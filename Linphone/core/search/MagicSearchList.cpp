@@ -72,7 +72,6 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 	    &MagicSearchModel::aggregationFlagChanged, [this](LinphoneEnums::MagicSearchAggregation flag) {
 		    mModelConnection->invokeToCore([this, flag]() { setAggregationFlag(flag); });
 	    });
-
 	mModelConnection->makeConnectToModel(
 	    &MagicSearchModel::searchResultsReceived,
 	    [this](const std::list<std::shared_ptr<linphone::SearchResult>> &results) {
@@ -83,12 +82,14 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 				    contact = FriendCore::create(it->getFriend());
 				    contacts->append(contact);
 			    } else if (auto address = it->getAddress()) {
-				    contact = FriendCore::create(nullptr);
+				    auto linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
+				    contact = FriendCore::create(linphoneFriend);
 				    contact->setGivenName(Utils::coreStringToAppString(address->asStringUriOnly()));
 				    contact->appendAddress(Utils::coreStringToAppString(address->asStringUriOnly()));
 				    contacts->append(contact);
 			    } else if (!it->getPhoneNumber().empty()) {
-				    contact = FriendCore::create(it->getFriend());
+				    auto linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
+				    contact = FriendCore::create(linphoneFriend);
 				    contact->setGivenName(Utils::coreStringToAppString(it->getPhoneNumber()));
 				    contact->appendPhoneNumber(tr("Phone"), Utils::coreStringToAppString(it->getPhoneNumber()));
 				    contacts->append(contact);
@@ -99,6 +100,26 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 			    delete contacts;
 		    });
 	    });
+
+	mCoreModelConnection = QSharedPointer<SafeConnection<MagicSearchList, CoreModel>>(
+	    new SafeConnection<MagicSearchList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mCoreModelConnection->makeConnectToModel(
+	    &CoreModel::friendCreated, [this](const std::shared_ptr<linphone::Friend> &f) {
+		    auto friendCore = FriendCore::create(f);
+		    auto haveContact =
+		        std::find_if(mList.begin(), mList.end(), [friendCore](const QSharedPointer<QObject> &item) {
+			        return item.objectCast<FriendCore>()->getDefaultAddress() == friendCore->getDefaultAddress();
+		        });
+		    if (haveContact == mList.end()) {
+			    connect(friendCore.get(), &FriendCore::removed, this, qOverload<QObject *>(&MagicSearchList::remove));
+			    add(friendCore);
+			    int index = -1;
+			    get(friendCore.get(), &index);
+			    if (index != -1) {
+				    emit friendCreated(index);
+			    }
+		    }
+	    });
 }
 
 void MagicSearchList::setResults(const QList<QSharedPointer<FriendCore>> &contacts) {
@@ -107,6 +128,9 @@ void MagicSearchList::setResults(const QList<QSharedPointer<FriendCore>> &contac
 		connect(it.get(), &FriendCore::removed, this, qOverload<QObject *>(&MagicSearchList::remove));
 	}
 	add(contacts);
+}
+
+void MagicSearchList::addResult(const QSharedPointer<FriendCore> &contact) {
 }
 
 void MagicSearchList::setSearch(const QString &search) {

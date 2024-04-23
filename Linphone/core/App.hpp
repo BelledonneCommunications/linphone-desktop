@@ -102,7 +102,7 @@ public:
 
 	void onLoggerInitialized();
 
-	QQuickWindow *getCallsWindow(QVariant callGui);
+	QQuickWindow *getCallsWindow(QVariant callGui = QVariant());
 	void setCallsWindowProperty(const char *id, QVariant property);
 	void closeCallsWindow();
 

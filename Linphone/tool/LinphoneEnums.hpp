@@ -187,9 +187,9 @@ linphone::ConferenceInfo::State toLinphone(const LinphoneEnums::ConferenceInfoSt
 LinphoneEnums::ConferenceInfoState fromLinphone(const linphone::ConferenceInfo::State &state);
 
 enum class ConferenceSchedulerState {
-	AllocationPending = int(linphone::ConferenceScheduler::State::AllocationPending),
-	Error = int(linphone::ConferenceScheduler::State::Error),
 	Idle = int(linphone::ConferenceScheduler::State::Idle),
+	Error = int(linphone::ConferenceScheduler::State::Error),
+	AllocationPending = int(linphone::ConferenceScheduler::State::AllocationPending),
 	Ready = int(linphone::ConferenceScheduler::State::Ready),
 	Updating = int(linphone::ConferenceScheduler::State::Updating)
 };

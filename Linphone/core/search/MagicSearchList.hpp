@@ -42,6 +42,7 @@ public:
 	void setSelf(QSharedPointer<MagicSearchList> me);
 	void setSearch(const QString &search);
 	void setResults(const QList<QSharedPointer<FriendCore>> &contacts);
+	void addResult(const QSharedPointer<FriendCore> &contact);
 
 	int getSourceFlags() const;
 	void setSourceFlags(int flags);
@@ -58,6 +59,8 @@ signals:
 
 	void sourceFlagsChanged(int sourceFlags);
 	void aggregationFlagChanged(LinphoneEnums::MagicSearchAggregation flag);
+
+	void friendCreated(int index);
 
 private:
 	int mSourceFlags;

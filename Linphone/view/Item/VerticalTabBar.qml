@@ -7,8 +7,8 @@ import Linphone
 
 Control.TabBar {
 	id: mainItem
-	spacing: 15 * DefaultStyle.dp
-	topPadding: 20 * DefaultStyle.dp
+	spacing: 32 * DefaultStyle.dp
+	topPadding: 36 * DefaultStyle.dp
 
 	property var model
 	readonly property alias cornerRadius: bottomLeftCorner.radius

@@ -9,11 +9,10 @@ Popup {
 	property string title
 	property string description
 	property int index
+	signal closePopup(int index)
+	onClosed: closePopup(index)
 	onAboutToShow: {
 		autoClosePopup.restart()
-	}
-	onAboutToHide: {
-		popupLayout.popupList.splice(mainItem.index, 1)
 	}
 	closePolicy: Popup.NoAutoClose
 	x : parent.x + parent.width - width

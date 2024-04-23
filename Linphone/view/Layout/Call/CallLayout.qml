@@ -68,17 +68,17 @@ Item {
 	Component{
 		id: activeSpeakerComponent
 		ActiveSpeakerLayout{
-				Layout.Layout.fillWidth: true
-				Layout.Layout.fillHeight: true
-				call: mainItem.call
+			Layout.Layout.fillWidth: true
+			Layout.Layout.fillHeight: true
+			call: mainItem.call
 		}
 	}
 	Component{
 		id: gridComponent
 		GridLayout{
-				Layout.Layout.fillWidth: true
-				Layout.Layout.fillHeight: true
-				call: mainItem.call
+			Layout.Layout.fillWidth: true
+			Layout.Layout.fillHeight: true
+			call: mainItem.call
 		}
 	}
 }

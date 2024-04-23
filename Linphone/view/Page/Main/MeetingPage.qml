@@ -16,14 +16,13 @@ AbstractMainPage {
 	property bool leftPanelEnabled: true
 	property ConferenceInfoGui selectedConference
 	property int meetingListCount
-	signal newConfCreated()
 	signal returnRequested()
 	signal addParticipantsValidated(list<string> selectedParticipants)
 	Component.onCompleted: rightPanelStackView.push(overridenRightPanel, Control.StackView.Immediate)
 
 	onSelectedConferenceChanged: {
 		overridenRightPanelStackView.clear()
-		if (selectedConference) {
+		if (selectedConference && selectedConference.core.haveModel) {
 			if (!overridenRightPanelStackView.currentItem || overridenRightPanelStackView.currentItem != meetingDetail) overridenRightPanelStackView.replace(meetingDetail, Control.StackView.Immediate)
 		}
 	}
@@ -136,7 +135,6 @@ AbstractMainPage {
 				mainItem.selectedConference = conferenceList.selectedConference
 			}
 			RowLayout {
-				visible: leftPanelStackView.currentItem == listLayout
 				enabled: mainItem.leftPanelEnabled
 				Layout.rightMargin: 39 * DefaultStyle.dp
 				spacing: 0
@@ -200,10 +198,6 @@ AbstractMainPage {
 					}
 					Connections {
 						target: mainItem
-						onNewConfCreated: {
-							// TODO : manque un connect côté c++
-							conferenceList.forceUpdate()
-						}
 					}
 					Control.ScrollBar.vertical: ScrollBar {
 						id: meetingsScrollbar
@@ -222,8 +216,10 @@ AbstractMainPage {
 	Component {
 		id: createConf
 		ColumnLayout {
+			id: createConfLayout
 			property ConferenceInfoGui conferenceInfoGui
 			property bool isCreation
+			spacing: 33 * DefaultStyle.dp
 
 			RowLayout {
 				width: 320 * DefaultStyle.dp
@@ -235,6 +231,8 @@ AbstractMainPage {
 					Layout.preferredHeight: 24 * DefaultStyle.dp
 					icon.width: 24 * DefaultStyle.dp
 					icon.height: 24 * DefaultStyle.dp
+					topPadding: 6 * DefaultStyle.dp
+					bottomPadding: 6 * DefaultStyle.dp
 					onClicked: {
 						meetingSetup.conferenceInfoGui.core.undo()
 						leftPanelStackView.pop()
@@ -250,10 +248,20 @@ AbstractMainPage {
 					Layout.fillWidth: true
 				}
 				Button {
+					Layout.preferredWidth: 57 * DefaultStyle.dp
 					topPadding: 6 * DefaultStyle.dp
 					bottomPadding: 6 * DefaultStyle.dp
-					text: qsTr("Créer")
-					textSize: 13 * DefaultStyle.dp
+					contentItem: Text {
+						text: qsTr("Créer")
+						horizontalAlignment: Text.AlignHCenter
+						verticalAlignment: Text.AlignVCenter
+
+						font {
+							pixelSize: 13 * DefaultStyle.dp
+							weight: 600 * DefaultStyle.dp
+						}
+						color: DefaultStyle.grey_0
+					}
 					onClicked: {
 						if (meetingSetup.conferenceInfoGui.core.subject.length === 0) {
 							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir un sujet"), false)
@@ -272,8 +280,23 @@ AbstractMainPage {
 				conferenceInfoGui: parent.conferenceInfoGui
 				isCreation: parent.isCreation
 				Layout.rightMargin: 35 * DefaultStyle.dp
+				Connections {
+					target: meetingSetup.conferenceInfoGui ? meetingSetup.conferenceInfoGui.core : null
+					onConferenceSchedulerStateChanged: {
+						var mainWin = UtilsCpp.getMainWindow()
+						if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
+						|| meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
+							mainWin.showLoadingPopup(qsTr("Création de la conférence en cours..."))
+						} else {
+							if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
+								UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création de la conférence a échoué"), false)
+							}
+							mainWin.closeLoadingPopup()
+						}
+						createConfLayout.enabled = meetingSetup.conferenceInfoGui.core.schedulerState != LinphoneEnums.ConferenceSchedulerState.AllocationPending
+					}
+				}
 				onSaveSucceed: {
-					mainItem.newConfCreated()
 					leftPanelStackView.pop()
 					UtilsCpp.showInformationPopup(qsTr("Nouvelle réunion"), qsTr("Réunion planifiée avec succès"), true)
 				}
@@ -364,6 +387,15 @@ AbstractMainPage {
 						overridenRightPanelStackView.pop()
 					}
 				}
+				Connections {
+					target: conferenceEdit.conferenceInfoGui ? conferenceEdit.conferenceInfoGui.core : null
+					onConferenceSchedulerStateChanged: {
+						var mainWin = UtilsCpp.getMainWindow()
+						if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
+							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("L'édition de la conférence a échoué"), false)
+						}
+					}
+				}
 			}
 		}
 	}
@@ -382,12 +414,12 @@ AbstractMainPage {
 					Layout.preferredHeight: 24 * DefaultStyle.dp
 					icon.width: 24 * DefaultStyle.dp
 					icon.height: 24 * DefaultStyle.dp
-					onClicked: mainItem.returnRequested()
+					onClicked: container.pop()
 				}
 				ColumnLayout {
 					spacing: 3 * DefaultStyle.dp
 					Text {
-						text: qsTr("Appel de groupe")
+						text: qsTr("Ajouter des participants")
 						color: DefaultStyle.main1_500_main
 						maximumLineCount: 1
 						font {
@@ -434,6 +466,7 @@ AbstractMainPage {
 			visible: mainItem.selectedConference
 			spacing: 25 * DefaultStyle.dp
 			Section {
+				Layout.topMargin: 58 * DefaultStyle.dp
 				visible: mainItem.selectedConference
 				content: RowLayout {
 					spacing: 8 * DefaultStyle.dp

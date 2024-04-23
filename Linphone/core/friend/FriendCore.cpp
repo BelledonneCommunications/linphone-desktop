@@ -54,10 +54,12 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 		mPresenceTimestamp = mFriendModel->getPresenceTimestamp();
 		mPictureUri = Utils::coreStringToAppString(contact->getPhoto());
 		auto vcard = contact->getVcard();
-		mOrganization = Utils::coreStringToAppString(vcard->getOrganization());
-		mJob = Utils::coreStringToAppString(vcard->getJobTitle());
-		mGivenName = Utils::coreStringToAppString(vcard->getGivenName());
-		mFamilyName = Utils::coreStringToAppString(vcard->getFamilyName());
+		if (vcard) {
+			mOrganization = Utils::coreStringToAppString(vcard->getOrganization());
+			mJob = Utils::coreStringToAppString(vcard->getJobTitle());
+			mGivenName = Utils::coreStringToAppString(vcard->getGivenName());
+			mFamilyName = Utils::coreStringToAppString(vcard->getFamilyName());
+		}
 		auto addresses = contact->getAddresses();
 		for (auto &address : addresses) {
 			mAddressList.append(
@@ -451,8 +453,8 @@ void FriendCore::remove() {
 	if (mFriendModel) { // Update
 		mFriendModelConnection->invokeToModel([this]() {
 			auto contact = mFriendModel->getFriend();
+			// emit CoreModel::getInstance()->friendRemoved(contact);
 			contact->remove();
-			emit CoreModel::getInstance()->friendRemoved();
 			mFriendModelConnection->invokeToCore([this]() { removed(this); });
 		});
 	}
@@ -506,21 +508,23 @@ void FriendCore::save() { // Save Values to model
 				auto contact = core->createFriend();
 				auto friendModel = Utils::makeQObject_ptr<FriendModel>(contact);
 				friendModel->setSelf(friendModel);
-				mCoreModelConnection->invokeToCore([this, thisCopy, friendModel] {
+				mCoreModelConnection->invokeToCore([this, thisCopy, friendModel, contact] {
 					mFriendModel = friendModel;
-					mCoreModelConnection->invokeToModel([this, thisCopy] {
+					mCoreModelConnection->invokeToModel([this, thisCopy, contact] {
+						auto core = CoreModel::getInstance()->getCore();
 						thisCopy->writeIntoModel(mFriendModel);
 						thisCopy->deleteLater();
+						bool created =
+						    (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
+						if (created) {
+							core->getDefaultFriendList()->updateSubscriptions();
+							emit CoreModel::getInstance()->friendCreated(contact);
+						}
+						mCoreModelConnection->invokeToCore([this, created]() {
+							if (created) setSelf(mCoreModelConnection->mCore);
+							setIsSaved(created);
+						});
 					});
-				});
-				bool created = (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
-				if (created) {
-					core->getDefaultFriendList()->updateSubscriptions();
-					emit CoreModel::getInstance()->friendAdded();
-				}
-				mCoreModelConnection->invokeToCore([this, created]() {
-					if (created) setSelf(mCoreModelConnection->mCore);
-					setIsSaved(created);
 				});
 			}
 		});

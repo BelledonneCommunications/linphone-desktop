@@ -55,7 +55,6 @@ ColumnLayout {
 		// Layout.fillWidth: true
 		Layout.alignment: Qt.AlignHCenter
 		Avatar {
-			// TODO : find friend and pass contact argument
 			id: detailAvatar
 			anchors.horizontalCenter: parent.horizontalCenter 
 			width: 100 * DefaultStyle.dp

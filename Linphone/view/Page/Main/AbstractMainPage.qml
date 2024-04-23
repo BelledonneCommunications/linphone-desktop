@@ -18,24 +18,8 @@ Item {
 	property color rightPanelColor: DefaultStyle.grey_100
 	property alias leftPanelContent: leftPanel.children
 	property alias rightPanelStackView: rightPanelStackView
-	property alias contactEditionComp: contactEditionComp
 	property alias rightPanel: rightPanel
 	signal noItemButtonPressed()
-	signal contactEditionClosed()
-
-	function createContact(name, address) {
-		var friendGui = Qt.createQmlObject('import Linphone
-											FriendGui{
-											}', mainItem)
-		friendGui.core.givenName = UtilsCpp.getGivenNameFromFullName(name)
-		friendGui.core.familyName = UtilsCpp.getFamilyNameFromFullName(name)
-		friendGui.core.defaultAddress = address
-		rightPanelStackView.push(contactEditionComp, {"contact": friendGui, "title": qsTr("Nouveau contact"), "saveButtonText": qsTr("Créer")})
-	}
-
-	function editContact(friendGui) {
-		rightPanelStackView.push(contactEditionComp, {"contact": friendGui, "title": qsTr("Modifier contact"), "saveButtonText": qsTr("Enregistrer")})
-	}
 
 	// Control.SplitView {
 	// 	id: splitView
@@ -223,24 +207,8 @@ Item {
 					}
 					
 				}
-				Item {
-					Control.StackView {
-						id: rightPanelStackView
-						anchors.fill: parent
-						anchors.topMargin: 39 * DefaultStyle.dp
-						anchors.leftMargin: 39 * DefaultStyle.dp
-					}
-				}
-				// We need this component here as it is used in multiple subPages (Call and Contact pages) 
-				Component {
-					id: contactEditionComp
-					ContactEdition {
-						property string objectName: "contactEdition"
-						onCloseEdition: {
-							rightPanelStackView.pop(Control.StackView.Immediate)
-							mainItem.contactEditionClosed()
-						}
-					}
+				Control.StackView {
+					id: rightPanelStackView
 				}
 			}
 		}

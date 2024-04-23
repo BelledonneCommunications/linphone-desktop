@@ -36,6 +36,8 @@ public:
 
 	void createConferenceScheduler();
 
+	std::shared_ptr<linphone::ConferenceInfo> getConferenceInfo() const;
+
 	std::shared_ptr<ConferenceSchedulerModel> getConferenceScheduler() const;
 	void setConferenceScheduler(const std::shared_ptr<ConferenceSchedulerModel> &model);
 	QDateTime getDateTime() const;

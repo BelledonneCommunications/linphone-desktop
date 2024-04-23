@@ -33,6 +33,10 @@ ApplicationWindow {
 		mainWindowStackView.currentItem.transferCallSucceed()
 	}
 
+	function removeFromPopupLayout(index) {
+		popupLayout.popupList.splice(index, 1)
+	}
+
 	Component {
 		id: popupComp
 		InformationPopup{}
@@ -42,24 +46,42 @@ ApplicationWindow {
 		infoPopup.index = popupLayout.popupList.length
 		popupLayout.popupList.push(infoPopup)
 		infoPopup.open()
+		infoPopup.closePopup.connect(removeFromPopupLayout)
 	}
-
+	function showLoadingPopup(text) {
+		loadingPopup.text = text
+		loadingPopup.open()
+	}
+	function closeLoadingPopup() {
+		loadingPopup.close()
+	}
 
 	ColumnLayout {
 		id: popupLayout
 		anchors.fill: parent
 		Layout.alignment: Qt.AlignBottom
 		property int nextY: mainWindow.height
-		property list<Popup> popupList
+		property list<InformationPopup> popupList
 		property int popupCount: popupList.length
-		spacing: 15
+		spacing: 15 * DefaultStyle.dp
 		onPopupCountChanged: {
 			nextY = mainWindow.height
 			for(var i = 0; i < popupCount; ++i) {
 				popupList[i].y = nextY - popupList[i].height
+				popupList[i].index = i
 				nextY = nextY - popupList[i].height - 15
 			}
 		}
+	}
+
+	LoadingPopup {
+		id: loadingPopup
+		modal: true
+		closePolicy: Popup.NoAutoClose
+		anchors.centerIn: parent
+		padding: 20 * DefaultStyle.dp
+		underlineColor: DefaultStyle.main1_500_main
+		radius: 15 * DefaultStyle.dp
 	}
 
 	AccountProxy {

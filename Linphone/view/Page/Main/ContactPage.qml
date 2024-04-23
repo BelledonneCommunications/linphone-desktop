@@ -25,25 +25,28 @@ AbstractMainPage {
 
 	onNoItemButtonPressed: createContact("", "")
 
+	function createContact(name, address) {
+		var friendGui = Qt.createQmlObject('import Linphone
+											FriendGui{
+											}', mainItem)
+		friendGui.core.givenName = UtilsCpp.getGivenNameFromFullName(name)
+		friendGui.core.familyName = UtilsCpp.getFamilyNameFromFullName(name)
+		friendGui.core.defaultAddress = address
+		rightPanelStackView.push(contactEdition, {"contact": friendGui, "title": qsTr("Nouveau contact"), "saveButtonText": qsTr("Créer")})
+	}
+
+	function editContact(friendGui) {
+		rightPanelStackView.push(contactEdition, {"contact": friendGui, "title": qsTr("Modifier contact"), "saveButtonText": qsTr("Enregistrer")})
+	}
+
 	// rightPanelStackView.initialItem: contactDetail
 	Binding {
 		mainItem.showDefaultItem: false
-		when: rightPanelStackView.currentItem && rightPanelStackView.currentItem.objectName == "contactEdition"
+		when: rightPanelStackView.currentItem
 		restoreMode: Binding.RestoreBinding
-	}
-	Connections {
-		target: mainItem
-		onContactEditionClosed: {
-			mainItem.forceListsUpdate()
-			// mainItem.rightPanelStackView.replace(contactDetail, Control.StackView.Immediate)
-		}
 	}
 
 	showDefaultItem: contactList.model.sourceModel.count === 0
-
-	function goToNewCall() {
-		listStackView.replace(newCallItem)
-	}
 	
 	property MagicSearchProxy allFriends: MagicSearchProxy {
 		searchText: searchBar.text.length === 0 ? "*" : searchBar.text
@@ -107,6 +110,7 @@ AbstractMainPage {
 				id: searchBar
 				Layout.leftMargin: leftPanel.leftMargin
 				Layout.rightMargin: leftPanel.rightMargin
+				Layout.topMargin: 18 * DefaultStyle.dp
 				Layout.fillWidth: true
 				placeholderText: qsTr("Rechercher un contact")
 			}
@@ -223,6 +227,12 @@ AbstractMainPage {
 								contactMenuVisible: true
 								searchBarText: searchBar.text
 								model: allFriends
+								Connections {
+									target: allFriends
+									onFriendCreated: (index) => {
+										contactList.currentIndex = index
+									}
+								}
 								onSelectedContactChanged: {
 									if (selectedContact) {
 										favoriteList.currentIndex = -1
@@ -589,6 +599,17 @@ AbstractMainPage {
 					}
 				}
 				// TODO : find device by friend
+			}
+		}
+	}
+
+	Component {
+		id: contactEdition
+		ContactEdition {
+			Control.StackView.onActivated: console.log("edit/create contact")
+			onCloseEdition: {
+				if (rightPanelStackView.depth <= 1) rightPanelStackView.clear()
+				else rightPanelStackView.pop(Control.StackView.Immediate)
 			}
 		}
 	}

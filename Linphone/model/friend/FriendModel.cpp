@@ -150,70 +150,90 @@ void FriendModel::setName(const QString &name) {
 
 QString FriendModel::getGivenName() const {
 	auto vcard = mMonitor->getVcard();
+	bool created = false;
 	if (!vcard) {
-		mMonitor->createVcard(mMonitor->getName());
+		created = mMonitor->createVcard(mMonitor->getName());
 	}
-	return Utils::coreStringToAppString(mMonitor->getVcard()->getGivenName());
+	if (mMonitor->getVcard()) return Utils::coreStringToAppString(mMonitor->getVcard()->getGivenName());
+	else return QString();
 }
 
 void FriendModel::setGivenName(const QString &name) {
 	auto vcard = mMonitor->getVcard();
+	bool created = false;
 	if (!vcard) {
-		mMonitor->createVcard(mMonitor->getName());
+		created = mMonitor->createVcard(mMonitor->getName());
 	}
-	mMonitor->getVcard()->setGivenName(Utils::appStringToCoreString(name));
-	emit givenNameChanged(name);
+	if (mMonitor->getVcard()) {
+		mMonitor->getVcard()->setGivenName(Utils::appStringToCoreString(name));
+		emit givenNameChanged(name);
+	}
 }
 
 QString FriendModel::getFamilyName() const {
 	auto vcard = mMonitor->getVcard();
+	bool created = false;
 	if (!vcard) {
-		mMonitor->createVcard(mMonitor->getName());
+		created = mMonitor->createVcard(mMonitor->getName());
 	}
-	return Utils::coreStringToAppString(mMonitor->getVcard()->getFamilyName());
+	if (mMonitor->getVcard()) return Utils::coreStringToAppString(mMonitor->getVcard()->getFamilyName());
+	else return QString();
 }
 
 void FriendModel::setFamilyName(const QString &name) {
 	auto vcard = mMonitor->getVcard();
+	bool created = false;
 	if (!vcard) {
-		mMonitor->createVcard(mMonitor->getName());
+		created = mMonitor->createVcard(mMonitor->getName());
 	}
-	mMonitor->getVcard()->setFamilyName(Utils::appStringToCoreString(name));
-	emit familyNameChanged(name);
+	if (mMonitor->getVcard()) {
+		mMonitor->getVcard()->setFamilyName(Utils::appStringToCoreString(name));
+		emit familyNameChanged(name);
+	}
 }
 
 QString FriendModel::getOrganization() const {
 	auto vcard = mMonitor->getVcard();
+	bool created = false;
 	if (!vcard) {
-		mMonitor->createVcard(mMonitor->getName());
+		created = mMonitor->createVcard(mMonitor->getName());
 	}
-	return Utils::coreStringToAppString(mMonitor->getVcard()->getOrganization());
+	if (mMonitor->getVcard()) return Utils::coreStringToAppString(mMonitor->getVcard()->getOrganization());
+	else return QString();
 }
 
 void FriendModel::setOrganization(const QString &orga) {
 	auto vcard = mMonitor->getVcard();
+	bool created = false;
 	if (!vcard) {
-		mMonitor->createVcard(mMonitor->getName());
+		created = mMonitor->createVcard(mMonitor->getName());
 	}
-	mMonitor->getVcard()->setOrganization(Utils::appStringToCoreString(orga));
-	emit organizationChanged(orga);
+	if (mMonitor->getVcard()) {
+		mMonitor->getVcard()->setOrganization(Utils::appStringToCoreString(orga));
+		emit organizationChanged(orga);
+	}
 }
 
 QString FriendModel::getJob() const {
 	auto vcard = mMonitor->getVcard();
+	bool created = false;
 	if (!vcard) {
-		mMonitor->createVcard(mMonitor->getName());
+		created = mMonitor->createVcard(mMonitor->getName());
 	}
-	return Utils::coreStringToAppString(mMonitor->getVcard()->getJobTitle());
+	if (mMonitor->getVcard()) return Utils::coreStringToAppString(mMonitor->getVcard()->getJobTitle());
+	else return QString();
 }
 
 void FriendModel::setJob(const QString &job) {
 	auto vcard = mMonitor->getVcard();
+	bool created = false;
 	if (!vcard) {
-		mMonitor->createVcard(mMonitor->getName());
+		created = mMonitor->createVcard(mMonitor->getName());
 	}
-	mMonitor->getVcard()->setJobTitle(Utils::appStringToCoreString(job));
-	emit jobChanged(job);
+	if (mMonitor->getVcard()) {
+		mMonitor->getVcard()->setJobTitle(Utils::appStringToCoreString(job));
+		emit jobChanged(job);
+	}
 }
 
 bool FriendModel::getStarred() const {
@@ -231,10 +251,12 @@ void FriendModel::onPresenceReceived(const std::shared_ptr<linphone::Friend> &co
 
 QString FriendModel::getPictureUri() const {
 	auto vcard = mMonitor->getVcard();
+	bool created = false;
 	if (!vcard) {
-		mMonitor->createVcard(mMonitor->getName());
+		created = mMonitor->createVcard(mMonitor->getName());
 	}
-	return Utils::coreStringToAppString(mMonitor->getVcard()->getPhoto());
+	if (mMonitor->getVcard()) return Utils::coreStringToAppString(mMonitor->getVcard()->getPhoto());
+	else return QString();
 }
 
 void FriendModel::setPictureUri(const QString &uri) {

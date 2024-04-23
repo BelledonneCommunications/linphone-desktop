@@ -5,7 +5,6 @@ import QtQuick.Controls as Control
 import Linphone
 import UtilsCpp 1.0
 
-//TODO : spacing layout 
 ColumnLayout {
 	id: mainItem
 	spacing: 8 * DefaultStyle.dp
@@ -18,7 +17,6 @@ ColumnLayout {
 	Connections {
 		target: mainItem.conferenceInfoGui.core
 		onSchedulerStateChanged: {
-			console.log("scheduler state changed", mainItem.conferenceInfoGui.core.schedulerState)
 			if (mainItem.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) {
 				mainItem.saveSucceed(isCreation)
 			}

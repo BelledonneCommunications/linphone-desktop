@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls as Control
 import QtQuick.Effects
+import QtQuick.Layouts
 import Linphone
 
 ComboBox {
@@ -25,7 +26,12 @@ ComboBox {
 		width: 321 * DefaultStyle.dp
 		height: 270 * DefaultStyle.dp
 		closePolicy: Popup.NoAutoClose
+		topPadding: 25 * DefaultStyle.dp
+		bottomPadding: 24 * DefaultStyle.dp
+		leftPadding: 21 * DefaultStyle.dp
+		rightPadding: 19 * DefaultStyle.dp
 		background: Item {
+			anchors.fill: parent
 			Rectangle {
 				id: calendarBg
 				anchors.fill: parent

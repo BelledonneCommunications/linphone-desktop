@@ -20,14 +20,17 @@
 
 #include "MagicSearchProxy.hpp"
 #include "MagicSearchList.hpp"
+#include "core/friend/FriendGui.hpp"
 
 MagicSearchProxy::MagicSearchProxy(QObject *parent) : SortFilterProxy(parent) {
 	mList = MagicSearchList::create();
 	connect(mList.get(), &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged);
 	connect(mList.get(), &MagicSearchList::aggregationFlagChanged, this, &MagicSearchProxy::aggregationFlagChanged);
+	connect(mList.get(), &MagicSearchList::friendCreated, this, [this](int index) {
+		auto proxyIndex = mapFromSource(sourceModel()->index(index, 0));
+		emit friendCreated(proxyIndex.row());
+	});
 	setSourceModel(mList.get());
-	connect(CoreModel::getInstance().get(), &CoreModel::friendRemoved, this,
-	        [this] { emit mList->lSearch(mSearchText); });
 	connect(this, &MagicSearchProxy::forceUpdate, [this] { emit mList->lSearch(mSearchText); });
 	sort(0);
 }
@@ -58,4 +61,19 @@ LinphoneEnums::MagicSearchAggregation MagicSearchProxy::getAggregationFlag() con
 
 void MagicSearchProxy::setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag) {
 	qobject_cast<MagicSearchList *>(sourceModel())->lSetAggregationFlag(flag);
+}
+
+bool MagicSearchProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
+	auto l = sourceModel()->data(left);
+	auto r = sourceModel()->data(right);
+
+	auto lIsFriend = l.value<FriendGui *>();
+	auto rIsFriend = r.value<FriendGui *>();
+
+	if (lIsFriend && rIsFriend) {
+		auto lName = lIsFriend->getCore()->getDisplayName().toLower();
+		auto rName = rIsFriend->getCore()->getDisplayName().toLower();
+		return lName < rName;
+	}
+	return true;
 }

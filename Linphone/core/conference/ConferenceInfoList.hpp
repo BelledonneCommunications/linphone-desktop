@@ -46,10 +46,9 @@ public:
 	int getCurrentDateIndex() const;
 	void setCurrentDateIndex(int index);
 
-	QSharedPointer<ConferenceInfoCore> get(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo) const;
-	QSharedPointer<ConferenceInfoCore> build(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo) const;
+	int findConfInfoIndexByUri(const QString &uri);
 
-	void remove(const int &row);
+	QSharedPointer<ConferenceInfoCore> build(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo) const;
 
 	QHash<int, QByteArray> roleNames() const override;
 
@@ -64,6 +63,8 @@ signals:
 
 private:
 	QSharedPointer<SafeConnection<ConferenceInfoList, CoreModel>> mCoreModelConnection;
+	std::shared_ptr<CoreModel> mCoreModel;
+	QSharedPointer<ConferenceInfoCore> mLastConfInfoInserted;
 	bool mHaveCurrentDate = false;
 	int mCurrentDateIndex = -1;
 	DECLARE_ABSTRACT_OBJECT

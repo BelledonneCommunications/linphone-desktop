@@ -39,6 +39,7 @@ public:
 	~ConferenceSchedulerModel();
 
 	QString getUri();
+	linphone::ConferenceScheduler::State getState() const;
 	void setInfo(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
 	void cancelConference(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
 
@@ -48,6 +49,7 @@ signals:
 
 private:
 	DECLARE_ABSTRACT_OBJECT
+	linphone::ConferenceScheduler::State mState;
 
 	//--------------------------------------------------------------------------------
 	// LINPHONE

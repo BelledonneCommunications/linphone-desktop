@@ -87,4 +87,6 @@ QtObject {
 	property string squaresFour: "image://internal/squares-four.svg"
 	property string handWaving: "image://internal/hand-waving.svg"
 	property string screencast: "image://internal/screencast.svg"
+	property string videoconference: "image://internal/video-conference.svg"
+	property string videoconferenceSelected: "image://internal/video-conference-selected.svg"
 }

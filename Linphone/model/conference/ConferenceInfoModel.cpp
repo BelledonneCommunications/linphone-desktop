@@ -45,6 +45,10 @@ void ConferenceInfoModel::createConferenceScheduler() {
 	mustBeInLinphoneThread(getClassName() + "::createConferenceScheduler()");
 }
 
+std::shared_ptr<linphone::ConferenceInfo> ConferenceInfoModel::getConferenceInfo() const {
+	return mConferenceInfo;
+}
+
 std::shared_ptr<ConferenceSchedulerModel> ConferenceInfoModel::getConferenceScheduler() const {
 	return mConferenceSchedulerModel;
 }
@@ -106,7 +110,9 @@ QString ConferenceInfoModel::getOrganizerName() const {
 }
 
 QString ConferenceInfoModel::getOrganizerAddress() const {
-	return Utils::coreStringToAppString(mConferenceInfo->getOrganizer()->asStringUriOnly());
+	if (auto organizer = mConferenceInfo->getOrganizer())
+		return Utils::coreStringToAppString(organizer->asStringUriOnly());
+	return QString();
 }
 
 QString ConferenceInfoModel::getDescription() const {
@@ -118,7 +124,7 @@ QString ConferenceInfoModel::getUri() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (auto uriAddr = mConferenceInfo->getUri()) {
 		return Utils::coreStringToAppString(uriAddr->asString());
-	} else return QString();
+	} else return mConferenceSchedulerModel->getUri();
 }
 
 std::list<std::shared_ptr<linphone::ParticipantInfo>> ConferenceInfoModel::getParticipantInfos() const {

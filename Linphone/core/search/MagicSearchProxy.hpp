@@ -55,10 +55,12 @@ signals:
 	void sourceFlagsChanged(int sourceFlags);
 	void aggregationFlagChanged(LinphoneEnums::MagicSearchAggregation aggregationFlag);
 	void forceUpdate();
+	void friendCreated(int index);
 
 protected:
 	QString mSearchText;
 	QSharedPointer<MagicSearchList> mList;
+	virtual bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
 };
 
 #endif

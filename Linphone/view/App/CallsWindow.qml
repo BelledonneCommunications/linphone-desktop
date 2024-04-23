@@ -275,7 +275,6 @@ Window {
 						Layout.preferredWidth: 30 * DefaultStyle.dp
 						Layout.preferredHeight: 30 * DefaultStyle.dp
 						// TODO : change with broadcast or meeting icon when available
-						// + 
 						imageSource: !mainWindow.call
 							? AppIcons.meeting
 							: (mainWindow.callState === LinphoneEnums.CallState.End
@@ -725,18 +724,16 @@ Window {
 								Connections {
 									target: participantsStack
 									onCurrentItemChanged: {
-										console.log("changing title", participantsStack.currentItem == participantList)
 										if (participantsStack.currentItem == participantList) rightPanel.headerTitleText = qsTr("Participants (%1)").arg(participantList.count)
 									}
 								}
 								Connections {
 									target: rightPanel
-									// TODO : chercher comment relier ces infos pour faire le add des participants
-									//onValidateRequested: {
-									//	participantList.model.addAddresses(participantsStack.selectedParticipants)
-									//	participantsStack.pop()
-									//	participantsStack.participantAdded()
-									//}
+									onValidateRequested: {
+										participantList.model.addAddresses(participantsStack.selectedParticipants)
+										participantsStack.pop()
+										participantsStack.participantAdded()
+									}
 								}
 							}
 						}

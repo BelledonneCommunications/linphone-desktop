@@ -14,6 +14,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 
 	view/Layout/FormItemLayout.qml
 	view/Layout/Mosaic.qml
+	view/Layout/RightPanelLayout.qml
 	view/Layout/Section.qml
 	
 	view/Item/Account/Accounts.qml
@@ -58,6 +59,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/ErrorText.qml
 	view/Item/IconLabelButton.qml
 	view/Item/InformationPopup.qml
+	view/Item/LoadingPopup.qml
 	view/Item/MovableMouseArea.qml
 	view/Item/NumericPad.qml
 	view/Item/PhoneNumberComboBox.qml

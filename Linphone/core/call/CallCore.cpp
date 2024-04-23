@@ -136,7 +136,15 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		mCallModelConnection->invokeToModel([this]() { mCallModel->stopRecording(); });
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::recordingChanged, [this](bool recording) {
-		mCallModelConnection->invokeToCore([this, recording]() { setRecording(recording); });
+		mCallModelConnection->invokeToCore([this, recording]() {
+			setRecording(recording);
+			if (recording == false) {
+				Utils::showInformationPopup(tr("Enregistrement terminé"),
+				                            tr("L'appel a été enregistré dans le fichier : %1")
+				                                .arg(QString::fromStdString(mCallModel->getRecordFile())),
+				                            true, App::getInstance()->getCallsWindow());
+			}
+		});
 	});
 	mCallModelConnection->makeConnectToCore(&CallCore::lVerifyAuthenticationToken, [this](bool verified) {
 		mCallModelConnection->invokeToModel(

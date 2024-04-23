@@ -194,33 +194,37 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 			    &ConferenceInfoModel::schedulerStateChanged, [this](linphone::ConferenceScheduler::State state) {
 				    auto confInfoState = mConferenceInfoModel->getState();
 				    QString uri;
-				    if (state == linphone::ConferenceScheduler::State::Ready)
+				    if (state == linphone::ConferenceScheduler::State::Ready) {
 					    uri = mConferenceInfoModel->getConferenceScheduler()->getUri();
+				    }
 				    mConfInfoModelConnection->invokeToCore([this, state = LinphoneEnums::fromLinphone(state),
 				                                            infoState = LinphoneEnums::fromLinphone(confInfoState),
 				                                            uri] {
-					    lDebug() << "scheduler state changed" << state;
 					    setConferenceSchedulerState(state);
 					    setConferenceInfoState(infoState);
 					    if (state == LinphoneEnums::ConferenceSchedulerState::Ready) {
 						    setUri(uri);
+						    mConfInfoModelConnection->invokeToModel([this, uri] {
+							    CoreModel::getInstance()->conferenceInfoCreated(
+							        mConferenceInfoModel->getConferenceInfo());
+						    });
 					    }
+					    setConferenceSchedulerState(state);
+				    });
+			    });
+			mConfInfoModelConnection->makeConnectToModel(
+			    &ConferenceInfoModel::infoStateChanged, [this](linphone::ConferenceInfo::State state) {
+				    auto uri = mConferenceInfoModel->getConferenceScheduler()->getUri();
+				    mConfInfoModelConnection->invokeToCore([this, infoState = LinphoneEnums::fromLinphone(state), uri] {
+					    setConferenceInfoState(infoState);
 				    });
 			    });
 			mConfInfoModelConnection->makeConnectToModel(
 			    &ConferenceInfoModel::invitationsSent,
-			    [this](const std::list<std::shared_ptr<linphone::Address>> &failedInvitations) {
-				    lDebug() << "invitations sent";
-			    });
+			    [this](const std::list<std::shared_ptr<linphone::Address>> &failedInvitations) {});
 		} else { // Create
 			mCoreModelConnection = QSharedPointer<SafeConnection<ConferenceInfoCore, CoreModel>>(
 			    new SafeConnection<ConferenceInfoCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
-			mCoreModelConnection->makeConnectToModel(
-			    &CoreModel::conferenceInfoReceived,
-			    [this](const std::shared_ptr<linphone::Core> &core,
-			           const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
-				    lDebug() << "CONF INFO RECEIVED ==================";
-			    });
 		}
 	}
 }
@@ -566,6 +570,11 @@ void ConferenceInfoCore::save() {
 		});
 	} else {
 		mCoreModelConnection->invokeToModel([this, thisCopy]() {
+			if (CoreModel::getInstance()->getCore()->getDefaultAccount()->getState() !=
+			    linphone::RegistrationState::Ok) {
+				Utils::showInformationPopup(tr("Erreur"), tr("Votre compte est déconnecté"), false);
+				return;
+			}
 			auto linphoneConf =
 			    CoreModel::getInstance()->getCore()->findConferenceInformationFromUri(ToolModel::interpretUrl(mUri));
 

@@ -19,7 +19,7 @@ Button {
 	background: Rectangle {
 		anchors.fill: parent
 		color: mainItem.backgroundColor
-		radius: mainItem.width * 1.29
+		radius: mainItem.width /2
 	}
 	icon.source: checkedIconUrl && mainItem.checked ? checkedIconUrl : iconUrl
 	icon.width: width * 0.58

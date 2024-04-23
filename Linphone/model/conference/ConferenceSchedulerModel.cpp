@@ -48,6 +48,10 @@ QString ConferenceSchedulerModel::getUri() {
 	} else return QString();
 }
 
+linphone::ConferenceScheduler::State ConferenceSchedulerModel::getState() const {
+	return mState;
+}
+
 void ConferenceSchedulerModel::setInfo(const std::shared_ptr<linphone::ConferenceInfo> &confInfo) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setInfo(confInfo);
@@ -60,6 +64,7 @@ void ConferenceSchedulerModel::cancelConference(const std::shared_ptr<linphone::
 
 void ConferenceSchedulerModel::onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> &conferenceScheduler,
                                               linphone::ConferenceScheduler::State state) {
+	mState = state;
 	emit stateChanged(state);
 }
 

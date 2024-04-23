@@ -22,6 +22,7 @@ AbstractMainPage {
 	property bool isRegistered: account ? account.core.registrationState == LinphoneEnums.RegistrationState.Ok : false
 	property int selectedParticipantsCount
 	signal startGroupCallRequested()
+	signal createContactRequested(string name, string address)
 
 	Connections {
 		enabled: confInfoGui
@@ -529,7 +530,7 @@ AbstractMainPage {
 						}
 						onClicked: {
 							detailOptions.close()
-							mainItem.createContact(contactDetail.contactName, contactDetail.contactAddress)
+							mainItem.createContactRequested(contactDetail.contactName, contactDetail.contactAddress)
 						}
 					}
 					Button {

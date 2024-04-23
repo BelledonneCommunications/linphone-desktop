@@ -32,7 +32,6 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : SortFilterProxy(pare
 		invalidate();
 		updateCurrentDateIndex();
 	});
-	connect(this, &ConferenceInfoProxy::lUpdate, mList.get(), &ConferenceInfoList::lUpdate);
 	connect(mList.get(), &ConferenceInfoList::haveCurrentDateChanged, [this] {
 		invalidate();
 		updateCurrentDateIndex();
@@ -77,10 +76,9 @@ bool ConferenceInfoProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sou
 	if (ciCore) {
 		if (!ciCore->getSubject().contains(mSearchText)) return false;
 		QDateTime currentDateTime = QDateTime::currentDateTimeUtc();
-		// TODO : use enums
-		if (mFilterType == 0) {
+		if (mFilterType == int(ConferenceInfoProxy::ConferenceInfoFiltering::None)) {
 			return true;
-		} else if (mFilterType == 1) {
+		} else if (mFilterType == int(ConferenceInfoProxy::ConferenceInfoFiltering::Future)) {
 			auto res = ciCore->getEndDateTimeUtc() >= currentDateTime;
 			return res;
 		} else return mFilterType == -1;

@@ -26,6 +26,11 @@ Item {
 		transferSucceedPopup.open()
 	}
 
+	function createContact(name, address) {
+		tabbar.currentIndex = 1
+		contactPage.createContact(name, address)
+	}
+
 	Timer {
 		id: autoClosePopup
 		interval: 5000
@@ -119,7 +124,7 @@ Item {
 					{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels")},
 					{icon: AppIcons.adressBook, selectedIcon: AppIcons.adressBookSelected, label: qsTr("Contacts")},
 					{icon: AppIcons.chatTeardropText, selectedIcon: AppIcons.chatTeardropTextSelected, label: qsTr("Conversations")},
-					{icon: AppIcons.usersThree, selectedIcon: AppIcons.usersThreeSelected, label: qsTr("Réunions")}
+					{icon: AppIcons.videoconference, selectedIcon: AppIcons.videoconferenceSelected, label: qsTr("Réunions")}
 				]
 
 			}
@@ -269,9 +274,8 @@ Item {
 												Item {Layout.fillWidth: true}
 											}
 											onClicked: {
-												var currentItem = mainStackLayout.children[mainStackLayout.currentIndex]
+												mainItem.createContact(magicSearchBar.text, sipAddr.text)
 												listPopup.close()
-												currentItem.createContact(magicSearchBar.text, sipAddr.text)
 											}
 										}
 									}
@@ -360,8 +364,13 @@ Item {
 					Layout.topMargin: 24 * DefaultStyle.dp
 					CallPage {
 						id: callPage
+						onCreateContactRequested: (name, address) => {
+							mainItem.createContact(name, address)
+						}
 					}
-					ContactPage{}
+					ContactPage{
+						id: contactPage
+					}
 					Item{}
 					//ConversationPage{}
 					MeetingPage{}

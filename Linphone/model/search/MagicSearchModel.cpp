@@ -30,11 +30,6 @@ DEFINE_ABSTRACT_OBJECT(MagicSearchModel)
 MagicSearchModel::MagicSearchModel(const std::shared_ptr<linphone::MagicSearch> &data, QObject *parent)
     : ::Listener<linphone::MagicSearch, linphone::MagicSearchListener>(data, parent) {
 	mustBeInLinphoneThread(getClassName());
-	// Removed is managed by FriendCore that allow to remove result automatically.
-	// No need to restart a new search in this case
-	connect(CoreModel::getInstance().get(), &CoreModel::friendAdded, this, [this]() {
-		if (!mLastSearch.isEmpty()) search(mLastSearch);
-	});
 }
 
 MagicSearchModel::~MagicSearchModel() {

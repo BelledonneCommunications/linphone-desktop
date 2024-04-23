@@ -4,6 +4,7 @@ import QtQuick.Controls as Control
 
 import Linphone
 import UtilsCpp 1.0
+import ConstantsCpp 1.0
 
 ListView {
 	id: mainItem
@@ -40,11 +41,7 @@ ListView {
 	property FriendGui selectedContact: model.getAt(currentIndex) || null
 
 	onCurrentIndexChanged: selectedContact = model.getAt(currentIndex) || null
-	onCountChanged: {
-		selectedContact = model.getAt(currentIndex) || null
-	}
 
-	// signal contactSelected(var contact)
 	signal contactStarredChanged()
 	signal contactDeletionRequested(FriendGui contact)
 	signal contactAddedToSelection()
@@ -66,6 +63,9 @@ ListView {
 
 	model: MagicSearchProxy {
 		searchText: searchBarText.length === 0 ? "*" : searchBarText
+		onFriendCreated: (index) => {
+			mainItem.currentIndex = index
+		}
 	}
 
 	Control.ScrollBar.vertical: ScrollBar {
@@ -85,9 +85,10 @@ ListView {
 		property var previousDisplayName: previousItem ? previousItem.core.displayName : ""
 		property var displayName: modelData.core.displayName
 		property bool display: !mainItem.showOnlyFavourites || modelData.core.starred
-		
 		visible: display
+
 		Connections {
+			enabled: modelData.core
 			target: modelData.core
 			onStarredChanged: mainItem.contactStarredChanged()
 		}
@@ -98,7 +99,7 @@ ListView {
 			anchors.verticalCenter: parent.verticalCenter
 			verticalAlignment: Text.AlignVCenter
 			width: 20 * DefaultStyle.dp
-			opacity: (!previousItem || !previousDisplayName.startsWith(displayName[0])) ? 1 : 0
+			opacity: (!previousItem || !previousDisplayName.toLocaleLowerCase(ConstantsCpp.DefaultLocale).startsWith(displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale))) ? 1 : 0
 			text: displayName[0]
 			color: DefaultStyle.main2_400
 			font {

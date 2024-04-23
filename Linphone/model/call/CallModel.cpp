@@ -185,7 +185,6 @@ void CallModel::stopRecording() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->stopRecording();
 	emit recordingChanged(mMonitor->getParams()->isRecording());
-	// TODO : display notification
 }
 
 void CallModel::setRecordFile(const std::string &path) {

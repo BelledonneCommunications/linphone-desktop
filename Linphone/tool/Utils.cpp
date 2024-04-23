@@ -111,6 +111,9 @@ void Utils::createCall(const QString &sipAddress,
 
 // TODO : change conf info only from qml
 //  (bug si on est déjà en appel et qu'on lance une conf)
+// demander à jonhatan pour le design : quand on est déjà en appel
+// et qu'on join une conf on retourne donc sur la waiting room
+// Comment on annule ? Si on ferme la fenêtre ça va finir l'appel en cours
 void Utils::setupConference(ConferenceInfoGui *confGui) {
 	if (!confGui) return;
 	auto window = App::getInstance()->getCallsWindow(QVariant());
@@ -1124,6 +1127,10 @@ QString Utils::toDateMonthString(const QDateTime &date) {
 	return QLocale().toString(date, "MMMM");
 }
 
+QString Utils::toDateMonthAndYearString(const QDateTime &date) {
+	return QLocale().toString(date, "MMMM yyyy");
+}
+
 bool Utils::isCurrentDay(QDateTime date) {
 	auto dateDayNum = date.date().day();
 	auto currentDate = QDateTime::currentDateTime();
@@ -1152,6 +1159,10 @@ bool Utils::datesAreEqual(const QDate &a, const QDate &b) {
 	return a.month() == b.month() && a.year() == b.year() && a.day() == b.day();
 }
 
+bool Utils::dateisInMonth(const QDate &a, int month, int year) {
+	return a.month() == month && a.year() == year;
+}
+
 QDateTime Utils::createDateTime(const QDate &date, int hour, int min) {
 	QTime time(hour, min);
 	return QDateTime(date, time);
@@ -1174,6 +1185,11 @@ int Utils::secsTo(const QString &startTime, const QString &endTime) {
 
 QDateTime Utils::addSecs(QDateTime date, int secs) {
 	date = date.addSecs(secs);
+	return date;
+}
+
+QDateTime Utils::addYears(QDateTime date, int years) {
+	date = date.addYears(years);
 	return date;
 }
 

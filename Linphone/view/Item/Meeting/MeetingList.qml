@@ -14,14 +14,14 @@ ListView {
 	property string searchBarText
 	property bool hoverEnabled: true	
 	property var delegateButtons
-	property ConferenceInfoGui selectedConference: model.getAt(currentIndex) || null
+	property ConferenceInfoGui selectedConference: currentIndex != -1 ? model.getAt(currentIndex) : null
 
 	spacing: 8 * DefaultStyle.dp
 	currentIndex: confInfoProxy.currentDateIndex
 
-	onCountChanged: selectedConference = model.getAt(currentIndex) || null
+	onCountChanged: selectedConference = currentIndex != -1 ? model.getAt(currentIndex) : null
 	onCurrentIndexChanged: {
-		selectedConference = currentIndex != confInfoProxy.currentDateIndex ? model.getAt(currentIndex) : null
+		selectedConference = model.getAt(currentIndex)
 	}
 	onVisibleChanged: if( visible) {
 		mainItem.positionViewAtIndex(currentIndex, ListView.Center)// First approximative move
@@ -34,16 +34,13 @@ ListView {
 	}
 	// using highlight doesn't center, take time before moving and don't work for not visible item (like not loaded)
 	highlightFollowsCurrentItem: false
-	
-	function forceUpdate() {
-		confInfoProxy.lUpdate()
-	}
 
 	signal conferenceSelected(var contact)
 
 	model: ConferenceInfoProxy {
 		id: confInfoProxy
 		searchText: searchBarText.length === 0 ? "" : searchBarText
+		filterType: ConferenceInfoProxy.None
 	}
 
 	section {
@@ -91,12 +88,12 @@ ListView {
 				Layout.fillWidth: false
 				Layout.preferredWidth: 32 * DefaultStyle.dp
 				Layout.minimumWidth: 32 * DefaultStyle.dp
-				height: 51 * DefaultStyle.dp
-				visible: !previousDateString || previousDateString != dateString
+				Layout.preferredHeight: 51 * DefaultStyle.dp
+				visible: previousDateString.length == 0 || previousDateString != dateString
 				spacing: 0
-				//anchors.leftMargin: 45 * DefaultStyle.dp
 				Text {
 					Layout.preferredHeight: 19 * DefaultStyle.dp
+					Layout.alignment: Qt.AlignCenter
 					text: day.substring(0,3) + '.'
 					color: DefaultStyle.main2_500main
 					wrapMode: Text.NoWrap
@@ -109,8 +106,8 @@ ListView {
 				}
 				Rectangle {
 					id: dayNum
-					Layout.fillWidth: true
-					Layout.preferredHeight: width
+					Layout.preferredWidth: 32 * DefaultStyle.dp
+					Layout.preferredHeight: 32 * DefaultStyle.dp
 					Layout.alignment: Qt.AlignCenter
 					radius: height/2
 					property var isCurrentDay: UtilsCpp.isCurrentDay(dateTime)
@@ -118,9 +115,9 @@ ListView {
 					color: isCurrentDay ? DefaultStyle.main1_500_main : "transparent"
 					
 					Text {
-						id: dayNumText
 						anchors.centerIn: parent
 						verticalAlignment: Text.AlignVCenter
+						horizontalAlignment: Text.AlignHCenter
 						text: UtilsCpp.toDateDayString(dateTime)
 						color: dayNum.isCurrentDay ? DefaultStyle.grey_0 : DefaultStyle.main2_500main
 						wrapMode: Text.NoWrap
@@ -208,18 +205,16 @@ ListView {
 			}
 		}
 
-
-		
-		MouseArea {
-			id: confArea
-			hoverEnabled: mainItem.hoverEnabled
-			visible: !dateDay.visible && itemDelegate.haveModel
-			anchors.fill: parent
-			cursorShape: Qt.PointingHandCursor
-			onClicked: {
-				mainItem.currentIndex = index
-				mainItem.conferenceSelected($modelData)
-			}
-		}
+		// MouseArea {
+		// 	id: confArea
+		// 	hoverEnabled: mainItem.hoverEnabled
+		// 	visible: !dateDay.visible && itemDelegate.haveModel
+		// 	anchors.fill: parent
+		// 	cursorShape: Qt.PointingHandCursor
+		// 	onClicked: {
+		// 		mainItem.currentIndex = index
+		// 		mainItem.conferenceSelected($modelData)
+		// 	}
+		// }
 	}
 }
