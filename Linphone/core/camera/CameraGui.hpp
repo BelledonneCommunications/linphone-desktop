@@ -49,9 +49,8 @@ public:
 	CameraGui(QQuickItem *parent = Q_NULLPTR);
 	virtual ~CameraGui();
 	QQuickFramebufferObject::Renderer *createRenderer() const override;
-	QQuickFramebufferObject::Renderer *createRenderer(bool resetWindowid) const;
 
-	Q_INVOKABLE void resetWindowId() const; // const to be used from createRenderer()
+	Q_INVOKABLE void resetWindowId();
 	void checkVideoDefinition();
 
 	bool getIsReady() const;
@@ -75,6 +74,12 @@ public:
 
 	void callStateChanged(LinphoneEnums::CallState state);
 
+	void setRenderer(QQuickFramebufferObject::Renderer *);
+	void refreshLastRenderer(); // Lookup in stocked renderer and link it.
+	void clearRenderer();
+	void updateSDKRenderer();
+	void updateSDKRenderer(QQuickFramebufferObject::Renderer *renderer);
+
 signals:
 	void requestNewRenderer();
 	void isReadyChanged(bool isReady);
@@ -95,9 +100,10 @@ private:
 	CallGui *mCallGui = nullptr;
 	ParticipantDeviceGui *mParticipantDeviceGui = nullptr;
 
+	QQuickFramebufferObject::Renderer *mLastRenderer = nullptr;
+
 	WindowIdLocation mWindowIdLocation = None;
 	mutable bool mIsWindowIdSet = false;
-	bool mIsDeleting = false;
 
 	DECLARE_ABSTRACT_OBJECT
 	DECLARE_GUI_OBJECT

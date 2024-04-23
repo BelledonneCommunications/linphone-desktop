@@ -21,11 +21,11 @@ Mosaic {
 			id: allDevices
 			qmlName: "G"
 			Component.onCompleted: console.log("Loaded : " +allDevices + " = " +allDevices.count)
-	}
+		}
 		model: grid.call.core.isConference ? participantDevices: [0,1]
 		delegate: Item{
 			id: avatarCell
-			property ParticipantDeviceGui currentDevice: grid.call.core.isConference ? gridModel.participantDevices.getAt(index) : null
+			property ParticipantDeviceGui currentDevice: index >= 0 &&  grid.call.core.isConference ? $modelData : null
 			onCurrentDeviceChanged: {
 				if(index < 0) cameraView.enabled = false	// this is a delegate destruction. We need to stop camera before Qt change its currentDevice (and then, let CameraView to delete wrong renderer)
 			}

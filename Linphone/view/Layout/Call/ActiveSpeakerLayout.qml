@@ -94,7 +94,7 @@ Item{
 			clip: true
 			delegate: Item{	// Spacing workaround
 				visible: $modelData && mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
-										&& $modelData.core.address != activeSpeakerSticker.address
+										&& $modelData.core.address != activeSpeakerSticker.address || false
 				height: visible ? (180 + 15) * DefaultStyle.dp : 0
 				width: 300 * DefaultStyle.dp
 				Sticker {

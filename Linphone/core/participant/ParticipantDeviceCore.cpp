@@ -83,7 +83,11 @@ void ParticipantDeviceCore::setSelf(QSharedPointer<ParticipantDeviceCore> me) {
 	});
 	mParticipantDeviceModelConnection->makeConnectToModel(
 	    &ParticipantDeviceModel::stateChanged, [this](LinphoneEnums::ParticipantDeviceState state) {
-		    mParticipantDeviceModelConnection->invokeToCore([this, state] { setState(state); });
+		    mParticipantDeviceModelConnection->invokeToCore(
+		        [this, state, isVideoEnabled = mParticipantDeviceModel->isVideoEnabled()] {
+			        setState(state);
+			        setIsVideoEnabled(isVideoEnabled);
+		        });
 	    });
 	mParticipantDeviceModelConnection->makeConnectToModel(
 	    &ParticipantDeviceModel::streamCapabilityChanged, [this](linphone::StreamType) {

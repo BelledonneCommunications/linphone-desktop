@@ -51,77 +51,117 @@ CameraGui::CameraGui(QQuickItem *parent) : QQuickFramebufferObject(parent) {
 CameraGui::~CameraGui() {
 	mustBeInMainThread("~" + getClassName());
 	mRefreshTimer.stop();
-	mIsDeleting = true;
 	setWindowIdLocation(None);
 }
 
-QQuickFramebufferObject::Renderer *CameraGui::createRenderer() const {
-	auto renderer = createRenderer(false);
-	if (!renderer) {
-		lInfo() << log().arg("(%1) Setting Camera to Dummy, %2").arg(mQmlName).arg(getSourceLocation());
-		QTimer::singleShot(1, this, &CameraGui::isNotReady);
-		renderer = new CameraDummy(); // Used to fill a renderer to avoid pushing a NULL.
-		/*if (getSourceLocation() != CorePreview)*/ QTimer::singleShot(1000, this, &CameraGui::requestNewRenderer);
-		// TODO : peut etre enelever le check sur le corepreview
-	} else QTimer::singleShot(1, this, &CameraGui::isReady); // Hack because of constness of createRenderer()
-	return renderer;
+// Hack for Qt constness on create Renderer.
+// We need to store the renderer in order to update the SDK filters with this renderer.
+QMap<const CameraGui *, QQuickFramebufferObject::Renderer *> gRenderers;
+QMutex gRenderesLock;
+
+//-------------------------------------------------------------
+
+void CameraGui::refreshLastRenderer() {
+	gRenderesLock.lock();
+	if (gRenderers.contains(this)) setRenderer(gRenderers[this]);
+	else clearRenderer();
+	updateSDKRenderer();
+	gRenderesLock.unlock();
 }
 
-QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId) const {
+void CameraGui::setRenderer(QQuickFramebufferObject::Renderer *renderer) {
+	mLastRenderer = renderer;
+}
+
+void CameraGui::clearRenderer() {
+	mLastRenderer = nullptr;
+}
+
+QQuickFramebufferObject::Renderer *CameraGui::createRenderer() const {
 	QQuickFramebufferObject::Renderer *renderer = NULL;
-	lDebug() << log().arg("CreateRenderer. Reset=") << resetWindowId;
+	lDebug() << log().arg("CreateRenderer");
+
 	// A renderer is mandatory, we cannot wait async.
 	switch (getSourceLocation()) {
 		case CorePreview: {
-			if (resetWindowId) PreviewManager::getInstance()->unsubscribe(this);
-			else renderer = PreviewManager::getInstance()->subscribe(this);
+			// if (resetWindowId) PreviewManager::getInstance()->unsubscribe(this);
+			renderer = PreviewManager::getInstance()->subscribe(this);
+			//(QQuickFramebufferObject::Renderer *)CoreModel::getInstance()->getCore()->createNativePreviewWindowId();
+
 		} break;
 		case Call: {
-			auto f = [qmlName = mQmlName, callGui = mCallGui, &renderer, resetWindowId]() {
+			App::postModelBlock([qmlName = mQmlName, callGui = mCallGui, &renderer]() {
 				auto call = callGui->getCore()->getModel()->getMonitor();
 				if (call) {
-					lInfo() << "[Camera] (" << qmlName << ") " << (resetWindowId ? "Resetting" : "Setting")
-					        << " Camera to CallModel";
-					if (resetWindowId) {
-						renderer = (QQuickFramebufferObject::Renderer *)call->getNativeVideoWindowId();
-						if (renderer) call->setNativeVideoWindowId(NULL);
-					} else {
-						renderer = (QQuickFramebufferObject::Renderer *)call->createNativeVideoWindowId();
-						if (renderer) call->setNativeVideoWindowId(renderer);
-						else {
-							renderer = (QQuickFramebufferObject::Renderer *)call->createNativeVideoWindowId();
-						}
-					}
+					lInfo() << "[Camera] (" << qmlName << ") Camera create from CallModel";
+					renderer = (QQuickFramebufferObject::Renderer *)call->createNativeVideoWindowId();
 				}
-			};
-			App::postModelBlock(f);
+			});
 		} break;
 		case Device: {
-			auto f = [qmlName = mQmlName, participantDeviceGui = mParticipantDeviceGui, &renderer, resetWindowId]() {
+			App::postModelBlock([qmlName = mQmlName, participantDeviceGui = mParticipantDeviceGui, &renderer]() {
 				auto device = participantDeviceGui->getCore()->getModel()->getMonitor();
 				if (device) {
-					lInfo() << "[Camera] (" << qmlName << ") " << (resetWindowId ? "Resetting" : "Setting")
-					        << " Camera to ParticipantDeviceModel";
-					if (resetWindowId) {
-						renderer = (QQuickFramebufferObject::Renderer *)device->getNativeVideoWindowId();
-						if (renderer) device->setNativeVideoWindowId(NULL);
-					} else {
-						renderer = (QQuickFramebufferObject::Renderer *)device->createNativeVideoWindowId();
-						if (renderer) device->setNativeVideoWindowId(renderer);
-					}
+					lInfo() << "[Camera] (" << qmlName << ") Camera create from ParticipantDeviceModel";
+					renderer = (QQuickFramebufferObject::Renderer *)device->createNativeVideoWindowId();
 				}
-			};
-			App::postModelBlock(f);
+			});
 		} break;
 		default: {
 		}
 	}
 
+	// Storing Qt renderer
+	gRenderesLock.lock();
+	gRenderers[this] = renderer;
+	gRenderesLock.unlock();
+	QTimer::singleShot(
+	    1, this, &CameraGui::refreshLastRenderer); // Assign new renderer to the current CameraGui (bypassing constness)
+
+	if (!renderer) {
+		lInfo() << log().arg("(%1) Setting Camera to Dummy, %2").arg(mQmlName).arg(getSourceLocation());
+		QTimer::singleShot(1, this, &CameraGui::isNotReady);
+		renderer = new CameraDummy(); // Used to fill a renderer to avoid pushing a NULL.
+		QTimer::singleShot(1000, this, &CameraGui::requestNewRenderer);
+	} else QTimer::singleShot(1, this, &CameraGui::isReady); // Hack because of constness of createRenderer()
 	return renderer;
 }
 
-void CameraGui::resetWindowId() const {
-	createRenderer(true);
+void CameraGui::updateSDKRenderer() {
+	updateSDKRenderer(mLastRenderer);
+}
+
+void CameraGui::updateSDKRenderer(QQuickFramebufferObject::Renderer *renderer) {
+	lDebug() << log().arg("Apply Qt Renderer to SDK") << renderer;
+	switch (getSourceLocation()) {
+		case CorePreview: {
+
+		} break;
+		case Call: {
+			App::postModelAsync([qmlName = mQmlName, callGui = mCallGui, renderer]() {
+				auto call = callGui->getCore()->getModel()->getMonitor();
+				if (call) {
+					lInfo() << "[Camera] (" << qmlName << ") Camera to CallModel";
+					call->setNativeVideoWindowId(renderer);
+				}
+			});
+		} break;
+		case Device: {
+			App::postModelAsync([qmlName = mQmlName, participantDeviceGui = mParticipantDeviceGui, renderer]() {
+				auto device = participantDeviceGui->getCore()->getModel()->getMonitor();
+				if (device) {
+					lInfo() << "[Camera] (" << qmlName << ") Camera to ParticipantDevice";
+					device->setNativeVideoWindowId(renderer);
+				}
+			});
+		} break;
+		default: {
+		}
+	}
+}
+
+void CameraGui::resetWindowId() {
+	updateSDKRenderer(nullptr);
 }
 void CameraGui::checkVideoDefinition() { /*
 	 if (mWindowIdLocation == WindowIdLocation::CorePreview) {
@@ -201,15 +241,16 @@ void CameraGui::setWindowIdLocation(const WindowIdLocation &location) {
 	if (mWindowIdLocation != location) {
 		lDebug() << log().arg("Update Window Id location from %2 to %3").arg(mWindowIdLocation).arg(location);
 		if (mWindowIdLocation == CorePreview) PreviewManager::getInstance()->unsubscribe(this);
-		else if (mWindowIdLocation != None) resetWindowId(); // Location change: Reset old window ID.
+		//  else if (mWindowIdLocation != None) resetWindowId(); // Location change: Reset old window ID.
+		resetWindowId();
 		mWindowIdLocation = location;
 		if (mWindowIdLocation == CorePreview) PreviewManager::getInstance()->subscribe(this);
-		update();
-		QTimer::singleShot(100, this, &CameraGui::requestNewRenderer);
+		else updateSDKRenderer();
+		// QTimer::singleShot(100, this, &CameraGui::requestNewRenderer);
 		//		if (mWindowIdLocation == WindowIdLocation::CorePreview) {
 		//			mLastVideoDefinition =
-		// CoreManager::getInstance()->getSettingsModel()->getCurrentPreviewVideoDefinition(); 			emit
-		// videoDefinitionChanged(); 			mLastVideoDefinitionChecker.start();
+		//  CoreManager::getInstance()->getSettingsModel()->getCurrentPreviewVideoDefinition(); 			emit
+		//  videoDefinitionChanged(); 			mLastVideoDefinitionChecker.start();
 		//		} else mLastVideoDefinitionChecker.stop();
 	}
 }

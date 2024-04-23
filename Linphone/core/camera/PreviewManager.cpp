@@ -46,6 +46,7 @@ PreviewManager *PreviewManager::getInstance() {
 	}
 }
 
+// Create a Renderer from SDK preview
 QQuickFramebufferObject::Renderer *PreviewManager::subscribe(const CameraGui *candidate) {
 	QQuickFramebufferObject::Renderer *renderer = nullptr;
 	mCounterMutex.lock();
@@ -101,8 +102,7 @@ void PreviewManager::unsubscribe(const CameraGui *candidate) { // If nullptr, Us
 			mCandidates.erase(itCandidate);
 			lDebug() << log().arg("Update") << mCandidates.first().first->getQmlName();
 			auto renderer = mCandidates.first().second;
-			if (!renderer) QTimer::singleShot(1, mCandidates.first().first, &CameraGui::requestNewRenderer);
-			else
+			if (renderer)
 				App::postModelBlock([renderer = mCandidates.first().second]() {
 					CoreModel::getInstance()->getCore()->setNativePreviewWindowId(renderer);
 				});
