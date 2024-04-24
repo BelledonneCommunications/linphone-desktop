@@ -75,6 +75,11 @@ DEFINE_ABSTRACT_OBJECT(App)
 
 App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
+	// Do not use APPLICATION_NAME here.
+	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
+	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
+	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
+	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
 	// If not OpenGL, createRender is never call.
 	QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
 	// Ignore vertical sync. This way, we avoid blinking on resizes(and other refresh like layouts etc.).

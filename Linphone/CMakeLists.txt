@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Linphone VERSION 0.1 LANGUAGES CXX)
+project(Linphone VERSION 6.0 LANGUAGES CXX)
 
 ################################################################
 #						PACKAGES
 ################################################################
-set(LINPHONE_PACKAGES LinphoneCxx)
+set(LINPHONE_PACKAGES LinphoneCxx BCToolbox)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 foreach(PACKAGE ${LINPHONE_PACKAGES})
 	message(STATUS "Trying to find ${PACKAGE}")
@@ -38,6 +38,10 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG" )
 set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
+
+if(NOT LINPHONEAPP_VERSION)
+	bc_compute_full_version(LINPHONEAPP_VERSION)
+endif()
 include(application_info.cmake)
 
 
