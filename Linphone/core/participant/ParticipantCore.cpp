@@ -39,9 +39,10 @@ QSharedPointer<ParticipantCore> ParticipantCore::create(const std::shared_ptr<li
 }
 
 ParticipantCore::ParticipantCore(const std::shared_ptr<linphone::Participant> &participant) : QObject(nullptr) {
-	mustBeInLinphoneThread(getClassName());
+	if (participant) mustBeInLinphoneThread(getClassName());
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mParticipantModel = Utils::makeQObject_ptr<ParticipantModel>(participant);
+	mParticipantModel->moveToThread(CoreModel::getInstance()->thread());
 	if (participant) {
 		mAdminStatus = participant->isAdmin();
 		mSipAddress = Utils::coreStringToAppString(participant->getAddress()->asStringUriOnly());

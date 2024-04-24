@@ -28,6 +28,7 @@ DEFINE_ABSTRACT_OBJECT(ParticipantModel)
 
 ParticipantModel::ParticipantModel(std::shared_ptr<linphone::Participant> linphoneParticipant, QObject *parent)
     : QObject(parent) {
+	if (linphoneParticipant) mustBeInLinphoneThread(getClassName());
 	mParticipant = linphoneParticipant;
 }
 

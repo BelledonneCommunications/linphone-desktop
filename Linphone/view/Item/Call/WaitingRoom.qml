@@ -93,10 +93,11 @@ RowLayout {
 			ColumnLayout {
 				spacing: 93 * DefaultStyle.dp
 				ColumnLayout {
-					spacing: 5 * DefaultStyle.dp
+					Layout.topMargin: 54 * DefaultStyle.dp
+					spacing: 0
 					Text {
 						Layout.fillWidth: true
-						text: qsTr("Participer à :\n")
+						text: qsTr("Participer à :")
 						color: DefaultStyle.grey_0
 						font {
 							pixelSize: 30 * DefaultStyle.dp

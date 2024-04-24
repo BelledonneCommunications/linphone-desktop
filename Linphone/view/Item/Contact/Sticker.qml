@@ -52,15 +52,52 @@ Item {
 			anchors.fill: parent
 			spacing: 0
 			visible: !cameraLoader.active || cameraLoader.status != Loader.Ready || !cameraLoader.item.isReady
-			Avatar{
-				id: avatar
+			Item{
 				Layout.alignment: Qt.AlignHCenter
 				// minSize = 372 => avatar = 142
 				Layout.preferredHeight: background.minSize * 142 / 372
 				Layout.preferredWidth: height
-				account: mainItem.account
-				call: !mainItem.previewEnabled ? mainItem.call : null
-				address: mainItem.peerAddress
+				Avatar{
+					id: avatar
+					anchors.fill: parent	
+					visible: !joiningView.visible
+					account: mainItem.account
+					call: !mainItem.previewEnabled ? mainItem.call : null
+					address: mainItem.peerAddress
+				}
+				ColumnLayout{
+					id: joiningView
+					anchors.fill: parent
+					spacing: 0
+					visible: mainItem.participantDevice && (mainItem.participantDevice.core.state == LinphoneEnums.ParticipantDeviceState.Joining || mainItem.participantDevice.core.state == LinphoneEnums.ParticipantDeviceState.Alerting) || false
+					Item{
+						Layout.fillHeight: true
+						Layout.fillWidth: true
+					}
+					BusyIndicator {
+						Layout.preferredHeight: 27 * DefaultStyle.dp
+						indicatorColor: DefaultStyle.main2_100
+						Layout.alignment: Qt.AlignHCenter
+						indicatorHeight: 42 * DefaultStyle.dp
+						indicatorWidth: 42 * DefaultStyle.dp
+					}
+					Text {
+						Layout.preferredHeight: 27 * DefaultStyle.dp
+						Layout.topMargin: 15 * DefaultStyle.dp // (84-27)-42
+						text: qsTr('rejoint...')
+						color: DefaultStyle.grey_0
+						Layout.alignment: Qt.AlignHCenter
+						horizontalAlignment: Text.AlignHCenter
+						font {
+							pixelSize: 20 * DefaultStyle.dp
+							weight: 500 * DefaultStyle.dp
+						}
+					}
+					Item{
+						Layout.fillHeight: true
+						Layout.fillWidth: true
+					}
+				}
 			}
 			Text {
 				Layout.fillWidth: true

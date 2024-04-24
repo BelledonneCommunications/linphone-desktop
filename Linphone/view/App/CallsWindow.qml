@@ -732,11 +732,11 @@ Window {
 								Connections {
 									target: rightPanel
 									// TODO : chercher comment relier ces infos pour faire le add des participants
-									onValidateRequested: {
-										participantList.model.addAddresses(participantsStack.selectedParticipants)
-										participantsStack.pop()
-										participantsStack.participantAdded()
-									}
+									//onValidateRequested: {
+									//	participantList.model.addAddresses(participantsStack.selectedParticipants)
+									//	participantsStack.pop()
+									//	participantsStack.participantAdded()
+									//}
 								}
 							}
 						}

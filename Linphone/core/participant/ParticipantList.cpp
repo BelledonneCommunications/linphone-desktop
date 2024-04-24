@@ -137,11 +137,14 @@ std::list<std::shared_ptr<linphone::Address>> ParticipantList::getParticipants()
 }
 
 bool ParticipantList::contains(const QString &address) const {
-	auto testAddress = ToolModel::interpretUrl(address);
 	bool exists = false;
-	for (auto itParticipant = mList.begin(); !exists && itParticipant != mList.end(); ++itParticipant)
-		exists = testAddress->weakEqual(
-		    ToolModel::interpretUrl(itParticipant->objectCast<ParticipantCore>()->getSipAddress()));
+	App::postModelBlock([this, address, &exists, participants = mList]() {
+		auto testAddress = ToolModel::interpretUrl(address);
+		for (auto itParticipant = participants.begin(); !exists && itParticipant != participants.end(); ++itParticipant)
+			exists = testAddress->weakEqual(
+			    ToolModel::interpretUrl(itParticipant->objectCast<ParticipantCore>()->getSipAddress()));
+	});
+
 	return exists;
 }
 

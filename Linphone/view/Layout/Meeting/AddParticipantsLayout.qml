@@ -16,7 +16,8 @@ ColumnLayout {
 	readonly property string groupName: groupCallName.text
 
 	function clearSelectedParticipants() {
-		contactList.selectedContacts.clear()
+		// TODO
+		//contactList.selectedContacts.clear()
 	}
 	
 	ColumnLayout {
