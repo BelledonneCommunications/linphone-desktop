@@ -19,6 +19,7 @@ Item {
 	property AccountGui account: null
 	property ParticipantDeviceGui participantDevice: null
 	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking || false
+	property alias displayPresence: avatar.displayPresence
 	property color color: DefaultStyle.grey_600
 	property int radius: 15 * DefaultStyle.dp
 	property var peerAddressObj: previewEnabled && (call || account)
@@ -34,6 +35,9 @@ Item {
 	property bool videoEnabled: (previewEnabled && call && call.core.localVideoEnabled)
 									|| (participantDevice && participantDevice.core.videoEnabled)
 	property string qmlName
+	property bool displayAll : !!mainItem.call
+	property bool bigBottomAddress: displayAll
+	property bool mutedStatus: participantDevice ? participantDevice.core.isMuted : false
 
 	Rectangle {
 		id: background
@@ -42,22 +46,27 @@ Item {
 		anchors.fill: parent
 		border.color: DefaultStyle.main2_200
 		border.width: mainItem.displayBorder ? 3 * DefaultStyle.dp : 0
+		property int minSize: Math.min(height, width)
 		ColumnLayout {
 			id: noCameraLayout
-			anchors.centerIn: parent
+			anchors.fill: parent
 			spacing: 0
 			visible: !cameraLoader.active || cameraLoader.status != Loader.Ready || !cameraLoader.item.isReady
 			Avatar{
+				id: avatar
 				Layout.alignment: Qt.AlignHCenter
-				height: 100
-				width: height
+				// minSize = 372 => avatar = 142
+				Layout.preferredHeight: background.minSize * 142 / 372
+				Layout.preferredWidth: height
 				account: mainItem.account
 				call: !mainItem.previewEnabled ? mainItem.call : null
+				address: mainItem.peerAddress
 			}
 			Text {
-				Layout.alignment: Qt.AlignHCenter
+				Layout.fillWidth: true
 				Layout.topMargin: 15 * DefaultStyle.dp
-				visible: mainItem.call && mainItem.call != undefined
+				horizontalAlignment: Text.AlignHCenter
+				visible: mainItem.displayAll
 				text: mainItem.peerAddress
 				color: DefaultStyle.grey_0
 				font {
@@ -67,8 +76,9 @@ Item {
 				}
 			}
 			Text {
-				Layout.alignment: Qt.AlignHCenter
-				visible: mainItem.call && mainItem.call != undefined
+				Layout.fillWidth: true
+				horizontalAlignment: Text.AlignHCenter
+				visible: mainItem.displayAll
 				text: mainItem.call && mainItem.call.core.peerAddress
 				color: DefaultStyle.grey_0
 				font {
@@ -141,7 +151,7 @@ Item {
 					: ""
 			color: DefaultStyle.grey_0
 			font {
-				pixelSize: 14 * DefaultStyle.dp
+				pixelSize: (mainItem.bigBottomAddress ? 14 : 10) * DefaultStyle.dp
 				weight: 500 * DefaultStyle.dp
 			}
 		}
@@ -154,5 +164,26 @@ Item {
 		shadowColor: DefaultStyle.grey_1000
 		shadowBlur: 1
 		shadowOpacity: 0.4
+	}
+	RowLayout{
+		anchors.right: parent.right
+		anchors.top: parent.top
+		anchors.rightMargin: 8 * DefaultStyle.dp
+		anchors.topMargin: 8 * DefaultStyle.dp
+		
+		height: 18 * DefaultStyle.dp
+		spacing: 0
+		CheckableButton {
+			id: muteIcon
+			icon.source: AppIcons.microphoneSlash
+			Layout.preferredWidth: 18 * DefaultStyle.dp
+			Layout.preferredHeight: 18 * DefaultStyle.dp
+			visible: mainItem.mutedStatus
+			icon.width: 13 * DefaultStyle.dp
+			icon.height: 13 * DefaultStyle.dp
+			enabled: false
+			contentImageColor: DefaultStyle.main2_500main
+			backgroundColor: DefaultStyle.grey_0
+		}
 	}
 }

@@ -22,6 +22,7 @@ Mosaic {
 			qmlName: "G"
 			Component.onCompleted: console.log("Loaded : " +allDevices + " = " +allDevices.count)
 		}
+		property AccountProxy accounts: AccountProxy{id: accountProxy}
 		model: grid.call.core.isConference ? participantDevices: [0,1]
 		delegate: Item{
 			id: avatarCell
@@ -39,6 +40,10 @@ Mosaic {
 				anchors.fill: parent
 				qmlName: 'G_'+index
 				call: !grid.call.core.isConference ? grid.call : null
+				account: index == 0 ? accountProxy.defaultAccount : null
+				displayAll: false
+				bigBottomAddress: true
+				displayPresence: false
 				
 				participantDevice: avatarCell.currentDevice
 				Component.onCompleted: console.log(qmlName + " is " +(call ? call.core.peerAddress : currentDevice ? currentDevice.core.address : 'addr_NotDefined'))

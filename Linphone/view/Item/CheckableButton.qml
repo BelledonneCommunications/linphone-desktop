@@ -10,14 +10,15 @@ Button {
 	property string checkedIconUrl
 	property color color: DefaultStyle.grey_500
 	property color checkedColor: color
+	property color backgroundColor: mainItem.enabled
+					? mainItem.pressed || mainItem.checked
+						? mainItem.checkedColor
+						: mainItem.color
+					: DefaultStyle.grey_600
 	checkable: true
 	background: Rectangle {
 		anchors.fill: parent
-		color: mainItem.enabled
-				? mainItem.pressed || mainItem.checked
-					? mainItem.checkedColor
-					: mainItem.color
-				: DefaultStyle.grey_600
+		color: mainItem.backgroundColor
 		radius: mainItem.width * 1.29
 	}
 	icon.source: checkedIconUrl && mainItem.checked ? checkedIconUrl : iconUrl

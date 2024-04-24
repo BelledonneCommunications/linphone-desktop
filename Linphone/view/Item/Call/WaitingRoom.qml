@@ -25,6 +25,10 @@ RowLayout {
 				Layout.preferredHeight: 330 * DefaultStyle.dp
 				Layout.preferredWidth: 558 * DefaultStyle.dp
 				qmlName: "WP"
+				displayAll: false
+				displayPresence: false
+				bigBottomAddress: true
+				mutedStatus: microButton.checked
 				AccountProxy{
 					id: accounts
 				}

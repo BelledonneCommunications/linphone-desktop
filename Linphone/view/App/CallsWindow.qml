@@ -666,7 +666,7 @@ Window {
 				Component {
 					id: screencastPanel
 					ScreencastPanel {
-						call: mainwindow.call
+						call: mainWindow.call
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Partage de votre écran")
 					}
 				}

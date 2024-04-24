@@ -41,6 +41,7 @@ Item{
 			property var address: participantDevice && participantDevice.core.address
 			videoEnabled: (participantDevice && participantDevice.core.videoEnabled) || (!participantDevice && call && call.core.remoteVideoEnabled)
 			qmlName: 'AS'
+			displayPresence: false
 	
 			Timer {
 				id: waitingTimer
@@ -104,6 +105,8 @@ Item{
 					qmlName: 'S_'+index
 					visible: parent.visible
 					participantDevice: $modelData
+					displayAll: false
+					displayPresence: false
 					Component.onCompleted: console.log(qmlName + " is " +($modelData ? $modelData.core.address : "-"))
 				}
 			}
@@ -127,6 +130,8 @@ Item{
 		property AccountProxy accounts: AccountProxy{id: accountProxy}
 		account: accountProxy.defaultAccount
 		call: mainItem.call
+		displayAll: false
+		displayPresence: false
 
 		MovableMouseArea {
 			id: previewMouseArea

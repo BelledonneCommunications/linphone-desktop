@@ -32,6 +32,9 @@ StackView {
 	onHaveAvatarChanged: replace(haveAvatar ? avatar : initials, StackView.Immediate)
 
 	property bool secured: false
+	property bool displayPresence: (account || contact) && (account 
+			? account.core.registrationState != LinphoneEnums.RegistrationState.Progress && account.core.registrationState != LinphoneEnums.RegistrationState.Refreshing
+			: contact.core.consolidatedPresence != LinphoneEnums.ConsolidatedPresence.Offline)
 	
 	initialItem: haveAvatar ? avatar : initials
 
@@ -57,9 +60,7 @@ StackView {
 		}
 	}
 	Rectangle {
-		visible: (account || contact) && (account 
-			? account.core.registrationState != LinphoneEnums.RegistrationState.Progress && account.core.registrationState != LinphoneEnums.RegistrationState.Refreshing
-			: contact.core.consolidatedPresence != LinphoneEnums.ConsolidatedPresence.Offline)
+		visible: mainItem.displayPresence
 		width: mainItem.width/4.5
 		height: width
 		radius: width / 2
@@ -110,10 +111,12 @@ StackView {
 				}
 			}
 			Image {
-				visible: initialItem.initials.length === 0
+				visible: initialItem.initials == ''
 				width: mainItem.width/3
 				height: width
 				source: AppIcons.profile
+				sourceSize.width: width
+				sourceSize.height: height
 				anchors.centerIn: parent
 			}
 		}
