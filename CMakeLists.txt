@@ -57,7 +57,7 @@ endif()
 set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 
 if( APPLE )
-	set(LINPHONEAPP_MACOS_ARCHS "x86_64" CACHE STRING "MacOS architectures to build: comma-separated list of values in [arm64, x86_64]")
+	set(LINPHONEAPP_MACOS_ARCHS "arm64" CACHE STRING "MacOS architectures to build: comma-separated list of values in [arm64, x86_64]")
 	set(LINPHONESDK_BUILD_TYPE "Default")#Using Mac will remove all SDK targets.
 	set(ENABLE_FAT_BINARY "ON") # Disable XCFrameworks as it is not supported.
 
@@ -149,6 +149,7 @@ add_option(OPTION_LIST ENABLE_QT_KEYCHAIN "Build QtKeychain to manage VFS from S
 add_option(OPTION_LIST ENABLE_QRCODE "Enable QRCode support" OFF)#Experimental
 add_option(OPTION_LIST ENABLE_RELATIVE_PREFIX "Set Internal packages relative to the binary" ON)
 add_option(OPTION_LIST ENABLE_SANITIZER "Enable sanitizer." OFF)
+add_option(OPTION_LIST ENABLE_SCREENSHARING "Enable screen sharing." ON)
 add_option(OPTION_LIST ENABLE_STRICT "Build with strict compilator flags e.g. -Wall -Werror" OFF)
 add_option(OPTION_LIST ENABLE_TESTS "Build with testing binaries of SDK" OFF)
 add_option(OPTION_LIST ENABLE_TESTS_COMPONENTS "Build libbctoolbox-tester" OFF)

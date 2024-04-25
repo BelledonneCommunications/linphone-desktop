@@ -102,6 +102,8 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mMicrophoneVolume = call->getRecordVolume();
 	mRecordable = mState == LinphoneEnums::CallState::StreamsRunning;
 	mConferenceVideoLayout = mCallModel->getConferenceVideoLayout();
+	auto videoSource = call->getVideoSource();
+	mVideoSourceDescriptor = VideoSourceDescriptorCore::create(videoSource ? videoSource->clone() : nullptr);
 }
 
 CallCore::~CallCore() {
@@ -299,6 +301,17 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	    &CallCore::lSetConferenceVideoLayout, [this](LinphoneEnums::ConferenceLayout layout) {
 		    mCallModelConnection->invokeToModel([this, layout]() { mCallModel->changeConferenceVideoLayout(layout); });
 	    });
+	mCallModelConnection->makeConnectToCore(
+	    &CallCore::lSetVideoSourceDescriptor, [this](VideoSourceDescriptorGui *gui) {
+		    mCallModelConnection->invokeToModel(
+		        [this, model = gui->getCore()->getModel()]() { mCallModel->setVideoSourceDescriptorModel(model); });
+	    });
+
+	mCallModelConnection->makeConnectToModel(&CallModel::videoDescriptorChanged, [this]() {
+		auto videoSource = mCallModel->getMonitor()->getVideoSource();
+		auto core = VideoSourceDescriptorCore::create(videoSource ? videoSource->clone() : nullptr);
+		mCallModelConnection->invokeToCore([this, core]() { setVideoSourceDescriptor(core); });
+	});
 }
 
 QString CallCore::getPeerAddress() const {
@@ -566,6 +579,17 @@ void CallCore::setTransferState(LinphoneEnums::CallState state, const QString &m
 
 LinphoneEnums::ConferenceLayout CallCore::getConferenceVideoLayout() const {
 	return mConferenceVideoLayout;
+}
+
+VideoSourceDescriptorGui *CallCore::getVideoSourceDescriptorGui() const {
+	return new VideoSourceDescriptorGui(mVideoSourceDescriptor);
+}
+
+void CallCore::setVideoSourceDescriptor(QSharedPointer<VideoSourceDescriptorCore> core) {
+	if (mVideoSourceDescriptor != core) {
+		mVideoSourceDescriptor = core;
+		emit videoSourceDescriptorChanged();
+	}
 }
 
 void CallCore::setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout) {

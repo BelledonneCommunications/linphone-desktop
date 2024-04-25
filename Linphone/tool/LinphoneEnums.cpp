@@ -42,6 +42,7 @@ void LinphoneEnums::registerMetaTypes() {
 	qRegisterMetaType<LinphoneEnums::RegistrationState>();
 	qRegisterMetaType<LinphoneEnums::TunnelMode>();
 	qRegisterMetaType<LinphoneEnums::TransportType>();
+	qRegisterMetaType<LinphoneEnums::VideoSourceScreenSharingType>();
 	qmlRegisterUncreatableMetaObject(LinphoneEnums::staticMetaObject, Constants::MainQmlUri, 1, 0, "LinphoneEnums",
 	                                 "Only enums");
 }
@@ -274,4 +275,13 @@ void LinphoneEnums::fromString(const QString &transportType, LinphoneEnums::Tran
 	else if (transportType.toUpper() == QLatin1String("UDP")) *transport = TransportType::Udp;
 	else if (transportType.toUpper() == QLatin1String("TLS")) *transport = TransportType::Tls;
 	else *transport = TransportType::Dtls;
+}
+
+linphone::VideoSourceScreenSharingType
+LinphoneEnums::toLinphone(const LinphoneEnums::VideoSourceScreenSharingType &type) {
+	return static_cast<linphone::VideoSourceScreenSharingType>(type);
+}
+LinphoneEnums::VideoSourceScreenSharingType
+LinphoneEnums::fromLinphone(const linphone::VideoSourceScreenSharingType &type) {
+	return static_cast<LinphoneEnums::VideoSourceScreenSharingType>(type);
 }

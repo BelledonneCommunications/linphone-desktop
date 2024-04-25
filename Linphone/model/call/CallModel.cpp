@@ -330,6 +330,32 @@ void CallModel::updateConferenceVideoLayout() {
 	}
 }
 
+void CallModel::setVideoSource(std::shared_ptr<linphone::VideoSourceDescriptor> videoDesc) {
+	mMonitor->setVideoSource(videoDesc);
+
+	emit videoDescriptorChanged();
+}
+
+LinphoneEnums::VideoSourceScreenSharingType CallModel::getVideoSourceType() const {
+	auto videoSource = mMonitor->getVideoSource();
+	return LinphoneEnums::fromLinphone(videoSource ? videoSource->getScreenSharingType()
+	                                               : linphone::VideoSourceScreenSharingType::Display);
+}
+int CallModel::getScreenSharingIndex() const {
+	auto videoSource = mMonitor->getVideoSource();
+	if (videoSource && videoSource->getScreenSharingType() == linphone::VideoSourceScreenSharingType::Display) {
+		void *t = videoSource->getScreenSharing();
+		return *(int *)(&t);
+	} else return -1;
+}
+
+void CallModel::setVideoSourceDescriptorModel(std::shared_ptr<VideoSourceDescriptorModel> model) {
+	if (model) setVideoSource(model->mDesc);
+	else {
+		setVideoSource(nullptr);
+	}
+}
+
 void CallModel::onDtmfReceived(const std::shared_ptr<linphone::Call> &call, int dtmf) {
 	emit dtmfReceived(call, dtmf);
 }

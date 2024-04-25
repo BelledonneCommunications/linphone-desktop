@@ -46,8 +46,7 @@ Control.TabBar {
 		Control.TabButton {
 			required property string modelData
 			required property int index
-			// width: Math.min(txtMeter.advanceWidth, Math.max(50, mainItem.width - (x - mainItem.x)))
-			width: txtMeter.advanceWidth
+			width: implicitWidth
 			hoverEnabled: true
 			ToolTip {
 				visible: tabText.truncated && hovered
@@ -70,22 +69,15 @@ Control.TabBar {
 
 			contentItem: Text {
 				id: tabText
-				anchors.fill: parent
+				width: Math.min(implicitWidth, mainItem.width / mainItem.model.length)
 				font.weight: mainItem.textWeight
 				color: mainItem.currentIndex === index ? DefaultStyle.main2_600 : DefaultStyle.main2_400
 				font.family: DefaultStyle.defaultFont
 				font.pixelSize: mainItem.pixelSize
 				elide: Text.ElideRight
 				maximumLineCount: 1
-				text: txtMeter.elidedText
-				// width: Math.min(txtMeter.advanceWidth, Math.max(50, mainItem.width - (x - mainItem.x)))
-				bottomPadding: 5 * DefaultStyle.dp
-			}
-
-			TextMetrics {
-				id: txtMeter
-				font: tabText.font
 				text: modelData
+				bottomPadding: 5 * DefaultStyle.dp
 			}
 		}
 	}

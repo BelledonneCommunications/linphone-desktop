@@ -719,11 +719,11 @@ AppWindow {
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Paramètres")
 						InCallSettingsPanel {
 							anchors.fill: parent
-							call: mainWindow.call
 							anchors.topMargin: 16 * DefaultStyle.dp
 							anchors.bottomMargin: 16 * DefaultStyle.dp
 							anchors.leftMargin: 17 * DefaultStyle.dp
 							anchors.rightMargin: 17 * DefaultStyle.dp
+							call: mainWindow.call
 						}
 					}
 				}
@@ -732,6 +732,7 @@ AppWindow {
 					Item {
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Partage de votre écran")
 						ScreencastPanel {
+							anchors.fill: parent
 							anchors.topMargin: 16 * DefaultStyle.dp
 							anchors.bottomMargin: 16 * DefaultStyle.dp
 							anchors.leftMargin: 17 * DefaultStyle.dp

@@ -96,10 +96,10 @@ if(APPLE)
 	if (NOT DEPLOYQT_PROGRAM)
 		message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
 	endif()
-	#Packaging is done by CPack in the cleanCpack.cmake file. But on mac, we need Qt files in .app
+	#Packaging is done by CPack in the cleanCPack.cmake file. But on mac, we need Qt files in .app
 	if(NOT ENABLE_APP_PACKAGING)
-		install(CODE "MESSAGE(\"MacDeploy install: execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=2 -always-overwrite) \")")
-		install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=2 -always-overwrite)")
+		install(CODE "MESSAGE(\"MacDeploy install: execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=0 -always-overwrite) \")")
+		install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=0 -always-overwrite)")
 	endif()
 elseif(WIN32)
 	set(BIN_ARCH "win32")
@@ -175,7 +175,7 @@ if(${ENABLE_APP_PACKAGING})
 	set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/Linphone/data/icon.ico")
 	set(PERFORM_SIGNING 0)
 	
-	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/cleanCpack.cmake.in" "${CMAKE_BINARY_DIR}/cmake/install/cleanCpack.cmake" @ONLY)
+	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/cleanCPack.cmake.in" "${CMAKE_BINARY_DIR}/cmake/install/cleanCPack.cmake" @ONLY)
 	set(CPACK_PRE_BUILD_SCRIPTS  "${CMAKE_BINARY_DIR}/cmake/install/cleanCPack.cmake")
 
 	if(APPLE)

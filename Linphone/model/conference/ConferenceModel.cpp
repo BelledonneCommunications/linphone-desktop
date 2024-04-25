@@ -24,6 +24,7 @@
 
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
 DEFINE_ABSTRACT_OBJECT(ConferenceModel)
@@ -38,6 +39,8 @@ ConferenceModel::ConferenceModel(const std::shared_ptr<linphone::Conference> &co
     : ::Listener<linphone::Conference, linphone::ConferenceListener>(conference, parent) {
 	mustBeInLinphoneThread(getClassName());
 	lDebug() << "[ConferenceModel] new" << this << conference.get();
+	connect(this, &ConferenceModel::isScreenSharingEnabledChanged, this,
+	        &ConferenceModel::onIsScreenSharingEnabledChanged);
 }
 
 ConferenceModel::~ConferenceModel() {
@@ -132,6 +135,32 @@ std::shared_ptr<const linphone::AudioDevice> ConferenceModel::getOutputAudioDevi
 	return mMonitor->getOutputAudioDevice();
 }
 
+void ConferenceModel::toggleScreenSharing() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto device = mMonitor->getScreenSharingParticipantDevice();
+
+	if (!device || ToolModel::isLocal(mMonitor, device)) {
+		bool enable = !device;
+		auto params = CoreModel::getInstance()->getCore()->createCallParams(mMonitor->getCall());
+		params->enableScreenSharing(enable);
+		if (enable) {
+			params->setConferenceVideoLayout(linphone::Conference::Layout::ActiveSpeaker);
+			params->enableVideo(true);
+		}
+		if (params->isValid()) mMonitor->getCall()->update(params);
+		else lCritical() << log().arg("Cannot toggle screen sharing because parameters are invalid");
+	}
+}
+
+bool ConferenceModel::isLocalScreenSharing() const {
+	auto device = mMonitor->getScreenSharingParticipantDevice();
+	return device && ToolModel::isLocal(mMonitor, device);
+}
+
+bool ConferenceModel::isScreenSharingEnabled() const {
+	return mMonitor && mMonitor->getScreenSharingParticipant();
+}
+
 void ConferenceModel::onActiveSpeakerParticipantDevice(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
@@ -143,10 +172,12 @@ void ConferenceModel::onActiveSpeakerParticipantDevice(
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<linphone::Conference> &conference,
                                          const std::shared_ptr<linphone::Participant> &participant) {
 	emit participantAdded(participant);
+	emit participantDeviceCountChanged(getParticipantDeviceCount());
 }
 void ConferenceModel::onParticipantRemoved(const std::shared_ptr<linphone::Conference> &conference,
                                            const std::shared_ptr<const linphone::Participant> &participant) {
 	emit participantRemoved(participant);
+	emit participantDeviceCountChanged(getParticipantDeviceCount());
 }
 void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> &conference,
                                                const std::shared_ptr<linphone::ParticipantDevice> &participantDevice) {
@@ -156,6 +187,7 @@ void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::C
 		for (auto d : conference->getMe()->getDevices())
 			lDebug() << "\t--> " << d->getAddress()->asString().c_str();
 	emit participantDeviceAdded(participantDevice);
+	emit participantDeviceCountChanged(getParticipantDeviceCount());
 }
 void ConferenceModel::onParticipantDeviceRemoved(
     const std::shared_ptr<linphone::Conference> &conference,
@@ -163,7 +195,9 @@ void ConferenceModel::onParticipantDeviceRemoved(
 	lDebug() << "onParticipantDeviceRemoved: " << participantDevice->getAddress()->asString().c_str() << " isInConf?["
 	         << participantDevice->isInConference() << "]";
 	lDebug() << "Me devices : " << conference->getMe()->getDevices().size();
+	if (participantDevice->screenSharingEnabled()) emit isScreenSharingEnabledChanged(false);
 	emit participantDeviceRemoved(participantDevice);
+	emit participantDeviceCountChanged(getParticipantDeviceCount());
 }
 void ConferenceModel::onParticipantDeviceStateChanged(const std::shared_ptr<linphone::Conference> &conference,
                                                       const std::shared_ptr<const linphone::ParticipantDevice> &device,
@@ -201,9 +235,28 @@ void ConferenceModel::onParticipantDeviceIsSpeakingChanged(
 	// ". Speaking:" << isSpeaking;
 	emit participantDeviceIsSpeakingChanged(participantDevice, isSpeaking);
 }
+
+void ConferenceModel::onParticipantDeviceScreenSharingChanged(
+    const std::shared_ptr<linphone::Conference> &conference,
+    const std::shared_ptr<const linphone::ParticipantDevice> &device,
+    bool enabled) {
+	qDebug() << "onParticipantDeviceScreenSharingChanged: " << device->getAddress()->asString().c_str()
+	         << ". Enabled:" << enabled;
+	emit participantDeviceScreenSharingChanged(device, enabled);
+	if (ToolModel::isLocal(mMonitor, device)) {
+		emit isLocalScreenSharingChanged(enabled);
+	}
+	emit isScreenSharingEnabledChanged(enabled);
+}
+
 void ConferenceModel::onStateChanged(const std::shared_ptr<linphone::Conference> &conference,
                                      linphone::Conference::State newState) {
 	lDebug() << "onStateChanged:" << (int)newState;
+	if (newState == linphone::Conference::State::Created) {
+		emit participantDeviceCountChanged(mMonitor->getParticipantDeviceList().size());
+		if (mMonitor->getScreenSharingParticipant()) emit isScreenSharingEnabledChanged(true);
+	}
+	// updateLocalParticipant();
 	emit conferenceStateChanged(newState);
 }
 void ConferenceModel::onSubjectChanged(const std::shared_ptr<linphone::Conference> &conference,
@@ -214,4 +267,13 @@ void ConferenceModel::onSubjectChanged(const std::shared_ptr<linphone::Conferenc
 void ConferenceModel::onAudioDeviceChanged(const std::shared_ptr<linphone::Conference> &conference,
                                            const std::shared_ptr<const linphone::AudioDevice> &audioDevice) {
 	lDebug() << "onAudioDeviceChanged is not yet implemented.";
+}
+
+void ConferenceModel::onIsScreenSharingEnabledChanged() {
+	auto call = mMonitor->getCall();
+	std::shared_ptr<linphone::CallParams> params = CoreModel::getInstance()->getCore()->createCallParams(call);
+	if (params->getConferenceVideoLayout() == linphone::Conference::Layout::Grid && params->videoEnabled()) {
+		params->setConferenceVideoLayout(linphone::Conference::Layout::ActiveSpeaker);
+	}
+	call->update(params);
 }

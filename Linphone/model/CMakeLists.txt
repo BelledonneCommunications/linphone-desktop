@@ -30,6 +30,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/setting/SettingsModel.cpp
 	
 	model/tool/ToolModel.cpp
+
+	model/videoSource/VideoSourceDescriptorModel.cpp
 )
 
 set(_LINPHONEAPP_SOURCES ${_LINPHONEAPP_SOURCES} PARENT_SCOPE)

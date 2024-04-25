@@ -109,8 +109,8 @@ Item{
 				id: activeSpeakerSticker
 				previewEnabled: false
 				call: mainItem.call
-				width: parent.width
-				height: parent.height
+				width: mainStackView.width
+				height: mainStackView.height
 				participantDevice: mainItem.conference && mainItem.conference.core.activeSpeaker
 				property var address: participantDevice && participantDevice.core.address
 				videoEnabled: (participantDevice && participantDevice.core.videoEnabled) || (!participantDevice && call && call.core.remoteVideoEnabled)
@@ -125,18 +125,19 @@ Item{
 			}
 		}
 		ListView{
+			id: sideStickers
 			Layout.fillHeight: true
 			Layout.preferredWidth: 300 * DefaultStyle.dp
 			Layout.rightMargin: 10 * DefaultStyle.dp
 			Layout.bottomMargin: 10 * DefaultStyle.dp
-			visible: allDevices.count > 2
+			visible: allDevices.count > 2 || !!mainItem.conference?.core.isScreenSharingEnabled
 			//spacing: 15 * DefaultStyle.dp	// bugged? First item has twice margins
 			model: allDevices
 			snapMode: ListView.SnapOneItem
 			clip: true
 			delegate: Item{	// Spacing workaround
 				visible: $modelData && mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
-										&& $modelData.core.address != activeSpeakerAddress || false
+										&& ($modelData.core.address != activeSpeakerAddress || mainItem.conference?.core.isScreenSharingEnabled) || false
 				height: visible ? (180 + 15) * DefaultStyle.dp : 0
 				width: 300 * DefaultStyle.dp
 				Sticker {
@@ -157,7 +158,7 @@ Item{
 		id: preview
 		qmlName: 'P'
 		previewEnabled: true
-		visible: mainItem.call && allDevices.count <= 2
+		visible: !sideStickers.visible
 		onVisibleChanged: console.log(visible + " : " +allDevices.count)
 		height: 180 * DefaultStyle.dp
 		width: 300 * DefaultStyle.dp

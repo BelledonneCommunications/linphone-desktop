@@ -308,6 +308,17 @@ Q_ENUM_NS(TransportType)
 
 linphone::TransportType toLinphone(const LinphoneEnums::TransportType &type);
 LinphoneEnums::TransportType fromLinphone(const linphone::TransportType &type);
+
+enum VideoSourceScreenSharingType {
+	VideoSourceScreenSharingTypeArea = int(linphone::VideoSourceScreenSharingType::Area),
+	VideoSourceScreenSharingTypeDisplay = int(linphone::VideoSourceScreenSharingType::Display),
+	VideoSourceScreenSharingTypeWindow = int(linphone::VideoSourceScreenSharingType::Window)
+};
+Q_ENUM_NS(VideoSourceScreenSharingType)
+
+linphone::VideoSourceScreenSharingType toLinphone(const LinphoneEnums::VideoSourceScreenSharingType &type);
+LinphoneEnums::VideoSourceScreenSharingType fromLinphone(const linphone::VideoSourceScreenSharingType &type);
+
 QString toString(const LinphoneEnums::TransportType &type);
 void fromString(const QString &transportType, LinphoneEnums::TransportType *transport);
 } // namespace LinphoneEnums

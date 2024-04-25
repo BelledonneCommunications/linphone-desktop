@@ -56,6 +56,12 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/participant/ParticipantDeviceProxy.cpp
 	core/participant/ParticipantList.cpp
 	core/participant/ParticipantProxy.cpp
+	
+	core/screen/ScreenList.cpp
+	core/screen/ScreenProxy.cpp
+
+	core/videoSource/VideoSourceDescriptorCore.cpp
+	core/videoSource/VideoSourceDescriptorGui.cpp
 )
 
 ## Single Application

@@ -22,6 +22,7 @@
 #define CALL_MODEL_H_
 
 #include "model/listener/Listener.hpp"
+#include "model/videoSource/VideoSourceDescriptorModel.hpp"
 #include "tool/AbstractObject.hpp"
 #include "tool/LinphoneEnums.hpp"
 
@@ -72,6 +73,11 @@ public:
 	void changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout); // Make a call request
 	void updateConferenceVideoLayout(); // Called from call state changed ater the new layout has been set.
 
+	void setVideoSource(std::shared_ptr<linphone::VideoSourceDescriptor> videoDesc);
+	LinphoneEnums::VideoSourceScreenSharingType getVideoSourceType() const;
+	int getScreenSharingIndex() const;
+	void setVideoSourceDescriptorModel(std::shared_ptr<VideoSourceDescriptorModel> model = nullptr);
+
 	static void activateLocalVideo(std::shared_ptr<linphone::CallParams> &params,
 	                               const std::shared_ptr<const linphone::CallParams> &currentParams,
 	                               bool enable);
@@ -92,6 +98,7 @@ signals:
 	void outputAudioDeviceChanged(const std::string &id);
 	void conferenceChanged();
 	void conferenceVideoLayoutChanged(LinphoneEnums::ConferenceLayout layout);
+	void videoDescriptorChanged();
 
 private:
 	QTimer mDurationTimer;

@@ -27,6 +27,14 @@ endif()
 find_package(Qt6 REQUIRED COMPONENTS Core)	
 find_package(Qt6 REQUIRED COMPONENTS ${QT_PACKAGES})
 
+if(NOT WIN32)
+	find_package(X11)
+endif()
+
+if(X11_FOUND)
+	list(APPEND APP_TARGETS X11::X11)
+endif()
+
 ################################################################
 #						CONFIGS
 ################################################################
@@ -131,6 +139,15 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 if(MSVC)
 	set_target_properties(${TARGET_NAME} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
 endif()
+
+if(WIN32)
+	if(ENABLE_SCREENSHARING)
+		target_link_libraries(${TARGET_NAME} PUBLIC Dwmapi)
+	endif()
+elseif (APPLE)
+	target_link_libraries(${TARGET_NAME} PUBLIC "-framework Cocoa" "-framework IOKit" "-framework AVFoundation" "-framework ScreenCaptureKit")
+endif()
+
 
 foreach(T ${APP_TARGETS})
 	target_include_directories(${TARGET_NAME} SYSTEM PUBLIC  $<TARGET_PROPERTY:${T},INTERFACE_INCLUDE_DIRECTORIES>)

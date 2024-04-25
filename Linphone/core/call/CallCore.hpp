@@ -23,6 +23,7 @@
 
 #include "core/conference/ConferenceCore.hpp"
 #include "core/conference/ConferenceGui.hpp"
+#include "core/videoSource/VideoSourceDescriptorGui.hpp"
 #include "model/call/CallModel.hpp"
 #include "tool/LinphoneEnums.hpp"
 #include "tool/thread/SafeConnection.hpp"
@@ -65,6 +66,9 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(ConferenceGui *conference READ getConferenceGui NOTIFY conferenceChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceLayout conferenceVideoLayout READ getConferenceVideoLayout WRITE
 	               lSetConferenceVideoLayout NOTIFY conferenceVideoLayoutChanged)
+
+	Q_PROPERTY(VideoSourceDescriptorGui *videoSourceDescriptor READ getVideoSourceDescriptorGui WRITE
+				   lSetVideoSourceDescriptor NOTIFY videoSourceDescriptorChanged)
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
@@ -149,8 +153,10 @@ public:
 	LinphoneEnums::ConferenceLayout getConferenceVideoLayout() const;
 	void setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);
 
-	std::shared_ptr<CallModel> getModel() const;
+	VideoSourceDescriptorGui *getVideoSourceDescriptorGui() const;
+	void setVideoSourceDescriptor(QSharedPointer<VideoSourceDescriptorCore> core);
 
+	std::shared_ptr<CallModel> getModel() const;
 signals:
 	void statusChanged(LinphoneEnums::CallStatus status);
 	void stateChanged(LinphoneEnums::CallState state);
@@ -174,6 +180,7 @@ signals:
 	void microphoneVolumeGainChanged();
 	void conferenceChanged();
 	void conferenceVideoLayoutChanged();
+	void videoSourceDescriptorChanged();
 
 	// Linphone commands
 	void lAccept(bool withVideo); // Accept an incoming call
@@ -194,6 +201,7 @@ signals:
 	void lSetInputAudioDevice(QString id);
 	void lSetOutputAudioDevice(QString id);
 	void lSetConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);
+	void lSetVideoSourceDescriptor(VideoSourceDescriptorGui *gui);
 
 	/* TODO
 	    Q_INVOKABLE void acceptWithVideo();
@@ -216,6 +224,7 @@ signals:
 private:
 	std::shared_ptr<CallModel> mCallModel;
 	QSharedPointer<ConferenceCore> mConference;
+	QSharedPointer<VideoSourceDescriptorCore> mVideoSourceDescriptor;
 	LinphoneEnums::CallStatus mStatus;
 	LinphoneEnums::CallState mState;
 	LinphoneEnums::CallState mTransferState;

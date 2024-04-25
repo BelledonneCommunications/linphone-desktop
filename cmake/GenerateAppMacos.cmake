@@ -113,6 +113,9 @@ foreach(_FILE IN LISTS ${_BINARIES})
 		endif()
 	endif()
 endforeach()
+execute_process(COMMAND codesign --force --deep --sign - "${MAIN_INSTALL_DIR}/${LINPHONEAPP_EXENAME}.app")#If not code signed, app can crash because of APPLE on "Code Signature Invalid".
+
+
 #[[
 if(NOT ENABLE_FAT_BINARY)
 	# Generate XCFrameworks

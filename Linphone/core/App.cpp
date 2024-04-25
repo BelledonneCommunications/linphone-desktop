@@ -57,18 +57,23 @@
 #include "core/participant/ParticipantProxy.hpp"
 #include "core/phone-number/PhoneNumber.hpp"
 #include "core/phone-number/PhoneNumberProxy.hpp"
+#include "core/screen/ScreenList.hpp"
+#include "core/screen/ScreenProxy.hpp"
 #include "core/search/MagicSearchProxy.hpp"
 #include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "core/timezone/TimeZone.hpp"
 #include "core/timezone/TimeZoneProxy.hpp"
 #include "core/variant/VariantList.hpp"
+#include "core/videoSource/VideoSourceDescriptorGui.hpp"
 #include "model/object/VariantObject.hpp"
 #include "tool/Constants.hpp"
 #include "tool/EnumsToString.hpp"
 #include "tool/Utils.hpp"
+#include "tool/native/DesktopTools.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/ImageProvider.hpp"
+#include "tool/providers/ScreenProvider.hpp"
 #include "tool/thread/Thread.hpp"
 
 DEFINE_ABSTRACT_OBJECT(App)
@@ -158,6 +163,9 @@ void App::init() {
 			    initCppInterfaces();
 			    mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
 			    mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
+			    mEngine->addImageProvider(ScreenProvider::ProviderId, new ScreenProvider());
+			    mEngine->addImageProvider(WindowProvider::ProviderId, new WindowProvider());
+			    mEngine->addImageProvider(WindowIconProvider::ProviderId, new WindowIconProvider());
 
 			    // Enable notifications.
 			    mNotifier = new Notifier(mEngine);
@@ -253,6 +261,13 @@ void App::initCppInterfaces() {
 
 	qmlRegisterType<ParticipantDeviceGui>(Constants::MainQmlUri, 1, 0, "ParticipantDeviceGui");
 	qmlRegisterType<ParticipantDeviceProxy>(Constants::MainQmlUri, 1, 0, "ParticipantDeviceProxy");
+
+	qmlRegisterUncreatableType<ScreenList>(Constants::MainQmlUri, 1, 0, "ScreenList", QLatin1String("Uncreatable"));
+	qmlRegisterType<ScreenProxy>(Constants::MainQmlUri, 1, 0, "ScreenProxy");
+
+	qmlRegisterUncreatableType<VideoSourceDescriptorCore>(Constants::MainQmlUri, 1, 0, "VideoSourceDescriptorCore",
+	                                                      QLatin1String("Uncreatable"));
+	qmlRegisterType<VideoSourceDescriptorGui>(Constants::MainQmlUri, 1, 0, "VideoSourceDescriptorGui");
 
 	LinphoneEnums::registerMetaTypes();
 }
