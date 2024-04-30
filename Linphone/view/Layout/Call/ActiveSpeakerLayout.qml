@@ -21,11 +21,7 @@ Item{
 			onCountChanged: console.log("Device count changed : " +count)
 			Component.onCompleted: console.log("Loaded : " +allDevices)
 	}
-	onCallChanged: {
-		waitingTime.seconds = 0
-		waitingTimer.restart()
-		console.log("call changed", call, waitingTime.seconds)
-	}
+	onCallStateChanged: if (callState === LinphoneEnums.CallState.End || callState === LinphoneEnums.CallState.Released) preview.visible = false
 	RowLayout{
 		anchors.fill: parent
 		anchors.rightMargin: 10 * DefaultStyle.dp
@@ -42,46 +38,6 @@ Item{
 			videoEnabled: (participantDevice && participantDevice.core.videoEnabled) || (!participantDevice && call && call.core.remoteVideoEnabled)
 			qmlName: 'AS'
 			displayPresence: false
-	
-			Timer {
-				id: waitingTimer
-				interval: 1000
-				repeat: true
-				onTriggered: waitingTime.seconds += 1
-			}
-			ColumnLayout {
-				id: waitingConnection
-				anchors.horizontalCenter: parent.horizontalCenter
-				anchors.top: parent.top
-				anchors.topMargin: 30 * DefaultStyle.dp
-				spacing: 0
-				visible: mainItem.callState === LinphoneEnums.CallState.OutgoingInit
-						|| mainItem.callState === LinphoneEnums.CallState.OutgoingProgress
-						|| mainItem.callState === LinphoneEnums.CallState.OutgoingRinging
-						|| mainItem.callState === LinphoneEnums.CallState.OutgoingEarlyMedia
-						|| mainItem.callState === LinphoneEnums.CallState.IncomingReceived
-				BusyIndicator {
-					indicatorColor: DefaultStyle.main2_100
-					Layout.alignment: Qt.AlignHCenter
-					indicatorHeight: 30 * DefaultStyle.dp
-					indicatorWidth: 30 * DefaultStyle.dp
-				}
-				Text {
-					id: waitingTime
-					property int seconds
-					text: UtilsCpp.formatElapsedTime(seconds)
-					color: DefaultStyle.grey_0
-					Layout.alignment: Qt.AlignHCenter
-					horizontalAlignment: Text.AlignHCenter
-					font {
-						pixelSize: 30 * DefaultStyle.dp
-						weight: 300 * DefaultStyle.dp
-					}
-					Component.onCompleted: {
-						waitingTimer.restart()
-					}
-				}
-			}
 		}
 		ListView{
 			Layout.fillHeight: true
@@ -116,7 +72,7 @@ Item{
 		id: preview
 		qmlName: 'P'
 		previewEnabled: true
-		visible: mainItem.call && allDevices.count <= 2 && !waitingConnection.visible
+		visible: mainItem.call && allDevices.count <= 2
 		onVisibleChanged: console.log(visible + " : " +allDevices.count)
 		height: 180 * DefaultStyle.dp
 		width: 300 * DefaultStyle.dp

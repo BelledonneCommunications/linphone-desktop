@@ -71,6 +71,11 @@ void ConferenceModel::addParticipant(const std::shared_ptr<linphone::Address> &a
 	mMonitor->addParticipant(address);
 }
 
+int ConferenceModel::getParticipantDeviceCount() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return mMonitor->getParticipantDeviceList().size();
+}
+
 void ConferenceModel::setMicrophoneMuted(bool isMuted) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setMicrophoneMuted(isMuted);

@@ -58,6 +58,18 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 		    auto device = ParticipantDeviceCore::create(participantDevice);
 		    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeaker(device); });
 	    });
+	mConferenceModelConnection->makeConnectToModel(
+	    &ConferenceModel::participantDeviceAdded,
+	    [this](const std::shared_ptr<linphone::ParticipantDevice> &participantDevice) {
+		    int count = mConferenceModel->getParticipantDeviceCount();
+		    mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
+	    });
+	mConferenceModelConnection->makeConnectToModel(
+	    &ConferenceModel::participantDeviceRemoved,
+	    [this](const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
+		    int count = mConferenceModel->getParticipantDeviceCount();
+		    mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
+	    });
 }
 
 bool ConferenceCore::updateLocalParticipant() { // true if changed
@@ -75,15 +87,22 @@ Q_INVOKABLE qint64 ConferenceCore::getElapsedSeconds() const {
 	return 0;
 }
 
+void ConferenceCore::setParticipantDeviceCount(int count) {
+	if (mParticipantDeviceCount != count) {
+		mParticipantDeviceCount = count;
+		emit participantDeviceCountChanged();
+	}
+}
+
 int ConferenceCore::getParticipantDeviceCount() const {
-	return mParticipantDeviceCount + 1;
+	return mParticipantDeviceCount;
 }
 
 void ConferenceCore::setIsReady(bool state) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	if (mIsReady != state) {
 		mIsReady = state;
-		isReadyChanged();
+		emit isReadyChanged();
 	}
 }
 

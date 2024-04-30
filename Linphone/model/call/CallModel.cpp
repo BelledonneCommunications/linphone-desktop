@@ -316,6 +316,7 @@ void CallModel::updateConferenceVideoLayout() {
 	//	auto settings = CoreManager::getInstance()->getSettingsModel();
 	auto newLayout = LinphoneEnums::fromLinphone(callParams->getConferenceVideoLayout());
 	if (!callParams->videoEnabled()) newLayout = LinphoneEnums::ConferenceLayout::AudioOnly;
+	if (!mConference) newLayout = LinphoneEnums::ConferenceLayout::ActiveSpeaker;
 	if (mConferenceVideoLayout != newLayout) { // && !getPausedByUser()) { // Only update if not in pause.
 		                                       //		if (mMonitor->getConference()) {
 		//			if (callParams->getConferenceVideoLayout() == linphone::Conference::Layout::Grid)

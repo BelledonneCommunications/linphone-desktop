@@ -2,6 +2,7 @@
 list(APPEND _LINPHONEAPP_QML_FILES
 	view/App/Main.qml
 	view/App/CallsWindow.qml
+	view/App/AppWindow.qml
 	view/App/Layout/LoginLayout.qml
 	view/App/Layout/MainLayout.qml
 	

@@ -55,6 +55,8 @@ public:
 	void removeParticipant(const std::shared_ptr<linphone::Address> &address);
 	void addParticipant(const std::shared_ptr<linphone::Address> &address);
 
+	int getParticipantDeviceCount() const;
+
 signals:
 	void microphoneMutedChanged(bool isMuted);
 	void speakerMutedChanged(bool isMuted);

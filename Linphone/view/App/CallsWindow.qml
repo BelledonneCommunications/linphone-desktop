@@ -7,7 +7,7 @@ import EnumsToStringCpp 1.0
 import UtilsCpp 1.0
 import SettingsCpp 1.0
 
-Window {
+AppWindow {
 	id: mainWindow
 	width: 1512 * DefaultStyle.dp
 	height: 982 * DefaultStyle.dp
@@ -38,33 +38,9 @@ Window {
 		}
 	}
 
-	Component {
-		id: popupComp
-		InformationPopup{}
-	}
-
-	function showInformationPopup(title, description, isSuccess) {
-		var infoPopup = popupComp.createObject(popupLayout, {"title": title, "description": description, "isSuccess": isSuccess})
-		infoPopup.index = popupLayout.popupList.length
-		popupLayout.popupList.push(infoPopup)
-		infoPopup.open()
-	}
-
-	ColumnLayout {
-		id: popupLayout
-		anchors.fill: parent
-		Layout.alignment: Qt.AlignBottom
-		property int nextY: mainWindow.height
-		property list<Popup> popupList
-		property int popupCount: popupList.length
-		spacing: 15 * DefaultStyle.dp
-		onPopupCountChanged: {
-			nextY = mainWindow.height
-			for(var i = 0; i < popupCount; ++i) {
-				popupList[i].y = nextY - popupList[i].height
-				nextY = nextY - popupList[i].height - 15 * DefaultStyle.dp
-			}
-		}
+	function shareInvitation() {
+		UtilsCpp.copyToClipboard(conference.core.uri)
+		showInformationPopup(qsTr("Copié"), qsTr("Le lien de la réunion a été copié dans le presse-papier"), true)
 	}
 
 	function changeLayout(layoutIndex) {
@@ -141,10 +117,13 @@ Window {
 	function endCall(callToFinish) {
 		if (callToFinish) callToFinish.core.lTerminate()
 	}
-	function callEnded(){
+	function callEnded(call){
 		if (!callsModel.haveCall) {
-			bottomButtonsLayout.setButtonsEnabled(false)
-			autoCloseWindow.restart()
+			if (call.core.conference) UtilsCpp.closeCallsWindow()
+			else {
+				bottomButtonsLayout.setButtonsEnabled(false)
+				autoCloseWindow.restart()
+			}
 		} else {
 			mainWindow.call = callsModel.currentCall
 		}
@@ -707,8 +686,7 @@ Window {
 												}
 											}
 											onClicked: {
-												UtilsCpp.copyToClipboard(mainWindow.conference.core.uri)
-												UtilsCpp.showInformationPopup(qsTr("Copié"), qsTr("Le lien de la réunion a été copié dans le presse-papier"), true, mainWindow)
+												mainItem.shareInvitation()
 											}
 										}
 									}
@@ -741,6 +719,8 @@ Window {
 							id: addParticipantComp
 							AddParticipantsLayout {
 								id: addParticipantLayout
+								searchBarColor: DefaultStyle.grey_0
+								searchBarBorderColor: DefaultStyle.grey_200
 								onSelectedParticipantsCountChanged: {
 									if (participantsStack.Control.StackView.status === Control.StackView.Active && Control.StackView.visible) {
 										rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné").arg(selectedParticipants.length).arg(selectedParticipants.length > 1 ? "s" : "")
@@ -754,13 +734,6 @@ Window {
 											rightPanel.headerTitleText = qsTr("Ajouter des participants")
 											rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné%2").arg(addParticipantLayout.selectedParticipants.length).arg(addParticipantLayout.selectedParticipants.length > 1 ? "s" : "")
 										}
-									}
-									onParticipantAdded: {
-										addParticipantLayout.clearSelectedParticipants()
-									}
-									onValidateRequested: {
-										conferenceInfoGui.core.resetParticipants(contactList.selectedContacts)
-										returnRequested()
 									}
 								}
 							}
@@ -799,6 +772,7 @@ Window {
 						anchors.topMargin: 10 * DefaultStyle.dp
 						call: mainWindow.call
 						callTerminatedByUser: mainWindow.callTerminatedByUser
+						onShareInvitationRequested: mainWindow.shareInvitation()
 					}
 				}
 			}

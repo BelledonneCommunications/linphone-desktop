@@ -236,12 +236,13 @@ RightPanelLayout {
 					}
 					RowLayout {
 						FormItemLayout {
+							id: phoneNumberInput
 							label: qsTr("Phone")
 							contentItem: TextField {
 								backgroundColor: DefaultStyle.grey_0
 								onEditingFinished: {
-									if (text.length != 0) mainItem.contact.core.appendPhoneNumber(label, text)
-									setText("")
+									if (text.length != 0) mainItem.contact.core.appendPhoneNumber(phoneNumberInput.label, text)
+									text = ""
 								}
 							}
 						}

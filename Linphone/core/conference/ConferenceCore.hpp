@@ -57,6 +57,8 @@ public:
 	QDateTime getStartDate() const;
 	Q_INVOKABLE qint64 getElapsedSeconds() const;
 	int getParticipantDeviceCount() const;
+	void setParticipantDeviceCount(int count);
+
 	ParticipantDeviceCore *getActiveSpeaker() const;
 	ParticipantDeviceGui *getActiveSpeakerGui() const;
 	ParticipantGui *getMeGui() const;

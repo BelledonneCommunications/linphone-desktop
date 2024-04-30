@@ -14,6 +14,8 @@ ColumnLayout {
 	property ConferenceInfoGui conferenceInfoGui
 	property bool nameGroupCall: false
 	readonly property string groupName: groupCallName.text
+	property color searchBarColor: DefaultStyle.grey_100
+	property color searchBarBorderColor: "transparent"
 
 	function clearSelectedParticipants() {
 		// TODO
@@ -47,7 +49,6 @@ ColumnLayout {
 	ListView {
 		id: participantList
 		Layout.fillWidth: true
-		Layout.topMargin: 15 * DefaultStyle.dp
 		Layout.preferredHeight: contentHeight
 		Layout.maximumHeight: mainItem.height / 3
 		width: mainItem.width
@@ -99,12 +100,14 @@ ColumnLayout {
 	SearchBar {
 		id: searchbar
 		Layout.fillWidth: true
-		Layout.topMargin: 21 * DefaultStyle.dp
+		Layout.topMargin: 6 * DefaultStyle.dp
 		Layout.rightMargin: 28 * DefaultStyle.dp
 		placeholderText: mainItem.placeHolderText
+		color: mainItem.searchBarColor
+		borderColor: mainItem.searchBarColor
 	}
 	Text {
-		Layout.topMargin: 21 * DefaultStyle.dp
+		Layout.topMargin: 6 * DefaultStyle.dp
 		text: qsTr("Contacts")
 		font {
 			pixelSize: 16 * DefaultStyle.dp

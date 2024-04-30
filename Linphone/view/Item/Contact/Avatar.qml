@@ -28,7 +28,7 @@ StackView {
 								|| (contact && contact.core.pictureUri)
 								|| computedAvatarUri.length != 0
 	property string computedAvatarUri: UtilsCpp.findAvatarByAddress(address)
-								
+
 	onHaveAvatarChanged: replace(haveAvatar ? avatar : initials, StackView.Immediate)
 
 	property bool secured: false

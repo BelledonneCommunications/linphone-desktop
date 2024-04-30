@@ -16,6 +16,8 @@ Item {
 	width: 200
 	property bool previewEnabled
 	property CallGui call: null
+	property ConferenceGui conference: call && call.core.conference || null
+	property var callState: call && call.core.state || undefined
 	property AccountGui account: null
 	property ParticipantDeviceGui participantDevice: null
 	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking || false
@@ -38,7 +40,10 @@ Item {
 	property bool displayAll : !!mainItem.call
 	property bool bigBottomAddress: displayAll
 	property bool mutedStatus: participantDevice ? participantDevice.core.isMuted : false
-
+	onCallChanged: {
+		waitingTime.seconds = 0
+		waitingTimer.restart()
+	}
 	Rectangle {
 		id: background
 		color: noCameraLayout.visible ? mainItem.color : 'transparent'
@@ -47,19 +52,60 @@ Item {
 		border.color: DefaultStyle.main2_200
 		border.width: mainItem.displayBorder ? 3 * DefaultStyle.dp : 0
 		property int minSize: Math.min(height, width)
-		ColumnLayout {
+		Item {
 			id: noCameraLayout
 			anchors.fill: parent
-			spacing: 0
 			visible: !cameraLoader.active || cameraLoader.status != Loader.Ready || !cameraLoader.item.isReady
+			ColumnLayout {
+				anchors.top: parent.top
+				anchors.topMargin: 81 * DefaultStyle.dp
+				anchors.horizontalCenter: parent.horizontalCenter
+				// Layout.alignment: Qt.AlignHCenter |Qt.AlignTop
+				spacing: 0
+				visible: !mainItem.account && (mainItem.callState === LinphoneEnums.CallState.OutgoingInit
+						|| mainItem.callState === LinphoneEnums.CallState.OutgoingProgress
+						|| mainItem.callState === LinphoneEnums.CallState.OutgoingRinging
+						|| mainItem.callState === LinphoneEnums.CallState.OutgoingEarlyMedia
+						|| mainItem.callState === LinphoneEnums.CallState.IncomingReceived)
+				BusyIndicator {
+					indicatorColor: DefaultStyle.main2_100
+					Layout.alignment: Qt.AlignHCenter
+					indicatorHeight: 27 * DefaultStyle.dp
+					indicatorWidth: 27 * DefaultStyle.dp
+				}
+				Timer {
+					id: waitingTimer
+					interval: 1000
+					repeat: true
+					onTriggered: waitingTime.seconds += 1
+				}
+				Text {
+					id: waitingTime
+					property int seconds
+					text: UtilsCpp.formatElapsedTime(seconds)
+					color: DefaultStyle.grey_0
+					Layout.alignment: Qt.AlignHCenter
+					horizontalAlignment: Text.AlignHCenter
+					Layout.topMargin: 25 * DefaultStyle.dp
+					font {
+						pixelSize: 30 * DefaultStyle.dp
+						weight: 300 * DefaultStyle.dp
+					}
+					Component.onCompleted: {
+						waitingTimer.restart()
+					}
+				}
+			}
 			Item{
-				Layout.alignment: Qt.AlignHCenter
-				// minSize = 372 => avatar = 142
-				Layout.preferredHeight: background.minSize * 142 / 372
-				Layout.preferredWidth: height
+				anchors.centerIn: parent
+				height: mainItem.conference 
+					? background.minSize * 142 / 372
+					: 120 * DefaultStyle.dp
+				width: height
+				id: centerItem
 				Avatar{
 					id: avatar
-					anchors.fill: parent	
+					anchors.fill: parent
 					visible: !joiningView.visible
 					account: mainItem.account
 					call: !mainItem.previewEnabled ? mainItem.call : null
@@ -67,15 +113,11 @@ Item {
 				}
 				ColumnLayout{
 					id: joiningView
-					anchors.fill: parent
+					anchors.centerIn: parent
 					spacing: 0
 					visible: mainItem.participantDevice && (mainItem.participantDevice.core.state == LinphoneEnums.ParticipantDeviceState.Joining || mainItem.participantDevice.core.state == LinphoneEnums.ParticipantDeviceState.Alerting) || false
-					Item{
-						Layout.fillHeight: true
-						Layout.fillWidth: true
-					}
 					BusyIndicator {
-						Layout.preferredHeight: 27 * DefaultStyle.dp
+						Layout.preferredHeight: 42 * DefaultStyle.dp
 						indicatorColor: DefaultStyle.main2_100
 						Layout.alignment: Qt.AlignHCenter
 						indicatorHeight: 42 * DefaultStyle.dp
@@ -93,34 +135,34 @@ Item {
 							weight: 500 * DefaultStyle.dp
 						}
 					}
-					Item{
-						Layout.fillHeight: true
-						Layout.fillWidth: true
+				}
+			}
+			ColumnLayout {
+				spacing: 0
+				visible: mainItem.displayAll
+				anchors.horizontalCenter: parent.horizontalCenter
+				anchors.top: centerItem.bottom
+				anchors.topMargin: 21 * DefaultStyle.dp
+				Text {
+					Layout.fillWidth: true
+					horizontalAlignment: Text.AlignHCenter
+					text: mainItem.peerAddress
+					color: DefaultStyle.grey_0
+					font {
+						pixelSize: 22 * DefaultStyle.dp
+						weight: 300 * DefaultStyle.dp
+						capitalization: Font.Capitalize
 					}
 				}
-			}
-			Text {
-				Layout.fillWidth: true
-				Layout.topMargin: 15 * DefaultStyle.dp
-				horizontalAlignment: Text.AlignHCenter
-				visible: mainItem.displayAll
-				text: mainItem.peerAddress
-				color: DefaultStyle.grey_0
-				font {
-					pixelSize: 22 * DefaultStyle.dp
-					weight: 300 * DefaultStyle.dp
-					capitalization: Font.Capitalize
-				}
-			}
-			Text {
-				Layout.fillWidth: true
-				horizontalAlignment: Text.AlignHCenter
-				visible: mainItem.displayAll
-				text: mainItem.call && mainItem.call.core.peerAddress
-				color: DefaultStyle.grey_0
-				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 300 * DefaultStyle.dp
+				Text {
+					Layout.fillWidth: true
+					horizontalAlignment: Text.AlignHCenter
+					text: mainItem.call && mainItem.call.core.peerAddress
+					color: DefaultStyle.grey_0
+					font {
+						pixelSize: 14 * DefaultStyle.dp
+						weight: 300 * DefaultStyle.dp
+					}
 				}
 			}
 		}
@@ -134,7 +176,7 @@ Item {
 				triggeredOnStart: true
 				onTriggered: {cameraLoader.reset = !cameraLoader.reset}
 			}
-			active: mainItem.visible && mainItem.videoEnabled && !cameraLoader.reset
+			active: mainItem.visible && mainItem.callState != LinphoneEnums.CallState.End && mainItem.callState != LinphoneEnums.CallState.Released && mainItem.videoEnabled && !cameraLoader.reset
 			onActiveChanged: console.log("("+mainItem.qmlName+") Camera active " + active +", visible="+mainItem.visible +", videoEnabled="+mainItem.videoEnabled +", reset="+cameraLoader.reset)
 			sourceComponent: cameraComponent
 		}
