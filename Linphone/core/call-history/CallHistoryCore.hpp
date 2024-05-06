@@ -33,8 +33,10 @@ class CallHistoryModel;
 class CallHistoryCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
+	Q_PROPERTY(QString displayName MEMBER mDisplayName CONSTANT)
 	Q_PROPERTY(QString remoteAddress MEMBER mRemoteAddress CONSTANT)
 	Q_PROPERTY(bool isOutgoing MEMBER mIsOutgoing CONSTANT)
+	Q_PROPERTY(bool isConference MEMBER mIsConference CONSTANT)
 	Q_PROPERTY(QDateTime date MEMBER mDate CONSTANT)
 	Q_PROPERTY(LinphoneEnums::CallStatus status MEMBER mStatus CONSTANT)
 	Q_PROPERTY(QString duration READ getDuration WRITE setDuration NOTIFY durationChanged)
@@ -52,8 +54,10 @@ public:
 	Q_INVOKABLE void remove();
 
 	QString mRemoteAddress;
+	QString mDisplayName;
 	QDateTime mDate;
 	bool mIsOutgoing;
+	bool mIsConference;
 	LinphoneEnums::CallStatus mStatus;
 
 signals:

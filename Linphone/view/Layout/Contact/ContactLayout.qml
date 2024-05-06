@@ -13,8 +13,6 @@ ColumnLayout {
 	property string contactAddress: contact && contact.core.defaultAddress || ""
 	property string contactName: contact && contact.core.displayName || ""
 
-	property bool addressVisible: true
-
 	property alias buttonContent: rightButton.data
 	property alias detailContent: detailControl.data
 
@@ -50,7 +48,7 @@ ColumnLayout {
 	}
 
 	Item {
-		Layout.preferredWidth: mainItem.implicitWidth
+		Layout.preferredWidth: 360 * DefaultStyle.dp
 		Layout.preferredHeight: detailAvatar.height
 		// Layout.fillWidth: true
 		Layout.alignment: Qt.AlignHCenter
@@ -73,11 +71,15 @@ ColumnLayout {
 	}
 	ColumnLayout {
 		Layout.alignment: Qt.AlignHCenter
-		// Layout.fillWidth: true
+		Layout.preferredWidth: 360 * DefaultStyle.dp
 		Text {
 			Layout.alignment: Qt.AlignHCenter
+			Layout.fillWidth: true
 			horizontalAlignment: Text.AlignHCenter
+			wrapMode: Text.WrapAnywhere
+			elide: Text.ElideRight
 			text: mainItem.contactName
+			maximumLineCount: 1
 			font {
 				pixelSize: 14 * DefaultStyle.dp
 				weight: 400 * DefaultStyle.dp
@@ -85,11 +87,10 @@ ColumnLayout {
 			}
 		}
 		Text {
-			id: contactAddress
 			property var mode : contact ? contact.core.consolidatedPresence : -1
 			Layout.alignment: Qt.AlignHCenter
 			horizontalAlignment: Text.AlignHCenter
-			visible: mainItem.addressVisible
+			visible: mainItem.contact
 			text: mode === LinphoneEnums.ConsolidatedPresence.Online
 				? qsTr("En ligne")
 				: mode === LinphoneEnums.ConsolidatedPresence.Busy
@@ -126,8 +127,7 @@ ColumnLayout {
 			button.icon.source: AppIcons.phone
 			label: qsTr("Appel")
 			button.onClicked: {
- 	  			var addr = UtilsCpp.generateLinphoneSipAddress(mainItem.contactAddress)
-				UtilsCpp.createCall(addr)
+				UtilsCpp.createCall(mainItem.contactAddress)
 			}
 		}
 		LabelButton {
@@ -150,8 +150,7 @@ ColumnLayout {
 			button.icon.source: AppIcons.videoCamera
 			label: qsTr("Appel Video")
 			button.onClicked: {
-				var addr = UtilsCpp.generateLinphoneSipAddress(mainItem.contactAddress)
-	  			UtilsCpp.createCall(addr, {'localVideoEnabled':true})
+	  			UtilsCpp.createCall(mainItem.contactAddress, {'localVideoEnabled':true})
 			}
 		}
 	}

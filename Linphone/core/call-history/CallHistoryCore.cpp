@@ -46,12 +46,21 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 
 	auto addr = callLog->getRemoteAddress()->clone();
 	addr->clean();
-	mRemoteAddress = Utils::coreStringToAppString(addr->asStringUriOnly());
 	// mRemoteAddress->clean();
 	mStatus = LinphoneEnums::fromLinphone(callLog->getStatus());
 	mDate = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
 	mIsOutgoing = callLog->getDir() == linphone::Call::Dir::Outgoing;
 	mDuration = QString::number(callLog->getDuration());
+	mIsConference = callLog->wasConference();
+	if (mIsConference) {
+		auto confinfo = callLog->getConferenceInfo();
+		confinfo->getSubject();
+		mRemoteAddress = Utils::coreStringToAppString(confinfo->getUri()->asStringUriOnly());
+		mDisplayName = Utils::coreStringToAppString(confinfo->getSubject());
+	} else {
+		mRemoteAddress = Utils::coreStringToAppString(addr->asStringUriOnly());
+		mDisplayName = ToolModel::getDisplayName(Utils::coreStringToAppString(addr->asStringUriOnly()));
+	}
 }
 
 CallHistoryCore::~CallHistoryCore() {

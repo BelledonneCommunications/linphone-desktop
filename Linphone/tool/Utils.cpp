@@ -24,6 +24,7 @@
 #include "core/call/CallGui.hpp"
 #include "core/conference/ConferenceInfoCore.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
+#include "core/friend/FriendGui.hpp"
 #include "core/path/Paths.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
@@ -296,6 +297,22 @@ QString Utils::findAvatarByAddress(const QString &address) {
 	});
 
 	return avatar;
+}
+
+VariantObject *Utils::findFriendByAddress(const QString &address) {
+	VariantObject *data = new VariantObject();
+	if (!data) return nullptr;
+	data->makeRequest([address]() {
+		auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
+		if (!defaultFriendList) return QVariant();
+		auto linphoneAddr = ToolModel::interpretUrl(address);
+		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+		if (!linFriend) return QVariant();
+		auto friendCore = FriendCore::create(linFriend);
+		return QVariant::fromValue(new FriendGui(friendCore));
+	});
+	data->requestValue();
+	return data;
 }
 
 QString Utils::generateSavedFilename(const QString &from, const QString &to) {

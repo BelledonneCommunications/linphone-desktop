@@ -122,7 +122,6 @@ AbstractMainPage {
 				Control.ScrollView {
 					id: listLayout
 					anchors.fill: parent
-					anchors.topMargin: 25 * DefaultStyle.dp
 					contentWidth: width
 					contentHeight: content.height
 					clip: true

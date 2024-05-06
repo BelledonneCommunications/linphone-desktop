@@ -39,6 +39,7 @@ AbstractMainPage {
 		else rightPanelStackView.replace(emptySelection, Control.StackView.Immediate)
 	}
 	rightPanelStackView.initialItem: emptySelection
+	rightPanelStackView.width: 360 * DefaultStyle.dp
 
 	onNoItemButtonPressed: goToNewCall()
 
@@ -46,6 +47,10 @@ AbstractMainPage {
 
 	function goToNewCall() {
 		listStackView.push(newCallItem)
+	}
+
+	function createCall(addr) {
+		UtilsCpp.createCall(addr)
 	}
 
 	Dialog {
@@ -92,7 +97,7 @@ AbstractMainPage {
 				width: parent.width
 				height: parent.height
 				onLaunchCall: {
-					UtilsCpp.createCall(searchBar.text + "@sip.linphone.org")
+					mainItem.createCall(UtilsCpp.generateLinphoneSipAddress(searchBar.text))
 					// TODO : auto completion instead of sip linphone
 				}
 			}
@@ -248,8 +253,7 @@ AbstractMainPage {
 												id: friendAddress
 												Layout.fillWidth: true
 												maximumLineCount: 1
-												property var remoteAddress: modelData ? UtilsCpp.getDisplayName(modelData.core.remoteAddress) : null
-												text: remoteAddress ? remoteAddress.value : ""
+												text: modelData.core.displayName
 												font {
 													pixelSize: 14 * DefaultStyle.dp
 													weight: 400 * DefaultStyle.dp
@@ -311,8 +315,7 @@ AbstractMainPage {
 											icon.width: 24 * DefaultStyle.dp
 											icon.height: 24 * DefaultStyle.dp
 											onClicked: {
-												var addr = UtilsCpp.generateLinphoneSipAddress(modelData.core.remoteAddress)
-												UtilsCpp.createCall(addr)
+												mainItem.createCall(modelData.core.remoteAddress)
 											}
 										}
 									}
@@ -405,7 +408,7 @@ AbstractMainPage {
 			searchBarColor: DefaultStyle.grey_100
 			
 			onCallButtonPressed: (address) => {
-				UtilsCpp.createCall(UtilsCpp.generateLinphoneSipAddress(address))
+				mainItem.createCall(address)
 				// var window = UtilsCpp.getCallsWindow()
 			}
 			onGroupCallCreationRequested: {
@@ -508,9 +511,10 @@ AbstractMainPage {
 		ContactLayout {
 			id: contactDetail
 			visible: mainItem.selectedRowHistoryGui != undefined
-			property var remoteName: mainItem.selectedRowHistoryGui ? UtilsCpp.getDisplayName(mainItem.selectedRowHistoryGui.core.remoteAddress) : null
+			property var contactObj: UtilsCpp.findFriendByAddress(contactAddress)
+			contact: contactObj ? contactObj.value : null 
 			contactAddress: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
-			contactName: remoteName ? remoteName.value : ""
+			contactName: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.displayName : ""
 			anchors.top: rightPanelStackView.top
 			anchors.bottom: rightPanelStackView.bottom
 			anchors.topMargin: 45 * DefaultStyle.dp

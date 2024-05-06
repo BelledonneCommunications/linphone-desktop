@@ -103,6 +103,7 @@ public:
 	Q_INVOKABLE static QDateTime addYears(QDateTime date, int years);
 	Q_INVOKABLE static QString generateLinphoneSipAddress(const QString &uri);
 	Q_INVOKABLE static QString findAvatarByAddress(const QString &address);
+	Q_INVOKABLE static VariantObject *findFriendByAddress(const QString &address);
 	static QString generateSavedFilename(const QString &from, const QString &to);
 	Q_INVOKABLE static bool isMe(const QString &address);
 	Q_INVOKABLE static bool isLocal(const QString &address);
