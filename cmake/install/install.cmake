@@ -96,6 +96,7 @@ if(APPLE)
 	if (NOT DEPLOYQT_PROGRAM)
 		message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
 	endif()
+	#Packaging is done by CPack in the cleanCpack.cmake file. But on mac, we need Qt files in .app
 	if(NOT ENABLE_APP_PACKAGING)
 		install(CODE "MESSAGE(\"MacDeploy install: execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=2 -always-overwrite) \")")
 		install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=2 -always-overwrite)")
@@ -114,7 +115,38 @@ elseif(WIN32)
 		NAMES msys2_shell.cmd
 		HINTS "C:/msys64/"
 	)
+	find_program(DEPLOYQT_PROGRAM windeployqt HINTS "${_qt_bin_dir}")
+	if (NOT DEPLOYQT_PROGRAM)
+		message(FATAL_ERROR "Could not find the windeployqt program. Make sure it is in the PATH.")
+	endif ()
 endif()
+
+#Windeployqt hack for CPack. WindeployQt cannot be used only with a simple 'install(CODE "execute_process' or CPack will not have all required files.
+#Call it from target folder
+function(deployqt_hack target)
+	if(WIN32)
+		find_program(DEPLOYQT_PROGRAM windeployqt HINTS "${_qt_bin_dir}")
+		if (NOT DEPLOYQT_PROGRAM)
+			message(FATAL_ERROR "Could not find the windeployqt program. Make sure it is in the PATH.")
+		endif ()
+		add_custom_command(TARGET ${target} POST_BUILD
+							COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/winqt/"
+							COMMAND "${CMAKE_COMMAND}" -E
+								env PATH="${_qt_bin_dir}" "${DEPLOYQT_PROGRAM}"
+								--qmldir "${LINPHONE_QML_DIR}"
+								--plugindir "${CMAKE_CURRENT_BINARY_DIR}/winqt/plugins"
+								--verbose 0
+								--no-compiler-runtime
+								--dir "${CMAKE_CURRENT_BINARY_DIR}/winqt/"
+								"$<TARGET_FILE:${target}>"
+							COMMENT "Deploying Qt..."
+							WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/.."
+		)
+		install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/winqt/" DESTINATION bin)
+		set(CMAKE_INSTALL_UCRT_LIBRARIES TRUE)
+		include(InstallRequiredSystemLibraries)
+	endif()
+endfunction()
 
 # ==============================================================================
 #                               CPack.
@@ -142,6 +174,9 @@ if(${ENABLE_APP_PACKAGING})
 	set(CPACK_RESOURCE_FILE_LICENSE_PROVIDED ${ENABLE_APP_LICENSE})
 	set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/Linphone/data/icon.ico")
 	set(PERFORM_SIGNING 0)
+	
+	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/cleanCpack.cmake.in" "${CMAKE_BINARY_DIR}/cmake/install/cleanCpack.cmake" @ONLY)
+	set(CPACK_PRE_BUILD_SCRIPTS  "${CMAKE_BINARY_DIR}/cmake/install/cleanCPack.cmake")
 
 	if(APPLE)
 ##############################################
@@ -154,9 +189,6 @@ if(${ENABLE_APP_PACKAGING})
 		set(CPACK_BINARY_DRAGNDROP ON)
 		set(CPACK_BUNDLE_APPLE_CERT_APP ${LINPHONE_BUILDER_SIGNING_IDENTITY})
 		set(PACKAGE_EXT "dmg")
-
-		configure_file("${CMAKE_SOURCE_DIR}/cmake/install/macos/cleanCpack.cmake.in" "${CMAKE_BINARY_DIR}/cmake/install/macos/cleanCpack.cmake" @ONLY)
-		set(CPACK_PRE_BUILD_SCRIPTS  "${CMAKE_BINARY_DIR}/cmake/install/macos/cleanCPack.cmake")
 
 		message(STATUS "Set DragNDrop CPack generator in OUTPUT/Packages")
 	elseif(WIN32)
