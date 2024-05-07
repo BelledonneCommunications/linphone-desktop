@@ -139,29 +139,32 @@ ubuntu2004-makefile-gcc-package:
 # Deploy - Nightly
 #################################################
 
-#ubuntu2004-makefile-gcc-deploy:
-#  stage: deploy
-#  tags: [ "deploy" ]
-#  needs:
-#    - ubuntu2004-makefile-gcc-package
-#  only:
-#     variables:
-#       - $NIGHTLY_MASTER
-#       - $DEPLOY_LINUX
-#  script:
-#    - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
-#    - rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
-#    - rsync -rlv build/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+ubuntu2004-makefile-gcc-deploy:
+ stage: deploy
+ tags: [ "deploy" ]
+ needs:
+   - ubuntu2004-makefile-gcc-package
+ only:
+    variables:
+      - $NIGHTLY_MASTER
+      - $DEPLOY_LINUX
+ script:
+   - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$UPLOAD_ROOT_INTERNAL_PATH/$LINUX_PLATFORM/$APP_FOLDER
+   - |-
+     if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
+       rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+       rsync -rlv build/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+     fi
 
 
-#ubuntu2004-makefile-gcc-plugins-deploy:
-#  stage: deploy
-#  tags: [ "deploy" ]
-#  needs:
-#    - ubuntu2004-makefile-gcc
-#  only:
-#     variables:
-#       - $DEPLOY_PLUGINS
-#  script:
-#    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER/plugins/
+ubuntu2004-makefile-gcc-plugins-deploy:
+ stage: deploy
+ tags: [ "deploy" ]
+ needs:
+   - ubuntu2004-makefile-gcc
+ only:
+    variables:
+      - $DEPLOY_PLUGINS
+ script:
+   - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $DEPLOY_SERVER:$UPLOAD_ROOT_INTERNAL_PATH/$LINUX_PLATFORM/$APP_FOLDER/plugins/
 

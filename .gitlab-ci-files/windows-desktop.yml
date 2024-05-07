@@ -166,28 +166,28 @@ vs2019-win64-package:
 #               DEPLOY
 #################################################
 
-#vs2019-win64-upload:
-#  stage: deploy
-#  tags: [ "windows-powershell"]
-#  rules:
-#    - if: $NIGHTLY_MASTER
-#    - if: $DEPLOY_WINDOWS
-#  needs:
-#    - vs2019-win64-package
-#  script:
-#    - scp -pr build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
-#    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
-#    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
+vs2019-win64-upload:
+ stage: deploy
+ tags: [ "windows-powershell"]
+ rules:
+   - if: $NIGHTLY_MASTER
+   - if: $DEPLOY_WINDOWS
+ needs:
+   - vs2019-win64-package
+ script:
+   - scp -pr build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_INTERNAL_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
+   - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_INTERNAL_PATH}/${WINDOWS_PLATFORM}/ }
+  #  - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
 
-#vs2019-win64-plugins-upload:
-#  stage: deploy
-#  tags: [ "windows"]
-#  rules:
-#    - if: $DEPLOY_PLUGINS
-#  needs:
-#    - vs2019-win64-scheduled-windows
-#  script:
-#    - scp "build-desktop/OUTPUT/plugins/app/*.dll" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%/plugins"
+vs2019-win64-plugins-upload:
+ stage: deploy
+ tags: [ "windows"]
+ rules:
+   - if: $DEPLOY_PLUGINS
+ needs:
+   - vs2019-win64-scheduled-windows
+ script:
+   - scp "build-desktop/OUTPUT/plugins/app/*.dll" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_INTERNAL_DIRECTORY%/plugins"
 
 
 

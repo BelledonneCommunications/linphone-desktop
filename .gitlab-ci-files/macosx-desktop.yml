@@ -138,32 +138,31 @@ macosx-codesigning:
 # Deploy - Nightly
 #################################################
 
-#macosx-makefile-deploy:
-#  stage: deploy
-#  tags: [ "macos-xcode13" ]
-#  needs:
-#    - macosx-codesigning
-#  only:
-#     variables:
-#       - $NIGHTLY_MASTER
-#       - $DEPLOY_MACOSX
-#  script:
-#    - rsync -rlv --ignore-existing build/OUTPUT/linphone-app/macos/Packages/Linphone*.dmg $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER
-#    - |-
-#      if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
-#        rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
-#        rsync -rlv build/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
-#      fi
+macosx-makefile-deploy:
+ stage: deploy
+ tags: [ "macos-xcode13" ]
+ needs:
+   - macosx-codesigning
+ only:
+    variables:
+      - $NIGHTLY_MASTER
+      - $DEPLOY_MACOSX
+ script:
+   - rsync -rlv --ignore-existing build/OUTPUT/linphone-app/macos/Packages/Linphone*.dmg $DEPLOY_SERVER:$UPLOAD_ROOT_INTERNAL_PATH/$MACOSX_PLATFORM/$APP_FOLDER
+   - |-
+     if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
+       rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_INTERNAL_PATH/$MACOSX_PLATFORM
+     fi
 
 
-#macosx-makefile-plugins-deploy:
-#  stage: deploy
-#  tags: [ "macos-xcode13" ]
-#  needs:
-#    - macosx-makefile
-#  only:
-#     variables:
-#       - $DEPLOY_PLUGINS
-#  script:
-#    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.dylib $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER/plugins
+macosx-makefile-plugins-deploy:
+ stage: deploy
+ tags: [ "macos-xcode13" ]
+ needs:
+   - macosx-makefile
+ only:
+    variables:
+      - $DEPLOY_PLUGINS
+ script:
+   - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.dylib $DEPLOY_SERVER:$UPLOAD_ROOT_INTERNAL_PATH/$MACOSX_PLATFORM/$APP_FOLDER/plugins
 
