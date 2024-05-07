@@ -61,6 +61,10 @@ void AccountProxy::resetDefaultAccount() {
 	emit this->defaultAccountChanged(); // Warn the UI
 }
 
+AccountGui *AccountProxy::findAccountByAddress(const QString &address) {
+	return dynamic_cast<AccountList *>(sourceModel())->findAccountByAddress(address);
+}
+
 bool AccountProxy::getHaveAccount() const {
 	return dynamic_cast<AccountList *>(sourceModel())->getHaveAccount();
 }

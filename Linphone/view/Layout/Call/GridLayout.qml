@@ -40,7 +40,7 @@ Mosaic {
 				anchors.fill: parent
 				qmlName: 'G_'+index
 				call: !grid.call.core.isConference ? grid.call : null
-				account: index == 0 ? accountProxy.defaultAccount : null
+				account: index == 0 ? accountProxy.findAccountByAddress(mainItem.localAddress) : null
 				displayAll: false
 				bigBottomAddress: true
 				displayPresence: false

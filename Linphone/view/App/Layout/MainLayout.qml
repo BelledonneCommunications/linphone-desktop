@@ -219,7 +219,7 @@ Item {
 												}
 												Text {
 													id: sipAddr
-													text: UtilsCpp.generateLinphoneSipAddress(magicSearchBar.text)
+													text: magicSearchBar.text
 												}
 											}
 											Item {
@@ -236,6 +236,7 @@ Item {
 												}
 												onClicked: {
 													UtilsCpp.createCall(sipAddr.text)
+													magicSearchBar.clearText()
 												}
 											}
 											Button {
@@ -246,7 +247,10 @@ Item {
 													anchors.fill: parent
 													source: AppIcons.videoCamera
 												}
-												onClicked: UtilsCpp.createCall(sipAddr.text, {'localVideoEnabled':true})
+												onClicked: {
+													UtilsCpp.createCall(sipAddr.text, {'localVideoEnabled':true})
+													magicSearchBar.clearText()
+												}
 											}
 										}
 										Button {
@@ -275,6 +279,7 @@ Item {
 											}
 											onClicked: {
 												mainItem.createContact(magicSearchBar.text, sipAddr.text)
+												magicSearchBar.clearText()
 												listPopup.close()
 											}
 										}

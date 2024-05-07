@@ -99,9 +99,22 @@ void AccountList::setDefaultAccount(QSharedPointer<AccountCore> account) {
 		emit defaultAccountChanged();
 	}
 }
+
+AccountGui *AccountList::findAccountByAddress(const QString &address) {
+	for (auto &item : mList) {
+		if (auto isAccount = item.objectCast<AccountCore>()) {
+			if (isAccount->getIdentityAddress() == address) {
+				return new AccountGui(isAccount);
+			}
+		}
+	}
+	return nullptr;
+}
+
 bool AccountList::getHaveAccount() const {
 	return mHaveAccount;
 }
+
 void AccountList::setHaveAccount(bool haveAccount) {
 	if (mHaveAccount != haveAccount) {
 		mHaveAccount = haveAccount;

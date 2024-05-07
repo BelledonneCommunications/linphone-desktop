@@ -72,12 +72,13 @@ ColumnLayout {
 		Layout.topMargin: 7 * DefaultStyle.dp
 		spacing: 29 * DefaultStyle.dp
 		Button {
+			id: connectionButton
 			leftPadding: 20 * DefaultStyle.dp
 			rightPadding: 20 * DefaultStyle.dp
 			topPadding: 11 * DefaultStyle.dp
 			bottomPadding: 11 * DefaultStyle.dp
 			contentItem: StackLayout {
-				id: connectionButton
+				id: connectionButtonContent
 				currentIndex: 0
 				Text {
 					text: qsTr("Connexion")
@@ -100,15 +101,16 @@ ColumnLayout {
 					target: LoginPageCpp
 					onRegistrationStateChanged: {
 						if (LoginPageCpp.registrationState != LinphoneEnums.RegistrationState.Progress) {
-							connectionButton.currentIndex = 0
+							connectionButtonContent.currentIndex = 0
 						}
 					}
 					onErrorMessageChanged: {
-						connectionButton.currentIndex = 0
+						connectionButtonContent.currentIndex = 0
 					}
 				}
 			}
-			onClicked: {
+
+			function trigger() {
 				username.errorMessage = ""
 				password.errorMessage = ""
 				errorText.text = ""
@@ -121,8 +123,14 @@ ColumnLayout {
 					return
 				}
 				LoginPageCpp.login(usernameEdit.text, passwordEdit.text)
-				connectionButton.currentIndex = 1
+				connectionButtonContent.currentIndex = 1
 			}
+
+			Shortcut {
+				sequences: ["Return", "Enter"]
+				onActivated: connectionButton.trigger()
+			}
+			onPressed: connectionButton.trigger()
 		}
 		Button {
 			background: Item {

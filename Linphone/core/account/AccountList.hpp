@@ -43,6 +43,7 @@ public:
 	AccountGui *getDefaultAccount() const;
 	QSharedPointer<AccountCore> getDefaultAccountCore() const;
 	void setDefaultAccount(QSharedPointer<AccountCore> account);
+	AccountGui *findAccountByAddress(const QString &address);
 
 	bool getHaveAccount() const;
 	void setHaveAccount(bool haveAccount);

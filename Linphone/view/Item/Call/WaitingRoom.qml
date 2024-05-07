@@ -32,7 +32,7 @@ RowLayout {
 				AccountProxy{
 					id: accounts
 				}
-				account: accounts.defaultAccount
+				account: accounts.findAccountByAddress(mainItem.localAddress)
 			}
 			RowLayout {
 				Layout.alignment: Qt.AlignHCenter

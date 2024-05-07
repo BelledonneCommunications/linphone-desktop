@@ -512,7 +512,7 @@ AbstractMainPage {
 			id: contactDetail
 			visible: mainItem.selectedRowHistoryGui != undefined
 			property var contactObj: UtilsCpp.findFriendByAddress(contactAddress)
-			contact: contactObj ? contactObj.value : null 
+			contact: contactObj && contactObj.value || null 
 			contactAddress: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
 			contactName: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.displayName : ""
 			anchors.top: rightPanelStackView.top

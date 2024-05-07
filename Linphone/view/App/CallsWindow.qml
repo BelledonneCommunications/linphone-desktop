@@ -179,6 +179,7 @@ AppWindow {
 	ZrtpTokenAuthenticationDialog {
 		id: zrtpValidation
 		call: mainWindow.call
+		modal: false
 	}
 	Popup {
 		id: waitingPopup
@@ -520,6 +521,10 @@ AppWindow {
 							Layout.fillWidth: true
 							Layout.maximumHeight: rightPanel.height
 							visible: callList.contentHeight > 0
+							leftPadding: 17 * DefaultStyle.dp
+							rightPadding: 17 * DefaultStyle.dp
+							topPadding: 16 * DefaultStyle.dp
+							bottomPadding: 16 * DefaultStyle.dp
 							
 							contentItem: ListView {
 								id: callList
@@ -537,8 +542,6 @@ AppWindow {
 									RowLayout {
 										id: delegateContent
 										anchors.fill: parent
-										anchors.leftMargin: 10 * DefaultStyle.dp
-										anchors.rightMargin: 10 * DefaultStyle.dp
 										spacing: 0
 										Avatar {
 											id: delegateAvatar
@@ -550,6 +553,7 @@ AppWindow {
 											id: delegateName
 											property var remoteAddress: UtilsCpp.getDisplayName(modelData.core.peerAddress)
 											text: remoteAddress ? remoteAddress.value : ""
+											Layout.leftMargin: 8 * DefaultStyle.dp
 											Connections {
 												target: modelData.core
 											}
@@ -560,6 +564,7 @@ AppWindow {
 										}
 										Text {
 											id: callStateText
+											Layout.rightMargin: 2 * DefaultStyle.dp
 											text: modelData.core.state === LinphoneEnums.CallState.Paused 
 											|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
 												? qsTr("Appel en pause") : qsTr("Appel en cours")
@@ -568,7 +573,6 @@ AppWindow {
 											id: listCallOptionsButton
 											Layout.preferredWidth: 24 * DefaultStyle.dp
 											Layout.preferredHeight: 24 * DefaultStyle.dp
-											Layout.alignment: Qt.AlignRight
 
 											popup.contentItem: ColumnLayout {
 												spacing: 0

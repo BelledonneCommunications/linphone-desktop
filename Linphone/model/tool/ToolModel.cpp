@@ -113,6 +113,13 @@ bool ToolModel::createCall(const QString &sipAddress,
 		}
 		return false;
 	}
+	for (auto &account : core->getAccountList()) {
+		if (account->getContactAddress()->weakEqual(address)) {
+			*errorMessage = "The calling address is a connected account.";
+			lDebug() << "[" + QString(gClassName) + "]" + *errorMessage;
+			return false;
+		}
+	}
 
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	CallModel::activateLocalVideo(params, nullptr, localVideoEnabled);

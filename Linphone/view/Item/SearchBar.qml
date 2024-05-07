@@ -19,6 +19,10 @@ Rectangle {
 
 	onVisibleChanged: if (!visible && numericPad) numericPad.close()
 
+	function clearText() {
+		textField.text = ""
+	}
+
 	Connections {
 		enabled: numericPad != undefined
 		target: numericPad ? numericPad : null

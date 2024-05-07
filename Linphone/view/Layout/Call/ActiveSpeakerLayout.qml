@@ -14,6 +14,11 @@ Item{
 	property alias call: allDevices.currentCall
 	property ConferenceGui conference: call && call.core.conference || null
 	property var callState: call && call.core.state || undefined
+	property string localAddress: call && call.conference
+		? call.conference.core.me.core.sipAddress
+		: call.core.localAddress
+	|| ""
+	onLocalAddressChanged: console.log("======== local addr changed", localAddress)
 	
 	property ParticipantDeviceProxy participantDevices : ParticipantDeviceProxy {
 			id: allDevices
@@ -80,11 +85,10 @@ Item{
 		anchors.bottom: mainItem.bottom
 		anchors.rightMargin: 20 * DefaultStyle.dp
 		anchors.bottomMargin: 10 * DefaultStyle.dp
-		//participantDevice: allDevices.me
 		videoEnabled: preview.visible && mainItem.call && mainItem.call.core.localVideoEnabled
 		onVideoEnabledChanged: console.log("P : " +videoEnabled + " / " +visible +" / " +mainItem.call)
 		property AccountProxy accounts: AccountProxy{id: accountProxy}
-		account: accountProxy.defaultAccount
+		account: accountProxy.findAccountByAddress(mainItem.localAddress)
 		call: mainItem.call
 		displayAll: false
 		displayPresence: false

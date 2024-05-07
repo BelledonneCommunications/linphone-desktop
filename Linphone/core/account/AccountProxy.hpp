@@ -44,6 +44,7 @@ public:
 	AccountGui *getDefaultAccount();             // Get a new object from List or give the stored one.
 	void setDefaultAccount(AccountGui *account); // TODO
 	void resetDefaultAccount();                  // Reset the default account to let UI build its new object if needed.
+	Q_INVOKABLE AccountGui *findAccountByAddress(const QString &address);
 
 	bool getHaveAccount() const;
 
