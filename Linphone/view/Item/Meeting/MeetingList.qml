@@ -196,7 +196,7 @@ ListView {
 					hoverEnabled: mainItem.hoverEnabled
 					anchors.fill: parent
 					cursorShape: Qt.PointingHandCursor
-					visible: dateDay.visible && itemDelegate.haveModel
+					visible: itemDelegate.haveModel
 					onClicked: {
 						mainItem.currentIndex = index
 						mainItem.conferenceSelected($modelData)
