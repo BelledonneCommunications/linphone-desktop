@@ -49,10 +49,6 @@ AbstractMainPage {
 		listStackView.push(newCallItem)
 	}
 
-	function createCall(addr) {
-		UtilsCpp.createCall(addr)
-	}
-
 	Dialog {
 		id: deleteHistoryPopup
 		width: 278 * DefaultStyle.dp
@@ -316,9 +312,13 @@ AbstractMainPage {
 											icon.height: 24 * DefaultStyle.dp
 											onClicked: {
 												if (modelData.core.isConference) {
-													
+													var callsWindow = UtilsCpp.getCallsWindow()
+													callsWindow.setupConference(modelData.core.conferenceInfo)
+													callsWindow.show()
 												}
-												else UtilsCpp.createCall(modelData.core.remoteAddress)
+												else {
+													UtilsCpp.createCall(modelData.core.remoteAddress)
+												}
 											}
 										}
 									}
@@ -515,7 +515,8 @@ AbstractMainPage {
 			id: contactDetail
 			visible: mainItem.selectedRowHistoryGui != undefined
 			property var contactObj: UtilsCpp.findFriendByAddress(contactAddress)
-			contact: contactObj && contactObj.value || null 
+			contact: contactObj && contactObj.value || null
+			conferenceInfo: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.conferenceInfo
 			contactAddress: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
 			contactName: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.displayName : ""
 			anchors.top: rightPanelStackView.top
@@ -546,7 +547,11 @@ AbstractMainPage {
 							text: qsTr("Copier l'adresse SIP")
 							iconSource: AppIcons.copy
 						}
-						onClicked: UtilsCpp.copyToClipboard(mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress)
+						onClicked: {
+							var success = UtilsCpp.copyToClipboard(mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress)
+							if (success) UtilsCpp.showInformationPopup(qsTr("Copié"), qsTr("L'adresse a été copiée dans le presse-papier"), true)
+							else UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Erreur lors de la copie de l'adresse"), false)
+						}
 					}
 					Button {
 						background: Item {}
@@ -626,7 +631,7 @@ AbstractMainPage {
 										|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
 										|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
 										|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-											? AppIcons.arrowElbow 
+											? AppIcons.arrowElbow
 											: modelData.core.isOutgoing
 												? AppIcons.arrowUpRight
 												: AppIcons.arrowDownLeft

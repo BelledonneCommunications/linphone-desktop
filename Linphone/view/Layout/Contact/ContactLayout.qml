@@ -10,6 +10,8 @@ ColumnLayout {
 	spacing: 30 * DefaultStyle.dp
 
 	property FriendGui contact
+	property ConferenceInfoGui conferenceInfo
+	property bool isConference: conferenceInfo != undefined && conferenceInfo != null
 	property string contactAddress: contact && contact.core.defaultAddress || ""
 	property string contactName: contact && contact.core.displayName || ""
 
@@ -31,6 +33,7 @@ ColumnLayout {
 			bottomPadding: 16 * DefaultStyle.dp
 			leftPadding: 16 * DefaultStyle.dp
 			rightPadding: 16 * DefaultStyle.dp
+			contentImageColor: DefaultStyle.main2_600
 			background: Rectangle {
 				anchors.fill: parent
 				radius: 40 * DefaultStyle.dp
@@ -58,7 +61,9 @@ ColumnLayout {
 			width: 100 * DefaultStyle.dp
 			height: 100 * DefaultStyle.dp
 			contact: mainItem.contact || null
-			address: mainItem.contactAddress || mainItem.contactName
+			address: mainItem.conferenceInfo 
+				? mainItem.conferenceInfo.core.subject 
+				: mainItem.contactAddress || mainItem.contactName
 		}
 		Item {
 			id: rightButton
@@ -118,7 +123,23 @@ ColumnLayout {
 		Layout.alignment: Qt.AlignHCenter
 		Layout.preferredWidth: mainItem.implicitWidth
 		Layout.preferredHeight: childrenRect.height
+		Button {
+			visible: mainItem.isConference
+			anchors.horizontalCenter: parent.horizontalCenter
+			text: qsTr("Rejoindre la réunion")
+			color: DefaultStyle.main2_200
+			pressedColor: DefaultStyle.main2_400
+			textColor: DefaultStyle.main2_600
+			onClicked: {
+				if (mainItem.conferenceInfo) {
+					var callsWindow = UtilsCpp.getCallsWindow()
+					callsWindow.setupConference(mainItem.conferenceInfo)
+					callsWindow.show()
+				}
+			}
+		}
 		LabelButton {
+			visible: !mainItem.isConference
 			anchors.left: parent.left
 			width: 56 * DefaultStyle.dp
 			height: 56 * DefaultStyle.dp
@@ -131,6 +152,7 @@ ColumnLayout {
 			}
 		}
 		LabelButton {
+			visible: !mainItem.isConference
 			anchors.horizontalCenter: parent.horizontalCenter
 			width: 56 * DefaultStyle.dp
 			height: 56 * DefaultStyle.dp
@@ -141,7 +163,7 @@ ColumnLayout {
 			button.onClicked: console.debug("[CallPage.qml] TODO : open conversation")
 		}
 		LabelButton {
-			id: videoCall
+			visible: !mainItem.isConference
 			anchors.right: parent.right
 			width: 56 * DefaultStyle.dp
 			height: 56 * DefaultStyle.dp

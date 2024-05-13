@@ -271,15 +271,13 @@ AbstractMainPage {
 			visible: mainItem.selectedContact != undefined
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			Control.StackView.onActivated:
-				mainItem.leftPanelEnabled = true
+			Control.StackView.onActivated: mainItem.leftPanelEnabled = true
 			Control.StackView.onDeactivated: mainItem.leftPanelEnabled = false
 			ContactLayout {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
 				Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 				Layout.topMargin: 45 * DefaultStyle.dp
-				Layout.leftMargin: 74 * DefaultStyle.dp
 				contact: mainItem.selectedContact
 				Layout.preferredWidth: 360 * DefaultStyle.dp
 				buttonContent: Button {
@@ -296,8 +294,9 @@ AbstractMainPage {
 					Layout.preferredWidth: 360 * DefaultStyle.dp
 					spacing: 32 * DefaultStyle.dp
 					ColumnLayout {
-						spacing: 15 * DefaultStyle.dp
+						spacing: 9 * DefaultStyle.dp
 						Text {
+							Layout.leftMargin: 10 * DefaultStyle.dp
 							text: qsTr("Informations")
 							font {
 								pixelSize: 16 * DefaultStyle.dp
@@ -309,27 +308,32 @@ AbstractMainPage {
 							Layout.preferredHeight: Math.min(226 * DefaultStyle.dp, addrList.contentHeight + topPadding + bottomPadding)
 							height: Math.min(226 * DefaultStyle.dp, addrList.contentHeight)
 							Layout.fillWidth: true
+							topPadding: 12 * DefaultStyle.dp
+							bottomPadding: 12 * DefaultStyle.dp
+							leftPadding: 20 * DefaultStyle.dp
+							rightPadding: 20 * DefaultStyle.dp
 							contentItem: ListView {
 								id: addrList
 								width: 360 * DefaultStyle.dp
 								height: contentHeight
 								clip: true
+								spacing: 9 * DefaultStyle.dp
 								model: VariantList {
 									model:  mainItem.selectedContact ? mainItem.selectedContact.core.allAddresses : []
 								}
 								delegate: Item {
 									width: addrList.width
-									height: 70 * DefaultStyle.dp
+									height: 46 * DefaultStyle.dp
 
 									ColumnLayout {
 										anchors.fill: parent
-										anchors.topMargin: 5 * DefaultStyle.dp
+										// anchors.topMargin: 5 * DefaultStyle.dp
 										RowLayout {
 											Layout.fillWidth: true
 											// Layout.fillHeight: true
 											// Layout.alignment: Qt.AlignVCenter
-											Layout.topMargin: 10 * DefaultStyle.dp
-											Layout.bottomMargin: 10 * DefaultStyle.dp
+											// Layout.topMargin: 10 * DefaultStyle.dp
+											// Layout.bottomMargin: 10 * DefaultStyle.dp
 											ColumnLayout {
 												Layout.fillWidth: true
 												Text {
@@ -384,6 +388,10 @@ AbstractMainPage {
 					RoundedBackgroundControl {
 						visible: companyText.text.length != 0 || jobText.text.length != 0
 						Layout.fillWidth: true
+						topPadding: 12 * DefaultStyle.dp
+						bottomPadding: 12 * DefaultStyle.dp
+						leftPadding: 20 * DefaultStyle.dp
+						rightPadding: 20 * DefaultStyle.dp
 						// Layout.fillHeight: true
 
 						contentItem: ColumnLayout {
@@ -462,11 +470,13 @@ AbstractMainPage {
 			}
 			ColumnLayout {
 				spacing: 10 * DefaultStyle.dp
+				Layout.rightMargin: 90 * DefaultStyle.dp
 				ColumnLayout {
 					visible: false
 					RowLayout {
 						Text {
 							text: qsTr("Confiance")
+							Layout.leftMargin: 10 * DefaultStyle.dp
 							font {
 								pixelSize: 16 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
@@ -482,7 +492,10 @@ AbstractMainPage {
 					}
 				}
 				ColumnLayout {
+					spacing: 9 * DefaultStyle.dp
 					Text {
+						Layout.preferredHeight: 22 * DefaultStyle.dp
+						Layout.leftMargin: 10 * DefaultStyle.dp
 						text: qsTr("Other actions")
 						font {
 							pixelSize: 16 * DefaultStyle.dp

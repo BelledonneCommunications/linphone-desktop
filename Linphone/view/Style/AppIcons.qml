@@ -5,6 +5,7 @@ QtObject {
 	property string welcomeLinphoneLogo: "image://internal/linphone.svg"
 	property string welcomeLock: "image://internal/secured.svg"
 	property string lock: "image://internal/lock.svg"
+	property string lockSimple: "image://internal/lock-simple.svg"
 	property string welcomeOpenSource: "image://internal/open_source.svg"
 	property string eyeHide: "image://internal/eye.svg"
 	property string eyeShow: "image://internal/eye-slash.svg"

@@ -44,6 +44,7 @@ public:
 	Q_PROPERTY(QDateTime dateTime READ getDateTimeSystem WRITE setDateTime NOTIFY dateTimeChanged)
 	Q_PROPERTY(QDateTime endDateTime READ getEndDateTime WRITE setEndDateTime NOTIFY endDateTimeChanged)
 	Q_PROPERTY(QDateTime dateTimeUtc READ getDateTimeUtc NOTIFY dateTimeChanged)
+	Q_PROPERTY(QString startEndDateString READ getStartEndDateString NOTIFY dateTimeChanged)
 	Q_PROPERTY(int duration READ getDuration WRITE setDuration NOTIFY durationChanged)
 	Q_PROPERTY(
 	    QString organizerAddress READ getOrganizerAddress WRITE setOrganizerAddress NOTIFY organizerAddressChanged)

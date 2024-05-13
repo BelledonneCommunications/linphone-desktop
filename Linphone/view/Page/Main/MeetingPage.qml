@@ -19,6 +19,7 @@ AbstractMainPage {
 	signal returnRequested()
 	signal addParticipantsValidated(list<string> selectedParticipants)
 	Component.onCompleted: rightPanelStackView.push(overridenRightPanel, Control.StackView.Immediate)
+	showDefaultItem: false//leftPanelStackView.currentItem.objectName === "listLayout"
 
 	onSelectedConferenceChanged: {
 		overridenRightPanelStackView.clear()
@@ -27,15 +28,7 @@ AbstractMainPage {
 		}
 	}
 
-	Connections {
-		target: leftPanelStackView
-		onCurrentItemChanged: {
-			mainItem.showDefaultItem = leftPanelStackView.currentItem == listLayout && mainItem.meetingListCount === 0
-		}
-	}
-	onMeetingListCountChanged: showDefaultItem = leftPanelStackView.currentItem == listLayout && meetingListCount === 0
-
-	function setUpConference(confInfoGui = null) {
+	function editConference(confInfoGui = null) {
 		var isCreation = !confInfoGui
 		if (isCreation) {
 			confInfoGui = Qt.createQmlObject('import Linphone
@@ -126,13 +119,24 @@ AbstractMainPage {
 	Component {
 		id: listLayout
 		ColumnLayout {
+			id: listLayoutIn
 			spacing: 0
+			property string objectName: "listLayout"
 			Control.StackView.onDeactivated: {
 				mainItem.selectedConference = null
+				// mainItem.showDefaultItem.visible = false
 				// mainItem.righPanelStackView.clear()
 			}
 			Control.StackView.onActivated: {
 				mainItem.selectedConference = conferenceList.selectedConference
+				// mainItem.showDefaultItem = conferenceList.count == 0
+			}
+			Binding {
+				target: mainItem
+				when: leftPanelStackView.currentItem.objectName === "listLayout"
+				property: "showDefaultItem"
+				value: conferenceList.count === 0
+				restoreMode: Binding.RestoreBindingOrValue
 			}
 			RowLayout {
 				enabled: mainItem.leftPanelEnabled
@@ -155,7 +159,7 @@ AbstractMainPage {
 					icon.width: 28 * DefaultStyle.dp
 					icon.height: 28 * DefaultStyle.dp
 					onClicked: {
-						mainItem.setUpConference()
+						mainItem.editConference()
 					}
 				}
 			}
@@ -169,6 +173,7 @@ AbstractMainPage {
 			}
 
 			Text {
+				Layout.topMargin: 38 * DefaultStyle.dp
 				Layout.fillHeight: true
 				Layout.alignment: Qt.AlignHCenter
 				text: mainItem.emptyListText
@@ -192,12 +197,6 @@ AbstractMainPage {
 					searchBarText: searchBar.text
 					onSelectedConferenceChanged: {
 						mainItem.selectedConference = selectedConference
-					}
-					onCountChanged: {
-						mainItem.meetingListCount = count
-					}
-					Connections {
-						target: mainItem
 					}
 					Control.ScrollBar.vertical: ScrollBar {
 						id: meetingsScrollbar
@@ -494,7 +493,7 @@ AbstractMainPage {
 						icon.source: AppIcons.pencil
 						contentImageColor: DefaultStyle.main1_500_main
 						background: Item{}
-						onClicked: mainItem.setUpConference(mainItem.selectedConference)
+						onClicked: mainItem.editConference(mainItem.selectedConference)
 					}
 					PopupButton {
 						id: deletePopup
@@ -718,7 +717,9 @@ AbstractMainPage {
 				bottomPadding: 11 * DefaultStyle.dp
 				onClicked: {
 					console.log(mainItem.selectedConference.core.uri)
-					UtilsCpp.setupConference(mainItem.selectedConference)
+					var callsWindow = UtilsCpp.getCallsWindow()
+					callsWindow.setupConference(mainItem.selectedConference)
+					callsWindow.show()
 				}
 			}
 			Item { Layout.fillHeight: true}

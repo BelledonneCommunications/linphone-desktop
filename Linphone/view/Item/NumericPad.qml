@@ -10,34 +10,37 @@ Control.Popup {
 	signal launchCall()
 	signal wipe()
 	property bool closeButtonVisible: true
+	property bool roundedBottom: false
 	closePolicy: Control.Popup.CloseOnEscape
 	leftPadding: 72 * DefaultStyle.dp
 	rightPadding: 72 * DefaultStyle.dp
 	topPadding: 41 * DefaultStyle.dp
 	bottomPadding: 18 * DefaultStyle.dp
-	// topPadding: closeButton.height + 4 * DefaultStyle.dp
 	background: Item {
 		anchors.fill: parent
 		Rectangle {
 			id: numPadBackground
-			anchors.fill: parent
+			width: parent.width
+			height: parent.height
 			color: DefaultStyle.grey_100
 			radius: 20 * DefaultStyle.dp
 		}
 		MultiEffect {
 			id: effect
-			anchors.fill: parent
+			anchors.fill: numPadBackground
 			source: numPadBackground
 			shadowEnabled: true
 			shadowColor: DefaultStyle.grey_1000
 			shadowOpacity: 0.1
 			shadowBlur: 1
+			z: -1
 		}
 		Rectangle {
 			width: parent.width
 			height: parent.height / 2
 			anchors.bottom: parent.bottom
 			color: DefaultStyle.grey_100
+			visible: !mainItem.roundedBottom
 		}
 		Button {
 			id: closeButton

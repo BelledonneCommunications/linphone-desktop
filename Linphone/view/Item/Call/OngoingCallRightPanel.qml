@@ -18,9 +18,7 @@ Control.Page {
 	signal validateRequested()
 
 	topPadding: 16 * DefaultStyle.dp
-	bottomPadding: 16 * DefaultStyle.dp
-	leftPadding: 17 * DefaultStyle.dp
-	rightPadding: 17 * DefaultStyle.dp
+	// bottomPadding: 16 * DefaultStyle.dp
 
 	background: Rectangle {
 		width: mainItem.width
@@ -135,7 +133,5 @@ Control.Page {
 	}
 	contentItem: Control.StackView {
 		id: contentStackView
-		// width: parent.width
-		// height: parent.height
 	}
 }

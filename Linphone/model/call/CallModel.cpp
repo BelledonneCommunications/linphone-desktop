@@ -204,7 +204,6 @@ void CallModel::setSpeakerVolumeGain(float gain) {
 float CallModel::getSpeakerVolumeGain() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto gain = mMonitor->getSpeakerVolumeGain();
-	if (gain < 0) gain = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
 	return gain;
 }
 

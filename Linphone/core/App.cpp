@@ -143,9 +143,6 @@ void App::init() {
 		    coreModel->start();
 		    auto settings = Settings::create();
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings]() mutable {
-			    mSettings = settings;
-			    settings.reset();
-
 			    // QML
 			    mEngine = new QQmlApplicationEngine(this);
 			    // Provide `+custom` folders for custom components and `5.9` for old components.
@@ -164,6 +161,8 @@ void App::init() {
 
 			    // Enable notifications.
 			    mNotifier = new Notifier(mEngine);
+			    mSettings = settings;
+			    settings.reset();
 
 			    const QUrl url(u"qrc:/Linphone/view/App/Main.qml"_qs);
 			    QObject::connect(
@@ -261,15 +260,15 @@ void App::initCppInterfaces() {
 //------------------------------------------------------------
 
 void App::clean() {
+	if (mSettings) mSettings.reset();
 	// Wait 500ms to let time for log te be stored.
 	// mNotifier destroyed in mEngine deletion as it is its parent
 	delete mEngine;
 	mEngine = nullptr;
-	if (mSettings) {
-		mSettings = nullptr;
-	}
-	mLinphoneThread->wait(250);
-	qApp->processEvents(QEventLoop::AllEvents, 250);
+	// if (mSettings) {
+	// mSettings.reset();
+	// }
+	qApp->processEvents(QEventLoop::AllEvents, 500);
 	mLinphoneThread->exit();
 	mLinphoneThread->wait();
 	delete mLinphoneThread;

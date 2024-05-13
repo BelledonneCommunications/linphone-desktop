@@ -88,14 +88,16 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mSpeakerVolumeGain = mCallModel->getSpeakerVolumeGain();
 	// TODO : change this with settings value when settings done
 	if (mSpeakerVolumeGain < 0) {
-		call->setSpeakerVolumeGain(0.5);
-		mSpeakerVolumeGain = 0.5;
+		auto vol = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
+		call->setSpeakerVolumeGain(vol);
+		mSpeakerVolumeGain = vol;
 	}
 	mMicrophoneVolumeGain = call->getMicrophoneVolumeGain();
 	// TODO : change this with settings value when settings done
 	if (mMicrophoneVolumeGain < 0) {
-		call->setMicrophoneVolumeGain(0.5);
-		mMicrophoneVolumeGain = 0.5;
+		auto vol = CoreModel::getInstance()->getCore()->getMicGainDb();
+		call->setMicrophoneVolumeGain(vol);
+		mMicrophoneVolumeGain = vol;
 	}
 	mMicrophoneVolume = call->getRecordVolume();
 	mRecordable = mState == LinphoneEnums::CallState::StreamsRunning;
@@ -163,6 +165,12 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::durationChanged, [this](int duration) {
 		mCallModelConnection->invokeToCore([this, duration]() { setDuration(duration); });
 	});
+	mCallModelConnection->makeConnectToModel(&CallModel::speakerVolumeGainChanged, [this](float volume) {
+		mCallModelConnection->invokeToCore([this, volume]() { setSpeakerVolumeGain(volume); });
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::microphoneVolumeGainChanged, [this](float volume) {
+		mCallModelConnection->invokeToCore([this, volume]() { setMicrophoneVolumeGain(volume); });
+	});
 	mCallModelConnection->makeConnectToModel(&CallModel::microphoneVolumeChanged, [this](float volume) {
 		mCallModelConnection->invokeToCore([this, volume]() { setMicrophoneVolume(volume); });
 	});
@@ -175,12 +183,26 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::statusChanged, [this](linphone::Call::Status status) {
 		mCallModelConnection->invokeToCore([this, status]() { setStatus(LinphoneEnums::fromLinphone(status)); });
 	});
-	mCallModelConnection->makeConnectToModel(&CallModel::stateChanged,
-	                                         [this](linphone::Call::State state, const std::string &message) {
-		                                         mCallModelConnection->invokeToCore([this, state]() {
-			                                         setRecordable(state == linphone::Call::State::StreamsRunning);
-		                                         });
-	                                         });
+	mCallModelConnection->makeConnectToModel(
+	    &CallModel::stateChanged, [this](linphone::Call::State state, const std::string &message) {
+		    double speakerVolume = mSpeakerVolumeGain;
+		    double micVolume = mMicrophoneVolumeGain;
+		    if (state == linphone::Call::State::StreamsRunning) {
+			    speakerVolume = mCallModel->getSpeakerVolumeGain();
+			    if (speakerVolume < 0) {
+				    speakerVolume = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
+			    }
+			    micVolume = mCallModel->getMicrophoneVolumeGain();
+			    if (micVolume < 0) {
+				    micVolume = CoreModel::getInstance()->getCore()->getMicGainDb();
+			    }
+		    }
+		    mCallModelConnection->invokeToCore([this, state, speakerVolume, micVolume]() {
+			    setSpeakerVolumeGain(speakerVolume);
+			    setMicrophoneVolumeGain(micVolume);
+			    setRecordable(state == linphone::Call::State::StreamsRunning);
+		    });
+	    });
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetPaused, [this](bool paused) {
 		mCallModelConnection->invokeToModel([this, paused]() { mCallModel->setPaused(paused); });
 	});
@@ -319,7 +341,10 @@ void CallCore::setState(LinphoneEnums::CallState state, const QString &message) 
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	if (mState != state) {
 		mState = state;
-		if (state == LinphoneEnums::CallState::Error) setLastErrorMessage(message);
+		if (state == LinphoneEnums::CallState::Error) {
+			lDebug() << "[CallCore] Error message : " << message;
+			setLastErrorMessage(message);
+		}
 		emit stateChanged(mState);
 	}
 }

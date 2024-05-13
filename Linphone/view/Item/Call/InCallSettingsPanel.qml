@@ -42,6 +42,7 @@ ColumnLayout {
 					}
 					Text {
 						text: qsTr("Haut-parleurs")
+						font.pixelSize: 14 * DefaultStyle.dp
 						Layout.fillWidth: true
 					}
 				}
@@ -80,6 +81,7 @@ ColumnLayout {
 					}
 					Text {
 						text: qsTr("Microphone")
+						font.pixelSize: 14 * DefaultStyle.dp
 						Layout.fillWidth: true
 					}
 				}
@@ -153,6 +155,7 @@ ColumnLayout {
 					}
 					Text {
 						text: qsTr("Caméra")
+						font.pixelSize: 14 * DefaultStyle.dp
 						Layout.fillWidth: true
 					}
 				}

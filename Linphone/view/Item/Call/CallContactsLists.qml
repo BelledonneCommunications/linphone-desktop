@@ -125,7 +125,6 @@ Item {
 				Layout.alignment: Qt.AlignTop
 				Layout.fillWidth: true
 				Layout.maximumWidth: mainItem.width
-				Layout.rightMargin: 39 * DefaultStyle.dp
 				color: mainItem.searchBarColor
 				borderColor: mainItem.searchBarBorderColor
 				placeholderText: qsTr("Rechercher un contact")

@@ -83,7 +83,7 @@ bool ConferenceInfoProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sou
 			return res;
 		} else return mFilterType == -1;
 	} else {
-		return !mList->haveCurrentDate();
+		return !mList->haveCurrentDate() &&
+		       mList->getCount() > 1; // if mlist count == 1 there is only the dummy row which we don't display alone
 	}
-	return false;
 }

@@ -11,7 +11,8 @@ RowLayout {
 	property bool microEnabled: true
 	property bool settingsButtonChecked: settingsButton.checked
 	property ConferenceInfoGui conferenceInfo
-	signal joinConfRequested()
+	signal joinConfRequested(string uri)
+	signal cancelJoiningRequested()
 	RowLayout {
 		Layout.fillWidth: false
 		Layout.fillHeight: false
@@ -114,17 +115,31 @@ RowLayout {
 						}
 					}
 				}
-				Button {
-					Layout.preferredWidth: 292 * DefaultStyle.dp
-					leftPadding: 20 * DefaultStyle.dp
-					rightPadding: 20 * DefaultStyle.dp
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
-					text: qsTr("Join")
-					onClicked: {
-						settingsButton.checked = false
-						stackLayout.currentIndex = 1
-						mainItem.joinConfRequested()
+				ColumnLayout {
+					spacing: 5 * DefaultStyle.dp
+					Button {
+						Layout.preferredWidth: 292 * DefaultStyle.dp
+						leftPadding: 20 * DefaultStyle.dp
+						rightPadding: 20 * DefaultStyle.dp
+						topPadding: 11 * DefaultStyle.dp
+						bottomPadding: 11 * DefaultStyle.dp
+						text: qsTr("Join")
+						onClicked: {
+							settingsButton.checked = false
+							stackLayout.currentIndex = 1
+							mainItem.joinConfRequested(mainItem.conferenceInfo.core.uri)
+						}
+					}
+					Button {
+						Layout.preferredWidth: 292 * DefaultStyle.dp
+						leftPadding: 20 * DefaultStyle.dp
+						rightPadding: 20 * DefaultStyle.dp
+						bottomPadding: 11 * DefaultStyle.dp
+						inversedColors: true
+						text: qsTr("Cancel")
+						onClicked: {
+							mainItem.cancelJoiningRequested()
+						}
 					}
 				}
 			}

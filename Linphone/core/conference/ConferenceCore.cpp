@@ -58,18 +58,26 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 		    auto device = ParticipantDeviceCore::create(participantDevice);
 		    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeaker(device); });
 	    });
-	mConferenceModelConnection->makeConnectToModel(
-	    &ConferenceModel::participantDeviceAdded,
-	    [this](const std::shared_ptr<linphone::ParticipantDevice> &participantDevice) {
-		    int count = mConferenceModel->getParticipantDeviceCount();
-		    mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
-	    });
-	mConferenceModelConnection->makeConnectToModel(
-	    &ConferenceModel::participantDeviceRemoved,
-	    [this](const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-		    int count = mConferenceModel->getParticipantDeviceCount();
-		    mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
-	    });
+	mConferenceModelConnection->makeConnectToModel(&ConferenceModel::participantDeviceAdded, [this]() {
+		int count = mConferenceModel->getParticipantDeviceCount();
+		mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
+	});
+	mConferenceModelConnection->makeConnectToModel(&ConferenceModel::participantDeviceRemoved, [this]() {
+		int count = mConferenceModel->getParticipantDeviceCount();
+		mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
+	});
+	mConferenceModelConnection->makeConnectToModel(&ConferenceModel::participantAdded, [this]() {
+		int count = mConferenceModel->getParticipantDeviceCount();
+		mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
+	});
+	mConferenceModelConnection->makeConnectToModel(&ConferenceModel::participantRemoved, [this]() {
+		int count = mConferenceModel->getParticipantDeviceCount();
+		mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
+	});
+	mConferenceModelConnection->makeConnectToModel(&ConferenceModel::participantDeviceStateChanged, [this]() {
+		int count = mConferenceModel->getParticipantDeviceCount();
+		mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
+	});
 }
 
 bool ConferenceCore::updateLocalParticipant() { // true if changed
@@ -94,6 +102,9 @@ void ConferenceCore::setParticipantDeviceCount(int count) {
 	}
 }
 
+/**
+ * /!\ mParticipantDeviceCount retrieves all devices but mine
+ **/
 int ConferenceCore::getParticipantDeviceCount() const {
 	return mParticipantDeviceCount;
 }

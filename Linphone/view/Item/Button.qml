@@ -41,8 +41,8 @@ Control.Button {
 				? inversedColors
 					? mainItem.pressed 
 						? DefaultStyle.grey_100
-						: DefaultStyle.grey_0
-					: mainItem.pressed 
+						: mainItem.borderColor
+					: mainItem.pressed
 						? mainItem.pressedColor
 						: mainItem.color
 				: mainItem.disabledColor

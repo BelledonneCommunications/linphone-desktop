@@ -99,6 +99,7 @@ void Utils::createCall(const QString &sipAddress,
                        QVariantMap options,
                        const QString &prepareTransfertAddress,
                        const QHash<QString, QString> &headers) {
+	lDebug() << "[Utils] create call with uri :" << sipAddress;
 	App::postModelAsync([sipAddress, options, prepareTransfertAddress, headers]() {
 		QString errorMessage;
 		bool success = ToolModel::createCall(sipAddress, options, prepareTransfertAddress, headers,
@@ -352,8 +353,16 @@ int Utils::getRandomIndex(int size) {
 	return QRandomGenerator::global()->bounded(size);
 }
 
-void Utils::copyToClipboard(const QString &text) {
-	QApplication::clipboard()->setText(text);
+bool Utils::copyToClipboard(const QString &text) {
+	QClipboard *clipboard = QApplication::clipboard();
+	clipboard->clear();
+	clipboard->setText(text);
+
+	QString clipboardText = clipboard->text();
+	if (clipboardText.isEmpty()) {
+		lDebug() << "[Utils] Clipboard is empty!";
+	}
+	return !clipboardText.isEmpty();
 }
 
 QString Utils::getApplicationProduct() {

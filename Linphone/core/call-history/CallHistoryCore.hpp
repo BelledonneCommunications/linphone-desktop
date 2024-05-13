@@ -21,6 +21,7 @@
 #ifndef CALL_HISTORY_CORE_H_
 #define CALL_HISTORY_CORE_H_
 
+#include "core/conference/ConferenceInfoGui.hpp"
 #include "tool/LinphoneEnums.hpp"
 #include "tool/thread/SafeConnection.hpp"
 #include <QDateTime>
@@ -37,6 +38,7 @@ class CallHistoryCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString remoteAddress MEMBER mRemoteAddress CONSTANT)
 	Q_PROPERTY(bool isOutgoing MEMBER mIsOutgoing CONSTANT)
 	Q_PROPERTY(bool isConference MEMBER mIsConference CONSTANT)
+	Q_PROPERTY(ConferenceInfoGui *conferenceInfo READ getConferenceInfoGui CONSTANT)
 	Q_PROPERTY(QDateTime date MEMBER mDate CONSTANT)
 	Q_PROPERTY(LinphoneEnums::CallStatus status MEMBER mStatus CONSTANT)
 	Q_PROPERTY(QString duration READ getDuration WRITE setDuration NOTIFY durationChanged)
@@ -47,6 +49,7 @@ public:
 	~CallHistoryCore();
 
 	void setSelf(QSharedPointer<CallHistoryCore> me);
+	ConferenceInfoGui *getConferenceInfoGui() const;
 
 	QString getDuration() const;
 	void setDuration(const QString &duration);
@@ -57,7 +60,7 @@ public:
 	QString mDisplayName;
 	QDateTime mDate;
 	bool mIsOutgoing;
-	bool mIsConference;
+	bool mIsConference = false;
 	LinphoneEnums::CallStatus mStatus;
 
 signals:
@@ -65,7 +68,7 @@ signals:
 
 private:
 	QString mDuration;
-
+	QSharedPointer<ConferenceInfoCore> mConferenceInfo = nullptr;
 	std::shared_ptr<CallHistoryModel> mCallHistoryModel;
 	QSharedPointer<SafeConnection<CallHistoryCore, CallHistoryModel>> mHistoryModelConnection;
 

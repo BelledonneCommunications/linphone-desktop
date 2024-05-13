@@ -41,6 +41,7 @@ public:
 	// Q_PROPERTY(ParticipantDeviceList *participantDevices READ getParticipantDeviceList CONSTANT)
 	// Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
 	Q_PROPERTY(bool isReady MEMBER mIsReady WRITE setIsReady NOTIFY isReadyChanged)
+	Q_PROPERTY(QString subject MEMBER mSubject CONSTANT)
 	Q_PROPERTY(int participantDeviceCount READ getParticipantDeviceCount NOTIFY participantDeviceCountChanged)
 	Q_PROPERTY(ParticipantDeviceGui *activeSpeaker READ getActiveSpeakerGui NOTIFY activeSpeakerChanged)
 	Q_PROPERTY(ParticipantGui *me READ getMeGui)

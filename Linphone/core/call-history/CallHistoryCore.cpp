@@ -20,6 +20,7 @@
 
 #include "CallHistoryCore.hpp"
 #include "core/App.hpp"
+#include "core/conference/ConferenceInfoCore.hpp"
 #include "model/call-history/CallHistoryModel.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
@@ -54,7 +55,7 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 	mIsConference = callLog->wasConference();
 	if (mIsConference) {
 		auto confinfo = callLog->getConferenceInfo();
-		confinfo->getSubject();
+		mConferenceInfo = ConferenceInfoCore::create(confinfo);
 		mRemoteAddress = Utils::coreStringToAppString(confinfo->getUri()->asStringUriOnly());
 		mDisplayName = Utils::coreStringToAppString(confinfo->getSubject());
 	} else {
@@ -71,6 +72,10 @@ CallHistoryCore::~CallHistoryCore() {
 void CallHistoryCore::setSelf(QSharedPointer<CallHistoryCore> me) {
 	mHistoryModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, CallHistoryModel>>(
 	    new SafeConnection<CallHistoryCore, CallHistoryModel>(me, mCallHistoryModel), &QObject::deleteLater);
+}
+
+ConferenceInfoGui *CallHistoryCore::getConferenceInfoGui() const {
+	return mConferenceInfo ? new ConferenceInfoGui(mConferenceInfo) : nullptr;
 }
 
 QString CallHistoryCore::getDuration() const {
