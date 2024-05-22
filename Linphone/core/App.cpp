@@ -112,6 +112,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	    new SafeConnection<App, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
 	mCoreModelConnection->makeConnectToModel(&CoreModel::callCreated,
 	                                         [this](const std::shared_ptr<linphone::Call> &call) {
+		                                         if (call->getDir() == linphone::Call::Dir::Incoming) return;
 		                                         auto callCore = CallCore::create(call);
 		                                         mCoreModelConnection->invokeToCore([this, callCore] {
 			                                         auto callGui = new CallGui(callCore);

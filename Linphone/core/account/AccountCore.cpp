@@ -80,6 +80,8 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	    &AccountModel::unreadNotificationsChanged, [this](int unreadMessagesCount, int unreadCallsCount) {
 		    mAccountModelConnection->invokeToCore([this, unreadMessagesCount, unreadCallsCount]() {
 			    this->setUnreadNotifications(unreadMessagesCount + unreadCallsCount);
+			    this->setUnreadCallNotifications(unreadCallsCount);
+			    this->setUnreadMessageNotifications(unreadMessagesCount);
 		    });
 	    });
 
@@ -89,6 +91,9 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	});
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetDefaultAccount, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { mAccountModel->setDefault(); });
+	});
+	mAccountModelConnection->makeConnectToCore(&AccountCore::lResetMissedCalls, [this]() {
+		mAccountModelConnection->invokeToModel([this]() { mAccountModel->resetMissedCallsCount(); });
 	});
 }
 
@@ -118,6 +123,26 @@ int AccountCore::getUnreadNotifications() const {
 void AccountCore::setUnreadNotifications(int unread) {
 	if (mUnreadNotifications != unread) {
 		mUnreadNotifications = unread;
+		emit unreadNotificationsChanged(unread);
+	}
+}
+
+int AccountCore::getUnreadCallNotifications() const {
+	return mUnreadCallNotifications;
+}
+void AccountCore::setUnreadCallNotifications(int unread) {
+	if (mUnreadCallNotifications != unread) {
+		mUnreadCallNotifications = unread;
+		emit unreadNotificationsChanged(unread);
+	}
+}
+
+int AccountCore::getUnreadMessageNotifications() const {
+	return mUnreadMessageNotifications;
+}
+void AccountCore::setUnreadMessageNotifications(int unread) {
+	if (mUnreadMessageNotifications != unread) {
+		mUnreadMessageNotifications = unread;
 		emit unreadNotificationsChanged(unread);
 	}
 }

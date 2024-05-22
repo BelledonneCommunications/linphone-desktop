@@ -12,6 +12,26 @@ Control.TabBar {
 
 	property var model
 	readonly property alias cornerRadius: bottomLeftCorner.radius
+
+	component UnreadNotification: Rectangle {
+		id: unreadNotifications
+		property int unread: 0
+		visible: unread > 0
+		width: 15 * DefaultStyle.dp
+		height: 15 * DefaultStyle.dp
+		radius: width/2
+		color: DefaultStyle.danger_500main
+		Text{
+			id: unreadCount
+			anchors.fill: parent
+			verticalAlignment: Text.AlignVCenter
+			horizontalAlignment: Text.AlignHCenter
+			color: DefaultStyle.grey_0
+			fontSizeMode: Text.Fit
+			font.pixelSize: 15 *  DefaultStyle.dp
+			text: parent.unread > 100 ? '99+' : parent.unread
+		}
+	}
 	
 	contentItem: ListView {
 		model: mainItem.contentModel
@@ -61,6 +81,12 @@ Control.TabBar {
 			id: tabButton
 			width: mainItem.width
 
+			UnreadNotification {
+				unread: modelData.unreadNotifications
+				anchors.right: parent.right
+				anchors.rightMargin: 15 * DefaultStyle.dp
+				anchors.top: parent.top
+			}
 			contentItem: ColumnLayout {
 				// height: tabButton.height
 				// width: tabButton.width

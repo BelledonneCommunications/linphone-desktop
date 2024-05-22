@@ -89,3 +89,9 @@ void AccountModel::setDefault() {
 void AccountModel::removeAccount() {
 	CoreModel::getInstance()->getCore()->removeAccount(mMonitor);
 }
+
+void AccountModel::resetMissedCallsCount() {
+	mMonitor->resetMissedCallsCount();
+	emit unreadNotificationsChanged(0 /*mMonitor->getUnreadChatMessageCount()*/,
+	                                mMonitor->getMissedCallsCount()); // TODO
+}

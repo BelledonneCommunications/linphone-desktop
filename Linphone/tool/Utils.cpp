@@ -129,7 +129,6 @@ void Utils::openCallsWindow(CallGui *call) {
 QQuickWindow *Utils::getCallsWindow(CallGui *callGui) {
 	auto app = App::getInstance();
 	auto window = app->getCallsWindow(QVariant::fromValue(callGui));
-	smartShowWindow(window);
 	return window;
 }
 

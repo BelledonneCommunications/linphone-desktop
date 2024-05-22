@@ -43,6 +43,7 @@ public:
 	void setPictureUri(QString uri);
 	void setDefault();
 	void removeAccount();
+	void resetMissedCallsCount();
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,

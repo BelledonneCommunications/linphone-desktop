@@ -38,6 +38,8 @@ class AccountCore : public QObject, public AbstractObject {
 	    LinphoneEnums::RegistrationState registrationState READ getRegistrationState NOTIFY registrationStateChanged)
 	Q_PROPERTY(bool isDefaultAccount READ getIsDefaultAccount NOTIFY defaultAccountChanged)
 	Q_PROPERTY(int unreadNotifications READ getUnreadNotifications NOTIFY unreadNotificationsChanged)
+	Q_PROPERTY(int unreadCallNotifications READ getUnreadCallNotifications NOTIFY unreadNotificationsChanged)
+	Q_PROPERTY(int unreadMessageNotifications READ getUnreadMessageNotifications NOTIFY unreadNotificationsChanged)
 
 public:
 	static QSharedPointer<AccountCore> create(const std::shared_ptr<linphone::Account> &account);
@@ -53,6 +55,10 @@ public:
 	bool getIsDefaultAccount() const;
 	int getUnreadNotifications() const;
 	void setUnreadNotifications(int unread);
+	int getUnreadCallNotifications() const;
+	void setUnreadCallNotifications(int unread);
+	int getUnreadMessageNotifications() const;
+	void setUnreadMessageNotifications(int unread);
 
 	void onPictureUriChanged(QString uri);
 	void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
@@ -71,6 +77,7 @@ signals:
 	// Account requests
 	void lSetPictureUri(QString pictureUri);
 	void lSetDefaultAccount();
+	void lResetMissedCalls();
 
 private:
 	QString mContactAddress;
@@ -79,6 +86,8 @@ private:
 	bool mIsDefaultAccount = false;
 	LinphoneEnums::RegistrationState mRegistrationState;
 	int mUnreadNotifications = 0;
+	int mUnreadCallNotifications = 0;
+	int mUnreadMessageNotifications = 0;
 	std::shared_ptr<AccountModel> mAccountModel;
 	QSharedPointer<SafeConnection<AccountCore, AccountModel>> mAccountModelConnection;
 

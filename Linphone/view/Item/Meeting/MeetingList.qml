@@ -14,12 +14,12 @@ ListView {
 	property string searchBarText
 	property bool hoverEnabled: true	
 	property var delegateButtons
-	property ConferenceInfoGui selectedConference: currentIndex != -1 ? model.getAt(currentIndex) : null
+	property ConferenceInfoGui selectedConference: model && currentIndex != -1 ? model.getAt(currentIndex) : null
 
 	spacing: 8 * DefaultStyle.dp
 	currentIndex: confInfoProxy.currentDateIndex
 
-	onCountChanged: selectedConference = currentIndex != -1 ? model.getAt(currentIndex) : null
+	onCountChanged: selectedConference = model && currentIndex != -1 ? model.getAt(currentIndex) : null
 	onCurrentIndexChanged: {
 		selectedConference = model.getAt(currentIndex)
 	}

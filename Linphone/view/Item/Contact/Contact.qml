@@ -96,22 +96,20 @@ Rectangle{
 								: qsTr("Erreur")
 			}
 		}
-		Item {
-			Layout.fillWidth: true
-		}
+		// Item {
+		// 	Layout.fillWidth: true
+		// }
 		Item{
-			Layout.preferredWidth: 22 * DefaultStyle.dp
-			Layout.preferredHeight: 22 * DefaultStyle.dp
+			Layout.preferredWidth: 27 * DefaultStyle.dp
+			Layout.preferredHeight: 27 * DefaultStyle.dp
 			Layout.fillHeight: true
 			Rectangle{
 				id: unreadNotifications
-				anchors.left: parent.left
-				anchors.leftMargin: 10 * DefaultStyle.dp
 				anchors.verticalCenter: parent.verticalCenter
 				property int unread: mainItem.account.core.unreadNotifications
 				visible: unread > 0
-				width: 22 * DefaultStyle.dp
-				height: 22 * DefaultStyle.dp
+				width: 27 * DefaultStyle.dp
+				height: 27 * DefaultStyle.dp
 				radius: width/2
 				color: DefaultStyle.danger_500main
 				border.color: DefaultStyle.grey_0
@@ -125,9 +123,17 @@ Rectangle{
 					color: DefaultStyle.grey_0
 					minimumPixelSize: 5
 					fontSizeMode: Text.Fit
-					font.pixelSize: 20 *  DefaultStyle.dp
-					text: parent.unread > 100 ? '+' : parent.unread
+					font.pixelSize: 11 *  DefaultStyle.dp
+					font.weight: 700 *  DefaultStyle.dp
+					text: parent.unread > 100 ? '99+' : parent.unread
 				}
+			}
+			MultiEffect {
+				anchors.fill: unreadNotifications
+				source: unreadNotifications
+				shadowEnabled: true
+				shadowBlur: 0.1
+				shadowOpacity: 0.15
 			}
 		}
 		EffectImage {

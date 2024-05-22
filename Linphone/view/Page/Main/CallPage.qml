@@ -97,7 +97,7 @@ AbstractMainPage {
 				width: parent.width
 				height: parent.height
 				onLaunchCall: {
-					mainItem.createCall(UtilsCpp.generateLinphoneSipAddress(searchBar.text))
+					UtilsCpp.createCall(searchBar.text)
 					// TODO : auto completion instead of sip linphone
 				}
 			}
@@ -315,7 +315,10 @@ AbstractMainPage {
 											icon.width: 24 * DefaultStyle.dp
 											icon.height: 24 * DefaultStyle.dp
 											onClicked: {
-												mainItem.createCall(modelData.core.remoteAddress)
+												if (modelData.core.isConference) {
+													
+												}
+												else UtilsCpp.createCall(modelData.core.remoteAddress)
 											}
 										}
 									}
@@ -408,7 +411,7 @@ AbstractMainPage {
 			searchBarColor: DefaultStyle.grey_100
 			
 			onCallButtonPressed: (address) => {
-				mainItem.createCall(address)
+				UtilsCpp.createCall(address)
 				// var window = UtilsCpp.getCallsWindow()
 			}
 			onGroupCallCreationRequested: {

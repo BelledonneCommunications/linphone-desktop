@@ -121,12 +121,14 @@ Item {
 				Layout.fillHeight: true
 				Layout.preferredWidth: 82 * DefaultStyle.dp
 				model: [
-					{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels")},
-					{icon: AppIcons.adressBook, selectedIcon: AppIcons.adressBookSelected, label: qsTr("Contacts")},
-					{icon: AppIcons.chatTeardropText, selectedIcon: AppIcons.chatTeardropTextSelected, label: qsTr("Conversations")},
-					{icon: AppIcons.videoconference, selectedIcon: AppIcons.videoconferenceSelected, label: qsTr("Réunions")}
+					{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels"), unreadNotifications: accountProxy.defaultAccount.core.unreadCallNotifications},
+					{icon: AppIcons.adressBook, selectedIcon: AppIcons.adressBookSelected, label: qsTr("Contacts"), unreadNotifications: 0},
+					{icon: AppIcons.chatTeardropText, selectedIcon: AppIcons.chatTeardropTextSelected, label: qsTr("Conversations"), unreadNotifications: accountProxy.defaultAccount.core.unreadMessageNotifications},
+					{icon: AppIcons.videoconference, selectedIcon: AppIcons.videoconferenceSelected, label: qsTr("Réunions"), unreadNotifications: 0}
 				]
-
+				onCurrentIndexChanged: {
+					if (currentIndex === 0) accountProxy.defaultAccount.core.lResetMissedCalls()
+				}
 			}
 			ColumnLayout {
 				spacing:0
