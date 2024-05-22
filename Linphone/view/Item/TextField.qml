@@ -10,6 +10,7 @@ Control.TextField {
 	leftPadding: 15 * DefaultStyle.dp
 	rightPadding: eyeButton.visible ? 5 * DefaultStyle.dp + eyeButton.width + eyeButton.rightMargin : 15 * DefaultStyle.dp
 	echoMode: (hidden && !eyeButton.checked) ? TextInput.Password : TextInput.Normal
+	verticalAlignment: TextInput.AlignVCenter
 	color: DefaultStyle.main2_600
 	font {
 		family: DefaultStyle.defaultFont
@@ -47,10 +48,12 @@ Control.TextField {
 			? DefaultStyle.main1_500_main
 			: mainItem.backgroundBorderColor
 	}
+
 	cursorDelegate: Rectangle {
 		id: cursor
 		color: DefaultStyle.main1_500_main
 		width: 1 * DefaultStyle.dp
+		anchors.verticalCenter: mainItem.verticalCenter
 
 		SequentialAnimation {
             loops: Animation.Infinite

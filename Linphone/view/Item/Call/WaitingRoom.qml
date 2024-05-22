@@ -42,13 +42,14 @@ RowLayout {
 					id: videoButton
 					iconUrl: AppIcons.videoCamera
 					checkedIconUrl: AppIcons.videoCameraSlash
+					checked: !mainItem.localVideoEnabled
 					color: DefaultStyle.grey_500
 					contentImageColor: DefaultStyle.main2_0
 					Layout.preferredWidth: 55 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
 					icon.width: 32 * DefaultStyle.dp
 					icon.height: 32 * DefaultStyle.dp
-					onCheckedChanged: mainItem.localVideoEnabled = !mainItem.localVideoEnabled
+					onClicked: mainItem.localVideoEnabled = !mainItem.localVideoEnabled
 				}
 				CheckableButton {
 					id: microButton

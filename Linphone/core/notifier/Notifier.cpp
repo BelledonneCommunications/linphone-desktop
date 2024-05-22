@@ -176,7 +176,7 @@ QObject *Notifier::createNotification(Notifier::NotificationType type, QVariantM
 					    engine->deleteLater();
 					    exit(-1);
 				    } else {
-					    qWarning() << engine->rootObjects()[0];
+					    lDebug() << engine->rootObjects()[0];
 					    auto window = qobject_cast<QQuickWindow *>(obj);
 					    if (window) {
 						    int *screenHeightOffset = &mScreenHeightOffset[screen->name()]; // Access optimization
@@ -191,7 +191,7 @@ QObject *Notifier::createNotification(Notifier::NotificationType type, QVariantM
 						                  window->property("width")
 						                      .toInt())); //*screen->devicePixelRatio()); when using manual scaler
 						    window->setY(heightOffset - (*screenHeightOffset % heightOffset));
-						    qWarning() << window->geometry();
+						    lDebug() << window->geometry();
 					    }
 				    }
 			    },

@@ -549,7 +549,13 @@ AbstractMainPage {
 								iconSize: 24 * DefaultStyle.dp
 								iconSource: AppIcons.shareNetwork
 								text: qsTr("Share")
-								onClicked: console.log("TODO : share contact")
+								onClicked: {
+									if (mainItem.selectedContact) {
+										var vcard = mainItem.selectedContact.core.getVCard()
+										UtilsCpp.copyToClipboard(vcard)
+										UtilsCpp.showInformationPopup(qsTr("Copié"), qsTr("VCard copiée dans le presse-papier"))
+									}
+								}
 							}
 							Rectangle {
 								Layout.fillWidth: true

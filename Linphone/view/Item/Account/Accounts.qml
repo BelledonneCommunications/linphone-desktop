@@ -15,6 +15,7 @@ Item {
 	readonly property int leftPadding: 32 * DefaultStyle.dp
 	readonly property int rightPadding: 32 * DefaultStyle.dp
 	readonly property int spacing: 16 * DefaultStyle.dp
+	property AccountProxy accountProxy
 	
 	signal addAccountRequest()
 	implicitHeight: list.contentHeight + topPadding + bottomPadding + 32 * DefaultStyle.dp + 1 + newAccountArea.height
@@ -33,7 +34,7 @@ Item {
 			Layout.preferredHeight: contentHeight
 			Layout.fillWidth: true
 			spacing: mainItem.spacing
-			model: AccountProxy{}
+			model: mainItem.accountProxy
 			delegate: Contact{
 				id: contactItem
 				width: list.width

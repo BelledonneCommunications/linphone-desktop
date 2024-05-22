@@ -54,6 +54,7 @@ public:
 	}
 
 	Q_INVOKABLE static VariantObject *getDisplayName(const QString &address);
+	Q_INVOKABLE static QString getUsername(const QString &address);
 	Q_INVOKABLE static QString getGivenNameFromFullName(const QString &fullName);
 	Q_INVOKABLE static QString getFamilyNameFromFullName(const QString &fullName);
 	Q_INVOKABLE static QString getInitials(const QString &username); // Support UTF32

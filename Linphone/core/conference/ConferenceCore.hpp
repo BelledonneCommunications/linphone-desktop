@@ -36,7 +36,6 @@
 class ConferenceCore : public QObject, public AbstractObject {
 	Q_OBJECT
 public:
-	Q_PROPERTY(QString subject READ getSubject NOTIFY subjectChanged)
 	Q_PROPERTY(QDateTime startDate READ getStartDate CONSTANT)
 	// Q_PROPERTY(ParticipantDeviceList *participantDevices READ getParticipantDeviceList CONSTANT)
 	// Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
@@ -72,7 +71,6 @@ public:
 	//---------------------------------------------------------------------------
 
 signals:
-	void subjectChanged();
 	void isReadyChanged();
 	void participantDeviceCountChanged();
 	void activeSpeakerChanged();

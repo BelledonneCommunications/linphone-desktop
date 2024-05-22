@@ -141,11 +141,22 @@ void FriendModel::clearAddresses() {
 }
 
 QString FriendModel::getName() const {
-	return Utils::coreStringToAppString(mMonitor->getName());
+	auto vcard = mMonitor->getVcard();
+	bool created = false;
+	if (!vcard) {
+		created = mMonitor->createVcard(mMonitor->getName());
+	}
+	if (mMonitor->getVcard()) return Utils::coreStringToAppString(mMonitor->getName());
+	else return QString();
 }
 
 void FriendModel::setName(const QString &name) {
-	mMonitor->setName(Utils::appStringToCoreString(name));
+	auto vcard = mMonitor->getVcard();
+	bool created = false;
+	if (!vcard) {
+		created = mMonitor->createVcard(Utils::appStringToCoreString(name));
+	}
+	if (mMonitor->getVcard()) mMonitor->setName(Utils::appStringToCoreString(name));
 }
 
 QString FriendModel::getGivenName() const {
@@ -257,6 +268,11 @@ QString FriendModel::getPictureUri() const {
 	}
 	if (mMonitor->getVcard()) return Utils::coreStringToAppString(mMonitor->getVcard()->getPhoto());
 	else return QString();
+}
+
+QString FriendModel::getVCardAsString() const {
+	assert(mMonitor->getVcard());
+	return Utils::coreStringToAppString(mMonitor->getVcard()->asVcard4String());
 }
 
 void FriendModel::setPictureUri(const QString &uri) {

@@ -59,6 +59,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 			mJob = Utils::coreStringToAppString(vcard->getJobTitle());
 			mGivenName = Utils::coreStringToAppString(vcard->getGivenName());
 			mFamilyName = Utils::coreStringToAppString(vcard->getFamilyName());
+			mVCardString = Utils::coreStringToAppString(vcard->asVcard4String());
 		}
 		auto addresses = contact->getAddresses();
 		for (auto &address : addresses) {
@@ -80,6 +81,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 		mIsSaved = false;
 		mStarred = false;
 	}
+
 	connect(this, &FriendCore::addressChanged, &FriendCore::allAddressesChanged);
 	connect(this, &FriendCore::phoneNumberChanged, &FriendCore::allAddressesChanged);
 }
@@ -245,6 +247,10 @@ void FriendCore::onStarredChanged(bool starred) {
 	mStarred = starred;
 	save();
 	emit starredChanged();
+}
+
+QString FriendCore::getVCard() const {
+	return mVCardString;
 }
 
 QList<QVariant> FriendCore::getPhoneNumbers() const {
@@ -480,6 +486,7 @@ void FriendCore::save() { // Save Values to model
 			mustBeInLinphoneThread(getClassName() + "::save()");
 			thisCopy->writeIntoModel(mFriendModel);
 			thisCopy->deleteLater();
+			mVCardString = mFriendModel->getVCardAsString();
 			mFriendModelConnection->invokeToCore([this]() { saved(); });
 			setIsSaved(true);
 		});
@@ -501,6 +508,7 @@ void FriendCore::save() { // Save Values to model
 					mCoreModelConnection->invokeToModel([this, thisCopy] {
 						thisCopy->writeIntoModel(mFriendModel);
 						thisCopy->deleteLater();
+						mVCardString = mFriendModel->getVCardAsString();
 					});
 					saved();
 				});
@@ -514,6 +522,7 @@ void FriendCore::save() { // Save Values to model
 						auto core = CoreModel::getInstance()->getCore();
 						thisCopy->writeIntoModel(mFriendModel);
 						thisCopy->deleteLater();
+						mVCardString = mFriendModel->getVCardAsString();
 						bool created =
 						    (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
 						if (created) {

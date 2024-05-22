@@ -55,8 +55,10 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 		mCoreModelConnection->invokeToModel([this]() {
 			QList<QSharedPointer<ConferenceInfoCore>> *items = new QList<QSharedPointer<ConferenceInfoCore>>();
 			mustBeInLinphoneThread(getClassName());
+			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+			if (!defaultAccount) return;
 			std::list<std::shared_ptr<linphone::ConferenceInfo>> conferenceInfos =
-			    CoreModel::getInstance()->getCore()->getDefaultAccount()->getConferenceInformationList();
+			   defaultAccount->getConferenceInformationList();
 			items->push_back(nullptr); // Add Dummy conference for today
 			for (auto conferenceInfo : conferenceInfos) {
 				auto confInfoCore = build(conferenceInfo);

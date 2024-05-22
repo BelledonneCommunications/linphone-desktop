@@ -44,6 +44,9 @@ public:
 	void setDefault();
 	void removeAccount();
 	void resetMissedCallsCount();
+	void refreshUnreadNotifications();
+	int getMissedCallsCount() const;
+	int getUnreadMessagesCount() const;
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,

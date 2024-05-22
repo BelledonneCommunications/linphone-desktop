@@ -101,10 +101,12 @@ ColumnLayout {
 					target: LoginPageCpp
 					onRegistrationStateChanged: {
 						if (LoginPageCpp.registrationState != LinphoneEnums.RegistrationState.Progress) {
+							connectionButton.enabled = true
 							connectionButtonContent.currentIndex = 0
 						}
 					}
 					onErrorMessageChanged: {
+						connectionButton.enabled = true
 						connectionButtonContent.currentIndex = 0
 					}
 				}
@@ -123,6 +125,7 @@ ColumnLayout {
 					return
 				}
 				LoginPageCpp.login(usernameEdit.text, passwordEdit.text)
+				connectionButton.enabled = false
 				connectionButtonContent.currentIndex = 1
 			}
 

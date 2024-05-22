@@ -45,6 +45,7 @@ ListView {
 	signal contactStarredChanged()
 	signal contactDeletionRequested(FriendGui contact)
 	signal contactAddedToSelection()
+	signal contactClicked(FriendGui contact)
 
 	function addContactToSelection(address) {
 		if (multiSelectionEnabled) {
@@ -112,7 +113,7 @@ ListView {
 			id: contactDelegate
 			anchors.left: initial.visible ? initial.right : parent.left
 			anchors.leftMargin: 10 * DefaultStyle.dp
-			anchors.right: parent.right
+			anchors.right: actionsRow.left
 			// anchors.rightMargin: 10 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 10 * DefaultStyle.dp
@@ -182,7 +183,7 @@ ListView {
 			PopupButton {
 				id: friendPopup
 				z: 1
-				Layout.rightMargin: 5 * DefaultStyle.dp
+				Layout.rightMargin: 13 * DefaultStyle.dp
 				Layout.alignment: Qt.AlignVCenter
 				popup.x: 0
 				popup.padding: 10 * DefaultStyle.dp
@@ -249,8 +250,9 @@ ListView {
 		MouseArea {
 			id: contactArea
 			hoverEnabled: mainItem.hoverEnabled
-			anchors.fill: contactDelegate
+			anchors.fill: itemDelegate
 			height: mainItem.height
+			z: -1
 			Rectangle {
 				anchors.fill: contactArea
 				opacity: 0.7
@@ -259,6 +261,7 @@ ListView {
 			}
 			onClicked: {
 				mainItem.currentIndex = index
+				mainItem.contactClicked(modelData)
 				if (mainItem.multiSelectionEnabled) {
 					var indexInSelection = mainItem.selectedContacts.indexOf(modelData.core.defaultAddress)
 					if (indexInSelection == -1) {

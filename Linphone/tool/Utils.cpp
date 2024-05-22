@@ -62,6 +62,14 @@ VariantObject *Utils::getDisplayName(const QString &address) {
 	return data;
 }
 
+QString Utils::getUsername(const QString &address) {
+	QString res = address;
+	if (res.startsWith("sip:")) res.remove("sip:");
+	int splitIndex = res.lastIndexOf('@');
+	if (splitIndex != -1) res.truncate(splitIndex);
+	return res;
+}
+
 QString Utils::getGivenNameFromFullName(const QString &fullName) {
 	if (fullName.isEmpty()) return QString();
 	auto nameSplitted = fullName.split(" ");

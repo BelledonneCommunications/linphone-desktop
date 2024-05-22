@@ -19,7 +19,7 @@ ListView {
 	spacing: 8 * DefaultStyle.dp
 	currentIndex: confInfoProxy.currentDateIndex
 
-	onCountChanged: selectedConference = model && currentIndex != -1 ? model.getAt(currentIndex) : null
+	onCountChanged: selectedConference = model && currentIndex != -1 && currentIndex < model.count ? model.getAt(currentIndex) : null
 	onCurrentIndexChanged: {
 		selectedConference = model.getAt(currentIndex)
 	}

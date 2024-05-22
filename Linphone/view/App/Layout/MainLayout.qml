@@ -31,6 +31,11 @@ Item {
 		contactPage.createContact(name, address)
 	}
 
+	AccountProxy {
+		id: accountProxy
+		onDefaultAccountChanged: if (tabbar.currentIndex === 0) defaultAccount.core.lResetMissedCalls()
+	}
+
 	Timer {
 		id: autoClosePopup
 		interval: 5000
@@ -120,11 +125,13 @@ Item {
 				id: tabbar
 				Layout.fillHeight: true
 				Layout.preferredWidth: 82 * DefaultStyle.dp
+				defaultAccount: accountProxy.defaultAccount
+				property int unreadMessages: defaultAccount.core.unreadMessageNotifications
 				model: [
-					{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels"), unreadNotifications: accountProxy.defaultAccount.core.unreadCallNotifications},
-					{icon: AppIcons.adressBook, selectedIcon: AppIcons.adressBookSelected, label: qsTr("Contacts"), unreadNotifications: 0},
-					{icon: AppIcons.chatTeardropText, selectedIcon: AppIcons.chatTeardropTextSelected, label: qsTr("Conversations"), unreadNotifications: accountProxy.defaultAccount.core.unreadMessageNotifications},
-					{icon: AppIcons.videoconference, selectedIcon: AppIcons.videoconferenceSelected, label: qsTr("Réunions"), unreadNotifications: 0}
+					{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels")},
+					{icon: AppIcons.adressBook, selectedIcon: AppIcons.adressBookSelected, label: qsTr("Contacts")},
+					{icon: AppIcons.chatTeardropText, selectedIcon: AppIcons.chatTeardropTextSelected, label: qsTr("Conversations")},
+					{icon: AppIcons.videoconference, selectedIcon: AppIcons.videoconferenceSelected, label: qsTr("Réunions")}
 				]
 				onCurrentIndexChanged: {
 					if (currentIndex === 0) accountProxy.defaultAccount.core.lResetMissedCalls()
@@ -294,10 +301,6 @@ Item {
 						spacing: 10 * DefaultStyle.dp
 						PopupButton {
 							id: avatarButton
-							AccountProxy{
-								id: accountProxy
-								//property bool haveAvatar: defaultAccount && defaultAccount.core.pictureUri || false
-							}
 							background.visible: false
 							Layout.preferredWidth: 54 * DefaultStyle.dp
 							Layout.preferredHeight: width
@@ -312,6 +315,7 @@ Item {
 							popup.contentItem: ColumnLayout {
 								Accounts {
 									id: accounts
+									accountProxy: accountProxy
 									onAddAccountRequest: mainItem.addAccountRequest()
 								}
 							}

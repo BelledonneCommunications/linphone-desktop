@@ -11,6 +11,7 @@ import UtilsCpp
 Rectangle{
 	id: mainItem
 	property AccountGui account
+
 	signal avatarClicked()
 	signal backgroundClicked()
 	
@@ -22,25 +23,27 @@ Rectangle{
 	RowLayout{
 		anchors.fill: parent
 		spacing: 0
-		Avatar{
-			id: avatar
-			Layout.preferredWidth: 45 * DefaultStyle.dp
-			Layout.preferredHeight: 45 * DefaultStyle.dp
-			account: mainItem.account
-			MouseArea{
-				anchors.fill: parent
-				onClicked: mainItem.avatarClicked()
-			}
-		}
-		Item {
-			Layout.preferredWidth: 200 * DefaultStyle.dp
-			Layout.fillHeight: true
-			Layout.leftMargin: 10 * DefaultStyle.dp
-			Layout.rightMargin: 10 * DefaultStyle.dp
-			ContactDescription{
-				id: description
-				anchors.fill: parent
+		RowLayout {
+			spacing: 10 * DefaultStyle.dp
+			Avatar{
+				id: avatar
+				Layout.preferredWidth: 45 * DefaultStyle.dp
+				Layout.preferredHeight: 45 * DefaultStyle.dp
 				account: mainItem.account
+				MouseArea{
+					anchors.fill: parent
+					onClicked: mainItem.avatarClicked()
+				}
+			}
+			Item {
+				Layout.preferredWidth: 200 * DefaultStyle.dp
+				Layout.fillHeight: true
+				Layout.rightMargin: 10 * DefaultStyle.dp
+				ContactDescription{
+					id: description
+					anchors.fill: parent
+					account: mainItem.account
+				}
 			}
 		}
 		Control.Control {
@@ -96,20 +99,17 @@ Rectangle{
 								: qsTr("Erreur")
 			}
 		}
-		// Item {
-		// 	Layout.fillWidth: true
-		// }
 		Item{
-			Layout.preferredWidth: 27 * DefaultStyle.dp
-			Layout.preferredHeight: 27 * DefaultStyle.dp
+			Layout.preferredWidth: 26 * DefaultStyle.dp
+			Layout.preferredHeight: 26 * DefaultStyle.dp
 			Layout.fillHeight: true
+			Layout.leftMargin: 40 * DefaultStyle.dp
+			visible: mainItem.account.core.unreadCallNotifications > 0
 			Rectangle{
 				id: unreadNotifications
 				anchors.verticalCenter: parent.verticalCenter
-				property int unread: mainItem.account.core.unreadNotifications
-				visible: unread > 0
-				width: 27 * DefaultStyle.dp
-				height: 27 * DefaultStyle.dp
+				width: 26 * DefaultStyle.dp
+				height: 26 * DefaultStyle.dp
 				radius: width/2
 				color: DefaultStyle.danger_500main
 				border.color: DefaultStyle.grey_0
@@ -125,7 +125,7 @@ Rectangle{
 					fontSizeMode: Text.Fit
 					font.pixelSize: 11 *  DefaultStyle.dp
 					font.weight: 700 *  DefaultStyle.dp
-					text: parent.unread > 100 ? '99+' : parent.unread
+					text: mainItem.account.core.unreadCallNotifications >= 100 ? '99+' : mainItem.account.core.unreadCallNotifications
 				}
 			}
 			MultiEffect {
@@ -136,6 +136,7 @@ Rectangle{
 				shadowOpacity: 0.15
 			}
 		}
+		Item{Layout.fillWidth: true}
 		EffectImage {
 			id: manageAccount
 			imageSource: AppIcons.manageProfile

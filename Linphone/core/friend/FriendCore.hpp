@@ -87,6 +87,8 @@ public:
 	bool getStarred() const;
 	void onStarredChanged(bool starred);
 
+	Q_INVOKABLE QString getVCard() const;
+
 	QList<QVariant> getPhoneNumbers() const;
 	QVariant getPhoneNumberAt(int index) const;
 	Q_INVOKABLE void appendPhoneNumber(const QString &label, const QString &number);
@@ -164,6 +166,7 @@ protected:
 	QString mDefaultAddress;
 	QString mPictureUri;
 	bool mIsSaved;
+	QString mVCardString;
 	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<FriendCore, FriendModel>> mFriendModelConnection;
 	QSharedPointer<SafeConnection<FriendCore, CoreModel>> mCoreModelConnection;

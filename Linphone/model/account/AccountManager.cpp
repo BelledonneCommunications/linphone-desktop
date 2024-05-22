@@ -66,6 +66,7 @@ bool AccountManager::login(QString username, QString password, QString *errorMes
 		}
 	}
 
+	username = Utils::getUsername(username);
 	identity->setUsername(Utils::appStringToCoreString(username));
 	if (params->setIdentityAddress(identity)) {
 		qWarning() << log()

@@ -210,14 +210,14 @@ Item {
 							model: MagicSearchProxy {
 								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
 							}
-							onSelectedContactChanged: {
-								if (selectedContact) {
-									if (selectedContact.core.allAddresses.length > 1) {
-										startCallPopup.contact = selectedContact
+							onContactClicked: (contact) => {
+								if (contact) {
+									if (contact.core.allAddresses.length > 1) {
+										startCallPopup.contact = contact
 										startCallPopup.open()
 
 									} else {
-										mainItem.callButtonPressed(selectedContact.core.defaultAddress)
+										mainItem.callButtonPressed(contact.core.defaultAddress)
 									}
 								}
 							}

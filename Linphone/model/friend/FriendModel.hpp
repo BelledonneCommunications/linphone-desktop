@@ -53,6 +53,7 @@ public:
 	bool getStarred() const;
 	std::shared_ptr<linphone::Friend> getFriend() const;
 	QString getPictureUri() const;
+	QString getVCardAsString() const;
 
 protected:
 	void setAddress(const std::shared_ptr<linphone::Address> &address);

@@ -20,7 +20,6 @@
 
 #include "AccountCore.hpp"
 #include "core/App.hpp"
-#include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/thread/SafeConnection.hpp"
 
@@ -95,6 +94,20 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lResetMissedCalls, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { mAccountModel->resetMissedCallsCount(); });
 	});
+	mAccountModelConnection->makeConnectToCore(&AccountCore::lRefreshNotifications, [this]() {
+		mAccountModelConnection->invokeToModel([this]() { mAccountModel->refreshUnreadNotifications(); });
+	});
+	mCoreModelConnection = QSharedPointer<SafeConnection<AccountCore, CoreModel>>(
+	    new SafeConnection<AccountCore, CoreModel>(me, CoreModel::getInstance()));
+	mAccountModelConnection->makeConnectToCore(&AccountCore::unreadCallNotificationsChanged, [this]() {
+		mAccountModelConnection->invokeToModel([this]() { CoreModel::getInstance()->unreadNotificationsChanged(); });
+	});
+	mAccountModelConnection->makeConnectToCore(&AccountCore::unreadMessageNotificationsChanged, [this]() {
+		mAccountModelConnection->invokeToModel([this]() { CoreModel::getInstance()->unreadNotificationsChanged(); });
+	});
+	mAccountModelConnection->makeConnectToCore(&AccountCore::unreadNotificationsChanged, [this]() {
+		mAccountModelConnection->invokeToModel([this]() { CoreModel::getInstance()->unreadNotificationsChanged(); });
+	});
 }
 
 QString AccountCore::getContactAddress() const {
@@ -133,7 +146,7 @@ int AccountCore::getUnreadCallNotifications() const {
 void AccountCore::setUnreadCallNotifications(int unread) {
 	if (mUnreadCallNotifications != unread) {
 		mUnreadCallNotifications = unread;
-		emit unreadNotificationsChanged(unread);
+		emit unreadCallNotificationsChanged(unread);
 	}
 }
 
@@ -143,7 +156,7 @@ int AccountCore::getUnreadMessageNotifications() const {
 void AccountCore::setUnreadMessageNotifications(int unread) {
 	if (mUnreadMessageNotifications != unread) {
 		mUnreadMessageNotifications = unread;
-		emit unreadNotificationsChanged(unread);
+		emit unreadMessageNotificationsChanged(unread);
 	}
 }
 

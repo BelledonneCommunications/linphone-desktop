@@ -13,6 +13,11 @@ Control.TabBar {
 	property var model
 	readonly property alias cornerRadius: bottomLeftCorner.radius
 
+	property AccountGui defaultAccount
+	onDefaultAccountChanged: {
+		defaultAccount.core.lRefreshNotifications()
+	}
+
 	component UnreadNotification: Rectangle {
 		id: unreadNotifications
 		property int unread: 0
@@ -82,7 +87,7 @@ Control.TabBar {
 			width: mainItem.width
 
 			UnreadNotification {
-				unread: modelData.unreadNotifications
+				unread: index == 0 ? defaultAccount.core.unreadCallNotifications : index == 2 ? defaultAccount.core.unreadMessageNotifications : 0// modelData.unreadNotifications
 				anchors.right: parent.right
 				anchors.rightMargin: 15 * DefaultStyle.dp
 				anchors.top: parent.top

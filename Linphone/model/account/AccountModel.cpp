@@ -95,3 +95,16 @@ void AccountModel::resetMissedCallsCount() {
 	emit unreadNotificationsChanged(0 /*mMonitor->getUnreadChatMessageCount()*/,
 	                                mMonitor->getMissedCallsCount()); // TODO
 }
+
+void AccountModel::refreshUnreadNotifications() {
+	emit unreadNotificationsChanged(0 /*mMonitor->getUnreadChatMessageCount()*/,
+	                                mMonitor->getMissedCallsCount()); // TODO
+}
+
+int AccountModel::getMissedCallsCount() const {
+	return mMonitor->getMissedCallsCount();
+}
+
+int AccountModel::getUnreadMessagesCount() const {
+	return mMonitor->getUnreadChatMessageCount();
+}
