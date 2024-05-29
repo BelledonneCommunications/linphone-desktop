@@ -56,6 +56,7 @@ public:
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 signals:
 	void lUpdate();
+	void lMergeAll();
 	void haveCallChanged();
 	void currentCallChanged();
 

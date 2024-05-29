@@ -14,6 +14,7 @@ QtObject {
 	property string rightArrow: "image://internal/caret-right.svg"
 	property string upArrow: "image://internal/caret-up.svg"
 	property string reloadArrow: "image://internal/arrow-clockwise.svg"
+	property string arrowsMerge: "image://internal/arrows-merge.svg"
 	property string info: "image://internal/info.svg"
 	property string loginImage: "image://internal/login_image.svg"
 	property string belledonne: "image://internal/belledonne.svg"

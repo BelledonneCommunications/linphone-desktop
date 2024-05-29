@@ -78,6 +78,49 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 			});
 		});
 	});
+	mModelConnection->makeConnectToCore(&CallList::lMergeAll, [this]() {
+		mModelConnection->invokeToModel([this]() {
+			auto core = CoreModel::getInstance()->getCore();
+			auto currentCalls = CoreModel::getInstance()->getCore()->getCalls();
+			std::shared_ptr<linphone::Conference> conference = nullptr;
+
+			// Search a managable conference from calls
+			for (auto call : currentCalls) {
+				auto dbConference = call->getConference();
+				if (dbConference && dbConference->getMe()->isAdmin()) {
+					conference = dbConference;
+					break;
+				}
+			}
+
+			auto currentCall = CoreModel::getInstance()->getCore()->getCurrentCall();
+			bool enablingVideo = false;
+			if (currentCall) enablingVideo = currentCall->getCurrentParams()->videoEnabled();
+			if (!conference) {
+				auto parameters = core->createConferenceParams(conference);
+				parameters->enableVideo(enablingVideo);
+				parameters->setSubject("Meeting");
+				conference = core->createConferenceWithParams(parameters);
+			}
+
+			std::list<std::shared_ptr<linphone::Address>> allLinphoneAddresses;
+			std::list<std::shared_ptr<linphone::Address>> newCalls;
+			std::list<std::shared_ptr<linphone::Call>> runningCallsToAdd;
+
+			for (auto call : currentCalls) {
+				if (!call->getConference()) {
+					runningCallsToAdd.push_back(call);
+				}
+			}
+
+			// 1) Add running calls
+			if (runningCallsToAdd.size() > 0) {
+				conference->addParticipants(runningCallsToAdd);
+			}
+
+			// emit lUpdate();
+		});
+	});
 
 	mModelConnection->makeConnectToModel(&CoreModel::firstCallStarted,
 	                                     [this]() { mModelConnection->invokeToCore([this]() { setHaveCall(true); }); });

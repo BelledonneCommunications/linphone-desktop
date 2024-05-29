@@ -28,6 +28,7 @@ CallProxy::CallProxy(QObject *parent) : SortFilterProxy(parent) {
 	mList = CallList::create();
 	connect(mList.get(), &CallList::currentCallChanged, this, &CallProxy::resetCurrentCall);
 	connect(mList.get(), &CallList::haveCallChanged, this, &CallProxy::haveCallChanged);
+	connect(this, &CallProxy::lMergeAll, mList.get(), &CallList::lMergeAll);
 	setSourceModel(mList.get());
 	sort(0);
 }

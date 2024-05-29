@@ -488,7 +488,7 @@ AbstractMainPage {
 					onStartGroupCallRequested: {
 						if (groupName.length === 0) {
 							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Un nom doit être donné à l'appel de groupe"), false)
-						} if(!mainItem.isRegistered) {
+						} else if(!mainItem.isRegistered) {
 							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Vous n'etes pas connecté"), false)
 						} else {
 							mainItem.confInfoGui = Qt.createQmlObject('import Linphone

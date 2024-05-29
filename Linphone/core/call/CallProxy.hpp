@@ -51,6 +51,7 @@ public:
 	bool getHaveCall() const;
 
 signals:
+	void lMergeAll();
 	void filterTextChanged();
 	void currentCallChanged();
 	void haveCallChanged();

@@ -556,8 +556,38 @@ AppWindow {
 				Component {
 					id: callsListPanel
 					ColumnLayout {
-						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Liste d'appel")
+						Control.StackView.onActivated: {
+							rightPanel.headerTitleText = qsTr("Liste d'appel")
+							rightPanel.customHeaderButtons = mergeCallPopupButton.createObject(rightPanel)
+						}
 						spacing: 0
+						Component {
+							id: mergeCallPopupButton
+							PopupButton {
+								visible: callsModel.count >= 2
+								id: popupbutton
+								popup.contentItem: Button {
+									background: Item{}
+									contentItem: RowLayout {
+										spacing: 5 * DefaultStyle.dp
+										EffectImage {
+											colorizationColor: DefaultStyle.main2_600
+											imageSource: AppIcons.arrowsMerge
+											Layout.preferredWidth: 32 * DefaultStyle.dp
+											Layout.preferredHeight: 32 * DefaultStyle.dp
+										}
+										Text {
+											text: qsTr("Merger tous les appels")
+											font.pixelSize: 14 * DefaultStyle.dp
+										}
+									}
+									onClicked: {
+										callsModel.lMergeAll()
+										popupbutton.close()
+									}
+								}
+							}
+						}
 						RoundedBackgroundControl {
 							Layout.fillWidth: true
 							Layout.maximumHeight: rightPanel.height
@@ -598,7 +628,9 @@ AppWindow {
 										Text {
 											id: delegateName
 											property var remoteAddress: UtilsCpp.getDisplayName(modelData.core.peerAddress)
-											text: remoteAddress ? remoteAddress.value : ""
+											text: modelData.core.isConference 
+												? modelData.core.conference.core.subject
+												: remoteAddress ? remoteAddress.value : ""
 											Layout.leftMargin: 8 * DefaultStyle.dp
 											Connections {
 												target: modelData.core
@@ -758,10 +790,11 @@ AppWindow {
 									}
 									Control.StackView.onActivated: {
 										rightPanel.customHeaderButtons = headerbutton.createObject(rightPanel)
+										rightPanel.headerTitleText = qsTr("Participants (%1)").arg(count)
 									}
 									call: mainWindow.call
 									onAddParticipantRequested: participantsStack.push(addParticipantComp)
-									onCountChanged: if (participantsStack.Control.StackView.status === Control.StackView.Active && participantsStack.currentItem == participantListComp) {
+									onCountChanged: {
 										rightPanel.headerTitleText = qsTr("Participants (%1)").arg(count)
 									}
 									Connections {
