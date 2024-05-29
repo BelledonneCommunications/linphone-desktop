@@ -15,6 +15,7 @@ ListView {
 
 	property string searchBarText
 
+	property bool selectionEnabled: true
 	property bool hoverEnabled: true
 	// dots popup menu
 	property bool contactMenuVisible: true
@@ -81,7 +82,7 @@ ListView {
 	delegate: Item {
 		id: itemDelegate
 		height: display ? 56 * DefaultStyle.dp : 0
-		width: mainItem.width - scrollbar.width - 12 * DefaultStyle.dp
+		width: mainItem.width
 		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
 		property var previousDisplayName: previousItem ? previousItem.core.displayName : ""
 		property var displayName: modelData.core.displayName
@@ -98,6 +99,7 @@ ListView {
 			anchors.left: parent.left
 			visible: mainItem.initialHeadersVisible && mainItem.model.sourceFlags != LinphoneEnums.MagicSearchSource.All
 			anchors.verticalCenter: parent.verticalCenter
+			anchors.rightMargin: 15 * DefaultStyle.dp
 			verticalAlignment: Text.AlignVCenter
 			width: 20 * DefaultStyle.dp
 			opacity: (!previousItem || !previousDisplayName.toLocaleLowerCase(ConstantsCpp.DefaultLocale).startsWith(displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale))) ? 1 : 0
@@ -112,9 +114,7 @@ ListView {
 		RowLayout {
 			id: contactDelegate
 			anchors.left: initial.visible ? initial.right : parent.left
-			anchors.leftMargin: 10 * DefaultStyle.dp
 			anchors.right: actionsRow.left
-			// anchors.rightMargin: 10 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 10 * DefaultStyle.dp
 			z: 1
@@ -156,34 +156,37 @@ ListView {
 				visible: mainItem.actionLayoutVisible
 				spacing: 10 * DefaultStyle.dp
 				Button {
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					background: Item{}
-					contentItem: Image {
+					Layout.preferredWidth: 45 * DefaultStyle.dp
+					Layout.preferredHeight: 45 * DefaultStyle.dp
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
+					icon.source: AppIcons.phone
+					contentImageColor: DefaultStyle.main2_500main
+					background: Rectangle {
 						anchors.fill: parent
-						width: 24 * DefaultStyle.dp
-						height: 24 * DefaultStyle.dp
-						source: AppIcons.phone
+						radius: 40 * DefaultStyle.dp
+						color: DefaultStyle.main2_200
 					}
 					onClicked: UtilsCpp.createCall(modelData.core.defaultAddress)
 				}
 				Button {
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					background: Item{}
-					contentItem: Image {
+					Layout.preferredWidth: 45 * DefaultStyle.dp
+					Layout.preferredHeight: 45 * DefaultStyle.dp
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
+					icon.source: AppIcons.chatTeardropText
+					contentImageColor: DefaultStyle.main2_500main
+					background: Rectangle {
 						anchors.fill: parent
-						width: 24 * DefaultStyle.dp
-						height: 24 * DefaultStyle.dp
-						source: AppIcons.videoCamera
+						radius: 40 * DefaultStyle.dp
+						color: DefaultStyle.main2_200
 					}
-					onClicked: UtilsCpp.createCall(modelData.core.defaultAddress, {'localVideoEnabled':true})
 				}
 			}
 			PopupButton {
 				id: friendPopup
 				z: 1
-				Layout.rightMargin: 13 * DefaultStyle.dp
+				// Layout.rightMargin: 13 * DefaultStyle.dp
 				Layout.alignment: Qt.AlignVCenter
 				popup.x: 0
 				popup.padding: 10 * DefaultStyle.dp
@@ -249,6 +252,7 @@ ListView {
 		
 		MouseArea {
 			id: contactArea
+			enabled: mainItem.selectionEnabled
 			hoverEnabled: mainItem.hoverEnabled
 			anchors.fill: itemDelegate
 			height: mainItem.height

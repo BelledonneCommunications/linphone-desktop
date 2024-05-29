@@ -194,6 +194,7 @@ Item {
 					}
 					ColumnLayout {
 						spacing: 18 * DefaultStyle.dp
+						Layout.rightMargin: 39 * DefaultStyle.dp
 						Text {
 							text: qsTr("All contacts")
 							font {

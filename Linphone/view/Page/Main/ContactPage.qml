@@ -145,7 +145,7 @@ AbstractMainPage {
 							visible: favoriteList.contentHeight > 0
 							Layout.leftMargin: leftPanel.leftMargin
 							Layout.rightMargin: leftPanel.rightMargin
-							spacing: 16 * DefaultStyle.dp
+							spacing: 18 * DefaultStyle.dp
 							RowLayout {
 								spacing: 0
 								Text {
@@ -255,7 +255,7 @@ AbstractMainPage {
 						height: listLayout.availableHeight
 						active: true
 						interactive: true
-						policy: Control.ScrollBar.AlwaysOn //Control.ScrollBar.AsNeeded
+						policy: Control.ScrollBar.AsNeeded
 					}
 
 				}

@@ -404,19 +404,23 @@ AbstractMainPage {
 	}
 	Component {
 		id: newCallItem
-		CallContactsLists {
+		ColumnLayout {
 			Control.StackView.onActivated: titleLoader.sourceComponent = newCallTitle
-			numPad: numericPad
-			groupCallVisible: true
-			searchBarColor: DefaultStyle.grey_100
-			
-			onCallButtonPressed: (address) => {
-				UtilsCpp.createCall(address)
-				// var window = UtilsCpp.getCallsWindow()
-			}
-			onGroupCallCreationRequested: {
-				console.log("groupe call requetsed")
-				listStackView.push(groupCallItem)
+			CallContactsLists {
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+				numPad: numericPad
+				groupCallVisible: true
+				searchBarColor: DefaultStyle.grey_100
+				
+				onCallButtonPressed: (address) => {
+					UtilsCpp.createCall(address)
+					// var window = UtilsCpp.getCallsWindow()
+				}
+				onGroupCallCreationRequested: {
+					console.log("groupe call requetsed")
+					listStackView.push(groupCallItem)
+				}
 			}
 		}
 	}

@@ -10,6 +10,7 @@ Rectangle {
 	property color placeholderTextColor: DefaultStyle.main2_400
 	property int textInputWidth: 350 * DefaultStyle.dp
 	property color borderColor: "transparent"
+	property color focusedBorderColor: DefaultStyle.main2_500main
 	property string text: textField.text
 	property bool magnifierVisible: true
 	property var validator: RegularExpressionValidator{}
@@ -39,7 +40,7 @@ Rectangle {
 	implicitHeight: 50 * DefaultStyle.dp
 	radius: 28 * DefaultStyle.dp
 	color: DefaultStyle.grey_100
-	border.color: textField.activeFocus ? DefaultStyle.main2_500main : mainItem.borderColor
+	border.color: textField.activeFocus ? mainItem.focusedBorderColor : mainItem.borderColor
 	Image {
 		id: magnifier
 		visible: mainItem.magnifierVisible

@@ -150,26 +150,46 @@ Item {
 						id: magicSearchBar
 						Layout.fillWidth: true
 						placeholderText: qsTr("Rechercher un contact, appeler ou envoyer un message...")
+						focusedBorderColor: DefaultStyle.main1_500_main
 						onTextChanged: {
 							if (text.length != 0) listPopup.open()
 							else listPopup.close()
 						}
+						component MagicSearchButton: Button {
+							id: button
+							width: 45 * DefaultStyle.dp
+							height: 45 * DefaultStyle.dp
+							topPadding: 16 * DefaultStyle.dp
+							bottomPadding: 16 * DefaultStyle.dp
+							leftPadding: 16 * DefaultStyle.dp
+							rightPadding: 16 * DefaultStyle.dp
+							contentImageColor: DefaultStyle.main2_500main
+							icon.width: 24 * DefaultStyle.dp
+							icon.height: 24 * DefaultStyle.dp
+							background: Rectangle {
+								anchors.fill: parent
+								radius: 40 * DefaultStyle.dp
+								color: DefaultStyle.main2_200
+							}
+						}
+
 						Popup {
 							id: listPopup
 							width: magicSearchBar.width
-							height: Math.min(magicSearchList.contentHeight + topPadding + bottomPadding, 400 * DefaultStyle.dp)
+							height: Math.min(magicSearchContent.contentHeight + topPadding + bottomPadding, 400 * DefaultStyle.dp)
 							y: magicSearchBar.height
-							closePolicy: Popup.NoAutoClose
-							topPadding: 10 * DefaultStyle.dp
-							bottomPadding: 10 * DefaultStyle.dp
-							rightPadding: 10 * DefaultStyle.dp
-							leftPadding: 10 * DefaultStyle.dp
+							// closePolicy: Popup.NoAutoClose
+							topPadding: 20 * DefaultStyle.dp
+							bottomPadding: 20 * DefaultStyle.dp
+							rightPadding: 20 * DefaultStyle.dp
+							leftPadding: 20 * DefaultStyle.dp
 							
 							background: Item {
 								anchors.fill: parent
 								Rectangle {
 									id: popupBg
-									radius: 15 * DefaultStyle.dp
+									radius: 16 * DefaultStyle.dp
+									color: DefaultStyle.grey_0
 									anchors.fill: parent
 								}
 								MultiEffect {
@@ -181,116 +201,93 @@ Item {
 									shadowOpacity: 0.1
 								}
 							}
-							ScrollBar {
-								id: scrollbar
-								height: parent.height
-								anchors.right: listPopup.right
-							}
-							contentItem: ContactsList {
-								id: magicSearchList
-								visible: magicSearchBar.text.length != 0
-								height: contentHeight
-								width: magicSearchBar.width
-								headerPositioning: ListView.OverlayHeader
-								rightMargin: 15 * DefaultStyle.dp
-								initialHeadersVisible: false
-								contactMenuVisible: false
-								actionLayoutVisible: true
-								model: MagicSearchProxy {
-									searchText: magicSearchBar.text.length === 0 ? "*" : magicSearchBar.text
-									aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
+							
+							contentItem: Control.ScrollView {
+								id: magicSearchContent
+								contentWidth: width
+								contentHeight: content.height
+								Control.ScrollBar.vertical: ScrollBar {
+									id: scrollbar
+									policy: Control.ScrollBar.AsNeeded
+									interactive: true
+									height: magicSearchContent.availableHeight
+									anchors.top: listPopup.top
+									anchors.bottom: listPopup.bottom
+									anchors.right: parent.right
 								}
-								Control.ScrollBar.vertical: scrollbar
-								header: Control.Control {
-									z: 2
-									width: magicSearchList.width
-									leftPadding: 10 * DefaultStyle.dp
-									rightPadding: 10 * DefaultStyle.dp
-									background: Rectangle {
-										color: DefaultStyle.grey_0
+								ColumnLayout {
+									id: content
+									spacing: 10 * DefaultStyle.dp
+									width: magicSearchContent.width - scrollbar.width - 5 * DefaultStyle.dp
+									Text {
+										visible: contactList.count > 0
+										text: qsTr("Contact")
+										color: DefaultStyle.main2_500main
+										font {
+											pixelSize: 13 * DefaultStyle.dp
+											weight: 700 * DefaultStyle.dp
+										}
 									}
-									contentItem: ColumnLayout {
-										RowLayout {
-											Layout.fillWidth: true
-											spacing: 10 * DefaultStyle.dp
-											Avatar {
-												Layout.preferredWidth: 45 * DefaultStyle.dp
-												Layout.preferredHeight: 45 * DefaultStyle.dp
-												address: sipAddr.text
-											}
-											ColumnLayout {
-												Text {
-													text: magicSearchBar.text
-													font {
-														pixelSize: 14 * DefaultStyle.dp
-														weight: 700 * DefaultStyle.dp
-													}
-												}
-												Text {
-													id: sipAddr
-													text: magicSearchBar.text
-												}
-											}
-											Item {
-												Layout.fillWidth: true
-											}
-											Button {
-												background: Item{}
-												Layout.preferredWidth: 24 * DefaultStyle.dp
-												Layout.preferredHeight: 24 * DefaultStyle.dp
-												
-												contentItem: Image {
-													anchors.fill: parent
-													source: AppIcons.phone
-												}
-												onClicked: {
-													UtilsCpp.createCall(sipAddr.text)
-													magicSearchBar.clearText()
-												}
-											}
-											Button {
-												Layout.preferredWidth: 24 * DefaultStyle.dp
-												Layout.preferredHeight: 24 * DefaultStyle.dp
-												background: Item{}
-												contentItem: Image {
-													anchors.fill: parent
-													source: AppIcons.videoCamera
-												}
-												onClicked: {
-													UtilsCpp.createCall(sipAddr.text, {'localVideoEnabled':true})
-													magicSearchBar.clearText()
+									ContactsList {
+										id: contactList
+										visible: magicSearchBar.text.length != 0
+										Layout.preferredHeight: contentHeight
+										Layout.fillWidth: true
+										Layout.rightMargin: 5 * DefaultStyle.dp
+										initialHeadersVisible: false
+										contactMenuVisible: false
+										actionLayoutVisible: true
+										selectionEnabled: false
+										Control.ScrollBar.vertical.visible: false
+										model: MagicSearchProxy {
+											searchText: magicSearchBar.text.length === 0 ? "*" : magicSearchBar.text
+											aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
+										}
+									}
+									Text {
+										text: qsTr("Suggestion")
+										color: DefaultStyle.main2_500main
+										font {
+											pixelSize: 13 * DefaultStyle.dp
+											weight: 700 * DefaultStyle.dp
+										}
+									}
+									RowLayout {
+										Layout.fillWidth: true
+										Layout.rightMargin: 5 * DefaultStyle.dp
+										spacing: 10 * DefaultStyle.dp
+										Avatar {
+											Layout.preferredWidth: 45 * DefaultStyle.dp
+											Layout.preferredHeight: 45 * DefaultStyle.dp
+											address: magicSearchBar.text
+										}
+										ColumnLayout {
+											Text {
+												text: magicSearchBar.text
+												font {
+													pixelSize: 12 * DefaultStyle.dp
+													weight: 300 * DefaultStyle.dp
 												}
 											}
 										}
-										Button {
+										Item {
 											Layout.fillWidth: true
-											Layout.preferredHeight: 30 * DefaultStyle.dp
-											color: DefaultStyle.main2_200
-											pressedColor: DefaultStyle.main2_400
-											background: Rectangle {
-												anchors.fill: parent
-												color: DefaultStyle.main2_200
-											}
-											contentItem: RowLayout {
-												spacing: 10 * DefaultStyle.dp
-												Image {
-													source: AppIcons.userPlus
-												}
-												Text {
-													text: qsTr("Ajouter ce contact")
-													font {
-														pixelSize: 14 * DefaultStyle.dp
-														weight: 700 * DefaultStyle.dp
-														capitalization: Font.AllUppercase
-													}
-												}
-												Item {Layout.fillWidth: true}
-											}
+										}
+										MagicSearchButton {
+											Layout.preferredWidth: 45 * DefaultStyle.dp
+											Layout.preferredHeight: 45 * DefaultStyle.dp
+											icon.source: AppIcons.phone
 											onClicked: {
-												mainItem.createContact(magicSearchBar.text, sipAddr.text)
+												UtilsCpp.createCall(magicSearchBar.text)
 												magicSearchBar.clearText()
-												listPopup.close()
 											}
+										}
+										MagicSearchButton {
+											// TODO : visible true when chat available
+											// visible: false
+											Layout.preferredWidth: 45 * DefaultStyle.dp
+											Layout.preferredHeight: 45 * DefaultStyle.dp
+											icon.source: AppIcons.chatTeardropText
 										}
 									}
 								}
