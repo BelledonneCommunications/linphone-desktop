@@ -98,8 +98,15 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 			if (currentCall) enablingVideo = currentCall->getCurrentParams()->videoEnabled();
 			if (!conference) {
 				auto parameters = core->createConferenceParams(conference);
+				auto audioVideoConfFactoryUri =
+				    core->getDefaultAccount()->getParams()->getAudioVideoConferenceFactoryAddress();
+				if (audioVideoConfFactoryUri) {
+					parameters->setConferenceFactoryAddress(audioVideoConfFactoryUri);
+					parameters->setSubject("Meeting");
+				} else {
+					parameters->setSubject("Local meeting");
+				}
 				parameters->enableVideo(enablingVideo);
-				parameters->setSubject("Meeting");
 				conference = core->createConferenceWithParams(parameters);
 			}
 

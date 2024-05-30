@@ -243,9 +243,11 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 				    setRemoteSas(remoteToken);
 			    }
 			    setEncryption(encryption);
-			    setIsSecured((encryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified) ||
-			                 encryption == LinphoneEnums::MediaEncryption::Srtp ||
-			                 encryption == LinphoneEnums::MediaEncryption::Dtls);
+			    setIsSecured((encryption == LinphoneEnums::MediaEncryption::Zrtp &&
+			                  tokenVerified)); // ||
+			                                   //  encryption == LinphoneEnums::MediaEncryption::Srtp ||
+			                                   //  encryption == LinphoneEnums::MediaEncryption::Dtls);
+			                                   // TODO : change this when api available in sdk
 		    });
 	    });
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetSpeakerVolumeGain, [this](float gain) {

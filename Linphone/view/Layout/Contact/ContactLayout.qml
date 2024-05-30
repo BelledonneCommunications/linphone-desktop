@@ -126,7 +126,7 @@ ColumnLayout {
 		Layout.preferredHeight: childrenRect.height
 		Button {
 			visible: mainItem.isConference
-			anchors.horizontalCenter: parent.horizontalCenter
+			Layout.alignment: Qt.AlignHCenter
 			text: qsTr("Rejoindre la réunion")
 			color: DefaultStyle.main2_200
 			pressedColor: DefaultStyle.main2_400

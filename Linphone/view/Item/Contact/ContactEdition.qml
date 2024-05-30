@@ -273,7 +273,7 @@ RightPanelLayout {
 			Layout.bottomMargin: 100 * DefaultStyle.dp
 			Layout.preferredWidth: 165 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignHCenter
-			enabled: mainItem.contact && mainItem.contact.core.givenName.length > 0
+			enabled: mainItem.contact && mainItem.contact.core.givenName.length > 0 && mainItem.contact.core.allAddresses.length > 0
 			text: mainItem.saveButtonText
 			leftPadding: 20 * DefaultStyle.dp
 			rightPadding: 20 * DefaultStyle.dp
