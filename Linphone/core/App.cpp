@@ -182,6 +182,7 @@ void App::init() {
 						        exit(-1);
 					        }
 					        mMainWindow = qobject_cast<QQuickWindow *>(obj);
+					        QMetaObject::invokeMethod(obj, "initStackViewItem");
 					        Q_ASSERT(mMainWindow);
 				        }
 			        },

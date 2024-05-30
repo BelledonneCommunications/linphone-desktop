@@ -32,17 +32,29 @@ AppWindow {
 		mainWindowStackView.replace(mainPage, StackView.Immediate)
 		mainWindowStackView.currentItem.transferCallSucceed()
 	}
+	function initStackViewItem() {
+		if (accountProxy.haveAccount) mainWindowStackView.replace(mainPage, StackView.Immediate)
+		else if (SettingsCpp.getFirstLaunch()) mainWindowStackView.replace(welcomePage, StackView.Immediate)
+		else mainWindowStackView.replace(loginPage, StackView.Immediate)
+	}
 
 	AccountProxy {
-		// TODO : change this so it does not display the main page for one second
-		// when we fail trying to connect the first account (account is added and
-		// removed shortly after)
 		id: accountProxy
 	}
 	StackView {
 		id: mainWindowStackView
 		anchors.fill: parent
-		initialItem: accountProxy.haveAccount ? mainPage : SettingsCpp.getFirstLaunch() ? welcomePage : loginPage
+		initialItem: splashScreen
+	}
+	Component {
+		id: splashScreen
+		Rectangle {
+			color: DefaultStyle.grey_0
+			Image {
+				anchors.centerIn: parent
+				source: AppIcons.splashscreenLogo
+			}
+		}
 	}
 	Component {
 		id: welcomePage

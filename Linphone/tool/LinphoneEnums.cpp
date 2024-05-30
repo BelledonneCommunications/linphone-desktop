@@ -113,6 +113,8 @@ QString LinphoneEnums::toString(const LinphoneEnums::CallStatus &data) {
 			return "AcceptedElsewhere";
 		case LinphoneEnums::CallStatus::DeclinedElsewhere:
 			return "DeclinedElsewhere";
+		default:
+			return QString();
 	}
 }
 
@@ -129,6 +131,8 @@ QString LinphoneEnums::toString(const LinphoneEnums::CallDir &data) {
 			return "Incoming";
 		case LinphoneEnums::CallDir::Outgoing:
 			return "Outgoing";
+		default:
+			return QString();
 	}
 }
 
@@ -268,6 +272,8 @@ QString LinphoneEnums::toString(const LinphoneEnums::TransportType &type) {
 			return "TLS";
 		case TransportType::Dtls:
 			return "DTLS";
+		default:
+			return QString();
 	}
 }
 void LinphoneEnums::fromString(const QString &transportType, LinphoneEnums::TransportType *transport) {

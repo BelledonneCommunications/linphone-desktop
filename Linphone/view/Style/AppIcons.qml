@@ -7,6 +7,7 @@ QtObject {
 	property string lock: "image://internal/lock.svg"
 	property string lockSimple: "image://internal/lock-simple.svg"
 	property string welcomeOpenSource: "image://internal/open_source.svg"
+	property string splashscreenLogo: "image://internal/splashscreen-logo.svg"
 	property string eyeHide: "image://internal/eye.svg"
 	property string eyeShow: "image://internal/eye-slash.svg"
 	property string downArrow: "image://internal/caret-down.svg"
