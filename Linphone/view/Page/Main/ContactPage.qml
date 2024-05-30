@@ -388,8 +388,8 @@ AbstractMainPage {
 					RoundedBackgroundControl {
 						visible: companyText.text.length != 0 || jobText.text.length != 0
 						Layout.fillWidth: true
-						topPadding: 12 * DefaultStyle.dp
-						bottomPadding: 12 * DefaultStyle.dp
+						topPadding: 17 * DefaultStyle.dp
+						bottomPadding: 17 * DefaultStyle.dp
 						leftPadding: 20 * DefaultStyle.dp
 						rightPadding: 20 * DefaultStyle.dp
 						// Layout.fillHeight: true

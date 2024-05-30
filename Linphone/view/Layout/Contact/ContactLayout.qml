@@ -119,9 +119,10 @@ ColumnLayout {
 			// connection status
 		}
 	}
-	Item {
+	RowLayout {
 		Layout.alignment: Qt.AlignHCenter
-		Layout.preferredWidth: mainItem.implicitWidth
+		spacing: 72 * DefaultStyle.dp
+		Layout.fillWidth: true
 		Layout.preferredHeight: childrenRect.height
 		Button {
 			visible: mainItem.isConference
@@ -140,7 +141,6 @@ ColumnLayout {
 		}
 		LabelButton {
 			visible: !mainItem.isConference
-			anchors.left: parent.left
 			width: 56 * DefaultStyle.dp
 			height: 56 * DefaultStyle.dp
 			button.icon.width: 24 * DefaultStyle.dp
@@ -153,7 +153,6 @@ ColumnLayout {
 		}
 		LabelButton {
 			visible: !mainItem.isConference
-			anchors.horizontalCenter: parent.horizontalCenter
 			width: 56 * DefaultStyle.dp
 			height: 56 * DefaultStyle.dp
 			button.icon.width: 24 * DefaultStyle.dp
@@ -164,7 +163,6 @@ ColumnLayout {
 		}
 		LabelButton {
 			visible: !mainItem.isConference
-			anchors.right: parent.right
 			width: 56 * DefaultStyle.dp
 			height: 56 * DefaultStyle.dp
 			button.icon.width: 24 * DefaultStyle.dp
