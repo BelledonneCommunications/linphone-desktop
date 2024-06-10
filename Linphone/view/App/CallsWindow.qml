@@ -81,6 +81,9 @@ AppWindow {
 		if (callToFinish) callToFinish.core.lTerminate()
 	}
 	function callEnded(call){
+		if (call.core.state === LinphoneEnums.CallState.Error) {
+			middleItemStackView.replace(inCallItem)
+		}
 		if (!callsModel.haveCall) {
 			if (call && call.core.conference) UtilsCpp.closeCallsWindow()
 			else {
