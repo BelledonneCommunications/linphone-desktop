@@ -23,6 +23,7 @@ ColumnLayout {
 		elide: Text.ElideRight
 		wrapMode: Text.Wrap
 		maximumLineCount: 1
+		textFormat: Text.RichText
 
 		font {
 			pixelSize: 13 * DefaultStyle.dp
