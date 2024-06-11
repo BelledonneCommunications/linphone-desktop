@@ -22,6 +22,7 @@ QtObject {
 	property color grey_400: "#949494"
 	property color grey_500: "#4E4E4E"
 	property color grey_600: "#2E3030"
+	property color grey_850: "#D9D9D9"
 	property color grey_900: "#070707"
 	property color grey_1000: "#000000"
 
@@ -29,6 +30,9 @@ QtObject {
 	property color danger_500main: "#DD5F5F"
 	property color success_500main: "#4FAE80"
 	property color info_500_main: "#4AA8FF"
+
+	property color vue_meter_light_green: "#6FF88D"
+	property color vue_meter_dark_green: "#00D916"
 
 	
 	property double dp: 1

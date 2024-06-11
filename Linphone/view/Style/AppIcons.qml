@@ -92,4 +92,7 @@ QtObject {
 	property string screencast: "image://internal/screencast.svg"
 	property string videoconference: "image://internal/video-conference.svg"
 	property string videoconferenceSelected: "image://internal/video-conference-selected.svg"
+	property string switchOn: "image://internal/switch-on.svg"
+	property string switchOff: "image://internal/switch-off.svg"
+	
 }

@@ -14,6 +14,7 @@ import UtilsCpp
 Item {
 	id: mainItem
 	property var callObj
+	property bool settingsHidden: true
 	
 	signal addAccountRequest()
 
@@ -134,7 +135,11 @@ Item {
 					{icon: AppIcons.videoconference, selectedIcon: AppIcons.videoconferenceSelected, label: qsTr("Réunions")}
 				]
 				onCurrentIndexChanged: {
-					if (currentIndex === 0) accountProxy.defaultAccount.core.lResetMissedCalls()
+                    if (currentIndex === 0) accountProxy.defaultAccount.core.lResetMissedCalls()
+					if (!mainItem.settingsHidden) {
+						mainStackView.pop()
+						mainItem.settingsHidden = true
+					}
 				}
 			}
 			ColumnLayout {
@@ -337,6 +342,15 @@ Item {
 									iconSize: 32 * DefaultStyle.dp
 									text: qsTr("Paramètres")
 									iconSource: AppIcons.settings
+									onClicked: {
+										if (mainItem.settingsHidden) {
+											mainStackView.push(settingsPageComponent)
+											settingsButton.popup.close()
+											mainItem.settingsHidden = false
+										} else {
+											settingsButton.popup.close()
+										}
+									}
 								}
 								IconLabelButton {
 									Layout.preferredHeight: 32 * DefaultStyle.dp
@@ -366,22 +380,47 @@ Item {
 						}
 					}
 				}
-				StackLayout {
-					id: mainStackLayout
-					currentIndex: tabbar.currentIndex
-					Layout.topMargin: 24 * DefaultStyle.dp
-					CallPage {
-						id: callPage
-						onCreateContactRequested: (name, address) => {
-							mainItem.createContact(name, address)
+				Component {
+					id: mainStackLayoutComponent
+					StackLayout {
+						id: mainStackLayout
+						currentIndex: tabbar.currentIndex
+						CallPage {
+							id: callPage
+							onCreateContactRequested: (name, address) => {
+								mainItem.createContact(name, address)
+							}
+						}
+						ContactPage{
+							id: contactPage
+						}
+						Item{}
+						//ConversationPage{}
+						MeetingPage{}
+					}
+				}
+				Component {
+					id: settingsPageComponent
+					SettingsPage {
+						onGoBack: {
+							mainStackView.pop()
+							mainItem.settingsHidden = true
 						}
 					}
-					ContactPage{
-						id: contactPage
+				}
+				Control.StackView {
+					id: mainStackView
+					property Transition noTransition: Transition {
+						PropertyAnimation { property: "opacity"; from: 1; to: 1; duration: 0 }
 					}
-					Item{}
-					//ConversationPage{}
-					MeetingPage{}
+					pushEnter: noTransition
+					pushExit: noTransition
+					popEnter: noTransition
+					popExit: noTransition
+					Layout.topMargin: 24 * DefaultStyle.dp
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					initialItem: mainStackLayoutComponent
 				}
 			}
 		}

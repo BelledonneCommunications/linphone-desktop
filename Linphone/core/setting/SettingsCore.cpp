@@ -41,23 +41,28 @@ QSharedPointer<Settings> Settings::create() {
 Settings::Settings(QObject *parent) : QObject(parent) {
 	mustBeInLinphoneThread(getClassName());
 	mSettingsModel = Utils::makeQObject_ptr<SettingsModel>();
-	auto core = CoreModel::getInstance()->getCore();
-	for (auto &device : core->getExtendedAudioDevices()) {
-		auto core = CoreModel::getInstance()->getCore();
-		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityRecord)) {
-			mInputAudioDevices.append(Utils::coreStringToAppString(device->getId()));
-			// mInputAudioDevices.append(createDeviceVariant(Utils::coreStringToAppString(device->getId()),
-			//   Utils::coreStringToAppString(device->getDeviceName())));
-		}
-		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityPlay)) {
-			mOutputAudioDevices.append(Utils::coreStringToAppString(device->getId()));
-			// mOutputAudioDevices.append(createDeviceVariant(Utils::coreStringToAppString(device->getId()),
-			//    Utils::coreStringToAppString(device->getDeviceName())));
-		}
-	}
-	for (auto &device : core->getVideoDevicesList()) {
-		mVideoDevices.append(Utils::coreStringToAppString(device));
-	}
+	
+	// Security
+	mVfsEnabled = mSettingsModel->getVfsEnabled();
+	
+	// Call
+	mVideoEnabled = mSettingsModel->getVideoEnabled();
+	mEchoCancellationEnabled = mSettingsModel->getEchoCancellationEnabled();
+	mAutomaticallyRecordCallsEnabled = mSettingsModel->getAutomaticallyRecordCallsEnabled();
+
+	// Audio
+	mCaptureDevices =  mSettingsModel->getCaptureDevices();
+	mPlaybackDevices = mSettingsModel->getPlaybackDevices();
+	mCaptureDevice =  mSettingsModel->getCaptureDevice();
+	mPlaybackDevice = mSettingsModel->getPlaybackDevice();
+	
+	mCaptureGain = mSettingsModel->getCaptureGain();
+	mPlaybackGain = mSettingsModel->getPlaybackGain();
+
+	// Video
+	mVideoDevice = mSettingsModel->getVideoDevice();
+	mVideoDevices = mSettingsModel->getVideoDevices();
+	
 }
 
 Settings::~Settings() {
@@ -67,13 +72,162 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 	mustBeInLinphoneThread(getClassName());
 	mSettingsModelConnection = QSharedPointer<SafeConnection<Settings, SettingsModel>>(
 	    new SafeConnection<Settings, SettingsModel>(me, mSettingsModel), &QObject::deleteLater);
-	mSettingsModelConnection->makeConnectToCore(&Settings::lSetVideoDevice, [this](const QString &id) {
+	
+	// VFS
+	mSettingsModelConnection->makeConnectToCore(&Settings::setVfsEnabled, [this](const bool enabled) {
 		mSettingsModelConnection->invokeToModel(
-		    [this, id]() { mSettingsModel->setVideoDevice(Utils::appStringToCoreString(id)); });
+			[this, enabled]() { mSettingsModel->setVfsEnabled(enabled); }
+		);
 	});
-	mSettingsModelConnection->makeConnectToModel(&SettingsModel::videoDeviceChanged, [this](const std::string &id) {
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::vfsEnabledChanged, [this](const bool enabled) {
+		mSettingsModelConnection->invokeToCore(
+			[this, enabled]() { 
+				mVfsEnabled = enabled;
+				emit vfsEnabledChanged();
+			}
+		);
+	});
+		
+	// Video Calls
+	mSettingsModelConnection->makeConnectToCore(&Settings::setVideoEnabled, [this](const bool enabled) {
 		mSettingsModelConnection->invokeToModel(
-		    [this, id = Utils::coreStringToAppString(id)]() { setCurrentVideoDevice(id); });
+			[this, enabled]() { mSettingsModel->setVideoEnabled(enabled); }
+		);
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::videoEnabledChanged, [this](const bool enabled) {
+		mSettingsModelConnection->invokeToCore(
+			[this, enabled]() {
+				mVideoEnabled = enabled;
+				emit videoEnabledChanged();
+			});
+	});
+	
+	// Echo cancelling
+	mSettingsModelConnection->makeConnectToCore(&Settings::setEchoCancellationEnabled, [this](const bool enabled) {
+		mSettingsModelConnection->invokeToModel(
+			[this, enabled]() { mSettingsModel->setEchoCancellationEnabled(enabled); }
+		);
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::echoCancellationEnabledChanged, [this](const bool enabled) {
+		mSettingsModelConnection->invokeToCore(
+			[this, enabled]() {
+				mEchoCancellationEnabled = enabled;
+				emit echoCancellationEnabledChanged();
+			});
+	});
+	
+	// Auto recording
+	mSettingsModelConnection->makeConnectToCore(&Settings::setAutomaticallyRecordCallsEnabled, [this](const bool enabled) {
+		mSettingsModelConnection->invokeToModel(
+			[this, enabled]() { mSettingsModel->setAutomaticallyRecordCallsEnabled(enabled); }
+		);
+	});
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::automaticallyRecordCallsEnabledChanged, [this](const bool enabled) {
+		mSettingsModelConnection->invokeToCore(
+			[this, enabled]() {
+				mAutomaticallyRecordCallsEnabled = enabled;
+				emit automaticallyRecordCallsEnabledChanged();
+			});
+	});
+	
+	// Audio device(s)
+	mSettingsModelConnection->makeConnectToCore(&Settings::setCaptureDevice, [this](const QString id) {
+		mSettingsModelConnection->invokeToModel(
+			[this, id]() { mSettingsModel->setCaptureDevice(id); });
+	});
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureDeviceChanged, [this](const QString device) {
+		mSettingsModelConnection->invokeToCore(
+			[this, device]() {
+				mCaptureDevice = device;
+				emit captureDeviceChanged(device);
+			});
+	});
+	
+	mSettingsModelConnection->makeConnectToCore(&Settings::setPlaybackDevice, [this](const QString id) {
+		mSettingsModelConnection->invokeToModel(
+			[this, id]() { mSettingsModel->setPlaybackDevice(id); });
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackDeviceChanged, [this](const QString device) {
+		mSettingsModelConnection->invokeToCore(
+			[this, device]() {
+				mPlaybackDevice = device;
+				emit playbackDeviceChanged(device);
+			});
+	});
+	
+	mSettingsModelConnection->makeConnectToCore(&Settings::setPlaybackGain, [this](const float value) {
+		mSettingsModelConnection->invokeToModel(
+			[this, value]() { mSettingsModel->setPlaybackGain(value); });
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackGainChanged, [this](const float value) {
+		mSettingsModelConnection->invokeToCore(
+			[this, value]() {
+				mPlaybackGain = value;
+				emit playbackGainChanged(value);
+			});
+	});
+	
+	mSettingsModelConnection->makeConnectToCore(&Settings::setCaptureGain, [this](const float value) {
+		mSettingsModelConnection->invokeToModel(
+			[this, value]() { mSettingsModel->setCaptureGain(value); });
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureGainChanged, [this](const float value) {
+		mSettingsModelConnection->invokeToCore(
+			[this, value]() {
+				mCaptureGain = value;
+				emit captureGainChanged(value);
+			});
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::micVolumeChanged, [this](const float value) {
+		mSettingsModelConnection->invokeToCore(
+			[this, value]() {
+				emit micVolumeChanged(value);
+			});
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureDevicesChanged, [this](const QStringList devices) {
+		mSettingsModelConnection->invokeToCore(
+			[this, devices]() {
+				mCaptureDevices = devices;
+				emit captureDevicesChanged(devices);
+			});
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackDevicesChanged, [this](const QStringList devices) {
+		mSettingsModelConnection->invokeToCore(
+			[this, devices]() {
+				mPlaybackDevices = devices;
+				emit playbackDevicesChanged(devices);
+			});
+	});
+		
+	// Video device(s)
+	mSettingsModelConnection->makeConnectToCore(&Settings::setVideoDevice, [this](const QString id) {
+		mSettingsModelConnection->invokeToModel(
+		    [this, id]() { mSettingsModel->setVideoDevice(id); });
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::videoDeviceChanged, [this](const QString device) {
+		mSettingsModelConnection->invokeToCore(
+			[this, device]() {
+				mVideoDevice = device;
+				emit videoDeviceChanged();
+			});
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::videoDevicesChanged, [this](const QStringList devices) {
+		mSettingsModelConnection->invokeToCore(
+			[this, devices]() {
+				mVideoDevices = devices;
+				emit videoDevicesChanged();
+			});
 	});
 }
 
@@ -89,33 +243,44 @@ QString Settings::getConfigPath(const QCommandLineParser &parser) {
 	return configPath;
 }
 
-QStringList Settings::getInputAudioDevicesList() const {
-	return mInputAudioDevices;
+QStringList Settings::getCaptureDevices() const {
+	return mCaptureDevices;
 }
 
-QStringList Settings::getOutputAudioDevicesList() const {
-	return mOutputAudioDevices;
+QStringList Settings::getPlaybackDevices() const {
+	return mPlaybackDevices;
 }
 
-QStringList Settings::getVideoDevicesList() const {
+QStringList Settings::getVideoDevices() const {
 	return mVideoDevices;
 }
 
-void Settings::setCurrentVideoDevice(const QString &id) {
-	if (mCurrentVideoDeviceId != id) {
-		mCurrentVideoDeviceId = id;
-		emit videoDeviceChanged();
-	}
+bool Settings::getCaptureGraphRunning() {
+	return mCaptureGraphRunning;
 }
 
-int Settings::getCurrentVideoDeviceIndex() {
-	auto found = std::find_if(mVideoDevices.begin(), mVideoDevices.end(),
-	                          [this](const QString &device) { return mCurrentVideoDeviceId == device; });
-	if (found != mVideoDevices.end()) {
-		auto index = std::distance(mVideoDevices.begin(), found);
-		return index;
-	}
-	return -1;
+float Settings::getCaptureGain() const {
+	return mCaptureGain;
+}
+
+float Settings::getPlaybackGain() const {
+	return mPlaybackGain;
+}
+
+QString Settings::getRingerDevice() const {
+	return mRingerDevice;
+}
+
+QString Settings::getCaptureDevice() const {
+	return mCaptureDevice;
+}
+
+QString Settings::getPlaybackDevice() const {
+	return mPlaybackDevice;
+}
+
+int Settings::getEchoCancellationCalibration() const {
+	return mEchoCancellationCalibration;
 }
 
 bool Settings::getFirstLaunch() const {
@@ -129,4 +294,28 @@ void Settings::setFirstLaunch(bool first) {
 		mAppSettings.setValue("firstLaunch", (int)first);
 		mAppSettings.sync();
 	}
+}
+
+void Settings::startEchoCancellerCalibration() {
+	mSettingsModelConnection->invokeToModel([this]() {
+		mSettingsModel->startEchoCancellerCalibration();
+	});
+}
+
+
+void Settings::accessCallSettings() {
+	mSettingsModelConnection->invokeToModel(
+		[this]() { mSettingsModel->accessCallSettings(); }
+	);
+}
+void Settings::closeCallSettings() {
+	mSettingsModelConnection->invokeToModel(
+		[this]() { mSettingsModel->closeCallSettings(); }
+	);
+}
+
+void Settings::updateMicVolume() const {
+	mSettingsModelConnection->invokeToModel(
+		[this]() { mSettingsModel->getMicVolume(); }
+	);
 }

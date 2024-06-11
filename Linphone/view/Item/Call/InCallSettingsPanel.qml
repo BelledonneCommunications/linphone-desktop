@@ -51,7 +51,7 @@ ColumnLayout {
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
 					Layout.preferredHeight: 49 * DefaultStyle.dp
-					model: SettingsCpp.outputAudioDevicesList
+					model: SettingsCpp.playbackDevices
 					onCurrentTextChanged: {
 						if (mainItem.call) mainItem.call.core.lSetOutputAudioDevice(currentText)
 					}
@@ -90,7 +90,7 @@ ColumnLayout {
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
 					Layout.preferredHeight: 49 * DefaultStyle.dp
-					model: SettingsCpp.inputAudioDevicesList
+					model: SettingsCpp.captureDevices
 					onCurrentTextChanged: {
 						if (mainItem.call) mainItem.call.core.lSetInputAudioDevice(currentText)
 					}
@@ -163,10 +163,10 @@ ColumnLayout {
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
 					Layout.preferredHeight: 49 * DefaultStyle.dp
-					model: SettingsCpp.videoDevicesList
+					model: SettingsCpp.videoDevices
 					currentIndex: SettingsCpp.currentVideoDeviceIndex
 					onCurrentTextChanged: {
-						SettingsCpp.lSetVideoDevice(currentText)
+						SettingsCpp.setVideoDevice(currentText)
 					}
 				}
 			}

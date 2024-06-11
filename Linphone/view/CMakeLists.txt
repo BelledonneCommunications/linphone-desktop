@@ -18,6 +18,10 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Layout/RightPanelLayout.qml
 	view/Layout/Section.qml
 	
+	view/App/Layout/Settings/GenericSettingsLayout.qml
+	view/App/Layout/Settings/SecuritySettingsLayout.qml
+	view/App/Layout/Settings/CallSettingsLayout.qml
+
 	view/Item/Account/Accounts.qml
 	
 	view/Item/Call/CallContactsLists.qml
@@ -52,6 +56,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Carousel.qml
 	view/Item/CheckableButton.qml
 	view/Item/CheckBox.qml
+	view/Item/SwitchButton.qml
 	view/Item/ComboBox.qml
 	view/Item/DesktopPopup.qml
 	view/Item/Dialog.qml
@@ -88,6 +93,10 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	
 	view/Item/Test/ItemsTest.qml
 	
+	view/Item/Settings/SettingsFamily.qml
+	view/Item/Settings/SwitchSetting.qml
+	view/Item/Settings/ComboSetting.qml
+
 	view/Page/Login/LoginPage.qml
 	view/Page/Login/RegisterPage.qml
 	view/Page/Login/RegisterCheckingPage.qml
@@ -100,7 +109,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Main/ContactPage.qml
 	view/Page/Main/MeetingPage.qml
 	
-	
+	view/Page/Main/SettingsPage.qml
 	
 	view/Tool/utils.js
 # Prototypes
@@ -115,6 +124,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 list(APPEND _LINPHONEAPP_QML_SINGLETONS
 	view/Style/AppIcons.qml
 	view/Style/DefaultStyle.qml
+	view/Style/Typography.qml
 )
 
 set(_LINPHONEAPP_QML_FILES ${_LINPHONEAPP_QML_FILES} PARENT_SCOPE)

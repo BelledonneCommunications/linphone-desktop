@@ -16,6 +16,7 @@ Control.ComboBox {
 	property int pixelSize: 14 * DefaultStyle.dp
 	property int weight: 400 * DefaultStyle.dp
 	property int leftMargin: 10 * DefaultStyle.dp
+	property bool oneLine: false
 
 	onConstantImageSourceChanged: if (constantImageSource)  selectedItemImg.source = constantImageSource
 	onCurrentIndexChanged: {
@@ -59,7 +60,7 @@ Control.ComboBox {
 			id: selectedItemText
 			color: mainItem.enabled ? DefaultStyle.main2_600 : DefaultStyle.grey_400
 			elide: Text.ElideRight
-			maximumLineCount: 2
+			maximumLineCount: oneLine ? 1 : 2
 			wrapMode: Text.WrapAnywhere
 			font {
 				pixelSize: mainItem.pixelSize

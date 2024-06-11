@@ -5,7 +5,7 @@ project(Linphone VERSION 6.0 LANGUAGES CXX)
 ################################################################
 #						PACKAGES
 ################################################################
-set(LINPHONE_PACKAGES LinphoneCxx BCToolbox)
+set(LINPHONE_PACKAGES Mediastreamer2 LinphoneCxx BCToolbox LibLinphone)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 foreach(PACKAGE ${LINPHONE_PACKAGES})
 	message(STATUS "Trying to find ${PACKAGE}")
@@ -17,7 +17,9 @@ endforeach()
 
 
 set(TARGET_NAME Linphone)
-set(APP_TARGETS ${LinphoneCxx_TARGET})
+set(APP_TARGETS ${LinphoneCxx_TARGET}
+				${Mediastreamer2_TARGET}#MediastreamerUtils
+				${LibLinphone_TARGET})#MediastreamerUtils
 
 set(QT_DEFAULT_MAJOR_VERSION 6)
 set(QT_PACKAGES Core Quick Qml Widgets Svg Multimedia Test)# Search Core at first for initialize Qt scripts for next find_packages.

@@ -1,5 +1,5 @@
 /**
-* Qml template used for overview pages : Calls, Contacts, Conversations, Meetings
+* Qml template used for overview pages : Calls, Contacts, Conversations, Meetings, Settings
 **/
 
 import QtQuick 2.15

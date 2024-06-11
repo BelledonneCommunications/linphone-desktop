@@ -28,6 +28,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/search/MagicSearchModel.cpp
 	
 	model/setting/SettingsModel.cpp
+	model/setting/MediastreamerUtils.cpp
+
 	
 	model/tool/ToolModel.cpp
 

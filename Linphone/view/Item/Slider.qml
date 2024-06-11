@@ -16,7 +16,7 @@ Control.Slider {
         height: implicitHeight
         radius: 30 * DefaultStyle.dp
 		// TODO : change the colors when mockup indicates their names
-        color: "#D9D9D9"
+        color: DefaultStyle.grey_850
 
         Rectangle {
             width: mainItem.visualPosition * parent.width
