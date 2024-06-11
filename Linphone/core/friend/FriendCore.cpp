@@ -37,6 +37,14 @@ QVariant createFriendAddressVariant(const QString &label, const QString &address
 	return map;
 }
 
+QVariant createFriendDevice(const QString &name, const QString &address, LinphoneEnums::SecurityLevel level) {
+	QVariantMap map;
+	map.insert("name", name);
+	map.insert("address", address);
+	map.insert("securityLevel", QVariant::fromValue(level));
+	return map;
+}
+
 QSharedPointer<FriendCore> FriendCore::create(const std::shared_ptr<linphone::Friend> &contact) {
 	auto sharedPointer = QSharedPointer<FriendCore>(new FriendCore(contact), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
@@ -75,6 +83,15 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 			                               Utils::coreStringToAppString(phoneNumber->getPhoneNumber())));
 		}
 
+		auto devices = contact->getDevices();
+		for (auto &device : devices) {
+			mDeviceList.append(createFriendDevice(Utils::coreStringToAppString(device->getDisplayName()),
+			                                      // do not use uri only as we want the unique device
+			                                      Utils::coreStringToAppString(device->getAddress()->asString()),
+			                                      LinphoneEnums::fromLinphone(device->getSecurityLevel())));
+		}
+		updateVerifiedDevicesCount();
+
 		mStarred = contact->getStarred();
 		mIsSaved = true;
 	} else {
@@ -110,16 +127,28 @@ void FriendCore::setSelf(SafeSharedPointer<FriendCore> me) {
 void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 	if (me) {
 		if (mFriendModel) {
-			mCoreModelConnection = nullptr; // No more needed
 			mFriendModelConnection = QSharedPointer<SafeConnection<FriendCore, FriendModel>>(
 			    new SafeConnection<FriendCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
 			mFriendModelConnection->makeConnectToModel(
 			    &FriendModel::presenceReceived,
 			    [this](LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp) {
-				    mFriendModelConnection->invokeToCore([this, consolidatedPresence, presenceTimestamp]() {
-					    setConsolidatedPresence(consolidatedPresence);
-					    setPresenceTimestamp(presenceTimestamp);
-				    });
+				    auto devices = mFriendModel->getDevices();
+				    QVariantList devicesList;
+				    for (auto &device : devices) {
+					    devicesList.append(
+					        createFriendDevice(Utils::coreStringToAppString(device->getDisplayName()),
+					                           // do not use uri only as we want the unique device
+					                           Utils::coreStringToAppString(device->getAddress()->asString()),
+					                           LinphoneEnums::fromLinphone(device->getSecurityLevel())));
+				    }
+				    mFriendModelConnection->invokeToCore(
+				        [this, consolidatedPresence, presenceTimestamp, devicesList]() {
+					        setConsolidatedPresence(consolidatedPresence);
+					        setPresenceTimestamp(presenceTimestamp);
+
+					        setDevices(devicesList);
+					        updateVerifiedDevicesCount();
+				        });
 			    });
 			mFriendModelConnection->makeConnectToModel(&FriendModel::pictureUriChanged, [this](const QString &uri) {
 				mFriendModelConnection->invokeToCore([this, uri]() { this->onPictureUriChanged(uri); });
@@ -165,6 +194,29 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 			mFriendModelConnection->makeConnectToCore(&FriendCore::lSetStarred, [this](bool starred) {
 				mFriendModelConnection->invokeToModel([this, starred]() { mFriendModel->setStarred(starred); });
 			});
+			if (!mCoreModelConnection) {
+				mCoreModelConnection = QSharedPointer<SafeConnection<FriendCore, CoreModel>>(
+				    new SafeConnection<FriendCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+			}
+			mCoreModelConnection->makeConnectToModel(
+			    &CoreModel::callStateChanged,
+			    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Call> &call,
+			           linphone::Call::State state, const std::string &message) {
+				    if (state != linphone::Call::State::End && state != linphone::Call::State::Released) return;
+				    auto devices = mFriendModel->getDevices();
+				    QVariantList devicesList;
+				    for (auto &device : devices) {
+					    devicesList.append(
+					        createFriendDevice(Utils::coreStringToAppString(device->getDisplayName()),
+					                           // do not use uri only as we want the unique device
+					                           Utils::coreStringToAppString(device->getAddress()->asString()),
+					                           LinphoneEnums::fromLinphone(device->getSecurityLevel())));
+				    }
+				    mCoreModelConnection->invokeToCore([this, devicesList]() {
+					    setDevices(devicesList);
+					    updateVerifiedDevicesCount();
+				    });
+			    });
 
 		} else { // Create
 			mCoreModelConnection = QSharedPointer<SafeConnection<FriendCore, CoreModel>>(
@@ -330,6 +382,27 @@ void FriendCore::resetAddresses(QList<QVariant> newList) {
 
 QList<QVariant> FriendCore::getAllAddresses() const {
 	return mAddressList + mPhoneNumberList;
+}
+
+QList<QVariant> FriendCore::getDevices() const {
+	return mDeviceList;
+}
+
+void FriendCore::updateVerifiedDevicesCount() {
+	mVerifiedDeviceCount = 0;
+	for (auto &device : mDeviceList) {
+		auto map = device.toMap();
+		if (map["securityLevel"].value<LinphoneEnums::SecurityLevel>() ==
+		    LinphoneEnums::SecurityLevel::EndToEndEncryptedAndVerified)
+			++mVerifiedDeviceCount;
+	}
+	emit verifiedDevicesChanged();
+}
+
+void FriendCore::setDevices(QVariantList devices) {
+	mDeviceList.clear();
+	mDeviceList.append(devices);
+	emit devicesChanged();
 }
 
 QString FriendCore::getDefaultAddress() const {

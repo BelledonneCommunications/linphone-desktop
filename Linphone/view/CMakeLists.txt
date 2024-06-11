@@ -74,6 +74,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/PhoneNumberInput.qml
 	view/Item/Popup.qml
 	view/Item/PopupButton.qml
+	view/Item/ProgressBar.qml
 	view/Item/SecurityRadioButton.qml
 	view/Item/RadioButton.qml
 	view/Item/RectangleTest.qml

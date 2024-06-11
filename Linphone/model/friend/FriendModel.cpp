@@ -275,6 +275,10 @@ QString FriendModel::getVCardAsString() const {
 	return Utils::coreStringToAppString(mMonitor->getVcard()->asVcard4String());
 }
 
+std::list<std::shared_ptr<linphone::FriendDevice>> FriendModel::getDevices() const {
+	return mMonitor->getDevices();
+}
+
 void FriendModel::setPictureUri(const QString &uri) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto oldPictureUri = Utils::coreStringToAppString(mMonitor->getPhoto());

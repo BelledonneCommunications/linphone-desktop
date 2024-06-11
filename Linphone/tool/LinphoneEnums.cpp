@@ -29,6 +29,7 @@
 void LinphoneEnums::registerMetaTypes() {
 	qRegisterMetaType<LinphoneEnums::CallState>();
 	qRegisterMetaType<LinphoneEnums::CallStatus>();
+	qRegisterMetaType<LinphoneEnums::SecurityLevel>();
 	qRegisterMetaType<LinphoneEnums::ChatMessageState>();
 	qRegisterMetaType<LinphoneEnums::ChatRoomState>();
 	qRegisterMetaType<LinphoneEnums::ConferenceLayout>();
@@ -116,6 +117,14 @@ QString LinphoneEnums::toString(const LinphoneEnums::CallStatus &data) {
 		default:
 			return QString();
 	}
+}
+
+linphone::SecurityLevel LinphoneEnums::toLinphone(const LinphoneEnums::SecurityLevel &level) {
+	return static_cast<linphone::SecurityLevel>(level);
+}
+
+LinphoneEnums::SecurityLevel LinphoneEnums::fromLinphone(const linphone::SecurityLevel &level) {
+	return static_cast<LinphoneEnums::SecurityLevel>(level);
 }
 
 LinphoneEnums::CallDir LinphoneEnums::fromLinphone(const linphone::Call::Dir &data) {

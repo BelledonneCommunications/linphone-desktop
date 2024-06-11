@@ -41,12 +41,20 @@
 class CoreModel;
 class FriendCore;
 
+struct FriendDevice {
+	QString name;
+	QString address;
+	LinphoneEnums::SecurityLevel securityLevel;
+};
+
 class FriendCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
 	Q_PROPERTY(QList<QVariant> allAddresses READ getAllAddresses NOTIFY allAddressesChanged)
 	Q_PROPERTY(QList<QVariant> phoneNumbers READ getPhoneNumbers NOTIFY phoneNumberChanged)
 	Q_PROPERTY(QList<QVariant> addresses READ getAddresses NOTIFY addressChanged)
+	Q_PROPERTY(QList<QVariant> devices READ getDevices NOTIFY devicesChanged)
+	Q_PROPERTY(int verifiedDeviceCount MEMBER mVerifiedDeviceCount NOTIFY verifiedDevicesChanged)
 	Q_PROPERTY(QString givenName READ getGivenName WRITE setGivenName NOTIFY givenNameChanged)
 	Q_PROPERTY(QString familyName READ getFamilyName WRITE setFamilyName NOTIFY familyNameChanged)
 	Q_PROPERTY(QString displayName READ getDisplayName NOTIFY displayNameChanged)
@@ -106,6 +114,10 @@ public:
 
 	QList<QVariant> getAllAddresses() const;
 
+	QList<QVariant> getDevices() const;
+	void updateVerifiedDevicesCount();
+	void setDevices(QVariantList devices);
+
 	LinphoneEnums::ConsolidatedPresence getConsolidatedPresence() const;
 	void setConsolidatedPresence(LinphoneEnums::ConsolidatedPresence presence);
 
@@ -147,7 +159,8 @@ signals:
 	void removed(FriendCore *contact);
 	void defaultAddressChanged();
 	void allAddressesChanged();
-
+	void devicesChanged();
+	void verifiedDevicesChanged();
 	void lSetStarred(bool starred);
 
 protected:
@@ -163,6 +176,8 @@ protected:
 	bool mStarred;
 	QList<QVariant> mPhoneNumberList;
 	QList<QVariant> mAddressList;
+	QList<QVariant> mDeviceList;
+	int mVerifiedDeviceCount;
 	QString mDefaultAddress;
 	QString mPictureUri;
 	bool mIsSaved;

@@ -36,9 +36,9 @@ void registerMetaTypes();
 
 enum class MediaEncryption {
 	None = int(linphone::MediaEncryption::None),
-	Dtls = int(linphone::MediaEncryption::DTLS),
 	Srtp = int(linphone::MediaEncryption::SRTP),
-	Zrtp = int(linphone::MediaEncryption::ZRTP)
+	Zrtp = int(linphone::MediaEncryption::ZRTP),
+	Dtls = int(linphone::MediaEncryption::DTLS)
 };
 Q_ENUM_NS(MediaEncryption)
 
@@ -158,6 +158,18 @@ Q_ENUM_NS(CallStatus)
 linphone::Call::Status toLinphone(const LinphoneEnums::CallStatus &data);
 LinphoneEnums::CallStatus fromLinphone(const linphone::Call::Status &data);
 QString toString(const LinphoneEnums::CallStatus &data);
+
+enum class SecurityLevel {
+	None = int(linphone::SecurityLevel::None),
+	Unsafe = int(linphone::SecurityLevel::Unsafe),
+	EndToEndEncrypted = int(linphone::SecurityLevel::EndToEndEncrypted),
+	EndToEndEncryptedAndVerified = int(linphone::SecurityLevel::EndToEndEncryptedAndVerified),
+	PointToPointEncrypted = int(linphone::SecurityLevel::PointToPointEncrypted)
+};
+Q_ENUM_NS(SecurityLevel)
+
+linphone::SecurityLevel toLinphone(const LinphoneEnums::SecurityLevel &level);
+LinphoneEnums::SecurityLevel fromLinphone(const linphone::SecurityLevel &level);
 
 enum class CallDir { Outgoing = int(linphone::Call::Dir::Outgoing), Incoming = int(linphone::Call::Dir::Incoming) };
 Q_ENUM_NS(CallDir)
@@ -308,6 +320,8 @@ Q_ENUM_NS(TransportType)
 
 linphone::TransportType toLinphone(const LinphoneEnums::TransportType &type);
 LinphoneEnums::TransportType fromLinphone(const linphone::TransportType &type);
+QString toString(const LinphoneEnums::TransportType &type);
+void fromString(const QString &transportType, LinphoneEnums::TransportType *transport);
 
 enum VideoSourceScreenSharingType {
 	VideoSourceScreenSharingTypeArea = int(linphone::VideoSourceScreenSharingType::Area),
@@ -319,8 +333,6 @@ Q_ENUM_NS(VideoSourceScreenSharingType)
 linphone::VideoSourceScreenSharingType toLinphone(const LinphoneEnums::VideoSourceScreenSharingType &type);
 LinphoneEnums::VideoSourceScreenSharingType fromLinphone(const linphone::VideoSourceScreenSharingType &type);
 
-QString toString(const LinphoneEnums::TransportType &type);
-void fromString(const QString &transportType, LinphoneEnums::TransportType *transport);
 } // namespace LinphoneEnums
 /*
 Q_DECLARE_METATYPE(LinphoneEnums::CallState)

@@ -105,13 +105,14 @@ QString Utils::getInitials(const QString &username) {
 
 void Utils::createCall(const QString &sipAddress,
                        QVariantMap options,
+                       LinphoneEnums::MediaEncryption mediaEncryption,
                        const QString &prepareTransfertAddress,
                        const QHash<QString, QString> &headers) {
-	lDebug() << "[Utils] create call with uri :" << sipAddress;
-	App::postModelAsync([sipAddress, options, prepareTransfertAddress, headers]() {
+	lDebug() << "[Utils] create call with uri :" << sipAddress << mediaEncryption;
+	App::postModelAsync([sipAddress, options, mediaEncryption, prepareTransfertAddress, headers]() {
 		QString errorMessage;
 		bool success = ToolModel::createCall(sipAddress, options, prepareTransfertAddress, headers,
-		                                     linphone::MediaEncryption::None, &errorMessage);
+		                                     LinphoneEnums::toLinphone(mediaEncryption), &errorMessage);
 		if (!success) {
 			if (errorMessage.isEmpty()) errorMessage = tr("L'appel n'a pas pu être créé");
 			showInformationPopup("Erreur", errorMessage, false);
