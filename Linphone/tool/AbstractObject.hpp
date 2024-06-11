@@ -32,6 +32,9 @@
 	const char *CLASS_NAME::gClassName = #CLASS_NAME;                                                                  \
 	QString CLASS_NAME::getClassName() const {                                                                         \
 		return gClassName;                                                                                             \
+	}                                                                                                                  \
+	static inline QString sLog() {                                                                                     \
+		return QStringLiteral("[%1]: %2").arg(#CLASS_NAME).arg("%1");                                                  \
 	}
 
 #define DECLARE_GUI_OBJECT                                                                                             \

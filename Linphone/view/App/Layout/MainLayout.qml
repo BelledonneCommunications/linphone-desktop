@@ -15,7 +15,8 @@ Item {
 	id: mainItem
 	property var callObj
 	property bool settingsHidden: true
-	
+	property bool helpHidden: true
+													
 	signal addAccountRequest()
 
 	function goToNewCall() {
@@ -139,6 +140,10 @@ Item {
 					if (!mainItem.settingsHidden) {
 						mainStackView.pop()
 						mainItem.settingsHidden = true
+					}
+					if (!mainItem.helpHidden) {
+						mainStackView.pop()
+						mainItem.helpHidden = true
 					}
 				}
 			}
@@ -343,6 +348,10 @@ Item {
 									text: qsTr("Paramètres")
 									iconSource: AppIcons.settings
 									onClicked: {
+										if (!mainItem.helpHidden) {
+											mainStackView.pop()
+											mainItem.helpHidden = true
+										}
 										if (mainItem.settingsHidden) {
 											mainStackView.push(settingsPageComponent)
 											settingsButton.popup.close()
@@ -363,6 +372,19 @@ Item {
 									iconSize: 32 * DefaultStyle.dp
 									text: qsTr("Aide")
 									iconSource: AppIcons.question
+									onClicked: {
+										if (!mainItem.settingsHidden) {
+											mainStackView.pop()
+											mainItem.settingsHidden = true
+										}
+										if (mainItem.helpHidden) {
+											mainStackView.push(helpPageComponent)
+											settingsButton.popup.close()
+											mainItem.helpHidden = false
+										} else {
+											settingsButton.popup.close()
+										}
+									}
 								}
 								Rectangle {
 									Layout.fillWidth: true
@@ -405,6 +427,15 @@ Item {
 						onGoBack: {
 							mainStackView.pop()
 							mainItem.settingsHidden = true
+						}
+					}
+				}
+				Component {
+					id: helpPageComponent
+					HelpPage {
+						onGoBack: {
+							mainStackView.pop()
+							mainItem.helpHidden = true
 						}
 					}
 				}

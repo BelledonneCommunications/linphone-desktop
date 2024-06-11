@@ -101,6 +101,27 @@ public:
 	
 	QString getVideoDevice () const;
 	void setVideoDevice (const QString &device);
+	
+	bool getLogsEnabled () const;
+	void setLogsEnabled (bool status);
+	
+	bool getFullLogsEnabled () const;
+	void setFullLogsEnabled (bool status);
+	
+	static bool getLogsEnabled (const std::shared_ptr<linphone::Config> &config);
+	static bool getFullLogsEnabled (const std::shared_ptr<linphone::Config> &config);
+	
+	QString getLogsFolder () const;
+	void setLogsFolder (const QString &folder);
+	static QString getLogsFolder (const std::shared_ptr<linphone::Config> &config);
+	
+	QString getLogsUploadUrl () const;
+	void setLogsUploadUrl (const QString &url);
+	
+	void cleanLogs () const;
+	void sendLogs () const;
+	
+	QString getLogsEmail () const;
 		
 signals:
 	
@@ -132,6 +153,9 @@ signals:
 	void videoDeviceChanged (const QString &device);
 	
 	void micVolumeChanged(float volume);
+	
+	void logsEnabledChanged (bool status);
+	void fullLogsEnabledChanged (bool status);
 
 private:
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;

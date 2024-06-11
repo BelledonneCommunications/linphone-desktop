@@ -94,5 +94,8 @@ QtObject {
 	property string videoconferenceSelected: "image://internal/video-conference-selected.svg"
 	property string switchOn: "image://internal/switch-on.svg"
 	property string switchOff: "image://internal/switch-off.svg"
-	
+	property string license: "image://internal/license.svg"
+	property string debug: "image://internal/debug.svg"
+	property string world: "image://internal/world.svg"
+	property string detective: "image://internal/detective.svg"
 }

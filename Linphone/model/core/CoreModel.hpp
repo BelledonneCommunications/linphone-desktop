@@ -45,6 +45,7 @@ public:
 	static std::shared_ptr<CoreModel> getInstance();
 
 	std::shared_ptr<linphone::Core> getCore();
+	std::shared_ptr<LoggerModel> getLogger();
 
 	void start();
 	void setConfigPath(QString path);

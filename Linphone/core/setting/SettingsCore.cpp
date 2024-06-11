@@ -63,6 +63,11 @@ Settings::Settings(QObject *parent) : QObject(parent) {
 	mVideoDevice = mSettingsModel->getVideoDevice();
 	mVideoDevices = mSettingsModel->getVideoDevices();
 	
+	//Logs
+	mLogsEnabled = mSettingsModel->getLogsEnabled();
+	mFullLogsEnabled = mSettingsModel->getFullLogsEnabled();
+	mLogsFolder = mSettingsModel->getLogsFolder();
+	mLogsEmail = mSettingsModel->getLogsEmail();
 }
 
 Settings::~Settings() {
@@ -229,6 +234,45 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 				emit videoDevicesChanged();
 			});
 	});
+	
+	// Logs
+	mSettingsModelConnection->makeConnectToCore(&Settings::setLogsEnabled, [this](const bool status) {
+		mSettingsModelConnection->invokeToModel(
+			[this, status]() { mSettingsModel->setLogsEnabled(status); });
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::logsEnabledChanged, [this](const bool status) {
+		mSettingsModelConnection->invokeToCore(
+			[this, status]() {
+				mLogsEnabled = status;
+				emit logsEnabledChanged();
+			});
+	});
+	
+	mSettingsModelConnection->makeConnectToCore(&Settings::setFullLogsEnabled, [this](const bool status) {
+		mSettingsModelConnection->invokeToModel(
+			[this, status]() { mSettingsModel->setFullLogsEnabled(status); });
+	});
+	
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::fullLogsEnabledChanged, [this](const bool status) {
+		mSettingsModelConnection->invokeToCore(
+			[this, status]() {
+				mFullLogsEnabled = status;
+				emit fullLogsEnabledChanged();
+			});
+	});
+	
+	auto coreModelConnection = QSharedPointer<SafeConnection<Settings, CoreModel>>(
+		new SafeConnection<Settings, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	
+	coreModelConnection->makeConnectToModel(&CoreModel::logCollectionUploadStateChanged, [this](auto core, auto state, auto info) {
+		mSettingsModelConnection->invokeToCore(
+			[this, state, info]() {
+				if (state == linphone::Core::LogCollectionUploadState::Delivered || state == linphone::Core::LogCollectionUploadState::NotDelivered) {
+					emit logsUploadTerminated(state == linphone::Core::LogCollectionUploadState::Delivered, Utils::coreStringToAppString(info));
+				}
+		});
+	});
 }
 
 QString Settings::getConfigPath(const QCommandLineParser &parser) {
@@ -318,4 +362,32 @@ void Settings::updateMicVolume() const {
 	mSettingsModelConnection->invokeToModel(
 		[this]() { mSettingsModel->getMicVolume(); }
 	);
+}
+
+bool Settings::getLogsEnabled () const {
+	return mLogsEnabled;
+}
+
+bool Settings::getFullLogsEnabled () const {
+	return mFullLogsEnabled;
+}
+
+void Settings::cleanLogs () const {
+	mSettingsModelConnection->invokeToModel(
+		[this]() { mSettingsModel->cleanLogs(); }
+	);
+}
+
+void Settings::sendLogs () const {
+	mSettingsModelConnection->invokeToModel(
+		[this]() { mSettingsModel->sendLogs(); }
+	);
+}
+
+QString Settings::getLogsEmail () const {
+	return mLogsEmail;
+}
+
+QString Settings::getLogsFolder () const {
+	return mLogsFolder;
 }

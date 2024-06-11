@@ -57,6 +57,12 @@ class Settings : public QObject, public AbstractObject {
 	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE setVideoDevice NOTIFY videoDeviceChanged)
 	
 	Q_PROPERTY(float micVolume MEMBER _dummy_int NOTIFY micVolumeChanged)
+	
+	Q_PROPERTY(bool logsEnabled READ getLogsEnabled WRITE setLogsEnabled NOTIFY logsEnabledChanged)
+	Q_PROPERTY(bool fullLogsEnabled READ getFullLogsEnabled WRITE setFullLogsEnabled NOTIFY fullLogsEnabledChanged)
+	Q_PROPERTY(QString logsEmail READ getLogsEmail)
+	Q_PROPERTY(QString logsFolder READ getLogsFolder)
+
 
 public:
 	static QSharedPointer<Settings> create();
@@ -104,6 +110,15 @@ public:
 	Q_INVOKABLE void closeCallSettings();
 	Q_INVOKABLE void updateMicVolume() const;
 	
+	bool getLogsEnabled () const;
+	bool getFullLogsEnabled () const;
+	
+	Q_INVOKABLE void cleanLogs () const;
+	Q_INVOKABLE void sendLogs () const;
+	QString getLogsEmail () const;
+	QString getLogsFolder () const;
+
+
 signals:
 	
 	// Security
@@ -145,12 +160,21 @@ signals:
 
 	void echoCancellationCalibrationChanged();
 	void micVolumeChanged(float volume);
-
+	
+	void logsEnabledChanged ();
+	void fullLogsEnabledChanged ();
+	
+	void setLogsEnabled (bool status);
+	void setFullLogsEnabled (bool status);
+	
+	void logsUploadTerminated (bool status, QString url);
+	void logsEmailChanged (const QString &email);
+	void logsFolderChanged (const QString &folder);
 
 private:
 	std::shared_ptr<SettingsModel> mSettingsModel;
 	
-	// Dummy properties (for properties that use values from core received throuh signals)
+	// Dummy properties (for properties that use values from core received through signals)
 	int _dummy_int = 0;
 	
 	// Security
@@ -176,6 +200,12 @@ private:
 	float mCaptureGain;
 	float mPlaybackGain;
 	int mEchoCancellationCalibration;
+	
+	//Debug logs
+	bool mLogsEnabled;
+	bool mFullLogsEnabled;
+	QString mLogsFolder;
+	QString mLogsEmail;
 	
 	QSettings mAppSettings;
 	QSharedPointer<SafeConnection<Settings, SettingsModel>> mSettingsModelConnection;

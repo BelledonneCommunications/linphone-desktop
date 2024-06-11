@@ -43,7 +43,7 @@ public:
 	void enableQtOnly(const bool &enable);
 
 	void init();
-	void init(const std::shared_ptr<linphone::Config> &config);
+	void applyConfig(const std::shared_ptr<linphone::Config> &config);
 
 	void onQtLog(QtMsgType type, QString msg); // Received from Qt
 	void onLinphoneLog(const std::shared_ptr<linphone::LoggingService> &,

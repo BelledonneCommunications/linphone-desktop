@@ -160,6 +160,30 @@ void App::init() {
 
 			    mEngine->addImportPath(":/");
 			    mEngine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
+#ifdef APPLICATION_VENDOR
+				mEngine->rootContext()->setContextProperty("applicationVendor", APPLICATION_VENDOR);
+#else
+				mEngine->rootContext()->setContextProperty("applicationVendor", "");
+#endif
+#ifdef APPLICATION_LICENCE
+				mEngine->rootContext()->setContextProperty("applicationLicence", APPLICATION_LICENCE);
+#else
+				mEngine->rootContext()->setContextProperty("applicationLicence", "");
+#endif
+#ifdef APPLICATION_LICENCE_URL
+				mEngine->rootContext()->setContextProperty("applicationLicenceUrl", APPLICATION_LICENCE_URL);
+#else
+				mEngine->rootContext()->setContextProperty("applicationLicenceUrl", "");
+#endif
+#ifdef COPYRIGHT_RANGE_DATE
+				mEngine->rootContext()->setContextProperty("copyrightRangeDate", COPYRIGHT_RANGE_DATE);
+#else
+				mEngine->rootContext()->setContextProperty("copyrightRangeDate", "");
+#endif
+				mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
+				mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);
+				
+				
 			    initCppInterfaces();
 			    mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
 			    mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());

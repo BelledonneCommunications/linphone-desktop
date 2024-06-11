@@ -110,6 +110,11 @@ std::shared_ptr<linphone::Core> CoreModel::getCore() {
 	return mCore;
 }
 
+std::shared_ptr<LoggerModel> CoreModel::getLogger() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return mLogger;
+}
+
 //-------------------------------------------------------------------------------
 void CoreModel::setConfigPath(QString path) {
 	if (mConfigPath != path) {

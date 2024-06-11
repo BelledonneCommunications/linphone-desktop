@@ -21,6 +21,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/App/Layout/Settings/GenericSettingsLayout.qml
 	view/App/Layout/Settings/SecuritySettingsLayout.qml
 	view/App/Layout/Settings/CallSettingsLayout.qml
+	view/App/Layout/Settings/DebugSettingsLayout.qml
 
 	view/Item/Account/Accounts.qml
 	
@@ -51,6 +52,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	
 	view/Item/BusyIndicator.qml
 	view/Item/Button.qml
+	view/Item/MediumButton.qml
 	view/Item/Calendar.qml
 	view/Item/CalendarComboBox.qml
 	view/Item/Carousel.qml
@@ -96,6 +98,8 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Settings/SettingsFamily.qml
 	view/Item/Settings/SwitchSetting.qml
 	view/Item/Settings/ComboSetting.qml
+	
+	view/Item/Help/HelpIconLabelButton.qml
 
 	view/Page/Login/LoginPage.qml
 	view/Page/Login/RegisterPage.qml
@@ -110,6 +114,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Main/MeetingPage.qml
 	
 	view/Page/Main/SettingsPage.qml
+	view/Page/Main/HelpPage.qml
 	
 	view/Tool/utils.js
 # Prototypes

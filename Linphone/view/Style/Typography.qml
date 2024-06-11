@@ -38,4 +38,11 @@ QtObject {
 		weight: 400 * DefaultStyle.dp
 	})
 	
+	// Bouton/B2 - Medium Bouton
+	property font b2: Qt.font( {
+		family: DefaultStyle.defaultFont,
+		pixelSize: 15 * DefaultStyle.dp,
+		weight: 600 * DefaultStyle.dp
+	})
+	
 }

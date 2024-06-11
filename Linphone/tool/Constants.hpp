@@ -69,7 +69,7 @@ public:
 	static constexpr char PrivatePolicyUrl[] = "https://www.linphone.org/privacy-policy";
 	static constexpr char ContactUrl[] = "https://www.linphone.org/contact";
 	static constexpr char TranslationUrl[] = "https://weblate.linphone.org/projects/linphone-desktop/";
-
+	
 	static constexpr int MaxMosaicParticipants =
 	    6; // From 7, the mosaic quality will be limited to avoid useless computations
 
@@ -98,6 +98,7 @@ public:
 	Q_PROPERTY(QString DefaultFont MEMBER DefaultFont CONSTANT)
 	Q_PROPERTY(int maxMosaicParticipants MEMBER MaxMosaicParticipants CONSTANT)
 	Q_PROPERTY(QStringList reactionsList READ getReactionsList CONSTANT)
+
 
 	// For Webviews
 	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
