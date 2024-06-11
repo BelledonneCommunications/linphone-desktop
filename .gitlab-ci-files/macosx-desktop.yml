@@ -148,7 +148,7 @@ macosx-makefile-deploy:
       - $NIGHTLY_MASTER
       - $DEPLOY_MACOSX
  script:
-   - rsync -rlv --ignore-existing build/OUTPUT/linphone-app/macos/Packages/Linphone*.dmg $DEPLOY_SERVER:$UPLOAD_ROOT_INTERNAL_PATH/$MACOSX_PLATFORM/$APP_FOLDER
+   - rsync -rlv --ignore-existing build/OUTPUT/Linphone/macos/Packages/Linphone*.dmg $DEPLOY_SERVER:$UPLOAD_ROOT_INTERNAL_PATH/$MACOSX_PLATFORM/$APP_FOLDER
    - |-
      if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
        rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_INTERNAL_PATH/$MACOSX_PLATFORM
