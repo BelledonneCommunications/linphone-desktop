@@ -79,7 +79,7 @@ Item {
 			Layout.Layout.preferredHeight: parent.height
 			Layout.Layout.alignment: Qt.AlignCenter
 			Text {
-				text: qsTr(mainItem.call.core.lastErrorMessage)
+				text: mainItem.call ? mainItem.call.core.lastErrorMessage : ""
 				Layout.Layout.alignment: Qt.AlignCenter
 				color: DefaultStyle.grey_0
 				font.pixelSize: 40 * DefaultStyle.dp

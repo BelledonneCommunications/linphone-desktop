@@ -81,8 +81,8 @@ Item {
 				}
 				Text {
 					id: waitingTime
-					property int seconds
 					visible: !UtilsCpp.isMe(mainItem.peerAddress)
+					property int seconds
 					text: UtilsCpp.formatElapsedTime(seconds)
 					color: DefaultStyle.grey_0
 					Layout.alignment: Qt.AlignHCenter

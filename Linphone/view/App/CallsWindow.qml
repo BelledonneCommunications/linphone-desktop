@@ -21,15 +21,8 @@ AppWindow {
 	property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
 
 	property bool callTerminatedByUser: false
-	property var callState: call && call.core.state
+	property var callState: call ? call.core.state : LinphoneEnums.CallState.Idle
 	property var transferState: call && call.core.transferState
-
-	onCallChanged: {
-		// if conference, the main item is only
-		// displayed when state is connected
-		if (call && middleItemStackView.currentItem != inCallItem && conference)
-			middleItemStackView.replace(inCallItem)
-	}
 
 	onCallStateChanged: {
 		if (callState === LinphoneEnums.CallState.Connected) {
@@ -395,7 +388,7 @@ AppWindow {
 								: ""
 						}
 						Button {
-							visible: mainWindow.call.core.recording
+							visible: mainWindow.call && mainWindow.call.core.recording
 							text: qsTr("Arrêter l'enregistrement")
 							onPressed: mainWindow.call.core.lStopRecording()
 						}
@@ -719,14 +712,17 @@ AppWindow {
 				Component {
 					id: settingsPanel
 					Item {
-						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Paramètres")
+						Control.StackView.onActivated: {
+							rightPanel.headerTitleText = qsTr("Paramètres")
+						}
 						InCallSettingsPanel {
+							id: inSettingsPanel
+							call: mainWindow.call
 							anchors.fill: parent
 							anchors.topMargin: 16 * DefaultStyle.dp
 							anchors.bottomMargin: 16 * DefaultStyle.dp
 							anchors.leftMargin: 17 * DefaultStyle.dp
 							anchors.rightMargin: 17 * DefaultStyle.dp
-							call: mainWindow.call
 						}
 					}
 				}
@@ -866,14 +862,14 @@ AppWindow {
 						target: callStatusText
 						when: middleItemStackView.currentItem === waitingRoomIn
 						property: "text"
-						value: waitingRoomIn.conferenceInfo.core.subject
+						value: waitingRoomIn.conferenceInfo && waitingRoomIn.conferenceInfo.core.subject
 						restoreMode: Binding.RestoreBindingOrValue
 					}
 					Binding {
 						target: conferenceDate
 						when: middleItemStackView.currentItem === waitingRoomIn
 						property: "text"
-						value: waitingRoomIn.conferenceInfo.core.startEndDateString
+						value: waitingRoomIn.conferenceInfo && waitingRoomIn.conferenceInfo.core.startEndDateString
 					}
 					Connections {
 						target: rightPanel

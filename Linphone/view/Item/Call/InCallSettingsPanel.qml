@@ -7,14 +7,11 @@ import SettingsCpp 1.0
 ColumnLayout {
 	id: mainItem
 	property CallGui call
-	onCallChanged: {
-		if (call) {
-			call.core.lSetOutputAudioDevice(outputAudioDeviceCBox.currentText)
-			call.core.lSetSpeakerVolumeGain(speakerVolume.value)
-			call.core.lSetInputAudioDevice(inputAudioDeviceCBox.currentText)
-			call.core.lSetMicrophoneVolumeGain(microVolume.value)
-		}
-	}
+	property alias speakerVolume: speakerVolume.value
+	property string speakerDevice: outputAudioDeviceCBox.currentText
+	property alias micVolume: microVolume.value
+	property string microDevice: inputAudioDeviceCBox.currentText
+
 	RoundedBackgroundControl {
 		Layout.alignment: Qt.AlignHCenter
 		Control.StackView.onActivated: {
@@ -54,6 +51,7 @@ ColumnLayout {
 					model: SettingsCpp.playbackDevices
 					onCurrentTextChanged: {
 						if (mainItem.call) mainItem.call.core.lSetOutputAudioDevice(currentText)
+						SettingsCpp.lSetPlaybackDevice(currentText)
 					}
 				}
 				Slider {
@@ -61,9 +59,10 @@ ColumnLayout {
 					Layout.fillWidth: true
 					from: 0.0
 					to: 1.0
-					value: mainItem.call ? mainItem.call.core.speakerVolumeGain : 0.5
+					value: mainItem.call ? mainItem.call.core.speakerVolumeGain : SettingsCpp.playbackGain
 					onMoved: {
 						if (mainItem.call) mainItem.call.core.lSetSpeakerVolumeGain(value)
+						SettingsCpp.lSetPlaybackGain(value)
 					}
 				}
 			}
@@ -93,6 +92,7 @@ ColumnLayout {
 					model: SettingsCpp.captureDevices
 					onCurrentTextChanged: {
 						if (mainItem.call) mainItem.call.core.lSetInputAudioDevice(currentText)
+						SettingsCpp.lSetCaptureDevice(currentText)
 					}
 				}
 				Slider {
@@ -100,9 +100,10 @@ ColumnLayout {
 					Layout.fillWidth: true
 					from: 0.0
 					to: 1.0
-					value: mainItem.call ? mainItem.call.core.microphoneVolumeGain : 0.5
+					value: mainItem.call ? mainItem.call.core.microphoneVolumeGain : SettingsCpp.captureGain
 					onMoved: {
 						if (mainItem.call) mainItem.call.core.lSetMicrophoneVolumeGain(value)
+						SettingsCpp.lSetCaptureGain(value)
 					}
 				}
 				Timer {
@@ -160,13 +161,14 @@ ColumnLayout {
 					}
 				}
 				ComboBox {
+					id: videoDevicesCbox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
 					Layout.preferredHeight: 49 * DefaultStyle.dp
 					model: SettingsCpp.videoDevices
-					currentIndex: SettingsCpp.currentVideoDeviceIndex
+					currentIndex: SettingsCpp.videoDeviceIndex
 					onCurrentTextChanged: {
-						SettingsCpp.setVideoDevice(currentText)
+						SettingsCpp.lSetVideoDevice(currentText)
 					}
 				}
 			}

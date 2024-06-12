@@ -19,10 +19,11 @@ Item{
 	}
 	property var callState: call && call.core.state || undefined
 	onCallStateChanged: if (callState === LinphoneEnums.CallState.End || callState === LinphoneEnums.CallState.Released) preview.visible = false
-	property string localAddress: call && call.conference
-		? call.conference.core.me.core.sipAddress
-		: call.core.localAddress
-	|| ""
+	property string localAddress: call 
+		? call.conference
+			? call.conference.core.me.core.sipAddress
+			: call.core.localAddress
+		: ""
 	
 	// currently speaking address (for hiding in list view)
 	property string activeSpeakerAddress
