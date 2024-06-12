@@ -1241,6 +1241,12 @@ bool Utils::isLocal(const QString &address) {
 	App::postModelSync([&isLocal, address]() { isLocal = ToolModel::isLocal(address); });
 	return isLocal;
 }
+
+bool Utils::isUsername(const QString &txt) {
+	QRegularExpression regex("^(<?sips?:)?[a-zA-Z0-9+_.\\-]+>?$");
+	QRegularExpressionMatch match = regex.match(txt);
+	return match.hasMatch(); // true
+}
 // QDateTime dateTime(QDateTime::fromString(date, "yyyy-MM-dd hh:mm:ss"));
 
 // bool Utils::isMe(const QString &address) {

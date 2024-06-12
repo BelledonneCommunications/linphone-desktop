@@ -28,6 +28,7 @@
 #include <QTimer>
 #include <linphone++/linphone.hh>
 
+#include "model/cli/CliModel.hpp"
 #include "model/listener/Listener.hpp"
 #include "model/logger/LoggerModel.hpp"
 #include "tool/AbstractObject.hpp"
@@ -50,6 +51,10 @@ public:
 	void start();
 	void setConfigPath(QString path);
 
+	QString getFetchConfig(QString filePath, bool *error);
+	void useFetchConfig(QString filePath);
+	bool setFetchConfig(QString filePath);
+
 	bool mEnd = false;
 
 	std::shared_ptr<linphone::Core> mCore;
@@ -61,6 +66,8 @@ signals:
 	void friendRemoved(const std::shared_ptr<linphone::Friend> &f);
 	void conferenceInfoCreated(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
 	void unreadNotificationsChanged();
+	void requestFetchConfig(QString path);
+	void requestRestart();
 
 private:
 	QString mConfigPath;

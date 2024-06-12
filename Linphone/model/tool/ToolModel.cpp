@@ -100,7 +100,23 @@ bool ToolModel::createCall(const QString &sipAddress,
                            linphone::MediaEncryption mediaEncryption,
                            QString *errorMessage) {
 	bool waitRegistrationForCall = true; // getSettingsModel()->getWaitRegistrationForCall()
+
 	std::shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
+
+	if (waitRegistrationForCall) {
+		std::shared_ptr<linphone::Account> currentAccount = core->getDefaultAccount();
+		if (!currentAccount || currentAccount->getState() != linphone::RegistrationState::Ok) {
+			connect(
+			    CoreModel::getInstance().get(), &CoreModel::accountRegistrationStateChanged,
+			    CoreModel::getInstance().get(),
+			    [sipAddress, options, prepareTransfertAddress, headers, mediaEncryption]() {
+				    ToolModel::createCall(sipAddress, options, prepareTransfertAddress, headers, mediaEncryption);
+			    },
+			    Qt::SingleShotConnection);
+			return false;
+		}
+	}
+
 	bool localVideoEnabled = options.contains("localVideoEnabled") ? options["localVideoEnabled"].toBool() : false;
 
 	std::shared_ptr<linphone::Address> address = interpretUrl(sipAddress);
@@ -114,7 +130,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 		return false;
 	}
 	for (auto &account : core->getAccountList()) {
-		if (account->getContactAddress()->weakEqual(address)) {
+		if (account->getContactAddress() && account->getContactAddress()->weakEqual(address)) {
 			*errorMessage = "The calling address is a connected account.";
 			lDebug() << "[" + QString(gClassName) + "]" + *errorMessage;
 			return false;

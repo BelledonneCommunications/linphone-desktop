@@ -28,6 +28,7 @@
 #include <QFontDatabase>
 #include <QGuiApplication>
 #include <QLibraryInfo>
+#include <QProcessEnvironment>
 #include <QQmlComponent>
 #include <QQmlContext>
 #include <QQmlFileSelector>
@@ -74,14 +75,21 @@
 #include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/ImageProvider.hpp"
 #include "tool/providers/ScreenProvider.hpp"
+#include "tool/request/RequestDialog.hpp"
 #include "tool/thread/Thread.hpp"
 
 DEFINE_ABSTRACT_OBJECT(App)
+
+#ifdef Q_OS_LINUX
+const QString ApplicationsDirectory(QDir::homePath().append(QStringLiteral("/.local/share/applications/")));
+const QString IconsDirectory(QDir::homePath().append(QStringLiteral("/.local/share/icons/hicolor/scalable/apps/")));
+#endif
 
 App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
 	// Do not use APPLICATION_NAME here.
 	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
+
 	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
 	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
 	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
@@ -101,6 +109,7 @@ App::App(int &argc, char *argv[])
 
 	//-------------------
 	mLinphoneThread = new Thread(this);
+
 	init();
 	lInfo() << QStringLiteral("Starting application " APPLICATION_NAME " (bin: " EXECUTABLE_NAME
 	                          "). Version:%1 Os:%2 Qt:%3")
@@ -126,6 +135,50 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			                                         lDebug() << "App : call created" << callGui;
 		                                         });
 	                                         });
+	mCoreModelConnection->makeConnectToModel(&CoreModel::requestRestart, [this]() {
+		mCoreModelConnection->invokeToCore([this]() {
+			lInfo() << log().arg("Restarting");
+			restart();
+		});
+	});
+	mCoreModelConnection->makeConnectToModel(&CoreModel::requestFetchConfig, [this](QString path) {
+		mCoreModelConnection->invokeToCore([this, path]() {
+			auto callback = [this, path]() {
+				RequestDialog *obj = new RequestDialog(
+				    tr("Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?"), path);
+				connect(obj, &RequestDialog::result, this, [this, obj, path](int result) {
+					if (result == 1) {
+						mCoreModelConnection->invokeToModel(
+						    [this, path]() { CoreModel::getInstance()->setFetchConfig(path); });
+					} else if (result == 0) {
+						mCoreModelConnection->invokeToModel([]() { CliModel::getInstance()->resetProcesses(); });
+					}
+					obj->deleteLater();
+				});
+				QMetaObject::invokeMethod(getMainWindow(), "showConfirmationPopup", QVariant::fromValue(obj));
+			};
+			if (!getMainWindow()) { // Delay
+				connect(this, &App::mainWindowChanged, this, callback, Qt::SingleShotConnection);
+			} else {
+				callback();
+			}
+		});
+	});
+	//---------------------------------------------------------------------------------------------
+	mCliModelConnection = QSharedPointer<SafeConnection<App, CliModel>>(
+	    new SafeConnection<App, CliModel>(me, CliModel::getInstance()), &QObject::deleteLater);
+	mCliModelConnection->makeConnectToCore(&App::receivedMessage, [this](int, const QByteArray &byteArray) {
+		QString command(byteArray);
+		if (command.isEmpty())
+			mCliModelConnection->invokeToModel([command]() { CliModel::getInstance()->runProcess(); });
+		else {
+			qInfo() << QStringLiteral("Received command from other application: `%1`.").arg(command);
+			mCliModelConnection->invokeToModel([command]() { CliModel::getInstance()->executeCommand(command); });
+		}
+	});
+	mCliModelConnection->makeConnectToModel(&CliModel::showMainWindow, [this]() {
+		mCliModelConnection->invokeToCore([this]() { Utils::smartShowWindow(getMainWindow()); });
+	});
 }
 
 App *App::getInstance() {
@@ -140,12 +193,33 @@ Notifier *App::getNotifier() const {
 //-----------------------------------------------------------
 
 void App::init() {
+	// Console Commands
+	createCommandParser();
+	mParser->parse(this->arguments());
+	// TODO : Update languages for command translations.
+
+	createCommandParser(); // Recreate parser in order to use translations from config.
+	mParser->process(*this);
+
+	if (mParser->isSet("verbose")) QtLogger::enableVerbose(true);
+	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
+
+	if (!mLinphoneThread->isRunning()) {
+		lDebug() << log().arg("Starting Thread");
+		mLinphoneThread->start();
+	}
+	setQuitOnLastWindowClosed(true); // TODO: use settings to set it
+
+	lInfo() << log().arg("Display server : %1").arg(platformName());
+}
+
+void App::initCore() {
 	// Core. Manage the logger so it must be instantiate at first.
-	auto coreModel = CoreModel::create("", mLinphoneThread);
-	connect(
-	    mLinphoneThread, &QThread::started, coreModel.get(),
-	    [this, coreModel]() mutable {
-		    coreModel->start();
+	CoreModel::create("", mLinphoneThread);
+	QMetaObject::invokeMethod(
+	    mLinphoneThread->getThreadId(),
+	    [this]() mutable {
+		    CoreModel::getInstance()->start();
 		    auto settings = Settings::create();
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings]() mutable {
 			    // QML
@@ -161,29 +235,27 @@ void App::init() {
 			    mEngine->addImportPath(":/");
 			    mEngine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
 #ifdef APPLICATION_VENDOR
-				mEngine->rootContext()->setContextProperty("applicationVendor", APPLICATION_VENDOR);
+			    mEngine->rootContext()->setContextProperty("applicationVendor", APPLICATION_VENDOR);
 #else
 				mEngine->rootContext()->setContextProperty("applicationVendor", "");
 #endif
 #ifdef APPLICATION_LICENCE
-				mEngine->rootContext()->setContextProperty("applicationLicence", APPLICATION_LICENCE);
+			    mEngine->rootContext()->setContextProperty("applicationLicence", APPLICATION_LICENCE);
 #else
 				mEngine->rootContext()->setContextProperty("applicationLicence", "");
 #endif
 #ifdef APPLICATION_LICENCE_URL
-				mEngine->rootContext()->setContextProperty("applicationLicenceUrl", APPLICATION_LICENCE_URL);
+			    mEngine->rootContext()->setContextProperty("applicationLicenceUrl", APPLICATION_LICENCE_URL);
 #else
 				mEngine->rootContext()->setContextProperty("applicationLicenceUrl", "");
 #endif
 #ifdef COPYRIGHT_RANGE_DATE
-				mEngine->rootContext()->setContextProperty("copyrightRangeDate", COPYRIGHT_RANGE_DATE);
+			    mEngine->rootContext()->setContextProperty("copyrightRangeDate", COPYRIGHT_RANGE_DATE);
 #else
 				mEngine->rootContext()->setContextProperty("copyrightRangeDate", "");
 #endif
-				mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
-				mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);
-				
-				
+			    mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
+			    mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);
 			    initCppInterfaces();
 			    mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
 			    mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
@@ -205,7 +277,7 @@ void App::init() {
 						        lCritical() << log().arg("Main.qml couldn't be load. The app will exit");
 						        exit(-1);
 					        }
-					        mMainWindow = qobject_cast<QQuickWindow *>(obj);
+					        setMainWindow(qobject_cast<QQuickWindow *>(obj));
 					        QMetaObject::invokeMethod(obj, "initStackViewItem");
 					        Q_ASSERT(mMainWindow);
 				        }
@@ -215,27 +287,7 @@ void App::init() {
 		    });
 		    // coreModel.reset();
 	    },
-	    Qt::SingleShotConnection);
-	// Console Commands
-	createCommandParser();
-	mParser->parse(this->arguments());
-	// TODO : Update languages for command translations.
-
-	createCommandParser(); // Recreate parser in order to use translations from config.
-	mParser->process(*this);
-
-	if (mParser->isSet("verbose")) QtLogger::enableVerbose(true);
-	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
-
-	if (!mLinphoneThread->isRunning()) {
-		lDebug() << log().arg("Starting Thread");
-		mLinphoneThread->start();
-	}
-	setQuitOnLastWindowClosed(true); // TODO: use settings to set it
-
-	lInfo() << log().arg("Display server : %1").arg(platformName());
-
-	// mEngine->load(u"qrc:/Linphone/view/Prototype/CameraPrototype.qml"_qs);
+	    Qt::BlockingQueuedConnection);
 }
 
 void App::initCppInterfaces() {
@@ -294,6 +346,9 @@ void App::initCppInterfaces() {
 	                                                      QLatin1String("Uncreatable"));
 	qmlRegisterType<VideoSourceDescriptorGui>(Constants::MainQmlUri, 1, 0, "VideoSourceDescriptorGui");
 
+	qmlRegisterUncreatableType<RequestDialog>(Constants::MainQmlUri, 1, 0, "RequestDialog",
+	                                          QLatin1String("Uncreatable"));
+
 	LinphoneEnums::registerMetaTypes();
 }
 
@@ -309,11 +364,29 @@ void App::clean() {
 	// mSettings.reset();
 	// }
 	qApp->processEvents(QEventLoop::AllEvents, 500);
-	mLinphoneThread->exit();
-	mLinphoneThread->wait();
-	delete mLinphoneThread;
+	if (mLinphoneThread) {
+		mLinphoneThread->exit();
+		mLinphoneThread->wait();
+		delete mLinphoneThread;
+	}
 }
-
+void App::restart() {
+	mCoreModelConnection->invokeToModel([this]() {
+		CoreModel::getInstance()->getCore()->stop();
+		mCoreModelConnection->invokeToCore([this]() {
+			mEngine->deleteLater();
+			if (mSettings) mSettings.reset();
+			initCore();
+			// Retrieve self from current Core/Model connection and reset Qt connections.
+			auto oldConnection = mCoreModelConnection;
+			oldConnection->mCore.lock();
+			auto me = oldConnection->mCore.mQData;
+			setSelf(me);
+			oldConnection->mCore.unlock();
+			exit((int)StatusCode::gRestartCode);
+		});
+	});
+}
 void App::createCommandParser() {
 	if (!mParser) delete mParser;
 
@@ -335,6 +408,28 @@ void App::createCommandParser() {
 	    {{"V", "verbose"}, tr("commandLineOptionVerbose")},
 	    {"qt-logs-only", tr("commandLineOptionQtLogsOnly")},
 	});
+}
+// Should be call only at first start
+void App::sendCommand() {
+	auto arguments = mParser->positionalArguments();
+	static bool firstStart = true; // We can't erase positional arguments. So we get them on each restart.
+	if (firstStart && arguments.size() > 0) {
+		firstStart = false;
+		if (isSecondary()) { // Send to primary
+			lDebug() << "Sending " << arguments;
+			for (auto i : arguments) {
+				sendMessage(i.toLocal8Bit(), -1);
+			}
+		} else { // Execute
+			lDebug() << "Executing " << arguments;
+			for (auto i : arguments) {
+				QString command(i);
+				receivedMessage(0, i.toLocal8Bit());
+			}
+		}
+	} else if (isPrimary()) { // Run waiting process
+		receivedMessage(0, "");
+	}
 }
 
 bool App::notify(QObject *receiver, QEvent *event) {
@@ -401,6 +496,122 @@ void App::closeCallsWindow() {
 	}
 }
 
-QQuickWindow *App::getMainWindow() {
+QQuickWindow *App::getMainWindow() const {
 	return mMainWindow;
 }
+
+void App::setMainWindow(QQuickWindow *data) {
+	if (mMainWindow != data) {
+		mMainWindow = data;
+		emit mainWindowChanged();
+	}
+}
+
+#ifdef Q_OS_LINUX
+QString App::getApplicationPath() const {
+	const QString binPath(QCoreApplication::applicationFilePath());
+
+	// Check if installation is done via Flatpak, AppImage, or classic package
+	// in order to rewrite a correct exec path for autostart
+	QString exec;
+	qDebug() << "binpath=" << binPath;
+	if (binPath.startsWith("/app")) { // Flatpak
+		exec = QStringLiteral("flatpak run " APPLICATION_ID);
+		qDebug() << "exec path autostart set flatpak=" << exec;
+	} else if (binPath.startsWith("/tmp/.mount")) { // Appimage
+		exec = QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
+		qDebug() << "exec path autostart set appimage=" << exec;
+	} else { // classic package
+		exec = binPath;
+		qDebug() << "exec path autostart set classic package=" << exec;
+	}
+	return exec;
+}
+
+void App::exportDesktopFile() {
+	QDir dir(ApplicationsDirectory);
+	if (!dir.exists() && !dir.mkpath(ApplicationsDirectory)) {
+		qWarning() << QStringLiteral("Unable to build applications dir path: `%1`.").arg(ApplicationsDirectory);
+		return;
+	}
+
+	const QString confPath(ApplicationsDirectory + EXECUTABLE_NAME ".desktop");
+	if (generateDesktopFile(confPath, true, false)) generateDesktopFile(confPath, false, false);
+}
+
+bool App::generateDesktopFile(const QString &confPath, bool remove, bool openInBackground) {
+	qInfo() << QStringLiteral("Updating `%1`...").arg(confPath);
+	QFile file(confPath);
+
+	if (remove) {
+		if (file.exists() && !file.remove()) {
+			qWarning() << QLatin1String("Unable to remove autostart file: `" EXECUTABLE_NAME ".desktop`.");
+			return false;
+		}
+		return true;
+	}
+
+	if (!file.open(QFile::WriteOnly)) {
+		qWarning() << "Unable to open autostart file: `" EXECUTABLE_NAME ".desktop`.";
+		return false;
+	}
+
+	QString exec = getApplicationPath();
+
+	QDir dir;
+	QString iconPath;
+	bool haveIcon = false;
+	if (!dir.mkpath(IconsDirectory)) // Scalable icons folder may be created
+		qWarning() << "Cannot create scalable icon path at " << IconsDirectory;
+	else {
+		iconPath = IconsDirectory + EXECUTABLE_NAME + ".svg";
+		QFile icon(Constants::WindowIconPath);
+		if (!QFile(iconPath).exists()) { // Keep old icon but copy if it doesn't exist
+			haveIcon = icon.copy(iconPath);
+			if (!haveIcon) qWarning() << "Couldn't copy icon svg into " << iconPath;
+			else { // Update permissions
+				QFile icon(iconPath);
+				icon.setPermissions(icon.permissions() | QFileDevice::WriteOwner);
+			}
+		} else {
+			qInfo() << "Icon already exists in " << IconsDirectory << ". It is not replaced.";
+			haveIcon = true;
+		}
+	}
+
+	QTextStream(&file) << QString("[Desktop Entry]\n"
+	                              "Name=" APPLICATION_NAME "\n"
+	                              "GenericName=SIP Phone\n"
+	                              "Comment=" APPLICATION_DESCRIPTION "\n"
+	                              "Type=Application\n")
+	                   << (openInBackground ? "Exec=" + exec + " --iconified %u\n" : "Exec=" + exec + " %u\n")
+	                   << (haveIcon ? "Icon=" + iconPath + "\n" : "Icon=" EXECUTABLE_NAME "\n")
+	                   << "Terminal=false\n"
+	                      "Categories=Network;Telephony;\n"
+	                      "MimeType=x-scheme-handler/sip-" EXECUTABLE_NAME ";x-scheme-handler/sips-" EXECUTABLE_NAME
+	                      ";x-scheme-handler/" EXECUTABLE_NAME "-sip;x-scheme-handler/" EXECUTABLE_NAME
+	                      "-sips;x-scheme-handler/sip;x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/"
+	                      "callto;x-scheme-handler/" EXECUTABLE_NAME "-config;\n"
+	                      "X-PulseAudio-Properties=media.role=phone\n";
+
+	return true;
+}
+#elif defined(Q_OS_MACOS)
+// On MAC, URI handlers call the application with no arguments and pass them in event loop.
+bool App::event(QEvent *event) {
+	if (event->type() == QEvent::FileOpen) {
+		const QString url = static_cast<QFileOpenEvent *>(event)->url().toString();
+		if (isSecondary()) {
+			sendMessage(url.toLocal8Bit(), -1);
+			::exit(EXIT_SUCCESS);
+		}
+		receivedMessage(0, url.toLocal8Bit());
+	} else if (event->type() == QEvent::ApplicationStateChange) {
+		auto state = static_cast<QApplicationStateChangeEvent *>(event);
+		if (state->applicationState() == Qt::ApplicationActive) Utils::smartShowWindow(getMainWindow());
+	}
+
+	return SingleApplication::event(event);
+}
+
+#endif

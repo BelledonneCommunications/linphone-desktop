@@ -18,22 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef THREAD_H_
-#define THREAD_H_
+#include "RequestDialog.hpp"
 
-#include <QThread>
-
-class Thread : public QThread {
-public:
-	Thread(QObject *parent = nullptr);
-	virtual ~Thread();
-	static bool isInLinphoneThread();
-	static bool mustBeInLinphoneThread(const QString &context);
-	static bool mustBeInMainThread(const QString &context);
-
-	QObject *getThreadId();
-
-	virtual void run();
-	QObject *mThreadId = nullptr;
-};
-#endif
+RequestDialog::RequestDialog(QString message, QString details, QObject *parent)
+    : QObject(parent), mMessage(message), mDetails(details) {
+}

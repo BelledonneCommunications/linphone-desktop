@@ -99,7 +99,8 @@ else
 fi
 
 ###########################################################################################
-export QMAKE=qmake
+
+export QMAKE=${QT_PATH}/bin/qmake
 export QML_SOURCES_PATHS=${QML_SOURCES_PATHS}:${WORK_DIR}/..
 export LD_LIBRARY_PATH=${QT_PATH}/lib:${BIN_SOURCE_DIR}/lib:${BIN_SOURCE_DIR}/lib64
 #export EXTRA_QT_PLUGINS=webenginecore;webview;webengine

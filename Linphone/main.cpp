@@ -11,6 +11,11 @@
 #include <QQmlDebuggingEnabler>
 #endif
 
+#ifdef _WIN32
+#include <Windows.h>
+FILE *gStream = NULL;
+#endif
+
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 10)
 // From 5.15.2 to 5.15.10, sometimes, Accessibility freeze the application : Deactivate handlers.
 #define ACCESSBILITY_WORKAROUND
@@ -22,14 +27,30 @@ void DummyRootObjectHandler(QObject *) {
 }
 #endif
 
+void cleanStream() {
+#ifdef _WIN32
+	if (gStream) {
+		fflush(stdout);
+		fflush(stderr);
+		fclose(gStream);
+	}
+#endif
+}
+
 int main(int argc, char *argv[]) {
+#if defined _WIN32
+	// log in console only if launched from console
+	if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+		freopen_s(&gStream, "CONOUT$", "w", stdout);
+		freopen_s(&gStream, "CONOUT$", "w", stderr);
+	}
+#endif
 	// Useful to share camera on Fullscreen (other context) or multiscreens
 	QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 	// Disable QML cache. Avoid malformed cache.
 	qputenv("QML_DISABLE_DISK_CACHE", "true");
 
 	auto app = QSharedPointer<App>::create(argc, argv);
-	app->setSelf(app);
 
 	QTranslator translator;
 	const QStringList uiLanguages = QLocale::system().uiLanguages();
@@ -46,8 +67,20 @@ int main(int argc, char *argv[]) {
 	QAccessible::installRootObjectHandler(DummyRootObjectHandler);
 #endif
 
+	if (app->isSecondary()) {
+		app->sendCommand();
+		qInfo() << QStringLiteral("Running secondary app success. Kill it now.");
+		app->clean();
+		cleanStream();
+		return EXIT_SUCCESS;
+	} else {
+		app->initCore();
+		app->setSelf(app);
+	}
+
 	int result = 0;
 	do {
+		app->sendCommand();
 		result = app->exec();
 	} while (result == (int)App::StatusCode::gRestartCode);
 	qWarning() << "[Main] Exiting app with the code : " << result;

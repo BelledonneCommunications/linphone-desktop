@@ -12,6 +12,22 @@ ApplicationWindow {
 		id: popupComp
 		InformationPopup{}
 	}
+
+	Component{
+		id: confirmPopupComp
+		Dialog {
+			property var requestDialog
+			property int index
+			signal closePopup(int index)
+			onClosed: closePopup(index)
+			text: requestDialog.message
+			details: requestDialog.details
+			onAccepted: requestDialog.result(1)
+			onRejected: requestDialog.result(0)
+			width: 278 * DefaultStyle.dp
+		}
+	}
+
 	function removeFromPopupLayout(index) {
 		popupLayout.popupList.splice(index, 1)
 	}
@@ -28,6 +44,15 @@ ApplicationWindow {
 	}
 	function closeLoadingPopup() {
 		loadingPopup.close()
+	}
+
+	function showConfirmationPopup(requestDialog){
+		console.log("Showing confirmation popup")
+		var popup = confirmPopupComp.createObject(popupLayout, {"requestDialog": requestDialog})
+		popup.index = popupLayout.popupList.length
+		popupLayout.popupList.push(popup)
+		popup.open()
+		popup.closePopup.connect(removeFromPopupLayout)
 	}
 
 	ColumnLayout {

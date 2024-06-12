@@ -13,6 +13,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/participant/ParticipantDeviceModel.cpp
 	model/participant/ParticipantModel.cpp
 
+	model/cli/CliModel.cpp
 	model/core/CoreModel.cpp
 	
 	model/friend/FriendModel.cpp

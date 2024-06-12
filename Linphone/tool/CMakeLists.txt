@@ -12,6 +12,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	tool/providers/ScreenProvider.cpp
 	
 	tool/native/DesktopTools.hpp
+
+	tool/request/RequestDialog.cpp
 )
 
 if (APPLE)

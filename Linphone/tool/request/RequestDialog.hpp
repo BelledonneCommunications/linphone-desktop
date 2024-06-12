@@ -18,22 +18,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef THREAD_H_
-#define THREAD_H_
+#ifndef REQUEST_DIALOG_H_
+#define REQUEST_DIALOG_H_
 
-#include <QThread>
+#include <QDebug>
+#include <QObject>
+#include <QString>
 
-class Thread : public QThread {
+class RequestDialog : public QObject {
+	Q_OBJECT
+	Q_PROPERTY(QString message MEMBER mMessage NOTIFY messageChanged)
+	Q_PROPERTY(QString details MEMBER mDetails NOTIFY detailsChanged)
 public:
-	Thread(QObject *parent = nullptr);
-	virtual ~Thread();
-	static bool isInLinphoneThread();
-	static bool mustBeInLinphoneThread(const QString &context);
-	static bool mustBeInMainThread(const QString &context);
+	RequestDialog(QString message, QString details, QObject *parent = nullptr);
 
-	QObject *getThreadId();
-
-	virtual void run();
-	QObject *mThreadId = nullptr;
+	QString mMessage;
+	QString mDetails;
+signals:
+	void messageChanged();
+	void detailsChanged();
+	void result(int data);
 };
 #endif

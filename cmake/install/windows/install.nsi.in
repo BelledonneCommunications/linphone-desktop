@@ -19,6 +19,9 @@ WriteRegStr HKCR "sip" "URL Protocol" ""
 WriteRegStr HKCR "sip-@EXECUTABLE_NAME@" "" "URL:sip-@EXECUTABLE_NAME@ Protocol"
 WriteRegStr HKCR "sip-@EXECUTABLE_NAME@" "URL Protocol" ""
 
+WriteRegStr HKCR "@EXECUTABLE_NAME@-sip" "" "URL:@EXECUTABLE_NAME@-sip Protocol"
+WriteRegStr HKCR "@EXECUTABLE_NAME@-sip" "URL Protocol" ""
+
 WriteRegStr HKCR "@EXECUTABLE_NAME@-config" "" "URL:@EXECUTABLE_NAME@-config Protocol"
 WriteRegStr HKCR "@EXECUTABLE_NAME@-config" "URL Protocol" ""
 
@@ -27,6 +30,9 @@ WriteRegStr HKCR "sips" "URL Protocol" ""
 
 WriteRegStr HKCR "sips-@EXECUTABLE_NAME@" "" "URL:sips-@EXECUTABLE_NAME@ Protocol"
 WriteRegStr HKCR "sips-@EXECUTABLE_NAME@" "URL Protocol" ""
+
+WriteRegStr HKCR "@EXECUTABLE_NAME@-sips" "" "URL:@EXECUTABLE_NAME@-sips Protocol"
+WriteRegStr HKCR "@EXECUTABLE_NAME@-sips" "URL Protocol" ""
 
 WriteRegStr HKCR "tel" "" "URL:tel Protocol"
 WriteRegStr HKCR "tel" "URL Protocol" ""
@@ -51,6 +57,13 @@ WriteRegStr HKCR "@APPLICATION_NAME@.sip-@EXECUTABLE_NAME@\Shell\Open" "" ""
 WriteRegStr HKCR "@APPLICATION_NAME@.sip-@EXECUTABLE_NAME@\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
 WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "sip-@EXECUTABLE_NAME@" "@APPLICATION_NAME@.sip-@EXECUTABLE_NAME@"
 
+## @EXECUTABLE_NAME@-SIP
+WriteRegStr HKCR "@APPLICATION_NAME@.@EXECUTABLE_NAME@-sip" "" "@APPLICATION_NAME@ @EXECUTABLE_NAME@-sip Protocol"
+WriteRegStr HKCR "@APPLICATION_NAME@.@EXECUTABLE_NAME@-sip\Shell" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.@EXECUTABLE_NAME@-sip\Shell\Open" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.@EXECUTABLE_NAME@-sip\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "@EXECUTABLE_NAME@-sip" "@APPLICATION_NAME@.@EXECUTABLE_NAME@-sip"
+
 ## SIPS
 WriteRegStr HKCR "@APPLICATION_NAME@.sips" "" "@APPLICATION_NAME@ sips Protocol"
 WriteRegStr HKCR "@APPLICATION_NAME@.sips\Shell" "" ""
@@ -64,6 +77,13 @@ WriteRegStr HKCR "@APPLICATION_NAME@.sips-@EXECUTABLE_NAME@\Shell" "" ""
 WriteRegStr HKCR "@APPLICATION_NAME@.sips-@EXECUTABLE_NAME@\Shell\Open" "" ""
 WriteRegStr HKCR "@APPLICATION_NAME@.sips-@EXECUTABLE_NAME@\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
 WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "sips-@EXECUTABLE_NAME@" "@APPLICATION_NAME@.sips-@EXECUTABLE_NAME@"
+
+## @EXECUTABLE_NAME@-SIPS
+WriteRegStr HKCR "@APPLICATION_NAME@.@EXECUTABLE_NAME@-sips" "" "@APPLICATION_NAME@ @EXECUTABLE_NAME@-sips Protocol"
+WriteRegStr HKCR "@APPLICATION_NAME@.@EXECUTABLE_NAME@-sips\Shell" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.@EXECUTABLE_NAME@-sips\Shell\Open" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.@EXECUTABLE_NAME@-sips\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "@EXECUTABLE_NAME@-sips" "@APPLICATION_NAME@.@EXECUTABLE_NAME@-sips"
 
 ## @EXECUTABLE_NAME@-CONFIG
 WriteRegStr HKCR "@APPLICATION_NAME@.@EXECUTABLE_NAME@-config" "" "@APPLICATION_NAME@ @EXECUTABLE_NAME@-config Protocol"

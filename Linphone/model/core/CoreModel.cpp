@@ -165,6 +165,57 @@ void CoreModel::setPathAfterStart() {
 	lInfo() << "[CoreModel] Using RootCa path : " << QString::fromStdString(mCore->getRootCa());
 }
 
+//-------------------------------------------------------------------------------
+//				FETCH CONFIG
+//-------------------------------------------------------------------------------
+
+QString CoreModel::getFetchConfig(QString filePath, bool *error) {
+	*error = false;
+	if (!filePath.isEmpty()) {
+		if (QUrl(filePath).isRelative()) { // this is a file path
+			filePath = Paths::getConfigFilePath(filePath, false);
+			if (!filePath.isEmpty()) filePath = "file://" + filePath;
+		}
+		if (filePath.isEmpty()) {
+			qWarning() << "Remote provisionning cannot be retrieved. Command have been cleaned";
+			*error = true;
+		}
+	}
+	return filePath;
+}
+
+void CoreModel::useFetchConfig(QString filePath) {
+	bool error = false;
+	filePath = getFetchConfig(filePath, &error);
+	if (!error && !filePath.isEmpty()) {
+
+		if (mCore && mCore->getGlobalState() == linphone::GlobalState::On) {
+			// TODO
+			// if (mSettings->getAutoApplyProvisioningConfigUriHandlerEnabled()) setFetchConfig(filePath); else
+			emit requestFetchConfig(filePath);
+		} else {
+			connect(
+			    this, &CoreModel::globalStateChanged, this, [filePath, this]() { useFetchConfig(filePath); },
+			    Qt::SingleShotConnection);
+		}
+	}
+}
+
+bool CoreModel::setFetchConfig(QString filePath) {
+	bool fetched = false;
+	qDebug() << "setFetchConfig with " << filePath;
+	if (!filePath.isEmpty()) {
+		if (mCore) {
+			filePath.replace('\\', '/');
+			fetched = mCore->setProvisioningUri(Utils::appStringToCoreString(filePath)) == 0;
+		}
+	}
+	if (!fetched) {
+		qWarning() << "Remote provisionning cannot be retrieved. Command have been cleaned";
+	} else emit requestRestart();
+	return fetched;
+}
+
 //---------------------------------------------------------------------------------------------------------------------------
 
 void CoreModel::onAccountAdded(const std::shared_ptr<linphone::Core> &core,

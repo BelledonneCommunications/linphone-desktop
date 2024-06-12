@@ -48,6 +48,8 @@
 				<string>tel</string>
 				<string>callto</string>
 				<string>@EXECUTABLE_NAME@-config</string>
+				<string>@EXECUTABLE_NAME@-sip</string>
+				<string>@EXECUTABLE_NAME@-sips</string>
 			</array>
 		</dict>
 	</array>

@@ -28,11 +28,20 @@ Thread::Thread(QObject *parent) : QThread(parent) {
 
 void Thread::run() {
 	int toExit = false;
+	mThreadId = new QObject();
 	while (!toExit) {
 		int result = exec();
 		if (result <= 0) toExit = true;
 	}
 }
+Thread::~Thread() {
+	mThreadId->deleteLater();
+}
+
+QObject *Thread::getThreadId() {
+	return mThreadId;
+}
+
 bool Thread::isInLinphoneThread() {
 	return CoreModel::getInstance() && QThread::currentThread() == CoreModel::getInstance()->thread();
 }

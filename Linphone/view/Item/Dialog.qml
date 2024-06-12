@@ -18,6 +18,7 @@ Popup {
   	property alias buttons: buttonsLayout.data
   	property alias content: contentLayout.data
 	property string text
+	property string details
 	signal accepted()
 	signal rejected()
 
@@ -70,6 +71,21 @@ Popup {
 			font {
 				pixelSize: 14 * DefaultStyle.dp
 				weight: 400 * DefaultStyle.dp
+			}
+			wrapMode: Text.Wrap
+			horizontalAlignment: Text.AlignHCenter
+		}
+		Text {
+			id: detailsText
+			visible: text.length != 0
+			width: parent.width
+			Layout.preferredWidth: 278 * DefaultStyle.dp
+			Layout.alignment: Qt.AlignCenter
+			text: mainItem.details
+			font {
+				pixelSize: 13 * DefaultStyle.dp
+				weight: 400 * DefaultStyle.dp
+				italic: true
 			}
 			wrapMode: Text.Wrap
 			horizontalAlignment: Text.AlignHCenter

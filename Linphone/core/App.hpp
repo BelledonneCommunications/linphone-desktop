@@ -24,6 +24,7 @@
 
 #include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
+#include "model/cli/CliModel.hpp"
 #include "model/core/CoreModel.hpp"
 #include "tool/AbstractObject.hpp"
 
@@ -33,6 +34,7 @@ class Notifier;
 class QQuickWindow;
 
 class App : public SingleApplication, public AbstractObject {
+	Q_OBJECT
 public:
 	App(int &argc, char *argv[]);
 	~App();
@@ -98,20 +100,37 @@ public:
 
 	void clean();
 	void init();
+	void initCore();
 	void initCppInterfaces();
+	void restart();
 
 	void onLoggerInitialized();
+	void sendCommand();
 
 	QQuickWindow *getCallsWindow(QVariant callGui = QVariant());
 	void setCallsWindowProperty(const char *id, QVariant property);
 	void closeCallsWindow();
 
-	QQuickWindow *getMainWindow();
+	QQuickWindow *getMainWindow() const;
+	void setMainWindow(QQuickWindow *data);
+
+#ifdef Q_OS_LINUX
+	Q_INVOKABLE void exportDesktopFile();
+
+	QString getApplicationPath() const;
+	bool generateDesktopFile(const QString &confPath, bool remove, bool openInBackground);
+#elif defined(Q_OS_MACOS)
+	bool event(QEvent *event) override;
+#endif
 
 	QQmlApplicationEngine *mEngine = nullptr;
 	bool notify(QObject *receiver, QEvent *event) override;
 
 	enum class StatusCode { gRestartCode = 1000, gDeleteDataCode = 1001 };
+
+signals:
+	void mainWindowChanged();
+	// void executeCommand(QString command);
 
 private:
 	void createCommandParser();
@@ -123,6 +142,7 @@ private:
 	QQuickWindow *mCallsWindow = nullptr;
 	QSharedPointer<Settings> mSettings;
 	QSharedPointer<SafeConnection<App, CoreModel>> mCoreModelConnection;
+	QSharedPointer<SafeConnection<App, CliModel>> mCliModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };
