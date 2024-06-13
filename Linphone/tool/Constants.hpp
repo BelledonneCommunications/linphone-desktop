@@ -69,7 +69,7 @@ public:
 	static constexpr char PrivatePolicyUrl[] = "https://www.linphone.org/privacy-policy";
 	static constexpr char ContactUrl[] = "https://www.linphone.org/contact";
 	static constexpr char TranslationUrl[] = "https://weblate.linphone.org/projects/linphone-desktop/";
-	
+
 	static constexpr int MaxMosaicParticipants =
 	    6; // From 7, the mosaic quality will be limited to avoid useless computations
 
@@ -99,7 +99,6 @@ public:
 	Q_PROPERTY(int maxMosaicParticipants MEMBER MaxMosaicParticipants CONSTANT)
 	Q_PROPERTY(QStringList reactionsList READ getReactionsList CONSTANT)
 
-
 	// For Webviews
 	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
 	static constexpr char DefaultAssistantLoginUrl[] = "https://subscribe.linphone.org/login";
@@ -117,8 +116,8 @@ public:
 	//--------------------------------------------------------------------------------
 
 	static constexpr char LinphoneDomain[] = "sip.linphone.org"; // Use for checking if config are a Linphone
-	static constexpr char WindowIconPath[] = ":/assets/images/linphone_logo.svg";
-	static constexpr char ApplicationMinimalQtVersion[] = "5.10.0";
+	static constexpr char WindowIconPath[] = ":/data/image/logo.svg";
+	static constexpr char ApplicationMinimalQtVersion[] = "6.6.5";
 	static constexpr char DefaultConferenceURI[] =
 	    "sip:conference-factory@sip.linphone.org"; // Default for a Linphone account
 	static constexpr char DefaultVideoConferenceURI[] =

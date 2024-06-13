@@ -99,6 +99,7 @@ App::App(int &argc, char *argv[])
 	auto ignoreVSync = QSurfaceFormat::defaultFormat();
 	ignoreVSync.setSwapInterval(0);
 	QSurfaceFormat::setDefaultFormat(ignoreVSync);
+	setWindowIcon(QIcon(Constants::WindowIconPath));
 	lInfo() << "Loading Fonts";
 	QDirIterator it(":/font/", QDirIterator::Subdirectories);
 	while (it.hasNext()) {
@@ -256,6 +257,7 @@ void App::initCore() {
 #endif
 			    mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
 			    mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);
+
 			    initCppInterfaces();
 			    mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
 			    mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
