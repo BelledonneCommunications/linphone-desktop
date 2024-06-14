@@ -17,8 +17,14 @@ Popup {
 	property color underlineColor: DefaultStyle.main1_500_main
   	property alias buttons: buttonsLayout.data
   	property alias content: contentLayout.data
+	property string title
 	property string text
 	property string details
+	property alias firstButton: firstButtonId
+	property alias secondButton: secondButtonId
+	property bool firstButtonAccept: true
+	property bool secondButtonAccept: false
+
 	signal accepted()
 	signal rejected()
 
@@ -54,18 +60,30 @@ Popup {
 
 	contentItem: ColumnLayout {
 		spacing: 20 * DefaultStyle.dp
-
-		ColumnLayout {
-			id: contentLayout
+		Text{
+			id: titleText
 			Layout.fillWidth: true
-			Layout.fillHeight: true
-			Layout.alignment: Qt.AlignHCenter
+			visible: text.length != 0
+			text: mainItem.title
+			font {
+				pixelSize: 16 * DefaultStyle.dp
+				weight: 800 * DefaultStyle.dp
+			}
+			wrapMode: Text.Wrap
+			horizontalAlignment: Text.AlignLeft
 		}
+		Rectangle{
+			Layout.fillWidth: true
+			Layout.preferredHeight: 1
+			color: DefaultStyle.main2_400
+			visible: titleText.visible
+		}
+
 		Text {
 			id: defaultText
 			visible: text.length != 0
-			width: parent.width
-			Layout.preferredWidth: 278 * DefaultStyle.dp
+			Layout.fillWidth: true
+			//Layout.preferredWidth: 278 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignCenter
 			text: mainItem.text
 			font {
@@ -73,13 +91,13 @@ Popup {
 				weight: 400 * DefaultStyle.dp
 			}
 			wrapMode: Text.Wrap
-			horizontalAlignment: Text.AlignHCenter
+			horizontalAlignment: titleText.visible ?  Text.AlignLeft : Text.AlignHCenter
 		}
 		Text {
 			id: detailsText
 			visible: text.length != 0
-			width: parent.width
-			Layout.preferredWidth: 278 * DefaultStyle.dp
+			Layout.fillWidth: true
+			//Layout.preferredWidth: 278 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignCenter
 			text: mainItem.details
 			font {
@@ -91,14 +109,22 @@ Popup {
 			horizontalAlignment: Text.AlignHCenter
 		}
 
+		ColumnLayout {
+			id: contentLayout
+			Layout.fillWidth: true
+			Layout.fillHeight: true
+			Layout.alignment: Qt.AlignHCenter
+		}
+
 		RowLayout {
 			id: buttonsLayout
-			Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+			Layout.alignment: Qt.AlignBottom | ( titleText.visible ? Qt.AlignRight : Qt.AlignHCenter)
 			spacing: 10 * DefaultStyle.dp
 
 			// Default buttons only visible if no other children
 			// have been set
 			Button {
+				id:firstButtonId
 				visible: mainItem.buttons.length === 2
 				text: qsTr("Oui")
 				leftPadding: 20 * DefaultStyle.dp
@@ -106,11 +132,15 @@ Popup {
 				topPadding: 11 * DefaultStyle.dp
 				bottomPadding: 11 * DefaultStyle.dp
 				onClicked: {
-					mainItem.accepted()
+					if(firstButtonAccept)
+						mainItem.accepted()
+					else
+						mainItem.rejected()
 					mainItem.close()
 				}
 			}
 			Button {
+				id: secondButtonId
 				visible: mainItem.buttons.length === 2
 				text: qsTr("Non")
 				leftPadding: 20 * DefaultStyle.dp
@@ -118,7 +148,10 @@ Popup {
 				topPadding: 11 * DefaultStyle.dp
 				bottomPadding: 11 * DefaultStyle.dp
 				onClicked: {
-					mainItem.rejected()
+					if(secondButtonAccept)
+						mainItem.accepted()
+					else
+						mainItem.rejected()
 					mainItem.close()
 				}
 			}

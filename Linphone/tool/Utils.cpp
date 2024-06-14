@@ -1252,3 +1252,6 @@ bool Utils::isUsername(const QString &txt) {
 // bool Utils::isMe(const QString &address) {
 // 	return !address.isEmpty() ? isMe(ToolModel::interpretUrl(address)) : false;
 // }
+void Utils::useFetchConfig(const QString &configUrl) {
+	App::getInstance()->receivedMessage(0, ("fetch-config=" + configUrl).toLocal8Bit());
+}

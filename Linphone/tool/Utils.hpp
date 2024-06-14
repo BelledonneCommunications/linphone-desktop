@@ -113,6 +113,7 @@ public:
 	Q_INVOKABLE static bool isLocal(const QString &address);
 	Q_INVOKABLE static bool isUsername(const QString &txt); // Regex check
 	static QString getCountryName(const QLocale::Territory &p_country);
+	Q_INVOKABLE static void useFetchConfig(const QString &configUrl);
 
 	static QString getApplicationProduct();
 	static QString getOsProduct();

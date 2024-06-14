@@ -619,7 +619,7 @@ void ConferenceInfoCore::undo() {
 			ConferenceInfoCore *conf = new ConferenceInfoCore(*this);
 			conf->writeFromModel(mConferenceInfoModel);
 			conf->moveToThread(App::getInstance()->thread());
-			mConfInfoModelConnection->invokeToCore([this, conf]() mutable {
+			mConfInfoModelConnection->invokeToCore([this, conf]() {
 				this->reset(*conf);
 				conf->deleteLater();
 			});

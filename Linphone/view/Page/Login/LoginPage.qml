@@ -1,13 +1,16 @@
-import QtQuick 2.15
-import QtQuick.Layouts 1.0
+import QtQuick
+import QtQuick.Layouts
 import QtQuick.Controls as Control
-import Linphone
+
+import Linphone 1.0
+import UtilsCpp 1.0
 
 LoginLayout {
 	id: mainItem
 	property bool showBackButton: false
 	signal goBack()
 	signal useSIPButtonClicked()
+	signal useRemoteConfigButtonClicked()
 	signal goToRegister()
 	signal connectionSucceed()
 
@@ -78,16 +81,26 @@ LoginLayout {
 			anchors.top: parent.top
 			anchors.leftMargin: 127 * DefaultStyle.dp
 			anchors.topMargin: 70 * DefaultStyle.dp
-			spacing: 39 * DefaultStyle.dp
+			spacing: 0
 			LoginForm {
+				id: loginForm
 				onConnectionSucceed: mainItem.connectionSucceed()
 			}
 			Button {
 				inversedColors: true
-				Layout.preferredWidth: 235 * DefaultStyle.dp
+				Layout.preferredWidth: loginForm.width
 				Layout.preferredHeight: 47 * DefaultStyle.dp
+				Layout.topMargin: 39 * DefaultStyle.dp
 				text: qsTr("Compte SIP tiers")
 				onClicked: {mainItem.useSIPButtonClicked()}
+			}
+			Button {
+				inversedColors: true
+				Layout.preferredWidth: loginForm.width
+				Layout.preferredHeight: 47 * DefaultStyle.dp
+				Layout.topMargin: 25 * DefaultStyle.dp
+				text: qsTr("Configuration distante")
+				onClicked: {fetchConfigDialog.open()}
 			}
 		},
 		Image {
@@ -101,5 +114,35 @@ LoginLayout {
 			source: AppIcons.loginImage
 		}
 	]
+	Dialog{
+		id: fetchConfigDialog
+		height: 315 * DefaultStyle.dp
+		width: 637 * DefaultStyle.dp
+		leftPadding: 33 * DefaultStyle.dp
+		rightPadding: 33 * DefaultStyle.dp
+		topPadding: 41 * DefaultStyle.dp
+		bottomPadding: 29 * DefaultStyle.dp
+		radius: 0
+		title: qsTr('Télécharger une configuration distante')
+		text: qsTr('Veuillez entrer le lien de configuration qui vous a été fourni :')
+
+		firstButton.text: 'Annuler'
+		firstButtonAccept: false
+		firstButton.inversedColors: true
+
+		secondButton.text: 'Valider'
+		secondButtonAccept: true
+		onAccepted:{
+			UtilsCpp.useFetchConfig(configUrl.text)
+		}
+		content:[
+			TextField{
+				id: configUrl
+				Layout.fillWidth: true
+				Layout.preferredHeight: 49 * DefaultStyle.dp
+				placeholderText: qsTr('Lien de configuration distante')
+			}
+		]
+	}
 }
  

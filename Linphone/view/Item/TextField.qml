@@ -12,6 +12,7 @@ Control.TextField {
 	echoMode: (hidden && !eyeButton.checked) ? TextInput.Password : TextInput.Normal
 	verticalAlignment: TextInput.AlignVCenter
 	color: DefaultStyle.main2_600
+	placeholderTextColor: DefaultStyle.placeholders
 	font {
 		family: DefaultStyle.defaultFont
 		pixelSize: 14 * DefaultStyle.dp

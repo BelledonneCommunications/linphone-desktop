@@ -619,7 +619,7 @@ void FriendCore::undo() { // Retrieve values from model
 			FriendCore *contact = new FriendCore(*this);
 			contact->writeFromModel(mFriendModel);
 			contact->moveToThread(App::getInstance()->thread());
-			mFriendModelConnection->invokeToCore([this, contact]() mutable {
+			mFriendModelConnection->invokeToCore([this, contact]() {
 				this->reset(*contact);
 				contact->deleteLater();
 			});
