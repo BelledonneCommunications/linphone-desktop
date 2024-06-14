@@ -24,6 +24,7 @@ Item {
 	property alias displayPresence: avatar.displayPresence
 	property color color: DefaultStyle.grey_600
 	property int radius: 15 * DefaultStyle.dp
+	property bool remoteIsPaused: participantDevice ? participantDevice.core.isPaused : false
 	property var peerAddressObj: previewEnabled && (call || account)
 									? UtilsCpp.getDisplayName(account ? account.core.identityAddress : call.core.localAddress)
 									: participantDevice && participantDevice.core
@@ -38,7 +39,6 @@ Item {
 									|| (participantDevice && participantDevice.core.videoEnabled)
 	property string qmlName
 	property bool displayAll : !!mainItem.call
-	property bool bigBottomAddress: displayAll
 	property bool mutedStatus: participantDevice ? participantDevice.core.isMuted : false
 	onCallChanged: {
 		waitingTime.seconds = 0
@@ -98,12 +98,13 @@ Item {
 				}
 			}
 			Item{
+				id: centerItem
+				visible: !mainItem.remoteIsPaused
 				anchors.centerIn: parent
 				height: mainItem.conference 
 					? background.minSize * 142 / 372
 					: 120 * DefaultStyle.dp
 				width: height
-				id: centerItem
 				Avatar{
 					id: avatar
 					anchors.fill: parent
@@ -139,8 +140,29 @@ Item {
 				}
 			}
 			ColumnLayout {
+				anchors.centerIn: parent
+				spacing: 12 * DefaultStyle.dp
+				visible: mainItem.remoteIsPaused
+				EffectImage {
+					imageSource: AppIcons.pause
+					colorizationColor: DefaultStyle.grey_0
+					Layout.preferredHeight: background.width / 8
+					Layout.preferredWidth: height
+					Layout.alignment: Qt.AlignHCenter
+				}
+				Text {
+					color: DefaultStyle.grey_0
+					Layout.alignment: Qt.AlignHCenter
+					text: qsTr("En pause")
+					font {
+						pixelSize: 20 * DefaultStyle.dp
+						weight: 500 * DefaultStyle.dp
+					}
+				}
+			}
+			ColumnLayout {
 				spacing: 0
-				visible: mainItem.displayAll
+				visible: mainItem.displayAll && !mainItem.remoteIsPaused
 				anchors.horizontalCenter: parent.horizontalCenter
 				anchors.top: centerItem.bottom
 				anchors.topMargin: 21 * DefaultStyle.dp
@@ -218,7 +240,6 @@ Item {
 			}
 		}
 		Text {
-			id: bottomAddress
 			anchors.left: parent.left
 			anchors.bottom: parent.bottom
 			anchors.leftMargin: 10 * DefaultStyle.dp
@@ -231,7 +252,7 @@ Item {
 					: ""
 			color: DefaultStyle.grey_0
 			font {
-				pixelSize: (mainItem.bigBottomAddress ? 14 : 10) * DefaultStyle.dp
+				pixelSize: 14 * DefaultStyle.dp
 				weight: 500 * DefaultStyle.dp
 			}
 		}
@@ -259,8 +280,8 @@ Item {
 			Layout.preferredWidth: 18 * DefaultStyle.dp
 			Layout.preferredHeight: 18 * DefaultStyle.dp
 			visible: mainItem.mutedStatus
-			icon.width: 13 * DefaultStyle.dp
-			icon.height: 13 * DefaultStyle.dp
+			icon.width: 19 * DefaultStyle.dp
+			icon.height: 19 * DefaultStyle.dp
 			enabled: false
 			contentImageColor: DefaultStyle.main2_500main
 			backgroundColor: DefaultStyle.grey_0

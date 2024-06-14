@@ -441,10 +441,6 @@ void CallCore::setIsSecured(bool secured) {
 	}
 }
 
-bool CallCore::isConference() const {
-	return mIsConference;
-}
-
 ConferenceGui *CallCore::getConferenceGui() const {
 	return mConference ? new ConferenceGui(mConference) : nullptr;
 }
@@ -461,6 +457,10 @@ void CallCore::setConference(const QSharedPointer<ConferenceCore> &conference) {
 		lDebug() << "[CallCore] Set conference : " << mConference;
 		emit conferenceChanged();
 	}
+}
+
+bool CallCore::isConference() const {
+	return mIsConference;
 }
 
 QString CallCore::getLocalSas() {

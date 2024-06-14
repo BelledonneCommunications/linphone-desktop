@@ -71,7 +71,6 @@ public:
 signals:
 	// void securityLevelChanged();
 	// void videoEnabledChanged();
-	void isPausedChanged(bool paused);
 	void isSpeakingChanged(bool speaking);
 	void isMutedChanged(bool muted);
 	void stateChanged(LinphoneEnums::ParticipantDeviceState state);

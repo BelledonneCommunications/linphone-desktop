@@ -78,7 +78,7 @@ AppWindow {
 			middleItemStackView.replace(inCallItem)
 		}
 		if (!callsModel.haveCall) {
-			if (call && call.core.conference) UtilsCpp.closeCallsWindow()
+			if (call && call.core.isConference) UtilsCpp.closeCallsWindow()
 			else {
 				bottomButtonsLayout.setButtonsEnabled(false)
 				autoCloseWindow.restart()
@@ -274,7 +274,7 @@ AppWindow {
 												: mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing
 													? AppIcons.arrowUpRight
 													: AppIcons.arrowDownLeft
-								colorizationColor: !mainWindow.call || mainWindow.callState === LinphoneEnums.CallState.Paused
+								colorizationColor: !mainWindow.call || mainWindow.call.core.paused || mainWindow.callState === LinphoneEnums.CallState.Paused
 									|| mainWindow.callState === LinphoneEnums.CallState.PausedByRemote || mainWindow.callState === LinphoneEnums.CallState.End
 									|| mainWindow.callState === LinphoneEnums.CallState.Released || mainWindow.conference 
 									? DefaultStyle.danger_500main
@@ -286,7 +286,8 @@ AppWindow {
 								id: callStatusText
 								text: (mainWindow.callState === LinphoneEnums.CallState.End  || mainWindow.callState === LinphoneEnums.CallState.Released)
 									? qsTr("End of the call")
-									: (mainWindow.callState === LinphoneEnums.CallState.Paused
+									: mainWindow.call.core.paused
+									|| (mainWindow.callState === LinphoneEnums.CallState.Paused
 									|| mainWindow.callState === LinphoneEnums.CallState.PausedByRemote)
 										? (mainWindow.conference ? qsTr('Réunion mise ') : qsTr('Appel mis')) + qsTr(" en pause")
 										: mainWindow.conference
@@ -676,7 +677,9 @@ AppWindow {
 															Layout.fillWidth: true
 														}
 													}
-													onClicked: modelData.core.lSetPaused(!modelData.core.paused)
+													onClicked: {
+														modelData.core.lSetPaused(!modelData.core.paused)
+													}
 												}
 												Button {
 													background: Item {}
@@ -862,14 +865,14 @@ AppWindow {
 						target: callStatusText
 						when: middleItemStackView.currentItem === waitingRoomIn
 						property: "text"
-						value: waitingRoomIn.conferenceInfo && waitingRoomIn.conferenceInfo.core.subject
+						value: waitingRoomIn.conferenceInfo ? waitingRoomIn.conferenceInfo.core.subject : ''
 						restoreMode: Binding.RestoreBindingOrValue
 					}
 					Binding {
 						target: conferenceDate
 						when: middleItemStackView.currentItem === waitingRoomIn
 						property: "text"
-						value: waitingRoomIn.conferenceInfo && waitingRoomIn.conferenceInfo.core.startEndDateString
+						value: waitingRoomIn.conferenceInfo ? waitingRoomIn.conferenceInfo.core.startEndDateString : ''
 					}
 					Connections {
 						target: rightPanel
@@ -978,10 +981,10 @@ AppWindow {
 										: DefaultStyle.grey_500
 								: DefaultStyle.grey_600
 						}
-						enabled: mainWindow.callState != LinphoneEnums.CallState.PausedByRemote
+						enabled: mainWindow.conference || mainWindow.callState != LinphoneEnums.CallState.PausedByRemote
 						icon.source: enabled && checked ? AppIcons.play : AppIcons.pause
-						checked: mainWindow.call && mainWindow.call.core.paused
-						onCheckedChanged: {
+						checked: mainWindow.call && mainWindow.callState == LinphoneEnums.CallState.Paused || mainWindow.callState == LinphoneEnums.CallState.Pausing || (!mainWindow.conference && mainWindow.callState == LinphoneEnums.CallState.PausedByRemote)
+						onClicked: {
 							mainWindow.call.core.lSetPaused(!mainWindow.call.core.paused)
 						}
 					}

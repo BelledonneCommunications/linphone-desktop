@@ -43,10 +43,10 @@ CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *paren
 	        [this]() { this->microphoneVolumeChanged(Utils::computeVu(mMonitor->getRecordVolume())); });
 	mMicroVolumeTimer.start();
 
-	connect(this, &CallModel::stateChanged, this, [this] {
-		auto state = mMonitor->getState();
-		if (state == linphone::Call::State::Paused) setPaused(true);
-	});
+	// connect(this, &CallModel::stateChanged, this, [this] {
+	// 	auto state = mMonitor->getState();
+	// 	if (state == linphone::Call::State::Paused) setPaused(true);
+	// });
 }
 
 CallModel::~CallModel() {
@@ -86,14 +86,18 @@ void CallModel::terminate() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->terminate();
 }
+
 void CallModel::setPaused(bool paused) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	linphone::Status status = -1;
 	if (paused) {
-		auto status = mMonitor->pause();
-		if (status != -1) emit pausedChanged(paused);
+		if (mMonitor->getConference()) status = mMonitor->getConference()->leave();
+		else status = mMonitor->pause();
+		if (status == 0) emit pausedChanged(paused);
 	} else {
-		auto status = mMonitor->resume();
-		if (status != -1) emit pausedChanged(paused);
+		if (mMonitor->getConference()) status = mMonitor->getConference()->enter();
+		else status = mMonitor->resume();
+		if (status == 0) emit pausedChanged(paused);
 	}
 }
 

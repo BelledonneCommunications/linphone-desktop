@@ -51,9 +51,6 @@ void ConferenceModel::terminate() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->terminate();
 }
-void ConferenceModel::setPaused(bool paused) {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-}
 
 void ConferenceModel::removeParticipant(const std::shared_ptr<linphone::Participant> &p) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));

@@ -28,7 +28,6 @@ RowLayout {
 				qmlName: "WP"
 				displayAll: false
 				displayPresence: false
-				bigBottomAddress: true
 				mutedStatus: microButton.checked
 				AccountProxy{
 					id: accounts

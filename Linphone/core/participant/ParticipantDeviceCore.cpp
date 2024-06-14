@@ -60,6 +60,8 @@ ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::Par
 	lDebug() << "Address = " << Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
 	mIsLocal = ToolModel::findAccount(deviceAddress) != nullptr; // TODO set local
 	mIsVideoEnabled = mParticipantDeviceModel->isVideoEnabled();
+	mIsPaused = device->getState() == linphone::ParticipantDevice::State::Left ||
+	            device->getState() == linphone::ParticipantDevice::State::OnHold;
 }
 
 ParticipantDeviceCore::~ParticipantDeviceCore() {
@@ -71,10 +73,6 @@ void ParticipantDeviceCore::setSelf(QSharedPointer<ParticipantDeviceCore> me) {
 	    new SafeConnection<ParticipantDeviceCore, ParticipantDeviceModel>(me, mParticipantDeviceModel),
 	    &QObject::deleteLater);
 	mParticipantDeviceModelConnection->makeConnectToModel(
-	    &ParticipantDeviceModel::isPausedChanged, [this](bool paused) {
-		    mParticipantDeviceModelConnection->invokeToCore([this, paused] { setPaused(paused); });
-	    });
-	mParticipantDeviceModelConnection->makeConnectToModel(
 	    &ParticipantDeviceModel::isSpeakingChanged, [this](bool speaking) {
 		    mParticipantDeviceModelConnection->invokeToCore([this, speaking] { setIsSpeaking(speaking); });
 	    });
@@ -83,6 +81,7 @@ void ParticipantDeviceCore::setSelf(QSharedPointer<ParticipantDeviceCore> me) {
 	});
 	mParticipantDeviceModelConnection->makeConnectToModel(
 	    &ParticipantDeviceModel::stateChanged, [this](LinphoneEnums::ParticipantDeviceState state) {
+		    onStateChanged(state);
 		    mParticipantDeviceModelConnection->invokeToCore(
 		        [this, state, isVideoEnabled = mParticipantDeviceModel->isVideoEnabled()] {
 			        setState(state);
@@ -213,33 +212,32 @@ void ParticipantDeviceCore::onIsMuted(const std::shared_ptr<linphone::Participan
                                       bool isMuted) {
 	emit isMutedChanged();
 }
-void ParticipantDeviceCore::onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> &participantDevice,
-                                           linphone::ParticipantDevice::State state) {
+void ParticipantDeviceCore::onStateChanged(LinphoneEnums::ParticipantDeviceState state) {
 	switch (state) {
-		case linphone::ParticipantDevice::State::Joining:
+		case LinphoneEnums::ParticipantDeviceState::Joining:
 			break;
-		case linphone::ParticipantDevice::State::Present:
+		case LinphoneEnums::ParticipantDeviceState::Present:
 			setPaused(false);
 			break;
-		case linphone::ParticipantDevice::State::Leaving:
+		case LinphoneEnums::ParticipantDeviceState::Leaving:
 			break;
-		case linphone::ParticipantDevice::State::Left:
+		case LinphoneEnums::ParticipantDeviceState::Left:
 			break;
-		case linphone::ParticipantDevice::State::ScheduledForJoining:
+		case LinphoneEnums::ParticipantDeviceState::ScheduledForJoining:
 			break;
-		case linphone::ParticipantDevice::State::ScheduledForLeaving:
+		case LinphoneEnums::ParticipantDeviceState::ScheduledForLeaving:
 			break;
-		case linphone::ParticipantDevice::State::OnHold:
+		case LinphoneEnums::ParticipantDeviceState::OnHold:
 			setPaused(true);
 			break;
-		case linphone::ParticipantDevice::State::Alerting:
+		case LinphoneEnums::ParticipantDeviceState::Alerting:
 			break;
-		case linphone::ParticipantDevice::State::MutedByFocus:
+		case LinphoneEnums::ParticipantDeviceState::MutedByFocus:
 			break;
 		default: {
 		}
 	}
-	setState(LinphoneEnums::fromLinphone(state));
+	setState(state);
 }
 void ParticipantDeviceCore::onStreamCapabilityChanged(
     const std::shared_ptr<linphone::ParticipantDevice> &participantDevice,

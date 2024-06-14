@@ -42,9 +42,7 @@ Mosaic {
 				call: grid.call && !grid.call.core.isConference ? grid.call : null
 				account: index == 0 ? accountProxy.findAccountByAddress(mainItem.localAddress) : null
 				displayAll: false
-				bigBottomAddress: true
 				displayPresence: false
-				
 				participantDevice: avatarCell.currentDevice
 				Component.onCompleted: console.log(qmlName + " is " +(call ? call.core.peerAddress : currentDevice ? currentDevice.core.address : 'addr_NotDefined'))
 			}
