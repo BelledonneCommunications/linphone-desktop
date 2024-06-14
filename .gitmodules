@@ -1,9 +1,6 @@
 [submodule "linphone-sdk"]
 path = linphone-sdk
 	url = https://gitlab.linphone.org/BC/public/linphone-sdk.git
-[submodule "plugins/contacts/contacts-api"]
-	path = plugins/contacts/contacts-api
-	url =  https://gitlab.linphone.org/BC/public/linphone-desktop-plugins/contacts/contacts-api.git
 [submodule "external/qtkeychain"]
 	path = external/qtkeychain
 	url = https://gitlab.linphone.org/BC/public/external/qtkeychain.git
