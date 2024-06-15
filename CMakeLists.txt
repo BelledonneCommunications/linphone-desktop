@@ -184,7 +184,7 @@ add_option(OPTION_LIST LIBSECRET_SUPPORT "Build with libsecret support" OFF) # N
 if(WIN32)
 	add_cache(OPTION_LIST QTKEYCHAIN_TARGET_NAME "Override Qt5Keychain library name for a workaround with windeployqt" "EQt5Keychain")
 else()
-	add_cache(OPTION_LIST QTKEYCHAIN_TARGET_NAME "Override Qt5Keychain library name" "Qt5Keychain")
+	add_cache(OPTION_LIST QTKEYCHAIN_TARGET_NAME "Override Qt5Keychain library name" "qt5keychain")
 endif()
 if(WIN32)
 	add_option(OPTION_LIST ENABLE_OPENSSL_EXPORT "Enable OpenSSL deployment" YES)
