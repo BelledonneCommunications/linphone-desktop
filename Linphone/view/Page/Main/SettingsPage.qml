@@ -17,14 +17,14 @@ AbstractMainPage {
 	}
 	
 	property var settingsFamilies: [
-		{title: "Sécurité", layout: "SecuritySettingsLayout"},
-		{title: "Appels", layout: "CallSettingsLayout"},
-		{title: "Conversations", layout: "ChatSettingsLayout"},
-		{title: "Contacts", layout: "ContactSettingsLayout"},
-		{title: "Réunions", layout: "MeetingsSettingsLayout"},
-		{title: "Réseau", layout: "NetworkSettingsLayout"},
-		{title: "Affichage", layout: "DisplaySettingsLayout"},
-		{title: "Paramètres avancés", layout: "AdvancedSettingsLayout"}
+		{title: qsTr("Appels"), layout: "CallSettingsLayout"},
+		//{title: qsTr("Sécurité"), layout: "SecuritySettingsLayout"},
+		{title: qsTr("Conversations"), layout: "ChatSettingsLayout"},
+		{title: qsTr("Contacts"), layout: "ContactSettingsLayout"},
+		{title: qsTr("Réunions"), layout: "MeetingsSettingsLayout"},
+		{title: qsTr("Affichage"), layout: "DisplaySettingsLayout"},
+		{title: qsTr("Réseau"), layout: "NetworkSettingsLayout"},
+		{title: qsTr("Paramètres avancés"), layout: "AdvancedSettingsLayout"}
 	]
 	
 	leftPanelContent: ColumnLayout {
@@ -53,7 +53,7 @@ AbstractMainPage {
 			Text {
 				text: qsTr("Paramètres")
 				color: DefaultStyle.main2_700
-				font: Typography.h2
+				font: Typography.h3
 			}
 			Item {
 				Layout.fillWidth: true
@@ -70,7 +70,7 @@ AbstractMainPage {
 			property int selectedIndex: 0
 			
 			delegate: SettingsFamily {
-				titleText:qsTr(modelData.title)
+				titleText: modelData.title
 				isSelected: settingsFamiliesList.selectedIndex == index
 				onSelected: {
 					settingsFamiliesList.selectedIndex = index

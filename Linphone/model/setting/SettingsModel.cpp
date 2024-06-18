@@ -139,7 +139,6 @@ void SettingsModel::accessCallSettings() {
 	emit playbackDevicesChanged(getPlaybackDevices());
 	emit playbackDeviceChanged(getPlaybackDevice());
 	emit captureDeviceChanged(getCaptureDevice());
-	emit ringerDeviceChanged(getRingerDevice());
 	emit playbackGainChanged(getPlaybackGain());
 	emit captureGainChanged(getCaptureGain());
 
@@ -278,22 +277,11 @@ void SettingsModel::setPlaybackDevice(const QString &device) {
 
 		CoreModel::getInstance()->getCore()->setPlaybackDevice(devId);
 		CoreModel::getInstance()->getCore()->setOutputAudioDevice(*audioDevice);
+		CoreModel::getInstance()->getCore()->setRingerDevice(devId);
 		emit playbackDeviceChanged(device);
 		resetCaptureGraph();
-	} else qWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
-}
-
-// -----------------------------------------------------------------------------
-
-QString SettingsModel::getRingerDevice() const {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	return Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getRingerDevice());
-}
-
-void SettingsModel::setRingerDevice(const QString &device) {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	CoreModel::getInstance()->getCore()->setRingerDevice(Utils::appStringToCoreString(device));
-	emit ringerDeviceChanged(device);
+	}else
+		qWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
 }
 
 // -----------------------------------------------------------------------------

@@ -11,21 +11,21 @@ RowLayout {
 	property string propertyName
 	property bool enabled: true
 	spacing : 20 * DefaultStyle.dp
-	property int textWidth: 286 * DefaultStyle.dp
 	ColumnLayout {
-		Layout.preferredWidth: textWidth
 		Text {
 			text: titleText
 			font: Typography.p2
 			wrapMode: Text.WordWrap
-			Layout.maximumWidth: textWidth
+			color: DefaultStyle.main2_600
+			Layout.fillWidth: true
 		}
 		Text {
 			text: subTitleText
 			font: Typography.p1
 			wrapMode: Text.WordWrap
-			Layout.maximumWidth: textWidth
 			visible: subTitleText.length > 0
+			color: DefaultStyle.main2_600
+			Layout.fillWidth: true
 		}
 	}
 	SwitchButton {

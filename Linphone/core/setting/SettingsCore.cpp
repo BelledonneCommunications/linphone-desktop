@@ -293,10 +293,6 @@ float Settings::getPlaybackGain() const {
 	return mPlaybackGain;
 }
 
-QString Settings::getRingerDevice() const {
-	return mRingerDevice;
-}
-
 QString Settings::getCaptureDevice() const {
 	return mCaptureDevice;
 }

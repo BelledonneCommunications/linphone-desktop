@@ -10,10 +10,17 @@ QtObject {
 		weight: 800 * DefaultStyle.dp
 	})
 	
-	// Title/H3M -  Bloc title
+	// Title/H3M -  Bloc title medium
 	property font h3m: Qt.font( {
 		family: DefaultStyle.defaultFont,
 		pixelSize: 16 * DefaultStyle.dp,
+		weight: 800 * DefaultStyle.dp
+	})
+	
+	// Title/H3 -  Bloc title
+	property font h3: Qt.font( {
+		family: DefaultStyle.defaultFont,
+		pixelSize: 22 * DefaultStyle.dp,
 		weight: 800 * DefaultStyle.dp
 	})
 	
@@ -28,6 +35,13 @@ QtObject {
 	property font p2: Qt.font( {
 		family: DefaultStyle.defaultFont,
 		pixelSize: 13 * DefaultStyle.dp,
+		weight: 700 * DefaultStyle.dp
+	})
+	
+	// Text/P2 - Large Bold, reduced paratraph text
+	property font p2l: Qt.font( {
+		family: DefaultStyle.defaultFont,
+		pixelSize: 14 * DefaultStyle.dp,
 		weight: 700 * DefaultStyle.dp
 	})
 		

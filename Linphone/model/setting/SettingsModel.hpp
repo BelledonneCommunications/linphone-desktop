@@ -88,9 +88,6 @@ public:
 	QString getPlaybackDevice () const;
 	void setPlaybackDevice (const QString &device);
 	
-	QString getRingerDevice () const;
-	void setRingerDevice (const QString &device);
-	
 	QString getRingPath () const;
 	void setRingPath (const QString &path);
 	
@@ -143,7 +140,6 @@ signals:
 	
 	void captureDeviceChanged (const QString &device);
 	void playbackDeviceChanged (const QString &device);
-	void ringerDeviceChanged (const QString &device);
 	
 	void ringPathChanged (const QString &path);
 		

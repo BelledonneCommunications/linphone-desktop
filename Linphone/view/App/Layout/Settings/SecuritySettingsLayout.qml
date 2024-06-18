@@ -6,11 +6,9 @@ import QtQuick.Controls as Control
 import Linphone
 
 GenericSettingsLayout {
-	Layout.fillWidth: true
-	Layout.fillHeight: true
 	Component {
 		id: settings
-		ColumnLayout {
+		Column {
 			spacing: 40 * DefaultStyle.dp
 			SwitchSetting {
 				titleText: qsTr("Chiffrer tous les fichiers")
@@ -18,7 +16,6 @@ GenericSettingsLayout {
 				propertyName: "vfsEnabled"
 			}
 		}
-		
 	}
 	component: settings
 }

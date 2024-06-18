@@ -7,42 +7,36 @@ import Linphone
 
 Rectangle {
 	id: mainItem
-	Layout.fillWidth: true
-	Layout.fillHeight: true
-	color: DefaultStyle.grey_0
-
+	anchors.fill: parent
 	property string titleText
 	property var component
-	property int horizontalMargin: 17 * DefaultStyle.dp
-	property int verticalMargin: 21 * DefaultStyle.dp
-
-	Control.ScrollView {
-		anchors.fill: parent
-		anchors.leftMargin: 55 * DefaultStyle.dp
-		anchors.topMargin: 85 * DefaultStyle.dp
+	color: 'white'
+	
+	Rectangle {
+		width: parent.width - 2 * 45 * DefaultStyle.dp
+		height: parent.height
+		anchors.centerIn: parent
+		
 		ColumnLayout {
 			width: parent.width
 			spacing: 10 * DefaultStyle.dp
 			Text {
 				text: titleText
-				font: Typography.h3m
+				font: Typography.h3
 				Layout.fillWidth: true
-				Layout.leftMargin: 10 * DefaultStyle.dp
+				Layout.topMargin: 20 * DefaultStyle.dp
+				color: DefaultStyle.main2_600
 			}
 			Rectangle {
-				Layout.preferredWidth: loader.implicitWidth + 2 * mainItem.horizontalMargin
-				Layout.preferredHeight: loader.implicitHeight + 2 * mainItem.verticalMargin
-				color: DefaultStyle.grey_100
-				radius: 15 * DefaultStyle.dp
-				Loader {
-					id:loader
-					anchors.centerIn:parent
-					anchors.topMargin: mainItem.verticalMargin
-					anchors.bottomMargin: mainItem.verticalMargin
-					anchors.leftMargin: mainItem.horizontalMargin
-					anchors.rightMargin: mainItem.horizontalMargin
-					sourceComponent: mainItem.component
-				}
+				Layout.fillWidth: true
+				Layout.topMargin: 16 * DefaultStyle.dp
+				height: 1 * DefaultStyle.dp
+				color: DefaultStyle.main2_500main
+			}
+			Loader {
+				id:loader
+				Layout.fillWidth: true
+				sourceComponent: mainItem.component
 			}
 			Item {
 				Layout.fillHeight: true
@@ -51,5 +45,3 @@ Rectangle {
 	}
 }
 
-
- 

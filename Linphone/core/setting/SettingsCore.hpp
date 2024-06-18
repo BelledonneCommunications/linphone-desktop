@@ -54,7 +54,6 @@ class Settings : public QObject, public AbstractObject {
 
 	Q_PROPERTY(QString captureDevice READ getCaptureDevice WRITE lSetCaptureDevice NOTIFY captureDeviceChanged)
 	Q_PROPERTY(QString playbackDevice READ getPlaybackDevice WRITE lSetPlaybackDevice NOTIFY playbackDeviceChanged)
-	Q_PROPERTY(QString ringerDevice READ getRingerDevice WRITE setRingerDevice NOTIFY ringerDeviceChanged)
 
 	Q_PROPERTY(QStringList videoDevices READ getVideoDevices NOTIFY videoDevicesChanged)
 	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE lSetVideoDevice NOTIFY videoDeviceChanged)
@@ -110,8 +109,6 @@ public:
 
 	QString getPlaybackDevice() const;
 
-	QString getRingerDevice() const;
-
 	QString getVideoDevice() const {
 		return mVideoDevice;
 	}
@@ -164,7 +161,6 @@ signals:
 
 	void lSetPlaybackDevice(const QString &device);
 	void playbackDeviceChanged(const QString &device);
-	void ringerDeviceChanged(const QString &device);
 
 	void lSetVideoDevice(const QString &device);
 	void videoDeviceChanged();
@@ -172,7 +168,6 @@ signals:
 
 	void lSetCaptureGain(float gain);
 	void lSetPlaybackGain(float gain);
-	void setRingerDevice(const QString &device);
 
 	void echoCancellationCalibrationChanged();
 	void micVolumeChanged(float volume);
@@ -209,7 +204,6 @@ private:
 	QStringList mPlaybackDevices;
 	QString mCaptureDevice;
 	QString mPlaybackDevice;
-	QString mRingerDevice;
 
 	// Video
 	QStringList mVideoDevices;
