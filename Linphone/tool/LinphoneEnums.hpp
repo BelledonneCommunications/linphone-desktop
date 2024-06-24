@@ -323,6 +323,29 @@ LinphoneEnums::TransportType fromLinphone(const linphone::TransportType &type);
 QString toString(const LinphoneEnums::TransportType &type);
 void fromString(const QString &transportType, LinphoneEnums::TransportType *transport);
 
+enum class AccountManagerServicesRequestType {
+	SendAccountCreationTokenByPush = int(linphone::AccountManagerServicesRequest::Type::SendAccountCreationTokenByPush),
+	AccountCreationRequestToken = int(linphone::AccountManagerServicesRequest::Type::AccountCreationRequestToken),
+	AccountCreationTokenFromAccountCreationRequestToken =
+	    int(linphone::AccountManagerServicesRequest::Type::AccountCreationTokenFromAccountCreationRequestToken),
+	CreateAccountUsingToken = int(linphone::AccountManagerServicesRequest::Type::CreateAccountUsingToken),
+	SendPhoneNumberLinkingCodeBySms =
+	    int(linphone::AccountManagerServicesRequest::Type::SendPhoneNumberLinkingCodeBySms),
+	LinkPhoneNumberUsingCode = int(linphone::AccountManagerServicesRequest::Type::LinkPhoneNumberUsingCode),
+	SendEmailLinkingCodeByEmail = int(linphone::AccountManagerServicesRequest::Type::SendEmailLinkingCodeByEmail),
+	LinkEmailUsingCode = int(linphone::AccountManagerServicesRequest::Type::LinkEmailUsingCode),
+	GetDevicesList = int(linphone::AccountManagerServicesRequest::Type::GetDevicesList),
+	DeleteDevice = int(linphone::AccountManagerServicesRequest::Type::DeleteDevice),
+	GetCreationTokenAsAdmin = int(linphone::AccountManagerServicesRequest::Type::GetCreationTokenAsAdmin),
+	GetAccountInfoAsAdmin = int(linphone::AccountManagerServicesRequest::Type::GetAccountInfoAsAdmin),
+	DeleteAccountAsAdmin = int(linphone::AccountManagerServicesRequest::Type::DeleteAccountAsAdmin)
+};
+Q_ENUM_NS(AccountManagerServicesRequestType)
+
+// linphone::AccountManagerServicesRequest::Type toLinphone(const LinphoneEnums::AccountManagerServicesRequestType
+// &type); LinphoneEnums::AccountManagerServicesRequestType fromLinphone(const
+// linphone::AccountManagerServicesRequest::Type &type);
+
 enum VideoSourceScreenSharingType {
 	VideoSourceScreenSharingTypeArea = int(linphone::VideoSourceScreenSharingType::Area),
 	VideoSourceScreenSharingTypeDisplay = int(linphone::VideoSourceScreenSharingType::Display),

@@ -25,6 +25,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/phone-number/PhoneNumber.cpp
 	core/phone-number/PhoneNumberList.cpp
 	core/phone-number/PhoneNumberProxy.cpp
+	core/register/RegisterPage.cpp
 	
 	core/search/MagicSearchList.cpp
 	core/search/MagicSearchProxy.cpp

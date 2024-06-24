@@ -38,8 +38,10 @@ ApplicationWindow {
 		infoPopup.open()
 		infoPopup.closePopup.connect(removeFromPopupLayout)
 	}
-	function showLoadingPopup(text) {
+	function showLoadingPopup(text, cancelButtonVisible) {
+		if (cancelButtonVisible == undefined) cancelButtonVisible = false
 		loadingPopup.text = text
+		loadingPopup.cancelButtonVisible = cancelButtonVisible
 		loadingPopup.open()
 	}
 	function closeLoadingPopup() {

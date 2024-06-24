@@ -92,8 +92,17 @@ AppWindow {
 		id: registerPage
 		RegisterPage {
 			onReturnToLogin: mainWindowStackView.replace(loginPage)
-			onRegisterCalled: (countryCode, phoneNumber, email) => {
-				mainWindowStackView.push(checkingPage, {"phoneNumber": phoneNumber, "email": email})
+			onBrowserValidationRequested: mainWindow.showLoadingPopup(qsTr("Veuillez valider le captcha sur la page web"), true)
+			Connections {
+				target: RegisterPageCpp
+				onNewAccountCreationSucceed: (withEmail, address, sipIdentityAddress) => {
+					mainWindowStackView.push(checkingPage, {"registerWithEmail": withEmail, "address": address, "sipIdentityAddress": sipIdentityAddress})
+				}
+				onRegisterNewAccountFailed: (errorMessage) => {
+					mainWindow.showInformationPopup(qsTr("Erreur lors de la création"), errorMessage, false)
+					mainWindow.closeLoadingPopup()
+				}
+				onTokenConversionSucceed: mainWindow.closeLoadingPopup()
 			}
 		}
 	}
@@ -101,6 +110,20 @@ AppWindow {
 		id: checkingPage
 		RegisterCheckingPage {
 			onReturnToRegister: mainWindowStackView.pop()
+			onSendCode: (code) => {
+				RegisterPageCpp.linkNewAccountUsingCode(code, registerWithEmail, sipIdentityAddress)
+			}
+			Connections {
+				target: RegisterPageCpp
+				onLinkingNewAccountWithCodeSucceed: {
+					mainWindowStackView.replace(loginPage)
+					mainWindow.showInformationPopup(qsTr("Compte créé"), qsTr("Le compte a été créé avec succès. Vous pouvez maintenant vous connecter"), true)
+				}
+				onLinkingNewAccountWithCodeFailed: (errorMessage) => {
+					if (errorMessage.length === 0) errorMessage = qsTr("Erreur dans le code de validation")
+					mainWindow.showInformationPopup(qsTr("Erreur"), errorMessage, false)
+				}
+			}
 		}
 	}
 	Component {

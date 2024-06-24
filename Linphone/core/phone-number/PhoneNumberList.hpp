@@ -29,9 +29,11 @@
 class PhoneNumberList : public ListProxy, public AbstractObject {
 	Q_OBJECT
 public:
+	static QSharedPointer<PhoneNumberList> create();
 	PhoneNumberList(QObject *parent = Q_NULLPTR);
 	~PhoneNumberList();
 
+private:
 	DECLARE_ABSTRACT_OBJECT
 };
 

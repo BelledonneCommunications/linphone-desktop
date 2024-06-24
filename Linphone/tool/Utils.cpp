@@ -374,6 +374,11 @@ bool Utils::copyToClipboard(const QString &text) {
 	return !clipboardText.isEmpty();
 }
 
+QString Utils::getClipboardText() {
+	QClipboard *clipboard = QApplication::clipboard();
+	return clipboard->text();
+}
+
 QString Utils::getApplicationProduct() {
 	// Note: Keep '-' as a separator between application name and application type
 	return QString(APPLICATION_NAME "-Desktop").remove(' ') + "/" + QCoreApplication::applicationVersion();

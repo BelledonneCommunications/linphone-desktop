@@ -28,22 +28,28 @@
 
 DEFINE_ABSTRACT_OBJECT(PhoneNumberList)
 
+QSharedPointer<PhoneNumberList> PhoneNumberList::create() {
+	auto model = QSharedPointer<PhoneNumberList>(new PhoneNumberList(), &QObject::deleteLater);
+	model->moveToThread(App::getInstance()->thread());
+	return model;
+}
+
 PhoneNumberList::PhoneNumberList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
 	App::postModelAsync([=]() {
 		// Model thread.
 		auto dialPlans = linphone::Factory::get()->getDialPlans();
-		QList<QSharedPointer<PhoneNumber>> numbers;
-		QVector<QVariantMap> results;
+		QList<QSharedPointer<PhoneNumber>> *numbers = new QList<QSharedPointer<PhoneNumber>>();
 		for (auto it : dialPlans) {
-			auto numberModel = QSharedPointer<PhoneNumber>::create(it);
-			numberModel->moveToThread(this->thread());
-			numbers.push_back(numberModel);
+			auto numberModel = PhoneNumber::create(it);
+			numbers->push_back(numberModel);
 		}
 		// Invoke for adding stuffs in caller thread
 		QMetaObject::invokeMethod(this, [this, numbers]() {
 			mustBeInMainThread(this->log().arg(Q_FUNC_INFO));
-			add(numbers);
+			resetData();
+			add(*numbers);
+			delete numbers;
 		});
 	});
 }

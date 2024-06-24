@@ -229,6 +229,7 @@ LoginLayout {
 			clip: true
 		},
 		Image {
+			z: -1
 			anchors.top: parent.top
 			anchors.right: parent.right
 			anchors.topMargin: 129 * DefaultStyle.dp

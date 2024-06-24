@@ -22,8 +22,11 @@
 #define ACCOUNT_MANAGER_H_
 
 #include <QObject>
+#include <QTimer>
 #include <linphone++/linphone.hh>
 
+#include "AccountManagerServicesModel.hpp"
+#include "AccountManagerServicesRequestModel.hpp"
 #include "AccountModel.hpp"
 #include "tool/AbstractObject.hpp"
 
@@ -34,18 +37,36 @@ public:
 	~AccountManager();
 
 	bool login(QString username, QString password, QString *errorMessage = nullptr);
-
 	std::shared_ptr<linphone::Account> createAccount(const QString &assistantFile);
+
+	enum RegisterType { PhoneNumber = 0, Email = 1 };
+	void registerNewAccount(const QString &username,
+	                        const QString &password,
+	                        RegisterType type,
+	                        const QString &registerAddress);
+
+	void linkNewAccountUsingCode(const QString &code, RegisterType registerType, const QString &sipAddress);
 
 	void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
 	                                linphone::RegistrationState state,
 	                                const std::string &message);
+
 signals:
 	void registrationStateChanged(linphone::RegistrationState state);
 	void errorMessageChanged(const QString &errorMessage);
+	void newAccountCreationSucceed(QString sipAddress, RegisterType registerType, const QString &registerAddress);
+	void registerNewAccountFailed(const QString &error);
+	void tokenConversionSucceed();
+	void errorInField(const QString &field, const QString &error);
+	void linkingNewAccountWithCodeSucceed();
+	void linkingNewAccountWithCodeFailed(const QString &error);
 
 private:
 	std::shared_ptr<AccountModel> mAccountModel;
+	std::shared_ptr<AccountManagerServicesModel> mAccountManagerServicesModel;
+	QTimer timer;
+	QString mCreatedSipAddress;
+	// std::shared_ptr<linphone::Address> mCreatedSipIdentityAddress;
 	DECLARE_ABSTRACT_OBJECT
 };
 

@@ -8,12 +8,6 @@ Text {
 	id: mainItem
 	color: DefaultStyle.danger_500main
 	opacity: 0
-	function displayText() {
-		mainItem.state = "Visible"
-	}
-	function hideText() {
-		mainItem.state = "Invisible"
-	}
 	font {
 		pixelSize: 12 * DefaultStyle.dp
 		weight: 300 * DefaultStyle.dp
@@ -25,7 +19,7 @@ Text {
 		},
 		State{
 			name:"Invisible"
-			PropertyChanges{target: mainItem; opacity: 0.0}
+			PropertyChanges{target: mainItem; opacity: 0.0; text: ""}
 		}
 	]
 	transitions: [
@@ -34,7 +28,7 @@ Text {
 			to: "Invisible"
 			NumberAnimation {
 				property: "opacity"
-				duration: 1000
+				duration: 500
 			}
 		}
 	]
@@ -51,6 +45,8 @@ Text {
 		onTextChanged: {
 			if (mainItem.text.length > 0) {
 				mainItem.state = "Visible"
+			} else {
+				mainItem.state = "Invisible"
 			}
 		}
 	}

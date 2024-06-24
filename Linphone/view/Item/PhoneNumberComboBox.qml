@@ -7,7 +7,7 @@ import Linphone
 ColumnLayout {
 	id: mainItem
 	property string label: ""
-	readonly property string currentText: combobox.model.getAt(combobox.currentIndex) ? combobox.model.getAt(combobox.currentIndex).countryCallingCode : ""
+	readonly property string currentText: combobox.model.getAt(combobox.currentIndex) ? "+" + combobox.model.getAt(combobox.currentIndex).countryCallingCode : ""
 	property string defaultCallingCode: ""
 	property bool enableBackgroundColors: false
 
@@ -101,7 +101,7 @@ ColumnLayout {
 			id: listPopup
 			y: combobox.height - 1
 			width: 311 * DefaultStyle.dp
-			height: 198 * DefaultStyle.dp
+			height: 250 * DefaultStyle.dp
 
 			contentItem: ListView {
 				id: listView
@@ -109,7 +109,9 @@ ColumnLayout {
 				anchors.fill: parent
 				model: PhoneNumberProxy{}
 				currentIndex: combobox.highlightedIndex >= 0 ? combobox.highlightedIndex : 0
-				highlightFollowsCurrentItem: true
+				keyNavigationEnabled: true
+				keyNavigationWraps: true
+				maximumFlickVelocity: 1500
 				highlight: Rectangle {
 					anchors.left: parent.left
 					anchors.right: parent.right
@@ -177,7 +179,7 @@ ColumnLayout {
 							color: DefaultStyle.main2_500main
 							visible: parent.containsMouse
 						}
-						onPressed: {
+						onClicked: {
 							combobox.currentIndex = index
 							listPopup.close()
 						}

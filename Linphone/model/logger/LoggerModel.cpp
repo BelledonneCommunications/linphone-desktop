@@ -28,9 +28,9 @@
 
 #include "LoggerListener.hpp"
 #include "LoggerModel.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "tool/Constants.hpp"
 #include "tool/Utils.hpp"
-#include "model/setting/SettingsModel.hpp"
 
 #include "core/logger/QtLogger.hpp"
 // -----------------------------------------------------------------------------
@@ -127,7 +127,9 @@ void LoggerModel::applyConfig(const std::shared_ptr<linphone::Config> &config) {
 	const QString folder = SettingsModel::getLogsFolder(config);
 	linphone::Core::setLogCollectionPath(Utils::appStringToCoreString(folder));
 	enableFullLogs(SettingsModel::getFullLogsEnabled(config));
-	enable(SettingsModel::getLogsEnabled(config));
+	// TODO : uncomment when it is possible to change the config from settings
+	// enable(SettingsModel::getLogsEnabled(config));
+	enable(true);
 }
 
 void LoggerModel::init() {

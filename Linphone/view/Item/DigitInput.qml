@@ -12,6 +12,7 @@ Control.TextField {
 	height: inputSize
 	horizontalAlignment: TextInput.AlignHCenter
 	verticalAlignment: TextInput.AlignVCenter
+	overwriteMode: true
 
 	// just reserve the space for the background
 	placeholderText: "0"

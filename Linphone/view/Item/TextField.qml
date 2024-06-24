@@ -86,7 +86,7 @@ Control.TextField {
         }
 	}
 	Keys.onPressed: (event) => {
-		if (event.jey == Qt.Key_Control) mainItem.controlIsDown = true
+		if (event.key == Qt.Key_Control) mainItem.controlIsDown = true
 		if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
 			enterPressed()
 			if (mainItem.controlIsDown) {

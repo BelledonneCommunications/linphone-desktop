@@ -10,7 +10,7 @@ ColumnLayout {
 	property string label: ""
 	property bool mandatory: false
 
-	property string errorMessage: ""
+	property alias errorMessage: errorText.text
 	property bool enableErrorText: false
 	property bool errorTextVisible: errorText.opacity > 0
 	spacing: 5 * DefaultStyle.dp
@@ -32,16 +32,19 @@ ColumnLayout {
 	}
 
 	Item {
-		id: contentItem
-		Layout.preferredHeight: childrenRect.height
-		Layout.preferredWidth: childrenRect.width
+		Layout.preferredHeight: contentItem.height
+		Layout.preferredWidth: contentItem.width
+		Item {
+			id: contentItem
+			height: childrenRect.height
+			width: childrenRect.width
+		}
+		ErrorText {
+			id: errorText
+			anchors.top: contentItem.bottom
+			color: DefaultStyle.danger_500main
+			Layout.preferredWidth: implicitWidth
+		}
 	}
 
-	ErrorText {
-		id: errorText
-		visible: mainItem.enableErrorText
-		text: mainItem.errorMessage
-		color: DefaultStyle.main2_600
-		Layout.preferredWidth: implicitWidth
-	}
 }

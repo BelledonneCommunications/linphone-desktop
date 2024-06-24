@@ -3,6 +3,7 @@ backend=1
 # 1 means FlexiAPI, 0 is XMLRPC
 url=https://subscribe.linphone.org/api/
 # replace above URL by https://staging-subscribe.linphone.org/api/ for testing
+# url=https://flexisip-staging-master.linphone.org/api/
 
 [alerts]
 alerts_enabled=1

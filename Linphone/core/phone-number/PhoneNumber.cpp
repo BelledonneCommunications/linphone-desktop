@@ -19,9 +19,16 @@
  */
 
 #include "PhoneNumber.hpp"
+#include "core/App.hpp"
 #include "tool/Utils.hpp"
 #include <QApplication>
 DEFINE_ABSTRACT_OBJECT(PhoneNumber)
+
+QSharedPointer<PhoneNumber> PhoneNumber::create(const std::shared_ptr<linphone::DialPlan> &dialPlan) {
+	auto sharedPointer = QSharedPointer<PhoneNumber>(new PhoneNumber(dialPlan), &QObject::deleteLater);
+	sharedPointer->moveToThread(App::getInstance()->thread());
+	return sharedPointer;
+}
 
 PhoneNumber::PhoneNumber(const std::shared_ptr<linphone::DialPlan> &dialPlan) : QObject(nullptr) {
 	// Should be call from model Thread

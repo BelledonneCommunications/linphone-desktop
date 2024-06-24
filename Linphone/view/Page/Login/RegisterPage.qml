@@ -2,14 +2,26 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls as Control
 import Linphone
+import UtilsCpp 1.0
+import ConstantsCpp 1.0
 
 LoginLayout {
 	id: mainItem
 	signal returnToLogin()
-	signal registerCalled(countryCode: string, phoneNumber: string, email: string)
+	signal browserValidationRequested()
 	readonly property string countryCode: phoneNumberInput.countryCode
 	readonly property string phoneNumber: phoneNumberInput.phoneNumber
 	readonly property string email: emailInput.text
+
+	Connections {
+		target: RegisterPageCpp
+		onErrorInField: (field, errorMessage) => {
+			if (field == "username") usernameItem.errorMessage = errorMessage
+			else if (field == "password") pwdItem.errorMessage = errorMessage
+			else if (field == "phone") phoneNumberInput.errorMessage = errorMessage
+			else if (field == "email") emailItem.errorMessage = errorMessage
+		}
+	}
 
 	titleContent: [
 		RowLayout {
@@ -80,11 +92,13 @@ LoginLayout {
 					RowLayout {
 						spacing: 16 * DefaultStyle.dp
 						FormItemLayout {
+							id: usernameItem
 							label: qsTr("Username")
 							mandatory: true
 							contentItem: TextField {
 								id: usernameInput
 								Layout.preferredWidth: 346 * DefaultStyle.dp
+								backgroundBorderColor: usernameItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 							}
 						}
 						RowLayout {
@@ -109,17 +123,22 @@ LoginLayout {
 						Layout.fillWidth: true
 						PhoneNumberInput {
 							id: phoneNumberInput
-							label: qsTr("Phone number")
+							property string completePhoneNumber: countryCode + phoneNumber
+							label: qsTr("Numéro de téléphone")
 							mandatory: true
 							placeholderText: "Phone number"
+							defaultCallingCode: "33"
 							Layout.preferredWidth: 346 * DefaultStyle.dp
 						}
 						FormItemLayout {
+							id: emailItem
 							label: qsTr("Email")
 							mandatory: true
+							enableErrorText: true
 							contentItem: TextField {
 								id: emailInput
 								Layout.preferredWidth: 346 * DefaultStyle.dp
+								backgroundBorderColor: emailItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 							}
 						}
 					}
@@ -128,130 +147,147 @@ LoginLayout {
 						ColumnLayout {
 							spacing: 5 * DefaultStyle.dp
 							FormItemLayout {
-								label: qsTr("Password")
+								id: passwordItem
+								label: qsTr("Mot de passe")
 								mandatory: true
+								enableErrorText: true
 								contentItem: TextField {
 									id: pwdInput
 									hidden: true
 									Layout.preferredWidth: 346 * DefaultStyle.dp
-								}
-							}
-							Text {
-								text: qsTr("The password must contain 6 characters minimum")
-								font {
-									pixelSize: 12 * DefaultStyle.dp
-									weight: 300 * DefaultStyle.dp
+									backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 								}
 							}
 						}
 						ColumnLayout {
 							spacing: 5 * DefaultStyle.dp
 							FormItemLayout {
-								label: qsTr("Confirm password")
+								label: qsTr("Confirmation mot de passe")
 								mandatory: true
+								enableErrorText: true
 								contentItem: TextField {
 									id: confirmPwdInput
 									hidden: true
 									Layout.preferredWidth: 346 * DefaultStyle.dp
-								}
-							}
-							Text {
-								text: qsTr("The password must contain 6 characters minimum")
-								font {
-									pixelSize: 12 * DefaultStyle.dp
-									weight: 300 * DefaultStyle.dp
+									backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 								}
 							}
 						}
 					}
 				}
-				ColumnLayout {
-					spacing: 18 * DefaultStyle.dp
+				// ColumnLayout {
+				// 	spacing: 18 * DefaultStyle.dp
+				// 	RowLayout {
+				// 		spacing: 10 * DefaultStyle.dp
+				// 		CheckBox {
+				// 			id: subscribeToNewsletterCheckBox
+				// 		}
+				// 		Text {
+				// 			text: qsTr("Je souhaite souscrire à la newletter Linphone.")
+				// 			font {
+				// 				pixelSize: 14 * DefaultStyle.dp
+				// 				weight: 400 * DefaultStyle.dp
+				// 			}
+				// 			MouseArea {
+				// 				anchors.fill: parent
+				// 				onClicked: subscribeToNewsletterCheckBox.toggle()
+				// 			}
+				// 		}
+				// 	}
+				RowLayout {
+					spacing: 10 * DefaultStyle.dp
+					CheckBox {
+						id: termsCheckBox
+					}
 					RowLayout {
-						spacing: 10 * DefaultStyle.dp
-						CheckBox {
+						spacing: 0
+						Layout.fillWidth: true
+						Text {
+							text: qsTr("J'accepte les ")
+							font {
+								pixelSize: 14 * DefaultStyle.dp
+								weight: 400 * DefaultStyle.dp
+							}
+							MouseArea {
+								anchors.fill: parent
+								onClicked: termsCheckBox.toggle()
+							}
 						}
 						Text {
-							text: qsTr("I would like to suscribe to the newsletter")
+							font {
+								underline: true
+								pixelSize: 14 * DefaultStyle.dp
+								weight: 400 * DefaultStyle.dp
+							}
+							text: qsTr("conditions d’utilisation")
+							MouseArea {
+								anchors.fill: parent
+								hoverEnabled: true
+								cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+								onClicked: Qt.openUrlExternally(ConstantsCpp.CguUrl)
+							}
+						}
+						Text {
+							text: qsTr(" et la ")
 							font {
 								pixelSize: 14 * DefaultStyle.dp
 								weight: 400 * DefaultStyle.dp
 							}
 						}
-					}
-					RowLayout {
-						spacing: 10 * DefaultStyle.dp
-						CheckBox {
-							id: termsCheckBox
-						}
-						RowLayout {
-							spacing: 0
-							Layout.fillWidth: true
-							Text {
-								// Layout.preferredWidth: 450 * DefaultStyle.dp
-								text: qsTr("I accept the Terms and Conditions: ")
-								font {
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
-								}
+						Text {
+							font {
+								underline: true
+								pixelSize: 14 * DefaultStyle.dp
+								weight: 400 * DefaultStyle.dp
 							}
-							Text {
-								// Layout.preferredWidth: 450 * DefaultStyle.dp
-								font {
-									underline: true
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
-								}
-								text: qsTr("Read the Terms and Conditions.")
-								MouseArea {
-									anchors.fill: parent
-									hoverEnabled: true
-									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-									onClicked: console.log("TODO : display terms and conditions")
-								}
-							}
-							Text {
-								// Layout.preferredWidth: 450 * DefaultStyle.dp
-								text: qsTr("I accept the Privacy policy: ")
-								font {
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
-								}
-							}
-							Text {
-								// Layout.preferredWidth: 450 * DefaultStyle.dp
-								font {
-									underline: true
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
-								}
-								text: qsTr("Read the Privacy policy.")
-								MouseArea {
-									anchors.fill: parent
-									hoverEnabled: true
-									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-									onClicked: console.log("TODO : display privacy policy")
-								}
+							text: qsTr("politique de confidentialité.")
+							MouseArea {
+								anchors.fill: parent
+								hoverEnabled: true
+								cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+								onClicked: Qt.openUrlExternally(ConstantsCpp.PrivatePolicyUrl)
 							}
 						}
 					}
 				}
+				// }
 				Button {
-					// enabled: termsCheckBox.checked && usernameInput.text.length != 0 && pwdInput.text.length != 0 && confirmPwdInput.text.length != 0
-					// && (phoneNumberInput.phoneNumber.length != 0 || emailInput.text.length != 0)
+					enabled: termsCheckBox.checked
 					leftPadding: 20 * DefaultStyle.dp
 					rightPadding: 20 * DefaultStyle.dp
 					topPadding: 11 * DefaultStyle.dp
 					bottomPadding: 11 * DefaultStyle.dp
-					text: qsTr("Register")
+					text: qsTr("Créer")
 					onClicked:{
-						console.log("[RegisterPage] User: Call register with phone number", phoneNumberInput.phoneNumber)
-						mainItem.registerCalled(phoneNumberInput.countryCode, phoneNumberInput.phoneNumber, emailInput.text)
+						if (usernameInput.text.length === 0) {
+							console.log("ERROR username")
+							usernameItem.errorMessage = qsTr("Veuillez entrer un nom d'utilisateur")
+						} else if (pwdInput.text.length === 0) {
+							console.log("ERROR password")
+							passwordItem.errorMessage = qsTr("Veuillez entrer un mot de passe")
+						} else if (pwdInput.text != confirmPwdInput.text) {
+							console.log("ERROR confirm pwd")
+							passwordItem.errorMessage = qsTr("Les mots de passe sont différents")
+						} else if (bar.currentIndex === 0 && phoneNumberInput.phoneNumber.length === 0) {
+							console.log("ERROR phone number")
+							phoneNumberInput.errorMessage = qsTr("Veuillez entrer un numéro de téléphone")
+						} else if (bar.currentIndex === 1 && emailInput.text.length === 0) {
+							console.log("ERROR email")
+							emailItem.errorMessage = qsTr("Veuillez entrer un email")
+						} else {
+							console.log("[RegisterPage] User: Call register")
+							mainItem.browserValidationRequested()
+							if (bar.currentIndex === 0)
+								RegisterPageCpp.registerNewAccount(usernameInput.text, pwdInput.text, "", phoneNumberInput.completePhoneNumber)
+							else
+								RegisterPageCpp.registerNewAccount(usernameInput.text, pwdInput.text, emailInput.text, "")
+						}
 					}
 				}
 			}
 		},
 		Image {
+			z: -1
 			anchors.top: parent.top
 			anchors.right: parent.right
 			anchors.topMargin: 129 * DefaultStyle.dp

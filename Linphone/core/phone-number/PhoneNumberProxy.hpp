@@ -22,21 +22,24 @@
 #define PHONE_NUMBER_PROXY_H_
 
 #include "../proxy/SortFilterProxy.hpp"
+#include "PhoneNumberList.hpp"
+#include "tool/AbstractObject.hpp"
 
 // =============================================================================
 
-class PhoneNumberProxy : public SortFilterProxy {
+class PhoneNumberProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
 
 	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
 
 public:
 	PhoneNumberProxy(QObject *parent = Q_NULLPTR);
+	~PhoneNumberProxy();
 
 	QString getFilterText() const;
 	void setFilterText(const QString &filter);
 
-	Q_INVOKABLE int findIndexByCountryCallingCode(const QString& countryCallingCode);
+	Q_INVOKABLE int findIndexByCountryCallingCode(const QString &countryCallingCode);
 
 signals:
 	void filterTextChanged();
@@ -46,6 +49,10 @@ protected:
 	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 	QString mFilterText;
+	QSharedPointer<PhoneNumberList> mPhoneNumberList;
+
+private:
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif

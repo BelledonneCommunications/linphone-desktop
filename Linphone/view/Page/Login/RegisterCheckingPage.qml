@@ -6,9 +6,11 @@ import Linphone
 LoginLayout {
 	id: mainItem
 	signal returnToRegister()
-	property string phoneNumber
-	property string email
-
+	signal sendCode(string code)
+	property bool registerWithEmail
+	property string address
+	property string sipIdentityAddress
+	property string code
 	titleContent: [
 		RowLayout {
 			spacing: 21 * DefaultStyle.dp
@@ -34,7 +36,7 @@ LoginLayout {
 			Text {
 				wrapMode: Text.NoWrap
 				text: {
-					var completeString =  (mainItem.email.length > 0) ? qsTr("email") : qsTr("numéro")
+					var completeString =  mainItem.registerWithEmail ? qsTr("email") : qsTr("numéro")
 					text = qsTr("Inscription | Confirmer votre ") + completeString
 				}
 				font {
@@ -64,7 +66,7 @@ LoginLayout {
 				}
 				color: DefaultStyle.main2_700
 				text: {
-					var completeString = (mainItem.email.length > 0) ? ("email \"" + mainItem.email + "\"") : ("phone number \"" + mainItem.phoneNumber + "\"")
+					var completeString = mainItem.registerWithEmail ? ("email \"") : ("phone number \"") + address + "\""
 					text = "We have sent a verification code on your " + completeString + " <br>Please enter the verification code below:"
 				}
 			}
@@ -78,10 +80,12 @@ LoginLayout {
 						Layout.preferredHeight: height
 						onTextEdited: {
 							if (text.length > 0 ) {
+								mainItem.code = mainItem.code.slice(0, index) + text + mainItem.code.slice(index)
 								if (index < 3)
 									nextItemInFocusChain(true).forceActiveFocus()
 								else {
-									// TODO : validate()
+									mainItem.sendCode(mainItem.code)
+									mainItem.code = ""
 								}
 							} else {
 								if (index > 0)

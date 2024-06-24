@@ -20,11 +20,17 @@
 
 #include "PhoneNumberProxy.hpp"
 #include "PhoneNumber.hpp"
-#include "PhoneNumberList.hpp"
+
+DEFINE_ABSTRACT_OBJECT(PhoneNumberProxy)
 
 PhoneNumberProxy::PhoneNumberProxy(QObject *parent) : SortFilterProxy(parent) {
-	setSourceModel(new PhoneNumberList(this));
+	mPhoneNumberList = PhoneNumberList::create();
+	setSourceModel(mPhoneNumberList.get());
 	sort(0);
+}
+
+PhoneNumberProxy::~PhoneNumberProxy() {
+	setSourceModel(nullptr);
 }
 
 QString PhoneNumberProxy::getFilterText() const {

@@ -36,7 +36,7 @@ class PhoneNumber : public QObject, public AbstractObject {
 	Q_PROPERTY(QString country MEMBER mCountry CONSTANT)
 
 public:
-	// Should be call from model Thread. Will be automatically in App thread after initialization
+	static QSharedPointer<PhoneNumber> create(const std::shared_ptr<linphone::DialPlan> &dialPlan);
 	PhoneNumber(const std::shared_ptr<linphone::DialPlan> &dialPlan);
 	~PhoneNumber();
 
@@ -47,6 +47,7 @@ public:
 	QString mInternationalCallPrefix;
 	QString mCountry;
 
+private:
 	DECLARE_ABSTRACT_OBJECT
 };
 

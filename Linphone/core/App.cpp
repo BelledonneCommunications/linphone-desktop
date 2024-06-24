@@ -58,6 +58,7 @@
 #include "core/participant/ParticipantProxy.hpp"
 #include "core/phone-number/PhoneNumber.hpp"
 #include "core/phone-number/PhoneNumberProxy.hpp"
+#include "core/register/RegisterPage.hpp"
 #include "core/screen/ScreenList.hpp"
 #include "core/screen/ScreenProxy.hpp"
 #include "core/search/MagicSearchProxy.hpp"
@@ -294,8 +295,17 @@ void App::initCore() {
 
 void App::initCppInterfaces() {
 	qmlRegisterSingletonType<LoginPage>(
-	    Constants::MainQmlUri, 1, 0, "LoginPageCpp",
-	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new LoginPage(engine); });
+	    Constants::MainQmlUri, 1, 0, "LoginPageCpp", [](QQmlEngine *engine, QJSEngine *) -> QObject * {
+		    static auto loginPage = new LoginPage(engine);
+		    App::getInstance()->mEngine->setObjectOwnership(loginPage, QQmlEngine::CppOwnership);
+		    return loginPage;
+	    });
+	qmlRegisterSingletonType<RegisterPage>(
+	    Constants::MainQmlUri, 1, 0, "RegisterPageCpp", [](QQmlEngine *engine, QJSEngine *) -> QObject * {
+		    static RegisterPage *registerPage = new RegisterPage();
+		    App::getInstance()->mEngine->setObjectOwnership(registerPage, QQmlEngine::CppOwnership);
+		    return registerPage;
+	    });
 	qmlRegisterSingletonType<Constants>(
 	    "ConstantsCpp", 1, 0, "ConstantsCpp",
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new Constants(engine); });

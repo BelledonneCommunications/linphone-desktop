@@ -71,14 +71,27 @@ void LoginPage::login(const QString &username, const QString &password) {
 			        switch (state) {
 				        case linphone::RegistrationState::Failed: {
 					        emit accountManager->errorMessageChanged(*error);
-					        accountManager->deleteLater();
+					        if (accountManager) {
+						        accountManager->deleteLater();
+						        accountManager = nullptr;
+					        }
 					        break;
 				        }
 				        case linphone::RegistrationState::Ok: {
 					        emit accountManager->errorMessageChanged("");
+					        if (accountManager) {
+						        accountManager->deleteLater();
+						        accountManager = nullptr;
+					        }
 					        break;
 				        }
-				        case linphone::RegistrationState::Cleared:
+				        case linphone::RegistrationState::Cleared: {
+					        if (accountManager) {
+						        accountManager->deleteLater();
+						        accountManager = nullptr;
+					        }
+					        break;
+				        }
 				        case linphone::RegistrationState::None:
 				        case linphone::RegistrationState::Progress:
 				        case linphone::RegistrationState::Refreshing:

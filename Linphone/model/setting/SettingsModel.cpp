@@ -19,11 +19,10 @@
  */
 
 #include "SettingsModel.hpp"
-#include "model/core/CoreModel.hpp"
-#include "tool/Utils.hpp"
-#include "model/tool/ToolModel.hpp"
 #include "core/path/Paths.hpp"
-
+#include "model/core/CoreModel.hpp"
+#include "model/tool/ToolModel.hpp"
+#include "tool/Utils.hpp"
 
 // =============================================================================
 
@@ -63,18 +62,14 @@ QStringList SettingsModel::getVideoDevices() const {
 	return result;
 }
 
-QString SettingsModel::getVideoDevice () const {
+QString SettingsModel::getVideoDevice() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	return Utils::coreStringToAppString(
-						CoreModel::getInstance()->getCore()->getVideoDevice()
-						);
+	return Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getVideoDevice());
 }
 
-void SettingsModel::setVideoDevice (const QString &device) {
+void SettingsModel::setVideoDevice(const QString &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	CoreModel::getInstance()->getCore()->setVideoDevice(
-								  Utils::appStringToCoreString(device)
-								  );
+	CoreModel::getInstance()->getCore()->setVideoDevice(Utils::appStringToCoreString(device));
 	emit videoDeviceChanged(device);
 }
 
@@ -94,8 +89,8 @@ void SettingsModel::resetCaptureGraph() {
 }
 void SettingsModel::createCaptureGraph() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	mSimpleCaptureGraph =
-			new MediastreamerUtils::SimpleCaptureGraph(Utils::appStringToCoreString(getCaptureDevice()), Utils::appStringToCoreString(getPlaybackDevice()));
+	mSimpleCaptureGraph = new MediastreamerUtils::SimpleCaptureGraph(Utils::appStringToCoreString(getCaptureDevice()),
+	                                                                 Utils::appStringToCoreString(getPlaybackDevice()));
 	mSimpleCaptureGraph->start();
 	emit captureGraphRunningChanged(getCaptureGraphRunning());
 }
@@ -135,7 +130,7 @@ void SettingsModel::deleteCaptureGraph() {
 		mSimpleCaptureGraph = nullptr;
 	}
 }
-//Force a call on the 'detect' method of all audio filters, updating new or removed devices
+// Force a call on the 'detect' method of all audio filters, updating new or removed devices
 void SettingsModel::accessCallSettings() {
 	// Audio
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
@@ -148,7 +143,8 @@ void SettingsModel::accessCallSettings() {
 	emit playbackGainChanged(getPlaybackGain());
 	emit captureGainChanged(getCaptureGain());
 
-	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo calibrations in call.
+	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo
+	// calibrations in call.
 	if (!getIsInCall()) {
 		qDebug() << "Starting capture graph from accessing audio panel";
 		startCaptureGraph();
@@ -193,8 +189,7 @@ void SettingsModel::setPlaybackGain(float gain) {
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setPlaybackGain(gain);
 	}
-	if((int)(oldGain*1000) != (int)(gain*1000))
-		emit playbackGainChanged(gain);
+	if ((int)(oldGain * 1000) != (int)(gain * 1000)) emit playbackGainChanged(gain);
 }
 
 float SettingsModel::getCaptureGain() const {
@@ -210,11 +205,10 @@ void SettingsModel::setCaptureGain(float gain) {
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setCaptureGain(gain);
 	}
-	if((int)(oldGain *1000) != (int)(gain *1000))
-		emit captureGainChanged(gain);
+	if ((int)(oldGain * 1000) != (int)(gain * 1000)) emit captureGainChanged(gain);
 }
 
-QStringList SettingsModel::getCaptureDevices () const {
+QStringList SettingsModel::getCaptureDevices() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
 	QStringList list;
@@ -226,7 +220,7 @@ QStringList SettingsModel::getCaptureDevices () const {
 	return list;
 }
 
-QStringList SettingsModel::getPlaybackDevices () const {
+QStringList SettingsModel::getPlaybackDevices() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
 	QStringList list;
@@ -241,68 +235,64 @@ QStringList SettingsModel::getPlaybackDevices () const {
 
 // -----------------------------------------------------------------------------
 
-QString SettingsModel::getCaptureDevice () const {
+QString SettingsModel::getCaptureDevice() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto audioDevice = CoreModel::getInstance()->getCore()->getInputAudioDevice();
-	return Utils::coreStringToAppString(audioDevice? audioDevice->getId() : CoreModel::getInstance()->getCore()->getCaptureDevice());
+	return Utils::coreStringToAppString(audioDevice ? audioDevice->getId()
+	                                                : CoreModel::getInstance()->getCore()->getCaptureDevice());
 }
 
-void SettingsModel::setCaptureDevice (const QString &device) {
+void SettingsModel::setCaptureDevice(const QString &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	std::string devId = Utils::appStringToCoreString(device);
 	auto list = CoreModel::getInstance()->getCore()->getExtendedAudioDevices();
-	auto audioDevice = find_if(list.cbegin(), list.cend(), [&] ( const std::shared_ptr<linphone::AudioDevice> & audioItem) {
-	   return audioItem->getId() == devId;
-	});
-	if(audioDevice != list.cend()){
+	auto audioDevice =
+	    find_if(list.cbegin(), list.cend(),
+	            [&](const std::shared_ptr<linphone::AudioDevice> &audioItem) { return audioItem->getId() == devId; });
+	if (audioDevice != list.cend()) {
 		CoreModel::getInstance()->getCore()->setCaptureDevice(devId);
 		CoreModel::getInstance()->getCore()->setInputAudioDevice(*audioDevice);
 		emit captureDeviceChanged(device);
 		resetCaptureGraph();
-	}else
-		qWarning() << "Cannot set Capture device. The ID cannot be matched with an existant device : " << device;
+	} else qWarning() << "Cannot set Capture device. The ID cannot be matched with an existant device : " << device;
 }
 
 // -----------------------------------------------------------------------------
 
-QString SettingsModel::getPlaybackDevice () const {
+QString SettingsModel::getPlaybackDevice() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto audioDevice = CoreModel::getInstance()->getCore()->getOutputAudioDevice();
-	return Utils::coreStringToAppString(audioDevice? audioDevice->getId() : CoreModel::getInstance()->getCore()->getPlaybackDevice());
+	return Utils::coreStringToAppString(audioDevice ? audioDevice->getId()
+	                                                : CoreModel::getInstance()->getCore()->getPlaybackDevice());
 }
 
-void SettingsModel::setPlaybackDevice (const QString &device) {
+void SettingsModel::setPlaybackDevice(const QString &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	std::string devId = Utils::appStringToCoreString(device);
 
 	auto list = CoreModel::getInstance()->getCore()->getExtendedAudioDevices();
-	auto audioDevice = find_if(list.cbegin(), list.cend(), [&] ( const std::shared_ptr<linphone::AudioDevice> & audioItem) {
-	   return audioItem->getId() == devId;
-	});
-	if(audioDevice != list.cend()){
+	auto audioDevice =
+	    find_if(list.cbegin(), list.cend(),
+	            [&](const std::shared_ptr<linphone::AudioDevice> &audioItem) { return audioItem->getId() == devId; });
+	if (audioDevice != list.cend()) {
 
 		CoreModel::getInstance()->getCore()->setPlaybackDevice(devId);
 		CoreModel::getInstance()->getCore()->setOutputAudioDevice(*audioDevice);
 		emit playbackDeviceChanged(device);
 		resetCaptureGraph();
-	}else
-		qWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
+	} else qWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
 }
 
 // -----------------------------------------------------------------------------
 
-QString SettingsModel::getRingerDevice () const {
+QString SettingsModel::getRingerDevice() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	return Utils::coreStringToAppString(
-						CoreModel::getInstance()->getCore()->getRingerDevice()
-						);
+	return Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getRingerDevice());
 }
 
-void SettingsModel::setRingerDevice (const QString &device) {
+void SettingsModel::setRingerDevice(const QString &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	CoreModel::getInstance()->getCore()->setRingerDevice(
-								   Utils::appStringToCoreString(device)
-								   );
+	CoreModel::getInstance()->getCore()->setRingerDevice(Utils::appStringToCoreString(device));
 	emit ringerDeviceChanged(device);
 }
 
@@ -310,7 +300,7 @@ void SettingsModel::setRingerDevice (const QString &device) {
 
 bool SettingsModel::getVideoEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	return  CoreModel::getInstance()->getCore()->videoEnabled();
+	return CoreModel::getInstance()->getCore()->videoEnabled();
 }
 
 void SettingsModel::setVideoEnabled(const bool enabled) {
@@ -323,33 +313,33 @@ void SettingsModel::setVideoEnabled(const bool enabled) {
 
 // -----------------------------------------------------------------------------
 
-bool SettingsModel::getEchoCancellationEnabled () const {
+bool SettingsModel::getEchoCancellationEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return CoreModel::getInstance()->getCore()->echoCancellationEnabled();
 }
 
-void SettingsModel::setEchoCancellationEnabled (bool status) {
+void SettingsModel::setEchoCancellationEnabled(bool status) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	CoreModel::getInstance()->getCore()->enableEchoCancellation(status);
 	emit echoCancellationEnabledChanged(status);
 }
 
-void SettingsModel::startEchoCancellerCalibration(){
+void SettingsModel::startEchoCancellerCalibration() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	CoreModel::getInstance()->getCore()->startEchoCancellerCalibration();
 }
 
-int SettingsModel::getEchoCancellationCalibration()const {
+int SettingsModel::getEchoCancellationCalibration() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return CoreModel::getInstance()->getCore()->getEchoCancellationCalibration();
 }
 
-bool SettingsModel::getAutomaticallyRecordCallsEnabled () const {
+bool SettingsModel::getAutomaticallyRecordCallsEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return !!mConfig->getInt(UiSection, "automatically_record_calls", 0);
 }
 
-void SettingsModel::setAutomaticallyRecordCallsEnabled (bool enabled) {
+void SettingsModel::setAutomaticallyRecordCallsEnabled(bool enabled) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mConfig->setInt(UiSection, "automatically_record_calls", enabled);
 	emit automaticallyRecordCallsEnabledChanged(enabled);
@@ -359,12 +349,12 @@ void SettingsModel::setAutomaticallyRecordCallsEnabled (bool enabled) {
 // VFS.
 // =============================================================================
 
-bool SettingsModel::getVfsEnabled () const {
+bool SettingsModel::getVfsEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return !!mConfig->getInt(UiSection, "vfs_enabled", 0);
 }
 
-void SettingsModel::setVfsEnabled (bool enabled) {
+void SettingsModel::setVfsEnabled(bool enabled) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mConfig->setInt(UiSection, "vfs_enabled", enabled);
 	emit vfsEnabledChanged(enabled);
@@ -374,69 +364,67 @@ void SettingsModel::setVfsEnabled (bool enabled) {
 // Logs.
 // =============================================================================
 
-bool SettingsModel::getLogsEnabled () const {
+bool SettingsModel::getLogsEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return getLogsEnabled(mConfig);
 }
 
-void SettingsModel::setLogsEnabled (bool status) {
+void SettingsModel::setLogsEnabled(bool status) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mConfig->setInt(UiSection, "logs_enabled", status);
 	CoreModel::getInstance()->getLogger()->enable(status);
 	emit logsEnabledChanged(status);
 }
 
-bool SettingsModel::getFullLogsEnabled () const {
+bool SettingsModel::getFullLogsEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return getFullLogsEnabled(mConfig);
 }
 
-void SettingsModel::setFullLogsEnabled (bool status) {
+void SettingsModel::setFullLogsEnabled(bool status) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mConfig->setInt(UiSection, "full_logs_enabled", status);
 	CoreModel::getInstance()->getLogger()->enableFullLogs(status);
 	emit fullLogsEnabledChanged(status);
 }
 
-bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) {
+bool SettingsModel::getLogsEnabled(const shared_ptr<linphone::Config> &config) {
 	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 	return config ? config->getInt(UiSection, "logs_enabled", false) : true;
 }
 
-bool SettingsModel::getFullLogsEnabled (const shared_ptr<linphone::Config> &config) {
+bool SettingsModel::getFullLogsEnabled(const shared_ptr<linphone::Config> &config) {
 	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 	return config ? config->getInt(UiSection, "full_logs_enabled", false) : false;
 }
 
-QString SettingsModel::getLogsFolder () const {
+QString SettingsModel::getLogsFolder() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return getLogsFolder(mConfig);
 }
 
-QString SettingsModel::getLogsFolder (const shared_ptr<linphone::Config> &config) {
+QString SettingsModel::getLogsFolder(const shared_ptr<linphone::Config> &config) {
 	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
-	return config
-		? Utils::coreStringToAppString(config->getString(UiSection, "logs_folder", Utils::appStringToCoreString(Paths::getLogsDirPath())))
-		: Paths::getLogsDirPath();
+	return config ? Utils::coreStringToAppString(config->getString(
+	                    UiSection, "logs_folder", Utils::appStringToCoreString(Paths::getLogsDirPath())))
+	              : Paths::getLogsDirPath();
 }
 
-void SettingsModel::cleanLogs () const {
+void SettingsModel::cleanLogs() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	CoreModel::getInstance()->getCore()->resetLogCollection();
 }
 
-void SettingsModel::sendLogs () const {
+void SettingsModel::sendLogs() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	qInfo() << QStringLiteral("Send logs to: `%1` from `%2`.")
-			   .arg(Utils::coreStringToAppString(core->getLogCollectionUploadServerUrl()))
-			   .arg(Utils::coreStringToAppString(core->getLogCollectionPath()));
+	               .arg(Utils::coreStringToAppString(core->getLogCollectionUploadServerUrl()))
+	               .arg(Utils::coreStringToAppString(core->getLogCollectionPath()));
 	core->uploadLogCollection();
 }
 
-QString SettingsModel::getLogsEmail () const {
+QString SettingsModel::getLogsEmail() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	return Utils::coreStringToAppString(
-						mConfig->getString(UiSection, "logs_email", Constants::DefaultLogsEmail)
-						);
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "logs_email", Constants::DefaultLogsEmail));
 }

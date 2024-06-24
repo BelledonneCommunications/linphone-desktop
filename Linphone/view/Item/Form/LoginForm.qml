@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
-
+import ConstantsCpp 1.0
 
 ColumnLayout {
 	id: mainItem
@@ -148,7 +148,7 @@ ColumnLayout {
 					weight: 600 * DefaultStyle.dp
 				}
 			}
-			onClicked: console.debug("[LoginForm]User: forgotten password button clicked")
+			onClicked: Qt.openUrlExternally(ConstantsCpp.PasswordRecoveryUrl)
 		}
 	
 	}

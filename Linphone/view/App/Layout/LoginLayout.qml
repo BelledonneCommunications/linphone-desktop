@@ -15,10 +15,12 @@ Rectangle {
 	color: DefaultStyle.grey_0
 	ColumnLayout {
 		// anchors.leftMargin: 119 * DefaultStyle.dp
-		anchors.top: parent.top
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.bottom: bottomMountains.top
+		id: contentLayout
+		// anchors.top: parent.top
+		// anchors.left: parent.left
+		// anchors.right: parent.right
+		anchors.fill: parent
+		// anchors.bottom: bottomMountains.top
 		spacing: 0
 		RowLayout {
 			Layout.fillWidth: true
@@ -63,17 +65,16 @@ Rectangle {
 			id: centerLayout
 			Layout.fillHeight: true
 			Layout.fillWidth: true
+			z: 1
+		}
+		Image {
+			id: bottomMountains
+			source: AppIcons.belledonne
+			fillMode: Image.Stretch
+			Layout.fillWidth: true
+			Layout.preferredHeight: 108 * DefaultStyle.dp
 		}
 	}
 
-	Image {
-		id: bottomMountains
-		anchors.bottom: parent.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-		height: 108 * DefaultStyle.dp
-		source: AppIcons.belledonne
-		fillMode: Image.Stretch
-	}
 } 
  

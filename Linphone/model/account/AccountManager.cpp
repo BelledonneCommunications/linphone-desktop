@@ -21,10 +21,16 @@
 #include "AccountManager.hpp"
 
 #include <QDebug>
+#include <QDesktopServices>
+#include <QEventLoop>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QTemporaryFile>
+#include <QUrl>
 
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
 DEFINE_ABSTRACT_OBJECT(AccountManager)
@@ -91,6 +97,172 @@ bool AccountManager::login(QString username, QString password, QString *errorMes
 	        &AccountManager::onRegistrationStateChanged);
 	core->addAccount(account);
 	return true;
+}
+
+void AccountManager::registerNewAccount(const QString &username,
+                                        const QString &password,
+                                        RegisterType type,
+                                        const QString &registerAddress) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (!mAccountManagerServicesModel) {
+		auto core = CoreModel::getInstance()->getCore();
+		auto ams = core->createAccountManagerServices();
+		mAccountManagerServicesModel = Utils::makeQObject_ptr<AccountManagerServicesModel>(ams);
+	}
+	connect(
+	    mAccountManagerServicesModel.get(), &AccountManagerServicesModel::requestSuccessfull, this,
+	    [this, username, password, type, registerAddress](
+	        const std::shared_ptr<const linphone::AccountManagerServicesRequest> &request, const std::string &data) {
+		    if (request->getType() == linphone::AccountManagerServicesRequest::Type::AccountCreationRequestToken) {
+			    QString verifyTokenUrl = Utils::coreStringToAppString(data);
+			    qDebug() << "[AccountManager] request token succeed" << verifyTokenUrl;
+
+			    QDesktopServices::openUrl(verifyTokenUrl);
+			    auto creationToken = verifyTokenUrl.mid(verifyTokenUrl.lastIndexOf("/") + 1);
+
+			    // QNetworkRequest req;
+			    timer.setSingleShot(true);
+			    timer.setInterval(2000);
+			    QObject::connect(&timer, &QTimer::timeout, this, [this, creationToken]() {
+				    mAccountManagerServicesModel->convertCreationRequestTokenIntoCreationToken(
+				        Utils::appStringToCoreString(creationToken));
+			    });
+			    timer.start();
+			    // req.setUrl(QUrl(verifyTokenUrl));
+
+		    } else if (request->getType() == linphone::AccountManagerServicesRequest::Type::
+		                                         AccountCreationTokenFromAccountCreationRequestToken) {
+			    qDebug() << "[AccountManager] request token conversion succeed" << data;
+			    emit tokenConversionSucceed();
+			    timer.stop();
+			    mAccountManagerServicesModel->createAccountUsingToken(Utils::appStringToCoreString(username),
+			                                                          Utils::appStringToCoreString(password), data);
+
+		    } else if (request->getType() == linphone::AccountManagerServicesRequest::Type::CreateAccountUsingToken) {
+			    auto core = CoreModel::getInstance()->getCore();
+			    auto factory = linphone::Factory::get();
+			    mCreatedSipAddress = Utils::coreStringToAppString(data);
+			    auto createdSipIdentityAddress = ToolModel::interpretUrl(mCreatedSipAddress);
+			    core->addAuthInfo(factory->createAuthInfo(Utils::appStringToCoreString(username), // Username.
+			                                              "",                                     // User ID.
+			                                              Utils::appStringToCoreString(password), // Password.
+			                                              "",                                     // HA1.
+			                                              "",                                     // Realm.
+			                                              createdSipIdentityAddress->getDomain()  // Domain.
+			                                              ));
+			    if (type == RegisterType::Email) {
+				    qDebug() << "[AccountManager] creation succeed, email verification" << registerAddress;
+				    mAccountManagerServicesModel->linkEmailByEmail(
+				        ToolModel::interpretUrl(Utils::coreStringToAppString(data)),
+				        Utils::appStringToCoreString(registerAddress));
+			    } else {
+				    qDebug() << "[AccountManager] creation succeed, sms verification" << registerAddress;
+				    mAccountManagerServicesModel->linkPhoneNumberBySms(
+				        ToolModel::interpretUrl(Utils::coreStringToAppString(data)),
+				        Utils::appStringToCoreString(registerAddress));
+			    }
+		    } else if (request->getType() ==
+		               linphone::AccountManagerServicesRequest::Type::SendEmailLinkingCodeByEmail) {
+			    qDebug() << "[AccountManager] send email succeed, link account using code";
+			    emit newAccountCreationSucceed(mCreatedSipAddress, type, registerAddress);
+			    mCreatedSipAddress.clear();
+		    } else if (request->getType() ==
+		               linphone::AccountManagerServicesRequest::Type::SendPhoneNumberLinkingCodeBySms) {
+			    qDebug() << "[AccountManager] send phone number succeed, link account using code";
+			    emit newAccountCreationSucceed(mCreatedSipAddress, type, registerAddress);
+			    mCreatedSipAddress.clear();
+		    }
+	    });
+	connect(
+	    mAccountManagerServicesModel.get(), &AccountManagerServicesModel::requestError, this,
+	    [this](const std::shared_ptr<const linphone::AccountManagerServicesRequest> &request, int statusCode,
+	           const std::string &errorMessage, const std::shared_ptr<const linphone::Dictionary> &parameterErrors) {
+		    if (request->getType() == linphone::AccountManagerServicesRequest::Type::AccountCreationRequestToken) {
+			    qDebug() << "[AccountManager] error creating request token :" << errorMessage;
+			    emit registerNewAccountFailed(Utils::coreStringToAppString(errorMessage));
+		    } else if (request->getType() == linphone::AccountManagerServicesRequest::Type::
+		                                         AccountCreationTokenFromAccountCreationRequestToken) {
+			    qDebug() << "[AccountManager] error converting token into creation token :" << errorMessage;
+			    if (parameterErrors) {
+				    timer.stop();
+				    emit registerNewAccountFailed(Utils::coreStringToAppString(errorMessage));
+			    } else {
+				    timer.start();
+			    }
+		    } else if (request->getType() == linphone::AccountManagerServicesRequest::Type::CreateAccountUsingToken) {
+			    qDebug() << "[AccountManager] error creating account :" << errorMessage;
+			    if (parameterErrors) {
+				    for (const std::string &key : parameterErrors->getKeys()) {
+					    emit errorInField(Utils::coreStringToAppString(key),
+					                      Utils::coreStringToAppString(errorMessage));
+				    }
+			    } else {
+				    emit registerNewAccountFailed(Utils::coreStringToAppString(errorMessage));
+			    }
+		    } else if (request->getType() ==
+		               linphone::AccountManagerServicesRequest::Type::SendEmailLinkingCodeByEmail) {
+			    qDebug() << "[AccountManager] error sending code to email" << errorMessage;
+			    if (parameterErrors) {
+				    for (const std::string &key : parameterErrors->getKeys()) {
+					    emit errorInField(Utils::coreStringToAppString(key),
+					                      Utils::coreStringToAppString(errorMessage));
+				    }
+			    } else {
+				    emit registerNewAccountFailed(Utils::coreStringToAppString(errorMessage));
+			    }
+		    } else if (request->getType() ==
+		               linphone::AccountManagerServicesRequest::Type::SendPhoneNumberLinkingCodeBySms) {
+			    qDebug() << "[AccountManager] error sending code to phone number" << errorMessage;
+			    if (parameterErrors) {
+				    for (const std::string &key : parameterErrors->getKeys()) {
+					    emit errorInField(Utils::coreStringToAppString(key),
+					                      Utils::coreStringToAppString(errorMessage));
+				    }
+			    } else {
+				    emit registerNewAccountFailed(Utils::coreStringToAppString(errorMessage));
+			    }
+		    }
+	    });
+	mAccountManagerServicesModel->requestToken();
+}
+
+void AccountManager::linkNewAccountUsingCode(const QString &code,
+                                             RegisterType registerType,
+                                             const QString &sipAddress) {
+	auto sipIdentityAddress = ToolModel::interpretUrl(sipAddress);
+	if (!mAccountManagerServicesModel) {
+		auto core = CoreModel::getInstance()->getCore();
+		auto ams = core->createAccountManagerServices();
+		mAccountManagerServicesModel = Utils::makeQObject_ptr<AccountManagerServicesModel>(ams);
+	}
+	connect(
+	    mAccountManagerServicesModel.get(), &AccountManagerServicesModel::requestSuccessfull, this,
+	    [this](const std::shared_ptr<const linphone::AccountManagerServicesRequest> &request, const std::string &data) {
+		    if (request->getType() == linphone::AccountManagerServicesRequest::Type::LinkEmailUsingCode) {
+			    qDebug() << "[AccountManager] link email to account succeed" << data;
+			    emit linkingNewAccountWithCodeSucceed();
+		    } else if (request->getType() == linphone::AccountManagerServicesRequest::Type::LinkPhoneNumberUsingCode) {
+			    qDebug() << "[AccountManager] link phone number to account succeed" << data;
+			    emit linkingNewAccountWithCodeSucceed();
+		    }
+	    });
+	connect(
+	    mAccountManagerServicesModel.get(), &AccountManagerServicesModel::requestError, this,
+	    [this](const std::shared_ptr<const linphone::AccountManagerServicesRequest> &request, int statusCode,
+	           const std::string &errorMessage, const std::shared_ptr<const linphone::Dictionary> &parameterErrors) {
+		    if (request->getType() == linphone::AccountManagerServicesRequest::Type::LinkEmailUsingCode) {
+			    qDebug() << "[AccountManager] error linking email to account" << errorMessage;
+		    } else if (request->getType() == linphone::AccountManagerServicesRequest::Type::LinkPhoneNumberUsingCode) {
+			    qDebug() << "[AccountManager] error linking phone number to account" << errorMessage;
+		    }
+		    emit linkingNewAccountWithCodeFailed(Utils::coreStringToAppString(errorMessage));
+	    });
+	if (registerType == RegisterType::Email)
+		mAccountManagerServicesModel->linkEmailToAccountUsingCode(sipIdentityAddress,
+		                                                          Utils::appStringToCoreString(code));
+	else
+		mAccountManagerServicesModel->linkPhoneNumberToAccountUsingCode(sipIdentityAddress,
+		                                                                Utils::appStringToCoreString(code));
 }
 
 void AccountManager::onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,

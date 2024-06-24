@@ -28,6 +28,7 @@
 #include <QTimer>
 #include <linphone++/linphone.hh>
 
+#include "model/account/AccountManager.hpp"
 #include "model/cli/CliModel.hpp"
 #include "model/listener/Listener.hpp"
 #include "model/logger/LoggerModel.hpp"
