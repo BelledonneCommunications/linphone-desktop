@@ -6,7 +6,7 @@ import Linphone
 Control.Popup{
 	id: mainItem
 	padding: 0
-	property color underlineColor
+	property color underlineColor : DefaultStyle.main1_500_main
 	property int radius: 16 * DefaultStyle.dp
 	property bool hovered: mouseArea.containsMouse
 	background: Item{

@@ -79,6 +79,9 @@ public:
 	Q_INVOKABLE void setFirstLaunch(bool first);
 	Q_INVOKABLE bool getFirstLaunch() const;
 
+	Q_INVOKABLE void setDisplayDeviceCheckConfirmation(bool display);
+	Q_INVOKABLE bool getDisplayDeviceCheckConfirmation() const;
+
 	// Security. --------------------------------------------------------------------
 	bool getVfsEnabled() {
 		return mVfsEnabled;
@@ -183,6 +186,9 @@ signals:
 	void logsUploadTerminated(bool status, QString url);
 	void logsEmailChanged(const QString &email);
 	void logsFolderChanged(const QString &folder);
+
+	void firstLaunchChanged(bool firstLaunch);
+	void showVerifyDeviceConfirmationChanged(bool showVerifyDeviceConfirmation);
 
 private:
 	std::shared_ptr<SettingsModel> mSettingsModel;

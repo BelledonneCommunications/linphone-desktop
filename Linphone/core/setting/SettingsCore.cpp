@@ -319,7 +319,21 @@ void Settings::setFirstLaunch(bool first) {
 	if (firstLaunch != first) {
 		mAppSettings.setValue("firstLaunch", (int)first);
 		mAppSettings.sync();
+		emit firstLaunchChanged(first);
 	}
+}
+
+void Settings::setDisplayDeviceCheckConfirmation(bool display) {
+	if (getDisplayDeviceCheckConfirmation() != display) {
+		mAppSettings.setValue("displayDeviceCheckConfirmation", display);
+		mAppSettings.sync();
+		emit showVerifyDeviceConfirmationChanged(display);
+	}
+}
+
+bool Settings::getDisplayDeviceCheckConfirmation() const {
+	auto val = mAppSettings.value("displayDeviceCheckConfirmation", 1).toInt();
+	return val;
 }
 
 void Settings::startEchoCancellerCalibration() {

@@ -62,6 +62,84 @@ AbstractMainPage {
 		onAccepted: contact.core.remove()
 	}
 
+	Popup {
+		id: verifyDevicePopup
+		property string deviceName
+		property string deviceAddress
+		padding: 30 * DefaultStyle.dp
+		anchors.centerIn: parent
+		closePolicy: Control.Popup.CloseOnEscape
+		modal: true
+		onAboutToHide: neverDisplayAgainCheckbox.checked = false
+		contentItem: ColumnLayout {
+			spacing: 45 * DefaultStyle.dp
+			ColumnLayout {
+				spacing: 10 * DefaultStyle.dp
+				Text {
+					text: qsTr("Augmenter la confiance")
+					font {
+						pixelSize: 22 * DefaultStyle.dp
+						weight: 800 * DefaultStyle.dp
+					}
+				}
+				ColumnLayout {
+					spacing: 24 * DefaultStyle.dp
+					Text {
+						Layout.preferredWidth: 529 * DefaultStyle.dp
+						text: qsTr("Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.")
+						font.pixelSize: 14 * DefaultStyle.dp
+					}
+					Text {
+						Layout.preferredWidth: 529 * DefaultStyle.dp
+						text: qsTr("Vous êtes sur le point d’appeler “%1” voulez vous continuer ?").arg(verifyDevicePopup.deviceName)
+						font.pixelSize: 14 * DefaultStyle.dp
+					}
+				}
+			}
+			RowLayout {
+				RowLayout {
+					spacing: 7 * DefaultStyle.dp
+					CheckBox{
+						id: neverDisplayAgainCheckbox
+					}
+					Text {
+						text: qsTr("Ne plus afficher")
+						font.pixelSize: 14 * DefaultStyle.dp
+						MouseArea {
+							anchors.fill: parent
+							onClicked: neverDisplayAgainCheckbox.toggle()
+						}
+					}
+				}
+				Item{Layout.fillWidth: true}
+				RowLayout {
+					spacing: 15 * DefaultStyle.dp
+					Button {
+						inversedColors: true
+						text: qsTr("Annuler")
+						leftPadding: 20 * DefaultStyle.dp
+						rightPadding: 20 * DefaultStyle.dp
+						topPadding: 11 * DefaultStyle.dp
+						bottomPadding: 11 * DefaultStyle.dp
+						onClicked: verifyDevicePopup.close()
+					}
+					Button {
+						text: qsTr("Appeler")
+						leftPadding: 20 * DefaultStyle.dp
+						rightPadding: 20 * DefaultStyle.dp
+						topPadding: 11 * DefaultStyle.dp
+						bottomPadding: 11 * DefaultStyle.dp
+						onClicked: {
+							SettingsCpp.setDisplayDeviceCheckConfirmation(!neverDisplayAgainCheckbox.checked)
+							UtilsCpp.createCall(verifyDevicePopup.deviceAddress, {}, LinphoneEnums.MediaEncryption.Zrtp)
+							onClicked: verifyDevicePopup.close()
+						}
+					}
+				}
+			}
+		}
+	}
+
 	leftPanelContent: Item {
 		id: leftPanel
 		property int leftMargin: 45 * DefaultStyle.dp
@@ -518,8 +596,9 @@ AbstractMainPage {
 										height: 30 * DefaultStyle.dp
 										property var callObj
 										property CallGui deviceCall: callObj ? callObj.value : null
+										property string deviceName: modelData.name.length != 0 ? modelData.name : qsTr("Appareil sans nom")
 										Text {
-											text: modelData.name.length != 0 ? modelData.name : qsTr("Appareil sans nom")
+											text: deviceDelegate.deviceName
 											font.pixelSize: 14 * DefaultStyle.dp
 										}
 										Item{Layout.fillWidth: true}
@@ -529,6 +608,7 @@ AbstractMainPage {
 											width: 22 * DefaultStyle.dp
 											height: 22 * DefaultStyle.dp
 										}
+										
 										Button {
 											visible: modelData.securityLevel != LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 											color: DefaultStyle.main1_100
@@ -542,8 +622,15 @@ AbstractMainPage {
 											topPadding: 6 * DefaultStyle.dp
 											bottomPadding: 6 * DefaultStyle.dp
 											onClicked: {
-												UtilsCpp.createCall(modelData.address, {}, LinphoneEnums.MediaEncryption.Zrtp)
-												parent.callObj = UtilsCpp.getCallByAddress(modelData.address)
+												if (SettingsCpp.getDisplayDeviceCheckConfirmation()) {
+													verifyDevicePopup.deviceName = deviceDelegate.deviceName
+													verifyDevicePopup.deviceAddress = modelData.address
+													verifyDevicePopup.open()
+												}
+												else {
+													UtilsCpp.createCall(modelData.address, {}, LinphoneEnums.MediaEncryption.Zrtp)
+													parent.callObj = UtilsCpp.getCallByAddress(modelData.address)
+												}
 											}
 										}
 									}
