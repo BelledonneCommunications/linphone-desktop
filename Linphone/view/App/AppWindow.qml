@@ -7,6 +7,8 @@ import SettingsCpp 1.0
 
 ApplicationWindow {
 	id: mainWindow
+	x: 0
+	y: 0
     width: Math.min(1512 * DefaultStyle.dp, Screen.desktopAvailableWidth)
     height: Math.min(982 * DefaultStyle.dp, Screen.desktopAvailableHeight)
 

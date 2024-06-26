@@ -13,13 +13,13 @@ Popup {
 	leftPadding: 10 * DefaultStyle.dp
 	topPadding: 10 * DefaultStyle.dp
 	bottomPadding: 10 * DefaultStyle.dp
+	underlineColor: DefaultStyle.main1_500_main
 	property int radius: 16 * DefaultStyle.dp
-	property color underlineColor: DefaultStyle.main1_500_main
-  	property alias buttons: buttonsLayout.data
-  	property alias content: contentLayout.data
 	property string title
 	property string text
 	property string details
+  	property alias content: contentLayout.data
+  	property alias buttons: buttonsLayout.data
 	property alias firstButton: firstButtonId
 	property alias secondButton: secondButtonId
 	property bool firstButtonAccept: true
@@ -27,40 +27,10 @@ Popup {
 
 	signal accepted()
 	signal rejected()
-	
-	background: Item {
-		anchors.fill: parent
-		Rectangle {
-			visible: mainItem.underlineColor != undefined
-			width: mainItem.width
-			x: backgroundItem.x
-			y: backgroundItem.y
-			height: backgroundItem.height + 2 * DefaultStyle.dp
-			color: mainItem.underlineColor
-			radius: mainItem.radius
-		}
-		Rectangle {
-			id: backgroundItem
-			anchors.fill: parent
-			width: mainItem.width
-			height: mainItem.implicitHeight
-			radius: mainItem.radius
-			color: DefaultStyle.grey_0
-			border.color: DefaultStyle.grey_0
-		}
-		MultiEffect {
-			anchors.fill: backgroundItem
-			source: backgroundItem
-			shadowEnabled: true
-			shadowColor: DefaultStyle.grey_900
-			shadowBlur: 1.0
-			shadowOpacity: 0.1
-		}
-	}
 
 	contentItem: FocusScope{
-		height: contentLayout.implicitHeight
-		width: contentLayout.implicitWidth
+		height: child.implicitHeight
+		width: child.implicitWidth
 		onVisibleChanged: {
 			if(visible) forceActiveFocus()
 		}
@@ -71,8 +41,9 @@ Popup {
 			}
 		}
 		ColumnLayout {
+			id: child
 			anchors.fill: parent
-			spacing: 20 * DefaultStyle.dp
+			spacing: 15 * DefaultStyle.dp
 			Text{
 				id: titleText
 				Layout.fillWidth: true
@@ -96,7 +67,6 @@ Popup {
 				id: defaultText
 				visible: text.length != 0
 				Layout.fillWidth: true
-				//Layout.preferredWidth: 278 * DefaultStyle.dp
 				Layout.alignment: Qt.AlignCenter
 				text: mainItem.text
 				font {

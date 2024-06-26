@@ -33,7 +33,9 @@ StackView {
 
 	onHaveAvatarChanged: replace(haveAvatar ? avatar : initials, StackView.Immediate)
 
-	property bool secured: false
+	property bool secured: contact
+	? contact.core.devices.length != 0 && contact.core.verifiedDeviceCount === contact.core.devices.length
+	: false
 	property bool displayPresence: (account || contact) && (account 
 			? account.core.registrationState != LinphoneEnums.RegistrationState.Progress && account.core.registrationState != LinphoneEnums.RegistrationState.Refreshing
 			: contact.core.consolidatedPresence != LinphoneEnums.ConsolidatedPresence.Offline)
@@ -66,8 +68,9 @@ StackView {
 		width: mainItem.width/4.5
 		height: width
 		radius: width / 2
-		x: 2 * mainItem.width / 3
-		y: 6 * mainItem.height / 7
+		anchors.bottom: parent.bottom
+		anchors.right: parent.right
+		anchors.rightMargin: mainItem.width / 15
 		z: 1
 		color: account
 			? account.core.registrationState == LinphoneEnums.RegistrationState.Ok
@@ -93,33 +96,47 @@ StackView {
 	}
 	Component{
 		id: initials
-		Rectangle {
-			id: initialItem
-			property string initials: UtilsCpp.getInitials(mainItem.displayNameVal)
-			radius: width / 2
-			color: DefaultStyle.main2_200
+		Item {
+			id: avatarItem
 			height: mainItem.height
 			width: height
-			Text {
-				anchors.fill: parent
-				anchors.centerIn: parent
-				verticalAlignment: Text.AlignVCenter
-				horizontalAlignment: Text.AlignHCenter
-				text: initialItem.initials
-				font {
-					pixelSize: initialItem.height * 36 / 120
-					weight: 800 * DefaultStyle.dp
-					capitalization: Font.AllUppercase
+			Rectangle {
+				id: initialItem
+				property string initials: UtilsCpp.getInitials(mainItem.displayNameVal)
+				radius: width / 2
+				color: DefaultStyle.main2_200
+				height: mainItem.height
+				width: height
+				Text {
+					anchors.fill: parent
+					anchors.centerIn: parent
+					verticalAlignment: Text.AlignVCenter
+					horizontalAlignment: Text.AlignHCenter
+					text: initialItem.initials
+					font {
+						pixelSize: initialItem.height * 36 / 120
+						weight: 800 * DefaultStyle.dp
+						capitalization: Font.AllUppercase
+					}
+				}
+				Image {
+					id: initialImg
+					visible: initialItem.initials == ''
+					width: mainItem.width/3
+					height: width
+					source: AppIcons.profile
+					sourceSize.width: width
+					sourceSize.height: height
+					anchors.centerIn: parent
 				}
 			}
-			Image {
-				visible: initialItem.initials == ''
-				width: mainItem.width/3
-				height: width
-				source: AppIcons.profile
-				sourceSize.width: width
-				sourceSize.height: height
-				anchors.centerIn: parent
+			MultiEffect {
+				source: initialItem
+				anchors.fill: initialItem
+				shadowEnabled: true
+				shadowBlur: 1
+				shadowColor: DefaultStyle.grey_1000
+				shadowOpacity: 0.1
 			}
 		}
 	}

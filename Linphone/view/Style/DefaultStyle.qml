@@ -29,6 +29,7 @@ QtObject {
 	property color warning_600: "#DBB820"
 	property color danger_500main: "#DD5F5F"
 	property color success_500main: "#4FAE80"
+	property color success_500main_darker: "#3F8C67"
 	property color info_500_main: "#4AA8FF"
 
 	property color vue_meter_light_green: "#6FF88D"

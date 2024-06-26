@@ -41,17 +41,17 @@ Item {
 			height: 50 * DefaultStyle.dp
 			visible: parent.containsMouse || isSelected
 		}
-		MultiEffect {
-			enabled: mainItem.shadowEnabled
-			anchors.fill: background
-			source: background
-			visible:  mainItem.shadowEnabled
-			// Crash : https://bugreports.qt.io/browse/QTBUG-124730
-			shadowEnabled: true //mainItem.shadowEnabled
-			shadowColor: DefaultStyle.grey_1000
-			shadowBlur: 1
-			shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
-		}
+		// MultiEffect {
+		// 	enabled: mainItem.shadowEnabled
+		// 	anchors.fill: background
+		// 	source: background
+		// 	visible:  mainItem.shadowEnabled
+		// 	// Crash : https://bugreports.qt.io/browse/QTBUG-124730
+		// 	shadowEnabled: true //mainItem.shadowEnabled
+		// 	shadowColor: DefaultStyle.grey_1000
+		// 	shadowBlur: 1
+		// 	shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
+		// }
 		onClicked: {
 			mainItem.selected()
 		}

@@ -168,6 +168,7 @@ ListView {
 			id: actionsRow
 			z: 1
 			anchors.right: parent.right
+			anchors.rightMargin: 5 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 10 * DefaultStyle.dp // TODO : change when mockup ready
 			RowLayout{

@@ -24,8 +24,8 @@ AppWindow {
 	property var transferState: call && call.core.transferState
 
 	onCallStateChanged: {
-		if (callState === LinphoneEnums.CallState.Connected) {
-			if (middleItemStackView.currentItem != inCallItem) {
+		if (callState === LinphoneEnums.CallState.Connected || callState === LinphoneEnums.CallState.StreamsRunning) {
+			if (middleItemStackView.currentItem.objectName != inCallItem) {
 				middleItemStackView.replace(inCallItem)
 				bottomButtonsLayout.visible = true
 			}
@@ -123,13 +123,7 @@ AppWindow {
 			}
 		}
 	}
-
-	Component.onCompleted: {
-		if(call && call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && (!call.core.tokenVerified || call.core.isMismatch)) {
-			zrtpValidation.open()
-		}
-	}
-
+	
 	Timer {
 		id: autoCloseWindow
 		interval: 2000
@@ -480,7 +474,6 @@ AppWindow {
 					initialItem: inCallItem
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					
 				}
 				OngoingCallRightPanel {
 					id: rightPanel

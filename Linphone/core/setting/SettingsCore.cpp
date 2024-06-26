@@ -362,6 +362,19 @@ void Settings::setFirstLaunch(bool first) {
 	}
 }
 
+void Settings::setLastActiveTabIndex(int index) {
+	auto lastActiveIndex = getLastActiveTabIndex();
+	if (lastActiveIndex != index) {
+		mAppSettings.setValue("lastActiveTabIndex", index);
+		mAppSettings.sync();
+		emit lastActiveTabIndexChanged();
+	}
+}
+
+int Settings::getLastActiveTabIndex() {
+	return mAppSettings.value("lastActiveTabIndex", 1).toInt();
+}
+
 void Settings::setDisplayDeviceCheckConfirmation(bool display) {
 	if (getDisplayDeviceCheckConfirmation() != display) {
 		mAppSettings.setValue("displayDeviceCheckConfirmation", display);

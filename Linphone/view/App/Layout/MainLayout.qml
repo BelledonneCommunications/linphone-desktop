@@ -108,6 +108,7 @@ Item {
 				Layout.preferredWidth: 82 * DefaultStyle.dp
 				defaultAccount: accountProxy.defaultAccount
 				property int unreadMessages: defaultAccount.core.unreadMessageNotifications
+				currentIndex: SettingsCpp.getLastActiveTabIndex()
 				model: [
 					{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels")},
 					{icon: AppIcons.adressBook, selectedIcon: AppIcons.adressBookSelected, label: qsTr("Contacts")},
@@ -115,6 +116,7 @@ Item {
 					{icon: AppIcons.videoconference, selectedIcon: AppIcons.videoconferenceSelected, label: qsTr("Réunions"), visible: !SettingsCpp.disableMeetingsFeature}
 				]
 				onCurrentIndexChanged: {
+					SettingsCpp.setLastActiveTabIndex(currentIndex)
                     if (currentIndex === 0) accountProxy.defaultAccount.core.lResetMissedCalls()
 					if (mainItem.contextualMenuOpenedComponent) {
 						closeContextualMenuComponent()

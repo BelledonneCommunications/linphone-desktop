@@ -81,6 +81,10 @@ public:
 	Q_INVOKABLE void setDisplayDeviceCheckConfirmation(bool display);
 	Q_INVOKABLE bool getDisplayDeviceCheckConfirmation() const;
 
+	// Used to restore the last active index on launch
+	Q_INVOKABLE void setLastActiveTabIndex(int index);
+	Q_INVOKABLE int getLastActiveTabIndex();
+
 	// Security. --------------------------------------------------------------------
 	bool getVfsEnabled() {
 		return mVfsEnabled;
@@ -197,6 +201,8 @@ signals:
 
 	void firstLaunchChanged(bool firstLaunch);
 	void showVerifyDeviceConfirmationChanged(bool showVerifyDeviceConfirmation);
+
+	void lastActiveTabIndexChanged();
 
 private:
 	std::shared_ptr<SettingsModel> mSettingsModel;

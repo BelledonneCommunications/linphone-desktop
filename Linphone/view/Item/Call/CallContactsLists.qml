@@ -42,7 +42,7 @@ FocusScope {
 				numericPad: mainItem.numPad
 				KeyNavigation.down: grouCallButton
 			}
-			Control.ScrollView {
+			Flickable {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
 				Layout.topMargin: 25 * DefaultStyle.dp

@@ -168,6 +168,12 @@ AbstractMainPage {
 							}
 						}
 					}
+					Connections {
+						target: deleteHistoryPopup
+						onAccepted: {
+							if (listStackView.currentItem.listView) listStackView.currentItem.listView.model.removeAllEntries()
+						}
+					}
 					onClicked: {
 						removeHistory.close()
 						deleteHistoryPopup.open()
