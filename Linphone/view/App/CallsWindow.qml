@@ -31,7 +31,7 @@ AppWindow {
 				middleItemStackView.replace(inCallItem)
 				bottomButtonsLayout.visible = true
 			}
-			if(!call.core.isSecured && call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
+			if(call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && (!call.core.tokenVerified || call.core.isMismatch)) {
 				zrtpValidation.open()
 			}
 		}
@@ -184,7 +184,7 @@ AppWindow {
 	ZrtpTokenAuthenticationDialog {
 		id: zrtpValidation
 		call: mainWindow.call
-		modal: false
+		modal: true
 	}
 	Popup {
 		id: waitingPopup
@@ -334,19 +334,59 @@ AppWindow {
 						}
 						RowLayout {
 							spacing: 5 * DefaultStyle.dp
-							visible: mainWindow.call && mainWindow.call.core.isSecured
+							visible: mainWindow.callState != LinphoneEnums.CallState.End && mainWindow.callState != LinphoneEnums.CallState.Released
+							BusyIndicator  {
+								visible: mainWindow.call && mainWindow.callState != LinphoneEnums.CallState.Connected && mainWindow.callState != LinphoneEnums.CallState.StreamsRunning
+								Layout.preferredWidth: 15 * DefaultStyle.dp
+								Layout.preferredHeight: 15 * DefaultStyle.dp
+								indicatorColor: DefaultStyle.grey_0
+							}
 							EffectImage {
 								Layout.preferredWidth: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 15 * DefaultStyle.dp
-								colorizationColor: DefaultStyle.info_500_main
-								imageSource: AppIcons.lockSimple
+								colorizationColor: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+									? DefaultStyle.info_500_main
+									: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
+										? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+											? DefaultStyle.warning_600
+											: DefaultStyle.info_500_main
+										: DefaultStyle.grey_0
+								visible: mainWindow.call && mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
+								imageSource: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+									? AppIcons.lockSimple
+									: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
+										? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+											? AppIcons.warningCircle
+											: AppIcons.lockKey
+										: AppIcons.lockSimpleOpen
 							}
 							Text {
-								text: qsTr("Appel chiffré de bout en bout")
-								color: DefaultStyle.info_500_main
+								text: mainWindow.call && mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
+								? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+									? qsTr("Appel chiffré de point à point")
+									: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
+										? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+											? qsTr("Vérification nécessaire")
+											: qsTr("Appel chiffré de bout en bout")
+										: qsTr("Appel non chiffré")
+								: qsTr("En attente de chiffrement")
+								color: mainWindow.call && mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
+								? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+									? DefaultStyle.info_500_main
+									: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
+										? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+											? DefaultStyle.warning_600
+											: DefaultStyle.info_500_main
+										: DefaultStyle.grey_0
+								: DefaultStyle.grey_0
 								font {
 									pixelSize: 12 * DefaultStyle.dp
 									weight: 400 * DefaultStyle.dp
+								}
+								MouseArea {
+									anchors.fill: parent
+									hoverEnabled: true
+									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 								}
 							}
 							Item {

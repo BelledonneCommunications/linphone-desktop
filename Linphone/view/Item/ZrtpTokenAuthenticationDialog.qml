@@ -8,150 +8,311 @@ import UtilsCpp 1.0
 // =============================================================================
 Dialog {
 	id: mainItem
-	
-	property var call
-		
 	width: 436 * DefaultStyle.dp
-	height: 549 * DefaultStyle.dp
+	rightPadding: 0 * DefaultStyle.dp
+	leftPadding: 0 * DefaultStyle.dp
+	topPadding: 85 * DefaultStyle.dp + 23 * DefaultStyle.dp
+	bottomPadding: 24 * DefaultStyle.dp
+	modal: true
+	closePolicy: Popup.NoAutoClose
 
-	rightPadding: 15 * DefaultStyle.dp
-	leftPadding: 15 * DefaultStyle.dp
-	topPadding: 40 * DefaultStyle.dp
-	bottomPadding: 40 * DefaultStyle.dp
-
+	property var call
 	onCallChanged: if(!call) close()
+	property bool isTokenVerified: call && call.core.tokenVerified || false
+	property bool isCaseMismatch: call && call.core.isMismatch || false
+	property bool securityError: false
+	property bool firstTry: true
 
 	Connections {
 		enabled: call != undefined && call != null
 		target: call && call.core
 		onStatusChanged: if (status === CallModel.CallStatusEnded) close()
-	}
-
-	buttons: Layout.ColumnLayout {
-		spacing: 15 * DefaultStyle.dp
-		Button {
-			Layout.Layout.alignment: Qt.AlignHCenter
-			background: Item{}
-			contentItem: Text {
-				text: qsTr("Skip")
-				font {
-					pixelSize: 13 * DefaultStyle.dp
-					weight: 600 * DefaultStyle.dp
-					underline: true
-				}
-			}
-			onClicked: {
-				if(mainItem.call) mainItem.call.core.lVerifyAuthenticationToken(false)
-				mainItem.close()
-			}
+		onSecurityUpdated: {
+			if (!mainItem.isTokenVerified) {
+				mainItem.securityError = true
+			} else close()
 		}
-		Button {
-			text: qsTr("Letters doesn't match")
-			color: DefaultStyle.danger_500main
-			inversedColors: true
-			Layout.Layout.alignment: Qt.AlignHCenter
-			width: 330 * DefaultStyle.dp
-			onClicked: {
-				if(mainItem.call) mainItem.call.core.lVerifyAuthenticationToken(false)
-				mainItem.close()
-			}
+		onTokenVerified: {
+			if (!mainItem.isTokenVerified) {
+				mainItem.securityError = true
+			} else close()
 		}
 	}
-		
-	content: Layout.ColumnLayout {
-		spacing: 32 * DefaultStyle.dp
-		Layout.Layout.alignment: Qt.AlignHCenter
-		Layout.ColumnLayout {
-			spacing: 10 * DefaultStyle.dp
-			Text {
-				Layout.Layout.preferredWidth: 330 * DefaultStyle.dp
-				Layout.Layout.alignment: Qt.AlignHCenter
 
-				text: qsTr("Vérifier l'appareil")
-				horizontalAlignment: Text.AlignLeft
-				font {
-					pixelSize: 16 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
-				}
-			}
-
-			Text {
-				Layout.Layout.preferredWidth: 330 * DefaultStyle.dp
-				Layout.Layout.alignment: Qt.AlignHCenter
-				
-				horizontalAlignment: Text.AlignLeft
-				//: 'To raise the security level, you can check the following codes with your correspondent.' : Explanation to do a security check.
-				text: qsTr("Dites %1 et cliquez sur les lettres votre interlocuteur vous dit :".arg(mainItem.call && mainItem.call.core.localSas || ""))
-				
-				wrapMode: Text.WordWrap
-				font.pixelSize: 14 * DefaultStyle.dp
-			}
-		}
-
-		Layout.GridLayout {
-			id: securityGridView
-			// Layout.Layout.fillWidth: true
-			Layout.Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-			rows: 2
-			columns: 2
-			rowSpacing: 32 * DefaultStyle.dp
-			columnSpacing: 32 * DefaultStyle.dp
-			property var correctIndex
-			property var modelList
-			Connections {
-				enabled: mainItem.call
-				target: mainItem.call ? mainItem.call.core : null
-				// this connection is needed to get the remoteSas when available
-				// due to the asynchronous connection between core and ui
-				onRemoteSasChanged: {
-					securityGridView.correctIndex = UtilsCpp.getRandomIndex(4)
-					securityGridView.modelList = UtilsCpp.generateSecurityLettersArray(4, securityGridView.correctIndex, mainItem.call.core.remoteSas)
-				}
-			}
-			Repeater {
-				model: securityGridView.modelList
+	background: Item {
+		anchors.fill: parent
+		Rectangle {
+			id: backgroundItem
+			anchors.fill: parent
+			width: mainItem.width
+			height: mainItem.implicitHeight
+			color: mainItem.securityError
+				? DefaultStyle.danger_500main
+				: mainItem.isCaseMismatch
+					? DefaultStyle.warning_600
+					: DefaultStyle.info_500_main
+			radius: mainItem.radius
+			Layout.ColumnLayout {
+				anchors.top: parent.top
+				anchors.topMargin: 18 * DefaultStyle.dp
+				anchors.horizontalCenter: parent.horizontalCenter
 				Item {
-					// implicitWidth: 70 * DefaultStyle.dp
-					// implicitHeight: 70 * DefaultStyle.dp
-					width: 70 * DefaultStyle.dp
-					height: 70 * DefaultStyle.dp
-					Rectangle {
-						id: code
-						anchors.fill: parent
-						color: DefaultStyle.grey_0
-						radius: 71 * DefaultStyle.dp
-						Text {
-							anchors.fill: parent
-							verticalAlignment: Text.AlignVCenter
-							horizontalAlignment: Text.AlignHCenter
-							text: modelData
-							font {
-								pixelSize: 32 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
-							}
+					// spacing: 14 * DefaultStyle.dp
+					width: childrenRect.width
+					height: childrenRect.height
+					Layout.Layout.fillWidth: true
+					Image {
+						id: trustShield
+						anchors.centerIn: parent
+						source: AppIcons.trustedWhite
+						sourceSize.width: 24 * DefaultStyle.dp
+						sourceSize.height: 24 * DefaultStyle.dp
+						width: 24 * DefaultStyle.dp
+						height: 24 * DefaultStyle.dp
+					}
+					EffectImage {
+						anchors.left: trustShield.right
+						anchors.leftMargin: 14 * DefaultStyle.dp
+						visible: mainItem.securityError
+						imageSource: AppIcons.shieldWarning
+						colorizationColor: DefaultStyle.main2_700
+						width: 24 * DefaultStyle.dp
+						height: 24 * DefaultStyle.dp
+					}
+				}
+				Text {
+					text: qsTr("Vérification de sécurité")
+					color: DefaultStyle.grey_0
+					Layout.Layout.alignment: Qt.AlignHCenter
+					font {
+						pixelSize: 14 * DefaultStyle.dp
+						weight: 700 * DefaultStyle.dp
+					}
+				}
+				Item{Layout.Layout.fillHeight: true}
+			}
+			Button {
+				visible: !mainItem.securityError
+				anchors.top: parent.top
+				anchors.right: parent.right
+				anchors.topMargin: 10 * DefaultStyle.dp
+				anchors.rightMargin: 17 * DefaultStyle.dp
+				background: Item{}
+				contentItem: Text {
+					text: qsTr("Passer")
+					color: DefaultStyle.grey_0
+					font {
+						pixelSize: 13 * DefaultStyle.dp
+						weight: 600 * DefaultStyle.dp
+						underline: true
+					}
+				}
+				onClicked: {
+					call.core.lSkipZrtpAuthentication()
+					mainItem.close()
+				}
+			}
+		}
+		Rectangle {
+			z: 1
+			width: mainItem.width
+			height: parent.height - 87 * DefaultStyle.dp
+			x: parent.x
+			y: parent.y + 85 * DefaultStyle.dp
+			color: DefaultStyle.grey_0
+			radius: mainItem.radius
+		}
+		MultiEffect {
+			anchors.fill: backgroundItem
+			source: backgroundItem
+			shadowEnabled: true
+			shadowColor: DefaultStyle.grey_900
+			shadowBlur: 1.0
+			shadowOpacity: 0.1
+		}
+	}
+
+	content: [
+		Layout.ColumnLayout {
+			visible: !mainItem.securityError
+			spacing: 20 * DefaultStyle.dp
+			Layout.Layout.alignment: Qt.AlignHCenter
+			Layout.Layout.fillWidth: true
+			Layout.ColumnLayout {
+				spacing: 10 * DefaultStyle.dp
+				Layout.Layout.alignment: Qt.AlignHCenter
+				Text {
+					Layout.Layout.preferredWidth: 343 * DefaultStyle.dp
+					Layout.Layout.alignment: Qt.AlignHCenter
+					horizontalAlignment: Text.AlignHCenter
+					text: !mainItem.isTokenVerified && mainItem.isCaseMismatch
+					? qsTr("Pour garantir le chiffrement, nous avons besoin de réauthentifier  l’appareil de votre correspondant. Echangez vos codes :")
+					: qsTr("Pour garantir le chiffrement, nous avons besoin d’authentifier l’appareil de votre correspondant. Veuillez échanger vos codes : ")
+					wrapMode: Text.WordWrap
+					font.pixelSize: 14 * DefaultStyle.dp
+				}
+				Layout.ColumnLayout {
+					spacing: 0
+					Layout.Layout.alignment: Qt.AlignHCenter
+					Text {
+						text: qsTr("Votre code :")
+						horizontalAlignment: Text.AlignHCenter
+						Layout.Layout.alignment: Qt.AlignHCenter
+						font.pixelSize: 14 * DefaultStyle.dp
+					}
+					Text {
+						text: mainItem.call && mainItem.call.core.localToken || ""
+						horizontalAlignment: Text.AlignHCenter
+						Layout.Layout.alignment: Qt.AlignHCenter
+						font {
+							pixelSize: 18 * DefaultStyle.dp
+							weight: 700 * DefaultStyle.dp
 						}
-						MouseArea {
-							anchors.fill: parent
-							onClicked: {
-								console.log("correct", index == securityGridView.correctIndex, index)
-								if (index == securityGridView.correctIndex) {
-									if(mainItem.call) mainItem.call.core.lVerifyAuthenticationToken(true)
-								} else {
-									if(mainItem.call) mainItem.call.core.lVerifyAuthenticationToken(false)
-									mainItem.close()
+					}
+				}
+			}
+			Rectangle {
+				color: "transparent"
+				border.color: DefaultStyle.main2_200
+				border.width: Math.max(0.5, 1 * DefaultStyle.dp)
+				radius: 15 * DefaultStyle.dp
+				Layout.Layout.preferredWidth: 292 * DefaultStyle.dp
+				Layout.Layout.preferredHeight: 233 * DefaultStyle.dp
+				Layout.Layout.alignment: Qt.AlignHCenter
+				Layout.ColumnLayout {
+					anchors.fill: parent
+					anchors.topMargin: 10 * DefaultStyle.dp
+					Text {
+						text: qsTr("Code correspondant :")
+						font.pixelSize: 14 * DefaultStyle.dp
+						Layout.Layout.alignment: Qt.AlignHCenter
+					}
+					Layout.GridLayout {
+						id: securityGridView
+						Layout.Layout.alignment: Qt.AlignHCenter
+						rows: 2
+						columns: 2
+						rowSpacing: 32 * DefaultStyle.dp
+						columnSpacing: 32 * DefaultStyle.dp
+						property var correctIndex
+						property var modelList
+						Repeater {
+							model: mainItem.call && mainItem.call.core.remoteTokens || ""
+							Item {
+								width: 70 * DefaultStyle.dp
+								height: 70 * DefaultStyle.dp
+								Rectangle {
+									id: code
+									anchors.fill: parent
+									color: DefaultStyle.grey_0
+									radius: 71 * DefaultStyle.dp
+									Text {
+										anchors.fill: parent
+										verticalAlignment: Text.AlignVCenter
+										horizontalAlignment: Text.AlignHCenter
+										text: modelData
+										font {
+											pixelSize: 32 * DefaultStyle.dp
+											weight: 400 * DefaultStyle.dp
+										}
+									}
+									MouseArea {
+										anchors.fill: parent
+										hoverEnabled: true
+										cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+										onClicked: {
+											console.log("check token", modelData)
+											if(mainItem.call) mainItem.call.core.lCheckAuthenticationTokenSelected(modelData)
+										}
+									}
+								}
+								MultiEffect {
+									source: code
+									anchors.fill: code
+									shadowEnabled: true
+									shadowOpacity: 0.1
+									shadowBlur: 1.0
 								}
 							}
 						}
 					}
-					MultiEffect {
-						source: code
-						anchors.fill: code
-						shadowEnabled: true
-						shadowOpacity: 0.1
-						shadowBlur: 1.0
-					}
 				}
 			}
+		},
+		Layout.ColumnLayout {
+			spacing: 0
+			Text {
+				visible: mainItem.securityError
+				width: 303 * DefaultStyle.dp
+				// Layout.Layout.preferredWidth: 343 * DefaultStyle.dp
+				Layout.Layout.alignment: Qt.AlignHCenter
+				Layout.Layout.fillWidth: true
+				horizontalAlignment: Text.AlignHCenter
+				text: qsTr("Le code fourni ne correspond pas.")
+				wrapMode: Text.WordWrap
+				font.pixelSize: 14 * DefaultStyle.dp
+			}
+			Text {
+				visible: mainItem.securityError
+				width: 303 * DefaultStyle.dp
+				// Layout.Layout.preferredWidth: 343 * DefaultStyle.dp
+				Layout.Layout.alignment: Qt.AlignHCenter
+				Layout.Layout.fillWidth: true
+				horizontalAlignment: Text.AlignHCenter
+				text: qsTr("La confidentialité de votre appel peut être compromise !")
+				wrapMode: Text.WordWrap
+				font.pixelSize: 14 * DefaultStyle.dp
+			}
+		}
+	]
+
+	buttons: Layout.ColumnLayout {
+		Layout.Layout.alignment: Qt.AlignHCenter
+		Button {
+			Layout.Layout.alignment: Qt.AlignHCenter
+			text: qsTr("Aucune correspondance")
+			color: DefaultStyle.danger_500main
+			inversedColors: true
+			textSize: 15 * DefaultStyle.dp
+			visible: !mainItem.securityError
+			leftPadding: 16 * DefaultStyle.dp
+			rightPadding: 16 * DefaultStyle.dp
+			topPadding: 10 * DefaultStyle.dp
+			bottomPadding: 10 * DefaultStyle.dp
+			width: 247 * DefaultStyle.dp
+			onClicked: {
+				if(mainItem.call) mainItem.call.core.lCheckAuthenticationTokenSelected(" ")
+			}
+		}
+		Button {
+			Layout.Layout.preferredWidth: 247 * DefaultStyle.dp
+			visible: mainItem.securityError && mainItem.firstTry
+			text: qsTr("Réessayer")
+			color: DefaultStyle.danger_500main
+			inversedColors: true
+			leftPadding: 16 * DefaultStyle.dp
+			rightPadding: 16 * DefaultStyle.dp
+			topPadding: 10 * DefaultStyle.dp
+			bottomPadding: 10 * DefaultStyle.dp
+			onClicked: {
+				mainItem.firstTry = false
+				mainItem.securityError = false
+			}
+		}
+		Button {
+			Layout.Layout.preferredWidth: 247 * DefaultStyle.dp  
+			visible: mainItem.securityError
+			leftPadding: (247 * DefaultStyle.dp - contentItem.implicitWidth) /2
+			rightPadding: (247 * DefaultStyle.dp - contentItem.implicitWidth) /2
+			topPadding: 10 * DefaultStyle.dp
+			bottomPadding: 10 * DefaultStyle.dp
+			color: DefaultStyle.danger_500main
+			onClicked: mainItem.call.core.lTerminate()
+			spacing: 15 * DefaultStyle.dp
+			icon.source: AppIcons.endCall
+			contentImageColor: DefaultStyle.grey_0
+			text: qsTr("Raccrocher")
+			textColor: DefaultStyle.grey_0
 		}
 	}
 }

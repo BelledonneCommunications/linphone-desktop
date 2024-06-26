@@ -66,8 +66,11 @@ public:
 	std::string getRecordFile() const;
 	std::shared_ptr<const linphone::Address> getRemoteAddress();
 	bool getAuthenticationTokenVerified() const;
-	void setAuthenticationTokenVerified(bool verified);
-	std::string getAuthenticationToken() const;
+	void checkAuthenticationToken(const QString &token);
+	void skipZrtpAuthentication();
+	std::string getLocalAtuhenticationToken() const;
+	QStringList getRemoteAtuhenticationTokens() const;
+	bool getZrtpCaseMismatch() const;
 
 	LinphoneEnums::ConferenceLayout getConferenceVideoLayout() const;
 	void changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout); // Make a call request
@@ -91,7 +94,6 @@ signals:
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
 	void localVideoEnabledChanged(bool enabled);
 	void recordingChanged(bool recording);
-	void authenticationTokenVerifiedChanged(bool verified);
 	void speakerVolumeGainChanged(float volume);
 	void microphoneVolumeGainChanged(float volume);
 	void inputAudioDeviceChanged(const std::string &id);
@@ -143,6 +145,7 @@ private:
 	virtual void onAudioDeviceChanged(const std::shared_ptr<linphone::Call> &call,
 	                                  const std::shared_ptr<linphone::AudioDevice> &audioDevice) override;
 	virtual void onRemoteRecording(const std::shared_ptr<linphone::Call> &call, bool recording) override;
+	virtual void onAuthenticationTokenVerified(const std::shared_ptr<linphone::Call> &call, bool verified);
 
 signals:
 	void dtmfReceived(const std::shared_ptr<linphone::Call> &call, int dtmf);
@@ -170,6 +173,7 @@ signals:
 	void audioDeviceChanged(const std::shared_ptr<linphone::Call> &call,
 	                        const std::shared_ptr<linphone::AudioDevice> &audioDevice);
 	void remoteRecording(const std::shared_ptr<linphone::Call> &call, bool recording);
+	void authenticationTokenVerified(const std::shared_ptr<linphone::Call> &call, bool verified);
 };
 
 #endif

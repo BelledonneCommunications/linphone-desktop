@@ -45,10 +45,12 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
 	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
 	Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT)
-	Q_PROPERTY(bool isSecured READ isSecured NOTIFY securityUpdated)
+	Q_PROPERTY(bool tokenVerified READ getTokenVerified WRITE setTokenVerified NOTIFY securityUpdated)
+	// Q_PROPERTY(bool isSecured READ isSecured WRITE setIsSecured NOTIFY securityUpdated)
+	Q_PROPERTY(bool isMismatch READ isMismatch WRITE setIsMismatch NOTIFY securityUpdated)
 	Q_PROPERTY(LinphoneEnums::MediaEncryption encryption READ getEncryption NOTIFY securityUpdated)
-	Q_PROPERTY(QString localSas READ getLocalSas WRITE setLocalSas MEMBER mLocalSas NOTIFY localSasChanged)
-	Q_PROPERTY(QString remoteSas WRITE setRemoteSas MEMBER mRemoteSas NOTIFY remoteSasChanged)
+	Q_PROPERTY(QString localToken READ getLocalToken WRITE setLocalToken MEMBER mLocalToken NOTIFY localTokenChanged)
+	Q_PROPERTY(QStringList remoteTokens WRITE setRemoteTokens MEMBER mRemoteTokens NOTIFY remoteTokensChanged)
 	Q_PROPERTY(
 	    bool remoteVideoEnabled READ getRemoteVideoEnabled WRITE setRemoteVideoEnabled NOTIFY remoteVideoEnabledChanged)
 	Q_PROPERTY(
@@ -104,8 +106,14 @@ public:
 	bool getPaused() const;
 	void setPaused(bool paused);
 
+	bool getTokenVerified() const;
+	void setTokenVerified(bool verified);
+
 	bool isSecured() const;
 	void setIsSecured(bool secured);
+
+	bool isMismatch() const;
+	void setIsMismatch(bool mismatch);
 
 	ConferenceGui *getConferenceGui() const;
 	QSharedPointer<ConferenceCore> getConferenceCore() const;
@@ -113,10 +121,10 @@ public:
 
 	bool isConference() const;
 
-	QString getLocalSas();
-	void setLocalSas(const QString &sas);
-	QString getRemoteSas();
-	void setRemoteSas(const QString &sas);
+	QString getLocalToken();
+	void setLocalToken(const QString &token);
+	QStringList getRemoteTokens();
+	void setRemoteTokens(const QStringList &Tokens);
 
 	LinphoneEnums::MediaEncryption getEncryption() const;
 	void setEncryption(LinphoneEnums::MediaEncryption encryption);
@@ -169,8 +177,9 @@ signals:
 	void pausedChanged();
 	void transferStateChanged();
 	void securityUpdated();
-	void localSasChanged();
-	void remoteSasChanged();
+	void tokenVerified();
+	void localTokenChanged();
+	void remoteTokensChanged();
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
 	void localVideoEnabledChanged();
 	void recordingChanged();
@@ -196,7 +205,8 @@ signals:
 	void lTransferCall(QString &est);
 	void lStartRecording();
 	void lStopRecording();
-	void lVerifyAuthenticationToken(bool verified);
+	void lCheckAuthenticationTokenSelected(const QString &token);
+	void lSkipZrtpAuthentication();
 	void lSetSpeakerVolumeGain(float gain);
 	void lSetMicrophoneVolumeGain(float gain);
 	void lSetInputAudioDevice(QString id);
@@ -236,10 +246,12 @@ private:
 	QString mLastErrorMessage;
 	QString mPeerAddress;
 	QString mLocalAddress;
-	bool mIsSecured;
+	bool mTokenVerified = false;
+	bool mIsSecured = false;
+	bool mIsMismatch = false;
 	int mDuration = 0;
-	bool mSpeakerMuted;
-	bool mMicrophoneMuted;
+	bool mSpeakerMuted = false;
+	bool mMicrophoneMuted = false;
 	bool mLocalVideoEnabled = false;
 	bool mVideoEnabled = false;
 	bool mPaused = false;
@@ -248,8 +260,8 @@ private:
 	bool mRemoteRecording = false;
 	bool mRecordable = false;
 	bool mIsConference = false;
-	QString mLocalSas;
-	QString mRemoteSas;
+	QString mLocalToken;
+	QStringList mRemoteTokens;
 	float mSpeakerVolumeGain;
 	float mMicrophoneVolume;
 	float mMicrophoneVolumeGain;

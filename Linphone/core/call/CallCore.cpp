@@ -65,13 +65,10 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mLocalAddress = Utils::coreStringToAppString(call->getCallLog()->getLocalAddress()->asStringUriOnly());
 	mStatus = LinphoneEnums::fromLinphone(call->getCallLog()->getStatus());
 	mTransferState = LinphoneEnums::fromLinphone(call->getTransferState());
-	auto token = Utils::coreStringToAppString(mCallModel->getAuthenticationToken());
-	auto localToken = mDir == LinphoneEnums::CallDir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
-	auto remoteToken = mDir == LinphoneEnums::CallDir::Outgoing ? token.left(2).toUpper() : token.right(2).toUpper();
+	mLocalToken = Utils::coreStringToAppString(mCallModel->getLocalAtuhenticationToken());
+	mRemoteTokens = mCallModel->getRemoteAtuhenticationTokens();
 	mEncryption = LinphoneEnums::fromLinphone(call->getParams()->getMediaEncryption());
 	auto tokenVerified = call->getAuthenticationTokenVerified();
-	mLocalSas = localToken;
-	mRemoteSas = remoteToken;
 	mIsSecured = (mEncryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified) ||
 	             mEncryption == LinphoneEnums::MediaEncryption::Srtp ||
 	             mEncryption == LinphoneEnums::MediaEncryption::Dtls;
@@ -150,13 +147,21 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			}
 		});
 	});
-	mCallModelConnection->makeConnectToCore(&CallCore::lVerifyAuthenticationToken, [this](bool verified) {
-		mCallModelConnection->invokeToModel(
-		    [this, verified]() { mCallModel->setAuthenticationTokenVerified(verified); });
+	mCallModelConnection->makeConnectToCore(&CallCore::lCheckAuthenticationTokenSelected, [this](const QString &token) {
+		mCallModelConnection->invokeToModel([this, token]() { mCallModel->checkAuthenticationToken(token); });
 	});
-	mCallModelConnection->makeConnectToModel(&CallModel::authenticationTokenVerifiedChanged, [this](bool verified) {
-		mCallModelConnection->invokeToCore([this, verified]() { setIsSecured(verified); });
+	mCallModelConnection->makeConnectToCore(&CallCore::lSkipZrtpAuthentication, [this]() {
+		mCallModelConnection->invokeToModel([this]() { mCallModel->skipZrtpAuthentication(); });
 	});
+	mCallModelConnection->makeConnectToModel(&CallModel::authenticationTokenVerified,
+	                                         [this](const std::shared_ptr<linphone::Call> &call, bool verified) {
+		                                         auto isMismatch = mCallModel->getZrtpCaseMismatch();
+		                                         mCallModelConnection->invokeToCore([this, verified, isMismatch]() {
+			                                         setTokenVerified(verified);
+			                                         setIsSecured(verified && !isMismatch);
+			                                         emit tokenVerified();
+		                                         });
+	                                         });
 	mCallModelConnection->makeConnectToModel(
 	    &CallModel::remoteRecording, [this](const std::shared_ptr<linphone::Call> &call, bool recording) {
 		    mCallModelConnection->invokeToCore([this, recording]() { setRemoteRecording(recording); });
@@ -232,23 +237,22 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	    [this](const std::shared_ptr<linphone::Call> &call, bool on, const std::string &authenticationToken) {
 		    auto encryption = LinphoneEnums::fromLinphone(call->getCurrentParams()->getMediaEncryption());
 		    auto tokenVerified = mCallModel->getAuthenticationTokenVerified();
-		    auto token = Utils::coreStringToAppString(mCallModel->getAuthenticationToken());
-		    mCallModelConnection->invokeToCore([this, call, encryption, tokenVerified, token]() {
-			    if (token.size() == 4) {
-				    auto localToken =
-				        mDir == LinphoneEnums::CallDir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
-				    auto remoteToken =
-				        mDir == LinphoneEnums::CallDir::Outgoing ? token.left(2).toUpper() : token.right(2).toUpper();
-				    setLocalSas(localToken);
-				    setRemoteSas(remoteToken);
-			    }
-			    setEncryption(encryption);
-			    setIsSecured((encryption == LinphoneEnums::MediaEncryption::Zrtp &&
-			                  tokenVerified)); // ||
-			                                   //  encryption == LinphoneEnums::MediaEncryption::Srtp ||
-			                                   //  encryption == LinphoneEnums::MediaEncryption::Dtls);
-			                                   // TODO : change this when api available in sdk
-		    });
+		    auto isCaseMismatch = mCallModel->getZrtpCaseMismatch();
+		    auto localToken = Utils::coreStringToAppString(mCallModel->getLocalAtuhenticationToken());
+		    QStringList remoteTokens = mCallModel->getRemoteAtuhenticationTokens();
+		    mCallModelConnection->invokeToCore(
+		        [this, call, encryption, tokenVerified, localToken, remoteTokens, isCaseMismatch]() {
+			        setLocalToken(localToken);
+			        setRemoteTokens(remoteTokens);
+			        setEncryption(encryption);
+			        setIsMismatch(isCaseMismatch);
+			        setIsSecured(
+			            (encryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified && !isCaseMismatch)); // ||
+			        //  encryption == LinphoneEnums::MediaEncryption::Srtp ||
+			        //  encryption == LinphoneEnums::MediaEncryption::Dtls);
+			        // TODO : change this when api available in sdk
+			        setTokenVerified(tokenVerified);
+		        });
 	    });
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetSpeakerVolumeGain, [this](float gain) {
 		mCallModelConnection->invokeToModel([this, gain]() { mCallModel->setSpeakerVolumeGain(gain); });
@@ -430,6 +434,17 @@ void CallCore::setPaused(bool paused) {
 	}
 }
 
+bool CallCore::getTokenVerified() const {
+	return mTokenVerified;
+}
+
+void CallCore::setTokenVerified(bool verified) {
+	if (mTokenVerified != verified) {
+		mTokenVerified = verified;
+		emit securityUpdated();
+	}
+}
+
 bool CallCore::isSecured() const {
 	return mIsSecured;
 }
@@ -437,6 +452,17 @@ bool CallCore::isSecured() const {
 void CallCore::setIsSecured(bool secured) {
 	if (mIsSecured != secured) {
 		mIsSecured = secured;
+		emit securityUpdated();
+	}
+}
+
+bool CallCore::isMismatch() const {
+	return mIsMismatch;
+}
+
+void CallCore::setIsMismatch(bool mismatch) {
+	if (mIsMismatch != mismatch) {
+		mIsMismatch = mismatch;
 		emit securityUpdated();
 	}
 }
@@ -463,25 +489,25 @@ bool CallCore::isConference() const {
 	return mIsConference;
 }
 
-QString CallCore::getLocalSas() {
-	return mLocalSas;
+QString CallCore::getLocalToken() {
+	return mLocalToken;
 }
 
-QString CallCore::getRemoteSas() {
-	return mRemoteSas;
+QStringList CallCore::getRemoteTokens() {
+	return mRemoteTokens;
 }
 
-void CallCore::setLocalSas(const QString &sas) {
-	if (mLocalSas != sas) {
-		mLocalSas = sas;
-		emit localSasChanged();
+void CallCore::setLocalToken(const QString &Token) {
+	if (mLocalToken != Token) {
+		mLocalToken = Token;
+		emit localTokenChanged();
 	}
 }
 
-void CallCore::setRemoteSas(const QString &sas) {
-	if (mRemoteSas != sas) {
-		mRemoteSas = sas;
-		emit remoteSasChanged();
+void CallCore::setRemoteTokens(const QStringList &token) {
+	if (mRemoteTokens != token) {
+		mRemoteTokens = token;
+		emit remoteTokensChanged();
 	}
 }
 

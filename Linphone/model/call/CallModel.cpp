@@ -270,16 +270,28 @@ bool CallModel::getAuthenticationTokenVerified() const {
 	return mMonitor->getAuthenticationTokenVerified();
 }
 
-void CallModel::setAuthenticationTokenVerified(bool verified) {
+void CallModel::checkAuthenticationToken(const QString &token) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	mMonitor->setAuthenticationTokenVerified(verified);
-	emit authenticationTokenVerifiedChanged(verified);
+	mMonitor->checkAuthenticationTokenSelected(Utils::appStringToCoreString(token));
 }
 
-std::string CallModel::getAuthenticationToken() const {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto token = mMonitor->getAuthenticationToken();
-	return token;
+void CallModel::skipZrtpAuthentication() {
+	mMonitor->skipZrtpAuthentication();
+}
+
+std::string CallModel::getLocalAtuhenticationToken() const {
+	return mMonitor->getLocalAuthenticationToken();
+}
+
+QStringList CallModel::getRemoteAtuhenticationTokens() const {
+	QStringList ret;
+	for (auto &token : mMonitor->getRemoteAuthenticationTokens())
+		ret.append(Utils::coreStringToAppString(token));
+	return ret;
+}
+
+bool CallModel::getZrtpCaseMismatch() const {
+	return mMonitor->getZrtpCacheMismatchFlag();
 }
 
 void CallModel::setConference(const std::shared_ptr<linphone::Conference> &conference) {
@@ -458,4 +470,8 @@ void CallModel::onAudioDeviceChanged(const std::shared_ptr<linphone::Call> &call
 
 void CallModel::onRemoteRecording(const std::shared_ptr<linphone::Call> &call, bool recording) {
 	emit remoteRecording(call, recording);
+}
+
+void CallModel::onAuthenticationTokenVerified(const std::shared_ptr<linphone::Call> &call, bool verified) {
+	emit authenticationTokenVerified(call, verified);
 }
