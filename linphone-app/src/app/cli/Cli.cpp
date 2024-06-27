@@ -153,29 +153,27 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
 	// Check identity.
-	{
-		shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(args["sip-address"]));
-		if (!address || address->getUsername().empty()) {
-			qWarning() << QStringLiteral("Unable to parse invalid sip address.");
-			return;
-		}
-
-		address->clean();
-
-		shared_ptr<linphone::Account> account = core->getDefaultAccount();
-		if (!account) {
-			qWarning() << QStringLiteral("Not connected to an account");
-			return;
-		}
-		if (!account->getParams()->getIdentityAddress()->weakEqual(address)) {
-			qWarning() << QStringLiteral("Received different sip address from identity : `%1 != %2`.")
-						  .arg(Utils::coreStringToAppString(account->getParams()->getIdentityAddress()->asString()))
-						  .arg(Utils::coreStringToAppString(address->asString()));
-			return;
-		}
+	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(args["sip-address"]));
+	if (!address || address->getUsername().empty()) {
+		qWarning() << QStringLiteral("Unable to parse invalid sip address.");
+		return;
 	}
 
-	shared_ptr<linphone::Conference> conference = core->getConference();
+	address->clean();
+
+	shared_ptr<linphone::Account> account = core->getDefaultAccount();
+	if (!account) {
+		qWarning() << QStringLiteral("Not connected to an account");
+		return;
+	}
+	if (!account->getParams()->getIdentityAddress()->weakEqual(address)) {
+		qWarning() << QStringLiteral("Received different sip address from identity : `%1 != %2`.")
+					  .arg(Utils::coreStringToAppString(account->getParams()->getIdentityAddress()->asString()))
+					  .arg(Utils::coreStringToAppString(address->asString()));
+		return;
+	}
+
+	shared_ptr<linphone::Conference> conference = core->searchConference(address);
 	const QString id = args["conference-id"];
 
 	auto updateCallsWindow = []() {
@@ -192,24 +190,17 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
 	};
 
 	if (conference) {
-		if (conference->getId() == Utils::appStringToCoreString(id)) {
-			qInfo() << QStringLiteral("Conference `%1` already exists.").arg(id);
-			updateCallsWindow();
-			return;
-		}
-
-		qInfo() << QStringLiteral("Remove existing conference with id: `%1`.")
-				   .arg(Utils::coreStringToAppString(conference->getId()));
-		core->terminateConference();
+		qInfo() << QStringLiteral("Conference `%1` already exists.").arg(Utils::coreStringToAppString(conference->getConferenceAddress()->asString()));
+		updateCallsWindow();
+		return;
 	}
 
 	qInfo() << QStringLiteral("Create conference with id: `%1`.").arg(id);
 	auto confParameters = core->createConferenceParams(conference);
 	confParameters->enableVideo(false);// Video is not yet fully supported by the application in conference
 	conference = core->createConferenceWithParams(confParameters);
-	conference->setId(Utils::appStringToCoreString(id));
 
-	if (core->enterConference() == -1) {
+	if (conference->enter() == -1) {
 		qWarning() << QStringLiteral("Unable to join created conference: `%1`.").arg(id);
 		return;
 	}

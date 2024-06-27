@@ -567,17 +567,7 @@ static void joinConference (const shared_ptr<linphone::Call> &call) {
 		qWarning() << QStringLiteral("Not in a conference. => Responding to `join-conference` as a simple call...");
 		return;
 	}
-	
-	shared_ptr<linphone::Conference> conference = core->getConference();
-	const QString conferenceId = Utils::coreStringToAppString(call->getToHeader("conference-id"));
-	
-	if (conference->getId() != Utils::appStringToCoreString(conferenceId)) {
-		qWarning() << QStringLiteral("Trying to join conference with an invalid conference id: `%1`. Responding as a simple call...")
-					  .arg(conferenceId);
-		return;
-	}
-	qInfo() << QStringLiteral("Join conference: `%1`.").arg(conferenceId);
-	
+
 	ConferenceHelperModel helperModel;
 	ConferenceHelperModel::ConferenceAddModel *addModel = helperModel.getConferenceAddModel();
 	if(call->dataExists("call-model")){
