@@ -77,8 +77,10 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 	mModelConnection->makeConnectToModel(
 	    &CoreModel::defaultAccountChanged,
 	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
-		    auto model = AccountCore::create(account);
-		    mModelConnection->invokeToCore([this, model]() { setDefaultAccount(model); });
+		    if (account) {
+			    auto model = AccountCore::create(account);
+			    mModelConnection->invokeToCore([this, model]() { setDefaultAccount(model); });
+		    } else mModelConnection->invokeToCore([this]() { setDefaultAccount(nullptr); });
 	    });
 	lUpdate();
 }

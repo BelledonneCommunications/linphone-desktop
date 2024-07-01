@@ -21,6 +21,7 @@
 #ifndef CORE_MODEL_H_
 #define CORE_MODEL_H_
 
+#include <QMap>
 #include <QObject>
 #include <QSharedPointer>
 #include <QString>
@@ -29,6 +30,7 @@
 #include <linphone++/linphone.hh>
 
 #include "model/account/AccountManager.hpp"
+#include "model/auth/OIDCModel.hpp"
 #include "model/cli/CliModel.hpp"
 #include "model/listener/Listener.hpp"
 #include "model/logger/LoggerModel.hpp"
@@ -73,6 +75,7 @@ signals:
 private:
 	QString mConfigPath;
 	QTimer *mIterateTimer = nullptr;
+	QMap<QString, OIDCModel *> mOpenIdConnections;
 
 	void setPathBeforeCreation();
 	void setPathsAfterCreation();

@@ -22,7 +22,7 @@ set(APP_TARGETS ${LinphoneCxx_TARGET}
 				${LibLinphone_TARGET})#MediastreamerUtils
 
 set(QT_DEFAULT_MAJOR_VERSION 6)
-set(QT_PACKAGES Core Quick Qml Widgets Svg Multimedia Test)# Search Core at first for initialize Qt scripts for next find_packages.
+set(QT_PACKAGES Core Quick Qml Widgets Svg Multimedia Test NetworkAuth)# Search Core at first for initialize Qt scripts for next find_packages.
 if (UNIX AND NOT APPLE)
 	list(APPEND QT_PACKAGES DBus)
 endif()

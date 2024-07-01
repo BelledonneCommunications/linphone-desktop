@@ -203,9 +203,6 @@ void App::init() {
 	createCommandParser(); // Recreate parser in order to use translations from config.
 	mParser->process(*this);
 
-	if (mParser->isSet("verbose")) QtLogger::enableVerbose(true);
-	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
-
 	if (!mLinphoneThread->isRunning()) {
 		lDebug() << log().arg("Starting Thread");
 		mLinphoneThread->start();
@@ -218,6 +215,8 @@ void App::init() {
 void App::initCore() {
 	// Core. Manage the logger so it must be instantiate at first.
 	CoreModel::create("", mLinphoneThread);
+	if (mParser->isSet("verbose")) QtLogger::enableVerbose(true);
+	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
 	QMetaObject::invokeMethod(
 	    mLinphoneThread->getThreadId(),
 	    [this]() mutable {

@@ -4,6 +4,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/account/AccountManagerServicesModel.cpp
 	model/account/AccountManagerServicesRequestModel.cpp
 	
+	model/auth/OIDCModel.cpp
+	
 	model/call/CallModel.cpp
 
 	model/call-history/CallHistoryModel.cpp

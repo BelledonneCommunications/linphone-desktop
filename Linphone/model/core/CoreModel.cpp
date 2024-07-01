@@ -235,6 +235,19 @@ void CoreModel::onAccountRegistrationStateChanged(const std::shared_ptr<linphone
 void CoreModel::onAuthenticationRequested(const std::shared_ptr<linphone::Core> &core,
                                           const std::shared_ptr<linphone::AuthInfo> &authInfo,
                                           linphone::AuthMethod method) {
+	if (method == linphone::AuthMethod::Bearer) {
+		auto serverUrl = authInfo->getAuthorizationServer();
+		auto username = authInfo->getUsername();
+		auto realm = authInfo->getRealm();
+		if (!serverUrl.empty()) {
+			qDebug() << "onAuthenticationRequested for Bearer. Initialize OpenID connection for " << username.c_str()
+			         << " at " << serverUrl.c_str();
+			QString key = Utils::coreStringToAppString(username) + '@' + Utils::coreStringToAppString(realm) + ' ' +
+			              Utils::coreStringToAppString(serverUrl);
+			if (mOpenIdConnections.contains(key)) mOpenIdConnections[key]->deleteLater();
+			mOpenIdConnections[key] = new OIDCModel(authInfo, this);
+		}
+	}
 	emit authenticationRequested(core, authInfo, method);
 }
 void CoreModel::onCallEncryptionChanged(const std::shared_ptr<linphone::Core> &core,

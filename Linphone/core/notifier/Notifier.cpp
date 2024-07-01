@@ -120,9 +120,8 @@ Notifier::~Notifier() {
 
 	const int nComponents = Notifications.size();
 	if (mComponents) {
-		for (int i = 0; i < nComponents; ++i)
-			if (mComponents[i]) mComponents[i]->deleteLater();
 		delete[] mComponents;
+		mComponents = nullptr;
 	}
 }
 
