@@ -104,4 +104,9 @@ QtObject {
 	property string detective: "image://internal/detective.svg"
 	property string warningCircle: "image://internal/warning-circle.svg"
 	property string fullscreen: "image://internal/fullscreen.svg"
+	property string cellSignalFull: "image://internal/cell-signal-full.svg"
+	property string cellSignalHigh: "image://internal/cell-signal-high.svg"
+	property string cellSignalMedium: "image://internal/cell-signal-medium.svg"
+	property string cellSignalLow: "image://internal/cell-signal-low.svg"
+	property string cellSignalNone: "image://internal/cell-signal-none.svg"
 }

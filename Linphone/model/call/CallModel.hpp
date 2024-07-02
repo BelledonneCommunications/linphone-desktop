@@ -55,6 +55,9 @@ public:
 	void setOutputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &id);
 	std::shared_ptr<const linphone::AudioDevice> getOutputAudioDevice() const;
 	void setConference(const std::shared_ptr<linphone::Conference> &conference);
+	std::shared_ptr<linphone::CallStats> getAudioStats() const;
+	std::shared_ptr<linphone::CallStats> getVideoStats() const;
+	std::shared_ptr<linphone::CallStats> getTextStats() const;
 
 	void setPaused(bool paused);
 	void transferTo(const std::shared_ptr<linphone::Address> &address);
@@ -89,6 +92,7 @@ signals:
 	void microphoneMutedChanged(bool isMuted);
 	void speakerMutedChanged(bool isMuted);
 	void durationChanged(int);
+	void qualityUpdated(float quality);
 	void microphoneVolumeChanged(float);
 	void pausedChanged(bool paused);
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
@@ -156,7 +160,8 @@ signals:
 	void receiveMasterKeyChanged(const std::shared_ptr<linphone::Call> &call, const std::string &receiveMasterKey);
 	void infoMessageReceived(const std::shared_ptr<linphone::Call> &call,
 	                         const std::shared_ptr<const linphone::InfoMessage> &message);
-	void stateChanged(linphone::Call::State state, const std::string &message);
+	void
+	stateChanged(const std::shared_ptr<linphone::Call> &call, linphone::Call::State state, const std::string &message);
 	void statusChanged(linphone::Call::Status status);
 	void dirChanged(linphone::Call::Dir dir);
 	void statsUpdated(const std::shared_ptr<linphone::Call> &call,

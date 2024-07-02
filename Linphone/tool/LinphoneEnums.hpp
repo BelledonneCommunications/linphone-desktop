@@ -44,6 +44,7 @@ Q_ENUM_NS(MediaEncryption)
 
 linphone::MediaEncryption toLinphone(const LinphoneEnums::MediaEncryption &encryption);
 LinphoneEnums::MediaEncryption fromLinphone(const linphone::MediaEncryption &encryption);
+QString toString(LinphoneEnums::MediaEncryption encryption);
 
 enum class FriendCapability {
 	None = int(linphone::Friend::Capability::None),

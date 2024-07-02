@@ -54,6 +54,20 @@ linphone::MediaEncryption LinphoneEnums::toLinphone(const LinphoneEnums::MediaEn
 LinphoneEnums::MediaEncryption LinphoneEnums::fromLinphone(const linphone::MediaEncryption &data) {
 	return static_cast<LinphoneEnums::MediaEncryption>(data);
 }
+QString LinphoneEnums::toString(LinphoneEnums::MediaEncryption encryption) {
+	switch (encryption) {
+		case LinphoneEnums::MediaEncryption::Dtls:
+			return "DTLS";
+		case LinphoneEnums::MediaEncryption::None:
+			return "None";
+		case LinphoneEnums::MediaEncryption::Srtp:
+			return "SRTP";
+		case LinphoneEnums::MediaEncryption::Zrtp:
+			return "ZRTP";
+		default:
+			return QString();
+	}
+}
 
 linphone::Friend::Capability LinphoneEnums::toLinphone(const LinphoneEnums::FriendCapability &data) {
 	return static_cast<linphone::Friend::Capability>(data);

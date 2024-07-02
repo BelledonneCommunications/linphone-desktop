@@ -28,6 +28,59 @@
 
 DEFINE_ABSTRACT_OBJECT(CallCore)
 
+/***********************************************************************/
+
+ZrtpStats ZrtpStats::operator=(ZrtpStats s) {
+	cipherAlgorithm = s.cipherAlgorithm;
+	keyAgreementAlgorithm = s.keyAgreementAlgorithm;
+	hashAlgorithm = s.hashAlgorithm;
+	authenticationAlgorithm = s.authenticationAlgorithm;
+	sasAlgorithm = s.sasAlgorithm;
+	isPostQuantum = s.isPostQuantum;
+	return *this;
+}
+
+bool ZrtpStats::operator==(ZrtpStats s) {
+	return s.cipherAlgorithm == cipherAlgorithm && s.keyAgreementAlgorithm == keyAgreementAlgorithm &&
+	       s.hashAlgorithm == hashAlgorithm && s.authenticationAlgorithm == authenticationAlgorithm &&
+	       s.sasAlgorithm == sasAlgorithm && s.isPostQuantum == isPostQuantum;
+}
+bool ZrtpStats::operator!=(ZrtpStats s) {
+	return s.cipherAlgorithm != cipherAlgorithm || s.keyAgreementAlgorithm != keyAgreementAlgorithm ||
+	       s.hashAlgorithm != hashAlgorithm || s.authenticationAlgorithm != authenticationAlgorithm ||
+	       s.sasAlgorithm != sasAlgorithm || s.isPostQuantum != isPostQuantum;
+}
+
+AudioStats AudioStats::operator=(AudioStats s) {
+	codec = s.codec;
+	bandwidth = s.bandwidth;
+	return *this;
+}
+
+bool AudioStats::operator==(AudioStats s) {
+	return s.codec == codec && s.bandwidth == bandwidth;
+}
+bool AudioStats::operator!=(AudioStats s) {
+	return s.codec != codec || s.bandwidth != bandwidth;
+}
+
+VideoStats VideoStats::operator=(VideoStats s) {
+	codec = s.codec;
+	bandwidth = s.bandwidth;
+	resolution = s.resolution;
+	fps = s.fps;
+	return *this;
+}
+
+bool VideoStats::operator==(VideoStats s) {
+	return s.codec == codec && s.bandwidth == bandwidth && s.resolution == resolution && s.fps == fps;
+}
+bool VideoStats::operator!=(VideoStats s) {
+	return s.codec != codec || s.bandwidth != bandwidth || s.resolution != resolution || s.fps != fps;
+}
+
+/***********************************************************************/
+
 QVariant createDeviceVariant(const QString &id, const QString &name) {
 	QVariantMap map;
 	map.insert("id", id);
@@ -72,6 +125,16 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mIsSecured = (mEncryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified) ||
 	             mEncryption == LinphoneEnums::MediaEncryption::Srtp ||
 	             mEncryption == LinphoneEnums::MediaEncryption::Dtls;
+	if (mEncryption == LinphoneEnums::MediaEncryption::Zrtp) {
+		auto stats = call->getStats(linphone::StreamType::Audio);
+		if (stats) {
+			mZrtpStats.cipherAlgorithm = Utils::coreStringToAppString(stats->getZrtpCipherAlgo());
+			mZrtpStats.keyAgreementAlgorithm = Utils::coreStringToAppString(stats->getZrtpKeyAgreementAlgo());
+			mZrtpStats.hashAlgorithm = Utils::coreStringToAppString(stats->getZrtpHashAlgo());
+			mZrtpStats.authenticationAlgorithm = Utils::coreStringToAppString(stats->getZrtpAuthTagAlgo());
+			mZrtpStats.sasAlgorithm = Utils::coreStringToAppString(stats->getZrtpSasAlgo());
+		}
+	}
 	auto conference = call->getConference();
 	mIsConference = conference != nullptr;
 	if (mIsConference) {
@@ -158,7 +221,6 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		                                         auto isMismatch = mCallModel->getZrtpCaseMismatch();
 		                                         mCallModelConnection->invokeToCore([this, verified, isMismatch]() {
 			                                         setTokenVerified(verified);
-			                                         setIsSecured(verified && !isMismatch);
 			                                         emit tokenVerified();
 		                                         });
 	                                         });
@@ -172,6 +234,9 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::durationChanged, [this](int duration) {
 		mCallModelConnection->invokeToCore([this, duration]() { setDuration(duration); });
 	});
+	mCallModelConnection->makeConnectToModel(&CallModel::qualityUpdated, [this](float quality) {
+		mCallModelConnection->invokeToCore([this, quality]() { setCurrentQuality(quality); });
+	});
 	mCallModelConnection->makeConnectToModel(&CallModel::speakerVolumeGainChanged, [this](float volume) {
 		mCallModelConnection->invokeToCore([this, volume]() { setSpeakerVolumeGain(volume); });
 	});
@@ -182,16 +247,11 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		mCallModelConnection->invokeToCore([this, volume]() { setMicrophoneVolume(volume); });
 	});
 	mCallModelConnection->makeConnectToModel(
-	    &CallModel::stateChanged, [this](linphone::Call::State state, const std::string &message) {
+	    &CallModel::stateChanged,
+	    [this](std::shared_ptr<linphone::Call> call, linphone::Call::State state, const std::string &message) {
 		    mCallModelConnection->invokeToCore([this, state, message]() {
 			    setState(LinphoneEnums::fromLinphone(state), Utils::coreStringToAppString(message));
 		    });
-	    });
-	mCallModelConnection->makeConnectToModel(&CallModel::statusChanged, [this](linphone::Call::Status status) {
-		mCallModelConnection->invokeToCore([this, status]() { setStatus(LinphoneEnums::fromLinphone(status)); });
-	});
-	mCallModelConnection->makeConnectToModel(
-	    &CallModel::stateChanged, [this](linphone::Call::State state, const std::string &message) {
 		    double speakerVolume = mSpeakerVolumeGain;
 		    double micVolume = mMicrophoneVolumeGain;
 		    if (state == linphone::Call::State::StreamsRunning) {
@@ -210,6 +270,9 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    setRecordable(state == linphone::Call::State::StreamsRunning);
 		    });
 	    });
+	mCallModelConnection->makeConnectToModel(&CallModel::statusChanged, [this](linphone::Call::Status status) {
+		mCallModelConnection->invokeToCore([this, status]() { setStatus(LinphoneEnums::fromLinphone(status)); });
+	});
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetPaused, [this](bool paused) {
 		mCallModelConnection->invokeToModel([this, paused]() { mCallModel->setPaused(paused); });
 	});
@@ -246,13 +309,18 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			        setRemoteTokens(remoteTokens);
 			        setEncryption(encryption);
 			        setIsMismatch(isCaseMismatch);
-			        setIsSecured(
-			            (encryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified && !isCaseMismatch)); // ||
-			        //  encryption == LinphoneEnums::MediaEncryption::Srtp ||
-			        //  encryption == LinphoneEnums::MediaEncryption::Dtls);
-			        // TODO : change this when api available in sdk
-			        setTokenVerified(tokenVerified);
 		        });
+		    auto mediaEncryption = call->getParams()->getMediaEncryption();
+		    if (mediaEncryption == linphone::MediaEncryption::ZRTP) {
+			    auto stats = call->getAudioStats();
+			    ZrtpStats zrtpStats;
+			    zrtpStats.cipherAlgorithm = Utils::coreStringToAppString(stats->getZrtpCipherAlgo());
+			    zrtpStats.keyAgreementAlgorithm = Utils::coreStringToAppString(stats->getZrtpKeyAgreementAlgo());
+			    zrtpStats.hashAlgorithm = Utils::coreStringToAppString(stats->getZrtpHashAlgo());
+			    zrtpStats.authenticationAlgorithm = Utils::coreStringToAppString(stats->getZrtpAuthTagAlgo());
+			    zrtpStats.sasAlgorithm = Utils::coreStringToAppString(stats->getZrtpSasAlgo());
+			    mCallModelConnection->invokeToCore([this, zrtpStats]() { setZrtpStats(zrtpStats); });
+		    }
 	    });
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetSpeakerVolumeGain, [this](float gain) {
 		mCallModelConnection->invokeToModel([this, gain]() { mCallModel->setSpeakerVolumeGain(gain); });
@@ -318,6 +386,52 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		auto core = VideoSourceDescriptorCore::create(videoSource ? videoSource->clone() : nullptr);
 		mCallModelConnection->invokeToCore([this, core]() { setVideoSourceDescriptor(core); });
 	});
+	mCallModelConnection->makeConnectToModel(
+	    &CallModel::statsUpdated,
+	    [this](const std::shared_ptr<linphone::Call> &call, const std::shared_ptr<const linphone::CallStats> &stats) {
+		    if (stats->getType() == linphone::StreamType::Audio) {
+			    AudioStats audioStats;
+			    auto playloadType = call->getParams()->getUsedAudioPayloadType();
+			    auto codecType = playloadType ? playloadType->getMimeType() : "";
+			    auto codecRate = playloadType ? playloadType->getClockRate() / 1000 : 0;
+			    audioStats.codec = tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
+			    if (stats) {
+				    audioStats.bandwidth = tr("Bande passante : %1 %2 %3 %4")
+				                               .arg("↑")
+				                               .arg(stats->getUploadBandwidth())
+				                               .arg("↓")
+				                               .arg(stats->getDownloadBandwidth());
+			    }
+			    setAudioStats(audioStats);
+		    } else if (stats->getType() == linphone::StreamType::Video) {
+			    VideoStats videoStats;
+			    auto params = call->getParams();
+			    auto playloadType = params->getUsedAudioPayloadType();
+			    auto codecType = playloadType ? playloadType->getMimeType() : "";
+			    auto codecRate = playloadType ? playloadType->getClockRate() / 1000 : 0;
+			    videoStats.codec = tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
+			    if (stats) {
+				    videoStats.bandwidth = tr("Bande passante : %1 %2 %3 %4")
+				                               .arg("↑")
+				                               .arg(stats->getUploadBandwidth())
+				                               .arg("↓")
+				                               .arg(stats->getDownloadBandwidth());
+			    }
+			    auto sentResolution =
+			        params->getSentVideoDefinition() ? params->getSentVideoDefinition()->getName() : "";
+			    auto receivedResolution =
+			        params->getReceivedVideoDefinition() ? params->getReceivedVideoDefinition()->getName() : "";
+			    videoStats.resolution = tr("Définition vidéo : %1 %2 %3 %4")
+			                                .arg("↑")
+			                                .arg(Utils::coreStringToAppString(sentResolution))
+			                                .arg("↓")
+			                                .arg(Utils::coreStringToAppString(receivedResolution));
+			    auto sentFps = params->getSentFramerate();
+			    auto receivedFps = params->getReceivedFramerate();
+			    videoStats.fps = tr("FPS : %1 %2 %3 %4").arg("↑").arg(sentFps).arg("↓").arg(receivedFps);
+			    setVideoStats(videoStats);
+		    }
+	    });
 }
 
 QString CallCore::getPeerAddress() const {
@@ -378,7 +492,7 @@ void CallCore::setLastErrorMessage(const QString &message) {
 	}
 }
 
-int CallCore::getDuration() {
+int CallCore::getDuration() const {
 	return mDuration;
 }
 
@@ -386,6 +500,17 @@ void CallCore::setDuration(int duration) {
 	if (mDuration != duration) {
 		mDuration = duration;
 		emit durationChanged(mDuration);
+	}
+}
+
+float CallCore::getCurrentQuality() const {
+	return mQuality;
+}
+
+void CallCore::setCurrentQuality(float quality) {
+	if (mQuality != quality) {
+		mQuality = quality;
+		emit qualityChanged(mQuality);
 	}
 }
 
@@ -441,17 +566,6 @@ bool CallCore::getTokenVerified() const {
 void CallCore::setTokenVerified(bool verified) {
 	if (mTokenVerified != verified) {
 		mTokenVerified = verified;
-		emit securityUpdated();
-	}
-}
-
-bool CallCore::isSecured() const {
-	return mIsSecured;
-}
-
-void CallCore::setIsSecured(bool secured) {
-	if (mIsSecured != secured) {
-		mIsSecured = secured;
 		emit securityUpdated();
 	}
 }
@@ -513,6 +627,10 @@ void CallCore::setRemoteTokens(const QStringList &token) {
 
 LinphoneEnums::MediaEncryption CallCore::getEncryption() const {
 	return mEncryption;
+}
+
+QString CallCore::getEncryptionString() const {
+	return LinphoneEnums::toString(mEncryption);
 }
 
 void CallCore::setEncryption(LinphoneEnums::MediaEncryption encryption) {
@@ -630,4 +748,37 @@ void CallCore::setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout) 
 
 std::shared_ptr<CallModel> CallCore::getModel() const {
 	return mCallModel;
+}
+
+ZrtpStats CallCore::getZrtpStats() const {
+	return mZrtpStats;
+}
+
+void CallCore::setZrtpStats(ZrtpStats stats) {
+	if (stats != mZrtpStats) {
+		mZrtpStats = stats;
+		emit zrtpStatsChanged();
+	}
+}
+
+AudioStats CallCore::getAudioStats() const {
+	return mAudioStats;
+}
+
+void CallCore::setAudioStats(AudioStats stats) {
+	if (stats != mAudioStats) {
+		mAudioStats = stats;
+		emit audioStatsChanged();
+	}
+}
+
+VideoStats CallCore::getVideoStats() const {
+	return mVideoStats;
+}
+
+void CallCore::setVideoStats(VideoStats stats) {
+	if (stats != mVideoStats) {
+		mVideoStats = stats;
+		emit videoStatsChanged();
+	}
 }

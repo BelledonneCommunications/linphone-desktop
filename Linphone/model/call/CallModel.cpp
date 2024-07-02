@@ -35,6 +35,7 @@ CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *paren
 	mDurationTimer.setInterval(1000);
 	mDurationTimer.setSingleShot(false);
 	connect(&mDurationTimer, &QTimer::timeout, this, [this]() { this->durationChanged(mMonitor->getDuration()); });
+	connect(&mDurationTimer, &QTimer::timeout, this, [this]() { this->qualityUpdated(mMonitor->getCurrentQuality()); });
 	mDurationTimer.start();
 
 	mMicroVolumeTimer.setInterval(50);
@@ -302,6 +303,18 @@ void CallModel::setConference(const std::shared_ptr<linphone::Conference> &confe
 	}
 }
 
+std::shared_ptr<linphone::CallStats> CallModel::getAudioStats() const {
+	return mMonitor->getAudioStats();
+}
+
+std::shared_ptr<linphone::CallStats> CallModel::getVideoStats() const {
+	return mMonitor->getVideoStats();
+}
+
+std::shared_ptr<linphone::CallStats> CallModel::getTextStats() const {
+	return mMonitor->getTextStats();
+}
+
 LinphoneEnums::ConferenceLayout CallModel::getConferenceVideoLayout() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return LinphoneEnums::fromLinphone(mMonitor->getParams()->getConferenceVideoLayout());
@@ -416,7 +429,7 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		setConference(call->getConference());
 		updateConferenceVideoLayout();
 	}
-	emit stateChanged(state, message);
+	emit stateChanged(call, state, message);
 }
 
 void CallModel::onStatusChanged(const std::shared_ptr<linphone::Call> &call, linphone::Call::Status status) {

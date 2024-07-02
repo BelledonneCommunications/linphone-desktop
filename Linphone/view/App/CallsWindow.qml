@@ -116,13 +116,18 @@ AppWindow {
 		target: call && call.core
 		onRemoteVideoEnabledChanged: console.log("remote video enabled", call.core.remoteVideoEnabled)
 		onSecurityUpdated: {
-			if (call.core.isSecured) {
+			if (call.core.encryption != LinphoneEnums.MediaEncryption.Zrtp || call.core.tokenVerified) {
 				zrtpValidation.close()
 			}
 			else if(call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
 				zrtpValidation.open()
-				// mainWindow.attachVirtualWindow(Utils.buildLinphoneDialogUri('ZrtpTokenAuthenticationDialog'), {call:callModel})
 			}
+		}
+	}
+
+	Component.onCompleted: {
+		if(call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && (!call.core.tokenVerified || call.core.isMismatch)) {
+			zrtpValidation.open()
 		}
 	}
 
@@ -237,7 +242,7 @@ AppWindow {
 			}
 		}
 	}
-	
+/************************* CONTENT ********************************/
 	Rectangle {
 		anchors.fill: parent
 		color: DefaultStyle.grey_900
@@ -387,6 +392,10 @@ AppWindow {
 									anchors.fill: parent
 									hoverEnabled: true
 									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+									onClicked: {
+										rightPanel.visible = true
+										rightPanel.replace(encryptionPanel)
+									}
 								}
 							}
 							Item {
@@ -397,8 +406,31 @@ AppWindow {
 					Item {
 						Layout.fillWidth: true
 					}
-					Item {
-						//TODO : network quality display
+					EffectImage {
+						Layout.preferredWidth: 32 * DefaultStyle.dp
+						Layout.preferredHeight: 32 * DefaultStyle.dp
+						Layout.rightMargin: 30 * DefaultStyle.dp
+						property int quality: mainWindow.call ? mainWindow.call.core.quality : 0
+						imageSource: quality >= 4
+							? AppIcons.cellSignalFull
+							: quality >= 3
+								? AppIcons.cellSignalMedium
+								: quality >= 2
+									? AppIcons.cellSignalLow
+									: AppIcons.cellSignalNone
+						colorizationColor: DefaultStyle.grey_0
+						MouseArea {
+							anchors.fill: parent
+							hoverEnabled: true
+							cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+							onClicked: {
+								if (rightPanel.visible) rightPanel.visible = false
+								else {
+									rightPanel.visible = true
+									rightPanel.replace(statsPanel)
+								}
+							}
+						}
 					}
 				}
 
@@ -882,12 +914,227 @@ AppWindow {
 						}
 					}
 				}
+				Component {
+					id: encryptionPanel
+					ColumnLayout {
+						Control.StackView.onActivated: {
+							rightPanel.headerTitleText = qsTr("Chiffrement")
+						}
+						RoundedBackgroundControl {
+							Layout.fillWidth: true
+							leftPadding: 16 * DefaultStyle.dp
+							rightPadding: 16 * DefaultStyle.dp
+							topPadding: 13 * DefaultStyle.dp
+							bottomPadding: 13 * DefaultStyle.dp
+
+							Layout.topMargin: 13 * DefaultStyle.dp
+							Layout.leftMargin: 16 * DefaultStyle.dp
+							Layout.rightMargin: 16 * DefaultStyle.dp
+							
+							contentItem: ColumnLayout {
+								spacing: 12 * DefaultStyle.dp
+								Text {
+									text: qsTr("Chiffrement :")
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 700 * DefaultStyle.dp
+									}
+								}
+								ColumnLayout {
+									Layout.alignment: Qt.AlignHCenter
+									spacing: 7 * DefaultStyle.dp
+									Text {
+										property bool isPostQuantum: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && mainWindow.call.core.zrtpStats.isPostQuantum
+										text: qsTr("Chiffrement du média : %1%2").arg(isPostQuantum ? "post Quantum " : "").arg(mainWindow.call.core.encryptionString)
+										Layout.alignment: Qt.AlignHCenter
+										font {
+											pixelSize: 12 * DefaultStyle.dp
+											weight: 500 * DefaultStyle.dp
+										}
+									}
+									ColumnLayout {
+										visible: mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+										Text {
+											text: qsTr("Cipher algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.cipherAlgo)
+											Layout.alignment: Qt.AlignHCenter
+											font {
+												pixelSize: 12 * DefaultStyle.dp
+												weight: 500 * DefaultStyle.dp
+											}
+										}
+										Text {
+											text: qsTr("Key agreement algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.keyAgreementAlgo)
+											Layout.alignment: Qt.AlignHCenter
+											font {
+												pixelSize: 12 * DefaultStyle.dp
+												weight: 500 * DefaultStyle.dp
+											}
+										}
+										Text {
+											text: qsTr("Hash algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.hashAlgo)
+											Layout.alignment: Qt.AlignHCenter
+											font {
+												pixelSize: 12 * DefaultStyle.dp
+												weight: 500 * DefaultStyle.dp
+											}
+										}
+										Text {
+											text: qsTr("Authentication algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.authenticationAlgo)
+											Layout.alignment: Qt.AlignHCenter
+											font {
+												pixelSize: 12 * DefaultStyle.dp
+												weight: 500 * DefaultStyle.dp
+											}
+										}
+										Text {
+											text: qsTr("SAS algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.sasAlgo)
+											Layout.alignment: Qt.AlignHCenter
+											font {
+												pixelSize: 12 * DefaultStyle.dp
+												weight: 500 * DefaultStyle.dp
+											}
+										}
+									}
+								}
+							}
+						}
+						Item{Layout.fillHeight: true}
+						Button {
+							visible: mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+							Layout.fillWidth: true
+							text: qsTr("Validation chiffrement")
+							onClicked: zrtpValidation.open()
+							Layout.bottomMargin: 13 * DefaultStyle.dp
+							Layout.leftMargin: 16 * DefaultStyle.dp
+							Layout.rightMargin: 16 * DefaultStyle.dp
+							leftPadding: 20 * DefaultStyle.dp
+							rightPadding: 20 * DefaultStyle.dp
+							topPadding: 11 * DefaultStyle.dp
+							bottomPadding: 11 * DefaultStyle.dp
+						}
+					}
+				}
+				Component {
+					id: statsPanel
+					ColumnLayout {
+						spacing: 20 * DefaultStyle.dp
+						Control.StackView.onActivated: {
+							rightPanel.headerTitleText = qsTr("Statistiques")
+						}
+						RoundedBackgroundControl {
+							Layout.fillWidth: true
+							leftPadding: 16 * DefaultStyle.dp
+							rightPadding: 16 * DefaultStyle.dp
+							topPadding: 13 * DefaultStyle.dp
+							bottomPadding: 13 * DefaultStyle.dp
+
+							Layout.topMargin: 13 * DefaultStyle.dp
+							Layout.leftMargin: 16 * DefaultStyle.dp
+							Layout.rightMargin: 16 * DefaultStyle.dp
+							
+							contentItem: ColumnLayout {
+								spacing: 12 * DefaultStyle.dp
+								Layout.alignment: Qt.AlignHCenter
+								Text {
+									text: qsTr("Audio")
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 700 * DefaultStyle.dp
+									}
+								}
+								ColumnLayout {
+									spacing: 7 * DefaultStyle.dp
+									Layout.alignment: Qt.AlignHCenter
+									Text {
+										text: mainWindow.call ? mainWindow.call.core.audioStats.codec : ""
+										Layout.alignment: Qt.AlignHCenter
+										font {
+											pixelSize: 12 * DefaultStyle.dp
+											weight: 500 * DefaultStyle.dp
+										}
+									}
+									Text {
+										text: mainWindow.call ? mainWindow.call.core.audioStats.bandwidth : ""
+										Layout.alignment: Qt.AlignHCenter
+										font {
+											pixelSize: 12 * DefaultStyle.dp
+											weight: 500 * DefaultStyle.dp
+										}
+									}
+								}
+							}
+						}
+						RoundedBackgroundControl {
+							Layout.fillWidth: true
+							leftPadding: 16 * DefaultStyle.dp
+							rightPadding: 16 * DefaultStyle.dp
+							topPadding: 13 * DefaultStyle.dp
+							bottomPadding: 13 * DefaultStyle.dp
+
+							Layout.topMargin: 13 * DefaultStyle.dp
+							Layout.leftMargin: 16 * DefaultStyle.dp
+							Layout.rightMargin: 16 * DefaultStyle.dp
+							
+							contentItem: ColumnLayout {
+								spacing: 12 * DefaultStyle.dp
+								Layout.alignment: Qt.AlignHCenter
+								Text {
+									text: qsTr("Vidéo")
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 700 * DefaultStyle.dp
+									}
+								}
+								ColumnLayout {
+									spacing: 7 * DefaultStyle.dp
+									Layout.alignment: Qt.AlignHCenter
+									Text {
+										text: mainWindow.call ? mainWindow.call.core.videoStats.codec : ""
+										Layout.alignment: Qt.AlignHCenter
+										font {
+											pixelSize: 12 * DefaultStyle.dp
+											weight: 500 * DefaultStyle.dp
+										}
+									}
+									Text {
+										text: mainWindow.call ? mainWindow.call.core.videoStats.bandwidth : ""
+										Layout.alignment: Qt.AlignHCenter
+										font {
+											pixelSize: 12 * DefaultStyle.dp
+											weight: 500 * DefaultStyle.dp
+										}
+									}
+									Text {
+										text: mainWindow.call ? mainWindow.call.core.videoStats.resolution : ""
+										Layout.alignment: Qt.AlignHCenter
+										font {
+											pixelSize: 12 * DefaultStyle.dp
+											weight: 500 * DefaultStyle.dp
+										}
+									}
+									Text {
+										text: mainWindow.call ? mainWindow.call.core.videoStats.fps : ""
+										Layout.alignment: Qt.AlignHCenter
+										font {
+											pixelSize: 12 * DefaultStyle.dp
+											weight: 500 * DefaultStyle.dp
+										}
+									}
+								}
+							}
+						}
+						Item{Layout.fillHeight: true}
+					}
+				}
 			}
 			Component {
 				id: waitingRoom
 				WaitingRoom {
 					id: waitingRoomIn
-					Layout.alignment: Qt.AlignCenter					
+					Layout.alignment: Qt.AlignCenter		
 					onSettingsButtonCheckedChanged: {
 						if (settingsButtonChecked) {
 							rightPanel.visible = true

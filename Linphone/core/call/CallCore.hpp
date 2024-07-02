@@ -31,6 +31,61 @@
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
 
+struct ZrtpStats {
+	Q_GADGET
+
+	Q_PROPERTY(QString cipherAlgo MEMBER cipherAlgorithm)
+	Q_PROPERTY(QString keyAgreementAlgo MEMBER keyAgreementAlgorithm)
+	Q_PROPERTY(QString hashAlgo MEMBER hashAlgorithm)
+	Q_PROPERTY(QString authenticationAlgo MEMBER authenticationAlgorithm)
+	Q_PROPERTY(QString sasAlgo MEMBER sasAlgorithm)
+	Q_PROPERTY(bool isPostQuantum MEMBER isPostQuantum)
+public:
+	bool isPostQuantum = false;
+	QString cipherAlgorithm;
+	QString keyAgreementAlgorithm;
+	QString hashAlgorithm;
+	QString authenticationAlgorithm;
+	QString sasAlgorithm;
+
+	ZrtpStats operator=(ZrtpStats s);
+	bool operator==(ZrtpStats s);
+	bool operator!=(ZrtpStats s);
+};
+
+struct AudioStats {
+	Q_GADGET
+	Q_PROPERTY(QString codec MEMBER codec)
+	Q_PROPERTY(QString bandwidth MEMBER bandwidth)
+
+public:
+	QString codec;
+	QString bandwidth;
+
+	AudioStats operator=(AudioStats s);
+
+	bool operator==(AudioStats s);
+	bool operator!=(AudioStats s);
+};
+
+struct VideoStats {
+	Q_GADGET
+	Q_PROPERTY(QString codec MEMBER codec)
+	Q_PROPERTY(QString bandwidth MEMBER bandwidth)
+	Q_PROPERTY(QString resolution MEMBER resolution)
+	Q_PROPERTY(QString fps MEMBER fps)
+
+public:
+	QString codec;
+	QString bandwidth;
+	QString resolution;
+	QString fps;
+
+	VideoStats operator=(VideoStats s);
+	bool operator==(VideoStats s);
+	bool operator!=(VideoStats s);
+};
+
 class CallCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
@@ -40,15 +95,16 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(LinphoneEnums::CallState state READ getState NOTIFY stateChanged)
 	Q_PROPERTY(QString lastErrorMessage READ getLastErrorMessage NOTIFY lastErrorMessageChanged)
 	Q_PROPERTY(int duration READ getDuration NOTIFY durationChanged)
+	Q_PROPERTY(int quality READ getCurrentQuality NOTIFY qualityChanged)
 	Q_PROPERTY(bool speakerMuted READ getSpeakerMuted WRITE lSetSpeakerMuted NOTIFY speakerMutedChanged)
 	Q_PROPERTY(bool microphoneMuted READ getMicrophoneMuted WRITE lSetMicrophoneMuted NOTIFY microphoneMutedChanged)
 	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
 	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
 	Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT)
 	Q_PROPERTY(bool tokenVerified READ getTokenVerified WRITE setTokenVerified NOTIFY securityUpdated)
-	// Q_PROPERTY(bool isSecured READ isSecured WRITE setIsSecured NOTIFY securityUpdated)
 	Q_PROPERTY(bool isMismatch READ isMismatch WRITE setIsMismatch NOTIFY securityUpdated)
 	Q_PROPERTY(LinphoneEnums::MediaEncryption encryption READ getEncryption NOTIFY securityUpdated)
+	Q_PROPERTY(QString encryptionString READ getEncryptionString NOTIFY securityUpdated)
 	Q_PROPERTY(QString localToken READ getLocalToken WRITE setLocalToken MEMBER mLocalToken NOTIFY localTokenChanged)
 	Q_PROPERTY(QStringList remoteTokens WRITE setRemoteTokens MEMBER mRemoteTokens NOTIFY remoteTokensChanged)
 	Q_PROPERTY(
@@ -71,6 +127,9 @@ class CallCore : public QObject, public AbstractObject {
 
 	Q_PROPERTY(VideoSourceDescriptorGui *videoSourceDescriptor READ getVideoSourceDescriptorGui WRITE
 	               lSetVideoSourceDescriptor NOTIFY videoSourceDescriptorChanged)
+	Q_PROPERTY(ZrtpStats zrtpStats READ getZrtpStats WRITE setZrtpStats NOTIFY zrtpStatsChanged)
+	Q_PROPERTY(AudioStats audioStats READ getAudioStats WRITE setAudioStats NOTIFY audioStatsChanged)
+	Q_PROPERTY(VideoStats videoStats READ getVideoStats WRITE setVideoStats NOTIFY videoStatsChanged)
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
@@ -94,8 +153,11 @@ public:
 	QString getLastErrorMessage() const;
 	void setLastErrorMessage(const QString &message);
 
-	int getDuration();
+	int getDuration() const;
 	void setDuration(int duration);
+
+	float getCurrentQuality() const;
+	void setCurrentQuality(float quality);
 
 	bool getSpeakerMuted() const;
 	void setSpeakerMuted(bool isMuted);
@@ -108,9 +170,6 @@ public:
 
 	bool getTokenVerified() const;
 	void setTokenVerified(bool verified);
-
-	bool isSecured() const;
-	void setIsSecured(bool secured);
 
 	bool isMismatch() const;
 	void setIsMismatch(bool mismatch);
@@ -127,6 +186,7 @@ public:
 	void setRemoteTokens(const QStringList &Tokens);
 
 	LinphoneEnums::MediaEncryption getEncryption() const;
+	QString getEncryptionString() const;
 	void setEncryption(LinphoneEnums::MediaEncryption encryption);
 
 	bool getRemoteVideoEnabled() const;
@@ -166,12 +226,23 @@ public:
 	void setVideoSourceDescriptor(QSharedPointer<VideoSourceDescriptorCore> core);
 
 	std::shared_ptr<CallModel> getModel() const;
+
+	ZrtpStats getZrtpStats() const;
+	void setZrtpStats(ZrtpStats stats);
+
+	AudioStats getAudioStats() const;
+	void setAudioStats(AudioStats stats);
+
+	VideoStats getVideoStats() const;
+	void setVideoStats(VideoStats stats);
+
 signals:
 	void statusChanged(LinphoneEnums::CallStatus status);
 	void stateChanged(LinphoneEnums::CallState state);
 	void dirChanged(LinphoneEnums::CallDir dir);
 	void lastErrorMessageChanged();
 	void durationChanged(int duration);
+	void qualityChanged(float quality);
 	void speakerMutedChanged();
 	void microphoneMutedChanged();
 	void pausedChanged();
@@ -191,6 +262,9 @@ signals:
 	void conferenceChanged();
 	void conferenceVideoLayoutChanged();
 	void videoSourceDescriptorChanged();
+	void zrtpStatsChanged();
+	void audioStatsChanged();
+	void videoStatsChanged();
 
 	// Linphone commands
 	void lAccept(bool withVideo); // Accept an incoming call
@@ -250,6 +324,7 @@ private:
 	bool mIsSecured = false;
 	bool mIsMismatch = false;
 	int mDuration = 0;
+	float mQuality = 0;
 	bool mSpeakerMuted = false;
 	bool mMicrophoneMuted = false;
 	bool mLocalVideoEnabled = false;
@@ -266,6 +341,9 @@ private:
 	float mMicrophoneVolume;
 	float mMicrophoneVolumeGain;
 	QSharedPointer<SafeConnection<CallCore, CallModel>> mCallModelConnection;
+	ZrtpStats mZrtpStats;
+	AudioStats mAudioStats;
+	VideoStats mVideoStats;
 
 	DECLARE_ABSTRACT_OBJECT
 };

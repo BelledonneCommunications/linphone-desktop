@@ -56,7 +56,7 @@ Control.Page {
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignVCenter
 					verticalAlignment: Text.AlignVCenter
-					color: mainWindow.conference ? DefaultStyle.main1_500_main : DefaultStyle.main2_700
+					color: DefaultStyle.main1_500_main
 					font {
 						pixelSize: 16 * DefaultStyle.dp
 						weight: 800 * DefaultStyle.dp

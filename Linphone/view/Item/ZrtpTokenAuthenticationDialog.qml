@@ -28,9 +28,11 @@ Dialog {
 		target: call && call.core
 		onStatusChanged: if (status === CallModel.CallStatusEnded) close()
 		onSecurityUpdated: {
-			if (!mainItem.isTokenVerified) {
-				mainItem.securityError = true
-			} else close()
+			if (mainItem.isTokenVerified) {
+				close()
+				// mainItem.securityError = true
+			// } else close()
+			}
 		}
 		onTokenVerified: {
 			if (!mainItem.isTokenVerified) {
@@ -58,8 +60,8 @@ Dialog {
 				anchors.horizontalCenter: parent.horizontalCenter
 				Item {
 					// spacing: 14 * DefaultStyle.dp
-					width: childrenRect.width
-					height: childrenRect.height
+					Layout.Layout.preferredWidth: childrenRect.width
+					Layout.Layout.preferredHeight: childrenRect.height
 					Layout.Layout.fillWidth: true
 					Image {
 						id: trustShield
@@ -221,7 +223,7 @@ Dialog {
 										hoverEnabled: true
 										cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 										onClicked: {
-											console.log("check token", modelData)
+											console.log("CHECK TOKEN", modelData)
 											if(mainItem.call) mainItem.call.core.lCheckAuthenticationTokenSelected(modelData)
 										}
 									}
