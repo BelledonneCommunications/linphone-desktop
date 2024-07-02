@@ -99,4 +99,5 @@ QtObject {
 	property string world: "image://internal/world.svg"
 	property string detective: "image://internal/detective.svg"
 	property string warningCircle: "image://internal/warning-circle.svg"
+	property string fullscreen: "image://internal/fullscreen.svg"
 }

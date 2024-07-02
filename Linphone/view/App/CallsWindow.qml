@@ -6,6 +6,7 @@ import Linphone
 import EnumsToStringCpp 1.0
 import UtilsCpp 1.0
 import SettingsCpp 1.0
+import DesktopToolsCpp 1.0
 
 AppWindow {
 	id: mainWindow
@@ -51,6 +52,7 @@ AppWindow {
 		}
 	}
 	onClosing: (close) => {
+		DesktopToolsCpp.screenSaverStatus = true
 		if (callsModel.haveCall) {
 			close.accepted = false
 			terminateAllCallsDialog.open()
@@ -108,7 +110,7 @@ AppWindow {
 		}
 		middleItemStackView.replace(inCallItem)
 	}
-
+	
 	Connections {
 		enabled: !!call
 		target: call && call.core
@@ -1133,8 +1135,8 @@ AppWindow {
 							background: Item{}
 							icon.width: 32 * DefaultStyle.dp
 							icon.height: 32 * DefaultStyle.dp
-							textColor: down ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
-							contentImageColor: down ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
+							textColor: down || checked ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
+							contentImageColor: down || checked ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
 							textSize: 14 * DefaultStyle.dp
 							textWeight: 400 * DefaultStyle.dp
 							spacing: 5 * DefaultStyle.dp
@@ -1154,6 +1156,24 @@ AppWindow {
 									rightPanel.visible = true
 									rightPanel.replace(changeLayoutPanel)
 									moreOptionsButton.close()
+								}
+							}
+							MenuButton {
+								visible: mainWindow.conference
+								Layout.fillWidth: true
+								icon.source: AppIcons.fullscreen
+								icon.width: 32 * DefaultStyle.dp
+								icon.height: 32 * DefaultStyle.dp
+								text: qsTr("Mode Plein écran")
+								checkable: true
+								onToggled: {
+									if(checked) {
+										DesktopToolsCpp.screenSaverStatus = false
+										mainWindow.showFullScreen()
+									}else{
+										DesktopToolsCpp.screenSaverStatus = true
+										mainWindow.showNormal()
+									}
 								}
 							}
 							MenuButton {

@@ -310,6 +310,9 @@ void App::initCppInterfaces() {
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new Constants(engine); });
 	qmlRegisterSingletonType<Utils>("UtilsCpp", 1, 0, "UtilsCpp",
 	                                [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new Utils(engine); });
+	qmlRegisterSingletonType<DesktopTools>(
+	    "DesktopToolsCpp", 1, 0, "DesktopToolsCpp",
+	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new DesktopTools(engine); });
 	qmlRegisterSingletonType<EnumsToString>(
 	    "EnumsToStringCpp", 1, 0, "EnumsToStringCpp",
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new EnumsToString(engine); });
