@@ -197,8 +197,9 @@ ListView {
 					Button {
 						background: Item{}
 						contentItem: RowLayout {
-							Image {
-								source: modelData.core.starred ? AppIcons.heartFill : AppIcons.heart
+							EffectImage {
+								imageSource: modelData.core.starred ? AppIcons.heartFill : AppIcons.heart
+								colorizationColor: modelData.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
 								fillMode: Image.PreserveAspectFit
 								width: 24 * DefaultStyle.dp
 								height: 24 * DefaultStyle.dp

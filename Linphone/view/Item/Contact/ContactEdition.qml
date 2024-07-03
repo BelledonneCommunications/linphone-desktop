@@ -27,6 +27,16 @@ RightPanelLayout {
 	property string oldPictureUri
 	signal closeEdition()
 
+	Dialog {
+		id: confirmDialog
+		onAccepted: {
+			mainItem.contact.core.undo()
+			mainItem.closeEdition()
+		}
+		width: 278 * DefaultStyle.dp
+		text: qsTr("Les changements seront annulés. Souhaitez-vous continuer ?")
+	}
+
 	headerContent: [
 			Text {
 				anchors.left: parent.left
@@ -49,9 +59,7 @@ RightPanelLayout {
 				icon.width: 24 * DefaultStyle.dp
 				icon.height: 24 * DefaultStyle.dp
 				onClicked: {
-					// contact.core.pictureUri = mainItem.oldPictureUri
-					mainItem.contact.core.undo()
-					mainItem.closeEdition()
+					confirmDialog.open()
 				}
 			}
 	]
@@ -119,11 +127,15 @@ RightPanelLayout {
 			ColumnLayout {
 				spacing: 20 * DefaultStyle.dp
 				FormItemLayout {
+					id: givenName
+					enableErrorText: true
 					label: qsTr("Prénom")
 					contentItem: TextField {
+						id: givenNameEdit
 						initialText: contact.core.givenName
 						onEditingFinished: contact.core.givenName = text
 						backgroundColor: DefaultStyle.grey_0
+						backgroundBorderColor: givenName.errorTextItem.opacity != 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 					}
 				}
 				FormItemLayout {
@@ -160,6 +172,7 @@ RightPanelLayout {
 					anchors.rightMargin: 10 * DefaultStyle.dp
 					spacing: 20 * DefaultStyle.dp
 					Repeater {
+						id: addressesList
 						model: VariantList {
 							model: mainItem.contact && mainItem.contact.core.addresses || []
 						}
@@ -198,6 +211,10 @@ RightPanelLayout {
 								backgroundColor: DefaultStyle.grey_0
 								onEditingFinished: {
 									if (text.length != 0) mainItem.contact.core.appendAddress(text)
+									text = ""
+								}
+								onFocusChanged: if (!focus && text.length != 0) {
+									mainItem.contact.core.appendAddress(text)
 									text = ""
 								}
 							}
@@ -253,6 +270,12 @@ RightPanelLayout {
 							Layout.preferredHeight: 24 * DefaultStyle.dp
 						}
 					}
+					ErrorText {
+						id: addressesErrorText
+						wrapMode: Qt.WordWrap
+						elide: Text.ElideRight
+						Layout.fillWidth: true
+					}
 					Item{Layout.fillHeight: true}
 				}
 				Control.ScrollBar.vertical: Control.ScrollBar{
@@ -275,13 +298,21 @@ RightPanelLayout {
 			Layout.bottomMargin: 100 * DefaultStyle.dp
 			Layout.preferredWidth: 165 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignHCenter
-			enabled: mainItem.contact && mainItem.contact.core.givenName.length > 0 && mainItem.contact.core.allAddresses.length > 0
+			enabled: mainItem.contact && mainItem.contact.core.allAddresses.length > 0
 			text: mainItem.saveButtonText
 			leftPadding: 20 * DefaultStyle.dp
 			rightPadding: 20 * DefaultStyle.dp
 			topPadding: 11 * DefaultStyle.dp
 			bottomPadding: 11 * DefaultStyle.dp
 			onClicked: {
+				if (givenNameEdit.text.length === 0) {
+					givenName.errorMessage = qsTr("Veuillez saisir un prénom")
+					return
+				}
+				if (addressesList.count === 0) {
+					addressesErrorText.text = qsTr("Veuillez saisir une adresse ou un numéro de téléphone")
+					return
+				}
 				mainItem.contact.core.save()
 				mainItem.closeEdition()
 			}

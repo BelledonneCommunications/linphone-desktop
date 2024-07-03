@@ -10,6 +10,7 @@ ColumnLayout {
 	property string label: ""
 	property bool mandatory: false
 
+	property alias errorTextItem: errorText
 	property alias errorMessage: errorText.text
 	property bool enableErrorText: false
 	property bool errorTextVisible: errorText.opacity > 0

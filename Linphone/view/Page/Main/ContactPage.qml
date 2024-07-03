@@ -59,7 +59,11 @@ AbstractMainPage {
 		id: dialog
 		property var contact
 		text: (contact ? contact.core.displayName : "Contact") + " is about to be deleted. Do you want to continue ?"
-		onAccepted: contact.core.remove()
+		onAccepted: {
+			var name = contact.core.displayName
+			contact.core.remove()
+			UtilsCpp.showInformationPopup(qsTr("Supprimé"), qsTr("%1 a été supprimé").arg(name))
+		}
 	}
 
 	Popup {
@@ -188,6 +192,7 @@ AbstractMainPage {
 			spacing: 38 * DefaultStyle.dp
 			SearchBar {
 				id: searchBar
+				visible: contactList.count > 0
 				Layout.leftMargin: leftPanel.leftMargin
 				Layout.rightMargin: leftPanel.rightMargin
 				Layout.topMargin: 18 * DefaultStyle.dp
@@ -213,16 +218,18 @@ AbstractMainPage {
 						// anchors.fill: parent
 						spacing: 15 * DefaultStyle.dp
 						Text {
+							visible: contactList.count === 0 && favoriteList.count === 0
+							Layout.alignment: Qt.AlignHCenter
+							Layout.topMargin: 137 * DefaultStyle.dp
 							text: qsTr("Aucun contact")
 							font {
 								pixelSize: 16 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
 							}
-							visible: contactList.count === 0 && favoriteList.count === 0
-							Layout.alignment: Qt.AlignHCenter
 						}
 						ColumnLayout {
 							visible: favoriteList.contentHeight > 0
+							onVisibleChanged: if (visible && !favoriteList.visible) favoriteList.visible = true
 							Layout.leftMargin: leftPanel.leftMargin
 							Layout.rightMargin: leftPanel.rightMargin
 							spacing: 18 * DefaultStyle.dp
@@ -271,6 +278,7 @@ AbstractMainPage {
 						}
 						ColumnLayout {
 							visible: contactList.count > 0
+							onVisibleChanged: if (visible && !contactList.visible) contactList.visible = true
 							Layout.leftMargin: leftPanel.leftMargin
 							Layout.rightMargin: leftPanel.rightMargin
 							spacing: 16 * DefaultStyle.dp

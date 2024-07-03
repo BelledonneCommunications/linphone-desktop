@@ -11,7 +11,7 @@ ColumnLayout {
 
 	FormItemLayout {
 		id: username
-		label: "Username"
+		label: qsTr("Nom d'utilisateur")
 		mandatory: true
 		enableErrorText: true
 		contentItem: TextField {
@@ -20,6 +20,10 @@ ColumnLayout {
 			Layout.preferredHeight: 49 * DefaultStyle.dp
 			Binding on backgroundBorderColor {
 				when: errorText.opacity != 0
+				value: DefaultStyle.danger_500main
+			}
+			Binding on backgroundBorderColor {
+				when: username.errorTextItem.opacity != 0
 				value: DefaultStyle.danger_500main
 			}
 			Binding on color {
@@ -32,7 +36,7 @@ ColumnLayout {
 		Layout.preferredHeight: password.implicitHeight
 		FormItemLayout {
 			id: password
-			label: "Password"
+			label: qsTr("Mot de passe")
 			mandatory: true
 			enableErrorText: true
 			contentItem: TextField {
@@ -42,6 +46,10 @@ ColumnLayout {
 				hidden: true
 				Binding on backgroundBorderColor {
 					when: errorText.opacity != 0
+					value: DefaultStyle.danger_500main
+				}
+				Binding on backgroundBorderColor {
+					when: password.errorTextItem.opacity != 0
 					value: DefaultStyle.danger_500main
 				}
 				Binding on color {
@@ -119,9 +127,9 @@ ColumnLayout {
 
 				if (usernameEdit.text.length == 0 || passwordEdit.text.length == 0) {
 					if (usernameEdit.text.length == 0)
-						username.errorMessage = qsTr("You must enter a username")
+						username.errorMessage = qsTr("Veuillez saisir un nom d'utilisateur")
 					if (passwordEdit.text.length == 0)
-						password.errorMessage = qsTr("You must enter a password")
+						password.errorMessage = qsTr("Veuillez saisir un mot de passe")
 					return
 				}
 				LoginPageCpp.login(usernameEdit.text, passwordEdit.text)
@@ -141,7 +149,7 @@ ColumnLayout {
 			}
 			contentItem: Text {
 				color: DefaultStyle.main2_500main
-				text: "Forgotten password?"
+				text: qsTr("Mot de passe oublié ?")
 				font{
 					underline: true
 					pixelSize: 13 * DefaultStyle.dp
