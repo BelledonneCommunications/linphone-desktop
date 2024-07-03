@@ -1,9 +1,10 @@
-import QtQuick 2.15
+import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
+import SettingsCpp
 
 ColumnLayout {
 	id: mainItem
@@ -59,7 +60,7 @@ ColumnLayout {
 		}
 	}
 	RowLayout {
-		visible: mainItem.isCreation
+		visible: mainItem.isCreation && !SettingsCpp.disableBroadcastFeature
 		Layout.topMargin: 20 * DefaultStyle.dp
 		Layout.bottomMargin: 20 * DefaultStyle.dp
 		spacing: 18 * DefaultStyle.dp

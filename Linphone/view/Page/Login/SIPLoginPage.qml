@@ -1,8 +1,9 @@
-import QtQuick 2.15
-import QtQuick.Layouts 1.3
+import QtQuick
+import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
-import ConstantsCpp 1.0
+import ConstantsCpp
+import SettingsCpp
 
 LoginLayout {
 	id: mainItem
@@ -13,6 +14,7 @@ LoginLayout {
 	titleContent: [
 		RowLayout {
 			Layout.leftMargin: 119 * DefaultStyle.dp
+			visible: !SettingsCpp.assistantHideThirdPartyAccount
 			spacing: 21 * DefaultStyle.dp
 			Button {
 				Layout.preferredHeight: 24 * DefaultStyle.dp
@@ -49,6 +51,7 @@ LoginLayout {
 			Layout.fillWidth: true
 		},
 		RowLayout {
+			visible: !SettingsCpp.assistantHideCreateAccount
 			Layout.rightMargin: 51 * DefaultStyle.dp
 			spacing: 20 * DefaultStyle.dp
 			Text {

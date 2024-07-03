@@ -7,7 +7,7 @@ Rectangle {
 
 	id: mainItem
 	
-	height: 50 * DefaultStyle.dp
+	height: visible ? 50 * DefaultStyle.dp : 0
 	anchors.right: parent.right
 	anchors.left: parent.left
 

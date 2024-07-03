@@ -10,6 +10,7 @@ import QtQuick.Effects
 
 import Linphone
 import UtilsCpp
+import SettingsCpp
 
 Item {
 	id: mainItem
@@ -123,6 +124,7 @@ Item {
 			anchors.fill: parent
 			spacing: 0
 			anchors.topMargin: 25 * DefaultStyle.dp
+			
 			VerticalTabBar {
 				id: tabbar
 				Layout.fillHeight: true
@@ -132,8 +134,8 @@ Item {
 				model: [
 					{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels")},
 					{icon: AppIcons.adressBook, selectedIcon: AppIcons.adressBookSelected, label: qsTr("Contacts")},
-					{icon: AppIcons.chatTeardropText, selectedIcon: AppIcons.chatTeardropTextSelected, label: qsTr("Conversations")},
-					{icon: AppIcons.videoconference, selectedIcon: AppIcons.videoconferenceSelected, label: qsTr("Réunions")}
+					{icon: AppIcons.chatTeardropText, selectedIcon: AppIcons.chatTeardropTextSelected, label: qsTr("Conversations"), visible: !SettingsCpp.disableChatFeature},
+					{icon: AppIcons.videoconference, selectedIcon: AppIcons.videoconferenceSelected, label: qsTr("Réunions"), visible: !SettingsCpp.disableMeetingsFeature}
 				]
 				onCurrentIndexChanged: {
                     if (currentIndex === 0) accountProxy.defaultAccount.core.lResetMissedCalls()
@@ -337,6 +339,7 @@ Item {
 								spacing: 20 * DefaultStyle.dp
 								IconLabelButton {
 									Layout.preferredHeight: 32 * DefaultStyle.dp
+									visible: !SettingsCpp.hideAccountSettings
 									iconSize: 32 * DefaultStyle.dp
 									text: qsTr("Mon compte")
 									iconSource: AppIcons.manageProfile
@@ -344,6 +347,7 @@ Item {
 								}
 								IconLabelButton {
 									Layout.preferredHeight: 32 * DefaultStyle.dp
+									visible: !SettingsCpp.hideSettings
 									iconSize: 32 * DefaultStyle.dp
 									text: qsTr("Paramètres")
 									iconSource: AppIcons.settings
@@ -363,6 +367,7 @@ Item {
 								}
 								IconLabelButton {
 									Layout.preferredHeight: 32 * DefaultStyle.dp
+									visible: !SettingsCpp.disableCallRecordingsFeature
 									iconSize: 32 * DefaultStyle.dp
 									text: qsTr("Enregistrements")
 									iconSource: AppIcons.micro
@@ -389,10 +394,13 @@ Item {
 								Rectangle {
 									Layout.fillWidth: true
 									Layout.preferredHeight: 1 * DefaultStyle.dp
+									visible: addAccountButton.visible
 									color: DefaultStyle.main2_400
 								}
 								IconLabelButton {
+									id: addAccountButton
 									Layout.preferredHeight: 32 * DefaultStyle.dp
+									visible: SettingsCpp.maxAccount == 0 || SettingsCpp.maxAccount > accountProxy.count
 									iconSize: 32 * DefaultStyle.dp
 									text: qsTr("Ajouter un compte")
 									iconSource: AppIcons.plusCircle

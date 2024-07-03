@@ -6,6 +6,7 @@ import QtQuick.Dialogs
 
 import Linphone
 import UtilsCpp
+import SettingsCpp
 
 Item {
 	id: mainItem
@@ -58,12 +59,15 @@ Item {
 			Layout.fillWidth: true
 			Layout.topMargin: mainItem.spacing
 			Layout.bottomMargin: mainItem.spacing
+			visible: addAccountButton.visible
 			height: 1 * DefaultStyle.dp
 			color: DefaultStyle.main2_300
 		}
 		MouseArea{
+			id: addAccountButton
 			Layout.fillWidth: true
 			Layout.preferredHeight: 32 * DefaultStyle.dp
+			visible: SettingsCpp.maxAccount == 0 || SettingsCpp.maxAccount > accountProxy.count
 			onClicked: mainItem.addAccountRequest()
 			RowLayout{
 				id: newAccountArea

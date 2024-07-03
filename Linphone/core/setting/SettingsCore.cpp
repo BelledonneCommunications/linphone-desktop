@@ -68,6 +68,22 @@ Settings::Settings(QObject *parent) : QObject(parent) {
 	mFullLogsEnabled = mSettingsModel->getFullLogsEnabled();
 	mLogsFolder = mSettingsModel->getLogsFolder();
 	mLogsEmail = mSettingsModel->getLogsEmail();
+
+	// Ui
+	INIT_CORE_MEMBER(DisableChatFeature, mSettingsModel)
+	INIT_CORE_MEMBER(DisableMeetingsFeature, mSettingsModel)
+	INIT_CORE_MEMBER(DisableBroadcastFeature, mSettingsModel)
+	INIT_CORE_MEMBER(HideSettings, mSettingsModel)
+	INIT_CORE_MEMBER(HideAccountSettings, mSettingsModel)
+	INIT_CORE_MEMBER(DisableCallRecordings, mSettingsModel)
+	INIT_CORE_MEMBER(AssistantHideCreateAccount, mSettingsModel)
+	INIT_CORE_MEMBER(AssistantHideCreateAccount, mSettingsModel)
+	INIT_CORE_MEMBER(AssistantDisableQrCode, mSettingsModel)
+
+	INIT_CORE_MEMBER(AssistantHideThirdPartyAccount, mSettingsModel)
+	INIT_CORE_MEMBER(OnlyDisplaySipUriUsername, mSettingsModel)
+	INIT_CORE_MEMBER(DarkModeAllowed, mSettingsModel)
+	INIT_CORE_MEMBER(MaxAccount, mSettingsModel)
 }
 
 Settings::~Settings() {
@@ -237,6 +253,33 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 			emit fullLogsEnabledChanged();
 		});
 	});
+
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	                           disableChatFeature, DisableChatFeature)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	                           disableMeetingsFeature, DisableMeetingsFeature)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	                           disableBroadcastFeature, DisableBroadcastFeature)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool, hideSettings,
+	                           HideSettings)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	                           hideAccountSettings, HideAccountSettings)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	                           disableCallRecordings, DisableCallRecordings)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	                           assistantHideCreateAccount, AssistantHideCreateAccount)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	                           assistantHideCreateAccount, AssistantHideCreateAccount)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	                           assistantDisableQrCode, AssistantDisableQrCode)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	                           assistantHideThirdPartyAccount, AssistantHideThirdPartyAccount)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	                           onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool, darkModeAllowed,
+	                           DarkModeAllowed)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, int, maxAccount,
+	                           MaxAccount)
 
 	auto coreModelConnection = QSharedPointer<SafeConnection<Settings, CoreModel>>(
 	    new SafeConnection<Settings, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);

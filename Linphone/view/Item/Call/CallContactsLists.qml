@@ -1,10 +1,11 @@
 import QtQuick
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2 as Control
+import QtQuick.Layouts
+import QtQuick.Controls as Control
 import QtQuick.Effects
 
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
+import SettingsCpp
 
 Item {
 	id: mainItem
@@ -152,7 +153,7 @@ Item {
 					width: parent.width
 					spacing: 32 * DefaultStyle.dp
 					Button {
-						visible: mainItem.groupCallVisible
+						visible: mainItem.groupCallVisible && !SettingsCpp.disableMeetingsFeature
 						Layout.preferredWidth: 320 * DefaultStyle.dp
 						padding: 0
 						background: Rectangle {

@@ -1,9 +1,10 @@
-import QtQuick 2.15
+import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
+import SettingsCpp
 
 ColumnLayout {
 	id: mainItem
@@ -125,7 +126,7 @@ ColumnLayout {
 		Layout.fillWidth: true
 		Layout.preferredHeight: childrenRect.height
 		Button {
-			visible: mainItem.isConference
+			visible: mainItem.isConference && !SettingsCpp.disableMeetingsFeature
 			Layout.alignment: Qt.AlignHCenter
 			text: qsTr("Rejoindre la réunion")
 			color: DefaultStyle.main2_200
@@ -152,7 +153,7 @@ ColumnLayout {
 			}
 		}
 		LabelButton {
-			visible: !mainItem.isConference
+			visible: !mainItem.isConference && !SettingsCpp.disableChatFeature
 			width: 56 * DefaultStyle.dp
 			height: 56 * DefaultStyle.dp
 			button.icon.width: 24 * DefaultStyle.dp

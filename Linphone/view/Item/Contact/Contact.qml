@@ -7,6 +7,7 @@ import QtQuick.Controls as Control
 
 import Linphone
 import UtilsCpp
+import SettingsCpp
 
 Rectangle{
 	id: mainItem
@@ -143,6 +144,7 @@ Rectangle{
 			Layout.preferredWidth: 24 * DefaultStyle.dp
 			Layout.preferredHeight: 24 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignHCenter
+			visible: !SettingsCpp.hideAccountSettings
 			width: 24 * DefaultStyle.dp
 			fillMode: Image.PreserveAspectFit
 			colorizationColor: DefaultStyle.main2_500main

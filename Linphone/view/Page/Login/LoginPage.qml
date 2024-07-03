@@ -2,8 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Control
 
-import Linphone 1.0
-import UtilsCpp 1.0
+import Linphone
+import UtilsCpp
+import SettingsCpp
 
 LoginLayout {
 	id: mainItem
@@ -53,6 +54,7 @@ LoginLayout {
 			Layout.fillWidth: true
 		},
 		RowLayout {
+			visible: !SettingsCpp.assistantHideCreateAccount
 			spacing: 20 * DefaultStyle.dp
 			Layout.rightMargin: 51 * DefaultStyle.dp
 			Text {
@@ -91,6 +93,7 @@ LoginLayout {
 				Layout.preferredWidth: loginForm.width
 				Layout.preferredHeight: 47 * DefaultStyle.dp
 				Layout.topMargin: 39 * DefaultStyle.dp
+				visible: !SettingsCpp.assistantHideThirdPartyAccount
 				text: qsTr("Compte SIP tiers")
 				onClicked: {mainItem.useSIPButtonClicked()}
 			}

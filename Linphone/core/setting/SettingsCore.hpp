@@ -132,6 +132,19 @@ public:
 	QString getLogsEmail() const;
 	QString getLogsFolder() const;
 
+	DECLARE_CORE_GETSET(bool, disableChatFeature, DisableChatFeature)
+	DECLARE_CORE_GETSET(bool, disableMeetingsFeature, DisableMeetingsFeature)
+	DECLARE_CORE_GETSET(bool, disableBroadcastFeature, DisableBroadcastFeature)
+	DECLARE_CORE_GETSET(bool, hideSettings, HideSettings)
+	DECLARE_CORE_GETSET(bool, hideAccountSettings, HideAccountSettings)
+	DECLARE_CORE_GETSET(bool, disableCallRecordings, DisableCallRecordings)
+	DECLARE_CORE_GETSET(bool, assistantHideCreateAccount, AssistantHideCreateAccount)
+	DECLARE_CORE_GETSET(bool, assistantDisableQrCode, AssistantDisableQrCode)
+	DECLARE_CORE_GETSET(bool, assistantHideThirdPartyAccount, AssistantHideThirdPartyAccount)
+	DECLARE_CORE_GETSET(bool, onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
+	DECLARE_CORE_GETSET(bool, darkModeAllowed, DarkModeAllowed)
+	DECLARE_CORE_GETSET(int, maxAccount, MaxAccount)
+
 signals:
 
 	// Security

@@ -1,9 +1,10 @@
-import QtQuick 2.15
+import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
+import SettingsCpp
 
 AbstractMainPage {
 	id: mainItem
@@ -429,6 +430,7 @@ AbstractMainPage {
 		id: groupCallTitle
 		RowLayout {
 			spacing: 10 * DefaultStyle.dp
+			visible: !SettingsCpp.disableMeetingsFeature
 			Button {
 				background: Item{}
 				icon.source: AppIcons.leftArrow

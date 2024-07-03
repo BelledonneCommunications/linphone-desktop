@@ -3,7 +3,8 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
+import SettingsCpp
 
 AbstractMainPage {
 
@@ -19,9 +20,9 @@ AbstractMainPage {
 	property var settingsFamilies: [
 		{title: qsTr("Appels"), layout: "CallSettingsLayout"},
 		//{title: qsTr("Sécurité"), layout: "SecuritySettingsLayout"},
-		{title: qsTr("Conversations"), layout: "ChatSettingsLayout"},
+		{title: qsTr("Conversations"), layout: "ChatSettingsLayout", visible: !SettingsCpp.disableChatFeature},
 		{title: qsTr("Contacts"), layout: "ContactSettingsLayout"},
-		{title: qsTr("Réunions"), layout: "MeetingsSettingsLayout"},
+		{title: qsTr("Réunions"), layout: "MeetingsSettingsLayout", visible: !SettingsCpp.disableMeetingsFeature},
 		{title: qsTr("Affichage"), layout: "DisplaySettingsLayout"},
 		{title: qsTr("Réseau"), layout: "NetworkSettingsLayout"},
 		{title: qsTr("Paramètres avancés"), layout: "AdvancedSettingsLayout"}
@@ -71,6 +72,7 @@ AbstractMainPage {
 			
 			delegate: SettingsFamily {
 				titleText: modelData.title
+				visible: modelData.visible != undefined ? modelData.visible : true
 				isSelected: settingsFamiliesList.selectedIndex == index
 				onSelected: {
 					settingsFamiliesList.selectedIndex = index

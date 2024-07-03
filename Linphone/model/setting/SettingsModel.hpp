@@ -21,11 +21,11 @@
 #ifndef SETTINGS_MODEL_H_
 #define SETTINGS_MODEL_H_
 
+#include "MediastreamerUtils.hpp"
 #include <QFont>
 #include <QObject>
 #include <QVariantMap>
 #include <linphone++/linphone.hh>
-#include "MediastreamerUtils.hpp"
 
 #include "tool/AbstractObject.hpp"
 
@@ -41,117 +41,131 @@ public:
 	getEntryFullName(const std::string &section,
 	                 const std::string &name) const; // Return the full name of the entry : 'name/readonly' or 'name'
 
-	
 	static const std::string UiSection;
 	std::shared_ptr<linphone::Config> mConfig;
-	
+
 	bool getVfsEnabled() const;
 	void setVfsEnabled(const bool enabled);
-	
+
 	bool getVideoEnabled() const;
 	void setVideoEnabled(const bool enabled);
-	
-	bool getAutomaticallyRecordCallsEnabled () const;
-	void setAutomaticallyRecordCallsEnabled (bool enabled);
-	
-	bool getEchoCancellationEnabled () const;
-	void setEchoCancellationEnabled (bool enabled);
-	
+
+	bool getAutomaticallyRecordCallsEnabled() const;
+	void setAutomaticallyRecordCallsEnabled(bool enabled);
+
+	bool getEchoCancellationEnabled() const;
+	void setEchoCancellationEnabled(bool enabled);
+
 	// Audio. --------------------------------------------------------------------
 
 	bool getIsInCall() const;
 	void accessCallSettings();
 	void closeCallSettings();
-	
+
 	void startCaptureGraph();
-	void stopCaptureGraph();;
+	void stopCaptureGraph();
+	;
 	void stopCaptureGraphs();
 	void resetCaptureGraph();
 	void createCaptureGraph();
 	void deleteCaptureGraph();
 	bool getCaptureGraphRunning();
-	
+
 	float getMicVolume();
-	
+
 	float getPlaybackGain() const;
 	void setPlaybackGain(float gain);
-	
+
 	float getCaptureGain() const;
 	void setCaptureGain(float gain);
-	
-	QStringList getCaptureDevices () const;
-	QStringList getPlaybackDevices () const;
-	
-	QString getCaptureDevice () const;
-	void setCaptureDevice (const QString &device);
-	
-	QString getPlaybackDevice () const;
-	void setPlaybackDevice (const QString &device);
-	
-	QString getRingPath () const;
-	void setRingPath (const QString &path);
-	
+
+	QStringList getCaptureDevices() const;
+	QStringList getPlaybackDevices() const;
+
+	QString getCaptureDevice() const;
+	void setCaptureDevice(const QString &device);
+
+	QString getPlaybackDevice() const;
+	void setPlaybackDevice(const QString &device);
+
+	QString getRingPath() const;
+	void setRingPath(const QString &path);
+
 	void startEchoCancellerCalibration();
 	int getEchoCancellationCalibration() const;
-	
-	QStringList getVideoDevices () const;
-	
-	QString getVideoDevice () const;
-	void setVideoDevice (const QString &device);
-	
-	bool getLogsEnabled () const;
-	void setLogsEnabled (bool status);
-	
-	bool getFullLogsEnabled () const;
-	void setFullLogsEnabled (bool status);
-	
-	static bool getLogsEnabled (const std::shared_ptr<linphone::Config> &config);
-	static bool getFullLogsEnabled (const std::shared_ptr<linphone::Config> &config);
-	
-	QString getLogsFolder () const;
-	void setLogsFolder (const QString &folder);
-	static QString getLogsFolder (const std::shared_ptr<linphone::Config> &config);
-	
-	QString getLogsUploadUrl () const;
-	void setLogsUploadUrl (const QString &url);
-	
-	void cleanLogs () const;
-	void sendLogs () const;
-	
-	QString getLogsEmail () const;
-		
+
+	QStringList getVideoDevices() const;
+
+	QString getVideoDevice() const;
+	void setVideoDevice(const QString &device);
+
+	bool getLogsEnabled() const;
+	void setLogsEnabled(bool status);
+
+	bool getFullLogsEnabled() const;
+	void setFullLogsEnabled(bool status);
+
+	static bool getLogsEnabled(const std::shared_ptr<linphone::Config> &config);
+	static bool getFullLogsEnabled(const std::shared_ptr<linphone::Config> &config);
+
+	QString getLogsFolder() const;
+	void setLogsFolder(const QString &folder);
+	static QString getLogsFolder(const std::shared_ptr<linphone::Config> &config);
+
+	QString getLogsUploadUrl() const;
+	void setLogsUploadUrl(const QString &url);
+
+	void cleanLogs() const;
+	void sendLogs() const;
+
+	QString getLogsEmail() const;
+
+	// UI
+	DECLARE_GETSET(bool, disableChatFeature, DisableChatFeature)
+	DECLARE_GETSET(bool, disableMeetingsFeature, DisableMeetingsFeature)
+	DECLARE_GETSET(bool, disableBroadcastFeature, DisableBroadcastFeature)
+	DECLARE_GETSET(bool, hideSettings, HideSettings)
+	DECLARE_GETSET(bool, hideAccountSettings, HideAccountSettings)
+	DECLARE_GETSET(bool, disableCallRecordings, DisableCallRecordings)
+	DECLARE_GETSET(bool, assistantHideCreateAccount, AssistantHideCreateAccount)
+	DECLARE_GETSET(bool, assistantDisableQrCode, AssistantDisableQrCode)
+	DECLARE_GETSET(bool, assistantHideThirdPartyAccount, AssistantHideThirdPartyAccount)
+	DECLARE_GETSET(bool, onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
+	DECLARE_GETSET(bool, darkModeAllowed, DarkModeAllowed)
+	DECLARE_GETSET(int, maxAccount, MaxAccount)
+
 signals:
-	
+
 	// VFS. --------------------------------------------------------------------
 	void vfsEnabledChanged(bool enabled);
 	void videoEnabledChanged(bool enabled);
-	
+
 	// Call. --------------------------------------------------------------------
 	void echoCancellationEnabledChanged(bool enabled);
 	void automaticallyRecordCallsEnabledChanged(bool enabled);
-	
+
 	void captureGraphRunningChanged(bool running);
-	
+
 	void playbackGainChanged(float gain);
 	void captureGainChanged(float gain);
-	
-	void captureDevicesChanged (const QStringList &devices);
-	void playbackDevicesChanged (const QStringList &devices);
-	
-	void captureDeviceChanged (const QString &device);
-	void playbackDeviceChanged (const QString &device);
-	
-	void ringPathChanged (const QString &path);
-		
-	void showAudioCodecsChanged (bool status);
-	
-	void videoDevicesChanged (const QStringList &devices);
-	void videoDeviceChanged (const QString &device);
-	
+
+	void captureDevicesChanged(const QStringList &devices);
+	void playbackDevicesChanged(const QStringList &devices);
+
+	void captureDeviceChanged(const QString &device);
+	void playbackDeviceChanged(const QString &device);
+
+	void ringPathChanged(const QString &path);
+
+	void showAudioCodecsChanged(bool status);
+
+	void videoDevicesChanged(const QStringList &devices);
+	void videoDeviceChanged(const QString &device);
+
 	void micVolumeChanged(float volume);
-	
-	void logsEnabledChanged (bool status);
-	void fullLogsEnabledChanged (bool status);
+
+	void logsEnabledChanged(bool status);
+	void fullLogsEnabledChanged(bool status);
 
 private:
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;

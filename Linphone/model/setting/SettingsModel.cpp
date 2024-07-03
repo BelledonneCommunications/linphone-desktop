@@ -280,8 +280,7 @@ void SettingsModel::setPlaybackDevice(const QString &device) {
 		CoreModel::getInstance()->getCore()->setRingerDevice(devId);
 		emit playbackDeviceChanged(device);
 		resetCaptureGraph();
-	}else
-		qWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
+	} else qWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
 }
 
 // -----------------------------------------------------------------------------
@@ -416,3 +415,47 @@ QString SettingsModel::getLogsEmail() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "logs_email", Constants::DefaultLogsEmail));
 }
+
+// =============================================================================
+// Ui.
+// =============================================================================
+/*
+bool SettingsModel::getShowChats() const {
+    return mConfig->getBool(UiSection, "disable_chat_feature", false);
+}*/
+
+DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", false)
+DEFINE_GETSET_CONFIG(
+    SettingsModel, bool, Bool, disableMeetingsFeature, DisableMeetingsFeature, "disable_meetings_feature", false)
+DEFINE_GETSET_CONFIG(
+    SettingsModel, bool, Bool, disableBroadcastFeature, DisableBroadcastFeature, "disable_broadcast_feature", false)
+DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, hideSettings, HideSettings, "hide_settings", false)
+DEFINE_GETSET_CONFIG(
+    SettingsModel, bool, Bool, hideAccountSettings, HideAccountSettings, "hide_account_settings", false)
+DEFINE_GETSET_CONFIG(
+    SettingsModel, bool, Bool, disableCallRecordings, DisableCallRecordings, "disable_call_recordings_feature", false)
+DEFINE_GETSET_CONFIG(SettingsModel,
+                     bool,
+                     Bool,
+                     assistantHideCreateAccount,
+                     AssistantHideCreateAccount,
+                     "assistant_hide_create_account",
+                     false)
+DEFINE_GETSET_CONFIG(
+    SettingsModel, bool, Bool, assistantDisableQrCode, AssistantDisableQrCode, "assistant_disable_qr_code", true)
+DEFINE_GETSET_CONFIG(SettingsModel,
+                     bool,
+                     Bool,
+                     assistantHideThirdPartyAccount,
+                     AssistantHideThirdPartyAccount,
+                     "assistant_hide_third_party_account",
+                     false)
+DEFINE_GETSET_CONFIG(SettingsModel,
+                     bool,
+                     Bool,
+                     onlyDisplaySipUriUsername,
+                     OnlyDisplaySipUriUsername,
+                     "only_display_sip_uri_username",
+                     false)
+DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, darkModeAllowed, DarkModeAllowed, "dark_mode_allowed", false)
+DEFINE_GETSET_CONFIG(SettingsModel, int, Int, maxAccount, MaxAccount, "max_account", 0)

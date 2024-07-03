@@ -7,7 +7,7 @@ import Linphone
 
 Control.TabBar {
 	id: mainItem
-	spacing: 32 * DefaultStyle.dp
+	//spacing: 32 * DefaultStyle.dp
 	topPadding: 36 * DefaultStyle.dp
 
 	property var model
@@ -85,7 +85,11 @@ Control.TabBar {
 		Control.TabButton {
 			id: tabButton
 			width: mainItem.width
-
+			height: visible ? undefined : 0
+			bottomInset:  32 * DefaultStyle.dp
+			topInset:  32 * DefaultStyle.dp
+			
+			visible: modelData?.visible != undefined ? modelData?.visible : true
 			UnreadNotification {
 				unread: index == 0 ? defaultAccount.core.unreadCallNotifications : index == 2 ? defaultAccount.core.unreadMessageNotifications : 0// modelData.unreadNotifications
 				anchors.right: parent.right

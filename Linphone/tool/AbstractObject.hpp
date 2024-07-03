@@ -39,7 +39,7 @@
 
 #define DECLARE_GUI_OBJECT                                                                                             \
 Q_SIGNALS:                                                                                                             \
-    void qmlNameChanged();                                                                                             \
+	void qmlNameChanged();                                                                                             \
                                                                                                                        \
 public:                                                                                                                \
 	Q_PROPERTY(QString qmlName READ getQmlName WRITE setQmlName NOTIFY qmlNameChanged)                                 \
@@ -58,6 +58,41 @@ public:                                                                         
 		if (mQmlName != name) {                                                                                        \
 			mQmlName = name;                                                                                           \
 			emit qmlNameChanged();                                                                                     \
+		}                                                                                                              \
+	}
+
+#define DECLARE_CORE_GETSET(type, x, X)                                                                                \
+	Q_PROPERTY(type x MEMBER m##X WRITE set##X NOTIFY x##Changed)                                                      \
+	Q_SIGNAL void set##X(type data);                                                                                   \
+	Q_SIGNAL void x##Changed();                                                                                        \
+	type m##X;
+
+#define DECLARE_GETSET(type, x, X)                                                                                     \
+	type get##X() const;                                                                                               \
+	void set##X(type data);                                                                                            \
+	Q_SIGNAL void x##Changed(type x);
+
+#define INIT_CORE_MEMBER(X, model) m##X = model->get##X();
+
+#define DEFINE_CORE_GETSET_CONNECT(safe, CoreClass, ModelClass, model, type, x, X)                                     \
+	safe->makeConnectToCore(&CoreClass::set##X,                                                                        \
+	                        [this](type data) { safe->invokeToModel([this, data]() { model->set##X(data); }); });      \
+	safe->makeConnectToModel(&ModelClass::x##Changed, [this](type data) {                                              \
+		safe->invokeToCore([this, data]() {                                                                            \
+			m##X = data;                                                                                               \
+			emit x##Changed();                                                                                         \
+		});                                                                                                            \
+	});
+
+#define DEFINE_GETSET_CONFIG(Class, type, Type, x, X, key, def)                                                        \
+	type Class::get##X() const {                                                                                       \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		return !!mConfig->get##Type(UiSection, key, def);                                                              \
+	}                                                                                                                  \
+	void Class::set##X(type data) {                                                                                    \
+		if (get##X() != data) {                                                                                        \
+			mConfig->set##Type(UiSection, key, data);                                                                  \
+			emit x##Changed(data);                                                                                     \
 		}                                                                                                              \
 	}
 
