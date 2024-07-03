@@ -1,11 +1,12 @@
 import QtCore
-import QtQuick 2.15
+import QtQuick
 import QtQuick.Controls as Control
 import QtQuick.Dialogs
 import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
+import SettingsCpp
 
 RightPanelLayout {
 	id: mainItem
@@ -167,9 +168,10 @@ RightPanelLayout {
 								contentItem: RowLayout {
 									TextField {
 										onEditingFinished: {
-											if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Address SIP"), text)
+											if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Adresse SIP"), text)
 										}
-										initialText: modelData.address
+										property string _initialText: modelData.address
+										initialText: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_initialText) : _initialText
 										backgroundColor: DefaultStyle.grey_0
 										Layout.preferredWidth: width
 										Layout.preferredHeight: height

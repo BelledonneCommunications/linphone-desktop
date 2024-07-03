@@ -283,15 +283,18 @@ QString Utils::formatDateElapsedTime(const QDateTime &date) {
 	return QString::number(s) + " s";
 }
 
-QString Utils::generateLinphoneSipAddress(const QString &uri) {
-	QString ret = uri;
-	if (!ret.startsWith("sip:")) {
-		ret.prepend("sip:");
+QString Utils::interpretUrl(const QString &uri) {
+	QString address = uri;
+
+	if (!address.contains('@')) {
+		App::postModelBlock([address, uri]() mutable {
+			auto addr = ToolModel::interpretUrl(uri);
+			if (addr) address = Utils::coreStringToAppString(addr->asStringUriOnly());
+		});
+	} else if (!address.startsWith("sip:")) {
+		address.prepend("sip:");
 	}
-	if (!ret.endsWith("@sip.linphone.org")) {
-		ret.append("@sip.linphone.org");
-	}
-	return ret;
+	return address;
 }
 
 QString Utils::findAvatarByAddress(const QString &address) {

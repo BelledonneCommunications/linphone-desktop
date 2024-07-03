@@ -1,11 +1,11 @@
-import QtQuick 2.15
+import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
-import UtilsCpp 1.0
-import EnumsToStringCpp 1.0
-import SettingsCpp 1.0
+import UtilsCpp
+import EnumsToStringCpp
+import SettingsCpp
 
 AbstractMainPage {
 	id: mainItem
@@ -427,7 +427,8 @@ AbstractMainPage {
 													}
 													Text {
 														Layout.fillWidth: true
-														text: modelData.address
+														property string _text: modelData.address
+														text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
 														font {
 															pixelSize: 14 * DefaultStyle.dp
 															weight: 400 * DefaultStyle.dp

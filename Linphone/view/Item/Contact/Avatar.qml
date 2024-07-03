@@ -5,6 +5,7 @@ import QtQuick.Effects
 
 import Linphone
 import UtilsCpp
+import SettingsCpp
 
 // Fill contact, account or call
 // Initials will be displayed if there isn't any avatar.
@@ -15,13 +16,14 @@ StackView {
 	property AccountGui account: null
 	property FriendGui contact: null
 	property CallGui call: null
-	property string address: account
+	property string _address: account
 								? account.core.identityAddress
 								: call
 									? call.core.peerAddress
 									: contact
 										? contact.core.defaultAddress
 										: ''
+	property string address: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_address) : _address
 	property var displayNameObj: UtilsCpp.getDisplayName(address)
 	property string displayNameVal: displayNameObj ? displayNameObj.value : ""
 	property bool haveAvatar: (account && account.core.pictureUri )

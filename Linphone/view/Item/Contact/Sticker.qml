@@ -3,7 +3,8 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
+import SettingsCpp
 
 // Display a sticker from a call or from an account.
 // The Avatar is shown while the camera become available.
@@ -180,7 +181,8 @@ Item {
 				Text {
 					Layout.fillWidth: true
 					horizontalAlignment: Text.AlignHCenter
-					text: mainItem.call && mainItem.call.core.peerAddress
+					property string _text: mainItem.call && mainItem.call.core.peerAddress
+					text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
 					color: DefaultStyle.grey_0
 					font {
 						pixelSize: 14 * DefaultStyle.dp
@@ -245,11 +247,12 @@ Item {
 			anchors.leftMargin: 10 * DefaultStyle.dp
 			anchors.bottomMargin: 10 * DefaultStyle.dp
 			width: implicitWidth
-			text: mainItem.peerAddress != ''
+			property string _text: mainItem.peerAddress != ''
 				? mainItem.peerAddress
 				: mainItem.account && mainItem.identityAddress
 					? mainItem.identityAddress.value
 					: ""
+			text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
 			color: DefaultStyle.grey_0
 			font {
 				pixelSize: 14 * DefaultStyle.dp

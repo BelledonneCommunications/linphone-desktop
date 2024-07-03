@@ -1,9 +1,10 @@
-import QtQuick 2.15
+import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
+import SettingsCpp
 
 ColumnLayout {
 	id: mainItem
@@ -148,7 +149,8 @@ ColumnLayout {
 					spacing: 0
 					Text {
 						id: sipAddr
-						text: UtilsCpp.generateLinphoneSipAddress(searchbar.text)
+						property string _text: UtilsCpp.interpretUrl(searchbar.text)
+						text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
 						font.pixelSize: 14 * DefaultStyle.dp
 					}
 				}

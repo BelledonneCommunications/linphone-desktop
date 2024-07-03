@@ -106,7 +106,7 @@ public:
 	Q_INVOKABLE static int secsTo(const QString &start, const QString &end);
 	Q_INVOKABLE static QDateTime addSecs(QDateTime date, int secs);
 	Q_INVOKABLE static QDateTime addYears(QDateTime date, int years);
-	Q_INVOKABLE static QString generateLinphoneSipAddress(const QString &uri);
+	Q_INVOKABLE static QString interpretUrl(const QString &uri);
 	Q_INVOKABLE static QString findAvatarByAddress(const QString &address);
 	Q_INVOKABLE static VariantObject *findFriendByAddress(const QString &address);
 	static QString generateSavedFilename(const QString &from, const QString &to);

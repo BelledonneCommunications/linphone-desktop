@@ -3,7 +3,7 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
 
 // TODO : spacing
 AbstractMainPage {

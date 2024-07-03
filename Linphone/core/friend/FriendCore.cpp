@@ -349,9 +349,12 @@ QVariant FriendCore::getAddressAt(int index) const {
 	return mAddressList[index];
 }
 
-void FriendCore::setAddressAt(int index, const QString &label, const QString &address) {
+void FriendCore::setAddressAt(int index, const QString &label, QString address) {
 	if (index < 0 || index >= mAddressList.count()) return;
 	auto map = mAddressList[index].toMap();
+	if (Utils::isUsername(address)) {
+		address = Utils::interpretUrl(address);
+	}
 	auto oldLabel = map["label"].toString();
 	if (/*oldLabel != label || */ map["address"] != address) {
 		mAddressList.replace(index, createFriendAddressVariant(label.isEmpty() ? oldLabel : label, address));
