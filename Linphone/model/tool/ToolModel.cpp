@@ -192,7 +192,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 std::shared_ptr<linphone::Account> ToolModel::findAccount(const std::shared_ptr<const linphone::Address> &address) {
 	std::shared_ptr<linphone::Account> account;
 	for (auto item : CoreModel::getInstance()->getCore()->getAccountList()) {
-		if (item->getContactAddress()->weakEqual(address)) {
+		if (item->getContactAddress() && item->getContactAddress()->weakEqual(address)) {
 			account = item;
 			break;
 		}
