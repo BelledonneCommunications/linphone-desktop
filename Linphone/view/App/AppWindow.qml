@@ -18,12 +18,14 @@ ApplicationWindow {
 		Dialog {
 			property var requestDialog
 			property int index
+			property var callback: requestDialog?.result
 			signal closePopup(int index)
 			onClosed: closePopup(index)
 			text: requestDialog.message
 			details: requestDialog.details
-			onAccepted: requestDialog.result(1)
-			onRejected: requestDialog.result(0)
+			// For C++, requestDialog need to be call directly
+			onAccepted: requestDialog ? requestDialog.result(1) : callback(1)
+			onRejected: requestDialog ? requestDialog.result(0) : callback(0)
 			width: 278 * DefaultStyle.dp
 		}
 	}
@@ -56,7 +58,16 @@ ApplicationWindow {
 		popup.open()
 		popup.closePopup.connect(removeFromPopupLayout)
 	}
-
+	
+	function showConfirmationLambdaPopup(title,details,callback){
+		console.log("Showing confirmation popup")
+		var popup = confirmPopupComp.createObject(popupLayout, {"text": title, "details":details,"callback":callback})
+		popup.index = popupLayout.popupList.length
+		popupLayout.popupList.push(popup)
+		popup.open()
+		popup.closePopup.connect(removeFromPopupLayout)
+	}
+	
 	ColumnLayout {
 		id: popupLayout
 		anchors.fill: parent
