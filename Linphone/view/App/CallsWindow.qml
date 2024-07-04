@@ -73,6 +73,8 @@ AppWindow {
 	
 	function endCall(callToFinish) {
 		if (callToFinish) callToFinish.core.lTerminate()
+		var mainWin = UtilsCpp.getMainWindow()
+		mainWin.goToCallHistory()
 	}
 	function callEnded(call){
 		if (call.core.state === LinphoneEnums.CallState.Error) {

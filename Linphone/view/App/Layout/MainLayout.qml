@@ -20,11 +20,16 @@ Item {
 													
 	signal addAccountRequest()
 	signal openNewCall()
+	signal openCallHistory()
 	signal createContactRequested(string name, string address)
 
 	function goToNewCall() {
 		tabbar.currentIndex = 0
 		mainItem.openNewCall()
+	}
+	function goToCallHistory() {
+		tabbar.currentIndex = 0
+		mainItem.openCallHistory()
 	}
 
 	function createContact(name, address) {
@@ -370,6 +375,7 @@ Item {
 							Connections {
 								target: mainItem
 								onOpenNewCall: callPage.goToNewCall()
+								onOpenCallHistory: callPage.goToCallHistory()
 							}
 							onCreateContactRequested: (name, address) => {
 								mainItem.createContact(name, address)

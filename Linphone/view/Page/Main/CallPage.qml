@@ -50,6 +50,9 @@ AbstractMainPage {
 	function goToNewCall() {
 		listStackView.push(newCallItem)
 	}
+	function goToCallHistory() {
+		listStackView.pop()
+	}
 
 	Dialog {
 		id: deleteHistoryPopup

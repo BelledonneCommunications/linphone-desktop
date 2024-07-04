@@ -24,6 +24,11 @@ AppWindow {
 	// 	color: DefaultStyle.grey_100
 	// }
 
+	function goToCallHistory() {
+		console.log("go to call history")
+		mainWindowStackView.replace(mainPage, StackView.Immediate)
+		mainWindowStackView.currentItem.goToCallHistory()
+	}
 	function goToNewCall() {
 		mainWindowStackView.replace(mainPage, StackView.Immediate)
 		mainWindowStackView.currentItem.goToNewCall()
