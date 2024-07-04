@@ -42,8 +42,7 @@ AppWindow {
 	onTransferStateChanged: {
 		console.log("Transfer state:", transferState)
 		if (transferState === LinphoneEnums.CallState.Error) {
-			transferErrorPopup.visible = true
-
+			UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Le transfert d'appel a échoué"), false, mainWindow)
 		}
 		else if (transferState === LinphoneEnums.CallState.Connected){
 			var mainWin = UtilsCpp.getMainWindow()
@@ -202,46 +201,26 @@ AppWindow {
 		padding: 20 * DefaultStyle.dp
 		underlineColor: DefaultStyle.main1_500_main
 		radius: 15 * DefaultStyle.dp
+		width: 278 * DefaultStyle.dp
+		height: 115 * DefaultStyle.dp
 		contentItem: ColumnLayout {
 			spacing: 0
 			BusyIndicator{
+				Layout.preferredWidth: 33 * DefaultStyle.dp
+				Layout.preferredHeight: 33 * DefaultStyle.dp
 				Layout.alignment: Qt.AlignHCenter
 			}
 			Text {
 				Layout.alignment: Qt.AlignHCenter
 				text: qsTr("Transfert en cours, veuillez patienter")
+				font {
+					pixelSize: 14 * DefaultStyle.dp
+					weight: 400 * DefaultStyle.dp
+				}
 			}
 		}
 	}
-	Timer {
-		id: autoClosePopup
-		interval: 2000
-		onTriggered: {
-			transferErrorPopup.close()
-		} 
-	}
-	Popup {
-		id: transferErrorPopup
-		onVisibleChanged: if (visible) autoClosePopup.restart()
-		closePolicy: Control.Popup.NoAutoClose
-		x : parent.x + parent.width - width
-		y : parent.y + parent.height - height
-		rightMargin: 20 * DefaultStyle.dp
-		bottomMargin: 20 * DefaultStyle.dp
-		padding: 20 * DefaultStyle.dp
-		underlineColor: DefaultStyle.danger_500main
-		radius: 0
-		contentItem: ColumnLayout {
-			spacing: 0
-			Text {
-				text: qsTr("Erreur de transfert")
-			}
-			Text {
-				Layout.alignment: Qt.AlignHCenter
-				text: qsTr("Le transfert d'appel a échoué.")
-			}
-		}
-	}
+
 /************************* CONTENT ********************************/
 	Rectangle {
 		anchors.fill: parent
@@ -349,21 +328,25 @@ AppWindow {
 							EffectImage {
 								Layout.preferredWidth: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 15 * DefaultStyle.dp
-								colorizationColor: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
-									? DefaultStyle.info_500_main
-									: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
-										? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
-											? DefaultStyle.warning_600
-											: DefaultStyle.info_500_main
-										: DefaultStyle.grey_0
+								colorizationColor: mainWindow.call 
+									? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+										? DefaultStyle.info_500_main
+										: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
+											? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+												? DefaultStyle.warning_600
+												: DefaultStyle.info_500_main
+											: DefaultStyle.grey_0
+									: "transparent"
 								visible: mainWindow.call && mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
-								imageSource: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+								imageSource: mainWindow.call 
+								? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
 									? AppIcons.lockSimple
 									: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
 										? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
 											? AppIcons.warningCircle
 											: AppIcons.lockKey
 										: AppIcons.lockSimpleOpen
+								: ""
 							}
 							Text {
 								text: mainWindow.call && mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
@@ -502,6 +485,7 @@ AppWindow {
 					Item {
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Transfert d'appel")
 						CallContactsLists {
+							id: callcontactslist
 							anchors.fill: parent
 							anchors.topMargin: 21 * DefaultStyle.dp
 							anchors.leftMargin: 16 * DefaultStyle.dp
@@ -509,8 +493,8 @@ AppWindow {
 							groupCallVisible: false
 							searchBarColor: DefaultStyle.grey_0
 							searchBarBorderColor: DefaultStyle.grey_200
-							onCallButtonPressed: (address) => {
-								mainWindow.call.core.lTransferCall(address)
+							onSelectedContactChanged: {
+								if (selectedContact) mainWindow.transferCallToContact(mainWindow.call, selectedContact, callcontactslist)
 							}
 						}
 					}

@@ -30,7 +30,7 @@ AppWindow {
 	}
 	function transferCallSucceed() {
 		mainWindowStackView.replace(mainPage, StackView.Immediate)
-		mainWindowStackView.currentItem.transferCallSucceed()
+		UtilsCpp.showInformationPopup(qsTr("Appel transféré"), qsTr("Votre correspondant a été transféré au contact sélectionné"))
 	}
 	function initStackViewItem() {
 		if (accountProxy.haveAccount) mainWindowStackView.replace(mainPage, StackView.Immediate)

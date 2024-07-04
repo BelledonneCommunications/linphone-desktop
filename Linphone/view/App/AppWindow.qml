@@ -34,6 +34,8 @@ ApplicationWindow {
 		id: startCallPopup
 		property FriendGui contact
 		property bool videoEnabled
+		// if currentCall, transfer call to contact
+		property CallGui currentCall
 		onContactChanged: {
 			console.log("contact changed", contact)
 		}
@@ -119,7 +121,10 @@ ApplicationWindow {
 						anchors.fill: parent
 						hoverEnabled: true
 						cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-						onClicked: UtilsCpp.createCall(modelData.address, {'localVideoEnabled': startCallPopup.videoEnabled})
+						onClicked: {
+							if (startCallPopup.currentCall) startCallPopup.currentCall.core.lTransferCall(modelData.address)
+							else UtilsCpp.createCall(modelData.address, {'localVideoEnabled': startCallPopup.videoEnabled})
+						}
 					}
 				}
 			}
@@ -127,7 +132,7 @@ ApplicationWindow {
 	}
 
 	function startCallWithContact(contact, videoEnabled, parentItem) {
-		if (parentItem == undefined) parentItem = mainWindow
+		if (parentItem == undefined) parentItem = mainWindow.contentItem
 		startCallPopup.parent = parentItem
 		if (contact) {
 			console.log("START CALL WITH", contact.core.displayName, "addresses count", contact.core.allAddresses.length)
@@ -143,6 +148,28 @@ ApplicationWindow {
 						: contact.core.phoneNumbers[0].address
 					: contact.core.defaultAddress
 				if (addressToCall.length != 0) UtilsCpp.createCall(addressToCall, {'localVideoEnabled':videoEnabled})
+			}
+		}
+	}
+
+	function transferCallToContact(call, contact, parentItem) {
+		if (!call || !contact) return
+		if (parentItem == undefined) parentItem = mainWindow.contentItem
+		startCallPopup.parent = parentItem
+		if (contact) {
+			console.log("TRANSFER CALL TO", contact.core.displayName, "addresses count", contact.core.allAddresses.length, call)
+			if (contact.core.allAddresses.length > 1) {
+				startCallPopup.contact = contact
+				startCallPopup.currentCall = call
+				startCallPopup.open()
+
+			} else {
+				var addressToCall = contact.core.defaultAddress.length === 0 
+					? contact.core.phoneNumbers.length === 0
+						? ""
+						: contact.core.phoneNumbers[0].address
+					: contact.core.defaultAddress
+				if (addressToCall.length != 0) call.core.lTransferCall(contact.core.defaultAddress)
 			}
 		}
 	}

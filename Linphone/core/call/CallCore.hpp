@@ -217,7 +217,7 @@ public:
 	void setInputDeviceName(const QString &id);
 
 	LinphoneEnums::CallState getTransferState() const;
-	void setTransferState(LinphoneEnums::CallState state, const QString &message);
+	void setTransferState(LinphoneEnums::CallState state);
 
 	LinphoneEnums::ConferenceLayout getConferenceVideoLayout() const;
 	void setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);
@@ -276,7 +276,7 @@ signals:
 	void lSetLocalVideoEnabled(bool enabled);
 	void lSetVideoEnabled(bool enabled);
 	void lSetPaused(bool paused);
-	void lTransferCall(QString &est);
+	void lTransferCall(QString address);
 	void lStartRecording();
 	void lStopRecording();
 	void lCheckAuthenticationTokenSelected(const QString &token);

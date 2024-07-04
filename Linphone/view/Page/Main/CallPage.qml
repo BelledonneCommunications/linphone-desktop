@@ -23,6 +23,7 @@ AbstractMainPage {
 	property bool isRegistered: account ? account.core.registrationState == LinphoneEnums.RegistrationState.Ok : false
 	property int selectedParticipantsCount
 	signal startGroupCallRequested()
+	signal createCallFromSearchBarRequested()
 	signal createContactRequested(string name, string address)
 
 	Connections {
@@ -94,7 +95,7 @@ AbstractMainPage {
 				width: parent.width
 				height: parent.height
 				onLaunchCall: {
-					UtilsCpp.createCall(searchBar.text)
+					mainItem.createCallFromSearchBarRequested()
 					// TODO : auto completion instead of sip linphone
 				}
 			}
@@ -408,14 +409,20 @@ AbstractMainPage {
 		ColumnLayout {
 			Control.StackView.onActivated: titleLoader.sourceComponent = newCallTitle
 			CallContactsLists {
+				id: callContactsList
 				Layout.fillWidth: true
 				Layout.fillHeight: true
 				numPad: numericPad
 				groupCallVisible: true
 				searchBarColor: DefaultStyle.grey_100
+				onSelectedContactChanged: mainWindow.startCallWithContact(selectedContact, false, callContactsList)
 				onGroupCallCreationRequested: {
 					console.log("groupe call requetsed")
 					listStackView.push(groupCallItem)
+				}
+				Connections {
+					target: mainItem
+					onCreateCallFromSearchBarRequested: UtilsCpp.createCall(callContactsList.searchBar.text)
 				}
 			}
 		}

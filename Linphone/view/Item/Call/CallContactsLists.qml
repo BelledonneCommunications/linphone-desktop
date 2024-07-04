@@ -12,8 +12,10 @@ Item {
 	property bool groupCallVisible
 	property color searchBarColor: DefaultStyle.grey_100
 	property color searchBarBorderColor: "transparent"
+	property alias searchBar: searchBar
 	signal callButtonPressed(string address)
 	signal groupCallCreationRequested()
+	property FriendGui selectedContact
 	property NumericPad numPad
 	clip: true
 
@@ -117,7 +119,7 @@ Item {
 							model: MagicSearchProxy {
 								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
 							}
-							onSelectedContactChanged: mainWindow.startCallWithContact(selectedContact, false, mainItem.parent)
+							onSelectedContactChanged: mainItem.selectedContact = selectedContact
 						}
 					}
 					ColumnLayout {
@@ -142,7 +144,7 @@ Item {
 								sourceFlags: LinphoneEnums.MagicSearchSource.All
 								aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
 							}
-							onSelectedContactChanged: mainWindow.startCallWithContact(selectedContact, false, mainItem.parent)
+							onSelectedContactChanged: mainItem.selectedContact = selectedContact
 						}
 					}
 					Item {

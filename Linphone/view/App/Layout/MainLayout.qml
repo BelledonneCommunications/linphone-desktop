@@ -19,19 +19,17 @@ Item {
 	property bool helpHidden: true
 													
 	signal addAccountRequest()
+	signal openNewCall()
+	signal createContactRequested(string name, string address)
 
 	function goToNewCall() {
 		tabbar.currentIndex = 0
-		callPage.goToNewCall()
-	}
-
-	function transferCallSucceed() {
-		transferSucceedPopup.open()
+		mainItem.openNewCall()
 	}
 
 	function createContact(name, address) {
 		tabbar.currentIndex = 1
-		contactPage.createContact(name, address)
+		mainItem.createContactRequested(name, address)
 	}
 
 	AccountProxy {
@@ -45,54 +43,6 @@ Item {
 		onTriggered: {
 			transferSucceedPopup.close()
 		} 
-	}
-	Popup {
-		id: transferSucceedPopup
-		onVisibleChanged: if (visible) autoClosePopup.restart()
-		closePolicy: Control.Popup.NoAutoClose
-		x : parent.x + parent.width - width
-		y : parent.y + parent.height - height
-		rightMargin: 20 * DefaultStyle.dp
-		bottomMargin: 20 * DefaultStyle.dp
-		padding: 20 * DefaultStyle.dp
-		underlineColor: DefaultStyle.success_500main
-		radius: 0
-		contentItem: RowLayout {
-			spacing: 15 * DefaultStyle.dp
-			EffectImage {
-				imageSource: AppIcons.smiley
-				colorizationColor: DefaultStyle.success_500main
-				Layout.preferredWidth: 32 * DefaultStyle.dp
-				Layout.preferredHeight: 32 * DefaultStyle.dp
-				width: 32 * DefaultStyle.dp
-				height: 32 * DefaultStyle.dp
-			}
-			Rectangle {
-				Layout.preferredWidth: 1 * DefaultStyle.dp
-				Layout.preferredHeight: parent.height
-				color: DefaultStyle.main2_200
-			}
-			ColumnLayout {
-				Text {
-					text: qsTr("Appel transféré")
-					color: DefaultStyle.success_500main
-					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
-					}
-				}
-				Text {
-					Layout.alignment: Qt.AlignHCenter
-					Layout.fillWidth: true
-					text: qsTr("Votre correspondant a été transféré au contact sélectionné")
-					color: DefaultStyle.main2_500main
-					font {
-						pixelSize: 12 * DefaultStyle.dp
-						weight: 300 * DefaultStyle.dp
-					}
-				}
-			}
-		}
 	}
 	Item{
 		anchors.fill: parent
@@ -417,12 +367,24 @@ Item {
 						currentIndex: tabbar.currentIndex
 						CallPage {
 							id: callPage
+							Connections {
+								target: mainItem
+								onOpenNewCall: callPage.goToNewCall()
+							}
 							onCreateContactRequested: (name, address) => {
 								mainItem.createContact(name, address)
 							}
 						}
 						ContactPage{
 							id: contactPage
+							Connections {
+								target: mainItem
+								onCreateContactRequested: (name, address) => {
+									contactPage.createContact(name, address)
+								}
+							}
+		
+
 						}
 						Item{}
 						//ConversationPage{}

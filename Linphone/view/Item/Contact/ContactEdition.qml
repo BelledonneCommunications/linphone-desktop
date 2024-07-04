@@ -272,7 +272,7 @@ RightPanelLayout {
 					}
 					ErrorText {
 						id: addressesErrorText
-						wrapMode: Qt.WordWrap
+						wrapMode: Text.WordWrap
 						elide: Text.ElideRight
 						Layout.fillWidth: true
 					}

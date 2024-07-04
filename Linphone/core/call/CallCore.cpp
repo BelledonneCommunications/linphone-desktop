@@ -280,20 +280,17 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		mCallModelConnection->invokeToCore([this, paused]() { setPaused(paused); });
 	});
 
-	mCallModelConnection->makeConnectToCore(&CallCore::lTransferCall, [this](const QString &address) {
-		mCallModelConnection->invokeToModel(
-		    [this, address]() { mCallModel->transferTo(ToolModel::interpretUrl(address)); });
+	mCallModelConnection->makeConnectToCore(&CallCore::lTransferCall, [this](QString address) {
+		mCallModelConnection->invokeToModel([this, address]() {
+			auto linAddr = ToolModel::interpretUrl(address);
+			if (linAddr) mCallModel->transferTo(linAddr);
+		});
 	});
 	mCallModelConnection->makeConnectToModel(
 	    &CallModel::transferStateChanged,
 	    [this](const std::shared_ptr<linphone::Call> &call, linphone::Call::State state) {
-		    mCallModelConnection->invokeToCore([this, state]() {
-			    QString message;
-			    if (state == linphone::Call::State::Error) {
-				    message = "L'appel n'a pas pu être transféré.";
-			    }
-			    setTransferState(LinphoneEnums::fromLinphone(state), message);
-		    });
+		    mCallModelConnection->invokeToCore(
+		        [this, state]() { setTransferState(LinphoneEnums::fromLinphone(state)); });
 	    });
 	mCallModelConnection->makeConnectToModel(
 	    &CallModel::encryptionChanged,
@@ -715,10 +712,9 @@ LinphoneEnums::CallState CallCore::getTransferState() const {
 	return mTransferState;
 }
 
-void CallCore::setTransferState(LinphoneEnums::CallState state, const QString &message) {
+void CallCore::setTransferState(LinphoneEnums::CallState state) {
 	if (mTransferState != state) {
 		mTransferState = state;
-		if (state == LinphoneEnums::CallState::Error) setLastErrorMessage(message);
 		emit transferStateChanged();
 	}
 }
