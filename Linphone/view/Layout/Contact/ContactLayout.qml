@@ -149,7 +149,7 @@ ColumnLayout {
 			button.icon.source: AppIcons.phone
 			label: qsTr("Appel")
 			button.onClicked: {
-				UtilsCpp.createCall(mainItem.contactAddress)
+				mainWindow.startCallWithContact(contact, false, mainItem)
 			}
 		}
 		LabelButton {
@@ -160,7 +160,7 @@ ColumnLayout {
 			button.icon.height: 24 * DefaultStyle.dp
 			button.icon.source: AppIcons.chatTeardropText
 			label: qsTr("Message")
-			button.onClicked: console.debug("[CallPage.qml] TODO : open conversation")
+			button.onClicked: console.debug("[ContactLayout.qml] TODO : open conversation")
 		}
 		LabelButton {
 			visible: !mainItem.isConference
@@ -171,7 +171,7 @@ ColumnLayout {
 			button.icon.source: AppIcons.videoCamera
 			label: qsTr("Appel Video")
 			button.onClicked: {
-	  			UtilsCpp.createCall(mainItem.contactAddress, {'localVideoEnabled':true})
+				mainWindow.startCallWithContact(contact, true, mainItem)
 			}
 		}
 	}

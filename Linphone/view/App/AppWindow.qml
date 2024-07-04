@@ -30,6 +30,123 @@ ApplicationWindow {
 		}
 	}
 
+	Popup {
+		id: startCallPopup
+		property FriendGui contact
+		property bool videoEnabled
+		onContactChanged: {
+			console.log("contact changed", contact)
+		}
+		underlineColor: DefaultStyle.main1_500_main
+		anchors.centerIn: parent
+		width: 370 * DefaultStyle.dp
+		modal: true
+		leftPadding: 15 * DefaultStyle.dp
+		rightPadding: 15 * DefaultStyle.dp
+		topPadding: 20 * DefaultStyle.dp
+		bottomPadding: 25 * DefaultStyle.dp
+		contentItem: ColumnLayout {
+			spacing: 16 * DefaultStyle.dp
+			RowLayout {
+				spacing: 0
+				Text {
+					text: qsTr("Which channel do you choose?")
+					font {
+						pixelSize: 16 * DefaultStyle.dp
+						weight: 800 * DefaultStyle.dp
+					}
+				}
+				Item{Layout.fillWidth: true}
+				Button {
+					Layout.preferredWidth: 24 * DefaultStyle.dp
+					Layout.preferredHeight: 24 * DefaultStyle.dp
+					Layout.alignment: Qt.AlignVCenter
+					background: Item{}
+					icon.source:AppIcons.closeX
+					width: 24 * DefaultStyle.dp
+					height: 24 * DefaultStyle.dp
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
+					contentItem: Image {
+						anchors.fill: parent
+						source: AppIcons.closeX
+					}
+					onClicked: startCallPopup.close()
+				}
+			}
+			ListView {
+				id: popuplist
+				model: VariantList {
+					model: startCallPopup.contact && startCallPopup.contact.core.allAddresses || []
+				}
+				Layout.fillWidth: true
+				Layout.preferredHeight: contentHeight
+				spacing: 10 * DefaultStyle.dp
+				delegate: Item {
+					width: popuplist.width
+					height: 56 * DefaultStyle.dp
+					ColumnLayout {
+						width: popuplist.width
+						anchors.verticalCenter: parent.verticalCenter
+						spacing: 10 * DefaultStyle.dp
+						ColumnLayout {
+							spacing: 7 * DefaultStyle.dp
+							Text {
+								Layout.leftMargin: 5 * DefaultStyle.dp
+								text: modelData.label + " :"
+								font {
+									pixelSize: 13 * DefaultStyle.dp
+									weight: 700 * DefaultStyle.dp
+								}
+							}
+							Text {
+								Layout.leftMargin: 5 * DefaultStyle.dp
+								text: modelData.address
+								font {
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+								}
+							}
+						}
+						Rectangle {
+							visible: index != popuplist.model.count - 1
+							Layout.fillWidth: true
+							Layout.preferredHeight: 1 * DefaultStyle.dp
+							color: DefaultStyle.main2_200
+						}
+					}
+					MouseArea {
+						anchors.fill: parent
+						hoverEnabled: true
+						cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+						onClicked: UtilsCpp.createCall(modelData.address, {'localVideoEnabled': startCallPopup.videoEnabled})
+					}
+				}
+			}
+		}
+	}
+
+	function startCallWithContact(contact, videoEnabled, parentItem) {
+		if (parentItem == undefined) parentItem = mainWindow
+		startCallPopup.parent = parentItem
+		if (contact) {
+			console.log("START CALL WITH", contact.core.displayName, "addresses count", contact.core.allAddresses.length)
+			if (contact.core.allAddresses.length > 1) {
+				startCallPopup.contact = contact
+				startCallPopup.videoEnabled = videoEnabled
+				startCallPopup.open()
+
+			} else {
+				var addressToCall = contact.core.defaultAddress.length === 0 
+					? contact.core.phoneNumbers.length === 0
+						? ""
+						: contact.core.phoneNumbers[0].address
+					: contact.core.defaultAddress
+				if (addressToCall.length != 0) UtilsCpp.createCall(addressToCall, {'localVideoEnabled':videoEnabled})
+			}
+		}
+	}
+
 	function removeFromPopupLayout(index) {
 		popupLayout.popupList.splice(index, 1)
 	}

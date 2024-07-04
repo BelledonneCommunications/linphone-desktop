@@ -46,7 +46,6 @@ ListView {
 	signal contactStarredChanged()
 	signal contactDeletionRequested(FriendGui contact)
 	signal contactAddedToSelection()
-	signal contactClicked(FriendGui contact)
 
 	function addContactToSelection(address) {
 		if (multiSelectionEnabled) {
@@ -62,6 +61,8 @@ ListView {
 			selectedContacts.splice(indexInSelection, 1)
 		}
 	}
+
+	
 
 	model: MagicSearchProxy {
 		searchText: searchBarText.length === 0 ? "*" : searchBarText
@@ -265,8 +266,8 @@ ListView {
 				visible: contactArea.containsMouse || friendPopup.hovered || (!mainItem.multiSelectionEnabled && mainItem.currentIndex === index)
 			}
 			onClicked: {
+				mainItem.currentIndex = -1
 				mainItem.currentIndex = index
-				mainItem.contactClicked(modelData)
 				if (mainItem.multiSelectionEnabled) {
 					var indexInSelection = mainItem.selectedContacts.indexOf(modelData.core.defaultAddress)
 					if (indexInSelection == -1) {

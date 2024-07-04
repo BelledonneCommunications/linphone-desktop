@@ -126,7 +126,7 @@ AppWindow {
 	}
 
 	Component.onCompleted: {
-		if(call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && (!call.core.tokenVerified || call.core.isMismatch)) {
+		if(call && call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && (!call.core.tokenVerified || call.core.isMismatch)) {
 			zrtpValidation.open()
 		}
 	}

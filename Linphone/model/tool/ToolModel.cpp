@@ -124,14 +124,13 @@ bool ToolModel::createCall(const QString &sipAddress,
 		lCritical() << "[" + QString(gClassName) + "] The calling address is not an interpretable SIP address: "
 		            << sipAddress;
 		if (errorMessage) {
-			*errorMessage = tr("The calling address is not an interpretable SIP address : ");
-			errorMessage->append(sipAddress);
+			*errorMessage = tr("The calling address is not an interpretable SIP address : %1").arg(sipAddress);
 		}
 		return false;
 	}
 	for (auto &account : core->getAccountList()) {
 		if (account->getContactAddress() && account->getContactAddress()->weakEqual(address)) {
-			*errorMessage = "The calling address is a connected account.";
+			if (errorMessage) *errorMessage = "The calling address is a connected account.";
 			lDebug() << "[" + QString(gClassName) + "]" + *errorMessage;
 			return false;
 		}

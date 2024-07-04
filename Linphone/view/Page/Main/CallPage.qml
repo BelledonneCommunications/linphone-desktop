@@ -79,9 +79,9 @@ AbstractMainPage {
 			anchors.top: titleLoader.bottom
 			anchors.topMargin: 18 * DefaultStyle.dp
 			anchors.left: parent.left
+			anchors.leftMargin: 45 * DefaultStyle.dp
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
-			anchors.leftMargin: 45 * DefaultStyle.dp
 		}
 
 		Item {
@@ -413,11 +413,6 @@ AbstractMainPage {
 				numPad: numericPad
 				groupCallVisible: true
 				searchBarColor: DefaultStyle.grey_100
-				
-				onCallButtonPressed: (address) => {
-					UtilsCpp.createCall(address)
-					// var window = UtilsCpp.getCallsWindow()
-				}
 				onGroupCallCreationRequested: {
 					console.log("groupe call requetsed")
 					listStackView.push(groupCallItem)
