@@ -21,6 +21,7 @@ Item {
 	signal addAccountRequest()
 	signal openNewCall()
 	signal openCallHistory()
+	signal displayContact(string contactAddress)
 	signal createContactRequested(string name, string address)
 
 	function goToNewCall() {
@@ -30,6 +31,10 @@ Item {
 	function goToCallHistory() {
 		tabbar.currentIndex = 0
 		mainItem.openCallHistory()
+	}
+	function goToContactPage(contactAddress) {
+		tabbar.currentIndex = 1
+		mainItem.displayContact(contactAddress)
 	}
 
 	function createContact(name, address) {
@@ -388,9 +393,10 @@ Item {
 								onCreateContactRequested: (name, address) => {
 									contactPage.createContact(name, address)
 								}
+								onDisplayContact: (contactAddress) => {
+									contactPage.displayContact(contactAddress)
+								}		
 							}
-		
-
 						}
 						Item{}
 						//ConversationPage{}

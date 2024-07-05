@@ -149,7 +149,8 @@ ColumnLayout {
 			button.icon.source: AppIcons.phone
 			label: qsTr("Appel")
 			button.onClicked: {
-				mainWindow.startCallWithContact(contact, false, mainItem)
+				if (mainItem.contact) mainWindow.startCallWithContact(mainItem.contact, false, mainItem)
+				else UtilsCpp.createCall(mainItem.contactAddress)
 			}
 		}
 		LabelButton {
@@ -171,7 +172,8 @@ ColumnLayout {
 			button.icon.source: AppIcons.videoCamera
 			label: qsTr("Appel Video")
 			button.onClicked: {
-				mainWindow.startCallWithContact(contact, true, mainItem)
+				if (mainItem.contact) mainWindow.startCallWithContact(mainItem.contact, true, mainItem)
+				else UtilsCpp.createCall(mainItem.contactAddress, {'localVideoEnabled': true})
 			}
 		}
 	}

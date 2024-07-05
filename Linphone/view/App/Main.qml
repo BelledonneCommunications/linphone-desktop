@@ -33,6 +33,10 @@ AppWindow {
 		mainWindowStackView.replace(mainPage, StackView.Immediate)
 		mainWindowStackView.currentItem.goToNewCall()
 	}
+	function goToContactPage(contactAddress) {
+		mainWindowStackView.replace(mainPage, StackView.Immediate)
+		mainWindowStackView.currentItem.goToContactPage(contactAddress)
+	}
 	function transferCallSucceed() {
 		mainWindowStackView.replace(mainPage, StackView.Immediate)
 		UtilsCpp.showInformationPopup(qsTr("Appel transféré"), qsTr("Votre correspondant a été transféré au contact sélectionné"))

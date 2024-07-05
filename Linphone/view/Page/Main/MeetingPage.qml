@@ -57,9 +57,9 @@ AbstractMainPage {
 				topPadding: 11 * DefaultStyle.dp
 				bottomPadding: 11 * DefaultStyle.dp
 				onClicked: {
+					cancelAndDeleteConfDialog.cancelRequested()
 					cancelAndDeleteConfDialog.accepted()
 					cancelAndDeleteConfDialog.close()
-					cancelAndDeleteConfDialog.cancelRequested()
 				}
 			},
 			Button {
@@ -169,6 +169,7 @@ AbstractMainPage {
 				// Layout.fillWidth: true
 				//Layout.topMargin: 18 * DefaultStyle.dp
 				placeholderText: qsTr("Rechercher une réunion")
+				focusedBorderColor: DefaultStyle.main1_500_main
 				Layout.preferredWidth: 331 * DefaultStyle.dp
 			}
 
@@ -270,6 +271,7 @@ AbstractMainPage {
 							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir au moins un participant"), false)
 						} else {
 							meetingSetup.conferenceInfoGui.core.save()
+							mainWindow.showLoadingPopup(qsTr("Création de la réunion en cours ..."), true)
 						}
 					}
 				}
@@ -285,7 +287,7 @@ AbstractMainPage {
 						var mainWin = UtilsCpp.getMainWindow()
 						if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
 						|| meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
-							mainWin.showLoadingPopup(qsTr("Création de la conférence en cours..."))
+							mainWin.showLoadingPopup(qsTr("Création de la réunion en cours..."))
 						} else {
 							if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
 								UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création de la conférence a échoué"), false)
@@ -298,6 +300,7 @@ AbstractMainPage {
 				onSaveSucceed: {
 					leftPanelStackView.pop()
 					UtilsCpp.showInformationPopup(qsTr("Nouvelle réunion"), qsTr("Réunion planifiée avec succès"), true)
+					mainWindow.closeLoadingPopup()
 				}
 				onAddParticipantsRequested: {
 					leftPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": leftPanelStackView})

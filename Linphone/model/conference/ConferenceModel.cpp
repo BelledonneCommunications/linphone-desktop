@@ -168,11 +168,13 @@ void ConferenceModel::onActiveSpeakerParticipantDevice(
 
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<linphone::Conference> &conference,
                                          const std::shared_ptr<linphone::Participant> &participant) {
+	lDebug() << "onParticipant Added" << participant->getAddress()->asStringUriOnly();
 	emit participantAdded(participant);
 	emit participantDeviceCountChanged(getParticipantDeviceCount());
 }
 void ConferenceModel::onParticipantRemoved(const std::shared_ptr<linphone::Conference> &conference,
                                            const std::shared_ptr<const linphone::Participant> &participant) {
+	lDebug() << "onParticipant Removed" << participant->getAddress()->asStringUriOnly();
 	emit participantRemoved(participant);
 	emit participantDeviceCountChanged(getParticipantDeviceCount());
 }

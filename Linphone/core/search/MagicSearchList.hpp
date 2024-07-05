@@ -52,6 +52,8 @@ public:
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+	int findFriendIndexByAddress(const QString& address);
+
 signals:
 	void lSearch(QString filter);
 	void lSetSourceFlags(int sourceFlags);

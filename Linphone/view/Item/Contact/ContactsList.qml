@@ -47,6 +47,14 @@ ListView {
 	signal contactDeletionRequested(FriendGui contact)
 	signal contactAddedToSelection()
 
+	function selectContact(address) {
+		console.log("select", address)
+		var index = magicSearchProxy.findFriendIndexByAddress(address)
+		console.log("index in selection", index)
+		if (index == -1) {
+			mainItem.currentIndex = index
+		}
+	}
 	function addContactToSelection(address) {
 		if (multiSelectionEnabled) {
 			var indexInSelection = selectedContacts.indexOf(address)
@@ -65,6 +73,7 @@ ListView {
 	
 
 	model: MagicSearchProxy {
+		id: magicSearchProxy
 		searchText: searchBarText.length === 0 ? "*" : searchBarText
 		onFriendCreated: (index) => {
 			mainItem.currentIndex = index

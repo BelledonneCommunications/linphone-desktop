@@ -39,7 +39,7 @@ ListView {
 
 	model: ConferenceInfoProxy {
 		id: confInfoProxy
-		searchText: searchBarText.length === 0 ? "" : searchBarText
+		searchText: searchBarText
 		filterType: ConferenceInfoProxy.None
 	}
 

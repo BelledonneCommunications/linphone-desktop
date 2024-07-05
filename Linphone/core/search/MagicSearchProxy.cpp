@@ -38,6 +38,10 @@ MagicSearchProxy::MagicSearchProxy(QObject *parent) : SortFilterProxy(parent) {
 MagicSearchProxy::~MagicSearchProxy() {
 }
 
+int MagicSearchProxy::findFriendIndexByAddress(const QString &address) {
+	return mapFromSource(mList->index(mList->findFriendIndexByAddress(address), 0)).row();
+}
+
 QString MagicSearchProxy::getSearchText() const {
 	return mSearchText;
 }

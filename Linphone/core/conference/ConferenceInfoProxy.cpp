@@ -74,7 +74,17 @@ void ConferenceInfoProxy::updateCurrentDateIndex() {
 bool ConferenceInfoProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	auto ciCore = qobject_cast<ConferenceInfoList *>(sourceModel())->template getAt<ConferenceInfoCore>(sourceRow);
 	if (ciCore) {
-		if (!ciCore->getSubject().contains(mSearchText)) return false;
+		bool searchTextInSubject = false;
+		bool searchTextInParticipant = false;
+		if (ciCore->getSubject().toLower().contains(mSearchText.toLower())) searchTextInSubject = true;
+		for (auto &contact : ciCore->getParticipants()) {
+			auto infos = contact.toMap();
+			if (infos["displayName"].toString().toLower().contains(mSearchText.toLower())) {
+				searchTextInParticipant = true;
+				break;
+			}
+		}
+		if (!searchTextInSubject && !searchTextInParticipant) return false;
 		QDateTime currentDateTime = QDateTime::currentDateTimeUtc();
 		if (mFilterType == int(ConferenceInfoProxy::ConferenceInfoFiltering::None)) {
 			return true;

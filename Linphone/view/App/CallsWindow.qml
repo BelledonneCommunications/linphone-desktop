@@ -73,8 +73,8 @@ AppWindow {
 	
 	function endCall(callToFinish) {
 		if (callToFinish) callToFinish.core.lTerminate()
-		var mainWin = UtilsCpp.getMainWindow()
-		mainWin.goToCallHistory()
+		// var mainWin = UtilsCpp.getMainWindow()
+		// mainWin.goToCallHistory()
 	}
 	function callEnded(call){
 		if (call.core.state === LinphoneEnums.CallState.Error) {
@@ -320,7 +320,7 @@ AppWindow {
 						}
 						RowLayout {
 							spacing: 5 * DefaultStyle.dp
-							visible: mainWindow.callState != LinphoneEnums.CallState.End && mainWindow.callState != LinphoneEnums.CallState.Released
+							visible: mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
 							BusyIndicator  {
 								visible: mainWindow.call && mainWindow.callState != LinphoneEnums.CallState.Connected && mainWindow.callState != LinphoneEnums.CallState.StreamsRunning
 								Layout.preferredWidth: 15 * DefaultStyle.dp
@@ -742,7 +742,6 @@ AppWindow {
 														}
 													}
 													onClicked: {
-														console.log("call is paused", modelData.core.paused)
 														modelData.core.lSetPaused(!modelData.core.paused)
 													}
 												}
@@ -850,7 +849,7 @@ AppWindow {
 													}
 												}
 												onClicked: {
-													UtilsCpp.copyToClipboard(mainWindow.conference.core.uri)
+													UtilsCpp.copyToClipboard(mainWindow.call.core.peerAddress)
 													showInformationPopup(qsTr("Copié"), qsTr("Le lien de la réunion a été copié dans le presse-papier"), true)
 												}
 											}

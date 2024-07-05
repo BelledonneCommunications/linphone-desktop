@@ -146,12 +146,6 @@ AbstractMainPage {
 							}
 						}
 					}
-					Connections {
-						target: deleteHistoryPopup
-						onAccepted: {
-							historyListView.model.removeAllEntries()
-						}
-					}
 					onClicked: {
 						removeHistory.close()
 						deleteHistoryPopup.open()
@@ -218,6 +212,13 @@ AbstractMainPage {
 								currentIndex: -1
 								flickDeceleration: 10000
 								spacing: 10 * DefaultStyle.dp
+
+								Connections {
+									target: deleteHistoryPopup
+									onAccepted: {
+										historyListView.model.removeAllEntries()
+									}
+								}
 
 								delegate: Item {
 									width:historyListView.width
@@ -527,7 +528,7 @@ AbstractMainPage {
 			visible: mainItem.selectedRowHistoryGui != undefined
 			property var contactObj: UtilsCpp.findFriendByAddress(contactAddress)
 			contact: contactObj && contactObj.value || null
-			conferenceInfo: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.conferenceInfo
+			conferenceInfo: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.conferenceInfo || null
 			contactAddress: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
 			contactName: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.displayName : ""
 			anchors.top: rightPanelStackView.top
@@ -540,16 +541,19 @@ AbstractMainPage {
 				anchors.rightMargin: 30 * DefaultStyle.dp
 				anchors.verticalCenter: parent.verticalCenter
 				popup.x: width
+				property var friendGuiObj: UtilsCpp.findFriendByAddress(contactDetail.contactAddress)
+				property var friendGui: friendGuiObj ? friendGuiObj.value : null
 				popup.contentItem: ColumnLayout {
 					Button {
 						background: Item {}
 						contentItem: IconLabel {
-							text: qsTr("Ajouter aux contacts")
+							text: detailOptions.friendGui ? qsTr("Voir le contact") : qsTr("Ajouter aux contacts")
 							iconSource: AppIcons.plusCircle
 						}
 						onClicked: {
 							detailOptions.close()
-							mainItem.createContactRequested(contactDetail.contactName, contactDetail.contactAddress)
+							if (detailOptions.friendGui) mainWindow.goToContactPage(contactDetail.contactAddress)
+							else mainItem.createContactRequested(contactDetail.contactName, contactDetail.contactAddress)
 						}
 					}
 					Button {
@@ -564,15 +568,15 @@ AbstractMainPage {
 							else UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Erreur lors de la copie de l'adresse"), false)
 						}
 					}
-					Button {
-						background: Item {}
-						enabled: false
-						contentItem: IconLabel {
-							text: qsTr("Bloquer")
-							iconSource: AppIcons.empty
-						}
-						onClicked: console.debug("[CallPage.qml] TODO : block user")
-					}
+					// Button {
+					// 	background: Item {}
+					// 	enabled: false
+					// 	contentItem: IconLabel {
+					// 		text: qsTr("Bloquer")
+					// 		iconSource: AppIcons.empty
+					// 	}
+					// 	onClicked: console.debug("[CallPage.qml] TODO : block user")
+					// }
 					Rectangle {
 						Layout.fillWidth: true
 						Layout.preferredHeight: 2 * DefaultStyle.dp

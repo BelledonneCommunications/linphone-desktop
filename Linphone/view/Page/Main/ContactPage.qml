@@ -41,6 +41,10 @@ AbstractMainPage {
 		rightPanelStackView.push(contactEdition, {"contact": friendGui, "title": qsTr("Modifier contact"), "saveButtonText": qsTr("Enregistrer")})
 	}
 
+	function displayContact(contactAddress) {
+		contactList.selectContact(contactAddress)
+	}
+
 	// rightPanelStackView.initialItem: contactDetail
 	Binding {
 		mainItem.showDefaultItem: false

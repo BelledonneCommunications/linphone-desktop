@@ -49,6 +49,7 @@ public:
 	void setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag);
 
 	// Q_INVOKABLE forceUpdate();
+	Q_INVOKABLE int findFriendIndexByAddress(const QString &address);
 
 signals:
 	void searchTextChanged();

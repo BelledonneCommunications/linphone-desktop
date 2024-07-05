@@ -173,3 +173,23 @@ QVariant MagicSearchList::data(const QModelIndex &index, int role) const {
 	}
 	return QVariant();
 }
+
+int MagicSearchList::findFriendIndexByAddress(const QString &address) {
+	int i = 0;
+	qDebug() << "LOOKING FOR ADDRESS" << address;
+	for (auto &item : mList) {
+		qDebug() << "item" << item;
+		auto isFriendCore = item.objectCast<FriendCore>();
+		if (!isFriendCore) continue;
+		qDebug() << "SEARCH IN FRIEND" << isFriendCore->getDisplayName();
+		for (auto &friendAddress : isFriendCore->getAllAddresses()) {
+			auto map = friendAddress.toMap();
+			qDebug() << "COMPARE" << map["address"].toString();
+			if (map["address"].toString() == address) {
+				return i;
+			}
+		}
+		++i;
+	}
+	return -1;
+}
