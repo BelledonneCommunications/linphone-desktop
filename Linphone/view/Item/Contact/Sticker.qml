@@ -280,11 +280,11 @@ Item {
 		CheckableButton {
 			id: muteIcon
 			icon.source: AppIcons.microphoneSlash
-			Layout.preferredWidth: 18 * DefaultStyle.dp
-			Layout.preferredHeight: 18 * DefaultStyle.dp
+			Layout.preferredWidth: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
+			Layout.preferredHeight: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
 			visible: mainItem.mutedStatus
-			icon.width: 19 * DefaultStyle.dp
-			icon.height: 19 * DefaultStyle.dp
+			icon.width: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
+			icon.height: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
 			enabled: false
 			contentImageColor: DefaultStyle.main2_500main
 			backgroundColor: DefaultStyle.grey_0

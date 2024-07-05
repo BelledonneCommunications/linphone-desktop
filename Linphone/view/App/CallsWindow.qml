@@ -421,31 +421,35 @@ AppWindow {
 
 				Control.Control {
 					visible: mainWindow.call && (mainWindow.call.core.recording || mainWindow.call.core.remoteRecording)
-					width: 563 * DefaultStyle.dp
-					height: 45 * DefaultStyle.dp
 					anchors.centerIn: parent
-					leftPadding: 15 * DefaultStyle.dp
+					leftPadding: 14 * DefaultStyle.dp
 					rightPadding: 14 * DefaultStyle.dp
+					topPadding: 6 * DefaultStyle.dp
+					bottomPadding: 6 * DefaultStyle.dp
 					background: Rectangle {
 						anchors.fill: parent
 						color: DefaultStyle.grey_500
 						radius: 10 * DefaultStyle.dp
 					}
 					contentItem: RowLayout {
-						EffectImage {
-							imageSource: AppIcons.recordFill
-							colorizationColor: DefaultStyle.danger_500main
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-						}
-						Text {
-							color: DefaultStyle.danger_500main
-							font.pixelSize: 14 * DefaultStyle.dp
-							text: mainWindow.call
-								? mainWindow.call.core.recording 
-									? mainWindow.conference ? qsTr("Vous enregistrez la réunion") : qsTr("Vous enregistrez l'appel") 
-									: mainWindow.conference ? qsTr("Un participant enregistre la réunion") : qsTr("Votre correspondant enregistre l'appel")
-								: ""
+						spacing: 85 * DefaultStyle.dp
+						RowLayout {
+							spacing: 15 * DefaultStyle.dp
+							EffectImage {
+								imageSource: AppIcons.recordFill
+								colorizationColor: DefaultStyle.danger_500main
+								Layout.preferredWidth: 24 * DefaultStyle.dp
+								Layout.preferredHeight: 24 * DefaultStyle.dp
+							}
+							Text {
+								color: DefaultStyle.danger_500main
+								font.pixelSize: 14 * DefaultStyle.dp
+								text: mainWindow.call
+									? mainWindow.call.core.recording 
+										? mainWindow.conference ? qsTr("Vous enregistrez la réunion") : qsTr("Vous enregistrez l'appel") 
+										: mainWindow.conference ? qsTr("Un participant enregistre la réunion") : qsTr("Votre correspondant enregistre l'appel")
+									: ""
+							}
 						}
 						Button {
 							visible: mainWindow.call && mainWindow.call.core.recording
@@ -738,6 +742,7 @@ AppWindow {
 														}
 													}
 													onClicked: {
+														console.log("call is paused", modelData.core.paused)
 														modelData.core.lSetPaused(!modelData.core.paused)
 													}
 												}

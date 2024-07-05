@@ -268,6 +268,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    setSpeakerVolumeGain(speakerVolume);
 			    setMicrophoneVolumeGain(micVolume);
 			    setRecordable(state == linphone::Call::State::StreamsRunning);
+			    setPaused(state == linphone::Call::State::Paused || state == linphone::Call::State::PausedByRemote);
 		    });
 	    });
 	mCallModelConnection->makeConnectToModel(&CallModel::statusChanged, [this](linphone::Call::Status status) {
@@ -275,9 +276,6 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetPaused, [this](bool paused) {
 		mCallModelConnection->invokeToModel([this, paused]() { mCallModel->setPaused(paused); });
-	});
-	mCallModelConnection->makeConnectToModel(&CallModel::pausedChanged, [this](bool paused) {
-		mCallModelConnection->invokeToCore([this, paused]() { setPaused(paused); });
 	});
 
 	mCallModelConnection->makeConnectToCore(&CallCore::lTransferCall, [this](QString address) {

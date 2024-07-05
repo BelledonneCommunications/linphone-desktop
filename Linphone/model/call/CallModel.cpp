@@ -90,15 +90,12 @@ void CallModel::terminate() {
 
 void CallModel::setPaused(bool paused) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	linphone::Status status = -1;
 	if (paused) {
-		if (mMonitor->getConference()) status = mMonitor->getConference()->leave();
-		else status = mMonitor->pause();
-		if (status == 0) emit pausedChanged(paused);
+		if (mMonitor->getConference()) mMonitor->getConference()->leave();
+		mMonitor->pause();
 	} else {
-		if (mMonitor->getConference()) status = mMonitor->getConference()->enter();
-		else status = mMonitor->resume();
-		if (status == 0) emit pausedChanged(paused);
+		if (mMonitor->getConference()) mMonitor->getConference()->enter();
+		mMonitor->resume();
 	}
 }
 
