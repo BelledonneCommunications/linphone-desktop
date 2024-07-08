@@ -712,8 +712,10 @@ AbstractMainPage {
 									onClicked: {
 										if (mainItem.selectedContact) {
 											var vcard = mainItem.selectedContact.core.getVCard()
-											UtilsCpp.copyToClipboard(vcard)
-											UtilsCpp.showInformationPopup(qsTr("Copié"), qsTr("VCard copiée dans le presse-papier"))
+											var username = mainItem.selectedContact.core.givenName + mainItem.selectedContact.core.familyName
+											var filepath = UtilsCpp.createVCardFile(username, vcard)
+											if (filepath == "") UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création du fichier vcard a échoué"))
+											UtilsCpp.shareByEmail(qsTr("Partage de contact"), vcard, filepath)
 										}
 									}
 								}

@@ -194,6 +194,11 @@ QString Paths::getAvatarsDirPath() {
 	                          Constants::PathAvatars);
 }
 
+QString Paths::getVCardsPath() {
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+	                          Constants::PathVCards);
+}
+
 QString Paths::getCallHistoryFilePath() {
 	return getWritableFilePath(getAppCallHistoryFilePath());
 }

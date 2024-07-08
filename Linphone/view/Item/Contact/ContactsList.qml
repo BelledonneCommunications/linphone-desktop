@@ -205,52 +205,50 @@ ListView {
 				
 				popup.contentItem: ColumnLayout {
 					Button {
+						text: modelData.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
 						background: Item{}
-						contentItem: RowLayout {
-							EffectImage {
-								imageSource: modelData.core.starred ? AppIcons.heartFill : AppIcons.heart
-								colorizationColor: modelData.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
-								fillMode: Image.PreserveAspectFit
-								width: 24 * DefaultStyle.dp
-								height: 24 * DefaultStyle.dp
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-							}
-							Text {
-								text: modelData.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
-								color: DefaultStyle.main2_500main
-								font {
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
-								}
-							}
-						}
+						icon.source: modelData.core.starred ? AppIcons.heartFill : AppIcons.heart
+						icon.width: 24 * DefaultStyle.dp
+						icon.height: 24 * DefaultStyle.dp
+						spacing: 10 * DefaultStyle.dp
+						textSize: 14 * DefaultStyle.dp
+						textWeight: 400 * DefaultStyle.dp
+						textColor: DefaultStyle.main2_500main
+						contentImageColor: modelData.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
 						onClicked: {
 							modelData.core.lSetStarred(!modelData.core.starred)
 							friendPopup.close()
 						}
 					}
 					Button {
+						text: qsTr("Partager")
 						background: Item{}
-						contentItem: RowLayout {
-							EffectImage {
-								imageSource: AppIcons.trashCan
-								width: 24 * DefaultStyle.dp
-								height: 24 * DefaultStyle.dp
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								fillMode: Image.PreserveAspectFit
-								colorizationColor: DefaultStyle.danger_500main
-							}
-							Text {
-								text: qsTr("Supprimer")
-								color: DefaultStyle.danger_500main
-								font {
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
-								}
-							}
+						icon.source: AppIcons.shareNetwork
+						icon.width: 24 * DefaultStyle.dp
+						icon.height: 24 * DefaultStyle.dp
+						spacing: 10 * DefaultStyle.dp
+						textSize: 14 * DefaultStyle.dp
+						textWeight: 400 * DefaultStyle.dp
+						textColor: DefaultStyle.main2_500main
+						onClicked: {
+							var vcard = modelData.core.getVCard()
+							var username = modelData.core.givenName + modelData.core.familyName
+							var filepath = UtilsCpp.createVCardFile(username, vcard)
+							if (filepath == "") UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création du fichier vcard a échoué"))
+							UtilsCpp.shareByEmail(qsTr("Partage de contact"), vcard, filepath)
 						}
+					}
+					Button {
+						text: qsTr("Supprimer")
+						background: Item{}
+						icon.source: AppIcons.trashCan
+						icon.width: 24 * DefaultStyle.dp
+						icon.height: 24 * DefaultStyle.dp
+						spacing: 10 * DefaultStyle.dp
+						textSize: 14 * DefaultStyle.dp
+						textWeight: 400 * DefaultStyle.dp
+						textColor: DefaultStyle.danger_500main
+						contentImageColor: DefaultStyle.danger_500main
 						onClicked: {
 							mainItem.contactDeletionRequested(modelData)
 							friendPopup.close()
@@ -267,6 +265,7 @@ ListView {
 			hoverEnabled: mainItem.hoverEnabled
 			anchors.fill: itemDelegate
 			height: mainItem.height
+			acceptedButtons: Qt.AllButtons
 			z: -1
 			Rectangle {
 				anchors.fill: contactArea
@@ -274,16 +273,20 @@ ListView {
 				color: DefaultStyle.main2_100
 				visible: contactArea.containsMouse || friendPopup.hovered || (!mainItem.multiSelectionEnabled && mainItem.currentIndex === index)
 			}
-			onClicked: {
-				mainItem.currentIndex = -1
-				mainItem.currentIndex = index
-				if (mainItem.multiSelectionEnabled) {
-					var indexInSelection = mainItem.selectedContacts.indexOf(modelData.core.defaultAddress)
-					if (indexInSelection == -1) {
-						mainItem.addContactToSelection(modelData.core.defaultAddress)
-					}
-					else {
-						mainItem.removeContactFromSelection(indexInSelection, 1)
+			onClicked: (mouse) => {
+				if (mouse.button == Qt.RightButton) {
+					friendPopup.open()
+				} else {
+					mainItem.currentIndex = -1
+					mainItem.currentIndex = index
+					if (mainItem.multiSelectionEnabled) {
+						var indexInSelection = mainItem.selectedContacts.indexOf(modelData.core.defaultAddress)
+						if (indexInSelection == -1) {
+							mainItem.addContactToSelection(modelData.core.defaultAddress)
+						}
+						else {
+							mainItem.removeContactFromSelection(indexInSelection, 1)
+						}
 					}
 				}
 			}

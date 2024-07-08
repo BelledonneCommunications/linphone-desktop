@@ -31,6 +31,7 @@ bool filePathExists(const QString &path, const bool isWritable = false);
 QString getAppLocalDirPath();
 QString getAssistantConfigDirPath();
 QString getAvatarsDirPath();
+QString getVCardsPath();
 QString getCallHistoryFilePath();
 QString getCapturesDirPath();
 QString getCodecsDirPath();

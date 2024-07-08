@@ -29,7 +29,9 @@
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/providers/AvatarProvider.hpp"
+
 #include <QClipboard>
+#include <QDesktopServices>
 #include <QImageReader>
 #include <QQuickWindow>
 #include <QRandomGenerator>
@@ -376,6 +378,29 @@ bool Utils::copyToClipboard(const QString &text) {
 		lDebug() << "[Utils] Clipboard is empty!";
 	}
 	return !clipboardText.isEmpty();
+}
+
+QString Utils::createVCardFile(const QString &username, const QString &vcardAsString) {
+	auto filepath = Paths::getVCardsPath() + username + ".vcf";
+	QFile file(filepath);
+	if (file.open(QIODevice::ReadWrite)) {
+		QTextStream stream(&file);
+		stream << vcardAsString;
+		return filepath;
+	}
+	return QString();
+}
+
+void Utils::shareByEmail(const QString &subject,
+                         const QString &body,
+                         const QString &attachment,
+                         const QString &receiver) {
+	QString url = QString("mailto:?to=%1&subject=%2&body=%3&attachment=%4")
+	                  .arg(receiver)
+	                  .arg(subject)
+	                  .arg(body)
+	                  .arg("/home/gaelle/ligneconsolevscode");
+	QDesktopServices::openUrl(QUrl(url, QUrl::TolerantMode));
 }
 
 QString Utils::getClipboardText() {

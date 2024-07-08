@@ -22,6 +22,9 @@ Button {
 	function close() {
 		popup.close()
 	}
+	function open() {
+		popup.open()
+	}
 
 	background: Rectangle {
 		anchors.fill: mainItem

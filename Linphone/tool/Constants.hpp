@@ -132,6 +132,7 @@ public:
 	static constexpr char PathData[] = "/" EXECUTABLE_NAME;
 	static constexpr char PathTools[] = "/tools/";
 	static constexpr char PathLogs[] = "/logs/";
+	static constexpr char PathVCards[] = "/vcards/";
 #ifdef APPLE
 	static constexpr char PathPlugins[] = "/Plugins/";
 #else

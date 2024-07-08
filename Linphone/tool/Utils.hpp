@@ -85,6 +85,11 @@ public:
 	Q_INVOKABLE static QStringList generateSecurityLettersArray(int arraySize, int correctIndex, QString correctCode);
 	Q_INVOKABLE static int getRandomIndex(int size);
 	Q_INVOKABLE static bool copyToClipboard(const QString &text);
+	Q_INVOKABLE static QString createVCardFile(const QString &username, const QString &vcardAsString);
+	Q_INVOKABLE static void shareByEmail(const QString &subject,
+	                                     const QString &body = QString(),
+	                                     const QString &attachment = QString(),
+	                                     const QString &receiver = QString());
 	Q_INVOKABLE static QString getClipboardText();
 	Q_INVOKABLE static QString toDateString(QDateTime date, const QString &format = "");
 	Q_INVOKABLE static QString toDateString(QDate date, const QString &format = "");
