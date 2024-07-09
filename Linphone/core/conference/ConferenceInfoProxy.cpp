@@ -76,10 +76,10 @@ bool ConferenceInfoProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sou
 	if (ciCore) {
 		bool searchTextInSubject = false;
 		bool searchTextInParticipant = false;
-		if (ciCore->getSubject().toLower().contains(mSearchText.toLower())) searchTextInSubject = true;
+		if (ciCore->getSubject().contains(mSearchText, Qt::CaseInsensitive)) searchTextInSubject = true;
 		for (auto &contact : ciCore->getParticipants()) {
 			auto infos = contact.toMap();
-			if (infos["displayName"].toString().toLower().contains(mSearchText.toLower())) {
+			if (infos["displayName"].toString().contains(mSearchText, Qt::CaseInsensitive)) {
 				searchTextInParticipant = true;
 				break;
 			}

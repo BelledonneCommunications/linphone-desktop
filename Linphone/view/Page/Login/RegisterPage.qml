@@ -15,7 +15,7 @@ LoginLayout {
 
 	Connections {
 		target: RegisterPageCpp
-		onErrorInField: (field, errorMessage) => {
+		function onErrorInField(field, errorMessage) {
 			if (field == "username") usernameItem.errorMessage = errorMessage
 			else if (field == "password") pwdItem.errorMessage = errorMessage
 			else if (field == "phone") phoneNumberInput.errorMessage = errorMessage

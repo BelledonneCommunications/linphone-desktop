@@ -17,7 +17,7 @@ ColumnLayout {
 
 	Connections {
 		target: mainItem.conferenceInfoGui.core
-		onSchedulerStateChanged: {
+		function onSchedulerStateChanged() {
 			if (mainItem.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) {
 				mainItem.saveSucceed(isCreation)
 			}

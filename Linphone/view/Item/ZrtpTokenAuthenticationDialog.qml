@@ -27,14 +27,14 @@ Dialog {
 		enabled: call != undefined && call != null
 		target: call && call.core
 		onStatusChanged: if (status === CallModel.CallStatusEnded) close()
-		onSecurityUpdated: {
+		function onSecurityUpdated() {
 			if (mainItem.isTokenVerified) {
 				close()
 				// mainItem.securityError = true
 			// } else close()
 			}
 		}
-		onTokenVerified: {
+		function onTokenVerified() {
 			if (!mainItem.isTokenVerified) {
 				mainItem.securityError = true
 			} else close()

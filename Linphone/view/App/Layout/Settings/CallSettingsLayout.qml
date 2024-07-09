@@ -233,7 +233,7 @@ GenericSettingsLayout {
 					}
 					Connections {
 						target: SettingsCpp
-						onMicVolumeChanged: volume => audioTestSlider.value = volume
+						function onMicVolumeChanged(volume) { audioTestSlider.value = volume}
 					}
 					Component.onCompleted: {
 						SettingsCpp.accessCallSettings()

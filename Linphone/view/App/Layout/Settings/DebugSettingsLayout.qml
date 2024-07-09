@@ -73,7 +73,7 @@ GenericSettingsLayout {
 	}
 	Connections {
 		target: SettingsCpp
-		onLogsUploadTerminated: {
+		function onLogsUploadTerminated() {
 			UtilsCpp.getMainWindow().closeLoadingPopup()
 			if (status) {
 				mainItem.logsUrl = url

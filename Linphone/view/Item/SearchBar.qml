@@ -27,12 +27,12 @@ Rectangle {
 	Connections {
 		enabled: numericPad != undefined
 		target: numericPad ? numericPad : null
-		onAboutToHide: { mainItem.numericPadButton.checked = false }
-		onAboutToShow: { mainItem.numericPadButton.checked = true }
-		onButtonPressed: (text) => {
+		function onAboutToHide() { mainItem.numericPadButton.checked = false }
+		function onAboutToShow() { mainItem.numericPadButton.checked = true }
+		function onButtonPressed(text) {
 			textField.text += text
 		}
-		onWipe: textField.text = textField.text.slice(0, -1)
+		function onWipe(){ textField.text = textField.text.slice(0, -1)}
 	}
 
 

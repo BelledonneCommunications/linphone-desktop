@@ -320,7 +320,7 @@ AbstractMainPage {
 								model: allFriends
 								Connections {
 									target: allFriends
-									onFriendCreated: (index) => {
+									function onFriendCreated(index) {
 										contactList.currentIndex = index
 									}
 								}

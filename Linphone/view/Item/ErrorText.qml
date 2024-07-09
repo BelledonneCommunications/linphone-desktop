@@ -42,7 +42,7 @@ Text {
 
 	Connections {
 		target: mainItem
-		onTextChanged: {
+		function onTextChanged() {
 			if (mainItem.text.length > 0) {
 				mainItem.state = "Visible"
 			} else {

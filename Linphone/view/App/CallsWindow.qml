@@ -115,8 +115,8 @@ AppWindow {
 	Connections {
 		enabled: !!call
 		target: call && call.core
-		onRemoteVideoEnabledChanged: console.log("remote video enabled", call.core.remoteVideoEnabled)
-		onSecurityUpdated: {
+		function onRemoteVideoEnabledChanged() { console.log("remote video enabled", call.core.remoteVideoEnabled)}
+		function onSecurityUpdated() {
 			if (call.core.encryption != LinphoneEnums.MediaEncryption.Zrtp || call.core.tokenVerified) {
 				zrtpValidation.close()
 			}
@@ -693,9 +693,6 @@ AppWindow {
 												? modelData.core.conference.core.subject
 												: remoteAddress ? remoteAddress.value : ""
 											Layout.leftMargin: 8 * DefaultStyle.dp
-											Connections {
-												target: modelData.core
-											}
 										}
 										Item {
 											Layout.fillHeight: true
@@ -823,7 +820,7 @@ AppWindow {
 
 							Connections {
 								target: rightPanel
-								onReturnRequested: participantsStack.pop()
+								function onReturnRequested(){ participantsStack.pop()}
 							}
 
 							Component {
@@ -866,13 +863,13 @@ AppWindow {
 									}
 									Connections {
 										target: participantsStack
-										onCurrentItemChanged: {
+										function onCurrentItemChanged() {
 											if (participantsStack.currentItem == participantList) rightPanel.headerTitleText = qsTr("Participants (%1)").arg(participantList.count)
 										}
 									}
 									Connections {
 										target: rightPanel
-										onValidateRequested: {
+										function onValidateRequested() {
 											participantList.model.addAddresses(participantsStack.selectedParticipants)
 											participantsStack.pop()
 											participantsStack.participantAdded()
@@ -892,7 +889,7 @@ AppWindow {
 									}
 									Connections {
 										target: participantsStack
-										onCurrentItemChanged: {
+										function onCurrentItemChanged() {
 											if (participantsStack.currentItem == addParticipantLayout) {
 												rightPanel.headerTitleText = qsTr("Ajouter des participants")
 												rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné%2").arg(addParticipantLayout.selectedParticipants.length).arg(addParticipantLayout.selectedParticipants.length > 1 ? "s" : "")
@@ -1155,11 +1152,11 @@ AppWindow {
 					}
 					Connections {
 						target: rightPanel
-						onVisibleChanged: if (!visible) waitingRoomIn.settingsButtonChecked = false
+						function onVisibleChanged(){ if (!visible) waitingRoomIn.settingsButtonChecked = false}
 					}
 					Connections {
 						target:mainWindow
-						onSetUpConferenceRequested: (conferenceInfo) => {
+						function onSetUpConferenceRequested(conferenceInfo) {
 							waitingRoomIn.conferenceInfo = conferenceInfo
 						}
 					}
@@ -1204,8 +1201,8 @@ AppWindow {
 
 				Connections {
 					target: mainWindow
-					onCallStateChanged: bottomButtonsLayout.refreshLayout()
-					onCallChanged: bottomButtonsLayout.refreshLayout()
+					function onCallStateChanged(){ bottomButtonsLayout.refreshLayout()}
+					function onCallChanged(){ bottomButtonsLayout.refreshLayout()}
 				}
 				function setButtonsEnabled(enabled) {
 					for(var i=0; i < children.length; ++i) {
@@ -1285,7 +1282,7 @@ AppWindow {
 						}
 						Connections {
 							target: rightPanel
-							onVisibleChanged: if(!rightPanel.visible) transferCallButton.checked = false
+							function onVisibleChanged(){ if(!rightPanel.visible) transferCallButton.checked = false}
 						}
 					}
 					CheckableButton {
@@ -1404,7 +1401,7 @@ AppWindow {
 						popup.x: width/2
 						Connections {
 							target: moreOptionsButton.popup
-							onOpened: {
+							function onOpened() {
 								moreOptionsButton.popup.y = - moreOptionsButton.popup.height - moreOptionsButton.popup.padding
 							}
 						}

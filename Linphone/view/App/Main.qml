@@ -104,14 +104,14 @@ AppWindow {
 			onBrowserValidationRequested: mainWindow.showLoadingPopup(qsTr("Veuillez valider le captcha sur la page web"), true)
 			Connections {
 				target: RegisterPageCpp
-				onNewAccountCreationSucceed: (withEmail, address, sipIdentityAddress) => {
+				function onNewAccountCreationSucceed(withEmail, address, sipIdentityAddress) {
 					mainWindowStackView.push(checkingPage, {"registerWithEmail": withEmail, "address": address, "sipIdentityAddress": sipIdentityAddress})
 				}
-				onRegisterNewAccountFailed: (errorMessage) => {
+				function onRegisterNewAccountFailed(errorMessage) {
 					mainWindow.showInformationPopup(qsTr("Erreur lors de la création"), errorMessage, false)
 					mainWindow.closeLoadingPopup()
 				}
-				onTokenConversionSucceed: mainWindow.closeLoadingPopup()
+				function onTokenConversionSucceed(){ mainWindow.closeLoadingPopup()}
 			}
 		}
 	}
@@ -124,11 +124,11 @@ AppWindow {
 			}
 			Connections {
 				target: RegisterPageCpp
-				onLinkingNewAccountWithCodeSucceed: {
+				function onLinkingNewAccountWithCodeSucceed() {
 					mainWindowStackView.replace(loginPage)
 					mainWindow.showInformationPopup(qsTr("Compte créé"), qsTr("Le compte a été créé avec succès. Vous pouvez maintenant vous connecter"), true)
 				}
-				onLinkingNewAccountWithCodeFailed: (errorMessage) => {
+				function onLinkingNewAccountWithCodeFailed(errorMessage) {
 					if (errorMessage.length === 0) errorMessage = qsTr("Erreur dans le code de validation")
 					mainWindow.showInformationPopup(qsTr("Erreur"), errorMessage, false)
 				}

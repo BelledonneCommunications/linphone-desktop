@@ -190,7 +190,7 @@ LoginLayout {
 				id: errorText
 				Connections {
 					target: LoginPageCpp
-					onRegistrationStateChanged: {
+					function onRegistrationStateChanged() {
 						if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Failed) {
 							errorText.text = qsTr("Connection has failed. Please verify your credentials")
 						} else if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {

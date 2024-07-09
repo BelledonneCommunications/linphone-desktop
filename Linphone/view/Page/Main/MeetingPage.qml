@@ -283,7 +283,7 @@ AbstractMainPage {
 				Layout.rightMargin: 35 * DefaultStyle.dp
 				Connections {
 					target: meetingSetup.conferenceInfoGui ? meetingSetup.conferenceInfoGui.core : null
-					onConferenceSchedulerStateChanged: {
+					function onConferenceSchedulerStateChanged() {
 						var mainWin = UtilsCpp.getMainWindow()
 						if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
 						|| meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
@@ -307,7 +307,7 @@ AbstractMainPage {
 				}
 				Connections {
 					target: mainItem
-					onAddParticipantsValidated: (selectedParticipants) => {
+					function onAddParticipantsValidated(selectedParticipants) {
 						meetingSetup.conferenceInfoGui.core.resetParticipants(selectedParticipants)
 						leftPanelStackView.pop()
 					}
@@ -384,14 +384,14 @@ AbstractMainPage {
 				}
 				Connections {
 					target: mainItem
-					onAddParticipantsValidated: (selectedParticipants) => {
+					function onAddParticipantsValidated(selectedParticipants) {
 						conferenceEdit.conferenceInfoGui.core.resetParticipants(selectedParticipants)
 						overridenRightPanelStackView.pop()
 					}
 				}
 				Connections {
 					target: conferenceEdit.conferenceInfoGui ? conferenceEdit.conferenceInfoGui.core : null
-					onConferenceSchedulerStateChanged: {
+					function onConferenceSchedulerStateChanged() {
 						var mainWin = UtilsCpp.getMainWindow()
 						if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
 							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("L'édition de la conférence a échoué"), false)
@@ -535,10 +535,10 @@ AbstractMainPage {
 								}
 								Connections {
 									target: cancelAndDeleteConfDialog
-									onCancelRequested: {
+									function onCancelRequested() {
 										mainItem.selectedConference.core.lCancelConferenceInfo()
 									}
-									onAccepted: {
+									function onAccepted() {
 										mainItem.selectedConference.core.lDeleteConferenceInfo()
 									}
 								}

@@ -29,7 +29,7 @@ AbstractMainPage {
 	Connections {
 		enabled: confInfoGui
 		target: confInfoGui ? confInfoGui.core : null
-		onConferenceSchedulerStateChanged: {
+		function onConferenceSchedulerStateChanged() {
 			if (confInfoGui.core.schedulerState === LinphoneEnums.ConferenceSchedulerState.Ready) {
 				listStackView.pop()
 			}
@@ -215,7 +215,7 @@ AbstractMainPage {
 
 								Connections {
 									target: deleteHistoryPopup
-									onAccepted: {
+									function onAccepted() {
 										historyListView.model.removeAllEntries()
 									}
 								}
@@ -358,7 +358,7 @@ AbstractMainPage {
 
 								Connections {
 									target: mainItem
-									onListViewUpdated: {
+									function onListViewUpdated() {
 										historyListView.model.updateView()
 									}
 								}
@@ -426,7 +426,7 @@ AbstractMainPage {
 				}
 				Connections {
 					target: mainItem
-					onCreateCallFromSearchBarRequested: UtilsCpp.createCall(callContactsList.searchBar.text)
+					function onCreateCallFromSearchBarRequested(){ UtilsCpp.createCall(callContactsList.searchBar.text)}
 				}
 			}
 		}
@@ -497,7 +497,7 @@ AbstractMainPage {
 				nameGroupCall: true
 				Connections {
 					target: mainItem
-					onStartGroupCallRequested: {
+					function onStartGroupCallRequested() {
 						if (groupName.length === 0) {
 							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Un nom doit être donné à l'appel de groupe"), false)
 						} else if(!mainItem.isRegistered) {
@@ -591,7 +591,7 @@ AbstractMainPage {
 						}
 						Connections {
 							target: deleteForUserPopup
-							onAccepted: {
+							function onAccepted() {
 								detailListView.model.removeEntriesWithFilter()
 								mainItem.listViewUpdated()
 							}

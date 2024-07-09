@@ -51,7 +51,7 @@ ListView {
 		console.log("select", address)
 		var index = magicSearchProxy.findFriendIndexByAddress(address)
 		console.log("index in selection", index)
-		if (index == -1) {
+		if (index != -1) {
 			mainItem.currentIndex = index
 		}
 	}
@@ -102,7 +102,7 @@ ListView {
 		Connections {
 			enabled: modelData.core
 			target: modelData.core
-			onStarredChanged: mainItem.contactStarredChanged()
+			function onStarredChanged() { mainItem.contactStarredChanged()}
 		}
 		Text {
 			id: initial
@@ -151,7 +151,7 @@ ListView {
 				Connections {
 					target: mainItem
 					// onParticipantsChanged: isSelectedCheck.visible = mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress) != -1
-					onSelectedContactCountChanged: isSelectedCheck.visible = (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)
+					function onSelectedContactCountChanged(){ isSelectedCheck.visible = (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)}
 				}
 			}
 		}

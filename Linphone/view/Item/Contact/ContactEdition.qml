@@ -14,7 +14,7 @@ RightPanelLayout {
 	property FriendGui contact
 	Connections {
 		target: contact.core
-		onIsSavedChanged: {
+		function onIsSavedChanged() {
 			if (contact.core.isSaved) {
 				var mainWin = UtilsCpp.getMainWindow()
 				UtilsCpp.smartShowWindow(mainWin)
@@ -305,12 +305,9 @@ RightPanelLayout {
 			topPadding: 11 * DefaultStyle.dp
 			bottomPadding: 11 * DefaultStyle.dp
 			onClicked: {
-				if (givenNameEdit.text.length === 0) {
-					givenName.errorMessage = qsTr("Veuillez saisir un prénom")
-					return
-				}
-				if (addressesList.count === 0) {
-					addressesErrorText.text = qsTr("Veuillez saisir une adresse ou un numéro de téléphone")
+				if (givenNameEdit.text.length === 0 || addressesList.count === 0) {
+					if (givenNameEdit.text.length === 0) givenName.errorMessage = qsTr("Veuillez saisir un prénom")
+					if (addressesList.count === 0) addressesErrorText.text = qsTr("Veuillez saisir une adresse ou un numéro de téléphone")
 					return
 				}
 				mainItem.contact.core.save()

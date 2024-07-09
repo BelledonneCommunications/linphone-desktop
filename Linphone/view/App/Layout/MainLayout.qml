@@ -379,8 +379,8 @@ Item {
 							id: callPage
 							Connections {
 								target: mainItem
-								onOpenNewCall: callPage.goToNewCall()
-								onOpenCallHistory: callPage.goToCallHistory()
+								function onOpenNewCall(){ callPage.goToNewCall()}
+								function onOpenCallHistory(){ callPage.goToCallHistory()}
 							}
 							onCreateContactRequested: (name, address) => {
 								mainItem.createContact(name, address)
@@ -390,10 +390,10 @@ Item {
 							id: contactPage
 							Connections {
 								target: mainItem
-								onCreateContactRequested: (name, address) => {
+								function onCreateContactRequested (name, address) {
 									contactPage.createContact(name, address)
 								}
-								onDisplayContact: (contactAddress) => {
+								function onDisplayContact (contactAddress) {
 									contactPage.displayContact(contactAddress)
 								}		
 							}

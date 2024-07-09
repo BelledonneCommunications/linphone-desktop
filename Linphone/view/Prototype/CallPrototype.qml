@@ -27,7 +27,7 @@ Window {
 	Component.onDestruction: gc()
 	Connections{
 		target: call && call.core || null
-		onLastErrorMessageChanged: if(mainItem.call) errorMessageText.text=mainItem.call.core.lastErrorMessage
+		function onLastErrorMessageChanged() { if(mainItem.call) errorMessageText.text=mainItem.call.core.lastErrorMessage}
 	}
 	RowLayout{
 		anchors.fill: parent

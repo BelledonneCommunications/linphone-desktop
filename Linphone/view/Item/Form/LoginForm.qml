@@ -64,10 +64,10 @@ ColumnLayout {
 			anchors.top: password.bottom
 			Connections {
 				target: LoginPageCpp
-				onErrorMessageChanged: {
+				function onErrorMessageChanged() {
 					errorText.text = LoginPageCpp.errorMessage
 				}
-				onRegistrationStateChanged: {
+				function onRegistrationStateChanged() {
 					if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
 						mainItem.connectionSucceed()
 					}
@@ -107,13 +107,13 @@ ColumnLayout {
 				}
 				Connections {
 					target: LoginPageCpp
-					onRegistrationStateChanged: {
+					function onRegistrationStateChanged() {
 						if (LoginPageCpp.registrationState != LinphoneEnums.RegistrationState.Progress) {
 							connectionButton.enabled = true
 							connectionButtonContent.currentIndex = 0
 						}
 					}
-					onErrorMessageChanged: {
+					function onErrorMessageChanged() {
 						connectionButton.enabled = true
 						connectionButtonContent.currentIndex = 0
 					}
