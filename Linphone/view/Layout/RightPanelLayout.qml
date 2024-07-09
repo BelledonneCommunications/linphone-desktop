@@ -5,26 +5,24 @@ import QtQuick.Controls as Control
 import Linphone
 import UtilsCpp 1.0
 
-Item {
+ColumnLayout {
 	id: mainItem
 	property color panelColor: DefaultStyle.grey_100
 	property alias headerContent: rightPanelHeader.children
 	property alias content: rightPanelContent.children
+	spacing: 0
 
 	Rectangle {
 		id: rightPanelHeader
 		color: DefaultStyle.grey_0
-		anchors.top: parent.top
-		anchors.left: parent.left
-		anchors.right: parent.right
-		height: 57 * DefaultStyle.dp
+		Layout.preferredHeight: 57 * DefaultStyle.dp
+		Layout.fillWidth: true
+		z: 1
 	}
 	Rectangle {
 		id: rightPanelContent
 		color: mainItem.panelColor
-		anchors.top: rightPanelHeader.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
+		Layout.fillWidth: true
+		Layout.fillHeight: true
 	}
 }
