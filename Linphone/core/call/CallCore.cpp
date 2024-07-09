@@ -246,31 +246,33 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::microphoneVolumeChanged, [this](float volume) {
 		mCallModelConnection->invokeToCore([this, volume]() { setMicrophoneVolume(volume); });
 	});
-	mCallModelConnection->makeConnectToModel(
-	    &CallModel::stateChanged,
-	    [this](std::shared_ptr<linphone::Call> call, linphone::Call::State state, const std::string &message) {
-		    mCallModelConnection->invokeToCore([this, state, message]() {
-			    setState(LinphoneEnums::fromLinphone(state), Utils::coreStringToAppString(message));
-		    });
-		    double speakerVolume = mSpeakerVolumeGain;
-		    double micVolume = mMicrophoneVolumeGain;
-		    if (state == linphone::Call::State::StreamsRunning) {
-			    speakerVolume = mCallModel->getSpeakerVolumeGain();
-			    if (speakerVolume < 0) {
-				    speakerVolume = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
-			    }
-			    micVolume = mCallModel->getMicrophoneVolumeGain();
-			    if (micVolume < 0) {
-				    micVolume = CoreModel::getInstance()->getCore()->getMicGainDb();
-			    }
-		    }
-		    mCallModelConnection->invokeToCore([this, state, speakerVolume, micVolume]() {
-			    setSpeakerVolumeGain(speakerVolume);
-			    setMicrophoneVolumeGain(micVolume);
-			    setRecordable(state == linphone::Call::State::StreamsRunning);
-			    setPaused(state == linphone::Call::State::Paused || state == linphone::Call::State::PausedByRemote);
-		    });
-	    });
+	mCallModelConnection->makeConnectToModel(&CallModel::stateChanged, [this](std::shared_ptr<linphone::Call> call,
+	                                                                          linphone::Call::State state,
+	                                                                          const std::string &message) {
+		mCallModelConnection->invokeToCore([this, state, message]() {
+			setState(LinphoneEnums::fromLinphone(state), Utils::coreStringToAppString(message));
+		});
+		double speakerVolume = mSpeakerVolumeGain;
+		double micVolume = mMicrophoneVolumeGain;
+		if (state == linphone::Call::State::StreamsRunning) {
+			speakerVolume = mCallModel->getSpeakerVolumeGain();
+			if (speakerVolume < 0) {
+				speakerVolume = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
+			}
+			micVolume = mCallModel->getMicrophoneVolumeGain();
+			if (micVolume < 0) {
+				micVolume = CoreModel::getInstance()->getCore()->getMicGainDb();
+			}
+		}
+		auto subject = call->getConference() ? Utils::coreStringToAppString(call->getConference()->getSubject()) : "";
+		mCallModelConnection->invokeToCore([this, state, speakerVolume, micVolume, subject]() {
+			setSpeakerVolumeGain(speakerVolume);
+			setMicrophoneVolumeGain(micVolume);
+			setRecordable(state == linphone::Call::State::StreamsRunning);
+			setPaused(state == linphone::Call::State::Paused || state == linphone::Call::State::PausedByRemote);
+			if (mConference) mConference->setSubject(subject);
+		});
+	});
 	mCallModelConnection->makeConnectToModel(&CallModel::statusChanged, [this](linphone::Call::Status status) {
 		mCallModelConnection->invokeToCore([this, status]() { setStatus(LinphoneEnums::fromLinphone(status)); });
 	});

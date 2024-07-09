@@ -59,7 +59,7 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 	    [this](const std::shared_ptr<linphone::ParticipantDevice> &participantDevice) {
 		    auto device = ParticipantDeviceCore::create(participantDevice);
 		    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeaker(device); });
-		});
+	    });
 
 	mConferenceModelConnection->makeConnectToModel(&ConferenceModel::participantDeviceStateChanged, [this]() {
 		int count = mConferenceModel->getParticipantDeviceCount();
@@ -89,6 +89,14 @@ bool ConferenceCore::updateLocalParticipant() { // true if changed
 QString ConferenceCore::getSubject() const {
 	return mSubject;
 }
+
+void ConferenceCore::setSubject(const QString &subject) {
+	if (mSubject != subject) {
+		mSubject = subject;
+		emit subjectChanged();
+	}
+}
+
 QDateTime ConferenceCore::getStartDate() const {
 	return mStartDate;
 }

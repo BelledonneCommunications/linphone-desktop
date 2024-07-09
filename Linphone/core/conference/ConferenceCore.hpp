@@ -41,7 +41,7 @@ public:
 	// Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
 	Q_PROPERTY(bool isReady MEMBER mIsReady WRITE setIsReady NOTIFY isReadyChanged)
 
-	Q_PROPERTY(QString subject MEMBER mSubject CONSTANT)
+	Q_PROPERTY(QString subject READ getSubject WRITE setSubject NOTIFY subjectChanged)
 	Q_PROPERTY(bool isLocalScreenSharing MEMBER mIsLocalScreenSharing WRITE setIsLocalScreenSharing NOTIFY
 	               isLocalScreenSharingChanged)
 	Q_PROPERTY(bool isScreenSharingEnabled MEMBER mIsScreenSharingEnabled WRITE setIsScreenSharingEnabled NOTIFY
@@ -59,6 +59,7 @@ public:
 	bool updateLocalParticipant(); // true if changed
 
 	QString getSubject() const;
+	void setSubject(const QString &subject);
 	QDateTime getStartDate() const;
 	Q_INVOKABLE qint64 getElapsedSeconds() const;
 	int getParticipantDeviceCount() const;
@@ -84,6 +85,7 @@ signals:
 	void isScreenSharingEnabledChanged();
 	void participantDeviceCountChanged();
 	void activeSpeakerChanged();
+	void subjectChanged();
 
 	void lToggleScreenSharing();
 

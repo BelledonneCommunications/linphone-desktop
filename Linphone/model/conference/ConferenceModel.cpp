@@ -143,6 +143,10 @@ void ConferenceModel::toggleScreenSharing() {
 		if (enable) {
 			params->setConferenceVideoLayout(linphone::Conference::Layout::ActiveSpeaker);
 			params->enableVideo(true);
+			auto videoDirection = params->getVideoDirection();
+			if (videoDirection != linphone::MediaDirection::SendOnly &&
+			    videoDirection != linphone::MediaDirection::SendRecv)
+				params->setVideoDirection(linphone::MediaDirection::SendOnly);
 		}
 		if (params->isValid()) mMonitor->getCall()->update(params);
 		else lCritical() << log().arg("Cannot toggle screen sharing because parameters are invalid");
