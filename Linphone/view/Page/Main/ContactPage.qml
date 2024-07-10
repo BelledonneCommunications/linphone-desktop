@@ -708,13 +708,14 @@ AbstractMainPage {
 									Layout.preferredHeight: 50 * DefaultStyle.dp
 									iconSize: 24 * DefaultStyle.dp
 									iconSource: AppIcons.shareNetwork
-									text: qsTr("Share")
+									text: qsTr("Partager")
 									onClicked: {
 										if (mainItem.selectedContact) {
 											var vcard = mainItem.selectedContact.core.getVCard()
 											var username = mainItem.selectedContact.core.givenName + mainItem.selectedContact.core.familyName
 											var filepath = UtilsCpp.createVCardFile(username, vcard)
-											if (filepath == "") UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création du fichier vcard a échoué"))
+											if (filepath == "") UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création du fichier vcard a échoué"), false)
+											else mainWindow.showInformationPopup(qsTr("VCard créée"), qsTr("VCard du contact enregistrée dans %1").arg(filepath))
 											UtilsCpp.shareByEmail(qsTr("Partage de contact"), vcard, filepath)
 										}
 									}

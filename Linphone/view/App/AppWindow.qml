@@ -178,6 +178,7 @@ ApplicationWindow {
 		popupLayout.popupList.splice(index, 1)
 	}
 	function showInformationPopup(title, description, isSuccess) {
+		if (isSuccess == undefined) isSuccess = true
 		var infoPopup = popupComp.createObject(popupLayout, {"title": title, "description": description, "isSuccess": isSuccess})
 		infoPopup.index = popupLayout.popupList.length
 		popupLayout.popupList.push(infoPopup)

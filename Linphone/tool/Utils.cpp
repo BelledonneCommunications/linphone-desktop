@@ -395,12 +395,10 @@ void Utils::shareByEmail(const QString &subject,
                          const QString &body,
                          const QString &attachment,
                          const QString &receiver) {
-	QString url = QString("mailto:?to=%1&subject=%2&body=%3&attachment=%4")
-	                  .arg(receiver)
-	                  .arg(subject)
-	                  .arg(body)
-	                  .arg("/home/gaelle/ligneconsolevscode");
-	QDesktopServices::openUrl(QUrl(url, QUrl::TolerantMode));
+	// QString attach = attachment;
+	// attach.prepend("file:///");
+	QUrl url(QString("mailto:?to=%1&subject=%2&body=%3").arg(receiver).arg(subject).arg(body));
+	QDesktopServices::openUrl(url);
 }
 
 QString Utils::getClipboardText() {

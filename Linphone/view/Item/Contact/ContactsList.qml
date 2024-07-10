@@ -234,7 +234,8 @@ ListView {
 							var vcard = modelData.core.getVCard()
 							var username = modelData.core.givenName + modelData.core.familyName
 							var filepath = UtilsCpp.createVCardFile(username, vcard)
-							if (filepath == "") UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création du fichier vcard a échoué"))
+							if (filepath == "") UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création du fichier vcard a échoué"), false)
+							else mainWindow.showInformationPopup(qsTr("VCard créée"), qsTr("VCard du contact enregistrée dans %1").arg(filepath))
 							UtilsCpp.shareByEmail(qsTr("Partage de contact"), vcard, filepath)
 						}
 					}
