@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Screen Sharing
 
+## 5.2.5 - 2024-07-10
+
+### Fixed
+- Crash on Windows when using non-UTF8 characters in system username.
+- Case sensitive issue with sip attributes on LDAP search.
+- Update SDK to 5.3.66
+
 ## 5.2.4 - 2024-04-11
 
 ### Fixed
