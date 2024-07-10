@@ -1,6 +1,6 @@
 ---
 name: Bug report
-description: File a bug/issue
+description: File a bug/issue for the Desktop application
 title: "[Bug]: "
 labels: ["bug"]
 
