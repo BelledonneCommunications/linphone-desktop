@@ -16,6 +16,8 @@ AbstractMainPage {
 	// disable left panel contact list interaction while a contact is being edited
 	property bool leftPanelEnabled: true
 	property FriendGui selectedContact
+	property string initialFriendToDisplay
+
 	onSelectedContactChanged: {
 		if (selectedContact) {
 			if (!rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName != "contactDetail") rightPanelStackView.push(contactDetail)
@@ -40,10 +42,6 @@ AbstractMainPage {
 
 	function editContact(friendGui) {
 		rightPanelStackView.push(contactEdition, {"contact": friendGui, "title": qsTr("Modifier contact"), "saveButtonText": qsTr("Enregistrer")})
-	}
-
-	function displayContact(contactAddress) {
-		contactList.selectContact(contactAddress)
 	}
 
 	// rightPanelStackView.initialItem: contactDetail
@@ -311,6 +309,11 @@ AbstractMainPage {
 							}
 							ContactsList{
 								id: contactList
+								onCountChanged: {
+									if (initialFriendToDisplay.length !== 0) {
+										if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
+									}
+								}
 								Layout.fillWidth: true
 								Layout.preferredHeight: contentHeight
 								interactive: false

@@ -58,35 +58,21 @@ void TimeZoneList::initTimeZones() {
 	}
 }
 
-QHash<int, QByteArray> TimeZoneList::roleNames() const {
-	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "$modelData";
-	roles[Qt::DisplayRole + 1] = "$timeZoneModel";
-	return roles;
-}
-
 QVariant TimeZoneList::data(const QModelIndex &index, int role) const {
 	int row = index.row();
 
 	if (!index.isValid() || row < 0 || row >= mList.count()) return QVariant();
 	auto timeZoneModel = getAt<TimeZoneModel>(row);
 	if (!timeZoneModel) return QVariant();
-	if (role == Qt::DisplayRole) {
-		int offset = timeZoneModel->getStandardTimeOffset() / 3600;
-		int absOffset = std::abs(offset);
+	int offset = timeZoneModel->getStandardTimeOffset() / 3600;
+	int absOffset = std::abs(offset);
 
-		return QStringLiteral("(GMT%1%2%3:00) %4 %5")
-		    .arg(offset >= 0 ? "+" : "-")
-		    .arg(absOffset < 10 ? "0" : "")
-		    .arg(absOffset)
-		    .arg(timeZoneModel->getCountryName())
-		    .arg(timeZoneModel->getTimeZone().comment().isEmpty() ? ""
-		                                                          : (" - " + timeZoneModel->getTimeZone().comment()));
-	} else {
-		return QVariant::fromValue(timeZoneModel.get());
-	}
-
-	return QVariant();
+	return QStringLiteral("(GMT%1%2%3:00) %4 %5")
+	    .arg(offset >= 0 ? "+" : "-")
+	    .arg(absOffset < 10 ? "0" : "")
+	    .arg(absOffset)
+	    .arg(timeZoneModel->getCountryName())
+	    .arg(timeZoneModel->getTimeZone().comment().isEmpty() ? "" : (" - " + timeZoneModel->getTimeZone().comment()));
 }
 
 int TimeZoneList::get(const QTimeZone &timeZone) const {

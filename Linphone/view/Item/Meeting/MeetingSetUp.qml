@@ -293,10 +293,10 @@ ColumnLayout {
 
 			ComboBox {
 				id: timeZoneCbox
-				Layout.fillWidth: true
+				Layout.preferredWidth: 307 * DefaultStyle.dp
 				Layout.preferredHeight: 30 * DefaultStyle.dp
 				hoverEnabled: true
-				listView.implicitHeight: 152 * DefaultStyle.dp
+				listView.implicitHeight: 250 * DefaultStyle.dp
 				constantImageSource: AppIcons.globe
 				weight: 700 * DefaultStyle.dp
 				leftMargin: 0
@@ -312,33 +312,33 @@ ColumnLayout {
 					var modelIndex = timeZoneCbox.model.index(currentIndex, 0)
 					mainItem.conferenceInfoGui.core.timeZoneModel = timeZoneCbox.model.data(modelIndex, Qt.DisplayRole + 1)
 				}
-			},
-
-			ComboBox {
-				id: repeaterCbox
-				enabled: false
-				Component.onCompleted: console.log("TODO : handle conf repetition")
-				constantImageSource: AppIcons.reloadArrow
-				Layout.fillWidth: true
-				Layout.preferredHeight: height
-				height: 30 * DefaultStyle.dp
-				width: 307 * DefaultStyle.dp
-				weight: 700 * DefaultStyle.dp
-				leftMargin: 0
-				currentIndex: 0
-				background: Rectangle {
-					visible: parent.hovered || parent.down
-					anchors.fill: parent
-					color: DefaultStyle.grey_100
-				}
-				model: [
-					{text: qsTr("Une fois")},
-					{text: qsTr("Tous les jours")},
-					{text: qsTr("Tous les jours de la semaine (Lun-Ven)")},
-					{text: qsTr("Toutes les semaines")},
-					{text: qsTr("Tous les mois")}
-				]
 			}
+
+			// ComboBox {
+			// 	id: repeaterCbox
+			// 	enabled: false
+			// 	Component.onCompleted: console.log("TODO : handle conf repetition")
+			// 	constantImageSource: AppIcons.reloadArrow
+			// 	Layout.fillWidth: true
+			// 	Layout.preferredHeight: height
+			// 	height: 30 * DefaultStyle.dp
+			// 	width: 307 * DefaultStyle.dp
+			// 	weight: 700 * DefaultStyle.dp
+			// 	leftMargin: 0
+			// 	currentIndex: 0
+			// 	background: Rectangle {
+			// 		visible: parent.hovered || parent.down
+			// 		anchors.fill: parent
+			// 		color: DefaultStyle.grey_100
+			// 	}
+			// 	model: [
+			// 		{text: qsTr("Une fois")},
+			// 		{text: qsTr("Tous les jours")},
+			// 		{text: qsTr("Tous les jours de la semaine (Lun-Ven)")},
+			// 		{text: qsTr("Toutes les semaines")},
+			// 		{text: qsTr("Tous les mois")}
+			// 	]
+			// }
 			
 		]
 		

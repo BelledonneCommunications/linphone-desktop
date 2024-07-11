@@ -9,7 +9,7 @@ import SettingsCpp
 AbstractMainPage {
 	id: mainItem
 	noItemButtonText: qsTr("Nouvel appel")
-	emptyListText: qsTr("Historique d'appel vide")
+	emptyListText: qsTr("Aucun appel")
 	newItemIconSource: AppIcons.newCall
 
 	property var selectedRowHistoryGui
@@ -199,6 +199,11 @@ AbstractMainPage {
 								}
 								visible: historyListView.count === 0
 								Layout.alignment: Qt.AlignHCenter
+								Binding on text {
+									when: searchBar.text.length !== 0
+									value: qsTr("Aucun appel correspondant")
+									restoreMode: Binding.RestoreBindingOrValue
+								}
 							}
 							ListView {
 								id: historyListView
@@ -552,7 +557,7 @@ AbstractMainPage {
 						}
 						onClicked: {
 							detailOptions.close()
-							if (detailOptions.friendGui) mainWindow.goToContactPage(contactDetail.contactAddress)
+							if (detailOptions.friendGui) mainWindow.displayContactPage(contactDetail.contactAddress)
 							else mainItem.createContactRequested(contactDetail.contactName, contactDetail.contactAddress)
 						}
 					}
@@ -563,6 +568,7 @@ AbstractMainPage {
 							iconSource: AppIcons.copy
 						}
 						onClicked: {
+							detailOptions.close()
 							var success = UtilsCpp.copyToClipboard(mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress)
 							if (success) UtilsCpp.showInformationPopup(qsTr("Copié"), qsTr("L'adresse a été copiée dans le presse-papier"), true)
 							else UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Erreur lors de la copie de l'adresse"), false)

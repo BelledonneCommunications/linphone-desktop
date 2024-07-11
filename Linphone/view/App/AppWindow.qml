@@ -8,6 +8,11 @@ import SettingsCpp 1.0
 ApplicationWindow {
 	id: mainWindow
 
+	MouseArea {
+		anchors.fill: parent
+		onClicked: forceActiveFocus()
+	}
+
 	Component {
 		id: popupComp
 		InformationPopup{}

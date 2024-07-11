@@ -21,7 +21,7 @@ Item {
 	signal addAccountRequest()
 	signal openNewCall()
 	signal openCallHistory()
-	signal displayContact(string contactAddress)
+	signal displayContactRequested(string contactAddress)
 	signal createContactRequested(string name, string address)
 
 	function goToNewCall() {
@@ -32,9 +32,9 @@ Item {
 		tabbar.currentIndex = 0
 		mainItem.openCallHistory()
 	}
-	function goToContactPage(contactAddress) {
+	function displayContactPage(contactAddress) {
 		tabbar.currentIndex = 1
-		mainItem.displayContact(contactAddress)
+		mainItem.displayContactRequested(contactAddress)
 	}
 
 	function createContact(name, address) {
@@ -390,12 +390,12 @@ Item {
 							id: contactPage
 							Connections {
 								target: mainItem
-								function onCreateContactRequested (name, address) {
+								function onCreateContactRequested(name, address) {
 									contactPage.createContact(name, address)
 								}
-								function onDisplayContact (contactAddress) {
-									contactPage.displayContact(contactAddress)
-								}		
+								function onDisplayContactRequested(contactAddress) {
+									contactPage.initialFriendToDisplay = contactAddress
+								}
 							}
 						}
 						Item{}

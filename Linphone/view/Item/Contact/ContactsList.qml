@@ -49,12 +49,11 @@ ListView {
 	signal contactAddedToSelection()
 
 	function selectContact(address) {
-		console.log("select", address)
 		var index = magicSearchProxy.findFriendIndexByAddress(address)
-		console.log("index in selection", index)
 		if (index != -1) {
 			mainItem.currentIndex = index
 		}
+		return index
 	}
 	function addContactToSelection(address) {
 		if (multiSelectionEnabled) {

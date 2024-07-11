@@ -124,12 +124,9 @@ AbstractMainPage {
 			property string objectName: "listLayout"
 			Control.StackView.onDeactivated: {
 				mainItem.selectedConference = null
-				// mainItem.showDefaultItem.visible = false
-				// mainItem.righPanelStackView.clear()
 			}
 			Control.StackView.onActivated: {
 				mainItem.selectedConference = conferenceList.selectedConference
-				// mainItem.showDefaultItem = conferenceList.count == 0
 			}
 			Binding {
 				target: mainItem
@@ -183,6 +180,11 @@ AbstractMainPage {
 					weight: 800 * DefaultStyle.dp
 				}
 				visible: mainItem.showDefaultItem
+				Binding on text {
+					when: searchBar.text.length !== 0
+					value: qsTr("Aucune réunion correspondante")
+					restoreMode: Binding.RestoreBindingOrValue
+				}
 			}
 			
 			RowLayout {

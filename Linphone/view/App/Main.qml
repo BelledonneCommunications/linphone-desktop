@@ -33,9 +33,9 @@ AppWindow {
 		mainWindowStackView.replace(mainPage, StackView.Immediate)
 		mainWindowStackView.currentItem.goToNewCall()
 	}
-	function goToContactPage(contactAddress) {
+	function displayContactPage(contactAddress) {
 		mainWindowStackView.replace(mainPage, StackView.Immediate)
-		mainWindowStackView.currentItem.goToContactPage(contactAddress)
+		mainWindowStackView.currentItem.displayContactPage(contactAddress)
 	}
 	function transferCallSucceed() {
 		mainWindowStackView.replace(mainPage, StackView.Immediate)
