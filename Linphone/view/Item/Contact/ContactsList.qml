@@ -42,6 +42,7 @@ ListView {
 	property FriendGui selectedContact: model.getAt(currentIndex) || null
 
 	onCurrentIndexChanged: selectedContact = model.getAt(currentIndex) || null
+	onCountChanged: selectedContact = model.getAt(currentIndex) || null
 
 	signal contactStarredChanged()
 	signal contactDeletionRequested(FriendGui contact)

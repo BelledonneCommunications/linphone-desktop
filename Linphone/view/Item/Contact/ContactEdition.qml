@@ -133,7 +133,7 @@ RightPanelLayout {
 					contentItem: TextField {
 						id: givenNameEdit
 						initialText: contact.core.givenName
-						onEditingFinished: contact.core.givenName = text
+						onTextEdited: contact.core.givenName = text
 						backgroundColor: DefaultStyle.grey_0
 						backgroundBorderColor: givenName.errorTextItem.opacity != 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 					}
@@ -142,7 +142,7 @@ RightPanelLayout {
 					label: qsTr("Nom")
 					contentItem: TextField {
 						initialText: contact.core.familyName
-						onEditingFinished: contact.core.familyName = text
+						onTextEdited: contact.core.familyName = text
 						backgroundColor: DefaultStyle.grey_0
 					}
 				}
@@ -150,7 +150,7 @@ RightPanelLayout {
 					label: qsTr("Entreprise")
 					contentItem: TextField {
 						initialText: contact.core.organization
-						onEditingFinished: contact.core.organization = text
+						onTextEdited: contact.core.organization = text
 						backgroundColor: DefaultStyle.grey_0
 					}
 				}
@@ -158,7 +158,7 @@ RightPanelLayout {
 					label: qsTr("Fonction")
 					contentItem: TextField {
 						initialText: contact.core.job
-						onEditingFinished: contact.core.job = text
+						onTextEdited: contact.core.job = text
 						backgroundColor: DefaultStyle.grey_0
 					}
 				}
@@ -180,7 +180,7 @@ RightPanelLayout {
 								label: modelData.label
 								contentItem: RowLayout {
 									TextField {
-										onEditingFinished: {
+										onTextEdited: {
 											if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Adresse SIP"), text)
 										}
 										property string _initialText: modelData.address
@@ -213,10 +213,6 @@ RightPanelLayout {
 									if (text.length != 0) mainItem.contact.core.appendAddress(text)
 									text = ""
 								}
-								onFocusChanged: if (!focus && text.length != 0) {
-									mainItem.contact.core.appendAddress(text)
-									text = ""
-								}
 							}
 						}
 						Item {
@@ -234,7 +230,7 @@ RightPanelLayout {
 								label: modelData.label
 								contentItem: TextField {
 									initialText: modelData.address
-									onEditingFinished: {
+									onTextEdited: {
 										if (text.length != 0) mainItem.contact.core.setPhoneNumberAt(index, qsTr("Téléphone"), text)
 									}
 									backgroundColor: DefaultStyle.grey_0

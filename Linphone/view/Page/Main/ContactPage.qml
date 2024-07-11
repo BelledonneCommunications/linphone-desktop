@@ -34,7 +34,8 @@ AbstractMainPage {
 		friendGui.core.givenName = UtilsCpp.getGivenNameFromFullName(name)
 		friendGui.core.familyName = UtilsCpp.getFamilyNameFromFullName(name)
 		friendGui.core.defaultAddress = address
-		rightPanelStackView.push(contactEdition, {"contact": friendGui, "title": qsTr("Nouveau contact"), "saveButtonText": qsTr("Créer")})
+		if (rightPanelStackView.currentItem && rightPanelStackView.currentItem.objectName != "contactEdition")
+			rightPanelStackView.push(contactEdition, {"contact": friendGui, "title": qsTr("Nouveau contact"), "saveButtonText": qsTr("Créer")})
 	}
 
 	function editContact(friendGui) {
@@ -787,7 +788,7 @@ AbstractMainPage {
 	Component {
 		id: contactEdition
 		ContactEdition {
-			Control.StackView.onActivated: console.log("edit/create contact")
+			property string objectName: "contactEdition"
 			onCloseEdition: {
 				if (rightPanelStackView.depth <= 1) rightPanelStackView.clear()
 				else rightPanelStackView.pop(Control.StackView.Immediate)

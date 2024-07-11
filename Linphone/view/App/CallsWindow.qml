@@ -194,9 +194,6 @@ AppWindow {
 	}
 	Popup {
 		id: waitingPopup
-		visible: mainWindow.transferState === LinphoneEnums.CallState.OutgoingInit
-					|| mainWindow.transferState === LinphoneEnums.CallState.OutgoingProgress
-					|| mainWindow.transferState === LinphoneEnums.CallState.OutgoingRinging || false
 		modal: true
 		closePolicy: Control.Popup.NoAutoClose
 		anchors.centerIn: parent
@@ -205,6 +202,16 @@ AppWindow {
 		radius: 15 * DefaultStyle.dp
 		width: 278 * DefaultStyle.dp
 		height: 115 * DefaultStyle.dp
+		Connections {
+			target: mainWindow
+			function ontransferStateChanged() {
+				if (mainWindow.transferState === LinphoneEnums.CallState.Error
+				|| mainWindow.transferState === LinphoneEnums.CallState.End
+				|| mainWindow.transferState === LinphoneEnums.CallState.Released
+				|| mainWindow.transferState === LinphoneEnums.CallState.Connected)
+					waitingPopup.close()
+			}
+		}
 		contentItem: ColumnLayout {
 			spacing: 0
 			BusyIndicator{
@@ -501,6 +508,7 @@ AppWindow {
 							searchBarBorderColor: DefaultStyle.grey_200
 							onSelectedContactChanged: {
 								if (selectedContact) mainWindow.transferCallToContact(mainWindow.call, selectedContact, callcontactslist)
+								waitingPopup.open()
 							}
 						}
 					}
