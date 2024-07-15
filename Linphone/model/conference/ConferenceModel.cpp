@@ -143,6 +143,7 @@ void ConferenceModel::toggleScreenSharing() {
 		if (enable) {
 			params->setConferenceVideoLayout(linphone::Conference::Layout::ActiveSpeaker);
 			params->enableVideo(true);
+			params->enableCamera(false);
 			auto videoDirection = params->getVideoDirection();
 			if (videoDirection != linphone::MediaDirection::SendOnly &&
 			    videoDirection != linphone::MediaDirection::SendRecv)

@@ -542,6 +542,7 @@ void ConferenceInfoCore::writeIntoModel(std::shared_ptr<ConferenceInfoModel> mod
 	model->setDateTime(mIsScheduled ? mDateTime : QDateTime());
 	model->setDuration(mDuration);
 	model->setSubject(mSubject);
+	model->enableInvite(mInviteEnabled);
 	if (!mOrganizerAddress.isEmpty()) {
 		model->setOrganizer(mOrganizerAddress);
 		lDebug() << "Use of " << mOrganizerAddress;

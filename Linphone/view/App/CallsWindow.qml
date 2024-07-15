@@ -9,9 +9,7 @@ import SettingsCpp 1.0
 import DesktopToolsCpp 1.0
 
 AppWindow {
-	id: mainWindow
-	width: 1512 * DefaultStyle.dp
-	height: 982 * DefaultStyle.dp
+    id: mainWindow
 	flags: Qt.Window
 	// modality: Qt.WindowModal
 
@@ -204,8 +202,9 @@ AppWindow {
 		height: 115 * DefaultStyle.dp
 		Connections {
 			target: mainWindow
-			function ontransferStateChanged() {
-				if (mainWindow.transferState === LinphoneEnums.CallState.Error
+			function onTransferStateChanged() {
+				if (mainWindow.transferState === LinphoneEnums.CallState.OutgoingInit) waitingPopup.open()
+				else if (mainWindow.transferState === LinphoneEnums.CallState.Error
 				|| mainWindow.transferState === LinphoneEnums.CallState.End
 				|| mainWindow.transferState === LinphoneEnums.CallState.Released
 				|| mainWindow.transferState === LinphoneEnums.CallState.Connected)
@@ -281,7 +280,7 @@ AppWindow {
 								id: callStatusText
 								text: (mainWindow.callState === LinphoneEnums.CallState.End  || mainWindow.callState === LinphoneEnums.CallState.Released)
 									? qsTr("End of the call")
-									: mainWindow.call.core.paused
+									: mainWindow.call && mainWindow.call.core.paused
 									|| (mainWindow.callState === LinphoneEnums.CallState.Paused
 									|| mainWindow.callState === LinphoneEnums.CallState.PausedByRemote)
 										? (mainWindow.conference ? qsTr('Réunion mise ') : qsTr('Appel mis')) + qsTr(" en pause")
@@ -416,7 +415,7 @@ AppWindow {
 							hoverEnabled: true
 							cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 							onClicked: {
-								if (rightPanel.visible) rightPanel.visible = false
+								if (rightPanel.visible && rightPanel.contentStackView.currentItem.objectName === "statsPanel") rightPanel.visible = false
 								else {
 									rightPanel.visible = true
 									rightPanel.replace(statsPanel)
@@ -427,7 +426,11 @@ AppWindow {
 				}
 
 				Control.Control {
-					visible: mainWindow.call && (mainWindow.call.core.recording || mainWindow.call.core.remoteRecording)
+					visible: mainWindow.call
+					? !!mainWindow.conference
+						? mainWindow.conference.core.isRecording
+						: (mainWindow.call.core.recording || mainWindow.call.core.remoteRecording)
+					: false
 					anchors.centerIn: parent
 					leftPadding: 14 * DefaultStyle.dp
 					rightPadding: 14 * DefaultStyle.dp
@@ -508,7 +511,6 @@ AppWindow {
 							searchBarBorderColor: DefaultStyle.grey_200
 							onSelectedContactChanged: {
 								if (selectedContact) mainWindow.transferCallToContact(mainWindow.call, selectedContact, callcontactslist)
-								waitingPopup.open()
 							}
 						}
 					}
@@ -1013,6 +1015,7 @@ AppWindow {
 				Component {
 					id: statsPanel
 					ColumnLayout {
+						property string objectName: "statsPanel"
 						spacing: 20 * DefaultStyle.dp
 						Control.StackView.onActivated: {
 							rightPanel.headerTitleText = qsTr("Statistiques")
@@ -1071,6 +1074,8 @@ AppWindow {
 							Layout.topMargin: 13 * DefaultStyle.dp
 							Layout.leftMargin: 16 * DefaultStyle.dp
 							Layout.rightMargin: 16 * DefaultStyle.dp
+
+							visible: mainWindow.call && (mainWindow.call.core.localVideoEnabled || mainWindow.call.core.remoteVideoEnabled)
 							
 							contentItem: ColumnLayout {
 								spacing: 12 * DefaultStyle.dp
@@ -1341,6 +1346,7 @@ AppWindow {
 					}
 					CheckableButton {
 						iconUrl: AppIcons.screencast
+                        visible: !!mainWindow.conference
 						checkedColor: DefaultStyle.main2_400
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
@@ -1480,6 +1486,7 @@ AppWindow {
 							}
 							MenuButton {
 								checkable: true
+								visible: mainWindow.call && !mainWindow.conference
 								enabled: mainWindow.call && mainWindow.call.core.recordable
 								icon.source: AppIcons.recordFill
 								icon.width: 32 * DefaultStyle.dp

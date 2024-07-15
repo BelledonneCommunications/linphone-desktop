@@ -273,14 +273,13 @@ Item {
 							background.visible: false
 							Layout.preferredWidth: 54 * DefaultStyle.dp
 							Layout.preferredHeight: width
+							popup.padding: 14 * DefaultStyle.dp
 							contentItem: Avatar {
 								id: avatar
 								height: avatarButton.height
 								width: avatarButton.width
 								account: accountProxy.defaultAccount
 							}
-							popup.x: width - popup.width
-							popup.padding: 0
 							popup.contentItem: ColumnLayout {
 								Accounts {
 									id: accounts
@@ -293,8 +292,8 @@ Item {
 							id: settingsButton
 							Layout.preferredWidth: 24 * DefaultStyle.dp
 							Layout.preferredHeight: 24 * DefaultStyle.dp
-							popup.x: width - popup.width
 							popup.width: 271 * DefaultStyle.dp
+							popup.padding: 14 * DefaultStyle.dp
 							popup.contentItem: ColumnLayout {
 								spacing: 20 * DefaultStyle.dp
 								IconLabelButton {

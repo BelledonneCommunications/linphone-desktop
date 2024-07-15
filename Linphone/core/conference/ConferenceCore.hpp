@@ -40,6 +40,7 @@ public:
 	// Q_PROPERTY(ParticipantDeviceList *participantDevices READ getParticipantDeviceList CONSTANT)
 	// Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
 	Q_PROPERTY(bool isReady MEMBER mIsReady WRITE setIsReady NOTIFY isReadyChanged)
+	Q_PROPERTY(bool isRecording READ isRecording WRITE setRecording NOTIFY isRecordingChanged)
 
 	Q_PROPERTY(QString subject READ getSubject WRITE setSubject NOTIFY subjectChanged)
 	Q_PROPERTY(bool isLocalScreenSharing MEMBER mIsLocalScreenSharing WRITE setIsLocalScreenSharing NOTIFY
@@ -65,6 +66,9 @@ public:
 	int getParticipantDeviceCount() const;
 	void setParticipantDeviceCount(int count);
 
+	bool isRecording() const;
+	void setRecording(bool recording);
+
 	ParticipantDeviceCore *getActiveSpeaker() const;
 	ParticipantDeviceGui *getActiveSpeakerGui() const;
 	ParticipantGui *getMeGui() const;
@@ -86,6 +90,7 @@ signals:
 	void participantDeviceCountChanged();
 	void activeSpeakerChanged();
 	void subjectChanged();
+	void isRecordingChanged();
 
 	void lToggleScreenSharing();
 
@@ -97,6 +102,7 @@ private:
 	int mParticipantDeviceCount = 0;
 
 	bool mIsReady = false;
+	bool mIsRecording = false;
 	bool mIsLocalScreenSharing = false;
 	bool mIsScreenSharingEnabled = false;
 	QString mSubject;

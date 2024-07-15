@@ -180,13 +180,13 @@ void CallModel::setLocalVideoEnabled(bool enabled) {
 void CallModel::startRecording() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->startRecording();
-	emit recordingChanged(mMonitor->getParams()->isRecording());
+	emit recordingChanged(mMonitor, mMonitor->getParams()->isRecording());
 }
 
 void CallModel::stopRecording() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->stopRecording();
-	emit recordingChanged(mMonitor->getParams()->isRecording());
+	emit recordingChanged(mMonitor, mMonitor->getParams()->isRecording());
 }
 
 void CallModel::setRecordFile(const std::string &path) {

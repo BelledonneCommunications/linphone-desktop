@@ -55,12 +55,12 @@ Button {
 			// Do not use popup.height as it is not consistent.
 			var position = mainItem.mapToItem(mainItem.Window.contentItem, mainItem.x + popup.implicitContentWidth + popup.padding, mainItem.y + mainItem.height + popup.implicitContentHeight + popup.padding)
 			if (position.y >= mainItem.Window.height) {
-				y = -mainItem.height - popup.implicitContentHeight
+				y = -mainItem.height - popup.implicitContentHeight - popup.padding
 			}else {
 				y = mainItem.height + popup.padding
 			}
 			if (position.x >= mainItem.Window.width) {
-				x = -popup.implicitContentWidth
+				x = mainItem.width - Math.max(popup.width, popup.implicitContentWidth)
 			} else {
 				x = 0
 			}

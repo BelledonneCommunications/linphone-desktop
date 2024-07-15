@@ -28,6 +28,8 @@ AbstractMainPage {
 		}
 	}
 
+    onNoItemButtonPressed: editConference()
+
 	function editConference(confInfoGui = null) {
 		var isCreation = !confInfoGui
 		if (isCreation) {

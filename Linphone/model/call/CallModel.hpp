@@ -97,7 +97,7 @@ signals:
 	void pausedChanged(bool paused);
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
 	void localVideoEnabledChanged(bool enabled);
-	void recordingChanged(bool recording);
+	void recordingChanged(const std::shared_ptr<linphone::Call> &call, bool recording);
 	void speakerVolumeGainChanged(float volume);
 	void microphoneVolumeGainChanged(float volume);
 	void inputAudioDeviceChanged(const std::string &id);

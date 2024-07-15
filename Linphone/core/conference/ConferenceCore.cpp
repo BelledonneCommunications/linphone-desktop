@@ -41,6 +41,7 @@ ConferenceCore::ConferenceCore(const std::shared_ptr<linphone::Conference> &conf
 	mParticipantDeviceCount = conference->getParticipantDeviceList().size();
 	mIsLocalScreenSharing = mConferenceModel->isLocalScreenSharing();
 	mIsScreenSharingEnabled = mConferenceModel->isScreenSharingEnabled();
+	mIsRecording = conference->isRecording();
 	auto me = conference->getMe();
 	if (me) {
 		mMe = ParticipantCore::create(me);
@@ -103,6 +104,17 @@ QDateTime ConferenceCore::getStartDate() const {
 
 Q_INVOKABLE qint64 ConferenceCore::getElapsedSeconds() const {
 	return 0;
+}
+
+bool ConferenceCore::isRecording() const {
+	return mIsRecording;
+}
+
+void ConferenceCore::setRecording(bool recording) {
+	if (mIsRecording != recording) {
+		mIsRecording = recording;
+		emit isRecordingChanged();
+	}
 }
 
 void ConferenceCore::setParticipantDeviceCount(int count) {

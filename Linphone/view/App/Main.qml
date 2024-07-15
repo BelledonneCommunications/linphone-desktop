@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.3
+import QtQuick.Window
 import QtQuick.Controls
 import Linphone
 import UtilsCpp 1.0
@@ -7,8 +8,7 @@ import SettingsCpp 1.0
 
 AppWindow {
 	id: mainWindow
-	width: 1512 * DefaultStyle.dp
-	height: 982 * DefaultStyle.dp
+    // height: 982 * DefaultStyle.dp
 	visible: true
 	title: qsTr("Linphone")
 	// TODO : handle this bool when security mode is implemented

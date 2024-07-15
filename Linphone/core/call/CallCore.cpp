@@ -199,17 +199,18 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToCore(&CallCore::lStopRecording, [this]() {
 		mCallModelConnection->invokeToModel([this]() { mCallModel->stopRecording(); });
 	});
-	mCallModelConnection->makeConnectToModel(&CallModel::recordingChanged, [this](bool recording) {
-		mCallModelConnection->invokeToCore([this, recording]() {
-			setRecording(recording);
-			if (recording == false) {
-				Utils::showInformationPopup(tr("Enregistrement terminé"),
-				                            tr("L'appel a été enregistré dans le fichier : %1")
-				                                .arg(QString::fromStdString(mCallModel->getRecordFile())),
-				                            true, App::getInstance()->getCallsWindow());
-			}
-		});
-	});
+	mCallModelConnection->makeConnectToModel(
+	    &CallModel::recordingChanged, [this](const std::shared_ptr<linphone::Call> &call, bool recording) {
+		    mCallModelConnection->invokeToCore([this, recording]() {
+			    setRecording(recording);
+			    if (recording == false) {
+				    Utils::showInformationPopup(tr("Enregistrement terminé"),
+				                                tr("L'appel a été enregistré dans le fichier : %1")
+				                                    .arg(QString::fromStdString(mCallModel->getRecordFile())),
+				                                true, App::getInstance()->getCallsWindow());
+			    }
+		    });
+	    });
 	mCallModelConnection->makeConnectToCore(&CallCore::lCheckAuthenticationTokenSelected, [this](const QString &token) {
 		mCallModelConnection->invokeToModel([this, token]() { mCallModel->checkAuthenticationToken(token); });
 	});
@@ -224,10 +225,17 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			                                         emit tokenVerified();
 		                                         });
 	                                         });
-	mCallModelConnection->makeConnectToModel(
-	    &CallModel::remoteRecording, [this](const std::shared_ptr<linphone::Call> &call, bool recording) {
-		    mCallModelConnection->invokeToCore([this, recording]() { setRemoteRecording(recording); });
-	    });
+	mCallModelConnection->makeConnectToModel(&CallModel::remoteRecording,
+	                                         [this](const std::shared_ptr<linphone::Call> &call, bool recording) {
+		                                         bool confRecording = false;
+		                                         if (call->getConference()) {
+			                                         confRecording = call->getConference()->isRecording();
+		                                         }
+		                                         mCallModelConnection->invokeToCore([this, recording, confRecording]() {
+			                                         if (mConference) mConference->setRecording(confRecording);
+			                                         setRemoteRecording(recording);
+		                                         });
+	                                         });
 	mCallModelConnection->makeConnectToModel(&CallModel::localVideoEnabledChanged, [this](bool enabled) {
 		mCallModelConnection->invokeToCore([this, enabled]() { setLocalVideoEnabled(enabled); });
 	});

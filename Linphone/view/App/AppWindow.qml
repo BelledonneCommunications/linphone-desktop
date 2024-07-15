@@ -7,6 +7,8 @@ import SettingsCpp 1.0
 
 ApplicationWindow {
 	id: mainWindow
+    width: Math.min(1512 * DefaultStyle.dp, Screen.desktopAvailableWidth)
+    height: Math.min(982 * DefaultStyle.dp, Screen.desktopAvailableHeight)
 
 	MouseArea {
 		anchors.fill: parent

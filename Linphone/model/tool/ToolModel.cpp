@@ -139,6 +139,9 @@ bool ToolModel::createCall(const QString &sipAddress,
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	CallModel::activateLocalVideo(params, nullptr, localVideoEnabled);
 
+	bool micEnabled = options.contains("microEnabled") ? options["microEnabled"].toBool() : true;
+	params->enableMic(micEnabled);
+
 	params->setMediaEncryption(mediaEncryption);
 	if (Utils::coreStringToAppString(params->getRecordFile()).isEmpty()) {
 

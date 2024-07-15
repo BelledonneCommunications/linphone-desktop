@@ -110,10 +110,11 @@ ColumnLayout {
 					height: 219 * DefaultStyle.dp
 					screenIndex: index
 					onClicked: {//screensLayout.selectedIndex = index
-									mainItem.desc.core.screenSharingIndex = index
-									if( mainItem.conference.core.isLocalScreenSharing)
-										mainItem.call.core.videoSourceDescriptor = mainItem.desc
-								}
+						screensLayout.currentIndex = index
+						mainItem.desc.core.screenSharingIndex = index
+						if( mainItem.conference.core.isLocalScreenSharing)
+							mainItem.call.core.videoSourceDescriptor = mainItem.desc
+					}
 					selected: //screensLayout.selectedIndex === index
 								mainItem.desc.core.screenSharingIndex === index
 				}
@@ -126,6 +127,7 @@ ColumnLayout {
 				id: windowsList
 				mode: ScreenList.WINDOWS
 			}
+			currentIndex: -1
 			onVisibleChanged: if(visible) windowsList.update()
 			cellWidth: width / 2
 			cellHeight: (112 + 15) * DefaultStyle.dp
@@ -139,10 +141,11 @@ ColumnLayout {
 						displayScreen: false
 						screenIndex: index
 						onClicked: {
-										mainItem.desc.core.windowId = $modelData.windowId
-										if( mainItem.conference.core.isLocalScreenSharing)
-												mainItem.call.core.videoSourceDescriptor = mainItem.desc
-									}
+							windowsLayout.currentIndex = index
+							mainItem.desc.core.windowId = $modelData.windowId
+							if( mainItem.conference.core.isLocalScreenSharing)
+									mainItem.call.core.videoSourceDescriptor = mainItem.desc
+						}
 						selected: mainItem.desc.core.windowId == $modelData.windowId
 
 						//onClicked: screensLayout.selectedIndex = index
@@ -153,6 +156,7 @@ ColumnLayout {
 	}
 	Button {
 		visible: mainItem.screenSharingAvailable
+		enabled: windowsLayout.currentIndex !== -1 || screensLayout.currentIndex !== -1
 		text:  mainItem.conference && mainItem.conference.core.isLocalScreenSharing
 					? qsTr("Stop")
 					: qsTr("Partager")
