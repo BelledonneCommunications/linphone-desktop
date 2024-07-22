@@ -373,9 +373,13 @@ void FriendCore::removeAddress(int index) {
 
 void FriendCore::appendAddress(const QString &addr) {
 	if (addr.isEmpty()) return;
-	mAddressList.append(createFriendAddressVariant(addressLabel, addr));
-	if (mDefaultAddress.isEmpty()) mDefaultAddress = addr;
-	emit addressChanged();
+	auto linAddr = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(addr));
+	if (!linAddr) Utils::showInformationPopup(tr("Erreur"), tr("Adresse invalide"), false);
+	else {
+		mAddressList.append(createFriendAddressVariant(addressLabel, addr));
+		if (mDefaultAddress.isEmpty()) mDefaultAddress = addr;
+		emit addressChanged();
+	}
 }
 
 void FriendCore::resetAddresses(QList<QVariant> newList) {
@@ -482,9 +486,9 @@ void FriendCore::writeIntoModel(std::shared_ptr<FriendModel> model) const {
 	std::list<std::shared_ptr<linphone::Address>> addresses;
 	for (auto &addr : mAddressList) {
 		auto friendAddress = addr.toMap();
-		auto num =
+		auto address =
 		    linphone::Factory::get()->createAddress(Utils::appStringToCoreString(friendAddress["address"].toString()));
-		addresses.push_back(num);
+		addresses.push_back(address);
 	}
 	model->resetAddresses(addresses);
 

@@ -147,7 +147,8 @@ ColumnLayout {
 						if (!selectedDate || selectedDate == mainItem.conferenceInfoGui.core.dateTime) return
 						mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(selectedDate, allDaySwitch.isAllDay ? 0 : startHour.selectedHour, allDaySwitch.isAllDay ? 0 : startHour.selectedMin)
 						if (isCreation) {
-							if (allDaySwitch.position === 0) endDate.calendar.selectedDate = UtilsCpp.addSecs(selectedDate, 3600)
+							startHour.selectedDateTime = UtilsCpp.createDateTime(selectedDate, startHour.selectedHour, startHour.selectedMin)
+							if (allDaySwitch.position === 0) endDate.calendar.selectedDate = UtilsCpp.addSecs(startHour.selectedDateTime, 3600)
 							else endDate.calendar.selectedDate = UtilsCpp.createDateTime(selectedDate, 23, 59)
 						}
 					}
@@ -164,10 +165,12 @@ ColumnLayout {
 					contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
 					onSelectedHourChanged: {
 						mainItem.conferenceInfoGui.core.dateTime = selectedDateTime//UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
+						endDate.calendar.selectedDate = UtilsCpp.addSecs(selectedDateTime, 3600)
 						endHour.selectedDateTime = UtilsCpp.addSecs(selectedDateTime, 3600)//Qt.formatDateTime(UtilsCpp.createDateTime(new Date(), selectedHour == 23 ? 23 : selectedHour + 1, selectedHour == 23 ? 59 : selectedMin), "hh:mm")
 					}
 					onSelectedMinChanged: {
 						mainItem.conferenceInfoGui.core.dateTime = selectedDateTime//UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
+						endDate.calendar.selectedDate = UtilsCpp.addSecs(selectedDateTime, 3600)
 						endHour.selectedDateTime = UtilsCpp.addSecs(selectedDateTime, 3600)//UtilsCpp.createDateTime(selectedDateTime, selectedHour == 23 ? 23 : selectedHour + 1, selectedHour == 23 ? 59 : selectedMin)
 					}
 				}

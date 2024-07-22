@@ -65,9 +65,10 @@ RightPanelLayout {
 	]
 
 	content: ColumnLayout {
-		anchors.centerIn: parent
-		// anchors.leftMargin: 103 * DefaultStyle.dp
+		anchors.fill: parent
+		spacing: 63 * DefaultStyle.dp
 		ColumnLayout {
+			spacing: 8 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignHCenter
 			Layout.topMargin: 69 * DefaultStyle.dp
 			Avatar {
@@ -118,58 +119,96 @@ RightPanelLayout {
 			}
 		}
 		RowLayout {
-			Layout.alignment: Qt.AlignHCenter
 			Layout.fillHeight: true
 			Layout.fillWidth: true
-			spacing: 100 * DefaultStyle.dp
+			Layout.alignment: Qt.AlignHCenter
 			Layout.topMargin: 50 * DefaultStyle.dp
 			Layout.bottomMargin: 50 * DefaultStyle.dp
-			ColumnLayout {
-				spacing: 20 * DefaultStyle.dp
-				FormItemLayout {
-					id: givenName
-					enableErrorText: true
-					label: qsTr("Prénom")
-					contentItem: TextField {
-						id: givenNameEdit
-						initialText: contact.core.givenName
-						onTextEdited: contact.core.givenName = text
-						backgroundColor: DefaultStyle.grey_0
-						backgroundBorderColor: givenName.errorTextItem.opacity != 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
-					}
-				}
-				FormItemLayout {
-					label: qsTr("Nom")
-					contentItem: TextField {
-						initialText: contact.core.familyName
-						onTextEdited: contact.core.familyName = text
-						backgroundColor: DefaultStyle.grey_0
-					}
-				}
-				FormItemLayout {
-					label: qsTr("Entreprise")
-					contentItem: TextField {
-						initialText: contact.core.organization
-						onTextEdited: contact.core.organization = text
-						backgroundColor: DefaultStyle.grey_0
-					}
-				}
-				FormItemLayout {
-					label: qsTr("Fonction")
-					contentItem: TextField {
-						initialText: contact.core.job
-						onTextEdited: contact.core.job = text
-						backgroundColor: DefaultStyle.grey_0
-					}
-				}
-				Item{Layout.fillHeight: true}
-			}
-			Control.ScrollView {
+			spacing: 100 * DefaultStyle.dp
+			Flickable {
+				Layout.preferredWidth: contentWidth
 				Layout.fillHeight: true
+				Layout.leftMargin: 100 * DefaultStyle.dp
+				contentWidth: content.implicitWidth
 				contentHeight: content.height
+				clip: true
+
+				ColumnLayout {
+					spacing: 20 * DefaultStyle.dp
+					anchors.fill: parent
+					FormItemLayout {
+						id: givenName
+						enableErrorText: true
+						label: qsTr("Prénom")
+						contentItem: TextField {
+							id: givenNameEdit
+							initialText: contact.core.givenName
+							onTextEdited: contact.core.givenName = text
+							backgroundColor: DefaultStyle.grey_0
+							backgroundBorderColor: givenName.errorTextItem.opacity != 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
+						}
+					}
+					FormItemLayout {
+						label: qsTr("Nom")
+						contentItem: TextField {
+							initialText: contact.core.familyName
+							onTextEdited: contact.core.familyName = text
+							backgroundColor: DefaultStyle.grey_0
+						}
+					}
+					FormItemLayout {
+						label: qsTr("Entreprise")
+						contentItem: TextField {
+							initialText: contact.core.organization
+							onTextEdited: contact.core.organization = text
+							backgroundColor: DefaultStyle.grey_0
+						}
+					}
+					FormItemLayout {
+						label: qsTr("Fonction")
+						contentItem: TextField {
+							initialText: contact.core.job
+							onTextEdited: contact.core.job = text
+							backgroundColor: DefaultStyle.grey_0
+						}
+					}
+					Item{Layout.fillHeight: true}
+				}
+			}
+			Flickable {
+				id: addressesFlickable
+				Layout.preferredWidth: contentWidth
+				Layout.fillHeight: true
+				Layout.rightMargin: 76 * DefaultStyle.dp
+				contentWidth: content.implicitWidth
+				contentHeight: content.implicitHeight
+				clip: true
+
+				flickableDirection: Flickable.VerticalFlick
+				function ensureVisible(r)
+				{
+					if (contentY >= r.y)
+						contentY = r.y;
+					else if (contentY+height <= r.y+r.height+content.spacing)
+						contentY = r.y+r.height-height;
+				}
+
+				Control.ScrollBar.vertical: Control.ScrollBar{
+					id: scrollbar
+					active: true
+					interactive: true
+					policy: Control.ScrollBar.AlwaysOff
+					anchors.top: parent.top
+					anchors.bottom: parent.bottom
+					anchors.right: parent.right
+					anchors.leftMargin: 15 * DefaultStyle.dp
+				}
+				Control.ScrollBar.horizontal: Control.ScrollBar{
+					visible: false
+				}
 				ColumnLayout {
 					id: content
-					anchors.rightMargin: 10 * DefaultStyle.dp
+					anchors.fill: parent
 					spacing: 20 * DefaultStyle.dp
 					Repeater {
 						id: addressesList
@@ -177,41 +216,45 @@ RightPanelLayout {
 							model: mainItem.contact && mainItem.contact.core.addresses || []
 						}
 						delegate: FormItemLayout {
-								label: modelData.label
-								contentItem: RowLayout {
-									TextField {
-										onTextEdited: {
-											if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Adresse SIP"), text)
-										}
-										property string _initialText: modelData.address
-										initialText: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_initialText) : _initialText
-										backgroundColor: DefaultStyle.grey_0
-										Layout.preferredWidth: width
-										Layout.preferredHeight: height
+							label: modelData.label
+							contentItem: RowLayout {
+								spacing: 10 * DefaultStyle.dp
+								TextField {
+									onTextEdited: {
+										if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Adresse SIP"), text)
 									}
-									Button {
-										Layout.preferredWidth: 24 * DefaultStyle.dp
-										Layout.preferredHeight: 24 * DefaultStyle.dp
-										Layout.alignment: Qt.AlignVCenter
-										background: Item{}
-										icon.source: AppIcons.closeX
-										width: 24 * DefaultStyle.dp
-										height: 24 * DefaultStyle.dp
-										icon.width: 24 * DefaultStyle.dp
-										icon.height: 24 * DefaultStyle.dp
-										onClicked: mainItem.contact.core.removeAddress(index)
-									}
+									property string _initialText: modelData.address
+									initialText: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_initialText) : _initialText
+									backgroundColor: DefaultStyle.grey_0
+									Layout.preferredWidth: width
+									Layout.preferredHeight: height
+								}
+								Button {
+									Layout.preferredWidth: 24 * DefaultStyle.dp
+									Layout.preferredHeight: 24 * DefaultStyle.dp
+									Layout.alignment: Qt.AlignVCenter
+									background: Item{}
+									icon.source: AppIcons.closeX
+									width: 24 * DefaultStyle.dp
+									height: 24 * DefaultStyle.dp
+									icon.width: 24 * DefaultStyle.dp
+									icon.height: 24 * DefaultStyle.dp
+									onClicked: mainItem.contact.core.removeAddress(index)
 								}
 							}
+						}
 					}
 					RowLayout {
+						onYChanged: addressesFlickable.ensureVisible(this)
+						spacing: 10 * DefaultStyle.dp
 						FormItemLayout {
 							label: qsTr("Adresse SIP")
 							contentItem: TextField {
 								backgroundColor: DefaultStyle.grey_0
+								Component.onCompleted: text = "sip:"
 								onEditingFinished: {
 									if (text.length != 0) mainItem.contact.core.appendAddress(text)
-									text = ""
+									text = "sip:"
 								}
 							}
 						}
@@ -222,34 +265,41 @@ RightPanelLayout {
 					}
 					Repeater {
 						// phone numbers
+						id: phoneNumberList
 						model: VariantList {
 							model: mainItem.contact && mainItem.contact.core.phoneNumbers || []
 						}
-						delegate: RowLayout {
-							FormItemLayout {
-								label: modelData.label
-								contentItem: TextField {
+						delegate: FormItemLayout {
+							label: modelData.label
+							contentItem: RowLayout {
+								spacing: 10 * DefaultStyle.dp
+								TextField {
 									initialText: modelData.address
 									onTextEdited: {
 										if (text.length != 0) mainItem.contact.core.setPhoneNumberAt(index, qsTr("Téléphone"), text)
 									}
 									backgroundColor: DefaultStyle.grey_0
+									Layout.preferredWidth: width
+									Layout.preferredHeight: height
 								}
-							}
-							Button {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								background: Item{}
-								icon.source: AppIcons.closeX
-								width: 24 * DefaultStyle.dp
-								height: 24 * DefaultStyle.dp
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
-								onClicked: mainItem.contact.core.removePhoneNumber(index)
+								Button {
+									Layout.preferredWidth: 24 * DefaultStyle.dp
+									Layout.preferredHeight: 24 * DefaultStyle.dp
+									Layout.alignment: Qt.AlignVCenter
+									background: Item{}
+									icon.source: AppIcons.closeX
+									width: 24 * DefaultStyle.dp
+									height: 24 * DefaultStyle.dp
+									icon.width: 24 * DefaultStyle.dp
+									icon.height: 24 * DefaultStyle.dp
+									onClicked: mainItem.contact.core.removePhoneNumber(index)
+								}
 							}
 						}
 					}
 					RowLayout {
+						onYChanged: addressesFlickable.ensureVisible(this)
+						spacing: 10 * DefaultStyle.dp
 						FormItemLayout {
 							id: phoneNumberInput
 							label: qsTr("Phone")
@@ -274,19 +324,6 @@ RightPanelLayout {
 					}
 					Item{Layout.fillHeight: true}
 				}
-				Control.ScrollBar.vertical: Control.ScrollBar{
-					id: scrollbar
-					active: true
-					interactive: true
-					policy: Control.ScrollBar.AsNeeded
-					anchors.top: parent.top
-					anchors.bottom: parent.bottom
-					anchors.right: parent.right
-					anchors.leftMargin: 15 * DefaultStyle.dp
-				}
-				Control.ScrollBar.horizontal: Control.ScrollBar{
-					visible: false
-				}
 			}
 		}
 
@@ -301,9 +338,9 @@ RightPanelLayout {
 			topPadding: 11 * DefaultStyle.dp
 			bottomPadding: 11 * DefaultStyle.dp
 			onClicked: {
-				if (givenNameEdit.text.length === 0 || addressesList.count === 0) {
+				if (givenNameEdit.text.length === 0 || (addressesList.count === 0 && phoneNumberList.count === 0)) {
 					if (givenNameEdit.text.length === 0) givenName.errorMessage = qsTr("Veuillez saisir un prénom")
-					if (addressesList.count === 0) addressesErrorText.text = qsTr("Veuillez saisir une adresse ou un numéro de téléphone")
+					if (addressesList.count === 0 && phoneNumberList.count === 0) addressesErrorText.text = qsTr("Veuillez saisir une adresse ou un numéro de téléphone")
 					return
 				}
 				mainItem.contact.core.save()
