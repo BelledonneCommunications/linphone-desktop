@@ -79,7 +79,7 @@ const QString IconsDirectory(QDir::homePath().append(QStringLiteral("/.local/sha
 const QString OsascriptExecutable(QStringLiteral("osascript"));
 #else
 const QString
-	AutoStartSettingsFilePath(QStringLiteral("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"));
+    AutoStartSettingsFilePath(QStringLiteral("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"));
 #endif // ifdef Q_OS_LINUX
 } // namespace
 
@@ -107,7 +107,7 @@ bool App::autoStartEnabled() {
 	// check if the Exec part of the autostart ini file not corresponding to our executable (old desktop entry with
 	// wrong version in filename)
 	if (autoStartConf.indexOf(QString("Exec=" + exec + " ")) <
-		0) { // On autostart, there is the option --iconified so there is one space.
+	    0) { // On autostart, there is the option --iconified so there is one space.
 		// replace file
 		setAutoStart(true);
 	}
@@ -140,11 +140,11 @@ bool App::autoStartEnabled() {
 
 	QProcess process;
 	process.start(OsascriptExecutable,
-				  {"-e", "tell application \"System Events\" to get the name of every login item"});
+	              {"-e", "tell application \"System Events\" to get the name of every login item"});
 	if (!process.waitForFinished()) {
 		qWarning() << QStringLiteral("Unable to execute properly: `%1` (%2).")
-						  .arg(OsascriptExecutable)
-						  .arg(process.errorString());
+		                  .arg(OsascriptExecutable)
+		                  .arg(process.errorString());
 		return false;
 	}
 
@@ -187,7 +187,7 @@ static inline string getConfigPathIfExists(const QCommandLineParser &parser) {
 	string configPath;
 	if (!QUrl(filePath).isRelative()) {
 		configPath = Utils::appStringToCoreString(FileDownloader::synchronousDownload(
-			filePath, Utils::coreStringToAppString(Paths::getConfigDirPath(false)), true));
+		    filePath, Utils::coreStringToAppString(Paths::getConfigDirPath(false)), true));
 	}
 	if (configPath == "") configPath = Paths::getConfigFilePath(filePath, false);
 	if (configPath == "") configPath = Paths::getConfigFilePath("", false);
@@ -218,7 +218,7 @@ QString App::getFetchConfig(QCommandLineParser *parser) {
 		createParser();
 	} else if (!filePath.isEmpty())
 		mParser->process(
-			cleanParserKeys(mParser, QStringList("fetch-config"))); // Remove this parameter from the parser
+		    cleanParserKeys(mParser, QStringList("fetch-config"))); // Remove this parameter from the parser
 	return filePath;
 }
 
@@ -231,10 +231,10 @@ bool App::useFetchConfig(const QString &filePath) {
 		} else {
 			QObject *context = new QObject();
 			connect(CoreManager::getInstance(), &CoreManager::coreManagerInitialized, context,
-					[context, filePath, this]() {
-						useFetchConfig(filePath);
-						context->deleteLater();
-					});
+			        [context, filePath, this]() {
+				        useFetchConfig(filePath);
+				        context->deleteLater();
+			        });
 		}
 	}
 	return false;
@@ -264,13 +264,13 @@ bool App::setFetchConfig(QString filePath) {
 // -----------------------------------------------------------------------------
 
 App::App(int &argc, char *argv[])
-	: SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
+    : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
 	// Ignore vertical sync. This way, we avoid blinking on resizes(and other refresh steps like layouts etc.).
 	auto ignoreVSync = QSurfaceFormat::defaultFormat();
 	ignoreVSync.setSwapInterval(0);
 	QSurfaceFormat::setDefaultFormat(ignoreVSync);
 	connect(this, SIGNAL(applicationStateChanged(Qt::ApplicationState)), this,
-			SLOT(stateChanged(Qt::ApplicationState)));
+	        SLOT(stateChanged(Qt::ApplicationState)));
 	setWindowIcon(QIcon(Constants::WindowIconPath));
 
 #ifdef Q_OS_WIN
@@ -303,13 +303,14 @@ App::App(int &argc, char *argv[])
 
 	// Use UTF-8 for internals. Linphone uses UTF-8 so there will be no loss on
 	// data with less precise encodings. Qt will do the rest.
-	bctbx_set_default_encoding(Constants::LinphoneLocaleEncoding);
+	// bctbx_set_default_encoding(Constants::LinphoneLocaleEncoding);
+	setlocale(LC_CTYPE, ".UTF8");
 
 	createParser();
 	mParser->parse(this->arguments());
 	// Get configuration for translators
 	shared_ptr<linphone::Config> config =
-		Utils::getConfigIfExists(QString::fromStdString(getConfigPathIfExists(*mParser)));
+	    Utils::getConfigIfExists(QString::fromStdString(getConfigPathIfExists(*mParser)));
 
 	// Init locale.
 	mTranslator = new DefaultTranslator(this);
@@ -341,18 +342,18 @@ App::App(int &argc, char *argv[])
 	mAutoStart = autoStartEnabled();
 
 	qInfo() << QStringLiteral("Starting application " APPLICATION_NAME " (bin: " EXECUTABLE_NAME
-							  "). Version:%1 Os:%2 Qt:%3")
-				   .arg(applicationVersion())
-				   .arg(Utils::getOsProduct())
-				   .arg(qVersion());
+	                          "). Version:%1 Os:%2 Qt:%3")
+	               .arg(applicationVersion())
+	               .arg(Utils::getOsProduct())
+	               .arg(qVersion());
 	qInfo() << QStringLiteral("Use locale: %1 with language: %2")
-				   .arg(mLocale.name())
-				   .arg(QLocale::languageToString(mLocale.language()));
+	               .arg(mLocale.name())
+	               .arg(QLocale::languageToString(mLocale.language()));
 	qInfo() << QStringLiteral("System timezone: code=%1 / country=%2 / Offset=%3 / ID=%4")
-				   .arg(QTimeZone::systemTimeZone().country())
-				   .arg(Utils::getCountryName(QTimeZone::systemTimeZone().country()))
-				   .arg(QTimeZone::systemTimeZone().standardTimeOffset(QDateTime::currentDateTime()))
-				   .arg(QString(QTimeZone::systemTimeZoneId()));
+	               .arg(QTimeZone::systemTimeZone().country())
+	               .arg(Utils::getCountryName(QTimeZone::systemTimeZone().country()))
+	               .arg(QTimeZone::systemTimeZone().standardTimeOffset(QDateTime::currentDateTime()))
+	               .arg(QString(QTimeZone::systemTimeZoneId()));
 
 	// Deal with received messages and CLI.
 	QObject::connect(this, &App::receivedMessage, this, [](int, const QByteArray &byteArray) {
@@ -566,11 +567,11 @@ void App::initContentApp() {
 	if (mEngine->rootObjects().isEmpty()) qFatal("Unable to open main window.");
 
 	QObject::connect(CoreManager::getInstance(), &CoreManager::coreManagerInitialized, CoreManager::getInstance(),
-					 [this, mustBeIconified]() mutable {
-						 if (CoreManager::getInstance()->started()) {
-							 openAppAfterInit(mustBeIconified);
-						 }
-					 });
+	                 [this, mustBeIconified]() mutable {
+		                 if (CoreManager::getInstance()->started()) {
+			                 openAppAfterInit(mustBeIconified);
+		                 }
+	                 });
 }
 
 // -----------------------------------------------------------------------------
@@ -650,20 +651,20 @@ void App::createParser() {
 	mParser = new QCommandLineParser();
 	mParser->setApplicationDescription(tr("applicationDescription"));
 	mParser->addPositionalArgument("command", tr("commandLineDescription").replace("%1", APPLICATION_NAME),
-								   "[command]");
+	                               "[command]");
 	mParser->addOptions({
-		{{"h", "help"}, tr("commandLineOptionHelp")},
-		{"cli-help", tr("commandLineOptionCliHelp").replace("%1", APPLICATION_NAME)},
-		{{"v", "version"}, tr("commandLineOptionVersion")},
-		{"config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg")},
-		{"fetch-config", tr("commandLineOptionFetchConfig").replace("%1", EXECUTABLE_NAME),
-		 tr("commandLineOptionFetchConfigArg")},
-		{{"c", "call"}, tr("commandLineOptionCall").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionCallArg")},
+	    {{"h", "help"}, tr("commandLineOptionHelp")},
+	    {"cli-help", tr("commandLineOptionCliHelp").replace("%1", APPLICATION_NAME)},
+	    {{"v", "version"}, tr("commandLineOptionVersion")},
+	    {"config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg")},
+	    {"fetch-config", tr("commandLineOptionFetchConfig").replace("%1", EXECUTABLE_NAME),
+	     tr("commandLineOptionFetchConfigArg")},
+	    {{"c", "call"}, tr("commandLineOptionCall").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionCallArg")},
 #ifndef Q_OS_MACOS
-		{"iconified", tr("commandLineOptionIconified")},
+	    {"iconified", tr("commandLineOptionIconified")},
 #endif // ifndef Q_OS_MACOS
-		{{"V", "verbose"}, tr("commandLineOptionVerbose")},
-		{"qt-logs-only", tr("commandLineOptionQtLogsOnly")},
+	    {{"V", "verbose"}, tr("commandLineOptionVerbose")},
+	    {"qt-logs-only", tr("commandLineOptionQtLogsOnly")},
 	});
 }
 
@@ -713,7 +714,7 @@ static inline void registerUncreatableType(const char *name) {
 template <typename T>
 static inline void registerSingletonType(const char *name) {
 	qmlRegisterSingletonType<T>(Constants::MainQmlUri, 1, 0, name,
-								[](QQmlEngine *engine, QJSEngine *) -> QObject * { return new T(engine); });
+	                            [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new T(engine); });
 }
 
 template <typename T>
@@ -724,7 +725,7 @@ static inline void registerType(const char *name) {
 template <typename T>
 static inline void registerToolType(const char *name, const int &major_version = 1, const int &minor_version = 0) {
 	qmlRegisterSingletonType<T>(name, major_version, minor_version, name,
-								[](QQmlEngine *engine, QJSEngine *) -> QObject * { return new T(engine); });
+	                            [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new T(engine); });
 }
 
 template <typename T, typename Owner, T *(Owner::*function)() const>
@@ -835,7 +836,7 @@ void App::registerTypes() {
 	registerUncreatableType<ParticipantImdnStateListModel>("ParticipantImdnStateListModel");
 
 	qmlRegisterUncreatableMetaObject(LinphoneEnums::staticMetaObject, "LinphoneEnums", 1, 0, "LinphoneEnums",
-									 "Only enums");
+	                                 "Only enums");
 }
 
 void App::registerSharedTypes() {
@@ -850,7 +851,7 @@ void App::registerSharedTypes() {
 	registerSharedSingletonType<CallsListModel, &CoreManager::getCallsListModel>("CallsListModel");
 	registerSharedSingletonType<ContactsListModel, &CoreManager::getContactsListModel>("ContactsListModel");
 	registerSharedSingletonType<ContactsImporterListModel, &CoreManager::getContactsImporterListModel>(
-		"ContactsImporterListModel");
+	    "ContactsImporterListModel");
 	registerSharedSingletonType<LdapListModel, &CoreManager::getLdapListModel>("LdapListModel");
 	registerSharedSingletonType<TimelineListModel, &CoreManager::getTimelineListModel>("TimelineListModel");
 	registerSharedSingletonType<RecorderManager, &CoreManager::getRecorderManager>("RecorderManager");
@@ -887,10 +888,10 @@ void App::registerUninstalledModules() {
 void App::setTrayIcon() {
 	QQuickWindow *root = getMainWindow();
 	QSystemTrayIcon *systemTrayIcon =
-		(mSystemTrayIcon
-			 ? mSystemTrayIcon
-			 : new QSystemTrayIcon(
-				   nullptr)); // Workaround : QSystemTrayIcon cannot be deleted because of setContextMenu (indirectly)
+	    (mSystemTrayIcon
+	         ? mSystemTrayIcon
+	         : new QSystemTrayIcon(
+	               nullptr)); // Workaround : QSystemTrayIcon cannot be deleted because of setContextMenu (indirectly)
 
 	// trayIcon: Right click actions.
 	QAction *settingsAction = new QAction(tr("settings"), root);
@@ -906,8 +907,8 @@ void App::setTrayIcon() {
 	root->connect(aboutAction, &QAction::triggered, root, [root] {
 		App::smartShowWindow(root);
 		QMetaObject::invokeMethod(root, Constants::AttachVirtualWindowMethodName, Qt::DirectConnection,
-								  Q_ARG(QVariant, QUrl(Constants::AboutPath)), Q_ARG(QVariant, QVariant()),
-								  Q_ARG(QVariant, QVariant()));
+		                          Q_ARG(QVariant, QUrl(Constants::AboutPath)), Q_ARG(QVariant, QVariant()),
+		                          Q_ARG(QVariant, QVariant()));
 	});
 
 	QAction *restoreAction = new QAction(tr("restore"), root);
@@ -918,7 +919,7 @@ void App::setTrayIcon() {
 
 	// trayIcon: Left click actions.
 	static QMenu *menu =
-		new QMenu(); // Static : Workaround about a bug with setContextMenu where it cannot be called more than once.
+	    new QMenu(); // Static : Workaround about a bug with setContextMenu where it cannot be called more than once.
 	root->connect(systemTrayIcon, &QSystemTrayIcon::activated, [root](QSystemTrayIcon::ActivationReason reason) {
 		if (reason == QSystemTrayIcon::Trigger) {
 			if (root->visibility() == QWindow::Hidden) smartShowWindow(root);
@@ -936,7 +937,7 @@ void App::setTrayIcon() {
 	menu->addAction(quitAction);
 	if (!mSystemTrayIcon)
 		systemTrayIcon->setContextMenu(menu); // This is a Qt bug. We cannot call setContextMenu more than once. So we
-											  // have to keep an instance of the menu.
+		                                      // have to keep an instance of the menu.
 	systemTrayIcon->setIcon(QIcon(Constants::WindowIconPath));
 	systemTrayIcon->setToolTip(APPLICATION_NAME);
 	systemTrayIcon->show();
@@ -976,8 +977,8 @@ void App::initLocale(const shared_ptr<linphone::Config> &config) {
 	//	QLocale sysLocale = QLocale(qtLocale.join('_'));
 	// #else
 	QLocale sysLocale(QLocale::system().name()); // Use Locale from name because Qt has a bug where it didn't use the
-												 // QLocale::language (aka : translator.language != locale.language) on
-												 // Mac. #endif
+	                                             // QLocale::language (aka : translator.language != locale.language) on
+	                                             // Mac. #endif
 	if (installLocale(*this, *mTranslator, sysLocale)) {
 		mLocale = sysLocale;
 		return;
@@ -986,12 +987,12 @@ void App::initLocale(const shared_ptr<linphone::Config> &config) {
 
 QString App::getConfigLocale() const {
 	return Utils::coreStringToAppString(
-		CoreManager::getInstance()->getCore()->getConfig()->getString(SettingsModel::UiSection, "locale", ""));
+	    CoreManager::getInstance()->getCore()->getConfig()->getString(SettingsModel::UiSection, "locale", ""));
 }
 
 void App::setConfigLocale(const QString &locale) {
 	CoreManager::getInstance()->getCore()->getConfig()->setString(SettingsModel::UiSection, "locale",
-																  Utils::appStringToCoreString(locale));
+	                                                              Utils::appStringToCoreString(locale));
 
 	emit configLocaleChanged(locale);
 }
@@ -1091,20 +1092,20 @@ bool App::generateDesktopFile(const QString &confPath, bool remove, bool openInB
 	}
 
 	QTextStream(&file)
-		<< QString("[Desktop Entry]\n"
-				   "Name=" APPLICATION_NAME "\n"
-				   "GenericName=SIP Phone\n"
-				   "Comment=" APPLICATION_DESCRIPTION "\n"
-				   "Type=Application\n")
-		<< (openInBackground ? "Exec=" + exec + " --iconified %u\n" : "Exec=" + exec + " %u\n")
-		<< (haveIcon ? "Icon=" + iconPath + "\n" : "Icon=" EXECUTABLE_NAME "\n")
-		<< "Terminal=false\n"
-		   "Categories=Network;Telephony;\n"
-		   "MimeType=x-scheme-handler/sip-" EXECUTABLE_NAME
-		   ";x-scheme-handler/sip;x-scheme-handler/sips-" EXECUTABLE_NAME
-		   ";x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;x-scheme-handler/" EXECUTABLE_NAME
-		   "-config;\n"
-		   "X-PulseAudio-Properties=media.role=phone\n";
+	    << QString("[Desktop Entry]\n"
+	               "Name=" APPLICATION_NAME "\n"
+	               "GenericName=SIP Phone\n"
+	               "Comment=" APPLICATION_DESCRIPTION "\n"
+	               "Type=Application\n")
+	    << (openInBackground ? "Exec=" + exec + " --iconified %u\n" : "Exec=" + exec + " %u\n")
+	    << (haveIcon ? "Icon=" + iconPath + "\n" : "Icon=" EXECUTABLE_NAME "\n")
+	    << "Terminal=false\n"
+	       "Categories=Network;Telephony;\n"
+	       "MimeType=x-scheme-handler/sip-" EXECUTABLE_NAME
+	       ";x-scheme-handler/sip;x-scheme-handler/sips-" EXECUTABLE_NAME
+	       ";x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;x-scheme-handler/" EXECUTABLE_NAME
+	       "-config;\n"
+	       "X-PulseAudio-Properties=media.role=phone\n";
 
 	return true;
 }
@@ -1121,12 +1122,12 @@ void App::setAutoStart(bool enabled) {
 
 	if (enabled)
 		QProcess::execute(OsascriptExecutable,
-						  {"-e", "tell application \"System Events\" to make login item at end with properties"
-								 "{ path: \"" +
-									 getMacOsBundlePath() + "\", hidden: false }"});
+		                  {"-e", "tell application \"System Events\" to make login item at end with properties"
+		                         "{ path: \"" +
+		                             getMacOsBundlePath() + "\", hidden: false }"});
 	else
 		QProcess::execute(OsascriptExecutable, {"-e", "tell application \"System Events\" to delete login item \"" +
-														  getMacOsBundleName() + "\""});
+		                                                  getMacOsBundleName() + "\""});
 
 	mAutoStart = enabled;
 	emit autoStartChanged(enabled);
@@ -1175,7 +1176,7 @@ void App::openAppAfterInit(bool mustBeIconified) {
 	// Display Assistant if it does not exist proxy config.
 	if (coreManager->getAccountList().empty())
 		QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, Constants::AssistantViewName),
-								  Q_ARG(QVariant, QString("")), Q_ARG(QVariant, QString("")));
+		                          Q_ARG(QVariant, QString("")), Q_ARG(QVariant, QString("")));
 
 #ifdef ENABLE_UPDATE_CHECK
 	QTimer *timer = new QTimer(mEngine);
@@ -1188,9 +1189,9 @@ void App::openAppAfterInit(bool mustBeIconified) {
 #endif // ifdef ENABLE_UPDATE_CHECK
 	QString fetchFilePath = getFetchConfig(mParser);
 	mustBeIconified =
-		mustBeIconified &&
-		(fetchFilePath.isEmpty() ||
-		 CoreManager::getInstance()->getSettingsModel()->getAutoApplyProvisioningConfigUriHandlerEnabled());
+	    mustBeIconified &&
+	    (fetchFilePath.isEmpty() ||
+	     CoreManager::getInstance()->getSettingsModel()->getAutoApplyProvisioningConfigUriHandlerEnabled());
 	bool showWindow = true;
 	if (fetchFilePath.isEmpty()) {
 		QString lastRunningVersion = CoreManager::getInstance()->getSettingsModel()->getLastRunningVersionOfApp();
@@ -1207,13 +1208,13 @@ void App::openAppAfterInit(bool mustBeIconified) {
 			} else {
 				QObject *context = new QObject();
 				QObject::connect(CoreManager::getInstance(), &CoreManager::coreManagerInitialized, context,
-								 [sipAddress, coreManager, context]() mutable {
-									 if (context) {
-										 delete context;
-										 context = nullptr;
-										 coreManager->getCallsListModel()->launchAudioCall(sipAddress);
-									 }
-								 });
+				                 [sipAddress, coreManager, context]() mutable {
+					                 if (context) {
+						                 delete context;
+						                 context = nullptr;
+						                 coreManager->getCallsListModel()->launchAudioCall(sipAddress);
+					                 }
+				                 });
 			}
 		} else {
 			// Execute command argument if needed
