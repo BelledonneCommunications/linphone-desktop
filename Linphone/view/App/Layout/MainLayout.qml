@@ -15,9 +15,8 @@ import SettingsCpp
 Item {
 	id: mainItem
 	property var callObj
-	property bool settingsHidden: true
-	property bool helpHidden: true
-													
+	property var contextualMenuOpenedComponent: undefined
+	
 	signal addAccountRequest()
 	signal openNewCall()
 	signal openCallHistory()
@@ -40,6 +39,23 @@ Item {
 	function createContact(name, address) {
 		tabbar.currentIndex = 1
 		mainItem.createContactRequested(name, address)
+	}
+	
+	function openContextualMenuComponent(component) {
+		if (mainItem.contextualMenuOpenedComponent && mainItem.contextualMenuOpenedComponent != component) {
+			mainStackView.pop()
+			mainItem.contextualMenuOpenedComponent = undefined
+		}
+		if (!mainItem.contextualMenuOpenedComponent) {
+			mainStackView.push(component)
+			mainItem.contextualMenuOpenedComponent = component
+		}
+		settingsButton.popup.close()
+	}
+	
+	function closeContextualMenuComponent() {
+		mainStackView.pop()
+		mainItem.contextualMenuOpenedComponent = undefined
 	}
 
 	AccountProxy {
@@ -99,13 +115,8 @@ Item {
 				]
 				onCurrentIndexChanged: {
                     if (currentIndex === 0) accountProxy.defaultAccount.core.lResetMissedCalls()
-					if (!mainItem.settingsHidden) {
-						mainStackView.pop()
-						mainItem.settingsHidden = true
-					}
-					if (!mainItem.helpHidden) {
-						mainStackView.pop()
-						mainItem.helpHidden = true
+					if (mainItem.contextualMenuOpenedComponent) {
+						closeContextualMenuComponent()
 					}
 				}
 			}
@@ -302,7 +313,7 @@ Item {
 									iconSize: 32 * DefaultStyle.dp
 									text: qsTr("Mon compte")
 									iconSource: AppIcons.manageProfile
-									onClicked: console.log("TODO : manage profile")
+									onClicked: openContextualMenuComponent(myAccountSettingsPageComponent)
 								}
 								IconLabelButton {
 									Layout.preferredHeight: 32 * DefaultStyle.dp
@@ -310,19 +321,7 @@ Item {
 									iconSize: 32 * DefaultStyle.dp
 									text: qsTr("Paramètres")
 									iconSource: AppIcons.settings
-									onClicked: {
-										if (!mainItem.helpHidden) {
-											mainStackView.pop()
-											mainItem.helpHidden = true
-										}
-										if (mainItem.settingsHidden) {
-											mainStackView.push(settingsPageComponent)
-											settingsButton.popup.close()
-											mainItem.settingsHidden = false
-										} else {
-											settingsButton.popup.close()
-										}
-									}
+									onClicked: openContextualMenuComponent(settingsPageComponent)
 								}
 								IconLabelButton {
 									Layout.preferredHeight: 32 * DefaultStyle.dp
@@ -336,19 +335,7 @@ Item {
 									iconSize: 32 * DefaultStyle.dp
 									text: qsTr("Aide")
 									iconSource: AppIcons.question
-									onClicked: {
-										if (!mainItem.settingsHidden) {
-											mainStackView.pop()
-											mainItem.settingsHidden = true
-										}
-										if (mainItem.helpHidden) {
-											mainStackView.push(helpPageComponent)
-											settingsButton.popup.close()
-											mainItem.helpHidden = false
-										} else {
-											settingsButton.popup.close()
-										}
-									}
+									onClicked: openContextualMenuComponent(helpPageComponent)
 								}
 								Rectangle {
 									Layout.fillWidth: true
@@ -403,21 +390,22 @@ Item {
 					}
 				}
 				Component {
+					id: myAccountSettingsPageComponent
+					AccountSettingsPage {
+						account: accountProxy.defaultAccount
+						onGoBack: closeContextualMenuComponent()
+					}
+				}
+				Component {
 					id: settingsPageComponent
 					SettingsPage {
-						onGoBack: {
-							mainStackView.pop()
-							mainItem.settingsHidden = true
-						}
+						onGoBack: closeContextualMenuComponent()
 					}
 				}
 				Component {
 					id: helpPageComponent
 					HelpPage {
-						onGoBack: {
-							mainStackView.pop()
-							mainItem.helpHidden = true
-						}
+						onGoBack: closeContextualMenuComponent()
 					}
 				}
 				Control.StackView {

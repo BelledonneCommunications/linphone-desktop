@@ -5,7 +5,7 @@ import QtQuick.Controls as Control
 import Linphone
 import SettingsCpp 1.0
 
-GenericSettingsLayout {
+AbstractDetailsLayout {
 	component: settings
 	width: parent.width
 	Component {
@@ -29,12 +29,14 @@ GenericSettingsLayout {
 						titleText: qsTr("Annulateur d'écho")
 						subTitleText: qsTr("Évite que de l'écho soit entendu par votre correspondant")
 						propertyName: "echoCancellationEnabled"
+						propertyOwner: SettingsCpp
 					}
 					SwitchSetting {
 						Layout.fillWidth: true
 						titleText: qsTr("Activer l’enregistrement automatique des appels")
 						subTitleText: qsTr("Enregistrer tous les appels par défaut")
 						propertyName: "automaticallyRecordCallsEnabled"
+						propertyOwner: SettingsCpp
 					}
 				}
 			}
@@ -101,8 +103,9 @@ GenericSettingsLayout {
 							Layout.fillWidth: true
 							Layout.topMargin: 12 * DefaultStyle.dp
 							Layout.preferredWidth: parent.width
-							model: SettingsCpp.playbackDevices
+							entries: SettingsCpp.playbackDevices
 							propertyName: "playbackDevice"
+							propertyOwner: SettingsCpp
 						}
 						Slider {
 							id: speakerVolume
@@ -145,8 +148,9 @@ GenericSettingsLayout {
 							Layout.topMargin: 12 * DefaultStyle.dp
 							Layout.bottomMargin: 22 * DefaultStyle.dp
 							Layout.preferredWidth: parent.width
-							model: SettingsCpp.captureDevices
+							entries: SettingsCpp.captureDevices
 							propertyName: "captureDevice"
+							propertyOwner: SettingsCpp
 						}
 						Slider {
 							id: microVolume
@@ -224,8 +228,9 @@ GenericSettingsLayout {
 							Layout.fillWidth: true
 							Layout.topMargin: 12 * DefaultStyle.dp
 							Layout.preferredWidth: parent.width
-							model: SettingsCpp.videoDevices
+							entries: SettingsCpp.videoDevices
 							propertyName: "videoDevice"
+							propertyOwner: SettingsCpp
 						}
 						Item {
 							Layout.fillHeight: true

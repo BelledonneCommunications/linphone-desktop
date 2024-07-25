@@ -7,17 +7,35 @@ import Linphone
 
 Rectangle {
 	id: mainItem
-	anchors.fill: parent
+	width: container.width
+	height: container.height
 	property string titleText
 	property var component
+	property var model
 	color: 'white'
-	
-	Rectangle {
-		width: parent.width - 2 * 45 * DefaultStyle.dp
+	property var container
+
+	Control.ScrollView {
+		id: scrollView
 		height: parent.height
+		width: parent.width - 2 * 45 * DefaultStyle.dp
 		anchors.centerIn: parent
-		
+		contentHeight: content.height + 20 * DefaultStyle.dp
+		contentWidth: parent.width - 2 * 45 * DefaultStyle.dp
+		Control.ScrollBar.vertical: ScrollBar {
+			active: scrollView.contentHeight > container.height
+			interactive: true
+			policy: Control.ScrollBar.AsNeeded
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			anchors.right: parent.right
+			anchors.rightMargin: -15 * DefaultStyle.dp
+		}
+		Control.ScrollBar.horizontal: ScrollBar {
+			active: false
+		}
 		ColumnLayout {
+			id: content
 			width: parent.width
 			spacing: 10 * DefaultStyle.dp
 			Text {

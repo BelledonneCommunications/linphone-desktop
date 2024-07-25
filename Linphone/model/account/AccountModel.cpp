@@ -57,8 +57,7 @@ void AccountModel::onRegistrationStateChanged(const std::shared_ptr<linphone::Ac
 
 void AccountModel::setPictureUri(QString uri) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto account = std::dynamic_pointer_cast<linphone::Account>(mMonitor);
-	auto params = account->getParams()->clone();
+	auto params = mMonitor->getParams()->clone();
 	auto oldPictureUri = Utils::coreStringToAppString(params->getPictureUri());
 	if (!oldPictureUri.isEmpty()) {
 		QString appPrefix = QStringLiteral("image://%1/").arg(AvatarProvider::ProviderId);
@@ -69,11 +68,11 @@ void AccountModel::setPictureUri(QString uri) {
 		if (!oldPicture.remove()) qWarning() << log().arg("Cannot delete old avatar file at " + oldPictureUri);
 	}
 	params->setPictureUri(Utils::appStringToCoreString(uri));
-	account->setParams(params);
+	mMonitor->setParams(params);
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit pictureUriChanged(uri);
-	emit CoreModel::getInstance()->defaultAccountChanged(CoreModel::getInstance()->getCore(),
-	                                                     CoreModel::getInstance()->getCore()->getDefaultAccount());
+	emit CoreModel::getInstance() -> defaultAccountChanged(CoreModel::getInstance()->getCore(),
+	                                                       CoreModel::getInstance()->getCore()->getDefaultAccount());
 }
 
 void AccountModel::onDefaultAccountChanged() {
@@ -107,4 +106,179 @@ int AccountModel::getMissedCallsCount() const {
 
 int AccountModel::getUnreadMessagesCount() const {
 	return mMonitor->getUnreadChatMessageCount();
+}
+
+void AccountModel::setDisplayName(QString displayName) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	auto address = params->getIdentityAddress()->clone();
+	address->setDisplayName(Utils::appStringToCoreString(displayName));
+	params->setIdentityAddress(address);
+	mMonitor->setParams(params);
+	emit displayNameChanged(displayName);
+}
+
+void AccountModel::setDialPlan(int index) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	std::string callingCode = "";
+	std::string countryCode = "";
+	if (index != -1) {
+		auto plans = linphone::Factory::get()->getDialPlans();
+		std::vector<std::shared_ptr<linphone::DialPlan>> vectorPlans(plans.begin(), plans.end());
+		auto plan = vectorPlans[index];
+		callingCode = plan->getCountryCallingCode();
+		countryCode = plan->getIsoCountryCode();
+	}
+	auto params = mMonitor->getParams()->clone();
+	params->setInternationalPrefix(callingCode);
+	params->setInternationalPrefixIsoCountryCode(countryCode);
+	mMonitor->setParams(params);
+	emit dialPlanChanged(index);
+}
+
+void AccountModel::setRegisterEnabled(bool enabled) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	params->enableRegister(enabled);
+	mMonitor->setParams(params);
+	emit registerEnabledChanged(enabled);
+}
+
+std::string AccountModel::getConfigAccountUiSection() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return "ui_" + mMonitor->getParams()->getIdentityAddress()->asStringUriOnly();
+}
+
+bool AccountModel::getNotificationsAllowed() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return mMonitor->getCore()->getConfig()->getBool(getConfigAccountUiSection(), "notifications_allowed", true);
+}
+
+void AccountModel::setNotificationsAllowed(bool value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mMonitor->getCore()->getConfig()->setBool(getConfigAccountUiSection(), "notifications_allowed", value);
+	emit notificationsAllowedChanged(value);
+}
+
+void AccountModel::setMwiServerAddress(QString value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
+	if (address) {
+		params->setMwiServerAddress(address);
+		mMonitor->setParams(params);
+		emit mwiServerAddressChanged(value);
+	} else qWarning() << "Unable to set MWI address, failed creating address from" << value;
+}
+
+void AccountModel::setTransport(linphone::TransportType value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	params->setTransport(value);
+	mMonitor->setParams(params);
+	emit transportChanged(value);
+}
+
+void AccountModel::setServerAddress(QString value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
+	if (address) {
+		params->setServerAddress(address);
+		mMonitor->setParams(params);
+		emit serverAddressChanged(value);
+	} else qWarning() << "Unable to set ServerAddress, failed creating address from" << value;
+}
+
+void AccountModel::setOutboundProxyEnabled(bool value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	params->enableOutboundProxy(value);
+	mMonitor->setParams(params);
+	emit outboundProxyEnabledChanged(value);
+}
+
+void AccountModel::setStunServer(QString value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	auto policy = params->getNatPolicy();
+	if (!policy) policy = mMonitor->getCore()->createNatPolicy();
+	policy->setStunServer(Utils::appStringToCoreString(value));
+	params->setNatPolicy(policy);
+	mMonitor->setParams(params);
+	emit stunServerChanged(value);
+	qWarning() << "cdes stun server set to" << value;
+}
+
+void AccountModel::setIceEnabled(bool value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	auto policy = params->getNatPolicy();
+	if (!policy) policy = mMonitor->getCore()->createNatPolicy();
+	policy->enableIce(value);
+	params->setNatPolicy(policy);
+	mMonitor->setParams(params);
+	emit iceEnabledChanged(value);
+}
+
+void AccountModel::setAvpfEnabled(bool value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	params->setAvpfMode(value ? linphone::AVPFMode::Enabled : linphone::AVPFMode::Disabled);
+	mMonitor->setParams(params);
+	emit avpfEnabledChanged(value);
+}
+
+void AccountModel::setBundleModeEnabled(bool value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	params->enableRtpBundle(value);
+	mMonitor->setParams(params);
+	emit bundleModeEnabledChanged(value);
+}
+
+void AccountModel::setExpire(int value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	params->setExpires(value);
+	mMonitor->setParams(params);
+	emit expireChanged(value);
+}
+
+void AccountModel::setConferenceFactoryAddress(QString value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
+	if (address) {
+		params->setConferenceFactoryAddress(address);
+		mMonitor->setParams(params);
+		emit conferenceFactoryAddressChanged(value);
+	} else qWarning() << "Unable to set ConferenceFactoryAddress address, failed creating address from" << value;
+}
+
+void AccountModel::setAudioVideoConferenceFactoryAddress(QString value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
+	if (address) {
+		params->setAudioVideoConferenceFactoryAddress(address);
+		mMonitor->setParams(params);
+		emit audioVideoConferenceFactoryAddressChanged(value);
+	} else
+		qWarning() << "Unable to set AudioVideoConferenceFactoryAddress address, failed creating address from" << value;
+}
+
+void AccountModel::setLimeServerUrl(QString value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
+	params->setLimeServerUrl(Utils::appStringToCoreString(value));
+	mMonitor->setParams(params);
+	emit limeServerUrlChanged(value);
+}
+
+QString AccountModel::dialPlanAsString(const std::shared_ptr<linphone::DialPlan> &dialPlan) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return Utils::coreStringToAppString(dialPlan->getFlag() + " " + dialPlan->getCountry() + " | +" +
+	                                    dialPlan->getCountryCallingCode());
 }

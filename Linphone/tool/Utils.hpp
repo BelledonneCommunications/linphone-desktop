@@ -82,6 +82,7 @@ public:
 	                                             bool dotsSeparator = true); // Return the elapsed time formated
 	Q_INVOKABLE static QString formatDate(const QDateTime &date, bool includeTime = true); // Return the date formated
 	Q_INVOKABLE static QString formatDateElapsedTime(const QDateTime &date);
+	Q_INVOKABLE static QString formatTime(const QDateTime &date); // Return the time formated
 	Q_INVOKABLE static QStringList generateSecurityLettersArray(int arraySize, int correctIndex, QString correctCode);
 	Q_INVOKABLE static int getRandomIndex(int size);
 	Q_INVOKABLE static bool copyToClipboard(const QString &text);
@@ -112,6 +113,10 @@ public:
 	Q_INVOKABLE static QDateTime addSecs(QDateTime date, int secs);
 	Q_INVOKABLE static QDateTime addYears(QDateTime date, int years);
 	Q_INVOKABLE static QString interpretUrl(const QString &uri);
+	Q_INVOKABLE static bool isValidSIPAddress(const QString &uri);
+	Q_INVOKABLE static bool isValidIPAddress(const QString &host);
+	Q_INVOKABLE static bool isValidHostname(const QString& hostname);
+	Q_INVOKABLE static bool isValidURL(const QString& url);
 	Q_INVOKABLE static QString findAvatarByAddress(const QString &address);
 	Q_INVOKABLE static VariantObject *findFriendByAddress(const QString &address);
 	static QString generateSavedFilename(const QString &from, const QString &to);

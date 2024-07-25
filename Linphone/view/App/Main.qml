@@ -49,6 +49,9 @@ AppWindow {
 
 	AccountProxy {
 		id: accountProxy
+		onHaveAccountChanged: {
+			initStackViewItem()
+		}
 	}
 	StackView {
 		id: mainWindowStackView

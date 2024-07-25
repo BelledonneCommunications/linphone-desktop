@@ -36,6 +36,7 @@
 #include "tool/LinphoneEnums.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/ImageProvider.hpp"
+#include "model/tool/ToolModel.hpp"
 
 DEFINE_ABSTRACT_OBJECT(Notifier)
 
@@ -277,6 +278,16 @@ void Notifier::deleteNotification(QVariant notification) {
 
 void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto account = ToolModel::findAccount(call->getToAddress());
+	if (account) {
+		auto accountModel = Utils::makeQObject_ptr<AccountModel>(account);
+		accountModel->setSelf(accountModel);
+		if (!accountModel->getNotificationsAllowed()) {
+			qInfo() << "Notifications have been disabled for this account - not creating a notification for incoming call";
+			return;
+		}
+	}
+		
 	auto model = CallCore::create(call);
 	auto gui = new CallGui(model);
 	gui->moveToThread(App::getInstance()->thread());

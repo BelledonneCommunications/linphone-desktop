@@ -109,4 +109,7 @@ QtObject {
 	property string cellSignalMedium: "image://internal/cell-signal-medium.svg"
 	property string cellSignalLow: "image://internal/cell-signal-low.svg"
 	property string cellSignalNone: "image://internal/cell-signal-none.svg"
+	property string mobile: "image://internal/mobile.svg"
+	property string desktop: "image://internal/desktop.svg"
+	property string calendar: "image://internal/calendar.svg"
 }

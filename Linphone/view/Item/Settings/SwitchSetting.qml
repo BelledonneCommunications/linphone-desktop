@@ -2,19 +2,20 @@ import QtQuick
 import QtQuick.Controls.Material
 import QtQuick.Layouts
 import Linphone
-import SettingsCpp 1.0
 
 RowLayout {
 	id:mainItem
 	property string titleText
 	property string subTitleText
 	property string propertyName
+	property var propertyOwner
 	property bool enabled: true
 	spacing : 20 * DefaultStyle.dp
+	Layout.minimumHeight: 32 * DefaultStyle.dp
 	ColumnLayout {
 		Text {
 			text: titleText
-			font: Typography.p2
+			font: Typography.p2l
 			wrapMode: Text.WordWrap
 			color: DefaultStyle.main2_600
 			Layout.fillWidth: true
@@ -30,8 +31,8 @@ RowLayout {
 	}
 	SwitchButton {
 		id: switchButton
-		Layout.alignment: Qt.AlignRight
-		checked: SettingsCpp[mainItem.propertyName]
+		Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+		checked: propertyOwner[mainItem.propertyName]
 		enabled: mainItem.enabled
 		onToggled: {
 			binding.when = true
@@ -39,7 +40,7 @@ RowLayout {
 	}
 	Binding {
 		id: binding
-		target: SettingsCpp
+		target: propertyOwner
 		property: mainItem.propertyName
 		value: switchButton.checked
 		when: false

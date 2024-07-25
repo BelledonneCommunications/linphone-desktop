@@ -18,11 +18,12 @@ AbstractMainPage {
 		Layout.fillWidth: true
 		Layout.fillHeight: true
 		property int sideMargin: 45 * DefaultStyle.dp
-
+		spacing: 5 * DefaultStyle.dp
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
+			spacing: 5 * DefaultStyle.dp
 			Button {
 				Layout.preferredHeight: 24 * DefaultStyle.dp
 				Layout.preferredWidth: 24 * DefaultStyle.dp

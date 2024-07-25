@@ -40,6 +40,8 @@ public:
 	                                        const std::string &message) override;
 	void onDefaultAccountChanged();
 
+	std::string getConfigAccountUiSection();
+
 	void setPictureUri(QString uri);
 	void setDefault();
 	void removeAccount();
@@ -47,6 +49,24 @@ public:
 	void refreshUnreadNotifications();
 	int getMissedCallsCount() const;
 	int getUnreadMessagesCount() const;
+	void setDisplayName(QString displayName);
+	void setDialPlan(int index);
+	void setRegisterEnabled(bool enabled);
+	bool getNotificationsAllowed();
+	void setNotificationsAllowed(bool value);
+	void setMwiServerAddress(QString value);
+	void setTransport(linphone::TransportType value);
+	void setServerAddress(QString value);
+	void setOutboundProxyEnabled(bool value);
+	void setStunServer(QString value);
+	void setIceEnabled(bool value);
+	void setAvpfEnabled(bool value);
+	void setBundleModeEnabled(bool value);
+	void setExpire(int value);
+	void setConferenceFactoryAddress(QString value);
+	void setAudioVideoConferenceFactoryAddress(QString value);
+	void setLimeServerUrl(QString value);
+	QString dialPlanAsString(const std::shared_ptr<linphone::DialPlan> &dialPlan);
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
@@ -56,6 +76,22 @@ signals:
 
 	void pictureUriChanged(QString uri);
 	void unreadNotificationsChanged(int unreadMessagesCount, int unreadCallsCount);
+	void displayNameChanged(QString displayName);
+	void dialPlanChanged(int index);
+	void registerEnabledChanged(bool enabled);
+	void notificationsAllowedChanged(bool value);
+	void mwiServerAddressChanged(QString value);
+	void transportChanged(linphone::TransportType value);
+	void serverAddressChanged(QString value);
+	void outboundProxyEnabledChanged(bool value);
+	void stunServerChanged(QString value);
+	void iceEnabledChanged(bool value);
+	void avpfEnabledChanged(bool value);
+	void bundleModeEnabledChanged(bool value);
+	void expireChanged(int value);
+	void conferenceFactoryAddressChanged(QString value);
+	void audioVideoConferenceFactoryAddressChanged(QString value);
+	void limeServerUrlChanged(QString value);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

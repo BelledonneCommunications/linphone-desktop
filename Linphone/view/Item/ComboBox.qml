@@ -105,6 +105,7 @@ Control.ComboBox {
 		width: mainItem.width
 		implicitHeight: contentItem.implicitHeight
 		padding: 1 * DefaultStyle.dp
+		height: Math.min(listView.contentHeight, 300)
 
 		contentItem: ListView {
 			id: listView

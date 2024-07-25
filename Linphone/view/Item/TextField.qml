@@ -5,7 +5,8 @@ import Linphone
   
 Control.TextField {
 	id: mainItem
-	width: 360 * DefaultStyle.dp
+	property var customWidth
+	width: (customWidth ? customWidth - 1 : 360) * DefaultStyle.dp
 	height: 49 * DefaultStyle.dp
 	leftPadding: 15 * DefaultStyle.dp
 	rightPadding: eyeButton.visible ? 5 * DefaultStyle.dp + eyeButton.width + eyeButton.rightMargin : 15 * DefaultStyle.dp

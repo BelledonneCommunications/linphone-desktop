@@ -32,9 +32,11 @@
 
 #include <QClipboard>
 #include <QDesktopServices>
+#include <QHostAddress>
 #include <QImageReader>
 #include <QQuickWindow>
 #include <QRandomGenerator>
+#include <QRegularExpression>
 
 // =============================================================================
 
@@ -260,6 +262,10 @@ QString Utils::formatDate(const QDateTime &date, bool includeTime) {
 	return dateDay + " | " + time;
 }
 
+QString Utils::formatTime(const QDateTime &date) {
+	return date.time().toString("hh:mm");
+}
+
 QString Utils::formatDateElapsedTime(const QDateTime &date) {
 	// auto y = floor(seconds / 31104000);
 	// if (y > 0) return QString::number(y) + " years";
@@ -298,6 +304,35 @@ QString Utils::interpretUrl(const QString &uri) {
 		address.prepend("sip:");
 	}
 	return address;
+}
+
+bool Utils::isValidSIPAddress(const QString &uri) {
+	bool isValid = false;
+	App::postModelBlock([&isValid, uri]() mutable {
+		isValid = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(uri)) != nullptr;
+	});
+	return isValid;
+}
+
+bool Utils::isValidIPAddress(const QString &host) {
+	QHostAddress address;
+	return address.setAddress(host);
+}
+
+bool Utils::isValidHostname(const QString &hostname) {
+	QRegularExpression regex("^[a-zA-Z0-9]([a-zA-Z0-9-]{0,62}[a-zA-Z0-9])?$");
+	QStringList labels = hostname.split('.');
+	if (labels.size() > 127) // More than 127 labels is invalid
+		return false;
+	foreach (const QString &label, labels) {
+		if (!regex.match(label).hasMatch() || label.length() > 63) // Label length must be between 1 and 63
+			return false;
+	}
+	return hostname.length() <= 253; // Total length should be <= 253
+}
+
+bool Utils::isValidURL(const QString &url) {
+	return QUrl(url).isValid();
 }
 
 QString Utils::findAvatarByAddress(const QString &address) {

@@ -3,7 +3,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/account/AccountManager.cpp
 	model/account/AccountManagerServicesModel.cpp
 	model/account/AccountManagerServicesRequestModel.cpp
-	
+
 	model/auth/OIDCModel.cpp
 	
 	model/call/CallModel.cpp

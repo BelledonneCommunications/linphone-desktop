@@ -7,7 +7,7 @@ import Linphone
 import SettingsCpp 1.0
 import UtilsCpp 1.0
 
-GenericSettingsLayout {
+AbstractDetailsLayout {
 	Layout.fillWidth: true
 	Layout.fillHeight: true
 	id: mainItem
@@ -50,19 +50,21 @@ GenericSettingsLayout {
 			SwitchSetting {
 				titleText: qsTr("Activer les traces de débogage")
 				propertyName: "logsEnabled"
+				propertyOwner: SettingsCpp
 			}
 			SwitchSetting {
 				titleText: qsTr("Activer les traces de débogage intégrales")
 				propertyName: "fullLogsEnabled"
+				propertyOwner: SettingsCpp
 			}
 			MediumButton {
-				text:  qsTr("Supprimer les traces")
+				text: qsTr("Supprimer les traces")
 				onClicked: {
 					deleteLogs.open()
 				}
 			}
 			MediumButton {
-				text:  qsTr("Partager les traces")
+				text: qsTr("Partager les traces")
 				enabled: SettingsCpp.logsEnabled || SettingsCpp.fullLogsEnabled
 				onClicked: {
 					UtilsCpp.getMainWindow().showLoadingPopup(qsTr("Téléversement des traces en cours ..."))

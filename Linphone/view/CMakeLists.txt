@@ -14,14 +14,18 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Layout/Meeting/AddParticipantsLayout.qml
 
 	view/Layout/FormItemLayout.qml
+	view/Layout/ValidatedTextField.qml
 	view/Layout/Mosaic.qml
 	view/Layout/RightPanelLayout.qml
 	view/Layout/Section.qml
 	
-	view/App/Layout/Settings/GenericSettingsLayout.qml
+	view/App/Layout/AbstractDetailsLayout.qml
 	view/App/Layout/Settings/SecuritySettingsLayout.qml
 	view/App/Layout/Settings/CallSettingsLayout.qml
 	view/App/Layout/Settings/DebugSettingsLayout.qml
+	
+	view/App/Layout/Account/AccountSettingsGeneralLayout.qml
+	view/App/Layout/Account/AccountSettingsParametersLayout.qml
 
 	view/Item/Account/Accounts.qml
 	
@@ -96,7 +100,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	
 	view/Item/Test/ItemsTest.qml
 	
-	view/Item/Settings/SettingsFamily.qml
+	view/Item/MasterDetailFamily.qml
 	view/Item/Settings/SwitchSetting.qml
 	view/Item/Settings/ComboSetting.qml
 	
@@ -114,8 +118,11 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Main/ContactPage.qml
 	view/Page/Main/MeetingPage.qml
 	
+	view/Page/Main/AbstractMasterDetailPage.qml
 	view/Page/Main/SettingsPage.qml
 	view/Page/Main/HelpPage.qml
+	view/Page/Main/AccountSettingsPage.qml
+
 	
 	view/Tool/utils.js
 # Prototypes
