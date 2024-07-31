@@ -363,6 +363,8 @@ AbstractMainPage {
 	Component {
 		id: contactDetail
 		Item {
+			width: parent?.width
+			height: parent?.height
 			property string objectName: "contactDetail"
 			Control.StackView.onActivated: mainItem.leftPanelEnabled = true
 			Control.StackView.onDeactivated: mainItem.leftPanelEnabled = false
@@ -791,6 +793,8 @@ AbstractMainPage {
 	Component {
 		id: contactEdition
 		ContactEdition {
+			width: rightPanelStackView.width
+			height: rightPanelStackView.height
 			property string objectName: "contactEdition"
 			onCloseEdition: {
 				if (rightPanelStackView.depth <= 1) rightPanelStackView.clear()

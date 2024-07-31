@@ -1,4 +1,4 @@
-import QtQuick 2.7 as Quick
+import QtQuick as Quick
 import QtQuick.Layouts
 import Linphone
 

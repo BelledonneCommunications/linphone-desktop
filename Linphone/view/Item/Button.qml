@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Controls.Basic 2.2 as Control
+import QtQuick
+import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
@@ -16,17 +16,19 @@ Control.Button {
 	property int textWeight: 600 * DefaultStyle.dp
 	property int radius: 48 * DefaultStyle.dp
 	property color textColor: DefaultStyle.grey_0
-	property bool underline: false
-	property bool shadowEnabled: false
+	property bool underline: mainItem.activeFocus || containsMouse
+	property bool shadowEnabled: mainItem.activeFocus  || containsMouse
 	property var contentImageColor
+	property alias containsMouse: mouseArea.containsMouse
 	hoverEnabled: true
-
+	activeFocusOnTab: true
 	// leftPadding: 20 * DefaultStyle.dp
 	// rightPadding: 20 * DefaultStyle.dp
 	// topPadding: 11 * DefaultStyle.dp
 	// bottomPadding: 11 * DefaultStyle.dp
 
 	MouseArea {
+		id: mouseArea
 		anchors.fill: parent
 		hoverEnabled: true
 		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
@@ -39,10 +41,10 @@ Control.Button {
 			id: buttonBackground
 			color: mainItem.enabled
 				? inversedColors
-					? mainItem.pressed 
+					? mainItem.pressed || mainItem.shadowEnabled
 						? DefaultStyle.grey_100
 						: mainItem.borderColor
-					: mainItem.pressed
+					: mainItem.pressed || mainItem.shadowEnabled
 						? mainItem.pressedColor
 						: mainItem.color
 				: mainItem.disabledColor
@@ -59,10 +61,12 @@ Control.Button {
 			enabled: mainItem.shadowEnabled
 			anchors.fill: buttonBackground
 			source: buttonBackground
-			shadowEnabled: mainItem.shadowEnabled
+			visible:  mainItem.shadowEnabled
+			// Crash : https://bugreports.qt.io/browse/QTBUG-124730
+			shadowEnabled: true //mainItem.shadowEnabled
 			shadowColor: DefaultStyle.grey_1000
 			shadowBlur: 1
-			shadowOpacity: 0.1
+			shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
 		}
 	}
 
@@ -83,6 +87,7 @@ Control.Button {
 			family: DefaultStyle.defaultFont
 			capitalization: mainItem.capitalization
 			underline: mainItem.underline
+			bold: mainItem.font.bold
 		}
 	}
 
@@ -93,6 +98,7 @@ Control.Button {
 		imageWidth: mainItem.icon.width
 		imageHeight: mainItem.icon.height
 		colorizationColor: mainItem.contentImageColor
+		shadowEnabled: mainItem.shadowEnabled
 	}
 
 	contentItem: StackLayout {

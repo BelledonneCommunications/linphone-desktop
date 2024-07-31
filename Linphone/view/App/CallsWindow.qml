@@ -280,9 +280,9 @@ AppWindow {
 								id: callStatusText
 								text: (mainWindow.callState === LinphoneEnums.CallState.End  || mainWindow.callState === LinphoneEnums.CallState.Released)
 									? qsTr("End of the call")
-									: mainWindow.call && mainWindow.call.core.paused
+									: mainWindow.call && (mainWindow.call.core.paused
 									|| (mainWindow.callState === LinphoneEnums.CallState.Paused
-									|| mainWindow.callState === LinphoneEnums.CallState.PausedByRemote)
+									|| mainWindow.callState === LinphoneEnums.CallState.PausedByRemote))
 										? (mainWindow.conference ? qsTr('Réunion mise ') : qsTr('Appel mis')) + qsTr(" en pause")
 										: mainWindow.conference
 											? mainWindow.conference.core.subject
@@ -348,8 +348,9 @@ AppWindow {
 								visible: mainWindow.call && mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
 								imageSource: mainWindow.call 
 								? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+
 									? AppIcons.lockSimple
-									: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
+									: mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
 										? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
 											? AppIcons.warningCircle
 											: AppIcons.lockKey
@@ -500,6 +501,12 @@ AppWindow {
 					id: contactsListPanel
 					Item {
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Transfert d'appel")
+						Keys.onPressed: (event)=> {
+							if (event.key == Qt.Key_Escape) {
+								rightPanel.visible = false
+								event.accepted = true;
+							}
+						}
 						CallContactsLists {
 							id: callcontactslist
 							anchors.fill: parent
@@ -520,6 +527,12 @@ AppWindow {
 					ColumnLayout {
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Dialer")
 						spacing: 0
+						Keys.onPressed: (event)=> {
+							if (event.key == Qt.Key_Escape) {
+								rightPanel.visible = false
+								event.accepted = true;
+							}
+						}
 						Item {
 							Layout.fillWidth: true
 							Layout.fillHeight: true
@@ -559,8 +572,14 @@ AppWindow {
 				}
 				Component {
 					id: changeLayoutPanel
-					Item {
+					FocusScope {
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Modifier la disposition")
+						Keys.onPressed: (event)=> {
+							if (event.key == Qt.Key_Escape) {
+								rightPanel.visible = false
+								event.accepted = true;
+							}
+						}
 						ColumnLayout {
 							anchors.fill: parent
 							anchors.topMargin: 16 * DefaultStyle.dp
@@ -630,6 +649,12 @@ AppWindow {
 						Control.StackView.onActivated: {
 							rightPanel.headerTitleText = qsTr("Liste d'appel")
 							rightPanel.customHeaderButtons = mergeCallPopupButton.createObject(rightPanel)
+						}
+						Keys.onPressed: (event)=> {
+							if (event.key == Qt.Key_Escape) {
+								rightPanel.visible = false
+								event.accepted = true;
+							}
 						}
 						spacing: 0
 						Component {
@@ -725,6 +750,10 @@ AppWindow {
 											popup.contentItem: ColumnLayout {
 												spacing: 0
 												Button {
+													id: pausingButton
+													onClicked: modelData.core.lSetPaused(!modelData.core.paused)
+													KeyNavigation.up: endCallButton
+													KeyNavigation.down: endCallButton
 													background: Item {}
 													contentItem: RowLayout {
 														spacing: 5 * DefaultStyle.dp
@@ -743,16 +772,18 @@ AppWindow {
 															|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
 															? qsTr("Reprendre l'appel") : qsTr("Mettre en pause")
 															color: DefaultStyle.main2_500main
+															font.bold: pausingButton.shadowEnabled
 														}
 														Item {
 															Layout.fillWidth: true
 														}
 													}
-													onClicked: {
-														modelData.core.lSetPaused(!modelData.core.paused)
-													}
 												}
 												Button {
+													id: endCallButton
+													onClicked: mainWindow.endCall(modelData)
+													KeyNavigation.up: pausingButton
+													KeyNavigation.down: pausingButton
 													background: Item {}
 													contentItem: RowLayout {
 														spacing: 5 * DefaultStyle.dp
@@ -765,12 +796,12 @@ AppWindow {
 														Text {
 															color: DefaultStyle.danger_500main
 															text: qsTr("Terminer l'appel")
+															font.bold: endCallButton.shadowEnabled
 														}
 														Item {
 															Layout.fillWidth: true
 														}
 													}
-													onClicked: mainWindow.endCall(modelData)
 												}
 											}
 										}
@@ -789,6 +820,12 @@ AppWindow {
 						Control.StackView.onActivated: {
 							rightPanel.headerTitleText = qsTr("Paramètres")
 						}
+						Keys.onPressed: (event)=> {
+							if (event.key == Qt.Key_Escape) {
+								rightPanel.visible = false
+								event.accepted = true;
+							}
+						}
 						InCallSettingsPanel {
 							id: inSettingsPanel
 							call: mainWindow.call
@@ -804,6 +841,12 @@ AppWindow {
 					id: screencastPanel
 					Item {
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Partage de votre écran")
+						Keys.onPressed: (event)=> {
+							if (event.key == Qt.Key_Escape) {
+								rightPanel.visible = false
+								event.accepted = true;
+							}
+						}
 						ScreencastPanel {
 							anchors.fill: parent
 							anchors.topMargin: 16 * DefaultStyle.dp
@@ -817,6 +860,12 @@ AppWindow {
 				Component {
 					id: participantListPanel
 					Item {
+						Keys.onPressed: (event)=> {
+							if (event.key == Qt.Key_Escape) {
+								rightPanel.visible = false
+								event.accepted = true;
+							}
+						}
 						Control.StackView {
 							id: participantsStack
 							anchors.fill: parent

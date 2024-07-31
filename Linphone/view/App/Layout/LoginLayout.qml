@@ -31,6 +31,7 @@ Rectangle {
 				Layout.fillWidth: true
 			}
 			Button {
+				id: aboutButton
 				Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 				background: Item{}
 				contentItem: RowLayout {
@@ -45,6 +46,7 @@ Rectangle {
 						Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 						text: qsTr("À propos")
 						font {
+							underline: aboutButton.underline
 							pixelSize: 14 * DefaultStyle.dp
 							weight: 400 * DefaultStyle.dp
 						}

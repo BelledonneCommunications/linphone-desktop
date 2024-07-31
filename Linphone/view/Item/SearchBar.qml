@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.0
 import Linphone
 
 
-Rectangle {
+FocusScope {
 	id: mainItem
 	property string placeholderText: ""
 	property color placeholderTextColor: DefaultStyle.main2_400
@@ -17,6 +17,7 @@ Rectangle {
 	property Control.Popup numericPad
 	property alias numericPadButton: dialerButton
 	readonly property bool hasActiveFocus: textField.activeFocus
+	property alias color: backgroundItem.color
 
 	onVisibleChanged: if (!visible && numericPad) numericPad.close()
 
@@ -38,9 +39,14 @@ Rectangle {
 
 	implicitWidth: mainItem.textInputWidth
 	implicitHeight: 50 * DefaultStyle.dp
-	radius: 28 * DefaultStyle.dp
-	color: DefaultStyle.grey_100
-	border.color: textField.activeFocus ? mainItem.focusedBorderColor : mainItem.borderColor
+	
+	Rectangle{
+		id: backgroundItem
+		anchors.fill: parent
+		radius: 28 * DefaultStyle.dp
+		color: DefaultStyle.grey_100
+		border.color: textField.activeFocus ? mainItem.focusedBorderColor : mainItem.borderColor
+	}
 	Image {
 		id: magnifier
 		visible: mainItem.magnifierVisible
@@ -57,6 +63,7 @@ Rectangle {
 		anchors.leftMargin: magnifier.visible ? 0 : 10 * DefaultStyle.dp
 		anchors.right: clearTextButton.left
 		anchors.verticalCenter: parent.verticalCenter
+		focus: true
 		placeholderText: mainItem.placeholderText
 		placeholderTextColor: mainItem.placeholderTextColor
 		width: mainItem.width - dialerButton.width

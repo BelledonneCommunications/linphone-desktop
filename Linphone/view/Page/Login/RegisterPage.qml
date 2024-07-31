@@ -214,13 +214,22 @@ LoginLayout {
 							}
 						}
 						Text {
+							activeFocusOnTab: true
 							font {
 								underline: true
 								pixelSize: 14 * DefaultStyle.dp
 								weight: 400 * DefaultStyle.dp
+								bold: activeFocus
 							}
 							text: qsTr("conditions d’utilisation")
+							Keys.onPressed: (event)=> {
+								if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+									cguMouseArea.clicked(undefined)
+									event.accepted = true;
+								}
+							}
 							MouseArea {
+								id: cguMouseArea
 								anchors.fill: parent
 								hoverEnabled: true
 								cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
@@ -235,13 +244,22 @@ LoginLayout {
 							}
 						}
 						Text {
+							activeFocusOnTab: true
 							font {
 								underline: true
 								pixelSize: 14 * DefaultStyle.dp
 								weight: 400 * DefaultStyle.dp
+								bold: activeFocus
 							}
 							text: qsTr("politique de confidentialité.")
+							Keys.onPressed: (event)=> {
+								if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+									privateMouseArea.clicked(undefined)
+									event.accepted = true;
+								}
+							}
 							MouseArea {
+								id: privateMouseArea
 								anchors.fill: parent
 								hoverEnabled: true
 								cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor

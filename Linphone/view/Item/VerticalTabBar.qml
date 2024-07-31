@@ -107,7 +107,7 @@ Control.TabBar {
 					Layout.preferredHeight: buttonSize
 					Layout.alignment: Qt.AlignHCenter
 					fillMode: Image.PreserveAspectFit
-					colorizationColor: DefaultStyle.grey_0
+					colorizationColor: DefaultStyle.grey_0				
 				}
 				Text {
 					id: buttonText
@@ -115,6 +115,7 @@ Control.TabBar {
 					font {
 						weight: mainItem.currentIndex === index ? 800 * DefaultStyle.dp : 400 * DefaultStyle.dp
 						pixelSize: 9 * DefaultStyle.dp
+						underline: tabButton.activeFocus || tabButton.hovered
 					}
 					color: DefaultStyle.grey_0
 					Layout.fillWidth: true

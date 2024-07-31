@@ -15,7 +15,7 @@ ListView {
 	property bool hoverEnabled: true	
 	property var delegateButtons
 	property ConferenceInfoGui selectedConference: model && currentIndex != -1 ? model.getAt(currentIndex) : null
-
+	
 	spacing: 8 * DefaultStyle.dp
 	currentIndex: confInfoProxy.currentDateIndex
 
@@ -60,7 +60,7 @@ ListView {
 		property: '$sectionMonth'
 	}
 
-	delegate: Item {
+	delegate: FocusScope {
 		id: itemDelegate
 		height: 63 * DefaultStyle.dp + topOffset
 		width: mainItem.width
@@ -74,6 +74,7 @@ ListView {
 		property var endDateTime: $modelData ? $modelData.core.endDateTime : UtilsCpp.getCurrentDateTime()
 				
 		property var haveModel: $modelData && $modelData.core.haveModel || false
+		
 		
 		RowLayout{
 			anchors.fill: parent
@@ -138,13 +139,14 @@ ListView {
 					anchors.fill: parent
 					anchors.rightMargin: 5	// margin to avoid clipping shadows at right
 					radius: 10 * DefaultStyle.dp
-					visible: itemDelegate.haveModel
+					visible: itemDelegate.haveModel || itemDelegate.activeFocus
 					color: mainItem.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.grey_0
 					ColumnLayout {
 						anchors.fill: parent
 						anchors.left: parent.left
 						anchors.leftMargin: 15 * DefaultStyle.dp
 						spacing: 2 * DefaultStyle.dp
+						visible: itemDelegate.haveModel
 						RowLayout {
 							spacing: 8 * DefaultStyle.dp
 							Image {
@@ -200,6 +202,7 @@ ListView {
 					onClicked: {
 						mainItem.currentIndex = index
 						mainItem.conferenceSelected($modelData)
+						itemDelegate.forceActiveFocus()
 					}
 				}
 			}

@@ -6,9 +6,8 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 
-ColumnLayout {
+FocusScope{
 	id: mainItem
-	spacing: 8 * DefaultStyle.dp
 	property bool isCreation
 	property ConferenceInfoGui conferenceInfoGui
 	signal addParticipantsRequested()
@@ -59,6 +58,7 @@ ColumnLayout {
 			}
 		}
 	}
+
 	RowLayout {
 		visible: mainItem.isCreation && !SettingsCpp.disableBroadcastFeature
 		Layout.topMargin: 20 * DefaultStyle.dp
@@ -100,8 +100,10 @@ ColumnLayout {
 					pixelSize: 20 * DefaultStyle.dp
 					weight: 800 * DefaultStyle.dp
 				}
-				onActiveFocusChanged: if(activeFocus==true) selectAll()
+				focus: true
+				onActiveFocusChanged: if(activeFocus) selectAll()
 				onEditingFinished: mainItem.conferenceInfoGui.core.subject = text
+				KeyNavigation.down: allDaySwitch
 			}
 		}
 	}
@@ -127,11 +129,13 @@ ColumnLayout {
 				Switch {
 					id: allDaySwitch
 					readonly property bool isAllDay: position === 1
-					Component.onCompleted: if (mainItem.conferenceInfoGui.core.isAllDayConf()) toggle
+					KeyNavigation.up: confTitle
+					KeyNavigation.down: startDate
 					onPositionChanged: if (position === 1) {
 						mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, 0, 0)
 						mainItem.conferenceInfoGui.core.endDateTime = UtilsCpp.createDateTime(endDate.selectedDate, 23, 59)
 					}
+					Component.onCompleted: if (mainItem.conferenceInfoGui.core.isAllDayConf()) toggle
 				}
 			},
 			RowLayout {
@@ -143,6 +147,10 @@ ColumnLayout {
 					contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
 					Layout.preferredWidth: 200 * DefaultStyle.dp
 					Layout.preferredHeight: 30 * DefaultStyle.dp
+					KeyNavigation.up: allDaySwitch
+					KeyNavigation.down: endDate
+					KeyNavigation.left: startHour
+					KeyNavigation.right: startHour
 					onSelectedDateChanged: {
 						if (!selectedDate || selectedDate == mainItem.conferenceInfoGui.core.dateTime) return
 						mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(selectedDate, allDaySwitch.isAllDay ? 0 : startHour.selectedHour, allDaySwitch.isAllDay ? 0 : startHour.selectedMin)
@@ -163,6 +171,10 @@ ColumnLayout {
 					Layout.preferredHeight: 30 * DefaultStyle.dp
 					background.visible: mainItem.isCreation
 					contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
+					KeyNavigation.up: allDaySwitch
+					KeyNavigation.down: endDate
+					KeyNavigation.left: startDate
+					KeyNavigation.right: startDate
 					onSelectedHourChanged: {
 						mainItem.conferenceInfoGui.core.dateTime = selectedDateTime//UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
 						endDate.calendar.selectedDate = UtilsCpp.addSecs(selectedDateTime, 3600)
@@ -200,99 +212,6 @@ ColumnLayout {
 					onSelectedMinChanged: mainItem.conferenceInfoGui.core.endDateTime = selectedDateTime//UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
 				}
 			},
-			// RowLayout {
-			// 	EffectImage {
-			// 		imageSource: AppIcons.clock
-			// 		colorizationColor: DefaultStyle.main2_600
-			// 		Layout.preferredWidth: 24 * DefaultStyle.dp
-			// 		Layout.preferredHeight: 24 * DefaultStyle.dp
-			// 	}
-			// 	CalendarComboBox {
-			// 		id: startDate
-			// 		Layout.fillWidth: true
-			// 		Layout.preferredHeight: 30 * DefaultStyle.dp
-			// 		background.visible: mainItem.isCreation
-			// 		contentText.font.weight: (mainItem.isCreation ? 700 : 400) * DefaultStyle.dp
-			// 		onSelectedDateChanged: {
-			// 			mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(selectedDate, allDaySwitch.position === 1 ? 0 : startHour.selectedHour, allDaySwitch.position === 1 ? 0 : startHour.selectedMin)
-			// 			if (allDaySwitch.position === 0) endDate.calendar.selectedDate = UtilsCpp.addSecs(selectedDate, 3600)
-			// 		}
-			// 	}
-			// },
-			// RowLayout {
-			// 	Item {
-			// 		Layout.preferredWidth: 24 * DefaultStyle.dp
-			// 		Layout.preferredHeight: 24 * DefaultStyle.dp
-			// 	}
-			// 	RowLayout {
-			// 		visible: allDaySwitch.position === 0
-			// 		TimeComboBox {
-			// 			id: startHour
-			// 			onSelectedHourChanged: {
-			// 				mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
-			// 				endHour.selectedTimeString = Qt.formatDateTime(UtilsCpp.createDateTime(new Date(), selectedHour == 23 ? 23 : selectedHour + 1, selectedHour == 23 ? 59 : selectedMin), "hh:mm")
-			// 			}
-			// 			onSelectedMinChanged: {
-			// 				mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
-			// 				endHour.selectedTimeString = Qt.formatDateTime(UtilsCpp.createDateTime(new Date(), selectedHour == 23 ? 23 : selectedHour + 1, selectedHour == 23 ? 59 : selectedMin), "hh:mm")
-			// 			}
-			// 			Layout.preferredWidth: 94 * DefaultStyle.dp
-			// 			Layout.preferredHeight: 30 * DefaultStyle.dp
-			// 		}
-			// 		TimeComboBox {
-			// 			id: endHour
-			// 			// property date startTime: new Date()
-			// 			onSelectedHourChanged: mainItem.conferenceInfoGui.core.endDateTime = UtilsCpp.createDateTime(endDate.selectedDate, selectedHour, selectedMin)
-			// 			onSelectedMinChanged: mainItem.conferenceInfoGui.core.endDateTime = UtilsCpp.createDateTime(endDate.selectedDate, selectedHour, selectedMin)
-			// 			Layout.preferredWidth: 94 * DefaultStyle.dp
-			// 			Layout.preferredHeight: 30 * DefaultStyle.dp
-			// 		}
-			// 		Item {
-			// 			Layout.fillWidth: true
-			// 		}
-			// 		Text {
-			// 			property int durationSec: UtilsCpp.secsTo(startHour.selectedTime, endHour.selectedTime)
-			// 			property int hour: durationSec/3600
-			// 			property int min: (durationSec - hour*3600)/60
-			// 			text: (hour > 0 ? hour + "h" : "") + (min > 0 ? min + "mn" : "")
-			// 			font {
-			// 				pixelSize: 14 * DefaultStyle.dp
-			// 				weight: 700 * DefaultStyle.dp
-			// 			}
-			// 		}
-			// 	}
-			// 	CalendarComboBox {
-			// 		id: endDate
-			// 		visible: allDaySwitch.position === 1
-			// 		Layout.fillWidth: true
-			// 		// Layout.fillHeight: false
-			// 		contentText.font.weight: (mainItem.isCreation ? 700 : 400) * DefaultStyle.dp
-			// 		Layout.preferredHeight: 30 * DefaultStyle.dp
-			// 		onSelectedDateChanged: mainItem.conferenceInfoGui.core.endDateTime = UtilsCpp.createDateTime(selectedDate, allDaySwitch.position === 1 ? 23 : endHour.selectedHour, allDaySwitch.position === 1 ? 59 : endHour.selectedMin)
-			// 	}
-			// },
-			// RowLayout {
-			// 	Item {
-			// 		Layout.preferredWidth: 24 * DefaultStyle.dp
-			// 		Layout.preferredHeight: 24 * DefaultStyle.dp
-			// 	}
-			// 	RowLayout {
-			// 		Switch {
-			// 			id: allDaySwitch
-			// 			text: qsTr("Toute la journée")
-			// 			onPositionChanged: {
-			// 				if (position == 1) {
-			// 					mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, 0, 0)
-			// 					mainItem.conferenceInfoGui.core.endDateTime = UtilsCpp.createDateTime(endDate.selectedDate, 23, 59)
-			// 				} else {
-			// 					mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, startHour.selectedHour, startHour.selectedMin)
-			// 					mainItem.conferenceInfoGui.core.endDateTime = UtilsCpp.createDateTime(endDate.selectedDate, endHour.selectedHour, endHour.selectedMin)
-			// 				}
-			// 			}
-			// 		}
-			// 	}
-			// },
-		
 
 			ComboBox {
 				id: timeZoneCbox
@@ -316,33 +235,6 @@ ColumnLayout {
 					mainItem.conferenceInfoGui.core.timeZoneModel = timeZoneCbox.model.data(modelIndex, Qt.DisplayRole + 1)
 				}
 			}
-
-			// ComboBox {
-			// 	id: repeaterCbox
-			// 	enabled: false
-			// 	Component.onCompleted: console.log("TODO : handle conf repetition")
-			// 	constantImageSource: AppIcons.reloadArrow
-			// 	Layout.fillWidth: true
-			// 	Layout.preferredHeight: height
-			// 	height: 30 * DefaultStyle.dp
-			// 	width: 307 * DefaultStyle.dp
-			// 	weight: 700 * DefaultStyle.dp
-			// 	leftMargin: 0
-			// 	currentIndex: 0
-			// 	background: Rectangle {
-			// 		visible: parent.hovered || parent.down
-			// 		anchors.fill: parent
-			// 		color: DefaultStyle.grey_100
-			// 	}
-			// 	model: [
-			// 		{text: qsTr("Une fois")},
-			// 		{text: qsTr("Tous les jours")},
-			// 		{text: qsTr("Tous les jours de la semaine (Lun-Ven)")},
-			// 		{text: qsTr("Toutes les semaines")},
-			// 		{text: qsTr("Tous les mois")}
-			// 	]
-			// }
-			
 		]
 		
 	}
@@ -370,12 +262,19 @@ ColumnLayout {
 					pixelSize: 14 * DefaultStyle.dp
 					weight: 400 * DefaultStyle.dp
 				}
+				onEditingFinished: mainItem.conferenceInfoGui.core.description = text
+				Keys.onPressed: (event)=> {
+					if (event.key == Qt.Key_Escape) {
+						text = mainItem.conferenceInfoGui.core.description
+						nextItemInFocusChain().forceActiveFocus()
+						event.accepted = true;
+					}
+				}
 				background: Rectangle {
 					anchors.fill: parent
 					color: descriptionEdit.hovered || descriptionEdit.activeFocus ? DefaultStyle.grey_100 : "transparent"
 					radius: 4 * DefaultStyle.dp
 				}
-				onEditingFinished: mainItem.conferenceInfoGui.core.description = text
 			}
 		}
 	}
@@ -387,7 +286,7 @@ ColumnLayout {
 				Layout.preferredHeight: 30 * DefaultStyle.dp
 				background: Rectangle {
 					anchors.fill: parent
-					color: addParticipantsButton.hovered ? DefaultStyle.grey_100 : "transparent"
+					color: addParticipantsButton.hovered || addParticipantsButton.activeFocus ? DefaultStyle.grey_100 : "transparent"
 					radius: 4 * DefaultStyle.dp
 				}
 				contentItem: RowLayout {

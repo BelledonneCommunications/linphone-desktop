@@ -9,7 +9,7 @@ import QtQuick.Controls as Control
 import Linphone
 import UtilsCpp
 
-Item {
+FocusScope {
 	id: mainItem
 	property string noItemButtonText
 	property string newItemIconSource
@@ -209,6 +209,8 @@ Item {
 				}
 				Control.StackView {
 					id: rightPanelStackView
+					Layout.fillWidth: true
+					Layout.fillHeight: true
 				}
 			}
 		}

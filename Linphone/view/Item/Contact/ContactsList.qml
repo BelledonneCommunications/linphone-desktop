@@ -11,6 +11,7 @@ ListView {
 	height: contentHeight
 	visible: contentHeight > 0
 	clip: true
+	//keyNavigationWraps: true
 	// rightMargin: 5 * DefaultStyle.dp
 
 	property string searchBarText
@@ -47,6 +48,7 @@ ListView {
 	signal contactStarredChanged()
 	signal contactDeletionRequested(FriendGui contact)
 	signal contactAddedToSelection()
+	signal clicked()
 
 	function selectContact(address) {
 		var index = magicSearchProxy.findFriendIndexByAddress(address)
@@ -69,9 +71,11 @@ ListView {
 			selectedContacts.splice(indexInSelection, 1)
 		}
 	}
-
-	
-
+	onActiveFocusChanged: if(activeFocus && (!footerItem || !footerItem.activeFocus)) {
+							currentIndex = 0
+						}else {
+							currentIndex = -1
+						}
 	model: MagicSearchProxy {
 		id: magicSearchProxy
 		searchText: searchBarText.length === 0 ? "*" : searchBarText
@@ -88,8 +92,12 @@ ListView {
 		// anchors.bottom: parent.bottom
 		// anchors.right: parent.right
 	}
-
-	delegate: Item {
+	Keys.onPressed: (event)=>{
+		if(event.key == Qt.Key_Tab && !mainItem.itemAtIndex(mainItem.currentIndex).activeFocus){
+			mainItem.itemAtIndex(mainItem.currentIndex).forceActiveFocus()
+		}
+	}
+	delegate: FocusScope {
 		id: itemDelegate
 		height: display ? 56 * DefaultStyle.dp : 0
 		width: mainItem.width
@@ -163,14 +171,17 @@ ListView {
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 10 * DefaultStyle.dp // TODO : change when mockup ready
 			RowLayout{
+				id: actionButtons
 				visible: mainItem.actionLayoutVisible
 				spacing: 10 * DefaultStyle.dp
 				Button {
+					id: callButton
 					Layout.preferredWidth: 45 * DefaultStyle.dp
 					Layout.preferredHeight: 45 * DefaultStyle.dp
 					icon.width: 24 * DefaultStyle.dp
 					icon.height: 24 * DefaultStyle.dp
 					icon.source: AppIcons.phone
+					focus: visible
 					contentImageColor: DefaultStyle.main2_500main
 					background: Rectangle {
 						anchors.fill: parent
@@ -178,19 +189,25 @@ ListView {
 						color: DefaultStyle.main2_200
 					}
 					onClicked: UtilsCpp.createCall(modelData.core.defaultAddress)
+					KeyNavigation.right: chatButton
+					KeyNavigation.left: chatButton
 				}
 				Button {
+					id: chatButton
 					Layout.preferredWidth: 45 * DefaultStyle.dp
 					Layout.preferredHeight: 45 * DefaultStyle.dp
 					icon.width: 24 * DefaultStyle.dp
 					icon.height: 24 * DefaultStyle.dp
 					icon.source: AppIcons.chatTeardropText
+					focus: visible && !callButton.visible
 					contentImageColor: DefaultStyle.main2_500main
 					background: Rectangle {
 						anchors.fill: parent
 						radius: 40 * DefaultStyle.dp
 						color: DefaultStyle.main2_200
 					}
+					KeyNavigation.right: callButton
+					KeyNavigation.left: callButton
 				}
 			}
 			PopupButton {
@@ -268,14 +285,21 @@ ListView {
 			height: mainItem.height
 			acceptedButtons: Qt.AllButtons
 			z: -1
+			focus: !actionButtons.visible
 			Rectangle {
 				anchors.fill: contactArea
 				opacity: 0.7
 				color: DefaultStyle.main2_100
-				visible: contactArea.containsMouse || friendPopup.hovered || (!mainItem.multiSelectionEnabled && mainItem.currentIndex === index)
+				visible: contactArea.containsMouse || friendPopup.hovered || mainItem.currentIndex === index
+			}
+			Keys.onPressed: (event)=> {
+				if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+					contactArea.clicked(undefined)
+					event.accepted = true;
+				}
 			}
 			onClicked: (mouse) => {
-				if (mouse.button == Qt.RightButton) {
+				if (mouse && mouse.button == Qt.RightButton) {
 					friendPopup.open()
 				} else {
 					mainItem.currentIndex = -1
@@ -289,6 +313,7 @@ ListView {
 							mainItem.removeContactFromSelection(indexInSelection, 1)
 						}
 					}
+					mainItem.clicked()
 				}
 			}
 		}

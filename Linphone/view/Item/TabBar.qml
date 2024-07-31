@@ -1,6 +1,7 @@
-import QtQuick 2.7
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2 as Control
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as Control
+import QtQuick.Effects
 import Linphone
   
 Control.TabBar {
@@ -44,9 +45,12 @@ Control.TabBar {
 	Repeater {
 		model: mainItem.model
 		Control.TabButton {
+			id: tabButton
 			required property string modelData
 			required property int index
+			property bool shadowEnabled: activeFocus || hovered
 			width: implicitWidth
+			activeFocusOnTab: true
 			hoverEnabled: true
 			ToolTip {
 				visible: tabText.truncated && hovered
@@ -58,12 +62,24 @@ Control.TabBar {
 				anchors.fill: parent
 
 				Rectangle {
+					id: tabBackground
 					visible: mainItem.currentIndex === index
 					height: 5 * DefaultStyle.dp
 					color: DefaultStyle.main1_500_main
 					anchors.bottom: parent.bottom
 					anchors.left: parent.left
 					anchors.right: parent.right
+				}
+				MultiEffect {
+					enabled: tabButton.shadowEnabled
+					anchors.fill: tabBackground
+					source: tabBackground
+					visible:  tabButton.shadowEnabled
+					// Crash : https://bugreports.qt.io/browse/QTBUG-124730
+					shadowEnabled: true //mainItem.shadowEnabled
+					shadowColor: DefaultStyle.grey_1000
+					shadowBlur: 1
+					shadowOpacity: tabButton.shadowEnabled ? 0.5 : 0.0
 				}
 			}
 

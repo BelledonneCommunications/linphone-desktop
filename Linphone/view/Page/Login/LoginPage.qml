@@ -23,8 +23,8 @@ LoginLayout {
 			Layout.preferredWidth: 27 * DefaultStyle.dp
 			Layout.leftMargin: 79 * DefaultStyle.dp
 			icon.source: AppIcons.leftArrow
-			icon.width: 27 * DefaultStyle.dp
-			icon.height: 27 * DefaultStyle.dp
+			icon.width: width
+			icon.height: height
 			background: Rectangle {
 				color: "transparent"
 			}

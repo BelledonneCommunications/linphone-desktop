@@ -1,9 +1,9 @@
-import QtQuick 2.15
+import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
 
-MouseArea {
+Item{
 	id: mainItem
 	property string iconSource
 	property string text
@@ -11,28 +11,70 @@ MouseArea {
 	property int iconSize: 17 * DefaultStyle.dp 
 	property int textSize: 14 * DefaultStyle.dp
 	property int textWeight: 400 * DefaultStyle.dp
-	hoverEnabled: true
-	cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-	width: content.implicitWidth
-	RowLayout {
-		id: content
-		anchors.verticalCenter: parent.verticalCenter
-		EffectImage {
-			Layout.preferredWidth: mainItem.iconSize
-			Layout.preferredHeight: mainItem.iconSize
-			width: mainItem.iconSize
-			height: mainItem.iconSize
-			imageSource: mainItem.iconSource
-			colorizationColor: mainItem.color
+	property color backgroundColor: DefaultStyle.grey_0
+	property color backgroundPressedColor: DefaultStyle.main2_100
+	property int radius: 5 * DefaultStyle.dp
+	property bool shadowEnabled: mainItem.activeFocus//  || containsMouse
+	property alias containsMouse: mouseArea.containsMouse
+	
+	signal clicked(var mouse)
+	
+	implicitWidth: content.implicitWidth
+	activeFocusOnTab: true
+	
+	Keys.onPressed: (event)=> {
+		if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+			mainItem.clicked(undefined)
+			event.accepted = true;
 		}
-		Text {
-			width: implicitWidth
-			Layout.fillWidth: true
-			text: mainItem.text
-			color: mainItem.color
-			font {
-				pixelSize: mainItem.textSize
-				weight: mainItem.textWeight
+	}
+	Rectangle{
+		anchors.fill: parent
+		id: buttonBackground
+		color: mainItem.shadowEnabled ? mainItem.backgroundPressedColor : mainItem.backgroundColor
+		radius: mainItem.radius
+	}/*
+	MultiEffect {
+		enabled: mainItem.shadowEnabled
+		anchors.fill: buttonBackground
+		source: buttonBackground
+		visible:  mainItem.shadowEnabled
+		// Crash : https://bugreports.qt.io/browse/QTBUG-124730
+		shadowEnabled: true //mainItem.shadowEnabled
+		shadowColor: DefaultStyle.grey_1000
+		shadowBlur: 1
+		shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
+	}*/
+
+	MouseArea {
+		id: mouseArea
+		anchors.verticalCenter: parent.verticalCenter
+		width: content.implicitWidth
+		height: mainItem.height
+		hoverEnabled: true
+		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+		
+		onClicked: function(mouse){mainItem.clicked(mouse)}
+		RowLayout {
+			id: content
+			anchors.verticalCenter: parent.verticalCenter
+			EffectImage {
+				Layout.preferredWidth: mainItem.iconSize
+				Layout.preferredHeight: mainItem.iconSize
+				width: mainItem.iconSize
+				height: mainItem.iconSize
+				imageSource: mainItem.iconSource
+				colorizationColor: mainItem.color
+			}
+			Text {
+				width: implicitWidth
+				Layout.fillWidth: true
+				text: mainItem.text
+				color: mainItem.color
+				font {
+					pixelSize: mainItem.textSize
+					weight: mainItem.textWeight
+				}
 			}
 		}
 	}

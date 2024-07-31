@@ -17,6 +17,7 @@ Control.ComboBox {
 	property int weight: 400 * DefaultStyle.dp
 	property int leftMargin: 10 * DefaultStyle.dp
 	property bool oneLine: false
+	property bool shadowEnabled: mainItem.activeFocus || mainItem.hovered
 
 	onConstantImageSourceChanged: if (constantImageSource)  selectedItemImg.source = constantImageSource
 	onCurrentIndexChanged: {
@@ -33,12 +34,37 @@ Control.ComboBox {
 				? item.img
 				: ""
 	}
+	
+	Keys.onPressed: (event)=>{
+		if(!mainItem.contentItem.activeFocus && (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return)){
+			mainItem.popup.open()
+			event.accepted = true
+		}
+	}
 
-	background: Rectangle {
-		anchors.fill: mainItem
-		radius: 63 * DefaultStyle.dp
-		color: mainItem.enabled ? DefaultStyle.grey_100 : DefaultStyle.grey_200
-		border.color: mainItem.enabled ? DefaultStyle.grey_200 : DefaultStyle.grey_400
+	background: Item{
+		Rectangle {
+			id: buttonBackground
+			anchors.fill: parent
+			radius: 63 * DefaultStyle.dp
+			color: mainItem.enabled ? DefaultStyle.grey_100 : DefaultStyle.grey_200
+			border.color: mainItem.enabled
+				? mainItem.activeFocus
+					? DefaultStyle.main1_500_main
+					: DefaultStyle.grey_200
+				: DefaultStyle.grey_400
+		}
+		MultiEffect {
+			enabled: mainItem.shadowEnabled
+			anchors.fill: buttonBackground
+			source: buttonBackground
+			visible:  mainItem.shadowEnabled
+			// Crash : https://bugreports.qt.io/browse/QTBUG-124730
+			shadowEnabled: true //mainItem.shadowEnabled
+			shadowColor: DefaultStyle.grey_1000
+			shadowBlur: 0.5
+			shadowOpacity: mainItem.shadowEnabled ? 0.1 : 0.0
+		}
 	}
 	contentItem: Item {
 		anchors.fill: parent
@@ -105,8 +131,12 @@ Control.ComboBox {
 		width: mainItem.width
 		implicitHeight: contentItem.implicitHeight
 		padding: 1 * DefaultStyle.dp
-		height: Math.min(listView.contentHeight, 300)
+		//height: Math.min(implicitHeight, 300)
 
+		onOpened: {
+			listView.positionViewAtIndex(listView.currentIndex, ListView.Center)
+			listView.forceActiveFocus()
+		}
 		contentItem: ListView {
 			id: listView
 			clip: true
@@ -122,6 +152,14 @@ Control.ComboBox {
 				color: DefaultStyle.main2_200
 				radius: 15 * DefaultStyle.dp
 				y: listView.currentItem? listView.currentItem.y : 0
+			}
+			
+			Keys.onPressed: (event)=>{
+				if(event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return){
+					event.accepted = true
+					mainItem.currentIndex = listView.currentIndex
+					popup.close()
+				}
 			}
 
 			delegate: Item {
@@ -163,6 +201,7 @@ Control.ComboBox {
 				}
 
 				MouseArea {
+					id: mouseArea
 					anchors.fill: parent
 					hoverEnabled: true
 					Rectangle {
@@ -182,9 +221,7 @@ Control.ComboBox {
 			Control.ScrollIndicator.vertical: Control.ScrollIndicator { }
 		}
 
-		onOpened: {
-			listView.positionViewAtIndex(listView.currentIndex, ListView.Center)
-		}
+		
 
 		background: Item {
 			implicitWidth: mainItem.width

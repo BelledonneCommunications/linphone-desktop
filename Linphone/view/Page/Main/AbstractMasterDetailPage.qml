@@ -33,16 +33,18 @@ AbstractMainPage {
 			Layout.rightMargin: leftPanel.sideMargin
 			spacing: 5 * DefaultStyle.dp
 			Button {
+				id: backButton
 				Layout.preferredHeight: 24 * DefaultStyle.dp
 				Layout.preferredWidth: 24 * DefaultStyle.dp
 				icon.source: AppIcons.leftArrow
 				width: 24 * DefaultStyle.dp
 				height: 24 * DefaultStyle.dp
-				background: Item {
-					anchors.fill: parent
-				}
+				focus: true
 				onClicked: {
 					mainItem.goBack()
+				}
+				background: Item {
+					anchors.fill: parent
 				}
 			}
 			Text {
@@ -63,11 +65,13 @@ AbstractMainPage {
 			Layout.topMargin: 41 * DefaultStyle.dp
 			Layout.leftMargin: leftPanel.sideMargin
 			property int selectedIndex: 0
+			activeFocusOnTab: true
 			
 			delegate: MasterDetailFamily {
 				titleText: modelData.title
 				visible: modelData.visible != undefined ? modelData.visible : true
 				isSelected: familiesList.selectedIndex == index
+				focus: index == 0
 				onSelected: {
 					familiesList.selectedIndex = index
 					rightPanelStackView.clear()
@@ -78,6 +82,8 @@ AbstractMainPage {
 		Component.onCompleted: {
 			let initialEntry = mainItem.families[familiesList.selectedIndex]
 			rightPanelStackView.push(layoutUrl(initialEntry.layout), { titleText: initialEntry.title, model: initialEntry.model, container: rightPanelStackView})
+			familiesList.currentIndex = familiesList.selectedIndex
+			backButton.forceActiveFocus()
 		}
 	}
 }

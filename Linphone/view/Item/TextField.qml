@@ -20,6 +20,7 @@ Control.TextField {
 		weight: 400 * DefaultStyle.dp
 	}
 	selectByMouse: true
+	activeFocusOnTab: true
 
 	property bool controlIsDown: false
 	property bool hidden: false
@@ -111,10 +112,9 @@ Control.TextField {
 		icon.source: eyeButton.checked ? AppIcons.eyeShow : AppIcons.eyeHide
 		width: 20 * DefaultStyle.dp
 		height: 20 * DefaultStyle.dp
-		icon.width: 20 * DefaultStyle.dp
-		icon.height: 20 * DefaultStyle.dp
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
+		icon.width: width
+		icon.height: height
+		anchors.verticalCenter: parent.verticalCenter
 		anchors.right: parent.right
 		anchors.rightMargin: rightMargin
 	}

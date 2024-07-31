@@ -22,6 +22,7 @@ ComboBox {
 		}
 	}
 	popup: Control.Popup {
+		id: popupItem
 		y: mainItem.height
 		width: 321 * DefaultStyle.dp
 		height: 270 * DefaultStyle.dp
@@ -30,6 +31,7 @@ ComboBox {
 		bottomPadding: 24 * DefaultStyle.dp
 		leftPadding: 21 * DefaultStyle.dp
 		rightPadding: 19 * DefaultStyle.dp
+		onOpened: calendar.forceActiveFocus()
 		background: Item {
 			anchors.fill: parent
 			Rectangle {
@@ -37,6 +39,8 @@ ComboBox {
 				anchors.fill: parent
 				color: DefaultStyle.grey_0
 				radius: 16 * DefaultStyle.dp
+				border.color: DefaultStyle.main1_500_main
+				border.width: calendar.activeFocus? 1 : 0
 			}
 			MultiEffect {
 				anchors.fill: calendarBg

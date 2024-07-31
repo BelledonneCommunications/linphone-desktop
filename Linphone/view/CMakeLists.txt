@@ -62,7 +62,6 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Carousel.qml
 	view/Item/CheckableButton.qml
 	view/Item/CheckBox.qml
-	view/Item/SwitchButton.qml
 	view/Item/ComboBox.qml
 	view/Item/DesktopPopup.qml
 	view/Item/Dialog.qml

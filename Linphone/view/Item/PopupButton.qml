@@ -7,6 +7,8 @@ Button {
 	id: mainItem
 	property alias popup: popup
 	property var contentImageColor
+	property bool shadowEnabled: mainItem.activeFocus  || hovered
+	property alias popupBackgroundColor: popupBackground.color
 	checked: popup.visible
 	implicitWidth: 24 * DefaultStyle.dp
 	implicitHeight: 24 * DefaultStyle.dp
@@ -26,11 +28,32 @@ Button {
 		popup.open()
 	}
 
-	background: Rectangle {
+	Keys.onPressed: (event) => {
+		if(popup.checked && event.key == Qt.Key_Escape){
+			mainItem.close()
+			event.accepted = true
+		}
+	}
+	background: Item {
 		anchors.fill: mainItem
-		visible: mainItem.checked
-		color: DefaultStyle.main2_300
-		radius: 40 * DefaultStyle.dp
+		Rectangle {
+			id: buttonBackground
+			anchors.fill: parent
+			visible: mainItem.checked || mainItem.shadowEnabled
+			color:  mainItem.checked ? DefaultStyle.main2_300 : DefaultStyle.grey_100
+			radius: 40 * DefaultStyle.dp
+		}
+		MultiEffect {
+			enabled: mainItem.shadowEnabled
+			anchors.fill: buttonBackground
+			source: buttonBackground
+			visible:  mainItem.shadowEnabled
+			// Crash : https://bugreports.qt.io/browse/QTBUG-124730
+			shadowEnabled: true //mainItem.shadowEnabled
+			shadowColor: DefaultStyle.grey_1000
+			shadowBlur: 1
+			shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
+		}
 	}
 	contentItem: EffectImage {
 		imageSource: mainItem.icon.source
@@ -46,7 +69,7 @@ Button {
 		id: popup
 		x: 0
 		y: mainItem.height
-		closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside
+		closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside | Popup.CloseOnEscape
 		padding: 10 * DefaultStyle.dp
 		parent: mainItem	// Explicit define for coordinates references.
 
@@ -64,19 +87,20 @@ Button {
 			} else {
 				x = 0
 			}
+			popup.contentItem.forceActiveFocus()
 		}
 
 		background: Item {
 			anchors.fill: parent
 			Rectangle {
-				id: callOptionsMenuPopup
+				id: popupBackground
 				anchors.fill: parent
 				color: DefaultStyle.grey_0
 				radius: 16 * DefaultStyle.dp
 			}
 			MultiEffect {
-				source: callOptionsMenuPopup
-				anchors.fill: callOptionsMenuPopup
+				source: popupBackground
+				anchors.fill: popupBackground
 				shadowEnabled: true
 				shadowBlur: 1
 				shadowColor: DefaultStyle.grey_900

@@ -29,7 +29,7 @@ RowLayout {
 			Layout.fillWidth: true
 		}
 	}
-	SwitchButton {
+	Switch {
 		id: switchButton
 		Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 		checked: propertyOwner[mainItem.propertyName]

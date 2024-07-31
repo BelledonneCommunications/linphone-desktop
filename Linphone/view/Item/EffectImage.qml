@@ -16,6 +16,7 @@ Loader {
 	property int imageWidth: width
 	property int imageHeight: height
 	property bool useColor: colorizationColor != undefined
+	property bool shadowEnabled: false
 	sourceComponent: Item {
 		Image {
 			id: image
@@ -48,6 +49,35 @@ Loader {
 			maskSource: effect
 			colorizationColor: effectEnabled && mainItem.colorizationColor ? mainItem.colorizationColor : 'black'
 			colorization: effectEnabled ? 1.0: 0.0
+		}
+		/* Alernative to shadow for no blackcolors
+		MultiEffect {
+			visible: mainItem.shadowEnabled
+			source: image
+			width: image.width
+			height: image.height
+			x: image.x
+			y: image.y + 6
+			z: -1
+			blurEnabled: true
+			blurMax: 12
+			blur: 1.0
+			contrast: -1.0
+			brightness: 1.0
+			colorizationColor: DefaultStyle.grey_400
+			colorization: 1.0
+		}*/
+		MultiEffect {
+			id: shadow
+			enabled: mainItem.shadowEnabled
+			anchors.fill: image
+			source: image
+			visible: mainItem.shadowEnabled
+			// Crash : https://bugreports.qt.io/browse/QTBUG-124730?
+			shadowEnabled: true //mainItem.shadowEnabled
+			shadowColor: DefaultStyle.grey_1000
+			shadowBlur: 0
+			shadowOpacity: mainItem.shadowEnabled ? 0.7 : 0.0
 		}
 	}
 }

@@ -95,6 +95,7 @@ LoginLayout {
 				<p>To enable it in a commercial projet, please contact us. </p>"
 			}
 			Button {
+				Layout.alignment: Qt.AlignCenter
 				Layout.topMargin: 18 * DefaultStyle.dp
 				text: "linphone.org/contact"
 				textSize: 13 * DefaultStyle.dp
@@ -109,7 +110,7 @@ LoginLayout {
 			}
 			Button {
 				Layout.topMargin: 85 * DefaultStyle.dp
-				Layout.preferredWidth: 360 * DefaultStyle.dp
+				Layout.fillWidth: true
 				inversedColors: true
 				text: qsTr("I prefer creating an account")
 				leftPadding: 20 * DefaultStyle.dp
@@ -123,7 +124,7 @@ LoginLayout {
 			}
 			Button {
 				Layout.topMargin: 20 * DefaultStyle.dp
-				Layout.preferredWidth: 360 * DefaultStyle.dp
+				Layout.fillWidth: true
 				text: qsTr("I understand")
 				leftPadding: 20 * DefaultStyle.dp
 				rightPadding: 20 * DefaultStyle.dp
@@ -229,7 +230,6 @@ LoginLayout {
 			anchors.topMargin: 70 * DefaultStyle.dp
 			anchors.leftMargin: 127 * DefaultStyle.dp
 			width: 361 * DefaultStyle.dp
-			clip: true
 		},
 		Image {
 			z: -1

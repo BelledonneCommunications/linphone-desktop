@@ -9,6 +9,7 @@ Control.Popup{
 	property color underlineColor : DefaultStyle.main1_500_main
 	property int radius: 16 * DefaultStyle.dp
 	property bool hovered: mouseArea.containsMouse
+
 	background: Item{
 		Rectangle {
 			visible: mainItem.underlineColor != undefined

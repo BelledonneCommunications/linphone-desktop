@@ -139,11 +139,13 @@ ColumnLayout {
 
 			Shortcut {
 				sequences: ["Return", "Enter"]
-				onActivated: connectionButton.trigger()
+				onActivated: if(passwordEdit.activeFocus) connectionButton.trigger()
+							else if( usernameEdit.activeFocus) passwordEdit.forceActiveFocus()
 			}
 			onPressed: connectionButton.trigger()
 		}
 		Button {
+			id: forgottenButton
 			background: Item {
 				visible: false
 			}
@@ -151,7 +153,7 @@ ColumnLayout {
 				color: DefaultStyle.main2_500main
 				text: qsTr("Mot de passe oublié ?")
 				font{
-					underline: true
+					underline: forgottenButton.underline
 					pixelSize: 13 * DefaultStyle.dp
 					weight: 600 * DefaultStyle.dp
 				}

@@ -15,6 +15,7 @@ TextEdit {
 	property bool hovered: mouseArea.hoverEnabled && mouseArea.containsMouse
 	topPadding: 5 * DefaultStyle.dp
 	bottomPadding: 5 * DefaultStyle.dp
+	activeFocusOnTab: true
 
 	MouseArea {
 		id: mouseArea

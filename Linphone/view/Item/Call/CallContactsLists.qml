@@ -7,16 +7,18 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 
-Item {
+FocusScope {
 	id: mainItem
 	property bool groupCallVisible
 	property color searchBarColor: DefaultStyle.grey_100
 	property color searchBarBorderColor: "transparent"
 	property alias searchBar: searchBar
-	signal callButtonPressed(string address)
-	signal groupCallCreationRequested()
 	property FriendGui selectedContact
 	property NumericPad numPad
+	signal callButtonPressed(string address)
+	signal callSelectedContact()
+	signal groupCallCreationRequested()
+	
 	clip: true
 
 	Control.Control {
@@ -33,10 +35,12 @@ Item {
 				Layout.alignment: Qt.AlignTop
 				Layout.fillWidth: true
 				Layout.maximumWidth: mainItem.width
+				focus: true
 				color: mainItem.searchBarColor
 				borderColor: mainItem.searchBarBorderColor
 				placeholderText: qsTr("Rechercher un contact")
 				numericPad: mainItem.numPad
+				KeyNavigation.down: grouCallButton
 			}
 			Control.ScrollView {
 				Layout.fillWidth: true
@@ -60,9 +64,13 @@ Item {
 					width: parent.width
 					spacing: 32 * DefaultStyle.dp
 					Button {
+						id: grouCallButton
 						visible: mainItem.groupCallVisible && !SettingsCpp.disableMeetingsFeature
 						Layout.preferredWidth: 320 * DefaultStyle.dp
 						padding: 0
+						KeyNavigation.up: searchBar
+						KeyNavigation.down: contactList.count >0 ? contactList : searchList
+						onClicked: mainItem.groupCallCreationRequested()
 						background: Rectangle {
 							gradient: Gradient {
 								orientation: Gradient.Horizontal
@@ -87,6 +95,7 @@ Item {
 								font {
 									pixelSize: 16 * DefaultStyle.dp
 									weight: 800 * DefaultStyle.dp
+									underline: grouCallButton.shadowEnabled
 								}
 							}
 							Item {
@@ -98,7 +107,6 @@ Item {
 								Layout.preferredHeight: 24 * DefaultStyle.dp
 							}
 						}
-						onClicked: mainItem.groupCallCreationRequested()
 					}
 					ColumnLayout {
 						spacing: 18 * DefaultStyle.dp
@@ -120,6 +128,7 @@ Item {
 								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
 							}
 							onSelectedContactChanged: mainItem.selectedContact = selectedContact
+							onClicked: mainItem.callSelectedContact()
 						}
 					}
 					ColumnLayout {
@@ -132,6 +141,7 @@ Item {
 							}
 						}
 						ContactsList{
+							id: searchList
 							contactMenuVisible: false
 							Layout.fillWidth: true
 							Layout.fillHeight: true
@@ -145,6 +155,7 @@ Item {
 								aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
 							}
 							onSelectedContactChanged: mainItem.selectedContact = selectedContact
+							onClicked: mainItem.callSelectedContact()
 						}
 					}
 					Item {
