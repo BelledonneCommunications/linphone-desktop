@@ -23,7 +23,8 @@ ComboBox {
 	property var maxTime
 	popup.width: 73 * DefaultStyle.dp
 	listView.model: 48
-	listView.height: Math.min(204 * DefaultStyle.dp, listView.implicitHeight)
+	listView.height: Math.min(204 * DefaultStyle.dp, listView.contentHeight)
+	popup.height: Math.min(204 * DefaultStyle.dp, listView.contentHeight)
 	editable: true
 	popup.closePolicy: Popup.PressOutsideParent | Popup.CloseOnPressOutside
 	onCurrentTextChanged: input.text = currentText

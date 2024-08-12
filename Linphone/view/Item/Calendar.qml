@@ -101,19 +101,14 @@ ListView {
 					year: model.year
 					month: model.month
 					property var curDate: model.date
-					onMonthChanged: {
-						console.log("cur date changed", month)
-					}
 					locale: Qt.locale(ConstantsCpp.DefaultLocale)
 					delegate: FocusScope {
 						id: focusDay
 						property bool isSelectedDay: mainItem.selectedDate ? UtilsCpp.datesAreEqual(mainItem.selectedDate, model.date) : false
 						property var d: model.date
 						objectName: 'focusDay'
-						// width: 30 * DefaultStyle.dp
-						// height: 30 * DefaultStyle.dp
 						activeFocusOnTab: true
-						focus: index == 0
+						focus: UtilsCpp.isCurrentMonth(model.date) && UtilsCpp.isCurrentDay(model.date) || index == 0
 						Keys.onPressed: (event)=> {
 							if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
 								monthGrid.clicked(model.date)
@@ -123,16 +118,14 @@ ListView {
 								if( previous.objectName != 'focusDay'){
 									previousButton.clicked(undefined)
 								}else{
-									previous.forceActiveFocus()
+									if (UtilsCpp.daysOffset(new Date(), model.date) >= 0) previous.forceActiveFocus()
 								}
 							}else if(event.key == Qt.Key_Right){
 								var next = nextItemInFocusChain()
-								console.log(next.objectName)
 								if( next.objectName != 'focusDay'){
 									nextButton.clicked(undefined)
 								} else {
 									next.forceActiveFocus()
-									
 								}
 							}	
 						}
@@ -143,6 +136,7 @@ ListView {
 							hoverEnabled: true
 							cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 							acceptedButtons: Qt.LeftButton
+							// onEntered: focusDay.forceActiveFocus()
 							onPressed: (event) =>{
 								focusDay.forceActiveFocus()
 								event.accepted = false
@@ -176,8 +170,7 @@ ListView {
 						}
 					}
 					onClicked: (date) => {
-						if (UtilsCpp.isBeforeToday(date)) return;
-						mainItem.selectedDate = date
+						if (UtilsCpp.daysOffset(new Date(), date) >= 0) mainItem.selectedDate = date
 					}
 				}
 			}

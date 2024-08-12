@@ -30,6 +30,8 @@
 #include "model/tool/ToolModel.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 
+#include <limits.h>
+
 #include <QClipboard>
 #include <QDesktopServices>
 #include <QHostAddress>
@@ -1250,12 +1252,6 @@ bool Utils::isCurrentMonth(QDate date) {
 	return date.month() == currentDate.month() && date.year() == currentDate.year();
 }
 
-bool Utils::isBeforeToday(QDate date) {
-	auto currentDate = QDate::currentDate();
-	auto res = date.daysTo(currentDate) > 0;
-	return res;
-}
-
 bool Utils::datesAreEqual(const QDate &a, const QDate &b) {
 	return a.month() == b.month() && a.year() == b.year() && a.day() == b.day();
 }
@@ -1295,8 +1291,13 @@ QDateTime Utils::addYears(QDateTime date, int years) {
 }
 
 int Utils::timeOffset(QDateTime start, QDateTime end) {
-	qDebug() << "offset between times" << start.msecsTo(end);
-	return start.msecsTo(end);
+	int offset = start.secsTo(end);
+	return std::min(offset, INT_MAX);
+}
+
+int Utils::daysOffset(QDateTime start, QDateTime end) {
+	int offset = start.daysTo(end);
+	return std::min(offset, INT_MAX);
 }
 
 int Utils::getYear(const QDate &date) {

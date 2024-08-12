@@ -102,7 +102,6 @@ public:
 	Q_INVOKABLE static bool isCurrentDay(QDateTime date);
 	Q_INVOKABLE static bool isCurrentDay(QDate date);
 	Q_INVOKABLE static bool isCurrentMonth(QDate date);
-	Q_INVOKABLE static bool isBeforeToday(QDate date);
 	Q_INVOKABLE static bool datesAreEqual(const QDate &a, const QDate &b);
 	Q_INVOKABLE static bool dateisInMonth(const QDate &a, int month, int year);
 	Q_INVOKABLE static QDateTime createDateTime(const QDate &date, int hour, int min);
@@ -113,6 +112,7 @@ public:
 	Q_INVOKABLE static QDateTime addSecs(QDateTime date, int secs);
 	Q_INVOKABLE static QDateTime addYears(QDateTime date, int years);
 	Q_INVOKABLE static int timeOffset(QDateTime start, QDateTime end);
+	Q_INVOKABLE static int daysOffset(QDateTime start, QDateTime end);
 	Q_INVOKABLE static QString interpretUrl(const QString &uri);
 	Q_INVOKABLE static bool isValidSIPAddress(const QString &uri);
 	Q_INVOKABLE static bool isValidIPAddress(const QString &host);
