@@ -195,42 +195,39 @@ AbstractMainPage {
 						restoreMode: Binding.RestoreBindingOrValue
 					}
 				}
-				RowLayout {
-				// Remove 24 from first section padding because we cannot know that it is the first section. 24 is the margins between sections.
+				MeetingList {
+					id: conferenceList
+					// Remove 24 from first section padding because we cannot know that it is the first section. 24 is the margins between sections.
 					Layout.topMargin: 38 * DefaultStyle.dp - 24 * DefaultStyle.dp
-					spacing: 0
-					MeetingList {
-						id: conferenceList
-						Layout.fillWidth: true
-						Layout.fillHeight: true
-						visible: count != 0
-						hoverEnabled: mainItem.leftPanelEnabled
-						highlightFollowsCurrentItem: true
-						preferredHighlightBegin: height/2 - 10
-						preferredHighlightEnd: height/2 + 10
-						highlightRangeMode: ListView.ApplyRange
-						searchBarText: searchBar.text
-						Keys.onPressed: (event) => {
-							if(event.key == Qt.Key_Escape){
-								searchBar.forceActiveFocus()
-								event.accepted = true
-							}else if(event.key == Qt.Key_Right){
-								overridenRightPanelStackView.currentItem.forceActiveFocus()
-								event.accepted = true
-							}
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					visible: count != 0
+					hoverEnabled: mainItem.leftPanelEnabled
+					highlightFollowsCurrentItem: true
+					preferredHighlightBegin: height/2 - 10
+					preferredHighlightEnd: height/2 + 10
+					highlightRangeMode: ListView.ApplyRange
+					searchBarText: searchBar.text
+					Keys.onPressed: (event) => {
+						if(event.key == Qt.Key_Escape){
+							searchBar.forceActiveFocus()
+							event.accepted = true
+						}else if(event.key == Qt.Key_Right){
+							overridenRightPanelStackView.currentItem.forceActiveFocus()
+							event.accepted = true
 						}
-						onSelectedConferenceChanged: {
-							mainItem.selectedConference = selectedConference
-						}
-						Control.ScrollBar.vertical: ScrollBar {
-							id: meetingsScrollbar
-							anchors.right: parent.right
-							anchors.rightMargin: 8 * DefaultStyle.dp
-							active: true
-							interactive: true
-							policy: Control.ScrollBar.AsNeeded
-							
-						}
+					}
+					onSelectedConferenceChanged: {
+						mainItem.selectedConference = selectedConference
+					}
+					Control.ScrollBar.vertical: ScrollBar {
+						id: meetingsScrollbar
+						anchors.right: parent.right
+						anchors.rightMargin: 8 * DefaultStyle.dp
+						active: true
+						interactive: true
+						policy: Control.ScrollBar.AsNeeded
+						
 					}
 				}
 			}
@@ -245,7 +242,7 @@ AbstractMainPage {
 			property bool isCreation
 			ColumnLayout {
 				spacing: 33 * DefaultStyle.dp
-	
+				
 				RowLayout {
 					width: 320 * DefaultStyle.dp
 					Layout.rightMargin: 35 * DefaultStyle.dp
