@@ -362,6 +362,7 @@ AbstractMainPage {
 				anchors.fill: parent
 				spacing: 0
 				Section {
+					Layout.topMargin: 58 * DefaultStyle.dp
 					content: RowLayout {
 						spacing: 10 * DefaultStyle.dp
 						Button {

@@ -16,8 +16,8 @@ Control.Button {
 	property int textWeight: 600 * DefaultStyle.dp
 	property int radius: 48 * DefaultStyle.dp
 	property color textColor: DefaultStyle.grey_0
-	property bool underline: mainItem.activeFocus || containsMouse
-	property bool shadowEnabled: mainItem.activeFocus  || containsMouse
+	property bool underline: activeFocus || containsMouse
+	property bool shadowEnabled: enabled && (activeFocus  || containsMouse)
 	property var contentImageColor
 	property alias containsMouse: mouseArea.containsMouse
 	hoverEnabled: true
