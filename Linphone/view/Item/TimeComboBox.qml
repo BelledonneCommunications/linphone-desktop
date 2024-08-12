@@ -5,13 +5,25 @@ import UtilsCpp 1.0
 ComboBox {
 	id: mainItem
 	property var selectedDateTime
+	onSelectedDateTimeChanged: {
+		if (minTime != undefined) {
+			if (UtilsCpp.timeOffset(minTime, selectedDateTime) < 0)
+				selectedDateTime = minTime
+		}
+		if (maxTime != undefined) {
+			if (UtilsCpp.timeOffset(maxTime, selectedDateTime) > 0)
+				selectedDateTime = maxTime
+		}
+	}
 	readonly property string selectedTimeString: Qt.formatDateTime(selectedDateTime, "hh:mm")
 	property int selectedHour: input.hour*1
 	property int selectedMin: input.min*1
 	property alias contentText: input
+	property var minTime
+	property var maxTime
 	popup.width: 73 * DefaultStyle.dp
 	listView.model: 48
-	listView.implicitHeight: 204 * DefaultStyle.dp
+	listView.height: Math.min(204 * DefaultStyle.dp, listView.implicitHeight)
 	editable: true
 	popup.closePolicy: Popup.PressOutsideParent | Popup.CloseOnPressOutside
 	onCurrentTextChanged: input.text = currentText
@@ -48,18 +60,20 @@ ComboBox {
 				focus = false
 			}
 		}
-		onEditingFinished: {
-			console.log("set time", hour, min)
+		onFocusChanged: if (!focus) {
 			mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min)
+			console.log("set time", hour, min)
 		}
 	}
 	listView.delegate: Text {
 		id: hourDelegate
 		property int hour: modelData /2
 		property int min: modelData%2 === 0 ? 0 : 30
-		text: Qt.formatDateTime(UtilsCpp.createDateTime(new Date(), hour, min), "hh:mm")
+		property var currentDateTime: UtilsCpp.createDateTime(new Date(), hour, min)
+		text: Qt.formatDateTime(currentDateTime, "hh:mm")
 		width: mainItem.width
-		height: 25 * DefaultStyle.dp
+		visible: mainItem.minTime == undefined || UtilsCpp.timeOffset(mainItem.minTime, currentDateTime) > 0
+		height: visible ? 25 * DefaultStyle.dp : 0
 		verticalAlignment: TextInput.AlignVCenter
 		horizontalAlignment: TextInput.AlignHCenter
 		font {

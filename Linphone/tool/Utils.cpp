@@ -1294,6 +1294,11 @@ QDateTime Utils::addYears(QDateTime date, int years) {
 	return date;
 }
 
+int Utils::timeOffset(QDateTime start, QDateTime end) {
+	qDebug() << "offset between times" << start.msecsTo(end);
+	return start.msecsTo(end);
+}
+
 int Utils::getYear(const QDate &date) {
 	return date.year();
 }

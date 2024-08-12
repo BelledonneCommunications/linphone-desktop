@@ -7,6 +7,7 @@ import Linphone
 ComboBox {
 	id: mainItem
 	readonly property var selectedDate: calendar.selectedDate
+	onSelectedDateChanged: popupItem.close()
 	property alias calendar: calendar
 	property alias contentText: contentText
 	contentItem: Text {
