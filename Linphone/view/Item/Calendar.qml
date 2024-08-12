@@ -23,7 +23,6 @@ ListView {
 	property int currentYear: calendarModel.yearAt(currentIndex)
 	onCurrentYearChanged: console.log("currentyear", currentYear)
 	onCurrentMonthChanged: console.log("current month", currentMonth)
-	currentIndex: 0
 	keyNavigationEnabled: false
 
 	model: Control.CalendarModel {
