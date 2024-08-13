@@ -101,10 +101,6 @@ FocusScope {
 		anchors.verticalCenter: parent.verticalCenter 
 		anchors.right: parent.right
 		anchors.rightMargin: 15 * DefaultStyle.dp
-		onCheckedChanged: {
-			if (checked) mainItem.numericPad.open()
-			else mainItem.numericPad.close()
-		}
 	}
 	Button {
 		id: clearTextButton

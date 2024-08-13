@@ -18,14 +18,15 @@ Item {
 	property var contextualMenuOpenedComponent: undefined
 	
 	signal addAccountRequest()
-	signal openNewCall()
+	signal openNewCallRequest()
 	signal openCallHistory()
+	signal openNumPadRequest()
 	signal displayContactRequested(string contactAddress)
 	signal createContactRequested(string name, string address)
 
 	function goToNewCall() {
 		tabbar.currentIndex = 0
-		mainItem.openNewCall()
+		mainItem.openNewCallRequest()
 	}
 	function goToCallHistory() {
 		tabbar.currentIndex = 0
@@ -139,6 +140,15 @@ Item {
 						Layout.fillWidth: true
 						placeholderText: qsTr("Rechercher un contact, appeler ou envoyer un message...")
 						focusedBorderColor: DefaultStyle.main1_500_main
+						numericPadButton.visible: text.length === 0
+						numericPadButton.checkable: false
+						Connections {
+							target: magicSearchBar.numericPadButton
+							function onClicked() {
+								mainItem.goToNewCall()
+								mainItem.openNumPadRequest()
+							}
+						}
 						onTextChanged: {
 							if (text.length != 0) listPopup.open()
 							else listPopup.close()
@@ -477,8 +487,9 @@ Item {
 							id: callPage
 							Connections {
 								target: mainItem
-								function onOpenNewCall(){ callPage.goToNewCall()}
+								function onOpenNewCallRequest(){ callPage.goToNewCall()}
 								function onOpenCallHistory(){ callPage.goToCallHistory()}
+								function onOpenNumPadRequest(){ callPage.openNumPadRequest()}
 							}
 							onCreateContactRequested: (name, address) => {
 								mainItem.createContact(name, address)

@@ -25,6 +25,7 @@ AbstractMainPage {
 	signal startGroupCallRequested()
 	signal createCallFromSearchBarRequested()
 	signal createContactRequested(string name, string address)
+	signal openNumPadRequest()
 
 	Connections {
 		enabled: confInfoGui
@@ -48,10 +49,10 @@ AbstractMainPage {
 	showDefaultItem: listStackView.currentItem.listView && listStackView.currentItem.listView.count === 0 && listStackView.currentItem.listView.model.sourceModel.count === 0 || false
 
 	function goToNewCall() {
-		listStackView.push(newCallItem)
+		if (listStackView.currentItem.objectName != "newCallItem") listStackView.push(newCallItem)
 	}
 	function goToCallHistory() {
-		listStackView.pop()
+		if (listStackView.currentItem.objectName != "historyListItem") listStackView.replace(historyListItem)
 	}
 
 	Dialog {
@@ -106,6 +107,7 @@ AbstractMainPage {
 				id: numericPad
 				width: parent.width
 				height: parent.height
+				visible: false
 				onLaunchCall: {
 					mainItem.createCallFromSearchBarRequested()
 					// TODO : auto completion instead of sip linphone
@@ -471,6 +473,7 @@ AbstractMainPage {
 	Component {
 		id: newCallItem
 		FocusScope{
+			objectName: "newCallItem"
 			width: parent?.width
 			height: parent?.height
 			Control.StackView.onActivated:{
@@ -498,6 +501,14 @@ AbstractMainPage {
 					Connections {
 						target: mainItem
 						function onCreateCallFromSearchBarRequested(){ UtilsCpp.createCall(callContactsList.searchBar.text)}
+						function onOpenNumPadRequest(){ if (!callContactsList.searchBar.numericPadButton.checked) callContactsList.searchBar.numericPadButton.checked = true}
+					}
+					Binding {
+						target: numericPad
+						property: "visible"
+						value: true
+						when: callContactsList.searchBar.numericPadButton.checked
+						restoreMode: Binding.RestoreValue
 					}
 				}
 			}
