@@ -75,7 +75,7 @@ AbstractDetailsLayout {
 	}
 	Connections {
 		target: SettingsCpp
-		function onLogsUploadTerminated() {
+		function onLogsUploadTerminated(status, url) {
 			UtilsCpp.getMainWindow().closeLoadingPopup()
 			if (status) {
 				mainItem.logsUrl = url

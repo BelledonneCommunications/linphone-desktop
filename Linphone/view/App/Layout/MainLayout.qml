@@ -51,7 +51,7 @@ Item {
 			mainStackView.push(component)
 			mainItem.contextualMenuOpenedComponent = component
 		}
-		settingsButton.popup.close()
+		settingsMenuButton.popup.close()
 	}
 	
 	function closeContextualMenuComponent() {

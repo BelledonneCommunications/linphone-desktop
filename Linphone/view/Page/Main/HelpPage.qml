@@ -117,7 +117,7 @@ AbstractMainPage {
 			title: qsTr("Dépannage")
 			onClicked: {
 				rightPanelStackView.clear()
-				rightPanelStackView.push("qrc:/Linphone/view/App/Layout/Settings/DebugSettingsLayout.qml", { titleText: troubleShooting.title })
+				rightPanelStackView.push("qrc:/Linphone/view/App/Layout/Settings/DebugSettingsLayout.qml", { titleText: troubleShooting.title, container: rightPanelStackView })
 			}
 		}
 		Item {
