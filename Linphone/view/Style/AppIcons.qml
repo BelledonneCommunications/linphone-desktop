@@ -112,4 +112,5 @@ QtObject {
 	property string mobile: "image://internal/mobile.svg"
 	property string desktop: "image://internal/desktop.svg"
 	property string calendar: "image://internal/calendar.svg"
+	property string bellDnd: "image://internal/bell-dnd.svg"
 }

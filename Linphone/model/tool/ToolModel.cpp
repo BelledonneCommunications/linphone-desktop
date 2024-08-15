@@ -136,6 +136,11 @@ bool ToolModel::createCall(const QString &sipAddress,
 		}
 	}
 
+	if (SettingsModel::dndEnabled(
+	        core->getConfig())) { // Force tones for outgoing calls when in DND mode (ringback, dtmf, etc ... ) disabled
+		                          // again when no more calls are running.
+		SettingsModel::enableTones(core->getConfig(), true);
+	}
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	CallModel::activateLocalVideo(params, nullptr, localVideoEnabled);
 

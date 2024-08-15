@@ -88,9 +88,6 @@ public:
 	QString getPlaybackDevice() const;
 	void setPlaybackDevice(const QString &device);
 
-	QString getRingPath() const;
-	void setRingPath(const QString &path);
-
 	void startEchoCancellerCalibration();
 	int getEchoCancellationCalibration() const;
 
@@ -117,6 +114,12 @@ public:
 
 	void cleanLogs() const;
 	void sendLogs() const;
+
+	bool dndEnabled() const;
+	static bool dndEnabled(const std::shared_ptr<linphone::Config> &config);
+	void enableDnd(bool value);
+	static void enableTones(const std::shared_ptr<linphone::Config> &config, bool enable);
+	void enableRinging(bool enable);
 
 	QString getLogsEmail() const;
 
@@ -155,8 +158,6 @@ signals:
 	void captureDeviceChanged(const QString &device);
 	void playbackDeviceChanged(const QString &device);
 
-	void ringPathChanged(const QString &path);
-
 	void showAudioCodecsChanged(bool status);
 
 	void videoDevicesChanged(const QStringList &devices);
@@ -166,6 +167,8 @@ signals:
 
 	void logsEnabledChanged(bool status);
 	void fullLogsEnabledChanged(bool status);
+
+	void dndChanged(bool value);
 
 private:
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;

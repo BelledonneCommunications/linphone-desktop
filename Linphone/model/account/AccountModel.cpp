@@ -207,7 +207,6 @@ void AccountModel::setStunServer(QString value) {
 	params->setNatPolicy(policy);
 	mMonitor->setParams(params);
 	emit stunServerChanged(value);
-	qWarning() << "cdes stun server set to" << value;
 }
 
 void AccountModel::setIceEnabled(bool value) {

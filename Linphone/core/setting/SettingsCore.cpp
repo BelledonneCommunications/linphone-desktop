@@ -69,6 +69,9 @@ Settings::Settings(QObject *parent) : QObject(parent) {
 	mLogsFolder = mSettingsModel->getLogsFolder();
 	mLogsEmail = mSettingsModel->getLogsEmail();
 
+	// DND
+	mDndEnabled = mSettingsModel->dndEnabled();
+
 	// Ui
 	INIT_CORE_MEMBER(DisableChatFeature, mSettingsModel)
 	INIT_CORE_MEMBER(DisableMeetingsFeature, mSettingsModel)
@@ -254,6 +257,17 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 		});
 	});
 
+	// DND
+	mSettingsModelConnection->makeConnectToCore(&Settings::lEnableDnd, [this](const bool value) {
+		mSettingsModelConnection->invokeToModel([this, value]() { mSettingsModel->enableDnd(value); });
+	});
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::dndChanged, [this](const bool value) {
+		mSettingsModelConnection->invokeToCore([this, value]() {
+			mDndEnabled = value;
+			emit dndChanged();
+		});
+	});
+
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
 	                           disableChatFeature, DisableChatFeature)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
@@ -425,4 +439,8 @@ QString Settings::getLogsEmail() const {
 
 QString Settings::getLogsFolder() const {
 	return mLogsFolder;
+}
+
+bool Settings::dndEnabled() const {
+	return mDndEnabled;
 }

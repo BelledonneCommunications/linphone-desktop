@@ -37,6 +37,9 @@ SettingsModel::SettingsModel(QObject *parent) : QObject(parent) {
 	auto core = CoreModel::getInstance()->getCore();
 	mConfig = core->getConfig();
 	CoreModel::getInstance()->getLogger()->applyConfig(mConfig);
+	if (mConfig->hasEntry(UiSection, "do_not_disturb") == 1) {
+		enableDnd(dndEnabled());
+	}
 }
 
 SettingsModel::~SettingsModel() {
@@ -414,6 +417,39 @@ void SettingsModel::sendLogs() const {
 QString SettingsModel::getLogsEmail() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "logs_email", Constants::DefaultLogsEmail));
+}
+
+// =============================================================================
+// Do not disturb
+// =============================================================================
+
+bool SettingsModel::dndEnabled(const shared_ptr<linphone::Config> &config) {
+	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+	return config ? config->getInt(UiSection, "do_not_disturb", false) : false;
+}
+
+bool SettingsModel::dndEnabled() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return dndEnabled(mConfig);
+}
+
+void SettingsModel::enableTones(const shared_ptr<linphone::Config> &config, bool enable) {
+	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+	config->setInt("sound", "tone_indications", enable); // General tones
+	config->setInt("misc", "tone_indications", enable);  // Call tones
+}
+
+void SettingsModel::enableRinging(bool enable) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mConfig->setInt("sound", "disable_ringing", !enable); // Ringing
+}
+
+void SettingsModel::enableDnd(bool enableDnd) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	enableTones(mConfig, !enableDnd);
+	enableRinging(!enableDnd);
+	mConfig->setInt(UiSection, "do_not_disturb", enableDnd);
+	emit dndChanged(enableDnd);
 }
 
 // =============================================================================

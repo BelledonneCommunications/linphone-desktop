@@ -33,10 +33,10 @@
 
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/LinphoneEnums.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/ImageProvider.hpp"
-#include "model/tool/ToolModel.hpp"
 
 DEFINE_ABSTRACT_OBJECT(Notifier)
 
@@ -95,7 +95,7 @@ const QHash<int, Notifier::Notification> Notifier::Notifications = {
 
 // -----------------------------------------------------------------------------
 
-Notifier::Notifier(QObject *parent) : QObject(parent) {
+Notifier::Notifier(QObject *parent, QSharedPointer<Settings> settings) : QObject(parent) {
 	mustBeInMainThread(getClassName());
 	const int nComponents = Notifications.size();
 	mComponents = new QQmlComponent *[nComponents];
@@ -113,6 +113,7 @@ Notifier::Notifier(QObject *parent) : QObject(parent) {
 	}
 
 	mMutex = new QMutex();
+	mSettings = settings;
 }
 
 Notifier::~Notifier() {
@@ -267,6 +268,7 @@ void Notifier::deleteNotification(QVariant notification) {
 // =============================================================================
 
 #define CREATE_NOTIFICATION(TYPE, DATA)                                                                                \
+	if (mSettings->dndEnabled()) return;                                                                               \
 	QObject *notification = createNotification(TYPE, DATA);                                                            \
 	if (!notification) return;                                                                                         \
 	const int timeout = Notifications[TYPE].getTimeout() * 1000;                                                       \
@@ -283,11 +285,12 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 		auto accountModel = Utils::makeQObject_ptr<AccountModel>(account);
 		accountModel->setSelf(accountModel);
 		if (!accountModel->getNotificationsAllowed()) {
-			qInfo() << "Notifications have been disabled for this account - not creating a notification for incoming call";
+			qInfo()
+			    << "Notifications have been disabled for this account - not creating a notification for incoming call";
 			return;
 		}
 	}
-		
+
 	auto model = CallCore::create(call);
 	auto gui = new CallGui(model);
 	gui->moveToThread(App::getInstance()->thread());

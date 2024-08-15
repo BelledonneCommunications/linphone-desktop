@@ -350,6 +350,36 @@ Item {
 					RowLayout {
 						spacing: 10 * DefaultStyle.dp
 						PopupButton {
+							id: deactivateDndButton
+							Layout.preferredWidth: 32 * DefaultStyle.dp
+							Layout.preferredHeight: 32 * DefaultStyle.dp
+							popup.padding: 14 * DefaultStyle.dp
+							visible: SettingsCpp.dnd
+							contentItem: EffectImage {
+								imageSource: AppIcons.bellDnd
+								width: 32 * DefaultStyle.dp
+								height: 32 * DefaultStyle.dp
+								Layout.preferredWidth: 32 * DefaultStyle.dp
+								Layout.preferredHeight: 32 * DefaultStyle.dp
+								fillMode: Image.PreserveAspectFit
+								colorizationColor: DefaultStyle.main1_500_main
+							}
+							popup.contentItem: ColumnLayout {
+								IconLabelButton {
+									Layout.preferredHeight: 32 * DefaultStyle.dp
+									Layout.fillWidth: true
+									focus: visible
+									iconSize: 32 * DefaultStyle.dp
+									text: qsTr("Désactiver ne pas déranger")
+									iconSource: AppIcons.bellDnd
+									onClicked: {
+										deactivateDndButton.popup.close()
+										SettingsCpp.dnd = false
+									}
+								}
+							}
+						}
+						PopupButton {
 							id: avatarButton
 							Layout.preferredWidth: 54 * DefaultStyle.dp
 							Layout.preferredHeight: width
@@ -416,6 +446,21 @@ Item {
 										text: qsTr("Mon compte")
 										iconSource: AppIcons.manageProfile
 										onClicked: openContextualMenuComponent(myAccountSettingsPageComponent)
+										KeyNavigation.up: visibleChildren.length != 0 ? settingsButtons.getPreviousItem(0) : null
+										KeyNavigation.down: visibleChildren.length != 0 ? settingsButtons.getNextItem(0) : null
+									}
+									IconLabelButton {
+										id: dndButton
+										Layout.preferredHeight: 32 * DefaultStyle.dp
+										Layout.fillWidth: true
+										focus: visible
+										iconSize: 32 * DefaultStyle.dp
+										text: SettingsCpp.dnd ? qsTr("Désactiver ne pas déranger") : qsTr("Activer ne pas déranger")
+										iconSource: AppIcons.bellDnd
+										onClicked: {
+											settingsMenuButton.popup.close()
+											SettingsCpp.dnd = !SettingsCpp.dnd
+										}
 										KeyNavigation.up: visibleChildren.length != 0 ? settingsButtons.getPreviousItem(0) : null
 										KeyNavigation.down: visibleChildren.length != 0 ? settingsButtons.getNextItem(0) : null
 									}

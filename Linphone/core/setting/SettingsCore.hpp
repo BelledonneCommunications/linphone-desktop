@@ -65,6 +65,7 @@ class Settings : public QObject, public AbstractObject {
 	Q_PROPERTY(bool fullLogsEnabled READ getFullLogsEnabled WRITE setFullLogsEnabled NOTIFY fullLogsEnabledChanged)
 	Q_PROPERTY(QString logsEmail READ getLogsEmail)
 	Q_PROPERTY(QString logsFolder READ getLogsFolder)
+	Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
 
 public:
 	static QSharedPointer<Settings> create();
@@ -136,6 +137,8 @@ public:
 	QString getLogsEmail() const;
 	QString getLogsFolder() const;
 
+	bool dndEnabled() const;
+
 	DECLARE_CORE_GETSET(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_CORE_GETSET(bool, disableMeetingsFeature, DisableMeetingsFeature)
 	DECLARE_CORE_GETSET(bool, disableBroadcastFeature, DisableBroadcastFeature)
@@ -204,6 +207,9 @@ signals:
 
 	void lastActiveTabIndexChanged();
 
+	void dndChanged();
+	void lEnableDnd(bool value);
+
 private:
 	std::shared_ptr<SettingsModel> mSettingsModel;
 
@@ -238,6 +244,9 @@ private:
 	bool mFullLogsEnabled;
 	QString mLogsFolder;
 	QString mLogsEmail;
+
+	// DND
+	bool mDndEnabled;
 
 	QSettings mAppSettings;
 	QSharedPointer<SafeConnection<Settings, SettingsModel>> mSettingsModelConnection;

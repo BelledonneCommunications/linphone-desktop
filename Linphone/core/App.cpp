@@ -267,7 +267,7 @@ void App::initCore() {
 			    mEngine->addImageProvider(WindowIconProvider::ProviderId, new WindowIconProvider());
 
 			    // Enable notifications.
-			    mNotifier = new Notifier(mEngine);
+			    mNotifier = new Notifier(mEngine, settings);
 			    mSettings = settings;
 			    settings.reset();
 

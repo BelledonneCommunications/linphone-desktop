@@ -49,7 +49,6 @@ use_cpim=1
 zrtp_key_agreements_suites=MS_ZRTP_KEY_AGREEMENT_K255_KYB512
 
 [sound]
-disable_ringing=1
 #remove this property for any application that is not Linphone public version itself
 ec_calibrator_cool_tones=1
 ec_filter=MSWebRTCAEC

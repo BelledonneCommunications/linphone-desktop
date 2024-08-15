@@ -268,6 +268,10 @@ void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
 	if (state == linphone::Call::State::IncomingReceived) {
 		App::getInstance()->getNotifier()->notifyReceivedCall(call);
 	}
+	if (state == linphone::Call::State::End && SettingsModel::dndEnabled(core->getConfig()) &&
+	    core->getCallsNb() == 0) { // Disable tones in DND mode if no more calls are running.
+		SettingsModel::enableTones(core->getConfig(), false);
+	}
 	emit callStateChanged(core, call, state, message);
 }
 void CoreModel::onCallStatsUpdated(const std::shared_ptr<linphone::Core> &core,
