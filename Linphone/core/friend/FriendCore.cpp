@@ -412,6 +412,16 @@ void FriendCore::setDevices(QVariantList devices) {
 	emit devicesChanged();
 }
 
+LinphoneEnums::SecurityLevel FriendCore::getSecurityLevelForAddress(const QString &address) const {
+	for (auto &device : mDeviceList) {
+		auto map = device.toMap();
+		if (map["address"].toString() == address) {
+			return map["securityLevel"].value<LinphoneEnums::SecurityLevel>();
+		}
+	}
+	return LinphoneEnums::SecurityLevel::None;
+}
+
 QString FriendCore::getDefaultAddress() const {
 	return mDefaultAddress;
 }

@@ -28,9 +28,9 @@ Popup {
 	signal accepted()
 	signal rejected()
 
-	contentItem: FocusScope{
-		height: child.implicitHeight
+	contentItem: FocusScope {
 		width: child.implicitWidth
+		height: child.implicitHeight
 		onVisibleChanged: {
 			if(visible) forceActiveFocus()
 		}
@@ -44,6 +44,7 @@ Popup {
 			id: child
 			anchors.fill: parent
 			spacing: 15 * DefaultStyle.dp
+			
 			Text{
 				id: titleText
 				Layout.fillWidth: true
@@ -94,9 +95,8 @@ Popup {
 	
 			ColumnLayout {
 				id: contentLayout
-				Layout.fillWidth: true
-				Layout.fillHeight: true
 				Layout.alignment: Qt.AlignHCenter
+				Layout.fillHeight: false
 			}
 			
 			RowLayout {

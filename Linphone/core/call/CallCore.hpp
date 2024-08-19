@@ -287,6 +287,7 @@ signals:
 	void lSetOutputAudioDevice(QString id);
 	void lSetConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);
 	void lSetVideoSourceDescriptor(VideoSourceDescriptorGui *gui);
+	void lSendDtmf(QString dtmf);
 
 	/* TODO
 	    Q_INVOKABLE void acceptWithVideo();
@@ -302,7 +303,6 @@ signals:
 
 	    Q_INVOKABLE void takeSnapshot();
 
-	    Q_INVOKABLE void sendDtmf(const QString &dtmf);
 	    Q_INVOKABLE void verifyAuthenticationToken(bool verify);
 	    Q_INVOKABLE void updateStreams();
 	*/

@@ -15,7 +15,7 @@ Control.TabBar {
 
 	property AccountGui defaultAccount
 	onDefaultAccountChanged: {
-		defaultAccount.core.lRefreshNotifications()
+		if (defaultAccount) defaultAccount.core.lRefreshNotifications()
 	}
 
 	component UnreadNotification: Rectangle {
@@ -91,7 +91,13 @@ Control.TabBar {
 			
 			visible: modelData?.visible != undefined ? modelData?.visible : true
 			UnreadNotification {
-				unread: index == 0 ? defaultAccount.core.unreadCallNotifications : index == 2 ? defaultAccount.core.unreadMessageNotifications : 0// modelData.unreadNotifications
+				unread: !defaultAccount 
+				? -1
+				: index == 0 
+					? defaultAccount.core.unreadCallNotifications 
+					: index == 2 
+						? defaultAccount.core.unreadMessageNotifications 
+						: 0
 				anchors.right: parent.right
 				anchors.rightMargin: 15 * DefaultStyle.dp
 				anchors.top: parent.top

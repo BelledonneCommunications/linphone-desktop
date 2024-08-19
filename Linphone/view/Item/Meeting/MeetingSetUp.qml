@@ -337,7 +337,7 @@ FocusScope {
 							Avatar {
 								Layout.preferredWidth: 45 * DefaultStyle.dp
 								Layout.preferredHeight: 45 * DefaultStyle.dp
-								address: modelData.address
+								_address: modelData.address
 							}
 							Text {
 								text: modelData.displayName

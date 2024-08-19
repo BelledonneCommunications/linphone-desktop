@@ -316,7 +316,7 @@ RightPanelLayout {
 									}
 								}
 								onEditingFinished: {
-									if (text.length != 0) mainItem.contact.core.appendAddress(text)
+									if (text != "sip:") mainItem.contact.core.appendAddress(text)
 									text = "sip:"
 								}
 								Component.onCompleted: text = "sip:"

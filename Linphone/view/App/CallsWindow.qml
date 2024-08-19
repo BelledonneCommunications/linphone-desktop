@@ -25,7 +25,7 @@ AppWindow {
 
 	onCallStateChanged: {
 		if (callState === LinphoneEnums.CallState.Connected || callState === LinphoneEnums.CallState.StreamsRunning) {
-			if (middleItemStackView.currentItem.objectName != inCallItem) {
+			if (middleItemStackView.currentItem.objectName != "inCallItem") {
 				middleItemStackView.replace(inCallItem)
 				bottomButtonsLayout.visible = true
 			}
@@ -34,9 +34,11 @@ AppWindow {
 			}
 		}
 		else if (callState === LinphoneEnums.CallState.Error || callState === LinphoneEnums.CallState.End) {
+			zrtpValidation.close()
 			callEnded(call)
 		}
 	}
+
 	onTransferStateChanged: {
 		console.log("Transfer state:", transferState)
 		if (transferState === LinphoneEnums.CallState.Error) {
@@ -115,12 +117,21 @@ AppWindow {
 		target: call && call.core
 		function onRemoteVideoEnabledChanged() { console.log("remote video enabled", call.core.remoteVideoEnabled)}
 		function onSecurityUpdated() {
-			if (call.core.encryption != LinphoneEnums.MediaEncryption.Zrtp || call.core.tokenVerified) {
+			if (call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
+				if (call.core.tokenVerified) {
+					zrtpValidation.close()
+					zrtpValidationToast.open()
+				} else {
+					zrtpValidation.open()
+				}
+			} else {
 				zrtpValidation.close()
 			}
-			else if(call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
-				zrtpValidation.open()
-			}
+		}
+		function onTokenVerified() {
+			if (!zrtpValidation.isTokenVerified) {
+				zrtpValidation.securityError = true
+			} else zrtpValidation.close()
 		}
 	}
 	
@@ -222,6 +233,55 @@ AppWindow {
 			}
 		}
 	}
+	Timer {
+		id: autoCloseZrtpToast
+		interval: 4000
+		onTriggered: {
+			zrtpValidationToast.y = -zrtpValidationToast.height*2
+		}
+	}
+	Control.Control {
+		id: zrtpValidationToast
+		// width: 269 * DefaultStyle.dp
+		y: -height*2
+		z: 1
+		topPadding: 8 * DefaultStyle.dp
+		bottomPadding: 8 * DefaultStyle.dp
+		leftPadding: 50 * DefaultStyle.dp
+		rightPadding: 50 * DefaultStyle.dp
+		anchors.horizontalCenter: parent.horizontalCenter
+		clip: true
+		function open() {
+			y = headerItem.height/2
+			autoCloseZrtpToast.restart()
+		}
+		Behavior on y {NumberAnimation {duration: 1000}}
+		background: Rectangle {
+			anchors.fill: parent
+			color: DefaultStyle.grey_0
+			border.color: DefaultStyle.info_500_main
+			border.width:  1 * DefaultStyle.dp
+			radius: 50 * DefaultStyle.dp
+		}
+		contentItem: RowLayout {
+			// anchors.centerIn: parent
+			Image {
+				source: AppIcons.trusted
+				Layout.preferredWidth: 24 * DefaultStyle.dp
+				Layout.preferredHeight: 24 * DefaultStyle.dp
+				fillMode: Image.PreserveAspectFit
+				Layout.fillWidth: true
+			}
+			Text {
+				color: DefaultStyle.info_500_main
+				text: qsTr("Appareil vérifié")
+				Layout.fillWidth: true
+				font {
+					pixelSize: 14 * DefaultStyle.dp
+				}
+			}
+		}
+	}
 
 /************************* CONTENT ********************************/
 	Rectangle {
@@ -233,6 +293,7 @@ AppWindow {
 			anchors.bottomMargin: 10 * DefaultStyle.dp
 			anchors.topMargin: 10 * DefaultStyle.dp
 			Item {
+				id: headerItem
 				Layout.margins: 10 * DefaultStyle.dp
 				Layout.fillWidth: true
 				Layout.minimumHeight: 25 * DefaultStyle.dp
@@ -710,7 +771,7 @@ AppWindow {
 										spacing: 0
 										Avatar {
 											id: delegateAvatar
-											address: modelData.core.peerAddress
+											_address: modelData.core.peerAddress
 											Layout.preferredWidth: 45 * DefaultStyle.dp
 											Layout.preferredHeight: 45 * DefaultStyle.dp
 										}
@@ -1176,6 +1237,7 @@ AppWindow {
 				id: waitingRoom
 				WaitingRoom {
 					id: waitingRoomIn
+					objectName: "waitingRoom"
 					Layout.alignment: Qt.AlignCenter		
 					onSettingsButtonCheckedChanged: {
 						if (settingsButtonChecked) {
@@ -1187,21 +1249,21 @@ AppWindow {
 					}
 					Binding {
 						target: callStatusIcon
-						when: middleItemStackView.currentItem === waitingRoomIn
+						when: middleItemStackView.currentItem.objectName === "waitingRoom"
 						property: "imageSource"
 						value: AppIcons.usersThree
 						restoreMode: Binding.RestoreBindingOrValue
 					}
 					Binding {
 						target: callStatusText
-						when: middleItemStackView.currentItem === waitingRoomIn
+						when: middleItemStackView.currentItem.objectName === "waitingRoom"
 						property: "text"
 						value: waitingRoomIn.conferenceInfo ? waitingRoomIn.conferenceInfo.core.subject : ''
 						restoreMode: Binding.RestoreBindingOrValue
 					}
 					Binding {
 						target: conferenceDate
-						when: middleItemStackView.currentItem === waitingRoomIn
+						when: middleItemStackView.currentItem.objectName === "waitingRoom"
 						property: "text"
 						value: waitingRoomIn.conferenceInfo ? waitingRoomIn.conferenceInfo.core.startEndDateString : ''
 					}

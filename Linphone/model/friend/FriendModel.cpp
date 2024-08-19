@@ -271,12 +271,26 @@ QString FriendModel::getPictureUri() const {
 }
 
 QString FriendModel::getVCardAsString() const {
+	auto vcard = mMonitor->getVcard();
+	bool created = false;
+	if (!vcard) {
+		created = mMonitor->createVcard(mMonitor->getName());
+	}
 	assert(mMonitor->getVcard());
 	return Utils::coreStringToAppString(mMonitor->getVcard()->asVcard4String());
 }
 
 std::list<std::shared_ptr<linphone::FriendDevice>> FriendModel::getDevices() const {
 	return mMonitor->getDevices();
+}
+
+linphone::SecurityLevel FriendModel::getSecurityLevel() const {
+	return mMonitor->getSecurityLevel();
+}
+
+linphone::SecurityLevel
+FriendModel::getSecurityLevelForAddress(const std::shared_ptr<linphone::Address> address) const {
+	return mMonitor->getSecurityLevelForAddress(address);
 }
 
 void FriendModel::setPictureUri(const QString &uri) {

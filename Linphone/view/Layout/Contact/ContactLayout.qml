@@ -13,8 +13,12 @@ ColumnLayout {
 	property FriendGui contact
 	property ConferenceInfoGui conferenceInfo
 	property bool isConference: conferenceInfo != undefined && conferenceInfo != null
-	property string contactAddress: contact && contact.core.defaultAddress || ""
+	property string contactAddress: specificAddress != "" ? specificAddress : contact && contact.core.defaultAddress || ""
 	property string contactName: contact && contact.core.displayName || ""
+
+	// Set this property to get the security informations 
+	// for a specific address and not for the entire contact
+	property string specificAddress: ""
 
 	property alias buttonContent: rightButton.data
 	property alias detailContent: detailControl.data
@@ -60,12 +64,12 @@ ColumnLayout {
 			Layout.alignment: Qt.AlignHCenter
 			Avatar {
 				id: detailAvatar
-				anchors.horizontalCenter: parent.horizontalCenter 
+				anchors.horizontalCenter: parent.horizontalCenter
 				width: 100 * DefaultStyle.dp
 				height: 100 * DefaultStyle.dp
-				contact: mainItem.contact || null
-				address: mainItem.conferenceInfo 
-					? mainItem.conferenceInfo.core.subject 
+				contact: mainItem.specificAddress == "" ? mainItem.contact : null
+				_address: mainItem.conferenceInfo
+					? mainItem.conferenceInfo.core.subject
 					: mainItem.contactAddress || mainItem.contactName
 			}
 			Item {
@@ -96,6 +100,19 @@ ColumnLayout {
 				}
 			}
 			Text {
+				Layout.alignment: Qt.AlignHCenter
+				Layout.fillWidth: true
+				horizontalAlignment: Text.AlignHCenter
+				visible: mainItem.specificAddress != ""
+				text: mainItem.specificAddress
+				elide: Text.ElideMiddle
+				maximumLineCount: 1
+				font {
+					pixelSize: 12 * DefaultStyle.dp
+					weight: 300 * DefaultStyle.dp
+				}
+			}
+			Text {
 				property var mode : contact ? contact.core.consolidatedPresence : -1
 				Layout.alignment: Qt.AlignHCenter
 				horizontalAlignment: Text.AlignHCenter
@@ -118,9 +135,6 @@ ColumnLayout {
 					pixelSize: 12 * DefaultStyle.dp
 					weight: 300 * DefaultStyle.dp
 				}
-			}
-			Text {
-				// connection status
 			}
 		}
 	}
@@ -153,8 +167,8 @@ ColumnLayout {
 			button.icon.source: AppIcons.phone
 			label: qsTr("Appel")
 			button.onClicked: {
-				if (mainItem.contact) mainWindow.startCallWithContact(mainItem.contact, false, mainItem)
-				else UtilsCpp.createCall(mainItem.contactAddress)
+				if (mainItem.specificAddress === "") mainWindow.startCallWithContact(mainItem.contact, false, mainItem)
+				else UtilsCpp.createCall(mainItem.specificAddress)
 			}
 		}
 		LabelButton {
@@ -176,8 +190,8 @@ ColumnLayout {
 			button.icon.source: AppIcons.videoCamera
 			label: qsTr("Appel Video")
 			button.onClicked: {
-				if (mainItem.contact) mainWindow.startCallWithContact(mainItem.contact, true, mainItem)
-				else UtilsCpp.createCall(mainItem.contactAddress, {'localVideoEnabled': true})
+				if (mainItem.specificAddress === "") mainWindow.startCallWithContact(mainItem.contact, true, mainItem)
+				else UtilsCpp.createCall(mainItem.specificAddress, {'localVideoEnabled': true})
 			}
 		}
 	}

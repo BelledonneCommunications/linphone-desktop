@@ -117,6 +117,7 @@ public:
 	QList<QVariant> getDevices() const;
 	void updateVerifiedDevicesCount();
 	void setDevices(QVariantList devices);
+	Q_INVOKABLE LinphoneEnums::SecurityLevel getSecurityLevelForAddress(const QString &address) const;
 
 	LinphoneEnums::ConsolidatedPresence getConsolidatedPresence() const;
 	void setConsolidatedPresence(LinphoneEnums::ConsolidatedPresence presence);

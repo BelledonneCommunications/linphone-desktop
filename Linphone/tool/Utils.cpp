@@ -367,6 +367,24 @@ VariantObject *Utils::findFriendByAddress(const QString &address) {
 	return data;
 }
 
+VariantObject *Utils::getFriendAddressSecurityLevel(const QString &address) {
+	VariantObject *data = new VariantObject();
+	if (!data) return nullptr;
+	data->makeRequest([address]() {
+		auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
+		if (!defaultFriendList) return QVariant();
+		auto linphoneAddr = ToolModel::interpretUrl(address);
+		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+		if (!linFriend) return QVariant();
+		auto linAddr = ToolModel::interpretUrl(address);
+		if (!linAddr) return QVariant();
+		auto secuLevel = linFriend->getSecurityLevelForAddress(linAddr);
+		return QVariant::fromValue(LinphoneEnums::fromLinphone(secuLevel));
+	});
+	data->requestValue();
+	return data;
+}
+
 QString Utils::generateSavedFilename(const QString &from, const QString &to) {
 	auto escape = [](const QString &str) {
 		constexpr char ReservedCharacters[] = "[<|>|:|\"|/|\\\\|\\?|\\*|\\+|\\||_|-]+";
@@ -1327,4 +1345,9 @@ bool Utils::isUsername(const QString &txt) {
 // }
 void Utils::useFetchConfig(const QString &configUrl) {
 	App::getInstance()->receivedMessage(0, ("fetch-config=" + configUrl).toLocal8Bit());
+}
+
+void Utils::playDtmf(const QString &dtmf) {
+	const char key = dtmf.constData()[0].toLatin1();
+	App::postModelSync([key]() { CoreModel::getInstance()->getCore()->playDtmf(key, 200); });
 }

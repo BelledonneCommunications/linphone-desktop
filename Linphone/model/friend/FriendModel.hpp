@@ -55,6 +55,8 @@ public:
 	QString getPictureUri() const;
 	QString getVCardAsString() const;
 	std::list<std::shared_ptr<linphone::FriendDevice>> getDevices() const;
+	linphone::SecurityLevel getSecurityLevel() const;
+	linphone::SecurityLevel getSecurityLevelForAddress(const std::shared_ptr<linphone::Address> address) const;
 
 protected:
 	void setAddress(const std::shared_ptr<linphone::Address> &address);

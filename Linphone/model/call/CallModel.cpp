@@ -382,6 +382,13 @@ void CallModel::setVideoSourceDescriptorModel(std::shared_ptr<VideoSourceDescrip
 	}
 }
 
+void CallModel::sendDtmf(const QString &dtmf) {
+	const char key = dtmf.constData()[0].toLatin1();
+	qInfo() << QStringLiteral("Send dtmf: `%1`.").arg(key);
+	if (mMonitor) mMonitor->sendDtmf(key);
+	CoreModel::getInstance()->getCore()->playDtmf(key, dtmfSoundDelay);
+}
+
 void CallModel::onDtmfReceived(const std::shared_ptr<linphone::Call> &call, int dtmf) {
 	emit dtmfReceived(call, dtmf);
 }

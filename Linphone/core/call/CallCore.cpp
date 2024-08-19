@@ -385,6 +385,9 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		    mCallModelConnection->invokeToModel(
 		        [this, model = gui->getCore()->getModel()]() { mCallModel->setVideoSourceDescriptorModel(model); });
 	    });
+	mCallModelConnection->makeConnectToCore(&CallCore::lSendDtmf, [this](QString dtmf) {
+		mCallModelConnection->invokeToModel([this, dtmf]() { mCallModel->sendDtmf(dtmf); });
+	});
 
 	mCallModelConnection->makeConnectToModel(&CallModel::videoDescriptorChanged, [this]() {
 		auto videoSource = mCallModel->getMonitor()->getVideoSource();

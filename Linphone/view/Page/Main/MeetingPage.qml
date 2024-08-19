@@ -93,20 +93,12 @@ AbstractMainPage {
 		]
 	}
 
-	leftPanelContent: Item {
+	leftPanelContent: Control.StackView {
+		id: leftPanelStackView
 		Layout.fillHeight: true
 		Layout.fillWidth: true
-
-		Control.StackView {
-			id: leftPanelStackView
-			initialItem: listLayout
-			anchors.top: parent.top
-			anchors.left: parent.left
-			anchors.right: parent.right
-			anchors.bottom: parent.bottom
-			anchors.leftMargin: 45 * DefaultStyle.dp
-		}
-
+		Layout.leftMargin: 45 * DefaultStyle.dp
+		initialItem: listLayout
 	}
 
 	Item {
@@ -124,8 +116,6 @@ AbstractMainPage {
 	Component {
 		id: listLayout
 		FocusScope{
-			width: parent.width
-			height: listLayoutIn.implicitHeight
 			property string objectName: "listLayout"
 			Control.StackView.onDeactivated: {
 				mainItem.selectedConference = null
@@ -171,11 +161,10 @@ AbstractMainPage {
 				}
 				SearchBar {
 					id: searchBar
+					Layout.fillWidth: true
 					Layout.topMargin: 18 * DefaultStyle.dp
-					// Layout.fillWidth: true
-					//Layout.topMargin: 18 * DefaultStyle.dp
+					Layout.rightMargin: 39 * DefaultStyle.dp
 					placeholderText: qsTr("Rechercher une réunion")
-					Layout.preferredWidth: 331 * DefaultStyle.dp
 					KeyNavigation.up: conferenceList
 					KeyNavigation.down: conferenceList
 				}
@@ -760,7 +749,7 @@ AbstractMainPage {
 						Avatar {
 							Layout.preferredWidth: 45 * DefaultStyle.dp
 							Layout.preferredHeight: 45 * DefaultStyle.dp
-							address: mainItem.selectedConference ? mainItem.selectedConference.core.organizerAddress : ""
+							_address: mainItem.selectedConference ? mainItem.selectedConference.core.organizerAddress : ""
 						}
 						Text {
 							text: mainItem.selectedConference ? mainItem.selectedConference.core.organizerName : ""
@@ -795,7 +784,7 @@ AbstractMainPage {
 								Avatar {
 									Layout.preferredWidth: 45 * DefaultStyle.dp
 									Layout.preferredHeight: 45 * DefaultStyle.dp
-									address: modelData.address
+									_address: modelData.address
 								}
 								Text {
 									text: modelData.displayName

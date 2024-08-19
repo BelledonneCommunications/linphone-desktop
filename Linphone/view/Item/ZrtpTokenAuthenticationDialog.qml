@@ -11,7 +11,7 @@ Dialog {
 	width: 436 * DefaultStyle.dp
 	rightPadding: 0 * DefaultStyle.dp
 	leftPadding: 0 * DefaultStyle.dp
-	topPadding: 85 * DefaultStyle.dp + 23 * DefaultStyle.dp
+	topPadding: 85 * DefaultStyle.dp + 24 * DefaultStyle.dp
 	bottomPadding: 24 * DefaultStyle.dp
 	modal: true
 	closePolicy: Popup.NoAutoClose
@@ -21,25 +21,7 @@ Dialog {
 	property bool isTokenVerified: call && call.core.tokenVerified || false
 	property bool isCaseMismatch: call && call.core.isMismatch || false
 	property bool securityError: false
-	property bool firstTry: true
-
-	Connections {
-		enabled: call != undefined && call != null
-		target: call && call.core
-		onStatusChanged: if (status === CallModel.CallStatusEnded) close()
-		function onSecurityUpdated() {
-			if (mainItem.isTokenVerified) {
-				close()
-				// mainItem.securityError = true
-			// } else close()
-			}
-		}
-		function onTokenVerified() {
-			if (!mainItem.isTokenVerified) {
-				mainItem.securityError = true
-			} else close()
-		}
-	}
+	// property bool firstTry: true
 
 	background: Item {
 		anchors.fill: parent
@@ -118,7 +100,7 @@ Dialog {
 		Rectangle {
 			z: 1
 			width: mainItem.width
-			height: parent.height - 87 * DefaultStyle.dp
+			height: parent.height - 85 * DefaultStyle.dp
 			x: parent.x
 			y: parent.y + 85 * DefaultStyle.dp
 			color: DefaultStyle.grey_0
@@ -242,9 +224,10 @@ Dialog {
 			}
 		},
 		Layout.ColumnLayout {
+			visible: mainItem.securityError
 			spacing: 0
+
 			Text {
-				visible: mainItem.securityError
 				width: 303 * DefaultStyle.dp
 				// Layout.Layout.preferredWidth: 343 * DefaultStyle.dp
 				Layout.Layout.alignment: Qt.AlignHCenter
@@ -255,7 +238,6 @@ Dialog {
 				font.pixelSize: 14 * DefaultStyle.dp
 			}
 			Text {
-				visible: mainItem.securityError
 				width: 303 * DefaultStyle.dp
 				// Layout.Layout.preferredWidth: 343 * DefaultStyle.dp
 				Layout.Layout.alignment: Qt.AlignHCenter
@@ -284,21 +266,6 @@ Dialog {
 			width: 247 * DefaultStyle.dp
 			onClicked: {
 				if(mainItem.call) mainItem.call.core.lCheckAuthenticationTokenSelected(" ")
-			}
-		}
-		Button {
-			Layout.Layout.preferredWidth: 247 * DefaultStyle.dp
-			visible: mainItem.securityError && mainItem.firstTry
-			text: qsTr("Réessayer")
-			color: DefaultStyle.danger_500main
-			inversedColors: true
-			leftPadding: 16 * DefaultStyle.dp
-			rightPadding: 16 * DefaultStyle.dp
-			topPadding: 10 * DefaultStyle.dp
-			bottomPadding: 10 * DefaultStyle.dp
-			onClicked: {
-				mainItem.firstTry = false
-				mainItem.securityError = false
 			}
 		}
 		Button {

@@ -147,7 +147,7 @@ AbstractMainPage {
 		}
 	}
 
-	leftPanelContent: Item {
+	leftPanelContent: FocusScope {
 		id: leftPanel
 		property int leftMargin: 45 * DefaultStyle.dp
 		property int rightMargin: 39 * DefaultStyle.dp
@@ -173,6 +173,7 @@ AbstractMainPage {
 				Layout.fillWidth: true
 			}
 			Button {
+				id: createContactButton
 				background: Item {
 				}
 				icon.source: AppIcons.plusCircle
@@ -183,6 +184,7 @@ AbstractMainPage {
 				onClicked: {
 					mainItem.createContact("", "")
 				}
+				KeyNavigation.down: searchBar
 			}
 		}
 
@@ -201,153 +203,163 @@ AbstractMainPage {
 				Layout.topMargin: 18 * DefaultStyle.dp
 				Layout.fillWidth: true
 				placeholderText: qsTr("Rechercher un contact")
+				KeyNavigation.up: createContactButton
+				KeyNavigation.down: favoriteList.contentHeight > 0 ? favoriteExpandButton : contactExpandButton
 			}
-				
-			Flickable {
-				id: listLayout
-				contentWidth: width
-				contentHeight: content.height
-				clip: true
-				Control.ScrollBar.vertical: contactsScrollbar
-				Layout.fillWidth: true
-				Layout.fillHeight: true
+			
+			RowLayout {
+				Flickable {
+					id: listLayout
+					contentWidth: width
+					contentHeight: content.height
+					clip: true
+					Control.ScrollBar.vertical: contactsScrollbar
+					Layout.fillWidth: true
+					Layout.fillHeight: true
 
-				ColumnLayout {
-					id: content
-					width: parent.width
-					spacing: 15 * DefaultStyle.dp
-					Text {
-						visible: contactList.count === 0 && favoriteList.count === 0
-						Layout.alignment: Qt.AlignHCenter
-						Layout.topMargin: 137 * DefaultStyle.dp
-						text: qsTr("Aucun contact")
-						font {
-							pixelSize: 16 * DefaultStyle.dp
-							weight: 800 * DefaultStyle.dp
-						}
-					}
 					ColumnLayout {
-						visible: favoriteList.contentHeight > 0
-						onVisibleChanged: if (visible && !favoriteList.visible) favoriteList.visible = true
-						Layout.leftMargin: leftPanel.leftMargin
-						Layout.rightMargin: leftPanel.rightMargin
-						spacing: 18 * DefaultStyle.dp
-						RowLayout {
-							spacing: 0
-							Text {
-								text: qsTr("Favoris")
-								font {
-									pixelSize: 16 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+						id: content
+						width: parent.width
+						spacing: 15 * DefaultStyle.dp
+						Text {
+							visible: contactList.count === 0 && favoriteList.count === 0
+							Layout.alignment: Qt.AlignHCenter
+							Layout.topMargin: 137 * DefaultStyle.dp
+							text: qsTr("Aucun contact")
+							font {
+								pixelSize: 16 * DefaultStyle.dp
+								weight: 800 * DefaultStyle.dp
+							}
+						}
+						ColumnLayout {
+							visible: favoriteList.contentHeight > 0
+							onVisibleChanged: if (visible && !favoriteList.visible) favoriteList.visible = true
+							Layout.leftMargin: leftPanel.leftMargin
+							Layout.rightMargin: leftPanel.rightMargin
+							spacing: 18 * DefaultStyle.dp
+							RowLayout {
+								spacing: 0
+								Text {
+									text: qsTr("Favoris")
+									font {
+										pixelSize: 16 * DefaultStyle.dp
+										weight: 800 * DefaultStyle.dp
+									}
+								}
+								Item {
+									Layout.fillWidth: true
+								}
+								Button {
+									id: favoriteExpandButton
+									background: Item{}
+									icon.source: favoriteList.visible ? AppIcons.upArrow :						  AppIcons.downArrow
+									Layout.preferredWidth: 24 * DefaultStyle.dp
+									Layout.preferredHeight: 24 * DefaultStyle.dp
+									icon.width: 24 * DefaultStyle.dp
+									icon.height: 24 * DefaultStyle.dp
+									onClicked: favoriteList.visible = !favoriteList.visible
+									KeyNavigation.up: searchBar
+									KeyNavigation.down: favoriteList
 								}
 							}
-							Item {
+							ContactsList{
+								id: favoriteList
+								onActiveFocusChanged: if (activeFocus) console.log("favorite list focus")
+								hoverEnabled: mainItem.leftPanelEnabled
 								Layout.fillWidth: true
-							}
-							Button {
-								background: Item{}
-								icon.source: favoriteList.visible ? AppIcons.upArrow : AppIcons.downArrow
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
-								onClicked: favoriteList.visible = !favoriteList.visible
-							}
-						}
-						ContactsList{
-							id: favoriteList
-							hoverEnabled: mainItem.leftPanelEnabled
-							Layout.fillWidth: true
-							Layout.preferredHeight: contentHeight
-							Control.ScrollBar.vertical.visible: false
-							showOnlyFavourites: true
-							contactMenuVisible: true
-							model: allFriends
-							onSelectedContactChanged: {
-								if (selectedContact) {
-									contactList.currentIndex = -1
+								Layout.preferredHeight: contentHeight
+								Control.ScrollBar.vertical.visible: false
+								showOnlyFavourites: true
+								contactMenuVisible: true
+								model: allFriends
+								onSelectedContactChanged: {
+									if (selectedContact) {
+										contactList.currentIndex = -1
+									}
+									mainItem.selectedContact = selectedContact
 								}
-								mainItem.selectedContact = selectedContact
-							}
-							onContactDeletionRequested: (contact) => {
-								dialog.contact = contact
-								dialog.open()
-							}
-						}
-					}
-					ColumnLayout {
-						visible: contactList.count > 0
-						onVisibleChanged: if (visible && !contactList.visible) contactList.visible = true
-						Layout.leftMargin: leftPanel.leftMargin
-						Layout.rightMargin: leftPanel.rightMargin
-						spacing: 16 * DefaultStyle.dp
-						RowLayout {
-							spacing: 0
-							Text {
-								text: qsTr("All contacts")
-								font {
-									pixelSize: 16 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+								onContactDeletionRequested: (contact) => {
+									dialog.contact = contact
+									dialog.open()
 								}
 							}
-							Item {
+						}
+						ColumnLayout {
+							visible: contactList.contentHeight > 0
+							onVisibleChanged: if (visible && !contactList.visible) contactList.visible = true
+							Layout.leftMargin: leftPanel.leftMargin
+							Layout.rightMargin: leftPanel.rightMargin
+							spacing: 16 * DefaultStyle.dp
+							RowLayout {
+								spacing: 0
+								Text {
+									text: qsTr("All contacts")
+									font {
+										pixelSize: 16 * DefaultStyle.dp
+										weight: 800 * DefaultStyle.dp
+									}
+								}
+								Item {
+									Layout.fillWidth: true
+								}
+								Button {
+									id: contactExpandButton
+									background: Item{}
+									icon.source: contactList.visible ? AppIcons.upArrow : AppIcons.downArrow
+									Layout.preferredWidth: 24 * DefaultStyle.dp
+									Layout.preferredHeight: 24 * DefaultStyle.dp
+									icon.width: 24 * DefaultStyle.dp
+									icon.height: 24 * DefaultStyle.dp
+									onClicked: contactList.visible = !contactList.visible
+									KeyNavigation.up: favoriteList.visible ? favoriteList : searchBar
+									KeyNavigation.down: contactList
+								}
+							}
+							ContactsList{
+								id: contactList
+								onActiveFocusChanged: if (activeFocus) console.log("contact list focus")
+								onCountChanged: {
+									if (initialFriendToDisplay.length !== 0) {
+										if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
+									}
+								}
 								Layout.fillWidth: true
-							}
-							Button {
-								background: Item{}
-								icon.source: contactList.visible ? AppIcons.upArrow : AppIcons.downArrow
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
-								onClicked: contactList.visible = !contactList.visible
-							}
-						}
-						ContactsList{
-							id: contactList
-							onCountChanged: {
-								if (initialFriendToDisplay.length !== 0) {
-									if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
+								Layout.preferredHeight: contentHeight
+								interactive: false
+								Control.ScrollBar.vertical.visible: false
+								hoverEnabled: mainItem.leftPanelEnabled
+								contactMenuVisible: true
+								searchBarText: searchBar.text
+								model: allFriends
+								Connections {
+									target: allFriends
+									function onFriendCreated(index) {
+										contactList.currentIndex = index
+									}
 								}
-							}
-							Layout.fillWidth: true
-							Layout.preferredHeight: contentHeight
-							interactive: false
-							Control.ScrollBar.vertical.visible: false
-							hoverEnabled: mainItem.leftPanelEnabled
-							contactMenuVisible: true
-							searchBarText: searchBar.text
-							model: allFriends
-							Connections {
-								target: allFriends
-								function onFriendCreated(index) {
-									contactList.currentIndex = index
+								onSelectedContactChanged: {
+									if (selectedContact) {
+										favoriteList.currentIndex = -1
+									}
+									mainItem.selectedContact = selectedContact
 								}
-							}
-							onSelectedContactChanged: {
-								if (selectedContact) {
-									favoriteList.currentIndex = -1
+								onContactDeletionRequested: (contact) => {
+									dialog.contact = contact
+									dialog.open()
 								}
-								mainItem.selectedContact = selectedContact
-							}
-							onContactDeletionRequested: (contact) => {
-								dialog.contact = contact
-								dialog.open()
 							}
 						}
 					}
 				}
-			}
-			ScrollBar {
-				id: contactsScrollbar
-				anchors.right: listLayout.right
-				anchors.rightMargin: 8 * DefaultStyle.dp
-				anchors.top: listLayout.top
-				anchors.bottom: listLayout.bottom
-				height: listLayout.height
-				active: true
-				interactive: true
-				policy: Control.ScrollBar.AsNeeded
+				ScrollBar {
+					id: contactsScrollbar
+					Layout.fillHeight: true
+					Layout.rightMargin: 8 * DefaultStyle.dp
+					height: listLayout.height
+					active: true
+					interactive: true
+					policy: Control.ScrollBar.AsNeeded
+				}
 			}
 		}
 	}

@@ -50,7 +50,7 @@ ListView {
 			Avatar {
 				Layout.preferredWidth: 45 * DefaultStyle.dp
 				Layout.preferredHeight: 45 * DefaultStyle.dp
-				address: modelData.core.sipAddress
+				_address: modelData.core.sipAddress
 			}
 			Text {
 				text: modelData.core.displayName

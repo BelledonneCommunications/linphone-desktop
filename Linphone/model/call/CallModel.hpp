@@ -88,6 +88,8 @@ public:
 	                               const std::shared_ptr<const linphone::CallParams> &currentParams,
 	                               bool enable);
 
+	void sendDtmf(const QString &dtmf);
+
 signals:
 	void microphoneMutedChanged(bool isMuted);
 	void speakerMutedChanged(bool isMuted);
@@ -111,6 +113,7 @@ private:
 	QTimer mMicroVolumeTimer;
 	std::shared_ptr<linphone::Conference> mConference;
 	LinphoneEnums::ConferenceLayout mConferenceVideoLayout;
+	static constexpr int dtmfSoundDelay = 200;
 
 	DECLARE_ABSTRACT_OBJECT
 

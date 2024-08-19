@@ -61,7 +61,7 @@ Item {
 
 	AccountProxy {
 		id: accountProxy
-		onDefaultAccountChanged: if (tabbar.currentIndex === 0) defaultAccount.core.lResetMissedCalls()
+		onDefaultAccountChanged: if (tabbar.currentIndex === 0 && defaultAccount) defaultAccount.core.lResetMissedCalls()
 	}
 
 	Timer {
@@ -107,7 +107,6 @@ Item {
 				Layout.fillHeight: true
 				Layout.preferredWidth: 82 * DefaultStyle.dp
 				defaultAccount: accountProxy.defaultAccount
-				property int unreadMessages: defaultAccount.core.unreadMessageNotifications
 				currentIndex: SettingsCpp.getLastActiveTabIndex()
 				model: [
 					{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels")},
@@ -117,7 +116,7 @@ Item {
 				]
 				onCurrentIndexChanged: {
 					SettingsCpp.setLastActiveTabIndex(currentIndex)
-                    if (currentIndex === 0) accountProxy.defaultAccount.core.lResetMissedCalls()
+                    if (currentIndex === 0 && accountProxy.defaultAccount) accountProxy.defaultAccount.core.lResetMissedCalls()
 					if (mainItem.contextualMenuOpenedComponent) {
 						closeContextualMenuComponent()
 					}
@@ -304,7 +303,7 @@ Item {
 											Avatar {
 												Layout.preferredWidth: 45 * DefaultStyle.dp
 												Layout.preferredHeight: 45 * DefaultStyle.dp
-												address: magicSearchBar.text
+												_address: magicSearchBar.text
 											}
 											ColumnLayout {
 												Text {

@@ -80,7 +80,7 @@ FocusScope{
 					Avatar {
 						Layout.preferredWidth: 45 * DefaultStyle.dp
 						Layout.preferredHeight: 45 * DefaultStyle.dp
-						address: modelData
+						_address: modelData
 					}
 					Text {
 						property var nameObj: UtilsCpp.getDisplayName(modelData)
@@ -167,7 +167,7 @@ FocusScope{
 					Avatar {
 						Layout.preferredWidth: 45 * DefaultStyle.dp
 						Layout.preferredHeight: 45 * DefaultStyle.dp
-						address: sipAddr.text
+						_address: sipAddr.text
 					}
 					ColumnLayout {
 						spacing: 0

@@ -18,7 +18,7 @@ Window{
 			anchors.centerIn: parent
 			height: 100
 			width: height
-			address: 'sip:jul@toto.com'
+			_address: 'sip:jul@toto.com'
 		}
 		Loader{
 			id: cameraLoader

@@ -23,19 +23,26 @@ StackView {
 									: contact
 										? contact.core.defaultAddress
 										: ''
-	property string address: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_address) : _address
-	property var displayNameObj: UtilsCpp.getDisplayName(address)
+	readonly property string address: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_address) : _address
+	property var displayNameObj: UtilsCpp.getDisplayName(_address)
 	property string displayNameVal: displayNameObj ? displayNameObj.value : ""
 	property bool haveAvatar: (account && account.core.pictureUri )
 								|| (contact && contact.core.pictureUri)
 								|| computedAvatarUri.length != 0
-	property string computedAvatarUri: UtilsCpp.findAvatarByAddress(address)
+	property string computedAvatarUri: UtilsCpp.findAvatarByAddress(_address)
 
 	onHaveAvatarChanged: replace(haveAvatar ? avatar : initials, StackView.Immediate)
 
-	property bool secured: contact
-	? contact.core.devices.length != 0 && contact.core.verifiedDeviceCount === contact.core.devices.length
-	: false
+	property var securityLevelObj: UtilsCpp.getFriendAddressSecurityLevel(_address)
+	property var securityLevel: securityLevelObj ? securityLevelObj.value : LinphoneEnums.SecurityLevel.None
+	property bool secured: call && call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+	? call.core.tokenVerified
+	: contact
+		? contact.core.devices.length != 0 && contact.core.verifiedDeviceCount === contact.core.devices.length
+		: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncrypted
+
+	property bool securityBreach: securityLevel === LinphoneEnums.SecurityLevel.Unsafe
+		
 	property bool displayPresence: (account || contact) && (account 
 			? account.core.registrationState != LinphoneEnums.RegistrationState.Progress && account.core.registrationState != LinphoneEnums.RegistrationState.Refreshing
 			: contact.core.consolidatedPresence != LinphoneEnums.ConsolidatedPresence.Offline)
@@ -43,17 +50,17 @@ StackView {
 	initialItem: haveAvatar ? avatar : initials
 
 	Rectangle {
-		visible: mainItem.secured
+		visible: mainItem.secured || mainItem.securityBreach
 		anchors.fill: mainItem.currentItem
 		radius: mainItem.width / 2
 		z: 1
 		color: "transparent"
 		border {
 			width: 3 * DefaultStyle.dp
-			color: DefaultStyle.info_500_main
+			color: mainItem.secured ? DefaultStyle.info_500_main : DefaultStyle.danger_500main
 		}
 		Image {
-			source: AppIcons.trusted
+			source: mainItem.secured ? AppIcons.trusted : AppIcons.notTrusted
 			x: mainItem.width / 7
 			width: mainItem.width / 4.5
 			height: width

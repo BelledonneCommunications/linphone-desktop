@@ -34,6 +34,7 @@ FocusScope {
 				id: searchBar
 				Layout.alignment: Qt.AlignTop
 				Layout.fillWidth: true
+				Layout.rightMargin: 39 * DefaultStyle.dp
 				Layout.maximumWidth: mainItem.width
 				focus: true
 				color: mainItem.searchBarColor

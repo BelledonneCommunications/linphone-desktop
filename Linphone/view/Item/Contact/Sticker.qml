@@ -112,7 +112,7 @@ Item {
 					visible: !joiningView.visible
 					account: mainItem.account
 					call: !mainItem.previewEnabled ? mainItem.call : null
-					address: mainItem.peerAddress
+					_address: mainItem.peerAddress
 				}
 				ColumnLayout{
 					id: joiningView
