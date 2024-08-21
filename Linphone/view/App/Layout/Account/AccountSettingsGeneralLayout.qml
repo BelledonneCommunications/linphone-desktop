@@ -168,10 +168,10 @@ AbstractDetailsLayout {
 						propertyOwner: account.core
 					}
 					SwitchSetting {
-						titleText: account.core.humaneReadableRegistrationState
-						subTitleText: account.core.humaneReadableRegistrationStateExplained
+						titleText: account?.core.humaneReadableRegistrationState
+						subTitleText: account?.core.humaneReadableRegistrationStateExplained
 						propertyName: "registerEnabled"
-						propertyOwner: account.core
+						propertyOwner: account?.core
 					}
 					RowLayout {
 						id:mainItem

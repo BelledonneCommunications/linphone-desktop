@@ -50,7 +50,9 @@ AppWindow {
 	AccountProxy {
 		id: accountProxy
 		onHaveAccountChanged: {
-			initStackViewItem()
+			// this function can't be used like this. It will show the main page when
+			// trying to connect and then return to login page if connection fails.
+			// initStackViewItem()
 		}
 	}
 	StackView {

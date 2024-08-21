@@ -42,6 +42,7 @@ public:
 	           QString domain = QString(),
 	           linphone::TransportType transportType = linphone::TransportType::Udp,
 	           QString *errorMessage = nullptr);
+
 	std::shared_ptr<linphone::Account> createAccount(const QString &assistantFile);
 
 	enum RegisterType { PhoneNumber = 0, Email = 1 };
@@ -58,7 +59,6 @@ public:
 
 signals:
 	void registrationStateChanged(linphone::RegistrationState state);
-	void errorMessageChanged(const QString &errorMessage);
 	void newAccountCreationSucceed(QString sipAddress, RegisterType registerType, const QString &registerAddress);
 	void registerNewAccountFailed(const QString &error);
 	void tokenConversionSucceed();
@@ -71,7 +71,6 @@ private:
 	std::shared_ptr<AccountManagerServicesModel> mAccountManagerServicesModel;
 	QTimer timer;
 	QString mCreatedSipAddress;
-	// std::shared_ptr<linphone::Address> mCreatedSipIdentityAddress;
 	DECLARE_ABSTRACT_OBJECT
 };
 

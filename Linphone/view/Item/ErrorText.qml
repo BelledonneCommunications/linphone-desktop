@@ -7,47 +7,15 @@ import Linphone
 Text {
 	id: mainItem
 	color: DefaultStyle.danger_500main
-	opacity: 0
 	font {
 		pixelSize: 12 * DefaultStyle.dp
 		weight: 300 * DefaultStyle.dp
 	}
-	states: [
-		State{
-			name: "Visible"
-			PropertyChanges{target: mainItem; opacity: 1.0}
-		},
-		State{
-			name:"Invisible"
-			PropertyChanges{target: mainItem; opacity: 0.0; text: ""}
-		}
-	]
-	transitions: [
-		Transition {
-			from: "Visible"
-			to: "Invisible"
-			NumberAnimation {
-				property: "opacity"
-				duration: 500
-			}
-		}
-	]
 	Timer {
 		id: autoHideErrorMessage
 		interval: 2500
-		onTriggered: mainItem.state = "Invisible"
+		onTriggered: mainItem.text = ""
 	}
 
-	onOpacityChanged: if (opacity === 1) autoHideErrorMessage.restart()
-
-	Connections {
-		target: mainItem
-		function onTextChanged() {
-			if (mainItem.text.length > 0) {
-				mainItem.state = "Visible"
-			} else {
-				mainItem.state = "Invisible"
-			}
-		}
-	}
+	onTextChanged: if (mainItem.text.length > 0) autoHideErrorMessage.restart()
 }

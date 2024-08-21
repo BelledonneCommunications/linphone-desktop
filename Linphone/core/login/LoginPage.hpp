@@ -40,7 +40,7 @@ public:
 	                       const QString &password,
 	                       QString displayName = QString(),
 	                       QString domain = QString(),
-	                       LinphoneEnums::TransportType transportType = LinphoneEnums::TransportType::Tcp);
+	                       LinphoneEnums::TransportType transportType = LinphoneEnums::TransportType::Tls);
 
 	linphone::RegistrationState getRegistrationState() const;
 	void setRegistrationState(linphone::RegistrationState status);
@@ -50,7 +50,7 @@ public:
 
 signals:
 	void registrationStateChanged();
-	void errorMessageChanged();
+	void errorMessageChanged(QString error);
 
 private:
 	linphone::RegistrationState mRegistrationState = linphone::RegistrationState::None;

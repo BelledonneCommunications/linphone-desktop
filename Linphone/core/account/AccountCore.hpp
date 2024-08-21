@@ -79,9 +79,12 @@ public:
 	~AccountCore();
 	void setSelf(QSharedPointer<AccountCore> me);
 
+	const std::shared_ptr<AccountModel> &getModel() const;
+
 	QString getContactAddress() const;
 	QString getIdentityAddress() const;
 	QString getPictureUri() const;
+	void onPictureUriChanged(QString uri);
 	LinphoneEnums::RegistrationState getRegistrationState() const;
 	bool getIsDefaultAccount() const;
 	int getUnreadNotifications() const;
@@ -91,7 +94,6 @@ public:
 	int getUnreadMessageNotifications() const;
 	void setUnreadMessageNotifications(int unread);
 
-	void onPictureUriChanged(QString uri);
 	void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
 	                                linphone::RegistrationState state,
 	                                const std::string &message);

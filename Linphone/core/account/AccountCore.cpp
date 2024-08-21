@@ -52,7 +52,10 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mRegisterEnabled = params->registerEnabled();
 	mMwiServerAddress =
 	    params->getMwiServerAddress() ? Utils::coreStringToAppString(params->getMwiServerAddress()->asString()) : "";
-	mTransports << "TCP" << "UDP" << "TLS" << "DTLS";
+	mTransports << "TCP"
+	            << "UDP"
+	            << "TLS"
+	            << "DTLS";
 	mTransport = LinphoneEnums::toString(LinphoneEnums::fromLinphone(params->getTransport()));
 	mServerAddress =
 	    params->getServerAddress() ? Utils::coreStringToAppString(params->getServerAddress()->asString()) : "";
@@ -98,76 +101,76 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	    &AccountModel::registrationStateChanged, [this](const std::shared_ptr<linphone::Account> &account,
 	                                                    linphone::RegistrationState state, const std::string &message) {
 		    mAccountModelConnection->invokeToCore(
-		        [this, account, state, message]() { this->onRegistrationStateChanged(account, state, message); });
+		        [this, account, state, message]() { onRegistrationStateChanged(account, state, message); });
 	    });
 	// From Model
 	mAccountModelConnection->makeConnectToModel(&AccountModel::defaultAccountChanged, [this](bool isDefault) {
-		mAccountModelConnection->invokeToCore([this, isDefault]() { this->onDefaultAccountChanged(isDefault); });
+		mAccountModelConnection->invokeToCore([this, isDefault]() { onDefaultAccountChanged(isDefault); });
 	});
 
 	mAccountModelConnection->makeConnectToModel(&AccountModel::pictureUriChanged, [this](QString uri) {
-		mAccountModelConnection->invokeToCore([this, uri]() { this->onPictureUriChanged(uri); });
+		mAccountModelConnection->invokeToCore([this, uri]() { onPictureUriChanged(uri); });
 	});
 	mAccountModelConnection->makeConnectToModel(
 	    &AccountModel::unreadNotificationsChanged, [this](int unreadMessagesCount, int unreadCallsCount) {
 		    mAccountModelConnection->invokeToCore([this, unreadMessagesCount, unreadCallsCount]() {
-			    this->setUnreadNotifications(unreadMessagesCount + unreadCallsCount);
-			    this->setUnreadCallNotifications(unreadCallsCount);
-			    this->setUnreadMessageNotifications(unreadMessagesCount);
+			    setUnreadNotifications(unreadMessagesCount + unreadCallsCount);
+			    setUnreadCallNotifications(unreadCallsCount);
+			    setUnreadMessageNotifications(unreadMessagesCount);
 		    });
 	    });
 	mAccountModelConnection->makeConnectToModel(&AccountModel::displayNameChanged, [this](QString displayName) {
-		mAccountModelConnection->invokeToCore([this, displayName]() { this->onDisplayNameChanged(displayName); });
+		mAccountModelConnection->invokeToCore([this, displayName]() { onDisplayNameChanged(displayName); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::dialPlanChanged, [this](int index) {
 		auto dialPlan = mDialPlans[index + 1];
-		mAccountModelConnection->invokeToCore([this, dialPlan]() { this->onDialPlanChanged(dialPlan); });
+		mAccountModelConnection->invokeToCore([this, dialPlan]() { onDialPlanChanged(dialPlan); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::registerEnabledChanged, [this](bool enabled) {
-		mAccountModelConnection->invokeToCore([this, enabled]() { this->onRegisterEnabledChanged(enabled); });
+		mAccountModelConnection->invokeToCore([this, enabled]() { onRegisterEnabledChanged(enabled); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::notificationsAllowedChanged, [this](bool value) {
-		mAccountModelConnection->invokeToCore([this, value]() { this->onNotificationsAllowedChanged(value); });
+		mAccountModelConnection->invokeToCore([this, value]() { onNotificationsAllowedChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::mwiServerAddressChanged, [this](QString value) {
-		mAccountModelConnection->invokeToCore([this, value]() { this->onMwiServerAddressChanged(value); });
+		mAccountModelConnection->invokeToCore([this, value]() { onMwiServerAddressChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::transportChanged, [this](linphone::TransportType value) {
 		mAccountModelConnection->invokeToCore(
-		    [this, value]() { this->onTransportChanged(LinphoneEnums::toString(LinphoneEnums::fromLinphone(value))); });
+		    [this, value]() { onTransportChanged(LinphoneEnums::toString(LinphoneEnums::fromLinphone(value))); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::serverAddressChanged, [this](QString value) {
-		mAccountModelConnection->invokeToCore([this, value]() { this->onServerAddressChanged(value); });
+		mAccountModelConnection->invokeToCore([this, value]() { onServerAddressChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::outboundProxyEnabledChanged, [this](bool value) {
-		mAccountModelConnection->invokeToCore([this, value]() { this->onOutboundProxyEnabledChanged(value); });
+		mAccountModelConnection->invokeToCore([this, value]() { onOutboundProxyEnabledChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::stunServerChanged, [this](QString value) {
-		mAccountModelConnection->invokeToCore([this, value]() { this->onStunServerChanged(value); });
+		mAccountModelConnection->invokeToCore([this, value]() { onStunServerChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::iceEnabledChanged, [this](bool value) {
-		mAccountModelConnection->invokeToCore([this, value]() { this->onIceEnabledChanged(value); });
+		mAccountModelConnection->invokeToCore([this, value]() { onIceEnabledChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::avpfEnabledChanged, [this](bool value) {
-		mAccountModelConnection->invokeToCore([this, value]() { this->onAvpfEnabledChanged(value); });
+		mAccountModelConnection->invokeToCore([this, value]() { onAvpfEnabledChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::bundleModeEnabledChanged, [this](bool value) {
-		mAccountModelConnection->invokeToCore([this, value]() { this->onBundleModeEnabledChanged(value); });
+		mAccountModelConnection->invokeToCore([this, value]() { onBundleModeEnabledChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::expireChanged, [this](int value) {
-		mAccountModelConnection->invokeToCore([this, value]() { this->onExpireChanged(value); });
+		mAccountModelConnection->invokeToCore([this, value]() { onExpireChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::conferenceFactoryAddressChanged, [this](QString value) {
-		mAccountModelConnection->invokeToCore([this, value]() { this->onConferenceFactoryAddressChanged(value); });
+		mAccountModelConnection->invokeToCore([this, value]() { onConferenceFactoryAddressChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::audioVideoConferenceFactoryAddressChanged,
 	                                            [this](QString value) {
 		                                            mAccountModelConnection->invokeToCore([this, value]() {
-			                                            this->onAudioVideoConferenceFactoryAddressChanged(value);
+			                                            onAudioVideoConferenceFactoryAddressChanged(value);
 		                                            });
 	                                            });
 	mAccountModelConnection->makeConnectToModel(&AccountModel::limeServerUrlChanged, [this](QString value) {
-		mAccountModelConnection->invokeToCore([this, value]() { this->onLimeServerUrlChanged(value); });
+		mAccountModelConnection->invokeToCore([this, value]() { onLimeServerUrlChanged(value); });
 	});
 
 	// From GUI
@@ -250,6 +253,10 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetLimeServerUrl, [this](QString value) {
 		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setLimeServerUrl(value); });
 	});
+}
+
+const std::shared_ptr<AccountModel> &AccountCore::getModel() const {
+	return mAccountModel;
 }
 
 QString AccountCore::getContactAddress() const {

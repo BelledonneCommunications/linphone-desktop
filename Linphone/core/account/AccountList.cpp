@@ -38,8 +38,6 @@ QSharedPointer<AccountList> AccountList::create() {
 
 AccountList::AccountList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
-	connect(CoreModel::getInstance().get(), &CoreModel::accountAdded, this, &AccountList::lUpdate);
-	connect(CoreModel::getInstance().get(), &CoreModel::accountRemoved, this, &AccountList::lUpdate);
 }
 
 AccountList::~AccountList() {
@@ -82,6 +80,9 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 			    mModelConnection->invokeToCore([this, model]() { setDefaultAccount(model); });
 		    } else mModelConnection->invokeToCore([this]() { setDefaultAccount(nullptr); });
 	    });
+	mModelConnection->makeConnectToModel(&CoreModel::accountRemoved, &AccountList::lUpdate);
+	mModelConnection->makeConnectToModel(&CoreModel::accountAdded, &AccountList::lUpdate);
+
 	lUpdate();
 }
 

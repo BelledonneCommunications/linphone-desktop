@@ -92,11 +92,7 @@ LoginLayout {
 						pixelSize: 14 * DefaultStyle.dp
 						weight: 400* DefaultStyle.dp
 					}
-					text: "Certaines fonctionnalités nécessitent un compte Linphone, comme la messagerie de groupe, les vidéoconférences...
-
-						Ces fonctionnalités sont cachées lorsque vous vous enregistrez avec un compte SIP tiers.
-
-						Pour les activer dans un projet commercial, veuillez nous contacter. "
+					text: "Certaines fonctionnalités nécessitent un compte Linphone, comme la messagerie de groupe, les vidéoconférences..."
 				}
 				Text {
 					Layout.fillWidth: true
@@ -250,8 +246,8 @@ LoginLayout {
 				id: errorText
 				Connections {
 					target: LoginPageCpp
-					function onErrorMessageChanged() {
-						errorText.text = LoginPageCpp.errorMessage
+					function onErrorMessageChanged(error) {
+						errorText.text = error
 					}
 					function onRegistrationStateChanged() {
 						if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
@@ -296,9 +292,11 @@ LoginLayout {
 								connectionButtonContent.currentIndex = 0
 							}
 						}
-						function onErrorMessageChanged() {
-							connectionButton.enabled = true
-							connectionButtonContent.currentIndex = 0
+						function onErrorMessageChanged(error) {
+							if (error.length != 0) {
+								connectionButton.enabled = true
+								connectionButtonContent.currentIndex = 0
+							}
 						}
 					}
 				}
@@ -323,21 +321,13 @@ LoginLayout {
 					connectionButton.enabled = false
 					connectionButtonContent.currentIndex = 1
 				}
-
-				Shortcut {
-					sequences: ["Return", "Enter"]
-					onActivated: if(domain.activeFocus) connectionButton.trigger()
-								else if(username.activeFocus) password.forceActiveFocus()
-								else if(password.activeFocus) domain.forceActiveFocus()
-				}
-				onPressed: connectionButton.trigger()
+				onPressed: trigger()
 				KeyNavigation.up: transportCbox
 			}
 			Item {
 				Layout.fillHeight: true
 			}
 		}
-	
 	}
 
 	centerContent: [

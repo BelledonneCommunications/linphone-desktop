@@ -63,7 +63,10 @@ bool AccountManager::login(QString username,
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	auto factory = linphone::Factory::get();
-	auto account = createAccount("use-app-sip-account.rc");
+	QString assistantFile = (!QString::compare(domain, "sip.linphone.org") || domain.isEmpty())
+	                            ? "use-app-sip-account.rc"
+	                            : "use-other-sip-account.rc";
+	auto account = createAccount(assistantFile);
 	auto params = account->getParams()->clone();
 	// Sip address.
 	auto identity = params->getIdentityAddress()->clone();
@@ -80,8 +83,20 @@ bool AccountManager::login(QString username,
 	username = Utils::getUsername(username);
 	identity->setUsername(Utils::appStringToCoreString(username));
 	if (!displayName.isEmpty()) identity->setDisplayName(Utils::appStringToCoreString(displayName));
-	identity->setTransport(transportType);
-	if (!domain.isEmpty()) identity->setDomain(Utils::appStringToCoreString(domain));
+	if (!domain.isEmpty()) {
+		identity->setDomain(Utils::appStringToCoreString(domain));
+		if (!domain.isEmpty() && QString::compare(domain, "sip.linphone.org")) {
+			params->setLimeServerUrl("");
+			auto serverAddress =
+			    factory->createAddress(Utils::appStringToCoreString(QStringLiteral("sip:%1").arg(domain)));
+			if (!serverAddress) {
+				*errorMessage = tr("Impossible de créer l'adresse proxy. Merci de vérifier le nom de domaine.");
+				return false;
+			}
+			serverAddress->setTransport(transportType);
+			params->setServerAddress(serverAddress);
+		}
+	}
 	if (params->setIdentityAddress(identity)) {
 		qWarning() << log()
 		                  .arg(QStringLiteral("Unable to set identity address: `%1`."))
@@ -91,7 +106,10 @@ bool AccountManager::login(QString username,
 		return false;
 	}
 
-	account->setParams(params);
+	if (account->setParams(params)) {
+		*errorMessage = tr("Impossible de configurer les paramètres du compte.");
+		return false;
+	}
 	core->addAuthInfo(factory->createAuthInfo(Utils::appStringToCoreString(username), // Username.
 	                                          "",                                     // User ID.
 	                                          Utils::appStringToCoreString(password), // Password.
@@ -103,7 +121,11 @@ bool AccountManager::login(QString username,
 	mAccountModel->setSelf(mAccountModel);
 	connect(mAccountModel.get(), &AccountModel::registrationStateChanged, this,
 	        &AccountManager::onRegistrationStateChanged);
-	core->addAccount(account);
+	auto status = core->addAccount(account);
+	if (status == -1) {
+		*errorMessage = tr("Impossible d'ajouter le compte.");
+		return false;
+	}
 	return true;
 }
 
@@ -155,7 +177,7 @@ void AccountManager::registerNewAccount(const QString &username,
 			                                              "",                                     // User ID.
 			                                              Utils::appStringToCoreString(password), // Password.
 			                                              "",                                     // HA1.
-			                                              "",                                     // Realm.
+			                                              createdSipIdentityAddress->getDomain(), // Realm.
 			                                              createdSipIdentityAddress->getDomain()  // Domain.
 			                                              ));
 			    if (type == RegisterType::Email) {

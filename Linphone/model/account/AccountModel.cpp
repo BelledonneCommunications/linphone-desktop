@@ -71,11 +71,12 @@ void AccountModel::setPictureUri(QString uri) {
 	mMonitor->setParams(params);
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit pictureUriChanged(uri);
-	emit CoreModel::getInstance() -> defaultAccountChanged(CoreModel::getInstance()->getCore(),
-	                                                       CoreModel::getInstance()->getCore()->getDefaultAccount());
+	emit CoreModel::getInstance()->defaultAccountChanged(CoreModel::getInstance()->getCore(),
+	                                                     CoreModel::getInstance()->getCore()->getDefaultAccount());
 }
 
 void AccountModel::onDefaultAccountChanged() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	emit defaultAccountChanged(CoreModel::getInstance()->getCore()->getDefaultAccount() == mMonitor);
 }
 

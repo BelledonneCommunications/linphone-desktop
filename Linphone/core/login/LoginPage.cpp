@@ -55,8 +55,10 @@ QString LoginPage::getErrorMessage() const {
 
 void LoginPage::setErrorMessage(const QString &error) {
 	// force signal emission to display the error even if it doesn't change
-	mErrorMessage = error;
-	emit errorMessageChanged();
+	if (mErrorMessage != error) {
+		mErrorMessage = error;
+		emit errorMessageChanged(error);
+	}
 }
 
 void LoginPage::login(const QString &username,
@@ -65,16 +67,15 @@ void LoginPage::login(const QString &username,
                       QString domain,
                       LinphoneEnums::TransportType transportType) {
 	App::postModelAsync([=]() {
-		QString *error = new QString(tr("Le couple identifiant mot de passe ne correspond pas"));
 		// Create on Model thread.
 		AccountManager *accountManager = new AccountManager();
 		connect(accountManager, &AccountManager::registrationStateChanged, this,
-		        [accountManager, this, error](linphone::RegistrationState state) mutable {
+		        [accountManager, this](linphone::RegistrationState state) mutable {
 			        // View thread
 			        setRegistrationState(state);
 			        switch (state) {
 				        case linphone::RegistrationState::Failed: {
-					        emit accountManager->errorMessageChanged(*error);
+					        setErrorMessage(QString(tr("Le couple identifiant mot de passe ne correspond pas")));
 					        if (accountManager) {
 						        accountManager->deleteLater();
 						        accountManager = nullptr;
@@ -82,7 +83,7 @@ void LoginPage::login(const QString &username,
 					        break;
 				        }
 				        case linphone::RegistrationState::Ok: {
-					        emit accountManager->errorMessageChanged("");
+					        // setErrorMessage("");
 					        if (accountManager) {
 						        accountManager->deleteLater();
 						        accountManager = nullptr;
@@ -102,14 +103,12 @@ void LoginPage::login(const QString &username,
 					        break;
 			        }
 		        });
-		connect(accountManager, &AccountManager::errorMessageChanged, this,
-		        [this](QString errorMessage) { setErrorMessage(errorMessage); });
 
-		connect(accountManager, &AccountManager::destroyed, [error]() { delete error; });
-
+		QString error;
 		if (!accountManager->login(username, password, displayName, domain, LinphoneEnums::toLinphone(transportType),
-		                           error)) {
-			emit accountManager->registrationStateChanged(linphone::RegistrationState::Failed);
+		                           &error)) {
+			setErrorMessage(error);
+			emit accountManager->registrationStateChanged(linphone::RegistrationState::None);
 		}
 	});
 }

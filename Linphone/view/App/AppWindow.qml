@@ -39,6 +39,7 @@ ApplicationWindow {
 		}
 	}
 
+	property bool authenticationPopupOpened: false
 	Component {
 		id: authenticationPopupComp
 		AuthenticationDialog{
@@ -50,6 +51,8 @@ ApplicationWindow {
 				authenticationDialog ? authenticationDialog.result(password) : callback(password)
 				close()
 			}
+			onOpened: mainWindow.authenticationPopupOpened = true
+			onClosed: mainWindow.authenticationPopupOpened = false
 		}
 	}
 
@@ -237,6 +240,7 @@ ApplicationWindow {
 	}
 
 	function reauthenticateAccount(authenticationDialog){
+		if (authenticationPopupOpened) return
 		console.log("Showing authentication dialog")
 		var popup = authenticationPopupComp.createObject(mainWindow, {"authenticationDialog": authenticationDialog})
 		popup.open()
