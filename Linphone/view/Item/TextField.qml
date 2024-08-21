@@ -12,7 +12,7 @@ Control.TextField {
 	rightPadding: eyeButton.visible ? 5 * DefaultStyle.dp + eyeButton.width + eyeButton.rightMargin : 15 * DefaultStyle.dp
 	echoMode: (hidden && !eyeButton.checked) ? TextInput.Password : TextInput.Normal
 	verticalAlignment: TextInput.AlignVCenter
-	color: DefaultStyle.main2_600
+	color: isError ? DefaultStyle.danger_500main : DefaultStyle.main2_600
 	placeholderTextColor: DefaultStyle.placeholders
 	font {
 		family: DefaultStyle.defaultFont
@@ -24,6 +24,7 @@ Control.TextField {
 
 	property bool controlIsDown: false
 	property bool hidden: false
+	property bool isError: false
 	property bool backgroundVisible: true
 	property color backgroundColor: DefaultStyle.grey_100
 	property color backgroundBorderColor: DefaultStyle.grey_200
@@ -47,9 +48,11 @@ Control.TextField {
 		anchors.fill: parent
 		radius: 79 * DefaultStyle.dp
 		color: mainItem.backgroundColor
-		border.color: activeFocus
-			? DefaultStyle.main1_500_main
-			: mainItem.backgroundBorderColor
+		border.color: mainItem.isError 
+			? DefaultStyle.danger_500main
+			: mainItem.activeFocus
+				? DefaultStyle.main1_500_main
+				: mainItem.backgroundBorderColor
 	}
 
 	cursorDelegate: Rectangle {

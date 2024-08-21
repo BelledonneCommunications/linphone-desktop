@@ -16,20 +16,9 @@ ColumnLayout {
 		enableErrorText: true
 		contentItem: TextField {
 			id: usernameEdit
+			isError: username.errorTextVisible
 			Layout.preferredWidth: 360 * DefaultStyle.dp
 			Layout.preferredHeight: 49 * DefaultStyle.dp
-			Binding on backgroundBorderColor {
-				when: errorText.opacity != 0
-				value: DefaultStyle.danger_500main
-			}
-			Binding on backgroundBorderColor {
-				when: username.errorTextItem.opacity != 0
-				value: DefaultStyle.danger_500main
-			}
-			Binding on color {
-				when: errorText.opacity != 0
-				value: DefaultStyle.danger_500main
-			}
 		}
 	}
 	Item {
@@ -41,21 +30,10 @@ ColumnLayout {
 			enableErrorText: true
 			contentItem: TextField {
 				id: passwordEdit
+				isError: password.errorTextVisible
 				Layout.preferredWidth: 360 * DefaultStyle.dp
 				Layout.preferredHeight: 49 * DefaultStyle.dp
 				hidden: true
-				Binding on backgroundBorderColor {
-					when: errorText.opacity != 0
-					value: DefaultStyle.danger_500main
-				}
-				Binding on backgroundBorderColor {
-					when: password.errorTextItem.opacity != 0
-					value: DefaultStyle.danger_500main
-				}
-				Binding on color {
-					when: errorText.opacity != 0
-					value: DefaultStyle.danger_500main
-				}
 			}
 		}
 

@@ -303,7 +303,8 @@ void LinphoneEnums::fromString(const QString &transportType, LinphoneEnums::Tran
 	if (transportType.toUpper() == QLatin1String("TCP")) *transport = TransportType::Tcp;
 	else if (transportType.toUpper() == QLatin1String("UDP")) *transport = TransportType::Udp;
 	else if (transportType.toUpper() == QLatin1String("TLS")) *transport = TransportType::Tls;
-	else *transport = TransportType::Dtls;
+	else if (transportType.toUpper() == QLatin1String("DTLS")) *transport = TransportType::Dtls;
+	else *transport = TransportType::Udp;
 }
 
 linphone::VideoSourceScreenSharingType

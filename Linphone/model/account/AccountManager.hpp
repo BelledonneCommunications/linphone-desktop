@@ -36,7 +36,12 @@ public:
 	AccountManager(QObject *parent = nullptr);
 	~AccountManager();
 
-	bool login(QString username, QString password, QString *errorMessage = nullptr);
+	bool login(QString username,
+	           QString password,
+	           QString displayName = QString(),
+	           QString domain = QString(),
+	           linphone::TransportType transportType = linphone::TransportType::Udp,
+	           QString *errorMessage = nullptr);
 	std::shared_ptr<linphone::Account> createAccount(const QString &assistantFile);
 
 	enum RegisterType { PhoneNumber = 0, Email = 1 };

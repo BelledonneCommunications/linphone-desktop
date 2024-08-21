@@ -22,6 +22,7 @@
 #define LOGINPAGE_H_
 
 #include "tool/AbstractObject.hpp"
+#include "tool/LinphoneEnums.hpp"
 #include <QObject>
 #include <linphone++/linphone.hh>
 
@@ -35,7 +36,11 @@ public:
 	Q_PROPERTY(linphone::RegistrationState registrationState READ getRegistrationState NOTIFY registrationStateChanged)
 	Q_PROPERTY(QString errorMessage READ getErrorMessage NOTIFY errorMessageChanged)
 
-	Q_INVOKABLE void login(const QString &username, const QString &password);
+	Q_INVOKABLE void login(const QString &username,
+	                       const QString &password,
+	                       QString displayName = QString(),
+	                       QString domain = QString(),
+	                       LinphoneEnums::TransportType transportType = LinphoneEnums::TransportType::Udp);
 
 	linphone::RegistrationState getRegistrationState() const;
 	void setRegistrationState(linphone::RegistrationState status);

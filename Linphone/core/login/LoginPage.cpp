@@ -59,7 +59,11 @@ void LoginPage::setErrorMessage(const QString &error) {
 	emit errorMessageChanged();
 }
 
-void LoginPage::login(const QString &username, const QString &password) {
+void LoginPage::login(const QString &username,
+                      const QString &password,
+                      QString displayName,
+                      QString domain,
+                      LinphoneEnums::TransportType transportType) {
 	App::postModelAsync([=]() {
 		QString *error = new QString(tr("Le couple identifiant mot de passe ne correspond pas"));
 		// Create on Model thread.
@@ -103,7 +107,8 @@ void LoginPage::login(const QString &username, const QString &password) {
 
 		connect(accountManager, &AccountManager::destroyed, [error]() { delete error; });
 
-		if (!accountManager->login(username, password, error)) {
+		if (!accountManager->login(username, password, displayName, domain, LinphoneEnums::toLinphone(transportType),
+		                           error)) {
 			emit accountManager->registrationStateChanged(linphone::RegistrationState::Failed);
 		}
 	});

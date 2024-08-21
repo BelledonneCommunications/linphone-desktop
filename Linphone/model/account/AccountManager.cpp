@@ -54,7 +54,12 @@ std::shared_ptr<linphone::Account> AccountManager::createAccount(const QString &
 	return core->createAccount(core->createAccountParams());
 }
 
-bool AccountManager::login(QString username, QString password, QString *errorMessage) {
+bool AccountManager::login(QString username,
+                           QString password,
+                           QString displayName,
+                           QString domain,
+                           linphone::TransportType transportType,
+                           QString *errorMessage) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	auto factory = linphone::Factory::get();
@@ -74,6 +79,9 @@ bool AccountManager::login(QString username, QString password, QString *errorMes
 
 	username = Utils::getUsername(username);
 	identity->setUsername(Utils::appStringToCoreString(username));
+	if (!displayName.isEmpty()) identity->setDisplayName(Utils::appStringToCoreString(displayName));
+	identity->setTransport(transportType);
+	if (!domain.isEmpty()) identity->setDomain(Utils::appStringToCoreString(domain));
 	if (params->setIdentityAddress(identity)) {
 		qWarning() << log()
 		                  .arg(QStringLiteral("Unable to set identity address: `%1`."))
