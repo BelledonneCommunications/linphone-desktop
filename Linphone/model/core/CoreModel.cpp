@@ -24,6 +24,7 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
+#include <QQuickWindow>
 #include <QSysInfo>
 #include <QTimer>
 

@@ -84,6 +84,7 @@ RightPanelLayout {
 				Layout.preferredHeight: 17 * DefaultStyle.dp
 				iconSource: AppIcons.camera
 				iconSize: 17 * DefaultStyle.dp
+				backgroundColor: "transparent"
 				text: qsTr("Ajouter une image")
 				KeyNavigation.down: editButton.visible ? editButton : givenNameEdit
 				onClicked: fileDialog.open()
@@ -97,6 +98,7 @@ RightPanelLayout {
 					Layout.preferredHeight: 17 * DefaultStyle.dp
 					iconSource: AppIcons.pencil
 					iconSize: 17 * DefaultStyle.dp
+					backgroundColor: "transparent"
 					text: qsTr("Modifier")
 					KeyNavigation.down: givenNameEdit
 					onClicked: fileDialog.open()
@@ -118,6 +120,7 @@ RightPanelLayout {
 					Layout.preferredWidth: width
 					iconSize: 17 * DefaultStyle.dp
 					iconSource: AppIcons.trashCan
+					backgroundColor: "transparent"
 					text: qsTr("Supprimer")
 					KeyNavigation.down: givenNameEdit
 					onClicked: mainItem.contact.core.pictureUri = ""

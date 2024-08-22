@@ -28,6 +28,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/App/Layout/Account/AccountSettingsParametersLayout.qml
 
 	view/Item/Account/Accounts.qml
+	view/Item/Account/AuthenticationDialog.qml
 	
 	view/Item/Call/CallContactsLists.qml
 	view/Item/Call/InCallSettingsPanel.qml

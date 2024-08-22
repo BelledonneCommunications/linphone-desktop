@@ -40,7 +40,7 @@ public:
 	                       const QString &password,
 	                       QString displayName = QString(),
 	                       QString domain = QString(),
-	                       LinphoneEnums::TransportType transportType = LinphoneEnums::TransportType::Udp);
+	                       LinphoneEnums::TransportType transportType = LinphoneEnums::TransportType::Tcp);
 
 	linphone::RegistrationState getRegistrationState() const;
 	void setRegistrationState(linphone::RegistrationState status);

@@ -17,6 +17,7 @@ LoginLayout {
 			visible: !SettingsCpp.assistantHideThirdPartyAccount
 			spacing: 21 * DefaultStyle.dp
 			Button {
+				id: backButton
 				Layout.preferredHeight: 24 * DefaultStyle.dp
 				Layout.preferredWidth: 24 * DefaultStyle.dp
 				icon.source: AppIcons.leftArrow
@@ -81,20 +82,47 @@ LoginLayout {
 		id: firstItem
 		ColumnLayout {
 			spacing: 0
-			Text {
-				Layout.fillWidth: true
-				Layout.preferredWidth: rootStackView.width
-				wrapMode: Text.WordWrap
-				color: DefaultStyle.main2_600
-				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 400* DefaultStyle.dp
+			ColumnLayout {
+				Text {
+					Layout.fillWidth: true
+					Layout.preferredWidth: rootStackView.width
+					wrapMode: Text.WordWrap
+					color: DefaultStyle.main2_600
+					font {
+						pixelSize: 14 * DefaultStyle.dp
+						weight: 400* DefaultStyle.dp
+					}
+					text: "Certaines fonctionnalités nécessitent un compte Linphone, comme la messagerie de groupe, les vidéoconférences...
+
+						Ces fonctionnalités sont cachées lorsque vous vous enregistrez avec un compte SIP tiers.
+
+						Pour les activer dans un projet commercial, veuillez nous contacter. "
 				}
-				text: "<p>Some features require a Linphone account, such as group messaging, video conferences...</p> 
-				<p>These features are hidden when you register with a third party SIP account.</p>
-				<p>To enable it in a commercial projet, please contact us. </p>"
+				Text {
+					Layout.fillWidth: true
+					Layout.preferredWidth: rootStackView.width
+					wrapMode: Text.WordWrap
+					color: DefaultStyle.main2_600
+					font {
+						pixelSize: 14 * DefaultStyle.dp
+						weight: 400* DefaultStyle.dp
+					}
+					text:"Ces fonctionnalités sont cachées lorsque vous vous enregistrez avec un compte SIP tiers."
+				}
+				Text {
+					Layout.fillWidth: true
+					Layout.preferredWidth: rootStackView.width
+					wrapMode: Text.WordWrap
+					color: DefaultStyle.main2_600
+					font {
+						pixelSize: 14 * DefaultStyle.dp
+						weight: 400* DefaultStyle.dp
+					}
+					text: "Pour les activer dans un projet commercial, veuillez nous contacter. "
+				}
 			}
 			Button {
+				id: openLinkButton
 				Layout.alignment: Qt.AlignCenter
 				Layout.topMargin: 18 * DefaultStyle.dp
 				text: "linphone.org/contact"
@@ -107,12 +135,15 @@ LoginLayout {
 				onClicked: {
 					Qt.openUrlExternally(ConstantsCpp.ContactUrl)
 				}
+				KeyNavigation.up: backButton
+				KeyNavigation.down: createAccountButton
 			}
 			Button {
+				id: createAccountButton
 				Layout.topMargin: 85 * DefaultStyle.dp
 				Layout.fillWidth: true
 				inversedColors: true
-				text: qsTr("I prefer creating an account")
+				text: qsTr("Créer un compte linphone")
 				leftPadding: 20 * DefaultStyle.dp
 				rightPadding: 20 * DefaultStyle.dp
 				topPadding: 11 * DefaultStyle.dp
@@ -121,11 +152,14 @@ LoginLayout {
 					console.debug("[SIPLoginPage] User: click register")
 					mainItem.goToRegister()
 				}
+				KeyNavigation.up: openLinkButton
+				KeyNavigation.down: continueButton
 			}
 			Button {
+				id: continueButton
 				Layout.topMargin: 20 * DefaultStyle.dp
 				Layout.fillWidth: true
-				text: qsTr("I understand")
+				text: qsTr("Je comprends")
 				leftPadding: 20 * DefaultStyle.dp
 				rightPadding: 20 * DefaultStyle.dp
 				topPadding: 11 * DefaultStyle.dp
@@ -133,6 +167,7 @@ LoginLayout {
 				onClicked: {
 					rootStackView.replace(secondItem)
 				}
+				KeyNavigation.up: createAccountButton
 			}
 			Item {
 				Layout.fillHeight: true
@@ -154,6 +189,7 @@ LoginLayout {
 						id: usernameEdit
 						isError: username.errorTextVisible
 						Layout.preferredWidth: 360 * DefaultStyle.dp
+						KeyNavigation.down: passwordEdit
 					}
 				}
 				FormItemLayout {
@@ -166,6 +202,8 @@ LoginLayout {
 						isError: password.errorTextVisible
 						hidden: true
 						Layout.preferredWidth: 360 * DefaultStyle.dp
+						KeyNavigation.up: usernameEdit
+						KeyNavigation.down: domainEdit
 					}
 				}
 				FormItemLayout {
@@ -177,6 +215,8 @@ LoginLayout {
 						id: domainEdit
 						isError: domain.errorTextVisible
 						Layout.preferredWidth: 360 * DefaultStyle.dp
+						KeyNavigation.up: passwordEdit
+						KeyNavigation.down: displayName
 					}
 				}
 				FormItemLayout {
@@ -184,6 +224,8 @@ LoginLayout {
 					contentItem: TextField {
 						id: displayName
 						Layout.preferredWidth: 360 * DefaultStyle.dp
+						KeyNavigation.up: domainEdit
+						KeyNavigation.down: transportCbox
 					}
 				}
 				FormItemLayout {
@@ -289,6 +331,7 @@ LoginLayout {
 								else if(password.activeFocus) domain.forceActiveFocus()
 				}
 				onPressed: connectionButton.trigger()
+				KeyNavigation.up: transportCbox
 			}
 			Item {
 				Layout.fillHeight: true

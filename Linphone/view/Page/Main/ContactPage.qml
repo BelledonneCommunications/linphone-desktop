@@ -58,15 +58,19 @@ AbstractMainPage {
 		aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
 	}
 
-	Dialog {
-		id: dialog
-		property var contact
-		text: (contact ? contact.core.displayName : "Contact") + " is about to be deleted. Do you want to continue ?"
-		onAccepted: {
-			var name = contact.core.displayName
-			contact.core.remove()
-			UtilsCpp.showInformationPopup(qsTr("Supprimé"), qsTr("%1 a été supprimé").arg(name))
-		}
+	function deleteContact(contact) {
+		if (!contact) return
+		var mainWin = UtilsCpp.getMainWindow()
+		mainWin.showConfirmationLambdaPopup(
+			contact.core.displayName + qsTr("sera supprimé des contacts. Voulez-vous continuer ?"),
+			"",
+			function (confirmed) {
+				if (confirmed) {
+					var name = contact.core.displayName
+					contact.core.remove()
+					UtilsCpp.showInformationPopup(qsTr("Supprimé"), qsTr("%1 a été supprimé").arg(name))				}
+			}
+		)
 	}
 
 	Popup {
@@ -279,8 +283,7 @@ AbstractMainPage {
 									mainItem.selectedContact = selectedContact
 								}
 								onContactDeletionRequested: (contact) => {
-									dialog.contact = contact
-									dialog.open()
+									mainItem.deleteContact(contact)
 								}
 							}
 						}
@@ -344,8 +347,7 @@ AbstractMainPage {
 									mainItem.selectedContact = selectedContact
 								}
 								onContactDeletionRequested: (contact) => {
-									dialog.contact = contact
-									dialog.open()
+									mainItem.deleteContact(contact)
 								}
 							}
 						}
@@ -782,9 +784,7 @@ AbstractMainPage {
 									color: DefaultStyle.danger_500main
 									text: qsTr("Delete this contact")
 									onClicked: {
-										// mainItem.selectedContact.core.remove()
-										dialog.contact = mainItem.selectedContact
-										dialog.open()
+										mainItem.deleteContact(contact)
 									}
 								}
 							}

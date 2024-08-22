@@ -77,6 +77,7 @@
 #include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/ImageProvider.hpp"
 #include "tool/providers/ScreenProvider.hpp"
+#include "tool/request/AuthenticationDialog.hpp"
 #include "tool/request/RequestDialog.hpp"
 #include "tool/thread/Thread.hpp"
 
@@ -167,6 +168,35 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			}
 		});
 	});
+	mCoreModelConnection->makeConnectToModel(
+	    &CoreModel::authenticationRequested,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::AuthInfo> &authInfo,
+	           linphone::AuthMethod method) {
+		    mCoreModelConnection->invokeToCore([this, core, authInfo, method]() {
+			    if (method == linphone::AuthMethod::HttpDigest) {
+				    auto window = App::getInstance()->getMainWindow();
+				    auto username = authInfo->getUsername();
+				    auto domain = authInfo->getDomain();
+				    AuthenticationDialog *obj = new AuthenticationDialog(Utils::coreStringToAppString(username),
+				                                                         Utils::coreStringToAppString(domain));
+				    connect(obj, &AuthenticationDialog::result, this, [this, obj, authInfo, core](QString password) {
+					    mCoreModelConnection->invokeToModel([this, core, authInfo, password] {
+						    mustBeInLinphoneThread("[App] reauthenticate");
+						    if (password.isEmpty()) {
+							    lDebug() << "ERROR : empty password";
+						    } else {
+							    lDebug() << "reset password for" << authInfo->getUsername();
+							    authInfo->setPassword(Utils::appStringToCoreString(password));
+							    core->addAuthInfo(authInfo);
+							    core->refreshRegisters();
+						    }
+					    });
+					    obj->deleteLater();
+				    });
+				    QMetaObject::invokeMethod(window, "reauthenticateAccount", QVariant::fromValue(obj));
+			    }
+		    });
+	    });
 	//---------------------------------------------------------------------------------------------
 	mCliModelConnection = QSharedPointer<SafeConnection<App, CliModel>>(
 	    new SafeConnection<App, CliModel>(me, CliModel::getInstance()), &QObject::deleteLater);
@@ -364,6 +394,8 @@ void App::initCppInterfaces() {
 
 	qmlRegisterUncreatableType<RequestDialog>(Constants::MainQmlUri, 1, 0, "RequestDialog",
 	                                          QLatin1String("Uncreatable"));
+	qmlRegisterUncreatableType<AuthenticationDialog>(Constants::MainQmlUri, 1, 0, "AuthenticationDialogCpp",
+	                                                 QLatin1String("Uncreatable"));
 
 	LinphoneEnums::registerMetaTypes();
 }

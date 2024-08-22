@@ -21,12 +21,14 @@ Control.TextField {
 	}
 	selectByMouse: true
 	activeFocusOnTab: true
+	KeyNavigation.right: eyeButton
 
 	property bool controlIsDown: false
 	property bool hidden: false
 	property bool isError: false
 	property bool backgroundVisible: true
 	property color backgroundColor: DefaultStyle.grey_100
+	property color disabledBackgroundColor: DefaultStyle.grey_200
 	property color backgroundBorderColor: DefaultStyle.grey_200
 	property string initialText
 	property int pixelSize: 14 * DefaultStyle.dp
@@ -47,7 +49,7 @@ Control.TextField {
 		visible: mainItem.backgroundVisible
 		anchors.fill: parent
 		radius: 79 * DefaultStyle.dp
-		color: mainItem.backgroundColor
+		color: mainItem.enabled ? mainItem.backgroundColor : mainItem.disabledBackgroundColor
 		border.color: mainItem.isError 
 			? DefaultStyle.danger_500main
 			: mainItem.activeFocus
@@ -105,6 +107,7 @@ Control.TextField {
 
 	Button {
 		id: eyeButton
+		KeyNavigation.left: mainItem
 		property int rightMargin: 15 * DefaultStyle.dp
 		z: 1
 		visible: mainItem.hidden
