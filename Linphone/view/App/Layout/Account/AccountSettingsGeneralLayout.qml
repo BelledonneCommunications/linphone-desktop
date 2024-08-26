@@ -260,7 +260,7 @@ AbstractDetailsLayout {
 							color: DefaultStyle.main2_600
 						}
 						Text {
-							text: qsTr("La liste des appareils connectés à votre compte. Vous pouvez retirer les appareils que vous n’utilisez plus. (TODO connecter API SDK quand dispo)")
+							text: qsTr("La liste des appareils connectés à votre compte. Vous pouvez retirer les appareils que vous n’utilisez plus.")
 							font: Typography.p1s
 							wrapMode: Text.WordWrap
 							color: DefaultStyle.main2_600
@@ -271,46 +271,55 @@ AbstractDetailsLayout {
 						Layout.fillHeight: true
 					}
 				}
-				Rectangle {
-					color: DefaultStyle.grey_100
+				RoundedBackgroundControl {
 					Layout.fillWidth: true
-					Layout.minimumHeight: account.core.devices.length * 133 * DefaultStyle.dp + (account.core.devices.length - 1) * 15 * DefaultStyle.dp +  2 * 21 * DefaultStyle.dp
-					radius: 15 * DefaultStyle.dp
+					Layout.fillHeight: true
+					// Layout.minimumHeight: account.core.devices.length * 133 * DefaultStyle.dp + (account.core.devices.length - 1) * 15 * DefaultStyle.dp +  2 * 21 * DefaultStyle.dp
 					Layout.rightMargin: 30 * DefaultStyle.dp
 					Layout.topMargin: 20 * DefaultStyle.dp
-					Layout.bottomMargin: 21 * DefaultStyle.dp
+					Layout.bottomMargin: 4 * DefaultStyle.dp
 					Layout.leftMargin: 44 * DefaultStyle.dp
-					ColumnLayout {
+					topPadding: 21 * DefaultStyle.dp
+					bottomPadding: 21 * DefaultStyle.dp
+					leftPadding: 17 * DefaultStyle.dp
+					rightPadding: 17 * DefaultStyle.dp
+					background: Rectangle {
 						anchors.fill: parent
-						anchors.bottomMargin: 21 * DefaultStyle.dp
+						color: DefaultStyle.grey_100
+						radius: 15 * DefaultStyle.dp
+					}
+					contentItem: ColumnLayout {
 						spacing: 15 * DefaultStyle.dp
 						Repeater {
 							id: devices
-							model: account.core.devices
-							Rectangle {
+							model: AccountDeviceProxy {
+								id: accountDeviceProxy
+								account: model
+							}
+							Control.Control{
 								Layout.fillWidth: true
-								Layout.preferredHeight: 133 * DefaultStyle.dp
-								Layout.topMargin: (index == 0 ? 21 : 0) * DefaultStyle.dp
-								Layout.leftMargin: 17 * DefaultStyle.dp
-								Layout.rightMargin: 17 * DefaultStyle.dp
-								color: 'white'
-								radius: 10 * DefaultStyle.dp
-								ColumnLayout {
-									anchors.topMargin: 26 * DefaultStyle.dp
-									anchors.bottomMargin: 26 * DefaultStyle.dp
-									anchors.centerIn: parent
+								height: 133 * DefaultStyle.dp
+								topPadding: 26 * DefaultStyle.dp
+								bottomPadding: 26 * DefaultStyle.dp
+								rightPadding: 36 * DefaultStyle.dp
+								leftPadding: 33 * DefaultStyle.dp
+								
+								background: Rectangle {
+									anchors.fill: parent
+									color: DefaultStyle.grey_0
+									radius: 10 * DefaultStyle.dp
+								}
+								contentItem: ColumnLayout {
 									width: parent.width
 									spacing: 20 * DefaultStyle.dp
 									RowLayout {
-										Layout.rightMargin: 36 * DefaultStyle.dp
-										Layout.leftMargin: 33 * DefaultStyle.dp
 										spacing: 5 * DefaultStyle.dp
 										EffectImage {
 											Layout.preferredWidth: 24 * DefaultStyle.dp
 											Layout.preferredHeight: 24 * DefaultStyle.dp
 											fillMode: Image.PreserveAspectFit
 											colorizationColor: DefaultStyle.main2_600
-											imageSource: modelData.core.userAgent.toLowerCase().includes('ios') || modelData.core.userAgent.toLowerCase().includes('android') ? AppIcons.mobile : AppIcons.desktop
+											imageSource: modelData.core.userAgent.toLowerCase().includes('ios') | modelData.core.userAgent.toLowerCase().includes('android') ? AppIcons.mobile : AppIcons.desktop
 										}
 										Text {
 											text: modelData.core.deviceName
@@ -330,10 +339,10 @@ AbstractDetailsLayout {
 											onClicked: {
 												var mainWin = UtilsCpp.getMainWindow()
 												mainWin.showConfirmationLambdaPopup(
-													qsTr("Supprimer ") + modelData.core.deviceName + " ?",
+													qsTr("Supprimer ") + modelData.core.deviceName + " ?", "",
 													function (confirmed) {
 														if (confirmed) {
-															modelData.core.removeDevice()
+															accountDeviceProxy.deleteDevice(modelData)
 														}
 													}
 												)
@@ -341,8 +350,6 @@ AbstractDetailsLayout {
 										}
 									}
 									RowLayout {
-										Layout.rightMargin: 36 * DefaultStyle.dp
-										Layout.leftMargin: 33 * DefaultStyle.dp
 										spacing: 5 * DefaultStyle.dp
 										Text {
 											text: qsTr("Dernière connexion:")

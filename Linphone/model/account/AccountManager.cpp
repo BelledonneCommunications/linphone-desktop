@@ -85,7 +85,7 @@ bool AccountManager::login(QString username,
 	if (!displayName.isEmpty()) identity->setDisplayName(Utils::appStringToCoreString(displayName));
 	if (!domain.isEmpty()) {
 		identity->setDomain(Utils::appStringToCoreString(domain));
-		if (!domain.isEmpty() && QString::compare(domain, "sip.linphone.org")) {
+		if (QString::compare(domain, "sip.linphone.org")) {
 			params->setLimeServerUrl("");
 			auto serverAddress =
 			    factory->createAddress(Utils::appStringToCoreString(QStringLiteral("sip:%1").arg(domain)));

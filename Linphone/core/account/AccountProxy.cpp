@@ -48,8 +48,8 @@ void AccountProxy::setFilterText(const QString &filter) {
 }
 
 AccountGui *AccountProxy::getDefaultAccount() {
-	if (!mDefaultAccount) mDefaultAccount = dynamic_cast<AccountList *>(sourceModel())->getDefaultAccount();
-	return mDefaultAccount;
+	if (!mDefaultAccount) mDefaultAccount = dynamic_cast<AccountList *>(sourceModel())->getDefaultAccountCore();
+	return new AccountGui(mDefaultAccount);
 }
 
 void AccountProxy::setDefaultAccount(AccountGui *account) {

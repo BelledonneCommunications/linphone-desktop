@@ -99,3 +99,14 @@ void AccountManagerServicesModel::linkEmailToAccountUsingCode(
 	auto req = mAccountManagerServices->createLinkEmailToAccountUsingCodeRequest(sipIdentityAddress, code);
 	setRequestAndSubmit(req);
 }
+
+void AccountManagerServicesModel::getDeviceList(const std::shared_ptr<const linphone::Address> &sipIdentityAddress) {
+	auto req = mAccountManagerServices->createGetDevicesListRequest(sipIdentityAddress);
+	setRequestAndSubmit(req);
+}
+
+void AccountManagerServicesModel::deleteDevice(const std::shared_ptr<const linphone::Address> &sipIdentityAddress,
+                                               const std::shared_ptr<linphone::AccountDevice> &device) {
+	auto req = mAccountManagerServices->createDeleteDeviceRequest(sipIdentityAddress, device);
+	setRequestAndSubmit(req);
+}

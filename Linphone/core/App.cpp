@@ -37,6 +37,7 @@
 
 #include "core/account/AccountCore.hpp"
 #include "core/account/AccountDeviceGui.hpp"
+#include "core/account/AccountDeviceProxy.hpp"
 #include "core/account/AccountProxy.hpp"
 #include "core/call-history/CallHistoryProxy.hpp"
 #include "core/call/CallCore.hpp"
@@ -365,6 +366,7 @@ void App::initCppInterfaces() {
 	qmlRegisterUncreatableType<PhoneNumber>(Constants::MainQmlUri, 1, 0, "PhoneNumber", QLatin1String("Uncreatable"));
 	qmlRegisterType<AccountProxy>(Constants::MainQmlUri, 1, 0, "AccountProxy");
 	qmlRegisterType<AccountGui>(Constants::MainQmlUri, 1, 0, "AccountGui");
+	qmlRegisterType<AccountDeviceProxy>(Constants::MainQmlUri, 1, 0, "AccountDeviceProxy");
 	qmlRegisterType<AccountDeviceGui>(Constants::MainQmlUri, 1, 0, "AccountDeviceGui");
 	qmlRegisterUncreatableType<AccountCore>(Constants::MainQmlUri, 1, 0, "AccountCore", QLatin1String("Uncreatable"));
 	qmlRegisterUncreatableType<CallCore>(Constants::MainQmlUri, 1, 0, "CallCore", QLatin1String("Uncreatable"));

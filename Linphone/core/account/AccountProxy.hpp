@@ -59,7 +59,7 @@ protected:
 	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 	QString mFilterText;
-	AccountGui *mDefaultAccount = nullptr; // When null, a new UI object is build from List
+	QSharedPointer<AccountCore> mDefaultAccount; // When null, a new UI object is build from List
 	QSharedPointer<AccountList> mAccountList;
 };
 

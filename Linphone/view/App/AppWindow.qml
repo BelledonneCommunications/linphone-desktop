@@ -30,8 +30,8 @@ ApplicationWindow {
 			property var callback: requestDialog?.result
 			signal closePopup(int index)
 			onClosed: closePopup(index)
-			text: requestDialog.message
-			details: requestDialog.details
+			text: requestDialog?.message
+			details: requestDialog?.details
 			// For C++, requestDialog need to be call directly
 			onAccepted: requestDialog ? requestDialog.result(1) : callback(1)
 			onRejected: requestDialog ? requestDialog.result(0) : callback(0)

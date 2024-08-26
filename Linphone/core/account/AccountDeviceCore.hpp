@@ -21,10 +21,11 @@
 #ifndef ACCOUNT_DEVICE_CORE_H_
 #define ACCOUNT_DEVICE_CORE_H_
 
+#include "model/account/AccountDeviceModel.hpp"
+#include "tool/AbstractObject.hpp"
+#include <QDateTime>
 #include <QObject>
 #include <QSharedPointer>
-#include <QDateTime>
-#include "tool/AbstractObject.hpp"
 #include <linphone++/linphone.hh>
 
 class AccountDeviceCore : public QObject, public AbstractObject {
@@ -35,24 +36,22 @@ class AccountDeviceCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QDateTime lastUpdateTimestamp MEMBER mLastUpdateTimestamp CONSTANT)
 
 public:
-	
 	static QSharedPointer<AccountDeviceCore> create(const std::shared_ptr<linphone::AccountDevice> &device);
 	AccountDeviceCore(const std::shared_ptr<linphone::AccountDevice> &device);
 	AccountDeviceCore(QString name, QString userAgent, QDateTime last);
 	static QSharedPointer<AccountDeviceCore> createDummy(QString name, QString userAgent, QDateTime last);
-	
-	
-	
+
 	~AccountDeviceCore();
-	Q_INVOKABLE void removeDevice();
+
+	const std::shared_ptr<AccountDeviceModel> &getModel() const;
 
 private:
 	QString mDeviceName;
 	QString mUserAgent;
 	QDateTime mLastUpdateTimestamp;
-	
+	std::shared_ptr<AccountDeviceModel> mAccountDeviceModel;
+
 	DECLARE_ABSTRACT_OBJECT
-	
 };
 
 #endif

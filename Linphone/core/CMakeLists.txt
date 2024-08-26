@@ -5,6 +5,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/account/AccountProxy.cpp
 	core/account/AccountDeviceCore.cpp
 	core/account/AccountDeviceGui.cpp
+	core/account/AccountDeviceList.cpp
+	core/account/AccountDeviceProxy.cpp
 	core/App.cpp
 	core/call/CallCore.cpp
 	core/call/CallGui.cpp

@@ -50,6 +50,9 @@ public:
 	                                       const std::string &code);
 	void linkEmailToAccountUsingCode(const std::shared_ptr<linphone::Address> &sipIdentityAddress,
 	                                 const std::string &code);
+	void getDeviceList(const std::shared_ptr<const linphone::Address> &sipIdentityAddress);
+	void deleteDevice(const std::shared_ptr<const linphone::Address> &sipIdentityAddress,
+	                  const std::shared_ptr<linphone::AccountDevice> &device);
 
 	void setRequestAndSubmit(const std::shared_ptr<linphone::AccountManagerServicesRequest> &request);
 

@@ -40,7 +40,7 @@ public:
 	           QString password,
 	           QString displayName = QString(),
 	           QString domain = QString(),
-	           linphone::TransportType transportType = linphone::TransportType::Udp,
+	           linphone::TransportType transportType = linphone::TransportType::Tls,
 	           QString *errorMessage = nullptr);
 
 	std::shared_ptr<linphone::Account> createAccount(const QString &assistantFile);

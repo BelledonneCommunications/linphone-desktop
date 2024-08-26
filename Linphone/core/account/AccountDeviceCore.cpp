@@ -28,19 +28,20 @@ DEFINE_ABSTRACT_OBJECT(AccountDeviceCore)
 AccountDeviceCore::AccountDeviceCore(QString name, QString userAgent, QDateTime last) : QObject(nullptr) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mustBeInLinphoneThread(getClassName());
-		
+
 	mDeviceName = name;
 	mUserAgent = userAgent;
 	mLastUpdateTimestamp = last;
 }
 
 QSharedPointer<AccountDeviceCore> AccountDeviceCore::createDummy(QString name, QString userAgent, QDateTime last) {
-	auto core = QSharedPointer<AccountDeviceCore>(new AccountDeviceCore(name,userAgent,last));
+	auto core = QSharedPointer<AccountDeviceCore>(new AccountDeviceCore(name, userAgent, last));
 	core->moveToThread(App::getInstance()->thread());
 	return core;
 }
 
 QSharedPointer<AccountDeviceCore> AccountDeviceCore::create(const std::shared_ptr<linphone::AccountDevice> &device) {
+	mustBeInLinphoneThread(Q_FUNC_INFO);
 	auto core = QSharedPointer<AccountDeviceCore>(new AccountDeviceCore(device));
 	core->moveToThread(App::getInstance()->thread());
 	return core;
@@ -49,9 +50,9 @@ QSharedPointer<AccountDeviceCore> AccountDeviceCore::create(const std::shared_pt
 AccountDeviceCore::AccountDeviceCore(const std::shared_ptr<linphone::AccountDevice> &device) : QObject(nullptr) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mustBeInLinphoneThread(getClassName());
-		
+	mAccountDeviceModel = Utils::makeQObject_ptr<AccountDeviceModel>(device);
 	mDeviceName = Utils::coreStringToAppString(device->getName());
-	mUserAgent =  Utils::coreStringToAppString(device->getUserAgent());
+	mUserAgent = Utils::coreStringToAppString(device->getUserAgent());
 	mLastUpdateTimestamp = QDateTime::fromSecsSinceEpoch(device->getLastUpdateTimestamp());
 }
 
@@ -59,6 +60,6 @@ AccountDeviceCore::~AccountDeviceCore() {
 	mustBeInMainThread("~" + getClassName());
 }
 
-void AccountDeviceCore::removeDevice() {
-	// TODO (core thread)
+const std::shared_ptr<AccountDeviceModel> &AccountDeviceCore::getModel() const {
+	return mAccountDeviceModel;
 }
