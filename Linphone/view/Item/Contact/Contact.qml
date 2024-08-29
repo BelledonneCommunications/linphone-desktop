@@ -15,6 +15,7 @@ Rectangle{
 
 	signal avatarClicked()
 	signal backgroundClicked()
+	signal edit()
 	
 	height: 45 * DefaultStyle.dp
 	MouseArea{
@@ -148,9 +149,10 @@ Rectangle{
 			width: 24 * DefaultStyle.dp
 			fillMode: Image.PreserveAspectFit
 			colorizationColor: DefaultStyle.main2_500main
-			MouseArea{ // TODO
+			MouseArea{
 				anchors.fill: parent
-				onClicked: console.log('TODO: Manage!')
+				onClicked: mainItem.edit()
+				cursorShape: Qt.PointingHandCursor
 			}
 		}
 	}

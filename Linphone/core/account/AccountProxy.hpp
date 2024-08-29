@@ -45,6 +45,7 @@ public:
 	void setDefaultAccount(AccountGui *account); // TODO
 	void resetDefaultAccount();                  // Reset the default account to let UI build its new object if needed.
 	Q_INVOKABLE AccountGui *findAccountByAddress(const QString &address);
+	Q_INVOKABLE AccountGui *firstAccount();
 
 	bool getHaveAccount() const;
 
@@ -52,6 +53,7 @@ signals:
 	void filterTextChanged();
 	void defaultAccountChanged();
 	void haveAccountChanged();
+	void accountRemoved(bool wasLast);
 
 protected:
 	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;

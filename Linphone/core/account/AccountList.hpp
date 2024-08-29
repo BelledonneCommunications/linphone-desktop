@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -44,6 +44,7 @@ public:
 	QSharedPointer<AccountCore> getDefaultAccountCore() const;
 	void setDefaultAccount(QSharedPointer<AccountCore> account);
 	AccountGui *findAccountByAddress(const QString &address);
+	AccountGui *firstAccount();
 
 	bool getHaveAccount() const;
 	void setHaveAccount(bool haveAccount);
@@ -53,6 +54,7 @@ signals:
 	void lUpdate();
 	void haveAccountChanged();
 	void defaultAccountChanged();
+	void accountRemoved(bool wasLast);
 
 private:
 	bool mHaveAccount = false;

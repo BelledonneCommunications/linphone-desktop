@@ -59,6 +59,11 @@ Item {
 		mainItem.contextualMenuOpenedComponent = undefined
 	}
 
+	function openAccountSettings(account: AccountGui) {
+		var page = accountSettingsPageComponent.createObject(parent, {"account": account});
+		openContextualMenuComponent(page)
+	}
+
 	AccountProxy {
 		id: accountProxy
 		onDefaultAccountChanged: if (tabbar.currentIndex === 0 && defaultAccount) defaultAccount.core.lResetMissedCalls()
@@ -394,6 +399,10 @@ Item {
 									id: accounts
 									accountProxy: accountProxy
 									onAddAccountRequest: mainItem.addAccountRequest()
+									onEditAccount: function(account) {
+										avatarButton.popup.close()
+										openAccountSettings(account)
+									}
 								}
 							}
 						}
@@ -444,7 +453,7 @@ Item {
 										iconSize: 32 * DefaultStyle.dp
 										text: qsTr("Mon compte")
 										iconSource: AppIcons.manageProfile
-										onClicked: openContextualMenuComponent(myAccountSettingsPageComponent)
+										onClicked: openAccountSettings(accountProxy.defaultAccount ? accountProxy.defaultAccount : accountProxy.firstAccount())
 										KeyNavigation.up: visibleChildren.length != 0 ? settingsButtons.getPreviousItem(0) : null
 										KeyNavigation.down: visibleChildren.length != 0 ? settingsButtons.getNextItem(0) : null
 									}
@@ -452,7 +461,6 @@ Item {
 										id: dndButton
 										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
-										focus: visible
 										iconSize: 32 * DefaultStyle.dp
 										text: SettingsCpp.dnd ? qsTr("Désactiver ne pas déranger") : qsTr("Activer ne pas déranger")
 										iconSource: AppIcons.bellDnd
@@ -559,9 +567,8 @@ Item {
 					}
 				}
 				Component {
-					id: myAccountSettingsPageComponent
+					id: accountSettingsPageComponent
 					AccountSettingsPage {
-						account: accountProxy.defaultAccount
 						onGoBack: closeContextualMenuComponent()
 					}
 				}

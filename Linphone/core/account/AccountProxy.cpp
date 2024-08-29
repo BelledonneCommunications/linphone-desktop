@@ -27,6 +27,7 @@ AccountProxy::AccountProxy(QObject *parent) : SortFilterProxy(parent) {
 	connect(mAccountList.get(), &AccountList::countChanged, this, &AccountProxy::resetDefaultAccount);
 	connect(mAccountList.get(), &AccountList::defaultAccountChanged, this, &AccountProxy::resetDefaultAccount);
 	connect(mAccountList.get(), &AccountList::haveAccountChanged, this, &AccountProxy::haveAccountChanged);
+	connect(mAccountList.get(), &AccountList::accountRemoved, this, &AccountProxy::accountRemoved);
 	setSourceModel(mAccountList.get());
 	sort(0);
 }
@@ -63,6 +64,10 @@ void AccountProxy::resetDefaultAccount() {
 
 AccountGui *AccountProxy::findAccountByAddress(const QString &address) {
 	return dynamic_cast<AccountList *>(sourceModel())->findAccountByAddress(address);
+}
+
+AccountGui *AccountProxy::firstAccount() {
+	return dynamic_cast<AccountList *>(sourceModel())->firstAccount();
 }
 
 bool AccountProxy::getHaveAccount() const {

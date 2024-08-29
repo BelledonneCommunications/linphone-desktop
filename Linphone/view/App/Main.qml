@@ -49,10 +49,9 @@ AppWindow {
 
 	AccountProxy {
 		id: accountProxy
-		onHaveAccountChanged: {
-			// this function can't be used like this. It will show the main page when
-			// trying to connect and then return to login page if connection fails.
-			// initStackViewItem()
+		onAccountRemoved:function (wasLast) {
+			if (wasLast) mainWindowStackView.replace(loginPage, StackView.Immediate)
+			else mainWindowStackView.replace(mainPage, StackView.Immediate)
 		}
 	}
 	StackView {

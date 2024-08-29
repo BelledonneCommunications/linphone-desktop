@@ -19,6 +19,8 @@ Item {
 	property AccountProxy accountProxy
 	
 	signal addAccountRequest()
+	signal editAccount(AccountGui account)
+
 	implicitHeight: list.contentHeight + topPadding + bottomPadding + 32 * DefaultStyle.dp + 1 + newAccountArea.height
 	ColumnLayout{
 		id: childLayout
@@ -42,6 +44,7 @@ Item {
 				account: modelData
 				onAvatarClicked: fileDialog.open()
 				onBackgroundClicked: modelData.core.lSetDefaultAccount()
+				onEdit: editAccount(modelData)
 				FileDialog {
 					id: fileDialog
 					currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
