@@ -36,7 +36,6 @@ CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *paren
 	mDurationTimer.setSingleShot(false);
 	connect(&mDurationTimer, &QTimer::timeout, this, [this]() { this->durationChanged(mMonitor->getDuration()); });
 	connect(&mDurationTimer, &QTimer::timeout, this, [this]() { this->qualityUpdated(mMonitor->getCurrentQuality()); });
-	mDurationTimer.start();
 
 	mMicroVolumeTimer.setInterval(50);
 	mMicroVolumeTimer.setSingleShot(false);
@@ -422,6 +421,7 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
                                const std::string &message) {
 	lDebug() << "CallModel::onStateChanged" << (int)state;
 	if (state == linphone::Call::State::StreamsRunning) {
+		mDurationTimer.start();
 		// After UpdatedByRemote, video direction could be changed.
 		auto params = call->getRemoteParams();
 		auto videoDirection = params ? params->getVideoDirection() : linphone::MediaDirection::Inactive;
@@ -432,6 +432,8 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		                              videoDirection == linphone::MediaDirection::SendRecv);
 		setConference(call->getConference());
 		updateConferenceVideoLayout();
+	} else if (state == linphone::Call::State::End) {
+		mDurationTimer.stop();
 	}
 	emit stateChanged(call, state, message);
 }
