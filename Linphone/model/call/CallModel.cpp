@@ -385,10 +385,11 @@ void CallModel::sendDtmf(const QString &dtmf) {
 	const char key = dtmf.constData()[0].toLatin1();
 	qInfo() << QStringLiteral("Send dtmf: `%1`.").arg(key);
 	if (mMonitor) mMonitor->sendDtmf(key);
-	CoreModel::getInstance()->getCore()->playDtmf(key, dtmfSoundDelay);
+	CoreModel::getInstance()->getCore()->playDtmf(key, gDtmfSoundDelay);
 }
 
 void CallModel::onDtmfReceived(const std::shared_ptr<linphone::Call> &call, int dtmf) {
+	CoreModel::getInstance()->getCore()->playDtmf(dtmf, gDtmfSoundDelay);
 	emit dtmfReceived(call, dtmf);
 }
 

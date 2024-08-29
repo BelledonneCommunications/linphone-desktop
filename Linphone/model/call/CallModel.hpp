@@ -113,7 +113,7 @@ private:
 	QTimer mMicroVolumeTimer;
 	std::shared_ptr<linphone::Conference> mConference;
 	LinphoneEnums::ConferenceLayout mConferenceVideoLayout;
-	static constexpr int dtmfSoundDelay = 200;
+	static constexpr int gDtmfSoundDelay = 200;
 
 	DECLARE_ABSTRACT_OBJECT
 
