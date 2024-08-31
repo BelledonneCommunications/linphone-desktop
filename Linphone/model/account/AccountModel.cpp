@@ -88,6 +88,7 @@ void AccountModel::setDefault() {
 
 void AccountModel::removeAccount() {
 	CoreModel::getInstance()->getCore()->removeAccount(mMonitor);
+	emit removed();
 }
 
 void AccountModel::resetMissedCallsCount() {

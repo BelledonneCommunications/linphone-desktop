@@ -23,6 +23,7 @@ Item {
 	signal openNumPadRequest()
 	signal displayContactRequested(string contactAddress)
 	signal createContactRequested(string name, string address)
+	signal accountRemoved()
 
 	function goToNewCall() {
 		tabbar.currentIndex = 0
@@ -570,6 +571,7 @@ Item {
 					id: accountSettingsPageComponent
 					AccountSettingsPage {
 						onGoBack: closeContextualMenuComponent()
+						onAccountRemoved: mainItem.accountRemoved()
 					}
 				}
 				Component {

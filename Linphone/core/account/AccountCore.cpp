@@ -172,6 +172,8 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToModel(&AccountModel::limeServerUrlChanged, [this](QString value) {
 		mAccountModelConnection->invokeToCore([this, value]() { onLimeServerUrlChanged(value); });
 	});
+	mAccountModelConnection->makeConnectToModel(
+	    &AccountModel::removed, [this]() { mAccountModelConnection->invokeToCore([this]() { emit removed(); }); });
 
 	// From GUI
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetPictureUri, [this](QString uri) {

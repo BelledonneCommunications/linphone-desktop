@@ -92,6 +92,7 @@ signals:
 	void conferenceFactoryAddressChanged(QString value);
 	void audioVideoConferenceFactoryAddressChanged(QString value);
 	void limeServerUrlChanged(QString value);
+	void removed();
 
 private:
 	DECLARE_ABSTRACT_OBJECT

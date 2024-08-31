@@ -165,6 +165,7 @@ signals:
 	void conferenceFactoryAddressChanged();
 	void audioVideoConferenceFactoryAddressChanged();
 	void limeServerUrlChanged();
+	void removed();
 
 	// Account requests
 	void lSetPictureUri(QString pictureUri);

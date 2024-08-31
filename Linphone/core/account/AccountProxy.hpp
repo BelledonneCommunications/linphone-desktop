@@ -53,7 +53,6 @@ signals:
 	void filterTextChanged();
 	void defaultAccountChanged();
 	void haveAccountChanged();
-	void accountRemoved(bool wasLast);
 
 protected:
 	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;

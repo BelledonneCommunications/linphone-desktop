@@ -84,17 +84,6 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 	mModelConnection->makeConnectToModel(&CoreModel::accountAdded, &AccountList::lUpdate);
 
 	lUpdate();
-
-	mModelConnection->makeConnectToModel(
-	    &CoreModel::accountRemoved,
-	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
-		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		    bool wasLast = CoreModel::getInstance()->getCore()->getAccountList().size() == 0;
-		    mModelConnection->invokeToCore([this, wasLast]() {
-			    mustBeInMainThread(log().arg(Q_FUNC_INFO));
-			    emit accountRemoved(wasLast);
-		    });
-	    });
 }
 
 QSharedPointer<AccountCore> AccountList::getDefaultAccountCore() const {

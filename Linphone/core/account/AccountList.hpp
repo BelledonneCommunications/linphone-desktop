@@ -54,7 +54,6 @@ signals:
 	void lUpdate();
 	void haveAccountChanged();
 	void defaultAccountChanged();
-	void accountRemoved(bool wasLast);
 
 private:
 	bool mHaveAccount = false;

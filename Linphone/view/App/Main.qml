@@ -49,10 +49,6 @@ AppWindow {
 
 	AccountProxy {
 		id: accountProxy
-		onAccountRemoved:function (wasLast) {
-			if (wasLast) mainWindowStackView.replace(loginPage, StackView.Immediate)
-			else mainWindowStackView.replace(mainPage, StackView.Immediate)
-		}
 	}
 	StackView {
 		id: mainWindowStackView
@@ -155,6 +151,9 @@ AppWindow {
 		id: mainPage
 		MainLayout {
 			onAddAccountRequest: mainWindowStackView.replace(loginPage)
+			onAccountRemoved: {
+				initStackViewItem()
+			}
 			// StackView.onActivated: connectionSecured(0) // TODO : connect to cpp part when ready
 		}
 	}
