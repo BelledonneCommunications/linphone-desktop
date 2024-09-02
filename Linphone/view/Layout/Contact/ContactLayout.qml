@@ -148,7 +148,6 @@ ColumnLayout {
 			Layout.alignment: Qt.AlignHCenter
 			text: qsTr("Rejoindre la réunion")
 			color: DefaultStyle.main2_200
-			pressedColor: DefaultStyle.main2_400
 			textColor: DefaultStyle.main2_600
 			onClicked: {
 				if (mainItem.conferenceInfo) {

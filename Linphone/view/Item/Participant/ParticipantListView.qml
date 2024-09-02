@@ -85,7 +85,6 @@ ListView {
 					Layout.preferredWidth: 20 * DefaultStyle.dp
 					Layout.preferredHeight: 20 * DefaultStyle.dp
 					color: DefaultStyle.main2_100
-					pressedColor: DefaultStyle.main2_200
 					icon.source: AppIcons.closeX
 					icon.width: 14 * DefaultStyle.dp
 					icon.height: 14 * DefaultStyle.dp

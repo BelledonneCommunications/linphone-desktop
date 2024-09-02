@@ -149,7 +149,6 @@ ListView {
 							height: 30 * DefaultStyle.dp
 							radius: 50 * DefaultStyle.dp
 							color: isSelectedDay ? DefaultStyle.main1_500_main : "transparent"
-							border.color: DefaultStyle.main1_500_main_darker
 							border.width: focusDay.activeFocus || hoveringArea.containsMouse ? 1 : 0
 							
 						}

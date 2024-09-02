@@ -8,9 +8,9 @@ Control.Button {
 	id: mainItem
 	property int capitalization
 	property color color: DefaultStyle.main1_500_main
-	property color disabledColor: DefaultStyle.main1_500_main_darker
-	property color borderColor: "transparent"
-	property color pressedColor: DefaultStyle.main1_500_main_darker
+	property color disabledColor: Qt.darker(color, 1.5)
+	property color borderColor: DefaultStyle.grey_0
+	readonly property color pressedColor: Qt.darker(color, 1.1)
 	property bool inversedColors: false
 	property int textSize: 18 * DefaultStyle.dp
 	property int textWeight: 600 * DefaultStyle.dp

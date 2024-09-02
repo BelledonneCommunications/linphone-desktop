@@ -80,7 +80,6 @@ Notification {
 				spacing: 26 * DefaultStyle.dp
 				Button {
 					color: DefaultStyle.success_500main
-					pressedColor: DefaultStyle.success_500main_darker
 					Layout.preferredWidth: 75 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
 					contentItem: EffectImage {

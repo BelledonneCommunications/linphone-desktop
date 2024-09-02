@@ -58,7 +58,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 			if (!defaultAccount) return;
 			std::list<std::shared_ptr<linphone::ConferenceInfo>> conferenceInfos =
-			   defaultAccount->getConferenceInformationList();
+			    defaultAccount->getConferenceInformationList();
 			items->push_back(nullptr); // Add Dummy conference for today
 			for (auto conferenceInfo : conferenceInfos) {
 				auto confInfoCore = build(conferenceInfo);
@@ -103,14 +103,10 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 		    }
 	    });
 	mCoreModelConnection->makeConnectToModel(
-	    &CoreModel::callCreated, [this](const std::shared_ptr<linphone::Call> &call) {
-		    lDebug() << "call created" << Utils::coreStringToAppString(call->getRemoteAddress()->asString());
-	    });
-	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::conferenceInfoReceived,
 	    [this](const std::shared_ptr<linphone::Core> &core,
 	           const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
-		    lDebug() << "info received" << conferenceInfo->getOrganizer()->asStringUriOnly()
+		    lDebug() << log().arg("conference info received") << conferenceInfo->getOrganizer()->asStringUriOnly()
 		             << conferenceInfo->getSubject();
 	    });
 	emit lUpdate();

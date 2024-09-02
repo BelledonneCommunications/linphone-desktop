@@ -140,7 +140,11 @@ void Utils::setupConference(ConferenceInfoGui *confGui) {
 }
 
 void Utils::openCallsWindow(CallGui *call) {
-	if (call) App::getInstance()->getCallsWindow(QVariant::fromValue(call))->show();
+	if (call) {
+		auto window = App::getInstance()->getCallsWindow(QVariant::fromValue(call));
+		window->show();
+		window->raise();
+	}
 }
 
 QQuickWindow *Utils::getCallsWindow(CallGui *callGui) {

@@ -12,7 +12,7 @@ Item{
 	property int textSize: 14 * DefaultStyle.dp
 	property int textWeight: 400 * DefaultStyle.dp
 	property color backgroundColor: DefaultStyle.grey_0
-	property color backgroundPressedColor: DefaultStyle.main2_100
+	readonly property color backgroundPressedColor: Qt.darker(backgroundColor, 1.1)
 	property int radius: 5 * DefaultStyle.dp
 	property bool shadowEnabled: mainItem.activeFocus//  || containsMouse
 	property alias containsMouse: mouseArea.containsMouse

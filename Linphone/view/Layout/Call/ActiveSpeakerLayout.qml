@@ -83,7 +83,6 @@ Item{
 						Button {
 							color: "transparent"
 							borderColor: DefaultStyle.main2_400
-							pressedColor: DefaultStyle.main2_500main
 							icon.source: AppIcons.shareNetwork
 							contentImageColor: DefaultStyle.main2_400
 							text: qsTr("Share invitation")

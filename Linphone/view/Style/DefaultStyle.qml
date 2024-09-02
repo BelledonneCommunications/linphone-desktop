@@ -4,7 +4,6 @@ import QtQuick 2.15
 QtObject {
 	property color main1_100: "#FFEACB"
 	property color main1_500_main: "#FE5E00"
-	property color main1_500_main_darker: "#C94C02"
 
 	property color main2_0: "#FAFEFF"
 	property color main2_100: "#EEF6F8"
@@ -29,7 +28,6 @@ QtObject {
 	property color warning_600: "#DBB820"
 	property color danger_500main: "#DD5F5F"
 	property color success_500main: "#4FAE80"
-	property color success_500main_darker: "#3F8C67"
 	property color info_500_main: "#4AA8FF"
 
 	property color vue_meter_light_green: "#6FF88D"

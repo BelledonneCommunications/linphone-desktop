@@ -69,15 +69,37 @@ Item {
 		id: accountProxy
 		onDefaultAccountChanged: if (tabbar.currentIndex === 0 && defaultAccount) defaultAccount.core.lResetMissedCalls()
 	}
-
-	Timer {
-		id: autoClosePopup
-		interval: 5000
-		onTriggered: {
-			transferSucceedPopup.close()
-		} 
+	CallProxy {
+		id: callsModel
 	}
+
+
 	Item{
+		Popup {
+			id: currentCallNotif
+			background: Item{}
+			closePolicy: Control.Popup.NoAutoClose
+			visible: currentCall 
+				&& currentCall.core.state != LinphoneEnums.CallState.Idle 
+				&& currentCall.core.state != LinphoneEnums.CallState.IncomingReceived
+				&& currentCall.core.state != LinphoneEnums.CallState.PushIncomingReceived
+			x: mainItem.width/2 - width/2
+			y: contentItem.height/2
+			property var currentCall: callsModel.currentCall ? callsModel.currentCall : null
+			property var peerNameObj: currentCall ? UtilsCpp.getDisplayName(currentCall.core.peerAddress) : null
+			property string peerName:peerNameObj ? peerNameObj.value : ""
+			contentItem: Button {
+				text: currentCallNotif.currentCall 
+				? currentCallNotif.currentCall.core.conference
+					? ("Réunion en cours : ") + currentCallNotif.currentCall.core.conference.core.subject
+					: (("Appel en cours : ") + currentCallNotif.peerName) : "appel en cours"
+				color: DefaultStyle.success_500main
+				onClicked: {
+					var callsWindow = UtilsCpp.getCallsWindow(currentCallNotif.currentCall)
+					UtilsCpp.smartShowWindow(callsWindow)
+				}
+			}
+		}
 		anchors.fill: parent
 		ColumnLayout{
 			anchors.fill: parent

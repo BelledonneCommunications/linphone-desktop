@@ -39,6 +39,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	
 	view/Item/Notification/Notification.qml
 	view/Item/Notification/NotificationReceivedCall.qml
+	view/Item/Notification/TemporaryNotification.qml
 
 	view/Item/Participant/ParticipantDeviceListView.qml
 	view/Item/Participant/ParticipantListView.qml
