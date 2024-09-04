@@ -225,6 +225,8 @@ void CoreModel::onAccountAdded(const std::shared_ptr<linphone::Core> &core,
 }
 void CoreModel::onAccountRemoved(const std::shared_ptr<linphone::Core> &core,
                                  const std::shared_ptr<linphone::Account> &account) {
+	if (core->getDefaultAccount() == nullptr && core->getAccountList().size() > 0)
+		core->setDefaultAccount(core->getAccountList().front());
 	emit accountRemoved(core, account);
 }
 void CoreModel::onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
