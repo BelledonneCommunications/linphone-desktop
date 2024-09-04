@@ -55,6 +55,20 @@ void AccountModel::onRegistrationStateChanged(const std::shared_ptr<linphone::Ac
 	emit registrationStateChanged(account, state, message);
 }
 
+void AccountModel::onMessageWaitingIndicationChanged(
+    const std::shared_ptr<linphone::Account> &account,
+    const std::shared_ptr<const linphone::MessageWaitingIndication> &mwi) {
+	for (auto summary : mwi->getSummaries()) {
+		qInfo() << "[MWI] new" << summary->getNbNew() << "new+urgent" << summary->getNbNewUrgent() << "old"
+		        << summary->getNbOld() << "old+urgent" << summary->getNbOldUrgent();
+		auto userData = getUserData(account);
+		if (!userData) userData = std::make_shared<AccountUserData>();
+		userData->voicemailCount = summary->getNbNew();
+		setUserData(account, userData);
+		emit voicemailCountChanged(summary->getNbNew());
+	}
+}
+
 void AccountModel::setPictureUri(QString uri) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
@@ -71,8 +85,8 @@ void AccountModel::setPictureUri(QString uri) {
 	mMonitor->setParams(params);
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit pictureUriChanged(uri);
-	emit CoreModel::getInstance()->defaultAccountChanged(CoreModel::getInstance()->getCore(),
-	                                                     CoreModel::getInstance()->getCore()->getDefaultAccount());
+	auto core = CoreModel::getInstance()->getCore();
+	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::onDefaultAccountChanged() {
@@ -88,6 +102,7 @@ void AccountModel::setDefault() {
 
 void AccountModel::removeAccount() {
 	CoreModel::getInstance()->getCore()->removeAccount(mMonitor);
+	removeUserData(mMonitor);
 	emit removed();
 }
 
@@ -282,4 +297,29 @@ QString AccountModel::dialPlanAsString(const std::shared_ptr<linphone::DialPlan>
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return Utils::coreStringToAppString(dialPlan->getFlag() + " " + dialPlan->getCountry() + " | +" +
 	                                    dialPlan->getCountryCallingCode());
+}
+
+int AccountModel::getVoicemailCount() {
+	auto userData = getUserData(mMonitor);
+	if (userData) return userData->voicemailCount;
+	else return 0;
+}
+
+// UserData (see hpp for explanations)
+
+static QMap<const std::shared_ptr<linphone::Account>, std::shared_ptr<AccountUserData>> userDataMap;
+
+void AccountModel::setUserData(const std::shared_ptr<linphone::Account> &account,
+                               std::shared_ptr<AccountUserData> &data) {
+	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+	userDataMap[account] = data;
+}
+std::shared_ptr<AccountUserData> AccountModel::getUserData(const std::shared_ptr<linphone::Account> &account) {
+	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+	if (userDataMap.contains(account)) return userDataMap.value(account);
+	else return nullptr;
+}
+void AccountModel::removeUserData(const std::shared_ptr<linphone::Account> &account) {
+	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+	userDataMap.remove(account);
 }

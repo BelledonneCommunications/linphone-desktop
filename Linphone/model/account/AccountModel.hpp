@@ -27,6 +27,8 @@
 #include <QObject>
 #include <linphone++/linphone.hh>
 
+struct AccountUserData;
+
 class AccountModel : public ::Listener<linphone::Account, linphone::AccountListener>,
                      public linphone::AccountListener,
                      public AbstractObject {
@@ -38,6 +40,10 @@ public:
 	virtual void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
 	                                        linphone::RegistrationState state,
 	                                        const std::string &message) override;
+	virtual void
+	onMessageWaitingIndicationChanged(const std::shared_ptr<linphone::Account> &account,
+	                                  const std::shared_ptr<const linphone::MessageWaitingIndication> &mwi) override;
+
 	void onDefaultAccountChanged();
 
 	std::string getConfigAccountUiSection();
@@ -67,6 +73,7 @@ public:
 	void setAudioVideoConferenceFactoryAddress(QString value);
 	void setLimeServerUrl(QString value);
 	QString dialPlanAsString(const std::shared_ptr<linphone::DialPlan> &dialPlan);
+	int getVoicemailCount();
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
@@ -93,9 +100,24 @@ signals:
 	void audioVideoConferenceFactoryAddressChanged(QString value);
 	void limeServerUrlChanged(QString value);
 	void removed();
+	void voicemailCountChanged(int count);
 
 private:
+	// UserData
+	static void setUserData(const std::shared_ptr<linphone::Account> &account, std::shared_ptr<AccountUserData> &data);
+	static std::shared_ptr<AccountUserData> getUserData(const std::shared_ptr<linphone::Account> &account);
+	static void removeUserData(const std::shared_ptr<linphone::Account> &account);
+
 	DECLARE_ABSTRACT_OBJECT
+};
+
+// UserData : user data storage for linphone account information, that cannot be retrieved from Linphone account object
+// through API, but received through listeners (example MWI/Voicemail count). Usually this is done using (s/g)etUserData
+// on Linphone Objects on other wrappers, but not available in C++ Wrapper.
+
+struct AccountUserData {
+	int voicemailCount;
+	// ..
 };
 
 #endif

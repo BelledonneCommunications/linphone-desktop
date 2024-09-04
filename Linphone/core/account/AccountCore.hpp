@@ -71,6 +71,7 @@ class AccountCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString audioVideoConferenceFactoryAddress READ getAudioVideoConferenceFactoryAddress WRITE
 	               lSetAudioVideoConferenceFactoryAddress NOTIFY audioVideoConferenceFactoryAddressChanged)
 	Q_PROPERTY(QString limeServerUrl READ getLimeServerUrl WRITE lSetLimeServerUrl NOTIFY limeServerUrlChanged)
+	DECLARE_CORE_GET(int, voicemailCount, VoicemailCount)
 
 public:
 	static QSharedPointer<AccountCore> create(const std::shared_ptr<linphone::Account> &account);

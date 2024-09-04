@@ -106,7 +106,7 @@ Rectangle{
 			Layout.preferredHeight: 26 * DefaultStyle.dp
 			Layout.fillHeight: true
 			Layout.leftMargin: 40 * DefaultStyle.dp
-			visible: mainItem.account.core.unreadCallNotifications > 0
+			visible: true // mainItem.account.core.unreadCallNotifications > 0
 			Rectangle{
 				id: unreadNotifications
 				anchors.verticalCenter: parent.verticalCenter
@@ -136,6 +136,19 @@ Rectangle{
 				shadowEnabled: true
 				shadowBlur: 0.1
 				shadowOpacity: 0.15
+			}
+		}
+		Voicemail {
+			Layout.leftMargin: 18 * DefaultStyle.dp
+			Layout.rightMargin: 20 * DefaultStyle.dp
+			Layout.preferredWidth: 27 * DefaultStyle.dp
+			Layout.preferredHeight: 28 * DefaultStyle.dp
+			voicemailCount: mainItem.account.core.voicemailCount >= 100 ? '99+' : mainItem.account.core.voicemailCount
+			onClicked: {
+				if (mainItem.account.core.mwiServerAddress.length > 0)
+					UtilsCpp.createCall(mainItem.account.core.mwiServerAddress)
+				else
+					UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("L'adresse de la messagerie vocale n'est pas définie."), false)
 			}
 		}
 		Item{Layout.fillWidth: true}

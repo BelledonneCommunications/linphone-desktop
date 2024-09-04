@@ -52,10 +52,7 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mRegisterEnabled = params->registerEnabled();
 	mMwiServerAddress =
 	    params->getMwiServerAddress() ? Utils::coreStringToAppString(params->getMwiServerAddress()->asString()) : "";
-	mTransports << "TCP"
-	            << "UDP"
-	            << "TLS"
-	            << "DTLS";
+	mTransports << "TCP" << "UDP" << "TLS" << "DTLS";
 	mTransport = LinphoneEnums::toString(LinphoneEnums::fromLinphone(params->getTransport()));
 	mServerAddress =
 	    params->getServerAddress() ? Utils::coreStringToAppString(params->getServerAddress()->asString()) : "";
@@ -87,6 +84,8 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 			mDialPlan = mAccountModel->dialPlanAsString(dialPlan);
 		}
 	}
+
+	INIT_CORE_MEMBER(VoicemailCount, mAccountModel)
 }
 
 AccountCore::~AccountCore() {
@@ -255,6 +254,9 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetLimeServerUrl, [this](QString value) {
 		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setLimeServerUrl(value); });
 	});
+
+	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, int, voicemailCount,
+	                        VoicemailCount)
 }
 
 const std::shared_ptr<AccountModel> &AccountCore::getModel() const {

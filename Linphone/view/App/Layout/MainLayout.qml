@@ -406,6 +406,30 @@ Item {
 								}
 							}
 						}
+						Voicemail {
+							id: voicemail
+							Layout.preferredWidth: 27 * DefaultStyle.dp
+							Layout.preferredHeight: 28 * DefaultStyle.dp
+							
+							function cumulatedVoicemailCount() {
+								var count = 0
+								for (var i=0 ; i < accountProxy.count ; i++ )
+									count += accountProxy.getAt(i).core.voicemailCount
+								return count
+							}
+							
+							voicemailCount: cumulatedVoicemailCount()
+							onClicked: {
+								if (accountProxy.count > 1) {
+									avatarButton.popup.open()
+								} else {
+									if (accountProxy.defaultAccount.core.mwiServerAddress.length > 0)
+										UtilsCpp.createCall(accountProxy.defaultAccount.core.mwiServerAddress)
+									else
+										UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("L'adresse de la messagerie vocale n'est pas définie."), false)
+								}
+							}
+						}
 						PopupButton {
 							id: avatarButton
 							Layout.preferredWidth: 54 * DefaultStyle.dp

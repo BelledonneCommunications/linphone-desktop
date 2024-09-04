@@ -67,6 +67,11 @@ public:                                                                         
 	Q_SIGNAL void x##Changed();                                                                                        \
 	type m##X;
 
+#define DECLARE_CORE_GET(type, x, X)                                                                                   \
+	Q_PROPERTY(type x MEMBER m##X NOTIFY x##Changed)                                                                   \
+	Q_SIGNAL void x##Changed();                                                                                        \
+	type m##X;
+
 #define DECLARE_GETSET(type, x, X)                                                                                     \
 	type get##X() const;                                                                                               \
 	void set##X(type data);                                                                                            \
@@ -83,6 +88,14 @@ public:                                                                         
 				m##X = data;                                                                                           \
 				emit x##Changed();                                                                                     \
 			}                                                                                                          \
+		});                                                                                                            \
+	});
+
+#define DEFINE_CORE_GET_CONNECT(safe, CoreClass, ModelClass, model, type, x, X)                                        \
+	safe->makeConnectToModel(&ModelClass::x##Changed, [this](type data) {                                              \
+		safe->invokeToCore([this, data]() {                                                                            \
+			m##X = data;                                                                                               \
+			emit x##Changed();                                                                                         \
 		});                                                                                                            \
 	});
 

@@ -52,6 +52,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Contact/ContactEdition.qml
 	view/Item/Contact/ContactsList.qml
 	view/Item/Contact/Sticker.qml
+	view/Item/Contact/Voicemail.qml
 
 	view/Item/Meeting/MeetingList.qml
 	view/Item/Meeting/MeetingSetUp.qml
