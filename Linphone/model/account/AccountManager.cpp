@@ -132,7 +132,8 @@ bool AccountManager::login(QString username,
 void AccountManager::registerNewAccount(const QString &username,
                                         const QString &password,
                                         RegisterType type,
-                                        const QString &registerAddress) {
+                                        const QString &registerAddress,
+                                        QString lastToken) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (!mAccountManagerServicesModel) {
 		auto core = CoreModel::getInstance()->getCore();
@@ -163,7 +164,7 @@ void AccountManager::registerNewAccount(const QString &username,
 		    } else if (request->getType() == linphone::AccountManagerServicesRequest::Type::
 		                                         AccountCreationTokenFromAccountCreationRequestToken) {
 			    qDebug() << "[AccountManager] request token conversion succeed" << data;
-			    emit tokenConversionSucceed();
+			    emit tokenConversionSucceed(Utils::coreStringToAppString(data));
 			    timer.stop();
 			    mAccountManagerServicesModel->createAccountUsingToken(Utils::appStringToCoreString(username),
 			                                                          Utils::appStringToCoreString(password), data);
@@ -253,7 +254,14 @@ void AccountManager::registerNewAccount(const QString &username,
 			    }
 		    }
 	    });
-	mAccountManagerServicesModel->requestToken();
+	if (lastToken.isEmpty()) {
+		mAccountManagerServicesModel->requestToken();
+	} else {
+		emit tokenConversionSucceed(lastToken);
+		mAccountManagerServicesModel->createAccountUsingToken(Utils::appStringToCoreString(username),
+		                                                      Utils::appStringToCoreString(password),
+		                                                      Utils::appStringToCoreString(lastToken));
+	}
 }
 
 void AccountManager::linkNewAccountUsingCode(const QString &code,

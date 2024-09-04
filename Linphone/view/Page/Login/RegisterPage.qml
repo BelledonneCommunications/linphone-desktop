@@ -20,6 +20,10 @@ LoginLayout {
 			else if (field == "password") pwdItem.errorMessage = errorMessage
 			else if (field == "phone") phoneNumberInput.errorMessage = errorMessage
 			else if (field == "email") emailItem.errorMessage = errorMessage
+			else otherErrorText.text = errorMessage
+		}
+		function onRegisterNewAccountFailed(errorMessage) {
+			otherErrorText.text = errorMessage
 		}
 	}
 
@@ -142,36 +146,47 @@ LoginLayout {
 							}
 						}
 					}
-					RowLayout {
-						spacing: 16 * DefaultStyle.dp
-						ColumnLayout {
-							spacing: 5 * DefaultStyle.dp
-							FormItemLayout {
-								id: passwordItem
-								label: qsTr("Mot de passe")
-								mandatory: true
-								enableErrorText: true
-								contentItem: TextField {
-									id: pwdInput
-									hidden: true
-									Layout.preferredWidth: 346 * DefaultStyle.dp
-									backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
+					ColumnLayout {
+						spacing: 0
+						Layout.preferredHeight: rowlayout.height
+						clip: false
+						RowLayout {
+							id: rowlayout
+							spacing: 16 * DefaultStyle.dp
+							ColumnLayout {
+								spacing: 5 * DefaultStyle.dp
+								FormItemLayout {
+									id: passwordItem
+									label: qsTr("Mot de passe")
+									mandatory: true
+									enableErrorText: true
+									contentItem: TextField {
+										id: pwdInput
+										hidden: true
+										Layout.preferredWidth: 346 * DefaultStyle.dp
+										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
+									}
+								}
+							}
+							ColumnLayout {
+								spacing: 5 * DefaultStyle.dp
+								FormItemLayout {
+									label: qsTr("Confirmation mot de passe")
+									mandatory: true
+									enableErrorText: true
+									contentItem: TextField {
+										id: confirmPwdInput
+										hidden: true
+										Layout.preferredWidth: 346 * DefaultStyle.dp
+										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
+									}
 								}
 							}
 						}
-						ColumnLayout {
-							spacing: 5 * DefaultStyle.dp
-							FormItemLayout {
-								label: qsTr("Confirmation mot de passe")
-								mandatory: true
-								enableErrorText: true
-								contentItem: TextField {
-									id: confirmPwdInput
-									hidden: true
-									Layout.preferredWidth: 346 * DefaultStyle.dp
-									backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
-								}
-							}
+						ErrorText {
+							id: otherErrorText
+							Layout.fillWidth: true
+							Layout.topMargin: 5 * DefaultStyle.dp
 						}
 					}
 				}
@@ -194,80 +209,81 @@ LoginLayout {
 				// 			}
 				// 		}
 				// 	}
-				RowLayout {
-					spacing: 10 * DefaultStyle.dp
-					CheckBox {
-						id: termsCheckBox
-					}
+
 					RowLayout {
-						spacing: 0
-						Layout.fillWidth: true
-						Text {
-							text: qsTr("J'accepte les ")
-							font {
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
-							}
-							MouseArea {
-								anchors.fill: parent
-								onClicked: termsCheckBox.toggle()
-							}
+						spacing: 10 * DefaultStyle.dp
+						CheckBox {
+							id: termsCheckBox
 						}
-						Text {
-							activeFocusOnTab: true
-							font {
-								underline: true
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
-								bold: activeFocus
-							}
-							text: qsTr("conditions d’utilisation")
-							Keys.onPressed: (event)=> {
-								if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-									cguMouseArea.clicked(undefined)
-									event.accepted = true;
+						RowLayout {
+							spacing: 0
+							Layout.fillWidth: true
+							Text {
+								text: qsTr("J'accepte les ")
+								font {
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+								}
+								MouseArea {
+									anchors.fill: parent
+									onClicked: termsCheckBox.toggle()
 								}
 							}
-							MouseArea {
-								id: cguMouseArea
-								anchors.fill: parent
-								hoverEnabled: true
-								cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-								onClicked: Qt.openUrlExternally(ConstantsCpp.CguUrl)
-							}
-						}
-						Text {
-							text: qsTr(" et la ")
-							font {
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
-							}
-						}
-						Text {
-							activeFocusOnTab: true
-							font {
-								underline: true
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
-								bold: activeFocus
-							}
-							text: qsTr("politique de confidentialité.")
-							Keys.onPressed: (event)=> {
-								if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-									privateMouseArea.clicked(undefined)
-									event.accepted = true;
+							Text {
+								activeFocusOnTab: true
+								font {
+									underline: true
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+									bold: activeFocus
+								}
+								text: qsTr("conditions d’utilisation")
+								Keys.onPressed: (event)=> {
+									if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+										cguMouseArea.clicked(undefined)
+										event.accepted = true;
+									}
+								}
+								MouseArea {
+									id: cguMouseArea
+									anchors.fill: parent
+									hoverEnabled: true
+									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+									onClicked: Qt.openUrlExternally(ConstantsCpp.CguUrl)
 								}
 							}
-							MouseArea {
-								id: privateMouseArea
-								anchors.fill: parent
-								hoverEnabled: true
-								cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-								onClicked: Qt.openUrlExternally(ConstantsCpp.PrivatePolicyUrl)
+							Text {
+								text: qsTr(" et la ")
+								font {
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+								}
+							}
+							Text {
+								activeFocusOnTab: true
+								font {
+									underline: true
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+									bold: activeFocus
+								}
+								text: qsTr("politique de confidentialité.")
+								Keys.onPressed: (event)=> {
+									if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+										privateMouseArea.clicked(undefined)
+										event.accepted = true;
+									}
+								}
+								MouseArea {
+									id: privateMouseArea
+									anchors.fill: parent
+									hoverEnabled: true
+									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+									onClicked: Qt.openUrlExternally(ConstantsCpp.PrivatePolicyUrl)
+								}
 							}
 						}
 					}
-				}
 				// }
 				Button {
 					enabled: termsCheckBox.checked

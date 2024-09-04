@@ -61,6 +61,10 @@ private:
 	QSharedPointer<SafeConnection<RegisterPage, AccountManager>> mAccountManagerConnection;
 	std::shared_ptr<AccountManager> mAccountManager;
 	QString mErrorMessage;
+	// Usefull to skip token verification part if the account
+	// creation failed for an existing username
+	QString mLastRegisterAddress;
+	QString mLastConvertedToken;
 
 	DECLARE_ABSTRACT_OBJECT
 };

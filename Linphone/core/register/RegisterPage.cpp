@@ -65,8 +65,11 @@ void RegisterPage::registerNewAccount(const QString &username,
 		        });
 		connect(accountManager, &AccountManager::registerNewAccountFailed, this,
 		        [this, accountManager](const QString &errorMessage) mutable {
-			        App::postCoreAsync(
-			            [this, errorMessage, accountManager]() { emit registerNewAccountFailed(errorMessage); });
+			        App::postCoreAsync([this, errorMessage]() {
+				        mLastRegisterAddress.clear();
+				        mLastConvertedToken.clear();
+				        emit registerNewAccountFailed(errorMessage);
+			        });
 			        if (accountManager) {
 				        accountManager->deleteLater();
 				        accountManager = nullptr;
@@ -81,8 +84,16 @@ void RegisterPage::registerNewAccount(const QString &username,
 			        }
 		        });
 		connect(accountManager, &AccountManager::tokenConversionSucceed, this,
-		        [this, accountManager]() { App::postCoreAsync([this]() { emit tokenConversionSucceed(); }); });
-		accountManager->registerNewAccount(username, password, registerType, address);
+		        [this, accountManager, address](QString convertedToken) {
+			        App::postCoreAsync([this, convertedToken, address]() {
+				        mLastRegisterAddress = address;
+				        mLastConvertedToken = convertedToken;
+				        emit tokenConversionSucceed();
+			        });
+		        });
+		accountManager->registerNewAccount(username, password, registerType, address,
+		                                   QString::compare(mLastRegisterAddress, address) ? QString()
+		                                                                                   : mLastConvertedToken);
 	});
 }
 
@@ -92,7 +103,11 @@ void RegisterPage::linkNewAccountUsingCode(const QString &code,
 	App::postModelAsync([=]() {
 		auto accountManager = new AccountManager();
 		connect(accountManager, &AccountManager::linkingNewAccountWithCodeSucceed, this, [this, accountManager]() {
-			App::postCoreAsync([this]() { emit linkingNewAccountWithCodeSucceed(); });
+			App::postCoreAsync([this]() {
+				mLastRegisterAddress.clear();
+				mLastConvertedToken.clear();
+				emit linkingNewAccountWithCodeSucceed();
+			});
 			accountManager->deleteLater();
 		});
 		connect(accountManager, &AccountManager::linkingNewAccountWithCodeFailed, this,
