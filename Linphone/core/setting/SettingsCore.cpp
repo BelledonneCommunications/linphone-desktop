@@ -87,6 +87,10 @@ Settings::Settings(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(OnlyDisplaySipUriUsername, mSettingsModel)
 	INIT_CORE_MEMBER(DarkModeAllowed, mSettingsModel)
 	INIT_CORE_MEMBER(MaxAccount, mSettingsModel)
+	INIT_CORE_MEMBER(AssistantGoDirectlyToThirdPartySipAccountLogin, mSettingsModel)
+	INIT_CORE_MEMBER(AssistantThirdPartySipAccountDomain, mSettingsModel)
+	INIT_CORE_MEMBER(AssistantThirdPartySipAccountTransport, mSettingsModel)
+	INIT_CORE_MEMBER(AutoStart, mSettingsModel)
 }
 
 Settings::~Settings() {
@@ -294,6 +298,15 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 	                           DarkModeAllowed)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, int, maxAccount,
 	                           MaxAccount)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	                           assistantGoDirectlyToThirdPartySipAccountLogin,
+	                           AssistantGoDirectlyToThirdPartySipAccountLogin)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, QString,
+	                           assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, QString,
+	                           assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool, autoStart,
+	                           AutoStart)
 
 	auto coreModelConnection = QSharedPointer<SafeConnection<Settings, CoreModel>>(
 	    new SafeConnection<Settings, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);

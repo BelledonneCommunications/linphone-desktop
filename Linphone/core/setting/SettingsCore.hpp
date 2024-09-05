@@ -151,6 +151,13 @@ public:
 	DECLARE_CORE_GETSET(bool, onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
 	DECLARE_CORE_GETSET(bool, darkModeAllowed, DarkModeAllowed)
 	DECLARE_CORE_GETSET(int, maxAccount, MaxAccount)
+	DECLARE_CORE_GETSET(bool,
+	                    assistantGoDirectlyToThirdPartySipAccountLogin,
+	                    AssistantGoDirectlyToThirdPartySipAccountLogin)
+	DECLARE_CORE_GETSET(QString, assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
+	DECLARE_CORE_GETSET(QString, assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
+	DECLARE_CORE_GETSET(bool, autoStart, AutoStart)
+	bool getAutoStart() { return mAutoStart; };
 
 signals:
 

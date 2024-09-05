@@ -79,8 +79,10 @@ public:                                                                         
 	                        [this](type data) { safe->invokeToModel([this, data]() { model->set##X(data); }); });      \
 	safe->makeConnectToModel(&ModelClass::x##Changed, [this](type data) {                                              \
 		safe->invokeToCore([this, data]() {                                                                            \
-			m##X = data;                                                                                               \
-			emit x##Changed();                                                                                         \
+			if (m##X != data) {                                                                                        \
+				m##X = data;                                                                                           \
+				emit x##Changed();                                                                                     \
+			}                                                                                                          \
 		});                                                                                                            \
 	});
 
@@ -95,6 +97,21 @@ public:                                                                         
 			emit x##Changed(data);                                                                                     \
 		}                                                                                                              \
 	}
+
+#define DEFINE_GETSET_CONFIG_STRING(Class, x, X, key, def)                                                             \
+	QString Class::get##X() const {                                                                                    \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		return Utils::coreStringToAppString(mConfig->getString(UiSection, key, def));                                  \
+	}                                                                                                                  \
+	void Class::set##X(QString data) {                                                                                 \
+		if (get##X() != data) {                                                                                        \
+			mConfig->setString(UiSection, key, Utils::appStringToCoreString(data));                                    \
+			emit x##Changed(data);                                                                                     \
+		}                                                                                                              \
+	}
+
+#define DEFINE_NOTIFY_CONFIG_READY(x, X)                                                                               \
+		emit x##Changed(get##X());
 
 class AbstractObject {
 public:

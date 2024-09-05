@@ -136,6 +136,10 @@ public:
 	DECLARE_GETSET(bool, onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
 	DECLARE_GETSET(bool, darkModeAllowed, DarkModeAllowed)
 	DECLARE_GETSET(int, maxAccount, MaxAccount)
+	DECLARE_GETSET(bool, assistantGoDirectlyToThirdPartySipAccountLogin, AssistantGoDirectlyToThirdPartySipAccountLogin)
+	DECLARE_GETSET(QString, assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
+	DECLARE_GETSET(QString, assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
+	DECLARE_GETSET(bool, autoStart, AutoStart)
 
 signals:
 
@@ -171,6 +175,7 @@ signals:
 	void dndChanged(bool value);
 
 private:
+	void notifyConfigReady();
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;
 	int mCaptureGraphListenerCount = 0;
 	DECLARE_ABSTRACT_OBJECT

@@ -4,6 +4,7 @@ import QtQuick.Controls as Control
 import Linphone
 import ConstantsCpp
 import SettingsCpp
+import 'qrc:/Linphone/view/Tool/utils.js' as Utils
 
 LoginLayout {
 	id: mainItem
@@ -30,6 +31,7 @@ LoginLayout {
 					console.debug("[SIPLoginPage] User: return")
 					mainItem.goBack()
 				}
+				visible: !SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin
 			}
 			Image {
 				fillMode: Image.PreserveAspectFit
@@ -210,9 +212,16 @@ LoginLayout {
 					contentItem: TextField {
 						id: domainEdit
 						isError: domain.errorTextVisible
+                        initialText: SettingsCpp.assistantThirdPartySipAccountDomain
 						Layout.preferredWidth: 360 * DefaultStyle.dp
 						KeyNavigation.up: passwordEdit
 						KeyNavigation.down: displayName
+					}
+					Connections {
+						target: SettingsCpp
+						function onAssistantThirdPartySipAccountDomainChanged() {
+							domain.resetText()
+						}
 					}
 				}
 				FormItemLayout {
@@ -238,6 +247,9 @@ LoginLayout {
 							{text: "TLS", value: LinphoneEnums.TransportType.Tls},
 							{text: "DTLS", value: LinphoneEnums.TransportType.Dtls}
 						]
+                        currentIndex: Utils.findIndex(model, function (entry) {
+                            return entry === SettingsCpp.assistantThirdPartySipAccountTransport.toUpperCase()
+                        })
 					}
 				}
 			}
@@ -333,7 +345,7 @@ LoginLayout {
 	centerContent: [
 		Control.StackView {
 			id: rootStackView
-			initialItem: firstItem
+			initialItem: SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin ? secondItem : firstItem
 			anchors.top: parent.top
 			anchors.left: parent.left
 			anchors.bottom: parent.bottom

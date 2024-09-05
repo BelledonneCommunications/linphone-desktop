@@ -85,9 +85,167 @@
 DEFINE_ABSTRACT_OBJECT(App)
 
 #ifdef Q_OS_LINUX
+const QString AutoStartDirectory(QDir::homePath().append(QStringLiteral("/.config/autostart/")));
 const QString ApplicationsDirectory(QDir::homePath().append(QStringLiteral("/.local/share/applications/")));
 const QString IconsDirectory(QDir::homePath().append(QStringLiteral("/.local/share/icons/hicolor/scalable/apps/")));
+#elif defined(Q_OS_MACOS)
+const QString OsascriptExecutable(QStringLiteral("osascript"));
+#else
+const QString
+    AutoStartSettingsFilePath(QStringLiteral("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"));
 #endif
+
+// -----------------------------------------------------------------------------
+//		Autostart
+// -----------------------------------------------------------------------------
+
+#ifdef Q_OS_LINUX
+bool App::autoStartEnabled() {
+	const QString confPath(AutoStartDirectory + EXECUTABLE_NAME ".desktop");
+	QFile file(confPath);
+	if (!QDir(AutoStartDirectory).exists() || !file.exists()) return false;
+	if (!file.open(QFile::ReadOnly)) {
+		qWarning() << "Unable to open autostart file in read only: `" << confPath << "`.";
+		return false;
+	}
+
+	// Check if installation is done via Flatpak, AppImage, or classic package
+	// in order to check if there is a correct exec path for autostart
+
+	QString exec = getApplicationPath();
+
+	QTextStream in(&file);
+	QString autoStartConf = in.readAll();
+
+	int index = -1;
+	// check if the Exec part of the autostart ini file not corresponding to our executable (old desktop entry with
+	// wrong version in filename)
+	if (autoStartConf.indexOf(QString("Exec=" + exec + " ")) <
+	    0) { // On autostart, there is the option --iconified so there is one space.
+		// replace file
+		setAutoStart(true);
+	}
+
+	return true;
+}
+#elif defined(Q_OS_MACOS)
+static inline QString getMacOsBundlePath() {
+	QDir dir(QCoreApplication::applicationDirPath());
+	if (dir.dirName() != QLatin1String("MacOS")) return QString();
+
+	dir.cdUp();
+	dir.cdUp();
+
+	QString path(dir.path());
+	if (path.length() > 0 && path.right(1) == "/") path.chop(1);
+	return path;
+}
+
+static inline QString getMacOsBundleName() {
+	return QFileInfo(getMacOsBundlePath()).baseName();
+}
+
+bool App::autoStartEnabled() {
+	const QByteArray expectedWord(getMacOsBundleName().toUtf8());
+	if (expectedWord.isEmpty()) {
+		qInfo() << QStringLiteral("Application is not installed. Autostart unavailable.");
+		return false;
+	}
+
+	QProcess process;
+	process.start(OsascriptExecutable,
+	              {"-e", "tell application \"System Events\" to get the name of every login item"});
+	if (!process.waitForFinished()) {
+		qWarning() << QStringLiteral("Unable to execute properly: `%1` (%2).")
+		                  .arg(OsascriptExecutable)
+		                  .arg(process.errorString());
+		return false;
+	}
+
+	// TODO: Move in utils?
+	const QByteArray buf(process.readAll());
+	for (const char *p = buf.data(), *word = p, *end = p + buf.length(); p <= end; ++p) {
+		switch (*p) {
+			case ' ':
+			case '\r':
+			case '\n':
+			case '\t':
+			case '\0':
+				if (word != p) {
+					if (!strncmp(word, expectedWord, size_t(p - word))) return true;
+					word = p + 1;
+				}
+			default:
+				break;
+		}
+	}
+
+	return false;
+}
+#else
+bool App::autoStartEnabled() {
+	return QSettings(AutoStartSettingsFilePath, QSettings::NativeFormat).value(EXECUTABLE_NAME).isValid();
+}
+#endif // ifdef Q_OS_LINUX
+
+#ifdef Q_OS_LINUX
+
+void App::setAutoStart(bool enabled) {
+	if (enabled == mAutoStart) return;
+
+	QDir dir(AutoStartDirectory);
+	if (!dir.exists() && !dir.mkpath(AutoStartDirectory)) {
+		qWarning() << QStringLiteral("Unable to build autostart dir path: `%1`.").arg(AutoStartDirectory);
+		return;
+	}
+
+	const QString confPath(AutoStartDirectory + EXECUTABLE_NAME ".desktop");
+	if (generateDesktopFile(confPath, !enabled, true)) {
+		mAutoStart = enabled;
+	}
+}
+
+#elif defined(Q_OS_MACOS)
+
+void App::setAutoStart(bool enabled) {
+	if (enabled == mAutoStart) return;
+
+	if (getMacOsBundlePath().isEmpty()) {
+		qWarning() << QStringLiteral("Application is not installed. Unable to change autostart state.");
+		return;
+	}
+
+	if (enabled)
+		QProcess::execute(OsascriptExecutable,
+		                  {"-e", "tell application \"System Events\" to make login item at end with properties"
+		                         "{ path: \"" +
+		                             getMacOsBundlePath() + "\", hidden: false }"});
+	else
+		QProcess::execute(OsascriptExecutable, {"-e", "tell application \"System Events\" to delete login item \"" +
+		                                                  getMacOsBundleName() + "\""});
+
+	mAutoStart = enabled;
+}
+
+#else
+
+void App::setAutoStart(bool enabled) {
+	if (enabled == mAutoStart) return;
+
+	QSettings settings(AutoStartSettingsFilePath, QSettings::NativeFormat);
+	if (enabled) settings.setValue(EXECUTABLE_NAME, QDir::toNativeSeparators(applicationFilePath()));
+	else settings.remove(EXECUTABLE_NAME);
+
+	mAutoStart = enabled;
+}
+
+#endif // ifdef Q_OS_LINUX
+
+// -----------------------------------------------------------------------------
+//		End Autostart
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
 
 App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
@@ -121,6 +279,8 @@ App::App(int &argc, char *argv[])
 	               .arg(applicationVersion())
 	               .arg(Utils::getOsProduct())
 	               .arg(qVersion());
+
+	mAutoStart = autoStartEnabled();
 }
 
 App::~App() {
@@ -317,6 +477,10 @@ void App::initCore() {
 				        }
 			        },
 			        Qt::QueuedConnection);
+			    QObject::connect(mSettings.get(), &Settings::autoStartChanged, [this]() {
+				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+				    setAutoStart(mSettings->getAutoStart());
+			    });
 			    mEngine->load(url);
 		    });
 		    // coreModel.reset();
@@ -665,3 +829,7 @@ bool App::event(QEvent *event) {
 }
 
 #endif
+
+//-----------------------------------------------------------
+//		AutoStart
+//-----------------------------------------------------------

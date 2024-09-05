@@ -103,6 +103,7 @@ public:
 	void initCore();
 	void initCppInterfaces();
 	void restart();
+	bool autoStartEnabled();
 
 	void onLoggerInitialized();
 	void sendCommand();
@@ -134,6 +135,7 @@ signals:
 
 private:
 	void createCommandParser();
+	void setAutoStart(bool enabled);
 
 	QCommandLineParser *mParser = nullptr;
 	Thread *mLinphoneThread = nullptr;
@@ -143,6 +145,7 @@ private:
 	QSharedPointer<Settings> mSettings;
 	QSharedPointer<SafeConnection<App, CoreModel>> mCoreModelConnection;
 	QSharedPointer<SafeConnection<App, CliModel>> mCliModelConnection;
+	bool mAutoStart = false;
 
 	DECLARE_ABSTRACT_OBJECT
 };

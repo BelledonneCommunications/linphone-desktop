@@ -44,7 +44,22 @@ AppWindow {
 	function initStackViewItem() {
 		if (accountProxy.haveAccount) mainWindowStackView.replace(mainPage, StackView.Immediate)
 		else if (SettingsCpp.getFirstLaunch()) mainWindowStackView.replace(welcomePage, StackView.Immediate)
+		else if (SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin) mainWindowStackView.replace(sipLoginPage, StackView.Immediate)
 		else mainWindowStackView.replace(loginPage, StackView.Immediate)
+	}
+	
+	function goToLogin() {
+		if (SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin)
+			mainWindowStackView.replace(sipLoginPage)
+		else
+			mainWindowStackView.replace(loginPage)
+	}
+
+	Connections {
+		target: SettingsCpp
+		function onAssistantGoDirectlyToThirdPartySipAccountLoginChanged() {
+			initStackViewItem()
+		}
 	}
 
 	AccountProxy {
@@ -69,7 +84,7 @@ AppWindow {
 		id: welcomePage
 		WelcomePage {
 			onStartButtonPressed: {
-				mainWindowStackView.replace(loginPage)// Replacing the first item will destroy the old.
+				goToLogin() // Replacing the first item will destroy the old.
 				SettingsCpp.setFirstLaunch(false)
 			}
 		}
@@ -100,7 +115,7 @@ AppWindow {
 	Component {
 		id: registerPage
 		RegisterPage {
-			onReturnToLogin: mainWindowStackView.replace(loginPage)
+			onReturnToLogin: goToLogin()
 			onBrowserValidationRequested: mainWindow.showLoadingPopup(qsTr("Veuillez valider le captcha sur la page web"), true)
 			Connections {
 				target: RegisterPageCpp
@@ -125,7 +140,7 @@ AppWindow {
 			Connections {
 				target: RegisterPageCpp
 				function onLinkingNewAccountWithCodeSucceed() {
-					mainWindowStackView.replace(loginPage)
+					goToLogin()
 					mainWindow.showInformationPopup(qsTr("Compte créé"), qsTr("Le compte a été créé avec succès. Vous pouvez maintenant vous connecter"), true)
 				}
 				function onLinkingNewAccountWithCodeFailed(errorMessage) {
@@ -150,7 +165,7 @@ AppWindow {
 	Component {
 		id: mainPage
 		MainLayout {
-			onAddAccountRequest: mainWindowStackView.replace(loginPage)
+			onAddAccountRequest: goToLogin()
 			onAccountRemoved: {
 				initStackViewItem()
 			}

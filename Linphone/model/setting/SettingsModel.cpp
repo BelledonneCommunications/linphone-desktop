@@ -40,6 +40,23 @@ SettingsModel::SettingsModel(QObject *parent) : QObject(parent) {
 	if (mConfig->hasEntry(UiSection, "do_not_disturb") == 1) {
 		enableDnd(dndEnabled());
 	}
+	QObject::connect(
+	    CoreModel::getInstance().get(), &CoreModel::globalStateChanged, this,
+	    [this](const std::shared_ptr<linphone::Core> &core, linphone::GlobalState gstate, const std::string &message) {
+		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		    if (gstate == linphone::GlobalState::On) { // reached when misc|config-uri is set in config and app starts
+			                                           // and after config is fetched.
+			    notifyConfigReady();
+		    }
+	    });
+	QObject::connect(CoreModel::getInstance().get(), &CoreModel::configuringStatus, this,
+	                 [this](const std::shared_ptr<linphone::Core> &core, linphone::ConfiguringState status,
+	                        const std::string &message) {
+		                 mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		                 if (status == linphone::ConfiguringState::Successful) {
+			                 notifyConfigReady();
+		                 }
+	                 });
 }
 
 SettingsModel::~SettingsModel() {
@@ -460,38 +477,91 @@ bool SettingsModel::getShowChats() const {
     return mConfig->getBool(UiSection, "disable_chat_feature", false);
 }*/
 
+void SettingsModel::notifyConfigReady(){
+	DEFINE_NOTIFY_CONFIG_READY(assistantGoDirectlyToThirdPartySipAccountLogin,
+							   AssistantGoDirectlyToThirdPartySipAccountLogin)
+	DEFINE_NOTIFY_CONFIG_READY(assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
+	DEFINE_NOTIFY_CONFIG_READY(assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
+	DEFINE_NOTIFY_CONFIG_READY(autoStart, AutoStart)
+}
+
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", false)
 DEFINE_GETSET_CONFIG(
-    SettingsModel, bool, Bool, disableMeetingsFeature, DisableMeetingsFeature, "disable_meetings_feature", false)
-DEFINE_GETSET_CONFIG(
-    SettingsModel, bool, Bool, disableBroadcastFeature, DisableBroadcastFeature, "disable_broadcast_feature", false)
+					 SettingsModel, bool, Bool, disableMeetingsFeature, DisableMeetingsFeature, "disable_meetings_feature", false)
+DEFINE_GETSET_CONFIG(SettingsModel,
+					 bool,
+					 Bool,
+					 disableBroadcastFeature,
+					 DisableBroadcastFeature,
+					 "disable_broadcast_feature",
+					 false)
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, hideSettings, HideSettings, "hide_settings", false)
-DEFINE_GETSET_CONFIG(
-    SettingsModel, bool, Bool, hideAccountSettings, HideAccountSettings, "hide_account_settings", false)
-DEFINE_GETSET_CONFIG(
-    SettingsModel, bool, Bool, disableCallRecordings, DisableCallRecordings, "disable_call_recordings_feature", false)
+DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, hideAccountSettings, HideAccountSettings, "hide_account_settings", false)
 DEFINE_GETSET_CONFIG(SettingsModel,
-                     bool,
-                     Bool,
-                     assistantHideCreateAccount,
-                     AssistantHideCreateAccount,
-                     "assistant_hide_create_account",
-                     false)
-DEFINE_GETSET_CONFIG(
-    SettingsModel, bool, Bool, assistantDisableQrCode, AssistantDisableQrCode, "assistant_disable_qr_code", true)
+					 bool,
+					 Bool,
+					 disableCallRecordings,
+					 DisableCallRecordings,
+					 "disable_call_recordings_feature",
+					 false)
 DEFINE_GETSET_CONFIG(SettingsModel,
-                     bool,
-                     Bool,
-                     assistantHideThirdPartyAccount,
-                     AssistantHideThirdPartyAccount,
-                     "assistant_hide_third_party_account",
-                     false)
+					 bool,
+					 Bool,
+					 assistantHideCreateAccount,
+					 AssistantHideCreateAccount,
+					 "assistant_hide_create_account",
+					 false)
 DEFINE_GETSET_CONFIG(SettingsModel,
-                     bool,
-                     Bool,
-                     onlyDisplaySipUriUsername,
-                     OnlyDisplaySipUriUsername,
-                     "only_display_sip_uri_username",
-                     false)
-DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, darkModeAllowed, DarkModeAllowed, "dark_mode_allowed", false)
+					 bool,
+					 Bool,
+					 assistantDisableQrCode,
+					 AssistantDisableQrCode,
+					 "assistant_disable_qr_code",
+					 true)
+DEFINE_GETSET_CONFIG(SettingsModel,
+					 bool,
+					 Bool,
+					 assistantHideThirdPartyAccount,
+					 AssistantHideThirdPartyAccount,
+					 "assistant_hide_third_party_account",
+					 false)
+DEFINE_GETSET_CONFIG(SettingsModel,
+					 bool,
+					 Bool,
+					 onlyDisplaySipUriUsername,
+					 OnlyDisplaySipUriUsername,
+					 "only_display_sip_uri_username",
+					 false)
+DEFINE_GETSET_CONFIG(SettingsModel,
+					 bool,
+					 Bool,
+					 darkModeAllowed,
+					 DarkModeAllowed,
+					 "dark_mode_allowed",
+					 false)
 DEFINE_GETSET_CONFIG(SettingsModel, int, Int, maxAccount, MaxAccount, "max_account", 0)
+DEFINE_GETSET_CONFIG(SettingsModel,
+					 bool,
+					 Bool,
+					 assistantGoDirectlyToThirdPartySipAccountLogin,
+					 AssistantGoDirectlyToThirdPartySipAccountLogin,
+					 "assistant_go_directly_to_third_party_sip_account_login",
+					 false)
+DEFINE_GETSET_CONFIG_STRING(SettingsModel,
+							assistantThirdPartySipAccountDomain,
+							AssistantThirdPartySipAccountDomain,
+							"assistant_third_party_sip_account_domain",
+							"")
+DEFINE_GETSET_CONFIG_STRING(SettingsModel,
+							assistantThirdPartySipAccountTransport,
+							AssistantThirdPartySipAccountTransport,
+							"assistant_third_party_sip_account_transport",
+							"TLS")
+DEFINE_GETSET_CONFIG(SettingsModel,
+					 bool,
+					 Bool,
+					 autoStart,
+					 AutoStart,
+					 "auto_start",
+					 false)
+
