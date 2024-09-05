@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Screen Sharing
 
+## 5.2.7 - undefined
+
+### Fixed
+- Download the correct version of openH264 (2.2.0)
+- Update SDK to 5.3.80
+
 ## 5.2.6 - 2024-07-22
 
 ### Fixed
