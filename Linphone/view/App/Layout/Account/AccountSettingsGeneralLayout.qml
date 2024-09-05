@@ -9,10 +9,10 @@ import UtilsCpp
 
 AbstractDetailsLayout {
 	id: mainItem
-	component: main
+	contentComponent: content
 	property alias account: mainItem.model
 	Component {
-		id: main
+		id: content
 		ColumnLayout {
 			width: parent.width
 			spacing: 5 * DefaultStyle.dp
@@ -228,10 +228,6 @@ AbstractDetailsLayout {
 							}
 						}
 					}
-				}
-				Component.onCompleted: {
-				}
-				Component.onDestruction: {
 				}
 			}
 			Rectangle {

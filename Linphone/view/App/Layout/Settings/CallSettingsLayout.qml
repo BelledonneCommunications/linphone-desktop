@@ -6,10 +6,10 @@ import Linphone
 import SettingsCpp 1.0
 
 AbstractDetailsLayout {
-	component: settings
+	contentComponent: content
 	width: parent.width
 	Component {
-		id: settings
+		id: content
 		ColumnLayout {
 			width: parent.width
 			RowLayout {

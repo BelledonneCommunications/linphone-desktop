@@ -23,7 +23,9 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/App/Layout/Settings/SecuritySettingsLayout.qml
 	view/App/Layout/Settings/CallSettingsLayout.qml
 	view/App/Layout/Settings/DebugSettingsLayout.qml
-	
+	view/App/Layout/Settings/ContactsSettingsLayout.qml
+	view/App/Layout/Settings/LdapSettingsLayout.qml
+
 	view/App/Layout/Account/AccountSettingsGeneralLayout.qml
 	view/App/Layout/Account/AccountSettingsParametersLayout.qml
 

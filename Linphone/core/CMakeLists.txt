@@ -67,6 +67,12 @@ list(APPEND _LINPHONEAPP_SOURCES
 
 	core/videoSource/VideoSourceDescriptorCore.cpp
 	core/videoSource/VideoSourceDescriptorGui.cpp
+	
+	core/address-books/LdapCore.cpp
+	core/address-books/LdapGui.cpp
+	core/address-books/LdapProxy.cpp
+	core/address-books/LdapList.cpp
+
 )
 
 ## Single Application

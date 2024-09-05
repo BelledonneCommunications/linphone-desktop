@@ -52,14 +52,14 @@ QtObject {
 		weight: 400 * DefaultStyle.dp
 	})
 	
-		// Text/P1 - Paratraph text
+	// Text/P1 - Paratraph text
 	property font p1s: Qt.font( {
 		family: DefaultStyle.defaultFont,
 		pixelSize: 13 * DefaultStyle.dp,
 		weight: 400 * DefaultStyle.dp
 	})
 	
-	// Bouton/B2 - Medium Bouton
+	// Button/B2 - Medium Button
 	property font b2: Qt.font( {
 		family: DefaultStyle.defaultFont,
 		pixelSize: 15 * DefaultStyle.dp,

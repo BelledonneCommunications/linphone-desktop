@@ -39,6 +39,8 @@
 #include "core/account/AccountDeviceGui.hpp"
 #include "core/account/AccountDeviceProxy.hpp"
 #include "core/account/AccountProxy.hpp"
+#include "core/address-books/LdapGui.hpp"
+#include "core/address-books/LdapProxy.hpp"
 #include "core/call-history/CallHistoryProxy.hpp"
 #include "core/call/CallCore.hpp"
 #include "core/call/CallGui.hpp"
@@ -562,6 +564,8 @@ void App::initCppInterfaces() {
 	                                          QLatin1String("Uncreatable"));
 	qmlRegisterUncreatableType<AuthenticationDialog>(Constants::MainQmlUri, 1, 0, "AuthenticationDialogCpp",
 	                                                 QLatin1String("Uncreatable"));
+	qmlRegisterType<LdapGui>(Constants::MainQmlUri, 1, 0, "LdapGui");
+	qmlRegisterType<LdapProxy>(Constants::MainQmlUri, 1, 0, "LdapProxy");
 
 	LinphoneEnums::registerMetaTypes();
 }

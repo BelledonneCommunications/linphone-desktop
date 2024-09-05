@@ -40,6 +40,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/tool/ToolModel.cpp
 
 	model/videoSource/VideoSourceDescriptorModel.cpp
+	
+	model/address-books/LdapModel.cpp
 )
 
 set(_LINPHONEAPP_SOURCES ${_LINPHONEAPP_SOURCES} PARENT_SCOPE)

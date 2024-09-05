@@ -10,7 +10,8 @@ Rectangle {
 	width: container.width
 	height: container.height
 	property string titleText
-	property var component
+	property var contentComponent
+	property var topbarOptionalComponent
 	property var model
 	color: 'white'
 	property var container
@@ -38,12 +39,40 @@ Rectangle {
 			id: content
 			width: parent.width
 			spacing: 10 * DefaultStyle.dp
-			Text {
-				text: titleText
-				font: Typography.h3
+			RowLayout {
 				Layout.fillWidth: true
 				Layout.topMargin: 20 * DefaultStyle.dp
-				color: DefaultStyle.main2_600
+				spacing: 5 * DefaultStyle.dp
+				Button {
+					id: backButton
+					Layout.preferredHeight: 24 * DefaultStyle.dp
+					Layout.preferredWidth: 24 * DefaultStyle.dp
+					icon.source: AppIcons.leftArrow
+					width: 24 * DefaultStyle.dp
+					height: 24 * DefaultStyle.dp
+					focus: true
+					visible: mainItem.container.depth > 1
+					Layout.rightMargin: 41 * DefaultStyle.dp
+					onClicked: {
+						mainItem.container.pop()
+					}
+					background: Item {
+						anchors.fill: parent
+					}
+				}
+				Text {
+					text: titleText
+					color: DefaultStyle.main2_600
+					font: Typography.h3
+				}
+				Item {
+					Layout.fillWidth: true
+				}
+				Loader {
+					Layout.alignment: Qt.AlignRight
+					sourceComponent: mainItem.topbarOptionalComponent
+					Layout.rightMargin: 34 * DefaultStyle.dp
+				}
 			}
 			Rectangle {
 				Layout.fillWidth: true
@@ -52,9 +81,8 @@ Rectangle {
 				color: DefaultStyle.main2_500main
 			}
 			Loader {
-				id:loader
 				Layout.fillWidth: true
-				sourceComponent: mainItem.component
+				sourceComponent: mainItem.contentComponent
 			}
 			Item {
 				Layout.fillHeight: true

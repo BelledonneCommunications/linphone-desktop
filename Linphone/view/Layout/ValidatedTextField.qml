@@ -19,6 +19,10 @@ FormItemLayout {
 	property var isValid: function(text) {
         return true;
     }
+    property alias hidden: textField.hidden
+	property alias validator: textField.validator
+	property bool empty: mainItem.propertyOwner[mainItem.propertyName]?.length == 0
+	property bool canBeEmpty: true
 	contentItem: TextField {
 		id: textField
 		property var initialReading: true
@@ -33,23 +37,29 @@ FormItemLayout {
 			onTriggered: textField.editingFinished()
 		}
 		onEditingFinished: {
+			updateText()
+		}
+		onTextChanged: {
+			idleTimer.restart()
+			updateText()
+		}
+		function updateText() {
+			mainItem.empty = text.length == 0
 			if (initialReading) {
 				initialReading = false
 				return
 			}
-			if (text.length != 0) {
-				if (isValid(text)) {
-					mainItem.errorMessage = ""
-					if (mainItem.propertyOwner[mainItem.propertyName] != text)
-						mainItem.propertyOwner[mainItem.propertyName] = text
-				} else {
-					mainItem.errorMessage = qsTr("Format non reconnu")
-				}
-			} else
+			if (!canBeEmpty && mainItem.empty) {
+				mainItem.errorMessage = qsTr("ne peut être vide")
+				return
+			}
+			if (isValid(text)) {
 				mainItem.errorMessage = ""
-		}
-		onTextChanged: {
-			idleTimer.restart()
+				if (mainItem.propertyOwner[mainItem.propertyName] != text)
+					mainItem.propertyOwner[mainItem.propertyName] = text
+			} else {
+				mainItem.errorMessage = qsTr("Format non reconnu")
+			}
 		}
 	}
 }

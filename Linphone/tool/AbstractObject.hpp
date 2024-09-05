@@ -126,6 +126,50 @@ public:                                                                         
 #define DEFINE_NOTIFY_CONFIG_READY(x, X)                                                                               \
 		emit x##Changed(get##X());
 
+#define DECLARE_GETSET_API(type, x, X)                                                                                 \
+	type get##X() const;                                                                                               \
+	void set##X(type data);                                                                                            \
+	Q_SIGNAL void x##Changed(type x);
+
+#define DEFINE_GETSET(Class, type, x, X, ownerNotNull)                                                                 \
+	type Class::get##X() const {                                                                                       \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		return ownerNotNull->get##X();                                                                                 \
+	}                                                                                                                  \
+	void Class::set##X(type data) {                                                                                    \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		if (get##X() != data) {                                                                                        \
+			ownerNotNull->set##X(data);                                                                                \
+			emit x##Changed(data);                                                                                     \
+		}                                                                                                              \
+	}
+
+#define DEFINE_GETSET_MODEL_STRING(Class, x, X, ownerNotNull)                                                          \
+QString Class::get##X() const {                                                                                        \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		return Utils::coreStringToAppString(ownerNotNull->get##X());                                                   \
+	}                                                                                                                  \
+	void Class::set##X(QString data) {                                                                                 \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		if (get##X() != data) {                                                                                        \
+			ownerNotNull->set##X(Utils::appStringToCoreString(data));                                                  \
+			emit x##Changed(data);                                                                                     \
+		}                                                                                                              \
+	}
+
+#define DEFINE_GETSET_ENABLED(Class, x, X, ownerNotNull)                                                               \
+bool Class::get##X() const {                                                                                           \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		return ownerNotNull->x##Enabled();                                                                             \
+	}                                                                                                                  \
+	void Class::set##X(bool data) {                                                                                    \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		if (get##X() != data) {                                                                                        \
+			ownerNotNull->enable##X(data);                                                                             \
+			emit x##Changed(data);                                                                                     \
+		}                                                                                                              \
+	}
+
 class AbstractObject {
 public:
 	virtual QString getClassName() const = 0;

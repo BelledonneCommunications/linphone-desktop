@@ -12,12 +12,14 @@ AbstractDetailsLayout {
 	Layout.fillHeight: true
 	id: mainItem
 	property string logsUrl
-	
+	contentComponent: content
+
 	Dialog {
 		id: deleteLogs
 		text: qsTr("Les traces de débogage seront supprimées. Souhaitez-vous continuer ?")
 		onAccepted: SettingsCpp.cleanLogs()
 	}
+	
 	Dialog {
 		id: shareLogs
 		text: qsTr("Les traces de débogage ont été téléversées. Comment souhaitez-vous partager le lien ? ")
@@ -43,8 +45,9 @@ AbstractDetailsLayout {
 			}
 		]
 	}
+	
 	Component {
-		id: debug
+		id: content
 		ColumnLayout {
 			spacing: 40 * DefaultStyle.dp
 			SwitchSetting {
@@ -73,6 +76,7 @@ AbstractDetailsLayout {
 			}
 		}
 	}
+	
 	Connections {
 		target: SettingsCpp
 		function onLogsUploadTerminated(status, url) {
@@ -85,5 +89,4 @@ AbstractDetailsLayout {
 			}
 		}
 	}
-	component: debug
 }

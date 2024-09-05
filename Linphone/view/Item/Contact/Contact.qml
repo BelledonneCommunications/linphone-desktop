@@ -106,7 +106,7 @@ Rectangle{
 			Layout.preferredHeight: 26 * DefaultStyle.dp
 			Layout.fillHeight: true
 			Layout.leftMargin: 40 * DefaultStyle.dp
-			visible: true // mainItem.account.core.unreadCallNotifications > 0
+			visible: mainItem.account.core.unreadCallNotifications > 0
 			Rectangle{
 				id: unreadNotifications
 				anchors.verticalCenter: parent.verticalCenter

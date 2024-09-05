@@ -6,8 +6,9 @@ import SettingsCpp 1.0
 import Linphone
 
 AbstractDetailsLayout {
+	contentComponent: content
 	Component {
-		id: settings
+		id: content
 		Column {
 			spacing: 40 * DefaultStyle.dp
 			SwitchSetting {
@@ -18,5 +19,4 @@ AbstractDetailsLayout {
 			}
 		}
 	}
-	component: settings
 }
