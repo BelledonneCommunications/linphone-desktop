@@ -132,7 +132,7 @@ ListView {
 		RowLayout {
 			id: contactDelegate
 			anchors.left: initial.visible ? initial.right : parent.left
-			anchors.right: actionsRow.left
+			anchors.right: parent.right
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 10 * DefaultStyle.dp
 			z: 1
@@ -162,127 +162,128 @@ ListView {
 					function onSelectedContactCountChanged(){ isSelectedCheck.visible = (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)}
 				}
 			}
+			Item{Layout.fillWidth: true}
+			RowLayout {
+				id: actionsRow
+				z: 1
+				// anchors.right: parent.right
+				Layout.rightMargin: 5 * DefaultStyle.dp
+				// anchors.verticalCenter: parent.verticalCenter
+				spacing: 10 * DefaultStyle.dp // TODO : change when mockup ready
+				RowLayout{
+					id: actionButtons
+					visible: mainItem.actionLayoutVisible
+					spacing: 10 * DefaultStyle.dp
+					Button {
+						id: callButton
+						Layout.preferredWidth: 45 * DefaultStyle.dp
+						Layout.preferredHeight: 45 * DefaultStyle.dp
+						icon.width: 24 * DefaultStyle.dp
+						icon.height: 24 * DefaultStyle.dp
+						icon.source: AppIcons.phone
+						focus: visible
+						contentImageColor: DefaultStyle.main2_500main
+						background: Rectangle {
+							anchors.fill: parent
+							radius: 40 * DefaultStyle.dp
+							color: DefaultStyle.main2_200
+						}
+						onClicked: UtilsCpp.createCall(modelData.core.defaultAddress)
+						KeyNavigation.right: chatButton
+						KeyNavigation.left: chatButton
+					}
+					Button {
+						id: chatButton
+						Layout.preferredWidth: 45 * DefaultStyle.dp
+						Layout.preferredHeight: 45 * DefaultStyle.dp
+						icon.width: 24 * DefaultStyle.dp
+						icon.height: 24 * DefaultStyle.dp
+						icon.source: AppIcons.chatTeardropText
+						focus: visible && !callButton.visible
+						contentImageColor: DefaultStyle.main2_500main
+						background: Rectangle {
+							anchors.fill: parent
+							radius: 40 * DefaultStyle.dp
+							color: DefaultStyle.main2_200
+						}
+						KeyNavigation.right: callButton
+						KeyNavigation.left: callButton
+					}
+				}
+				PopupButton {
+					id: friendPopup
+					z: 1
+					// Layout.rightMargin: 13 * DefaultStyle.dp
+					Layout.alignment: Qt.AlignVCenter
+					popup.x: 0
+					popup.padding: 10 * DefaultStyle.dp
+					hoverEnabled: mainItem.hoverEnabled
+					visible: mainItem.contactMenuVisible && (contactArea.containsMouse || hovered || popup.opened) && (!mainItem.delegateButtons || mainItem.delegateButtons.length === 0)
+					
+					popup.contentItem: ColumnLayout {
+						Button {
+							text: modelData.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
+							background: Item{}
+							icon.source: modelData.core.starred ? AppIcons.heartFill : AppIcons.heart
+							icon.width: 24 * DefaultStyle.dp
+							icon.height: 24 * DefaultStyle.dp
+							spacing: 10 * DefaultStyle.dp
+							textSize: 14 * DefaultStyle.dp
+							textWeight: 400 * DefaultStyle.dp
+							textColor: DefaultStyle.main2_500main
+							contentImageColor: modelData.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
+							onClicked: {
+								modelData.core.lSetStarred(!modelData.core.starred)
+								friendPopup.close()
+							}
+						}
+						Button {
+							text: qsTr("Partager")
+							background: Item{}
+							icon.source: AppIcons.shareNetwork
+							icon.width: 24 * DefaultStyle.dp
+							icon.height: 24 * DefaultStyle.dp
+							spacing: 10 * DefaultStyle.dp
+							textSize: 14 * DefaultStyle.dp
+							textWeight: 400 * DefaultStyle.dp
+							textColor: DefaultStyle.main2_500main
+							onClicked: {
+								var vcard = modelData.core.getVCard()
+								var username = modelData.core.givenName + modelData.core.familyName
+								var filepath = UtilsCpp.createVCardFile(username, vcard)
+								if (filepath == "") UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création du fichier vcard a échoué"), false)
+								else mainWindow.showInformationPopup(qsTr("VCard créée"), qsTr("VCard du contact enregistrée dans %1").arg(filepath))
+								UtilsCpp.shareByEmail(qsTr("Partage de contact"), vcard, filepath)
+							}
+						}
+						Button {
+							text: qsTr("Supprimer")
+							background: Item{}
+							icon.source: AppIcons.trashCan
+							icon.width: 24 * DefaultStyle.dp
+							icon.height: 24 * DefaultStyle.dp
+							spacing: 10 * DefaultStyle.dp
+							textSize: 14 * DefaultStyle.dp
+							textWeight: 400 * DefaultStyle.dp
+							textColor: DefaultStyle.danger_500main
+							contentImageColor: DefaultStyle.danger_500main
+							onClicked: {
+								mainItem.contactDeletionRequested(modelData)
+								friendPopup.close()
+							}
+						}
+					}
+				}
+			}
 		}
 
-		RowLayout {
-			id: actionsRow
-			z: 1
-			anchors.right: parent.right
-			anchors.rightMargin: 5 * DefaultStyle.dp
-			anchors.verticalCenter: parent.verticalCenter
-			spacing: 10 * DefaultStyle.dp // TODO : change when mockup ready
-			RowLayout{
-				id: actionButtons
-				visible: mainItem.actionLayoutVisible
-				spacing: 10 * DefaultStyle.dp
-				Button {
-					id: callButton
-					Layout.preferredWidth: 45 * DefaultStyle.dp
-					Layout.preferredHeight: 45 * DefaultStyle.dp
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
-					icon.source: AppIcons.phone
-					focus: visible
-					contentImageColor: DefaultStyle.main2_500main
-					background: Rectangle {
-						anchors.fill: parent
-						radius: 40 * DefaultStyle.dp
-						color: DefaultStyle.main2_200
-					}
-					onClicked: UtilsCpp.createCall(modelData.core.defaultAddress)
-					KeyNavigation.right: chatButton
-					KeyNavigation.left: chatButton
-				}
-				Button {
-					id: chatButton
-					Layout.preferredWidth: 45 * DefaultStyle.dp
-					Layout.preferredHeight: 45 * DefaultStyle.dp
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
-					icon.source: AppIcons.chatTeardropText
-					focus: visible && !callButton.visible
-					contentImageColor: DefaultStyle.main2_500main
-					background: Rectangle {
-						anchors.fill: parent
-						radius: 40 * DefaultStyle.dp
-						color: DefaultStyle.main2_200
-					}
-					KeyNavigation.right: callButton
-					KeyNavigation.left: callButton
-				}
-			}
-			PopupButton {
-				id: friendPopup
-				z: 1
-				// Layout.rightMargin: 13 * DefaultStyle.dp
-				Layout.alignment: Qt.AlignVCenter
-				popup.x: 0
-				popup.padding: 10 * DefaultStyle.dp
-				hoverEnabled: mainItem.hoverEnabled
-				visible: mainItem.contactMenuVisible && (contactArea.containsMouse || hovered || popup.opened) && (!mainItem.delegateButtons || mainItem.delegateButtons.length === 0)
-				
-				popup.contentItem: ColumnLayout {
-					Button {
-						text: modelData.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
-						background: Item{}
-						icon.source: modelData.core.starred ? AppIcons.heartFill : AppIcons.heart
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
-						spacing: 10 * DefaultStyle.dp
-						textSize: 14 * DefaultStyle.dp
-						textWeight: 400 * DefaultStyle.dp
-						textColor: DefaultStyle.main2_500main
-						contentImageColor: modelData.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
-						onClicked: {
-							modelData.core.lSetStarred(!modelData.core.starred)
-							friendPopup.close()
-						}
-					}
-					Button {
-						text: qsTr("Partager")
-						background: Item{}
-						icon.source: AppIcons.shareNetwork
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
-						spacing: 10 * DefaultStyle.dp
-						textSize: 14 * DefaultStyle.dp
-						textWeight: 400 * DefaultStyle.dp
-						textColor: DefaultStyle.main2_500main
-						onClicked: {
-							var vcard = modelData.core.getVCard()
-							var username = modelData.core.givenName + modelData.core.familyName
-							var filepath = UtilsCpp.createVCardFile(username, vcard)
-							if (filepath == "") UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création du fichier vcard a échoué"), false)
-							else mainWindow.showInformationPopup(qsTr("VCard créée"), qsTr("VCard du contact enregistrée dans %1").arg(filepath))
-							UtilsCpp.shareByEmail(qsTr("Partage de contact"), vcard, filepath)
-						}
-					}
-					Button {
-						text: qsTr("Supprimer")
-						background: Item{}
-						icon.source: AppIcons.trashCan
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
-						spacing: 10 * DefaultStyle.dp
-						textSize: 14 * DefaultStyle.dp
-						textWeight: 400 * DefaultStyle.dp
-						textColor: DefaultStyle.danger_500main
-						contentImageColor: DefaultStyle.danger_500main
-						onClicked: {
-							mainItem.contactDeletionRequested(modelData)
-							friendPopup.close()
-						}
-					}
-				}
-			}
-		}
 
 		
 		MouseArea {
 			id: contactArea
 			enabled: mainItem.selectionEnabled
 			hoverEnabled: mainItem.hoverEnabled
-			anchors.fill: itemDelegate
+			anchors.fill: contactDelegate
 			height: mainItem.height
 			acceptedButtons: Qt.AllButtons
 			z: -1

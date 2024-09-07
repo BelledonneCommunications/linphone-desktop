@@ -152,7 +152,7 @@ private:
 	virtual void onAudioDeviceChanged(const std::shared_ptr<linphone::Call> &call,
 	                                  const std::shared_ptr<linphone::AudioDevice> &audioDevice) override;
 	virtual void onRemoteRecording(const std::shared_ptr<linphone::Call> &call, bool recording) override;
-	virtual void onAuthenticationTokenVerified(const std::shared_ptr<linphone::Call> &call, bool verified);
+	virtual void onAuthenticationTokenVerified(const std::shared_ptr<linphone::Call> &call, bool verified) override;
 
 signals:
 	void dtmfReceived(const std::shared_ptr<linphone::Call> &call, int dtmf);

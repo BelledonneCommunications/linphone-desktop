@@ -7,6 +7,7 @@ import Linphone
 import EnumsToStringCpp 1.0
 import UtilsCpp 1.0
 import SettingsCpp 1.0
+import LinphoneAccountsCpp
 // =============================================================================
 
 Item{
@@ -111,6 +112,7 @@ Item{
 				call: mainItem.call
 				width: mainStackView.width
 				height: mainStackView.height
+				displayAll: !mainItem.conference
 				participantDevice: mainItem.conference && mainItem.conference.core.activeSpeaker
 				property var address: participantDevice && participantDevice.core.address
 				videoEnabled: (participantDevice && participantDevice.core.videoEnabled) || (!participantDevice && call && call.core.remoteVideoEnabled)
@@ -168,7 +170,8 @@ Item{
 		anchors.bottomMargin: 10 * DefaultStyle.dp
 		videoEnabled: preview.visible && mainItem.call && mainItem.call.core.localVideoEnabled
 		onVideoEnabledChanged: console.log("P : " +videoEnabled + " / " +visible +" / " +mainItem.call)
-		property AccountProxy accounts: AccountProxy{id: accountProxy}
+		property AccountProxy  accounts: AccountProxy {id: accountProxy
+		}
 		account: accountProxy.findAccountByAddress(mainItem.localAddress)
 		call: mainItem.call
 		displayAll: false

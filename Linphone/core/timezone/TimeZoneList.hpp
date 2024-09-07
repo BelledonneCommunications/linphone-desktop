@@ -38,6 +38,7 @@ public:
 	void initTimeZones();
 	int get(const QTimeZone &timeZone = QTimeZone::systemTimeZone()) const;
 
+	QHash<int, QByteArray> roleNames() const;
 	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 private:

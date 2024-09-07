@@ -54,6 +54,7 @@ signals:
 	void lUpdate();
 	void haveAccountChanged();
 	void defaultAccountChanged();
+	void initialized();
 
 private:
 	bool mHaveAccount = false;

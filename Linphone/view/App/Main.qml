@@ -5,6 +5,7 @@ import QtQuick.Controls
 import Linphone
 import UtilsCpp 1.0
 import SettingsCpp 1.0
+import LinphoneAccountsCpp
 
 AppWindow {
 	id: mainWindow
@@ -62,9 +63,11 @@ AppWindow {
 		}
 	}
 
-	AccountProxy {
+	AccountProxy  {
 		id: accountProxy
+		onInitialized: initStackViewItem()
 	}
+
 	StackView {
 		id: mainWindowStackView
 		anchors.fill: parent

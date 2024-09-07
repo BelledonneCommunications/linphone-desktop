@@ -38,7 +38,6 @@
 #include "core/account/AccountCore.hpp"
 #include "core/account/AccountDeviceGui.hpp"
 #include "core/account/AccountDeviceProxy.hpp"
-#include "core/account/AccountProxy.hpp"
 #include "core/address-books/LdapGui.hpp"
 #include "core/address-books/LdapProxy.hpp"
 #include "core/call-history/CallHistoryProxy.hpp"
@@ -415,10 +414,11 @@ void App::initCore() {
 	    mLinphoneThread->getThreadId(),
 	    [this]() mutable {
 		    CoreModel::getInstance()->start();
-		    auto settings = Settings::create();
-		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings]() mutable {
+		    auto settings = SettingsCore::create();
+		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings] {
 			    // QML
 			    mEngine = new QQmlApplicationEngine(this);
+			    assert(mEngine);
 			    // Provide `+custom` folders for custom components and `5.9` for old components.
 			    QStringList selectors("custom");
 			    const QVersionNumber &version = QLibraryInfo::version();
@@ -460,9 +460,11 @@ void App::initCore() {
 			    mEngine->addImageProvider(WindowIconProvider::ProviderId, new WindowIconProvider());
 
 			    // Enable notifications.
-			    mNotifier = new Notifier(mEngine, settings);
+			    mNotifier = new Notifier(mEngine);
 			    mSettings = settings;
-			    settings.reset();
+			    mEngine->setObjectOwnership(mSettings.get(), QQmlEngine::CppOwnership);
+			    mAccountList = AccountList::create();
+			    mCallList = CallList::create();
 
 			    const QUrl url(u"qrc:/Linphone/view/App/Main.qml"_qs);
 			    QObject::connect(
@@ -479,7 +481,7 @@ void App::initCore() {
 				        }
 			        },
 			        Qt::QueuedConnection);
-			    QObject::connect(mSettings.get(), &Settings::autoStartChanged, [this]() {
+			    QObject::connect(mSettings.get(), &SettingsCore::autoStartChanged, [this]() {
 				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
 				    setAutoStart(mSettings->getAutoStart());
 			    });
@@ -515,9 +517,15 @@ void App::initCppInterfaces() {
 	    "EnumsToStringCpp", 1, 0, "EnumsToStringCpp",
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new EnumsToString(engine); });
 
-	qmlRegisterSingletonType<Settings>(
+	qmlRegisterSingletonType<SettingsCore>(
 	    "SettingsCpp", 1, 0, "SettingsCpp",
 	    [this](QQmlEngine *engine, QJSEngine *) -> QObject * { return mSettings.get(); });
+	qmlRegisterSingletonType<AccountList>(
+	    "LinphoneAccountsCpp", 1, 0, "LinphoneAccountsCpp",
+	    [this](QQmlEngine *engine, QJSEngine *) -> QObject * { return mAccountList.get(); });
+	qmlRegisterSingletonType<CallList>(
+	    "LinphoneCallsCpp", 1, 0, "LinphoneCallsCpp",
+	    [this](QQmlEngine *engine, QJSEngine *) -> QObject * { return mCallList.get(); });
 
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
 	qmlRegisterType<VariantObject>(Constants::MainQmlUri, 1, 0, "VariantObject");
@@ -530,15 +538,15 @@ void App::initCppInterfaces() {
 
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
 	qmlRegisterUncreatableType<PhoneNumber>(Constants::MainQmlUri, 1, 0, "PhoneNumber", QLatin1String("Uncreatable"));
-	qmlRegisterType<AccountProxy>(Constants::MainQmlUri, 1, 0, "AccountProxy");
 	qmlRegisterType<AccountGui>(Constants::MainQmlUri, 1, 0, "AccountGui");
+	qmlRegisterType<AccountProxy>(Constants::MainQmlUri, 1, 0, "AccountProxy");
 	qmlRegisterType<AccountDeviceProxy>(Constants::MainQmlUri, 1, 0, "AccountDeviceProxy");
 	qmlRegisterType<AccountDeviceGui>(Constants::MainQmlUri, 1, 0, "AccountDeviceGui");
 	qmlRegisterUncreatableType<AccountCore>(Constants::MainQmlUri, 1, 0, "AccountCore", QLatin1String("Uncreatable"));
 	qmlRegisterUncreatableType<CallCore>(Constants::MainQmlUri, 1, 0, "CallCore", QLatin1String("Uncreatable"));
-	qmlRegisterType<CallProxy>(Constants::MainQmlUri, 1, 0, "CallProxy");
 	qmlRegisterType<CallHistoryProxy>(Constants::MainQmlUri, 1, 0, "CallHistoryProxy");
 	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
+	qmlRegisterType<CallProxy>(Constants::MainQmlUri, 1, 0, "CallProxy");
 	qmlRegisterUncreatableType<ConferenceCore>(Constants::MainQmlUri, 1, 0, "ConferenceCore",
 	                                           QLatin1String("Uncreatable"));
 	qmlRegisterType<ConferenceGui>(Constants::MainQmlUri, 1, 0, "ConferenceGui");
@@ -573,14 +581,10 @@ void App::initCppInterfaces() {
 //------------------------------------------------------------
 
 void App::clean() {
-	if (mSettings) mSettings.reset();
-	// Wait 500ms to let time for log te be stored.
-	// mNotifier destroyed in mEngine deletion as it is its parent
 	delete mEngine;
 	mEngine = nullptr;
-	// if (mSettings) {
-	// mSettings.reset();
-	// }
+	// Wait 500ms to let time for log te be stored.
+	// mNotifier destroyed in mEngine deletion as it is its parent
 	qApp->processEvents(QEventLoop::AllEvents, 500);
 	if (mLinphoneThread) {
 		mLinphoneThread->exit();
@@ -723,6 +727,18 @@ void App::setMainWindow(QQuickWindow *data) {
 		mMainWindow = data;
 		emit mainWindowChanged();
 	}
+}
+
+QSharedPointer<AccountList> App::getAccountList() const {
+	return mAccountList;
+}
+
+QSharedPointer<CallList> App::getCallList() const {
+	return mCallList;
+}
+
+QSharedPointer<SettingsCore> App::getSettings() const {
+	return mSettings;
 }
 
 #ifdef Q_OS_LINUX

@@ -95,7 +95,7 @@ const QHash<int, Notifier::Notification> Notifier::Notifications = {
 
 // -----------------------------------------------------------------------------
 
-Notifier::Notifier(QObject *parent, QSharedPointer<Settings> settings) : QObject(parent) {
+Notifier::Notifier(QObject *parent) : QObject(parent) {
 	mustBeInMainThread(getClassName());
 	const int nComponents = Notifications.size();
 	mComponents = new QQmlComponent *[nComponents];
@@ -113,7 +113,6 @@ Notifier::Notifier(QObject *parent, QSharedPointer<Settings> settings) : QObject
 	}
 
 	mMutex = new QMutex();
-	mSettings = settings;
 }
 
 Notifier::~Notifier() {
@@ -268,7 +267,8 @@ void Notifier::deleteNotification(QVariant notification) {
 // =============================================================================
 
 #define CREATE_NOTIFICATION(TYPE, DATA)                                                                                \
-	if (mSettings->dndEnabled()) return;                                                                               \
+	auto settings = App::getInstance()->getSettings();                                                                 \
+	if (settings && settings->dndEnabled()) return;                                                                    \
 	QObject *notification = createNotification(TYPE, DATA);                                                            \
 	if (!notification) return;                                                                                         \
 	const int timeout = Notifications[TYPE].getTimeout() * 1000;                                                       \
@@ -280,6 +280,8 @@ void Notifier::deleteNotification(QVariant notification) {
 
 void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto remoteAddress = call->getRemoteAddress();
+	auto accountSender = ToolModel::findAccount(remoteAddress);
 	auto account = ToolModel::findAccount(call->getToAddress());
 	if (account) {
 		auto accountModel = Utils::makeQObject_ptr<AccountModel>(account);

@@ -37,7 +37,7 @@ class Notifier : public QObject, public AbstractObject {
 	Q_OBJECT
 
 public:
-	Notifier(QObject *parent = Q_NULLPTR, QSharedPointer<Settings> settings = Q_NULLPTR);
+	Notifier(QObject *parent = Q_NULLPTR);
 	~Notifier();
 
 	enum NotificationType {
@@ -98,7 +98,6 @@ private:
 	QQmlComponent **mComponents = nullptr;
 
 	static const QHash<int, Notification> Notifications;
-	QSharedPointer<Settings> mSettings;
 
 	DECLARE_ABSTRACT_OBJECT
 };

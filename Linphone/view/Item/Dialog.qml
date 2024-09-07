@@ -29,8 +29,8 @@ Popup {
 	signal rejected()
 
 	contentItem: FocusScope {
-		width: child.implicitWidth
-		height: child.implicitHeight
+		implicitWidth: child.implicitWidth
+		implicitHeight: child.implicitHeight
 		onVisibleChanged: {
 			if(visible) forceActiveFocus()
 		}

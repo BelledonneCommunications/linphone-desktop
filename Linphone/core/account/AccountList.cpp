@@ -38,6 +38,7 @@ QSharedPointer<AccountList> AccountList::create() {
 
 AccountList::AccountList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 }
 
 AccountList::~AccountList() {
@@ -84,6 +85,7 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 	mModelConnection->makeConnectToModel(&CoreModel::accountAdded, &AccountList::lUpdate);
 
 	lUpdate();
+	emit initialized();
 }
 
 QSharedPointer<AccountCore> AccountList::getDefaultAccountCore() const {

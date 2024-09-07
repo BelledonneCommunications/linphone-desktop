@@ -7,6 +7,7 @@ import EnumsToStringCpp 1.0
 import UtilsCpp 1.0
 import SettingsCpp 1.0
 import DesktopToolsCpp 1.0
+import LinphoneCallsCpp
 
 AppWindow {
     id: mainWindow
@@ -24,7 +25,7 @@ AppWindow {
 	property var transferState: call && call.core.transferState
 
 	onCallStateChanged: {
-		if (callState === LinphoneEnums.CallState.Connected || callState === LinphoneEnums.CallState.StreamsRunning) {
+		if (callState === LinphoneEnums.CallState.Connected) {
 			if (middleItemStackView.currentItem.objectName != "inCallItem") {
 				middleItemStackView.replace(inCallItem)
 				bottomButtonsLayout.visible = true
@@ -613,6 +614,7 @@ AppWindow {
 								closeButtonVisible: false
 								roundedBottom: true
 								visible: parent.visible
+								currentCall: callsModel.currentCall
 								leftPadding: 40 * DefaultStyle.dp
 								rightPadding: 40 * DefaultStyle.dp
 								topPadding: 41 * DefaultStyle.dp
@@ -743,7 +745,7 @@ AppWindow {
 							Layout.maximumHeight: rightPanel.height
 							visible: callList.contentHeight > 0
 							leftPadding: 16 * DefaultStyle.dp
-							rightPadding: 16 * DefaultStyle.dp
+							rightPadding: 6 * DefaultStyle.dp
 							topPadding: 15 * DefaultStyle.dp
 							bottomPadding: 16 * DefaultStyle.dp
 
@@ -754,7 +756,9 @@ AppWindow {
 							
 							contentItem: ListView {
 								id: callList
-								model: callsModel
+								model: CallProxy {
+									id: callProxy
+								}
 								implicitHeight: contentHeight// Math.min(contentHeight, rightPanel.height)
 								spacing: 15 * DefaultStyle.dp
 								clip: true
@@ -800,6 +804,7 @@ AppWindow {
 											id: listCallOptionsButton
 											Layout.preferredWidth: 24 * DefaultStyle.dp
 											Layout.preferredHeight: 24 * DefaultStyle.dp
+											Layout.rightMargin: 10 * DefaultStyle.dp
 
 											popup.contentItem: ColumnLayout {
 												spacing: 0

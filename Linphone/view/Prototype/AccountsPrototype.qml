@@ -3,12 +3,13 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls as Control
 import Linphone
 import UtilsCpp 1.0
+import LinphoneAccountsCpp
 
 // Snippet
 
 ListView{
 	id: mainItem
-	model: AccountProxy{}
+	model: AccountProxy {}
 	function printObject(o) {
   var out = '';
   for (var p in o) {

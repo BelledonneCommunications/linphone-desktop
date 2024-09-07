@@ -106,30 +106,6 @@ bool ParticipantProxy::getShowMe() const {
 // }
 // }
 
-void ParticipantProxy::setConferenceModel(ConferenceModel *conferenceModel) {
-	// if (!mConferenceModel || mConferenceModel != conferenceModel) {
-	// 	mConferenceModel = conferenceModel;
-	// 	if (mConferenceModel) {
-	// 		auto participants = mConferenceModel->getParticipantList();
-	// 		connect(participants, &ParticipantList::countChanged, this, &ParticipantProxy::countChanged);
-	// 		setSourceModel(participants);
-	// 		emit participantListChanged();
-	// 		for (int i = 0; i < participants->getCount(); ++i) {
-	// 			auto participant = participants->getAt<ParticipantCore>(i);
-	// 			connect(participant.get(), &ParticipantCore::invitationTimeout, this, &ParticipantProxy::removeModel);
-	// 			emit addressAdded(participant->getSipAddress());
-	// 		}
-	// 	} else if (!sourceModel()) {
-	// 		auto model = new ParticipantList((ConferenceModel *)nullptr, this);
-	// 		connect(model, &ParticipantList::countChanged, this, &ParticipantProxy::countChanged);
-	// 		setSourceModel(model);
-	// 		emit participantListChanged();
-	// 	}
-	// 	sort(0);
-	// 	emit conferenceModelChanged();
-	// }
-}
-
 void ParticipantProxy::setShowMe(const bool &show) {
 	if (mShowMe != show) {
 		mShowMe = show;

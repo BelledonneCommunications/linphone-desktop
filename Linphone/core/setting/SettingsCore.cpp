@@ -27,18 +27,18 @@
 #include <QUrl>
 #include <QVariant>
 
-DEFINE_ABSTRACT_OBJECT(Settings)
+DEFINE_ABSTRACT_OBJECT(SettingsCore)
 
 // =============================================================================
 
-QSharedPointer<Settings> Settings::create() {
-	auto sharedPointer = QSharedPointer<Settings>(new Settings(), &QObject::deleteLater);
+QSharedPointer<SettingsCore> SettingsCore::create() {
+	auto sharedPointer = QSharedPointer<SettingsCore>(new SettingsCore(), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
 	sharedPointer->moveToThread(App::getInstance()->thread());
 	return sharedPointer;
 }
 
-Settings::Settings(QObject *parent) : QObject(parent) {
+SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	mustBeInLinphoneThread(getClassName());
 	mSettingsModel = Utils::makeQObject_ptr<SettingsModel>();
 
@@ -93,16 +93,16 @@ Settings::Settings(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(AutoStart, mSettingsModel)
 }
 
-Settings::~Settings() {
+SettingsCore::~SettingsCore() {
 }
 
-void Settings::setSelf(QSharedPointer<Settings> me) {
+void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	mustBeInLinphoneThread(getClassName());
-	mSettingsModelConnection = QSharedPointer<SafeConnection<Settings, SettingsModel>>(
-	    new SafeConnection<Settings, SettingsModel>(me, mSettingsModel), &QObject::deleteLater);
+	mSettingsModelConnection = QSharedPointer<SafeConnection<SettingsCore, SettingsModel>>(
+	    new SafeConnection<SettingsCore, SettingsModel>(me, mSettingsModel), &QObject::deleteLater);
 
 	// VFS
-	mSettingsModelConnection->makeConnectToCore(&Settings::setVfsEnabled, [this](const bool enabled) {
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::setVfsEnabled, [this](const bool enabled) {
 		mSettingsModelConnection->invokeToModel([this, enabled]() { mSettingsModel->setVfsEnabled(enabled); });
 	});
 
@@ -114,7 +114,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 	});
 
 	// Video Calls
-	mSettingsModelConnection->makeConnectToCore(&Settings::setVideoEnabled, [this](const bool enabled) {
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::setVideoEnabled, [this](const bool enabled) {
 		mSettingsModelConnection->invokeToModel([this, enabled]() { mSettingsModel->setVideoEnabled(enabled); });
 	});
 
@@ -126,7 +126,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 	});
 
 	// Echo cancelling
-	mSettingsModelConnection->makeConnectToCore(&Settings::setEchoCancellationEnabled, [this](const bool enabled) {
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::setEchoCancellationEnabled, [this](const bool enabled) {
 		mSettingsModelConnection->invokeToModel(
 		    [this, enabled]() { mSettingsModel->setEchoCancellationEnabled(enabled); });
 	});
@@ -140,7 +140,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 	                                             });
 
 	// Auto recording
-	mSettingsModelConnection->makeConnectToCore(&Settings::setAutomaticallyRecordCallsEnabled,
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::setAutomaticallyRecordCallsEnabled,
 	                                            [this](const bool enabled) {
 		                                            mSettingsModelConnection->invokeToModel([this, enabled]() {
 			                                            mSettingsModel->setAutomaticallyRecordCallsEnabled(enabled);
@@ -155,7 +155,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 	                                             });
 
 	// Audio device(s)
-	mSettingsModelConnection->makeConnectToCore(&Settings::lSetCaptureDevice, [this](const QString id) {
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureDevice, [this](const QString id) {
 		mSettingsModelConnection->invokeToModel([this, id]() { mSettingsModel->setCaptureDevice(id); });
 	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureDeviceChanged, [this](const QString device) {
@@ -165,7 +165,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 		});
 	});
 
-	mSettingsModelConnection->makeConnectToCore(&Settings::lSetPlaybackDevice, [this](const QString id) {
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetPlaybackDevice, [this](const QString id) {
 		mSettingsModelConnection->invokeToModel([this, id]() { mSettingsModel->setPlaybackDevice(id); });
 	});
 
@@ -176,7 +176,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 		});
 	});
 
-	mSettingsModelConnection->makeConnectToCore(&Settings::lSetPlaybackGain, [this](const float value) {
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetPlaybackGain, [this](const float value) {
 		mSettingsModelConnection->invokeToModel([this, value]() { mSettingsModel->setPlaybackGain(value); });
 	});
 
@@ -187,7 +187,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 		});
 	});
 
-	mSettingsModelConnection->makeConnectToCore(&Settings::lSetCaptureGain, [this](const float value) {
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureGain, [this](const float value) {
 		mSettingsModelConnection->invokeToModel([this, value]() { mSettingsModel->setCaptureGain(value); });
 	});
 
@@ -219,7 +219,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 	                                             });
 
 	// Video device(s)
-	mSettingsModelConnection->makeConnectToCore(&Settings::lSetVideoDevice, [this](const QString id) {
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetVideoDevice, [this](const QString id) {
 		mSettingsModelConnection->invokeToModel([this, id]() { mSettingsModel->setVideoDevice(id); });
 	});
 
@@ -239,7 +239,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 	                                             });
 
 	// Logs
-	mSettingsModelConnection->makeConnectToCore(&Settings::setLogsEnabled, [this](const bool status) {
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::setLogsEnabled, [this](const bool status) {
 		mSettingsModelConnection->invokeToModel([this, status]() { mSettingsModel->setLogsEnabled(status); });
 	});
 
@@ -250,7 +250,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 		});
 	});
 
-	mSettingsModelConnection->makeConnectToCore(&Settings::setFullLogsEnabled, [this](const bool status) {
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::setFullLogsEnabled, [this](const bool status) {
 		mSettingsModelConnection->invokeToModel([this, status]() { mSettingsModel->setFullLogsEnabled(status); });
 	});
 
@@ -262,7 +262,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 	});
 
 	// DND
-	mSettingsModelConnection->makeConnectToCore(&Settings::lEnableDnd, [this](const bool value) {
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lEnableDnd, [this](const bool value) {
 		mSettingsModelConnection->invokeToModel([this, value]() { mSettingsModel->enableDnd(value); });
 	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::dndChanged, [this](const bool value) {
@@ -272,44 +272,44 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 		});
 	});
 
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           disableChatFeature, DisableChatFeature)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           disableMeetingsFeature, DisableMeetingsFeature)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           disableBroadcastFeature, DisableBroadcastFeature)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool, hideSettings,
-	                           HideSettings)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
+	                           hideSettings, HideSettings)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           hideAccountSettings, HideAccountSettings)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           disableCallRecordings, DisableCallRecordings)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           assistantHideCreateAccount, AssistantHideCreateAccount)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           assistantHideCreateAccount, AssistantHideCreateAccount)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           assistantDisableQrCode, AssistantDisableQrCode)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           assistantHideThirdPartyAccount, AssistantHideThirdPartyAccount)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool, darkModeAllowed,
-	                           DarkModeAllowed)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, int, maxAccount,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
+	                           darkModeAllowed, DarkModeAllowed)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, int, maxAccount,
 	                           MaxAccount)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           assistantGoDirectlyToThirdPartySipAccountLogin,
 	                           AssistantGoDirectlyToThirdPartySipAccountLogin)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, QString,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, QString,
 	                           assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, QString,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, QString,
 	                           assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, Settings, SettingsModel, mSettingsModel, bool, autoStart,
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool, autoStart,
 	                           AutoStart)
 
-	auto coreModelConnection = QSharedPointer<SafeConnection<Settings, CoreModel>>(
-	    new SafeConnection<Settings, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	auto coreModelConnection = QSharedPointer<SafeConnection<SettingsCore, CoreModel>>(
+	    new SafeConnection<SettingsCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
 
 	coreModelConnection->makeConnectToModel(
 	    &CoreModel::logCollectionUploadStateChanged, [this](auto core, auto state, auto info) {
@@ -323,7 +323,7 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 	    });
 }
 
-QString Settings::getConfigPath(const QCommandLineParser &parser) {
+QString SettingsCore::getConfigPath(const QCommandLineParser &parser) {
 	QString filePath = parser.isSet("config") ? parser.value("config") : "";
 	QString configPath;
 	if (!QUrl(filePath).isRelative()) {
@@ -335,52 +335,52 @@ QString Settings::getConfigPath(const QCommandLineParser &parser) {
 	return configPath;
 }
 
-QStringList Settings::getCaptureDevices() const {
+QStringList SettingsCore::getCaptureDevices() const {
 	return mCaptureDevices;
 }
 
-QStringList Settings::getPlaybackDevices() const {
+QStringList SettingsCore::getPlaybackDevices() const {
 	return mPlaybackDevices;
 }
 
-int Settings::getVideoDeviceIndex() const {
+int SettingsCore::getVideoDeviceIndex() const {
 	return mVideoDevices.indexOf(mVideoDevice);
 }
 
-QStringList Settings::getVideoDevices() const {
+QStringList SettingsCore::getVideoDevices() const {
 	return mVideoDevices;
 }
 
-bool Settings::getCaptureGraphRunning() {
+bool SettingsCore::getCaptureGraphRunning() {
 	return mCaptureGraphRunning;
 }
 
-float Settings::getCaptureGain() const {
+float SettingsCore::getCaptureGain() const {
 	return mCaptureGain;
 }
 
-float Settings::getPlaybackGain() const {
+float SettingsCore::getPlaybackGain() const {
 	return mPlaybackGain;
 }
 
-QString Settings::getCaptureDevice() const {
+QString SettingsCore::getCaptureDevice() const {
 	return mCaptureDevice;
 }
 
-QString Settings::getPlaybackDevice() const {
+QString SettingsCore::getPlaybackDevice() const {
 	return mPlaybackDevice;
 }
 
-int Settings::getEchoCancellationCalibration() const {
+int SettingsCore::getEchoCancellationCalibration() const {
 	return mEchoCancellationCalibration;
 }
 
-bool Settings::getFirstLaunch() const {
+bool SettingsCore::getFirstLaunch() const {
 	auto val = mAppSettings.value("firstLaunch", 1).toInt();
 	return val;
 }
 
-void Settings::setFirstLaunch(bool first) {
+void SettingsCore::setFirstLaunch(bool first) {
 	auto firstLaunch = getFirstLaunch();
 	if (firstLaunch != first) {
 		mAppSettings.setValue("firstLaunch", (int)first);
@@ -389,7 +389,7 @@ void Settings::setFirstLaunch(bool first) {
 	}
 }
 
-void Settings::setLastActiveTabIndex(int index) {
+void SettingsCore::setLastActiveTabIndex(int index) {
 	auto lastActiveIndex = getLastActiveTabIndex();
 	if (lastActiveIndex != index) {
 		mAppSettings.setValue("lastActiveTabIndex", index);
@@ -398,11 +398,11 @@ void Settings::setLastActiveTabIndex(int index) {
 	}
 }
 
-int Settings::getLastActiveTabIndex() {
+int SettingsCore::getLastActiveTabIndex() {
 	return mAppSettings.value("lastActiveTabIndex", 1).toInt();
 }
 
-void Settings::setDisplayDeviceCheckConfirmation(bool display) {
+void SettingsCore::setDisplayDeviceCheckConfirmation(bool display) {
 	if (getDisplayDeviceCheckConfirmation() != display) {
 		mAppSettings.setValue("displayDeviceCheckConfirmation", display);
 		mAppSettings.sync();
@@ -410,50 +410,50 @@ void Settings::setDisplayDeviceCheckConfirmation(bool display) {
 	}
 }
 
-bool Settings::getDisplayDeviceCheckConfirmation() const {
+bool SettingsCore::getDisplayDeviceCheckConfirmation() const {
 	auto val = mAppSettings.value("displayDeviceCheckConfirmation", 1).toInt();
 	return val;
 }
 
-void Settings::startEchoCancellerCalibration() {
+void SettingsCore::startEchoCancellerCalibration() {
 	mSettingsModelConnection->invokeToModel([this]() { mSettingsModel->startEchoCancellerCalibration(); });
 }
 
-void Settings::accessCallSettings() {
+void SettingsCore::accessCallSettings() {
 	mSettingsModelConnection->invokeToModel([this]() { mSettingsModel->accessCallSettings(); });
 }
-void Settings::closeCallSettings() {
+void SettingsCore::closeCallSettings() {
 	mSettingsModelConnection->invokeToModel([this]() { mSettingsModel->closeCallSettings(); });
 }
 
-void Settings::updateMicVolume() const {
+void SettingsCore::updateMicVolume() const {
 	mSettingsModelConnection->invokeToModel([this]() { mSettingsModel->getMicVolume(); });
 }
 
-bool Settings::getLogsEnabled() const {
+bool SettingsCore::getLogsEnabled() const {
 	return mLogsEnabled;
 }
 
-bool Settings::getFullLogsEnabled() const {
+bool SettingsCore::getFullLogsEnabled() const {
 	return mFullLogsEnabled;
 }
 
-void Settings::cleanLogs() const {
+void SettingsCore::cleanLogs() const {
 	mSettingsModelConnection->invokeToModel([this]() { mSettingsModel->cleanLogs(); });
 }
 
-void Settings::sendLogs() const {
+void SettingsCore::sendLogs() const {
 	mSettingsModelConnection->invokeToModel([this]() { mSettingsModel->sendLogs(); });
 }
 
-QString Settings::getLogsEmail() const {
+QString SettingsCore::getLogsEmail() const {
 	return mLogsEmail;
 }
 
-QString Settings::getLogsFolder() const {
+QString SettingsCore::getLogsFolder() const {
 	return mLogsFolder;
 }
 
-bool Settings::dndEnabled() const {
+bool SettingsCore::dndEnabled() const {
 	return mDndEnabled;
 }

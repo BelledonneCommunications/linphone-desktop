@@ -62,8 +62,10 @@ FocusScope {
 
 				ColumnLayout {
 					id: content
-					width: parent.width
 					spacing: 32 * DefaultStyle.dp
+					anchors.left: parent.left
+					anchors.right: parent.right
+					anchors.rightMargin: 39 * DefaultStyle.dp
 					Button {
 						id: grouCallButton
 						visible: mainItem.groupCallVisible && !SettingsCpp.disableMeetingsFeature
@@ -111,7 +113,6 @@ FocusScope {
 					}
 					ColumnLayout {
 						spacing: 18 * DefaultStyle.dp
-						Layout.rightMargin: 39 * DefaultStyle.dp
 						Text {
 							text: qsTr("All contacts")
 							font {

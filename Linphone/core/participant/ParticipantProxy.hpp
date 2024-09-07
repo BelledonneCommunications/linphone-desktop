@@ -53,8 +53,6 @@ public:
 	bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 	bool getShowMe() const;
-
-	void setConferenceModel(ConferenceModel *conferenceModel);
 	void setShowMe(const bool &show);
 
 	Q_INVOKABLE void addAddress(const QString &address);

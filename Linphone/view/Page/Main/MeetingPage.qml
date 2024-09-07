@@ -136,7 +136,7 @@ AbstractMainPage {
 				spacing: 0
 				RowLayout {
 					enabled: mainItem.leftPanelEnabled
-					Layout.rightMargin: 39 * DefaultStyle.dp
+					Layout.rightMargin: 38 * DefaultStyle.dp
 					spacing: 0					
 					Text {
 						Layout.fillWidth: true
@@ -163,7 +163,7 @@ AbstractMainPage {
 					id: searchBar
 					Layout.fillWidth: true
 					Layout.topMargin: 18 * DefaultStyle.dp
-					Layout.rightMargin: 39 * DefaultStyle.dp
+					Layout.rightMargin: 38 * DefaultStyle.dp
 					placeholderText: qsTr("Rechercher une réunion")
 					KeyNavigation.up: conferenceList
 					KeyNavigation.down: conferenceList
@@ -231,9 +231,8 @@ AbstractMainPage {
 			property bool isCreation
 			ColumnLayout {
 				spacing: 33 * DefaultStyle.dp
-				
+				anchors.fill: parent
 				RowLayout {
-					width: 320 * DefaultStyle.dp
 					Layout.rightMargin: 35 * DefaultStyle.dp
 					spacing: 5 * DefaultStyle.dp
 					Button {
@@ -263,6 +262,7 @@ AbstractMainPage {
 						}
 						Layout.fillWidth: true
 					}
+					Item {Layout.fillWidth: true}
 					Button {
 						id: createButton
 						Layout.preferredWidth: 57 * DefaultStyle.dp
@@ -316,6 +316,10 @@ AbstractMainPage {
 								mainWin.closeLoadingPopup()
 							}
 							createConfLayout.enabled = meetingSetup.conferenceInfoGui.core.schedulerState != LinphoneEnums.ConferenceSchedulerState.AllocationPending
+						}
+						function onSaveFailed() {
+							var mainWin = UtilsCpp.getMainWindow()
+							mainWin.closeLoadingPopup()
 						}
 					}
 					onSaveSucceed: {

@@ -21,15 +21,12 @@
 #include "CallProxy.hpp"
 #include "CallGui.hpp"
 #include "CallList.hpp"
+#include "core/App.hpp"
 
 DEFINE_ABSTRACT_OBJECT(CallProxy)
 
 CallProxy::CallProxy(QObject *parent) : SortFilterProxy(parent) {
-	mList = CallList::create();
-	connect(mList.get(), &CallList::currentCallChanged, this, &CallProxy::resetCurrentCall);
-	connect(mList.get(), &CallList::haveCallChanged, this, &CallProxy::haveCallChanged);
-	connect(this, &CallProxy::lMergeAll, mList.get(), &CallList::lMergeAll);
-	setSourceModel(mList.get());
+	setSourceModel(App::getInstance()->getCallList().get());
 	sort(0);
 }
 
@@ -66,6 +63,20 @@ void CallProxy::resetCurrentCall() {
 
 bool CallProxy::getHaveCall() const {
 	return dynamic_cast<CallList *>(sourceModel())->getHaveCall();
+}
+
+void CallProxy::setSourceModel(QAbstractItemModel *model) {
+	auto oldCallList = dynamic_cast<CallList *>(sourceModel());
+	if (oldCallList) {
+		disconnect(oldCallList);
+	}
+	auto newCallList = dynamic_cast<CallList *>(model);
+	if (newCallList) {
+		connect(newCallList, &CallList::currentCallChanged, this, &CallProxy::resetCurrentCall);
+		connect(newCallList, &CallList::haveCallChanged, this, &CallProxy::haveCallChanged);
+		connect(this, &CallProxy::lMergeAll, newCallList, &CallList::lMergeAll);
+	}
+	QSortFilterProxyModel::setSourceModel(model);
 }
 
 bool CallProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {

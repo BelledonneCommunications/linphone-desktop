@@ -50,6 +50,8 @@ public:
 
 	bool getHaveCall() const;
 
+	void setSourceModel(QAbstractItemModel *sourceModel) override;
+
 signals:
 	void lMergeAll();
 	void filterTextChanged();
@@ -62,7 +64,6 @@ protected:
 
 	QString mFilterText;
 	CallGui *mCurrentCall = nullptr; // When null, a new UI object is build from List
-	QSharedPointer<CallList> mList;
 
 	DECLARE_ABSTRACT_OBJECT
 };

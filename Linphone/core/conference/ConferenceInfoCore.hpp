@@ -150,6 +150,7 @@ signals:
 	void conferenceInfoStateChanged();
 	void conferenceSchedulerStateChanged();
 	void timeZoneModelChanged();
+	void saveFailed();
 
 	void invitationsSent();
 	void removed();

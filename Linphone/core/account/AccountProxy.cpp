@@ -21,13 +21,10 @@
 #include "AccountProxy.hpp"
 #include "AccountGui.hpp"
 #include "AccountList.hpp"
+#include "core/App.hpp"
 
 AccountProxy::AccountProxy(QObject *parent) : SortFilterProxy(parent) {
-	mAccountList = AccountList::create();
-	connect(mAccountList.get(), &AccountList::countChanged, this, &AccountProxy::resetDefaultAccount);
-	connect(mAccountList.get(), &AccountList::defaultAccountChanged, this, &AccountProxy::resetDefaultAccount);
-	connect(mAccountList.get(), &AccountList::haveAccountChanged, this, &AccountProxy::haveAccountChanged);
-	setSourceModel(mAccountList.get());
+	setSourceModel(App::getInstance()->getAccountList().get());
 	sort(0);
 }
 
@@ -71,6 +68,20 @@ AccountGui *AccountProxy::firstAccount() {
 
 bool AccountProxy::getHaveAccount() const {
 	return dynamic_cast<AccountList *>(sourceModel())->getHaveAccount();
+}
+
+void AccountProxy::setSourceModel(QAbstractItemModel *model) {
+	auto oldAccountList = dynamic_cast<AccountList *>(sourceModel());
+	if (oldAccountList) {
+		disconnect(oldAccountList);
+	}
+	auto newAccountList = dynamic_cast<AccountList *>(model);
+	if (newAccountList) {
+		connect(newAccountList, &AccountList::countChanged, this, &AccountProxy::resetDefaultAccount);
+		connect(newAccountList, &AccountList::defaultAccountChanged, this, &AccountProxy::resetDefaultAccount);
+		connect(newAccountList, &AccountList::haveAccountChanged, this, &AccountProxy::haveAccountChanged);
+	}
+	QSortFilterProxyModel::setSourceModel(model);
 }
 
 bool AccountProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {

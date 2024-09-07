@@ -44,6 +44,7 @@ QSharedPointer<CallCore> CallList::createCallCore(const std::shared_ptr<linphone
 
 CallList::CallList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 }
 
 CallList::~CallList() {

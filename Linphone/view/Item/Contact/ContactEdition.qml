@@ -265,7 +265,7 @@ RightPanelLayout {
 								}
 								TextField {
 									id: addressTextField
-									onTextEdited: {
+									onEditingFinished: {
 										if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Adresse SIP"), text)
 									}
 									property string _initialText: modelData.address

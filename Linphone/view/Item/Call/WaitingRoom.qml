@@ -4,6 +4,7 @@ import QtQuick.Effects
 import QtQuick.Controls as Control
 import Linphone
 import UtilsCpp 1.0
+import LinphoneAccountsCpp
 
 RowLayout {
 	id: mainItem
@@ -29,7 +30,7 @@ RowLayout {
 				displayAll: false
 				displayPresence: false
 				mutedStatus: microButton.checked
-				AccountProxy{
+				AccountProxy {
 					id: accounts
 				}
 				account: accounts.findAccountByAddress(mainItem.localAddress)

@@ -22,6 +22,8 @@
 #include <QQmlApplicationEngine>
 #include <QSharedPointer>
 
+#include "core/account/AccountProxy.hpp"
+#include "core/call/CallProxy.hpp"
 #include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "model/cli/CliModel.hpp"
@@ -114,6 +116,9 @@ public:
 
 	QQuickWindow *getMainWindow() const;
 	void setMainWindow(QQuickWindow *data);
+	QSharedPointer<AccountList> getAccountList() const;
+	QSharedPointer<CallList> getCallList() const;
+	QSharedPointer<SettingsCore> getSettings() const;
 
 #ifdef Q_OS_LINUX
 	Q_INVOKABLE void exportDesktopFile();
@@ -142,7 +147,9 @@ private:
 	Notifier *mNotifier = nullptr;
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;
-	QSharedPointer<Settings> mSettings;
+	QSharedPointer<SettingsCore> mSettings;
+	QSharedPointer<AccountList> mAccountList;
+	QSharedPointer<CallList> mCallList;
 	QSharedPointer<SafeConnection<App, CoreModel>> mCoreModelConnection;
 	QSharedPointer<SafeConnection<App, CliModel>> mCliModelConnection;
 	bool mAutoStart = false;

@@ -60,6 +60,8 @@ signals:
 
 protected:
 	QString mSearchText;
+	int mSourceFlags;
+	LinphoneEnums::MagicSearchAggregation mAggregationFlag;
 	QSharedPointer<MagicSearchList> mList;
 	virtual bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
 };

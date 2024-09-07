@@ -18,8 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SETTINGS_H_
-#define SETTINGS_H_
+#ifndef SETTINGS_CORE_H_
+#define SETTINGS_CORE_H_
 
 #include "model/setting/SettingsModel.hpp"
 #include "tool/thread/SafeConnection.hpp"
@@ -29,7 +29,7 @@
 #include <QSettings>
 #include <QVariantMap>
 
-class Settings : public QObject, public AbstractObject {
+class SettingsCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
 	// Security
@@ -68,11 +68,11 @@ class Settings : public QObject, public AbstractObject {
 	Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
 
 public:
-	static QSharedPointer<Settings> create();
-	Settings(QObject *parent = Q_NULLPTR);
-	virtual ~Settings();
+	static QSharedPointer<SettingsCore> create();
+	SettingsCore(QObject *parent = Q_NULLPTR);
+	virtual ~SettingsCore();
 
-	void setSelf(QSharedPointer<Settings> me);
+	void setSelf(QSharedPointer<SettingsCore> me);
 
 	QString getConfigPath(const QCommandLineParser &parser = QCommandLineParser());
 
@@ -256,7 +256,7 @@ private:
 	bool mDndEnabled;
 
 	QSettings mAppSettings;
-	QSharedPointer<SafeConnection<Settings, SettingsModel>> mSettingsModelConnection;
+	QSharedPointer<SafeConnection<SettingsCore, SettingsModel>> mSettingsModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };

@@ -163,7 +163,7 @@ Item {
 			}
 			ColumnLayout {
 				spacing: 0
-				visible: mainItem.displayAll && !mainItem.remoteIsPaused
+				visible: mainItem.displayAll && !mainItem.remoteIsPaused && !mainItem.conference
 				anchors.horizontalCenter: parent.horizontalCenter
 				anchors.top: centerItem.bottom
 				anchors.topMargin: 21 * DefaultStyle.dp

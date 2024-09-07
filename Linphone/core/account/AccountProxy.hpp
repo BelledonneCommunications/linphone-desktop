@@ -49,10 +49,13 @@ public:
 
 	bool getHaveAccount() const;
 
+	void setSourceModel(QAbstractItemModel *sourceModel) override;
+
 signals:
 	void filterTextChanged();
 	void defaultAccountChanged();
 	void haveAccountChanged();
+	void initialized();
 
 protected:
 	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
@@ -60,7 +63,6 @@ protected:
 
 	QString mFilterText;
 	QSharedPointer<AccountCore> mDefaultAccount; // When null, a new UI object is build from List
-	QSharedPointer<AccountList> mAccountList;
 };
 
 #endif

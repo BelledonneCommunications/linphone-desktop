@@ -3,6 +3,8 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls as Control
 import Linphone
 import UtilsCpp 1.0
+import LinphoneAccountsCpp
+import LinphoneCallsCpp
 
 // Snippet
 Window {
@@ -21,7 +23,6 @@ Window {
 	onCallChanged: console.log('New Call:' +call)
 	onClosing: {
 		accountStatus.defaultAccount = accountStatus
-		accountLayout.accounts = null
 		gc()
 	}
 	Component.onDestruction: gc()
@@ -39,8 +40,8 @@ Window {
 			ListView{
 				id: callList
 				anchors.fill: parent
-				model: CallProxy{
-					id: callsModel
+				model: CallProxy {
+					id: callProxy
 					onCountChanged: console.log("count:"+count)
 				}
 				delegate: RectangleTest{
@@ -57,7 +58,7 @@ Window {
 						anchors.fill: parent
 						onClicked: {
 							//modelData.core.lSetPaused(false)
-							callsModel.currentCall = modelData
+							callProxy.currentCall = modelData
 						}
 					}
 				}
@@ -69,7 +70,7 @@ Window {
 			RowLayout {
 				id: accountLayout
 				Layout.fillWidth: true
-				property AccountProxy accounts: AccountProxy{id: accountProxy}
+				property AccountProxy  accounts: AccountProxy {id: accountProxy}
 				property var haveAccountVar: UtilsCpp.haveAccount()
 				property var haveAccount: haveAccountVar ? haveAccountVar.value : false
 				onHaveAccountChanged: {
@@ -87,7 +88,7 @@ Window {
 						ListView{
 							id: accountList
 							Layout.fillHeight: true
-							model: AccountProxy{}
+							model: AccountProxy {}
 							delegate:Rectangle{
 								color: "#11111111"
 								height: 20

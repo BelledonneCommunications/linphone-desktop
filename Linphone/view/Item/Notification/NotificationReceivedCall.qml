@@ -89,8 +89,8 @@ Notification {
 						imageHeight: 32 * DefaultStyle.dp
 					}
 					onClicked: {
-						mainItem.call.core.lAccept(false)
 						UtilsCpp.openCallsWindow(mainItem.call)
+						mainItem.call.core.lAccept(false)
 					}
 				}
 				Button {

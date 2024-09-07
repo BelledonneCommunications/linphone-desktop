@@ -52,7 +52,7 @@ public:
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-	int findFriendIndexByAddress(const QString& address);
+	int findFriendIndexByAddress(const QString &address);
 
 signals:
 	void lSearch(QString filter);
@@ -64,9 +64,12 @@ signals:
 
 	void friendCreated(int index);
 
+	void initialized();
+
 private:
 	int mSourceFlags;
 	LinphoneEnums::MagicSearchAggregation mAggregationFlag;
+	QString mSearchFilter;
 
 	std::shared_ptr<MagicSearchModel> mMagicSearch;
 	QSharedPointer<SafeConnection<MagicSearchList, MagicSearchModel>> mModelConnection;

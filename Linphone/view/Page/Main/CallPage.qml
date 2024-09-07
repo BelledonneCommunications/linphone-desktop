@@ -5,6 +5,7 @@ import QtQuick.Controls as Control
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import LinphoneAccountsCpp
 
 AbstractMainPage {
 	id: mainItem
@@ -17,7 +18,7 @@ AbstractMainPage {
 
 	//Group call properties
 	property ConferenceInfoGui confInfoGui
-	property AccountProxy accounts: AccountProxy{id: accountProxy}
+	property AccountProxy  accounts: AccountProxy {id: accountProxy}
 	property AccountGui account: accountProxy.defaultAccount
 	property var state: account && account.core.registrationState || 0
 	property bool isRegistered: account ? account.core.registrationState == LinphoneEnums.RegistrationState.Ok : false

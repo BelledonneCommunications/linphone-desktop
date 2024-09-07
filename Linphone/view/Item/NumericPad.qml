@@ -4,27 +4,27 @@ import QtQuick.Layouts as Layout
 import QtQuick.Effects
 import Linphone
 import UtilsCpp
-  
+import LinphoneCallsCpp
+
 Control.Popup {
 	id: mainItem
-	property bool closeButtonVisible: true
-	property bool roundedBottom: false
 	closePolicy: Control.Popup.CloseOnEscape
 	leftPadding: 72 * DefaultStyle.dp
 	rightPadding: 72 * DefaultStyle.dp
 	topPadding: 41 * DefaultStyle.dp
 	bottomPadding: 18 * DefaultStyle.dp
-	onOpened: numPad.forceActiveFocus()
-	signal buttonPressed(string text)
+	property bool closeButtonVisible: true
+	property bool roundedBottom: false
+	property var currentCall
 	onButtonPressed: (text) => {
-		if (callsModel.currentCall) callsModel.currentCall.core.lSendDtmf(text)
+		if (currentCall) currentCall.core.lSendDtmf(text)
 		else UtilsCpp.playDtmf(text)
 	}
+	onOpened: numPad.forceActiveFocus()
+	signal buttonPressed(string text)
 	signal launchCall()
 	signal wipe()
-	CallProxy{
-		id: callsModel
-	}
+
 	background: Item {
 		anchors.fill: parent
 		Rectangle {

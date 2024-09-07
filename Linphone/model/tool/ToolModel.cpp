@@ -128,13 +128,6 @@ bool ToolModel::createCall(const QString &sipAddress,
 		}
 		return false;
 	}
-	for (auto &account : core->getAccountList()) {
-		if (account->getContactAddress() && account->getContactAddress()->weakEqual(address)) {
-			if (errorMessage) *errorMessage = tr("The calling address is a connected account.");
-			lDebug() << "[" + QString(gClassName) + "]" + *errorMessage;
-			return false;
-		}
-	}
 
 	if (SettingsModel::dndEnabled(
 	        core->getConfig())) { // Force tones for outgoing calls when in DND mode (ringback, dtmf, etc ... ) disabled

@@ -24,7 +24,9 @@
 
 MagicSearchProxy::MagicSearchProxy(QObject *parent) : SortFilterProxy(parent) {
 	mList = MagicSearchList::create();
-	connect(mList.get(), &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged);
+	mSourceFlags = (int)LinphoneEnums::MagicSearchSource::Friends | (int)LinphoneEnums::MagicSearchSource::LdapServers;
+	mAggregationFlag = LinphoneEnums::MagicSearchAggregation::Friend;
+	(mList.get(), &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged);
 	connect(mList.get(), &MagicSearchList::aggregationFlagChanged, this, &MagicSearchProxy::aggregationFlagChanged);
 	connect(mList.get(), &MagicSearchList::friendCreated, this, [this](int index) {
 		auto proxyIndex = mapFromSource(sourceModel()->index(index, 0));
@@ -33,6 +35,10 @@ MagicSearchProxy::MagicSearchProxy(QObject *parent) : SortFilterProxy(parent) {
 	setSourceModel(mList.get());
 	connect(this, &MagicSearchProxy::forceUpdate, [this] { emit mList->lSearch(mSearchText); });
 	sort(0);
+	connect(mList.get(), &MagicSearchList::initialized, this, [this] {
+		emit mList->lSetSourceFlags(mSourceFlags);
+		emit mList->lSetAggregationFlag(mAggregationFlag);
+	});
 }
 
 MagicSearchProxy::~MagicSearchProxy() {
@@ -48,23 +54,29 @@ QString MagicSearchProxy::getSearchText() const {
 
 void MagicSearchProxy::setSearchText(const QString &search) {
 	mSearchText = search;
-	qobject_cast<MagicSearchList *>(sourceModel())->setSearch(mSearchText);
+	mList->setSearch(mSearchText);
 }
 
 int MagicSearchProxy::getSourceFlags() const {
-	return qobject_cast<MagicSearchList *>(sourceModel())->getSourceFlags();
+	return mSourceFlags;
 }
 
 void MagicSearchProxy::setSourceFlags(int flags) {
-	qobject_cast<MagicSearchList *>(sourceModel())->lSetSourceFlags(flags);
+	if (flags != mSourceFlags) {
+		mSourceFlags = flags;
+		emit mList->lSetSourceFlags(flags);
+	}
 }
 
 LinphoneEnums::MagicSearchAggregation MagicSearchProxy::getAggregationFlag() const {
-	return qobject_cast<MagicSearchList *>(sourceModel())->getAggregationFlag();
+	return mAggregationFlag;
 }
 
 void MagicSearchProxy::setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag) {
-	qobject_cast<MagicSearchList *>(sourceModel())->lSetAggregationFlag(flag);
+	if (flag != mAggregationFlag) {
+		mAggregationFlag = flag;
+		emit mList->lSetAggregationFlag(flag);
+	}
 }
 
 bool MagicSearchProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {

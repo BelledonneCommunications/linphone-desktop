@@ -7,6 +7,7 @@ import QtQuick.Dialogs
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import LinphoneAccountsCpp
 
 Item {
 	id: mainItem
@@ -16,7 +17,7 @@ Item {
 	readonly property int leftPadding: 32 * DefaultStyle.dp
 	readonly property int rightPadding: 32 * DefaultStyle.dp
 	readonly property int spacing: 16 * DefaultStyle.dp
-	property AccountProxy accountProxy
+	property AccountProxy  accountProxy
 	
 	signal addAccountRequest()
 	signal editAccount(AccountGui account)
@@ -37,7 +38,7 @@ Item {
 			Layout.preferredHeight: contentHeight
 			Layout.fillWidth: true
 			spacing: mainItem.spacing
-			model: mainItem.accountProxy
+			model: LinphoneAccountsCpp
 			delegate: Contact{
 				id: contactItem
 				width: list.width

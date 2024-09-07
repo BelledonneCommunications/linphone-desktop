@@ -11,6 +11,7 @@ import QtQuick.Effects
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import LinphoneAccountsCpp
 
 Item {
 	id: mainItem
@@ -65,10 +66,11 @@ Item {
 		openContextualMenuComponent(page)
 	}
 
-	AccountProxy {
+	AccountProxy  {
 		id: accountProxy
 		onDefaultAccountChanged: if (tabbar.currentIndex === 0 && defaultAccount) defaultAccount.core.lResetMissedCalls()
 	}
+
 	CallProxy {
 		id: callsModel
 	}
@@ -79,7 +81,7 @@ Item {
 			id: currentCallNotif
 			background: Item{}
 			closePolicy: Control.Popup.NoAutoClose
-			visible: currentCall 
+			visible: currentCall
 				&& currentCall.core.state != LinphoneEnums.CallState.Idle 
 				&& currentCall.core.state != LinphoneEnums.CallState.IncomingReceived
 				&& currentCall.core.state != LinphoneEnums.CallState.PushIncomingReceived
@@ -444,7 +446,6 @@ Item {
 							popup.contentItem: ColumnLayout {
 								Accounts {
 									id: accounts
-									accountProxy: accountProxy
 									onAddAccountRequest: mainItem.addAccountRequest()
 									onEditAccount: function(account) {
 										avatarButton.popup.close()

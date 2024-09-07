@@ -66,7 +66,8 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 		        [this](linphone::ConferenceScheduler::State state) {
 			        if (state == linphone::ConferenceScheduler::State::Ready && mInviteEnabled) {
 				        auto params = CoreModel::getInstance()->getCore()->createDefaultChatRoomParams();
-				        mConferenceSchedulerModel->getMonitor()->sendInvitations(params);
+				        // TODO : wait for new sdk api to send the invitations again
+				        // mConferenceSchedulerModel->getMonitor()->sendInvitations(params);
 			        }
 			        emit schedulerStateChanged(state);
 		        });

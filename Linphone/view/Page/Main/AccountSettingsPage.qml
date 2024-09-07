@@ -5,11 +5,12 @@ import QtQuick.Controls as Control
 import Linphone
 import UtilsCpp 1.0
 import SettingsCpp 1.0
+import LinphoneAccountsCpp
 
 AbstractMasterDetailPage {
 	layoutsPath: "qrc:/Linphone/view/App/Layout/Account"
 	titleText: qsTr("Mon compte")
-	property AccountProxy accounts: AccountProxy{id: accountProxy}
+	property AccountProxy  accounts: AccountProxy {id: accountProxy}
 	property AccountGui account: accountProxy.defaultAccount
 	signal accountRemoved()
 	families: [

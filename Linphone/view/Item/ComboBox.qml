@@ -173,7 +173,7 @@ Control.ComboBox {
 					visible: source != ""
 					width: visible ? 20 * DefaultStyle.dp : 0
 					sourceSize.width: 20 * DefaultStyle.dp
-					source: modelData && modelData.img ? modelData.img : ""
+					source: typeof(modelData) != "undefined" && modelData.img ? modelData.img : ""
 					fillMode: Image.PreserveAspectFit
 					anchors.left: parent.left
 					anchors.leftMargin: visible ? 10 * DefaultStyle.dp : 0
@@ -181,11 +181,13 @@ Control.ComboBox {
 				}
 
 				Text {
-					text: modelData
+					text: typeof(modelData) != "undefined"
 							? modelData.text
 								? modelData.text
 								: modelData
-							: ""
+							: $modelData
+								? $modelData
+								: ""
 					elide: Text.ElideRight
 					maximumLineCount: 1
 					wrapMode: Text.WrapAnywhere
