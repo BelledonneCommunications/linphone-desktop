@@ -52,17 +52,18 @@ public:
 	}
 	
 private:
-	void createAccount (const shared_ptr<linphone::AccountCreator> &creator) {
-		auto account = creator->createAccountInCore();
-		if(account){
+	void createAccount (const shared_ptr<linphone::AccountCreator> &creator, bool enableRegister = false) {
+		if(!mAssistant->mAccount) mAssistant->mAccount = creator->createAccountInCore();
+		if(mAssistant->mAccount){
 			AccountSettingsModel *accountSettingsModel = CoreManager::getInstance()->getAccountSettingsModel();
-			CoreManager::getInstance()->addingAccount(account->getParams());
-			auto accountParams = account->getParams()->clone();
+			CoreManager::getInstance()->addingAccount(mAssistant->mAccount->getParams());
+			auto accountParams = mAssistant->mAccount->getParams()->clone();
 			auto natPolicy = accountParams->getNatPolicy();
 			if(natPolicy)
 				accountParams->setNatPolicy(natPolicy->clone());// Be sure to have a 'ref' entry on a nat_policy. When using default values, the 'ref' entry is lost where it should be pointing to default. We get one by cloning the policy.
-			if (accountSettingsModel->addOrUpdateAccount(account, accountParams)) {
-				accountSettingsModel->setDefaultAccount(account);
+			accountParams->enableRegister(enableRegister);
+			if (accountSettingsModel->addOrUpdateAccount(mAssistant->mAccount, accountParams)) {
+				accountSettingsModel->setDefaultAccount(mAssistant->mAccount);
 			}
 		}
 	}
@@ -127,7 +128,7 @@ private:
 					creator->recoverAccount();
 				}else{
 					emit mAssistant->loginStatusChanged("");
-					createAccount(creator);
+					createAccount(creator, true);
 					CoreManager::getInstance()->getSipAddressesModel()->reset();
 					mAssistant->setIsProcessing(false);
 				}
@@ -176,7 +177,7 @@ private:
 					creator->recoverAccount();
 				}else{
 					emit mAssistant->loginStatusChanged("");
-					createAccount(creator);
+					createAccount(creator, true);
 					CoreManager::getInstance()->getSipAddressesModel()->reset();
 					mAssistant->setIsProcessing(false);
 				}
@@ -262,8 +263,9 @@ private:
 				status == linphone::AccountCreator::Status::AccountAlreadyActivated
 				) {
 			if (creator->getEmail().empty())
-				createAccount(creator);
+				createAccount(creator, true);
 			CoreManager::getInstance()->getSipAddressesModel()->reset();
+			
 			emit mAssistant->activateStatusChanged(QString(""));
 		} else {
 			if (status == linphone::AccountCreator::Status::RequestFailed)
@@ -279,7 +281,7 @@ private:
 			const string &
 			) override {
 		if (status == linphone::AccountCreator::Status::AccountActivated) {
-			createAccount(creator);
+			createAccount(creator, true);
 			CoreManager::getInstance()->getSipAddressesModel()->reset();
 			emit mAssistant->activateStatusChanged(QString(""));
 		} else {
@@ -313,7 +315,7 @@ private:
 			linphone::AccountCreator::Status status,
 			const std::string & response) override {
 		if( status == linphone::AccountCreator::Status::RequestOk){
-			createAccount(creator);
+			createAccount(creator, true);
 			CoreManager::getInstance()->getSipAddressesModel()->reset();
 			emit mAssistant->activateStatusChanged("");
 		} else {
@@ -366,6 +368,7 @@ void AssistantModel::activate () {
 void AssistantModel::create () {
 	setIsProcessing(true);
 	mNextAction = AccountCreation;
+	mAccount = nullptr;
 	if(mAccountCreator->getUsername().empty())
 		mAccountCreator->setUsername(mAccountCreator->getPhoneNumber());
 	emit createStatusChanged(tr("requestingValidationUrl"));
