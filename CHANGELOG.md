@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Blinking on resize or Ui updates on screen that have low frame rates.
 - Timezones and Windows fix.
 - Download the correct version of openH264 (2.2.0)
+- Avoid to register the account while activating it.
 - Update SDK to 5.3.80
 
 ### Added

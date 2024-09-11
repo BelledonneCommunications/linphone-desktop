@@ -172,6 +172,7 @@ private:
 	
 	
 	std::shared_ptr<linphone::AccountCreator> mAccountCreator;
+	std::shared_ptr<linphone::Account> mAccount;
 	std::shared_ptr<Handlers> mHandlers;
 #ifdef ENABLE_OAUTH2
 	OAuth2Model * oAuth2Model = nullptr;
