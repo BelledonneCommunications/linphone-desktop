@@ -178,7 +178,7 @@ void AccountManager::registerNewAccount(const QString &username,
 			                                              "",                                     // User ID.
 			                                              Utils::appStringToCoreString(password), // Password.
 			                                              "",                                     // HA1.
-			                                              createdSipIdentityAddress->getDomain(), // Realm.
+			                                              "",                                     // Realm.
 			                                              createdSipIdentityAddress->getDomain()  // Domain.
 			                                              ));
 			    if (type == RegisterType::Email) {
