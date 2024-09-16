@@ -39,23 +39,6 @@ ApplicationWindow {
 		}
 	}
 
-	property bool authenticationPopupOpened: false
-	Component {
-		id: authenticationPopupComp
-		AuthenticationDialog{
-			property var authenticationDialog
-			property var callback: authenticationDialog.result
-			identity: authenticationDialog.username
-			domain: authenticationDialog.domain
-			onAccepted: {
-				authenticationDialog ? authenticationDialog.result(password) : callback(password)
-				close()
-			}
-			onOpened: mainWindow.authenticationPopupOpened = true
-			onClosed: mainWindow.authenticationPopupOpened = false
-		}
-	}
-
 	Popup {
 		id: startCallPopup
 		property FriendGui contact
@@ -237,13 +220,6 @@ ApplicationWindow {
 		popupLayout.popupList.push(popup)
 		popup.open()
 		popup.closePopup.connect(removeFromPopupLayout)
-	}
-
-	function reauthenticateAccount(authenticationDialog){
-		if (authenticationPopupOpened) return
-		console.log("Showing authentication dialog")
-		var popup = authenticationPopupComp.createObject(mainWindow, {"authenticationDialog": authenticationDialog})
-		popup.open()
 	}
 	
 	ColumnLayout {

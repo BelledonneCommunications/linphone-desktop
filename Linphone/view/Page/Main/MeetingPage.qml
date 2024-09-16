@@ -560,7 +560,8 @@ AbstractMainPage {
 						}
 						Button {
 							id: editButton
-							visible: mainItem.selectedConference && UtilsCpp.isMe(mainItem.selectedConference.core.organizerAddress)
+							property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core.organizerAddress)
+							visible: mainItem.selectedConference && isMeObj && isMeObj.value || false
 							Layout.preferredWidth: 24 * DefaultStyle.dp
 							Layout.preferredHeight: 24 * DefaultStyle.dp
 							icon.width: 24 * DefaultStyle.dp
@@ -588,6 +589,7 @@ AbstractMainPage {
 								color: deletePopup.popupBackgroundColor
 								borderColor: deletePopup.popupBackgroundColor
 								inversedColors: true
+								property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core.organizerAddress)
 								contentItem: RowLayout {
 									EffectImage {
 										imageSource: AppIcons.trashCan
@@ -609,7 +611,7 @@ AbstractMainPage {
 								}
 								onClicked: {
 									if (mainItem.selectedConference) {
-										cancelAndDeleteConfDialog.cancel = UtilsCpp.isMe(mainItem.selectedConference.core.organizerAddress)
+										cancelAndDeleteConfDialog.cancel = isMeObj? isMeObj.value : false
 										cancelAndDeleteConfDialog.open()
 										// mainItem.contactDeletionRequested(mainItem.selectedConference)
 										deletePopup.close()

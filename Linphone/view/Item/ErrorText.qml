@@ -7,6 +7,13 @@ import Linphone
 Text {
 	id: mainItem
 	color: DefaultStyle.danger_500main
+	function clear() {
+		autoHideErrorMessage.stop()
+		text = ""
+	}
+	function setText(text) {
+		mainItem.text = text
+	}
 	font {
 		pixelSize: 12 * DefaultStyle.dp
 		weight: 300 * DefaultStyle.dp

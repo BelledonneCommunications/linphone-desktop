@@ -122,7 +122,7 @@ public:
 	Q_INVOKABLE static VariantObject *findFriendByAddress(const QString &address);
 	Q_INVOKABLE static VariantObject *getFriendAddressSecurityLevel(const QString &address);
 	static QString generateSavedFilename(const QString &from, const QString &to);
-	Q_INVOKABLE static bool isMe(const QString &address);
+	Q_INVOKABLE static VariantObject *isMe(const QString &address);
 	Q_INVOKABLE static bool isLocal(const QString &address);
 	Q_INVOKABLE static bool isUsername(const QString &txt); // Regex check
 	static QString getCountryName(const QLocale::Territory &p_country);

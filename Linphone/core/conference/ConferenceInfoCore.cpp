@@ -60,7 +60,8 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		mHaveModel = true;
 		auto confSchedulerModel = mConferenceInfoModel->getConferenceScheduler();
 		if (!confSchedulerModel) {
-			auto confScheduler = CoreModel::getInstance()->getCore()->createConferenceScheduler();
+			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+			auto confScheduler = CoreModel::getInstance()->getCore()->createConferenceScheduler(defaultAccount);
 			confSchedulerModel = Utils::makeQObject_ptr<ConferenceSchedulerModel>(confScheduler);
 			mConferenceInfoModel->setConferenceScheduler(confSchedulerModel);
 		}
@@ -597,7 +598,7 @@ void ConferenceInfoCore::save() {
 			auto confInfoModel = Utils::makeQObject_ptr<ConferenceInfoModel>(linphoneConf);
 			auto confSchedulerModel = confInfoModel->getConferenceScheduler();
 			if (!confSchedulerModel) {
-				auto confScheduler = CoreModel::getInstance()->getCore()->createConferenceScheduler();
+				auto confScheduler = CoreModel::getInstance()->getCore()->createConferenceScheduler(defaultAccount);
 				confSchedulerModel = Utils::makeQObject_ptr<ConferenceSchedulerModel>(confScheduler);
 				confInfoModel->setConferenceScheduler(confSchedulerModel);
 			}

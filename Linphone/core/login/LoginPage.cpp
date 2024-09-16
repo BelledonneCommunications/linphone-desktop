@@ -54,7 +54,6 @@ QString LoginPage::getErrorMessage() const {
 }
 
 void LoginPage::setErrorMessage(const QString &error) {
-	// force signal emission to display the error even if it doesn't change
 	if (mErrorMessage != error) {
 		mErrorMessage = error;
 		emit errorMessageChanged(error);
@@ -66,6 +65,7 @@ void LoginPage::login(const QString &username,
                       QString displayName,
                       QString domain,
                       LinphoneEnums::TransportType transportType) {
+	setErrorMessage("");
 	App::postModelAsync([=]() {
 		// Create on Model thread.
 		AccountManager *accountManager = new AccountManager();

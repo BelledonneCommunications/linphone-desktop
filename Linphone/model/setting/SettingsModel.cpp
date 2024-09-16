@@ -257,8 +257,8 @@ QStringList SettingsModel::getPlaybackDevices() const {
 QString SettingsModel::getCaptureDevice() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto audioDevice = CoreModel::getInstance()->getCore()->getInputAudioDevice();
-	return Utils::coreStringToAppString(audioDevice ? audioDevice->getId()
-	                                                : CoreModel::getInstance()->getCore()->getCaptureDevice());
+	if (!audioDevice) audioDevice = CoreModel::getInstance()->getCore()->getDefaultInputAudioDevice();
+	return Utils::coreStringToAppString(audioDevice ? audioDevice->getId() : "");
 }
 
 void SettingsModel::setCaptureDevice(const QString &device) {
@@ -269,7 +269,7 @@ void SettingsModel::setCaptureDevice(const QString &device) {
 	    find_if(list.cbegin(), list.cend(),
 	            [&](const std::shared_ptr<linphone::AudioDevice> &audioItem) { return audioItem->getId() == devId; });
 	if (audioDevice != list.cend()) {
-		CoreModel::getInstance()->getCore()->setCaptureDevice(devId);
+		CoreModel::getInstance()->getCore()->setDefaultInputAudioDevice(*audioDevice);
 		CoreModel::getInstance()->getCore()->setInputAudioDevice(*audioDevice);
 		emit captureDeviceChanged(device);
 		resetCaptureGraph();
@@ -281,8 +281,8 @@ void SettingsModel::setCaptureDevice(const QString &device) {
 QString SettingsModel::getPlaybackDevice() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto audioDevice = CoreModel::getInstance()->getCore()->getOutputAudioDevice();
-	return Utils::coreStringToAppString(audioDevice ? audioDevice->getId()
-	                                                : CoreModel::getInstance()->getCore()->getPlaybackDevice());
+	if (!audioDevice) audioDevice = CoreModel::getInstance()->getCore()->getDefaultOutputAudioDevice();
+	return Utils::coreStringToAppString(audioDevice ? audioDevice->getId() : "");
 }
 
 void SettingsModel::setPlaybackDevice(const QString &device) {
@@ -294,8 +294,7 @@ void SettingsModel::setPlaybackDevice(const QString &device) {
 	    find_if(list.cbegin(), list.cend(),
 	            [&](const std::shared_ptr<linphone::AudioDevice> &audioItem) { return audioItem->getId() == devId; });
 	if (audioDevice != list.cend()) {
-
-		CoreModel::getInstance()->getCore()->setPlaybackDevice(devId);
+		CoreModel::getInstance()->getCore()->setDefaultOutputAudioDevice(*audioDevice);
 		CoreModel::getInstance()->getCore()->setOutputAudioDevice(*audioDevice);
 		CoreModel::getInstance()->getCore()->setRingerDevice(devId);
 		emit playbackDeviceChanged(device);
@@ -477,9 +476,10 @@ bool SettingsModel::getShowChats() const {
     return mConfig->getBool(UiSection, "disable_chat_feature", false);
 }*/
 
+// clang-format off
 void SettingsModel::notifyConfigReady(){
-	DEFINE_NOTIFY_CONFIG_READY(assistantGoDirectlyToThirdPartySipAccountLogin,
-							   AssistantGoDirectlyToThirdPartySipAccountLogin)
+    DEFINE_NOTIFY_CONFIG_READY(assistantGoDirectlyToThirdPartySipAccountLogin,
+                               AssistantGoDirectlyToThirdPartySipAccountLogin)
 	DEFINE_NOTIFY_CONFIG_READY(assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
 	DEFINE_NOTIFY_CONFIG_READY(assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
 	DEFINE_NOTIFY_CONFIG_READY(autoStart, AutoStart)
@@ -487,66 +487,67 @@ void SettingsModel::notifyConfigReady(){
 
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", false)
 DEFINE_GETSET_CONFIG(
-					 SettingsModel, bool, Bool, disableMeetingsFeature, DisableMeetingsFeature, "disable_meetings_feature", false)
+	SettingsModel, bool, Bool, disableMeetingsFeature, DisableMeetingsFeature, "disable_meetings_feature", false)
 DEFINE_GETSET_CONFIG(SettingsModel,
-					 bool,
-					 Bool,
-					 disableBroadcastFeature,
-					 DisableBroadcastFeature,
-					 "disable_broadcast_feature",
-					 false)
+						bool,
+						Bool,
+						disableBroadcastFeature,
+						DisableBroadcastFeature,
+						"disable_broadcast_feature",
+						false)
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, hideSettings, HideSettings, "hide_settings", false)
-DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, hideAccountSettings, HideAccountSettings, "hide_account_settings", false)
+DEFINE_GETSET_CONFIG(
+	SettingsModel, bool, Bool, hideAccountSettings, HideAccountSettings, "hide_account_settings", false)
 DEFINE_GETSET_CONFIG(SettingsModel,
-					 bool,
-					 Bool,
-					 disableCallRecordings,
-					 DisableCallRecordings,
-					 "disable_call_recordings_feature",
-					 false)
+						bool,
+						Bool,
+						disableCallRecordings,
+						DisableCallRecordings,
+						"disable_call_recordings_feature",
+						false) 
 DEFINE_GETSET_CONFIG(SettingsModel,
-					 bool,
-					 Bool,
-					 assistantHideCreateAccount,
-					 AssistantHideCreateAccount,
-					 "assistant_hide_create_account",
-					 false)
+						bool,
+						Bool,
+						assistantHideCreateAccount,
+						AssistantHideCreateAccount,
+						"assistant_hide_create_account",
+						false)
 DEFINE_GETSET_CONFIG(SettingsModel,
-					 bool,
-					 Bool,
-					 assistantDisableQrCode,
-					 AssistantDisableQrCode,
-					 "assistant_disable_qr_code",
-					 true)
+						bool,
+						Bool,
+						assistantDisableQrCode,
+						AssistantDisableQrCode,
+						"assistant_disable_qr_code",
+						true) 
 DEFINE_GETSET_CONFIG(SettingsModel,
-					 bool,
-					 Bool,
-					 assistantHideThirdPartyAccount,
-					 AssistantHideThirdPartyAccount,
-					 "assistant_hide_third_party_account",
-					 false)
+						bool,
+						Bool,
+						assistantHideThirdPartyAccount,
+						AssistantHideThirdPartyAccount,
+						"assistant_hide_third_party_account",
+						false)
 DEFINE_GETSET_CONFIG(SettingsModel,
-					 bool,
-					 Bool,
-					 onlyDisplaySipUriUsername,
-					 OnlyDisplaySipUriUsername,
-					 "only_display_sip_uri_username",
-					 false)
+						bool,
+						Bool,
+						onlyDisplaySipUriUsername,
+						OnlyDisplaySipUriUsername,
+						"only_display_sip_uri_username",
+						false) 
 DEFINE_GETSET_CONFIG(SettingsModel,
-					 bool,
-					 Bool,
-					 darkModeAllowed,
-					 DarkModeAllowed,
-					 "dark_mode_allowed",
-					 false)
+							bool,
+							Bool,
+							darkModeAllowed,
+							DarkModeAllowed,
+							"dark_mode_allowed",
+							false)
 DEFINE_GETSET_CONFIG(SettingsModel, int, Int, maxAccount, MaxAccount, "max_account", 0)
 DEFINE_GETSET_CONFIG(SettingsModel,
-					 bool,
-					 Bool,
-					 assistantGoDirectlyToThirdPartySipAccountLogin,
-					 AssistantGoDirectlyToThirdPartySipAccountLogin,
-					 "assistant_go_directly_to_third_party_sip_account_login",
-					 false)
+						bool,
+						Bool,
+						assistantGoDirectlyToThirdPartySipAccountLogin,
+						AssistantGoDirectlyToThirdPartySipAccountLogin,
+						"assistant_go_directly_to_third_party_sip_account_login",
+						false)
 DEFINE_GETSET_CONFIG_STRING(SettingsModel,
 							assistantThirdPartySipAccountDomain,
 							AssistantThirdPartySipAccountDomain,
@@ -556,12 +557,12 @@ DEFINE_GETSET_CONFIG_STRING(SettingsModel,
 							assistantThirdPartySipAccountTransport,
 							AssistantThirdPartySipAccountTransport,
 							"assistant_third_party_sip_account_transport",
-							"TLS")
+							"TLS") 
 DEFINE_GETSET_CONFIG(SettingsModel,
-					 bool,
-					 Bool,
-					 autoStart,
-					 AutoStart,
-					 "auto_start",
-					 false)
-
+							bool,
+							Bool,
+							autoStart,
+							AutoStart,
+							"auto_start",
+							false)
+    // clang-format on

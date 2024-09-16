@@ -68,7 +68,7 @@ Item {
 
 	AccountProxy  {
 		id: accountProxy
-		onDefaultAccountChanged: if (tabbar.currentIndex === 0 && defaultAccount) defaultAccount.core.lResetMissedCalls()
+		onDefaultAccountChanged: if (tabbar.currentIndex === 0 && defaultAccount) defaultAccount.core?.lResetMissedCalls()
 	}
 
 	CallProxy {
@@ -146,7 +146,7 @@ Item {
 				]
 				onCurrentIndexChanged: {
 					SettingsCpp.setLastActiveTabIndex(currentIndex)
-                    if (currentIndex === 0 && accountProxy.defaultAccount) accountProxy.defaultAccount.core.lResetMissedCalls()
+                    if (currentIndex === 0 && accountProxy.defaultAccount) accountProxy.defaultAccount.core?.lResetMissedCalls()
 					if (mainItem.contextualMenuOpenedComponent) {
 						closeContextualMenuComponent()
 					}

@@ -43,7 +43,7 @@ ColumnLayout {
 			Connections {
 				target: LoginPageCpp
 				function onErrorMessageChanged() {
-					errorText.text = LoginPageCpp.errorMessage
+					errorText.setText(LoginPageCpp.errorMessage)
 				}
 				function onRegistrationStateChanged() {
 					if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
@@ -101,7 +101,7 @@ ColumnLayout {
 			function trigger() {
 				username.errorMessage = ""
 				password.errorMessage = ""
-				errorText.text = ""
+				errorText.clear()
 
 				if (usernameEdit.text.length == 0 || passwordEdit.text.length == 0) {
 					if (usernameEdit.text.length == 0)

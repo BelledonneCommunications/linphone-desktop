@@ -82,7 +82,8 @@ Item {
 				}
 				Text {
 					id: waitingTime
-					visible: !UtilsCpp.isMe(mainItem.peerAddress)
+					property var isMeObj: UtilsCpp.isMe(mainItem.peerAddress) 
+					visible: isMeObj ? !isMeObj.value : false
 					property int seconds
 					text: UtilsCpp.formatElapsedTime(seconds)
 					color: DefaultStyle.grey_0

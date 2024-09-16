@@ -21,7 +21,7 @@ ListView {
 
 	onCountChanged: selectedConference = model && currentIndex != -1 && currentIndex < model.count ? model.getAt(currentIndex) : null
 	onCurrentIndexChanged: {
-		selectedConference = model.getAt(currentIndex)
+		selectedConference = model.getAt(currentIndex) || null
 	}
 	onVisibleChanged: if( visible) {
 		mainItem.positionViewAtIndex(currentIndex, ListView.Center)// First approximative move

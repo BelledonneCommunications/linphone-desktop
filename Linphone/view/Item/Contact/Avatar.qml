@@ -17,7 +17,7 @@ StackView {
 	property FriendGui contact: null
 	property CallGui call: null
 	property string _address: account
-								? account.core.identityAddress
+								? account.core?.identityAddress || ""
 								: call
 									? call.core.peerAddress
 									: contact
@@ -26,7 +26,7 @@ StackView {
 	readonly property string address: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_address) : _address
 	property var displayNameObj: UtilsCpp.getDisplayName(_address)
 	property string displayNameVal: displayNameObj ? displayNameObj.value : ""
-	property bool haveAvatar: (account && account.core.pictureUri )
+	property bool haveAvatar: (account && account.core?.pictureUri || false)
 								|| (contact && contact.core.pictureUri)
 								|| computedAvatarUri.length != 0
 	property string computedAvatarUri: UtilsCpp.findAvatarByAddress(_address)
@@ -43,9 +43,11 @@ StackView {
 
 	property bool securityBreach: securityLevel === LinphoneEnums.SecurityLevel.Unsafe
 		
-	property bool displayPresence: (account || contact) && (account 
-			? account.core.registrationState != LinphoneEnums.RegistrationState.Progress && account.core.registrationState != LinphoneEnums.RegistrationState.Refreshing
-			: contact.core.consolidatedPresence != LinphoneEnums.ConsolidatedPresence.Offline)
+	property bool displayPresence: account 
+			? account.core?.registrationState != LinphoneEnums.RegistrationState.Progress && account.core?.registrationState != LinphoneEnums.RegistrationState.Refreshing || false
+			: contact
+				? contact.core?.consolidatedPresence != LinphoneEnums.ConsolidatedPresence.Offline || false
+				: false
 	
 	initialItem: haveAvatar ? avatar : initials
 
@@ -80,11 +82,11 @@ StackView {
 		anchors.rightMargin: mainItem.width / 15
 		z: 1
 		color: account
-			? account.core.registrationState == LinphoneEnums.RegistrationState.Ok
+			? account.core?.registrationState == LinphoneEnums.RegistrationState.Ok
 				? DefaultStyle.success_500main
-				: account.core.registrationState == LinphoneEnums.RegistrationState.Cleared || account.core.registrationState == LinphoneEnums.RegistrationState.None
+				: account.core?.registrationState == LinphoneEnums.RegistrationState.Cleared || account.core?.registrationState == LinphoneEnums.RegistrationState.None
 					? DefaultStyle.warning_600
-					: account.core.registrationState == LinphoneEnums.RegistrationState.Progress || account.core.registrationState == LinphoneEnums.RegistrationState.Refreshing
+					: account.core?.registrationState == LinphoneEnums.RegistrationState.Progress || account.core?.registrationState == LinphoneEnums.RegistrationState.Refreshing
 						? DefaultStyle.main2_500main
 						: DefaultStyle.danger_500main
 			: contact

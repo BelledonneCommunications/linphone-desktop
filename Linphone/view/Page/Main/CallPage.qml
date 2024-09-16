@@ -20,8 +20,8 @@ AbstractMainPage {
 	property ConferenceInfoGui confInfoGui
 	property AccountProxy  accounts: AccountProxy {id: accountProxy}
 	property AccountGui account: accountProxy.defaultAccount
-	property var state: account && account.core.registrationState || 0
-	property bool isRegistered: account ? account.core.registrationState == LinphoneEnums.RegistrationState.Ok : false
+	property var state: account && account.core?.registrationState || 0
+	property bool isRegistered: account ? account.core?.registrationState == LinphoneEnums.RegistrationState.Ok : false
 	property int selectedParticipantsCount
 	signal startGroupCallRequested()
 	signal createCallFromSearchBarRequested()

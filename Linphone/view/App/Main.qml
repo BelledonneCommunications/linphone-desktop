@@ -56,6 +56,31 @@ AppWindow {
 			mainWindowStackView.replace(loginPage)
 	}
 
+	property bool authenticationPopupOpened: false
+	Component {
+		id: authenticationPopupComp
+		AuthenticationDialog{
+			property var authenticationDialog
+			property var callback: authenticationDialog.result
+			identity: authenticationDialog.username
+			domain: authenticationDialog.domain
+			onAccepted: {
+				authenticationDialog ? authenticationDialog.result(password) : callback(password)
+				close()
+			}
+			onOpened: mainWindow.authenticationPopupOpened = true
+			onClosed: mainWindow.authenticationPopupOpened = false
+		}
+	}
+
+	function reauthenticateAccount(authenticationDialog){
+		if (mainWindowStackView.currentItem.objectName !== "mainPage") return
+		if (authenticationPopupOpened) return
+		console.log("Showing authentication dialog")
+		var popup = authenticationPopupComp.createObject(mainWindow, {"authenticationDialog": authenticationDialog})
+		popup.open()
+	}
+
 	Connections {
 		target: SettingsCpp
 		function onAssistantGoDirectlyToThirdPartySipAccountLoginChanged() {
@@ -168,6 +193,7 @@ AppWindow {
 	Component {
 		id: mainPage
 		MainLayout {
+			objectName: "mainPage"
 			onAddAccountRequest: goToLogin()
 			onAccountRemoved: {
 				initStackViewItem()

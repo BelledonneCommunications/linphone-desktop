@@ -232,13 +232,13 @@ QString Utils::formatElapsedTime(int seconds, bool dotsSeparator) {
 	// s,	m,	h,		d,		W,		M,			Y
 	// 1,	60,	3600,	86400,	604800,	2592000,	31104000
 	auto y = floor(seconds / 31104000);
-	if (y > 0) return QString::number(y) + " years";
+	if (y > 0) return tr("%n year(s)", "", y);
 	auto M = floor(seconds / 2592000);
-	if (M > 0) return QString::number(M) + " months";
+	if (M > 0) return tr("%n month(s)", "", M);
 	auto w = floor(seconds / 604800);
-	if (w > 0) return QString::number(w) + " week";
+	if (w > 0) return tr("%n week(s)", "", w);
 	auto d = floor(seconds / 86400);
-	if (d > 0) return QString::number(d) + " days";
+	if (d > 0) return tr("%n day(s)", "", d);
 
 	auto h = floor(seconds / 3600);
 	auto m = floor((seconds - h * 3600) / 60);
@@ -1326,10 +1326,13 @@ int Utils::getYear(const QDate &date) {
 	return date.year();
 }
 
-bool Utils::isMe(const QString &address) {
+VariantObject *Utils::isMe(const QString &address) {
 	bool isMe = false;
-	App::postModelSync([&isMe, address]() { isMe = ToolModel::isMe(address); });
-	return isMe;
+	VariantObject *data = new VariantObject();
+	if (!data) return nullptr;
+	data->makeRequest([&isMe, address]() { return QVariant::fromValue(ToolModel::isMe(address)); });
+	data->requestValue();
+	return data;
 }
 bool Utils::isLocal(const QString &address) {
 	bool isLocal = false;
