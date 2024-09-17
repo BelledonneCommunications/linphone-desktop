@@ -27,7 +27,6 @@ FocusScope {
 		Component.onCompleted: {
 			endHour.selectedDateTime = mainItem.conferenceInfoGui.core.endDateTime
 			startHour.selectedDateTime = mainItem.conferenceInfoGui.core.dateTime
-			endDate.calendar.selectedDate = mainItem.conferenceInfoGui.core.endDateTime
 			startDate.calendar.selectedDate = mainItem.conferenceInfoGui.core.dateTime
 		}
 
@@ -104,7 +103,7 @@ FocusScope {
 					focus: true
 					onActiveFocusChanged: if(activeFocus) selectAll()
 					onEditingFinished: mainItem.conferenceInfoGui.core.subject = text
-					KeyNavigation.down: allDaySwitch
+					KeyNavigation.down: startDate
 				}
 			}
 		}
@@ -125,17 +124,13 @@ FocusScope {
 						contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
 						Layout.fillWidth: true
 						Layout.preferredHeight: 30 * DefaultStyle.dp
-						KeyNavigation.up: allDaySwitch
-						KeyNavigation.down: endDate
-						KeyNavigation.left: startHour
-						KeyNavigation.right: startHour
+						KeyNavigation.up: confTitle
+						KeyNavigation.down: startHour
 						onSelectedDateChanged: {
 							if (!selectedDate || selectedDate == mainItem.conferenceInfoGui.core.dateTime) return
-							mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(selectedDate, allDaySwitch.isAllDay ? 0 : startHour.selectedHour, allDaySwitch.isAllDay ? 0 : startHour.selectedMin)
+							mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(selectedDate, startHour.selectedHour, startHour.selectedMin)
 							if (isCreation) {
 								startHour.selectedDateTime = UtilsCpp.createDateTime(selectedDate, startHour.selectedHour, startHour.selectedMin)
-								if (allDaySwitch.position === 0) endDate.calendar.selectedDate = UtilsCpp.addSecs(startHour.selectedDateTime, 3600)
-								else endDate.calendar.selectedDate = UtilsCpp.createDateTime(selectedDate, 23, 59)
 							}
 						}
 					}
@@ -146,31 +141,27 @@ FocusScope {
 						Layout.preferredHeight: 24 * DefaultStyle.dp
 					}
 					RowLayout {
-						visible: allDaySwitch.position === 0
 						TimeComboBox {
 							id: startHour
-							visible: allDaySwitch.position === 0
 							indicator.visible: mainItem.isCreation
 							// Layout.fillWidth: true
 							Layout.preferredWidth: 94 * DefaultStyle.dp
 							Layout.preferredHeight: 30 * DefaultStyle.dp
 							background.visible: mainItem.isCreation
 							contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
-							KeyNavigation.up: allDaySwitch
-							KeyNavigation.down: endDate
+							KeyNavigation.up: startDate
+							KeyNavigation.down: timeZoneCbox
 							KeyNavigation.left: startDate
-							KeyNavigation.right: startDate
+							KeyNavigation.right: endHour
 							onSelectedDateTimeChanged: {
 								endHour.minTime = selectedDateTime
 								endHour.maxTime = UtilsCpp.createDateTime(selectedDateTime, 23, 59)
 								mainItem.conferenceInfoGui.core.dateTime = selectedDateTime
-								endDate.calendar.selectedDate = UtilsCpp.addSecs(selectedDateTime, 3600)
 								endHour.selectedDateTime = UtilsCpp.addSecs(selectedDateTime, 3600)
 							}
 						}
 						TimeComboBox {
 							id: endHour
-							visible: allDaySwitch.position === 0
 							indicator.visible: mainItem.isCreation
 							Layout.preferredWidth: 94 * DefaultStyle.dp
 							Layout.preferredHeight: 30 * DefaultStyle.dp
@@ -192,39 +183,7 @@ FocusScope {
 							}
 						}
 					}
-					CalendarComboBox {
-						id: endDate
-						visible: allDaySwitch.position === 1
-						background.visible: mainItem.isCreation
-						indicator.visible: mainItem.isCreation
-						Layout.fillWidth: true
-						Layout.preferredHeight: 30 * DefaultStyle.dp
-						contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
-						onSelectedDateChanged: if (selectedDate) mainItem.conferenceInfoGui.core.endDateTime = UtilsCpp.createDateTime(selectedDate, endHour.selectedHour, endHour.selectedMin)
-					}
 				},
-				RowLayout {
-					Item {
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
-					}
-					RowLayout {
-						Switch {
-							id: allDaySwitch
-							text: qsTr("Toute la journée")
-							onPositionChanged: {
-								if (position == 1) {
-									mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, 0, 0)
-									mainItem.conferenceInfoGui.core.endDateTime = UtilsCpp.createDateTime(endDate.selectedDate, 23, 59)
-								} else {
-									mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, startHour.selectedHour, startHour.selectedMin)
-									mainItem.conferenceInfoGui.core.endDateTime = UtilsCpp.createDateTime(endDate.selectedDate, endHour.selectedHour, endHour.selectedMin)
-								}
-							}
-						}
-					}
-				},
-
 
 				ComboBox {
 					id: timeZoneCbox
