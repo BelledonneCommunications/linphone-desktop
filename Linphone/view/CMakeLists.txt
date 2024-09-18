@@ -1,141 +1,125 @@
 
 list(APPEND _LINPHONEAPP_QML_FILES
-	view/App/Main.qml
-	view/App/CallsWindow.qml
-	view/App/AppWindow.qml
-	view/App/Layout/LoginLayout.qml
-	view/App/Layout/MainLayout.qml
-	
-	view/Layout/Call/ActiveSpeakerLayout.qml
-	view/Layout/Call/CallLayout.qml
-	view/Layout/Call/GridLayout.qml
-	
-	view/Layout/Contact/ContactLayout.qml
-	view/Layout/Meeting/AddParticipantsLayout.qml
+	view/Control/Button/Button.qml
+	view/Control/Button/CalendarComboBox.qml
+	view/Control/Button/CheckableButton.qml
+	view/Control/Button/CheckBox.qml
+	view/Control/Button/ComboBox.qml
+	view/Control/Button/HelpIconLabelButton.qml
+	view/Control/Button/IconLabelButton.qml
+	view/Control/Button/MediumButton.qml
+	view/Control/Button/PhoneNumberComboBox.qml
+	view/Control/Button/PopupButton.qml
+	view/Control/Button/RadioButton.qml
+	view/Control/Button/SecurityRadioButton.qml
+	view/Control/Button/Slider.qml
+	view/Control/Button/Switch.qml
+	view/Control/Button/Settings/ComboSetting.qml
+	view/Control/Button/Settings/SwitchSetting.qml
 
-	view/Layout/FormItemLayout.qml
-	view/Layout/ValidatedTextField.qml
-	view/Layout/Mosaic.qml
-	view/Layout/RightPanelLayout.qml
-	view/Layout/Section.qml
-	
-	view/App/Layout/AbstractDetailsLayout.qml
-	view/App/Layout/Settings/SecuritySettingsLayout.qml
-	view/App/Layout/Settings/CallSettingsLayout.qml
-	view/App/Layout/Settings/DebugSettingsLayout.qml
-	view/App/Layout/Settings/ContactsSettingsLayout.qml
-	view/App/Layout/Settings/LdapSettingsLayout.qml
+	view/Control/Container/Carousel.qml
+	view/Control/Container/FormItemLayout.qml
+	view/Control/Container/ScrollBar.qml
+	view/Control/Container/Section.qml
+	view/Control/Container/TabBar.qml
+	view/Control/Container/VerticalTabBar.qml
+	view/Control/Container/Call/ActiveSpeakerLayout.qml
+	view/Control/Container/Call/CallLayout.qml
+	view/Control/Container/Call/GridLayout.qml
+	view/Control/Container/Call/Mosaic.qml
+	view/Control/Container/Contact/ContactLayout.qml
+	view/Control/Container/Main/RightPanelLayout.qml
 
-	view/App/Layout/Account/AccountSettingsGeneralLayout.qml
-	view/App/Layout/Account/AccountSettingsParametersLayout.qml
+	view/Control/Display/BusyIndicator.qml
+	view/Control/Display/EffectImage.qml
+	view/Control/Display/ErrorText.qml
+	view/Control/Display/ProgressBar.qml
+	view/Control/Display/RoundedBackgroundControl.qml
+	view/Control/Display/Sticker.qml
+	view/Control/Display/Text.qml
+	view/Control/Display/ToolTip.qml
+	view/Control/Display/Contact/Avatar.qml
+	view/Control/Display/Contact/Contact.qml
+	view/Control/Display/Contact/ContactsList.qml
+	view/Control/Display/Contact/Voicemail.qml
+	view/Control/Display/Meeting/MeetingList.qml
+	view/Control/Display/Participant/ParticipantDeviceListView.qml
+	view/Control/Display/Participant/ParticipantListView.qml
+	view/Control/Display/Settings/MasterDetailFamily.qml
 
-	view/Item/Account/Accounts.qml
-	view/Item/Account/AuthenticationDialog.qml
-	
-	view/Item/Call/CallContactsLists.qml
-	view/Item/Call/InCallSettingsPanel.qml
-	view/Item/Call/OngoingCallRightPanel.qml
-	view/Item/Call/WaitingRoom.qml
+	view/Control/Form/Login/LoginForm.qml
+	view/Control/Form/Settings/InCallSettingsPanel.qml
+	view/Control/Form/Settings/ScreencastPanel.qml
 
-	view/Item/Call/Menu/ScreencastPanel.qml
-	
-	view/Item/Notification/Notification.qml
-	view/Item/Notification/NotificationReceivedCall.qml
-	view/Item/Notification/TemporaryNotification.qml
+	view/Control/Input/Calendar.qml
+	view/Control/Input/DigitInput.qml
+	view/Control/Input/NumericPad.qml
+	view/Control/Input/PhoneNumberInput.qml
+	view/Control/Input/SearchBar.qml
+	view/Control/Input/TextArea.qml
+	view/Control/Input/TextField.qml
+	view/Control/Input/TimeComboBox.qml
+	view/Control/Input/ValidatedTextField.qml
 
-	view/Item/Participant/ParticipantDeviceListView.qml
-	view/Item/Participant/ParticipantListView.qml
+	view/Control/Popup/DesktopPopup.qml
+	view/Control/Popup/InformationPopup.qml
+	view/Control/Popup/Popup.qml
+	view/Control/Popup/Dialog/AuthenticationDialog.qml
+	view/Control/Popup/Dialog/Dialog.qml
+	view/Control/Popup/Dialog/ZrtpTokenAuthenticationDialog.qml
+	view/Control/Popup/Loading/LoadingPopup.qml
+	view/Control/Popup/Notification/Notification.qml
+	view/Control/Popup/Notification/NotificationReceivedCall.qml
 
-	view/Item/Prototype/CanvasCircle.qml
-	
-	view/Item/Contact/Avatar.qml
-	view/Item/Contact/Contact.qml
-	view/Item/Contact/ContactDescription.qml
-	view/Item/Contact/ContactEdition.qml
-	view/Item/Contact/ContactsList.qml
-	view/Item/Contact/Sticker.qml
-	view/Item/Contact/Voicemail.qml
-
-	view/Item/Meeting/MeetingList.qml
-	view/Item/Meeting/MeetingSetUp.qml
-	
-	view/Item/BusyIndicator.qml
-	view/Item/Button.qml
-	view/Item/MediumButton.qml
-	view/Item/Calendar.qml
-	view/Item/CalendarComboBox.qml
-	view/Item/Carousel.qml
-	view/Item/CheckableButton.qml
-	view/Item/CheckBox.qml
-	view/Item/ComboBox.qml
-	view/Item/DesktopPopup.qml
-	view/Item/Dialog.qml
-	view/Item/DigitInput.qml
-	view/Item/EffectImage.qml
-	view/Item/ErrorText.qml
-	view/Item/IconLabelButton.qml
-	view/Item/InformationPopup.qml
-	view/Item/LoadingPopup.qml
-	view/Item/MovableMouseArea.qml
-	view/Item/NumericPad.qml
-	view/Item/PhoneNumberComboBox.qml
-	view/Item/PhoneNumberInput.qml
-	view/Item/Popup.qml
-	view/Item/PopupButton.qml
-	view/Item/ProgressBar.qml
-	view/Item/SecurityRadioButton.qml
-	view/Item/RadioButton.qml
-	view/Item/RectangleTest.qml
-	view/Item/RoundedBackgroundControl.qml
-	view/Item/ScrollBar.qml
-	view/Item/SearchBar.qml
-	view/Item/Slider.qml
-	view/Item/Switch.qml
-	view/Item/TabBar.qml
-	view/Item/Text.qml
-	view/Item/TextArea.qml
-	view/Item/TextField.qml
-	view/Item/TimeComboBox.qml
-	view/Item/ToolTip.qml
-	view/Item/VerticalTabBar.qml
-	view/Item/ZrtpTokenAuthenticationDialog.qml
-	
-	view/Item/Form/LoginForm.qml
-	
-	view/Item/Test/ItemsTest.qml
-	
-	view/Item/MasterDetailFamily.qml
-	view/Item/Settings/SwitchSetting.qml
-	view/Item/Settings/ComboSetting.qml
-	
-	view/Item/Help/HelpIconLabelButton.qml
-
-	view/Page/Login/LoginPage.qml
-	view/Page/Login/RegisterPage.qml
-	view/Page/Login/RegisterCheckingPage.qml
-	view/Page/Login/SIPLoginPage.qml
-	view/Page/Login/SecurityModePage.qml
-	view/Page/Login/WelcomePage.qml
-	
-	view/Page/Main/AbstractMainPage.qml
-	view/Page/Main/CallPage.qml
-	view/Page/Main/ContactPage.qml
-	view/Page/Main/MeetingPage.qml
-	
-	view/Page/Main/AbstractMasterDetailPage.qml
-	view/Page/Main/SettingsPage.qml
-	view/Page/Main/HelpPage.qml
-	view/Page/Main/AccountSettingsPage.qml
-
-	
-	view/Tool/utils.js
+	view/Control/Tool/MovableMouseArea.qml
+	view/Control/Tool/Helper/utils.js
 # Prototypes
-	view/Prototype/PhoneNumberPrototype.qml
-	view/Prototype/AccountsPrototype.qml
-	view/Prototype/CallPrototype.qml
-	view/Prototype/CameraPrototype.qml
-	view/Prototype/FriendPrototype.qml
-	view/Prototype/ItemPrototype.qml
+	view/Control/Tool/Prototype/AccountsPrototype.qml
+	view/Control/Tool/Prototype/CallPrototype.qml
+	view/Control/Tool/Prototype/CameraPrototype.qml
+	view/Control/Tool/Prototype/CanvasCircle.qml
+	view/Control/Tool/Prototype/FriendPrototype.qml
+	view/Control/Tool/Prototype/ItemPrototype.qml
+	view/Control/Tool/Prototype/PhoneNumberPrototype.qml
+
+	view/Page/Form/Call/CallContactsList.qml
+	view/Page/Form/Contact/ContactDescription.qml
+	view/Page/Form/Contact/ContactEdition.qml
+	view/Page/Form/Login/LoginPage.qml
+	view/Page/Form/Login/SIPLoginPage.qml
+	view/Page/Form/Meeting/AddParticipantsLayout.qml
+	view/Page/Form/Meeting/MeetingSetUp.qml
+	view/Page/Form/Register/RegisterCheckingPage.qml
+	view/Page/Form/Register/RegisterPage.qml
+	view/Page/Form/Security/SecurityModePage.qml
+	view/Page/Form/Settings/AbstractMasterDetailPage.qml
+	view/Page/Form/Settings/AccountSettingsPage.qml
+	view/Page/Form/Settings/SettingsPage.qml
+
+	view/Page/Layout/Login/LoginLayout.qml
+	view/Page/Layout/Main/MainLayout.qml
+	view/Page/Layout/Settings/AbstractDetailsLayout.qml
+	view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml
+	view/Page/Layout/Settings/AccountSettingsParametersLayout.qml
+	view/Page/Layout/Settings/CallSettingsLayout.qml
+	view/Page/Layout/Settings/ContactsSettingsLayout.qml
+	view/Page/Layout/Settings/DebugSettingsLayout.qml
+	view/Page/Layout/Settings/LdapSettingsLayout.qml
+	view/Page/Layout/Settings/SecuritySettingsLayout.qml
+
+	view/Page/Main/AbstractMainPage.qml
+	view/Page/Main/Account/Accounts.qml
+	view/Page/Main/Call/CallPage.qml
+	view/Page/Main/Call/OngoingCallRightPanel.qml
+	view/Page/Main/Call/WaitingRoom.qml
+	view/Page/Main/Contact/ContactPage.qml
+	view/Page/Main/Help/HelpPage.qml
+	view/Page/Main/Meeting/MeetingPage.qml
+	view/Page/Main/Start/WelcomePage.qml
+
+	view/Page/Window/AppWindow.qml
+	view/Page/Window/Call/CallsWindow.qml
+	view/Page/Window/Main/Main.qml
 )
 
 list(APPEND _LINPHONEAPP_QML_SINGLETONS

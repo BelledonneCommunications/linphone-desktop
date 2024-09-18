@@ -466,7 +466,7 @@ void App::initCore() {
 			    mAccountList = AccountList::create();
 			    mCallList = CallList::create();
 
-			    const QUrl url(u"qrc:/Linphone/view/App/Main.qml"_qs);
+			    const QUrl url(u"qrc:/Linphone/view/Page/Window/Main/Main.qml"_qs);
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,
 			        [this, url](QObject *obj, const QUrl &objUrl) {
@@ -669,7 +669,7 @@ bool App::notify(QObject *receiver, QEvent *event) {
 QQuickWindow *App::getCallsWindow(QVariant callGui) {
 	mustBeInMainThread(getClassName());
 	if (!mCallsWindow) {
-		const QUrl callUrl("qrc:/Linphone/view/App/CallsWindow.qml");
+		const QUrl callUrl("qrc:/Linphone/view/Page/Window/Call/CallsWindow.qml");
 
 		lInfo() << log().arg("Creating subwindow: `%1`.").arg(callUrl.toString());
 
