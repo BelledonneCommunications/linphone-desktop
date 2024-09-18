@@ -120,7 +120,7 @@ FocusScope {
 								weight: 800 * DefaultStyle.dp
 							}
 						}
-						ContactsList{
+						ContactListView{
 							id: contactList
 							Layout.fillWidth: true
 							Layout.preferredHeight: contentHeight
@@ -142,7 +142,7 @@ FocusScope {
 								weight: 800 * DefaultStyle.dp
 							}
 						}
-						ContactsList{
+						ContactListView{
 							id: searchList
 							contactMenuVisible: false
 							Layout.fillWidth: true

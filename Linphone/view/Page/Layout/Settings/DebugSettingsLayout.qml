@@ -7,7 +7,7 @@ import Linphone
 import SettingsCpp 1.0
 import UtilsCpp 1.0
 
-AbstractDetailsLayout {
+AbstractSettingsLayout {
 	Layout.fillWidth: true
 	Layout.fillHeight: true
 	id: mainItem

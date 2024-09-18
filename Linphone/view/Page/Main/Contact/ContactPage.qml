@@ -266,7 +266,7 @@ AbstractMainPage {
 									KeyNavigation.down: favoriteList
 								}
 							}
-							ContactsList{
+							ContactListView{
 								id: favoriteList
 								onActiveFocusChanged: if (activeFocus) console.log("favorite list focus")
 								hoverEnabled: mainItem.leftPanelEnabled
@@ -318,7 +318,7 @@ AbstractMainPage {
 									KeyNavigation.down: contactList
 								}
 							}
-							ContactsList{
+							ContactListView{
 								id: contactList
 								onActiveFocusChanged: if (activeFocus) console.log("contact list focus")
 								onCountChanged: {
@@ -409,7 +409,7 @@ AbstractMainPage {
 								}
 							}
 							
-							RoundedBackgroundControl {
+							RoundedPane {
 								Layout.preferredHeight: Math.min(226 * DefaultStyle.dp, addrList.contentHeight + topPadding + bottomPadding)
 								height: Math.min(226 * DefaultStyle.dp, addrList.contentHeight)
 								Layout.fillWidth: true
@@ -491,7 +491,7 @@ AbstractMainPage {
 								}
 							}
 						}
-						RoundedBackgroundControl {
+						RoundedPane {
 							visible: companyText.text.length != 0 || jobText.text.length != 0
 							Layout.fillWidth: true
 							topPadding: 17 * DefaultStyle.dp
@@ -588,7 +588,7 @@ AbstractMainPage {
 								}
 							}
 						}
-						RoundedBackgroundControl {
+						RoundedPane {
 							Layout.preferredWidth: 360 * DefaultStyle.dp
 							contentItem: ColumnLayout {
 								spacing: 13 * DefaultStyle.dp
@@ -675,7 +675,7 @@ AbstractMainPage {
 								weight: 800 * DefaultStyle.dp
 							}
 						}
-						RoundedBackgroundControl {
+						RoundedPane {
 							Layout.preferredWidth: 360 * DefaultStyle.dp
 							contentItem: ColumnLayout {
 								width: parent.width

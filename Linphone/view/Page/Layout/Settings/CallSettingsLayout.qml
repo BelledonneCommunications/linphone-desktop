@@ -5,7 +5,7 @@ import QtQuick.Controls as Control
 import Linphone
 import SettingsCpp 1.0
 
-AbstractDetailsLayout {
+AbstractSettingsLayout {
 	contentComponent: content
 	width: parent.width
 	Component {

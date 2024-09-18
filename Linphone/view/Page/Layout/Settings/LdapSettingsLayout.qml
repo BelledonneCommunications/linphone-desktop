@@ -7,7 +7,7 @@ import Linphone
 import SettingsCpp 1.0
 import UtilsCpp
 
-AbstractDetailsLayout {
+AbstractSettingsLayout {
 	id: mainItem
 	contentComponent: content
 	topbarOptionalComponent: topBar

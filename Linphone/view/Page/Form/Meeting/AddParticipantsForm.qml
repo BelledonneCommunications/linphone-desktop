@@ -139,7 +139,7 @@ FocusScope{
 				weight: 800 * DefaultStyle.dp
 			}
 		}
-		ContactsList {
+		ContactListView {
 			id: contactList
 			visible: contentHeight > 0 || searchbar.text.length > 0
 			Layout.fillWidth: true

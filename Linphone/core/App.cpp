@@ -466,13 +466,13 @@ void App::initCore() {
 			    mAccountList = AccountList::create();
 			    mCallList = CallList::create();
 
-			    const QUrl url(u"qrc:/Linphone/view/Page/Window/Main/Main.qml"_qs);
+			    const QUrl url(u"qrc:/Linphone/view/Page/Window/Main/MainWindow.qml"_qs);
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,
 			        [this, url](QObject *obj, const QUrl &objUrl) {
 				        if (url == objUrl) {
 					        if (!obj) {
-						        lCritical() << log().arg("Main.qml couldn't be load. The app will exit");
+						        lCritical() << log().arg("MainWindow.qml couldn't be load. The app will exit");
 						        exit(-1);
 					        }
 					        setMainWindow(qobject_cast<QQuickWindow *>(obj));

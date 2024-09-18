@@ -184,7 +184,7 @@ AbstractMainPage {
 						restoreMode: Binding.RestoreBindingOrValue
 					}
 				}
-				MeetingList {
+				MeetingListView {
 					id: conferenceList
 					// Remove 24 from first section padding because we cannot know that it is the first section. 24 is the margins between sections.
 					Layout.topMargin: 38 * DefaultStyle.dp - 24 * DefaultStyle.dp
@@ -295,7 +295,7 @@ AbstractMainPage {
 						}
 					}
 				}
-				MeetingSetUp {
+				MeetingForm {
 					id: meetingSetup
 					conferenceInfoGui: createConfLayout.conferenceInfoGui
 					isCreation: createConfLayout.isCreation
@@ -420,7 +420,7 @@ AbstractMainPage {
 						}
 					}
 				}
-				MeetingSetUp {
+				MeetingForm {
 					id: conferenceEdit
 					property bool isCreation
 					isCreation: editFocusScope.isCreation
@@ -519,7 +519,7 @@ AbstractMainPage {
 					}
 				}
 			}
-			AddParticipantsLayout {
+			AddParticipantsForm {
 				id: addParticipantLayout
 				Layout.fillWidth: true
 				Layout.fillHeight: true

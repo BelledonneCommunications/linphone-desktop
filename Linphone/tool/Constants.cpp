@@ -28,7 +28,6 @@ constexpr char Constants::LanguagePath[];
 // The main windows of Linphone desktop.
 constexpr char Constants::QmlViewMainWindow[];
 constexpr char Constants::QmlViewCallsWindow[];
-constexpr char Constants::QmlViewSettingsWindow[];
 
 #ifdef ENABLE_UPDATE_CHECK
 constexpr int Constants::VersionUpdateCheckInterval;

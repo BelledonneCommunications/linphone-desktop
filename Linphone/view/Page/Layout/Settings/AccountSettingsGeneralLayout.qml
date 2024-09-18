@@ -7,7 +7,7 @@ import Linphone
 import SettingsCpp 1.0
 import UtilsCpp
 
-AbstractDetailsLayout {
+AbstractSettingsLayout {
 	id: mainItem
 	contentComponent: content
 	property alias account: mainItem.model
@@ -267,7 +267,7 @@ AbstractDetailsLayout {
 						Layout.fillHeight: true
 					}
 				}
-				RoundedBackgroundControl {
+				RoundedPane {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					// Layout.minimumHeight: account.core.devices.length * 133 * DefaultStyle.dp + (account.core.devices.length - 1) * 15 * DefaultStyle.dp +  2 * 21 * DefaultStyle.dp

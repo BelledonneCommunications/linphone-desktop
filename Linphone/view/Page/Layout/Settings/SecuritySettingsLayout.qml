@@ -5,7 +5,7 @@ import QtQuick.Controls as Control
 import SettingsCpp 1.0
 import Linphone
 
-AbstractDetailsLayout {
+AbstractSettingsLayout {
 	contentComponent: content
 	Component {
 		id: content

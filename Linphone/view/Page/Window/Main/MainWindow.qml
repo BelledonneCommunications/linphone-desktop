@@ -7,7 +7,7 @@ import UtilsCpp 1.0
 import SettingsCpp 1.0
 import LinphoneAccountsCpp
 
-AppWindow {
+AbstractWindow {
 	id: mainWindow
     // height: 982 * DefaultStyle.dp
 	visible: true

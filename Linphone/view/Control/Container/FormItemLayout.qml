@@ -44,7 +44,7 @@ FocusScope{
 				height: childrenRect.height
 				width: childrenRect.width
 			}
-			ErrorText {
+			TemporaryText {
 				id: errorText
 				anchors.top: contentItem.bottom
 				color: DefaultStyle.danger_500main

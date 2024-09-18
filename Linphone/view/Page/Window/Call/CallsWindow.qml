@@ -9,7 +9,7 @@ import SettingsCpp 1.0
 import DesktopToolsCpp 1.0
 import LinphoneCallsCpp
 
-AppWindow {
+AbstractWindow {
     id: mainWindow
 	flags: Qt.Window
 	// modality: Qt.WindowModal
@@ -191,7 +191,7 @@ AppWindow {
 		icon.height: 32 * DefaultStyle.dp
 		contentImageColor: DefaultStyle.grey_0
 	}
-	ZrtpTokenAuthenticationDialog {
+	ZrtpAuthenticationDialog {
 		id: zrtpValidation
 		call: mainWindow.call
 		modal: true
@@ -537,7 +537,7 @@ AppWindow {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 				}
-				OngoingCallRightPanel {
+				CallSettingsPanel {
 					id: rightPanel
 					Layout.fillHeight: true
 					Layout.preferredWidth: 393 * DefaultStyle.dp
@@ -562,7 +562,7 @@ AppWindow {
 								event.accepted = true;
 							}
 						}
-						CallContactsList {
+						NewCallForm {
 							id: callcontactslist
 							anchors.fill: parent
 							anchors.topMargin: 21 * DefaultStyle.dp
@@ -649,7 +649,7 @@ AppWindow {
 								font.pixelSize: 14 * DefaultStyle.dp
 								color: DefaultStyle.main2_500main
 							}
-							RoundedBackgroundControl {
+							RoundedPane {
 								Layout.fillWidth: true
 								contentItem: ColumnLayout {
 									spacing: 0
@@ -740,7 +740,7 @@ AppWindow {
 								}
 							}
 						}
-						RoundedBackgroundControl {
+						RoundedPane {
 							Layout.fillWidth: true
 							Layout.maximumHeight: rightPanel.height
 							visible: callList.contentHeight > 0
@@ -885,7 +885,7 @@ AppWindow {
 								event.accepted = true;
 							}
 						}
-						InCallSettingsPanel {
+						MultimediaSettings {
 							id: inSettingsPanel
 							call: mainWindow.call
 							anchors.fill: parent
@@ -906,7 +906,7 @@ AppWindow {
 								event.accepted = true;
 							}
 						}
-						ScreencastPanel {
+						ScreencastSettings {
 							anchors.fill: parent
 							anchors.topMargin: 16 * DefaultStyle.dp
 							anchors.bottomMargin: 16 * DefaultStyle.dp
@@ -997,7 +997,7 @@ AppWindow {
 							}
 							Component {
 								id: addParticipantComp
-								AddParticipantsLayout {
+								AddParticipantsForm {
 									id: addParticipantLayout
 									searchBarColor: DefaultStyle.grey_0
 									searchBarBorderColor: DefaultStyle.grey_200
@@ -1025,7 +1025,7 @@ AppWindow {
 						Control.StackView.onActivated: {
 							rightPanel.headerTitleText = qsTr("Chiffrement")
 						}
-						RoundedBackgroundControl {
+						RoundedPane {
 							Layout.fillWidth: true
 							leftPadding: 16 * DefaultStyle.dp
 							rightPadding: 16 * DefaultStyle.dp
@@ -1128,7 +1128,7 @@ AppWindow {
 						Control.StackView.onActivated: {
 							rightPanel.headerTitleText = qsTr("Statistiques")
 						}
-						RoundedBackgroundControl {
+						RoundedPane {
 							Layout.fillWidth: true
 							leftPadding: 16 * DefaultStyle.dp
 							rightPadding: 16 * DefaultStyle.dp
@@ -1172,7 +1172,7 @@ AppWindow {
 								}
 							}
 						}
-						RoundedBackgroundControl {
+						RoundedPane {
 							Layout.fillWidth: true
 							leftPadding: 16 * DefaultStyle.dp
 							rightPadding: 16 * DefaultStyle.dp

@@ -250,7 +250,7 @@ Item {
 									
 								}
 							}
-							contentItem: ContactsList {
+							contentItem: ContactListView {
 								id: contactList
 								visible: magicSearchBar.text.length != 0
 								Layout.preferredHeight: contentHeight
@@ -444,7 +444,7 @@ Item {
 								account: accountProxy.defaultAccount
 							}
 							popup.contentItem: ColumnLayout {
-								Accounts {
+								AccountListView {
 									id: accounts
 									onAddAccountRequest: mainItem.addAccountRequest()
 									onEditAccount: function(account) {

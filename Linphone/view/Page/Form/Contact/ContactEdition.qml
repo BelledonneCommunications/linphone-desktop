@@ -8,7 +8,7 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 
-RightPanelLayout {
+MainRightPanel {
 	id: mainItem
 
 	property FriendGui contact
@@ -422,7 +422,7 @@ RightPanelLayout {
 							Layout.preferredHeight: 24 * DefaultStyle.dp
 						}
 					}
-					ErrorText {
+					TemporaryText {
 						id: addressesErrorText
 						wrapMode: Text.WordWrap
 						elide: Text.ElideRight

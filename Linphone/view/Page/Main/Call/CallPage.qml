@@ -490,7 +490,7 @@ AbstractMainPage {
 			
 			ColumnLayout {
 				anchors.fill: parent
-				CallContactsList {
+				NewCallForm {
 					id: callContactsList
 					Layout.fillWidth: true
 					Layout.fillHeight: true
@@ -602,7 +602,7 @@ AbstractMainPage {
 				titleLoader.sourceComponent = groupCallTitle
 				addParticipantsLayout.forceActiveFocus()
 			}
-			AddParticipantsLayout {
+			AddParticipantsForm {
 				id: addParticipantsLayout
 				anchors.fill: parent
 				onSelectedParticipantsCountChanged: mainItem.selectedParticipantsCount = selectedParticipantsCount
@@ -721,7 +721,7 @@ AbstractMainPage {
 						}
 					}
 				}
-				detailContent: RoundedBackgroundControl {
+				detailContent: RoundedPane {
 					id: detailControl
 					Layout.preferredWidth: 360 * DefaultStyle.dp
 					implicitHeight: 430 * DefaultStyle.dp + topPadding + bottomPadding

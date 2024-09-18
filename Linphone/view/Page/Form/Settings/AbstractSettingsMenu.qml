@@ -67,7 +67,7 @@ AbstractMainPage {
 			property int selectedIndex: 0
 			activeFocusOnTab: true
 			
-			delegate: MasterDetailFamily {
+			delegate: SettingsMenuItem {
 				titleText: modelData.title
 				visible: modelData.visible != undefined ? modelData.visible : true
 				isSelected: familiesList.selectedIndex == index

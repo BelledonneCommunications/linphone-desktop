@@ -254,7 +254,7 @@ LoginLayout {
 				}
 			}
 
-			ErrorText {
+			TemporaryText {
 				id: errorText
 				Connections {
 					target: LoginPageCpp

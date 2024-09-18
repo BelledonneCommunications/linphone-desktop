@@ -7,8 +7,8 @@ import UtilsCpp 1.0
 import SettingsCpp 1.0
 import LinphoneAccountsCpp
 
-AbstractMasterDetailPage {
-	layoutsPath: "qrc:/Linphone/view/Page/Layout/Settings/"
+AbstractSettingsMenu {
+	layoutsPath: "qrc:/Linphone/view/Page/Layout/Settings"
 	titleText: qsTr("Mon compte")
 	property AccountProxy  accounts: AccountProxy {id: accountProxy}
 	property AccountGui account: accountProxy.defaultAccount

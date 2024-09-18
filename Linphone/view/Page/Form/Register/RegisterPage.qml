@@ -183,7 +183,7 @@ LoginLayout {
 								}
 							}
 						}
-						ErrorText {
+						TemporaryText {
 							id: otherErrorText
 							Layout.fillWidth: true
 							Layout.topMargin: 5 * DefaultStyle.dp

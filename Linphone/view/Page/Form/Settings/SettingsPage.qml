@@ -4,8 +4,8 @@ import QtQuick.Layouts
 import QtQuick.Controls as Control
 import SettingsCpp
 
-AbstractMasterDetailPage {
-	layoutsPath: "qrc:/Linphone/view/Page/Layout/Settings/"
+AbstractSettingsMenu {
+	layoutsPath: "qrc:/Linphone/view/Page/Layout/Settings"
 	titleText: qsTr("Paramètres")
 	families: [
 		{title: qsTr("Appels"), layout: "CallSettingsLayout"},

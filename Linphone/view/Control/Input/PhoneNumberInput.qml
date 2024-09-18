@@ -44,7 +44,7 @@ ColumnLayout {
 								: DefaultStyle.grey_200
 			RowLayout {
 				anchors.fill: parent
-				PhoneNumberComboBox {
+				CountryIndicatorCombobox {
 					id: combobox
 					implicitWidth: 110 * DefaultStyle.dp
 					defaultCallingCode: mainItem.defaultCallingCode
@@ -66,7 +66,7 @@ ColumnLayout {
 				}
 			}
 		}
-		ErrorText {
+		TemporaryText {
 			id: errorText
 			anchors.top: contentBackground.bottom
 			// visible: mainItem.enableErrorText

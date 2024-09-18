@@ -37,7 +37,7 @@ ColumnLayout {
 			}
 		}
 
-		ErrorText {
+		TemporaryText {
 			id: errorText
 			anchors.top: password.bottom
 			Connections {

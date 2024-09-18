@@ -8,7 +8,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Button/HelpIconLabelButton.qml
 	view/Control/Button/IconLabelButton.qml
 	view/Control/Button/MediumButton.qml
-	view/Control/Button/PhoneNumberComboBox.qml
+	view/Control/Button/CountryIndicatorCombobox.qml
 	view/Control/Button/PopupButton.qml
 	view/Control/Button/RadioButton.qml
 	view/Control/Button/SecurityRadioButton.qml
@@ -28,28 +28,28 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Container/Call/GridLayout.qml
 	view/Control/Container/Call/Mosaic.qml
 	view/Control/Container/Contact/ContactLayout.qml
-	view/Control/Container/Main/RightPanelLayout.qml
+	view/Control/Container/Main/MainRightPanel.qml
 
 	view/Control/Display/BusyIndicator.qml
 	view/Control/Display/EffectImage.qml
-	view/Control/Display/ErrorText.qml
+	view/Control/Display/TemporaryText.qml
 	view/Control/Display/ProgressBar.qml
-	view/Control/Display/RoundedBackgroundControl.qml
+	view/Control/Display/RoundedPane.qml
 	view/Control/Display/Sticker.qml
 	view/Control/Display/Text.qml
 	view/Control/Display/ToolTip.qml
 	view/Control/Display/Contact/Avatar.qml
 	view/Control/Display/Contact/Contact.qml
-	view/Control/Display/Contact/ContactsList.qml
+	view/Control/Display/Contact/ContactListView.qml
 	view/Control/Display/Contact/Voicemail.qml
-	view/Control/Display/Meeting/MeetingList.qml
+	view/Control/Display/Meeting/MeetingListView.qml
 	view/Control/Display/Participant/ParticipantDeviceListView.qml
 	view/Control/Display/Participant/ParticipantListView.qml
-	view/Control/Display/Settings/MasterDetailFamily.qml
+	view/Control/Display/Settings/SettingsMenuItem.qml
 
 	view/Control/Form/Login/LoginForm.qml
-	view/Control/Form/Settings/InCallSettingsPanel.qml
-	view/Control/Form/Settings/ScreencastPanel.qml
+	view/Control/Form/Settings/MultimediaSettings.qml
+	view/Control/Form/Settings/ScreencastSettings.qml
 
 	view/Control/Input/Calendar.qml
 	view/Control/Input/DigitInput.qml
@@ -66,7 +66,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Popup/Popup.qml
 	view/Control/Popup/Dialog/AuthenticationDialog.qml
 	view/Control/Popup/Dialog/Dialog.qml
-	view/Control/Popup/Dialog/ZrtpTokenAuthenticationDialog.qml
+	view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml
 	view/Control/Popup/Loading/LoadingPopup.qml
 	view/Control/Popup/Notification/Notification.qml
 	view/Control/Popup/Notification/NotificationReceivedCall.qml
@@ -82,23 +82,23 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Tool/Prototype/ItemPrototype.qml
 	view/Control/Tool/Prototype/PhoneNumberPrototype.qml
 
-	view/Page/Form/Call/CallContactsList.qml
+	view/Page/Form/Call/NewCallForm.qml
 	view/Page/Form/Contact/ContactDescription.qml
 	view/Page/Form/Contact/ContactEdition.qml
 	view/Page/Form/Login/LoginPage.qml
 	view/Page/Form/Login/SIPLoginPage.qml
-	view/Page/Form/Meeting/AddParticipantsLayout.qml
-	view/Page/Form/Meeting/MeetingSetUp.qml
+	view/Page/Form/Meeting/AddParticipantsForm.qml
+	view/Page/Form/Meeting/MeetingForm.qml
 	view/Page/Form/Register/RegisterCheckingPage.qml
 	view/Page/Form/Register/RegisterPage.qml
 	view/Page/Form/Security/SecurityModePage.qml
-	view/Page/Form/Settings/AbstractMasterDetailPage.qml
+	view/Page/Form/Settings/AbstractSettingsMenu.qml
 	view/Page/Form/Settings/AccountSettingsPage.qml
 	view/Page/Form/Settings/SettingsPage.qml
 
 	view/Page/Layout/Login/LoginLayout.qml
 	view/Page/Layout/Main/MainLayout.qml
-	view/Page/Layout/Settings/AbstractDetailsLayout.qml
+	view/Page/Layout/Settings/AbstractSettingsLayout.qml
 	view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml
 	view/Page/Layout/Settings/AccountSettingsParametersLayout.qml
 	view/Page/Layout/Settings/CallSettingsLayout.qml
@@ -108,18 +108,18 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Settings/SecuritySettingsLayout.qml
 
 	view/Page/Main/AbstractMainPage.qml
-	view/Page/Main/Account/Accounts.qml
+	view/Page/Main/Account/AccountListView.qml
 	view/Page/Main/Call/CallPage.qml
-	view/Page/Main/Call/OngoingCallRightPanel.qml
+	view/Page/Main/Call/CallSettingsPanel.qml
 	view/Page/Main/Call/WaitingRoom.qml
 	view/Page/Main/Contact/ContactPage.qml
 	view/Page/Main/Help/HelpPage.qml
 	view/Page/Main/Meeting/MeetingPage.qml
 	view/Page/Main/Start/WelcomePage.qml
 
-	view/Page/Window/AppWindow.qml
+	view/Page/Window/AbstractWindow.qml
 	view/Page/Window/Call/CallsWindow.qml
-	view/Page/Window/Main/Main.qml
+	view/Page/Window/Main/MainWindow.qml
 )
 
 list(APPEND _LINPHONEAPP_QML_SINGLETONS

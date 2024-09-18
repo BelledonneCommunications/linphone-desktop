@@ -12,7 +12,7 @@ ColumnLayout {
 	property alias micVolume: microVolume.value
 	property string microDevice: inputAudioDeviceCBox.currentText
 
-	RoundedBackgroundControl {
+	RoundedPane {
 		Layout.alignment: Qt.AlignHCenter
 		Control.StackView.onActivated: {
 			rightPanelTitle.text = qsTr("Paramètres")
