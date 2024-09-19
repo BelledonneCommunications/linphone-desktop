@@ -84,10 +84,6 @@
     when: always
     expire_in: 1 week
 
-.windows-vs2019:
-  extends: .windows-vs
-  tags: [ "windows-powershell-vs-16-2019" ]
-
 .windows-vs2022:
   extends: .windows-vs
   tags: [ "windows-powershell-vs-17-2022" ]
@@ -124,24 +120,25 @@
     CMAKE_RC_COMPILER : rc.exe
   extends: .windows-msvc
 
-vs2019-msvc-win64-windows:
-  extends:
-    - .windows-vs2019
-    - .msvc-win64-windows
-
 vs2022-msvc-win64-windows:
   rules:
     - !reference [.rules-merge-request-manual, rules]
+  variables:
+    CMAKE_GENERATOR: "Visual Studio 17 2022"
   extends:
     - .windows-vs2022
     - .msvc-win64-windows
 
-######################################################
-
-  # .windows-vs2019-msvc:
-  #   extends:
-  #     - .windows-vs2019
-  #     - .windows-msvc
+ninja-msvc-win64-windows:
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+  variables:
+    CMAKE_GENERATOR: "Ninja"
+    CMAKE_ARCHITECTURE: ""
+    PARALLEL_OPTIONS: ""
+  extends:
+    - .windows-vs2022
+    - .msvc-win64-windows
 
 ######################################################
 # NIGHTLY
@@ -156,14 +153,9 @@ vs2022-msvc-win64-windows:
     - if: $DEPLOY_PLUGINS
     - if: $DEPLOY_RUN_WINDOWS
 
-vs2019-win64-scheduled-windows:
+ninja-win64-scheduled-windows:
   extends:
-    - vs2019-msvc-win64-windows
-    - .vs-scheduled-windows
-
-vs2022-win64-scheduled-windows:
-  extends:
-    - vs2022-msvc-win64-windows
+    - ninja-msvc-win64-windows
     - .vs-scheduled-windows
 
 #################################################
@@ -185,13 +177,11 @@ vs2022-win64-scheduled-windows:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$WINDOWS_PLATFORM/$APP_FOLDER
 
-vs2019-win64-package:
-  extends:
-    - .windows-msvc
-    - .vs-win64-package
-    - .windows-vs2019
-
-vs2022-win64-package:
+ninja-win64-package:
+  variables:
+    CMAKE_GENERATOR: "Ninja"
+    CMAKE_ARCHITECTURE: ""
+    PARALLEL_OPTIONS: ""
   extends:
     - .windows-msvc
     - .vs-win64-package
@@ -213,17 +203,11 @@ vs2022-win64-package:
     - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_INTERNAL_PATH}/${WINDOWS_PLATFORM}/ }
     #  - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
 
-vs2019-win64-upload:
+ninja-win64-upload:
   extends:
     - .win64-upload
   needs:
-    - vs2019-win64-package
-
-vs2022-win64-upload:
-  extends:
-    - .win64-upload
-  needs:
-    - vs2022-win64-package
+    - ninja-win64-package
 
 .win64-plugins-upload:
   stage: deploy
@@ -233,13 +217,7 @@ vs2022-win64-upload:
   script:
     - scp "build-desktop/OUTPUT/plugins/app/*.dll" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_INTERNAL_DIRECTORY%/plugins"
 
-
-vs2019-win64-plugins-upload:
+ninja-win64-plugins-upload:
   extends: .win64-plugins-upload
   needs:
-    - vs2019-win64-scheduled-windows
-
-vs2022-win64-plugins-upload:
-  extends: .win64-plugins-upload
-  needs:
-    - vs2022-win64-scheduled-windows
+    - ninja-win64-scheduled-windows
