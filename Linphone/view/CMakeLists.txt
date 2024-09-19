@@ -63,6 +63,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 
 	view/Control/Popup/DesktopPopup.qml
 	view/Control/Popup/InformationPopup.qml
+	view/Control/Popup/NumericPadPopup.qml
 	view/Control/Popup/Popup.qml
 	view/Control/Popup/Dialog/AuthenticationDialog.qml
 	view/Control/Popup/Dialog/Dialog.qml

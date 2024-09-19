@@ -14,7 +14,7 @@ FocusScope {
 	property color searchBarBorderColor: "transparent"
 	property alias searchBar: searchBar
 	property FriendGui selectedContact
-	property NumericPad numPad
+	property NumericPadPopup numPadPopup
 	signal callButtonPressed(string address)
 	signal callSelectedContact()
 	signal groupCallCreationRequested()
@@ -40,7 +40,7 @@ FocusScope {
 				color: mainItem.searchBarColor
 				borderColor: mainItem.searchBarBorderColor
 				placeholderText: qsTr("Rechercher un contact")
-				numericPad: mainItem.numPad
+				numericPadPopup: mainItem.numPadPopup
 				KeyNavigation.down: grouCallButton
 			}
 			Flickable {

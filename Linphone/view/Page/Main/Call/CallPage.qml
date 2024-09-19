@@ -104,8 +104,8 @@ AbstractMainPage {
 			anchors.left: parent.left
 			anchors.right: parent.right
 			height: 402 * DefaultStyle.dp
-			NumericPad {
-				id: numericPad
+			NumericPadPopup {
+				id: numericPadPopup
 				width: parent.width
 				height: parent.height
 				visible: false
@@ -495,7 +495,7 @@ AbstractMainPage {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					focus: true
-					numPad: numericPad
+					numPadPopup: numericPadPopup
 					groupCallVisible: true
 					searchBarColor: DefaultStyle.grey_100
 					//onSelectedContactChanged: mainWindow.startCallWithContact(selectedContact, false, callContactsList)
@@ -511,7 +511,7 @@ AbstractMainPage {
 						function onOpenNumPadRequest(){ if (!callContactsList.searchBar.numericPadButton.checked) callContactsList.searchBar.numericPadButton.checked = true}
 					}
 					Binding {
-						target: numericPad
+						target: numericPadPopup
 						property: "visible"
 						value: true
 						when: callContactsList.searchBar.numericPadButton.checked

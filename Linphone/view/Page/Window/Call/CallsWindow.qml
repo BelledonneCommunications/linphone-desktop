@@ -563,7 +563,7 @@ AbstractWindow {
 							}
 						}
 						NewCallForm {
-							id: callcontactslist
+							id: newCallForm
 							anchors.fill: parent
 							anchors.topMargin: 21 * DefaultStyle.dp
 							anchors.leftMargin: 16 * DefaultStyle.dp
@@ -572,7 +572,35 @@ AbstractWindow {
 							searchBarColor: DefaultStyle.grey_0
 							searchBarBorderColor: DefaultStyle.grey_200
 							onSelectedContactChanged: {
-								if (selectedContact) mainWindow.transferCallToContact(mainWindow.call, selectedContact, callcontactslist)
+								if (selectedContact) mainWindow.transferCallToContact(mainWindow.call, selectedContact, newCallForm)
+							}
+							numPadPopup: numPadPopup
+							Binding {
+								target: numPadPopup
+								property: "visible"
+								value: true
+								when: newCallForm.searchBar.numericPadButton.checked
+								restoreMode: Binding.RestoreValue
+							}
+							
+							Item {
+								anchors.bottom: parent.bottom
+								anchors.left: parent.left
+								anchors.right: parent.right
+								height: 402 * DefaultStyle.dp
+								NumericPadPopup {
+									id: numPadPopup
+									width: parent.width
+									roundedBottom: true
+									visible: false
+									leftPadding: 40 * DefaultStyle.dp
+									rightPadding: 40 * DefaultStyle.dp
+									topPadding: 41 * DefaultStyle.dp
+									bottomPadding: 18 * DefaultStyle.dp
+									onLaunchCall: {
+										UtilsCpp.createCall(dialerTextInput.text)
+									}
+								}
 							}
 						}
 					}
@@ -601,15 +629,15 @@ AbstractWindow {
 							color: DefaultStyle.grey_0
 							borderColor: DefaultStyle.grey_200
 							placeholderText: ""
-							numericPad: numPad
+							numericPadPopup: numPadPopup
 							numericPadButton.visible: false
 						}
 						Item {
 							Layout.preferredWidth: parent.width
-							Layout.preferredHeight: numPad.height
+							Layout.preferredHeight: numPadPopup.height
 							Layout.topMargin: 10 * DefaultStyle.dp
-							NumericPad {
-								id: numPad
+							NumericPadPopup {
+								id: numPadPopup
 								width: parent.width
 								closeButtonVisible: false
 								roundedBottom: true

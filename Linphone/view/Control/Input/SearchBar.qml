@@ -14,23 +14,24 @@ FocusScope {
 	property string text: textField.text
 	property bool magnifierVisible: true
 	property var validator: RegularExpressionValidator{}
-	property Control.Popup numericPad
+	property Control.Popup numericPadPopup
 	property alias numericPadButton: dialerButton
 	readonly property bool hasActiveFocus: textField.activeFocus
 	property alias color: backgroundItem.color
 
-	onVisibleChanged: if (!visible && numericPad) numericPad.close()
+	onVisibleChanged: if (!visible && numericPadPopup) numericPadPopup.close()
 
 	function clearText() {
 		textField.text = ""
 	}
 
 	Connections {
-		enabled: numericPad != undefined
-		target: numericPad ? numericPad : null
+		enabled: numericPadPopup != undefined
+		target: numericPadPopup ? numericPadPopup : null
 		function onAboutToHide() { mainItem.numericPadButton.checked = false }
 		function onAboutToShow() { mainItem.numericPadButton.checked = true }
 		function onButtonPressed(text) {
+			console.log("text", text)
 			textField.text += text
 		}
 		function onWipe(){ textField.text = textField.text.slice(0, -1)}
@@ -87,7 +88,7 @@ FocusScope {
 	}
 	Button {
 		id: dialerButton
-		visible: numericPad != undefined && textField.text.length === 0
+		visible: numericPadPopup != undefined && textField.text.length === 0
 		checkable: true
 		checked: false
 		background: Rectangle {
