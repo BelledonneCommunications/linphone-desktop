@@ -120,6 +120,9 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Window/AbstractWindow.qml
 	view/Page/Window/Call/CallsWindow.qml
 	view/Page/Window/Main/MainWindow.qml
+
+	view/Test/ItemsTest.qml
+	view/Test/RectangleTest.qml
 )
 
 list(APPEND _LINPHONEAPP_QML_SINGLETONS
