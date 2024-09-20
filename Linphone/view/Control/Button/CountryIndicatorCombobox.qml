@@ -112,6 +112,7 @@ ColumnLayout {
 				keyNavigationEnabled: true
 				keyNavigationWraps: true
 				maximumFlickVelocity: 1500
+				spacing: 10 * DefaultStyle.dp
 				highlight: Rectangle {
 					anchors.left: parent.left
 					anchors.right: parent.right
@@ -205,7 +206,7 @@ ColumnLayout {
 					source: popupBg
 					shadowEnabled: true
 					shadowColor: DefaultStyle.grey_1000
-					shadowBlur: 1
+					shadowBlur: 0.1
 					shadowOpacity: 0.1
 				}
 			}

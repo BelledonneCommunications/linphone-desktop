@@ -65,6 +65,6 @@ DesktopPopup {
 		shadowEnabled: true
 		shadowColor: DefaultStyle.grey_1000
 		shadowOpacity: 0.1
-		shadowBlur: 1
+		shadowBlur: 0.1
 	}
 }

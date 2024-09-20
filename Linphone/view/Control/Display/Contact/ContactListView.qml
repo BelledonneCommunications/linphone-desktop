@@ -14,7 +14,6 @@ ListView {
 	//keyNavigationWraps: true
 	// rightMargin: 5 * DefaultStyle.dp
 
-	property string searchBarText
 
 	property bool selectionEnabled: true
 	property bool hoverEnabled: true
@@ -24,7 +23,18 @@ ListView {
 	property bool actionLayoutVisible: false
 	property bool initialHeadersVisible: true
 	property bool displayNameCapitalization: true
-	property bool showOnlyFavourites: false
+	property bool showFavouritesOnly: false
+	property bool showDefaultAddress: false
+
+	property var sourceModel: MagicSearchList{}
+
+	// Model properties
+	// set searchBarText without specifying a model to bold
+	// matching names
+	property string searchBarText
+	property string searchText: searchBarText.length === 0 ? "*" : searchBarText
+	property var aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
+	property var sourceFlags: LinphoneEnums.MagicSearchSource.Friends | LinphoneEnums.MagicSearchSource.LdapServers
 
 	property ConferenceInfoGui confInfoGui
 
@@ -76,12 +86,19 @@ ListView {
 						}else {
 							currentIndex = -1
 						}
+
 	model: MagicSearchProxy {
 		id: magicSearchProxy
-		searchText: searchBarText.length === 0 ? "*" : searchBarText
+		searchText: mainItem.searchText
+		// This property is needed instead of playing on the delegate visibility
+		// considering its starred status. Otherwise, the row in the list still
+		// exists even if its delegate is not visible, and creates navigation issues
+		showFavouritesOnly: mainItem.showFavouritesOnly
 		onFriendCreated: (index) => {
 			mainItem.currentIndex = index
 		}
+		aggregationFlag: mainItem.aggregationFlag
+		sourceModel: mainItem.sourceModel
 	}
 
 	Control.ScrollBar.vertical: ScrollBar {
@@ -99,13 +116,11 @@ ListView {
 	}
 	delegate: FocusScope {
 		id: itemDelegate
-		height: display ? 56 * DefaultStyle.dp : 0
+		height: 56 * DefaultStyle.dp
 		width: mainItem.width
 		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
 		property var previousDisplayName: previousItem ? previousItem.core.displayName : ""
 		property var displayName: modelData.core.displayName
-		property bool display: !mainItem.showOnlyFavourites || modelData.core.starred
-		visible: display
 
 		Connections {
 			enabled: modelData.core
@@ -134,19 +149,34 @@ ListView {
 			anchors.left: initial.visible ? initial.right : parent.left
 			anchors.right: parent.right
 			anchors.verticalCenter: parent.verticalCenter
-			spacing: 10 * DefaultStyle.dp
+			spacing: 16 * DefaultStyle.dp
 			z: 1
 			Avatar {
 				Layout.preferredWidth: 45 * DefaultStyle.dp
 				Layout.preferredHeight: 45 * DefaultStyle.dp
 				contact: modelData
 			}
-			Text {
-				text: itemDelegate.displayName
-				font.pixelSize: 14 * DefaultStyle.dp
-				font.capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
-				maximumLineCount: 1
-				Layout.fillWidth: true
+			ColumnLayout {
+				spacing: 0
+				Text {
+					text: UtilsCpp.boldTextPart(itemDelegate.displayName, mainItem.searchBarText)
+					font{
+						pixelSize: mainItem.showDefaultAddress ? 16 * DefaultStyle.dp : 14 * DefaultStyle.dp
+						capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
+						weight: mainItem.showDefaultAddress ? 800 * DefaultStyle.dp : 400 * DefaultStyle.dp
+					}
+					maximumLineCount: 1
+					Layout.fillWidth: true
+				}
+				Text {
+					Layout.topMargin: 2 * DefaultStyle.dp
+					visible: mainItem.showDefaultAddress
+					text: modelData.core.defaultAddress
+					font {
+						weight: 300 * DefaultStyle.dp
+						pixelSize: 12 * DefaultStyle.dp
+					}
+				}
 			}
 			EffectImage {
 				id: isSelectedCheck
@@ -169,7 +199,7 @@ ListView {
 				// anchors.right: parent.right
 				Layout.rightMargin: 5 * DefaultStyle.dp
 				// anchors.verticalCenter: parent.verticalCenter
-				spacing: 10 * DefaultStyle.dp // TODO : change when mockup ready
+				spacing: 16 * DefaultStyle.dp
 				RowLayout{
 					id: actionButtons
 					visible: mainItem.actionLayoutVisible
@@ -304,7 +334,7 @@ ListView {
 				if (mouse && mouse.button == Qt.RightButton) {
 					friendPopup.open()
 				} else {
-					mainItem.currentIndex = -1
+					mainItem.forceActiveFocus()
 					mainItem.currentIndex = index
 					if (mainItem.multiSelectionEnabled) {
 						var indexInSelection = mainItem.selectedContacts.indexOf(modelData.core.defaultAddress)

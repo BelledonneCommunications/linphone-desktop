@@ -83,89 +83,96 @@ LoginLayout {
 	Component {
 		id: firstItem
 		ColumnLayout {
-			spacing: 0
+			spacing: 85 * DefaultStyle.dp
+			Layout.maximumHeight: 420 * DefaultStyle.dp
 			ColumnLayout {
-				Text {
-					Layout.fillWidth: true
-					Layout.preferredWidth: rootStackView.width
-					wrapMode: Text.WordWrap
-					color: DefaultStyle.main2_600
-					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 400* DefaultStyle.dp
+				spacing: 0
+				ColumnLayout {
+					spacing: 28 * DefaultStyle.dp
+					Text {
+						Layout.fillWidth: true
+						Layout.preferredWidth: rootStackView.width
+						wrapMode: Text.WordWrap
+						color: DefaultStyle.main2_900
+						font {
+							pixelSize: 14 * DefaultStyle.dp
+							weight: 400* DefaultStyle.dp
+						}
+						text: "Certaines fonctionnalités nécessitent un compte Linphone, comme la messagerie de groupe, les vidéoconférences..."
 					}
-					text: "Certaines fonctionnalités nécessitent un compte Linphone, comme la messagerie de groupe, les vidéoconférences..."
+					Text {
+						Layout.fillWidth: true
+						Layout.preferredWidth: rootStackView.width
+						wrapMode: Text.WordWrap
+						color: DefaultStyle.main2_900
+						font {
+							pixelSize: 14 * DefaultStyle.dp
+							weight: 400* DefaultStyle.dp
+						}
+						text:"Ces fonctionnalités sont cachées lorsque vous vous enregistrez avec un compte SIP tiers."
+					}
+					Text {
+						Layout.fillWidth: true
+						Layout.preferredWidth: rootStackView.width
+						wrapMode: Text.WordWrap
+						color: DefaultStyle.main2_900
+						font {
+							pixelSize: 14 * DefaultStyle.dp
+							weight: 400* DefaultStyle.dp
+						}
+						text: "Pour les activer dans un projet commercial, veuillez nous contacter. "
+					}
 				}
-				Text {
-					Layout.fillWidth: true
-					Layout.preferredWidth: rootStackView.width
-					wrapMode: Text.WordWrap
-					color: DefaultStyle.main2_600
-					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 400* DefaultStyle.dp
+				Button {
+					id: openLinkButton
+					Layout.alignment: Qt.AlignCenter
+					Layout.topMargin: 18 * DefaultStyle.dp
+					text: "linphone.org/contact"
+					textSize: 13 * DefaultStyle.dp
+					inversedColors: true
+					leftPadding: 12 * DefaultStyle.dp
+					rightPadding: 12 * DefaultStyle.dp
+					topPadding: 6 * DefaultStyle.dp
+					bottomPadding: 6 * DefaultStyle.dp
+					onClicked: {
+						Qt.openUrlExternally(ConstantsCpp.ContactUrl)
 					}
-					text:"Ces fonctionnalités sont cachées lorsque vous vous enregistrez avec un compte SIP tiers."
-				}
-				Text {
-					Layout.fillWidth: true
-					Layout.preferredWidth: rootStackView.width
-					wrapMode: Text.WordWrap
-					color: DefaultStyle.main2_600
-					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 400* DefaultStyle.dp
-					}
-					text: "Pour les activer dans un projet commercial, veuillez nous contacter. "
+					KeyNavigation.up: backButton
+					KeyNavigation.down: createAccountButton
 				}
 			}
-			Button {
-				id: openLinkButton
-				Layout.alignment: Qt.AlignCenter
-				Layout.topMargin: 18 * DefaultStyle.dp
-				text: "linphone.org/contact"
-				textSize: 13 * DefaultStyle.dp
-				inversedColors: true
-				leftPadding: 12 * DefaultStyle.dp
-				rightPadding: 12 * DefaultStyle.dp
-				topPadding: 6 * DefaultStyle.dp
-				bottomPadding: 6 * DefaultStyle.dp
-				onClicked: {
-					Qt.openUrlExternally(ConstantsCpp.ContactUrl)
+			ColumnLayout {
+				spacing: 20 * DefaultStyle.dp
+				Button {
+					id: createAccountButton
+					// Layout.topMargin: 85 * DefaultStyle.dp
+					Layout.fillWidth: true
+					inversedColors: true
+					text: qsTr("Créer un compte linphone")
+					leftPadding: 20 * DefaultStyle.dp
+					rightPadding: 20 * DefaultStyle.dp
+					topPadding: 11 * DefaultStyle.dp
+					bottomPadding: 11 * DefaultStyle.dp
+					onClicked: {
+						console.debug("[SIPLoginPage] User: click register")
+						mainItem.goToRegister()
+					}
+					KeyNavigation.up: openLinkButton
+					KeyNavigation.down: continueButton
 				}
-				KeyNavigation.up: backButton
-				KeyNavigation.down: createAccountButton
-			}
-			Button {
-				id: createAccountButton
-				Layout.topMargin: 85 * DefaultStyle.dp
-				Layout.fillWidth: true
-				inversedColors: true
-				text: qsTr("Créer un compte linphone")
-				leftPadding: 20 * DefaultStyle.dp
-				rightPadding: 20 * DefaultStyle.dp
-				topPadding: 11 * DefaultStyle.dp
-				bottomPadding: 11 * DefaultStyle.dp
-				onClicked: {
-					console.debug("[SIPLoginPage] User: click register")
-					mainItem.goToRegister()
+				Button {
+					id: continueButton
+					Layout.fillWidth: true
+					text: qsTr("Je comprends")
+					leftPadding: 20 * DefaultStyle.dp
+					rightPadding: 20 * DefaultStyle.dp
+					topPadding: 11 * DefaultStyle.dp
+					bottomPadding: 11 * DefaultStyle.dp
+					onClicked: {
+						rootStackView.replace(secondItem)
+					}
+					KeyNavigation.up: createAccountButton
 				}
-				KeyNavigation.up: openLinkButton
-				KeyNavigation.down: continueButton
-			}
-			Button {
-				id: continueButton
-				Layout.topMargin: 20 * DefaultStyle.dp
-				Layout.fillWidth: true
-				text: qsTr("Je comprends")
-				leftPadding: 20 * DefaultStyle.dp
-				rightPadding: 20 * DefaultStyle.dp
-				topPadding: 11 * DefaultStyle.dp
-				bottomPadding: 11 * DefaultStyle.dp
-				onClicked: {
-					rootStackView.replace(secondItem)
-				}
-				KeyNavigation.up: createAccountButton
 			}
 			Item {
 				Layout.fillHeight: true

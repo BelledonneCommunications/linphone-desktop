@@ -52,7 +52,6 @@ signals:
 	void accountChanged();
 
 private:
-	QSharedPointer<AccountCore> mAccount;
 	QString mSearchText;
 	QSharedPointer<AccountDeviceList> mAccountDeviceList;
 	QSharedPointer<SafeConnection<AccountDeviceProxy, CoreModel>> mCoreModelConnection;

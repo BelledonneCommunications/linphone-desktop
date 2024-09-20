@@ -37,22 +37,16 @@ AccountDeviceProxy::AccountDeviceProxy(QObject *parent) : SortFilterProxy(parent
 }
 
 AccountDeviceProxy::~AccountDeviceProxy() {
-	setSourceModel(nullptr);
+	// setSourceModel(nullptr);
 }
 
 AccountGui *AccountDeviceProxy::getAccount() const {
-	return mAccount ? new AccountGui(mAccount) : nullptr;
+	auto account = mAccountDeviceList->getAccount();
+	return account ? new AccountGui(account) : nullptr;
 }
 
 void AccountDeviceProxy::setAccount(AccountGui *accountGui) {
-	auto currentAccountModel = mAccountDeviceList->getAccountModel();
-	auto accountCore = accountGui ? QSharedPointer<AccountCore>(accountGui->getCore()) : nullptr;
-	auto newModel = accountCore ? accountCore->getModel() : nullptr;
-	if (newModel != currentAccountModel) {
-		mAccount = accountCore;
-		mAccountDeviceList->setAccountModel(accountGui->getCore()->getModel());
-		emit accountChanged();
-	}
+	mAccountDeviceList->setAccount(accountGui ? accountGui->mCore : nullptr);
 }
 
 void AccountDeviceProxy::deleteDevice(AccountDeviceGui *device) {

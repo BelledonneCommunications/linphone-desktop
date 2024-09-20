@@ -51,7 +51,7 @@ Button {
 			// Crash : https://bugreports.qt.io/browse/QTBUG-124730
 			shadowEnabled: true //mainItem.shadowEnabled
 			shadowColor: DefaultStyle.grey_1000
-			shadowBlur: 1
+			shadowBlur: 0.1
 			shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
 		}
 	}
@@ -102,8 +102,8 @@ Button {
 				source: popupBackground
 				anchors.fill: popupBackground
 				shadowEnabled: true
-				shadowBlur: 1
-				shadowColor: DefaultStyle.grey_900
+				shadowBlur: 0.1
+				shadowColor: DefaultStyle.grey_1000
 				shadowOpacity: 0.4
 			}
 		}

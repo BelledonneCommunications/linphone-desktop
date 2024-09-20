@@ -15,7 +15,7 @@ AbstractMainPage {
 
 	signal goBack()
 	
-	function layoutUrl(name) {
+	function layoutUrl(name) {
 		return layoutsPath+"/"+name+".qml"
 	}
 	

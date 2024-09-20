@@ -16,7 +16,7 @@ ColumnLayout {
 		enableErrorText: true
 		contentItem: TextField {
 			id: usernameEdit
-			isError: username.errorTextVisible
+			isError: username.errorTextVisible || errorText.visible
 			Layout.preferredWidth: 360 * DefaultStyle.dp
 			Layout.preferredHeight: 49 * DefaultStyle.dp
 		}
@@ -30,7 +30,7 @@ ColumnLayout {
 			enableErrorText: true
 			contentItem: TextField {
 				id: passwordEdit
-				isError: password.errorTextVisible
+				isError: password.errorTextVisible || errorText.visible
 				Layout.preferredWidth: 360 * DefaultStyle.dp
 				Layout.preferredHeight: 49 * DefaultStyle.dp
 				hidden: true
@@ -130,7 +130,7 @@ ColumnLayout {
 				color: DefaultStyle.main2_500main
 				text: qsTr("Mot de passe oublié ?")
 				font{
-					underline: forgottenButton.underline
+					underline: true
 					pixelSize: 13 * DefaultStyle.dp
 					weight: 600 * DefaultStyle.dp
 				}

@@ -47,7 +47,7 @@ ComboBox {
 				anchors.fill: calendarBg
 				source: calendarBg
 				shadowEnabled: true
-				shadowBlur: 1
+				shadowBlur: 0.1
 				shadowOpacity: 0.1
 			}
 		}

@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls as Control
 import Linphone
+import UtilsCpp
 
 LoginLayout {
 	id: mainItem
@@ -11,6 +12,8 @@ LoginLayout {
 	property string address
 	property string sipIdentityAddress
 	property string code
+	property bool ctrlIsPressed
+	onCtrlIsPressedChanged: console.log("ctrl is pressed", ctrlIsPressed)
 	titleContent: [
 		RowLayout {
 			spacing: 21 * DefaultStyle.dp
@@ -74,11 +77,26 @@ LoginLayout {
 				spacing: 45 * DefaultStyle.dp
 				Repeater {
 					model: 4
+					id: repeater
+					signal pasteRequested(string text)
 					DigitInput {
+						id: digitInput
 						required property int index
 						Layout.preferredWidth: width
 						Layout.preferredHeight: height
-						onTextEdited: {
+						Connections {
+							target: repeater
+							function onPasteRequested(text) {
+								console.log("paste requested", text[digitInput.index])
+								var test= text;
+								if (UtilsCpp.isInteger(text))
+								{
+									digitInput.text = text[digitInput.index]
+								}
+							}
+						}
+						onTextChanged: {
+							console.log("text edited", text)
 							if (text.length > 0 ) {
 								mainItem.code = mainItem.code.slice(0, index) + text + mainItem.code.slice(index)
 								if (index < 3)
@@ -90,7 +108,32 @@ LoginLayout {
 							} else {
 								if (index > 0)
 									nextItemInFocusChain(false).forceActiveFocus()
-							} 
+							}
+						}
+						Keys.onPressed: (event) => {
+							if (event.key == Qt.Key_Backspace) {
+								if (text.length === 0) {
+									nextItemInFocusChain(false).forceActiveFocus()
+									event.accepted = true
+								} else {
+								event.accepted = false
+								}
+							} else if (event.key == Qt.Key_Control) {
+								mainItem.ctrlIsPressed = true
+								event.accepted = false
+							} else if (mainItem.ctrlIsPressed && event.key == Qt.Key_V) {
+								var clipboard = UtilsCpp.getClipboardText()
+								console.log("paste", clipboard)
+								repeater.pasteRequested(clipboard)
+							} else {
+								event.accepted = false
+							}
+						}
+						Keys.onReleased: (event) => {
+							if (event.key == Qt.Key_Control) {
+								mainItem.ctrlIsPressed = false
+								event.accepted = true
+							}
 						}
 					}
 				}

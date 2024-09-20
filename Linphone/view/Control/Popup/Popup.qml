@@ -30,8 +30,8 @@ Control.Popup{
 			anchors.fill: backgroundItem
 			source: backgroundItem
 			shadowEnabled: true
-			shadowColor: DefaultStyle.grey_900
-			shadowBlur: 1.0
+			shadowColor: DefaultStyle.grey_1000
+			shadowBlur: 0.1
 			shadowOpacity: 0.1
 		}
 		MouseArea {

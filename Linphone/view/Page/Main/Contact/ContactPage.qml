@@ -52,10 +52,9 @@ AbstractMainPage {
 	}
 
 	showDefaultItem: contactList.model.sourceModel.count === 0
-	
-	property MagicSearchProxy allFriends: MagicSearchProxy {
-		searchText: searchBar.text.length === 0 ? "*" : searchBar.text
-		aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
+
+	MagicSearchList {
+		id: allFriends
 	}
 
 	function deleteContact(contact) {
@@ -268,14 +267,15 @@ AbstractMainPage {
 							}
 							ContactListView{
 								id: favoriteList
-								onActiveFocusChanged: if (activeFocus) console.log("favorite list focus")
 								hoverEnabled: mainItem.leftPanelEnabled
+								highlightFollowsCurrentItem: true
 								Layout.fillWidth: true
 								Layout.preferredHeight: contentHeight
 								Control.ScrollBar.vertical.visible: false
-								showOnlyFavourites: true
+								showFavouritesOnly: true
 								contactMenuVisible: true
-								model: allFriends
+								searchBarText: searchBar.text
+								sourceModel: allFriends
 								onSelectedContactChanged: {
 									if (selectedContact) {
 										contactList.currentIndex = -1
@@ -320,7 +320,6 @@ AbstractMainPage {
 							}
 							ContactListView{
 								id: contactList
-								onActiveFocusChanged: if (activeFocus) console.log("contact list focus")
 								onCountChanged: {
 									if (initialFriendToDisplay.length !== 0) {
 										if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
@@ -328,14 +327,14 @@ AbstractMainPage {
 								}
 								Layout.fillWidth: true
 								Layout.preferredHeight: contentHeight
-								interactive: false
 								Control.ScrollBar.vertical.visible: false
 								hoverEnabled: mainItem.leftPanelEnabled
 								contactMenuVisible: true
+								highlightFollowsCurrentItem: true
 								searchBarText: searchBar.text
-								model: allFriends
+								sourceModel: allFriends
 								Connections {
-									target: allFriends
+									target: contactList.model
 									function onFriendCreated(index) {
 										contactList.currentIndex = index
 									}

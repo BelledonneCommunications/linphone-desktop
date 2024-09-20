@@ -46,7 +46,7 @@ AbstractSettingsLayout {
 					Layout.rightMargin: 44 * DefaultStyle.dp
 					Layout.leftMargin: 64 * DefaultStyle.dp
 					Layout.topMargin: 20 * DefaultStyle.dp
-					ValidatedTextField {
+					DecoratedTextField {
 						propertyName: "mwiServerAddress"
 						propertyOwner: account.core
 						title: qsTr("URI du serveur de messagerie vocale")
@@ -105,7 +105,7 @@ AbstractSettingsLayout {
 						propertyName: "transport"
 						propertyOwner: account.core
 					}
-					ValidatedTextField {
+					DecoratedTextField {
 						title: qsTr("URL du serveur mandataire")
 						propertyName: "serverAddress"
 						propertyOwner: account.core
@@ -116,7 +116,7 @@ AbstractSettingsLayout {
 						propertyName: "outboundProxyEnabled"
 						propertyOwner: account.core
 					}
-					ValidatedTextField {
+					DecoratedTextField {
 						propertyName: "stunServer"
 						propertyOwner: account.core
 						title: qsTr("Adresse du serveur STUN")
@@ -137,26 +137,26 @@ AbstractSettingsLayout {
 						propertyName: "bundleModeEnabled"
 						propertyOwner: account.core
 					}
-					ValidatedTextField {
+					DecoratedTextField {
 						propertyName: "expire"
 						propertyOwner: account.core
 						title: qsTr("Expiration (en seconde)")
 						canBeEmpty: false
 						isValid: function(text) { return !isNaN(Number(text)); }
 					}
-					ValidatedTextField {
+					DecoratedTextField {
 						title: qsTr("URI de l’usine à conversations")
 						propertyName: "conferenceFactoryAddress"
 						propertyOwner: account.core
 						isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
 					}
-					ValidatedTextField {
+					DecoratedTextField {
 						title: qsTr("URI de l’usine à réunions")
 						propertyName: "audioVideoConferenceFactoryAddress"
 						propertyOwner: account.core
 						isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
 					}
-					ValidatedTextField {
+					DecoratedTextField {
 						title: qsTr("URL du serveur d’échange de clés de chiffrement")
 						propertyName: "limeServerUrl"
 						propertyOwner: account.core

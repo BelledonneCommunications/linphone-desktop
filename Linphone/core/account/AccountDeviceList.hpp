@@ -25,7 +25,6 @@
 #include "AccountDeviceCore.hpp"
 #include "core/account/AccountGui.hpp"
 #include "model/account/AccountManagerServicesModel.hpp"
-#include "model/account/AccountModel.hpp"
 #include "tool/AbstractObject.hpp"
 #include "tool/thread/SafeConnection.hpp"
 
@@ -35,7 +34,7 @@ class AccountDeviceList : public ListProxy, public AbstractObject {
 
 public:
 	static QSharedPointer<AccountDeviceList> create();
-	static QSharedPointer<AccountDeviceList> create(const std::shared_ptr<AccountModel> &accountModel);
+	static QSharedPointer<AccountDeviceList> create(const QSharedPointer<AccountCore> &accountCore);
 
 	AccountDeviceList();
 	~AccountDeviceList();
@@ -43,8 +42,8 @@ public:
 	QList<QSharedPointer<AccountDeviceCore>>
 	buildDevices(const std::list<std::shared_ptr<linphone::AccountDevice>> &devicesList);
 
-	const std::shared_ptr<AccountModel> &getAccountModel() const;
-	void setAccountModel(const std::shared_ptr<AccountModel> &accountModel);
+	const QSharedPointer<AccountCore> &getAccount() const;
+	void setAccount(const QSharedPointer<AccountCore> &accountCore);
 	void refreshDevices();
 
 	void setDevices(QList<QSharedPointer<AccountDeviceCore>> devices);
@@ -58,7 +57,7 @@ signals:
 	void componentReady();
 
 private:
-	std::shared_ptr<AccountModel> mAccountModel;
+	QSharedPointer<AccountCore> mAccountCore;
 	std::shared_ptr<AccountManagerServicesModel> mAccountManagerServicesModel;
 	QSharedPointer<SafeConnection<AccountDeviceList, AccountManagerServicesModel>>
 	    mAccountManagerServicesModelConnection;

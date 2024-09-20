@@ -35,9 +35,9 @@ QSharedPointer<AccountDeviceList> AccountDeviceList::create() {
 	return model;
 }
 
-QSharedPointer<AccountDeviceList> AccountDeviceList::create(const std::shared_ptr<AccountModel> &accountModel) {
+QSharedPointer<AccountDeviceList> AccountDeviceList::create(const QSharedPointer<AccountCore> &account) {
 	auto model = create();
-	model->setAccountModel(accountModel);
+	model->setAccount(account);
 	return model;
 }
 
@@ -59,15 +59,15 @@ AccountDeviceList::buildDevices(const std::list<std::shared_ptr<linphone::Accoun
 	return devices;
 }
 
-const std::shared_ptr<AccountModel> &AccountDeviceList::getAccountModel() const {
-	return mAccountModel;
+const QSharedPointer<AccountCore> &AccountDeviceList::getAccount() const {
+	return mAccountCore;
 }
 
-void AccountDeviceList::setAccountModel(const std::shared_ptr<AccountModel> &accountModel) {
+void AccountDeviceList::setAccount(const QSharedPointer<AccountCore> &accountCore) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
-	if (mAccountModel != accountModel) {
-		mAccountModel = accountModel;
-		lDebug() << log().arg("Set account model") << mAccountModel.get();
+	if (mAccountCore != accountCore) {
+		mAccountCore = accountCore;
+		lDebug() << log().arg("Set account model") << mAccountCore.get();
 		// oldConnect.unlock();
 		refreshDevices();
 		// }
@@ -79,12 +79,12 @@ void AccountDeviceList::refreshDevices() {
 	beginResetModel();
 	clearData();
 	endResetModel();
-	if (mAccountModel) {
+	if (mAccountCore) {
 		auto requestDeviceList = [this] {
 			if (!mAccountManagerServicesModelConnection) return;
 			mAccountManagerServicesModelConnection->invokeToModel([this]() {
-				auto identityAddress = mAccountModel->getMonitor()->getParams()->getIdentityAddress();
-				auto authinfo = mAccountModel->getMonitor()->findAuthInfo();
+				auto identityAddress = mAccountCore->getModel()->getMonitor()->getParams()->getIdentityAddress();
+				auto authinfo = mAccountCore->getModel()->getMonitor()->findAuthInfo();
 				qDebug() << "[AccountDeviceList] request devices for address" << identityAddress->asStringUriOnly();
 				mAccountManagerServicesModel->getDeviceList(identityAddress);
 			});
@@ -110,8 +110,8 @@ void AccountDeviceList::deleteDevice(AccountDeviceGui *deviceGui) {
 		auto deviceModel = deviceCore->getModel();
 		mAccountManagerServicesModelConnection->invokeToModel([this, deviceModel]() {
 			auto linphoneDevice = deviceModel->getDevice();
-			auto identityAddress = mAccountModel->getMonitor()->getParams()->getIdentityAddress();
-			auto authinfo = mAccountModel->getMonitor()->findAuthInfo();
+			auto identityAddress = mAccountCore->getModel()->getMonitor()->getParams()->getIdentityAddress();
+			auto authinfo = mAccountCore->getModel()->getMonitor()->findAuthInfo();
 			qDebug() << "[AccountDeviceList] delete device" << linphoneDevice->getName() << "of address"
 			         << identityAddress->asStringUriOnly();
 			mAccountManagerServicesModel->deleteDevice(identityAddress, linphoneDevice);

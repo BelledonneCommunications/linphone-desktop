@@ -42,7 +42,7 @@ Control.TextField {
         return true
     }
 	property int idleTimeOut: 200
-	property bool empty: mainItem.propertyOwner[mainItem.propertyName]?.length == 0
+	property bool empty: mainItem.propertyOwner!= undefined && mainItem.propertyOwner[mainItem.propertyName]?.length == 0
 	property bool canBeEmpty: true
 
 	signal validationChecked(bool valid)
@@ -144,7 +144,7 @@ Control.TextField {
 		running: false
 		interval: mainItem.idleTimeOut
 		repeat: false
-		onTriggered: textField.editingFinished()
+		onTriggered: mainItem.editingFinished()
 	}
 	onEditingFinished: {
 		updateText()
@@ -162,7 +162,7 @@ Control.TextField {
 			mainItem.validationChecked(false)
 			return
 		}
-		if (isValid(text)) {
+		if (isValid(text) && mainItem.propertyOwner && mainItem.propertyName) {
 			if (mainItem.propertyOwner[mainItem.propertyName] != text)
 				mainItem.propertyOwner[mainItem.propertyName] = text
 			mainItem.validationChecked(true)

@@ -143,7 +143,7 @@ StackView {
 				source: initialItem
 				anchors.fill: initialItem
 				shadowEnabled: true
-				shadowBlur: 1
+				shadowBlur: 0.1
 				shadowColor: DefaultStyle.grey_1000
 				shadowOpacity: 0.1
 			}

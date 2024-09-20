@@ -233,7 +233,7 @@ Item {
 									source: popupBg
 									anchors.fill: popupBg
 									shadowEnabled: true
-									shadowBlur: 1
+									shadowBlur: 0.1
 									shadowColor: DefaultStyle.grey_1000
 									shadowOpacity: 0.1
 								}
@@ -260,11 +260,9 @@ Item {
 								contactMenuVisible: false
 								actionLayoutVisible: true
 								selectionEnabled: false
+								showDefaultAddress: true
 								Control.ScrollBar.vertical: scrollbar
-								model: MagicSearchProxy {
-									searchText: magicSearchBar.text.length === 0 ? "*" : magicSearchBar.text
-									aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
-								}
+								searchText: magicSearchBar.text
 								
 								Keys.onPressed: (event) => {
 									if(event.key == Qt.Key_Down){
@@ -335,13 +333,11 @@ Item {
 												Layout.preferredHeight: 45 * DefaultStyle.dp
 												_address: magicSearchBar.text
 											}
-											ColumnLayout {
-												Text {
-													text: magicSearchBar.text
-													font {
-														pixelSize: 12 * DefaultStyle.dp
-														weight: 300 * DefaultStyle.dp
-													}
+											Text {
+												text: UtilsCpp.interpretUrl(magicSearchBar.text)
+												font {
+													pixelSize: 12 * DefaultStyle.dp
+													weight: 300 * DefaultStyle.dp
 												}
 											}
 											Item {

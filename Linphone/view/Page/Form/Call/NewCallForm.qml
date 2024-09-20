@@ -126,9 +126,7 @@ FocusScope {
 							Layout.preferredHeight: contentHeight
 							Control.ScrollBar.vertical.visible: false
 							contactMenuVisible: false
-							model: MagicSearchProxy {
-								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
-							}
+							searchBarText: searchBar.text
 							onSelectedContactChanged: mainItem.selectedContact = selectedContact
 							onClicked: mainItem.callSelectedContact()
 						}
@@ -151,11 +149,8 @@ FocusScope {
 							Layout.preferredHeight: contentHeight
 							initialHeadersVisible: false
 							displayNameCapitalization: false
-							model: MagicSearchProxy {
-								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
-								sourceFlags: LinphoneEnums.MagicSearchSource.All
-								aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
-							}
+							searchBarText: searchBar.text
+							sourceFlags: LinphoneEnums.MagicSearchSource.All
 							onSelectedContactChanged: mainItem.selectedContact = selectedContact
 							onClicked: mainItem.callSelectedContact()
 						}

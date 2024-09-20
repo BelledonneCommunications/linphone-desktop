@@ -37,6 +37,13 @@ QSharedPointer<MagicSearchList> MagicSearchList::create() {
 	return model;
 }
 
+QSharedPointer<MagicSearchList> MagicSearchList::create(MagicSearchList *magicSearchList) {
+	auto model = QSharedPointer<MagicSearchList>(magicSearchList, &QObject::deleteLater);
+	model->moveToThread(App::getInstance()->thread());
+	model->setSelf(model);
+	return model;
+}
+
 MagicSearchList::MagicSearchList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
 	mSourceFlags = (int)linphone::MagicSearch::Source::Friends | (int)linphone::MagicSearch::Source::LdapServers;
@@ -82,6 +89,10 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 			mModelConnection->makeConnectToCore(&MagicSearchList::lSetSourceFlags, [this](int flags) {
 				mModelConnection->invokeToModel([this, flags]() { mMagicSearch->setSourceFlags(flags); });
 			});
+			mModelConnection->makeConnectToCore(
+			    &MagicSearchList::lSetAggregationFlag, [this](LinphoneEnums::MagicSearchAggregation flag) {
+				    mModelConnection->invokeToModel([this, flag]() { mMagicSearch->setAggregationFlag(flag); });
+			    });
 			mModelConnection->makeConnectToModel(&MagicSearchModel::sourceFlagsChanged, [this](int flags) {
 				mModelConnection->invokeToCore([this, flags]() { setSourceFlags(flags); });
 			});
@@ -124,9 +135,15 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 }
 
 void MagicSearchList::setResults(const QList<QSharedPointer<FriendCore>> &contacts) {
+	for (auto item : mList) {
+		auto isFriendCore = item.objectCast<FriendCore>();
+		if (!isFriendCore) continue;
+		disconnect(isFriendCore.get());
+	}
 	resetData();
 	for (auto it : contacts) {
 		connect(it.get(), &FriendCore::removed, this, qOverload<QObject *>(&MagicSearchList::remove));
+		connect(it.get(), &FriendCore::starredChanged, this, [this] { lSearch(mSearchFilter); });
 	}
 	add(contacts);
 }

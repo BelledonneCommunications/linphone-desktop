@@ -128,6 +128,8 @@ public:
 	static QString getCountryName(const QLocale::Territory &p_country);
 	Q_INVOKABLE static void useFetchConfig(const QString &configUrl);
 	Q_INVOKABLE void playDtmf(const QString &dtmf);
+	Q_INVOKABLE bool isInteger(const QString &text);
+	Q_INVOKABLE QString boldTextPart(const QString &text, const QString &regex);
 
 	static QString getApplicationProduct();
 	static QString getOsProduct();

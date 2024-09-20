@@ -283,6 +283,7 @@ AbstractMainPage {
 										RowLayout {
 											z: 1
 											anchors.fill: parent
+											spacing: 10 * DefaultStyle.dp
 											Item {
 												Layout.preferredWidth: historyAvatar.width
 												Layout.preferredHeight: historyAvatar.height
@@ -291,8 +292,8 @@ AbstractMainPage {
 													source: historyAvatar
 													anchors.fill: historyAvatar
 													shadowEnabled: true
-													shadowBlur: 1
-													shadowColor: DefaultStyle.grey_900
+													shadowBlur: 0.1
+													shadowColor: DefaultStyle.grey_1000
 													shadowOpacity: 0.1
 												}
 												Avatar {
@@ -317,7 +318,7 @@ AbstractMainPage {
 													}
 												}
 												RowLayout {
-													spacing: 3 * DefaultStyle.dp
+													spacing: 6 * DefaultStyle.dp
 													EffectImage {
 														id: statusIcon
 														imageSource: modelData.core.status === LinphoneEnums.CallStatus.Declined
@@ -403,7 +404,6 @@ AbstractMainPage {
 											onPressed: {
 												historyListView.currentIndex = model.index
 												historyListView.forceActiveFocus()
-												
 											}
 										}
 									}

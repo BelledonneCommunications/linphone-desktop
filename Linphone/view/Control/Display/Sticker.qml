@@ -267,7 +267,7 @@ Item {
 		anchors.fill: background
 		shadowEnabled: true
 		shadowColor: DefaultStyle.grey_1000
-		shadowBlur: 1
+		shadowBlur: 0.1
 		shadowOpacity: 0.4
 	}
 	RowLayout{

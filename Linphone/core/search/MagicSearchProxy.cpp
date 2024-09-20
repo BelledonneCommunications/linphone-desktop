@@ -23,29 +23,48 @@
 #include "core/friend/FriendGui.hpp"
 
 MagicSearchProxy::MagicSearchProxy(QObject *parent) : SortFilterProxy(parent) {
-	mList = MagicSearchList::create();
 	mSourceFlags = (int)LinphoneEnums::MagicSearchSource::Friends | (int)LinphoneEnums::MagicSearchSource::LdapServers;
 	mAggregationFlag = LinphoneEnums::MagicSearchAggregation::Friend;
-	(mList.get(), &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged);
-	connect(mList.get(), &MagicSearchList::aggregationFlagChanged, this, &MagicSearchProxy::aggregationFlagChanged);
-	connect(mList.get(), &MagicSearchList::friendCreated, this, [this](int index) {
-		auto proxyIndex = mapFromSource(sourceModel()->index(index, 0));
-		emit friendCreated(proxyIndex.row());
-	});
-	setSourceModel(mList.get());
-	connect(this, &MagicSearchProxy::forceUpdate, [this] { emit mList->lSearch(mSearchText); });
+	setSourceModel(new MagicSearchList());
 	sort(0);
-	connect(mList.get(), &MagicSearchList::initialized, this, [this] {
-		emit mList->lSetSourceFlags(mSourceFlags);
-		emit mList->lSetAggregationFlag(mAggregationFlag);
+	connect(this, &MagicSearchProxy::forceUpdate, [this] {
+		auto magicSearchList = qobject_cast<MagicSearchList *>(sourceModel());
+		if (magicSearchList) emit magicSearchList->lSearch(mSearchText);
 	});
 }
 
 MagicSearchProxy::~MagicSearchProxy() {
+	setSourceModel(nullptr);
+}
+
+void MagicSearchProxy::setSourceModel(QAbstractItemModel *model) {
+	auto oldMagicSearchList = dynamic_cast<MagicSearchList *>(sourceModel());
+	if (oldMagicSearchList) {
+		disconnect(oldMagicSearchList);
+	}
+	auto newMagicSearchList = dynamic_cast<MagicSearchList *>(model);
+	if (newMagicSearchList) {
+		mList = MagicSearchList::create(newMagicSearchList);
+		connect(newMagicSearchList, &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged);
+		connect(newMagicSearchList, &MagicSearchList::aggregationFlagChanged, this,
+		        &MagicSearchProxy::aggregationFlagChanged);
+		connect(newMagicSearchList, &MagicSearchList::friendCreated, this, [this](int index) {
+			auto proxyIndex = mapFromSource(sourceModel()->index(index, 0));
+			emit friendCreated(proxyIndex.row());
+		});
+		connect(newMagicSearchList, &MagicSearchList::initialized, this, [this, newMagicSearchList] {
+			emit newMagicSearchList->lSetSourceFlags(mSourceFlags);
+			emit newMagicSearchList->lSetAggregationFlag(mAggregationFlag);
+		});
+	}
+	QSortFilterProxyModel::setSourceModel(model);
 }
 
 int MagicSearchProxy::findFriendIndexByAddress(const QString &address) {
-	return mapFromSource(mList->index(mList->findFriendIndexByAddress(address), 0)).row();
+	auto magicSearchList = qobject_cast<MagicSearchList *>(sourceModel());
+	if (magicSearchList)
+		return mapFromSource(magicSearchList->index(magicSearchList->findFriendIndexByAddress(address), 0)).row();
+	else return -1;
 }
 
 QString MagicSearchProxy::getSearchText() const {
@@ -53,8 +72,10 @@ QString MagicSearchProxy::getSearchText() const {
 }
 
 void MagicSearchProxy::setSearchText(const QString &search) {
-	mSearchText = search;
-	mList->setSearch(mSearchText);
+	if (mSearchText != search) {
+		mSearchText = search;
+		mList->setSearch(mSearchText);
+	}
 }
 
 int MagicSearchProxy::getSourceFlags() const {
@@ -68,6 +89,17 @@ void MagicSearchProxy::setSourceFlags(int flags) {
 	}
 }
 
+bool MagicSearchProxy::showFavouritesOnly() const {
+	return mShowFavouritesOnly;
+}
+
+void MagicSearchProxy::setShowFavouritesOnly(bool show) {
+	if (mShowFavouritesOnly != show) {
+		mShowFavouritesOnly = show;
+		emit showFavouriteOnlyChanged();
+	}
+}
+
 LinphoneEnums::MagicSearchAggregation MagicSearchProxy::getAggregationFlag() const {
 	return mAggregationFlag;
 }
@@ -77,6 +109,17 @@ void MagicSearchProxy::setAggregationFlag(LinphoneEnums::MagicSearchAggregation 
 		mAggregationFlag = flag;
 		emit mList->lSetAggregationFlag(flag);
 	}
+}
+
+bool MagicSearchProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+	QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+	auto model = sourceModel()->data(index);
+	auto friendGui = model.value<FriendGui *>();
+	auto friendCore = friendGui->getCore();
+	if (friendCore) {
+		return !mShowFavouritesOnly || friendCore->getStarred();
+	}
+	return false;
 }
 
 bool MagicSearchProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {

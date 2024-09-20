@@ -44,7 +44,7 @@ Control.Switch {
 			// Crash : https://bugreports.qt.io/browse/QTBUG-124730
 			shadowEnabled: true //mainItem.shadowEnabled
 			shadowColor: DefaultStyle.grey_1000
-			shadowBlur: 1
+			shadowBlur: 0.1
 			shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
 		}
     }

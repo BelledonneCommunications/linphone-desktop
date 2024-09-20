@@ -7,12 +7,19 @@ import Linphone
 Text {
 	id: mainItem
 	color: DefaultStyle.danger_500main
+	visible: false
 	function clear() {
 		autoHideErrorMessage.stop()
 		text = ""
+		mainItem.visible = false
 	}
 	function setText(text) {
-		mainItem.text = text
+		if (text.length === 0) {
+			clear()
+		} else {
+			mainItem.visible = true
+			mainItem.text = text
+		}
 	}
 	font {
 		pixelSize: 12 * DefaultStyle.dp
@@ -21,7 +28,9 @@ Text {
 	Timer {
 		id: autoHideErrorMessage
 		interval: 5000
-		onTriggered: mainItem.text = ""
+		onTriggered: {
+			mainItem.clear()
+		}
 	}
 
 	onTextChanged: if (mainItem.text.length > 0) autoHideErrorMessage.restart()

@@ -14,6 +14,7 @@ QtObject {
 	property color main2_600: "#4E6074"
 	property color main2_700: "#364860"
 	property color main2_800: "#22334D"
+	property color main2_900: "#2D3648"
 
 	property color grey_0: "#FFFFFF"
 	property color grey_100: "#F9F9F9"

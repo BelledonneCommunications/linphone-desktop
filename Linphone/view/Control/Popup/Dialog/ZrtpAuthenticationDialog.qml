@@ -111,7 +111,7 @@ Dialog {
 			source: backgroundItem
 			shadowEnabled: true
 			shadowColor: DefaultStyle.grey_900
-			shadowBlur: 1.0
+			shadowBlur: 0.1
 			shadowOpacity: 0.1
 		}
 	}
@@ -215,7 +215,7 @@ Dialog {
 									anchors.fill: code
 									shadowEnabled: true
 									shadowOpacity: 0.1
-									shadowBlur: 1.0
+									shadowBlur: 0.1
 								}
 							}
 						}

@@ -302,7 +302,7 @@ QString Utils::interpretUrl(const QString &uri) {
 	QString address = uri;
 
 	if (!address.contains('@')) {
-		App::postModelBlock([address, uri]() mutable {
+		App::postModelBlock([&address, uri]() mutable {
 			auto addr = ToolModel::interpretUrl(uri);
 			if (addr) address = Utils::coreStringToAppString(addr->asStringUriOnly());
 		});
@@ -1357,4 +1357,25 @@ void Utils::useFetchConfig(const QString &configUrl) {
 void Utils::playDtmf(const QString &dtmf) {
 	const char key = dtmf.constData()[0].toLatin1();
 	App::postModelSync([key]() { CoreModel::getInstance()->getCore()->playDtmf(key, 200); });
+}
+
+bool Utils::isInteger(const QString &text) {
+	QRegularExpression re(QRegularExpression::anchoredPattern("\\d+"));
+	if (re.match(text).hasMatch()) {
+		return true;
+	}
+	return false;
+}
+
+QString Utils::boldTextPart(const QString &text, const QString &regex) {
+	int regexIndex = text.indexOf(regex, 0, Qt::CaseInsensitive);
+	if (regex.isEmpty() || regexIndex == -1) return text;
+	QString result;
+	QStringList splittedText = text.split(regex, Qt::KeepEmptyParts, Qt::CaseInsensitive);
+	for (int i = 0; i < splittedText.size() - 1; ++i) {
+		result.append(splittedText[i]);
+		result.append("<b>" + regex + "</b>");
+	}
+	if (splittedText.size() > 0) result.append(splittedText[splittedText.size() - 1]);
+	return result;
 }
