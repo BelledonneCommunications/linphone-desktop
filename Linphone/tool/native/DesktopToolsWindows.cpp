@@ -19,14 +19,12 @@
  */
 
 #include "DesktopToolsWindows.hpp"
+#include "config.h"
 
 #include <QDebug>
 #include <QRect>
 #include <Windows.h>
-#include <atlimage.h>
 #include <dwmapi.h>
-#include <wingdi.h>
-#include <winuser.h>
 // =============================================================================
 
 DesktopTools::DesktopTools(QObject *parent) : QObject(parent) {
@@ -97,6 +95,7 @@ QList<QVariantMap> DesktopTools::getWindows() {
 
 QImage DesktopTools::getWindowIcon(void *window) {
 #ifdef ENABLE_SCREENSHARING
+	HICON icon = (HICON)GetClassLongPtr((HWND)window, GCL_HICON);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	QPixmap pixmap = QtWin::fromHICON(icon);
 	return pixmap.toImage();
