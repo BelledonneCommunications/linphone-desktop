@@ -33,7 +33,20 @@ Control.TextField {
 	property string initialText
 	property int pixelSize: 14 * DefaultStyle.dp
 	property int weight: 400 * DefaultStyle.dp
-	
+
+	// fill propertyName and propertyOwner to check text validity
+	property string propertyName
+	property var propertyOwner
+	property var initialReading: true
+	property var isValid: function(text) {
+        return true
+    }
+	property int idleTimeOut: 200
+	property bool empty: mainItem.propertyOwner[mainItem.propertyName]?.length == 0
+	property bool canBeEmpty: true
+
+	signal validationChecked(bool valid)
+
 	Component.onCompleted: {
 		text = initialText
 	}
@@ -123,6 +136,37 @@ Control.TextField {
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.right: parent.right
 		anchors.rightMargin: rightMargin
+	}
+
+	// Validation textfield functions
+	Timer {
+		id: idleTimer
+		running: false
+		interval: mainItem.idleTimeOut
+		repeat: false
+		onTriggered: textField.editingFinished()
+	}
+	onEditingFinished: {
+		updateText()
+	}
+	onTextChanged: {
+		idleTimer.restart()
+		// updateText()
+	}
+	function updateText() {
+		mainItem.empty = text.length == 0
+		if (initialReading) {
+			initialReading = false
+		}
+		if (mainItem.empty && !mainItem.canBeEmpty) {
+			mainItem.validationChecked(false)
+			return
+		}
+		if (isValid(text)) {
+			if (mainItem.propertyOwner[mainItem.propertyName] != text)
+				mainItem.propertyOwner[mainItem.propertyName] = text
+			mainItem.validationChecked(true)
+		} else mainItem.validationChecked(false)
 	}
 }
 

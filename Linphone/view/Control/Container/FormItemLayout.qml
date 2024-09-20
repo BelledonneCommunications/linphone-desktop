@@ -16,6 +16,10 @@ FocusScope{
 	property bool errorTextVisible: errorText.text.length > 0
 	implicitHeight: layout.implicitHeight
 	implicitWidth: layout.implicitWidth
+
+	function clearErrorText() {
+		errorText.clear()
+	}
 	ColumnLayout {
 		id: layout
 		spacing: 5 * DefaultStyle.dp

@@ -141,6 +141,7 @@ AbstractSettingsLayout {
 						propertyName: "expire"
 						propertyOwner: account.core
 						title: qsTr("Expiration (en seconde)")
+						canBeEmpty: false
 						isValid: function(text) { return !isNaN(Number(text)); }
 					}
 					ValidatedTextField {

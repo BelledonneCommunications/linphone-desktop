@@ -52,6 +52,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Form/Settings/ScreencastSettings.qml
 
 	view/Control/Input/Calendar.qml
+	view/Control/Input/DecoratedTextField.qml
 	view/Control/Input/DigitInput.qml
 	view/Control/Input/NumericPad.qml
 	view/Control/Input/PhoneNumberInput.qml
@@ -59,7 +60,6 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Input/TextArea.qml
 	view/Control/Input/TextField.qml
 	view/Control/Input/TimeComboBox.qml
-	view/Control/Input/ValidatedTextField.qml
 
 	view/Control/Popup/DesktopPopup.qml
 	view/Control/Popup/InformationPopup.qml
