@@ -167,6 +167,7 @@ For example:
 ## Specific instructions for the Windows platform
 
 32-bit version is not supported as Qt6 doesn't provide 32bits packages for MSVC.
+Visual Studio 2022 is only supported.
 
 1. Install main tools:
   - `MinGW/MSYS2` : [download](https://www.msys2.org/)
@@ -186,7 +187,7 @@ Specify `-DENABLE_WINDOWS_TOOLS_CHECK=ON` when building the SDK to install autom
 
 2. Ensure that you have downloaded the correct Qt version on msvc.
 
-3. Or open a Command line with Visual Studio `Developer Command Prompt for VS 2019` and call qtenv2.bat that is in your qt binaries eg: `C:\Qt\<version>\msvc2019\bin\qtenv2.bat`
+3. Or open a Command line with Visual Studio `Developer Command Prompt for VS 2022` and call qtenv2.bat that is in your qt binaries eg: `C:\Qt\<version>\msvc2019\bin\qtenv2.bat`
 
 4. Build as usual with adding `-A x64` to `cmake ..` (General Steps) :
   - `cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64`

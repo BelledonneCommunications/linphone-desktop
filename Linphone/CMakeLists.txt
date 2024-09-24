@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Linphone VERSION 6.0 LANGUAGES CXX)
+project(Linphone VERSION 6.0.0 LANGUAGES CXX)
 
 ################################################################
 #						PACKAGES
@@ -52,6 +52,13 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
 if(NOT LINPHONEAPP_VERSION)
 	bc_compute_full_version(LINPHONEAPP_VERSION)
 endif()
+
+set(LINPHONE_MAJOR_VERSION)
+set(LINPHONE_MINOR_VERSION)
+set(LINPHONE_MICRO_VERSION)
+set(LINPHONE_BRANCH_VERSION)
+bc_parse_full_version(${LINPHONEAPP_VERSION} LINPHONE_MAJOR_VERSION LINPHONE_MINOR_VERSION LINPHONE_MICRO_VERSION LINPHONE_BRANCH_VERSION)
+
 include(application_info.cmake)
 string(TIMESTAMP CURRENT_YEAR "%Y")
 if(NOT APPLICATION_START_LICENCE OR "${CURRENT_YEAR}" STREQUAL "${APPLICATION_START_LICENCE}")
@@ -98,6 +105,12 @@ add_subdirectory(model)
 add_subdirectory(view)
 add_subdirectory(core)
 
+# set application details
+if(WIN32)
+	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/windows/appDetailsWindows.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/appDetailsWindows.rc")
+	set(_APPDETAILS_RC_FILE ${CMAKE_CURRENT_BINARY_DIR}/appDetailsWindows.rc)
+endif()
+
 #fonts.qrc is in data and not in data/font because we want to use 'font' in path and not in prefix.
 #TODO make prefix working
 set(_LINPHONEAPP_FONTS_FILES)
@@ -108,8 +121,9 @@ list(APPEND _LINPHONEAPP_FONTS_FILES data/fonts.qrc)
 set_property(SOURCE data/fonts.qrc PROPERTY SKIP_AUTORCC ON)
 
 qt6_add_executable(Linphone
-    ${_LINPHONEAPP_SOURCES}
-    ${_LINPHONEAPP_FONTS_FILES}
+	${_LINPHONEAPP_SOURCES}
+	${_LINPHONEAPP_FONTS_FILES}
+	${_APPDETAILS_RC_FILE}
 )
 
 set_source_files_properties(${_LINPHONEAPP_QML_SINGLETONS} PROPERTIES QT_QML_SINGLETON_TYPE TRUE)

@@ -185,7 +185,7 @@ if(${ENABLE_APP_PACKAGING})
 	
 	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/cleanCPack.cmake.in" "${CMAKE_BINARY_DIR}/cmake/install/cleanCPack.cmake" @ONLY)
 	set(CPACK_PRE_BUILD_SCRIPTS  "${CMAKE_BINARY_DIR}/cmake/install/cleanCPack.cmake")
-
+	set(CPACK_PACKAGE_INSTALL_DIRECTORY ${APPLICATION_NAME})
 	if(APPLE)
 ##############################################
 #	APPLE

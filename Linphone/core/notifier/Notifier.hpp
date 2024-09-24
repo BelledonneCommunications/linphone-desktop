@@ -41,12 +41,12 @@ public:
 	~Notifier();
 
 	enum NotificationType {
-		ReceivedMessage,
-		ReceivedFileMessage,
+		//ReceivedMessage,
+		//ReceivedFileMessage,
 		ReceivedCall,
-		NewVersionAvailable,
-		SnapshotWasTaken,
-		RecordingCompleted
+		//NewVersionAvailable,
+		//SnapshotWasTaken,
+		//RecordingCompleted
 	};
 
 	// void notifyReceivedCall(Call *call);
@@ -95,7 +95,8 @@ private:
 	int mInstancesNumber = 0;
 
 	QMutex *mMutex = nullptr;
-	QQmlComponent **mComponents = nullptr;
+	//QQmlComponent **mComponents = nullptr;
+	QVector<QQmlComponent *> mComponents;
 
 	static const QHash<int, Notification> Notifications;
 

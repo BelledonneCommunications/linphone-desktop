@@ -98,7 +98,7 @@ const QHash<int, Notifier::Notification> Notifier::Notifications = {
 Notifier::Notifier(QObject *parent) : QObject(parent) {
 	mustBeInMainThread(getClassName());
 	const int nComponents = Notifications.size();
-	mComponents = new QQmlComponent *[nComponents];
+	mComponents.resize(nComponents);
 
 	QQmlEngine *engine = App::getInstance()->mEngine;
 	for (const auto &key : Notifications.keys()) {
@@ -120,10 +120,7 @@ Notifier::~Notifier() {
 	delete mMutex;
 
 	const int nComponents = Notifications.size();
-	if (mComponents) {
-		delete[] mComponents;
-		mComponents = nullptr;
-	}
+	mComponents.clear();
 }
 
 // -----------------------------------------------------------------------------
