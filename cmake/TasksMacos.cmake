@@ -34,8 +34,8 @@ linphone_app_convert_comma_separated_list_to_cmake_list("${LINPHONEAPP_MACOS_ARC
 
 #linphone_sdk_convert_comma_separated_list_to_cmake_list("${LINPHONESDK_MACOS_ARCHS}" _MACOS_ARCHS)
 
-set(LINPHONEAPP_NAME "Linphone")
-set(LINPHONEAPP_EXENAME "Linphone60")
+set(LINPHONEAPP_NAME ${APPLICATION_NAME})
+set(LINPHONEAPP_EXENAME ${EXECUTABLE_NAME})
 set(LINPHONEAPP_PLATFORM "macos")
 set(SUB_TARGET app_macos)
 string(TOLOWER "${LINPHONEAPP_PLATFORM}" LINPHONEAPP_PLATFORM_LOWER)

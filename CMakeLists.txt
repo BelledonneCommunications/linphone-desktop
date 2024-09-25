@@ -160,12 +160,10 @@ add_option(OPTION_LIST ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video sup
 add_option(OPTION_LIST ENABLE_LDAP "Enable LDAP support." YES)
 add_option(OPTION_LIST ENABLE_NON_FREE_CODECS "Enable the use of non free codecs" YES)
 add_option(OPTION_LIST ENABLE_NON_FREE_FEATURES "Enable the use of non free codecs" ${ENABLE_NON_FREE_CODECS})
-add_option(OPTION_LIST ENABLE_OPENH264 "Enable the use of OpenH264 codec" YES)
 add_option(OPTION_LIST ENABLE_QT_KEYCHAIN "Build QtKeychain to manage VFS from System key stores." ON)
 add_option(OPTION_LIST ENABLE_QRCODE "Enable QRCode support" OFF)#Experimental
 add_option(OPTION_LIST ENABLE_RELATIVE_PREFIX "Set Internal packages relative to the binary" ON)
 add_option(OPTION_LIST ENABLE_SANITIZER "Enable sanitizer." OFF)
-add_option(OPTION_LIST ENABLE_SCREENSHARING "Enable screen sharing." ON)
 add_option(OPTION_LIST ENABLE_STRICT "Build with strict compilator flags e.g. -Wall -Werror" OFF)
 add_option(OPTION_LIST ENABLE_TESTS "Build with testing binaries of SDK" OFF)
 add_option(OPTION_LIST ENABLE_TESTS_COMPONENTS "Build libbctoolbox-tester" OFF)
@@ -175,8 +173,11 @@ add_option(OPTION_LIST ENABLE_UPDATE_CHECK "Enable update check." ON)
 add_option(OPTION_LIST ENABLE_VIDEO "Enable Video support." YES)
 add_option(OPTION_LIST ENABLE_WINDOWS_TOOLS_CHECK "Enable tools checks on Windows for auto install." OFF)
 
-
 add_option(OPTION_LIST LINPHONE_SDK_MAKE_RELEASE_FILE_URL "Make a RELEASE file that work along check_version and use this URL" "")
+
+
+add_option(OPTION_LIST ENABLE_OPENH264 "Enable the use of OpenH264 codec" ${ENABLE_VIDEO})
+add_option(OPTION_LIST ENABLE_SCREENSHARING "Enable screen sharing." ${ENABLE_VIDEO})
 
 # QtKeychain
 add_option(OPTION_LIST LIBSECRET_SUPPORT "Build with libsecret support" OFF) # Need libsecret-devel
@@ -190,9 +191,11 @@ if(WIN32)
 elseif(APPLE)
 	add_option(OPTION_LIST ENABLE_OPENSSL_EXPORT "Enable OpenSSL deployment" OFF)
 else()
-	add_option(OPTION_LIST ENABLE_V4L "Ability to capture and display video using libv4l2 or libv4l." YES)
+	add_option(OPTION_LIST ENABLE_V4L "Ability to capture and display video using libv4l2 or libv4l." ${ENABLE_VIDEO})
 	add_option(OPTION_LIST ENABLE_OPENSSL_EXPORT "Enable OpenSSL deployment" OFF)
 endif()
+
+
 
 # Set some SDK variables to configure the APP build as we want it
 set(ENABLE_CXX_WRAPPER ON CACHE BOOL "Build the C++ wrapper for Liblinphone." FORCE)
