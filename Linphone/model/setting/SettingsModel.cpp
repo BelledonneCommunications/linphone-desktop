@@ -478,6 +478,16 @@ bool SettingsModel::getShowChats() const {
 
 // clang-format off
 void SettingsModel::notifyConfigReady(){
+	DEFINE_NOTIFY_CONFIG_READY(disableChatFeature, DisableChatFeature)
+	DEFINE_NOTIFY_CONFIG_READY(disableMeetingsFeature, DisableMeetingsFeature)
+	DEFINE_NOTIFY_CONFIG_READY(hideSettings,HideSettings)
+	DEFINE_NOTIFY_CONFIG_READY(hideAccountSettings, HideAccountSettings)
+	DEFINE_NOTIFY_CONFIG_READY(disableCallRecordings, DisableCallRecordings)
+	DEFINE_NOTIFY_CONFIG_READY(assistantHideCreateAccount, AssistantHideCreateAccount)
+	DEFINE_NOTIFY_CONFIG_READY(assistantDisableQrCode, AssistantDisableQrCode)
+	DEFINE_NOTIFY_CONFIG_READY(assistantHideThirdPartyAccount, AssistantHideThirdPartyAccount)
+	DEFINE_NOTIFY_CONFIG_READY(onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
+	DEFINE_NOTIFY_CONFIG_READY(darkModeAllowed, DarkModeAllowed)
     DEFINE_NOTIFY_CONFIG_READY(assistantGoDirectlyToThirdPartySipAccountLogin,
                                AssistantGoDirectlyToThirdPartySipAccountLogin)
 	DEFINE_NOTIFY_CONFIG_READY(assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
