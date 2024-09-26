@@ -172,6 +172,7 @@ protected:
 	QDateTime mPresenceTimestamp;
 	QString mGivenName;
 	QString mFamilyName;
+	QString mFullName;
 	QString mOrganization;
 	QString mJob;
 	bool mStarred;

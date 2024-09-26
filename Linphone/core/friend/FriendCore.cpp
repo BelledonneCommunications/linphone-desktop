@@ -67,6 +67,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 			mJob = Utils::coreStringToAppString(vcard->getJobTitle());
 			mGivenName = Utils::coreStringToAppString(vcard->getGivenName());
 			mFamilyName = Utils::coreStringToAppString(vcard->getFamilyName());
+			mFullName = Utils::coreStringToAppString(vcard->getFullName());
 			mVCardString = Utils::coreStringToAppString(vcard->asVcard4String());
 		}
 		auto addresses = contact->getAddresses();
@@ -110,6 +111,7 @@ FriendCore::FriendCore(const FriendCore &friendCore) {
 	mDefaultAddress = friendCore.mDefaultAddress;
 	mGivenName = friendCore.mGivenName;
 	mFamilyName = friendCore.mFamilyName;
+	mFullName = friendCore.mFullName;
 	mOrganization = friendCore.mOrganization;
 	mJob = friendCore.mJob;
 	mPictureUri = friendCore.mPictureUri;
@@ -238,7 +240,7 @@ void FriendCore::reset(const FriendCore &contact) {
 }
 
 QString FriendCore::getDisplayName() const {
-	return mGivenName + " " + mFamilyName;
+	return !mFullName.isEmpty() ? mFullName : mGivenName + " " + mFamilyName;
 }
 
 QString FriendCore::getGivenName() const {
@@ -491,7 +493,9 @@ void FriendCore::writeIntoModel(std::shared_ptr<FriendModel> model) const {
 	mustBeInLinphoneThread(QString("[") + gClassName + "] " + Q_FUNC_INFO);
 	model->getFriend()->edit();
 	// needed to create the vcard if not created yet
-	model->setName(mGivenName + (mFamilyName.isEmpty() || mGivenName.isEmpty() ? "" : " ") + mFamilyName);
+	model->setName(!mFullName.isEmpty()
+	                   ? mFullName
+	                   : mGivenName + (mFamilyName.isEmpty() || mGivenName.isEmpty() ? "" : " ") + mFamilyName);
 	auto core = CoreModel::getInstance()->getCore();
 
 	std::list<std::shared_ptr<linphone::Address>> addresses;
@@ -618,7 +622,7 @@ void FriendCore::save() { // Save Values to model
 						    (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
 						if (created) {
 							core->getDefaultFriendList()->updateSubscriptions();
-							emit CoreModel::getInstance()->friendCreated(contact);
+							emit CoreModel::getInstance() -> friendCreated(contact);
 						}
 						mCoreModelConnection->invokeToCore([this, created]() {
 							if (created) setSelf(mCoreModelConnection->mCore);
