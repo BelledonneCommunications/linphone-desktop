@@ -177,7 +177,7 @@ Item {
 					SearchBar {
 						id: magicSearchBar
 						Layout.fillWidth: true
-						placeholderText: qsTr("Rechercher un contact, appeler ou envoyer un message...")
+						placeholderText: SettingsCpp.disableChatFeature ? qsTr("Rechercher un contact, appeler...") : qsTr("Rechercher un contact, appeler ou envoyer un message...")
 						focusedBorderColor: DefaultStyle.main1_500_main
 						numericPadButton.visible: text.length === 0
 						numericPadButton.checkable: false
