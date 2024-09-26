@@ -139,7 +139,7 @@ public:
 	static constexpr char PathPlugins[] = "/plugins/";
 #endif
 	static constexpr char PathPluginsApp[] = "app/";
-	static constexpr char PathSounds[] = "/sounds/" EXECUTABLE_NAME;
+	static constexpr char PathSounds[] = "/sounds/linphone";
 	static constexpr char PathUserCertificates[] = "/usr-crt/";
 
 	static constexpr char PathCallHistoryList[] = "/call-history.db";
