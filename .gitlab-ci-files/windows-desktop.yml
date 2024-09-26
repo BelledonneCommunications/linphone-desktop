@@ -204,9 +204,9 @@ win64-ninja-vs2022-package-windows:
     - if: $DEPLOY_WINDOWS
 
   script:
-    - scp -pr build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_INTERNAL_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
-    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_INTERNAL_PATH}/${WINDOWS_PLATFORM}/ }
-    #  - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
+    - scp -pr build-desktop/OUTPUT/Packages/*.exe ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
+    #- if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_INTERNAL_PATH}/${WINDOWS_PLATFORM}/ }
+    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
 
 win64-ninja-vs2022-upload:
   extends:
@@ -220,7 +220,7 @@ win64-ninja-vs2022-upload:
   rules:
     - if: $DEPLOY_PLUGINS
   script:
-    - scp "build-desktop/OUTPUT/plugins/app/*.dll" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_INTERNAL_DIRECTORY%/plugins"
+    - scp "build-desktop/OUTPUT/plugins/app/*.dll" "%MAIN_DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%/plugins"
 
 win64-ninja-vs2022-plugins-upload:
   extends: .win64-plugins-upload
