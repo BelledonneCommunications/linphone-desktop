@@ -1623,7 +1623,7 @@ AbstractWindow {
 							}
 							MenuButton {
 								checkable: true
-								visible: mainWindow.call && !mainWindow.conference
+								visible: mainWindow.call && !mainWindow.conference && !SettingsCpp.disableCallRecordings
 								enabled: mainWindow.call && mainWindow.call.core.recordable
 								icon.source: AppIcons.recordFill
 								icon.width: 32 * DefaultStyle.dp

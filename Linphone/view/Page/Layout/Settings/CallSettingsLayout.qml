@@ -35,6 +35,7 @@ AbstractSettingsLayout {
 						subTitleText: qsTr("Enregistrer tous les appels par défaut")
 						propertyName: "automaticallyRecordCallsEnabled"
 						propertyOwner: SettingsCpp
+						visible: !SettingsCpp.disableCallRecordings
 					}
 				}
 			}
