@@ -155,6 +155,7 @@ AbstractSettingsLayout {
 						propertyName: "audioVideoConferenceFactoryAddress"
 						propertyOwner: account.core
 						isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
+						visible: !SettingsCpp.disableMeetingsFeature
 					}
 					DecoratedTextField {
 						title: qsTr("URL du serveur d’échange de clés de chiffrement")
