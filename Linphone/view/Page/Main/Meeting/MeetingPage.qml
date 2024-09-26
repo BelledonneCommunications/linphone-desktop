@@ -21,6 +21,11 @@ AbstractMainPage {
 	Component.onCompleted: rightPanelStackView.push(overridenRightPanel, Control.StackView.Immediate)
 	showDefaultItem: false//leftPanelStackView.currentItem.objectName === "listLayout"
 
+	onVisibleChanged: if (!visible) {
+		leftPanelStackView.clear()
+		leftPanelStackView.push(leftPanelStackView.initialItem)
+	}
+
 	onSelectedConferenceChanged: {
 		overridenRightPanelStackView.clear()
 		if (selectedConference && selectedConference.core.haveModel) {
@@ -125,7 +130,7 @@ AbstractMainPage {
 			}
 			Binding {
 				target: mainItem
-				when: leftPanelStackView.currentItem.objectName === "listLayout"
+				when: leftPanelStackView.currentItem && leftPanelStackView.currentItem.objectName === "listLayout"
 				property: "showDefaultItem"
 				value: conferenceList.count === 0
 				restoreMode: Binding.RestoreBindingOrValue

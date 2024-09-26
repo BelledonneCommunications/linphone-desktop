@@ -11,10 +11,14 @@ Notification {
 	overriddenHeight: content.implicitHeight//422 * DefaultStyle.dp
 	readonly property var call: notificationData && notificationData.call
 	property var state: call.core.state
+	property var status: call.core.status
 	onStateChanged:{
 		if (state != LinphoneEnums.CallState.IncomingReceived){
 			close()
 		}
+	}
+	onStatusChanged:{
+		console.log("status", status)
 	}
 
 	Popup {

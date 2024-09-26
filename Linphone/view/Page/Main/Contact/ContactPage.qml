@@ -18,6 +18,12 @@ AbstractMainPage {
 	property FriendGui selectedContact
 	property string initialFriendToDisplay
 
+	onVisibleChanged: if (!visible) {
+		rightPanelStackView.clear()
+		contactList.currentIndex = -1
+		favoriteList.currentIndex = -1
+	}
+
 	onSelectedContactChanged: {
 		if (selectedContact) {
 			if (!rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName != "contactDetail") rightPanelStackView.push(contactDetail)
@@ -272,7 +278,7 @@ AbstractMainPage {
 								Layout.fillWidth: true
 								Layout.preferredHeight: contentHeight
 								Control.ScrollBar.vertical.visible: false
-								showFavouritesOnly: true
+								showFavoritesOnly: true
 								contactMenuVisible: true
 								searchBarText: searchBar.text
 								sourceModel: allFriends
@@ -703,7 +709,7 @@ AbstractMainPage {
 									Layout.preferredHeight: 50 * DefaultStyle.dp
 									iconSize: 24 * DefaultStyle.dp
 									iconSource: mainItem.selectedContact && mainItem.selectedContact.core.starred ? AppIcons.heartFill : AppIcons.heart
-									text: mainItem.selectedContact && mainItem.selectedContact.core.starred ? qsTr("Remove from favourites") : qsTr("Add to favourites")
+									text: mainItem.selectedContact && mainItem.selectedContact.core.starred ? qsTr("Remove from favorites") : qsTr("Add to favorites")
 									onClicked: if (mainItem.selectedContact) mainItem.selectedContact.core.lSetStarred(!mainItem.selectedContact.core.starred)
 								}
 								Rectangle {

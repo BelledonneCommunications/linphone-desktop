@@ -319,10 +319,9 @@ MainRightPanel {
 									}
 								}
 								onEditingFinished: {
-									if (text != "sip:") mainItem.contact.core.appendAddress(text)
-									text = "sip:"
+									mainItem.contact.core.appendAddress(text)
+									newAddressTextField.clear()
 								}
-								Component.onCompleted: text = "sip:"
 							}
 						}
 						Item {

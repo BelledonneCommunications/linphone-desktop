@@ -20,7 +20,7 @@ DesktopPopup {
 	
 	// Use as an intermediate between signal/slot without propagate the notification var : last signal parameter will be the last notification instance
 	function deleteNotificationSlot(){
-		deleteNotification(notification)
+		deleteNotification(mainItem)
 	}
 	
 	function _close (cb) {
@@ -29,7 +29,7 @@ DesktopPopup {
 		}
 		deleteNotificationSlot();
 	}
-	
+
 	Rectangle {
 		id: background
 		color: DefaultStyle.grey_0

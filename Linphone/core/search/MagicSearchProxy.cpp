@@ -89,14 +89,14 @@ void MagicSearchProxy::setSourceFlags(int flags) {
 	}
 }
 
-bool MagicSearchProxy::showFavouritesOnly() const {
-	return mShowFavouritesOnly;
+bool MagicSearchProxy::showFavoritesOnly() const {
+	return mShowFavoritesOnly;
 }
 
-void MagicSearchProxy::setShowFavouritesOnly(bool show) {
-	if (mShowFavouritesOnly != show) {
-		mShowFavouritesOnly = show;
-		emit showFavouriteOnlyChanged();
+void MagicSearchProxy::setShowFavoritesOnly(bool show) {
+	if (mShowFavoritesOnly != show) {
+		mShowFavoritesOnly = show;
+		emit showFavoriteOnlyChanged();
 	}
 }
 
@@ -117,7 +117,7 @@ bool MagicSearchProxy::filterAcceptsRow(int sourceRow, const QModelIndex &source
 	auto friendGui = model.value<FriendGui *>();
 	auto friendCore = friendGui->getCore();
 	if (friendCore) {
-		return !mShowFavouritesOnly || friendCore->getStarred();
+		return !mShowFavoritesOnly || friendCore->getStarred();
 	}
 	return false;
 }

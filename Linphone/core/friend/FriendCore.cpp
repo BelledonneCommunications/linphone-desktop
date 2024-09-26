@@ -373,11 +373,12 @@ void FriendCore::removeAddress(int index) {
 
 void FriendCore::appendAddress(const QString &addr) {
 	if (addr.isEmpty()) return;
-	auto linAddr = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(addr));
+	QString interpretedAddress = Utils::interpretUrl(addr);
+	auto linAddr = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(interpretedAddress));
 	if (!linAddr) Utils::showInformationPopup(tr("Erreur"), tr("Adresse invalide"), false);
 	else {
-		mAddressList.append(createFriendAddressVariant(addressLabel, addr));
-		if (mDefaultAddress.isEmpty()) mDefaultAddress = addr;
+		mAddressList.append(createFriendAddressVariant(addressLabel, interpretedAddress));
+		if (mDefaultAddress.isEmpty()) mDefaultAddress = interpretedAddress;
 		emit addressChanged();
 	}
 }

@@ -16,6 +16,10 @@ AbstractMainPage {
 	property var selectedRowHistoryGui
 	signal listViewUpdated()
 
+	onVisibleChanged: if (!visible) {
+		resetLeftPanel()
+	}
+
 	//Group call properties
 	property ConferenceInfoGui confInfoGui
 	property AccountProxy  accounts: AccountProxy {id: accountProxy}
@@ -47,13 +51,17 @@ AbstractMainPage {
 
 	onNoItemButtonPressed: goToNewCall()
 
-	showDefaultItem: listStackView.currentItem.listView && listStackView.currentItem.listView.count === 0 && listStackView.currentItem.listView.model.sourceModel.count === 0 || false
+	showDefaultItem: listStackView.currentItem && listStackView.currentItem.listView && listStackView.currentItem.listView.count === 0 && listStackView.currentItem.listView.model.sourceModel.count === 0 || false
 
+	function resetLeftPanel() {
+		listStackView.clear()
+		listStackView.push(listStackView.initialItem)
+	}
 	function goToNewCall() {
-		if (listStackView.currentItem.objectName != "newCallItem") listStackView.push(newCallItem)
+		if (listStackView.currentItem && listStackView.currentItem.objectName != "newCallItem") listStackView.push(newCallItem)
 	}
 	function goToCallHistory() {
-		if (listStackView.currentItem.objectName != "historyListItem") listStackView.replace(historyListItem)
+		if (listStackView.currentItem && listStackView.currentItem.objectName != "historyListItem") listStackView.replace(historyListItem)
 	}
 
 	Dialog {
@@ -202,8 +210,6 @@ AbstractMainPage {
 	Component {
 		id: historyListItem
 		FocusScope{
-			width: parent.width
-			height: parent.height
 			Control.StackView.onActivated: titleLoader.sourceComponent = historyListTitle
 			ColumnLayout {
 				anchors.fill: parent
@@ -315,6 +321,7 @@ AbstractMainPage {
 													font {
 														pixelSize: 14 * DefaultStyle.dp
 														weight: 400 * DefaultStyle.dp
+														capitalization: Font.Capitalize
 													}
 												}
 												RowLayout {
@@ -500,14 +507,13 @@ AbstractMainPage {
 					searchBarColor: DefaultStyle.grey_100
 					//onSelectedContactChanged: mainWindow.startCallWithContact(selectedContact, false, callContactsList)
 					onCallSelectedContact: mainWindow.startCallWithContact(selectedContact, false, callContactsList)
-					onCallButtonPressed: mainItem.createCallFromSearchBarRequested()
 					onGroupCallCreationRequested: {
 						console.log("groupe call requetsed")
 						listStackView.push(groupCallItem)
 					}
 					Connections {
 						target: mainItem
-						function onCreateCallFromSearchBarRequested(){ UtilsCpp.createCall(callContactsList.searchBar.text)}
+						function onCreateCallFromSearchBarRequested(){ UtilsCpp.createCall(UtilsCpp.interpretUrl(callContactsList.searchBar.text))}
 						function onOpenNumPadRequest(){ if (!callContactsList.searchBar.numericPadButton.checked) callContactsList.searchBar.numericPadButton.checked = true}
 					}
 					Binding {

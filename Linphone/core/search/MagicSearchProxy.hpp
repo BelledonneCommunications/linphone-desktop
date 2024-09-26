@@ -34,8 +34,7 @@ class MagicSearchProxy : public SortFilterProxy {
 	Q_PROPERTY(int sourceFlags READ getSourceFlags WRITE setSourceFlags NOTIFY sourceFlagsChanged)
 	Q_PROPERTY(LinphoneEnums::MagicSearchAggregation aggregationFlag READ getAggregationFlag WRITE setAggregationFlag
 	               NOTIFY aggregationFlagChanged)
-	Q_PROPERTY(
-	    bool showFavouritesOnly READ showFavouritesOnly WRITE setShowFavouritesOnly NOTIFY showFavouriteOnlyChanged)
+	Q_PROPERTY(bool showFavoritesOnly READ showFavoritesOnly WRITE setShowFavoritesOnly NOTIFY showFavoriteOnlyChanged)
 
 public:
 	MagicSearchProxy(QObject *parent = Q_NULLPTR);
@@ -50,8 +49,8 @@ public:
 	LinphoneEnums::MagicSearchAggregation getAggregationFlag() const;
 	void setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag);
 
-	bool showFavouritesOnly() const;
-	void setShowFavouritesOnly(bool show);
+	bool showFavoritesOnly() const;
+	void setShowFavoritesOnly(bool show);
 
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
@@ -64,12 +63,12 @@ signals:
 	void aggregationFlagChanged(LinphoneEnums::MagicSearchAggregation aggregationFlag);
 	void forceUpdate();
 	void friendCreated(int index);
-	void showFavouriteOnlyChanged();
+	void showFavoriteOnlyChanged();
 
 protected:
 	QString mSearchText;
 	int mSourceFlags;
-	bool mShowFavouritesOnly = false;
+	bool mShowFavoritesOnly = false;
 	LinphoneEnums::MagicSearchAggregation mAggregationFlag;
 	QSharedPointer<MagicSearchList> mList;
 	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;

@@ -125,19 +125,17 @@ Notifier::~Notifier() {
 
 // -----------------------------------------------------------------------------
 
-QObject *Notifier::createNotification(Notifier::NotificationType type, QVariantMap data) {
-	QQuickItem *wrapperItem = nullptr;
+bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap data) {
 	mMutex->lock();
 	Q_ASSERT(mInstancesNumber <= MaxNotificationsNumber);
 	if (mInstancesNumber == MaxNotificationsNumber) { // Check existing instances.
 		qWarning() << QStringLiteral("Unable to create another notification.");
 		mMutex->unlock();
-		return nullptr;
+		return false;
 	}
 	QList<QScreen *> allScreens = QGuiApplication::screens();
 	if (allScreens.size() > 0) { // Ensure to have a screen to avoid errors
 		QQuickItem *previousWrapper = nullptr;
-		++mInstancesNumber;
 		bool showAsTool = false;
 #ifdef Q_OS_MACOS
 		for (auto w : QGuiApplication::topLevelWindows()) {
@@ -151,6 +149,7 @@ QObject *Notifier::createNotification(Notifier::NotificationType type, QVariantM
 #endif
 		for (int i = 0; i < allScreens.size(); ++i) {
 
+			++mInstancesNumber;
 			// Use QQuickView to create a visual root object that is
 			// independant from current application Window
 			QScreen *screen = allScreens[i];
@@ -167,7 +166,7 @@ QObject *Notifier::createNotification(Notifier::NotificationType type, QVariantM
 			const QUrl url(QString(NotificationsPath) + Notifier::Notifications[type].filename);
 			QObject::connect(
 			    engine, &QQmlApplicationEngine::objectCreated, this,
-			    [this, url, screen, engine](QObject *obj, const QUrl &objUrl) {
+			    [this, url, screen, engine, type](QObject *obj, const QUrl &objUrl) {
 				    if (!obj && url == objUrl) {
 					    lCritical() << "[App] Notifier.qml couldn't be load.";
 					    engine->deleteLater();
@@ -188,18 +187,21 @@ QObject *Notifier::createNotification(Notifier::NotificationType type, QVariantM
 						                  window->property("width")
 						                      .toInt())); //*screen->devicePixelRatio()); when using manual scaler
 						    window->setY(heightOffset - (*screenHeightOffset % heightOffset));
-						    lDebug() << window->geometry();
+						    const int timeout = Notifications[type].getTimeout() * 1000;
+						    QObject::connect(window, &QQuickWindow::closing, window,
+						                     [this, window] { deleteNotification(QVariant::fromValue(window)); });
+						    showNotification(window, timeout);
+						    lInfo() << QStringLiteral("Create notification:") << QVariant::fromValue(window);
 					    }
 				    }
 			    },
 			    Qt::QueuedConnection);
 			engine->load(url);
 		}
-		lInfo() << QStringLiteral("Create notifications:") << wrapperItem;
 	}
 
 	mMutex->unlock();
-	return wrapperItem;
+	return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -246,12 +248,12 @@ void Notifier::deleteNotification(QVariant notification) {
 		return;
 	}
 
-	lInfo() << QStringLiteral("Delete notification:") << instance;
+	lInfo() << QStringLiteral("Delete notification:") << instance << --mInstancesNumber;
 
 	instance->setProperty("__valid", true);
-	instance->property(NotificationPropertyTimer).value<QTimer *>()->stop();
+	auto timerProperty = instance->property(NotificationPropertyTimer).value<QTimer *>();
+	if (timerProperty) timerProperty->stop();
 
-	mInstancesNumber--;
 	Q_ASSERT(mInstancesNumber >= 0);
 
 	if (mInstancesNumber == 0) mScreenHeightOffset.clear();
@@ -266,10 +268,7 @@ void Notifier::deleteNotification(QVariant notification) {
 #define CREATE_NOTIFICATION(TYPE, DATA)                                                                                \
 	auto settings = App::getInstance()->getSettings();                                                                 \
 	if (settings && settings->dndEnabled()) return;                                                                    \
-	QObject *notification = createNotification(TYPE, DATA);                                                            \
-	if (!notification) return;                                                                                         \
-	const int timeout = Notifications[TYPE].getTimeout() * 1000;                                                       \
-	showNotification(notification, timeout);
+	createNotification(TYPE, DATA);
 
 // -----------------------------------------------------------------------------
 // Notification functions.
@@ -299,15 +298,6 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 
 		map["call"].setValue(gui);
 		CREATE_NOTIFICATION(Notifier::ReceivedCall, map)
-
-		QObject::connect(
-		    gui->getCore(), &CallCore::statusChanged, notification,
-		    [this, notification](LinphoneEnums::CallStatus status) {
-			    lInfo() << log().arg("Delete notification on call status : %1").arg(LinphoneEnums::toString(status));
-			    deleteNotification(QVariant::fromValue(notification));
-		    });
-		QObject::connect(gui->getCore(), &CallCore::destroyed, notification,
-		                 [this, notification]() { deleteNotification(QVariant::fromValue(notification)); });
 	});
 }
 

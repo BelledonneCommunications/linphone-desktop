@@ -20,11 +20,13 @@ Item {
 	
 	signal addAccountRequest()
 	signal openNewCallRequest()
+	signal callCreated()
 	signal openCallHistory()
 	signal openNumPadRequest()
 	signal displayContactRequested(string contactAddress)
 	signal createContactRequested(string name, string address)
 	signal accountRemoved()
+
 
 	function goToNewCall() {
 		tabbar.currentIndex = 0
@@ -138,6 +140,11 @@ Item {
 				Layout.preferredWidth: 82 * DefaultStyle.dp
 				defaultAccount: accountProxy.defaultAccount
 				currentIndex: SettingsCpp.getLastActiveTabIndex()
+				Binding on currentIndex {
+					when: mainItem.contextualMenuOpenedComponent != undefined
+					value: -1
+					restoreMode: Binding.RestoreBindingOrValue
+				}
 				model: [
 					{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels")},
 					{icon: AppIcons.adressBook, selectedIcon: AppIcons.adressBookSelected, label: qsTr("Contacts")},
@@ -145,6 +152,7 @@ Item {
 					{icon: AppIcons.videoconference, selectedIcon: AppIcons.videoconferenceSelected, label: qsTr("Réunions"), visible: !SettingsCpp.disableMeetingsFeature}
 				]
 				onCurrentIndexChanged: {
+					if (currentIndex == -1) return
 					SettingsCpp.setLastActiveTabIndex(currentIndex)
                     if (currentIndex === 0 && accountProxy.defaultAccount) accountProxy.defaultAccount.core?.lResetMissedCalls()
 					if (mainItem.contextualMenuOpenedComponent) {
@@ -580,12 +588,13 @@ Item {
 					StackLayout {
 						id: mainStackLayout
 						currentIndex: tabbar.currentIndex
-						onActiveFocusChanged: if(activeFocus) children[currentIndex].forceActiveFocus()
+						onActiveFocusChanged: if(activeFocus && currentIndex >= 0) children[currentIndex].forceActiveFocus()
 						CallPage {
 							id: callPage
 							Connections {
 								target: mainItem
 								function onOpenNewCallRequest(){ callPage.goToNewCall()}
+								function onCallCreated(){ callPage.resetLeftPanel()}
 								function onOpenCallHistory(){ callPage.goToCallHistory()}
 								function onOpenNumPadRequest(){ callPage.openNumPadRequest()}
 							}

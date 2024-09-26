@@ -41,12 +41,12 @@ public:
 	~Notifier();
 
 	enum NotificationType {
-		//ReceivedMessage,
-		//ReceivedFileMessage,
+		// ReceivedMessage,
+		// ReceivedFileMessage,
 		ReceivedCall,
-		//NewVersionAvailable,
-		//SnapshotWasTaken,
-		//RecordingCompleted
+		// NewVersionAvailable,
+		// SnapshotWasTaken,
+		// RecordingCompleted
 	};
 
 	// void notifyReceivedCall(Call *call);
@@ -88,14 +88,14 @@ private:
 		int type;
 	};
 
-	QObject *createNotification(NotificationType type, QVariantMap data);
+	bool createNotification(NotificationType type, QVariantMap data);
 	void showNotification(QObject *notification, int timeout);
 
 	QHash<QString, int> mScreenHeightOffset;
 	int mInstancesNumber = 0;
 
 	QMutex *mMutex = nullptr;
-	//QQmlComponent **mComponents = nullptr;
+	// QQmlComponent **mComponents = nullptr;
 	QVector<QQmlComponent *> mComponents;
 
 	static const QHash<int, Notification> Notifications;

@@ -23,7 +23,7 @@ ListView {
 	property bool actionLayoutVisible: false
 	property bool initialHeadersVisible: true
 	property bool displayNameCapitalization: true
-	property bool showFavouritesOnly: false
+	property bool showFavoritesOnly: false
 	property bool showDefaultAddress: false
 
 	property var sourceModel: MagicSearchList{}
@@ -82,10 +82,8 @@ ListView {
 		}
 	}
 	onActiveFocusChanged: if(activeFocus && (!footerItem || !footerItem.activeFocus)) {
-							currentIndex = 0
-						}else {
-							currentIndex = -1
-						}
+		currentIndex = 0
+	}
 
 	model: MagicSearchProxy {
 		id: magicSearchProxy
@@ -93,7 +91,7 @@ ListView {
 		// This property is needed instead of playing on the delegate visibility
 		// considering its starred status. Otherwise, the row in the list still
 		// exists even if its delegate is not visible, and creates navigation issues
-		showFavouritesOnly: mainItem.showFavouritesOnly
+		showFavoritesOnly: mainItem.showFavoritesOnly
 		onFriendCreated: (index) => {
 			mainItem.currentIndex = index
 		}

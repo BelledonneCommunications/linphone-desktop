@@ -25,7 +25,11 @@ Item {
 	property alias displayPresence: avatar.displayPresence
 	property color color: DefaultStyle.grey_600
 	property int radius: 15 * DefaultStyle.dp
-	property bool remoteIsPaused: participantDevice ? participantDevice.core.isPaused : false
+	property bool remoteIsPaused: participantDevice
+		? participantDevice.core.isPaused
+		: previewEnabled
+			? callState === LinphoneEnums.CallState.Paused
+			: callState === LinphoneEnums.CallState.PausedByRemote
 	property var peerAddressObj: previewEnabled && (call || account)
 									? UtilsCpp.getDisplayName(account ? account.core.identityAddress : call.core.localAddress)
 									: participantDevice && participantDevice.core
@@ -202,7 +206,12 @@ Item {
 				triggeredOnStart: true
 				onTriggered: {cameraLoader.reset = !cameraLoader.reset}
 			}
-			active: mainItem.visible && mainItem.callState != LinphoneEnums.CallState.End && mainItem.callState != LinphoneEnums.CallState.Released && mainItem.videoEnabled && !cameraLoader.reset
+			active: mainItem.visible && !mainItem.remoteIsPaused 
+				&& mainItem.callState != LinphoneEnums.CallState.End 
+				&& mainItem.callState != LinphoneEnums.CallState.Released
+				&& mainItem.callState != LinphoneEnums.CallState.Paused 
+				&& mainItem.callState != LinphoneEnums.CallState.PausedByRemote
+				&& mainItem.videoEnabled && !cameraLoader.reset
 			onActiveChanged: console.log("("+mainItem.qmlName+") Camera active " + active +", visible="+mainItem.visible +", videoEnabled="+mainItem.videoEnabled +", reset="+cameraLoader.reset)
 			sourceComponent: cameraComponent
 		}

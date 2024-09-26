@@ -11,19 +11,17 @@ AbstractSettingsLayout {
 	Component {
 		id: content
 		ColumnLayout {
-			width: parent.width
 			RowLayout {
 				ColumnLayout {
-					Layout.fillWidth: true
 					Item {
 						Layout.preferredWidth: 341 * DefaultStyle.dp
+
 					}
 				}
 				ColumnLayout {
 					Layout.rightMargin: 25 * DefaultStyle.dp
 					Layout.topMargin: 36 * DefaultStyle.dp
 					Layout.leftMargin: 64 * DefaultStyle.dp
-					Layout.fillWidth: true
 					spacing: 40 * DefaultStyle.dp
 					SwitchSetting {
 						titleText: qsTr("Annulateur d'écho")
@@ -49,7 +47,6 @@ AbstractSettingsLayout {
 			}
 			RowLayout {
 				ColumnLayout {
-					Layout.fillWidth: true
 					ColumnLayout {
 						Layout.preferredWidth: 341 * DefaultStyle.dp
 						Text {
@@ -72,17 +69,14 @@ AbstractSettingsLayout {
 					}
 				}
 				ColumnLayout {
-					Layout.fillWidth: true
 					spacing: 20 * DefaultStyle.dp
 					Layout.rightMargin: 44 * DefaultStyle.dp
 					Layout.topMargin: 20 * DefaultStyle.dp
 					Layout.leftMargin: 64 * DefaultStyle.dp
 
 					ColumnLayout {
-						Layout.fillWidth: true
 						spacing: 0
 						RowLayout {
-							Layout.fillWidth: true
 							EffectImage {
 								imageSource: AppIcons.speaker
 								colorizationColor: DefaultStyle.main1_500_main
@@ -123,10 +117,8 @@ AbstractSettingsLayout {
 						}
 					}
 					ColumnLayout {
-						Layout.fillWidth: true
 						spacing: 0
 						RowLayout {
-							Layout.fillWidth: true
 							EffectImage {
 								imageSource: AppIcons.microphone
 								colorizationColor: DefaultStyle.main1_500_main
@@ -205,7 +197,6 @@ AbstractSettingsLayout {
 						}
 					}
 					ColumnLayout {
-						Layout.fillWidth: true
 						spacing: 0
 						RowLayout {
 							EffectImage {

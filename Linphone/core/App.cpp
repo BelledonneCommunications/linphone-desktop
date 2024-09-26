@@ -298,6 +298,8 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			                                         auto callGui = new CallGui(callCore);
 			                                         auto win = getCallsWindow(QVariant::fromValue(callGui));
 			                                         Utils::smartShowWindow(win);
+			                                         auto mainwin = getMainWindow();
+			                                         QMetaObject::invokeMethod(mainwin, "callCreated");
 			                                         lDebug() << "App : call created" << callGui;
 		                                         });
 	                                         });

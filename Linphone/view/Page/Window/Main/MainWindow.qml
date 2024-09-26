@@ -17,6 +17,8 @@ AbstractWindow {
 
 	color: "transparent"
 
+	signal callCreated()
+
 	// TODO : use this to make the border transparent
 	// flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint
 	// menuBar: Rectangle {
@@ -193,10 +195,15 @@ AbstractWindow {
 	Component {
 		id: mainPage
 		MainLayout {
+			id: mainLayout
 			objectName: "mainPage"
 			onAddAccountRequest: goToLogin()
 			onAccountRemoved: {
 				initStackViewItem()
+			}
+			Connections {
+				target: mainWindow
+				function onCallCreated(){ mainLayout.callCreated() }
 			}
 			// StackView.onActivated: connectionSecured(0) // TODO : connect to cpp part when ready
 		}

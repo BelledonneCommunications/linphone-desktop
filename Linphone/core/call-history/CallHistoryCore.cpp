@@ -21,6 +21,7 @@
 #include "CallHistoryCore.hpp"
 #include "core/App.hpp"
 #include "core/conference/ConferenceInfoCore.hpp"
+#include "core/friend/FriendGui.hpp"
 #include "model/call-history/CallHistoryModel.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
@@ -61,6 +62,11 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 	} else {
 		mRemoteAddress = Utils::coreStringToAppString(addr->asStringUriOnly());
 		mDisplayName = ToolModel::getDisplayName(Utils::coreStringToAppString(addr->asStringUriOnly()));
+		auto inFriend = Utils::findFriendByAddress(mRemoteAddress);
+		if (inFriend) {
+			auto friendGui = inFriend->getValue().value<FriendGui *>();
+			if (friendGui) mDisplayName = friendGui->getCore()->getDisplayName();
+		}
 	}
 }
 
