@@ -149,7 +149,7 @@ ubuntu2004-makefile-gcc-deploy:
       - $NIGHTLY_MASTER
       - $DEPLOY_LINUX
  script:
-   - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
+   - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
    - |-
      if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
        rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
@@ -166,5 +166,5 @@ ubuntu2004-makefile-gcc-plugins-deploy:
     variables:
       - $DEPLOY_PLUGINS
  script:
-   - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER/plugins/
+   - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER/plugins/
 

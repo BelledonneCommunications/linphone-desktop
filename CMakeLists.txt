@@ -173,7 +173,7 @@ add_option(OPTION_LIST ENABLE_UPDATE_CHECK "Enable update check." ON)
 add_option(OPTION_LIST ENABLE_VIDEO "Enable Video support." YES)
 add_option(OPTION_LIST ENABLE_WINDOWS_TOOLS_CHECK "Enable tools checks on Windows for auto install." OFF)
 
-add_option(OPTION_LIST LINPHONE_SDK_MAKE_RELEASE_FILE_URL "Make a RELEASE file that work along check_version and use this URL" "")
+add_cache(OPTION_LIST LINPHONE_SDK_MAKE_RELEASE_FILE_URL "Make a RELEASE file that work along check_version and use this URL" "")
 
 
 add_option(OPTION_LIST ENABLE_OPENH264 "Enable the use of OpenH264 codec" ${ENABLE_VIDEO})

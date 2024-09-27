@@ -293,6 +293,9 @@ if(${ENABLE_APP_PACKAGING})
 ##############################################
 	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/packaging.cmake.in" "${CMAKE_BINARY_DIR}/cmake/install/packaging.cmake" @ONLY)
 	install(SCRIPT "${CMAKE_BINARY_DIR}/cmake/install/packaging.cmake")
+	if(LINPHONE_SDK_MAKE_RELEASE_FILE_URL)
+		bc_make_release_file("${LINPHONEAPP_VERSION}" "${LINPHONE_SDK_MAKE_RELEASE_FILE_URL}/${CPACK_PACKAGE_FILE_NAME}.${PACKAGE_EXT}")
+	endif()
 	include(CPack)
 endif()
 
