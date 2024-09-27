@@ -100,6 +100,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 		mStarred = false;
 	}
 
+	mIsLdap = false;
 	connect(this, &FriendCore::addressChanged, &FriendCore::allAddressesChanged);
 	connect(this, &FriendCore::phoneNumberChanged, &FriendCore::allAddressesChanged);
 }
@@ -116,6 +117,7 @@ FriendCore::FriendCore(const FriendCore &friendCore) {
 	mJob = friendCore.mJob;
 	mPictureUri = friendCore.mPictureUri;
 	mIsSaved = friendCore.mIsSaved;
+	mIsLdap = friendCore.mIsLdap;
 }
 
 FriendCore::~FriendCore() {
@@ -622,7 +624,7 @@ void FriendCore::save() { // Save Values to model
 						    (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
 						if (created) {
 							core->getDefaultFriendList()->updateSubscriptions();
-							emit CoreModel::getInstance() -> friendCreated(contact);
+							emit CoreModel::getInstance()->friendCreated(contact);
 						}
 						mCoreModelConnection->invokeToCore([this, created]() {
 							if (created) setSelf(mCoreModelConnection->mCore);
@@ -655,6 +657,7 @@ bool FriendCore::getIsLdap() const {
 void FriendCore::setIsLdap(bool data) {
 	if (mIsLdap != data) {
 		mIsLdap = data;
+		emit readOnlyChanged();
 	}
 }
 
