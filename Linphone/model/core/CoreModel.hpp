@@ -71,6 +71,7 @@ signals:
 	void unreadNotificationsChanged();
 	void requestFetchConfig(QString path);
 	void requestRestart();
+	void enabledLdapAddressBookSaved();
 
 private:
 	QString mConfigPath;

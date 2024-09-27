@@ -5,6 +5,7 @@ import QtQuick.Controls as Control
 import Linphone
 import UtilsCpp 1.0
 import ConstantsCpp 1.0
+import SettingsCpp
 
 ListView {
 	id: mainItem
@@ -97,6 +98,18 @@ ListView {
 		}
 		aggregationFlag: mainItem.aggregationFlag
 		sourceModel: mainItem.sourceModel
+		sourceFlags: LinphoneEnums.MagicSearchSource.Friends | ((mainItem.searchText.length > 0 && mainItem.searchText != "*") || SettingsCpp.syncLdapContacts ? LinphoneEnums.MagicSearchSource.LdapServers : 0)
+		onInitialized: {
+			magicSearchProxy.forceUpdate()
+		}
+	}
+
+	Connections {
+		target: SettingsCpp
+		onLdapConfigChanged: {
+			if (SettingsCpp.syncLdapContacts)
+				magicSearchProxy.forceUpdate()
+		}
 	}
 
 	Control.ScrollBar.vertical: ScrollBar {
@@ -295,6 +308,7 @@ ListView {
 							textWeight: 400 * DefaultStyle.dp
 							textColor: DefaultStyle.danger_500main
 							contentImageColor: DefaultStyle.danger_500main
+							visible: !modelData.core.readOnly
 							onClicked: {
 								mainItem.contactDeletionRequested(modelData)
 								friendPopup.close()

@@ -33,8 +33,9 @@ LdapModel::LdapModel(const std::shared_ptr<linphone::Ldap> &ldap, QObject *paren
 		mLdap = nullptr;
 		mLdapParamsClone = CoreModel::getInstance()->getCore()->createLdapParams();
 		mLdapParamsClone->setTimeout(5);
+		mLdapParamsClone->setMaxResults(50);
 		mLdapParamsClone->setDelay(2000);
-		mLdapParamsClone->setMinChars(3);
+		mLdapParamsClone->setMinChars(0); // Needs to be 0 if Contacts list should be synchronized with LDAP AB
 		mLdapParamsClone->enableTls(true);
 	}
 }

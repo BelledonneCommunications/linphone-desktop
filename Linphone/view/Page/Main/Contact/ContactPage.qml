@@ -398,6 +398,7 @@ AbstractMainPage {
 						background: Item{}
 						onClicked: mainItem.editContact(mainItem.selectedContact)
 						icon.source: AppIcons.pencil
+						visible: !mainItem.selectedContact.core.readOnly
 					}
 					detailContent: ColumnLayout {
 						Layout.fillWidth: false
@@ -694,6 +695,7 @@ AbstractMainPage {
 									iconSource: AppIcons.pencil
 									text: qsTr("Edit")
 									onClicked: mainItem.editContact(mainItem.selectedContact)
+									visible: !mainItem.selectedContact.core.readOnly
 								}
 								Rectangle {
 									Layout.fillWidth: true
@@ -788,6 +790,7 @@ AbstractMainPage {
 									iconSource: AppIcons.trashCan
 									color: DefaultStyle.danger_500main
 									text: qsTr("Delete this contact")
+									visible: !mainItem.selectedContact.core.readOnly
 									onClicked: {
 										mainItem.deleteContact(contact)
 									}

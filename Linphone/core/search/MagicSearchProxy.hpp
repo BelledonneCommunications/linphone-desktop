@@ -64,6 +64,7 @@ signals:
 	void forceUpdate();
 	void friendCreated(int index);
 	void showFavoriteOnlyChanged();
+    void initialized();
 
 protected:
 	QString mSearchText;

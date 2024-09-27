@@ -493,6 +493,7 @@ void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
 	DEFINE_NOTIFY_CONFIG_READY(assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
 	DEFINE_NOTIFY_CONFIG_READY(autoStart, AutoStart)
+	DEFINE_NOTIFY_CONFIG_READY(syncLdapContacts, SyncLdapContacts)
 }
 
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", false)
@@ -575,4 +576,11 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 							AutoStart,
 							"auto_start",
 							false)
+DEFINE_GETSET_CONFIG(SettingsModel,
+						bool,
+						Bool,
+						syncLdapContacts,
+						SyncLdapContacts,
+						"sync_ldap_contacts",
+						true)
     // clang-format on

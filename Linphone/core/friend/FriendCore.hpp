@@ -67,6 +67,7 @@ class FriendCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool isSaved READ getIsSaved NOTIFY isSavedChanged)
 	Q_PROPERTY(QString pictureUri READ getPictureUri WRITE setPictureUri NOTIFY pictureUriChanged)
 	Q_PROPERTY(bool starred READ getStarred WRITE lSetStarred NOTIFY starredChanged)
+	Q_PROPERTY(bool readOnly READ getReadOnly CONSTANT)
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
@@ -134,6 +135,10 @@ public:
 
 	void onPresenceReceived(LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp);
 
+	bool getIsLdap() const;
+	void setIsLdap(bool isLdap);
+	bool getReadOnly() const;
+
 	Q_INVOKABLE void remove();
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
@@ -184,6 +189,7 @@ protected:
 	QString mPictureUri;
 	bool mIsSaved;
 	QString mVCardString;
+	bool mIsLdap;
 	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<FriendCore, FriendModel>> mFriendModelConnection;
 	QSharedPointer<SafeConnection<FriendCore, CoreModel>> mCoreModelConnection;

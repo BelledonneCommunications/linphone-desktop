@@ -55,6 +55,7 @@ void MagicSearchProxy::setSourceModel(QAbstractItemModel *model) {
 		connect(newMagicSearchList, &MagicSearchList::initialized, this, [this, newMagicSearchList] {
 			emit newMagicSearchList->lSetSourceFlags(mSourceFlags);
 			emit newMagicSearchList->lSetAggregationFlag(mAggregationFlag);
+			emit initialized();
 		});
 	}
 	QSortFilterProxyModel::setSourceModel(model);

@@ -140,6 +140,7 @@ public:
 	DECLARE_GETSET(QString, assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
 	DECLARE_GETSET(QString, assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
 	DECLARE_GETSET(bool, autoStart, AutoStart)
+	DECLARE_GETSET(bool, syncLdapContacts, SyncLdapContacts)
 
 signals:
 

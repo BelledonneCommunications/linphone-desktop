@@ -648,3 +648,16 @@ void FriendCore::undo() { // Retrieve values from model
 		});
 	}
 }
+
+bool FriendCore::getIsLdap() const {
+	return mIsLdap;
+}
+void FriendCore::setIsLdap(bool data) {
+	if (mIsLdap != data) {
+		mIsLdap = data;
+	}
+}
+
+bool FriendCore::getReadOnly() const {
+	return getIsLdap(); // TODO add conditions for friends retrieved via HTTP [misc]vcards-contacts-list=<URL> & CardDAV
+}

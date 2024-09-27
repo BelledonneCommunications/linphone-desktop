@@ -103,4 +103,11 @@ void LdapCore::setSelf(QSharedPointer<LdapCore> me) {
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, sipDomain, SipDomain)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, linphone::Ldap::DebugLevel,
 	                           debugLevel, DebugLevel)
+
+	mLdapModelConnection->makeConnectToModel(&LdapModel::saved, [this]() {
+		mLdapModelConnection->invokeToCore([this]() { emit App::getInstance() -> getSettings()->ldapConfigChanged(); });
+	});
+	mLdapModelConnection->makeConnectToModel(&LdapModel::removed, [this]() {
+		mLdapModelConnection->invokeToCore([this]() { emit App::getInstance() -> getSettings()->ldapConfigChanged(); });
+	});
 }

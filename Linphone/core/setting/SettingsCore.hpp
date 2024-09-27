@@ -157,7 +157,13 @@ public:
 	DECLARE_CORE_GETSET(QString, assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
 	DECLARE_CORE_GETSET(QString, assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
 	DECLARE_CORE_GETSET(bool, autoStart, AutoStart)
-	bool getAutoStart() { return mAutoStart; };
+	bool getAutoStart() {
+		return mAutoStart;
+	};
+	DECLARE_CORE_GETSET(bool, syncLdapContacts, SyncLdapContacts)
+	bool getSyncLdapContacts() {
+		return mSyncLdapContacts;
+	};
 
 signals:
 
@@ -216,6 +222,8 @@ signals:
 
 	void dndChanged();
 	void lEnableDnd(bool value);
+
+	void ldapConfigChanged();
 
 private:
 	std::shared_ptr<SettingsModel> mSettingsModel;

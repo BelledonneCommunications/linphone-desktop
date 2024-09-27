@@ -91,6 +91,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(AssistantThirdPartySipAccountDomain, mSettingsModel)
 	INIT_CORE_MEMBER(AssistantThirdPartySipAccountTransport, mSettingsModel)
 	INIT_CORE_MEMBER(AutoStart, mSettingsModel)
+	INIT_CORE_MEMBER(SyncLdapContacts, mSettingsModel)
 }
 
 SettingsCore::~SettingsCore() {
@@ -307,6 +308,8 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                           assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool, autoStart,
 	                           AutoStart)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
+	                           syncLdapContacts, SyncLdapContacts)
 
 	auto coreModelConnection = QSharedPointer<SafeConnection<SettingsCore, CoreModel>>(
 	    new SafeConnection<SettingsCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);

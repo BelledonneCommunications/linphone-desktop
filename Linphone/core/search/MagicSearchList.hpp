@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
