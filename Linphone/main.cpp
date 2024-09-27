@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
 	QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 	// Disable QML cache. Avoid malformed cache.
 	qputenv("QML_DISABLE_DISK_CACHE", "true");
+	setlocale(LC_CTYPE, ".UTF8");
 
 	auto app = QSharedPointer<App>::create(argc, argv);
 

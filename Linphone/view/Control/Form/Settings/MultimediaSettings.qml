@@ -43,16 +43,14 @@ ColumnLayout {
 						Layout.fillWidth: true
 					}
 				}
-				ComboBox {
+				ComboSetting {
 					id: outputAudioDeviceCBox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
 					Layout.preferredHeight: 49 * DefaultStyle.dp
-					model: SettingsCpp.playbackDevices
-					onCurrentTextChanged: {
-						if (mainItem.call) mainItem.call.core.lSetOutputAudioDevice(currentText)
-						SettingsCpp.lSetPlaybackDevice(currentText)
-					}
+					entries: SettingsCpp.playbackDevices
+					propertyName: "playbackDevice"
+					propertyOwner: SettingsCpp
 				}
 				Slider {
 					id: speakerVolume
@@ -84,16 +82,14 @@ ColumnLayout {
 						Layout.fillWidth: true
 					}
 				}
-				ComboBox {
+				ComboSetting {
 					id: inputAudioDeviceCBox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
 					Layout.preferredHeight: 49 * DefaultStyle.dp
-					model: SettingsCpp.captureDevices
-					onCurrentTextChanged: {
-						if (mainItem.call) mainItem.call.core.lSetInputAudioDevice(currentText)
-						SettingsCpp.lSetCaptureDevice(currentText)
-					}
+					entries: SettingsCpp.captureDevices
+					propertyName: "captureDevice"
+					propertyOwner: SettingsCpp
 				}
 				Slider {
 					id: microVolume
@@ -126,15 +122,15 @@ ColumnLayout {
 						width: audioTestSlider.availableWidth
 						height: implicitHeight
 						radius: 2 * DefaultStyle.dp
-						color: "#D9D9D9"
+						color: DefaultStyle.grey_850
 
 						Rectangle {
 							width: audioTestSlider.visualPosition * parent.width
 							height: parent.height
 							gradient: Gradient {
 								orientation: Gradient.Horizontal
-								GradientStop { position: 0.0; color: "#6FF88D" }
-								GradientStop { position: 1.0; color: "#00D916" }
+								GradientStop { position: 0.0; color: DefaultStyle.vue_meter_light_green }
+								GradientStop { position: 1.0; color: DefaultStyle.vue_meter_dark_green}
 							}
 							radius: 2 * DefaultStyle.dp
 						}
@@ -160,16 +156,14 @@ ColumnLayout {
 						Layout.fillWidth: true
 					}
 				}
-				ComboBox {
+				ComboSetting {
 					id: videoDevicesCbox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
 					Layout.preferredHeight: 49 * DefaultStyle.dp
-					model: SettingsCpp.videoDevices
-					currentIndex: SettingsCpp.videoDeviceIndex
-					onCurrentTextChanged: {
-						SettingsCpp.lSetVideoDevice(currentText)
-					}
+					entries: SettingsCpp.videoDevices
+					propertyName: "videoDevice"
+					propertyOwner: SettingsCpp
 				}
 			}
 		}

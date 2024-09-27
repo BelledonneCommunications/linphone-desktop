@@ -27,6 +27,7 @@ Thread::Thread(QObject *parent) : QThread(parent) {
 }
 
 void Thread::run() {
+	setlocale(LC_CTYPE, ".UTF8");
 	int toExit = false;
 	mThreadId = new QObject();
 	while (!toExit) {
