@@ -82,6 +82,12 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 			mModelConnection->makeConnectToCore(&MagicSearchList::lSetSourceFlags, [this](int flags) {
 				mModelConnection->invokeToModel([this, flags]() { mMagicSearch->setSourceFlags(flags); });
 			});
+			mModelConnection->makeConnectToCore(&MagicSearchList::lSetAggregationFlag,
+			                                    [this](LinphoneEnums::MagicSearchAggregation aggregation) {
+				                                    mModelConnection->invokeToModel([this, aggregation]() {
+					                                    mMagicSearch->setAggregationFlag(aggregation);
+				                                    });
+			                                    });
 			mModelConnection->makeConnectToCore(
 			    &MagicSearchList::lSetAggregationFlag, [this](LinphoneEnums::MagicSearchAggregation flag) {
 				    mModelConnection->invokeToModel([this, flag]() { mMagicSearch->setAggregationFlag(flag); });

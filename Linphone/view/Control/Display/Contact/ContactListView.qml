@@ -35,7 +35,7 @@ ListView {
 	property string searchBarText
 	property string searchText: searchBarText.length === 0 ? "*" : searchBarText
 	property var aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
-	property var sourceFlags: LinphoneEnums.MagicSearchSource.Friends | LinphoneEnums.MagicSearchSource.LdapServers
+	property var sourceFlags: LinphoneEnums.MagicSearchSource.Friends | ((searchText.length > 0 && searchText != "*") || SettingsCpp.syncLdapContacts ? LinphoneEnums.MagicSearchSource.LdapServers : 0)
 
 	property ConferenceInfoGui confInfoGui
 
@@ -98,7 +98,7 @@ ListView {
 		}
 		aggregationFlag: mainItem.aggregationFlag
 		parentProxy: mainItem.listProxy
-		sourceFlags: LinphoneEnums.MagicSearchSource.Friends | ((mainItem.searchText.length > 0 && mainItem.searchText != "*") || SettingsCpp.syncLdapContacts ? LinphoneEnums.MagicSearchSource.LdapServers : 0)
+		sourceFlags: mainItem.sourceFlags
 		onInitialized: {
 			magicSearchProxy.forceUpdate()
 		}
