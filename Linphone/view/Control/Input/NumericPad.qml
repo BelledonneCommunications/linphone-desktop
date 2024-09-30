@@ -19,6 +19,71 @@ FocusScope{
 	signal launchCall()
 	signal wipe()
 
+	function keypadKeyPressedAtIndex(index) {
+		var button = numPadGrid.getButtonAt(index)
+		button.shadowEnabled = true
+		button.clicked()
+		removeButtonsShadow.restart()
+	}
+
+	Timer {
+		id: removeButtonsShadow
+		interval: 250
+		repeat: false
+		onTriggered: {
+			for (var i = 0; i < 12; i++) {
+				numPadGrid.getButtonAt(i).shadowEnabled = false
+			}
+		}
+	}
+
+	Keys.onPressed: (event) => {
+		if (event.modifiers & Qt.KeypadModifier) {
+			if (event.key === Qt.Key_0) {
+				keypadKeyPressedAtIndex(10)
+			}
+			if (event.key === Qt.Key_1) {
+				keypadKeyPressedAtIndex(0)
+			}
+			if (event.key === Qt.Key_2) {
+				keypadKeyPressedAtIndex(1)
+			}
+			if (event.key === Qt.Key_3) {
+				keypadKeyPressedAtIndex(2)
+			}
+			if (event.key === Qt.Key_4) {
+				keypadKeyPressedAtIndex(3)
+			}
+			if (event.key === Qt.Key_5) {
+				keypadKeyPressedAtIndex(4)
+			}
+			if (event.key === Qt.Key_6) {
+				keypadKeyPressedAtIndex(5)
+			}
+			if (event.key === Qt.Key_7) {
+				keypadKeyPressedAtIndex(6)
+			}
+			if (event.key === Qt.Key_8) {
+				keypadKeyPressedAtIndex(7)
+			}
+			if (event.key === Qt.Key_9) {
+				keypadKeyPressedAtIndex(8)
+			}
+			if (event.key === Qt.Key_Asterisk) {
+				keypadKeyPressedAtIndex(9)
+			}
+			if (event.key === Qt.Key_Plus) {
+				mainItem.buttonPressed("+")
+			}
+			if (event.key === Qt.Key_Enter) {
+				mainItem.launchCall()
+			}
+		}
+		if (event.key === Qt.Key_Backspace) {
+			mainItem.wipe()
+		}
+	}
+
 	Layout.GridLayout {
 		id: numPadGrid
 		anchors.fill: parent
@@ -48,7 +113,6 @@ FocusScope{
 				required property int index
 				implicitWidth: 60 * DefaultStyle.dp
 				implicitHeight: 60 * DefaultStyle.dp
-				focus: index == 4
 				onClicked: {
 					mainItem.buttonPressed(innerText.text)
 				}

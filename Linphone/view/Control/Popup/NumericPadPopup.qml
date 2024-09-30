@@ -47,6 +47,10 @@ Control.Popup {
 			color: DefaultStyle.grey_100
 			visible: !mainItem.roundedBottom
 		}
+		MouseArea {
+			anchors.fill: parent
+			onClicked: numPad.forceActiveFocus()
+		}
 		Button {
 			id: closeButton
 			visible: mainItem.closeButtonVisible
