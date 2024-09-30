@@ -27,7 +27,7 @@ ListView {
 	property bool showFavoritesOnly: false
 	property bool showDefaultAddress: false
 
-	property var sourceModel: MagicSearchList{}
+	property var listProxy: MagicSearchProxy{}
 
 	// Model properties
 	// set searchBarText without specifying a model to bold
@@ -97,7 +97,7 @@ ListView {
 			mainItem.currentIndex = index
 		}
 		aggregationFlag: mainItem.aggregationFlag
-		sourceModel: mainItem.sourceModel
+		parentProxy: mainItem.listProxy
 		sourceFlags: LinphoneEnums.MagicSearchSource.Friends | ((mainItem.searchText.length > 0 && mainItem.searchText != "*") || SettingsCpp.syncLdapContacts ? LinphoneEnums.MagicSearchSource.LdapServers : 0)
 		onInitialized: {
 			magicSearchProxy.forceUpdate()

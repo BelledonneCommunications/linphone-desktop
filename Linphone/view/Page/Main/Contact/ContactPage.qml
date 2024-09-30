@@ -59,7 +59,7 @@ AbstractMainPage {
 
 	showDefaultItem: contactList.model.sourceModel.count === 0
 
-	MagicSearchList {
+	MagicSearchProxy {
 		id: allFriends
 	}
 
@@ -281,7 +281,7 @@ AbstractMainPage {
 								showFavoritesOnly: true
 								contactMenuVisible: true
 								searchBarText: searchBar.text
-								sourceModel: allFriends
+								listProxy: allFriends
 								onSelectedContactChanged: {
 									if (selectedContact) {
 										contactList.currentIndex = -1
@@ -338,7 +338,7 @@ AbstractMainPage {
 								contactMenuVisible: true
 								highlightFollowsCurrentItem: true
 								searchBarText: searchBar.text
-								sourceModel: allFriends
+								listProxy: allFriends
 								Connections {
 									target: contactList.model
 									function onFriendCreated(index) {

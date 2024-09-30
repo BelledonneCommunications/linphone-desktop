@@ -25,11 +25,10 @@
 MagicSearchProxy::MagicSearchProxy(QObject *parent) : SortFilterProxy(parent) {
 	mSourceFlags = (int)LinphoneEnums::MagicSearchSource::Friends | (int)LinphoneEnums::MagicSearchSource::LdapServers;
 	mAggregationFlag = LinphoneEnums::MagicSearchAggregation::Friend;
-	setSourceModel(new MagicSearchList());
+	setList(MagicSearchList::create());
 	sort(0);
 	connect(this, &MagicSearchProxy::forceUpdate, [this] {
-		auto magicSearchList = qobject_cast<MagicSearchList *>(sourceModel());
-		if (magicSearchList) emit magicSearchList->lSearch(mSearchText);
+		if (mList) emit mList->lSearch(mSearchText);
 	});
 }
 
@@ -37,28 +36,26 @@ MagicSearchProxy::~MagicSearchProxy() {
 	setSourceModel(nullptr);
 }
 
-void MagicSearchProxy::setSourceModel(QAbstractItemModel *model) {
-	auto oldMagicSearchList = dynamic_cast<MagicSearchList *>(sourceModel());
-	if (oldMagicSearchList) {
-		disconnect(oldMagicSearchList);
+void MagicSearchProxy::setList(QSharedPointer<MagicSearchList> newList) {
+	if (mList == newList) return;
+	if (mList) {
+		disconnect(mList.get());
 	}
-	auto newMagicSearchList = dynamic_cast<MagicSearchList *>(model);
-	if (newMagicSearchList) {
-		mList = MagicSearchList::create(newMagicSearchList);
-		connect(newMagicSearchList, &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged);
-		connect(newMagicSearchList, &MagicSearchList::aggregationFlagChanged, this,
-		        &MagicSearchProxy::aggregationFlagChanged);
-		connect(newMagicSearchList, &MagicSearchList::friendCreated, this, [this](int index) {
+	mList = newList;
+	if (mList) {
+		connect(mList.get(), &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged);
+		connect(mList.get(), &MagicSearchList::aggregationFlagChanged, this, &MagicSearchProxy::aggregationFlagChanged);
+		connect(mList.get(), &MagicSearchList::friendCreated, this, [this](int index) {
 			auto proxyIndex = mapFromSource(sourceModel()->index(index, 0));
 			emit friendCreated(proxyIndex.row());
 		});
-		connect(newMagicSearchList, &MagicSearchList::initialized, this, [this, newMagicSearchList] {
-			emit newMagicSearchList->lSetSourceFlags(mSourceFlags);
-			emit newMagicSearchList->lSetAggregationFlag(mAggregationFlag);
+		connect(mList.get(), &MagicSearchList::initialized, this, [this, newList = mList.get()] {
+			emit newList->lSetSourceFlags(mSourceFlags);
+			emit newList->lSetAggregationFlag(mAggregationFlag);
 			emit initialized();
 		});
 	}
-	QSortFilterProxyModel::setSourceModel(model);
+	setSourceModel(mList.get());
 }
 
 int MagicSearchProxy::findFriendIndexByAddress(const QString &address) {
@@ -99,6 +96,11 @@ void MagicSearchProxy::setShowFavoritesOnly(bool show) {
 		mShowFavoritesOnly = show;
 		emit showFavoriteOnlyChanged();
 	}
+}
+
+void MagicSearchProxy::setParentProxy(MagicSearchProxy *proxy) {
+	setList(proxy->mList);
+	emit parentProxyChanged();
 }
 
 LinphoneEnums::MagicSearchAggregation MagicSearchProxy::getAggregationFlag() const {

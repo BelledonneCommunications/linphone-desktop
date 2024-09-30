@@ -36,7 +36,6 @@ class MagicSearchList : public ListProxy, public AbstractObject {
 	Q_OBJECT
 public:
 	static QSharedPointer<MagicSearchList> create();
-	static QSharedPointer<MagicSearchList> create(MagicSearchList *magicSearchList);
 	MagicSearchList(QObject *parent = Q_NULLPTR);
 	~MagicSearchList();
 

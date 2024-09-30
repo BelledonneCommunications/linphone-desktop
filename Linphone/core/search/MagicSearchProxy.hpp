@@ -35,6 +35,7 @@ class MagicSearchProxy : public SortFilterProxy {
 	Q_PROPERTY(LinphoneEnums::MagicSearchAggregation aggregationFlag READ getAggregationFlag WRITE setAggregationFlag
 	               NOTIFY aggregationFlagChanged)
 	Q_PROPERTY(bool showFavoritesOnly READ showFavoritesOnly WRITE setShowFavoritesOnly NOTIFY showFavoriteOnlyChanged)
+	Q_PROPERTY(MagicSearchProxy *parentProxy WRITE setParentProxy NOTIFY parentProxyChanged)
 
 public:
 	MagicSearchProxy(QObject *parent = Q_NULLPTR);
@@ -52,7 +53,8 @@ public:
 	bool showFavoritesOnly() const;
 	void setShowFavoritesOnly(bool show);
 
-	void setSourceModel(QAbstractItemModel *sourceModel) override;
+	void setList(QSharedPointer<MagicSearchList> list);
+	Q_INVOKABLE void setParentProxy(MagicSearchProxy *proxy);
 
 	// Q_INVOKABLE forceUpdate();
 	Q_INVOKABLE int findFriendIndexByAddress(const QString &address);
@@ -64,7 +66,8 @@ signals:
 	void forceUpdate();
 	void friendCreated(int index);
 	void showFavoriteOnlyChanged();
-    void initialized();
+	void parentProxyChanged();
+	void initialized();
 
 protected:
 	QString mSearchText;

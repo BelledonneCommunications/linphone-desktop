@@ -37,13 +37,6 @@ QSharedPointer<MagicSearchList> MagicSearchList::create() {
 	return model;
 }
 
-QSharedPointer<MagicSearchList> MagicSearchList::create(MagicSearchList *magicSearchList) {
-	auto model = QSharedPointer<MagicSearchList>(magicSearchList, &QObject::deleteLater);
-	model->moveToThread(App::getInstance()->thread());
-	model->setSelf(model);
-	return model;
-}
-
 MagicSearchList::MagicSearchList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
 	mSourceFlags = (int)linphone::MagicSearch::Source::Friends | (int)linphone::MagicSearch::Source::LdapServers;
@@ -130,6 +123,7 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 					    delete contacts;
 				    });
 			    });
+			qDebug() << log().arg("Initialized");
 			emit initialized();
 		});
 	});
