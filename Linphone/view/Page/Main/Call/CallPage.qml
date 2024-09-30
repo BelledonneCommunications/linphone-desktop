@@ -602,33 +602,58 @@ AbstractMainPage {
 	Component {
 		id: groupCallItem
 		FocusScope{
-			width: parent?.width
-			height: parent?.height
 			Control.StackView.onActivated: {
 				titleLoader.sourceComponent = groupCallTitle
 				addParticipantsLayout.forceActiveFocus()
 			}
-			AddParticipantsForm {
-				id: addParticipantsLayout
+			ColumnLayout {
+				spacing: 5 * DefaultStyle.dp
 				anchors.fill: parent
-				onSelectedParticipantsCountChanged: mainItem.selectedParticipantsCount = selectedParticipantsCount
-				nameGroupCall: true
-				focus: true
-				Connections {
-					target: mainItem
-					function onStartGroupCallRequested() {
-						if (groupName.length === 0) {
-							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Un nom doit être donné à l'appel de groupe"), false)
-						} else if(!mainItem.isRegistered) {
-							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Vous n'etes pas connecté"), false)
-						} else {
-							mainItem.confInfoGui = Qt.createQmlObject('import Linphone
-																		ConferenceInfoGui{
-																		}', mainItem)
-							mainItem.confInfoGui.core.subject = addParticipantsLayout.groupName
-							mainItem.confInfoGui.core.isScheduled = false
-							mainItem.confInfoGui.core.addParticipants(addParticipantsLayout.selectedParticipants)
-							mainItem.confInfoGui.core.save()
+				RowLayout {
+					spacing: 0
+					Layout.rightMargin: 38 * DefaultStyle.dp
+					Text {
+						font.pixelSize: 13 * DefaultStyle.dp
+						font.weight: 700 * DefaultStyle.dp
+						text: qsTr("Nom du groupe")
+					}
+					Item{Layout.fillWidth: true}
+					Text {
+						font.pixelSize: 12 * DefaultStyle.dp
+						font.weight: 300 * DefaultStyle.dp
+						text: qsTr("Requis")
+					}
+				}
+				TextField {
+					id: groupCallName
+					Layout.fillWidth: true
+					Layout.rightMargin: 38 * DefaultStyle.dp
+					Layout.preferredHeight: 49 * DefaultStyle.dp
+					focus: true
+					KeyNavigation.down: addParticipantsLayout//participantList.count > 0 ? participantList : searchbar
+				}
+				AddParticipantsForm {
+					id: addParticipantsLayout
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					onSelectedParticipantsCountChanged: mainItem.selectedParticipantsCount = selectedParticipantsCount
+					focus: true
+					Connections {
+						target: mainItem
+						function onStartGroupCallRequested() {
+							if (groupCallName.text.length === 0) {
+								UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Un nom doit être donné à l'appel de groupe"), false)
+							} else if(!mainItem.isRegistered) {
+								UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Vous n'etes pas connecté"), false)
+							} else {
+								mainItem.confInfoGui = Qt.createQmlObject('import Linphone
+																			ConferenceInfoGui{
+																			}', mainItem)
+								mainItem.confInfoGui.core.subject = groupCallName.text
+								mainItem.confInfoGui.core.isScheduled = false
+								mainItem.confInfoGui.core.addParticipants(addParticipantsLayout.selectedParticipants)
+								mainItem.confInfoGui.core.save()
+							}
 						}
 					}
 				}

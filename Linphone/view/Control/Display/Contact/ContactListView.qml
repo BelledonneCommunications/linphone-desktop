@@ -58,7 +58,8 @@ ListView {
 
 	signal contactStarredChanged()
 	signal contactDeletionRequested(FriendGui contact)
-	signal contactAddedToSelection()
+	signal contactAddedToSelection(string address)
+	signal contactRemovedFromSelection(string address)
 	signal clicked()
 
 	function selectContact(address) {
@@ -73,15 +74,25 @@ ListView {
 			var indexInSelection = selectedContacts.indexOf(address)
 			if (indexInSelection == -1) {
 				selectedContacts.push(address)
-				contactAddedToSelection()
+				contactAddedToSelection(address)
 			}
 		}
 	}
 	function removeContactFromSelection(indexInSelection) {
+		var addressToRemove = selectedContacts[indexInSelection]
 		if (indexInSelection != -1) {
 			selectedContacts.splice(indexInSelection, 1)
+			contactRemovedFromSelection(addressToRemove)
 		}
 	}
+	function removeSelectedContactByAddress(address) {
+		var index = selectedContacts.indexOf(address)
+		if (index != -1) {
+			selectedContacts.splice(index, 1)
+			contactRemovedFromSelection(address)
+		}
+	}
+
 	onActiveFocusChanged: if(activeFocus && (!footerItem || !footerItem.activeFocus)) {
 		currentIndex = 0
 	}
@@ -159,6 +170,7 @@ ListView {
 			id: contactDelegate
 			anchors.left: initial.visible ? initial.right : parent.left
 			anchors.right: parent.right
+			anchors.rightMargin: 5 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 16 * DefaultStyle.dp
 			z: 1
@@ -189,32 +201,30 @@ ListView {
 					}
 				}
 			}
-			EffectImage {
-				id: isSelectedCheck
-				// visible: mainItem.multiSelectionEnabled && (mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress) != -1)
-				visible: mainItem.multiSelectionEnabled && (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)
-				Layout.preferredWidth: 24 * DefaultStyle.dp
-				Layout.preferredHeight: 24 * DefaultStyle.dp
-				imageSource: AppIcons.check
-				colorizationColor: DefaultStyle.main1_500_main
-				Connections {
-					target: mainItem
-					// onParticipantsChanged: isSelectedCheck.visible = mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress) != -1
-					function onSelectedContactCountChanged(){ isSelectedCheck.visible = (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)}
-				}
-			}
 			Item{Layout.fillWidth: true}
 			RowLayout {
 				id: actionsRow
 				z: 1
-				// anchors.right: parent.right
-				Layout.rightMargin: 5 * DefaultStyle.dp
-				// anchors.verticalCenter: parent.verticalCenter
-				spacing: 16 * DefaultStyle.dp
+				visible: actionButtons || friendPopup.visible || mainItem.multiSelectionEnabled
+				spacing: visible ? 16 * DefaultStyle.dp : 0
+				EffectImage {
+					id: isSelectedCheck
+					// visible: mainItem.multiSelectionEnabled && (mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress) != -1)
+					visible: mainItem.multiSelectionEnabled && (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)
+					Layout.preferredWidth: 24 * DefaultStyle.dp
+					Layout.preferredHeight: 24 * DefaultStyle.dp
+					imageSource: AppIcons.check
+					colorizationColor: DefaultStyle.main1_500_main
+					Connections {
+						target: mainItem
+						// onParticipantsChanged: isSelectedCheck.visible = mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress) != -1
+						function onSelectedContactCountChanged(){ isSelectedCheck.visible = (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)}
+					}
+				}
 				RowLayout{
 					id: actionButtons
 					visible: mainItem.actionLayoutVisible
-					spacing: 10 * DefaultStyle.dp
+					spacing: visible ? 10 * DefaultStyle.dp : 0
 					Button {
 						id: callButton
 						Layout.preferredWidth: 45 * DefaultStyle.dp
