@@ -582,5 +582,5 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 						syncLdapContacts,
 						SyncLdapContacts,
 						"sync_ldap_contacts",
-						true)
+						false)
     // clang-format on
