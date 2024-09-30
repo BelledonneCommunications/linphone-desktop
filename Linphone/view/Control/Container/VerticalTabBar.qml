@@ -141,6 +141,9 @@ Control.TabBar {
 					mainItem.implicitWidth = Math.max(mainItem.implicitWidth, advanceWidth + buttonIcon.buttonSize)
 				}
 			}
+			onClicked: {
+				mainItem.setCurrentIndex(TabBar.index)
+			}
 
 			background: Item {
 			}
