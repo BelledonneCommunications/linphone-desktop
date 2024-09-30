@@ -540,7 +540,7 @@ Item {
 										id: recordsButton
 										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
-										visible: !SettingsCpp.disableCallRecordingsFeature
+										visible: !SettingsCpp.disableCallRecordings
 										focus: !accountButton.visible && !settingsButton.visible && visible
 										iconSize: 32 * DefaultStyle.dp
 										text: qsTr("Enregistrements")
