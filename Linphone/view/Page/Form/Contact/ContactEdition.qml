@@ -1,6 +1,6 @@
 import QtCore
 import QtQuick
-import QtQuick.Controls as Control
+import QtQuick.Controls.Material as Control
 import QtQuick.Dialogs
 import QtQuick.Effects
 import QtQuick.Layouts

@@ -1,7 +1,7 @@
-import QtQuick 2.15
+import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
-import QtQuick.Controls as Control
+import QtQuick.Controls.Material as Control
 import Linphone
 import UtilsCpp 1.0
 

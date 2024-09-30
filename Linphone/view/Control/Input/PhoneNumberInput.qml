@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls
-import QtQuick.Layouts 1.0
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
 import Linphone
   
 ColumnLayout {

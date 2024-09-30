@@ -1,9 +1,9 @@
-import QtQuick 2.7
-import QtQuick.Window 2.2
+import QtQuick
+import QtQuick.Window
 
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Qt.labs.platform 1.0
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import Qt.labs.platform
 
 
 // =============================================================================

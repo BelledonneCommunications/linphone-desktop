@@ -1,7 +1,7 @@
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls as Control
+import QtQuick.Controls.Material as Control
 import SettingsCpp 1.0
 import Linphone
 

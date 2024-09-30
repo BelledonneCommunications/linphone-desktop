@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Controls as Control
+import QtQuick
+import QtQuick.Controls.Material as Control
 import Linphone
   
 Control.ToolTip {

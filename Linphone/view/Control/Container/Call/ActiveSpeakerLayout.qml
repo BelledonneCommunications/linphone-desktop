@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
 import QtQml.Models
-import QtQuick.Controls as Control
+import QtQuick.Controls.Material as Control
 import Linphone
 import EnumsToStringCpp 1.0
 import UtilsCpp 1.0

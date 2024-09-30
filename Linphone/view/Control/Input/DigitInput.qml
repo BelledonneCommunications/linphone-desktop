@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.2 as Control
+import QtQuick
+import QtQuick.Controls.Material as Control
 import Linphone
   
 Control.TextField {

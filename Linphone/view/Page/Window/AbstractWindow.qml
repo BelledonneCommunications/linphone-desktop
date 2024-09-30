@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Layouts 1.3
-import QtQuick.Controls
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
 import Linphone
 import UtilsCpp 1.0
 import SettingsCpp 1.0

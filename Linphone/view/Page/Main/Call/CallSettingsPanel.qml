@@ -1,6 +1,6 @@
-import QtQuick 2.7
+import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls as Control
+import QtQuick.Controls.Material as Control
 import Linphone
 
 Control.Page {
