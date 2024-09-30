@@ -5,7 +5,7 @@
 import QtCore
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls.Material as Control
+import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 
 import Linphone

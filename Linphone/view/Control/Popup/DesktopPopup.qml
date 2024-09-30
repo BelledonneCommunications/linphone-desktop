@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Window
 
-import QtQuick.Controls.Material
+import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import Qt.labs.platform
 

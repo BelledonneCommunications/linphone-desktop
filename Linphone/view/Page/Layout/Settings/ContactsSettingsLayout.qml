@@ -1,14 +1,14 @@
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls.Material as Control
+import QtQuick.Controls.Basic as Control
 import SettingsCpp 1.0
 import Linphone
 
 AbstractSettingsLayout {
 	id: mainItem
 	contentComponent: content
-	function layoutUrl(name) {
+	function layoutUrl(name) {
 		return layoutsPath+"/"+name+".qml"
 	}
 	Component {

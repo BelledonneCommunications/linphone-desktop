@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Controls.Material as Control
+import QtQuick.Controls.Basic as Control
 import Linphone
 import QtQuick.Effects
  

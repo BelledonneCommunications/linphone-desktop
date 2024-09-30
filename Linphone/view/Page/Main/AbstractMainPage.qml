@@ -4,7 +4,7 @@
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls.Material as Control
+import QtQuick.Controls.Basic as Control
 
 import Linphone
 import UtilsCpp

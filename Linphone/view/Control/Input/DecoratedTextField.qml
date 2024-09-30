@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Controls.Material as Control
+import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts 1.0
 import QtQuick.Effects
 import UtilsCpp

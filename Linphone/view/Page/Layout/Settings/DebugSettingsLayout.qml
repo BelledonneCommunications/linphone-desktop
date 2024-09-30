@@ -1,7 +1,7 @@
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls.Material as Control
+import QtQuick.Controls.Basic as Control
 
 import Linphone
 import SettingsCpp 1.0
@@ -68,7 +68,7 @@ AbstractSettingsLayout {
 			}
 			MediumButton {
 				text: qsTr("Partager les traces")
-				enabled: SettingsCpp.logsEnabled || SettingsCpp.fullLogsEnabled
+				enabled: SettingsCpp.logsEnabled || SettingsCpp.fullLogsEnabled
 				onClicked: {
 					UtilsCpp.getMainWindow().showLoadingPopup(qsTr("Téléversement des traces en cours ..."))
 					SettingsCpp.sendLogs()

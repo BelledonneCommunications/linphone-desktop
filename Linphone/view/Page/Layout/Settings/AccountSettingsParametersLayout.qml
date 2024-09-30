@@ -1,7 +1,7 @@
 import QtCore
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls.Material as Control
+import QtQuick.Controls.Basic as Control
 import QtQuick.Dialogs
 import Linphone
 import SettingsCpp 1.0
@@ -120,7 +120,7 @@ AbstractSettingsLayout {
 						propertyName: "stunServer"
 						propertyOwner: account.core
 						title: qsTr("Adresse du serveur STUN")
-						isValid: function(text) { return UtilsCpp.isValidIPAddress(text) || UtilsCpp.isValidHostname(text); }
+						isValid: function(text) { return UtilsCpp.isValidIPAddress(text) || UtilsCpp.isValidHostname(text); }
 					}
 					SwitchSetting {
 						titleText: qsTr("Activer ICE")
