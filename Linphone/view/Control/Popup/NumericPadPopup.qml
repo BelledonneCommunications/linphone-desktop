@@ -68,7 +68,7 @@ Control.Popup {
 	}
 	contentItem: NumericPad{
 		id: numPad
-		currentCall: currentCall
+		currentCall: mainItem.currentCall
 		anchors.fill: parent
 		anchors.topMargin: 41 * DefaultStyle.dp
 		anchors.bottomMargin: 18 * DefaultStyle.dp
