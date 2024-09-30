@@ -399,7 +399,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	    [this](const std::shared_ptr<linphone::Call> &call, const std::shared_ptr<const linphone::CallStats> &stats) {
 		    if (stats->getType() == linphone::StreamType::Audio) {
 			    AudioStats audioStats;
-			    auto playloadType = call->getParams()->getUsedAudioPayloadType();
+			    auto playloadType = call->getCurrentParams()->getUsedAudioPayloadType();
 			    auto codecType = playloadType ? playloadType->getMimeType() : "";
 			    auto codecRate = playloadType ? playloadType->getClockRate() / 1000 : 0;
 			    audioStats.codec = tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
@@ -413,8 +413,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    setAudioStats(audioStats);
 		    } else if (stats->getType() == linphone::StreamType::Video) {
 			    VideoStats videoStats;
-			    auto params = call->getParams();
-			    auto playloadType = params->getUsedAudioPayloadType();
+			    auto params = call->getCurrentParams();
+			    auto playloadType = params->getUsedVideoPayloadType();
 			    auto codecType = playloadType ? playloadType->getMimeType() : "";
 			    auto codecRate = playloadType ? playloadType->getClockRate() / 1000 : 0;
 			    videoStats.codec = tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
@@ -430,10 +430,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    auto receivedResolution =
 			        params->getReceivedVideoDefinition() ? params->getReceivedVideoDefinition()->getName() : "";
 			    videoStats.resolution = tr("Définition vidéo : %1 %2 %3 %4")
-			                                .arg("↑")
-			                                .arg(Utils::coreStringToAppString(sentResolution))
-			                                .arg("↓")
-			                                .arg(Utils::coreStringToAppString(receivedResolution));
+			                                .arg("↑", Utils::coreStringToAppString(sentResolution), "↓",
+			                                     Utils::coreStringToAppString(receivedResolution));
 			    auto sentFps = params->getSentFramerate();
 			    auto receivedFps = params->getReceivedFramerate();
 			    videoStats.fps = tr("FPS : %1 %2 %3 %4").arg("↑").arg(sentFps).arg("↓").arg(receivedFps);
