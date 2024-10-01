@@ -53,6 +53,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	// Audio
 	mCaptureDevices = mSettingsModel->getCaptureDevices();
 	mPlaybackDevices = mSettingsModel->getPlaybackDevices();
+	mRingerDevices = mSettingsModel->getRingerDevices();
 	mCaptureDevice = mSettingsModel->getCaptureDevice();
 	mPlaybackDevice = mSettingsModel->getPlaybackDevice();
 
@@ -176,6 +177,16 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 			emit playbackDeviceChanged(device);
 		});
 	});
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetRingerDevice, [this](const QString id) {
+		mSettingsModelConnection->invokeToModel([this, id]() { mSettingsModel->setRingerDevice(id); });
+	});
+
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ringerDeviceChanged, [this](const QString device) {
+		mSettingsModelConnection->invokeToCore([this, device]() {
+			mRingerDevice = device;
+			emit ringerDeviceChanged(device);
+		});
+	});
 
 	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetPlaybackGain, [this](const float value) {
 		mSettingsModelConnection->invokeToModel([this, value]() { mSettingsModel->setPlaybackGain(value); });
@@ -216,6 +227,13 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		                                             mSettingsModelConnection->invokeToCore([this, devices]() {
 			                                             mPlaybackDevices = devices;
 			                                             emit playbackDevicesChanged(devices);
+		                                             });
+	                                             });
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ringerDevicesChanged,
+	                                             [this](const QStringList devices) {
+		                                             mSettingsModelConnection->invokeToCore([this, devices]() {
+			                                             mRingerDevices = devices;
+			                                             emit ringerDevicesChanged(devices);
 		                                             });
 	                                             });
 
@@ -346,6 +364,10 @@ QStringList SettingsCore::getPlaybackDevices() const {
 	return mPlaybackDevices;
 }
 
+QStringList SettingsCore::getRingerDevices() const {
+	return mRingerDevices;
+}
+
 int SettingsCore::getVideoDeviceIndex() const {
 	return mVideoDevices.indexOf(mVideoDevice);
 }
@@ -372,6 +394,10 @@ QString SettingsCore::getCaptureDevice() const {
 
 QString SettingsCore::getPlaybackDevice() const {
 	return mPlaybackDevice;
+}
+
+QString SettingsCore::getRingerDevice() const {
+	return mRingerDevice;
 }
 
 int SettingsCore::getEchoCancellationCalibration() const {

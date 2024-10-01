@@ -81,12 +81,16 @@ public:
 
 	QStringList getCaptureDevices() const;
 	QStringList getPlaybackDevices() const;
+	QStringList getRingerDevices() const;
 
 	QString getCaptureDevice() const;
 	void setCaptureDevice(const QString &device);
 
 	QString getPlaybackDevice() const;
 	void setPlaybackDevice(const QString &device);
+
+	QString getRingerDevice() const;
+	void setRingerDevice(const QString &device);
 
 	void startEchoCancellerCalibration();
 	int getEchoCancellationCalibration() const;
@@ -159,9 +163,11 @@ signals:
 
 	void captureDevicesChanged(const QStringList &devices);
 	void playbackDevicesChanged(const QStringList &devices);
+	void ringerDevicesChanged(const QStringList &devices);
 
 	void captureDeviceChanged(const QString &device);
 	void playbackDeviceChanged(const QString &device);
+	void ringerDeviceChanged(const QString &device);
 
 	void showAudioCodecsChanged(bool status);
 

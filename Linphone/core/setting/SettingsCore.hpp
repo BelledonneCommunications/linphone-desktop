@@ -48,12 +48,14 @@ class SettingsCore : public QObject, public AbstractObject {
 
 	Q_PROPERTY(QStringList captureDevices READ getCaptureDevices NOTIFY captureDevicesChanged)
 	Q_PROPERTY(QStringList playbackDevices READ getPlaybackDevices NOTIFY playbackDevicesChanged)
+	Q_PROPERTY(QStringList ringerDevices READ getRingerDevices NOTIFY ringerDevicesChanged)
 
 	Q_PROPERTY(float playbackGain READ getPlaybackGain WRITE lSetPlaybackGain NOTIFY playbackGainChanged)
 	Q_PROPERTY(float captureGain READ getCaptureGain WRITE lSetCaptureGain NOTIFY captureGainChanged)
 
 	Q_PROPERTY(QString captureDevice READ getCaptureDevice WRITE lSetCaptureDevice NOTIFY captureDeviceChanged)
 	Q_PROPERTY(QString playbackDevice READ getPlaybackDevice WRITE lSetPlaybackDevice NOTIFY playbackDeviceChanged)
+	Q_PROPERTY(QString ringerDevice READ getRingerDevice WRITE lSetRingerDevice NOTIFY ringerDeviceChanged)
 
 	Q_PROPERTY(QStringList videoDevices READ getVideoDevices NOTIFY videoDevicesChanged)
 	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE lSetVideoDevice NOTIFY videoDeviceChanged)
@@ -109,10 +111,12 @@ public:
 
 	QStringList getCaptureDevices() const;
 	QStringList getPlaybackDevices() const;
+	QStringList getRingerDevices() const;
 
 	QString getCaptureDevice() const;
 
 	QString getPlaybackDevice() const;
+	QString getRingerDevice() const;
 
 	QString getVideoDevice() const {
 		return mVideoDevice;
@@ -188,12 +192,16 @@ signals:
 
 	void captureDevicesChanged(const QStringList &devices);
 	void playbackDevicesChanged(const QStringList &devices);
+	void ringerDevicesChanged(const QStringList &devices);
 
 	void lSetCaptureDevice(const QString &device);
 	void captureDeviceChanged(const QString &device);
 
 	void lSetPlaybackDevice(const QString &device);
 	void playbackDeviceChanged(const QString &device);
+
+	void lSetRingerDevice(const QString &device);
+	void ringerDeviceChanged(const QString &device);
 
 	void lSetVideoDevice(const QString &device);
 	void videoDeviceChanged();
@@ -242,8 +250,10 @@ private:
 	// Audio
 	QStringList mCaptureDevices;
 	QStringList mPlaybackDevices;
+	QStringList mRingerDevices;
 	QString mCaptureDevice;
 	QString mPlaybackDevice;
+	QString mRingerDevice;
 
 	// Video
 	QStringList mVideoDevices;

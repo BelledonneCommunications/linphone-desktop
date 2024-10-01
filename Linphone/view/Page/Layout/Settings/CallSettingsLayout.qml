@@ -79,6 +79,37 @@ AbstractSettingsLayout {
 						spacing: 0
 						RowLayout {
 							EffectImage {
+								imageSource: AppIcons.bellRinger
+								colorizationColor: DefaultStyle.main1_500_main
+								Layout.preferredWidth: 24 * DefaultStyle.dp
+								Layout.preferredHeight: 24 * DefaultStyle.dp
+								imageWidth: 24 * DefaultStyle.dp
+								imageHeight: 24 * DefaultStyle.dp
+							}
+							Text {
+								text: qsTr("Sonnerie - Appels entrants")
+								Layout.leftMargin: 9
+								font: Typography.p2l
+								color: DefaultStyle.main2_600
+								Layout.fillWidth: true
+							}
+						}
+						ComboSetting {
+							Layout.fillWidth: true
+							Layout.topMargin: 12 * DefaultStyle.dp
+							Layout.preferredWidth: parent.width
+							entries: SettingsCpp.ringerDevices
+							propertyName: "ringerDevice"
+							propertyOwner: SettingsCpp
+						}
+						Item {
+							Layout.fillHeight: true
+						}
+					}
+					ColumnLayout {
+						spacing: 0
+						RowLayout {
+							EffectImage {
 								imageSource: AppIcons.speaker
 								colorizationColor: DefaultStyle.main1_500_main
 								Layout.preferredWidth: 24 * DefaultStyle.dp
