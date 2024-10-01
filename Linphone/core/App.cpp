@@ -467,6 +467,7 @@ void App::initCore() {
 			    mEngine->setObjectOwnership(mSettings.get(), QQmlEngine::CppOwnership);
 			    mAccountList = AccountList::create();
 			    mCallList = CallList::create();
+			    setAutoStart(mSettings->getAutoStart());
 
 			    const QUrl url(u"qrc:/Linphone/view/Page/Window/Main/MainWindow.qml"_qs);
 			    QObject::connect(
