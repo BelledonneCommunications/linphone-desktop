@@ -226,7 +226,7 @@ LoginLayout {
 					Connections {
 						target: SettingsCpp
 						function onAssistantThirdPartySipAccountDomainChanged() {
-							domain.resetText()
+							domainEdit.resetText()
 						}
 					}
 				}

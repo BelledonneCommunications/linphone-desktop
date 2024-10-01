@@ -498,7 +498,7 @@ void App::initCore() {
 void App::initCppInterfaces() {
 	qmlRegisterSingletonType<LoginPage>(
 	    Constants::MainQmlUri, 1, 0, "LoginPageCpp", [](QQmlEngine *engine, QJSEngine *) -> QObject * {
-		    static auto loginPage = new LoginPage(engine);
+		    static auto loginPage = new LoginPage();
 		    App::getInstance()->mEngine->setObjectOwnership(loginPage, QQmlEngine::CppOwnership);
 		    return loginPage;
 	    });
@@ -585,6 +585,8 @@ void App::initCppInterfaces() {
 //------------------------------------------------------------
 
 void App::clean() {
+	mEngine->clearComponentCache();
+	mEngine->clearSingletons();
 	delete mEngine;
 	mEngine = nullptr;
 	// Wait 500ms to let time for log te be stored.
@@ -600,7 +602,10 @@ void App::restart() {
 	mCoreModelConnection->invokeToModel([this]() {
 		CoreModel::getInstance()->getCore()->stop();
 		mCoreModelConnection->invokeToCore([this]() {
-			mEngine->deleteLater();
+			mEngine->clearComponentCache();
+			mEngine->clearSingletons();
+			delete mEngine;
+			mEngine = nullptr;
 			if (mSettings) mSettings.reset();
 			initCore();
 			// Retrieve self from current Core/Model connection and reset Qt connections.
