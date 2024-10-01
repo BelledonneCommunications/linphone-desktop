@@ -98,17 +98,20 @@ AbstractSettingsLayout {
 						propertyName: "server"
 						propertyOwner: ldapGui.core
 						title: qsTr("URL du serveur (ne peut être vide)")
+						toValidate: true
 					}
 					DecoratedTextField {
 						propertyName: "bindDn"
 						propertyOwner: ldapGui.core
 						title: qsTr("Bind DN")
+						toValidate: true
 					}
 					DecoratedTextField {
 						propertyName: "password"
 						hidden: true
 						propertyOwner: ldapGui.core
 						title: qsTr("Mot de passe")
+						toValidate: true
 					}
 					SwitchSetting {
 						titleText: qsTr("Utiliser TLS")
@@ -119,50 +122,59 @@ AbstractSettingsLayout {
 						propertyName: "baseObject"
 						propertyOwner: ldapGui.core
 						title: qsTr("Base de recherche (ne peut être vide)")
+						toValidate: true
 					}
 					DecoratedTextField {
 						propertyName: "filter"
 						propertyOwner: ldapGui.core
 						title: qsTr("Filtre")
+						toValidate: true
 					}
 					DecoratedTextField {
 						propertyName: "maxResults"
 						propertyOwner: ldapGui.core
 						validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 						title: qsTr("Nombre maximum de résultats")
+						toValidate: true
 					}
 					DecoratedTextField {
 						propertyName: "delay"
 						propertyOwner: ldapGui.core
 						validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 						title: qsTr("Délai entre 2 requêtes (en millisecondes)")
+						toValidate: true
 					}
 					DecoratedTextField {
 						propertyName: "timeout"
 						propertyOwner: ldapGui.core
 						title: qsTr("Durée maximun (en secondes)")
 						validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
+						toValidate: true
 					}
 					DecoratedTextField {
 						propertyName: "minChars"
 						propertyOwner: ldapGui.core
 						title: qsTr("Nombre minimum de caractères pour la requête")
 						validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
+						toValidate: true
 					}
 					DecoratedTextField {
 						propertyName: "nameAttribute"
 						propertyOwner: ldapGui.core
 						title: qsTr("Attributs de nom")
+						toValidate: true
 					}
 					DecoratedTextField {
 						propertyName: "sipAttribute"
 						propertyOwner: ldapGui.core
 						title: qsTr("Attributs SIP")
+						toValidate: true
 					}
 					DecoratedTextField {
 						propertyName: "sipDomain"
 						propertyOwner: ldapGui.core
 						title: qsTr("Domaine SIP")
+						toValidate: true
 					}
 				}
 			}

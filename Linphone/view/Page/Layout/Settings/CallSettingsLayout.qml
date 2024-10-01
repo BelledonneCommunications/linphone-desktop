@@ -7,7 +7,7 @@ import SettingsCpp 1.0
 
 AbstractSettingsLayout {
 	contentComponent: content
-	width: parent.width
+	width: parent?.width
 	Component {
 		id: content
 		ColumnLayout {

@@ -65,7 +65,7 @@ ListView {
 		height: 63 * DefaultStyle.dp + topOffset
 		width: mainItem.width
 		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
-		property var dateTime: $modelData && $modelData.core.haveModel ? $modelData.core.dateTime : UtilsCpp.getCurrentDateTime()
+		property var dateTime: !!$modelData && $modelData.core.haveModel ? $modelData.core.dateTime : UtilsCpp.getCurrentDateTime()
 		property string day : UtilsCpp.toDateDayNameString(dateTime)
 		property string dateString:  UtilsCpp.toDateString(dateTime)
 		property string previousDateString: previousItem ? UtilsCpp.toDateString(previousItem.core ? previousItem.core.dateTimeUtc : UtilsCpp.getCurrentDateTimeUtc()) : ''

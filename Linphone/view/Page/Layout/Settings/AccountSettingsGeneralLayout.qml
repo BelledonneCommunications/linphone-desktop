@@ -154,6 +154,7 @@ AbstractSettingsLayout {
 						onEditingFinished: {
 							if (text.length != 0) model.core.displayName = text
 						}
+						toValidate: true
 					}
 					Text {
 						text: qsTr("Indicatif international*")

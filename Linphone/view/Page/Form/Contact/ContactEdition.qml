@@ -154,7 +154,7 @@ MainRightPanel {
 							initialText: contact.core.givenName
 							onTextEdited: contact.core.givenName = text
 							backgroundColor: DefaultStyle.grey_0
-							backgroundBorderColor: givenName.errorTextItem.opacity != 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
+							backgroundBorderColor: givenName.errorTextVisible ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 							KeyNavigation.up: editButton.visible ? editButton : addPictureButton
 							KeyNavigation.down: nameTextField
 						}

@@ -16,6 +16,7 @@ FormItemLayout {
 	property var placeHolder
 	property bool useTitleAsPlaceHolder: true
 	property bool canBeEmpty: true
+	property bool toValidate: false
 
     property alias hidden: textField.hidden
 	property alias validator: textField.validator
@@ -33,6 +34,7 @@ FormItemLayout {
 		propertyOwner: mainItem.propertyOwner
 		canBeEmpty: mainItem.canBeEmpty
 		isValid: mainItem.isValid
+		toValidate: mainItem.toValidate
 		onValidationChecked: (isValid) => {
 			if (isValid) return
 			if (!canBeEmpty && empty) {

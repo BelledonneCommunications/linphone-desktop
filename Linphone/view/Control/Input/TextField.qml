@@ -41,6 +41,7 @@ Control.TextField {
 	property var isValid: function(text) {
         return true
     }
+	property bool toValidate: false
 	property int idleTimeOut: 200
 	property bool empty: mainItem.propertyOwner!= undefined && mainItem.propertyOwner[mainItem.propertyName]?.length == 0
 	property bool canBeEmpty: true
@@ -150,7 +151,10 @@ Control.TextField {
 		updateText()
 	}
 	onTextChanged: {
-		idleTimer.restart()
+		if(mainItem.toValidate) {
+			// Restarting
+			idleTimer.restart()
+		}
 		// updateText()
 	}
 	function updateText() {

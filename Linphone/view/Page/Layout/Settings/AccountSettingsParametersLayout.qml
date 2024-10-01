@@ -51,6 +51,7 @@ AbstractSettingsLayout {
 						propertyOwner: account.core
 						title: qsTr("URI du serveur de messagerie vocale")
 						isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
+						toValidate: true
 					}
 					Item {
 						Layout.fillHeight: true
@@ -104,12 +105,14 @@ AbstractSettingsLayout {
 						entries: account.core.transports
 						propertyName: "transport"
 						propertyOwner: account.core
+						toValidate: true
 					}
 					DecoratedTextField {
 						title: qsTr("URL du serveur mandataire")
 						propertyName: "serverAddress"
 						propertyOwner: account.core
 						isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
+						toValidate: true
 					}
 					SwitchSetting {
 						titleText: qsTr("Serveur mandataire sortant")
@@ -121,6 +124,7 @@ AbstractSettingsLayout {
 						propertyOwner: account.core
 						title: qsTr("Adresse du serveur STUN")
 						isValid: function(text) { return UtilsCpp.isValidIPAddress(text) || UtilsCpp.isValidHostname(text); }
+						toValidate: true
 					}
 					SwitchSetting {
 						titleText: qsTr("Activer ICE")
@@ -143,12 +147,14 @@ AbstractSettingsLayout {
 						title: qsTr("Expiration (en seconde)")
 						canBeEmpty: false
 						isValid: function(text) { return !isNaN(Number(text)); }
+						toValidate: true
 					}
 					DecoratedTextField {
 						title: qsTr("URI de l’usine à conversations")
 						propertyName: "conferenceFactoryAddress"
 						propertyOwner: account.core
 						isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
+						toValidate: true
 					}
 					DecoratedTextField {
 						title: qsTr("URI de l’usine à réunions")
@@ -156,12 +162,14 @@ AbstractSettingsLayout {
 						propertyOwner: account.core
 						isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
 						visible: !SettingsCpp.disableMeetingsFeature
+						toValidate: true
 					}
 					DecoratedTextField {
 						title: qsTr("URL du serveur d’échange de clés de chiffrement")
 						propertyName: "limeServerUrl"
 						propertyOwner: account.core
 						isValid: function(text) { return UtilsCpp.isValidURL(text); }
+						toValidate: true
 					}
 					Item {
 						Layout.fillHeight: true
