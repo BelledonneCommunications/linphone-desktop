@@ -134,7 +134,12 @@ AbstractWindow {
 	Component {
 		id: sipLoginPage
 		SIPLoginPage {
-			onGoBack: mainWindowStackView.pop()
+			onGoBack: {
+				if(SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin)
+					mainWindowStackView.replace(mainPage)
+				else
+					mainWindowStackView.pop()
+			}
 			onGoToRegister: mainWindowStackView.replace(registerPage)
 			
 			onConnectionSucceed: {

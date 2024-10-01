@@ -31,7 +31,6 @@ LoginLayout {
 					console.debug("[SIPLoginPage] User: return")
 					mainItem.goBack()
 				}
-				visible: !SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin
 			}
 			Image {
 				fillMode: Image.PreserveAspectFit
