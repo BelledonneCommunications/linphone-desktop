@@ -76,6 +76,9 @@ Control.Popup {
 		anchors.leftMargin: 72 * DefaultStyle.dp
 		onButtonPressed: (text) => {
 			console.log("BUTTON PRESSED NUMPAD")
-			mainItem.buttonPressed(text)}
+			mainItem.buttonPressed(text)
+		}
+		onLaunchCall: mainItem.launchCall()
+		onWipe: mainItem.wipe()
 	}
 }
