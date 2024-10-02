@@ -601,9 +601,11 @@ void App::initCppInterfaces() {
 //------------------------------------------------------------
 
 void App::clean() {
-	mEngine->clearComponentCache();
-	mEngine->clearSingletons();
-	delete mEngine;
+	if (mEngine) {
+		mEngine->clearComponentCache();
+		mEngine->clearSingletons();
+		delete mEngine;
+	}
 	mEngine = nullptr;
 	// Wait 500ms to let time for log te be stored.
 	// mNotifier destroyed in mEngine deletion as it is its parent
