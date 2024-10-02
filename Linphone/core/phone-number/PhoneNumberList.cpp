@@ -36,6 +36,7 @@ QSharedPointer<PhoneNumberList> PhoneNumberList::create() {
 
 PhoneNumberList::PhoneNumberList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	App::postModelAsync([=]() {
 		// Model thread.
 		auto dialPlans = linphone::Factory::get()->getDialPlans();

@@ -72,8 +72,8 @@ void CallProxy::setSourceModel(QAbstractItemModel *model) {
 	}
 	auto newCallList = dynamic_cast<CallList *>(model);
 	if (newCallList) {
-		connect(newCallList, &CallList::currentCallChanged, this, &CallProxy::resetCurrentCall);
-		connect(newCallList, &CallList::haveCallChanged, this, &CallProxy::haveCallChanged);
+		connect(newCallList, &CallList::currentCallChanged, this, &CallProxy::resetCurrentCall, Qt::QueuedConnection);
+		connect(newCallList, &CallList::haveCallChanged, this, &CallProxy::haveCallChanged, Qt::QueuedConnection);
 		connect(this, &CallProxy::lMergeAll, newCallList, &CallList::lMergeAll);
 	}
 	QSortFilterProxyModel::setSourceModel(model);

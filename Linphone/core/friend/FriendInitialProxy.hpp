@@ -53,8 +53,6 @@ protected:
 	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 
 	QString mFilterText;
-	QSharedPointer<MagicSearchProxy> mSource;
-
 	DECLARE_ABSTRACT_OBJECT
 };
 

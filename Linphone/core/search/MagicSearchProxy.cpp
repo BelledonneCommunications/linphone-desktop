@@ -43,17 +43,25 @@ void MagicSearchProxy::setList(QSharedPointer<MagicSearchList> newList) {
 	}
 	mList = newList;
 	if (mList) {
-		connect(mList.get(), &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged);
-		connect(mList.get(), &MagicSearchList::aggregationFlagChanged, this, &MagicSearchProxy::aggregationFlagChanged);
-		connect(mList.get(), &MagicSearchList::friendCreated, this, [this](int index) {
-			auto proxyIndex = mapFromSource(sourceModel()->index(index, 0));
-			emit friendCreated(proxyIndex.row());
-		});
-		connect(mList.get(), &MagicSearchList::initialized, this, [this, newList = mList.get()] {
-			emit newList->lSetSourceFlags(mSourceFlags);
-			emit newList->lSetAggregationFlag(mAggregationFlag);
-			emit initialized();
-		});
+		connect(mList.get(), &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged,
+		        Qt::QueuedConnection);
+		connect(mList.get(), &MagicSearchList::aggregationFlagChanged, this, &MagicSearchProxy::aggregationFlagChanged,
+		        Qt::QueuedConnection);
+		connect(
+		    mList.get(), &MagicSearchList::friendCreated, this,
+		    [this](int index) {
+			    auto proxyIndex = mapFromSource(sourceModel()->index(index, 0));
+			    emit friendCreated(proxyIndex.row());
+		    },
+		    Qt::QueuedConnection);
+		connect(
+		    mList.get(), &MagicSearchList::initialized, this,
+		    [this, newList = mList.get()] {
+			    emit newList->lSetSourceFlags(mSourceFlags);
+			    emit newList->lSetAggregationFlag(mAggregationFlag);
+			    emit initialized();
+		    },
+		    Qt::QueuedConnection);
 	}
 	setSourceModel(mList.get());
 }

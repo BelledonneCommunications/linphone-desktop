@@ -28,18 +28,24 @@ DEFINE_ABSTRACT_OBJECT(ConferenceInfoProxy)
 ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : SortFilterProxy(parent) {
 	mList = ConferenceInfoList::create();
 	setSourceModel(mList.get());
-	connect(this, &ConferenceInfoProxy::searchTextChanged, [this] {
-		invalidate();
-		updateCurrentDateIndex();
-	});
-	connect(mList.get(), &ConferenceInfoList::haveCurrentDateChanged, [this] {
-		invalidate();
-		updateCurrentDateIndex();
-	});
+	connect(
+	    this, &ConferenceInfoProxy::searchTextChanged, this,
+	    [this] {
+		    invalidate();
+		    updateCurrentDateIndex();
+	    },
+	    Qt::QueuedConnection);
+	connect(
+	    mList.get(), &ConferenceInfoList::haveCurrentDateChanged, this,
+	    [this] {
+		    invalidate();
+		    updateCurrentDateIndex();
+	    },
+	    Qt::QueuedConnection);
 	connect(mList.get(), &ConferenceInfoList::haveCurrentDateChanged, this,
-	        &ConferenceInfoProxy::haveCurrentDateChanged);
+	        &ConferenceInfoProxy::haveCurrentDateChanged, Qt::QueuedConnection);
 	connect(mList.get(), &ConferenceInfoList::currentDateIndexChanged, this,
-	        &ConferenceInfoProxy::updateCurrentDateIndex);
+	        &ConferenceInfoProxy::updateCurrentDateIndex, Qt::QueuedConnection);
 }
 
 ConferenceInfoProxy::~ConferenceInfoProxy() {

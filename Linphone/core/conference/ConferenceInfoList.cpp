@@ -40,6 +40,7 @@ QSharedPointer<ConferenceInfoList> ConferenceInfoList::create() {
 
 ConferenceInfoList::ConferenceInfoList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 }
 
 ConferenceInfoList::~ConferenceInfoList() {

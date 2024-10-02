@@ -32,7 +32,8 @@ DEFINE_GUI_OBJECT(ParticipantDeviceProxy)
 
 ParticipantDeviceProxy::ParticipantDeviceProxy(QObject *parent) : SortFilterProxy(parent) {
 	mParticipants = ParticipantDeviceList::create();
-	connect(mParticipants.get(), &ParticipantDeviceList::countChanged, this, &ParticipantDeviceProxy::meChanged);
+	connect(mParticipants.get(), &ParticipantDeviceList::countChanged, this, &ParticipantDeviceProxy::meChanged,
+	        Qt::QueuedConnection);
 
 	setSourceModel(mParticipants.get());
 	sort(0); //, Qt::DescendingOrder);

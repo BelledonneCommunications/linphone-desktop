@@ -39,6 +39,7 @@ QSharedPointer<MagicSearchList> MagicSearchList::create() {
 
 MagicSearchList::MagicSearchList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mSourceFlags = (int)linphone::MagicSearch::Source::Friends | (int)linphone::MagicSearch::Source::LdapServers;
 	mAggregationFlag = LinphoneEnums::MagicSearchAggregation::Friend;
 	mSearchFilter = "*";

@@ -77,9 +77,12 @@ void AccountProxy::setSourceModel(QAbstractItemModel *model) {
 	}
 	auto newAccountList = dynamic_cast<AccountList *>(model);
 	if (newAccountList) {
-		connect(newAccountList, &AccountList::countChanged, this, &AccountProxy::resetDefaultAccount);
-		connect(newAccountList, &AccountList::defaultAccountChanged, this, &AccountProxy::resetDefaultAccount);
-		connect(newAccountList, &AccountList::haveAccountChanged, this, &AccountProxy::haveAccountChanged);
+		connect(newAccountList, &AccountList::countChanged, this, &AccountProxy::resetDefaultAccount,
+		        Qt::QueuedConnection);
+		connect(newAccountList, &AccountList::defaultAccountChanged, this, &AccountProxy::resetDefaultAccount,
+		        Qt::QueuedConnection);
+		connect(newAccountList, &AccountList::haveAccountChanged, this, &AccountProxy::haveAccountChanged,
+		        Qt::QueuedConnection);
 	}
 	QSortFilterProxyModel::setSourceModel(model);
 }

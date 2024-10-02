@@ -44,6 +44,7 @@ CallHistoryList::createCallHistoryCore(const std::shared_ptr<linphone::CallLog> 
 
 CallHistoryList::CallHistoryList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 }
 
 CallHistoryList::~CallHistoryList() {

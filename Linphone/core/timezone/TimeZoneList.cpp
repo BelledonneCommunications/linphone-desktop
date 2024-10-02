@@ -36,6 +36,7 @@ QSharedPointer<TimeZoneList> TimeZoneList::create() {
 }
 
 TimeZoneList::TimeZoneList(QObject *parent) : ListProxy(parent) {
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	initTimeZones();
 }
 

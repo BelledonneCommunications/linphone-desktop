@@ -43,6 +43,7 @@ QSharedPointer<LdapCore> LdapList::createLdapCore(const std::shared_ptr<linphone
 
 LdapList::LdapList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 }
 
 LdapList::~LdapList() {

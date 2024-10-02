@@ -43,14 +43,6 @@ void FriendInitialProxy::setFilterText(const QString &filter) {
 	}
 }
 
-// void FriendInitialProxy::setSourceModel(QAbstractItemModel *sourceModel) {
-// 	mSource = qSharedPointerCast<MagicSearchProxy>(QSharedPointer<QAbstractItemModel>(sourceModel));
-// }
-
-// QAbstractItemModel *FriendInitialProxy::sourceModel() const {
-// 	return mSource.get();
-// }
-
 bool FriendInitialProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	bool show = (mFilterText.isEmpty() || mFilterText == "*");
 	if (!show) {
