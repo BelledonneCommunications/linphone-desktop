@@ -34,6 +34,7 @@ class CallGui;
 class Thread;
 class Notifier;
 class QQuickWindow;
+class QSystemTrayIcon;
 
 class App : public SingleApplication, public AbstractObject {
 	Q_OBJECT
@@ -106,6 +107,7 @@ public:
 	void initCppInterfaces();
 	void restart();
 	bool autoStartEnabled();
+	void setSysTrayIcon();
 
 	void onLoggerInitialized();
 	void sendCommand();
@@ -119,6 +121,8 @@ public:
 	QSharedPointer<AccountList> getAccountList() const;
 	QSharedPointer<CallList> getCallList() const;
 	QSharedPointer<SettingsCore> getSettings() const;
+
+	void onExitOnCloseChanged(); // Can be used for UniqueConnection
 
 #ifdef Q_OS_LINUX
 	Q_INVOKABLE void exportDesktopFile();
@@ -145,6 +149,7 @@ private:
 	QCommandLineParser *mParser = nullptr;
 	Thread *mLinphoneThread = nullptr;
 	Notifier *mNotifier = nullptr;
+	QSystemTrayIcon *mSystemTrayIcon = nullptr;
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;
 	QSharedPointer<SettingsCore> mSettings;

@@ -61,9 +61,16 @@ public:                                                                         
 		}                                                                                                              \
 	}
 
-#define DECLARE_CORE_GETSET(type, x, X)                                                                                \
+#define DECLARE_CORE_GETSET_MEMBER(type, x, X)                                                                         \
 	Q_PROPERTY(type x MEMBER m##X WRITE set##X NOTIFY x##Changed)                                                      \
 	Q_SIGNAL void set##X(type data);                                                                                   \
+	Q_SIGNAL void x##Changed();                                                                                        \
+	type m##X;
+
+#define DECLARE_CORE_GETSET(type, x, X)                                                                                \
+	Q_PROPERTY(type x READ get##X WRITE set##X NOTIFY x##Changed)                                                      \
+	Q_SIGNAL void set##X(type data);                                                                                   \
+	type get##X() const;                                                                                               \
 	Q_SIGNAL void x##Changed();                                                                                        \
 	type m##X;
 
@@ -123,8 +130,7 @@ public:                                                                         
 		}                                                                                                              \
 	}
 
-#define DEFINE_NOTIFY_CONFIG_READY(x, X)                                                                               \
-		emit x##Changed(get##X());
+#define DEFINE_NOTIFY_CONFIG_READY(x, X) emit x##Changed(get##X());
 
 #define DECLARE_GETSET_API(type, x, X)                                                                                 \
 	type get##X() const;                                                                                               \
@@ -145,7 +151,7 @@ public:                                                                         
 	}
 
 #define DEFINE_GETSET_MODEL_STRING(Class, x, X, ownerNotNull)                                                          \
-QString Class::get##X() const {                                                                                        \
+	QString Class::get##X() const {                                                                                    \
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		return Utils::coreStringToAppString(ownerNotNull->get##X());                                                   \
 	}                                                                                                                  \
@@ -158,7 +164,7 @@ QString Class::get##X() const {                                                 
 	}
 
 #define DEFINE_GETSET_ENABLED(Class, x, X, ownerNotNull)                                                               \
-bool Class::get##X() const {                                                                                           \
+	bool Class::get##X() const {                                                                                       \
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		return ownerNotNull->x##Enabled();                                                                             \
 	}                                                                                                                  \

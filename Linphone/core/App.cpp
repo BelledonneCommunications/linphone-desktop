@@ -22,17 +22,20 @@
 
 #include "App.hpp"
 
+#include <QAction>
 #include <QCoreApplication>
 #include <QDirIterator>
 #include <QFileSelector>
 #include <QFontDatabase>
 #include <QGuiApplication>
 #include <QLibraryInfo>
+#include <QMenu>
 #include <QProcessEnvironment>
 #include <QQmlComponent>
 #include <QQmlContext>
 #include <QQmlFileSelector>
 #include <QQuickWindow>
+#include <QSystemTrayIcon>
 #include <QTimer>
 
 #include "core/account/AccountCore.hpp"
@@ -122,7 +125,7 @@ bool App::autoStartEnabled() {
 	// check if the Exec part of the autostart ini file not corresponding to our executable (old desktop entry with
 	// wrong version in filename)
 	if (autoStartConf.indexOf(QString("Exec=" + exec + " ")) <
-	    0) { // On autostart, there is the option --iconified so there is one space.
+	    0) { // On autostart, there is the option --minimized so there is one space.
 		// replace file
 		setAutoStart(true);
 	}
@@ -231,10 +234,10 @@ void App::setAutoStart(bool enabled) {
 #else
 
 void App::setAutoStart(bool enabled) {
-	if (enabled == mAutoStart) return;
-
 	QSettings settings(AutoStartSettingsFilePath, QSettings::NativeFormat);
-	if (enabled) settings.setValue(EXECUTABLE_NAME, QDir::toNativeSeparators(applicationFilePath()));
+	QString parameters;
+	if (!mSettings->getExitOnClose()) parameters = " --minimized";
+	if (enabled) settings.setValue(EXECUTABLE_NAME, QDir::toNativeSeparators(applicationFilePath()) + parameters);
 	else settings.remove(EXECUTABLE_NAME);
 
 	mAutoStart = enabled;
@@ -402,7 +405,6 @@ void App::init() {
 		lDebug() << log().arg("Starting Thread");
 		mLinphoneThread->start();
 	}
-	setQuitOnLastWindowClosed(true); // TODO: use settings to set it
 
 	lInfo() << log().arg("Display server : %1").arg(platformName());
 }
@@ -468,6 +470,9 @@ void App::initCore() {
 			    mAccountList = AccountList::create();
 			    mCallList = CallList::create();
 			    setAutoStart(mSettings->getAutoStart());
+			    setQuitOnLastWindowClosed(mSettings->getExitOnClose());
+			    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
+			            Qt::UniqueConnection);
 
 			    const QUrl url(u"qrc:/Linphone/view/Page/Window/Main/MainWindow.qml"_qs);
 			    QObject::connect(
@@ -478,9 +483,20 @@ void App::initCore() {
 						        lCritical() << log().arg("MainWindow.qml couldn't be load. The app will exit");
 						        exit(-1);
 					        }
-					        setMainWindow(qobject_cast<QQuickWindow *>(obj));
+					        auto window = qobject_cast<QQuickWindow *>(obj);
+					        setMainWindow(window);
 					        QMetaObject::invokeMethod(obj, "initStackViewItem");
-					        Q_ASSERT(mMainWindow);
+#ifndef __APPLE__
+					        // Enable TrayIconSystem.
+					        if (!QSystemTrayIcon::isSystemTrayAvailable())
+						        qWarning("System tray not found on this system.");
+					        else setSysTrayIcon();
+#endif // ifndef __APPLE__
+					        static bool firstOpen = true;
+					        if (!firstOpen || !mParser->isSet("minimized")) {
+						        window->show();
+					        }
+					        firstOpen = false;
 				        }
 			        },
 			        Qt::QueuedConnection);
@@ -634,7 +650,7 @@ void App::createCommandParser() {
 	     tr("commandLineOptionFetchConfigArg")},
 	    {{"c", "call"}, tr("commandLineOptionCall").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionCallArg")},
 #ifndef Q_OS_MACOS
-	    {"iconified", tr("commandLineOptionIconified")},
+	    {"minimized", tr("commandLineOptionMinimized")},
 #endif // ifndef Q_OS_MACOS
 	    {{"V", "verbose"}, tr("commandLineOptionVerbose")},
 	    {"qt-logs-only", tr("commandLineOptionQtLogsOnly")},
@@ -750,6 +766,12 @@ QSharedPointer<SettingsCore> App::getSettings() const {
 	return mSettings;
 }
 
+void App::onExitOnCloseChanged() {
+	setSysTrayIcon(); // Restore button depends from this option
+	setQuitOnLastWindowClosed(mSettings->getExitOnClose());
+	setAutoStart(mSettings->getAutoStart());
+}
+
 #ifdef Q_OS_LINUX
 QString App::getApplicationPath() const {
 	const QString binPath(QCoreApplication::applicationFilePath());
@@ -827,7 +849,7 @@ bool App::generateDesktopFile(const QString &confPath, bool remove, bool openInB
 	                              "GenericName=SIP Phone\n"
 	                              "Comment=" APPLICATION_DESCRIPTION "\n"
 	                              "Type=Application\n")
-	                   << (openInBackground ? "Exec=" + exec + " --iconified %u\n" : "Exec=" + exec + " %u\n")
+	                   << (openInBackground ? "Exec=" + exec + " --minimized %u\n" : "Exec=" + exec + " %u\n")
 	                   << (haveIcon ? "Icon=" + iconPath + "\n" : "Icon=" EXECUTABLE_NAME "\n")
 	                   << "Terminal=false\n"
 	                      "Categories=Network;Telephony;\n"
@@ -860,5 +882,56 @@ bool App::event(QEvent *event) {
 #endif
 
 //-----------------------------------------------------------
-//		AutoStart
+//		System tray
 //-----------------------------------------------------------
+
+void App::setSysTrayIcon() {
+	QQuickWindow *root = getMainWindow();
+	QSystemTrayIcon *systemTrayIcon =
+	    (mSystemTrayIcon
+	         ? mSystemTrayIcon
+	         : new QSystemTrayIcon(
+	               nullptr)); // Workaround : QSystemTrayIcon cannot be deleted because of setContextMenu (indirectly)
+
+	// trayIcon: Right click actions.
+	QAction *restoreAction = nullptr;
+	if (!mSettings->getExitOnClose()) {
+		restoreAction = new QAction(root);
+		auto setRestoreActionText = [restoreAction](bool visible) {
+			restoreAction->setText(visible ? tr("Cacher") : tr("Afficher"));
+		};
+		setRestoreActionText(root->isVisible());
+		connect(root, &QWindow::visibleChanged, restoreAction, setRestoreActionText);
+
+		root->connect(restoreAction, &QAction::triggered, this, [this, restoreAction](bool checked) {
+			auto mainWindow = getMainWindow();
+			if (mainWindow->isVisible()) {
+				mainWindow->close();
+			} else {
+				mainWindow->show();
+			}
+		});
+	}
+
+	QAction *quitAction = new QAction(tr("Quit"), root);
+	root->connect(quitAction, &QAction::triggered, this, &App::quit);
+
+	// trayIcon: Left click actions.
+	QMenu *menu = mSystemTrayIcon ? mSystemTrayIcon->contextMenu() : new QMenu();
+	menu->clear();
+	menu->setTitle(APPLICATION_NAME);
+	// Build trayIcon menu.
+	if (restoreAction) {
+		menu->addAction(restoreAction);
+		menu->addSeparator();
+	}
+	menu->addAction(quitAction);
+	if (!mSystemTrayIcon)
+		systemTrayIcon->setContextMenu(menu); // This is a Qt bug. We cannot call setContextMenu more than once. So we
+		                                      // have to keep an instance of the menu.
+	systemTrayIcon->setIcon(QIcon(Constants::WindowIconPath));
+	systemTrayIcon->setToolTip(APPLICATION_NAME);
+	systemTrayIcon->show();
+	if (!mSystemTrayIcon) mSystemTrayIcon = systemTrayIcon;
+	if (!QSystemTrayIcon::isSystemTrayAvailable()) qInfo() << "System tray is not available";
+}

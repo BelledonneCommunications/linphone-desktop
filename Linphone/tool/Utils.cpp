@@ -159,7 +159,6 @@ void Utils::closeCallsWindow() {
 
 QQuickWindow *Utils::getMainWindow() {
 	auto win = App::getInstance()->getMainWindow();
-	smartShowWindow(win);
 	return win;
 }
 

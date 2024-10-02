@@ -143,31 +143,26 @@ public:
 
 	bool dndEnabled() const;
 
-	DECLARE_CORE_GETSET(bool, disableChatFeature, DisableChatFeature)
-	DECLARE_CORE_GETSET(bool, disableMeetingsFeature, DisableMeetingsFeature)
-	DECLARE_CORE_GETSET(bool, disableBroadcastFeature, DisableBroadcastFeature)
-	DECLARE_CORE_GETSET(bool, hideSettings, HideSettings)
-	DECLARE_CORE_GETSET(bool, hideAccountSettings, HideAccountSettings)
-	DECLARE_CORE_GETSET(bool, disableCallRecordings, DisableCallRecordings)
-	DECLARE_CORE_GETSET(bool, assistantHideCreateAccount, AssistantHideCreateAccount)
-	DECLARE_CORE_GETSET(bool, assistantDisableQrCode, AssistantDisableQrCode)
-	DECLARE_CORE_GETSET(bool, assistantHideThirdPartyAccount, AssistantHideThirdPartyAccount)
-	DECLARE_CORE_GETSET(bool, onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
-	DECLARE_CORE_GETSET(bool, darkModeAllowed, DarkModeAllowed)
-	DECLARE_CORE_GETSET(int, maxAccount, MaxAccount)
-	DECLARE_CORE_GETSET(bool,
-	                    assistantGoDirectlyToThirdPartySipAccountLogin,
-	                    AssistantGoDirectlyToThirdPartySipAccountLogin)
-	DECLARE_CORE_GETSET(QString, assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
-	DECLARE_CORE_GETSET(QString, assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
+	DECLARE_CORE_GETSET_MEMBER(bool, disableChatFeature, DisableChatFeature)
+	DECLARE_CORE_GETSET_MEMBER(bool, disableMeetingsFeature, DisableMeetingsFeature)
+	DECLARE_CORE_GETSET_MEMBER(bool, disableBroadcastFeature, DisableBroadcastFeature)
+	DECLARE_CORE_GETSET_MEMBER(bool, hideSettings, HideSettings)
+	DECLARE_CORE_GETSET_MEMBER(bool, hideAccountSettings, HideAccountSettings)
+	DECLARE_CORE_GETSET_MEMBER(bool, disableCallRecordings, DisableCallRecordings)
+	DECLARE_CORE_GETSET_MEMBER(bool, assistantHideCreateAccount, AssistantHideCreateAccount)
+	DECLARE_CORE_GETSET_MEMBER(bool, assistantDisableQrCode, AssistantDisableQrCode)
+	DECLARE_CORE_GETSET_MEMBER(bool, assistantHideThirdPartyAccount, AssistantHideThirdPartyAccount)
+	DECLARE_CORE_GETSET_MEMBER(bool, onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
+	DECLARE_CORE_GETSET_MEMBER(bool, darkModeAllowed, DarkModeAllowed)
+	DECLARE_CORE_GETSET_MEMBER(int, maxAccount, MaxAccount)
+	DECLARE_CORE_GETSET_MEMBER(bool,
+	                           assistantGoDirectlyToThirdPartySipAccountLogin,
+	                           AssistantGoDirectlyToThirdPartySipAccountLogin)
+	DECLARE_CORE_GETSET_MEMBER(QString, assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
+	DECLARE_CORE_GETSET_MEMBER(QString, assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
 	DECLARE_CORE_GETSET(bool, autoStart, AutoStart)
-	bool getAutoStart() {
-		return mAutoStart;
-	};
+	DECLARE_CORE_GETSET(bool, exitOnClose, ExitOnClose)
 	DECLARE_CORE_GETSET(bool, syncLdapContacts, SyncLdapContacts)
-	bool getSyncLdapContacts() {
-		return mSyncLdapContacts;
-	};
 
 signals:
 

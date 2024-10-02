@@ -42,25 +42,25 @@ public:
 	Q_INVOKABLE void save();
 	Q_INVOKABLE bool isValid();
 
-	DECLARE_CORE_GETSET(bool, enabled, Enabled)
-	DECLARE_CORE_GETSET(QString, server, Server)
-	DECLARE_CORE_GETSET(QString, bindDn, BindDn)
-	DECLARE_CORE_GETSET(QString, password, Password)
-	DECLARE_CORE_GETSET(linphone::Ldap::AuthMethod, authMethod, AuthMethod)
-	DECLARE_CORE_GETSET(bool, tls, Tls)
-	DECLARE_CORE_GETSET(linphone::Ldap::CertVerificationMode,
-	                    serverCertificatesVerificationMode,
-	                    ServerCertificatesVerificationMode)
-	DECLARE_CORE_GETSET(QString, baseObject, BaseObject)
-	DECLARE_CORE_GETSET(QString, filter, Filter)
-	DECLARE_CORE_GETSET(int, maxResults, MaxResults)
-	DECLARE_CORE_GETSET(int, timeout, Timeout)
-	DECLARE_CORE_GETSET(int, delay, Delay)
-	DECLARE_CORE_GETSET(int, minChars, MinChars)
-	DECLARE_CORE_GETSET(QString, nameAttribute, NameAttribute)
-	DECLARE_CORE_GETSET(QString, sipAttribute, SipAttribute)
-	DECLARE_CORE_GETSET(QString, sipDomain, SipDomain)
-	DECLARE_CORE_GETSET(linphone::Ldap::DebugLevel, debugLevel, DebugLevel)
+	DECLARE_CORE_GETSET_MEMBER(bool, enabled, Enabled)
+	DECLARE_CORE_GETSET_MEMBER(QString, server, Server)
+	DECLARE_CORE_GETSET_MEMBER(QString, bindDn, BindDn)
+	DECLARE_CORE_GETSET_MEMBER(QString, password, Password)
+	DECLARE_CORE_GETSET_MEMBER(linphone::Ldap::AuthMethod, authMethod, AuthMethod)
+	DECLARE_CORE_GETSET_MEMBER(bool, tls, Tls)
+	DECLARE_CORE_GETSET_MEMBER(linphone::Ldap::CertVerificationMode,
+	                           serverCertificatesVerificationMode,
+	                           ServerCertificatesVerificationMode)
+	DECLARE_CORE_GETSET_MEMBER(QString, baseObject, BaseObject)
+	DECLARE_CORE_GETSET_MEMBER(QString, filter, Filter)
+	DECLARE_CORE_GETSET_MEMBER(int, maxResults, MaxResults)
+	DECLARE_CORE_GETSET_MEMBER(int, timeout, Timeout)
+	DECLARE_CORE_GETSET_MEMBER(int, delay, Delay)
+	DECLARE_CORE_GETSET_MEMBER(int, minChars, MinChars)
+	DECLARE_CORE_GETSET_MEMBER(QString, nameAttribute, NameAttribute)
+	DECLARE_CORE_GETSET_MEMBER(QString, sipAttribute, SipAttribute)
+	DECLARE_CORE_GETSET_MEMBER(QString, sipDomain, SipDomain)
+	DECLARE_CORE_GETSET_MEMBER(linphone::Ldap::DebugLevel, debugLevel, DebugLevel)
 
 private:
 	std::shared_ptr<LdapModel> mLdapModel;

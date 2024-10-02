@@ -92,6 +92,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(AssistantThirdPartySipAccountDomain, mSettingsModel)
 	INIT_CORE_MEMBER(AssistantThirdPartySipAccountTransport, mSettingsModel)
 	INIT_CORE_MEMBER(AutoStart, mSettingsModel)
+	INIT_CORE_MEMBER(ExitOnClose, mSettingsModel)
 	INIT_CORE_MEMBER(SyncLdapContacts, mSettingsModel)
 }
 
@@ -326,6 +327,8 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                           assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool, autoStart,
 	                           AutoStart)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool, exitOnClose,
+	                           ExitOnClose)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, mSettingsModel, bool,
 	                           syncLdapContacts, SyncLdapContacts)
 
@@ -485,4 +488,16 @@ QString SettingsCore::getLogsFolder() const {
 
 bool SettingsCore::dndEnabled() const {
 	return mDndEnabled;
+}
+
+bool SettingsCore::getAutoStart() const {
+	return mAutoStart;
+}
+
+bool SettingsCore::getExitOnClose() const {
+	return mExitOnClose;
+}
+
+bool SettingsCore::getSyncLdapContacts() const {
+	return mSyncLdapContacts;
 }

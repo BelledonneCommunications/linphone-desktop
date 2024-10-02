@@ -10,7 +10,6 @@ import LinphoneAccountsCpp
 AbstractWindow {
 	id: mainWindow
     // height: 982 * DefaultStyle.dp
-	visible: true
 	title: qsTr("Linphone")
 	// TODO : handle this bool when security mode is implemented
 	property bool firstConnection: true

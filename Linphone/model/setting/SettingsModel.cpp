@@ -527,6 +527,7 @@ void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
 	DEFINE_NOTIFY_CONFIG_READY(assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
 	DEFINE_NOTIFY_CONFIG_READY(autoStart, AutoStart)
+	DEFINE_NOTIFY_CONFIG_READY(exitOnClose, ExitOnClose)
 	DEFINE_NOTIFY_CONFIG_READY(syncLdapContacts, SyncLdapContacts)
 }
 
@@ -609,6 +610,13 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 							autoStart,
 							AutoStart,
 							"auto_start",
+							false)
+DEFINE_GETSET_CONFIG(SettingsModel,
+							bool,
+							Bool,
+							exitOnClose,
+							ExitOnClose,
+							"exit_on_close",
 							false)
 DEFINE_GETSET_CONFIG(SettingsModel,
 						bool,
