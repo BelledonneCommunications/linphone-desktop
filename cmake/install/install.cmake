@@ -121,6 +121,15 @@ elseif(WIN32)
 		NAMES msys2_shell.cmd
 		HINTS "C:/msys64/"
 	)
+	include(InstallRequiredSystemLibraries)
+	set(MSVC_VERSION ${MSVC_TOOLSET_VERSION})
+	set(CMAKE_INSTALL_UCRT_LIBRARIES TRUE)
+	if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+		set(CMAKE_INSTALL_DEBUG_LIBRARIES TRUE)
+	endif()
+	find_file(UCRTBASE_LIB "ucrtbase.dll" PATHS "C:/Windows/System32")
+	install(FILES ${UCRTBASE_LIB} DESTINATION "${CMAKE_INSTALL_BINDIR}")
+
 	find_program(DEPLOYQT_PROGRAM windeployqt HINTS "${_qt_bin_dir}")
 	if (NOT DEPLOYQT_PROGRAM)
 		message(FATAL_ERROR "Could not find the windeployqt program. Make sure it is in the PATH.")
