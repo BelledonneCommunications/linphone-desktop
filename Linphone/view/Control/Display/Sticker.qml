@@ -45,6 +45,7 @@ Item {
 	property string qmlName
 	property bool displayAll : !!mainItem.call
 	property bool mutedStatus: participantDevice ? participantDevice.core.isMuted : false
+	clip: false
 	onCallChanged: {
 		waitingTime.seconds = 0
 		waitingTimer.restart()
@@ -276,8 +277,9 @@ Item {
 		anchors.fill: background
 		shadowEnabled: true
 		shadowColor: DefaultStyle.grey_1000
-		shadowBlur: 0.1
-		shadowOpacity: 0.4
+		shadowBlur: 1
+		shadowOpacity: 0.3
+		shadowScale: 1.05
 	}
 	RowLayout{
 		anchors.right: parent.right

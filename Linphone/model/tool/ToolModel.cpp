@@ -120,6 +120,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 	bool localVideoEnabled = options.contains("localVideoEnabled") ? options["localVideoEnabled"].toBool() : false;
 
 	std::shared_ptr<linphone::Address> address = interpretUrl(sipAddress);
+
 	if (!address) {
 		lCritical() << "[" + QString(gClassName) + "] The calling address is not an interpretable SIP address: "
 		            << sipAddress;
@@ -128,6 +129,8 @@ bool ToolModel::createCall(const QString &sipAddress,
 		}
 		return false;
 	}
+	bool isConference = !!core->findConferenceInformationFromUri(address);
+	if (isConference) mediaEncryption = linphone::MediaEncryption::ZRTP;
 
 	if (SettingsModel::dndEnabled(
 	        core->getConfig())) { // Force tones for outgoing calls when in DND mode (ringback, dtmf, etc ... ) disabled
