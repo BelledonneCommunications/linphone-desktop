@@ -531,7 +531,7 @@ void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(syncLdapContacts, SyncLdapContacts)
 }
 
-DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", false)
+DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", true)
 DEFINE_GETSET_CONFIG(
 	SettingsModel, bool, Bool, disableMeetingsFeature, DisableMeetingsFeature, "disable_meetings_feature", false)
 DEFINE_GETSET_CONFIG(SettingsModel,
@@ -540,7 +540,7 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 						disableBroadcastFeature,
 						DisableBroadcastFeature,
 						"disable_broadcast_feature",
-						false)
+						true)
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, hideSettings, HideSettings, "hide_settings", false)
 DEFINE_GETSET_CONFIG(
 	SettingsModel, bool, Bool, hideAccountSettings, HideAccountSettings, "hide_account_settings", false)

@@ -10,6 +10,7 @@ FocusScope{
 	id: mainItem
 
 	property var currentCall
+	property bool lastRowVisible: true
 
 	onButtonPressed: (text) => {
 		if (currentCall) currentCall.core.lSendDtmf(text)
@@ -191,10 +192,12 @@ FocusScope{
 			}
 		}
 		Item {
+			visible: !mainItem.lastRowVisible
 			// Invisible item to move the last two buttons to the right
 		}
 		Button {
 			id: launchCallButton
+			visible: !mainItem.lastRowVisible
 			implicitWidth: 75 * DefaultStyle.dp
 			implicitHeight: 55 * DefaultStyle.dp
 			Layout.Layout.alignment: Qt.AlignHCenter
@@ -218,6 +221,7 @@ FocusScope{
 		}
 		Button {
 			id: eraseButton
+			visible: !mainItem.lastRowVisible
 			leftPadding: 5 * DefaultStyle.dp
 			rightPadding: 5 * DefaultStyle.dp
 			topPadding: 5 * DefaultStyle.dp

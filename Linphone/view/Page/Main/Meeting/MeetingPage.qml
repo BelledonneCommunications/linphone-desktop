@@ -19,7 +19,7 @@ AbstractMainPage {
 	signal returnRequested()
 	signal addParticipantsValidated(list<string> selectedParticipants)
 	Component.onCompleted: rightPanelStackView.push(overridenRightPanel, Control.StackView.Immediate)
-	showDefaultItem: false//leftPanelStackView.currentItem.objectName === "listLayout"
+	showDefaultItem: leftPanelStackView.currentItem.objectName === "listLayout" && meetingListCount === 0
 
 	onVisibleChanged: if (!visible) {
 		leftPanelStackView.clear()
@@ -128,13 +128,6 @@ AbstractMainPage {
 			Control.StackView.onActivated: {
 				mainItem.selectedConference = conferenceList.selectedConference
 			}
-			Binding {
-				target: mainItem
-				when: leftPanelStackView.currentItem && leftPanelStackView.currentItem.objectName === "listLayout"
-				property: "showDefaultItem"
-				value: conferenceList.count === 0
-				restoreMode: Binding.RestoreBindingOrValue
-			}
 			ColumnLayout {
 				id: listLayoutIn
 				anchors.fill: parent
@@ -201,6 +194,7 @@ AbstractMainPage {
 					preferredHighlightBegin: height/2 - 10
 					preferredHighlightEnd: height/2 + 10
 					highlightRangeMode: ListView.ApplyRange
+					onCountChanged: mainItem.meetingListCount = count
 					searchBarText: searchBar.text
 					Keys.onPressed: (event) => {
 						if(event.key == Qt.Key_Escape){

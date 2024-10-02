@@ -105,7 +105,7 @@ FocusScope {
 	}
 	Button {
 		id: clearTextButton
-		visible: textField.text.length > 0
+		visible: textField.text.length > 0 && mainItem.enabled
 		background: Rectangle {
 			color: "transparent"
 		}

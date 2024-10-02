@@ -278,8 +278,8 @@ Item {
 		shadowEnabled: true
 		shadowColor: DefaultStyle.grey_1000
 		shadowBlur: 1
-		shadowOpacity: 0.3
 		shadowScale: 1.05
+		shadowOpacity: 0.5
 	}
 	RowLayout{
 		anchors.right: parent.right

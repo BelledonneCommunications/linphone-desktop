@@ -245,6 +245,7 @@ ListView {
 					}
 					Button {
 						id: chatButton
+						visible: actionButtons.visible && !SettingsCpp.disableChatFeature
 						Layout.preferredWidth: 45 * DefaultStyle.dp
 						Layout.preferredHeight: 45 * DefaultStyle.dp
 						icon.width: 24 * DefaultStyle.dp
@@ -266,6 +267,7 @@ ListView {
 					z: 1
 					// Layout.rightMargin: 13 * DefaultStyle.dp
 					Layout.alignment: Qt.AlignVCenter
+					Layout.rightMargin: 8 * DefaultStyle.dp
 					popup.x: 0
 					popup.padding: 10 * DefaultStyle.dp
 					hoverEnabled: mainItem.hoverEnabled

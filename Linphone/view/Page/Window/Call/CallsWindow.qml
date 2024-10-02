@@ -32,7 +32,7 @@ AbstractWindow {
 				middleItemStackView.replace(inCallItem)
 				bottomButtonsLayout.visible = true
 			}
-			if(call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && (!call.core.tokenVerified || call.core.isMismatch)) {
+			if(call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && !mainWindow.conference && (!call.core.tokenVerified || call.core.isMismatch)) {
 				zrtpValidation.open()
 			}
 		}
@@ -632,6 +632,7 @@ AbstractWindow {
 							placeholderText: ""
 							numericPadPopup: numPadPopup
 							numericPadButton.visible: false
+							enabled: false
 						}
 						Item {
 							Layout.preferredWidth: parent.width
@@ -644,6 +645,7 @@ AbstractWindow {
 								roundedBottom: true
 								visible: parent.visible
 								currentCall: callsModel.currentCall
+								lastRowVisible: false
 								leftPadding: 40 * DefaultStyle.dp
 								rightPadding: 40 * DefaultStyle.dp
 								topPadding: 41 * DefaultStyle.dp
@@ -948,6 +950,7 @@ AbstractWindow {
 				Component {
 					id: participantListPanel
 					Item {
+						objectName: "participantListPanel"
 						Keys.onPressed: (event)=> {
 							if (event.key == Qt.Key_Escape) {
 								rightPanel.visible = false
@@ -1417,6 +1420,7 @@ AbstractWindow {
 					}
 					CheckableButton {
 						id: transferCallButton
+						visible: !mainWindow.conference
 						icon.source: AppIcons.transferCall
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
@@ -1519,8 +1523,10 @@ AbstractWindow {
 						icon.height: 32 * DefaultStyle.dp
 					}
 					CheckableButton {
+						id: participantListButton
 						visible: mainWindow.conference
 						iconUrl: AppIcons.usersTwo
+						checked: rightPanel.visible && rightPanel.currentItem.objectName == "participantListPanel"
 						checkedColor: DefaultStyle.main2_400
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp

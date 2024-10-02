@@ -15,6 +15,8 @@ FocusScope {
 	signal saveSucceed(bool isCreation)
 
 	ColumnLayout {
+		id: formLayout
+		spacing: 16 * DefaultStyle.dp
 		Connections {
 			target: mainItem.conferenceInfoGui.core
 			function onSchedulerStateChanged() {
@@ -84,6 +86,7 @@ FocusScope {
 		}
 		Section {
 			visible: mainItem.isCreation
+			spacing: formLayout.spacing
 			content: RowLayout {
 				spacing: 8 * DefaultStyle.dp
 				EffectImage {
@@ -108,7 +111,7 @@ FocusScope {
 			}
 		}
 		Section {
-			Layout.topMargin: 10 * DefaultStyle.dp
+			spacing: formLayout.spacing
 			content: [
 				RowLayout {
 					EffectImage {
@@ -211,6 +214,7 @@ FocusScope {
 			
 		}
 		Section {
+			spacing: formLayout.spacing
 			content: RowLayout {
 				spacing: 8 * DefaultStyle.dp
 				EffectImage {
@@ -251,6 +255,7 @@ FocusScope {
 			}
 		}
 		Section {
+			spacing: formLayout.spacing
 			content: [
 				Button {
 					id: addParticipantsButton

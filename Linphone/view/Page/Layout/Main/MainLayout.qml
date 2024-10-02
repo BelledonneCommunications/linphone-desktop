@@ -366,8 +366,7 @@ Item {
 											}
 											MagicSearchButton {
 												id: chatButton
-												// TODO : visible true when chat available
-												// visible: false
+												visible: !SettingsCpp.disableChatFeature
 												Layout.preferredWidth: 45 * DefaultStyle.dp
 												Layout.preferredHeight: 45 * DefaultStyle.dp
 												icon.source: AppIcons.chatTeardropText

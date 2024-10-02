@@ -314,6 +314,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			        setRemoteTokens(remoteTokens);
 			        setEncryption(encryption);
 			        setIsMismatch(isCaseMismatch);
+			        setTokenVerified(tokenVerified);
 		        });
 		    auto mediaEncryption = call->getParams()->getMediaEncryption();
 		    if (mediaEncryption == linphone::MediaEncryption::ZRTP) {

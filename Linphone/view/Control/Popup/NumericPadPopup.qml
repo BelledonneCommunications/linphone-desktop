@@ -15,6 +15,7 @@ Control.Popup {
 	bottomPadding: 18 * DefaultStyle.dp
 	property bool closeButtonVisible: true
 	property bool roundedBottom: false
+	property bool lastRowVisible: true
 	property var currentCall
 	onOpened: numPad.forceActiveFocus()
 	signal buttonPressed(string text)
@@ -72,12 +73,8 @@ Control.Popup {
 	}
 	contentItem: NumericPad{
 		id: numPad
+		lastRowVisible: lastRowVisible
 		currentCall: mainItem.currentCall
-		anchors.fill: parent
-		anchors.topMargin: 41 * DefaultStyle.dp
-		anchors.bottomMargin: 18 * DefaultStyle.dp
-		anchors.rightMargin: 72 * DefaultStyle.dp
-		anchors.leftMargin: 72 * DefaultStyle.dp
 		onButtonPressed: (text) => {
 			console.log("BUTTON PRESSED NUMPAD")
 			mainItem.buttonPressed(text)
