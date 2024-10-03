@@ -338,10 +338,10 @@ AbstractWindow {
 								id: callStatusText
 								property var remoteNameObj: mainWindow.call ? UtilsCpp.getDisplayName(mainWindow.call.core.peerAddress) : null
 								property string remoteName: remoteNameObj 
-									? remoteNameObj.value 
-									: mainWindow.call 
-										? EnumsToStringCpp.dirToString(mainWindow.call.core.dir) + qsTr(" call")
-										: ""
+									? mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
+										? remoteNameObj.value 
+										: EnumsToStringCpp.dirToString(mainWindow.call.core.dir) + qsTr(" call")
+									: ""
 								text: (mainWindow.callState === LinphoneEnums.CallState.End  || mainWindow.callState === LinphoneEnums.CallState.Released)
 									? qsTr("Fin d'appel")
 									: mainWindow.call && (mainWindow.call.core.paused
