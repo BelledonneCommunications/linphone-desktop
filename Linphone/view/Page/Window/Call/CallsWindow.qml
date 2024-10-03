@@ -297,6 +297,7 @@ AbstractWindow {
 			Item {
 				id: headerItem
 				Layout.margins: 10 * DefaultStyle.dp
+				Layout.leftMargin: 20 * DefaultStyle.dp
 				Layout.fillWidth: true
 				Layout.minimumHeight: 25 * DefaultStyle.dp
 				RowLayout {
@@ -335,17 +336,21 @@ AbstractWindow {
 							}
 							Text {
 								id: callStatusText
+								property var remoteNameObj: mainWindow.call ? UtilsCpp.getDisplayName(mainWindow.call.core.peerAddress) : null
+								property string remoteName: remoteNameObj 
+									? remoteNameObj.value 
+									: mainWindow.call 
+										? EnumsToStringCpp.dirToString(mainWindow.call.core.dir) + qsTr(" call")
+										: ""
 								text: (mainWindow.callState === LinphoneEnums.CallState.End  || mainWindow.callState === LinphoneEnums.CallState.Released)
-									? qsTr("End of the call")
+									? qsTr("Fin d'appel")
 									: mainWindow.call && (mainWindow.call.core.paused
 									|| (mainWindow.callState === LinphoneEnums.CallState.Paused
 									|| mainWindow.callState === LinphoneEnums.CallState.PausedByRemote))
 										? (mainWindow.conference ? qsTr('Réunion mise ') : qsTr('Appel mis')) + qsTr(" en pause")
 										: mainWindow.conference
 											? mainWindow.conference.core.subject
-											: mainWindow.call
-												? EnumsToStringCpp.dirToString(mainWindow.call.core.dir) + qsTr(" call")
-												: ""
+											: remoteName
 								color: DefaultStyle.grey_0
 								font {
 									pixelSize: 22 * DefaultStyle.dp
@@ -531,7 +536,6 @@ AbstractWindow {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
 				spacing: 23 * DefaultStyle.dp
-				Layout.rightMargin: 20 * DefaultStyle.dp
 				Control.StackView {
 					id: middleItemStackView
 					initialItem: inCallItem
@@ -541,6 +545,7 @@ AbstractWindow {
 				CallSettingsPanel {
 					id: rightPanel
 					Layout.fillHeight: true
+					Layout.rightMargin: 20 * DefaultStyle.dp
 					Layout.preferredWidth: 393 * DefaultStyle.dp
 					Layout.topMargin: 10 * DefaultStyle.dp
 					property int currentIndex: 0
@@ -553,99 +558,48 @@ AbstractWindow {
 					contentStackView.initialItem: callsListPanel
 					headerValidateButtonText: qsTr("Ajouter")
 				}
-				Component {
-					id: contactsListPanel
-					Item {
-						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Transfert d'appel")
-						Keys.onPressed: (event)=> {
-							if (event.key == Qt.Key_Escape) {
-								rightPanel.visible = false
-								event.accepted = true;
-							}
-						}
-						NewCallForm {
-							id: newCallForm
-							anchors.fill: parent
-							anchors.topMargin: 21 * DefaultStyle.dp
-							anchors.leftMargin: 16 * DefaultStyle.dp
-							anchors.rightMargin: 16 * DefaultStyle.dp
-							groupCallVisible: false
-							searchBarColor: DefaultStyle.grey_0
-							searchBarBorderColor: DefaultStyle.grey_200
-							onSelectedContactChanged: {
-								if (selectedContact) mainWindow.transferCallToContact(mainWindow.call, selectedContact, newCallForm)
-							}
-							numPadPopup: numPadPopup
-							Binding {
-								target: numPadPopup
-								property: "visible"
-								value: true
-								when: newCallForm.searchBar.numericPadButton.checked
-								restoreMode: Binding.RestoreValue
-							}
-							
-							Item {
-								anchors.bottom: parent.bottom
-								anchors.left: parent.left
-								anchors.right: parent.right
-								height: 402 * DefaultStyle.dp
-								NumericPadPopup {
-									id: numPadPopup
-									width: parent.width
-									roundedBottom: true
-									visible: false
-									leftPadding: 40 * DefaultStyle.dp
-									rightPadding: 40 * DefaultStyle.dp
-									topPadding: 41 * DefaultStyle.dp
-									bottomPadding: 18 * DefaultStyle.dp
-									onLaunchCall: {
-										UtilsCpp.createCall(dialerTextInput.text)
-									}
-								}
-							}
+			}
+			Component {
+				id: contactsListPanel
+				Item {
+					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Transfert d'appel")
+					Keys.onPressed: (event)=> {
+						if (event.key == Qt.Key_Escape) {
+							rightPanel.visible = false
+							event.accepted = true;
 						}
 					}
-				}
-				Component {
-					id: dialerPanel
-					ColumnLayout {
-						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Dialer")
-						spacing: 0
-						Keys.onPressed: (event)=> {
-							if (event.key == Qt.Key_Escape) {
-								rightPanel.visible = false
-								event.accepted = true;
-							}
+					NewCallForm {
+						id: newCallForm
+						anchors.fill: parent
+						anchors.topMargin: 21 * DefaultStyle.dp
+						anchors.leftMargin: 16 * DefaultStyle.dp
+						anchors.rightMargin: 16 * DefaultStyle.dp
+						groupCallVisible: false
+						searchBarColor: DefaultStyle.grey_0
+						searchBarBorderColor: DefaultStyle.grey_200
+						onSelectedContactChanged: {
+							if (selectedContact) mainWindow.transferCallToContact(mainWindow.call, selectedContact, newCallForm)
 						}
+						numPadPopup: numPadPopup
+						Binding {
+							target: numPadPopup
+							property: "visible"
+							value: true
+							when: newCallForm.searchBar.numericPadButton.checked
+							restoreMode: Binding.RestoreValue
+						}
+						
 						Item {
-							Layout.fillWidth: true
-							Layout.fillHeight: true
-						}
-						SearchBar {
-							id: dialerTextInput
-							Layout.fillWidth: true
-							Layout.leftMargin: 10 * DefaultStyle.dp
-							Layout.rightMargin: 10 * DefaultStyle.dp
-							magnifierVisible: false
-							color: DefaultStyle.grey_0
-							borderColor: DefaultStyle.grey_200
-							placeholderText: ""
-							numericPadPopup: numPadPopup
-							numericPadButton.visible: false
-							enabled: false
-						}
-						Item {
-							Layout.preferredWidth: parent.width
-							Layout.preferredHeight: numPadPopup.height
-							Layout.topMargin: 10 * DefaultStyle.dp
+							anchors.bottom: parent.bottom
+							anchors.left: parent.left
+							anchors.right: parent.right
+							height: 402 * DefaultStyle.dp
 							NumericPadPopup {
 								id: numPadPopup
 								width: parent.width
-								closeButtonVisible: false
 								roundedBottom: true
-								visible: parent.visible
-								currentCall: callsModel.currentCall
-								lastRowVisible: false
+								visible: false
 								leftPadding: 40 * DefaultStyle.dp
 								rightPadding: 40 * DefaultStyle.dp
 								topPadding: 41 * DefaultStyle.dp
@@ -657,393 +611,444 @@ AbstractWindow {
 						}
 					}
 				}
-				Component {
-					id: changeLayoutPanel
-					FocusScope {
-						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Modifier la disposition")
-						Keys.onPressed: (event)=> {
-							if (event.key == Qt.Key_Escape) {
-								rightPanel.visible = false
-								event.accepted = true;
-							}
+			}
+			Component {
+				id: dialerPanel
+				ColumnLayout {
+					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Dialer")
+					spacing: 0
+					Keys.onPressed: (event)=> {
+						if (event.key == Qt.Key_Escape) {
+							rightPanel.visible = false
+							event.accepted = true;
 						}
-						ColumnLayout {
-							anchors.fill: parent
-							anchors.topMargin: 16 * DefaultStyle.dp
-							anchors.bottomMargin: 16 * DefaultStyle.dp
-							anchors.leftMargin: 17 * DefaultStyle.dp
-							anchors.rightMargin: 17 * DefaultStyle.dp
-							spacing: 12 * DefaultStyle.dp
-							Text {
-								Layout.fillWidth: true
-								text: qsTr("La disposition choisie sera enregistrée pour vos prochaines réunions")
-								font.pixelSize: 14 * DefaultStyle.dp
-								color: DefaultStyle.main2_500main
+					}
+					Item {
+						Layout.fillWidth: true
+						Layout.fillHeight: true
+					}
+					SearchBar {
+						id: dialerTextInput
+						Layout.fillWidth: true
+						Layout.leftMargin: 10 * DefaultStyle.dp
+						Layout.rightMargin: 10 * DefaultStyle.dp
+						magnifierVisible: false
+						color: DefaultStyle.grey_0
+						borderColor: DefaultStyle.grey_200
+						placeholderText: ""
+						numericPadPopup: numPadPopup
+						numericPadButton.visible: false
+						enabled: false
+					}
+					Item {
+						Layout.preferredWidth: parent.width
+						Layout.preferredHeight: numPadPopup.height
+						Layout.topMargin: 10 * DefaultStyle.dp
+						NumericPadPopup {
+							id: numPadPopup
+							width: parent.width
+							closeButtonVisible: false
+							roundedBottom: true
+							visible: parent.visible
+							currentCall: callsModel.currentCall
+							lastRowVisible: false
+							leftPadding: 40 * DefaultStyle.dp
+							rightPadding: 40 * DefaultStyle.dp
+							topPadding: 41 * DefaultStyle.dp
+							bottomPadding: 18 * DefaultStyle.dp
+							onLaunchCall: {
+								UtilsCpp.createCall(dialerTextInput.text)
 							}
-							RoundedPane {
-								Layout.fillWidth: true
-								contentItem: ColumnLayout {
-									spacing: 0
-									Repeater {
-										model: [
-											{text: qsTr("Mosaïque"), imgUrl: AppIcons.squaresFour},
-											{text: qsTr("Intervenant actif"), imgUrl: AppIcons.pip},
-											{text: qsTr("Audio seulement"), imgUrl: AppIcons.waveform}
-										]
-										RadioButton {
-											id: radiobutton
-											checkOnClick: false
-											color: DefaultStyle.main1_500_main
-											indicatorSize: 20 * DefaultStyle.dp
-											leftPadding: indicator.width + spacing
-											spacing: 8 * DefaultStyle.dp
-											checkable: false	// Qt Documentation is wrong: It is true by default. We don't want to change the checked state if the layout change is not effective.
-											checked: index == 0
-														? mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.Grid
-														: index == 1
-															? mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.ActiveSpeaker
-															: mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.AudioOnly
-											onClicked: mainWindow.changeLayout(index)
-
-											contentItem: RowLayout {
-												spacing: 5 * DefaultStyle.dp
-												EffectImage {
-													id: radioButtonImg
-													Layout.preferredWidth: 32 * DefaultStyle.dp
-													Layout.preferredHeight: 32 * DefaultStyle.dp
-													imageSource: modelData.imgUrl
-													colorizationColor: DefaultStyle.main2_500main
-												}
-												Text {
-													text: modelData.text
-													color: DefaultStyle.main2_500main
-													verticalAlignment: Text.AlignVCenter
-													font.pixelSize: 14 * DefaultStyle.dp
-													Layout.fillWidth: true
-												}
-											}
-										}
-									}
-								}
-							}
-							Item {Layout.fillHeight: true}
 						}
 					}
 				}
-				Component {
-					id: callsListPanel
+			}
+			Component {
+				id: changeLayoutPanel
+				FocusScope {
+					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Modifier la disposition")
+					Keys.onPressed: (event)=> {
+						if (event.key == Qt.Key_Escape) {
+							rightPanel.visible = false
+							event.accepted = true;
+						}
+					}
 					ColumnLayout {
-						Control.StackView.onActivated: {
-							rightPanel.headerTitleText = qsTr("Liste d'appel")
-							rightPanel.customHeaderButtons = mergeCallPopupButton.createObject(rightPanel)
-						}
-						Keys.onPressed: (event)=> {
-							if (event.key == Qt.Key_Escape) {
-								rightPanel.visible = false
-								event.accepted = true;
-							}
-						}
-						spacing: 0
-						Component {
-							id: mergeCallPopupButton
-							PopupButton {
-								visible: callsModel.count >= 2
-								id: popupbutton
-								popup.contentItem: Button {
-									background: Item{}
-									contentItem: RowLayout {
-										spacing: 5 * DefaultStyle.dp
-										EffectImage {
-											colorizationColor: DefaultStyle.main2_600
-											imageSource: AppIcons.arrowsMerge
-											Layout.preferredWidth: 32 * DefaultStyle.dp
-											Layout.preferredHeight: 32 * DefaultStyle.dp
-										}
-										Text {
-											text: qsTr("Merger tous les appels")
-											font.pixelSize: 14 * DefaultStyle.dp
-										}
-									}
-									onClicked: {
-										callsModel.lMergeAll()
-										popupbutton.close()
-									}
-								}
-							}
+						anchors.fill: parent
+						anchors.topMargin: 16 * DefaultStyle.dp
+						anchors.bottomMargin: 16 * DefaultStyle.dp
+						anchors.leftMargin: 17 * DefaultStyle.dp
+						anchors.rightMargin: 17 * DefaultStyle.dp
+						spacing: 12 * DefaultStyle.dp
+						Text {
+							Layout.fillWidth: true
+							text: qsTr("La disposition choisie sera enregistrée pour vos prochaines réunions")
+							font.pixelSize: 14 * DefaultStyle.dp
+							color: DefaultStyle.main2_500main
 						}
 						RoundedPane {
 							Layout.fillWidth: true
-							Layout.maximumHeight: rightPanel.height
-							visible: callList.contentHeight > 0
-							leftPadding: 16 * DefaultStyle.dp
-							rightPadding: 6 * DefaultStyle.dp
-							topPadding: 15 * DefaultStyle.dp
-							bottomPadding: 16 * DefaultStyle.dp
+							contentItem: ColumnLayout {
+								spacing: 0
+								Repeater {
+									model: [
+										{text: qsTr("Mosaïque"), imgUrl: AppIcons.squaresFour},
+										{text: qsTr("Intervenant actif"), imgUrl: AppIcons.pip},
+										{text: qsTr("Audio seulement"), imgUrl: AppIcons.waveform}
+									]
+									RadioButton {
+										id: radiobutton
+										checkOnClick: false
+										color: DefaultStyle.main1_500_main
+										indicatorSize: 20 * DefaultStyle.dp
+										leftPadding: indicator.width + spacing
+										spacing: 8 * DefaultStyle.dp
+										checkable: false	// Qt Documentation is wrong: It is true by default. We don't want to change the checked state if the layout change is not effective.
+										checked: index == 0
+													? mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.Grid
+													: index == 1
+														? mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.ActiveSpeaker
+														: mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.AudioOnly
+										onClicked: mainWindow.changeLayout(index)
 
-							Layout.topMargin: 15 * DefaultStyle.dp
-							Layout.bottomMargin: 16 * DefaultStyle.dp
-							Layout.leftMargin: 16 * DefaultStyle.dp
-							Layout.rightMargin: 16 * DefaultStyle.dp
-							
-							contentItem: ListView {
-								id: callList
-								model: CallProxy {
-									id: callProxy
-								}
-								implicitHeight: contentHeight// Math.min(contentHeight, rightPanel.height)
-								spacing: 15 * DefaultStyle.dp
-								clip: true
-								onCountChanged: forceLayout()
-
-								delegate: Item {
-									id: callDelegate
-									width: callList.width
-									height: 45 * DefaultStyle.dp
-
-									RowLayout {
-										id: delegateContent
-										anchors.fill: parent
-										spacing: 0
-										Avatar {
-											id: delegateAvatar
-											_address: modelData.core.peerAddress
-											Layout.preferredWidth: 45 * DefaultStyle.dp
-											Layout.preferredHeight: 45 * DefaultStyle.dp
-										}
-										Text {
-											id: delegateName
-											property var remoteAddress: UtilsCpp.getDisplayName(modelData.core.peerAddress)
-											text: modelData.core.isConference 
-												? modelData.core.conference.core.subject
-												: remoteAddress ? remoteAddress.value : ""
-											Layout.leftMargin: 8 * DefaultStyle.dp
-										}
-										Item {
-											Layout.fillHeight: true
-											Layout.fillWidth: true
-										}
-										Text {
-											id: callStateText
-											Layout.rightMargin: 2 * DefaultStyle.dp
-											property string type: modelData.core.isConference ? qsTr('Réunion') : qsTr('Appel')
-											text: modelData.core.state === LinphoneEnums.CallState.Paused
-											|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
-												? type + qsTr(" en pause")
-												: type + qsTr(" en cours")
-										}
-										PopupButton {
-											id: listCallOptionsButton
-											Layout.preferredWidth: 24 * DefaultStyle.dp
-											Layout.preferredHeight: 24 * DefaultStyle.dp
-											Layout.rightMargin: 10 * DefaultStyle.dp
-
-											popup.contentItem: ColumnLayout {
-												spacing: 0
-												Button {
-													id: pausingButton
-													onClicked: modelData.core.lSetPaused(!modelData.core.paused)
-													KeyNavigation.up: endCallButton
-													KeyNavigation.down: endCallButton
-													background: Item {}
-													contentItem: RowLayout {
-														spacing: 5 * DefaultStyle.dp
-														Image {
-															source: modelData.core.state === LinphoneEnums.CallState.Paused 
-															|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
-															? AppIcons.phone : AppIcons.pause
-															sourceSize.width: 32 * DefaultStyle.dp
-															sourceSize.height: 32 * DefaultStyle.dp
-															Layout.preferredWidth: 32 * DefaultStyle.dp
-															Layout.preferredHeight: 32 * DefaultStyle.dp
-															fillMode: Image.PreserveAspectFit
-														}
-														Text {
-															text: modelData.core.state === LinphoneEnums.CallState.Paused 
-															|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
-															? qsTr("Reprendre l'appel") : qsTr("Mettre en pause")
-															color: DefaultStyle.main2_500main
-															font.bold: pausingButton.shadowEnabled
-														}
-														Item {
-															Layout.fillWidth: true
-														}
-													}
-												}
-												Button {
-													id: endCallButton
-													onClicked: mainWindow.endCall(modelData)
-													KeyNavigation.up: pausingButton
-													KeyNavigation.down: pausingButton
-													background: Item {}
-													contentItem: RowLayout {
-														spacing: 5 * DefaultStyle.dp
-														EffectImage {
-															imageSource: AppIcons.endCall
-															colorizationColor: DefaultStyle.danger_500main
-															width: 32 * DefaultStyle.dp
-															height: 32 * DefaultStyle.dp
-														}
-														Text {
-															color: DefaultStyle.danger_500main
-															text: qsTr("Terminer l'appel")
-															font.bold: endCallButton.shadowEnabled
-														}
-														Item {
-															Layout.fillWidth: true
-														}
-													}
-												}
+										contentItem: RowLayout {
+											spacing: 5 * DefaultStyle.dp
+											EffectImage {
+												id: radioButtonImg
+												Layout.preferredWidth: 32 * DefaultStyle.dp
+												Layout.preferredHeight: 32 * DefaultStyle.dp
+												imageSource: modelData.imgUrl
+												colorizationColor: DefaultStyle.main2_500main
+											}
+											Text {
+												text: modelData.text
+												color: DefaultStyle.main2_500main
+												verticalAlignment: Text.AlignVCenter
+												font.pixelSize: 14 * DefaultStyle.dp
+												Layout.fillWidth: true
 											}
 										}
 									}
 								}
 							}
 						}
-						Item {
-							Layout.fillHeight: true
-						}
+						Item {Layout.fillHeight: true}
 					}
 				}
-				Component {
-					id: settingsPanel
-					Item {
-						Control.StackView.onActivated: {
-							rightPanel.headerTitleText = qsTr("Paramètres")
-						}
-						Keys.onPressed: (event)=> {
-							if (event.key == Qt.Key_Escape) {
-								rightPanel.visible = false
-								event.accepted = true;
-							}
-						}
-						MultimediaSettings {
-							id: inSettingsPanel
-							call: mainWindow.call
-							anchors.fill: parent
-							anchors.topMargin: 16 * DefaultStyle.dp
-							anchors.bottomMargin: 16 * DefaultStyle.dp
-							anchors.leftMargin: 17 * DefaultStyle.dp
-							anchors.rightMargin: 17 * DefaultStyle.dp
+			}
+			Component {
+				id: callsListPanel
+				ColumnLayout {
+					Control.StackView.onActivated: {
+						rightPanel.headerTitleText = qsTr("Liste d'appel")
+						rightPanel.customHeaderButtons = mergeCallPopupButton.createObject(rightPanel)
+					}
+					Keys.onPressed: (event)=> {
+						if (event.key == Qt.Key_Escape) {
+							rightPanel.visible = false
+							event.accepted = true;
 						}
 					}
-				}
-				Component {
-					id: screencastPanel
-					Item {
-						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Partage de votre écran")
-						Keys.onPressed: (event)=> {
-							if (event.key == Qt.Key_Escape) {
-								rightPanel.visible = false
-								event.accepted = true;
+					spacing: 0
+					Component {
+						id: mergeCallPopupButton
+						PopupButton {
+							visible: callsModel.count >= 2
+							id: popupbutton
+							popup.contentItem: Button {
+								background: Item{}
+								contentItem: RowLayout {
+									spacing: 5 * DefaultStyle.dp
+									EffectImage {
+										colorizationColor: DefaultStyle.main2_600
+										imageSource: AppIcons.arrowsMerge
+										Layout.preferredWidth: 32 * DefaultStyle.dp
+										Layout.preferredHeight: 32 * DefaultStyle.dp
+									}
+									Text {
+										text: qsTr("Merger tous les appels")
+										font.pixelSize: 14 * DefaultStyle.dp
+									}
+								}
+								onClicked: {
+									callsModel.lMergeAll()
+									popupbutton.close()
+								}
 							}
-						}
-						ScreencastSettings {
-							anchors.fill: parent
-							anchors.topMargin: 16 * DefaultStyle.dp
-							anchors.bottomMargin: 16 * DefaultStyle.dp
-							anchors.leftMargin: 17 * DefaultStyle.dp
-							anchors.rightMargin: 17 * DefaultStyle.dp
-							call: mainWindow.call
 						}
 					}
-				}
-				Component {
-					id: participantListPanel
-					Item {
-						objectName: "participantListPanel"
-						Keys.onPressed: (event)=> {
-							if (event.key == Qt.Key_Escape) {
-								rightPanel.visible = false
-								event.accepted = true;
-							}
-						}
-						Control.StackView {
-							id: participantsStack
-							anchors.fill: parent
-							anchors.bottomMargin: 16 * DefaultStyle.dp
-							anchors.leftMargin: 17 * DefaultStyle.dp
-							anchors.rightMargin: 17 * DefaultStyle.dp
-							initialItem: participantListComp
-							onCurrentItemChanged: rightPanel.headerStack.currentIndex = currentItem.Control.StackView.index
-							property list<string> selectedParticipants
-							signal participantAdded()
+					RoundedPane {
+						Layout.fillWidth: true
+						Layout.maximumHeight: rightPanel.height
+						visible: callList.contentHeight > 0
+						leftPadding: 16 * DefaultStyle.dp
+						rightPadding: 6 * DefaultStyle.dp
+						topPadding: 15 * DefaultStyle.dp
+						bottomPadding: 16 * DefaultStyle.dp
 
-							Connections {
-								target: rightPanel
-								function onReturnRequested(){ participantsStack.pop()}
+						Layout.topMargin: 15 * DefaultStyle.dp
+						Layout.bottomMargin: 16 * DefaultStyle.dp
+						Layout.leftMargin: 16 * DefaultStyle.dp
+						Layout.rightMargin: 16 * DefaultStyle.dp
+						
+						contentItem: ListView {
+							id: callList
+							model: CallProxy {
+								id: callProxy
 							}
+							implicitHeight: contentHeight// Math.min(contentHeight, rightPanel.height)
+							spacing: 15 * DefaultStyle.dp
+							clip: true
+							onCountChanged: forceLayout()
 
-							Component {
-								id: participantListComp
-								ParticipantListView {
-									id: participantList
-									Component {
-										id: headerbutton
-										PopupButton {
-											popup.contentItem: Button {
-												background: Item{}
+							delegate: Item {
+								id: callDelegate
+								width: callList.width
+								height: 45 * DefaultStyle.dp
+
+								RowLayout {
+									id: delegateContent
+									anchors.fill: parent
+									spacing: 0
+									Avatar {
+										id: delegateAvatar
+										_address: modelData.core.peerAddress
+										Layout.preferredWidth: 45 * DefaultStyle.dp
+										Layout.preferredHeight: 45 * DefaultStyle.dp
+									}
+									Text {
+										id: delegateName
+										property var remoteAddress: UtilsCpp.getDisplayName(modelData.core.peerAddress)
+										text: modelData.core.isConference 
+											? modelData.core.conference.core.subject
+											: remoteAddress ? remoteAddress.value : ""
+										Layout.leftMargin: 8 * DefaultStyle.dp
+									}
+									Item {
+										Layout.fillHeight: true
+										Layout.fillWidth: true
+									}
+									Text {
+										id: callStateText
+										Layout.rightMargin: 2 * DefaultStyle.dp
+										property string type: modelData.core.isConference ? qsTr('Réunion') : qsTr('Appel')
+										text: modelData.core.state === LinphoneEnums.CallState.Paused
+										|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+											? type + qsTr(" en pause")
+											: type + qsTr(" en cours")
+									}
+									PopupButton {
+										id: listCallOptionsButton
+										Layout.preferredWidth: 24 * DefaultStyle.dp
+										Layout.preferredHeight: 24 * DefaultStyle.dp
+										Layout.rightMargin: 10 * DefaultStyle.dp
+
+										popup.contentItem: ColumnLayout {
+											spacing: 0
+											Button {
+												id: pausingButton
+												onClicked: modelData.core.lSetPaused(!modelData.core.paused)
+												KeyNavigation.up: endCallButton
+												KeyNavigation.down: endCallButton
+												background: Item {}
 												contentItem: RowLayout {
-													spacing: 0
-													EffectImage {
-														colorizationColor: DefaultStyle.main2_600
-														imageSource: AppIcons.shareNetwork
-														Layout.preferredWidth: 24 * DefaultStyle.dp
-														Layout.preferredHeight: 24 * DefaultStyle.dp
+													spacing: 5 * DefaultStyle.dp
+													Image {
+														source: modelData.core.state === LinphoneEnums.CallState.Paused 
+														|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+														? AppIcons.phone : AppIcons.pause
+														sourceSize.width: 32 * DefaultStyle.dp
+														sourceSize.height: 32 * DefaultStyle.dp
+														Layout.preferredWidth: 32 * DefaultStyle.dp
+														Layout.preferredHeight: 32 * DefaultStyle.dp
+														fillMode: Image.PreserveAspectFit
 													}
 													Text {
-														text: qsTr("Partager le lien de la réunion")
-														font.pixelSize: 14 * DefaultStyle.dp
+														text: modelData.core.state === LinphoneEnums.CallState.Paused 
+														|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+														? qsTr("Reprendre l'appel") : qsTr("Mettre en pause")
+														color: DefaultStyle.main2_500main
+														font.bold: pausingButton.shadowEnabled
+													}
+													Item {
+														Layout.fillWidth: true
 													}
 												}
-												onClicked: {
-													UtilsCpp.copyToClipboard(mainWindow.call.core.peerAddress)
-													showInformationPopup(qsTr("Copié"), qsTr("Le lien de la réunion a été copié dans le presse-papier"), true)
+											}
+											Button {
+												id: endCallButton
+												onClicked: mainWindow.endCall(modelData)
+												KeyNavigation.up: pausingButton
+												KeyNavigation.down: pausingButton
+												background: Item {}
+												contentItem: RowLayout {
+													spacing: 5 * DefaultStyle.dp
+													EffectImage {
+														imageSource: AppIcons.endCall
+														colorizationColor: DefaultStyle.danger_500main
+														width: 32 * DefaultStyle.dp
+														height: 32 * DefaultStyle.dp
+													}
+													Text {
+														color: DefaultStyle.danger_500main
+														text: qsTr("Terminer l'appel")
+														font.bold: endCallButton.shadowEnabled
+													}
+													Item {
+														Layout.fillWidth: true
+													}
 												}
 											}
 										}
 									}
-									Control.StackView.onActivated: {
-										rightPanel.customHeaderButtons = headerbutton.createObject(rightPanel)
-										rightPanel.headerTitleText = qsTr("Participants (%1)").arg(count)
-									}
-									call: mainWindow.call
-									onAddParticipantRequested: participantsStack.push(addParticipantComp)
-									onCountChanged: {
-										rightPanel.headerTitleText = qsTr("Participants (%1)").arg(count)
-									}
-									Connections {
-										target: participantsStack
-										function onCurrentItemChanged() {
-											if (participantsStack.currentItem == participantList) rightPanel.headerTitleText = qsTr("Participants (%1)").arg(participantList.count)
-										}
-									}
-									Connections {
-										target: rightPanel
-										function onValidateRequested() {
-											participantList.model.addAddresses(participantsStack.selectedParticipants)
-											participantsStack.pop()
-											participantsStack.participantAdded()
+								}
+							}
+						}
+					}
+					Item {
+						Layout.fillHeight: true
+					}
+				}
+			}
+			Component {
+				id: settingsPanel
+				Item {
+					Control.StackView.onActivated: {
+						rightPanel.headerTitleText = qsTr("Paramètres")
+					}
+					Keys.onPressed: (event)=> {
+						if (event.key == Qt.Key_Escape) {
+							rightPanel.visible = false
+							event.accepted = true;
+						}
+					}
+					MultimediaSettings {
+						id: inSettingsPanel
+						call: mainWindow.call
+						anchors.fill: parent
+						anchors.topMargin: 16 * DefaultStyle.dp
+						anchors.bottomMargin: 16 * DefaultStyle.dp
+						anchors.leftMargin: 17 * DefaultStyle.dp
+						anchors.rightMargin: 17 * DefaultStyle.dp
+					}
+				}
+			}
+			Component {
+				id: screencastPanel
+				Item {
+					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Partage de votre écran")
+					Keys.onPressed: (event)=> {
+						if (event.key == Qt.Key_Escape) {
+							rightPanel.visible = false
+							event.accepted = true;
+						}
+					}
+					ScreencastSettings {
+						anchors.fill: parent
+						anchors.topMargin: 16 * DefaultStyle.dp
+						anchors.bottomMargin: 16 * DefaultStyle.dp
+						anchors.leftMargin: 17 * DefaultStyle.dp
+						anchors.rightMargin: 17 * DefaultStyle.dp
+						call: mainWindow.call
+					}
+				}
+			}
+			Component {
+				id: participantListPanel
+				Item {
+					objectName: "participantListPanel"
+					Keys.onPressed: (event)=> {
+						if (event.key == Qt.Key_Escape) {
+							rightPanel.visible = false
+							event.accepted = true;
+						}
+					}
+					Control.StackView {
+						id: participantsStack
+						anchors.fill: parent
+						anchors.bottomMargin: 16 * DefaultStyle.dp
+						anchors.leftMargin: 17 * DefaultStyle.dp
+						anchors.rightMargin: 17 * DefaultStyle.dp
+						initialItem: participantListComp
+						onCurrentItemChanged: rightPanel.headerStack.currentIndex = currentItem.Control.StackView.index
+						property list<string> selectedParticipants
+						signal participantAdded()
+
+						Connections {
+							target: rightPanel
+							function onReturnRequested(){ participantsStack.pop()}
+						}
+
+						Component {
+							id: participantListComp
+							ParticipantListView {
+								id: participantList
+								Component {
+									id: headerbutton
+									PopupButton {
+										popup.contentItem: Button {
+											background: Item{}
+											contentItem: RowLayout {
+												spacing: 0
+												EffectImage {
+													colorizationColor: DefaultStyle.main2_600
+													imageSource: AppIcons.shareNetwork
+													Layout.preferredWidth: 24 * DefaultStyle.dp
+													Layout.preferredHeight: 24 * DefaultStyle.dp
+												}
+												Text {
+													text: qsTr("Partager le lien de la réunion")
+													font.pixelSize: 14 * DefaultStyle.dp
+												}
+											}
+											onClicked: {
+												UtilsCpp.copyToClipboard(mainWindow.call.core.peerAddress)
+												showInformationPopup(qsTr("Copié"), qsTr("Le lien de la réunion a été copié dans le presse-papier"), true)
+											}
 										}
 									}
 								}
-							}
-							Component {
-								id: addParticipantComp
-								AddParticipantsForm {
-									id: addParticipantLayout
-									searchBarColor: DefaultStyle.grey_0
-									searchBarBorderColor: DefaultStyle.grey_200
-									onSelectedParticipantsCountChanged: {
-										rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné%2").arg(selectedParticipantsCount).arg(selectedParticipantsCount > 1 ? "s" : "")
-										participantsStack.selectedParticipants = selectedParticipants
+								Control.StackView.onActivated: {
+									rightPanel.customHeaderButtons = headerbutton.createObject(rightPanel)
+									rightPanel.headerTitleText = qsTr("Participants (%1)").arg(count)
+								}
+								call: mainWindow.call
+								onAddParticipantRequested: participantsStack.push(addParticipantComp)
+								onCountChanged: {
+									rightPanel.headerTitleText = qsTr("Participants (%1)").arg(count)
+								}
+								Connections {
+									target: participantsStack
+									function onCurrentItemChanged() {
+										if (participantsStack.currentItem == participantList) rightPanel.headerTitleText = qsTr("Participants (%1)").arg(participantList.count)
 									}
-									Connections {
-										target: participantsStack
-										function onCurrentItemChanged() {
-											if (participantsStack.currentItem == addParticipantLayout) {
-												rightPanel.headerTitleText = qsTr("Ajouter des participants")
-												rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné%2").arg(addParticipantLayout.selectedParticipants.length).arg(addParticipantLayout.selectedParticipants.length > 1 ? "s" : "")
-											}
+								}
+								Connections {
+									target: rightPanel
+									function onValidateRequested() {
+										participantList.model.addAddresses(participantsStack.selectedParticipants)
+										participantsStack.pop()
+										participantsStack.participantAdded()
+									}
+								}
+							}
+						}
+						Component {
+							id: addParticipantComp
+							AddParticipantsForm {
+								id: addParticipantLayout
+								searchBarColor: DefaultStyle.grey_0
+								searchBarBorderColor: DefaultStyle.grey_200
+								onSelectedParticipantsCountChanged: {
+									rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné%2").arg(selectedParticipantsCount).arg(selectedParticipantsCount > 1 ? "s" : "")
+									participantsStack.selectedParticipants = selectedParticipants
+								}
+								Connections {
+									target: participantsStack
+									function onCurrentItemChanged() {
+										if (participantsStack.currentItem == addParticipantLayout) {
+											rightPanel.headerTitleText = qsTr("Ajouter des participants")
+											rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné%2").arg(addParticipantLayout.selectedParticipants.length).arg(addParticipantLayout.selectedParticipants.length > 1 ? "s" : "")
 										}
 									}
 								}
@@ -1051,223 +1056,223 @@ AbstractWindow {
 						}
 					}
 				}
-				Component {
-					id: encryptionPanel
-					ColumnLayout {
-						Control.StackView.onActivated: {
-							rightPanel.headerTitleText = qsTr("Chiffrement")
-						}
-						RoundedPane {
-							Layout.fillWidth: true
-							leftPadding: 16 * DefaultStyle.dp
-							rightPadding: 16 * DefaultStyle.dp
-							topPadding: 13 * DefaultStyle.dp
-							bottomPadding: 13 * DefaultStyle.dp
+			}
+			Component {
+				id: encryptionPanel
+				ColumnLayout {
+					Control.StackView.onActivated: {
+						rightPanel.headerTitleText = qsTr("Chiffrement")
+					}
+					RoundedPane {
+						Layout.fillWidth: true
+						leftPadding: 16 * DefaultStyle.dp
+						rightPadding: 16 * DefaultStyle.dp
+						topPadding: 13 * DefaultStyle.dp
+						bottomPadding: 13 * DefaultStyle.dp
 
-							Layout.topMargin: 13 * DefaultStyle.dp
-							Layout.leftMargin: 16 * DefaultStyle.dp
-							Layout.rightMargin: 16 * DefaultStyle.dp
-							
-							contentItem: ColumnLayout {
-								spacing: 12 * DefaultStyle.dp
+						Layout.topMargin: 13 * DefaultStyle.dp
+						Layout.leftMargin: 16 * DefaultStyle.dp
+						Layout.rightMargin: 16 * DefaultStyle.dp
+						
+						contentItem: ColumnLayout {
+							spacing: 12 * DefaultStyle.dp
+							Text {
+								text: qsTr("Chiffrement :")
+								Layout.alignment: Qt.AlignHCenter
+								font {
+									pixelSize: 12 * DefaultStyle.dp
+									weight: 700 * DefaultStyle.dp
+								}
+							}
+							ColumnLayout {
+								Layout.alignment: Qt.AlignHCenter
+								spacing: 7 * DefaultStyle.dp
 								Text {
-									text: qsTr("Chiffrement :")
+									property bool isPostQuantum: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && mainWindow.call.core.zrtpStats.isPostQuantum
+									text: qsTr("Chiffrement du média : %1%2").arg(isPostQuantum ? "post Quantum " : "").arg(mainWindow.call.core.encryptionString)
 									Layout.alignment: Qt.AlignHCenter
 									font {
 										pixelSize: 12 * DefaultStyle.dp
-										weight: 700 * DefaultStyle.dp
+										weight: 500 * DefaultStyle.dp
 									}
 								}
 								ColumnLayout {
-									Layout.alignment: Qt.AlignHCenter
-									spacing: 7 * DefaultStyle.dp
+									visible: mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
 									Text {
-										property bool isPostQuantum: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && mainWindow.call.core.zrtpStats.isPostQuantum
-										text: qsTr("Chiffrement du média : %1%2").arg(isPostQuantum ? "post Quantum " : "").arg(mainWindow.call.core.encryptionString)
+										text: qsTr("Cipher algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.cipherAlgo)
 										Layout.alignment: Qt.AlignHCenter
 										font {
 											pixelSize: 12 * DefaultStyle.dp
 											weight: 500 * DefaultStyle.dp
 										}
 									}
-									ColumnLayout {
-										visible: mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-										Text {
-											text: qsTr("Cipher algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.cipherAlgo)
-											Layout.alignment: Qt.AlignHCenter
-											font {
-												pixelSize: 12 * DefaultStyle.dp
-												weight: 500 * DefaultStyle.dp
-											}
+									Text {
+										text: qsTr("Key agreement algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.keyAgreementAlgo)
+										Layout.alignment: Qt.AlignHCenter
+										font {
+											pixelSize: 12 * DefaultStyle.dp
+											weight: 500 * DefaultStyle.dp
 										}
-										Text {
-											text: qsTr("Key agreement algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.keyAgreementAlgo)
-											Layout.alignment: Qt.AlignHCenter
-											font {
-												pixelSize: 12 * DefaultStyle.dp
-												weight: 500 * DefaultStyle.dp
-											}
+									}
+									Text {
+										text: qsTr("Hash algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.hashAlgo)
+										Layout.alignment: Qt.AlignHCenter
+										font {
+											pixelSize: 12 * DefaultStyle.dp
+											weight: 500 * DefaultStyle.dp
 										}
-										Text {
-											text: qsTr("Hash algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.hashAlgo)
-											Layout.alignment: Qt.AlignHCenter
-											font {
-												pixelSize: 12 * DefaultStyle.dp
-												weight: 500 * DefaultStyle.dp
-											}
+									}
+									Text {
+										text: qsTr("Authentication algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.authenticationAlgo)
+										Layout.alignment: Qt.AlignHCenter
+										font {
+											pixelSize: 12 * DefaultStyle.dp
+											weight: 500 * DefaultStyle.dp
 										}
-										Text {
-											text: qsTr("Authentication algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.authenticationAlgo)
-											Layout.alignment: Qt.AlignHCenter
-											font {
-												pixelSize: 12 * DefaultStyle.dp
-												weight: 500 * DefaultStyle.dp
-											}
-										}
-										Text {
-											text: qsTr("SAS algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.sasAlgo)
-											Layout.alignment: Qt.AlignHCenter
-											font {
-												pixelSize: 12 * DefaultStyle.dp
-												weight: 500 * DefaultStyle.dp
-											}
+									}
+									Text {
+										text: qsTr("SAS algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.sasAlgo)
+										Layout.alignment: Qt.AlignHCenter
+										font {
+											pixelSize: 12 * DefaultStyle.dp
+											weight: 500 * DefaultStyle.dp
 										}
 									}
 								}
 							}
 						}
-						Item{Layout.fillHeight: true}
-						Button {
-							visible: mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-							Layout.fillWidth: true
-							text: qsTr("Validation chiffrement")
-							onClicked: zrtpValidation.open()
-							Layout.bottomMargin: 13 * DefaultStyle.dp
-							Layout.leftMargin: 16 * DefaultStyle.dp
-							Layout.rightMargin: 16 * DefaultStyle.dp
-							leftPadding: 20 * DefaultStyle.dp
-							rightPadding: 20 * DefaultStyle.dp
-							topPadding: 11 * DefaultStyle.dp
-							bottomPadding: 11 * DefaultStyle.dp
-						}
+					}
+					Item{Layout.fillHeight: true}
+					Button {
+						visible: mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+						Layout.fillWidth: true
+						text: qsTr("Validation chiffrement")
+						onClicked: zrtpValidation.open()
+						Layout.bottomMargin: 13 * DefaultStyle.dp
+						Layout.leftMargin: 16 * DefaultStyle.dp
+						Layout.rightMargin: 16 * DefaultStyle.dp
+						leftPadding: 20 * DefaultStyle.dp
+						rightPadding: 20 * DefaultStyle.dp
+						topPadding: 11 * DefaultStyle.dp
+						bottomPadding: 11 * DefaultStyle.dp
 					}
 				}
-				Component {
-					id: statsPanel
-					ColumnLayout {
-						property string objectName: "statsPanel"
-						spacing: 20 * DefaultStyle.dp
-						Control.StackView.onActivated: {
-							rightPanel.headerTitleText = qsTr("Statistiques")
-						}
-						RoundedPane {
-							Layout.fillWidth: true
-							leftPadding: 16 * DefaultStyle.dp
-							rightPadding: 16 * DefaultStyle.dp
-							topPadding: 13 * DefaultStyle.dp
-							bottomPadding: 13 * DefaultStyle.dp
-
-							Layout.topMargin: 13 * DefaultStyle.dp
-							Layout.leftMargin: 16 * DefaultStyle.dp
-							Layout.rightMargin: 16 * DefaultStyle.dp
-							
-							contentItem: ColumnLayout {
-								spacing: 12 * DefaultStyle.dp
-								Layout.alignment: Qt.AlignHCenter
-								Text {
-									text: qsTr("Audio")
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 700 * DefaultStyle.dp
-									}
-								}
-								ColumnLayout {
-									spacing: 7 * DefaultStyle.dp
-									Layout.alignment: Qt.AlignHCenter
-									Text {
-										text: mainWindow.call ? mainWindow.call.core.audioStats.codec : ""
-										Layout.alignment: Qt.AlignHCenter
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
-										}
-									}
-									Text {
-										text: mainWindow.call ? mainWindow.call.core.audioStats.bandwidth : ""
-										Layout.alignment: Qt.AlignHCenter
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
-										}
-									}
-								}
-							}
-						}
-						RoundedPane {
-							Layout.fillWidth: true
-							leftPadding: 16 * DefaultStyle.dp
-							rightPadding: 16 * DefaultStyle.dp
-							topPadding: 13 * DefaultStyle.dp
-							bottomPadding: 13 * DefaultStyle.dp
-
-							Layout.topMargin: 13 * DefaultStyle.dp
-							Layout.leftMargin: 16 * DefaultStyle.dp
-							Layout.rightMargin: 16 * DefaultStyle.dp
-
-							visible: mainWindow.localVideoEnabled || mainWindow.remoteVideoEnabled
-
-							contentItem: ColumnLayout {
-								spacing: 12 * DefaultStyle.dp
-								Layout.alignment: Qt.AlignHCenter
-								Text {
-									text: qsTr("Vidéo")
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 700 * DefaultStyle.dp
-									}
-								}
-								ColumnLayout {
-									spacing: 7 * DefaultStyle.dp
-									Layout.alignment: Qt.AlignHCenter
-									Text {
-										text: mainWindow.call ? mainWindow.call.core.videoStats.codec : ""
-										Layout.alignment: Qt.AlignHCenter
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
-										}
-									}
-									Text {
-										text: mainWindow.call ? mainWindow.call.core.videoStats.bandwidth : ""
-										Layout.alignment: Qt.AlignHCenter
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
-										}
-									}
-									Text {
-										text: mainWindow.call ? mainWindow.call.core.videoStats.resolution : ""
-										Layout.alignment: Qt.AlignHCenter
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
-										}
-									}
-									Text {
-										text: mainWindow.call ? mainWindow.call.core.videoStats.fps : ""
-										Layout.alignment: Qt.AlignHCenter
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
-										}
-									}
-								}
-							}
-						}
-						Item{Layout.fillHeight: true}
+			}
+			Component {
+				id: statsPanel
+				ColumnLayout {
+					property string objectName: "statsPanel"
+					spacing: 20 * DefaultStyle.dp
+					Control.StackView.onActivated: {
+						rightPanel.headerTitleText = qsTr("Statistiques")
 					}
+					RoundedPane {
+						Layout.fillWidth: true
+						leftPadding: 16 * DefaultStyle.dp
+						rightPadding: 16 * DefaultStyle.dp
+						topPadding: 13 * DefaultStyle.dp
+						bottomPadding: 13 * DefaultStyle.dp
+
+						Layout.topMargin: 13 * DefaultStyle.dp
+						Layout.leftMargin: 16 * DefaultStyle.dp
+						Layout.rightMargin: 16 * DefaultStyle.dp
+						
+						contentItem: ColumnLayout {
+							spacing: 12 * DefaultStyle.dp
+							Layout.alignment: Qt.AlignHCenter
+							Text {
+								text: qsTr("Audio")
+								Layout.alignment: Qt.AlignHCenter
+								font {
+									pixelSize: 12 * DefaultStyle.dp
+									weight: 700 * DefaultStyle.dp
+								}
+							}
+							ColumnLayout {
+								spacing: 7 * DefaultStyle.dp
+								Layout.alignment: Qt.AlignHCenter
+								Text {
+									text: mainWindow.call ? mainWindow.call.core.audioStats.codec : ""
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 500 * DefaultStyle.dp
+									}
+								}
+								Text {
+									text: mainWindow.call ? mainWindow.call.core.audioStats.bandwidth : ""
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 500 * DefaultStyle.dp
+									}
+								}
+							}
+						}
+					}
+					RoundedPane {
+						Layout.fillWidth: true
+						leftPadding: 16 * DefaultStyle.dp
+						rightPadding: 16 * DefaultStyle.dp
+						topPadding: 13 * DefaultStyle.dp
+						bottomPadding: 13 * DefaultStyle.dp
+
+						Layout.topMargin: 13 * DefaultStyle.dp
+						Layout.leftMargin: 16 * DefaultStyle.dp
+						Layout.rightMargin: 16 * DefaultStyle.dp
+
+						visible: mainWindow.localVideoEnabled || mainWindow.remoteVideoEnabled
+
+						contentItem: ColumnLayout {
+							spacing: 12 * DefaultStyle.dp
+							Layout.alignment: Qt.AlignHCenter
+							Text {
+								text: qsTr("Vidéo")
+								Layout.alignment: Qt.AlignHCenter
+								font {
+									pixelSize: 12 * DefaultStyle.dp
+									weight: 700 * DefaultStyle.dp
+								}
+							}
+							ColumnLayout {
+								spacing: 7 * DefaultStyle.dp
+								Layout.alignment: Qt.AlignHCenter
+								Text {
+									text: mainWindow.call ? mainWindow.call.core.videoStats.codec : ""
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 500 * DefaultStyle.dp
+									}
+								}
+								Text {
+									text: mainWindow.call ? mainWindow.call.core.videoStats.bandwidth : ""
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 500 * DefaultStyle.dp
+									}
+								}
+								Text {
+									text: mainWindow.call ? mainWindow.call.core.videoStats.resolution : ""
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 500 * DefaultStyle.dp
+									}
+								}
+								Text {
+									text: mainWindow.call ? mainWindow.call.core.videoStats.fps : ""
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 500 * DefaultStyle.dp
+									}
+								}
+							}
+						}
+					}
+					Item{Layout.fillHeight: true}
 				}
 			}
 			Component {

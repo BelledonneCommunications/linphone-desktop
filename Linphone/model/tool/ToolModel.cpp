@@ -90,7 +90,12 @@ QString ToolModel::getDisplayName(QString address) {
 	mustBeInLinphoneThread(QString(gClassName) + " : " + Q_FUNC_INFO);
 
 	QString displayName = getDisplayName(interpretUrl(address));
-	return displayName.isEmpty() ? address : displayName;
+	if (displayName.isEmpty()) return address;
+	QStringList nameSplitted = displayName.split(" ");
+	for (auto &part : nameSplitted) {
+		part[0] = part[0].toUpper();
+	}
+	return nameSplitted.join(" ");
 }
 
 bool ToolModel::createCall(const QString &sipAddress,

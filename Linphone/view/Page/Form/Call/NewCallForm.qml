@@ -112,9 +112,9 @@ FocusScope {
 						}
 					}
 					ColumnLayout {
-						spacing: 18 * DefaultStyle.dp
+						visible: contactList.contentHeight > 0
 						Text {
-							text: qsTr("All contacts")
+							text: qsTr("Contacts")
 							font {
 								pixelSize: 16 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
