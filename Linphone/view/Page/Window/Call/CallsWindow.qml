@@ -19,6 +19,8 @@ AbstractWindow {
 	property ConferenceGui conference: call && call.core.conference || null
 
 	property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
+	property bool localVideoEnabled: call && call.core.localVideoEnabled
+	property bool remoteVideoEnabled: call && call.core.remoteVideoEnabled
 
 	property bool callTerminatedByUser: false
 	property var callState: call ? call.core.state : LinphoneEnums.CallState.Idle
@@ -116,7 +118,6 @@ AbstractWindow {
 	Connections {
 		enabled: !!call
 		target: call && call.core
-		function onRemoteVideoEnabledChanged() { console.log("remote video enabled", call.core.remoteVideoEnabled)}
 		function onSecurityUpdated() {
 			if (call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
 				if (call.core.tokenVerified) {
@@ -1211,8 +1212,8 @@ AbstractWindow {
 							Layout.leftMargin: 16 * DefaultStyle.dp
 							Layout.rightMargin: 16 * DefaultStyle.dp
 
-							visible: mainWindow.call && (mainWindow.call.core.localVideoEnabled || mainWindow.call.core.remoteVideoEnabled)
-							
+							visible: mainWindow.localVideoEnabled || mainWindow.remoteVideoEnabled
+
 							contentItem: ColumnLayout {
 								spacing: 12 * DefaultStyle.dp
 								Layout.alignment: Qt.AlignHCenter
@@ -1464,7 +1465,7 @@ AbstractWindow {
 						enabled: mainWindow.conferenceInfo || (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning)
 						iconUrl: AppIcons.videoCamera
 						checkedIconUrl: AppIcons.videoCameraSlash
-						checked: mainWindow.call && !mainWindow.call.core.localVideoEnabled
+						checked: !mainWindow.localVideoEnabled
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
