@@ -105,7 +105,6 @@ AbstractSettingsLayout {
 						entries: account.core.transports
 						propertyName: "transport"
 						propertyOwner: account.core
-						toValidate: true
 					}
 					DecoratedTextField {
 						title: qsTr("URL du serveur mandataire")
