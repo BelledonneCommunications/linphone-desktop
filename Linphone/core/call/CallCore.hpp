@@ -34,19 +34,19 @@
 struct ZrtpStats {
 	Q_GADGET
 
-	Q_PROPERTY(QString cipherAlgo MEMBER cipherAlgorithm)
-	Q_PROPERTY(QString keyAgreementAlgo MEMBER keyAgreementAlgorithm)
-	Q_PROPERTY(QString hashAlgo MEMBER hashAlgorithm)
-	Q_PROPERTY(QString authenticationAlgo MEMBER authenticationAlgorithm)
-	Q_PROPERTY(QString sasAlgo MEMBER sasAlgorithm)
-	Q_PROPERTY(bool isPostQuantum MEMBER isPostQuantum)
+	Q_PROPERTY(QString cipherAlgo MEMBER mCipherAlgorithm)
+	Q_PROPERTY(QString keyAgreementAlgo MEMBER mKeyAgreementAlgorithm)
+	Q_PROPERTY(QString hashAlgo MEMBER mHashAlgorithm)
+	Q_PROPERTY(QString authenticationAlgo MEMBER mAuthenticationAlgorithm)
+	Q_PROPERTY(QString sasAlgo MEMBER mSasAlgorithm)
+	Q_PROPERTY(bool isPostQuantum MEMBER mIsPostQuantum)
 public:
-	bool isPostQuantum = false;
-	QString cipherAlgorithm;
-	QString keyAgreementAlgorithm;
-	QString hashAlgorithm;
-	QString authenticationAlgorithm;
-	QString sasAlgorithm;
+	bool mIsPostQuantum = false;
+	QString mCipherAlgorithm;
+	QString mKeyAgreementAlgorithm;
+	QString mHashAlgorithm;
+	QString mAuthenticationAlgorithm;
+	QString mSasAlgorithm;
 
 	ZrtpStats operator=(ZrtpStats s);
 	bool operator==(ZrtpStats s);
@@ -55,12 +55,16 @@ public:
 
 struct AudioStats {
 	Q_GADGET
-	Q_PROPERTY(QString codec MEMBER codec)
-	Q_PROPERTY(QString bandwidth MEMBER bandwidth)
+	Q_PROPERTY(QString codec MEMBER mCodec)
+	Q_PROPERTY(QString bandwidth MEMBER mBandwidth)
+	Q_PROPERTY(QString lossRate MEMBER mLossRate)
+	Q_PROPERTY(QString jitterBufferSize MEMBER mJitterBufferSize)
 
 public:
-	QString codec;
-	QString bandwidth;
+	QString mCodec;
+	QString mBandwidth;
+	QString mLossRate;
+	QString mJitterBufferSize;
 
 	AudioStats operator=(AudioStats s);
 
@@ -70,16 +74,18 @@ public:
 
 struct VideoStats {
 	Q_GADGET
-	Q_PROPERTY(QString codec MEMBER codec)
-	Q_PROPERTY(QString bandwidth MEMBER bandwidth)
-	Q_PROPERTY(QString resolution MEMBER resolution)
-	Q_PROPERTY(QString fps MEMBER fps)
+	Q_PROPERTY(QString codec MEMBER mCodec)
+	Q_PROPERTY(QString bandwidth MEMBER mBandwidth)
+	Q_PROPERTY(QString resolution MEMBER mResolution)
+	Q_PROPERTY(QString fps MEMBER mFps)
+	Q_PROPERTY(QString lossRate MEMBER mLossRate)
 
 public:
-	QString codec;
-	QString bandwidth;
-	QString resolution;
-	QString fps;
+	QString mCodec;
+	QString mBandwidth;
+	QString mResolution;
+	QString mFps;
+	QString mLossRate;
 
 	VideoStats operator=(VideoStats s);
 	bool operator==(VideoStats s);

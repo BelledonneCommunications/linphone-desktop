@@ -9,8 +9,7 @@ import SettingsCpp
 ColumnLayout{
 	id: mainItem
 	property AccountGui account: null
-	property var displayName: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : ""
-	property string topText: displayName ? displayName.value : ""
+	property string topText: account ? account.core.displayName : ""
 	property string bottomText: account ? SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(account.core.identityAddress) : account.core.identityAddress : ""
 	spacing: 0
 	width: topTextItem.implicitWidth

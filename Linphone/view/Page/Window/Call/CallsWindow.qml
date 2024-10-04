@@ -1189,7 +1189,7 @@ AbstractWindow {
 								}
 							}
 							ColumnLayout {
-								spacing: 7 * DefaultStyle.dp
+								spacing: 8 * DefaultStyle.dp
 								Layout.alignment: Qt.AlignHCenter
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.audioStats.codec : ""
@@ -1207,6 +1207,22 @@ AbstractWindow {
 										weight: 500 * DefaultStyle.dp
 									}
 								}
+								Text {
+									text: mainWindow.call ? mainWindow.call.core.audioStats.lossRate : ""
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 500 * DefaultStyle.dp
+									}
+								}
+								Text {
+									text: mainWindow.call ? mainWindow.call.core.audioStats.jitterBufferSize : ""
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 500 * DefaultStyle.dp
+									}
+								}
 							}
 						}
 					}
@@ -1217,7 +1233,6 @@ AbstractWindow {
 						topPadding: 13 * DefaultStyle.dp
 						bottomPadding: 13 * DefaultStyle.dp
 
-						Layout.topMargin: 13 * DefaultStyle.dp
 						Layout.leftMargin: 16 * DefaultStyle.dp
 						Layout.rightMargin: 16 * DefaultStyle.dp
 
@@ -1235,7 +1250,7 @@ AbstractWindow {
 								}
 							}
 							ColumnLayout {
-								spacing: 7 * DefaultStyle.dp
+								spacing: 8 * DefaultStyle.dp
 								Layout.alignment: Qt.AlignHCenter
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.videoStats.codec : ""
@@ -1247,6 +1262,14 @@ AbstractWindow {
 								}
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.videoStats.bandwidth : ""
+									Layout.alignment: Qt.AlignHCenter
+									font {
+										pixelSize: 12 * DefaultStyle.dp
+										weight: 500 * DefaultStyle.dp
+									}
+								}
+								Text {
+									text: mainWindow.call ? mainWindow.call.core.videoStats.lossRate : ""
 									Layout.alignment: Qt.AlignHCenter
 									font {
 										pixelSize: 12 * DefaultStyle.dp

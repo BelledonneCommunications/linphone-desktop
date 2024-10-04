@@ -20,6 +20,8 @@
 
 #include "AccountCore.hpp"
 #include "core/App.hpp"
+#include "model/object/VariantObject.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/thread/SafeConnection.hpp"
 #include <QHostInfo>
@@ -49,10 +51,16 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	// mUnreadNotifications = account->getUnreadChatMessageCount() + account->getMissedCallsCount();	// TODO
 	mUnreadNotifications = account->getMissedCallsCount();
 	mDisplayName = Utils::coreStringToAppString(identityAddress->getDisplayName());
+	if (mDisplayName.isEmpty()) {
+		mDisplayName = ToolModel::getDisplayName(mIdentityAddress);
+	}
 	mRegisterEnabled = params->registerEnabled();
 	mMwiServerAddress =
 	    params->getMwiServerAddress() ? Utils::coreStringToAppString(params->getMwiServerAddress()->asString()) : "";
-	mTransports << "TCP" << "UDP" << "TLS" << "DTLS";
+	mTransports << "TCP"
+	            << "UDP"
+	            << "TLS"
+	            << "DTLS";
 	mTransport = LinphoneEnums::toString(LinphoneEnums::fromLinphone(params->getTransport()));
 	mServerAddress =
 	    params->getServerAddress() ? Utils::coreStringToAppString(params->getServerAddress()->asString()) : "";

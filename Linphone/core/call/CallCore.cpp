@@ -31,52 +31,59 @@ DEFINE_ABSTRACT_OBJECT(CallCore)
 /***********************************************************************/
 
 ZrtpStats ZrtpStats::operator=(ZrtpStats s) {
-	cipherAlgorithm = s.cipherAlgorithm;
-	keyAgreementAlgorithm = s.keyAgreementAlgorithm;
-	hashAlgorithm = s.hashAlgorithm;
-	authenticationAlgorithm = s.authenticationAlgorithm;
-	sasAlgorithm = s.sasAlgorithm;
-	isPostQuantum = s.isPostQuantum;
+	mCipherAlgorithm = s.mCipherAlgorithm;
+	mKeyAgreementAlgorithm = s.mKeyAgreementAlgorithm;
+	mHashAlgorithm = s.mHashAlgorithm;
+	mAuthenticationAlgorithm = s.mAuthenticationAlgorithm;
+	mSasAlgorithm = s.mSasAlgorithm;
+	mIsPostQuantum = s.mIsPostQuantum;
 	return *this;
 }
 
 bool ZrtpStats::operator==(ZrtpStats s) {
-	return s.cipherAlgorithm == cipherAlgorithm && s.keyAgreementAlgorithm == keyAgreementAlgorithm &&
-	       s.hashAlgorithm == hashAlgorithm && s.authenticationAlgorithm == authenticationAlgorithm &&
-	       s.sasAlgorithm == sasAlgorithm && s.isPostQuantum == isPostQuantum;
+	return s.mCipherAlgorithm == mCipherAlgorithm && s.mKeyAgreementAlgorithm == mKeyAgreementAlgorithm &&
+	       s.mHashAlgorithm == mHashAlgorithm && s.mAuthenticationAlgorithm == mAuthenticationAlgorithm &&
+	       s.mSasAlgorithm == mSasAlgorithm && s.mIsPostQuantum == mIsPostQuantum;
 }
 bool ZrtpStats::operator!=(ZrtpStats s) {
-	return s.cipherAlgorithm != cipherAlgorithm || s.keyAgreementAlgorithm != keyAgreementAlgorithm ||
-	       s.hashAlgorithm != hashAlgorithm || s.authenticationAlgorithm != authenticationAlgorithm ||
-	       s.sasAlgorithm != sasAlgorithm || s.isPostQuantum != isPostQuantum;
+	return s.mCipherAlgorithm != mCipherAlgorithm || s.mKeyAgreementAlgorithm != mKeyAgreementAlgorithm ||
+	       s.mHashAlgorithm != mHashAlgorithm || s.mAuthenticationAlgorithm != mAuthenticationAlgorithm ||
+	       s.mSasAlgorithm != mSasAlgorithm || s.mIsPostQuantum != mIsPostQuantum;
 }
 
 AudioStats AudioStats::operator=(AudioStats s) {
-	codec = s.codec;
-	bandwidth = s.bandwidth;
+	mCodec = s.mCodec;
+	mBandwidth = s.mBandwidth;
+	mJitterBufferSize = s.mJitterBufferSize;
+	mLossRate = s.mLossRate;
 	return *this;
 }
 
 bool AudioStats::operator==(AudioStats s) {
-	return s.codec == codec && s.bandwidth == bandwidth;
+	return s.mCodec == mCodec && s.mBandwidth == mBandwidth && s.mLossRate == mLossRate &&
+	       s.mJitterBufferSize == mJitterBufferSize;
 }
 bool AudioStats::operator!=(AudioStats s) {
-	return s.codec != codec || s.bandwidth != bandwidth;
+	return s.mCodec != mCodec || s.mBandwidth != mBandwidth || s.mLossRate != mLossRate ||
+	       s.mJitterBufferSize != mJitterBufferSize;
 }
 
 VideoStats VideoStats::operator=(VideoStats s) {
-	codec = s.codec;
-	bandwidth = s.bandwidth;
-	resolution = s.resolution;
-	fps = s.fps;
+	mCodec = s.mCodec;
+	mBandwidth = s.mBandwidth;
+	mResolution = s.mResolution;
+	mFps = s.mFps;
+	mLossRate = s.mLossRate;
 	return *this;
 }
 
 bool VideoStats::operator==(VideoStats s) {
-	return s.codec == codec && s.bandwidth == bandwidth && s.resolution == resolution && s.fps == fps;
+	return s.mCodec == mCodec && s.mBandwidth == mBandwidth && s.mResolution == mResolution && s.mFps == mFps &&
+	       s.mLossRate == mLossRate;
 }
 bool VideoStats::operator!=(VideoStats s) {
-	return s.codec != codec || s.bandwidth != bandwidth || s.resolution != resolution || s.fps != fps;
+	return s.mCodec != mCodec || s.mBandwidth != mBandwidth || s.mResolution != mResolution || s.mFps != mFps ||
+	       s.mLossRate != mLossRate;
 }
 
 /***********************************************************************/
@@ -128,11 +135,11 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	if (mEncryption == LinphoneEnums::MediaEncryption::Zrtp) {
 		auto stats = call->getStats(linphone::StreamType::Audio);
 		if (stats) {
-			mZrtpStats.cipherAlgorithm = Utils::coreStringToAppString(stats->getZrtpCipherAlgo());
-			mZrtpStats.keyAgreementAlgorithm = Utils::coreStringToAppString(stats->getZrtpKeyAgreementAlgo());
-			mZrtpStats.hashAlgorithm = Utils::coreStringToAppString(stats->getZrtpHashAlgo());
-			mZrtpStats.authenticationAlgorithm = Utils::coreStringToAppString(stats->getZrtpAuthTagAlgo());
-			mZrtpStats.sasAlgorithm = Utils::coreStringToAppString(stats->getZrtpSasAlgo());
+			mZrtpStats.mCipherAlgorithm = Utils::coreStringToAppString(stats->getZrtpCipherAlgo());
+			mZrtpStats.mKeyAgreementAlgorithm = Utils::coreStringToAppString(stats->getZrtpKeyAgreementAlgo());
+			mZrtpStats.mHashAlgorithm = Utils::coreStringToAppString(stats->getZrtpHashAlgo());
+			mZrtpStats.mAuthenticationAlgorithm = Utils::coreStringToAppString(stats->getZrtpAuthTagAlgo());
+			mZrtpStats.mSasAlgorithm = Utils::coreStringToAppString(stats->getZrtpSasAlgo());
 		}
 	}
 	auto conference = call->getConference();
@@ -320,11 +327,11 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		    if (mediaEncryption == linphone::MediaEncryption::ZRTP) {
 			    auto stats = call->getAudioStats();
 			    ZrtpStats zrtpStats;
-			    zrtpStats.cipherAlgorithm = Utils::coreStringToAppString(stats->getZrtpCipherAlgo());
-			    zrtpStats.keyAgreementAlgorithm = Utils::coreStringToAppString(stats->getZrtpKeyAgreementAlgo());
-			    zrtpStats.hashAlgorithm = Utils::coreStringToAppString(stats->getZrtpHashAlgo());
-			    zrtpStats.authenticationAlgorithm = Utils::coreStringToAppString(stats->getZrtpAuthTagAlgo());
-			    zrtpStats.sasAlgorithm = Utils::coreStringToAppString(stats->getZrtpSasAlgo());
+			    zrtpStats.mCipherAlgorithm = Utils::coreStringToAppString(stats->getZrtpCipherAlgo());
+			    zrtpStats.mKeyAgreementAlgorithm = Utils::coreStringToAppString(stats->getZrtpKeyAgreementAlgo());
+			    zrtpStats.mHashAlgorithm = Utils::coreStringToAppString(stats->getZrtpHashAlgo());
+			    zrtpStats.mAuthenticationAlgorithm = Utils::coreStringToAppString(stats->getZrtpAuthTagAlgo());
+			    zrtpStats.mSasAlgorithm = Utils::coreStringToAppString(stats->getZrtpSasAlgo());
 			    mCallModelConnection->invokeToCore([this, zrtpStats]() { setZrtpStats(zrtpStats); });
 		    }
 	    });
@@ -403,13 +410,20 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    auto playloadType = call->getCurrentParams()->getUsedAudioPayloadType();
 			    auto codecType = playloadType ? playloadType->getMimeType() : "";
 			    auto codecRate = playloadType ? playloadType->getClockRate() / 1000 : 0;
-			    audioStats.codec = tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
-			    if (stats) {
-				    audioStats.bandwidth = tr("Bande passante : %1 %2 %3 %4")
-				                               .arg("↑")
-				                               .arg(stats->getUploadBandwidth())
-				                               .arg("↓")
-				                               .arg(stats->getDownloadBandwidth());
+			    audioStats.mCodec =
+			        tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
+			    auto linAudioStats = call->getAudioStats();
+			    if (linAudioStats) {
+				    audioStats.mBandwidth = tr("Bande passante : %1 %2 %3 %4")
+				                                .arg("↑")
+				                                .arg(linAudioStats->getUploadBandwidth())
+				                                .arg("↓")
+				                                .arg(linAudioStats->getDownloadBandwidth());
+				    audioStats.mLossRate = tr("Taux de perte: %1 \% %2 \%")
+				                               .arg(linAudioStats->getSenderLossRate())
+				                               .arg(linAudioStats->getReceiverLossRate());
+				    audioStats.mJitterBufferSize =
+				        tr("Tampon de gigue: %1 ms").arg(linAudioStats->getJitterBufferSizeMs());
 			    }
 			    setAudioStats(audioStats);
 		    } else if (stats->getType() == linphone::StreamType::Video) {
@@ -418,24 +432,29 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    auto playloadType = params->getUsedVideoPayloadType();
 			    auto codecType = playloadType ? playloadType->getMimeType() : "";
 			    auto codecRate = playloadType ? playloadType->getClockRate() / 1000 : 0;
-			    videoStats.codec = tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
+			    videoStats.mCodec =
+			        tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
+			    auto linVideoStats = call->getVideoStats();
 			    if (stats) {
-				    videoStats.bandwidth = tr("Bande passante : %1 %2 %3 %4")
-				                               .arg("↑")
-				                               .arg(stats->getUploadBandwidth())
-				                               .arg("↓")
-				                               .arg(stats->getDownloadBandwidth());
+				    videoStats.mBandwidth = tr("Bande passante : %1 %2 %3 %4")
+				                                .arg("↑")
+				                                .arg(linVideoStats->getUploadBandwidth())
+				                                .arg("↓")
+				                                .arg(linVideoStats->getDownloadBandwidth());
+				    videoStats.mLossRate = tr("Taux de perte: %1 \% %2 \%")
+				                               .arg(linVideoStats->getSenderLossRate())
+				                               .arg(linVideoStats->getReceiverLossRate());
 			    }
 			    auto sentResolution =
 			        params->getSentVideoDefinition() ? params->getSentVideoDefinition()->getName() : "";
 			    auto receivedResolution =
 			        params->getReceivedVideoDefinition() ? params->getReceivedVideoDefinition()->getName() : "";
-			    videoStats.resolution = tr("Définition vidéo : %1 %2 %3 %4")
-			                                .arg("↑", Utils::coreStringToAppString(sentResolution), "↓",
-			                                     Utils::coreStringToAppString(receivedResolution));
+			    videoStats.mResolution = tr("Définition vidéo : %1 %2 %3 %4")
+			                                 .arg("↑", Utils::coreStringToAppString(sentResolution), "↓",
+			                                      Utils::coreStringToAppString(receivedResolution));
 			    auto sentFps = params->getSentFramerate();
 			    auto receivedFps = params->getReceivedFramerate();
-			    videoStats.fps = tr("FPS : %1 %2 %3 %4").arg("↑").arg(sentFps).arg("↓").arg(receivedFps);
+			    videoStats.mFps = tr("FPS : %1 %2 %3 %4").arg("↑").arg(sentFps).arg("↓").arg(receivedFps);
 			    setVideoStats(videoStats);
 		    }
 	    });

@@ -36,8 +36,11 @@ AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QO
 	        &AccountModel::onDefaultAccountChanged);
 
 	// Hack because Account doesn't provide callbacks on updated data
-	connect(this, &AccountModel::defaultAccountChanged, this,
-	        [this]() { emit pictureUriChanged(Utils::coreStringToAppString(mMonitor->getParams()->getPictureUri())); });
+	connect(this, &AccountModel::defaultAccountChanged, this, [this]() {
+		emit pictureUriChanged(Utils::coreStringToAppString(mMonitor->getParams()->getPictureUri()));
+		emit displayNameChanged(
+		    Utils::coreStringToAppString(mMonitor->getParams()->getIdentityAddress()->getDisplayName()));
+	});
 
 	connect(CoreModel::getInstance().get(), &CoreModel::unreadNotificationsChanged, this, [this]() {
 		emit unreadNotificationsChanged(0 /*mMonitor->getUnreadChatMessageCount()*/,
@@ -132,7 +135,10 @@ void AccountModel::setDisplayName(QString displayName) {
 	address->setDisplayName(Utils::appStringToCoreString(displayName));
 	params->setIdentityAddress(address);
 	mMonitor->setParams(params);
-	emit displayNameChanged(displayName);
+	// Hack because Account doesn't provide callbacks on updated data
+	// emit displayNameChanged(displayName);
+	auto core = CoreModel::getInstance()->getCore();
+	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::setDialPlan(int index) {
