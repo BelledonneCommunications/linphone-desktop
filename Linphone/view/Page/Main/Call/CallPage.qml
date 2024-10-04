@@ -150,35 +150,22 @@ AbstractMainPage {
 					height: 24 * DefaultStyle.dp
 					focus: true
 					popup.x: 0
-					popup.padding: 10 * DefaultStyle.dp
+					popup.padding: 20 * DefaultStyle.dp
 					KeyNavigation.right: newCallButton
 					KeyNavigation.down: listStackView
-					popup.contentItem: Button {
-						color: removeHistory.popupBackgroundColor
-						borderColor: removeHistory.popupBackgroundColor
-						inversedColors: true
-						contentItem: RowLayout {
-							EffectImage {
-								imageSource: AppIcons.trashCan
-								width: 24 * DefaultStyle.dp
-								height: 24 * DefaultStyle.dp
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								fillMode: Image.PreserveAspectFit
-								colorizationColor: DefaultStyle.danger_500main
+					popup.contentItem: ColumnLayout {
+						IconLabelButton {
+							Layout.preferredHeight: 24 * DefaultStyle.dp
+							Layout.fillWidth: true
+							focus: visible
+							iconSize: 24 * DefaultStyle.dp
+							text: qsTr("Supprimer l'historique")
+							iconSource: AppIcons.trashCan
+							color: DefaultStyle.danger_500main
+							onClicked: {
+								removeHistory.close()
+								deleteHistoryPopup.open()
 							}
-							Text {
-								text: qsTr("Supprimer l’historique")
-								color: DefaultStyle.danger_500main
-								font {
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
-								}
-							}
-						}
-						onClicked: {
-							removeHistory.close()
-							deleteHistoryPopup.open()
 						}
 					}
 					Connections {
