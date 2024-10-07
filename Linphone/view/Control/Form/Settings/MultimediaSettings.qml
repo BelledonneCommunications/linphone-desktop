@@ -11,17 +11,52 @@ ColumnLayout {
 	property string speakerDevice: outputAudioDeviceCBox.currentText
 	property alias micVolume: microVolume.value
 	property string microDevice: inputAudioDeviceCBox.currentText
+	property bool ringerDevicesVisible: false
+	property bool backgroundVisible: true
+	spacing: 40 * DefaultStyle.dp
 
 	RoundedPane {
+		background.visible: mainItem.backgroundVisible
 		Layout.alignment: Qt.AlignHCenter
 		height: contentItem.implicitHeight + topPadding + bottomPadding
 		Layout.fillWidth: true
-		topPadding: 25 * DefaultStyle.dp
-		bottomPadding: 25 * DefaultStyle.dp
-		leftPadding: 25 * DefaultStyle.dp
-		rightPadding: 25 * DefaultStyle.dp
+		topPadding: background.visible ? 25 * DefaultStyle.dp : 0
+		bottomPadding: background.visible ? 25 * DefaultStyle.dp : 0
+		leftPadding: background.visible ? 25 * DefaultStyle.dp : 0
+		rightPadding: background.visible ? 25 * DefaultStyle.dp : 0
 		contentItem: ColumnLayout {
-			spacing: 40 * DefaultStyle.dp
+			spacing: mainItem.spacing
+			ColumnLayout {
+				spacing: 12 * DefaultStyle.dp
+				RowLayout {
+					spacing: 8 * DefaultStyle.dp
+					EffectImage {
+						imageSource: AppIcons.bellRinger
+						colorizationColor: DefaultStyle.main1_500_main
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+						imageWidth: 24 * DefaultStyle.dp
+						imageHeight: 24 * DefaultStyle.dp
+					}
+					Text {
+						text: qsTr("Sonnerie - Appels entrants")
+						font: Typography.p2l
+						color: DefaultStyle.main2_600
+						Layout.fillWidth: true
+					}
+				}
+				ComboSetting {
+					Layout.fillWidth: true
+					Layout.topMargin: 12 * DefaultStyle.dp
+					Layout.preferredWidth: parent.width
+					entries: SettingsCpp.ringerDevices
+					propertyName: "ringerDevice"
+					propertyOwner: SettingsCpp
+				}
+				Item {
+					Layout.fillHeight: true
+				}
+			}
 			ColumnLayout {
 				spacing: 12 * DefaultStyle.dp
 				RowLayout {
@@ -36,7 +71,7 @@ ColumnLayout {
 					}
 					Text {
 						text: qsTr("Haut-parleurs")
-						font.pixelSize: 14 * DefaultStyle.dp
+						font: Typography.p2l
 						Layout.fillWidth: true
 					}
 				}
@@ -75,7 +110,7 @@ ColumnLayout {
 					}
 					Text {
 						text: qsTr("Microphone")
-						font.pixelSize: 14 * DefaultStyle.dp
+						font: Typography.p2l
 						Layout.fillWidth: true
 					}
 				}
@@ -153,7 +188,7 @@ ColumnLayout {
 					}
 					Text {
 						text: qsTr("Caméra")
-						font.pixelSize: 14 * DefaultStyle.dp
+						font: Typography.p2l
 						Layout.fillWidth: true
 					}
 				}

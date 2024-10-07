@@ -12,6 +12,7 @@ AbstractSettingsLayout {
 		id: content
 		ColumnLayout {
 			RowLayout {
+				spacing: 47 * DefaultStyle.dp
 				ColumnLayout {
 					Item {
 						Layout.preferredWidth: 341 * DefaultStyle.dp
@@ -20,8 +21,7 @@ AbstractSettingsLayout {
 				ColumnLayout {
 					Layout.rightMargin: 25 * DefaultStyle.dp
 					Layout.topMargin: 36 * DefaultStyle.dp
-					Layout.leftMargin: 64 * DefaultStyle.dp
-					spacing: 40 * DefaultStyle.dp
+					spacing: 20 * DefaultStyle.dp
 					SwitchSetting {
 						titleText: qsTr("Annulateur d'écho")
 						subTitleText: qsTr("Évite que de l'écho soit entendu par votre correspondant")
@@ -46,6 +46,7 @@ AbstractSettingsLayout {
 				Layout.bottomMargin: 16 * DefaultStyle.dp
 			}
 			RowLayout {
+				spacing: 47 * DefaultStyle.dp
 				ColumnLayout {
 					ColumnLayout {
 						Layout.preferredWidth: 341 * DefaultStyle.dp
@@ -68,208 +69,11 @@ AbstractSettingsLayout {
 						Layout.fillHeight: true
 					}
 				}
-				ColumnLayout {
+				MultimediaSettings {
+					ringerDevicesVisible: true
+					backgroundVisible: false
 					spacing: 20 * DefaultStyle.dp
 					Layout.rightMargin: 44 * DefaultStyle.dp
-					Layout.topMargin: 20 * DefaultStyle.dp
-					Layout.leftMargin: 64 * DefaultStyle.dp
-
-					ColumnLayout {
-						spacing: 0
-						RowLayout {
-							EffectImage {
-								imageSource: AppIcons.bellRinger
-								colorizationColor: DefaultStyle.main1_500_main
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								imageWidth: 24 * DefaultStyle.dp
-								imageHeight: 24 * DefaultStyle.dp
-							}
-							Text {
-								text: qsTr("Sonnerie - Appels entrants")
-								Layout.leftMargin: 9
-								font: Typography.p2l
-								color: DefaultStyle.main2_600
-								Layout.fillWidth: true
-							}
-						}
-						ComboSetting {
-							Layout.fillWidth: true
-							Layout.topMargin: 12 * DefaultStyle.dp
-							Layout.preferredWidth: parent.width
-							entries: SettingsCpp.ringerDevices
-							propertyName: "ringerDevice"
-							propertyOwner: SettingsCpp
-						}
-						Item {
-							Layout.fillHeight: true
-						}
-					}
-					ColumnLayout {
-						spacing: 0
-						RowLayout {
-							EffectImage {
-								imageSource: AppIcons.speaker
-								colorizationColor: DefaultStyle.main1_500_main
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								imageWidth: 24 * DefaultStyle.dp
-								imageHeight: 24 * DefaultStyle.dp
-							}
-							Text {
-								text: qsTr("Audio")
-								Layout.leftMargin: 9
-								font: Typography.p2l
-								color: DefaultStyle.main2_600
-								Layout.fillWidth: true
-							}
-						}
-						ComboSetting {
-							Layout.fillWidth: true
-							Layout.topMargin: 12 * DefaultStyle.dp
-							Layout.preferredWidth: parent.width
-							entries: SettingsCpp.playbackDevices
-							propertyName: "playbackDevice"
-							propertyOwner: SettingsCpp
-						}
-						Slider {
-							id: speakerVolume
-							Layout.fillWidth: true
-							Layout.topMargin: 22 * DefaultStyle.dp
-							from: 0.0
-							to: 1.0
-							value: SettingsCpp.playbackGain
-							onMoved: {
-								SettingsCpp.lSetPlaybackGain(value)
-							}
-						}
-						Item {
-							Layout.fillHeight: true
-						}
-					}
-					ColumnLayout {
-						spacing: 0
-						RowLayout {
-							EffectImage {
-								imageSource: AppIcons.microphone
-								colorizationColor: DefaultStyle.main1_500_main
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								imageWidth: 24 * DefaultStyle.dp
-								imageHeight: 24 * DefaultStyle.dp
-							}
-							Text {
-								text: qsTr("Microphone")
-								font: Typography.p2l
-								color: DefaultStyle.main2_600
-								Layout.fillWidth: true
-								Layout.leftMargin: 9
-							}
-						}
-						ComboSetting {
-							Layout.fillWidth: true
-							Layout.topMargin: 12 * DefaultStyle.dp
-							Layout.bottomMargin: 22 * DefaultStyle.dp
-							Layout.preferredWidth: parent.width
-							entries: SettingsCpp.captureDevices
-							propertyName: "captureDevice"
-							propertyOwner: SettingsCpp
-						}
-						Slider {
-							id: microVolume
-							Layout.fillWidth: true
-							Layout.bottomMargin: 19 * DefaultStyle.dp
-							from: 0.0
-							to: 1.0
-							value: SettingsCpp.captureGain
-							onMoved: {
-								SettingsCpp.lSetCaptureGain(value)
-							}
-						}
-						Timer {
-							id: audioTestSliderTimer
-							running: false
-							interval: 50
-							repeat: true
-							onTriggered: SettingsCpp.updateMicVolume()
-						}
-						Slider {
-							id: audioTestSlider
-							visible: !SettingsCpp.isInCall
-							Layout.fillWidth: true
-							enabled: false
-							Layout.preferredHeight: 10 * DefaultStyle.dp
-
-							background: Rectangle {
-								x: audioTestSlider.leftPadding
-								y: audioTestSlider.topPadding + audioTestSlider.availableHeight / 2 - height / 2
-								implicitWidth: 200 * DefaultStyle.dp
-								implicitHeight: 10 * DefaultStyle.dp
-								width: audioTestSlider.availableWidth
-								height: implicitHeight
-								radius: 2 * DefaultStyle.dp
-								color: DefaultStyle.grey_850
-
-								Rectangle {
-									width: audioTestSlider.visualPosition * parent.width
-									height: parent.height
-									gradient: Gradient {
-										orientation: Gradient.Horizontal
-										GradientStop { position: 0.0; color: DefaultStyle.vue_meter_light_green }
-										GradientStop { position: 1.0; color: DefaultStyle.vue_meter_dark_green }
-									}
-									radius: 2 * DefaultStyle.dp
-								}
-							}
-							handle: Item {visible: false}
-						}
-						Item {
-							Layout.fillHeight: true
-						}
-					}
-					ColumnLayout {
-						spacing: 0
-						RowLayout {
-							EffectImage {
-								imageSource: AppIcons.videoCamera
-								colorizationColor: DefaultStyle.main1_500_main
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								imageWidth: 24 * DefaultStyle.dp
-								imageHeight: 24 * DefaultStyle.dp
-							}
-							Text {
-								text: qsTr("Caméra")
-								font: Typography.p2l
-								color: DefaultStyle.main2_600
-								Layout.fillWidth: true
-								Layout.leftMargin: 9
-							}
-						}
-						ComboSetting {
-							Layout.fillWidth: true
-							Layout.topMargin: 12 * DefaultStyle.dp
-							Layout.preferredWidth: parent.width
-							entries: SettingsCpp.videoDevices
-							propertyName: "videoDevice"
-							propertyOwner: SettingsCpp
-						}
-						Item {
-							Layout.fillHeight: true
-						}
-					}
-					Connections {
-						target: SettingsCpp
-						function onMicVolumeChanged(volume) { audioTestSlider.value = volume}
-					}
-					Component.onCompleted: {
-						SettingsCpp.accessCallSettings()
-						audioTestSliderTimer.running = true
-					}
-					Component.onDestruction: {
-						audioTestSliderTimer.running = false
-						SettingsCpp.closeCallSettings()
-					}
 				}
 			}
 		}
