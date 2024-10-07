@@ -503,6 +503,30 @@ void SettingsModel::enableDnd(bool enableDnd) {
 }
 
 // =============================================================================
+// Carddav storage list
+// =============================================================================
+
+const std::shared_ptr<linphone::FriendList> SettingsModel::getCarddavListForNewFriends() {
+	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+	auto core = CoreModel::getInstance()->getCore();
+	if (core) {
+		auto config = core->getConfig();
+		auto listName = config->getString(UiSection, "friend_list_to_store_newly_created_contacts", "");
+		if (!listName.empty()) return core->getFriendListByName(listName);
+		else return nullptr;
+	} else return nullptr;
+}
+
+void SettingsModel::setCarddavListForNewFriends(std::string name) {
+	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+	auto core = CoreModel::getInstance()->getCore();
+	if (core) {
+		auto config = core->getConfig();
+		config->setString(UiSection, "friend_list_to_store_newly_created_contacts", name);
+	}
+}
+
+// =============================================================================
 // Ui.
 // =============================================================================
 /*

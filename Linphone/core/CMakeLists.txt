@@ -68,10 +68,15 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/videoSource/VideoSourceDescriptorCore.cpp
 	core/videoSource/VideoSourceDescriptorGui.cpp
 	
-	core/address-books/LdapCore.cpp
-	core/address-books/LdapGui.cpp
-	core/address-books/LdapProxy.cpp
-	core/address-books/LdapList.cpp
+	core/address-books/ldap/LdapCore.cpp
+	core/address-books/ldap/LdapGui.cpp
+	core/address-books/ldap/LdapProxy.cpp
+	core/address-books/ldap/LdapList.cpp
+
+	core/address-books/carddav/CarddavCore.cpp
+	core/address-books/carddav/CarddavGui.cpp
+	core/address-books/carddav/CarddavProxy.cpp
+	core/address-books/carddav/CarddavList.cpp
 
 )
 

@@ -21,7 +21,7 @@
 #ifndef LDAP_CORE_H_
 #define LDAP_CORE_H_
 
-#include "model/address-books/LdapModel.hpp"
+#include "model/address-books/ldap/LdapModel.hpp"
 #include "tool/AbstractObject.hpp"
 #include "tool/thread/SafeConnection.hpp"
 #include <QObject>

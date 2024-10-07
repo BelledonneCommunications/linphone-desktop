@@ -620,10 +620,15 @@ void FriendCore::save() { // Save Values to model
 						thisCopy->writeIntoModel(mFriendModel);
 						thisCopy->deleteLater();
 						mVCardString = mFriendModel->getVCardAsString();
-						bool created =
-						    (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
+						auto carddavListForNewFriends = SettingsModel::getCarddavListForNewFriends();
+						auto listWhereToAddFriend = carddavListForNewFriends != nullptr ? carddavListForNewFriends
+						                                                                : core->getDefaultFriendList();
+						bool created = (listWhereToAddFriend->addFriend(contact) == linphone::FriendList::Status::OK);
 						if (created) {
-							core->getDefaultFriendList()->updateSubscriptions();
+							listWhereToAddFriend->updateSubscriptions();
+							if (listWhereToAddFriend->getType() == linphone::FriendList::Type::CardDAV) {
+								listWhereToAddFriend->synchronizeFriendsFromServer();
+							}
 							emit CoreModel::getInstance()->friendCreated(contact);
 						}
 						mCoreModelConnection->invokeToCore([this, created]() {

@@ -85,9 +85,7 @@ void LdapList::removeAllEntries() {
 
 void LdapList::remove(const int &row) {
 	beginRemoveRows(QModelIndex(), row, row);
-	auto item = mList[row].objectCast<LdapCore>();
-	item->remove();
-	mList.takeAt(row);
+	mList.takeAt(row).objectCast<LdapCore>()->remove();
 	endRemoveRows();
 }
 

@@ -41,8 +41,10 @@
 #include "core/account/AccountCore.hpp"
 #include "core/account/AccountDeviceGui.hpp"
 #include "core/account/AccountDeviceProxy.hpp"
-#include "core/address-books/LdapGui.hpp"
-#include "core/address-books/LdapProxy.hpp"
+#include "core/address-books/carddav/CarddavGui.hpp"
+#include "core/address-books/carddav/CarddavProxy.hpp"
+#include "core/address-books/ldap/LdapGui.hpp"
+#include "core/address-books/ldap/LdapProxy.hpp"
 #include "core/call-history/CallHistoryProxy.hpp"
 #include "core/call/CallCore.hpp"
 #include "core/call/CallGui.hpp"
@@ -594,6 +596,8 @@ void App::initCppInterfaces() {
 	                                                 QLatin1String("Uncreatable"));
 	qmlRegisterType<LdapGui>(Constants::MainQmlUri, 1, 0, "LdapGui");
 	qmlRegisterType<LdapProxy>(Constants::MainQmlUri, 1, 0, "LdapProxy");
+	qmlRegisterType<CarddavGui>(Constants::MainQmlUri, 1, 0, "CarddavGui");
+	qmlRegisterType<CarddavProxy>(Constants::MainQmlUri, 1, 0, "CarddavProxy");
 
 	LinphoneEnums::registerMetaTypes();
 }

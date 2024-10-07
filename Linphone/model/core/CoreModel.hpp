@@ -180,6 +180,8 @@ private:
 	                                                linphone::VersionUpdateCheckResult result,
 	                                                const std::string &version,
 	                                                const std::string &url) override;
+	virtual void onFriendListRemoved(const std::shared_ptr<linphone::Core> &core,
+	                                 const std::shared_ptr<linphone::FriendList> &friendList) override;
 
 signals:
 	void accountAdded(const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account);
@@ -260,6 +262,8 @@ signals:
 	                                      linphone::VersionUpdateCheckResult result,
 	                                      const std::string &version,
 	                                      const std::string &url);
+	void friendListRemoved(const std::shared_ptr<linphone::Core> &core,
+	                       const std::shared_ptr<linphone::FriendList> &friendList);
 };
 
 #endif

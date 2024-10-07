@@ -38,8 +38,7 @@
 	}
 
 #define DECLARE_GUI_OBJECT                                                                                             \
-Q_SIGNALS:                                                                                                             \
-	void qmlNameChanged();                                                                                             \
+Q_SIGNALS : void qmlNameChanged();                                                                                     \
                                                                                                                        \
 public:                                                                                                                \
 	Q_PROPERTY(QString qmlName READ getQmlName WRITE setQmlName NOTIFY qmlNameChanged)                                 \
@@ -64,6 +63,11 @@ public:                                                                         
 #define DECLARE_CORE_GETSET_MEMBER(type, x, X)                                                                         \
 	Q_PROPERTY(type x MEMBER m##X WRITE set##X NOTIFY x##Changed)                                                      \
 	Q_SIGNAL void set##X(type data);                                                                                   \
+	Q_SIGNAL void x##Changed();                                                                                        \
+	type m##X;
+
+#define DECLARE_CORE_MEMBER(type, x, X)                                                                                \
+	Q_PROPERTY(type x MEMBER m##X NOTIFY x##Changed)                                                                   \
 	Q_SIGNAL void x##Changed();                                                                                        \
 	type m##X;
 

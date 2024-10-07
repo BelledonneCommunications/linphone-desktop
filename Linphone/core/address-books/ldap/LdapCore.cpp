@@ -105,9 +105,9 @@ void LdapCore::setSelf(QSharedPointer<LdapCore> me) {
 	                           debugLevel, DebugLevel)
 
 	mLdapModelConnection->makeConnectToModel(&LdapModel::saved, [this]() {
-		mLdapModelConnection->invokeToCore([this]() { emit App::getInstance() -> getSettings()->ldapConfigChanged(); });
+		mLdapModelConnection->invokeToCore([this]() { emit App::getInstance()->getSettings()->ldapConfigChanged(); });
 	});
 	mLdapModelConnection->makeConnectToModel(&LdapModel::removed, [this]() {
-		mLdapModelConnection->invokeToCore([this]() { emit App::getInstance() -> getSettings()->ldapConfigChanged(); });
+		mLdapModelConnection->invokeToCore([this]() { emit App::getInstance()->getSettings()->ldapConfigChanged(); });
 	});
 }

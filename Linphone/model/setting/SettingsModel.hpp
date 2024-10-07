@@ -127,6 +127,9 @@ public:
 
 	QString getLogsEmail() const;
 
+	static const std::shared_ptr<linphone::FriendList> getCarddavListForNewFriends();
+	static void setCarddavListForNewFriends(std::string listName);
+
 	// UI
 	DECLARE_GETSET(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_GETSET(bool, disableMeetingsFeature, DisableMeetingsFeature)

@@ -399,3 +399,7 @@ void CoreModel::onVersionUpdateCheckResultReceived(const std::shared_ptr<linphon
                                                    const std::string &url) {
 	emit versionUpdateCheckResultReceived(core, result, version, url);
 }
+void CoreModel::onFriendListRemoved(const std::shared_ptr<linphone::Core> &core,
+                                    const std::shared_ptr<linphone::FriendList> &friendList) {
+	emit friendListRemoved(core, friendList);
+}

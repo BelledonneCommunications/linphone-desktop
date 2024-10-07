@@ -18,40 +18,42 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LDAP_LIST_H_
-#define LDAP_LIST_H_
+#ifndef LDAP_PROXY_H_
+#define LDAP_PROXY_H_
 
-#include "../proxy/ListProxy.hpp"
+#include "../../proxy/SortFilterProxy.hpp"
+#include "LdapGui.hpp"
+#include "LdapList.hpp"
 #include "tool/AbstractObject.hpp"
-#include "tool/thread/SafeConnection.hpp"
-#include <QLocale>
 
-class LdapCore;
-class CoreModel;
 // =============================================================================
 
-class LdapList : public ListProxy, public AbstractObject {
+class LdapProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
 
+	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
+
 public:
-	static QSharedPointer<LdapList> create();
-	// Create a LdapCore and make connections to List.
-	QSharedPointer<LdapCore> createLdapCore(const std::shared_ptr<linphone::Ldap> &ldap);
-	LdapList(QObject *parent = Q_NULLPTR);
-	~LdapList();
+	LdapProxy(QObject *parent = Q_NULLPTR);
+	~LdapProxy();
 
-	void setSelf(QSharedPointer<LdapList> me);
+	QString getFilterText() const;
+	void setFilterText(const QString &filter);
 
-	void removeAllEntries();
-	void remove(const int &row);
-
-	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	Q_INVOKABLE void removeAllEntries();
+	Q_INVOKABLE void removeEntriesWithFilter();
+	Q_INVOKABLE void updateView();
 
 signals:
-	void lUpdate();
+	void filterTextChanged();
 
-private:
-	QSharedPointer<SafeConnection<LdapList, CoreModel>> mModelConnection;
+protected:
+	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
+
+	QString mFilterText;
+	QSharedPointer<LdapList> mLdapList;
+
 	DECLARE_ABSTRACT_OBJECT
 };
 

@@ -18,24 +18,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LDAP_PROXY_H_
-#define LDAP_PROXY_H_
+#ifndef CARDDAV_PROXY_H_
+#define CARDDAV_PROXY_H_
 
-#include "../proxy/SortFilterProxy.hpp"
-#include "LdapGui.hpp"
-#include "LdapList.hpp"
+#include "../../proxy/SortFilterProxy.hpp"
+#include "CarddavGui.hpp"
+#include "CarddavList.hpp"
 #include "tool/AbstractObject.hpp"
 
 // =============================================================================
 
-class LdapProxy : public SortFilterProxy, public AbstractObject {
+class CarddavProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
 
 	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
 
 public:
-	LdapProxy(QObject *parent = Q_NULLPTR);
-	~LdapProxy();
+	CarddavProxy(QObject *parent = Q_NULLPTR);
+	~CarddavProxy();
 
 	QString getFilterText() const;
 	void setFilterText(const QString &filter);
@@ -52,7 +52,7 @@ protected:
 	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 	QString mFilterText;
-	QSharedPointer<LdapList> mLdapList;
+	QSharedPointer<CarddavList> mCarddavList;
 
 	DECLARE_ABSTRACT_OBJECT
 };

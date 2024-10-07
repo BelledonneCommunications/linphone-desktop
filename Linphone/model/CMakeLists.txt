@@ -41,7 +41,9 @@ list(APPEND _LINPHONEAPP_SOURCES
 
 	model/videoSource/VideoSourceDescriptorModel.cpp
 	
-	model/address-books/LdapModel.cpp
+	model/address-books/ldap/LdapModel.cpp
+	model/address-books/carddav/CarddavModel.cpp
+
 )
 
 set(_LINPHONEAPP_SOURCES ${_LINPHONEAPP_SOURCES} PARENT_SCOPE)

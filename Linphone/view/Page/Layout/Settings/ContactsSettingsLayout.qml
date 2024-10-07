@@ -11,127 +11,51 @@ AbstractSettingsLayout {
 	function layoutUrl(name) {
 		return layoutsPath+"/"+name+".qml"
 	}
+	function createGuiObject(name) {
+		return Qt.createQmlObject('import Linphone; '+name+'Gui{}', mainItem)
+	}
 	Component {
 		id: content
-		RowLayout {
+		ColumnLayout {
 			spacing: 5 * DefaultStyle.dp
-			ColumnLayout {
-				Layout.fillWidth: true
-				spacing: 5 * DefaultStyle.dp
-				ColumnLayout {
-					Layout.preferredWidth: 341 * DefaultStyle.dp
-					Layout.maximumWidth: 341 * DefaultStyle.dp
-					spacing: 5 * DefaultStyle.dp
-					Text {
-						text: qsTr("Annuaires LDAP")
-						font: Typography.h4
-						wrapMode: Text.WordWrap
-						color: DefaultStyle.main2_600
-						Layout.fillWidth: true
-					}
-					Text {
-						text: qsTr("Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la magic search bar.")
-						font: Typography.p1s
-						wrapMode: Text.WordWrap
-						color: DefaultStyle.main2_600
-						Layout.fillWidth: true
-					}
-				}
-				Item {
-					Layout.fillHeight: true
-				}
+			ContactsSettingsProviderLayout {
+				title: qsTr("Annuaires LDAP")
+				addText: qsTr("Ajouter un annuaire LDAP")
+				addTextDescription: qsTr("Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la magic search bar.")
+				editText: qsTr("Modifier un annuaire LDAP")
+				proxyModel: LdapProxy {}
+				newItemGui: createGuiObject('Ldap')
+				settingsLayout: layoutUrl("LdapSettingsLayout")
+				owner: mainItem
+				titleProperty: "server"
+				supportsEnableDisable: true
+				showAddButton: true
 			}
-			ColumnLayout {
-				Layout.rightMargin: 25 * DefaultStyle.dp
+			Rectangle {
 				Layout.fillWidth: true
-				Layout.fillHeight: true
-				spacing: 27 * DefaultStyle.dp
-				Layout.leftMargin: 76 * DefaultStyle.dp
-				Layout.topMargin: 16 * DefaultStyle.dp
-				Repeater {
-					model: LdapProxy {
-						id: proxyModel
-					}
-					RowLayout {
-						Layout.fillWidth: true
-						Layout.alignment: Qt.AlignLeft|Qt.AlignHCenter
-						spacing: 5 * DefaultStyle.dp
-						Text {
-							text: modelData.core.server
-							font: Typography.p2l
-							wrapMode: Text.WordWrap
-							color: DefaultStyle.main2_600
-							Layout.fillWidth: true
-							Layout.leftMargin: 17 * DefaultStyle.dp
-						}
-						Item {
-							Layout.fillWidth: true
-						}
-						Button {
-							background: Item{}
-							icon.source: AppIcons.pencil
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
-							contentImageColor: DefaultStyle.main2_600
-							onClicked: {
-								var ldapGui = Qt.createQmlObject('import Linphone
-											LdapGui{
-											}', mainItem)
-								mainItem.container.push(layoutUrl("LdapSettingsLayout"), {
-									titleText: qsTr("Modifier un annuaire LDAP"),
-									model: modelData,
-									container: mainItem.container,
-									isNew: false})
-							}
-						}
-						Switch {
-							id: switchButton
-							Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-							Layout.rightMargin: 17 * DefaultStyle.dp
-							checked: modelData.core["enabled"]
-							onToggled: {
-								binding.when = true
-								modelData.core.save()
-							}
-						}
-						Binding {
-							id: binding
-							target: modelData.core
-							property: "enabled"
-							value: switchButton.checked
-							when: false
-						}
-					}
-					onVisibleChanged: {
-						proxyModel.updateView()
-					}
-					Component.onCompleted: {
-						proxyModel.updateView()
-					}
-				}
-				RowLayout {
-					Layout.fillWidth: true
-					spacing: 5 * DefaultStyle.dp
-					Item {
-						Layout.fillWidth: true
-					}
-					Button {
-						Layout.alignment: Qt.AlignRight | Qt.AlignHCenter
-						text: qsTr("Ajouter")
-						onClicked: {
-							var ldapGui = Qt.createQmlObject('import Linphone
-											LdapGui{
-											}', mainItem)
-							mainItem.container.push(layoutUrl("LdapSettingsLayout"), {
-								titleText: qsTr("Ajouter un annuaire LDAP"),
-								model: ldapGui,
-								container: mainItem.container,
-								isNew: true})
-						}
-					}
-				}
+				Layout.topMargin: 35 * DefaultStyle.dp
+				Layout.bottomMargin: 9 * DefaultStyle.dp
+				height: 1 * DefaultStyle.dp
+				color: DefaultStyle.main2_500main
 			}
-
+			ContactsSettingsProviderLayout {
+				id: carddavProvider
+				title: qsTr("Carnet d'adresse CardDAV")
+				addText: qsTr("Ajouter un carnet d'adresse CardDAV")
+				addTextDescription: qsTr("Ajouter un carnet d’adresse CardDAV pour synchroniser vos contacts Linphone avec un carnet d’adresse tiers.")
+				editText: qsTr("Modifier un carnet d'adresse CardDAV")
+				proxyModel: CarddavProxy {
+					onModelReset:  {
+						carddavProvider.showAddButton = carddavProvider.proxyModel.count == 0
+						carddavProvider.newItemGui = createGuiObject('Carddav')
+					}
+				}
+				newItemGui: createGuiObject('Carddav')
+				settingsLayout: layoutUrl("CarddavSettingsLayout")
+				owner: mainItem
+				titleProperty: "displayName"
+				supportsEnableDisable: false
+			}
 		}
 	}
 }

@@ -104,8 +104,10 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Settings/AccountSettingsParametersLayout.qml
 	view/Page/Layout/Settings/CallSettingsLayout.qml
 	view/Page/Layout/Settings/ContactsSettingsLayout.qml
+	view/Page/Layout/Settings/ContactsSettingsProviderLayout.qml
 	view/Page/Layout/Settings/DebugSettingsLayout.qml
 	view/Page/Layout/Settings/LdapSettingsLayout.qml
+	view/Page/Layout/Settings/CarddavSettingsLayout.qml
 	view/Page/Layout/Settings/SecuritySettingsLayout.qml
 
 	view/Page/Main/AbstractMainPage.qml
