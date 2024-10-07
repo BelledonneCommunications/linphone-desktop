@@ -232,8 +232,6 @@ signals:
 	void ldapConfigChanged();
 
 private:
-	std::shared_ptr<SettingsModel> mSettingsModel;
-
 	// Dummy properties (for properties that use values from core received through signals)
 	int _dummy_int = 0;
 

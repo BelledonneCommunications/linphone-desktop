@@ -19,7 +19,7 @@ AbstractMainPage {
 	signal returnRequested()
 	signal addParticipantsValidated(list<string> selectedParticipants)
 	Component.onCompleted: rightPanelStackView.push(overridenRightPanel, Control.StackView.Immediate)
-	showDefaultItem: leftPanelStackView.currentItem.objectName === "listLayout" && meetingListCount === 0
+	showDefaultItem: leftPanelStackView.currentItem?.objectName === "listLayout" && meetingListCount === 0
 
 	onVisibleChanged: if (!visible) {
 		leftPanelStackView.clear()

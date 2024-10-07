@@ -423,6 +423,7 @@ void App::initCore() {
 	    mLinphoneThread->getThreadId(),
 	    [this]() mutable {
 		    CoreModel::getInstance()->start();
+		    SettingsModel::create();
 		    auto settings = SettingsCore::create();
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings] {
 			    // QML

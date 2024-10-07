@@ -31,9 +31,14 @@ DEFINE_ABSTRACT_OBJECT(SettingsModel)
 using namespace std;
 
 const std::string SettingsModel::UiSection("ui");
+std::shared_ptr<SettingsModel> SettingsModel::gCoreModel;
 
-SettingsModel::SettingsModel(QObject *parent) : QObject(parent) {
+SettingsModel::SettingsModel() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	connect(CoreModel::getInstance()->thread(), &QThread::finished, this, [this]() {
+		// Model thread
+		gCoreModel = nullptr;
+	});
 	auto core = CoreModel::getInstance()->getCore();
 	mConfig = core->getConfig();
 	CoreModel::getInstance()->getLogger()->applyConfig(mConfig);
@@ -61,6 +66,16 @@ SettingsModel::SettingsModel(QObject *parent) : QObject(parent) {
 
 SettingsModel::~SettingsModel() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+}
+
+shared_ptr<SettingsModel> SettingsModel::create() {
+	auto model = make_shared<SettingsModel>();
+	gCoreModel = model;
+	return model;
+}
+
+shared_ptr<SettingsModel> SettingsModel::getInstance() {
+	return gCoreModel;
 }
 
 bool SettingsModel::isReadOnly(const std::string &section, const std::string &name) const {

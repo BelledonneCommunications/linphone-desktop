@@ -14,9 +14,6 @@ ColumnLayout {
 
 	RoundedPane {
 		Layout.alignment: Qt.AlignHCenter
-		Control.StackView.onActivated: {
-			rightPanelTitle.text = qsTr("Paramètres")
-		}
 		height: contentItem.implicitHeight + topPadding + bottomPadding
 		Layout.fillWidth: true
 		topPadding: 25 * DefaultStyle.dp
@@ -103,10 +100,14 @@ ColumnLayout {
 					}
 				}
 				Timer {
+					id: audioTestSliderTimer
 					interval: 50
 					repeat: true
-					running: mainItem.call || false
-					onTriggered: audioTestSlider.value = (mainItem.call && mainItem.call.core.microVolume)
+					running: false
+					onTriggered: {
+						if (mainItem.call) audioTestSlider.value = mainItem.call.core.microVolume
+						else SettingsCpp.updateMicVolume()
+					}
 				}
 				Slider {
 					id: audioTestSlider
@@ -165,6 +166,21 @@ ColumnLayout {
 					propertyName: "videoDevice"
 					propertyOwner: SettingsCpp
 				}
+			}
+			Connections {
+				enabled: !mainItem.call
+				target: SettingsCpp
+				onMicVolumeChanged: (value) => {
+					audioTestSlider.value = value
+				}
+			}
+			Component.onCompleted: {
+				SettingsCpp.accessCallSettings()
+				audioTestSliderTimer.running = true
+			}
+			Component.onDestruction: {
+				audioTestSliderTimer.running = false
+				SettingsCpp.closeCallSettings()
 			}
 		}
 	}

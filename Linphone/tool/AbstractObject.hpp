@@ -92,8 +92,9 @@ public:                                                                         
 #define INIT_CORE_MEMBER(X, model) m##X = model->get##X();
 
 #define DEFINE_CORE_GETSET_CONNECT(safe, CoreClass, ModelClass, model, type, x, X)                                     \
-	safe->makeConnectToCore(&CoreClass::set##X,                                                                        \
-	                        [this](type data) { safe->invokeToModel([this, data]() { model->set##X(data); }); });      \
+	safe->makeConnectToCore(&CoreClass::set##X, [this, objectToCall = model.get()](type data) {                        \
+		safe->invokeToModel([this, data, objectToCall]() { objectToCall->set##X(data); });                             \
+	});                                                                                                                \
 	safe->makeConnectToModel(&ModelClass::x##Changed, [this](type data) {                                              \
 		safe->invokeToCore([this, data]() {                                                                            \
 			if (m##X != data) {                                                                                        \

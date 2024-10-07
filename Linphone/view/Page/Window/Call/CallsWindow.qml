@@ -1554,7 +1554,7 @@ AbstractWindow {
 						id: participantListButton
 						visible: mainWindow.conference
 						iconUrl: AppIcons.usersTwo
-						checked: rightPanel.visible && rightPanel.currentItem.objectName == "participantListPanel"
+						checked: rightPanel.visible && rightPanel.currentItem?.objectName == "participantListPanel"
 						checkedColor: DefaultStyle.main2_400
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp

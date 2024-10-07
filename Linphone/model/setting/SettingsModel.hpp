@@ -33,8 +33,11 @@ class SettingsModel : public QObject, public AbstractObject {
 	Q_OBJECT
 
 public:
-	SettingsModel(QObject *parent = Q_NULLPTR);
+	SettingsModel();
 	virtual ~SettingsModel();
+
+	static std::shared_ptr<SettingsModel> create();
+	static std::shared_ptr<SettingsModel> getInstance();
 
 	bool isReadOnly(const std::string &section, const std::string &name) const;
 	std::string
@@ -190,6 +193,9 @@ private:
 	void notifyConfigReady();
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;
 	int mCaptureGraphListenerCount = 0;
+
+	static std::shared_ptr<SettingsModel> gCoreModel;
+
 	DECLARE_ABSTRACT_OBJECT
 };
 #endif // SETTINGS_MODEL_H_
