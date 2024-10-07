@@ -15,7 +15,6 @@ AbstractSettingsLayout {
 				ColumnLayout {
 					Item {
 						Layout.preferredWidth: 341 * DefaultStyle.dp
-
 					}
 				}
 				ColumnLayout {

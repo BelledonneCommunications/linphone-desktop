@@ -149,6 +149,7 @@ public:
 	DECLARE_GETSET(bool, autoStart, AutoStart)
 	DECLARE_GETSET(bool, exitOnClose, ExitOnClose)
 	DECLARE_GETSET(bool, syncLdapContacts, SyncLdapContacts)
+	DECLARE_GETSET(bool, ipv6Enabled, Ipv6Enabled)
 
 signals:
 

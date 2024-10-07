@@ -502,6 +502,19 @@ void SettingsModel::enableDnd(bool enableDnd) {
 	emit dndChanged(enableDnd);
 }
 
+bool SettingsModel::getIpv6Enabled() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return CoreModel::getInstance()->getCore()->ipv6Enabled();
+}
+
+void SettingsModel::setIpv6Enabled(bool status) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (getIpv6Enabled() != status) {
+		CoreModel::getInstance()->getCore()->enableIpv6(status);
+		emit ipv6EnabledChanged(status);
+	}
+}
+
 // =============================================================================
 // Carddav storage list
 // =============================================================================
