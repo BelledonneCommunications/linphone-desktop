@@ -67,10 +67,10 @@ Rectangle {
 			id: centerLayout
 			Layout.fillHeight: true
 			Layout.fillWidth: true
-			z: 1
 		}
 		Image {
 			id: bottomMountains
+			z: -1
 			source: AppIcons.belledonne
 			fillMode: Image.Stretch
 			Layout.fillWidth: true

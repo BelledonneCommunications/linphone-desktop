@@ -78,32 +78,41 @@ LoginLayout {
 		}
 	]
 	centerContent: [
-		ColumnLayout {
+		Flickable {
 			anchors.left: parent.left
 			anchors.top: parent.top
 			anchors.leftMargin: 127 * DefaultStyle.dp
 			anchors.topMargin: 70 * DefaultStyle.dp
-			spacing: 0
-			LoginForm {
-				id: loginForm
-				onConnectionSucceed: mainItem.connectionSucceed()
-			}
-			Button {
-				inversedColors: true
-				Layout.preferredWidth: loginForm.width
-				Layout.preferredHeight: 47 * DefaultStyle.dp
-				Layout.topMargin: 39 * DefaultStyle.dp
-				visible: !SettingsCpp.assistantHideThirdPartyAccount
-				text: qsTr("Compte SIP tiers")
-				onClicked: {mainItem.useSIPButtonClicked()}
-			}
-			Button {
-				inversedColors: true
-				Layout.preferredWidth: loginForm.width
-				Layout.preferredHeight: 47 * DefaultStyle.dp
-				Layout.topMargin: 25 * DefaultStyle.dp
-				text: qsTr("Configuration distante")
-				onClicked: {fetchConfigDialog.open()}
+			anchors.bottom: parent.bottom
+			width: contentWidth
+			contentWidth: content.implicitWidth
+			contentHeight: content.implicitHeight
+			clip: true
+			flickableDirection: Flickable.VerticalFlick
+			ColumnLayout {
+				id: content
+				spacing: 0
+				LoginForm {
+					id: loginForm
+					onConnectionSucceed: mainItem.connectionSucceed()
+				}
+				Button {
+					inversedColors: true
+					Layout.preferredWidth: loginForm.width
+					Layout.preferredHeight: 47 * DefaultStyle.dp
+					Layout.topMargin: 39 * DefaultStyle.dp
+					visible: !SettingsCpp.assistantHideThirdPartyAccount
+					text: qsTr("Compte SIP tiers")
+					onClicked: {mainItem.useSIPButtonClicked()}
+				}
+				Button {
+					inversedColors: true
+					Layout.preferredWidth: loginForm.width
+					Layout.preferredHeight: 47 * DefaultStyle.dp
+					Layout.topMargin: 25 * DefaultStyle.dp
+					text: qsTr("Configuration distante")
+					onClicked: {fetchConfigDialog.open()}
+				}
 			}
 		},
 		Image {

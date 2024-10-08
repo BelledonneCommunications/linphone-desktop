@@ -33,8 +33,6 @@ LoginLayout {
 
 	centerContent: ColumnLayout {
 		spacing: 80 * DefaultStyle.dp
-		Layout.topMargin: 70 * DefaultStyle.dp
-		Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 		RowLayout {
 			id: radioButtonsLayout
 			Layout.fillWidth: true
