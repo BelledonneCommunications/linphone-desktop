@@ -117,4 +117,5 @@ QtObject {
 	property string bellDnd: "image://internal/bell-dnd.svg"
 	property string bellRinger: "image://internal/bell-ringer.svg"
 	property string voicemail: "image://internal/voicemail.svg"
+	property string power: "image://internal/power.svg"
 }

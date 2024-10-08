@@ -559,6 +559,30 @@ Item {
 										KeyNavigation.up: visibleChildren.length != 0 ? settingsButtons.getPreviousItem(3) : null
 										KeyNavigation.down: visibleChildren.length != 0 ?  settingsButtons.getNextItem(3) : null
 									}
+									IconLabelButton {
+										id: quitButton
+										Layout.preferredHeight: 32 * DefaultStyle.dp
+										Layout.fillWidth: true
+										focus: !accountButton.visible && !settingsButton.visible && visible
+										iconSize: 32 * DefaultStyle.dp
+										text: qsTr("Quitter Linphone")
+										iconSource: AppIcons.power
+										onClicked: {
+												settingsMenuButton.popup.close()
+												UtilsCpp.getMainWindow().showConfirmationLambdaPopup(
+												qsTr("Quitter Linphone ?"),
+												"",
+												function (confirmed) {
+													if (confirmed) {
+														console.info("Exiting App from Top Menu");
+														Qt.quit()
+													}
+												}
+											)
+										}
+										KeyNavigation.up: visibleChildren.length != 0 ?  settingsButtons.getPreviousItem(4) : null
+										KeyNavigation.down: visibleChildren.length != 0 ? settingsButtons.getNextItem(4) : null
+									}
 									Rectangle {
 										Layout.fillWidth: true
 										Layout.preferredHeight: 1 * DefaultStyle.dp
