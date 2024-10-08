@@ -10,13 +10,17 @@ FormItemLayout {
 	label: title
 	mandatory: false
 	enableErrorText: true
-	property string propertyName
-	property var propertyOwner
+	property string propertyName: "value"
+	property var propertyOwner: new Array
 	property var title
 	property var placeHolder
 	property bool useTitleAsPlaceHolder: true
 	property bool canBeEmpty: true
 	property bool toValidate: false
+
+	function value() {
+		return propertyOwner[propertyName]
+	}
 
     property alias hidden: textField.hidden
 	property alias validator: textField.validator

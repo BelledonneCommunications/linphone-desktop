@@ -64,6 +64,9 @@
 #include "core/participant/ParticipantDeviceProxy.hpp"
 #include "core/participant/ParticipantGui.hpp"
 #include "core/participant/ParticipantProxy.hpp"
+#include "core/payload-type/PayloadTypeCore.hpp"
+#include "core/payload-type/PayloadTypeGui.hpp"
+#include "core/payload-type/PayloadTypeProxy.hpp"
 #include "core/phone-number/PhoneNumber.hpp"
 #include "core/phone-number/PhoneNumberProxy.hpp"
 #include "core/register/RegisterPage.hpp"
@@ -598,6 +601,9 @@ void App::initCppInterfaces() {
 	qmlRegisterType<LdapProxy>(Constants::MainQmlUri, 1, 0, "LdapProxy");
 	qmlRegisterType<CarddavGui>(Constants::MainQmlUri, 1, 0, "CarddavGui");
 	qmlRegisterType<CarddavProxy>(Constants::MainQmlUri, 1, 0, "CarddavProxy");
+	qmlRegisterType<PayloadTypeGui>(Constants::MainQmlUri, 1, 0, "PayloadTypeGui");
+	qmlRegisterType<PayloadTypeProxy>(Constants::MainQmlUri, 1, 0, "PayloadTypeProxy");
+	qmlRegisterType<PayloadTypeCore>(Constants::MainQmlUri, 1, 0, "PayloadTypeCore");
 
 	LinphoneEnums::registerMetaTypes();
 }

@@ -164,6 +164,8 @@ public:
 	DECLARE_CORE_GETSET(bool, exitOnClose, ExitOnClose)
 	DECLARE_CORE_GETSET(bool, syncLdapContacts, SyncLdapContacts)
 	DECLARE_CORE_GETSET_MEMBER(bool, ipv6Enabled, Ipv6Enabled)
+	DECLARE_CORE_GETSET_MEMBER(QVariantList, audioCodecs, AudioCodecs)
+	DECLARE_CORE_GETSET_MEMBER(QVariantList, videoCodecs, VideoCodecs)
 
 signals:
 

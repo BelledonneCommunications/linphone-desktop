@@ -38,7 +38,8 @@
 	}
 
 #define DECLARE_GUI_OBJECT                                                                                             \
-Q_SIGNALS : void qmlNameChanged();                                                                                     \
+Q_SIGNALS:                                                                                                             \
+	void qmlNameChanged();                                                                                             \
                                                                                                                        \
 public:                                                                                                                \
 	Q_PROPERTY(QString qmlName READ getQmlName WRITE setQmlName NOTIFY qmlNameChanged)                                 \
@@ -154,6 +155,18 @@ public:                                                                         
 		}                                                                                                              \
 	}
 
+#define DEFINE_GET(Class, type, X, ownerNotNull)                                                                       \
+	type Class::get##X() const {                                                                                       \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		return ownerNotNull->get##X();                                                                                 \
+	}
+
+#define DEFINE_GET_STRING(Class, X, ownerNotNull)                                                                      \
+	QString Class::get##X() const {                                                                                    \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		return Utils::coreStringToAppString(ownerNotNull->get##X());                                                   \
+	}
+
 #define DEFINE_GETSET_MODEL_STRING(Class, x, X, ownerNotNull)                                                          \
 	QString Class::get##X() const {                                                                                    \
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
@@ -176,6 +189,19 @@ public:                                                                         
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		if (get##X() != data) {                                                                                        \
 			ownerNotNull->enable##X(data);                                                                             \
+			emit x##Changed(data);                                                                                     \
+		}                                                                                                              \
+	}
+
+#define DEFINE_GETSET_ENABLE(Class, x, X, ownerNotNull)                                                                \
+	bool Class::get##X() const {                                                                                       \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		return ownerNotNull->enabled();                                                                                \
+	}                                                                                                                  \
+	void Class::set##X(bool data) {                                                                                    \
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
+		if (get##X() != data) {                                                                                        \
+			ownerNotNull->enable(data);                                                                                \
 			emit x##Changed(data);                                                                                     \
 		}                                                                                                              \
 	}

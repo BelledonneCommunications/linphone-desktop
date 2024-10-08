@@ -8,6 +8,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Button/HelpIconLabelButton.qml
 	view/Control/Button/IconLabelButton.qml
 	view/Control/Button/MediumButton.qml
+	view/Control/Button/SmallButton.qml
 	view/Control/Button/CountryIndicatorCombobox.qml
 	view/Control/Button/PopupButton.qml
 	view/Control/Button/RadioButton.qml
@@ -110,6 +111,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Settings/CarddavSettingsLayout.qml
 	view/Page/Layout/Settings/SecuritySettingsLayout.qml
 	view/Page/Layout/Settings/NetworkSettingsLayout.qml
+	view/Page/Layout/Settings/AdvancedSettingsLayout.qml
 
 	view/Page/Main/AbstractMainPage.qml
 	view/Page/Main/Account/AccountListView.qml

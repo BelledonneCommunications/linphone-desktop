@@ -43,6 +43,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	
 	model/address-books/ldap/LdapModel.cpp
 	model/address-books/carddav/CarddavModel.cpp
+	model/payload-type/PayloadTypeModel.cpp
 
 )
 

@@ -66,4 +66,11 @@ QtObject {
 		weight: 600 * DefaultStyle.dp
 	})
 	
+	// Button/B3 - Small Button
+	property font b3: Qt.font( {
+		family: DefaultStyle.defaultFont,
+		pixelSize: 13 * DefaultStyle.dp,
+		weight: 600 * DefaultStyle.dp
+	})
+
 }
