@@ -93,6 +93,7 @@ QString ToolModel::getDisplayName(QString address) {
 	if (displayName.isEmpty()) return address;
 	QStringList nameSplitted = displayName.split(" ");
 	for (auto &part : nameSplitted) {
+		if (part.isEmpty()) continue;
 		part[0] = part[0].toUpper();
 	}
 	return nameSplitted.join(" ");

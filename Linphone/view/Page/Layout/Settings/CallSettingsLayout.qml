@@ -48,21 +48,24 @@ AbstractSettingsLayout {
 			RowLayout {
 				spacing: 47 * DefaultStyle.dp
 				ColumnLayout {
-					ColumnLayout {
+					Item {
 						Layout.preferredWidth: 341 * DefaultStyle.dp
 						Text {
+							id: periphTitle
 							text: qsTr("Périphériques")
 							font: Typography.p2
 							wrapMode: Text.WordWrap
 							color: DefaultStyle.main2_600
-							Layout.fillWidth: true
 						}
 						Text {
+							anchors.top: periphTitle.bottom
+							anchors.topMargin: 3 * DefaultStyle.dp
+							anchors.left: parent.left
+							anchors.right: parent.right
 							text: qsTr("Vous pouvez modifier les périphériques de sortie audio, le microphone et la caméra de capture.")
 							font: Typography.p1
 							wrapMode: Text.WordWrap
 							color: DefaultStyle.main2_600
-							Layout.fillWidth: true
 						}
 					}
 					Item {
