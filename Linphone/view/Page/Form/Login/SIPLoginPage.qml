@@ -254,7 +254,7 @@ LoginLayout {
 							{text: "DTLS", value: LinphoneEnums.TransportType.Dtls}
 						]
                         currentIndex: Utils.findIndex(model, function (entry) {
-                            return entry === SettingsCpp.assistantThirdPartySipAccountTransport.toUpperCase()
+                            return entry.text === SettingsCpp.assistantThirdPartySipAccountTransport.toUpperCase()
                         })
 					}
 				}
