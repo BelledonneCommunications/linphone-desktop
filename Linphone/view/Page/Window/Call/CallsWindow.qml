@@ -333,6 +333,10 @@ AbstractWindow {
 									: mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing
 										? DefaultStyle.info_500_main
 										: DefaultStyle.success_500main
+								onColorizationColorChanged: {
+									callStatusIcon.active = !callStatusIcon.active
+									callStatusIcon.active = !callStatusIcon.active
+								}
 							}
 							Text {
 								id: callStatusText
