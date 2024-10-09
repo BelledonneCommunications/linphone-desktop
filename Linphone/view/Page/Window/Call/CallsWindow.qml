@@ -139,7 +139,7 @@ AbstractWindow {
 	
 	Timer {
 		id: autoCloseWindow
-		interval: 2000
+		interval: 3000
 		onTriggered: {
 			UtilsCpp.closeCallsWindow()
 		} 

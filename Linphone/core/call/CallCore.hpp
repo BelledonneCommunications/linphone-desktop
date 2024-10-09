@@ -154,7 +154,7 @@ public:
 	void setDir(LinphoneEnums::CallDir dir);
 
 	LinphoneEnums::CallState getState() const;
-	void setState(LinphoneEnums::CallState state, const QString &message);
+	void setState(LinphoneEnums::CallState state);
 
 	QString getLastErrorMessage() const;
 	void setLastErrorMessage(const QString &message);

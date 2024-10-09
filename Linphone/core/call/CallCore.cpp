@@ -257,12 +257,11 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::microphoneVolumeChanged, [this](float volume) {
 		mCallModelConnection->invokeToCore([this, volume]() { setMicrophoneVolume(volume); });
 	});
+	mCallModelConnection->makeConnectToModel(
+	    &CallModel::errorMessageChanged, [this](const QString &errorMessage) { setLastErrorMessage(errorMessage); });
 	mCallModelConnection->makeConnectToModel(&CallModel::stateChanged, [this](std::shared_ptr<linphone::Call> call,
 	                                                                          linphone::Call::State state,
 	                                                                          const std::string &message) {
-		mCallModelConnection->invokeToCore([this, state, message]() {
-			setState(LinphoneEnums::fromLinphone(state), Utils::coreStringToAppString(message));
-		});
 		double speakerVolume = mSpeakerVolumeGain;
 		double micVolumeGain = mMicrophoneVolumeGain;
 		if (state == linphone::Call::State::StreamsRunning) {
@@ -283,6 +282,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			setPaused(state == linphone::Call::State::Paused || state == linphone::Call::State::PausedByRemote);
 			if (mConference) mConference->setSubject(subject);
 		});
+		mCallModelConnection->invokeToCore([this, state, message]() { setState(LinphoneEnums::fromLinphone(state)); });
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::statusChanged, [this](linphone::Call::Status status) {
 		mCallModelConnection->invokeToCore([this, status]() { setStatus(LinphoneEnums::fromLinphone(status)); });
@@ -492,14 +492,10 @@ LinphoneEnums::CallState CallCore::getState() const {
 	return mState;
 }
 
-void CallCore::setState(LinphoneEnums::CallState state, const QString &message) {
+void CallCore::setState(LinphoneEnums::CallState state) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	if (mState != state) {
 		mState = state;
-		if (state == LinphoneEnums::CallState::Error) {
-			lDebug() << "[CallCore] Error message : " << message;
-			setLastErrorMessage(message);
-		}
 		emit stateChanged(mState);
 	}
 }

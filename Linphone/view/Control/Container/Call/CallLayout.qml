@@ -14,7 +14,9 @@ Item {
 	property CallGui call
 	property ConferenceGui conference: call && call.core.conference
 	property bool callTerminatedByUser: false
+	property bool callStarted: false
 	readonly property var callState: call && call.core.state || undefined
+	onCallStateChanged: if (callState === LinphoneEnums.CallState.Connected) callStarted = true
 	property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
 	// property int participantDeviceCount: conference ? conference.core.participantDeviceCount : -1
 	// onParticipantDeviceCountChanged: {
@@ -25,15 +27,6 @@ Item {
 		console.log("CallLayout change : " +conferenceLayout)
 		setConferenceLayout()
 	}
-	onCallStateChanged: {
-		if( callState === LinphoneEnums.CallState.Error) {
-			centerLayout.currentIndex = 1
-		} 
-		// else if( callState === LinphoneEnums.CallState.End) {
-			// callTerminatedText.visible = true
-		// }
-	}
-	// onCallChanged: callTerminatedText.visible = false
 
 	function setConferenceLayout() {
 		callLayout.sourceComponent = undefined	// unload old view before opening the new view to avoid conflicts in Video UI.
@@ -48,12 +41,16 @@ Item {
 		anchors.top: parent.top
 		anchors.topMargin: 25 * DefaultStyle.dp
 		z: 1
-		visible: callState === LinphoneEnums.CallState.End
-		text: mainItem.conference 
-			? qsTr("Vous avez quitté la conférence")
-			: mainItem.callTerminatedByUser 
-				? qsTr("Vous avez terminé l'appel") 
-				: qsTr("Votre correspondant a terminé l'appel")
+		visible: callState === LinphoneEnums.CallState.End || callState === LinphoneEnums.CallState.Error || callState === LinphoneEnums.CallState.Released
+		text: callState === LinphoneEnums.CallState.End
+			? mainItem.conference
+				? qsTr("Vous avez quitté la conférence")
+				: mainItem.callStarted 
+					? mainItem.callTerminatedByUser
+						? qsTr("Vous avez terminé l'appel") 
+						: qsTr("Votre correspondant a terminé l'appel")
+					: call.core.lastErrorMessage
+			: call.core.lastErrorMessage
 		color: DefaultStyle.grey_0
 		font {
 			pixelSize: 22 * DefaultStyle.dp
@@ -61,31 +58,14 @@ Item {
 		}
 	}
 	
-	Layout.StackLayout {
-		id: centerLayout
-		currentIndex: 0
+	Loader{
+		id: callLayout
 		anchors.fill: parent
-		Loader{
-			id: callLayout
-			Layout.Layout.fillWidth: true
-			Layout.Layout.fillHeight: true
-			sourceComponent: mainItem.participantDeviceCount === 0
-				? waitingForOthersComponent
-				: activeSpeakerComponent
-		}
-		Layout.ColumnLayout {
-			id: userNotFoundLayout
-			Layout.Layout.preferredWidth: parent.width
-			Layout.Layout.preferredHeight: parent.height
-			Layout.Layout.alignment: Qt.AlignCenter
-			Text {
-				text: mainItem.call ? mainItem.call.core.lastErrorMessage : ""
-				Layout.Layout.alignment: Qt.AlignCenter
-				color: DefaultStyle.grey_0
-				font.pixelSize: 40 * DefaultStyle.dp
-			}
-		}
+		sourceComponent: mainItem.participantDeviceCount === 0
+			? waitingForOthersComponent
+			: activeSpeakerComponent
 	}
+	
 	Component{
 		id: activeSpeakerComponent
 		ActiveSpeakerLayout{

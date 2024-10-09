@@ -179,6 +179,38 @@ linphone::Call::Dir toLinphone(const LinphoneEnums::CallDir &data);
 LinphoneEnums::CallDir fromLinphone(const linphone::Call::Dir &data);
 QString toString(const LinphoneEnums::CallDir &data);
 
+enum class Reason {
+	None = int(linphone::Reason::None),
+	NoResponse = int(linphone::Reason::NoResponse),
+	Forbidden = int(linphone::Reason::Forbidden),
+	Declined = int(linphone::Reason::Declined),
+	NotFound = int(linphone::Reason::NotFound),
+	NotAnswered = int(linphone::Reason::NotAnswered),
+	Busy = int(linphone::Reason::Busy),
+	UnsupportedContent = int(linphone::Reason::UnsupportedContent),
+	BadEvent = int(linphone::Reason::BadEvent),
+	IOError = int(linphone::Reason::IOError),
+	DoNotDisturb = int(linphone::Reason::DoNotDisturb),
+	Unauthorized = int(linphone::Reason::Unauthorized),
+	NotAcceptable = int(linphone::Reason::NotAcceptable),
+	NoMatch = int(linphone::Reason::NoMatch),
+	MovedPermanently = int(linphone::Reason::MovedPermanently),
+	Gone = int(linphone::Reason::Gone),
+	TemporarilyUnavailable = int(linphone::Reason::TemporarilyUnavailable),
+	AddressIncomplete = int(linphone::Reason::AddressIncomplete),
+	NotImplemented = int(linphone::Reason::NotImplemented),
+	BadGateway = int(linphone::Reason::BadGateway),
+	SessionIntervalTooSmall = int(linphone::Reason::SessionIntervalTooSmall),
+	ServerTimeout = int(linphone::Reason::ServerTimeout),
+	Unknown = int(linphone::Reason::Unknown),
+	Transferred = int(linphone::Reason::Transferred),
+	ConditionalRequestFailed = int(linphone::Reason::ConditionalRequestFailed),
+	SasCheckRequired = int(linphone::Reason::SasCheckRequired)
+};
+Q_ENUM_NS(Reason)
+linphone::Reason toLinphone(const LinphoneEnums::Reason &data);
+LinphoneEnums::Reason fromLinphone(const linphone::Reason &data);
+
 enum class ConferenceLayout {
 	Grid = int(linphone::Conference::Layout::Grid),
 	ActiveSpeaker = int(linphone::Conference::Layout::ActiveSpeaker),

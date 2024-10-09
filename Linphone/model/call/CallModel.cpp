@@ -388,6 +388,29 @@ void CallModel::sendDtmf(const QString &dtmf) {
 	CoreModel::getInstance()->getCore()->playDtmf(key, gDtmfSoundDelay);
 }
 
+void CallModel::updateCallErrorFromReason(linphone::Reason reason) {
+	QString error;
+	switch (reason) {
+		case linphone::Reason::Declined:
+			error = tr("Le correspondant a décliné l'appel");
+			break;
+		case linphone::Reason::NotFound:
+			error = tr("Le correspondant n'a pas été trouvé");
+			break;
+		case linphone::Reason::Busy:
+			error = tr("Le correspondant est occupé");
+			break;
+		case linphone::Reason::NotAcceptable:
+			error = tr("Le correspondant ne peut accepter votre appel.");
+			break;
+		default:
+			break;
+	}
+
+	if (!error.isEmpty()) qInfo() << QStringLiteral("Call terminated with error (%1):").arg(error) << this;
+	emit errorMessageChanged(error);
+}
+
 void CallModel::onDtmfReceived(const std::shared_ptr<linphone::Call> &call, int dtmf) {
 	CoreModel::getInstance()->getCore()->playDtmf(dtmf, gDtmfSoundDelay);
 	emit dtmfReceived(call, dtmf);
@@ -431,8 +454,9 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		                               videoDirection == linphone::MediaDirection::SendRecv);
 		setConference(call->getConference());
 		updateConferenceVideoLayout();
-	} else if (state == linphone::Call::State::End) {
+	} else if (state == linphone::Call::State::End || state == linphone::Call::State::Error) {
 		mDurationTimer.stop();
+		updateCallErrorFromReason(call->getReason());
 	}
 	emit stateChanged(call, state, message);
 }

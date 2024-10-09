@@ -148,6 +148,7 @@ LinphoneEnums::CallDir LinphoneEnums::fromLinphone(const linphone::Call::Dir &da
 linphone::Call::Dir LinphoneEnums::toLinphone(const LinphoneEnums::CallDir &data) {
 	return static_cast<linphone::Call::Dir>(data);
 }
+
 QString LinphoneEnums::toString(const LinphoneEnums::CallDir &data) {
 	switch (data) {
 		case LinphoneEnums::CallDir::Incoming:
@@ -157,6 +158,14 @@ QString LinphoneEnums::toString(const LinphoneEnums::CallDir &data) {
 		default:
 			return QString();
 	}
+}
+
+LinphoneEnums::Reason LinphoneEnums::fromLinphone(const linphone::Reason &data) {
+	return static_cast<LinphoneEnums::Reason>(data);
+}
+
+linphone::Reason LinphoneEnums::toLinphone(const LinphoneEnums::Reason &data) {
+	return static_cast<linphone::Reason>(data);
 }
 
 linphone::Conference::Layout LinphoneEnums::toLinphone(const LinphoneEnums::ConferenceLayout &layout) {

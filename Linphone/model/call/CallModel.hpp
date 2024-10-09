@@ -90,6 +90,8 @@ public:
 
 	void sendDtmf(const QString &dtmf);
 
+	void updateCallErrorFromReason(linphone::Reason reason);
+
 signals:
 	void microphoneMutedChanged(bool isMuted);
 	void speakerMutedChanged(bool isMuted);
@@ -107,6 +109,7 @@ signals:
 	void conferenceChanged();
 	void conferenceVideoLayoutChanged(LinphoneEnums::ConferenceLayout layout);
 	void videoDescriptorChanged();
+	void errorMessageChanged(const QString &error);
 
 private:
 	QTimer mDurationTimer;
