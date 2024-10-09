@@ -57,6 +57,7 @@ copyFolder share/icons
 copyFolder share/images
 copyFolder share/linphone
 copyFolder share/sounds
+copyFolder share/$1
 
 #remove Packages folder : it is not part of the project
 #rm -rf "${WORK_DIR}/AppDir/usr/Packages"
