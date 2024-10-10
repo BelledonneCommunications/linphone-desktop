@@ -347,7 +347,7 @@ AbstractMainPage {
 													}
 													Text {
 														// text: modelData.core.date
-														text: UtilsCpp.formatDateElapsedTime(modelData.core.date)
+														text: UtilsCpp.formatDate(modelData.core.date, true)
 														font {
 															pixelSize: 12 * DefaultStyle.dp
 															weight: 300 * DefaultStyle.dp
