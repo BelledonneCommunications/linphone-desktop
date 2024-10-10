@@ -21,27 +21,30 @@
 #ifndef PAYLOAD_TYPE_PROXY_H_
 #define PAYLOAD_TYPE_PROXY_H_
 
-#include "../proxy/SortFilterProxy.hpp"
-#include "PayloadTypeGui.hpp"
+#include "../proxy/LimitProxy.hpp"
 #include "PayloadTypeList.hpp"
 #include "tool/AbstractObject.hpp"
 
 // =============================================================================
 
-class PayloadTypeProxy : public SortFilterProxy, public AbstractObject {
+class PayloadTypeProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
 
-	Q_PROPERTY(PayloadTypeCore::Family family MEMBER mFamily)
+	Q_PROPERTY(PayloadTypeCore::Family family READ getFamily WRITE setFamily NOTIFY familyChanged)
 
 public:
+	DECLARE_SORTFILTER_CLASS(PayloadTypeCore::Family mFamily;)
+
 	PayloadTypeProxy(QObject *parent = Q_NULLPTR);
 	~PayloadTypeProxy();
 
-protected:
-	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
+	PayloadTypeCore::Family getFamily() const;
+	void setFamily(PayloadTypeCore::Family data);
 
-	PayloadTypeCore::Family mFamily;
+signals:
+	void familyChanged();
+
+protected:
 	QSharedPointer<PayloadTypeList> mPayloadTypeList;
 
 	DECLARE_ABSTRACT_OBJECT

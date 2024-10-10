@@ -21,37 +21,27 @@
 #ifndef CALL_HISTORY_PROXY_H_
 #define CALL_HISTORY_PROXY_H_
 
+#include "../proxy/LimitProxy.hpp"
 #include "../proxy/SortFilterProxy.hpp"
-#include "CallHistoryGui.hpp"
 #include "CallHistoryList.hpp"
 #include "tool/AbstractObject.hpp"
+#include <QSortFilterProxyModel>
 
 // =============================================================================
 
-class CallHistoryProxy : public SortFilterProxy, public AbstractObject {
+class CallHistoryProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
-
-	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
-
 public:
+	DECLARE_SORTFILTER_CLASS()
+
 	CallHistoryProxy(QObject *parent = Q_NULLPTR);
 	~CallHistoryProxy();
-
-	QString getFilterText() const;
-	void setFilterText(const QString &filter);
 
 	Q_INVOKABLE void removeAllEntries();
 	Q_INVOKABLE void removeEntriesWithFilter();
 	Q_INVOKABLE void updateView();
 
-signals:
-	void filterTextChanged();
-
 protected:
-	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
-
-	QString mFilterText;
 	QSharedPointer<CallHistoryList> mHistoryList;
 
 	DECLARE_ABSTRACT_OBJECT

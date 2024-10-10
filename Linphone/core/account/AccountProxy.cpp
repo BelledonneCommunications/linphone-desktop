@@ -23,29 +23,18 @@
 #include "AccountList.hpp"
 #include "core/App.hpp"
 
-AccountProxy::AccountProxy(QObject *parent) : SortFilterProxy(parent) {
-	setSourceModel(App::getInstance()->getAccountList().get());
-	sort(0);
+AccountProxy::AccountProxy(QObject *parent) : LimitProxy(parent) {
+	setSourceModels(new SortFilterList(App::getInstance()->getAccountList().get(), Qt::AscendingOrder));
 }
 
 AccountProxy::~AccountProxy() {
 	setSourceModel(nullptr);
 }
 
-QString AccountProxy::getFilterText() const {
-	return mFilterText;
-}
-
-void AccountProxy::setFilterText(const QString &filter) {
-	if (mFilterText != filter) {
-		mFilterText = filter;
-		invalidate();
-		emit filterTextChanged();
-	}
-}
-
 AccountGui *AccountProxy::getDefaultAccount() {
-	if (!mDefaultAccount) mDefaultAccount = dynamic_cast<AccountList *>(sourceModel())->getDefaultAccountCore();
+	if (!mDefaultAccount)
+		mDefaultAccount = dynamic_cast<AccountList *>(dynamic_cast<SortFilterList *>(sourceModel())->sourceModel())
+		                      ->getDefaultAccountCore();
 	return new AccountGui(mDefaultAccount);
 }
 
@@ -59,19 +48,19 @@ void AccountProxy::resetDefaultAccount() {
 }
 
 AccountGui *AccountProxy::findAccountByAddress(const QString &address) {
-	return dynamic_cast<AccountList *>(sourceModel())->findAccountByAddress(address);
+	return getListModel<AccountList>()->findAccountByAddress(address);
 }
 
 AccountGui *AccountProxy::firstAccount() {
-	return dynamic_cast<AccountList *>(sourceModel())->firstAccount();
+	return getListModel<AccountList>()->firstAccount();
 }
 
 bool AccountProxy::getHaveAccount() const {
-	return dynamic_cast<AccountList *>(sourceModel())->getHaveAccount();
+	return getListModel<AccountList>()->getHaveAccount();
 }
 
 void AccountProxy::setSourceModel(QAbstractItemModel *model) {
-	auto oldAccountList = dynamic_cast<AccountList *>(sourceModel());
+	auto oldAccountList = getListModel<AccountList>();
 	if (oldAccountList) {
 		disconnect(oldAccountList);
 	}
@@ -87,25 +76,24 @@ void AccountProxy::setSourceModel(QAbstractItemModel *model) {
 	QSortFilterProxyModel::setSourceModel(model);
 }
 
-bool AccountProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+//------------------------------------------------------------------------------------------
+
+bool AccountProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	bool show = (mFilterText.isEmpty() || mFilterText == "*");
 	if (!show) {
 		QRegularExpression search(QRegularExpression::escape(mFilterText),
 		                          QRegularExpression::CaseInsensitiveOption |
 		                              QRegularExpression::UseUnicodePropertiesOption);
-		QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-		auto model = sourceModel()->data(index);
-		auto account = model.value<AccountGui *>();
-		show = account->getCore()->getIdentityAddress().contains(search);
+		auto account = getItemAtSource<AccountList, AccountCore>(sourceRow);
+		show = account->getIdentityAddress().contains(search);
 	}
 
 	return show;
 }
 
-bool AccountProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto l = sourceModel()->data(left);
-	auto r = sourceModel()->data(right);
+bool AccountProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	auto l = getItemAtSource<AccountList, AccountCore>(sourceLeft.row());
+	auto r = getItemAtSource<AccountList, AccountCore>(sourceRight.row());
 
-	return l.value<AccountGui *>()->getCore()->getIdentityAddress() <
-	       r.value<AccountGui *>()->getCore()->getIdentityAddress();
+	return l->getIdentityAddress() < r->getIdentityAddress();
 }

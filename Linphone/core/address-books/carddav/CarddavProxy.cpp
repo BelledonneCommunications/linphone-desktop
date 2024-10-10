@@ -24,25 +24,13 @@
 
 DEFINE_ABSTRACT_OBJECT(CarddavProxy)
 
-CarddavProxy::CarddavProxy(QObject *parent) : SortFilterProxy(parent) {
+CarddavProxy::CarddavProxy(QObject *parent) : LimitProxy(parent) {
 	mCarddavList = CarddavList::create();
-	setSourceModel(mCarddavList.get());
+	setSourceModels(new SortFilterList(mCarddavList.get(), Qt::AscendingOrder));
 }
 
 CarddavProxy::~CarddavProxy() {
 	setSourceModel(nullptr);
-}
-
-QString CarddavProxy::getFilterText() const {
-	return mFilterText;
-}
-
-void CarddavProxy::setFilterText(const QString &filter) {
-	if (mFilterText != filter) {
-		mFilterText = filter;
-		invalidate();
-		emit filterTextChanged();
-	}
 }
 
 void CarddavProxy::removeAllEntries() {
@@ -50,10 +38,10 @@ void CarddavProxy::removeAllEntries() {
 }
 
 void CarddavProxy::removeEntriesWithFilter() {
-	std::list<QSharedPointer<CarddavCore>> itemList(rowCount());
+	QList<QSharedPointer<CarddavCore>> itemList(rowCount());
 	for (auto i = rowCount() - 1; i >= 0; --i) {
-		auto item = getItemAt<CarddavList, CarddavCore>(i);
-		itemList.emplace_back(item);
+		auto item = getItemAt<SortFilterList, CarddavList, CarddavCore>(i);
+		itemList[i] = item;
 	}
 	for (auto item : itemList) {
 		mCarddavList->ListProxy::remove(item.get());
@@ -61,13 +49,13 @@ void CarddavProxy::removeEntriesWithFilter() {
 	}
 }
 
-bool CarddavProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+bool CarddavProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	return true;
 }
 
-bool CarddavProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto l = getItemAt<CarddavList, CarddavCore>(left.row());
-	auto r = getItemAt<CarddavList, CarddavCore>(right.row());
+bool CarddavProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	auto l = getItemAtSource<CarddavList, CarddavCore>(sourceLeft.row());
+	auto r = getItemAtSource<CarddavList, CarddavCore>(sourceRight.row());
 
 	return l->mDisplayName < r->mDisplayName;
 }

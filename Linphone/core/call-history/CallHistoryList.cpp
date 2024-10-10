@@ -73,6 +73,18 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 				mustBeInMainThread(getClassName());
 				resetData();
 				add(*callLogs);
+				
+				/*
+				if (callLogs->size() > 0) {
+					int count = qMin(callLogs->size(), mMaxDisplayItems);
+					// QModelIndex firstIndex = index(0, 0);
+					beginInsertRows(QModelIndex(), 0, count - 1);
+					for (auto i : *callLogs)
+						mList << i.template objectCast<QObject>();
+					endInsertRows();
+					// auto lastIndex = index(count - 1, 0);
+					// emit dataChanged(firstIndex, lastIndex);
+				}*/
 				delete callLogs;
 			});
 		});
@@ -109,3 +121,14 @@ QVariant CallHistoryList::data(const QModelIndex &index, int role) const {
 	}
 	return QVariant();
 }
+/*
+void CallHistoryList::displayMore() {
+	int oldCount = qMin(mList.size(), mDisplayCount);
+	int newCount = qMin(mList.size(), mDisplayCount + mDisplayStep);
+	if (newCount != oldCount) {
+		mDisplayCount = newCount;
+		beginInsertRows(QModelIndex(), oldCount, mDisplayCount - 1);
+		endInsertRows();
+	}
+}
+*/

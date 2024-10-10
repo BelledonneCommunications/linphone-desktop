@@ -21,7 +21,7 @@
 #ifndef PARTICIPANT_DEVICE_PROXY_MODEL_H_
 #define PARTICIPANT_DEVICE_PROXY_MODEL_H_
 
-#include "../proxy/SortFilterProxy.hpp"
+#include "../proxy/LimitProxy.hpp"
 #include "core/call/CallGui.hpp"
 #include "core/participant/ParticipantDeviceGui.hpp"
 #include "tool/AbstractObject.hpp"
@@ -29,13 +29,15 @@
 class ParticipantDeviceList;
 class ParticipantDeviceGui;
 
-class ParticipantDeviceProxy : public SortFilterProxy, public AbstractObject {
+class ParticipantDeviceProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(CallGui *currentCall READ getCurrentCall WRITE setCurrentCall NOTIFY currentCallChanged)
 	Q_PROPERTY(ParticipantDeviceGui *me READ getMe NOTIFY meChanged)
 
 public:
 	DECLARE_GUI_OBJECT
+	DECLARE_SORTFILTER_CLASS()
+
 	ParticipantDeviceProxy(QObject *parent = Q_NULLPTR);
 	~ParticipantDeviceProxy();
 
@@ -44,17 +46,12 @@ public:
 
 	ParticipantDeviceGui *getMe() const;
 
-protected:
-	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-	bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
-
 signals:
 	void lUpdate();
 	void currentCallChanged();
 	void meChanged();
 
 private:
-	QString mSearchText;
 	CallGui *mCurrentCall = nullptr;
 	QSharedPointer<ParticipantDeviceList> mParticipants;
 	DECLARE_ABSTRACT_OBJECT

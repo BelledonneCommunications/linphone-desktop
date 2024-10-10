@@ -162,6 +162,26 @@ AbstractSettingsLayout {
 					}
 				}
 			}
+			Rectangle {
+				Layout.fillWidth: true
+				Layout.topMargin: 35 * DefaultStyle.dp
+				Layout.bottomMargin: 9 * DefaultStyle.dp
+				height: 1 * DefaultStyle.dp
+				color: DefaultStyle.main2_500main
+			}
+			RowLayout {
+				Layout.topMargin: 16 * DefaultStyle.dp
+				spacing: 5 * DefaultStyle.dp
+				Item {
+					Layout.preferredWidth: 341 * DefaultStyle.dp
+				}
+				SwitchSetting {
+					Layout.rightMargin: 44 * DefaultStyle.dp
+					titleText:qsTr("Cacher les FPS")
+					propertyName: "hideFps"
+					propertyOwner: SettingsCpp
+				}
+			}
 		}
 	}
 }

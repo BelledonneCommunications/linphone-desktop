@@ -44,7 +44,7 @@ Window{
 			
 			model: MagicSearchProxy{
 				id: search
-				searchText: ''
+				filterText: ''
 			}
 			delegate: Rectangle{
 				height: 50
@@ -92,7 +92,7 @@ Window{
 			text: 'Get'
 			Layout.rightMargin: 20
 			onClicked: {
-				search.searchText = '*'
+				search.filterText = '*'
 			}
 		}
 	}

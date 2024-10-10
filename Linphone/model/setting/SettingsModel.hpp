@@ -139,6 +139,7 @@ public:
 	DECLARE_GETSET(bool, disableBroadcastFeature, DisableBroadcastFeature)
 	DECLARE_GETSET(bool, hideSettings, HideSettings)
 	DECLARE_GETSET(bool, hideAccountSettings, HideAccountSettings)
+	DECLARE_GETSET(bool, hideFps, HideFps)
 	DECLARE_GETSET(bool, disableCallRecordings, DisableCallRecordings)
 	DECLARE_GETSET(bool, assistantHideCreateAccount, AssistantHideCreateAccount)
 	DECLARE_GETSET(bool, assistantDisableQrCode, AssistantDisableQrCode)

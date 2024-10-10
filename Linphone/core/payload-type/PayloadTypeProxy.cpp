@@ -24,23 +24,34 @@
 
 DEFINE_ABSTRACT_OBJECT(PayloadTypeProxy)
 
-PayloadTypeProxy::PayloadTypeProxy(QObject *parent) : SortFilterProxy(parent) {
+PayloadTypeProxy::PayloadTypeProxy(QObject *parent) : LimitProxy(parent) {
 	mPayloadTypeList = PayloadTypeList::create();
-	setSourceModel(mPayloadTypeList.get());
+	setSourceModels(new SortFilterList(mPayloadTypeList.get(), Qt::AscendingOrder));
 }
 
 PayloadTypeProxy::~PayloadTypeProxy() {
-	setSourceModel(nullptr);
 }
 
-bool PayloadTypeProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-	auto data = sourceModel()->data(sourceModel()->index(sourceRow, 0, sourceParent)).value<PayloadTypeGui *>();
-	return data->getCore()->getFamily() == mFamily;
+PayloadTypeCore::Family PayloadTypeProxy::getFamily() const {
+	return dynamic_cast<SortFilterList *>(sourceModel())->mFamily;
 }
 
-bool PayloadTypeProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto l = getItemAt<PayloadTypeList, PayloadTypeCore>(left.row());
-	auto r = getItemAt<PayloadTypeList, PayloadTypeCore>(right.row());
+void PayloadTypeProxy::setFamily(PayloadTypeCore::Family data) {
+	auto list = dynamic_cast<SortFilterList *>(sourceModel());
+	if (list->mFamily != data) {
+		list->mFamily = data;
+		familyChanged();
+	}
+}
+
+bool PayloadTypeProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+	auto payload = qobject_cast<PayloadTypeList *>(sourceModel())->getAt<PayloadTypeCore>(sourceRow);
+	return payload->getFamily() == mFamily;
+}
+
+bool PayloadTypeProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	auto l = getItemAtSource<PayloadTypeList, PayloadTypeCore>(sourceLeft.row());
+	auto r = getItemAtSource<PayloadTypeList, PayloadTypeCore>(sourceRight.row());
 
 	return l->getMimeType() < r->getMimeType();
 }

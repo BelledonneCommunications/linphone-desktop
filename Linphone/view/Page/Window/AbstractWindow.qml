@@ -249,4 +249,19 @@ ApplicationWindow {
 		underlineColor: DefaultStyle.main1_500_main
 		radius: 15 * DefaultStyle.dp
 	}
+	FPSCounter{
+		anchors.top: parent.top
+		anchors.left: parent.left
+		height: 50
+		width: 120
+		z: 100
+		visible: !SettingsCpp.hideFps
+		Text{
+			font.bold: true
+			font.italic: true
+			font.pixelSize: 14 * DefaultStyle.dp
+			text: parent.fps + " FPS"
+			color: parent.fps < 30 ? DefaultStyle.danger_500main : DefaultStyle.main2_900
+		}
+	}
 }

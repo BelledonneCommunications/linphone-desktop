@@ -34,15 +34,14 @@
 
 DEFINE_ABSTRACT_OBJECT(ParticipantProxy)
 
-ParticipantProxy::ParticipantProxy(QObject *parent) : SortFilterProxy(parent) {
+ParticipantProxy::ParticipantProxy(QObject *parent) : LimitProxy(parent) {
 	mParticipants = ParticipantList::create();
 	connect(this, &ParticipantProxy::chatRoomModelChanged, this, &ParticipantProxy::countChanged);
 	connect(this, &ParticipantProxy::conferenceModelChanged, this, &ParticipantProxy::countChanged);
-	setSourceModel(mParticipants.get());
+	setSourceModels(new SortFilterList(mParticipants.get(), Qt::AscendingOrder));
 }
 
 ParticipantProxy::~ParticipantProxy() {
-	setSourceModel(nullptr);
 }
 
 CallGui *ParticipantProxy::getCurrentCall() const {
@@ -77,7 +76,7 @@ void ParticipantProxy::setCurrentCall(CallGui *call) {
 }
 
 bool ParticipantProxy::getShowMe() const {
-	return mShowMe;
+	return dynamic_cast<SortFilterList *>(sourceModel())->mShowMe;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,10 +106,11 @@ bool ParticipantProxy::getShowMe() const {
 // }
 
 void ParticipantProxy::setShowMe(const bool &show) {
-	if (mShowMe != show) {
-		mShowMe = show;
+	auto list = dynamic_cast<SortFilterList *>(sourceModel());
+	if (list->mShowMe != show) {
+		list->mShowMe = show;
 		emit showMeChanged();
-		invalidate();
+		invalidateFilter();
 	}
 }
 
@@ -135,16 +135,15 @@ void ParticipantProxy::setParticipantAdminStatus(ParticipantCore *participant, b
 
 // -----------------------------------------------------------------------------
 
-bool ParticipantProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+bool ParticipantProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	if (mShowMe) return true;
 	else {
-		const ParticipantCore *a =
-		    sourceModel()->data(sourceModel()->index(sourceRow, 0, sourceParent)).value<ParticipantCore *>();
-		return !a->isMe();
+		auto participant = qobject_cast<ParticipantList *>(sourceModel())->getAt<ParticipantCore>(sourceRow);
+		return !participant->isMe();
 	}
 }
 
-bool ParticipantProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
+bool ParticipantProxy::SortFilterList::lessThan(const QModelIndex &left, const QModelIndex &right) const {
 	const ParticipantCore *a = sourceModel()->data(left).value<ParticipantCore *>();
 	const ParticipantCore *b = sourceModel()->data(right).value<ParticipantCore *>();
 

@@ -3,7 +3,7 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
-  
+
 Control.Button {
 	id: mainItem
 	property int capitalization
@@ -26,7 +26,8 @@ Control.Button {
 	// rightPadding: 20 * DefaultStyle.dp
 	// topPadding: 11 * DefaultStyle.dp
 	// bottomPadding: 11 * DefaultStyle.dp
-
+	implicitHeight: contentItem.implicitHeight + bottomPadding + topPadding
+	implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
@@ -34,42 +35,48 @@ Control.Button {
 		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 		acceptedButtons: Qt.NoButton
 	}
-
-	background: Item {
-		Rectangle {
-			anchors.fill: parent
-			id: buttonBackground
-			color: mainItem.enabled
-				? inversedColors
-					? mainItem.pressed || mainItem.shadowEnabled
-						? DefaultStyle.grey_100
-						: mainItem.borderColor
-					: mainItem.pressed || mainItem.shadowEnabled
-						? mainItem.pressedColor
-						: mainItem.color
-				: mainItem.disabledColor
-			radius: mainItem.radius
-			border.color: inversedColors ? mainItem.color : mainItem.borderColor
-
-			MouseArea {
+	
+	background: Loader{
+		asynchronous: true
+		anchors.fill: parent
+		
+		sourceComponent:
+			Item {
+			Rectangle {
+				id: buttonBackground
 				anchors.fill: parent
-				hoverEnabled: true
-				cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+				color: mainItem.enabled
+					   ? inversedColors
+						 ? mainItem.pressed || mainItem.shadowEnabled
+						   ? DefaultStyle.grey_100
+						   : mainItem.borderColor
+				: mainItem.pressed || mainItem.shadowEnabled
+				? mainItem.pressedColor
+				: mainItem.color
+				: mainItem.disabledColor
+				radius: mainItem.radius
+				border.color: inversedColors ? mainItem.color : mainItem.borderColor
+				
+				MouseArea {
+					anchors.fill: parent
+					hoverEnabled: true
+					cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+				}
+			}
+			MultiEffect {
+				enabled: mainItem.shadowEnabled
+				anchors.fill: buttonBackground
+				source: buttonBackground
+				visible:  mainItem.shadowEnabled
+				// Crash : https://bugreports.qt.io/browse/QTBUG-124730
+				shadowEnabled: true //mainItem.shadowEnabled
+				shadowColor: DefaultStyle.grey_1000
+				shadowBlur: 0.1
+				shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
 			}
 		}
-		MultiEffect {
-			enabled: mainItem.shadowEnabled
-			anchors.fill: buttonBackground
-			source: buttonBackground
-			visible:  mainItem.shadowEnabled
-			// Crash : https://bugreports.qt.io/browse/QTBUG-124730
-			shadowEnabled: true //mainItem.shadowEnabled
-			shadowColor: DefaultStyle.grey_1000
-			shadowBlur: 0.1
-			shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
-		}
 	}
-
+	
 	component ButtonText: Text {
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter
@@ -90,7 +97,7 @@ Control.Button {
 			bold: mainItem.font.bold
 		}
 	}
-
+	
 	component ButtonImage: EffectImage {
 		// Layout.fillWidth: true
 		// Layout.fillHeight: true
@@ -100,7 +107,70 @@ Control.Button {
 		colorizationColor: mainItem.contentImageColor
 		shadowEnabled: mainItem.shadowEnabled
 	}
-
+	
+	contentItem: Control.StackView{
+		id: stacklayout
+		width: mainItem.width
+		// TODO Qt bug : contentItem is never changed....
+		implicitHeight: contentItem && contentItem.implicitHeight? contentItem.implicitHeight : 0
+		implicitWidth: contentItem && contentItem.implicitWidth? contentItem.implicitWidth: 0
+		function updateComponent(){
+			var item
+			var component = mainItem.text.length != 0 && mainItem.icon.source.toString().length != 0
+					? imageTextComponent
+					: mainItem.text.length != 0
+					  ? textComponent
+					  : mainItem.icon.source.toString().length != 0
+						? imageComponent
+						: emptyComponent
+			if( stacklayout.depth == 0)
+				item = stacklayout.push(component, Control.StackView.Immediate)
+			else if( component != stacklayout.get(0))
+				item = stacklayout.replace(component, Control.StackView.Immediate)
+			if(item){// Workaround for Qt bug : set from the item and not from the contentItem
+				implicitHeight = item.implicitHeight
+				implicitWidth = item.implicitWidth
+			}
+		}
+		
+		Component.onCompleted: {
+			updateComponent()
+		}
+		
+		Connections{
+			target: mainItem
+			function onTextChanged(){stacklayout.updateComponent()}
+			function onIconChanged(){stacklayout.updateComponent()}
+		}
+		
+		Component{
+			id: imageTextComponent
+			RowLayout {
+				spacing: mainItem.spacing
+				ButtonImage{
+					Layout.preferredWidth: mainItem.icon.width
+					Layout.preferredHeight: mainItem.icon.height
+				}
+				ButtonText{}
+			}
+		}
+		Component{
+			id: textComponent
+			ButtonText {}
+		}
+		Component{
+			id: imageComponent
+			ButtonImage{}
+		}
+		Component{
+			id: emptyComponent
+			Item {
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+			}
+		}
+	}
+	/*
 	contentItem: StackLayout {
 		id: stacklayout
 		currentIndex: mainItem.text.length != 0 && mainItem.icon.source.toString().length != 0
@@ -110,7 +180,7 @@ Control.Button {
 				: mainItem.icon.source.toString().length != 0
 					? 2
 					: 3
-
+					
 		width: mainItem.width
 		RowLayout {
 			spacing: mainItem.spacing
@@ -126,5 +196,5 @@ Control.Button {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 		}
-	}
+	}*/
 }

@@ -568,6 +568,7 @@ void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(disableMeetingsFeature, DisableMeetingsFeature)
 	DEFINE_NOTIFY_CONFIG_READY(hideSettings,HideSettings)
 	DEFINE_NOTIFY_CONFIG_READY(hideAccountSettings, HideAccountSettings)
+	DEFINE_NOTIFY_CONFIG_READY(hideFps, HideFps)
 	DEFINE_NOTIFY_CONFIG_READY(disableCallRecordings, DisableCallRecordings)
 	DEFINE_NOTIFY_CONFIG_READY(assistantHideCreateAccount, AssistantHideCreateAccount)
 	DEFINE_NOTIFY_CONFIG_READY(assistantDisableQrCode, AssistantDisableQrCode)
@@ -596,6 +597,7 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, hideSettings, HideSettings, "hide_settings", false)
 DEFINE_GETSET_CONFIG(
 	SettingsModel, bool, Bool, hideAccountSettings, HideAccountSettings, "hide_account_settings", false)
+DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, hideFps, HideFps, "hide_fps", true )
 DEFINE_GETSET_CONFIG(SettingsModel,
 						bool,
 						Bool,

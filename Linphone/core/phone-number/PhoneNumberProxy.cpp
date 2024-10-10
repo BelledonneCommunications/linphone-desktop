@@ -23,30 +23,16 @@
 
 DEFINE_ABSTRACT_OBJECT(PhoneNumberProxy)
 
-PhoneNumberProxy::PhoneNumberProxy(QObject *parent) : SortFilterProxy(parent) {
+PhoneNumberProxy::PhoneNumberProxy(QObject *parent) : LimitProxy(parent) {
 	mPhoneNumberList = PhoneNumberList::create();
-	setSourceModel(mPhoneNumberList.get());
-	sort(0);
+	setSourceModels(new SortFilterList(mPhoneNumberList.get(), Qt::AscendingOrder));
 }
 
 PhoneNumberProxy::~PhoneNumberProxy() {
-	setSourceModel(nullptr);
-}
-
-QString PhoneNumberProxy::getFilterText() const {
-	return mFilterText;
-}
-
-void PhoneNumberProxy::setFilterText(const QString &filter) {
-	if (mFilterText != filter) {
-		mFilterText = filter;
-		invalidate();
-		emit filterTextChanged();
-	}
 }
 
 int PhoneNumberProxy::findIndexByCountryCallingCode(const QString &countryCallingCode) {
-	auto model = qobject_cast<PhoneNumberList *>(sourceModel());
+	auto model = getListModel<PhoneNumberList>();
 	if (!model) return -1;
 	if (countryCallingCode.isEmpty()) return -1;
 
@@ -58,24 +44,22 @@ int PhoneNumberProxy::findIndexByCountryCallingCode(const QString &countryCallin
 	return proxyModelIndex.row();
 }
 
-bool PhoneNumberProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+bool PhoneNumberProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	bool show = (mFilterText.isEmpty() || mFilterText == "*");
 	if (!show) {
 		QRegularExpression search(QRegularExpression::escape(mFilterText),
 		                          QRegularExpression::CaseInsensitiveOption |
 		                              QRegularExpression::UseUnicodePropertiesOption);
-		QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-		auto model = sourceModel()->data(index);
-		auto phoneNumber = model.value<PhoneNumber *>();
+		auto phoneNumber = qobject_cast<PhoneNumberList *>(sourceModel())->getAt<PhoneNumber>(sourceRow);
+
 		show = phoneNumber->mCountry.contains(search) || phoneNumber->mCountryCallingCode.contains(search);
 	}
 
 	return show;
 }
 
-bool PhoneNumberProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto l = sourceModel()->data(left);
-	auto r = sourceModel()->data(right);
-
-	return l.value<PhoneNumber *>()->mCountry < r.value<PhoneNumber *>()->mCountry;
+bool PhoneNumberProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	auto l = getItemAtSource<PhoneNumberList, PhoneNumber>(sourceLeft.row());
+	auto r = getItemAtSource<PhoneNumberList, PhoneNumber>(sourceRight.row());
+	return l->mCountry < r->mCountry;
 }

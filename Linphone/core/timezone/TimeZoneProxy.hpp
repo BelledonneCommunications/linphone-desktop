@@ -21,16 +21,18 @@
 #ifndef TIME_ZONE_PROXY_MODEL_H_
 #define TIME_ZONE_PROXY_MODEL_H_
 
-#include "../proxy/SortFilterProxy.hpp"
+#include "../proxy/LimitProxy.hpp"
 
 // =============================================================================
 
 class TimeZoneModel;
 class TimeZoneList;
 
-class TimeZoneProxy : public SortFilterProxy {
+class TimeZoneProxy : public LimitProxy {
 	Q_OBJECT
 public:
+	DECLARE_SORTFILTER_CLASS()
+
 	TimeZoneProxy(QObject *parent = Q_NULLPTR);
 	Q_PROPERTY(int defaultIndex READ getIndex CONSTANT)
 
@@ -38,7 +40,6 @@ public:
 
 protected:
 	QSharedPointer<TimeZoneList> mList;
-	bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 };
 
 #endif

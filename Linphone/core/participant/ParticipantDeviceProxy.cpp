@@ -30,17 +30,15 @@
 DEFINE_ABSTRACT_OBJECT(ParticipantDeviceProxy)
 DEFINE_GUI_OBJECT(ParticipantDeviceProxy)
 
-ParticipantDeviceProxy::ParticipantDeviceProxy(QObject *parent) : SortFilterProxy(parent) {
+ParticipantDeviceProxy::ParticipantDeviceProxy(QObject *parent) : LimitProxy(parent) {
 	mParticipants = ParticipantDeviceList::create();
 	connect(mParticipants.get(), &ParticipantDeviceList::countChanged, this, &ParticipantDeviceProxy::meChanged,
 	        Qt::QueuedConnection);
 
-	setSourceModel(mParticipants.get());
-	sort(0); //, Qt::DescendingOrder);
+	setSourceModels(new SortFilterList(mParticipants.get(), Qt::AscendingOrder));
 }
 
 ParticipantDeviceProxy::~ParticipantDeviceProxy() {
-	setSourceModel(nullptr);
 }
 
 CallGui *ParticipantDeviceProxy::getCurrentCall() const {
@@ -86,13 +84,14 @@ ParticipantDeviceGui *ParticipantDeviceProxy::getMe() const {
 	}
 }
 
-bool ParticipantDeviceProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+bool ParticipantDeviceProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	return true;
 }
 
-bool ParticipantDeviceProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto deviceA = sourceModel()->data(left).value<ParticipantDeviceGui *>()->getCore();
-	auto deviceB = sourceModel()->data(right).value<ParticipantDeviceGui *>()->getCore();
+bool ParticipantDeviceProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft,
+                                                      const QModelIndex &sourceRight) const {
+	auto l = getItemAtSource<ParticipantDeviceList, ParticipantDeviceCore>(sourceLeft.row());
+	auto r = getItemAtSource<ParticipantDeviceList, ParticipantDeviceCore>(sourceRight.row());
 
-	return deviceB->isMe() || (!deviceB->isMe() && left.row() < right.row());
+	return r->isMe() || (!r->isMe() && sourceLeft.row() < sourceRight.row());
 }

@@ -17,7 +17,8 @@ Loader {
 	property int imageHeight: height
 	property bool useColor: colorizationColor != undefined
 	property bool shadowEnabled: false
-	sourceComponent: Item {
+	asynchronous: true
+	sourceComponent: Component{Item {
 		Image {
 			id: image
 			visible: !effect2.effectEnabled
@@ -79,5 +80,6 @@ Loader {
 			shadowBlur: 0
 			shadowOpacity: mainItem.shadowEnabled ? 0.7 : 0.0
 		}
+	}
 	}
 }

@@ -30,10 +30,9 @@
 DEFINE_ABSTRACT_OBJECT(AccountDeviceProxy)
 DEFINE_GUI_OBJECT(AccountDeviceProxy)
 
-AccountDeviceProxy::AccountDeviceProxy(QObject *parent) : SortFilterProxy(parent) {
+AccountDeviceProxy::AccountDeviceProxy(QObject *parent) : LimitProxy(parent) {
 	mAccountDeviceList = AccountDeviceList::create();
-	setSourceModel(mAccountDeviceList.get());
-	sort(0); //, Qt::DescendingOrder);
+	setSourceModels(new SortFilterList(mAccountDeviceList.get(), Qt::DescendingOrder));
 }
 
 AccountDeviceProxy::~AccountDeviceProxy() {
@@ -53,13 +52,10 @@ void AccountDeviceProxy::deleteDevice(AccountDeviceGui *device) {
 	mAccountDeviceList->deleteDevice(device);
 }
 
-bool AccountDeviceProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+bool AccountDeviceProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	return true;
 }
 
-bool AccountDeviceProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto deviceA = sourceModel()->data(left).value<AccountDeviceGui *>()->getCore();
-	auto deviceB = sourceModel()->data(right).value<AccountDeviceGui *>()->getCore();
-
-	return left.row() < right.row();
+bool AccountDeviceProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	return sourceLeft.row() < sourceRight.row();
 }

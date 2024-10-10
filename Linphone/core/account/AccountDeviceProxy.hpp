@@ -21,21 +21,22 @@
 #ifndef ACCOUNT_DEVICE_PROXY_MODEL_H_
 #define ACCOUNT_DEVICE_PROXY_MODEL_H_
 
-#include "../proxy/SortFilterProxy.hpp"
+#include "../proxy/LimitProxy.hpp"
 #include "core/account/AccountDeviceGui.hpp"
 #include "core/account/AccountGui.hpp"
-#include "core/call/CallGui.hpp"
 #include "tool/AbstractObject.hpp"
 
 class AccountDeviceList;
 class AccountDeviceGui;
 
-class AccountDeviceProxy : public SortFilterProxy, public AbstractObject {
+class AccountDeviceProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(AccountGui *account READ getAccount WRITE setAccount NOTIFY accountChanged)
 
 public:
 	DECLARE_GUI_OBJECT
+	DECLARE_SORTFILTER_CLASS()
+
 	AccountDeviceProxy(QObject *parent = Q_NULLPTR);
 	~AccountDeviceProxy();
 
@@ -44,9 +45,6 @@ public:
 	Q_INVOKABLE void deleteDevice(AccountDeviceGui *device);
 
 protected:
-	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-	bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
-
 signals:
 	void lUpdate();
 	void accountChanged();

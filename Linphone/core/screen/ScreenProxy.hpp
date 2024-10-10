@@ -22,17 +22,18 @@
 #define SCREEN_PROXY_H_
 
 #include "ScreenList.hpp"
-#include "core/proxy/SortFilterProxy.hpp"
+#include "core/proxy/LimitProxy.hpp"
 // =============================================================================
 
 class QWindow;
 
-class ScreenProxy : public SortFilterProxy {
+class ScreenProxy : public LimitProxy {
 	class ScreenModelFilter;
 
 	Q_OBJECT
 	Q_PROPERTY(ScreenList::Mode mode READ getMode WRITE setMode NOTIFY modeChanged)
 public:
+	DECLARE_SORTFILTER_CLASS()
 	ScreenProxy(QObject *parent = Q_NULLPTR);
 
 	ScreenList::Mode getMode() const;

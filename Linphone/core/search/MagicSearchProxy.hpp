@@ -21,13 +21,13 @@
 #ifndef MAGIC_SEARCH_PROXY_H_
 #define MAGIC_SEARCH_PROXY_H_
 
-#include "../proxy/SortFilterProxy.hpp"
+#include "../proxy/LimitProxy.hpp"
 #include "core/search/MagicSearchList.hpp"
 #include "tool/LinphoneEnums.hpp"
 
 // =============================================================================
 
-class MagicSearchProxy : public SortFilterProxy {
+class MagicSearchProxy : public LimitProxy {
 	Q_OBJECT
 
 	Q_PROPERTY(QString searchText READ getSearchText WRITE setSearchText NOTIFY searchTextChanged)
@@ -38,6 +38,7 @@ class MagicSearchProxy : public SortFilterProxy {
 	Q_PROPERTY(MagicSearchProxy *parentProxy WRITE setParentProxy NOTIFY parentProxyChanged)
 
 public:
+	DECLARE_SORTFILTER_CLASS(bool mShowFavoritesOnly = false;)
 	MagicSearchProxy(QObject *parent = Q_NULLPTR);
 	~MagicSearchProxy();
 
@@ -72,11 +73,8 @@ signals:
 protected:
 	QString mSearchText;
 	int mSourceFlags;
-	bool mShowFavoritesOnly = false;
 	LinphoneEnums::MagicSearchAggregation mAggregationFlag;
 	QSharedPointer<MagicSearchList> mList;
-	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-	virtual bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
 };
 
 #endif

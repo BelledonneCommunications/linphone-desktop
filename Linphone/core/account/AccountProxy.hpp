@@ -21,25 +21,24 @@
 #ifndef ACCOUNT_PROXY_H_
 #define ACCOUNT_PROXY_H_
 
+#include "../proxy/LimitProxy.hpp"
 #include "../proxy/SortFilterProxy.hpp"
 #include "core/account/AccountGui.hpp"
 #include "core/account/AccountList.hpp"
 
 // =============================================================================
 
-class AccountProxy : public SortFilterProxy {
+class AccountProxy : public LimitProxy {
 	Q_OBJECT
 
-	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
 	Q_PROPERTY(AccountGui *defaultAccount READ getDefaultAccount WRITE setDefaultAccount NOTIFY defaultAccountChanged)
 	Q_PROPERTY(bool haveAccount READ getHaveAccount NOTIFY haveAccountChanged)
 
 public:
+	DECLARE_SORTFILTER_CLASS()
+
 	AccountProxy(QObject *parent = Q_NULLPTR);
 	~AccountProxy();
-
-	QString getFilterText() const;
-	void setFilterText(const QString &filter);
 
 	AccountGui *getDefaultAccount();             // Get a new object from List or give the stored one.
 	void setDefaultAccount(AccountGui *account); // TODO
@@ -52,16 +51,11 @@ public:
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
 signals:
-	void filterTextChanged();
 	void defaultAccountChanged();
 	void haveAccountChanged();
 	void initialized();
 
 protected:
-	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
-
-	QString mFilterText;
 	QSharedPointer<AccountCore> mDefaultAccount; // When null, a new UI object is build from List
 };
 

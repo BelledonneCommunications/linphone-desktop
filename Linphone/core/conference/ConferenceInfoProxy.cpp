@@ -25,15 +25,11 @@
 
 DEFINE_ABSTRACT_OBJECT(ConferenceInfoProxy)
 
-ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : SortFilterProxy(parent) {
+ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
 	mList = ConferenceInfoList::create();
-	setSourceModel(mList.get());
+	setSourceModels(new SortFilterList(mList.get()));
 	connect(
-	    this, &ConferenceInfoProxy::searchTextChanged, this,
-	    [this] {
-		    invalidate();
-		    updateCurrentDateIndex();
-	    },
+	    this, &ConferenceInfoProxy::filterTextChanged, this, [this] { updateCurrentDateIndex(); },
 	    Qt::QueuedConnection);
 	connect(
 	    mList.get(), &ConferenceInfoList::haveCurrentDateChanged, this,
@@ -49,16 +45,6 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : SortFilterProxy(pare
 }
 
 ConferenceInfoProxy::~ConferenceInfoProxy() {
-	setSourceModel(nullptr);
-}
-
-QString ConferenceInfoProxy::getSearchText() const {
-	return mSearchText;
-}
-
-void ConferenceInfoProxy::setSearchText(const QString &search) {
-	mSearchText = search;
-	emit searchTextChanged();
 }
 
 bool ConferenceInfoProxy::haveCurrentDate() const {
@@ -77,15 +63,16 @@ void ConferenceInfoProxy::updateCurrentDateIndex() {
 	}
 }
 
-bool ConferenceInfoProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-	auto ciCore = qobject_cast<ConferenceInfoList *>(sourceModel())->template getAt<ConferenceInfoCore>(sourceRow);
+bool ConferenceInfoProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+	auto list = qobject_cast<ConferenceInfoList *>(sourceModel());
+	auto ciCore = list->getAt<ConferenceInfoCore>(sourceRow);
 	if (ciCore) {
 		bool searchTextInSubject = false;
 		bool searchTextInParticipant = false;
-		if (ciCore->getSubject().contains(mSearchText, Qt::CaseInsensitive)) searchTextInSubject = true;
+		if (ciCore->getSubject().contains(mFilterText, Qt::CaseInsensitive)) searchTextInSubject = true;
 		for (auto &contact : ciCore->getParticipants()) {
 			auto infos = contact.toMap();
-			if (infos["displayName"].toString().contains(mSearchText, Qt::CaseInsensitive)) {
+			if (infos["displayName"].toString().contains(mFilterText, Qt::CaseInsensitive)) {
 				searchTextInParticipant = true;
 				break;
 			}
@@ -99,7 +86,12 @@ bool ConferenceInfoProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sou
 			return res;
 		} else return mFilterType == -1;
 	} else {
-		return !mList->haveCurrentDate() && mList->getCount() > 1 &&
-		       mSearchText.isEmpty(); // if mlist count == 1 there is only the dummy row which we don't display alone
+		return !list->haveCurrentDate() && list->getCount() > 1 && mFilterText.isEmpty();
+		// if mlist count == 1 there is only the dummy row which we don't display alone
 	}
+}
+
+bool ConferenceInfoProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft,
+                                                   const QModelIndex &sourceRight) const {
+	return true; // Not used
 }

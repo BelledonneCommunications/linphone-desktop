@@ -275,7 +275,7 @@ ListView {
 					
 					popup.contentItem: ColumnLayout {
 						Button {
-							text: modelData.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
+							text: $modelData.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
 							background: Item{}
 							icon.source: modelData.core.starred ? AppIcons.heartFill : AppIcons.heart
 							icon.width: 24 * DefaultStyle.dp

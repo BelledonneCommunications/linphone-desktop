@@ -54,6 +54,7 @@ public:
 	// 	roles[Qt::DisplayRole + 2] = "date";
 	// 	return roles;
 	// }
+	//void displayMore();
 
 signals:
 	void lUpdate();

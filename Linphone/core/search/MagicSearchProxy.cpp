@@ -22,7 +22,7 @@
 #include "MagicSearchList.hpp"
 #include "core/friend/FriendGui.hpp"
 
-MagicSearchProxy::MagicSearchProxy(QObject *parent) : SortFilterProxy(parent) {
+MagicSearchProxy::MagicSearchProxy(QObject *parent) : LimitProxy(parent) {
 	mSourceFlags = (int)LinphoneEnums::MagicSearchSource::Friends | (int)LinphoneEnums::MagicSearchSource::LdapServers;
 	mAggregationFlag = LinphoneEnums::MagicSearchAggregation::Friend;
 	setList(MagicSearchList::create());
@@ -41,6 +41,7 @@ void MagicSearchProxy::setList(QSharedPointer<MagicSearchList> newList) {
 	if (mList) {
 		disconnect(mList.get());
 	}
+	auto oldModel = dynamic_cast<SortFilterList *>(sourceModel());
 	mList = newList;
 	if (mList) {
 		connect(mList.get(), &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged,
@@ -50,8 +51,11 @@ void MagicSearchProxy::setList(QSharedPointer<MagicSearchList> newList) {
 		connect(
 		    mList.get(), &MagicSearchList::friendCreated, this,
 		    [this](int index) {
-			    auto proxyIndex = mapFromSource(sourceModel()->index(index, 0));
-			    emit friendCreated(proxyIndex.row());
+			    auto proxyIndex =
+			        dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(mList->index(index, 0)).row();
+			    // auto proxyIndex = mapFromSource(sourceModel()->index(index, 0)); // OLD (keep for checking new proxy
+			    // behavior)
+			    emit friendCreated(proxyIndex);
 		    },
 		    Qt::QueuedConnection);
 		connect(
@@ -63,11 +67,13 @@ void MagicSearchProxy::setList(QSharedPointer<MagicSearchList> newList) {
 		    },
 		    Qt::QueuedConnection);
 	}
-	setSourceModel(mList.get());
+	auto sortFilterList = new SortFilterList(mList.get(), Qt::AscendingOrder);
+	if (oldModel) sortFilterList->mShowFavoritesOnly = oldModel->mShowFavoritesOnly;
+	setSourceModels(sortFilterList);
 }
 
 int MagicSearchProxy::findFriendIndexByAddress(const QString &address) {
-	auto magicSearchList = qobject_cast<MagicSearchList *>(sourceModel());
+	auto magicSearchList = getListModel<MagicSearchList>();
 	if (magicSearchList)
 		return mapFromSource(magicSearchList->index(magicSearchList->findFriendIndexByAddress(address), 0)).row();
 	else return -1;
@@ -96,12 +102,14 @@ void MagicSearchProxy::setSourceFlags(int flags) {
 }
 
 bool MagicSearchProxy::showFavoritesOnly() const {
-	return mShowFavoritesOnly;
+	return dynamic_cast<SortFilterList *>(sourceModel())->mShowFavoritesOnly;
 }
 
 void MagicSearchProxy::setShowFavoritesOnly(bool show) {
-	if (mShowFavoritesOnly != show) {
-		mShowFavoritesOnly = show;
+	auto list = dynamic_cast<SortFilterList *>(sourceModel());
+	if (list->mShowFavoritesOnly != show) {
+		list->mShowFavoritesOnly = show;
+		list->invalidate();
 		emit showFavoriteOnlyChanged();
 	}
 }
@@ -122,27 +130,21 @@ void MagicSearchProxy::setAggregationFlag(LinphoneEnums::MagicSearchAggregation 
 	}
 }
 
-bool MagicSearchProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-	QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-	auto model = sourceModel()->data(index);
-	auto friendGui = model.value<FriendGui *>();
-	auto friendCore = friendGui->getCore();
+bool MagicSearchProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+	auto friendCore = getItemAtSource<MagicSearchList, FriendCore>(sourceRow);
 	if (friendCore) {
 		return !mShowFavoritesOnly || friendCore->getStarred();
 	}
 	return false;
 }
 
-bool MagicSearchProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto l = sourceModel()->data(left);
-	auto r = sourceModel()->data(right);
+bool MagicSearchProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	auto l = getItemAtSource<MagicSearchList, FriendCore>(sourceLeft.row());
+	auto r = getItemAtSource<MagicSearchList, FriendCore>(sourceRight.row());
 
-	auto lIsFriend = l.value<FriendGui *>();
-	auto rIsFriend = r.value<FriendGui *>();
-
-	if (lIsFriend && rIsFriend) {
-		auto lName = lIsFriend->getCore()->getDisplayName().toLower();
-		auto rName = rIsFriend->getCore()->getDisplayName().toLower();
+	if (l && r) {
+		auto lName = l->getDisplayName().toLower();
+		auto rName = r->getDisplayName().toLower();
 		return lName < rName;
 	}
 	return true;

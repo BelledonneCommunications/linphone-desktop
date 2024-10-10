@@ -35,9 +35,9 @@ public:
 	virtual ~AbstractListProxy() {
 		clearData();
 	}
-
+	
 	virtual int rowCount(const QModelIndex &index = QModelIndex()) const override {
-		return mList.count();
+		return getDisplayCount(mList.size());
 	}
 
 	virtual QHash<int, QByteArray> roleNames() const override {
@@ -45,6 +45,7 @@ public:
 		roles[Qt::DisplayRole] = "$modelData";
 		return roles;
 	}
+	
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override {
 		int row = index.row();
 		if (!index.isValid() || row < 0 || row >= mList.count()) return QVariant();
@@ -59,37 +60,58 @@ public:
 
 	// Add functions
 	virtual void add(T item) {
-		int row = mList.count();
-		beginInsertRows(QModelIndex(), row, row);
-		mList << item;
-		endInsertRows();
-		auto lastIndex = index(mList.size() - 1, 0);
-		emit dataChanged(lastIndex, lastIndex);
-	}
-	virtual void add(QList<T> items) {
-		if (items.size() > 0) {
-			QModelIndex firstIndex = mList.size() > 0 ? index(mList.size() - 1, 0) : index(0, 0);
-			beginInsertRows(QModelIndex(), mList.size(), mList.size() + items.size() - 1);
-			mList << items;
+		int row = rowCount();
+		if (mMaxDisplayItems > 0 && row + 1 >= mMaxDisplayItems) {// New item is not in display range
+			mList << item;
+		}else{
+			beginInsertRows(QModelIndex(), row, row);
+			mList << item;
 			endInsertRows();
 			auto lastIndex = index(mList.size() - 1, 0);
-			emit dataChanged(firstIndex, lastIndex);
+			emit dataChanged(lastIndex, lastIndex);
+		}
+		
+	}
+	virtual void add(QList<T> items) {
+		int count = items.size();
+		if (count > 0 ) {
+			int currentCount = rowCount();
+			int newCount = getDisplayCount(mList.size() + count);
+			if(newCount != currentCount){
+				beginInsertRows(QModelIndex(), currentCount, newCount - 1);
+				mList << items;
+				endInsertRows();
+				QModelIndex firstIndex = currentCount > 0 ? index(currentCount-1, 0) : index(0, 0);
+				auto lastIndex = index(newCount - 1, 0);
+				emit dataChanged(firstIndex, lastIndex);	
+			}else
+				mList << items;
 		}
 	}
 
 	virtual void prepend(T item) {
+		int currentCount = rowCount();
 		beginInsertRows(QModelIndex(), 0, 0);
 		mList.prepend(item);
 		endInsertRows();
+		if(mMaxDisplayItems > 0 && currentCount + 1 >= mMaxDisplayItems){
+			setMaxDisplayItems(mMaxDisplayItems+1);
+		}
 		emit dataChanged(index(0), index(0));
 	}
 
 	virtual void prepend(QList<T> items) {
-		if (items.size() > 0) {
+		int count = items.size();
+		if (count > 0) {
+			int currentCount = rowCount();
+			int newCount = currentCount + count;
 			beginInsertRows(QModelIndex(), 0, items.size() - 1);
 			items << mList;
 			mList = items;
 			endInsertRows();
+			if(mMaxDisplayItems > 0 && newCount >= mMaxDisplayItems){
+				setMaxDisplayItems(newCount);
+			}
 			emit dataChanged(index(0), index(items.size() - 1));
 		}
 	}
@@ -111,6 +133,7 @@ public:
 
 	virtual void clearData() override {
 		mList.clear();
+		setMaxDisplayItems(getInitialDisplayItems());
 	}
 
 	virtual void resetData() override {
@@ -118,6 +141,16 @@ public:
 		clearData();
 		endResetModel();
 	}
+/*
+	void displayMore() {
+		int oldCount = rowCount();
+		int newCount = getDisplayCount(oldCount + mList.size(), mMaxDisplayItems + mDisplayItemsStep);
+		if (newCount != oldCount) {
+			setMaxDisplayItems(newCount);
+			beginInsertRows(QModelIndex(), oldCount, newCount - 1);
+			endInsertRows();
+		}
+	}*/
 
 protected:
 	QList<T> mList;

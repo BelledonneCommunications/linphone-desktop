@@ -19,10 +19,15 @@
  */
 
 #include "SortFilterProxy.hpp"
-
-SortFilterProxy::SortFilterProxy(QObject *parent) : QSortFilterProxyModel(parent) {
+#include "Proxy.hpp"
+SortFilterProxy::SortFilterProxy(QAbstractItemModel *list) : QSortFilterProxyModel(list) {
 	connect(this, &SortFilterProxy::rowsInserted, this, &SortFilterProxy::countChanged);
 	connect(this, &SortFilterProxy::rowsRemoved, this, &SortFilterProxy::countChanged);
+	setSourceModel(list);
+}
+
+SortFilterProxy::SortFilterProxy(QAbstractItemModel *list, Qt::SortOrder order) : SortFilterProxy(list) {
+	sort(0, order);
 }
 
 SortFilterProxy::~SortFilterProxy() {
@@ -37,12 +42,15 @@ void SortFilterProxy::deleteSourceModel() {
 	}
 }
 
-int SortFilterProxy::getCount() const {
-	return rowCount();
+void SortFilterProxy::setSourceModel(QAbstractItemModel *model) {
+	auto listModel = dynamic_cast<Proxy *>(model);
+	auto oldSourceModel = sourceModel();
+	if (oldSourceModel) disconnect(oldSourceModel);
+	QSortFilterProxyModel::setSourceModel(model);
 }
 
-int SortFilterProxy::getFilterType() const {
-	return mFilterType;
+int SortFilterProxy::getCount() const {
+	return rowCount();
 }
 
 QVariant SortFilterProxy::getAt(const int &atIndex) const {
@@ -50,8 +58,8 @@ QVariant SortFilterProxy::getAt(const int &atIndex) const {
 	return sourceModel()->data(mapToSource(modelIndex), 0);
 }
 
-void SortFilterProxy::setSortOrder(const Qt::SortOrder &order) {
-	sort(0, order);
+int SortFilterProxy::getFilterType() const {
+	return mFilterType;
 }
 
 void SortFilterProxy::setFilterType(int filterType) {
@@ -60,6 +68,22 @@ void SortFilterProxy::setFilterType(int filterType) {
 		emit filterTypeChanged(filterType);
 		invalidate();
 	}
+}
+
+QString SortFilterProxy::getFilterText() const {
+	return mFilterText;
+}
+
+void SortFilterProxy::setFilterText(const QString &filter) {
+	if (mFilterText != filter) {
+		mFilterText = filter;
+		invalidateFilter();
+		emit filterTextChanged();
+	}
+}
+
+void SortFilterProxy::setSortOrder(const Qt::SortOrder &order) {
+	sort(0, order);
 }
 
 void SortFilterProxy::remove(int index, int count) {

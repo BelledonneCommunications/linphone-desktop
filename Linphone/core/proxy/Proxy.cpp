@@ -24,13 +24,57 @@ Proxy::Proxy(QObject *parent) : QAbstractListModel(parent) {
 	connect(this, &Proxy::rowsInserted, this, &Proxy::countChanged);
 	connect(this, &Proxy::rowsRemoved, this, &Proxy::countChanged);
 }
+
 int Proxy::getCount() const {
 	return rowCount();
 }
+
+int Proxy::getDisplayCount(int listCount) const {
+	return mMaxDisplayItems >= 0 ? qMin(listCount, mMaxDisplayItems) : listCount;
+}
+
 bool Proxy::remove(QObject *itemToRemove) {
 	return false;
 }
+
 void Proxy::clearData() {
 }
+
 void Proxy::resetData() {
+}
+
+int Proxy::getInitialDisplayItems() const {
+	return mInitialDisplayItems;
+}
+
+void Proxy::setInitialDisplayItems(int initialItems) {
+	if (mInitialDisplayItems != initialItems) {
+		mInitialDisplayItems = initialItems;
+		if(getMaxDisplayItems() == -1)
+			setMaxDisplayItems(initialItems);
+		emit initialDisplayItemsChanged();
+	}
+}
+
+int Proxy::getMaxDisplayItems() const {
+	return mMaxDisplayItems;
+}
+void Proxy::setMaxDisplayItems(int maxItems) {
+	if (mMaxDisplayItems != maxItems) {
+		mMaxDisplayItems = maxItems;
+		if( getInitialDisplayItems() == -1)
+			setInitialDisplayItems(maxItems);
+		emit maxDisplayItemsChanged();
+	}
+}
+
+int Proxy::getDisplayItemsStep() const {
+	return mDisplayItemsStep;
+}
+
+void Proxy::setDisplayItemsStep(int step) {
+	if (mDisplayItemsStep != step) {
+		mDisplayItemsStep = step;
+		emit displayItemsStepChanged();
+	}
 }

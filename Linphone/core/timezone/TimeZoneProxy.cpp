@@ -24,19 +24,20 @@
 
 // -----------------------------------------------------------------------------
 
-TimeZoneProxy::TimeZoneProxy(QObject *parent) : SortFilterProxy(parent) {
-	mDeleteSourceModel = true;
+TimeZoneProxy::TimeZoneProxy(QObject *parent) : LimitProxy(parent) {
 	mList = TimeZoneList::create();
-	setSourceModel(mList.get());
-	sort(0);
+	setSourceModels(new SortFilterList(mList.get(), Qt::AscendingOrder));
 }
 
 // -----------------------------------------------------------------------------
 
-bool TimeZoneProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto test = sourceModel()->data(left);
-	auto l = getItemAt<TimeZoneList, TimeZoneModel>(left.row());
-	auto r = getItemAt<TimeZoneList, TimeZoneModel>(right.row());
+bool TimeZoneProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+	return true;
+}
+
+bool TimeZoneProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	auto l = getItemAtSource<TimeZoneList, TimeZoneModel>(sourceLeft.row());
+	auto r = getItemAtSource<TimeZoneList, TimeZoneModel>(sourceRight.row());
 	if (!l || !r) return true;
 	auto timeA = l->getStandardTimeOffset() / 3600;
 	auto timeB = r->getStandardTimeOffset() / 3600;
@@ -47,5 +48,5 @@ bool TimeZoneProxy::lessThan(const QModelIndex &left, const QModelIndex &right) 
 int TimeZoneProxy::getIndex(TimeZoneModel *model) const {
 	int index = 0;
 	index = mList->get(model ? model->getTimeZone() : QTimeZone::systemTimeZone());
-	return mapFromSource(mList->index(index, 0)).row();
+	return dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(mList->index(index, 0)).row();
 }

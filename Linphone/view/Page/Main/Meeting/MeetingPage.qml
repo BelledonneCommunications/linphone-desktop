@@ -188,7 +188,6 @@ AbstractMainPage {
 					Layout.topMargin: 38 * DefaultStyle.dp - 24 * DefaultStyle.dp
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					visible: count != 0
 					hoverEnabled: mainItem.leftPanelEnabled
 					highlightFollowsCurrentItem: true
 					preferredHighlightBegin: height/2 - 10

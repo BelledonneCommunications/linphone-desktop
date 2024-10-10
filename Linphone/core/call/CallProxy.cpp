@@ -25,34 +25,21 @@
 
 DEFINE_ABSTRACT_OBJECT(CallProxy)
 
-CallProxy::CallProxy(QObject *parent) : SortFilterProxy(parent) {
+CallProxy::CallProxy(QObject *parent) : LimitProxy(parent) {
 	setSourceModel(App::getInstance()->getCallList().get());
-	sort(0);
 }
 
 CallProxy::~CallProxy() {
-	setSourceModel(nullptr);
-}
-
-QString CallProxy::getFilterText() const {
-	return mFilterText;
-}
-
-void CallProxy::setFilterText(const QString &filter) {
-	if (mFilterText != filter) {
-		mFilterText = filter;
-		invalidate();
-		emit filterTextChanged();
-	}
 }
 
 CallGui *CallProxy::getCurrentCall() {
-	if (!mCurrentCall) mCurrentCall = dynamic_cast<CallList *>(sourceModel())->getCurrentCall();
+	auto model = getListModel<CallList>();
+	if (!mCurrentCall && model) mCurrentCall = model->getCurrentCall();
 	return mCurrentCall;
 }
 
 void CallProxy::setCurrentCall(CallGui *call) {
-	dynamic_cast<CallList *>(sourceModel())->setCurrentCall(call->mCore);
+	getListModel<CallList>()->setCurrentCall(call->mCore);
 }
 
 // Reset the default account to let UI build its new object if needed.
@@ -62,11 +49,11 @@ void CallProxy::resetCurrentCall() {
 }
 
 bool CallProxy::getHaveCall() const {
-	return dynamic_cast<CallList *>(sourceModel())->getHaveCall();
+	return getListModel<CallList>()->getHaveCall();
 }
 
 void CallProxy::setSourceModel(QAbstractItemModel *model) {
-	auto oldCallList = dynamic_cast<CallList *>(sourceModel());
+	auto oldCallList = getListModel<CallList>();
 	if (oldCallList) {
 		disconnect(oldCallList);
 	}
@@ -76,27 +63,26 @@ void CallProxy::setSourceModel(QAbstractItemModel *model) {
 		connect(newCallList, &CallList::haveCallChanged, this, &CallProxy::haveCallChanged, Qt::QueuedConnection);
 		connect(this, &CallProxy::lMergeAll, newCallList, &CallList::lMergeAll);
 	}
-	QSortFilterProxyModel::setSourceModel(model);
+	setSourceModels(new SortFilterList(model, Qt::AscendingOrder));
 }
 
-bool CallProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+bool CallProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	bool show = (mFilterText.isEmpty() || mFilterText == "*");
 	if (!show) {
 		QRegularExpression search(QRegularExpression::escape(mFilterText),
 		                          QRegularExpression::CaseInsensitiveOption |
 		                              QRegularExpression::UseUnicodePropertiesOption);
-		QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-		auto model = sourceModel()->data(index);
-		auto call = model.value<CallGui *>();
-		show = call->getCore()->getPeerAddress().contains(search);
+		auto call = qobject_cast<CallList *>(sourceModel())->getAt<CallCore>(sourceRow);
+
+		show = call->getPeerAddress().contains(search);
 	}
 
 	return show;
 }
 
-bool CallProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto l = sourceModel()->data(left);
-	auto r = sourceModel()->data(right);
+bool CallProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	auto l = getItemAtSource<CallList, CallCore>(sourceLeft.row());
+	auto r = getItemAtSource<CallList, CallCore>(sourceRight.row());
 
-	return l.value<CallGui *>()->getCore()->getPeerAddress() < r.value<CallGui *>()->getCore()->getPeerAddress();
+	return l->getPeerAddress() < r->getPeerAddress();
 }

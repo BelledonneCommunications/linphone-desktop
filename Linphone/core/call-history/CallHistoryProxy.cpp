@@ -24,41 +24,26 @@
 
 DEFINE_ABSTRACT_OBJECT(CallHistoryProxy)
 
-CallHistoryProxy::CallHistoryProxy(QObject *parent) : SortFilterProxy(parent) {
+CallHistoryProxy::CallHistoryProxy(QObject *parent) : LimitProxy(parent) {
 	mHistoryList = CallHistoryList::create();
-	setSourceModel(mHistoryList.get());
-	// sort(0);
+	setSourceModels(new SortFilterList(mHistoryList.get(), Qt::DescendingOrder));
 }
 
 CallHistoryProxy::~CallHistoryProxy() {
-	setSourceModel(nullptr);
-}
-
-QString CallHistoryProxy::getFilterText() const {
-	return mFilterText;
-}
-
-void CallHistoryProxy::setFilterText(const QString &filter) {
-	if (mFilterText != filter) {
-		mFilterText = filter;
-		invalidate();
-		emit filterTextChanged();
-	}
 }
 
 void CallHistoryProxy::removeAllEntries() {
-	static_cast<CallHistoryList *>(sourceModel())->removeAllEntries();
+	mHistoryList->removeAllEntries();
 }
 
 void CallHistoryProxy::removeEntriesWithFilter() {
-	std::list<QSharedPointer<CallHistoryCore>> itemList(rowCount());
+	QList<QSharedPointer<CallHistoryCore>> itemList(rowCount());
 	for (auto i = rowCount() - 1; i >= 0; --i) {
-		auto item = getItemAt<CallHistoryList, CallHistoryCore>(i);
-		itemList.emplace_back(item);
+		auto item = getItemAt<SortFilterList, CallHistoryList, CallHistoryCore>(i);
+		itemList[i] = item;
 	}
 	for (auto item : itemList) {
 		mHistoryList->ListProxy::remove(item.get());
-		if (item) item->remove();
 	}
 }
 
@@ -66,8 +51,12 @@ void CallHistoryProxy::updateView() {
 	mHistoryList->lUpdate();
 }
 
-bool CallHistoryProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+//------------------------------------------------------------------------------------------
+
+bool CallHistoryProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	bool show = (mFilterText.isEmpty() || mFilterText == "*");
+	auto sortProxy = dynamic_cast<SortFilterList *>(sourceModel());
+
 	if (!show) {
 		QRegularExpression search(QRegularExpression::escape(mFilterText),
 		                          QRegularExpression::CaseInsensitiveOption |
@@ -76,13 +65,12 @@ bool CallHistoryProxy::filterAcceptsRow(int sourceRow, const QModelIndex &source
 		show =
 		    callLog->mIsConference ? callLog->mDisplayName.contains(search) : callLog->mRemoteAddress.contains(search);
 	}
-
 	return show;
 }
 
-bool CallHistoryProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto l = getItemAt<CallHistoryList, CallHistoryCore>(left.row());
-	auto r = getItemAt<CallHistoryList, CallHistoryCore>(right.row());
+bool CallHistoryProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	auto l = getItemAtSource<CallHistoryList, CallHistoryCore>(sourceLeft.row());
+	auto r = getItemAtSource<CallHistoryList, CallHistoryCore>(sourceRight.row());
 
 	return l->mDate < r->mDate;
 }

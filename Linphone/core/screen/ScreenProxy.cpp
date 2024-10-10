@@ -24,18 +24,28 @@
 #include "ScreenProxy.hpp"
 // =============================================================================
 
-ScreenProxy::ScreenProxy(QObject *parent) : SortFilterProxy(parent) {
-	setSourceModel(new ScreenList(this));
-	sort(0);
+ScreenProxy::ScreenProxy(QObject *parent) : LimitProxy(parent) {
+	setSourceModels(new SortFilterList(new ScreenList(this), Qt::AscendingOrder));
 }
 ScreenList::Mode ScreenProxy::getMode() const {
-	return dynamic_cast<ScreenList *>(sourceModel())->getMode();
+	return getListModel<ScreenList>()->getMode();
 }
 
 void ScreenProxy::setMode(ScreenList::Mode data) {
-	dynamic_cast<ScreenList *>(sourceModel())->setMode(data);
+	getListModel<ScreenList>()->setMode(data);
 }
 
 void ScreenProxy::update() {
-	dynamic_cast<ScreenList *>(sourceModel())->update();
+	getListModel<ScreenList>()->update();
+}
+
+bool ScreenProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+	return true;
+}
+
+bool ScreenProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	auto l = qobject_cast<ScreenList *>(sourceModel())->getAt(sourceLeft.row());
+	auto r = qobject_cast<ScreenList *>(sourceModel())->getAt(sourceRight.row());
+
+	return l["screenIndex"].toInt() < r["screenIndex"].toInt();
 }

@@ -44,7 +44,7 @@ void FPSCounter::recalculateFPS() {
 
 	int currentCount = _times.length();
 	_currentFPS = (currentCount + _cacheCount) / 2;
-	lDebug() << _currentFPS;
+	// lDebug() << _currentFPS;
 
 	if (currentCount != _cacheCount) fpsChanged(_currentFPS);
 
@@ -58,11 +58,13 @@ int FPSCounter::fps() const {
 void FPSCounter::paint(QPainter *painter) {
 	recalculateFPS();
 	// lDebug()<< __FUNCTION__;
+	/*
 	QBrush brush(Qt::yellow);
 
 	painter->setBrush(brush);
 	painter->setPen(Qt::NoPen);
 	painter->setRenderHint(QPainter::Antialiasing);
 	painter->drawRoundedRect(0, 0, boundingRect().width(), boundingRect().height(), 0, 0);
+*/
 	update();
 }

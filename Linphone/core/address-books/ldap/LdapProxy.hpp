@@ -21,24 +21,20 @@
 #ifndef LDAP_PROXY_H_
 #define LDAP_PROXY_H_
 
-#include "../../proxy/SortFilterProxy.hpp"
-#include "LdapGui.hpp"
+#include "../../proxy/LimitProxy.hpp"
 #include "LdapList.hpp"
 #include "tool/AbstractObject.hpp"
 
 // =============================================================================
 
-class LdapProxy : public SortFilterProxy, public AbstractObject {
+class LdapProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
 
-	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
-
 public:
+	DECLARE_SORTFILTER_CLASS()
+
 	LdapProxy(QObject *parent = Q_NULLPTR);
 	~LdapProxy();
-
-	QString getFilterText() const;
-	void setFilterText(const QString &filter);
 
 	Q_INVOKABLE void removeAllEntries();
 	Q_INVOKABLE void removeEntriesWithFilter();
@@ -48,10 +44,6 @@ signals:
 	void filterTextChanged();
 
 protected:
-	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
-
-	QString mFilterText;
 	QSharedPointer<LdapList> mLdapList;
 
 	DECLARE_ABSTRACT_OBJECT

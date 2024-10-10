@@ -38,13 +38,15 @@ void cleanStream() {
 }
 
 int main(int argc, char *argv[]) {
-#if defined _WIN32
-	// log in console only if launched from console
-	if (AttachConsole(ATTACH_PARENT_PROCESS)) {
-		freopen_s(&gStream, "CONOUT$", "w", stdout);
-		freopen_s(&gStream, "CONOUT$", "w", stderr);
-	}
-#endif
+	/*
+	#if defined _WIN32
+	    // log in console only if launched from console
+	    if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+	        freopen_s(&gStream, "CONOUT$", "w", stdout);
+	        freopen_s(&gStream, "CONOUT$", "w", stderr);
+	    }
+	#endif
+	*/
 	// Useful to share camera on Fullscreen (other context) or multiscreens
 	QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 	// Disable QML cache. Avoid malformed cache.

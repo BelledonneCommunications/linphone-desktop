@@ -21,7 +21,7 @@
 #ifndef PARTICIPANT_PROXY_H_
 #define PARTICIPANT_PROXY_H_
 
-#include "../proxy/SortFilterProxy.hpp"
+#include "../proxy/LimitProxy.hpp"
 #include "core/call/CallGui.hpp"
 #include "tool/AbstractObject.hpp"
 
@@ -36,21 +36,20 @@ class ConferenceInfoModel;
 
 class QWindow;
 
-class ParticipantProxy : public SortFilterProxy, public AbstractObject {
+class ParticipantProxy : public LimitProxy, public AbstractObject {
 
 	Q_OBJECT
 	Q_PROPERTY(CallGui *currentCall READ getCurrentCall WRITE setCurrentCall NOTIFY currentCallChanged)
 	Q_PROPERTY(bool showMe READ getShowMe WRITE setShowMe NOTIFY showMeChanged)
 
 public:
+	DECLARE_SORTFILTER_CLASS(bool mShowMe;)
+
 	ParticipantProxy(QObject *parent = Q_NULLPTR);
 	~ParticipantProxy();
 
 	CallGui *getCurrentCall() const;
 	void setCurrentCall(CallGui *callGui);
-
-	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-	bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 	bool getShowMe() const;
 	void setShowMe(const bool &show);
@@ -71,7 +70,6 @@ signals:
 	void currentCallChanged();
 
 private:
-	bool mShowMe = true;
 	CallGui *mCurrentCall = nullptr;
 	QSharedPointer<ParticipantList> mParticipants;
 	DECLARE_ABSTRACT_OBJECT

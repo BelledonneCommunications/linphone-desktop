@@ -19,55 +19,42 @@
  */
 
 #include "LdapProxy.hpp"
-#include "LdapGui.hpp"
+#include "LdapCore.hpp"
 #include "LdapList.hpp"
 
 DEFINE_ABSTRACT_OBJECT(LdapProxy)
 
-LdapProxy::LdapProxy(QObject *parent) : SortFilterProxy(parent) {
+LdapProxy::LdapProxy(QObject *parent) : LimitProxy(parent) {
 	mLdapList = LdapList::create();
-	setSourceModel(mLdapList.get());
+	setSourceModels(new SortFilterList(mLdapList.get(), Qt::AscendingOrder));
 }
 
 LdapProxy::~LdapProxy() {
 	setSourceModel(nullptr);
 }
 
-QString LdapProxy::getFilterText() const {
-	return mFilterText;
-}
-
-void LdapProxy::setFilterText(const QString &filter) {
-	if (mFilterText != filter) {
-		mFilterText = filter;
-		invalidate();
-		emit filterTextChanged();
-	}
-}
-
 void LdapProxy::removeAllEntries() {
-	static_cast<LdapList *>(sourceModel())->removeAllEntries();
+	getListModel<LdapList>()->removeAllEntries();
 }
 
 void LdapProxy::removeEntriesWithFilter() {
-	std::list<QSharedPointer<LdapCore>> itemList(rowCount());
+	QList<QSharedPointer<LdapCore>> itemList(rowCount());
 	for (auto i = rowCount() - 1; i >= 0; --i) {
-		auto item = getItemAt<LdapList, LdapCore>(i);
-		itemList.emplace_back(item);
+		auto item = getItemAt<SortFilterList, LdapList, LdapCore>(i);
+		itemList[i] = item;
 	}
 	for (auto item : itemList) {
 		mLdapList->ListProxy::remove(item.get());
-		if (item) item->remove();
 	}
 }
 
-bool LdapProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+bool LdapProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	return true;
 }
 
-bool LdapProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto l = getItemAt<LdapList, LdapCore>(left.row());
-	auto r = getItemAt<LdapList, LdapCore>(right.row());
+bool LdapProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	auto l = getItemAtSource<LdapList, LdapCore>(sourceLeft.row());
+	auto r = getItemAtSource<LdapList, LdapCore>(sourceRight.row());
 
 	return l->mSipDomain < r->mSipDomain;
 }

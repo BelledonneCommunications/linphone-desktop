@@ -30,15 +30,35 @@ class Proxy : public QAbstractListModel {
 public:
 	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 	Q_PROPERTY(int length READ getCount NOTIFY countChanged)
+	Q_PROPERTY(int initialDisplayItems READ getInitialDisplayItems WRITE setInitialDisplayItems NOTIFY initialDisplayItemsChanged)
+	Q_PROPERTY(int maxDisplayItems READ getMaxDisplayItems WRITE setMaxDisplayItems NOTIFY maxDisplayItemsChanged)
+	Q_PROPERTY(int displayItemsStep READ getDisplayItemsStep WRITE setDisplayItemsStep NOTIFY displayItemsStepChanged)
 
 	Proxy(QObject *parent = nullptr);
 	Q_INVOKABLE virtual int getCount() const;
+	int getDisplayCount(int listCount) const;
 	Q_INVOKABLE virtual bool remove(QObject *itemToRemove);
 	Q_INVOKABLE virtual void clearData();
 	Q_INVOKABLE virtual void resetData();
+	
+	int getInitialDisplayItems() const;
+	void setInitialDisplayItems(int initialItems);
+	
+	int getMaxDisplayItems() const;
+	void setMaxDisplayItems(int maxItems);
+
+	int getDisplayItemsStep() const;
+	void setDisplayItemsStep(int step);
+	
+	int mInitialDisplayItems = -1;
+	int mMaxDisplayItems = -1;
+	int mDisplayItemsStep = -1;
 
 signals:
 	void countChanged();
+	void initialDisplayItemsChanged();
+	void maxDisplayItemsChanged();
+	void displayItemsStepChanged();
 };
 
 #endif

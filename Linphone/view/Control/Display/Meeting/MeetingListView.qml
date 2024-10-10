@@ -16,8 +16,12 @@ ListView {
 	property var delegateButtons
 	property ConferenceInfoGui selectedConference: model && currentIndex != -1 ? model.getAt(currentIndex) : null
 	
+	signal conferenceSelected(var contact)
+	
 	spacing: 8 * DefaultStyle.dp
 	currentIndex: confInfoProxy.currentDateIndex
+	// using highlight doesn't center, take time before moving and don't work for not visible item (like not loaded)
+	highlightFollowsCurrentItem: false
 
 	onCountChanged: selectedConference = model && currentIndex != -1 && currentIndex < model.count ? model.getAt(currentIndex) : null
 	onCurrentIndexChanged: {
@@ -27,20 +31,20 @@ ListView {
 		mainItem.positionViewAtIndex(currentIndex, ListView.Center)// First approximative move
 		delayMove.restart()	// Move to exact position after load.
 	}
+	onAtYEndChanged: if(atYEnd) confInfoProxy.displayMore()
+	
 	Timer{
 		id: delayMove
 		interval: 60
 		onTriggered: mainItem.positionViewAtIndex(currentIndex, ListView.Center)
 	}
-	// using highlight doesn't center, take time before moving and don't work for not visible item (like not loaded)
-	highlightFollowsCurrentItem: false
-
-	signal conferenceSelected(var contact)
-
+	
 	model: ConferenceInfoProxy {
 		id: confInfoProxy
-		searchText: searchBarText
+		filterText: searchBarText
 		filterType: ConferenceInfoProxy.None
+		initialDisplayItems: mainItem.height / (63 * DefaultStyle.dp) + 5
+		displayItemsStep: initialDisplayItems/2
 	}
 
 	section {

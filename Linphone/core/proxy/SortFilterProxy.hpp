@@ -22,37 +22,62 @@
 #define SORT_FILTER_PROXY_H_
 
 #include <QSortFilterProxyModel>
+#define DECLARE_SORTFILTER_CLASS(...)                                                                                  \
+	class SortFilterList : public SortFilterProxy {                                                                    \
+	public:                                                                                                            \
+		SortFilterList(QAbstractItemModel *list) : SortFilterProxy(list) {                                             \
+		}                                                                                                              \
+		SortFilterList(QAbstractItemModel *list, Qt::SortOrder order) : SortFilterProxy(list, order) {                 \
+		}                                                                                                              \
+		virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;                  \
+		virtual bool lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const override;           \
+		__VA_ARGS__                                                                                                    \
+	};
 
 class SortFilterProxy : public QSortFilterProxyModel {
 	Q_OBJECT
 public:
 	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 	Q_PROPERTY(int filterType READ getFilterType WRITE setFilterType NOTIFY filterTypeChanged)
+	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
 
-	SortFilterProxy(QObject *parent = nullptr);
+	SortFilterProxy(QAbstractItemModel *parent);
+	SortFilterProxy(QAbstractItemModel *parent, Qt::SortOrder order);
 	virtual ~SortFilterProxy();
 	virtual void deleteSourceModel();
+	virtual void setSourceModel(QAbstractItemModel *sourceModel) override;
 
 	virtual int getCount() const;
-	virtual int getFilterType() const;
+
 	Q_INVOKABLE QVariant getAt(const int &index) const;
 	template <class A, class B>
 	QSharedPointer<B> getItemAt(const int &atIndex) const {
 		auto modelIndex = index(atIndex, 0);
 		return qobject_cast<A *>(sourceModel())->template getAt<B>(mapToSource(modelIndex).row());
 	}
+	template <class A, class B>
+	QSharedPointer<B> getItemAtSource(const int &atIndex) const {
+		return qobject_cast<A *>(sourceModel())->template getAt<B>(atIndex);
+	}
+
+	virtual int getFilterType() const;
+	virtual void setFilterType(int filterType);
+
 	Q_INVOKABLE void setSortOrder(const Qt::SortOrder &order);
 
-	virtual void setFilterType(int filterType);
+	QString getFilterText() const;
+	void setFilterText(const QString &filter);
 
 	Q_INVOKABLE void remove(int index, int count = 1);
 
 signals:
 	void countChanged();
 	void filterTypeChanged(int filterType);
+	void filterTextChanged();
 
 protected:
 	int mFilterType = 0;
+	QString mFilterText;
 	bool mDeleteSourceModel = false;
 };
 

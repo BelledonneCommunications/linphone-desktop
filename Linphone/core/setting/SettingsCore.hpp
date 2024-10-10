@@ -148,6 +148,7 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(bool, disableBroadcastFeature, DisableBroadcastFeature)
 	DECLARE_CORE_GETSET_MEMBER(bool, hideSettings, HideSettings)
 	DECLARE_CORE_GETSET_MEMBER(bool, hideAccountSettings, HideAccountSettings)
+	DECLARE_CORE_GETSET_MEMBER(bool, hideFps, HideFps)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableCallRecordings, DisableCallRecordings)
 	DECLARE_CORE_GETSET_MEMBER(bool, assistantHideCreateAccount, AssistantHideCreateAccount)
 	DECLARE_CORE_GETSET_MEMBER(bool, assistantDisableQrCode, AssistantDisableQrCode)
