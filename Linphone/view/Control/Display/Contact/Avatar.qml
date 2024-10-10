@@ -16,15 +16,19 @@ Loader{
 	property FriendGui contact: null
 	property CallGui call: null
 	property string _address: account
-							  ? account.core?.identityAddress || ""
-							  : call
-								? call.core.peerAddress
-								: contact
-								  ? contact.core.defaultAddress
-								  : ''
+		? account.core?.identityAddress || ""
+		: call
+			? call.core.remoteAddress
+			: contact
+				? contact.core.defaultAddress
+				: ''
 	readonly property string address: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_address) : _address
 	property var displayNameObj: UtilsCpp.getDisplayName(_address)
-	property string displayNameVal: displayNameObj ? displayNameObj.value : ""
+	property string displayNameVal: contact
+		? contact.core.displayName
+		: displayNameObj
+			? displayNameObj.value
+			: ""
 	property bool haveAvatar: (account && account.core?.pictureUri || false)
 							  || (contact && contact.core.pictureUri)
 							  || computedAvatarUri.length != 0

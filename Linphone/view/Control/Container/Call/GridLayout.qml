@@ -46,7 +46,7 @@ Mosaic {
 				displayAll: false
 				displayPresence: false
 				participantDevice: avatarCell.currentDevice
-				Component.onCompleted: console.log(qmlName + " is " +(call ? call.core.peerAddress : currentDevice ? currentDevice.core.address : 'addr_NotDefined'))
+				Component.onCompleted: console.log(qmlName + " is " +(call ? call.core.remoteAddress : currentDevice ? currentDevice.core.address : 'addr_NotDefined'))
 			}
 		}
 	}

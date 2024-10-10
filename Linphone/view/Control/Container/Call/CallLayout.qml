@@ -50,7 +50,7 @@ Item {
 						? qsTr("Vous avez terminé l'appel") 
 						: qsTr("Votre correspondant a terminé l'appel")
 					: call.core.lastErrorMessage
-			: call.core.lastErrorMessage
+			: call && call.core.lastErrorMessage || ""
 		color: DefaultStyle.grey_0
 		font {
 			pixelSize: 22 * DefaultStyle.dp

@@ -50,7 +50,7 @@ Window {
 					Text{
 						id: addressText
 						anchors.fill: parent
-						text: modelData.core.peerAddress
+						text: modelData.core.remoteAddress
 						onTextChanged: console.log(addressText.text)
 						Component.onCompleted: console.log(addressText.text)
 					}

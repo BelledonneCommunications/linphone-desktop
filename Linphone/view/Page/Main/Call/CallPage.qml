@@ -283,6 +283,8 @@ AbstractMainPage {
 												spacing: 10 * DefaultStyle.dp
 												Avatar {
 													id: historyAvatar
+													property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.remoteAddress)
+													contact: contactObj && contactObj.value || null
 													_address: modelData.core.remoteAddress
 													width: 45 * DefaultStyle.dp
 													height: 45 * DefaultStyle.dp
@@ -662,7 +664,6 @@ AbstractMainPage {
 				contact: contactObj && contactObj.value || null
 				conferenceInfo: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.conferenceInfo || null
 				specificAddress: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
-				contactName: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.displayName : ""
 				
 				buttonContent: PopupButton {
 					id: detailOptions

@@ -144,8 +144,8 @@ bool ParticipantProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 }
 
 bool ParticipantProxy::SortFilterList::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	const ParticipantCore *a = sourceModel()->data(left).value<ParticipantCore *>();
-	const ParticipantCore *b = sourceModel()->data(right).value<ParticipantCore *>();
+	auto l = getItemAtSource<ParticipantList, ParticipantCore>(left.row());
+	auto r = getItemAtSource<ParticipantList, ParticipantCore>(right.row());
 
-	return a->getCreationTime() > b->getCreationTime() || b->isMe();
+	return l->getCreationTime() > r->getCreationTime() || r->isMe();
 }

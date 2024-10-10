@@ -30,15 +30,28 @@ Item {
 		: previewEnabled
 			? callState === LinphoneEnums.CallState.Paused
 			: callState === LinphoneEnums.CallState.PausedByRemote
-	property var peerAddressObj: previewEnabled && (call || account)
-									? UtilsCpp.getDisplayName(account ? account.core.identityAddress : call.core.localAddress)
-									: participantDevice && participantDevice.core
-										? UtilsCpp.getDisplayName(participantDevice.core.address)
-										: !previewEnabled && call && call.core
-											? UtilsCpp.getDisplayName(call.core.peerAddress)
-											: null
-											
-	property string peerAddress:peerAddressObj ? peerAddressObj.value : ""
+
+	property string remoteAddress: account 
+		? account.core.identityAddress 
+		: participantDevice
+			? participantDevice.core.address
+			: call
+				? call.core.remoteAddress
+				: ""
+	property var localNameObj: previewEnabled && call
+		? UtilsCpp.getDisplayName(call.core.localAddress)
+		: null
+	property string localName: localNameObj ? localNameObj.value : ""
+	property string displayName: account
+		? account.core.displayName
+		: participantDevice
+			? participantDevice.core.displayName
+			: call
+				? previewEnabled
+					? localName
+					: call.core.remoteName
+				: ""
+
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null
 	property bool videoEnabled: (previewEnabled && call && call.core.localVideoEnabled)
 									|| (participantDevice && participantDevice.core.videoEnabled)
@@ -87,7 +100,7 @@ Item {
 				}
 				Text {
 					id: waitingTime
-					property var isMeObj: UtilsCpp.isMe(mainItem.peerAddress) 
+					property var isMeObj: UtilsCpp.isMe(mainItem.remoteAddress) 
 					visible: isMeObj ? !isMeObj.value : false
 					property int seconds
 					text: UtilsCpp.formatElapsedTime(seconds)
@@ -118,7 +131,7 @@ Item {
 					visible: !joiningView.visible
 					account: mainItem.account
 					call: !mainItem.previewEnabled ? mainItem.call : null
-					_address: mainItem.peerAddress
+					displayNameVal: mainItem.displayName
 				}
 				ColumnLayout{
 					id: joiningView
@@ -176,7 +189,7 @@ Item {
 				Text {
 					Layout.fillWidth: true
 					horizontalAlignment: Text.AlignHCenter
-					text: mainItem.peerAddress
+					text: mainItem.displayName
 					color: DefaultStyle.grey_0
 					font {
 						pixelSize: 22 * DefaultStyle.dp
@@ -187,7 +200,7 @@ Item {
 				Text {
 					Layout.fillWidth: true
 					horizontalAlignment: Text.AlignHCenter
-					property string _text: mainItem.call && mainItem.call.core.peerAddress
+					property string _text: mainItem.call && mainItem.call.core.remoteAddress
 					text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
 					color: DefaultStyle.grey_0
 					font {
@@ -258,8 +271,8 @@ Item {
 			anchors.leftMargin: 10 * DefaultStyle.dp
 			anchors.bottomMargin: 10 * DefaultStyle.dp
 			width: implicitWidth
-			property string _text: mainItem.peerAddress != ''
-				? mainItem.peerAddress
+			property string _text: mainItem.displayName != ''
+				? mainItem.displayName
 				: mainItem.account && mainItem.identityAddress
 					? mainItem.identityAddress.value
 					: ""

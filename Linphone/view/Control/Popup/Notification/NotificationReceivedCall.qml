@@ -48,7 +48,7 @@ Notification {
 				}
 				ColumnLayout {
 					Text {
-						property var remoteAddress: UtilsCpp.getDisplayName(call.core.peerAddress)
+						property var remoteAddress: UtilsCpp.getDisplayName(call.core.remoteAddress)
 						text: remoteAddress ? remoteAddress.value : ""
 						color: DefaultStyle.grey_600
 						font {
@@ -67,7 +67,7 @@ Notification {
 						Text {
 							Layout.fillWidth: true
 							property var localAddress: UtilsCpp.getDisplayName(call.core.localAddress)
-							text: qsTr("Appel entrant")//.arg(localAddress ? qsTr(" pour %1").arg(localAddress.value) : "") //call.core.peerAddress
+							text: qsTr("Appel entrant")//.arg(localAddress ? qsTr(" pour %1").arg(localAddress.value) : "") //call.core.remoteAddress
 							color: DefaultStyle.grey_600
 							font {
 								pixelSize: 13 * DefaultStyle.dp

@@ -122,7 +122,12 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mRemoteVideoEnabled =
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
 	mState = LinphoneEnums::fromLinphone(call->getState());
-	mPeerAddress = Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
+	mRemoteAddress = Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
+	auto linphoneFriend = ToolModel::findFriendByAddress(mRemoteAddress);
+	if (linphoneFriend)
+		mRemoteName = Utils::coreStringToAppString(
+		    linphoneFriend->getVcard() ? linphoneFriend->getVcard()->getFullName() : linphoneFriend->getName());
+	if (mRemoteName.isEmpty()) mRemoteName = ToolModel::getDisplayName(mRemoteAddress);
 	mLocalAddress = Utils::coreStringToAppString(call->getCallLog()->getLocalAddress()->asStringUriOnly());
 	mStatus = LinphoneEnums::fromLinphone(call->getCallLog()->getStatus());
 	mTransferState = LinphoneEnums::fromLinphone(call->getTransferState());
@@ -454,8 +459,12 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	    });
 }
 
-QString CallCore::getPeerAddress() const {
-	return mPeerAddress;
+QString CallCore::getRemoteName() const {
+	return mRemoteName;
+}
+
+QString CallCore::getRemoteAddress() const {
+	return mRemoteAddress;
 }
 
 QString CallCore::getLocalAddress() const {

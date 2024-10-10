@@ -329,8 +329,8 @@ void Notifier::notifyReceivedMessages(const list<shared_ptr<linphone::ChatMessag
         map["timelineModel"].setValue(
             CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
         if (messages.size() == 1) { // Display only sender on mono message.
-            map["peerAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
-            map["fullPeerAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asString());
+            map["remoteAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
+            map["fullremoteAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asString());
         }
         map["localAddress"] = Utils::coreStringToAppString(message->getToAddress()->asStringUriOnly());
         map["fullLocalAddress"] = Utils::coreStringToAppString(message->getToAddress()->asString());
@@ -381,8 +381,8 @@ void Notifier::notifyReceivedReactions(
 
         map["timelineModel"].setValue(timelineModel.get());
         if (reactions.size() == 1) { // Display only sender on mono message.
-            map["peerAddress"] = Utils::coreStringToAppString(reaction.second->getFromAddress()->asStringUriOnly());
-            map["fullPeerAddress"] = Utils::coreStringToAppString(reaction.second->getFromAddress()->asString());
+            map["remoteAddress"] = Utils::coreStringToAppString(reaction.second->getFromAddress()->asStringUriOnly());
+            map["fullremoteAddress"] = Utils::coreStringToAppString(reaction.second->getFromAddress()->asString());
         }
         map["localAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly());
         map["fullLocalAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asString());

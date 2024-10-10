@@ -101,6 +101,13 @@ QString ToolModel::getDisplayName(QString address) {
 	return nameSplitted.join(" ");
 }
 
+std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &address) {
+	auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
+	if (!defaultFriendList) return nullptr;
+	auto linphoneAddr = ToolModel::interpretUrl(address);
+	return CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+}
+
 bool ToolModel::createCall(const QString &sipAddress,
                            const QVariantMap &options,
                            const QString &prepareTransfertAddress,

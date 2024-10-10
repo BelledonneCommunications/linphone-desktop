@@ -90,13 +90,12 @@ Item {
 			x: mainItem.width/2 - width/2
 			y: contentItem.height/2
 			property var currentCall: callsModel.currentCall ? callsModel.currentCall : null
-			property var peerNameObj: currentCall ? UtilsCpp.getDisplayName(currentCall.core.peerAddress) : null
-			property string peerName:peerNameObj ? peerNameObj.value : ""
+			property string remoteName: currentCall ? currentCall.core.remoteName : ""
 			contentItem: Button {
 				text: currentCallNotif.currentCall 
 				? currentCallNotif.currentCall.core.conference
 					? ("Réunion en cours : ") + currentCallNotif.currentCall.core.conference.core.subject
-					: (("Appel en cours : ") + currentCallNotif.peerName) : "appel en cours"
+					: (("Appel en cours : ") + currentCallNotif.remoteName) : "appel en cours"
 				color: DefaultStyle.success_500main
 				onClicked: {
 					var callsWindow = UtilsCpp.getCallsWindow(currentCallNotif.currentCall)

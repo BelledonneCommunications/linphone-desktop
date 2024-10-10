@@ -95,7 +95,7 @@ Item{
 							textColor: DefaultStyle.main2_400
 							onClicked: {
 								if (mainItem.conference) {
-									UtilsCpp.copyToClipboard(mainItem.call.core.peerAddress)
+									UtilsCpp.copyToClipboard(mainItem.call.core.remoteAddress)
 									showInformationPopup(qsTr("Copié"), qsTr("Le lien de la réunion a été copié dans le presse-papier"), true)
 								}
 							}

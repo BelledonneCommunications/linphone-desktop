@@ -95,7 +95,6 @@ public:
 class CallCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
-	// Q_PROPERTY(QString peerDisplayName MEMBER mPeerDisplayName)
 	Q_PROPERTY(LinphoneEnums::CallStatus status READ getStatus NOTIFY statusChanged)
 	Q_PROPERTY(LinphoneEnums::CallDir dir READ getDir NOTIFY dirChanged)
 	Q_PROPERTY(LinphoneEnums::CallState state READ getState NOTIFY stateChanged)
@@ -105,7 +104,8 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool speakerMuted READ getSpeakerMuted WRITE lSetSpeakerMuted NOTIFY speakerMutedChanged)
 	Q_PROPERTY(bool microphoneMuted READ getMicrophoneMuted WRITE lSetMicrophoneMuted NOTIFY microphoneMutedChanged)
 	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
-	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
+	Q_PROPERTY(QString remoteName READ getRemoteName CONSTANT)
+	Q_PROPERTY(QString remoteAddress READ getRemoteAddress CONSTANT)
 	Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT)
 	Q_PROPERTY(bool tokenVerified READ getTokenVerified WRITE setTokenVerified NOTIFY securityUpdated)
 	Q_PROPERTY(bool isMismatch READ isMismatch WRITE setIsMismatch NOTIFY securityUpdated)
@@ -144,7 +144,8 @@ public:
 	~CallCore();
 	void setSelf(QSharedPointer<CallCore> me);
 
-	QString getPeerAddress() const;
+	QString getRemoteName() const;
+	QString getRemoteAddress() const;
 	QString getLocalAddress() const;
 
 	LinphoneEnums::CallStatus getStatus() const;
@@ -301,7 +302,7 @@ signals:
 	    Q_INVOKABLE void askForTransfer();
 	    Q_INVOKABLE void askForAttendedTransfer();
 	    Q_INVOKABLE bool transferTo(const QString &sipAddress);
-	    Q_INVOKABLE bool transferToAnother(const QString &peerAddress);
+	    Q_INVOKABLE bool transferToAnother(const QString &remoteAddress);
 
 	    Q_INVOKABLE bool getRemoteVideoEnabled() const;
 	    Q_INVOKABLE void acceptVideoRequest();
@@ -324,7 +325,8 @@ private:
 	LinphoneEnums::MediaEncryption mEncryption;
 
 	QString mLastErrorMessage;
-	QString mPeerAddress;
+	QString mRemoteName;
+	QString mRemoteAddress;
 	QString mLocalAddress;
 	bool mTokenVerified = false;
 	bool mIsSecured = false;

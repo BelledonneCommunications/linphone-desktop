@@ -14,7 +14,13 @@ ColumnLayout {
 	property ConferenceInfoGui conferenceInfo
 	property bool isConference: conferenceInfo != undefined && conferenceInfo != null
 	property string contactAddress: specificAddress != "" ? specificAddress : contact && contact.core.defaultAddress || ""
-	property string contactName: contact && contact.core.displayName || ""
+	property var computedContactNameObj: UtilsCpp.getDisplayName(contactAddress)
+	property string computedContactName: computedContactNameObj ? computedContactNameObj.value: ""
+	property string contactName: contact
+		? contact.core.displayName 
+		: conferenceInfo
+			? conferenceInfo.core.subject
+			: computedContactName
 
 	// Set this property to get the security informations 
 	// for a specific address and not for the entire contact
@@ -60,14 +66,13 @@ ColumnLayout {
 		Item {
 			Layout.preferredWidth: 360 * DefaultStyle.dp
 			Layout.preferredHeight: detailAvatar.height
-			// Layout.fillWidth: true
 			Layout.alignment: Qt.AlignHCenter
 			Avatar {
 				id: detailAvatar
 				anchors.horizontalCenter: parent.horizontalCenter
 				width: 100 * DefaultStyle.dp
 				height: 100 * DefaultStyle.dp
-				contact: mainItem.specificAddress == "" ? mainItem.contact : null
+				contact: mainItem.contact || null
 				_address: mainItem.conferenceInfo
 					? mainItem.conferenceInfo.core.subject
 					: mainItem.contactAddress || mainItem.contactName
@@ -85,11 +90,11 @@ ColumnLayout {
 			Layout.alignment: Qt.AlignHCenter
 			Layout.preferredWidth: 360 * DefaultStyle.dp
 			spacing: 2 * DefaultStyle.dp
+
 			Text {
+				Layout.preferredWidth: implicitWidth
 				Layout.alignment: Qt.AlignHCenter
-				Layout.fillWidth: true
 				horizontalAlignment: Text.AlignHCenter
-				wrapMode: Text.WrapAnywhere
 				elide: Text.ElideRight
 				text: mainItem.contactName
 				maximumLineCount: 1
@@ -116,6 +121,7 @@ ColumnLayout {
 				property var mode : contact ? contact.core.consolidatedPresence : -1
 				Layout.alignment: Qt.AlignHCenter
 				horizontalAlignment: Text.AlignHCenter
+				Layout.fillWidth: true
 				visible: mainItem.contact
 				text: mode === LinphoneEnums.ConsolidatedPresence.Online
 					? qsTr("En ligne")

@@ -59,6 +59,7 @@ AbstractWindow {
 			close.accepted = false
 			terminateAllCallsDialog.open()
 		}
+		if (middleItemStackView.currentItem.objectName === "waitingRoom") middleItemStackView.replace(inCallItem)
 	}
 
 	function changeLayout(layoutIndex) {
@@ -340,12 +341,9 @@ AbstractWindow {
 							}
 							Text {
 								id: callStatusText
-								property var remoteNameObj: mainWindow.call ? UtilsCpp.getDisplayName(mainWindow.call.core.peerAddress) : null
-								property string remoteName: remoteNameObj 
-									? mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
-										? remoteNameObj.value 
-										: EnumsToStringCpp.dirToString(mainWindow.call.core.dir) + qsTr(" call")
-									: ""
+								property string remoteName: mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
+									? mainWindow.call.core.remoteName
+									: EnumsToStringCpp.dirToString(mainWindow.call.core.dir) + qsTr(" call")
 								text: (mainWindow.callState === LinphoneEnums.CallState.End  || mainWindow.callState === LinphoneEnums.CallState.Released)
 									? qsTr("Fin d'appel")
 									: mainWindow.call && (mainWindow.call.core.paused
@@ -816,13 +814,13 @@ AbstractWindow {
 									spacing: 0
 									Avatar {
 										id: delegateAvatar
-										_address: modelData.core.peerAddress
+										_address: modelData.core.remoteAddress
 										Layout.preferredWidth: 45 * DefaultStyle.dp
 										Layout.preferredHeight: 45 * DefaultStyle.dp
 									}
 									Text {
 										id: delegateName
-										property var remoteAddress: UtilsCpp.getDisplayName(modelData.core.peerAddress)
+										property var remoteAddress: UtilsCpp.getDisplayName(modelData.core.remoteAddress)
 										text: modelData.core.isConference 
 											? modelData.core.conference.core.subject
 											: remoteAddress ? remoteAddress.value : ""
@@ -1006,7 +1004,7 @@ AbstractWindow {
 												}
 											}
 											onClicked: {
-												UtilsCpp.copyToClipboard(mainWindow.call.core.peerAddress)
+												UtilsCpp.copyToClipboard(mainWindow.call.core.remoteAddress)
 												showInformationPopup(qsTr("Copié"), qsTr("Le lien de la réunion a été copié dans le presse-papier"), true)
 											}
 										}
@@ -1558,7 +1556,6 @@ AbstractWindow {
 						id: participantListButton
 						visible: mainWindow.conference
 						iconUrl: AppIcons.usersTwo
-						checked: rightPanel.visible && rightPanel.currentItem?.objectName == "participantListPanel"
 						checkedColor: DefaultStyle.main2_400
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
@@ -1571,6 +1568,10 @@ AbstractWindow {
 							} else {
 								rightPanel.visible = false
 							}
+						}
+						Connections {
+							target: rightPanel
+							onVisibleChanged: if (!rightPanel.visible) participantListButton.checked = false
 						}
 					}
 					PopupButton {

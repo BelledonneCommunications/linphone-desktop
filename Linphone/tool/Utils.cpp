@@ -363,10 +363,7 @@ VariantObject *Utils::findFriendByAddress(const QString &address) {
 	VariantObject *data = new VariantObject();
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
-		auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
-		if (!defaultFriendList) return QVariant();
-		auto linphoneAddr = ToolModel::interpretUrl(address);
-		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+		auto linFriend = ToolModel::findFriendByAddress(address);
 		if (!linFriend) return QVariant();
 		auto friendCore = FriendCore::create(linFriend);
 		return QVariant::fromValue(new FriendGui(friendCore));

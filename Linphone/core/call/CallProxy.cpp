@@ -74,7 +74,7 @@ bool CallProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelInde
 		                              QRegularExpression::UseUnicodePropertiesOption);
 		auto call = qobject_cast<CallList *>(sourceModel())->getAt<CallCore>(sourceRow);
 
-		show = call->getPeerAddress().contains(search);
+		show = call->getRemoteAddress().contains(search);
 	}
 
 	return show;
@@ -84,5 +84,5 @@ bool CallProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QM
 	auto l = getItemAtSource<CallList, CallCore>(sourceLeft.row());
 	auto r = getItemAtSource<CallList, CallCore>(sourceRight.row());
 
-	return l->getPeerAddress() < r->getPeerAddress();
+	return l->getRemoteAddress() < r->getRemoteAddress();
 }
