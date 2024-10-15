@@ -56,12 +56,14 @@ std::shared_ptr<linphone::FriendPhoneNumber> ToolModel::makeLinphoneNumber(const
 	return linphoneNumber;
 }
 
-std::shared_ptr<linphone::AudioDevice> ToolModel::findAudioDevice(const QString &id) {
+std::shared_ptr<linphone::AudioDevice> ToolModel::findAudioDevice(const QString &id,
+                                                                  linphone::AudioDevice::Capabilities capability) {
 	std::string devId = Utils::appStringToCoreString(id);
 	auto devices = CoreModel::getInstance()->getCore()->getExtendedAudioDevices();
 	auto audioDevice =
-	    find_if(devices.cbegin(), devices.cend(),
-	            [&](const std::shared_ptr<linphone::AudioDevice> &audioItem) { return audioItem->getId() == devId; });
+	    find_if(devices.cbegin(), devices.cend(), [&](const std::shared_ptr<linphone::AudioDevice> &audioItem) {
+		    return audioItem->hasCapability(capability) && audioItem->getId() == devId;
+	    });
 	if (audioDevice != devices.cend()) {
 		return *audioDevice;
 	}

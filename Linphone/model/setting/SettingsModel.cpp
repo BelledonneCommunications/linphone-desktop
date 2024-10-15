@@ -293,14 +293,10 @@ QString SettingsModel::getCaptureDevice() const {
 
 void SettingsModel::setCaptureDevice(const QString &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	std::string devId = Utils::appStringToCoreString(device);
-	auto list = CoreModel::getInstance()->getCore()->getExtendedAudioDevices();
-	auto audioDevice =
-	    find_if(list.cbegin(), list.cend(),
-	            [&](const std::shared_ptr<linphone::AudioDevice> &audioItem) { return audioItem->getId() == devId; });
-	if (audioDevice != list.cend()) {
-		CoreModel::getInstance()->getCore()->setDefaultInputAudioDevice(*audioDevice);
-		CoreModel::getInstance()->getCore()->setInputAudioDevice(*audioDevice);
+	auto audioDevice = ToolModel::findAudioDevice(device, linphone::AudioDevice::Capabilities::CapabilityRecord);
+	if (audioDevice) {
+		CoreModel::getInstance()->getCore()->setDefaultInputAudioDevice(audioDevice);
+		CoreModel::getInstance()->getCore()->setInputAudioDevice(audioDevice);
 		emit captureDeviceChanged(device);
 		resetCaptureGraph();
 	} else qWarning() << "Cannot set Capture device. The ID cannot be matched with an existant device : " << device;
@@ -317,15 +313,10 @@ QString SettingsModel::getPlaybackDevice() const {
 
 void SettingsModel::setPlaybackDevice(const QString &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	std::string devId = Utils::appStringToCoreString(device);
-
-	auto list = CoreModel::getInstance()->getCore()->getExtendedAudioDevices();
-	auto audioDevice =
-	    find_if(list.cbegin(), list.cend(),
-	            [&](const std::shared_ptr<linphone::AudioDevice> &audioItem) { return audioItem->getId() == devId; });
-	if (audioDevice != list.cend()) {
-		CoreModel::getInstance()->getCore()->setDefaultOutputAudioDevice(*audioDevice);
-		CoreModel::getInstance()->getCore()->setOutputAudioDevice(*audioDevice);
+	auto audioDevice = ToolModel::findAudioDevice(device, linphone::AudioDevice::Capabilities::CapabilityPlay);
+	if (audioDevice) {
+		CoreModel::getInstance()->getCore()->setDefaultOutputAudioDevice(audioDevice);
+		CoreModel::getInstance()->getCore()->setOutputAudioDevice(audioDevice);
 		emit playbackDeviceChanged(device);
 		resetCaptureGraph();
 	} else qWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
@@ -340,14 +331,10 @@ QString SettingsModel::getRingerDevice() const {
 
 void SettingsModel::setRingerDevice(const QString &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	std::string devId = Utils::appStringToCoreString(device);
+	auto audioDevice = ToolModel::findAudioDevice(device, linphone::AudioDevice::Capabilities::CapabilityPlay);
 
-	auto list = CoreModel::getInstance()->getCore()->getExtendedAudioDevices();
-	auto audioDevice =
-	    find_if(list.cbegin(), list.cend(),
-	            [&](const std::shared_ptr<linphone::AudioDevice> &audioItem) { return audioItem->getId() == devId; });
-	if (audioDevice != list.cend()) {
-		CoreModel::getInstance()->getCore()->setRingerDevice(devId);
+	if (audioDevice) {
+		CoreModel::getInstance()->getCore()->setRingerDevice(audioDevice->getId());
 		emit ringerDeviceChanged(device);
 	} else qWarning() << "Cannot set Ringer device. The ID cannot be matched with an existant device : " << device;
 }

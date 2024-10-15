@@ -36,7 +36,8 @@ public:
 
 	static std::shared_ptr<linphone::Address> interpretUrl(const QString &address);
 	static std::shared_ptr<linphone::FriendPhoneNumber> makeLinphoneNumber(const QString &label, const QString &number);
-	static std::shared_ptr<linphone::AudioDevice> findAudioDevice(const QString &id);
+	static std::shared_ptr<linphone::AudioDevice> findAudioDevice(const QString &id,
+	                                                              linphone::AudioDevice::Capabilities capability);
 	static std::shared_ptr<linphone::Account> findAccount(const std::shared_ptr<const linphone::Address> &address);
 	static bool isMe(const QString &address);
 	static bool isLocal(const QString &address);

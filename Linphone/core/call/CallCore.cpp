@@ -345,9 +345,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetInputAudioDevice, [this](QString id) {
 		mCallModelConnection->invokeToModel([this, id]() {
-			if (auto device = ToolModel::findAudioDevice(id)) {
-				mCallModel->setInputAudioDevice(device);
-			}
+			auto device = ToolModel::findAudioDevice(id, linphone::AudioDevice::Capabilities::CapabilityRecord);
+			if (device) mCallModel->setInputAudioDevice(device);
 		});
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::inputAudioDeviceChanged, [this](const std::string &id) {
@@ -355,9 +354,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetOutputAudioDevice, [this](QString id) {
 		mCallModelConnection->invokeToModel([this, id]() {
-			if (auto device = ToolModel::findAudioDevice(id)) {
-				mCallModel->setOutputAudioDevice(device);
-			}
+			auto device = ToolModel::findAudioDevice(id, linphone::AudioDevice::Capabilities::CapabilityPlay);
+			if (device) mCallModel->setOutputAudioDevice(device);
 		});
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::conferenceChanged, [this]() {
@@ -410,12 +408,12 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			        tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
 			    auto linAudioStats = call->getAudioStats();
 			    if (linAudioStats) {
-				    audioStats.mBandwidth = tr("Bande passante : %1 %2 %3 %4")
+				    audioStats.mBandwidth = tr("Bande passante : %1 %2 kbits/s %3 %4 kbits/s")
 				                                .arg("↑")
-				                                .arg(linAudioStats->getUploadBandwidth())
+				                                .arg(round(linAudioStats->getUploadBandwidth()))
 				                                .arg("↓")
-				                                .arg(linAudioStats->getDownloadBandwidth());
-				    audioStats.mLossRate = tr("Taux de perte: %1 \% %2 \%")
+				                                .arg(round(linAudioStats->getDownloadBandwidth()));
+				    audioStats.mLossRate = tr("Taux de perte: %1% %2%")
 				                               .arg(linAudioStats->getSenderLossRate())
 				                               .arg(linAudioStats->getReceiverLossRate());
 				    audioStats.mJitterBufferSize =
@@ -432,12 +430,12 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			        tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
 			    auto linVideoStats = call->getVideoStats();
 			    if (stats) {
-				    videoStats.mBandwidth = tr("Bande passante : %1 %2 %3 %4")
+				    videoStats.mBandwidth = tr("Bande passante : %1 %2 kbits/s %3 %4 kbits/s")
 				                                .arg("↑")
-				                                .arg(linVideoStats->getUploadBandwidth())
+				                                .arg(round(linVideoStats->getUploadBandwidth()))
 				                                .arg("↓")
-				                                .arg(linVideoStats->getDownloadBandwidth());
-				    videoStats.mLossRate = tr("Taux de perte: %1 \% %2 \%")
+				                                .arg(round(linVideoStats->getDownloadBandwidth()));
+				    videoStats.mLossRate = tr("Taux de perte: %1% %2%")
 				                               .arg(linVideoStats->getSenderLossRate())
 				                               .arg(linVideoStats->getReceiverLossRate());
 			    }
