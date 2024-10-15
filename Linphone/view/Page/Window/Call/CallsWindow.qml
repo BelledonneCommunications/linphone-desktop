@@ -1604,6 +1604,7 @@ AbstractWindow {
 							contentImageColor: down || checked ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
 							textSize: 14 * DefaultStyle.dp
 							textWeight: 400 * DefaultStyle.dp
+							textHAlignment: Text.AlignLeft
 							spacing: 5 * DefaultStyle.dp
 						}
 						popup.contentItem: ColumnLayout {

@@ -14,6 +14,7 @@ Control.Button {
 	property bool inversedColors: false
 	property int textSize: 18 * DefaultStyle.dp
 	property int textWeight: 600 * DefaultStyle.dp
+	property var textHAlignment: Text.AlignHCenter
 	property int radius: 48 * DefaultStyle.dp
 	property color textColor: DefaultStyle.grey_0
 	property bool underline: activeFocus || containsMouse
@@ -78,7 +79,7 @@ Control.Button {
 	}
 	
 	component ButtonText: Text {
-		horizontalAlignment: Text.AlignHCenter
+		horizontalAlignment: mainItem.textHAlignment
 		verticalAlignment: Text.AlignVCenter
 		wrapMode: Text.WrapAnywhere
 		text: mainItem.text
