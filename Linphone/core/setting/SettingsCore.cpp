@@ -97,6 +97,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(ExitOnClose, settingsModel)
 	INIT_CORE_MEMBER(SyncLdapContacts, settingsModel)
 	INIT_CORE_MEMBER(Ipv6Enabled, settingsModel)
+	INIT_CORE_MEMBER(ConfigLocale, settingsModel)
 }
 
 SettingsCore::~SettingsCore() {
@@ -345,6 +346,8 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                           syncLdapContacts, SyncLdapContacts)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool, ipv6Enabled,
 	                           Ipv6Enabled)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
+	                           configLocale, ConfigLocale)
 
 	auto coreModelConnection = QSharedPointer<SafeConnection<SettingsCore, CoreModel>>(
 	    new SafeConnection<SettingsCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
@@ -515,4 +518,8 @@ bool SettingsCore::getExitOnClose() const {
 
 bool SettingsCore::getSyncLdapContacts() const {
 	return mSyncLdapContacts;
+}
+
+QString SettingsCore::getConfigLocale() const {
+	return mConfigLocale;
 }

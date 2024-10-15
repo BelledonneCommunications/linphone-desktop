@@ -582,6 +582,7 @@ void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(autoStart, AutoStart)
 	DEFINE_NOTIFY_CONFIG_READY(exitOnClose, ExitOnClose)
 	DEFINE_NOTIFY_CONFIG_READY(syncLdapContacts, SyncLdapContacts)
+	DEFINE_NOTIFY_CONFIG_READY(configLocale, ConfigLocale)
 }
 
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", true)
@@ -679,4 +680,9 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 						SyncLdapContacts,
 						"sync_ldap_contacts",
 						false)
+DEFINE_GETSET_CONFIG_STRING(SettingsModel,
+							configLocale,
+							ConfigLocale,
+							"locale",
+							"")
     // clang-format on

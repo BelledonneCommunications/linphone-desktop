@@ -108,6 +108,7 @@ public:
 	void restart();
 	bool autoStartEnabled();
 	void setSysTrayIcon();
+	QLocale getLocale();
 
 	void onLoggerInitialized();
 	void sendCommand();
@@ -145,6 +146,7 @@ signals:
 private:
 	void createCommandParser();
 	void setAutoStart(bool enabled);
+	void setLocale(QString configLocale);
 
 	QCommandLineParser *mParser = nullptr;
 	Thread *mLinphoneThread = nullptr;
@@ -158,6 +160,7 @@ private:
 	QSharedPointer<SafeConnection<App, CoreModel>> mCoreModelConnection;
 	QSharedPointer<SafeConnection<App, CliModel>> mCliModelConnection;
 	bool mAutoStart = false;
+	QLocale mLocale = QLocale::system();
 
 	DECLARE_ABSTRACT_OBJECT
 };

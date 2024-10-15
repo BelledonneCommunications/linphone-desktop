@@ -55,16 +55,6 @@ int main(int argc, char *argv[]) {
 
 	auto app = QSharedPointer<App>::create(argc, argv);
 
-	QTranslator translator;
-	const QStringList uiLanguages = QLocale::system().uiLanguages();
-	for (const QString &locale : uiLanguages) {
-		const QString baseName = "Linphone_" + QLocale(locale).name();
-		if (translator.load(":/i18n/" + baseName)) {
-			app->installTranslator(&translator);
-			break;
-		}
-	}
-
 #ifdef ACCESSBILITY_WORKAROUND
 	QAccessible::installUpdateHandler(DummyUpdateHandler);
 	QAccessible::installRootObjectHandler(DummyRootObjectHandler);

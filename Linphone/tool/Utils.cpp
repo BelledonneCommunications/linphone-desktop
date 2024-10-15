@@ -264,7 +264,7 @@ QString Utils::formatDate(const QDateTime &date, bool includeTime) {
 	else if (date.date() == QDate::currentDate().addDays(-1)) dateDay = tr("Hier");
 	else {
 		QString format = date.date().year() == QDateTime::currentDateTime().date().year() ? "dd MMMM" : "dd MMMM yyyy";
-		dateDay = tr(date.date().toString(format).toLocal8Bit().data());
+		dateDay = App::getInstance()->getLocale().toString(date.date(), format);
 	}
 	if (!includeTime) return dateDay;
 

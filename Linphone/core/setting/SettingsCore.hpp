@@ -167,6 +167,7 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(bool, ipv6Enabled, Ipv6Enabled)
 	DECLARE_CORE_GETSET_MEMBER(QVariantList, audioCodecs, AudioCodecs)
 	DECLARE_CORE_GETSET_MEMBER(QVariantList, videoCodecs, VideoCodecs)
+	DECLARE_CORE_GETSET(QString, configLocale, ConfigLocale)
 
 signals:
 

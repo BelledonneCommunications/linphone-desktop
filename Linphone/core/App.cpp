@@ -37,6 +37,7 @@
 #include <QQuickWindow>
 #include <QSystemTrayIcon>
 #include <QTimer>
+#include <QTranslator>
 
 #include "core/account/AccountCore.hpp"
 #include "core/account/AccountDeviceGui.hpp"
@@ -479,6 +480,7 @@ void App::initCore() {
 			    setQuitOnLastWindowClosed(mSettings->getExitOnClose());
 			    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
 			            Qt::UniqueConnection);
+			    setLocale(settings->getConfigLocale());
 
 			    const QUrl url(u"qrc:/Linphone/view/Page/Window/Main/MainWindow.qml"_qs);
 			    QObject::connect(
@@ -509,6 +511,10 @@ void App::initCore() {
 			    QObject::connect(mSettings.get(), &SettingsCore::autoStartChanged, [this]() {
 				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
 				    setAutoStart(mSettings->getAutoStart());
+			    });
+			    QObject::connect(mSettings.get(), &SettingsCore::configLocaleChanged, [this]() {
+				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+				    setLocale(mSettings->getConfigLocale());
 			    });
 			    mEngine->load(url);
 		    });
@@ -947,4 +953,16 @@ void App::setSysTrayIcon() {
 	systemTrayIcon->show();
 	if (!mSystemTrayIcon) mSystemTrayIcon = systemTrayIcon;
 	if (!QSystemTrayIcon::isSystemTrayAvailable()) qInfo() << "System tray is not available";
+}
+
+//-----------------------------------------------------------
+//		Locale TODO - App only in French now.
+//-----------------------------------------------------------
+
+void App::setLocale(QString configLocale) {
+	mLocale = QLocale(QLocale::French);
+}
+
+QLocale App::getLocale() {
+	return mLocale;
 }
