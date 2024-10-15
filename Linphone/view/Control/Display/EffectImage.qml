@@ -79,6 +79,7 @@ Loader {
 			shadowColor: DefaultStyle.grey_1000
 			shadowBlur: 0
 			shadowOpacity: mainItem.shadowEnabled ? 0.7 : 0.0
+			z: mainItem.z - 1
 		}
 	}
 	}

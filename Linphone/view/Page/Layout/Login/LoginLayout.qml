@@ -33,27 +33,16 @@ Rectangle {
 			Button {
 				id: aboutButton
 				Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-				background: Item{}
-				contentItem: RowLayout {
-					spacing: 8 * DefaultStyle.dp
-					Image {
-						fillMode: Image.PreserveAspectFit
-						source: AppIcons.info
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
-					}
-					Text {
-						Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-						text: qsTr("À propos")
-						font {
-							underline: aboutButton.underline
-							pixelSize: 14 * DefaultStyle.dp
-							weight: 400 * DefaultStyle.dp
-						}
-						color: DefaultStyle.main2_500main
-					}
-				}
+				icon.width: 24 * DefaultStyle.dp
+				icon.height: 24 * DefaultStyle.dp
+				icon.source: AppIcons.info
+				text: qsTr("À propos")
+				textSize: 14 * DefaultStyle.dp
+				textWeight: 400 * DefaultStyle.dp
+				textColor: DefaultStyle.main2_500main
 				onClicked: console.debug("[LoginLayout]User: open about popup")
+				
+				background: Item{}
 			}
 		}
 

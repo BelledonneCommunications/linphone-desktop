@@ -584,29 +584,20 @@ AbstractMainPage {
 							KeyNavigation.down: shareNetworkButton
 							
 							popup.contentItem: Button {
-								color: deletePopup.popupBackgroundColor
+								color: DefaultStyle.danger_500main
 								borderColor: deletePopup.popupBackgroundColor
+								textColor: DefaultStyle.danger_500main
+								contentImageColor: DefaultStyle.danger_500main
 								inversedColors: true
 								property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core.organizerAddress)
-								contentItem: RowLayout {
-									EffectImage {
-										imageSource: AppIcons.trashCan
-										width: 24 * DefaultStyle.dp
-										height: 24 * DefaultStyle.dp
-										Layout.preferredWidth: 24 * DefaultStyle.dp
-										Layout.preferredHeight: 24 * DefaultStyle.dp
-										fillMode: Image.PreserveAspectFit
-										colorizationColor: DefaultStyle.danger_500main
-									}
-									Text {
-										text: qsTr("Delete this meeting")
-										color: DefaultStyle.danger_500main
-										font {
-											pixelSize: 14 * DefaultStyle.dp
-											weight: 400 * DefaultStyle.dp
-										}
-									}
-								}
+								icon.source: AppIcons.trashCan
+								icon.width: 24 * DefaultStyle.dp
+								icon.height: 24 * DefaultStyle.dp
+								spacing: 10 * DefaultStyle.dp
+								textSize: 14 * DefaultStyle.dp
+								textWeight: 400 * DefaultStyle.dp
+								text: qsTr("Delete this meeting")
+								
 								onClicked: {
 									if (mainItem.selectedConference) {
 										cancelAndDeleteConfDialog.cancel = isMeObj? isMeObj.value : false
@@ -624,6 +615,7 @@ AbstractMainPage {
 										mainItem.selectedConference.core.lDeleteConferenceInfo()
 									}
 								}
+								background: Item{}
 							}
 						}
 					}

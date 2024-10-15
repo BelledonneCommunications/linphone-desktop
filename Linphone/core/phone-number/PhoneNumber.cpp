@@ -32,6 +32,7 @@ QSharedPointer<PhoneNumber> PhoneNumber::create(const std::shared_ptr<linphone::
 
 PhoneNumber::PhoneNumber(const std::shared_ptr<linphone::DialPlan> &dialPlan) : QObject(nullptr) {
 	// Should be call from model Thread
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mustBeInLinphoneThread(getClassName());
 	mFlag = Utils::coreStringToAppString(dialPlan->getFlag());
 	mNationalNumberLength = dialPlan->getNationalNumberLength();

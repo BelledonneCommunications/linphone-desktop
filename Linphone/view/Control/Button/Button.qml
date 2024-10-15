@@ -46,14 +46,14 @@ Control.Button {
 				id: buttonBackground
 				anchors.fill: parent
 				color: mainItem.enabled
-					   ? inversedColors
-						 ? mainItem.pressed || mainItem.shadowEnabled
-						   ? DefaultStyle.grey_100
-						   : mainItem.borderColor
-				: mainItem.pressed || mainItem.shadowEnabled
-				? mainItem.pressedColor
-				: mainItem.color
-				: mainItem.disabledColor
+						? inversedColors
+							? mainItem.pressed || mainItem.shadowEnabled
+								? DefaultStyle.grey_100
+								: mainItem.borderColor
+							: mainItem.pressed || mainItem.shadowEnabled
+								? mainItem.pressedColor
+								: mainItem.color
+						: mainItem.disabledColor
 				radius: mainItem.radius
 				border.color: inversedColors ? mainItem.color : mainItem.borderColor
 				
@@ -80,11 +80,7 @@ Control.Button {
 	component ButtonText: Text {
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter
-		width: mainItem.text != undefined ? implicitWidth : 0
-		height: implicitHeight
 		wrapMode: Text.WrapAnywhere
-		// Layout.fillWidth: true
-		// Layout.fillHeight: true
 		text: mainItem.text
 		maximumLineCount: 1
 		color: inversedColors ? mainItem.color : mainItem.textColor
@@ -99,8 +95,6 @@ Control.Button {
 	}
 	
 	component ButtonImage: EffectImage {
-		// Layout.fillWidth: true
-		// Layout.fillHeight: true
 		imageSource: mainItem.icon.source
 		imageWidth: mainItem.icon.width
 		imageHeight: mainItem.icon.height
@@ -111,9 +105,10 @@ Control.Button {
 	contentItem: Control.StackView{
 		id: stacklayout
 		width: mainItem.width
+		height: mainItem.height
 		// TODO Qt bug : contentItem is never changed....
-		implicitHeight: contentItem && contentItem.implicitHeight? contentItem.implicitHeight : 0
-		implicitWidth: contentItem && contentItem.implicitWidth? contentItem.implicitWidth: 0
+		implicitHeight: !!contentItem && contentItem.implicitHeight ? contentItem.implicitHeight : 0
+		implicitWidth: !!contentItem && contentItem.implicitWidth ? contentItem.implicitWidth: 0
 		function updateComponent(){
 			var item
 			var component = mainItem.text.length != 0 && mainItem.icon.source.toString().length != 0
@@ -127,9 +122,9 @@ Control.Button {
 				item = stacklayout.push(component, Control.StackView.Immediate)
 			else if( component != stacklayout.get(0))
 				item = stacklayout.replace(component, Control.StackView.Immediate)
-			if(item){// Workaround for Qt bug : set from the item and not from the contentItem
-				implicitHeight = item.implicitHeight
-				implicitWidth = item.implicitWidth
+			if(item){// Workaround for Qt bug : set from the item and not from the contentItem which seems to be lost
+				implicitHeight = Qt.binding(function() { return item.implicitHeight})
+				implicitWidth = Qt.binding(function() { return item.implicitWidth})
 			}
 		}
 		
@@ -146,27 +141,40 @@ Control.Button {
 		Component{
 			id: imageTextComponent
 			RowLayout {
+				width: stacklayout.width
+				height: stacklayout.height
 				spacing: mainItem.spacing
 				ButtonImage{
 					Layout.preferredWidth: mainItem.icon.width
 					Layout.preferredHeight: mainItem.icon.height
 				}
-				ButtonText{}
+				ButtonText{
+					Layout.fillHeight: true
+					Layout.fillWidth: true
+				}
 			}
 		}
 		Component{
 			id: textComponent
-			ButtonText {}
+			ButtonText {
+				width: stacklayout.width
+				height: stacklayout.height
+				// Hack for StackView binding loop
+				onImplicitHeightChanged: {implicitHeight}
+			}
 		}
 		Component{
 			id: imageComponent
-			ButtonImage{}
+			ButtonImage{
+				width: stacklayout.width
+				height: stacklayout.height
+			}
 		}
 		Component{
 			id: emptyComponent
 			Item {
-				Layout.fillWidth: true
-				Layout.fillHeight: true
+				width: stacklayout.width
+				height: stacklayout.height
 			}
 		}
 	}

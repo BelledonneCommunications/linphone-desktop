@@ -40,7 +40,8 @@ int PhoneNumberProxy::findIndexByCountryCallingCode(const QString &countryCallin
 	auto it = std::find_if(list.begin(), list.end(), [countryCallingCode](const QSharedPointer<QObject> &a) {
 		return a.objectCast<PhoneNumber>()->mCountryCallingCode == countryCallingCode;
 	});
-	auto proxyModelIndex = mapFromSource(model->index(it - list.begin()));
+	auto proxyModelIndex =
+	    dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(model->index(it - list.begin()));
 	return proxyModelIndex.row();
 }
 
@@ -50,8 +51,7 @@ bool PhoneNumberProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 		QRegularExpression search(QRegularExpression::escape(mFilterText),
 		                          QRegularExpression::CaseInsensitiveOption |
 		                              QRegularExpression::UseUnicodePropertiesOption);
-		auto phoneNumber = qobject_cast<PhoneNumberList *>(sourceModel())->getAt<PhoneNumber>(sourceRow);
-
+		auto phoneNumber = getItemAtSource<PhoneNumberList, PhoneNumber>(sourceRow);
 		show = phoneNumber->mCountry.contains(search) || phoneNumber->mCountryCallingCode.contains(search);
 	}
 
