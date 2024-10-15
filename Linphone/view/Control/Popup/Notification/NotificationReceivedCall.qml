@@ -9,6 +9,7 @@ Notification {
 	radius: 20 * DefaultStyle.dp
 	overriddenWidth: content.implicitWidth//101 * DefaultStyle.dp
 	overriddenHeight: content.implicitHeight//422 * DefaultStyle.dp
+	
 	readonly property var call: notificationData && notificationData.call
 	property var state: call.core.state
 	property var status: call.core.status
@@ -20,7 +21,7 @@ Notification {
 	onStatusChanged:{
 		console.log("status", status)
 	}
-
+	
 	Popup {
 		id: content
 		visible: mainItem.visible
@@ -86,6 +87,7 @@ Notification {
 					color: DefaultStyle.success_500main
 					Layout.preferredWidth: 75 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
+					asynchronous: false
 					contentItem: EffectImage {
 						colorizationColor: DefaultStyle.grey_0
 						imageSource: AppIcons.phone
@@ -93,6 +95,7 @@ Notification {
 						imageHeight: 32 * DefaultStyle.dp
 					}
 					onClicked: {
+						console.debug("[NotificationReceivedCall] Accept click")
 						UtilsCpp.openCallsWindow(mainItem.call)
 						mainItem.call.core.lAccept(false)
 					}
@@ -101,6 +104,7 @@ Notification {
 					color: DefaultStyle.danger_500main
 					Layout.preferredWidth: 75 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
+					asynchronous: false
 					contentItem: EffectImage {
 						colorizationColor: DefaultStyle.grey_0
 						imageSource: AppIcons.endCall
@@ -108,10 +112,12 @@ Notification {
 						imageHeight: 32 * DefaultStyle.dp
 					}
 					onClicked: {
+						console.debug("[NotificationReceivedCall] Decline click")
 						mainItem.call.core.lDecline()
 					}
 				}
 			}
 		}
 	}
+
 }

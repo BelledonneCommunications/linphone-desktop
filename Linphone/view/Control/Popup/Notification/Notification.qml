@@ -17,6 +17,8 @@ DesktopPopup {
 	default property alias _content: content.data
 	
 	signal deleteNotification (var notification)
+	width: mainItem.overriddenWidth
+	height: mainItem.overriddenHeight
 	
 	// Use as an intermediate between signal/slot without propagate the notification var : last signal parameter will be the last notification instance
 	function deleteNotificationSlot(){
@@ -29,42 +31,46 @@ DesktopPopup {
 		}
 		deleteNotificationSlot();
 	}
-
 	Rectangle {
-		id: background
+		anchors.fill: parent
+		visible: backgroundLoader.status != Loader.Ready
 		color: DefaultStyle.grey_0
-		height: mainItem.overriddenHeight
-		width: mainItem.overriddenWidth
 		radius: mainItem.radius
-		
 		border {
 			color: DefaultStyle.grey_400
 			width: 1 * DefaultStyle.dp
 		}
-		
-		Item {
-			id: content
-			
-			anchors.fill: parent
-		}
-		
-		Image {
-			id: iconSign
-			
-			anchors {
-				left: parent.left
-				top: parent.top
+	}
+	
+	Loader{
+		id: backgroundLoader
+		asynchronous: true
+		sourceComponent: Item{
+			width: mainItem.overriddenWidth
+			height: mainItem.overriddenHeight
+			Rectangle {
+				id: background
+				anchors.fill: parent
+				visible: backgroundLoader.status != Loader.Ready
+				color: DefaultStyle.grey_0
+				radius: mainItem.radius
+				border {
+					color: DefaultStyle.grey_400
+					width: 1 * DefaultStyle.dp
+				}
 			}
-			
-			
+			MultiEffect {
+				source: background
+				anchors.fill: background
+				shadowEnabled: true
+				shadowColor: DefaultStyle.grey_1000
+				shadowOpacity: 0.1
+				shadowBlur: 0.1
+			}
 		}
 	}
-	MultiEffect {
-		source: background
-		anchors.fill: background
-		shadowEnabled: true
-		shadowColor: DefaultStyle.grey_1000
-		shadowOpacity: 0.1
-		shadowBlur: 0.1
+	Item {
+		id: content
+		anchors.fill: parent
 	}
 }

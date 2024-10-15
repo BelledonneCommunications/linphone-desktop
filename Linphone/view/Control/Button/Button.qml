@@ -21,6 +21,7 @@ Control.Button {
 	property bool shadowEnabled: enabled && (activeFocus  || containsMouse)
 	property var contentImageColor
 	property alias containsMouse: mouseArea.containsMouse
+	property bool asynchronous: true
 	hoverEnabled: true
 	activeFocusOnTab: true
 	// leftPadding: 20 * DefaultStyle.dp
@@ -38,7 +39,7 @@ Control.Button {
 	}
 	
 	background: Loader{
-		asynchronous: true
+		asynchronous: mainItem.asynchronous
 		anchors.fill: parent
 		
 		sourceComponent:

@@ -287,6 +287,7 @@ AbstractWindow {
 	}
 
 /************************* CONTENT ********************************/
+	
 	Rectangle {
 		anchors.fill: parent
 		color: DefaultStyle.grey_900
@@ -533,7 +534,9 @@ AbstractWindow {
 						}
 					}
 				}
+			
 			}
+			
 			RowLayout {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
@@ -561,6 +564,8 @@ AbstractWindow {
 					headerValidateButtonText: qsTr("Ajouter")
 				}
 			}
+			
+		
 			Component {
 				id: contactsListPanel
 				Item {
@@ -1352,18 +1357,24 @@ AbstractWindow {
 			}
 			Component {
 				id: inCallItem
-				Item {
-					property string objectName: "inCallItem"
-					CallLayout{
-						anchors.fill: parent
-						anchors.leftMargin: 20 * DefaultStyle.dp
-						anchors.rightMargin: (rightPanel.visible ? 0 : 10) * DefaultStyle.dp	// Grid and AS have 10 in right margin (so apply -10 here)
-						anchors.topMargin: 10 * DefaultStyle.dp
-						call: mainWindow.call
-						callTerminatedByUser: mainWindow.callTerminatedByUser
+				Loader{
+					asynchronous: true
+					sourceComponent: Item {
+						property string objectName: "inCallItem"
+						CallLayout{
+							anchors.fill: parent
+							anchors.leftMargin: 20 * DefaultStyle.dp
+							anchors.rightMargin: (rightPanel.visible ? 0 : 10) * DefaultStyle.dp	// Grid and AS have 10 in right margin (so apply -10 here)
+							anchors.topMargin: 10 * DefaultStyle.dp
+							call: mainWindow.call
+							callTerminatedByUser: mainWindow.callTerminatedByUser
+						}
 					}
 				}
 			}
+	
+			
+			
 			RowLayout {
 				id: bottomButtonsLayout
 				Layout.alignment: Qt.AlignHCenter
@@ -1723,6 +1734,8 @@ AbstractWindow {
 					}
 				}
 			}
+		
 		}
 	}
+
 }

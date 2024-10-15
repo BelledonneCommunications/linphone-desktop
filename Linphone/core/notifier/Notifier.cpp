@@ -153,20 +153,11 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 			// Use QQuickView to create a visual root object that is
 			// independant from current application Window
 			QScreen *screen = allScreens[i];
-			// auto engine = App::getInstance()->mEngine;
-			auto engine = new QQmlApplicationEngine();
-			engine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
-			engine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
-			engine->addImportPath(":/");
-			// if(showAsTool) window->setProperty("showAsTool",true);
-			engine->setInitialProperties(data);
-			//  engine->rootContext()->setContextProperty("applicationDirPath",QGuiApplication::applicationDirPath());
-			//  engine->setInitialProperties({{"screenIndex", i}});
-			//, {"x", screen->geometry().x()}, {"y", screen->geometry().y()}});
+			auto engine = App::getInstance()->mEngine;
 			const QUrl url(QString(NotificationsPath) + Notifier::Notifications[type].filename);
 			QObject::connect(
 			    engine, &QQmlApplicationEngine::objectCreated, this,
-			    [this, url, screen, engine, type](QObject *obj, const QUrl &objUrl) {
+			    [this, url, screen, engine, type, data](QObject *obj, const QUrl &objUrl) {
 				    if (!obj && url == objUrl) {
 					    lCritical() << "[App] Notifier.qml couldn't be load.";
 					    engine->deleteLater();
@@ -175,6 +166,9 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 					    lDebug() << engine->rootObjects()[0];
 					    auto window = qobject_cast<QQuickWindow *>(obj);
 					    if (window) {
+						    window->setProperty(NotificationPropertyData, data);
+						    //						    for (auto it = data.begin(); it != data.end(); ++it)
+						    //							    window->setProperty(it.key().toLatin1(), it.value());
 						    int *screenHeightOffset = &mScreenHeightOffset[screen->name()]; // Access optimization
 						    QRect availableGeometry = screen->availableGeometry();
 						    int heightOffset =
@@ -195,7 +189,8 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 					    }
 				    }
 			    },
-			    Qt::QueuedConnection);
+			    static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::SingleShotConnection));
+			lDebug() << log().arg("Engine loading notification");
 			engine->load(url);
 		}
 	}
