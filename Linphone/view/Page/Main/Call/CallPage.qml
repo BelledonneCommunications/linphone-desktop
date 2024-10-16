@@ -664,64 +664,92 @@ AbstractMainPage {
 					popup.x: width
 					property var friendGuiObj: UtilsCpp.findFriendByAddress(contactDetail.contactAddress)
 					property var friendGui: friendGuiObj ? friendGuiObj.value : null
-					popup.contentItem: ColumnLayout {
-						Button {
-							background: Item {}
-							contentItem: IconLabel {
+					popup.contentItem: FocusScope {
+						implicitHeight: detailsButtons.implicitHeight
+						implicitWidth: detailsButtons.implicitWidth
+						Keys.onPressed: (event)=> {
+								if (event.key == Qt.Key_Left || event.key == Qt.Key_Escape) {
+									detailOptions.popup.close()
+								event.accepted = true;
+							}
+						}
+						ColumnLayout {
+							id: detailsButtons
+							anchors.fill: parent
+							Button {
 								text: detailOptions.friendGui ? qsTr("Voir le contact") : qsTr("Ajouter aux contacts")
-								iconSource: AppIcons.plusCircle
-							}
-							onClicked: {
-								detailOptions.close()
-								if (detailOptions.friendGui) mainWindow.displayContactPage(contactDetail.contactAddress)
-								else mainItem.createContactRequested(contactDetail.contactName, contactDetail.contactAddress)
-							}
-						}
-						Button {
-							background: Item {}
-							contentItem: IconLabel {
-								text: qsTr("Copier l'adresse SIP")
-								iconSource: AppIcons.copy
-							}
-							onClicked: {
-								detailOptions.close()
-								var success = UtilsCpp.copyToClipboard(mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress)
-								if (success) UtilsCpp.showInformationPopup(qsTr("Copié"), qsTr("L'adresse a été copiée dans le presse-papier"), true)
-								else UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Erreur lors de la copie de l'adresse"), false)
-							}
-						}
-						// Button {
-						// 	background: Item {}
-						// 	enabled: false
-						// 	contentItem: IconLabel {
-						// 		text: qsTr("Bloquer")
-						// 		iconSource: AppIcons.empty
-						// 	}
-						// 	onClicked: console.debug("[CallPage.qml] TODO : block user")
-						// }
-						Rectangle {
-							Layout.fillWidth: true
-							Layout.preferredHeight: 2 * DefaultStyle.dp
-							color: DefaultStyle.main2_400
-						}
-						
-						Button {
-							background: Item {}
-							contentItem: IconLabel {
-								text: qsTr("Supprimer l'historique")
-								iconSource: AppIcons.trashCan
-								colorizationColor: DefaultStyle.danger_500main
-							}
-							Connections {
-								target: deleteForUserPopup
-								function onAccepted() {
-									detailListView.model.removeEntriesWithFilter()
-									mainItem.listViewUpdated()
+								icon.source: AppIcons.plusCircle
+								icon.width: 24 * DefaultStyle.dp
+								icon.height: 24 * DefaultStyle.dp
+								spacing: 10 * DefaultStyle.dp
+								textSize: 14 * DefaultStyle.dp
+								textWeight: 400 * DefaultStyle.dp
+								textColor: DefaultStyle.main2_500main
+								contentImageColor: DefaultStyle.main2_600
+								background: Item {}
+								onClicked: {
+									detailOptions.close()
+									if (detailOptions.friendGui) mainWindow.displayContactPage(contactDetail.contactAddress)
+									else mainItem.createContactRequested(contactDetail.contactName, contactDetail.contactAddress)
 								}
 							}
-							onClicked: {
-								detailOptions.close()
-								deleteForUserPopup.open()
+							Button {
+								text: qsTr("Copier l'adresse SIP")
+								icon.source: AppIcons.copy
+								icon.width: 24 * DefaultStyle.dp
+								icon.height: 24 * DefaultStyle.dp
+								spacing: 10 * DefaultStyle.dp
+								textSize: 14 * DefaultStyle.dp
+								textWeight: 400 * DefaultStyle.dp
+								textColor: DefaultStyle.main2_500main
+								contentImageColor: DefaultStyle.main2_600
+								background: Item {}
+								
+								onClicked: {
+									detailOptions.close()
+									var success = UtilsCpp.copyToClipboard(mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress)
+									if (success) UtilsCpp.showInformationPopup(qsTr("Copié"), qsTr("L'adresse a été copiée dans le presse-papier"), true)
+									else UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Erreur lors de la copie de l'adresse"), false)
+								}
+							}
+							// Button {
+							// 	background: Item {}
+							// 	enabled: false
+							// 	contentItem: IconLabel {
+							// 		text: qsTr("Bloquer")
+							// 		iconSource: AppIcons.empty
+							// 	}
+							// 	onClicked: console.debug("[CallPage.qml] TODO : block user")
+							// }
+							Rectangle {
+								Layout.fillWidth: true
+								Layout.preferredHeight: 2 * DefaultStyle.dp
+								color: DefaultStyle.main2_400
+							}
+							
+							Button {
+								text: qsTr("Supprimer l'historique")
+								icon.source: AppIcons.trashCan
+								icon.width: 24 * DefaultStyle.dp
+								icon.height: 24 * DefaultStyle.dp
+								spacing: 10 * DefaultStyle.dp
+								textSize: 14 * DefaultStyle.dp
+								textWeight: 400 * DefaultStyle.dp
+								textColor: DefaultStyle.danger_500main
+								contentImageColor: DefaultStyle.danger_500main
+								background: Item {}
+								
+								Connections {
+									target: deleteForUserPopup
+									function onAccepted() {
+										detailListView.model.removeEntriesWithFilter()
+										mainItem.listViewUpdated()
+									}
+								}
+								onClicked: {
+									detailOptions.close()
+									deleteForUserPopup.open()
+								}
 							}
 						}
 					}

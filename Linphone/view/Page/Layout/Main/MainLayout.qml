@@ -119,7 +119,6 @@ Item {
 				Binding on currentIndex {
 					when: mainItem.contextualMenuOpenedComponent != undefined
 					value: -1
-					restoreMode: Binding.RestoreBindingOrValue
 				}
 				model: [
 					{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels")},
