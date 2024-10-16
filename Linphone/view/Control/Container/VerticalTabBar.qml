@@ -80,9 +80,8 @@ Control.TabBar {
 		}
 		Rectangle {
 			color: DefaultStyle.main1_500_main
-			x: parent.x + parent.width/2
 			y: parent.y + parent.height/2
-			width: parent.width/2
+			width: parent.width
 			height: parent.height/2
 		}
 	}

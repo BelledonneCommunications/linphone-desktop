@@ -104,29 +104,6 @@ Item {
 			}
 		}
 		anchors.fill: parent
-		ColumnLayout{
-			anchors.fill: parent
-			spacing: 0
-			Rectangle{
-				Layout.fillWidth: true
-				Layout.fillHeight: true
-				color: DefaultStyle.grey_0
-			}
-			RowLayout{
-				Layout.fillWidth: true
-				Layout.preferredHeight: tabbar.cornerRadius
-				spacing: 0
-				Item{// Transparent corner
-					Layout.fillHeight: true
-					Layout.preferredWidth: tabbar.cornerRadius
-				}
-				Rectangle{
-					Layout.fillWidth: true
-					Layout.fillHeight: true	
-					color: DefaultStyle.grey_0
-				}
-			}
-		}
 		
 		RowLayout {
 			anchors.fill: parent

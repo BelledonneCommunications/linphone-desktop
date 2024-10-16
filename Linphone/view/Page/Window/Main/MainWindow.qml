@@ -14,7 +14,7 @@ AbstractWindow {
 	// TODO : handle this bool when security mode is implemented
 	property bool firstConnection: true
 
-	color: "transparent"
+	color: DefaultStyle.grey_0
 
 	signal callCreated()
 
