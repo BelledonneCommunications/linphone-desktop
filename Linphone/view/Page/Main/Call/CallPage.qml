@@ -748,9 +748,13 @@ AbstractMainPage {
 						clip: true
 	
 						model: CallHistoryProxy {
+							id: detailsHistoryProxy
 							filterText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
+							onFilterTextChanged: maxDisplayItems = initialDisplayItems
+							initialDisplayItems: detailListView.height / (56 * DefaultStyle.dp) + 5
+							displayItemsStep: initialDisplayItems / 2
 						}
-	
+						onAtYEndChanged: if(atYEnd) detailsHistoryProxy.displayMore()
 						delegate: Item {
 							width:detailListView.width
 							height: 56 * DefaultStyle.dp

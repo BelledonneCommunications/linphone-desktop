@@ -42,43 +42,47 @@ using namespace std;
 const QString ImageProvider::ProviderId = "internal";
 
 ImageAsyncImageResponse::ImageAsyncImageResponse(const QString &id, const QSize &requestedSize) {
-
 	QString path = ":/data/image/";
-	QStringList filters;
-	filters << "*.svg";
-	filters << "*.png";
-	QDir imageDir(path);
-	if (!imageDir.exists()) {
-		lDebug() << QStringLiteral("[ImageProvider] Dir doesn't exist: `%1`.").arg(path);
-		emit imageGrabbed(QImage(":/data/image/warning-circle.svg"));
-		return;
-	}
-	QFileInfoList files = QDir(path).entryInfoList(filters, QDir::Files, QDir::Name);
-	QFileInfo fileInfo;
-	for (QFileInfo file : files) {
-		if (file.fileName() == id) {
-			fileInfo = file;
-			mPath = file.absoluteFilePath();
-			break;
-		}
-	}
+	//  Snippet for external images (useful for Chats). Do not use it for internal because of performance issue.
+	// QStringList filters;
+	//  filters << "*.svg";
+	//  filters << "*.png";
+	// filters << id;// Use it if we don't need wildcards.
+	//  QDir imageDir(path);
+	//  if (!imageDir.exists()) {
+	//	lDebug() << QStringLiteral("[ImageProvider] Dir doesn't exist: `%1`.").arg(path);
+	//	imageGrabbed(QImage(":/data/image/warning-circle.svg"));
+	//	return;
+	// }
+	//  elapsedTimes.push_back(benchmark.restart());
 
+	// QFileInfoList files = QDir(path).entryInfoList(filters, QDir::Files, QDir::Name);
+	// QFileInfo fileInfo;
+	// for (QFileInfo file : files) {
+	//	if (file.fileName() == id) {
+	//		fileInfo = file;
+	//		mPath = file.absoluteFilePath();
+	//		break;
+	//	}
+	// }
+	// elapsedTimes.push_back(benchmark.restart());
+	mPath = path + id;
 	QFile file(mPath);
+	QFileInfo fileInfo(file);
 
 	if (!file.exists()) {
 		lDebug() << QStringLiteral("[ImageProvider] File doesn't exist: `%1`.").arg(path + id);
-		emit imageGrabbed(QImage(":/data/image/warning-circle.svg"));
+		imageGrabbed(QImage(":/data/image/warning-circle.svg"));
 		return;
 	}
 
 	if (Q_UNLIKELY(!file.open(QIODevice::ReadOnly))) {
 		qWarning() << QStringLiteral("[ImageProvider] Unable to open file: `%1`.").arg(path);
-		emit imageGrabbed(QImage(":/data/image/warning-circle.svg"));
+		imageGrabbed(QImage(":/data/image/warning-circle.svg"));
 		return;
 	}
 
 	QImage image;
-
 	if (fileInfo.suffix() == "svg") {
 		QSvgRenderer renderer(mPath);
 		if (Q_UNLIKELY(!renderer.isValid())) {
@@ -102,9 +106,8 @@ ImageAsyncImageResponse::ImageAsyncImageResponse(const QString &id, const QSize 
 			}
 		}
 	} else image = QImage(mPath);
-
-	if (!image.isNull()) emit imageGrabbed(image);
-	else emit imageGrabbed(QImage(":/data/image/warning-circle.svg"));
+	if (!image.isNull()) imageGrabbed(image);
+	else imageGrabbed(QImage(":/data/image/warning-circle.svg"));
 }
 
 void ImageAsyncImageResponse::imageGrabbed(QImage image) {
