@@ -65,8 +65,7 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 			}
 			mModelConnection->invokeToCore([this, accounts, defaultAccountCore]() {
 				mustBeInMainThread(getClassName());
-				resetData();
-				add(*accounts);
+				resetData<AccountCore>(*accounts);
 				setHaveAccount(accounts->size() > 0);
 				setDefaultAccount(defaultAccountCore);
 				delete accounts;

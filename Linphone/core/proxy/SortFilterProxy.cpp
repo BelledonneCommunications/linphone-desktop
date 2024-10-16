@@ -19,7 +19,7 @@
  */
 
 #include "SortFilterProxy.hpp"
-#include "Proxy.hpp"
+
 SortFilterProxy::SortFilterProxy(QAbstractItemModel *list) : QSortFilterProxyModel(list) {
 	connect(this, &SortFilterProxy::rowsInserted, this, &SortFilterProxy::countChanged);
 	connect(this, &SortFilterProxy::rowsRemoved, this, &SortFilterProxy::countChanged);
@@ -43,7 +43,6 @@ void SortFilterProxy::deleteSourceModel() {
 }
 
 void SortFilterProxy::setSourceModel(QAbstractItemModel *model) {
-	auto listModel = dynamic_cast<Proxy *>(model);
 	auto oldSourceModel = sourceModel();
 	if (oldSourceModel) disconnect(oldSourceModel);
 	QSortFilterProxyModel::setSourceModel(model);

@@ -71,28 +71,35 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 			}
 			mModelConnection->invokeToCore([this, callLogs]() {
 				mustBeInMainThread(getClassName());
-				resetData();
-				add(*callLogs);
-				
-				/*
-				if (callLogs->size() > 0) {
-					int count = qMin(callLogs->size(), mMaxDisplayItems);
-					// QModelIndex firstIndex = index(0, 0);
-					beginInsertRows(QModelIndex(), 0, count - 1);
-					for (auto i : *callLogs)
-						mList << i.template objectCast<QObject>();
-					endInsertRows();
-					// auto lastIndex = index(count - 1, 0);
-					// emit dataChanged(firstIndex, lastIndex);
-				}*/
+				resetData<CallHistoryCore>(*callLogs);
 				delete callLogs;
 			});
 		});
 	});
 	mModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged,
 	                                     [this]() { mModelConnection->invokeToCore([this]() { lUpdate(); }); });
-	mModelConnection->makeConnectToModel(&CoreModel::callLogUpdated,
-	                                     [this]() { mModelConnection->invokeToCore([this]() { lUpdate(); }); });
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::callLogUpdated,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::CallLog> &callLog) {
+		    QSharedPointer<CallHistoryCore> *callLogs = new QSharedPointer<CallHistoryCore>[1];
+		    auto model = createCallHistoryCore(callLog);
+		    callLogs[0] = model;
+		    mModelConnection->invokeToCore([this, callLogs]() {
+			    auto oldLog = std::find_if(mList.begin(), mList.end(), [callLogs](QSharedPointer<QObject> log) {
+				    return (*callLogs)->mCallId == log.objectCast<CallHistoryCore>()->mCallId;
+			    });
+			    if (oldLog == mList.end()) { // New
+				    prepend(*callLogs);
+			    } else { // Update
+				    qWarning() << log()
+				                      .arg("LinphoneCore::onCallLogUpdated has been call for an existant log which "
+				                           "should not be the "
+				                           "case. Check with the SDK. CallID=%1")
+				                      .arg((*callLogs)->mCallId);
+			    }
+			    delete[] callLogs;
+		    });
+	    });
 	emit lUpdate();
 }
 
@@ -121,14 +128,3 @@ QVariant CallHistoryList::data(const QModelIndex &index, int role) const {
 	}
 	return QVariant();
 }
-/*
-void CallHistoryList::displayMore() {
-	int oldCount = qMin(mList.size(), mDisplayCount);
-	int newCount = qMin(mList.size(), mDisplayCount + mDisplayStep);
-	if (newCount != oldCount) {
-		mDisplayCount = newCount;
-		beginInsertRows(QModelIndex(), oldCount, mDisplayCount - 1);
-		endInsertRows();
-	}
-}
-*/

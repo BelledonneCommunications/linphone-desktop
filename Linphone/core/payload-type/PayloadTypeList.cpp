@@ -67,8 +67,7 @@ void PayloadTypeList::setSelf(QSharedPointer<PayloadTypeList> me) {
 			}
 			mModelConnection->invokeToCore([this, payloadTypes]() {
 				mustBeInMainThread(getClassName());
-				resetData();
-				add(*payloadTypes);
+				resetData<PayloadTypeCore>(*payloadTypes);
 				delete payloadTypes;
 			});
 		});

@@ -617,7 +617,7 @@ Item {
 							Connections {
 								target: mainItem
 								function onOpenNewCallRequest(){ callPage.goToNewCall()}
-								function onCallCreated(){ callPage.resetLeftPanel()}
+								function onCallCreated(){ callPage.goToCallHistory()}
 								function onOpenCallHistory(){ callPage.goToCallHistory()}
 								function onOpenNumPadRequest(){ callPage.openNumPadRequest()}
 							}

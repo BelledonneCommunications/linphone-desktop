@@ -70,8 +70,7 @@ void ParticipantList::setSelf(QSharedPointer<ParticipantList> me) {
 				participantList->push_back(meModel);
 				mConferenceModelConnection->invokeToCore([this, participantList]() {
 					mustBeInMainThread(getClassName());
-					resetData();
-					add(*participantList);
+					resetData<ParticipantCore>(*participantList);
 					delete participantList;
 				});
 			});

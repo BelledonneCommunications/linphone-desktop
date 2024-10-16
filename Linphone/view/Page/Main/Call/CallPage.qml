@@ -17,7 +17,7 @@ AbstractMainPage {
 	signal listViewUpdated()
 
 	onVisibleChanged: if (!visible) {
-		resetLeftPanel()
+		goToCallHistory()
 	}
 
 	//Group call properties
@@ -53,10 +53,6 @@ AbstractMainPage {
 
 	showDefaultItem: listStackView.currentItem && listStackView.currentItem.listView && listStackView.currentItem.listView.count === 0 && listStackView.currentItem.listView.model.sourceModel.count === 0 || false
 
-	function resetLeftPanel() {
-		listStackView.clear()
-		listStackView.push(listStackView.initialItem)
-	}
 	function goToNewCall() {
 		if (listStackView.currentItem && listStackView.currentItem.objectName != "newCallItem") listStackView.push(newCallItem)
 	}
@@ -197,6 +193,7 @@ AbstractMainPage {
 	Component {
 		id: historyListItem
 		FocusScope{
+			objectName: "historyListItem"
 			Control.StackView.onActivated: titleLoader.sourceComponent = historyListTitle
 			ColumnLayout {
 				anchors.fill: parent
@@ -246,7 +243,9 @@ AbstractMainPage {
 										onFilterTextChanged: maxDisplayItems = initialDisplayItems
 										initialDisplayItems: historyListView.height / (56 * DefaultStyle.dp) + 5
 										displayItemsStep: initialDisplayItems / 2
+										onCountChanged: console.log("callHistoryProxy : " +count)
 									}
+									Component.onCompleted: console.log("historyListView completed")
 									cacheBuffer: contentHeight>0 ? contentHeight : 0// cache all items
 									flickDeceleration: 10000
 									spacing: 10 * DefaultStyle.dp
@@ -276,6 +275,7 @@ AbstractMainPage {
 											anchors.topMargin: 5 * DefaultStyle.dp
 											anchors.bottomMargin: 5 * DefaultStyle.dp
 											visible: !!modelData
+											Component.onCompleted: console.log(index + " => Completed "+visible)
 											RowLayout {
 												z: 1
 												anchors.fill: parent
@@ -404,13 +404,6 @@ AbstractMainPage {
 									}
 									onVisibleChanged: {
 										if (!visible) currentIndex = -1
-									}
-	
-									Connections {
-										target: mainItem
-										function onListViewUpdated() {
-											historyListView.model.updateView()
-										}
 									}
 									Control.ScrollBar.vertical: scrollbar
 								}

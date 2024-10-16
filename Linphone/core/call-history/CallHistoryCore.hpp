@@ -62,6 +62,7 @@ public:
 	bool mIsOutgoing;
 	bool mIsConference = false;
 	LinphoneEnums::CallStatus mStatus;
+	QString mCallId;
 
 signals:
 	void durationChanged(QString duration);

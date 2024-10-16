@@ -38,8 +38,9 @@ bool LimitProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent
 
 void LimitProxy::setSourceModels(SortFilterProxy *firstList) {
 	auto secondList = firstList->sourceModel();
-	connect(secondList, &QAbstractItemModel::rowsInserted, this, &LimitProxy::invalidateFilter);
-	connect(secondList, &QAbstractItemModel::rowsRemoved, this, &LimitProxy::invalidateFilter);
+	connect(secondList, &QAbstractItemModel::rowsInserted, this, &LimitProxy::onAdded);
+	connect(secondList, &QAbstractItemModel::rowsRemoved, this, &LimitProxy::onRemoved);
+	connect(secondList, &QAbstractItemModel::modelReset, this, &LimitProxy::invalidateRowsFilter);
 	connect(firstList, &SortFilterProxy::filterTextChanged, this, &LimitProxy::filterTextChanged);
 	connect(firstList, &SortFilterProxy::filterTypeChanged, this, &LimitProxy::filterTypeChanged);
 
@@ -147,5 +148,17 @@ void LimitProxy::displayMore() {
 	int newCount = getDisplayCount(model ? model->rowCount() : 0, mMaxDisplayItems + mDisplayItemsStep);
 	if (newCount != oldCount) {
 		setMaxDisplayItems(mMaxDisplayItems + mDisplayItemsStep);
+	}
+}
+
+void LimitProxy::onAdded() {
+	int count = sourceModel()->rowCount();
+	if (mMaxDisplayItems > 0 && mMaxDisplayItems <= count) setMaxDisplayItems(mMaxDisplayItems + 1);
+}
+
+void LimitProxy::onRemoved() {
+	int count = sourceModel()->rowCount();
+	if (mMaxDisplayItems > 0 && mMaxDisplayItems <= count) {
+		invalidateFilter();
 	}
 }

@@ -54,6 +54,7 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 	mIsOutgoing = callLog->getDir() == linphone::Call::Dir::Outgoing;
 	mDuration = QString::number(callLog->getDuration());
 	mIsConference = callLog->wasConference();
+	mCallId = Utils::coreStringToAppString(callLog->getCallId());
 	if (mIsConference) {
 		auto confinfo = callLog->getConferenceInfo();
 		mConferenceInfo = ConferenceInfoCore::create(confinfo);

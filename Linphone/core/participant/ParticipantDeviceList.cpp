@@ -74,8 +74,7 @@ QSharedPointer<ParticipantDeviceCore> ParticipantDeviceList::getMe() const {
 
 void ParticipantDeviceList::setDevices(QList<QSharedPointer<ParticipantDeviceCore>> devices) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
-	resetData();
-	add(devices);
+	resetData<ParticipantDeviceCore>(devices);
 	lDebug() << log().arg("Add %1 devices").arg(devices.size());
 }
 

@@ -64,20 +64,16 @@ public:
 	template <class T>
 	void add(QList<QSharedPointer<T>> items) {
 		int count = items.size();
-		if (count > 0 ) {
+		if (count > 0) {
 			int currentCount = rowCount();
-			int newCount = getDisplayCount(mList.size() + count);
-			if(newCount != currentCount){
-				beginInsertRows(QModelIndex(), currentCount, newCount - 1);
-				for (auto i : items)
-					mList << i.template objectCast<QObject>();
-				endInsertRows();
-				QModelIndex firstIndex = currentCount > 0 ? index(currentCount-1, 0) : index(0, 0);
-				auto lastIndex = index(newCount - 1, 0);
-				emit dataChanged(firstIndex, lastIndex);	
-			}else
-				for (auto i : items)
-					mList << i.template objectCast<QObject>();
+			int newCount = mList.size() + count;
+			beginInsertRows(QModelIndex(), currentCount, newCount - 1);
+			for (auto i : items)
+				mList << i.template objectCast<QObject>();
+			endInsertRows();
+			QModelIndex firstIndex = currentCount > 0 ? index(currentCount - 1, 0) : index(0, 0);
+			auto lastIndex = index(newCount - 1, 0);
+			emit dataChanged(firstIndex, lastIndex);
 		}
 	}
 
@@ -89,6 +85,15 @@ public:
 	template <class T>
 	void prepend(QList<QSharedPointer<T>> items) {
 		AbstractListProxy<QSharedPointer<QObject>>::prepend(items);
+	}
+
+	template <class T>
+	void resetData(QList<QSharedPointer<T>> items) {
+		beginResetModel();
+		mList.clear();
+		for (auto i : items)
+			mList << i.template objectCast<QObject>();
+		endResetModel();
 	}
 
 	virtual bool remove(QObject *itemToRemove) override {

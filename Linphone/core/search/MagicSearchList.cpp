@@ -142,12 +142,11 @@ void MagicSearchList::setResults(const QList<QSharedPointer<FriendCore>> &contac
 		if (!isFriendCore) continue;
 		disconnect(isFriendCore.get());
 	}
-	resetData();
+	resetData<FriendCore>(contacts);
 	for (auto it : contacts) {
 		connect(it.get(), &FriendCore::removed, this, qOverload<QObject *>(&MagicSearchList::remove));
 		connect(it.get(), &FriendCore::starredChanged, this, [this] { lSearch(mSearchFilter); });
 	}
-	add(contacts);
 }
 
 void MagicSearchList::addResult(const QSharedPointer<FriendCore> &contact) {

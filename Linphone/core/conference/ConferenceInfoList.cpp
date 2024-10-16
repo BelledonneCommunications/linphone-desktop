@@ -67,9 +67,8 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			}
 			mCoreModelConnection->invokeToCore([this, items]() {
 				mustBeInMainThread(getClassName());
-				resetData();
 				int currentDateIndex = sort(*items);
-				add(*items);
+				resetData<ConferenceInfoCore>(*items);
 				updateHaveCurrentDate();
 				if (mLastConfInfoInserted) {
 					int index = -1;

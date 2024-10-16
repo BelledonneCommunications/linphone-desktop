@@ -70,6 +70,7 @@ FocusScope {
 						id: grouCallButton
 						visible: mainItem.groupCallVisible && !SettingsCpp.disableMeetingsFeature
 						Layout.preferredWidth: 320 * DefaultStyle.dp
+						Layout.preferredHeight: 44 * DefaultStyle.dp
 						padding: 0
 						KeyNavigation.up: searchBar
 						KeyNavigation.down: contactList.count >0 ? contactList : searchList
@@ -85,7 +86,6 @@ FocusScope {
 						}
 						contentItem: RowLayout {
 							spacing: 16 * DefaultStyle.dp
-							anchors.verticalCenter: parent.verticalCenter
 							Image {
 								source: AppIcons.groupCall
 								Layout.preferredWidth: 44 * DefaultStyle.dp

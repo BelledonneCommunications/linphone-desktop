@@ -47,10 +47,6 @@ void CallHistoryProxy::removeEntriesWithFilter() {
 	}
 }
 
-void CallHistoryProxy::updateView() {
-	mHistoryList->lUpdate();
-}
-
 //------------------------------------------------------------------------------------------
 
 bool CallHistoryProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {

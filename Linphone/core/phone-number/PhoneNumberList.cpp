@@ -48,8 +48,7 @@ PhoneNumberList::PhoneNumberList(QObject *parent) : ListProxy(parent) {
 		// Invoke for adding stuffs in caller thread
 		QMetaObject::invokeMethod(this, [this, numbers]() {
 			mustBeInMainThread(this->log().arg(Q_FUNC_INFO));
-			resetData();
-			add(*numbers);
+			resetData<PhoneNumber>(*numbers);
 			delete numbers;
 		});
 	});

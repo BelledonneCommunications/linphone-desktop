@@ -71,8 +71,7 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 			}
 			mModelConnection->invokeToCore([this, calls, currentCallCore]() {
 				mustBeInMainThread(getClassName());
-				resetData();
-				add(*calls);
+				resetData<CallCore>(*calls);
 				setHaveCall(calls->size() > 0);
 				setCurrentCall(currentCallCore);
 				delete calls;

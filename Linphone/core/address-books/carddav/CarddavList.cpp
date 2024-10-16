@@ -67,8 +67,7 @@ void CarddavList::setSelf(QSharedPointer<CarddavList> me) {
 			}
 			mModelConnection->invokeToCore([this, carddavs]() {
 				mustBeInMainThread(getClassName());
-				resetData();
-				add(*carddavs);
+				resetData<CarddavCore>(*carddavs);
 				delete carddavs;
 			});
 		});

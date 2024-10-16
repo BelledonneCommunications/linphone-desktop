@@ -64,8 +64,7 @@ void LdapList::setSelf(QSharedPointer<LdapList> me) {
 			}
 			mModelConnection->invokeToCore([this, ldaps]() {
 				mustBeInMainThread(getClassName());
-				resetData();
-				add(*ldaps);
+				resetData<LdapCore>(*ldaps);
 				delete ldaps;
 			});
 		});

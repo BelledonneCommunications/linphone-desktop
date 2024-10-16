@@ -80,6 +80,9 @@ public:
 	virtual void setFilterType(int filterType);
 	//-------------------------------------------------------------
 
+	void onAdded();
+	void onRemoved();
+
 	int mInitialDisplayItems = -1;
 	int mMaxDisplayItems = -1;
 	int mDisplayItemsStep = 5;

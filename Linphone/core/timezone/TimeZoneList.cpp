@@ -46,17 +46,18 @@ TimeZoneList::~TimeZoneList() {
 // -----------------------------------------------------------------------------
 
 void TimeZoneList::initTimeZones() {
-	resetData();
+	QList<QSharedPointer<QObject>> models;
 	for (auto id : QTimeZone::availableTimeZoneIds()) {
 		auto model = QSharedPointer<TimeZoneModel>::create(QTimeZone(id));
 		if (std::find_if(mList.begin(), mList.end(), [id](const QSharedPointer<QObject> &a) {
 			    return a.objectCast<TimeZoneModel>()->getTimeZone() == QTimeZone(id);
 		    }) == mList.end()) {
 			if (model->getCountryName().toUpper() != "DEFAULT") {
-				add(model);
+				models << model;
 			}
 		}
 	}
+	resetData(models);
 }
 
 QHash<int, QByteArray> TimeZoneList::roleNames() const {
