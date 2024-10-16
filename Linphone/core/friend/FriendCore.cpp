@@ -20,15 +20,14 @@
 
 #include "FriendCore.hpp"
 #include "core/App.hpp"
-#include "core/proxy/ListProxy.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/thread/SafeConnection.hpp"
 
 DEFINE_ABSTRACT_OBJECT(FriendCore)
 
-const QString addressLabel = FriendCore::tr("Adresse SIP");
-const QString phoneLabel = FriendCore::tr("Téléphone");
+const QString _addressLabel = FriendCore::tr("Adresse SIP");
+const QString _phoneLabel = FriendCore::tr("Téléphone");
 
 QVariant createFriendAddressVariant(const QString &label, const QString &address) {
 	QVariantMap map;
@@ -73,7 +72,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 		auto addresses = contact->getAddresses();
 		for (auto &address : addresses) {
 			mAddressList.append(
-			    createFriendAddressVariant(addressLabel, Utils::coreStringToAppString(address->asStringUriOnly())));
+			    createFriendAddressVariant(_addressLabel, Utils::coreStringToAppString(address->asStringUriOnly())));
 		}
 		mDefaultAddress =
 		    contact->getAddress() ? Utils::coreStringToAppString(contact->getAddress()->asStringUriOnly()) : QString();
@@ -176,8 +175,8 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 				auto numbers = mFriendModel->getAddresses();
 				QList<QVariant> addr;
 				for (auto &num : numbers) {
-					addr.append(
-					    createFriendAddressVariant(addressLabel, Utils::coreStringToAppString(num->asStringUriOnly())));
+					addr.append(createFriendAddressVariant(_addressLabel,
+					                                       Utils::coreStringToAppString(num->asStringUriOnly())));
 				}
 				mFriendModelConnection->invokeToCore([this, addr]() { resetPhoneNumbers(addr); });
 			});
@@ -186,7 +185,7 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 				QList<QVariant> addr;
 				for (auto &num : numbers) {
 					addr.append(
-					    createFriendAddressVariant(phoneLabel, Utils::coreStringToAppString(num->getPhoneNumber())));
+					    createFriendAddressVariant(_phoneLabel, Utils::coreStringToAppString(num->getPhoneNumber())));
 				}
 				mFriendModelConnection->invokeToCore([this, addr]() { resetPhoneNumbers(addr); });
 			});
@@ -353,15 +352,26 @@ QVariant FriendCore::getAddressAt(int index) const {
 	return mAddressList[index];
 }
 
-void FriendCore::setAddressAt(int index, const QString &label, QString address) {
+void FriendCore::setAddressAt(int index, QString label, QString address) {
 	if (index < 0 || index >= mAddressList.count()) return;
 	auto map = mAddressList[index].toMap();
+	label = label.isEmpty() ? map["label"].toString() : label;
+	QString currentAddress = map["address"].toString();
+
 	if (Utils::isUsername(address)) {
-		address = Utils::interpretUrl(address);
-	}
-	auto oldLabel = map["label"].toString();
-	if (/*oldLabel != label || */ map["address"] != address) {
-		mAddressList.replace(index, createFriendAddressVariant(label.isEmpty() ? oldLabel : label, address));
+		mCoreModelConnection->invokeToModel([this, index, label, currentAddress, address]() {
+			auto linphoneAddr = ToolModel::interpretUrl(address);
+			QString interpretedAddr = Utils::coreStringToAppString(linphoneAddr->asStringUriOnly());
+			if (interpretedAddr != currentAddress) {
+				mCoreModelConnection->invokeToCore([this, index, label, interpretedAddr]() {
+					mAddressList.replace(index, createFriendAddressVariant(label, interpretedAddr));
+					emit addressChanged();
+					setIsSaved(false);
+				});
+			}
+		});
+	} else if (address != currentAddress) {
+		mAddressList.replace(index, createFriendAddressVariant(label, address));
 		emit addressChanged();
 		setIsSaved(false);
 	}
@@ -377,14 +387,18 @@ void FriendCore::removeAddress(int index) {
 
 void FriendCore::appendAddress(const QString &addr) {
 	if (addr.isEmpty()) return;
-	QString interpretedAddress = Utils::interpretUrl(addr);
-	auto linAddr = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(interpretedAddress));
-	if (!linAddr) Utils::showInformationPopup(tr("Erreur"), tr("Adresse invalide"), false);
-	else {
-		mAddressList.append(createFriendAddressVariant(addressLabel, interpretedAddress));
-		if (mDefaultAddress.isEmpty()) mDefaultAddress = interpretedAddress;
-		emit addressChanged();
-	}
+	mCoreModelConnection->invokeToModel([this, addr]() {
+		auto linphoneAddr = ToolModel::interpretUrl(addr);
+		QString interpretedAddress = linphoneAddr ? Utils::coreStringToAppString(linphoneAddr->asString()) : "";
+		mCoreModelConnection->invokeToCore([this, interpretedAddress]() {
+			if (interpretedAddress.isEmpty()) Utils::showInformationPopup(tr("Erreur"), tr("Adresse invalide"), false);
+			else {
+				mAddressList.append(createFriendAddressVariant(_addressLabel, interpretedAddress));
+				if (mDefaultAddress.isEmpty()) mDefaultAddress = interpretedAddress;
+				emit addressChanged();
+			}
+		});
+	});
 }
 
 void FriendCore::resetAddresses(QList<QVariant> newList) {
@@ -535,7 +549,7 @@ void FriendCore::writeFromModel(const std::shared_ptr<FriendModel> &model) {
 	QList<QVariant> addresses;
 	for (auto &addr : model->getAddresses()) {
 		addresses.append(
-		    createFriendAddressVariant(addressLabel, Utils::coreStringToAppString(addr->asStringUriOnly())));
+		    createFriendAddressVariant(_addressLabel, Utils::coreStringToAppString(addr->asStringUriOnly())));
 	}
 	mAddressList = addresses;
 
@@ -667,5 +681,6 @@ void FriendCore::setIsLdap(bool data) {
 }
 
 bool FriendCore::getReadOnly() const {
-	return getIsLdap(); // TODO add conditions for friends retrieved via HTTP [misc]vcards-contacts-list=<URL> & CardDAV
+	return getIsLdap(); // TODO add conditions for friends retrieved via HTTP [misc]vcards-contacts-list=<URL> &
+	                    // CardDAV
 }

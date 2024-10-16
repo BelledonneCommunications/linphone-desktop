@@ -108,7 +108,7 @@ public:
 	QVariant getAddressAt(int index) const;
 	Q_INVOKABLE void appendAddress(const QString &addr);
 	Q_INVOKABLE void removeAddress(int index);
-	Q_INVOKABLE void setAddressAt(int index, const QString &label, QString address);
+	Q_INVOKABLE void setAddressAt(int index, QString label, QString address);
 
 	void setDefaultAddress(const QString &address);
 	QString getDefaultAddress() const;

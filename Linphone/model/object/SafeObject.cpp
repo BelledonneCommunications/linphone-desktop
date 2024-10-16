@@ -33,7 +33,9 @@ SafeObject::SafeObject(QVariant defaultValue, QObject *parent) : mValue(defaultV
 }
 SafeObject::~SafeObject() {
 }
-
+void SafeObject::setDefaultValue(QVariant value) {
+	mValue = value;
+}
 QVariant SafeObject::getValue() const {
 	return mValue;
 }

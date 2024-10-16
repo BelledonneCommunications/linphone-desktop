@@ -58,7 +58,9 @@ VariantObject::~VariantObject() {
 QVariant VariantObject::getValue() const {
 	return mCoreObject->getValue();
 }
-
+void VariantObject::setDefaultValue(QVariant value) {
+	mCoreObject->setDefaultValue(value);
+}
 void VariantObject::requestValue() {
 	emit mCoreObject->requestValue();
 }

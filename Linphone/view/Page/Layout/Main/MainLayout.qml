@@ -341,7 +341,8 @@ Item {
 												_address: magicSearchBar.text
 											}
 											Text {
-												text: UtilsCpp.interpretUrl(magicSearchBar.text)
+												property var urlObj: UtilsCpp.interpretUrl(magicSearchBar.text)
+												text: urlObj?.value
 												font {
 													pixelSize: 12 * DefaultStyle.dp
 													weight: 300 * DefaultStyle.dp

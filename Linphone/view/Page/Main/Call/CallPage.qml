@@ -233,7 +233,6 @@ AbstractMainPage {
 									Binding on text {
 										when: searchBar.text.length !== 0
 										value: qsTr("Aucun appel correspondant")
-										restoreMode: Binding.RestoreBindingOrValue
 									}
 								}
 								ListView {
@@ -497,7 +496,7 @@ AbstractMainPage {
 					}
 					Connections {
 						target: mainItem
-						function onCreateCallFromSearchBarRequested(){ UtilsCpp.createCall(UtilsCpp.interpretUrl(callContactsList.searchBar.text))}
+						function onCreateCallFromSearchBarRequested(){ UtilsCpp.createCall(callContactsList.searchBar.text)}
 						function onOpenNumPadRequest(){ if (!callContactsList.searchBar.numericPadButton.checked) callContactsList.searchBar.numericPadButton.checked = true}
 					}
 					Binding {
@@ -505,7 +504,6 @@ AbstractMainPage {
 						property: "visible"
 						value: true
 						when: callContactsList.searchBar.numericPadButton.checked
-						restoreMode: Binding.RestoreValue
 					}
 				}
 			}

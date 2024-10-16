@@ -253,10 +253,11 @@ ApplicationWindow {
 		anchors.top: parent.top
 		anchors.left: parent.left
 		height: 50
-		width: 120
+		width: fpsText.implicitWidth
 		z: 100
 		visible: !SettingsCpp.hideFps
 		Text{
+			id: fpsText
 			font.bold: true
 			font.italic: true
 			font.pixelSize: 14 * DefaultStyle.dp

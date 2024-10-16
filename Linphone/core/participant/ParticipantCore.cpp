@@ -25,6 +25,7 @@
 #include "ParticipantCore.hpp"
 // #include "ParticipantDeviceList.hpp"
 #include "model/participant/ParticipantModel.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
 // =============================================================================
@@ -46,6 +47,7 @@ ParticipantCore::ParticipantCore(const std::shared_ptr<linphone::Participant> &p
 	if (participant) {
 		mAdminStatus = participant->isAdmin();
 		mSipAddress = Utils::coreStringToAppString(participant->getAddress()->asStringUriOnly());
+		mIsMe = ToolModel::isMe(mSipAddress);
 		mCreationTime = QDateTime::fromSecsSinceEpoch(participant->getCreationTime());
 		mDisplayName = Utils::coreStringToAppString(participant->getAddress()->getDisplayName());
 		if (mDisplayName.isEmpty())
@@ -58,11 +60,8 @@ ParticipantCore::ParticipantCore(const std::shared_ptr<linphone::Participant> &p
 			map.insert("address", address);
 			mParticipantDevices.append(map);
 		}
-	}
-	// App::getInstance()->mEngine->setObjectOwnership(mParticipantDevices.get(),
-	// QQmlEngine::CppOwnership); // Managed by QSharedPointer
-	// connect(this, &ParticipantCore::deviceSecurityLevelChanged, mParticipantDevices.get(),
-	// &ParticipantDeviceListModel::securityLevelChanged);
+	} else mIsMe = false;
+	connect(this, &ParticipantCore::sipAddressChanged, this, &ParticipantCore::updateIsMe);
 }
 
 ParticipantCore::~ParticipantCore() {
@@ -86,7 +85,20 @@ int ParticipantCore::getDeviceCount() const {
 }
 
 bool ParticipantCore::isMe() const {
-	return Utils::isMe(mSipAddress);
+	return mIsMe;
+}
+
+void ParticipantCore::setIsMe(bool isMe) {
+	if (mIsMe != isMe) {
+		mIsMe = isMe;
+		emit isMeChanged();
+	}
+}
+
+void ParticipantCore::updateIsMe() {
+	mParticipantConnection->invokeToModel([this, address = mSipAddress]() {
+		mParticipantConnection->invokeToCore([this, isMe = ToolModel::isMe(address)]() { setIsMe(isMe); });
+	});
 }
 
 QString ParticipantCore::getSipAddress() const {

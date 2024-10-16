@@ -180,7 +180,7 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 			});
 			mConfInfoModelConnection->makeConnectToCore(&ConferenceInfoCore::lCancelConferenceInfo, [this]() {
 				mConfInfoModelConnection->invokeToModel([this] {
-					if (Utils::isMe(mOrganizerAddress)) {
+					if (ToolModel::isMe(mOrganizerAddress)) {
 						mConferenceInfoModel->cancelConference();
 					}
 				});

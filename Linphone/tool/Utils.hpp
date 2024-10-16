@@ -113,17 +113,17 @@ public:
 	Q_INVOKABLE static QDateTime addYears(QDateTime date, int years);
 	Q_INVOKABLE static int timeOffset(QDateTime start, QDateTime end);
 	Q_INVOKABLE static int daysOffset(QDateTime start, QDateTime end);
-	Q_INVOKABLE static QString interpretUrl(const QString &uri);
-	Q_INVOKABLE static bool isValidSIPAddress(const QString &uri);
+	Q_INVOKABLE static VariantObject *interpretUrl(QString uri);
+	Q_INVOKABLE static VariantObject *isValidSIPAddress(QString uri);
 	Q_INVOKABLE static bool isValidIPAddress(const QString &host);
 	Q_INVOKABLE static bool isValidHostname(const QString &hostname);
 	Q_INVOKABLE static bool isValidURL(const QString &url);
-	Q_INVOKABLE static QString findAvatarByAddress(const QString &address);
+	Q_INVOKABLE static VariantObject *findAvatarByAddress(const QString &address);
 	Q_INVOKABLE static VariantObject *findFriendByAddress(const QString &address);
 	Q_INVOKABLE static VariantObject *getFriendAddressSecurityLevel(const QString &address);
 	static QString generateSavedFilename(const QString &from, const QString &to);
 	Q_INVOKABLE static VariantObject *isMe(const QString &address);
-	Q_INVOKABLE static bool isLocal(const QString &address);
+	Q_INVOKABLE static VariantObject *isLocal(const QString &address);
 	Q_INVOKABLE static bool isUsername(const QString &txt); // Regex check
 	static QString getCountryName(const QLocale::Territory &p_country);
 	Q_INVOKABLE static void useFetchConfig(const QString &configUrl);

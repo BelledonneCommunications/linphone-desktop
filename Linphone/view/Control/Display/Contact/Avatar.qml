@@ -32,9 +32,8 @@ Loader{
 	property bool haveAvatar: (account && account.core?.pictureUri || false)
 							  || (contact && contact.core.pictureUri)
 							  || computedAvatarUri.length != 0
-	property string computedAvatarUri: UtilsCpp.findAvatarByAddress(_address)
-	
-	onHaveAvatarChanged: replace(haveAvatar ? avatar : initials, StackView.Immediate)
+	property var avatarObj: UtilsCpp.findAvatarByAddress(_address)
+	property string computedAvatarUri: avatarObj ? avatarObj.value : ''
 	
 	property var securityLevelObj: UtilsCpp.getFriendAddressSecurityLevel(_address)
 	property var securityLevel: securityLevelObj ? securityLevelObj.value : LinphoneEnums.SecurityLevel.None
@@ -69,8 +68,14 @@ Loader{
 			StackView {
 				id: stackView
 				
-				initialItem: haveAvatar ? avatar : initials
+				initialItem: mainItem.haveAvatar ? avatar : initials
 				anchors.fill: parent
+				
+				Connections{
+					target: mainItem
+					onHaveAvatarChanged: function(haveAvatar) {stackView.replace(haveAvatar ? avatar : initials, StackView.Immediate)}
+				}
+				
 				Rectangle {
 					visible: mainItem.secured || mainItem.securityBreach
 					anchors.fill: stackView.currentItem

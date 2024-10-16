@@ -302,26 +302,32 @@ QString Utils::formatDateElapsedTime(const QDateTime &date) {
 	return QString::number(s) + " s";
 }
 
-QString Utils::interpretUrl(const QString &uri) {
-	QString address = uri;
-
-	if (!address.contains('@')) {
-		App::postModelBlock([&address, uri]() mutable {
-			auto addr = ToolModel::interpretUrl(uri);
-			if (addr) address = Utils::coreStringToAppString(addr->asStringUriOnly());
-		});
-	} else if (!address.startsWith("sip:")) {
-		address.prepend("sip:");
+VariantObject *Utils::interpretUrl(QString uri) {
+	VariantObject *data = new VariantObject(uri);
+	if (!data) return nullptr;
+	data->makeRequest([uri]() -> QVariant {
+		QString address = uri;
+		auto addr = ToolModel::interpretUrl(uri);
+		if (addr) address = Utils::coreStringToAppString(addr->asStringUriOnly());
+		return QVariant(address);
+	});
+	if (!uri.contains('@')) {
+		data->requestValue();
+	} else if (!uri.startsWith("sip:")) {
+		uri.prepend("sip:");
+		data->setDefaultValue(uri);
 	}
-	return address;
+	return data;
 }
 
-bool Utils::isValidSIPAddress(const QString &uri) {
-	bool isValid = false;
-	App::postModelBlock([&isValid, uri]() mutable {
-		isValid = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(uri)) != nullptr;
+VariantObject *Utils::isValidSIPAddress(QString uri) {
+	VariantObject *data = new VariantObject(QVariant(false));
+	if (!data) return nullptr;
+	data->makeRequest([uri]() -> QVariant {
+		return QVariant(linphone::Factory::get()->createAddress(Utils::appStringToCoreString(uri)) != nullptr);
 	});
-	return isValid;
+	data->requestValue();
+	return data;
 }
 
 bool Utils::isValidIPAddress(const QString &host) {
@@ -345,18 +351,20 @@ bool Utils::isValidURL(const QString &url) {
 	return QUrl(url).isValid();
 }
 
-QString Utils::findAvatarByAddress(const QString &address) {
-	QString avatar;
-
-	App::postModelBlock([address, avatar]() mutable {
+VariantObject *Utils::findAvatarByAddress(const QString &address) {
+	VariantObject *data = new VariantObject("");
+	if (!data) return nullptr;
+	data->makeRequest([address]() -> QVariant {
+		QString avatar;
 		auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
-		if (!defaultFriendList) return;
+		if (!defaultFriendList) return QVariant();
 		auto linphoneAddr = ToolModel::interpretUrl(address);
 		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
 		if (linFriend) avatar = Utils::coreStringToAppString(linFriend->getPhoto());
+		return QVariant(avatar);
 	});
-
-	return avatar;
+	data->requestValue();
+	return data;
 }
 
 VariantObject *Utils::findFriendByAddress(const QString &address) {
@@ -1328,17 +1336,17 @@ int Utils::getYear(const QDate &date) {
 }
 
 VariantObject *Utils::isMe(const QString &address) {
-	bool isMe = false;
-	VariantObject *data = new VariantObject();
+	VariantObject *data = new VariantObject(QVariant(false));
 	if (!data) return nullptr;
-	data->makeRequest([&isMe, address]() { return QVariant::fromValue(ToolModel::isMe(address)); });
+	data->makeRequest([address]() { return QVariant::fromValue(ToolModel::isMe(address)); });
 	data->requestValue();
 	return data;
 }
-bool Utils::isLocal(const QString &address) {
-	bool isLocal = false;
-	App::postModelSync([&isLocal, address]() { isLocal = ToolModel::isLocal(address); });
-	return isLocal;
+VariantObject *Utils::isLocal(const QString &address) {
+	VariantObject *data = new VariantObject(QVariant(false));
+	data->makeRequest([address]() { return QVariant(ToolModel::isLocal(address)); });
+	data->requestValue();
+	return data;
 }
 
 bool Utils::isUsername(const QString &txt) {

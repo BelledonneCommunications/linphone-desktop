@@ -41,7 +41,7 @@ class ParticipantCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged)
 	Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged)
 	Q_PROPERTY(bool isAdmin READ isAdmin WRITE setIsAdmin NOTIFY isAdminChanged)
-	Q_PROPERTY(bool isMe READ isMe CONSTANT)
+	Q_PROPERTY(bool isMe READ isMe NOTIFY isMeChanged)
 	Q_PROPERTY(QDateTime creationTime READ getCreationTime CONSTANT)
 	Q_PROPERTY(bool focus READ isFocus CONSTANT)
 	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
@@ -64,6 +64,8 @@ public:
 	int getDeviceCount() const;
 
 	bool isMe() const;
+	void setIsMe(bool isMe);
+	void updateIsMe();
 
 	void setSipAddress(const QString &address);
 	void setDisplayName(const QString &name);
@@ -85,6 +87,7 @@ signals:
 	void sipAddressChanged();
 	void isAdminChanged();
 	void isFocusChanged();
+	void isMeChanged();
 	void deviceCountChanged();
 	void invitingChanged();
 	void creationTimeChanged();
@@ -109,6 +112,7 @@ private:
 	bool mAdminStatus;
 	bool mIsFocus;
 	int mSecurityLevel;
+	bool mIsMe;
 
 	DECLARE_ABSTRACT_OBJECT
 };

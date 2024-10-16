@@ -54,6 +54,7 @@ public:
 
 	QVariant getValue() const;
 	void requestValue();
+	void setDefaultValue(QVariant value);
 
 	QSharedPointer<SafeObject> mCoreObject, mModelObject;
 	QSharedPointer<SafeConnection<SafeObject, SafeObject>> mConnection;
