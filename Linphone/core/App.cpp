@@ -678,6 +678,7 @@ void App::createCommandParser() {
 // Should be call only at first start
 void App::sendCommand() {
 	auto arguments = mParser->positionalArguments();
+	if (mParser->isSet("fetch-config")) arguments << "fetch-config=" + mParser->value("fetch-config");
 	static bool firstStart = true; // We can't erase positional arguments. So we get them on each restart.
 	if (firstStart && arguments.size() > 0) {
 		firstStart = false;
