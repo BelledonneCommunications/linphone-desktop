@@ -35,6 +35,7 @@ public:
 	~ToolModel();
 
 	static std::shared_ptr<linphone::Address> interpretUrl(const QString &address);
+	static std::shared_ptr<linphone::Call> interpretUri(const QString &uri);
 	static std::shared_ptr<linphone::FriendPhoneNumber> makeLinphoneNumber(const QString &label, const QString &number);
 	static std::shared_ptr<linphone::AudioDevice> findAudioDevice(const QString &id,
 	                                                              linphone::AudioDevice::Capabilities capability);

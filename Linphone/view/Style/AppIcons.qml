@@ -1,5 +1,5 @@
 pragma Singleton
-import QtQuick 2.15
+import QtQuick
 
 QtObject {
 	property string welcomeLinphoneLogo: "image://internal/linphone.svg"

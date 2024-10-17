@@ -217,7 +217,7 @@ AbstractSettingsLayout {
 							}
 							onClicked: {
 								var mainWin = UtilsCpp.getMainWindow()
-								mainWin.showConfirmationLambdaPopup(
+								mainWin.showConfirmationLambdaPopup("",
 									qsTr("Supprimer ") + (model.core.displayName.length > 0 ? model.core.displayName : qsTr("le compte")) + " ?",
 									qsTr("Vous pouvez vous reconnecter à tout moment en cliquant sur \"Ajouter un compte\".\nCependant toutes les informations stockées sur ce périphérique seront supprimées."),
 									function (confirmed) {
@@ -335,7 +335,7 @@ AbstractSettingsLayout {
 											contentImageColor: DefaultStyle.main1_500_main
 											onClicked: {
 												var mainWin = UtilsCpp.getMainWindow()
-												mainWin.showConfirmationLambdaPopup(
+												mainWin.showConfirmationLambdaPopup("",
 													qsTr("Supprimer ") + modelData.core.deviceName + " ?", "",
 													function (confirmed) {
 														if (confirmed) {

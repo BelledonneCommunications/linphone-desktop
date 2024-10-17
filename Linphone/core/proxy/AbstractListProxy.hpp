@@ -64,8 +64,9 @@ public:
 		beginInsertRows(QModelIndex(), row, row);
 		mList << item;
 		endInsertRows();
-		auto lastIndex = index(mList.size() - 1, 0);
-		emit dataChanged(lastIndex, lastIndex);
+		// Snippet in case of not refreshing beside begin/end
+		// auto lastIndex = index(mList.size() - 1, 0);
+		// emit dataChanged(lastIndex, lastIndex);
 	}
 	virtual void add(QList<T> items) {
 		int count = items.size();
@@ -75,9 +76,10 @@ public:
 			beginInsertRows(QModelIndex(), currentCount, newCount - 1);
 			mList << items;
 			endInsertRows();
-			QModelIndex firstIndex = currentCount > 0 ? index(currentCount - 1, 0) : index(0, 0);
-			auto lastIndex = index(newCount - 1, 0);
-			emit dataChanged(firstIndex, lastIndex);
+			// Snippet in case of not refreshing beside begin/end
+			// QModelIndex firstIndex = currentCount > 0 ? index(currentCount - 1, 0) : index(0, 0);
+			// auto lastIndex = index(newCount - 1, 0);
+			// emit dataChanged(firstIndex, lastIndex);
 		}
 	}
 
@@ -86,7 +88,8 @@ public:
 		beginInsertRows(QModelIndex(), 0, 0);
 		mList.prepend(item);
 		endInsertRows();
-		emit dataChanged(index(0), index(0));
+		// Snippet in case of not refreshing beside begin/end
+		// emit dataChanged(index(0), index(0));
 	}
 
 	virtual void prepend(QList<T> items) {
@@ -98,7 +101,8 @@ public:
 			items << mList;
 			mList = items;
 			endInsertRows();
-			emit dataChanged(index(0), index(items.size() - 1));
+			// Snippet in case of not refreshing beside begin/end
+			// emit dataChanged(index(0), index(items.size() - 1));
 		}
 	}
 
@@ -113,7 +117,8 @@ public:
 		for (int i = 0; i < count; ++i)
 			mList.takeAt(row);
 		endRemoveRows();
-		emit dataChanged(index(row), index(limit));
+		// Snippet in case of not refreshing beside begin/end (TODO: check crashs, empty list?)
+		// emit dataChanged(index(row), index(limit));
 		return true;
 	}
 
@@ -126,16 +131,6 @@ public:
 		mList = newData;
 		endResetModel();
 	}
-	/*
-	    void displayMore() {
-	        int oldCount = rowCount();
-	        int newCount = getDisplayCount(oldCount + mList.size(), mMaxDisplayItems + mDisplayItemsStep);
-	        if (newCount != oldCount) {
-	            setMaxDisplayItems(newCount);
-	            beginInsertRows(QModelIndex(), oldCount, newCount - 1);
-	            endInsertRows();
-	        }
-	    }*/
 
 protected:
 	QList<T> mList;

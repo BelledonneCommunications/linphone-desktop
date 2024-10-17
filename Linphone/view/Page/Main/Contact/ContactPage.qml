@@ -61,7 +61,7 @@ AbstractMainPage {
 	function deleteContact(contact) {
 		if (!contact) return
 		var mainWin = UtilsCpp.getMainWindow()
-		mainWin.showConfirmationLambdaPopup(
+		mainWin.showConfirmationLambdaPopup("",
 			contact.core.displayName + qsTr("sera supprimé des contacts. Voulez-vous continuer ?"),
 			"",
 			function (confirmed) {

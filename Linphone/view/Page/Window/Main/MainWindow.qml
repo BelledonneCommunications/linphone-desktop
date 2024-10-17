@@ -25,26 +25,27 @@ AbstractWindow {
 	// 	height: 40 * DefaultStyle.dp
 	// 	color: DefaultStyle.grey_100
 	// }
-
+	function openMainPage(){
+		if (mainWindowStackView.currentItem.objectName !== "mainPage") mainWindowStackView.replace(mainPage, StackView.Immediate)
+	}
 	function goToCallHistory() {
-		console.log("go to call history")
-		mainWindowStackView.replace(mainPage, StackView.Immediate)
+		openMainPage()
 		mainWindowStackView.currentItem.goToCallHistory()
 	}
 	function goToNewCall() {
-		mainWindowStackView.replace(mainPage, StackView.Immediate)
+		openMainPage()
 		mainWindowStackView.currentItem.goToNewCall()
 	}
 	function displayContactPage(contactAddress) {
-		mainWindowStackView.replace(mainPage, StackView.Immediate)
+		openMainPage()
 		mainWindowStackView.currentItem.displayContactPage(contactAddress)
 	}
 	function transferCallSucceed() {
-		mainWindowStackView.replace(mainPage, StackView.Immediate)
+		openMainPage()
 		UtilsCpp.showInformationPopup(qsTr("Appel transféré"), qsTr("Votre correspondant a été transféré au contact sélectionné"))
 	}
 	function initStackViewItem() {
-		if (accountProxy.haveAccount) mainWindowStackView.replace(mainPage, StackView.Immediate)
+		if (accountProxy.haveAccount) openMainPage()
 		else if (SettingsCpp.getFirstLaunch()) mainWindowStackView.replace(welcomePage, StackView.Immediate)
 		else if (SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin) mainWindowStackView.replace(sipLoginPage, StackView.Immediate)
 		else mainWindowStackView.replace(loginPage, StackView.Immediate)
@@ -122,11 +123,11 @@ AbstractWindow {
 		id: loginPage
 		LoginPage {
 			showBackButton: accountProxy.haveAccount
-			onGoBack: mainWindowStackView.replace(mainPage)
+			onGoBack: openMainPage()
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
 			onGoToRegister: mainWindowStackView.replace(registerPage)
 			onConnectionSucceed: {
-				mainWindowStackView.replace(mainPage)
+				openMainPage()
 			}
 		}
 	}
@@ -134,15 +135,15 @@ AbstractWindow {
 		id: sipLoginPage
 		SIPLoginPage {
 			onGoBack: {
-				if(SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin)
-					mainWindowStackView.replace(mainPage)
-				else
+				if(SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin){
+					openMainPage()
+				}else
 					mainWindowStackView.pop()
 			}
 			onGoToRegister: mainWindowStackView.replace(registerPage)
 			
 			onConnectionSucceed: {
-				mainWindowStackView.replace(mainPage)
+				openMainPage()
 			}
 		}
 	}
@@ -192,7 +193,7 @@ AbstractWindow {
 				// TODO : connect to cpp part when ready
 				var selectedMode = index == 0 ? "chiffrement" : "interoperable"
 				console.debug("[SelectMode]User: User selected mode " + selectedMode)
-				mainWindowStackView.replace(mainPage)
+				openMainPage()
 			}
 		}
 	}

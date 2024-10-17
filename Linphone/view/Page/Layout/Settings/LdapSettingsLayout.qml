@@ -26,7 +26,7 @@ AbstractSettingsLayout {
 				visible: !isNew
 				onClicked: {
 					var mainWin = UtilsCpp.getMainWindow()
-					mainWin.showConfirmationLambdaPopup(
+					mainWin.showConfirmationLambdaPopup("",
 						qsTr("Supprimer l'annuaire LDAP ?"),
 						"",
 						function (confirmed) {

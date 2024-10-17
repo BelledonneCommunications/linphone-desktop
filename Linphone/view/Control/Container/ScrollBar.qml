@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Controls.Basic 2.2 as Control
+import QtQuick
+import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone

@@ -124,6 +124,7 @@ AbstractMainPage {
 	Component {
 		id: historyListTitle
 		FocusScope{
+			objectName: "historyListTitle"
 			width: parent.width
 			height: titleCallLayout.implicitHeight
 			RowLayout {
@@ -427,6 +428,7 @@ AbstractMainPage {
 	Component {
 		id: newCallTitle
 		FocusScope{
+			objectName: "newCallTitle"
 			width: parent.width
 			height: parent.height
 			RowLayout {
@@ -481,8 +483,9 @@ AbstractMainPage {
 					numPadPopup: numericPadPopup
 					groupCallVisible: true
 					searchBarColor: DefaultStyle.grey_100
-					//onSelectedContactChanged: mainWindow.startCallWithContact(selectedContact, false, callContactsList)
-					onCallSelectedContact: mainWindow.startCallWithContact(selectedContact, false, callContactsList)
+					onContactClicked: (contact) => {
+						mainWindow.startCallWithContact(contact, false, callContactsList)
+					}
 					onGroupCallCreationRequested: {
 						console.log("groupe call requetsed")
 						listStackView.push(groupCallItem)
@@ -506,6 +509,7 @@ AbstractMainPage {
 	Component {
 		id: groupCallTitle
 		FocusScope{
+			objectName: "groupCallTitle"
 			width: parent.width
 			height: parent.height
 			RowLayout {
@@ -577,6 +581,7 @@ AbstractMainPage {
 	Component {
 		id: groupCallItem
 		FocusScope{
+			objectName: "groupCallItem"
 			Control.StackView.onActivated: {
 				titleLoader.sourceComponent = groupCallTitle
 				addParticipantsLayout.forceActiveFocus()
@@ -638,11 +643,12 @@ AbstractMainPage {
 
 	Component{
 		id: emptySelection
-		Item{}
+		Item{objectName: "emptySelection"}
 	}
 	Component {
 		id: contactDetailComp
 		FocusScope{
+			objectName: "contactDetailComp"
 			width: parent?.width
 			height: parent?.height
 			ContactLayout {

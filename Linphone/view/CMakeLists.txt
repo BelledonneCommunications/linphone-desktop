@@ -7,6 +7,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Button/ComboBox.qml
 	view/Control/Button/HelpIconLabelButton.qml
 	view/Control/Button/IconLabelButton.qml
+	view/Control/Button/MenuButton.qml
 	view/Control/Button/MediumButton.qml
 	view/Control/Button/SmallButton.qml
 	view/Control/Button/CountryIndicatorCombobox.qml
@@ -39,6 +40,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Sticker.qml
 	view/Control/Display/Text.qml
 	view/Control/Display/ToolTip.qml
+	view/Control/Display/Call/CallListView.qml
 	view/Control/Display/Contact/Avatar.qml
 	view/Control/Display/Contact/Contact.qml
 	view/Control/Display/Contact/ContactListView.qml

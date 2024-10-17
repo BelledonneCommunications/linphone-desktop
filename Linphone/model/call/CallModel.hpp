@@ -61,6 +61,7 @@ public:
 
 	void setPaused(bool paused);
 	void transferTo(const std::shared_ptr<linphone::Address> &address);
+	void transferToAnother(const std::shared_ptr<linphone::Call> &call);
 	void terminateAllCalls();
 
 	float getMicrophoneVolumeGain() const;

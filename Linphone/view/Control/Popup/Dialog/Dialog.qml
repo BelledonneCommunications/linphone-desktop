@@ -9,15 +9,17 @@ Popup {
 	modal: true
 	anchors.centerIn: parent
 	closePolicy: Control.Popup.NoAutoClose
-	rightPadding: 10 * DefaultStyle.dp
-	leftPadding: 10 * DefaultStyle.dp
-	topPadding: 10 * DefaultStyle.dp
-	bottomPadding: 10 * DefaultStyle.dp
+	leftPadding: title.length === 0 ? 10 * DefaultStyle.dp : 33 * DefaultStyle.dp 
+	rightPadding: title.length === 0 ? 10 * DefaultStyle.dp : 33 * DefaultStyle.dp 
+	topPadding: title.length === 0 ? 10 * DefaultStyle.dp : 37 * DefaultStyle.dp
+	bottomPadding: title.length === 0 ? 10 * DefaultStyle.dp : 37 * DefaultStyle.dp
 	underlineColor: DefaultStyle.main1_500_main
-	property int radius: 16 * DefaultStyle.dp
+	radius: title.length === 0 ? 16 * DefaultStyle.dp : 0
 	property string title
 	property string text
 	property string details
+	property string firstButtonText: firstButtonAccept ? qsTr("Oui") : qsTr("Annuler")
+	property string secondButtonText: secondButtonAccept ? qsTr("Confirmer") : qsTr("Non")
   	property alias content: contentLayout.data
   	property alias buttons: buttonsLayout.data
 	property alias firstButton: firstButtonId
@@ -50,8 +52,9 @@ Popup {
 				Layout.fillWidth: true
 				visible: text.length != 0
 				text: mainItem.title
+				color: DefaultStyle.main1_500_main
 				font {
-					pixelSize: 16 * DefaultStyle.dp
+					pixelSize: 22 * DefaultStyle.dp
 					weight: 800 * DefaultStyle.dp
 				}
 				wrapMode: Text.Wrap
@@ -102,18 +105,19 @@ Popup {
 			RowLayout {
 				id: buttonsLayout
 				Layout.alignment: Qt.AlignBottom | ( titleText.visible ? Qt.AlignRight : Qt.AlignHCenter)
-				spacing: 10 * DefaultStyle.dp
+				spacing: titleText.visible ? 20 * DefaultStyle.dp : 10 * DefaultStyle.dp
 	
 				// Default buttons only visible if no other children
 				// have been set
 				Button {
 					id:firstButtonId
 					visible: mainItem.buttons.length === 2
-					text: qsTr("Oui")
+					text: mainItem.firstButtonText
 					leftPadding: 20 * DefaultStyle.dp
 					rightPadding: 20 * DefaultStyle.dp
 					topPadding: 11 * DefaultStyle.dp
 					bottomPadding: 11 * DefaultStyle.dp
+					inversedColors: !mainItem.firstButtonAccept
 					focus: !firstButtonAccept
 					onClicked: {
 						if(firstButtonAccept)
@@ -128,7 +132,7 @@ Popup {
 				Button {
 					id: secondButtonId
 					visible: mainItem.buttons.length === 2
-					text: qsTr("Non")
+					text: mainItem.secondButtonText
 					leftPadding: 20 * DefaultStyle.dp
 					rightPadding: 20 * DefaultStyle.dp
 					topPadding: 11 * DefaultStyle.dp

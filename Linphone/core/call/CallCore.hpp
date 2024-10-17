@@ -286,6 +286,7 @@ signals:
 	void lSetVideoEnabled(bool enabled);
 	void lSetPaused(bool paused);
 	void lTransferCall(QString address);
+	void lTransferCallToAnother(QString uri);
 	void lStartRecording();
 	void lStopRecording();
 	void lCheckAuthenticationTokenSelected(const QString &token);

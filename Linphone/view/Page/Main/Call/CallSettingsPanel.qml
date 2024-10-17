@@ -55,6 +55,8 @@ Control.Page {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignVCenter
+					elide: Text.ElideRight
+					maximumLineCount: 1
 					verticalAlignment: Text.AlignVCenter
 					color: DefaultStyle.main1_500_main
 					font {

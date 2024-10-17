@@ -32,10 +32,13 @@ ApplicationWindow {
 			onClosed: closePopup(index)
 			text: requestDialog?.message
 			details: requestDialog?.details
+			firstButtonAccept: title.length === 0
+			secondButtonAccept: title.length !== 0
+			Component.onCompleted: if (details.length != 0) radius = 0
 			// For C++, requestDialog need to be call directly
 			onAccepted: requestDialog ? requestDialog.result(1) : callback(1)
 			onRejected: requestDialog ? requestDialog.result(0) : callback(0)
-			width: 278 * DefaultStyle.dp
+			width: title.length === 0 ? 278 * DefaultStyle.dp : 637 * DefaultStyle.dp
 		}
 	}
 
@@ -166,7 +169,7 @@ ApplicationWindow {
 		if (parentItem == undefined) parentItem = mainWindow.contentItem
 		startCallPopup.parent = parentItem
 		if (contact) {
-			console.log("TRANSFER CALL TO", contact.core.displayName, "addresses count", contact.core.allAddresses.length, call)
+			console.log("[AbstractWindow] Transfer call to", contact.core.displayName, "addresses count", contact.core.allAddresses.length, call)
 			if (contact.core.allAddresses.length > 1) {
 				startCallPopup.contact = contact
 				startCallPopup.currentCall = call
@@ -178,7 +181,7 @@ ApplicationWindow {
 						? ""
 						: contact.core.phoneNumbers[0].address
 					: contact.core.defaultAddress
-				if (addressToCall.length != 0) call.core.lTransferCall(contact.core.defaultAddress)
+				if (addressToCall.length != 0) call.core.lTransferCall(addressToCall)
 			}
 		}
 	}
@@ -213,9 +216,9 @@ ApplicationWindow {
 		popup.closePopup.connect(removeFromPopupLayout)
 	}
 	
-	function showConfirmationLambdaPopup(title,details,callback){
+	function showConfirmationLambdaPopup(title,text, details,callback){
 		console.log("Showing confirmation lambda popup")
-		var popup = confirmPopupComp.createObject(popupLayout, {"text": title, "details":details,"callback":callback})
+		var popup = confirmPopupComp.createObject(popupLayout, {"title": title, "text": text, "details":details,"callback":callback})
 		popup.index = popupLayout.popupList.length
 		popupLayout.popupList.push(popup)
 		popup.open()

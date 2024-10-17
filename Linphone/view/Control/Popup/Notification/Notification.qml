@@ -1,4 +1,4 @@
-import QtQuick 2.7
+import QtQuick
 import QtQuick.Effects
 import Linphone
 

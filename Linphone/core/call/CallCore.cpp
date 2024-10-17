@@ -304,6 +304,13 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			if (linAddr) mCallModel->transferTo(linAddr);
 		});
 	});
+	mCallModelConnection->makeConnectToCore(&CallCore::lTransferCallToAnother, [this](QString uri) {
+		mCallModelConnection->invokeToModel([this, uri]() {
+			auto linCall = ToolModel::interpretUri(uri);
+			if (linCall) mCallModel->transferToAnother(linCall);
+		});
+	});
+
 	mCallModelConnection->makeConnectToModel(
 	    &CallModel::transferStateChanged,
 	    [this](const std::shared_ptr<linphone::Call> &call, linphone::Call::State state) {

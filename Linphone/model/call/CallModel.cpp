@@ -106,6 +106,14 @@ void CallModel::transferTo(const std::shared_ptr<linphone::Address> &address) {
 		                  .arg(Utils::coreStringToAppString(address->asStringUriOnly()));
 }
 
+void CallModel::transferToAnother(const std::shared_ptr<linphone::Call> &call) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (mMonitor->transferToAnother(call) == -1)
+		qWarning() << log()
+		                  .arg(QStringLiteral("Unable to transfer: `%1`."))
+		                  .arg(Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly()));
+}
+
 void CallModel::terminateAllCalls() {
 	auto status = mMonitor->getCore()->terminateAllCalls();
 }

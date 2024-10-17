@@ -51,7 +51,6 @@ void CallHistoryProxy::removeEntriesWithFilter() {
 
 bool CallHistoryProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	bool show = (mFilterText.isEmpty() || mFilterText == "*");
-	auto sortProxy = dynamic_cast<SortFilterList *>(sourceModel());
 
 	if (!show) {
 		QRegularExpression search(QRegularExpression::escape(mFilterText),

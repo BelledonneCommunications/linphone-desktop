@@ -60,7 +60,7 @@ ListView {
 	signal contactDeletionRequested(FriendGui contact)
 	signal contactAddedToSelection(string address)
 	signal contactRemovedFromSelection(string address)
-	signal clicked()
+	signal contactClicked(FriendGui contact)
 
 	function selectContact(address) {
 		var index = magicSearchProxy.findFriendIndexByAddress(address)
@@ -93,9 +93,12 @@ ListView {
 		}
 	}
 
-	onActiveFocusChanged: if(activeFocus && (!footerItem || !footerItem.activeFocus)) {
-		currentIndex = 0
-	}
+	// strange behaviour with this lines
+	// When a popup opens after clicking on a contact, the selected contact
+	// changes because we lose focus on the list
+	// onActiveFocusChanged: if(activeFocus && (!footerItem || !footerItem.activeFocus)) {
+	// 	currentIndex = 0
+	// }
 
 	model: MagicSearchProxy {
 		id: magicSearchProxy
@@ -369,7 +372,7 @@ ListView {
 							mainItem.removeContactFromSelection(indexInSelection, 1)
 						}
 					}
-					mainItem.clicked()
+					mainItem.contactClicked(modelData)
 				}
 			}
 		}
