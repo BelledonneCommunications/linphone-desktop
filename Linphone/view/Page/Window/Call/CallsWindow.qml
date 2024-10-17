@@ -1358,9 +1358,9 @@ AbstractWindow {
 			Component {
 				id: inCallItem
 				Loader{
+					property string objectName: "inCallItem"
 					asynchronous: true
 					sourceComponent: Item {
-						property string objectName: "inCallItem"
 						CallLayout{
 							anchors.fill: parent
 							anchors.leftMargin: 20 * DefaultStyle.dp

@@ -175,26 +175,14 @@ FocusScope {
 								bottomPadding: 11 * DefaultStyle.dp
 								leftPadding: 20 * DefaultStyle.dp
 								rightPadding: 20 * DefaultStyle.dp
-								contentItem: RowLayout {
-									Layout.alignment: Qt.AlignVCenter
-									EffectImage {
-										colorizationColor: DefaultStyle.grey_0
-										imageSource: mainItem.newItemIconSource
-										width: 24 * DefaultStyle.dp
-										height: 24 * DefaultStyle.dp
-										fillMode: Image.PreserveAspectFit
-									}
-									Text {
-										text: mainItem.noItemButtonText
-										wrapMode: Text.WordWrap
-										color: DefaultStyle.grey_0
-										font {
-											weight: 600 * DefaultStyle.dp
-											pixelSize: 18 * DefaultStyle.dp
-											family: DefaultStyle.defaultFont
-										}
-									}
-								}
+								icon.source: AppIcons.newItemIconSource
+								icon.width: 24 * DefaultStyle.dp
+								icon.height: 24 * DefaultStyle.dp
+								contentImageColor: DefaultStyle.grey_0
+								text: mainItem.noItemButtonText
+								textSize: 18 * DefaultStyle.dp
+								textWeight: 600 * DefaultStyle.dp
+								
 								onPressed: mainItem.noItemButtonPressed()
 							}
 							Item {

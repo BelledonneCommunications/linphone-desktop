@@ -79,6 +79,13 @@ public:                                                                         
 	Q_SIGNAL void x##Changed();                                                                                        \
 	type m##X;
 
+#define DECLARE_GUI_GETSET(type, x, X)                                                                                 \
+	Q_PROPERTY(type x READ get##X WRITE set##X NOTIFY x##Changed)                                                      \
+	void set##X(type data);                                                                                            \
+	type get##X() const;                                                                                               \
+	Q_SIGNAL void x##Changed();                                                                                        \
+	type m##X;
+
 #define DECLARE_CORE_GET(type, x, X)                                                                                   \
 	Q_PROPERTY(type x MEMBER m##X NOTIFY x##Changed)                                                                   \
 	Q_SIGNAL void x##Changed();                                                                                        \
@@ -142,6 +149,17 @@ public:                                                                         
 	type get##X() const;                                                                                               \
 	void set##X(type data);                                                                                            \
 	Q_SIGNAL void x##Changed(type x);
+
+#define DEFINE_GET_SET_API(Class, type, x, X)                                                                          \
+	type Class::get##X() const {                                                                                       \
+		return m##X;                                                                                                   \
+	}                                                                                                                  \
+	void Class::set##X(type data) {                                                                                    \
+		if (get##X() != data) {                                                                                        \
+			m##X = data;                                                                                               \
+			emit x##Changed();                                                                                         \
+		}                                                                                                              \
+	}
 
 #define DEFINE_GETSET(Class, type, x, X, ownerNotNull)                                                                 \
 	type Class::get##X() const {                                                                                       \

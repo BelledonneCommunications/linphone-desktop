@@ -137,6 +137,8 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(AudioStats audioStats READ getAudioStats WRITE setAudioStats NOTIFY audioStatsChanged)
 	Q_PROPERTY(VideoStats videoStats READ getVideoStats WRITE setVideoStats NOTIFY videoStatsChanged)
 
+	DECLARE_GUI_GETSET(bool, isStarted, IsStarted)
+
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	static QSharedPointer<CallCore> create(const std::shared_ptr<linphone::Call> &call);

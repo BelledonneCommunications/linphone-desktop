@@ -112,6 +112,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mCallModel = Utils::makeQObject_ptr<CallModel>(call);
 	mCallModel->setSelf(mCallModel);
 	mDuration = call->getDuration();
+	mIsStarted = mDuration > 0;
 	mMicrophoneMuted = call->getMicrophoneMuted();
 	mSpeakerMuted = call->getSpeakerMuted();
 	auto videoDirection = call->getCurrentParams()->getVideoDirection();
@@ -130,6 +131,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	if (mRemoteName.isEmpty()) mRemoteName = ToolModel::getDisplayName(mRemoteAddress);
 	mLocalAddress = Utils::coreStringToAppString(call->getCallLog()->getLocalAddress()->asStringUriOnly());
 	mStatus = LinphoneEnums::fromLinphone(call->getCallLog()->getStatus());
+
 	mTransferState = LinphoneEnums::fromLinphone(call->getTransferState());
 	mLocalToken = Utils::coreStringToAppString(mCallModel->getLocalAtuhenticationToken());
 	mRemoteTokens = mCallModel->getRemoteAtuhenticationTokens();
@@ -459,6 +461,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	    });
 }
 
+DEFINE_GET_SET_API(CallCore, bool, isStarted, IsStarted)
+
 QString CallCore::getRemoteName() const {
 	return mRemoteName;
 }
@@ -524,6 +528,7 @@ int CallCore::getDuration() const {
 void CallCore::setDuration(int duration) {
 	if (mDuration != duration) {
 		mDuration = duration;
+		setIsStarted(mDuration > 0);
 		emit durationChanged(mDuration);
 	}
 }

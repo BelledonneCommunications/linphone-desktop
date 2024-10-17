@@ -51,14 +51,9 @@ AbstractMainPage {
 	}
 
 	// rightPanelStackView.initialItem: contactDetail
-	Binding {
-		mainItem.showDefaultItem: false
-		when: rightPanelStackView.currentItem
-		restoreMode: Binding.RestoreBinding
-	}
-
-	showDefaultItem: contactList.model.sourceModel.count === 0
-
+	
+	showDefaultItem: rightPanelStackView.depth == 0 && contactList.count == 0
+	
 	MagicSearchProxy {
 		id: allFriends
 	}
