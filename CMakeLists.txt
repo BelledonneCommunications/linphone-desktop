@@ -144,6 +144,9 @@ function(add_cache _OPTION_LIST OPTION DESC VALUE)
 	set(${${_OPTION_LIST}} ${_OPTION_LIST} PARENT_SCOPE)
 endfunction()
 
+set(LINPHONEAPP_APPLICATION_NAME "Linphone6" CACHE STRING "Application name" )
+set(LINPHONEAPP_EXECUTABLE_NAME "linphone6" CACHE STRING "Executable name" )
+
 add_option(OPTION_LIST ENABLE_APP_LICENSE "Enable the license in packages." ON)
 add_option(OPTION_LIST ENABLE_APP_OAUTH2 "Build with OAuth2 support for remote provisioning." OFF) # Experimental.
 add_option(OPTION_LIST ENABLE_APP_PACKAGING "Enable packaging" OFF)
