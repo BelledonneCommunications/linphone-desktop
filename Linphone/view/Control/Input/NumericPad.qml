@@ -192,12 +192,12 @@ FocusScope{
 			}
 		}
 		Item {
-			visible: !mainItem.lastRowVisible
+			visible: mainItem.lastRowVisible
 			// Invisible item to move the last two buttons to the right
 		}
 		Button {
 			id: launchCallButton
-			visible: !mainItem.lastRowVisible
+			visible: mainItem.lastRowVisible
 			implicitWidth: 75 * DefaultStyle.dp
 			implicitHeight: 55 * DefaultStyle.dp
 			Layout.Layout.alignment: Qt.AlignHCenter
@@ -221,7 +221,7 @@ FocusScope{
 		}
 		Button {
 			id: eraseButton
-			visible: !mainItem.lastRowVisible
+			visible: mainItem.lastRowVisible
 			leftPadding: 5 * DefaultStyle.dp
 			rightPadding: 5 * DefaultStyle.dp
 			topPadding: 5 * DefaultStyle.dp

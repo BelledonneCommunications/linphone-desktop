@@ -26,6 +26,7 @@ FocusScope {
 		spacing: 22 * DefaultStyle.dp
 		ColumnLayout {
 			spacing: 18 * DefaultStyle.dp
+			visible: mainItem.displayCurrentCalls
 			Text {
 				text: qsTr("Appels en cours")
 				font {
@@ -38,7 +39,6 @@ FocusScope {
 				Layout.preferredHeight: callList.height
 				Layout.maximumHeight: mainItem.height/2
 				// Layout.fillHeight: true
-				visible: mainItem.displayCurrentCalls
 				contentHeight: callList.height
 				contentWidth: width
 				RoundedPane {

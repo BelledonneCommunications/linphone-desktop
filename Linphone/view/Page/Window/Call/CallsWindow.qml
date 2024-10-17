@@ -610,14 +610,50 @@ AbstractWindow {
 								id: numPadPopup
 								width: parent.width
 								roundedBottom: true
+								lastRowVisible: false
 								visible: false
 								leftPadding: 40 * DefaultStyle.dp
 								rightPadding: 40 * DefaultStyle.dp
 								topPadding: 41 * DefaultStyle.dp
 								bottomPadding: 18 * DefaultStyle.dp
-								onLaunchCall: {
-									UtilsCpp.createCall(dialerTextInput.text)
-								}
+							}
+						}
+					}
+				}
+			}
+			Component {
+				id: newCallPanel
+				NewCallForm {
+					id: newCallForm
+					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Nouvel appel")
+					anchors.fill: parent
+					anchors.topMargin: 21 * DefaultStyle.dp
+					anchors.leftMargin: 16 * DefaultStyle.dp
+					anchors.rightMargin: 16 * DefaultStyle.dp
+					groupCallVisible: false
+					searchBarColor: DefaultStyle.grey_0
+					searchBarBorderColor: DefaultStyle.grey_200
+					numPadPopup: numericPad
+					onContactClicked: (contact) => {
+						startCallWithContact(contact, false, rightPanel)
+					}
+					
+					Item {
+						anchors.bottom: parent.bottom
+						anchors.left: parent.left
+						anchors.right: parent.right
+						height: 402 * DefaultStyle.dp
+						NumericPadPopup {
+							id: numericPad
+							width: parent.width
+							roundedBottom: true
+							visible: newCallForm.searchBar.numericPadButton.checked
+							leftPadding: 40 * DefaultStyle.dp
+							rightPadding: 40 * DefaultStyle.dp
+							topPadding: 41 * DefaultStyle.dp
+							bottomPadding: 18 * DefaultStyle.dp
+							onLaunchCall: {
+								UtilsCpp.createCall(newCallForm.searchBar.text)
 							}
 						}
 					}
@@ -1377,16 +1413,19 @@ AbstractWindow {
 					}
 					CheckableButton {
 						id: newCallButton
-						checkable: false
+						checkable: true
 						icon.source: AppIcons.newCall
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
 						icon.height: 32 * DefaultStyle.dp
-						onClicked: {
-							var mainWin = UtilsCpp.getMainWindow()
-							UtilsCpp.smartShowWindow(mainWin)
-							mainWin.goToNewCall()
+						onCheckedChanged: {
+							if (checked) {
+								rightPanel.visible = true
+								rightPanel.replace(newCallPanel)
+							} else {
+								rightPanel.visible = false
+							}
 						}
 					}
 				}

@@ -73,7 +73,7 @@ Control.Popup {
 	}
 	contentItem: NumericPad{
 		id: numPad
-		lastRowVisible: lastRowVisible
+		lastRowVisible: mainItem.lastRowVisible
 		currentCall: mainItem.currentCall
 		onButtonPressed: (text) => {
 			console.log("BUTTON PRESSED NUMPAD")
