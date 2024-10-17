@@ -12,10 +12,10 @@
   echo $DEFAULT_LINUX_CMAKE_OPTIONS
   echo $CMAKE_SANITIZER_OPTIONS
   cd build
-  eval "$(qtchooser -qt=$QT_LINUX_VER -print-env)"
+  eval "$(qtchooser -qt=$QT5_LINUX_VER -print-env)"
   export PATH=${QTTOOLDIR}:$PATH
   export Qt5_DIR=${QTLIBDIR}/cmake/Qt5
-  echo "Using Qt $QT_LINUX_VER at ${QTLIBDIR}"
+  echo "Using Qt $QT5_LINUX_VER at ${QTLIBDIR}"
   cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
   cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
   
