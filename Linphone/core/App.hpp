@@ -38,6 +38,7 @@ class QSystemTrayIcon;
 
 class App : public SingleApplication, public AbstractObject {
 	Q_OBJECT
+	Q_PROPERTY(bool coreStarted READ getCoreStarted WRITE setCoreStarted NOTIFY coreStartedChanged)
 public:
 	App(int &argc, char *argv[]);
 	~App();
@@ -113,6 +114,9 @@ public:
 	void onLoggerInitialized();
 	void sendCommand();
 
+	bool getCoreStarted() const;
+	void setCoreStarted(bool started);
+
 	QQuickWindow *getCallsWindow(QVariant callGui = QVariant());
 	void setCallsWindowProperty(const char *id, QVariant property);
 	void closeCallsWindow();
@@ -141,6 +145,7 @@ public:
 
 signals:
 	void mainWindowChanged();
+	void coreStartedChanged(bool coreStarted);
 	// void executeCommand(QString command);
 
 private:
@@ -160,6 +165,7 @@ private:
 	QSharedPointer<SafeConnection<App, CoreModel>> mCoreModelConnection;
 	QSharedPointer<SafeConnection<App, CliModel>> mCliModelConnection;
 	bool mAutoStart = false;
+	bool mCoreStarted = false;
 	QLocale mLocale = QLocale::system();
 
 	DECLARE_ABSTRACT_OBJECT

@@ -50,8 +50,8 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 	mModelConnection = QSharedPointer<SafeConnection<AccountList, CoreModel>>(
 	    new SafeConnection<AccountList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
 
-	mModelConnection->makeConnectToCore(&AccountList::lUpdate, [this]() {
-		mModelConnection->invokeToModel([this]() {
+	mModelConnection->makeConnectToCore(&AccountList::lUpdate, [this](bool isInitialization) {
+		mModelConnection->invokeToModel([this, isInitialization]() {
 			// Avoid copy to lambdas
 			QList<QSharedPointer<AccountCore>> *accounts = new QList<QSharedPointer<AccountCore>>();
 			mustBeInLinphoneThread(getClassName());
@@ -63,11 +63,12 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 				if (it == defaultAccount) defaultAccountCore = AccountCore::create(defaultAccount);
 				accounts->push_back(model);
 			}
-			mModelConnection->invokeToCore([this, accounts, defaultAccountCore]() {
+			mModelConnection->invokeToCore([this, accounts, defaultAccountCore, isInitialization]() {
 				mustBeInMainThread(getClassName());
 				resetData<AccountCore>(*accounts);
 				setHaveAccount(accounts->size() > 0);
 				setDefaultAccount(defaultAccountCore);
+				if (isInitialization) setInitialized(true);
 				delete accounts;
 			});
 		});
@@ -80,11 +81,10 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 			    mModelConnection->invokeToCore([this, model]() { setDefaultAccount(model); });
 		    } else mModelConnection->invokeToCore([this]() { setDefaultAccount(nullptr); });
 	    });
-	mModelConnection->makeConnectToModel(&CoreModel::accountRemoved, &AccountList::lUpdate);
-	mModelConnection->makeConnectToModel(&CoreModel::accountAdded, &AccountList::lUpdate);
+	mModelConnection->makeConnectToModel(&CoreModel::accountRemoved, [this] { emit lUpdate(); });
+	mModelConnection->makeConnectToModel(&CoreModel::accountAdded, [this] { emit lUpdate(); });
 
-	lUpdate();
-	emit initialized();
+	lUpdate(true);
 }
 
 QSharedPointer<AccountCore> AccountList::getDefaultAccountCore() const {
@@ -132,6 +132,17 @@ void AccountList::setHaveAccount(bool haveAccount) {
 	if (mHaveAccount != haveAccount) {
 		mHaveAccount = haveAccount;
 		emit haveAccountChanged();
+	}
+}
+
+bool AccountList::isInitialized() const {
+	return mIsInitialized;
+}
+
+void AccountList::setInitialized(bool init) {
+	if (mIsInitialized != init) {
+		mIsInitialized = init;
+		emit initializedChanged(mIsInitialized);
 	}
 }
 

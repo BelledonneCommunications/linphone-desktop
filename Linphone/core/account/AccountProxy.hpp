@@ -33,6 +33,7 @@ class AccountProxy : public LimitProxy {
 
 	Q_PROPERTY(AccountGui *defaultAccount READ getDefaultAccount WRITE setDefaultAccount NOTIFY defaultAccountChanged)
 	Q_PROPERTY(bool haveAccount READ getHaveAccount NOTIFY haveAccountChanged)
+	Q_PROPERTY(bool isInitialized READ isInitialized NOTIFY initializedChanged)
 
 public:
 	DECLARE_SORTFILTER_CLASS()
@@ -48,14 +49,18 @@ public:
 
 	bool getHaveAccount() const;
 
+	bool isInitialized() const;
+	void setInitialized(bool init);
+
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
 signals:
 	void defaultAccountChanged();
 	void haveAccountChanged();
-	void initialized();
+	void initializedChanged();
 
 protected:
+	bool mInitialized = false;
 	QSharedPointer<AccountCore> mDefaultAccount; // When null, a new UI object is build from List
 };
 

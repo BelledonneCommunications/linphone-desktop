@@ -17,7 +17,8 @@ AbstractWindow {
 	color: DefaultStyle.grey_0
 
 	signal callCreated()
-
+	property var accountProxy: accountProxyLoader.item
+	
 	// TODO : use this to make the border transparent
 	// flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint
 	// menuBar: Rectangle {
@@ -25,6 +26,7 @@ AbstractWindow {
 	// 	height: 40 * DefaultStyle.dp
 	// 	color: DefaultStyle.grey_100
 	// }
+
 	function openMainPage(){
 		if (mainWindowStackView.currentItem.objectName !== "mainPage") mainWindowStackView.replace(mainPage, StackView.Immediate)
 	}
@@ -45,10 +47,12 @@ AbstractWindow {
 		UtilsCpp.showInformationPopup(qsTr("Appel transféré"), qsTr("Votre correspondant a été transféré au contact sélectionné"))
 	}
 	function initStackViewItem() {
-		if (accountProxy.haveAccount) openMainPage()
-		else if (SettingsCpp.getFirstLaunch()) mainWindowStackView.replace(welcomePage, StackView.Immediate)
-		else if (SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin) mainWindowStackView.replace(sipLoginPage, StackView.Immediate)
-		else mainWindowStackView.replace(loginPage, StackView.Immediate)
+		if(accountProxy && accountProxy.isInitialized) {
+			if (accountProxy.haveAccount) openMainPage()
+			else if (SettingsCpp.getFirstLaunch()) mainWindowStackView.replace(welcomePage, StackView.Immediate)
+			else if (SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin) mainWindowStackView.replace(sipLoginPage, StackView.Immediate)
+			else mainWindowStackView.replace(loginPage, StackView.Immediate)
+		}
 	}
 	
 	function goToLogin() {
@@ -90,9 +94,16 @@ AbstractWindow {
 		}
 	}
 
-	AccountProxy  {
-		id: accountProxy
-		onInitialized: initStackViewItem()
+	Loader {
+		id: accountProxyLoader
+		active: AppCpp.coreStarted
+		sourceComponent: AccountProxy {
+			Component.onCompleted: {
+				mainWindow.accountProxy = this
+				mainWindow.initStackViewItem()
+			}
+			onInitializedChanged: mainWindow.initStackViewItem()
+		}
 	}
 
 	StackView {

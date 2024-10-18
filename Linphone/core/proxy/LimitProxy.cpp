@@ -38,9 +38,11 @@ bool LimitProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent
 
 void LimitProxy::setSourceModels(SortFilterProxy *firstList) {
 	auto secondList = firstList->sourceModel();
-	connect(secondList, &QAbstractItemModel::rowsInserted, this, &LimitProxy::onAdded);
-	connect(secondList, &QAbstractItemModel::rowsRemoved, this, &LimitProxy::onRemoved);
-	connect(secondList, &QAbstractItemModel::modelReset, this, &LimitProxy::invalidateRowsFilter);
+	if (secondList) {
+		connect(secondList, &QAbstractItemModel::rowsInserted, this, &LimitProxy::onAdded);
+		connect(secondList, &QAbstractItemModel::rowsRemoved, this, &LimitProxy::onRemoved);
+		connect(secondList, &QAbstractItemModel::modelReset, this, &LimitProxy::invalidateRowsFilter);
+	}
 	connect(firstList, &SortFilterProxy::filterTextChanged, this, &LimitProxy::filterTextChanged);
 	connect(firstList, &SortFilterProxy::filterTypeChanged, this, &LimitProxy::filterTypeChanged);
 

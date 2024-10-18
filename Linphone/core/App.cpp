@@ -342,6 +342,13 @@ void App::setSelf(QSharedPointer<App>(me)) {
 		});
 	});
 	mCoreModelConnection->makeConnectToModel(
+	    &CoreModel::globalStateChanged,
+	    [this](const std::shared_ptr<linphone::Core> &core, linphone::GlobalState gstate, const std::string &message) {
+		    if (gstate == linphone::GlobalState::On) {
+			    mCoreModelConnection->invokeToCore([this] { setCoreStarted(true); });
+		    }
+	    });
+	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::authenticationRequested,
 	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::AuthInfo> &authInfo,
 	           linphone::AuthMethod method) {
@@ -424,9 +431,10 @@ void App::initCore() {
 	    mLinphoneThread->getThreadId(),
 	    [this]() mutable {
 		    CoreModel::getInstance()->start();
+		    auto coreStarted = CoreModel::getInstance()->getCore()->getGlobalState() == linphone::GlobalState::On;
 		    SettingsModel::create();
 		    auto settings = SettingsCore::create();
-		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings] {
+		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings, coreStarted] {
 			    // QML
 			    mEngine = new QQmlApplicationEngine(this);
 			    assert(mEngine);
@@ -473,6 +481,7 @@ void App::initCore() {
 			    mNotifier = new Notifier(mEngine);
 			    mSettings = settings;
 			    mEngine->setObjectOwnership(mSettings.get(), QQmlEngine::CppOwnership);
+			    mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 			    mAccountList = AccountList::create();
 			    mCallList = CallList::create();
 			    setAutoStart(mSettings->getAutoStart());
@@ -484,7 +493,7 @@ void App::initCore() {
 			    const QUrl url(u"qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml"_qs);
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,
-			        [this, url](QObject *obj, const QUrl &objUrl) {
+			        [this, url, coreStarted](QObject *obj, const QUrl &objUrl) {
 				        if (url == objUrl) {
 					        if (!obj) {
 						        lCritical() << log().arg("MainWindow.qml couldn't be load. The app will exit");
@@ -492,7 +501,7 @@ void App::initCore() {
 					        }
 					        auto window = qobject_cast<QQuickWindow *>(obj);
 					        setMainWindow(window);
-					        QMetaObject::invokeMethod(obj, "initStackViewItem");
+					        setCoreStarted(coreStarted);
 #ifndef __APPLE__
 					        // Enable TrayIconSystem.
 					        if (!QSystemTrayIcon::isSystemTrayAvailable())
@@ -523,6 +532,8 @@ void App::initCore() {
 }
 
 void App::initCppInterfaces() {
+	qmlRegisterSingletonType<App>(Constants::MainQmlUri, 1, 0, "AppCpp",
+	                              [](QQmlEngine *engine, QJSEngine *) -> QObject * { return App::getInstance(); });
 	qmlRegisterSingletonType<LoginPage>(
 	    Constants::MainQmlUri, 1, 0, "LoginPageCpp", [](QQmlEngine *engine, QJSEngine *) -> QObject * {
 		    static auto loginPage = new LoginPage();
@@ -695,6 +706,17 @@ void App::sendCommand() {
 		}
 	} else if (isPrimary()) { // Run waiting process
 		receivedMessage(0, "");
+	}
+}
+
+bool App::getCoreStarted() const {
+	return mCoreStarted;
+}
+
+void App::setCoreStarted(bool started) {
+	if (mCoreStarted != started) {
+		mCoreStarted = started;
+		emit coreStartedChanged(mCoreStarted);
 	}
 }
 

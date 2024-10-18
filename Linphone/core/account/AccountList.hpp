@@ -49,15 +49,19 @@ public:
 	bool getHaveAccount() const;
 	void setHaveAccount(bool haveAccount);
 
+	bool isInitialized() const;
+	void setInitialized(bool init);
+
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 signals:
-	void lUpdate();
+	void lUpdate(bool isInitialization = false);
 	void haveAccountChanged();
 	void defaultAccountChanged();
-	void initialized();
+	void initializedChanged(bool init);
 
 private:
 	bool mHaveAccount = false;
+	bool mIsInitialized = false;
 	QSharedPointer<AccountCore> mDefaultAccount;
 	QSharedPointer<SafeConnection<AccountList, CoreModel>> mModelConnection;
 	DECLARE_ABSTRACT_OBJECT

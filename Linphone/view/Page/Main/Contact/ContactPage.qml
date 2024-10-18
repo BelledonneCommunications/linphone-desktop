@@ -201,7 +201,7 @@ AbstractMainPage {
 			spacing: 38 * DefaultStyle.dp
 			SearchBar {
 				id: searchBar
-				visible: contactList.model.sourceModel.count != 0
+				visible: contactList.count != 0
 				Layout.leftMargin: leftPanel.leftMargin
 				Layout.rightMargin: leftPanel.rightMargin
 				Layout.topMargin: 18 * DefaultStyle.dp

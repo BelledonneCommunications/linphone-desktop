@@ -24,7 +24,7 @@
 #include "core/App.hpp"
 
 AccountProxy::AccountProxy(QObject *parent) : LimitProxy(parent) {
-	setSourceModels(new SortFilterList(App::getInstance()->getAccountList().get(), Qt::AscendingOrder));
+	setSourceModel(App::getInstance()->getAccountList().get());
 }
 
 AccountProxy::~AccountProxy() {
@@ -59,6 +59,17 @@ bool AccountProxy::getHaveAccount() const {
 	return getListModel<AccountList>()->getHaveAccount();
 }
 
+bool AccountProxy::isInitialized() const {
+	return mInitialized;
+}
+
+void AccountProxy::setInitialized(bool init) {
+	if (mInitialized != init) {
+		mInitialized = init;
+		emit initializedChanged();
+	}
+}
+
 void AccountProxy::setSourceModel(QAbstractItemModel *model) {
 	auto oldAccountList = getListModel<AccountList>();
 	if (oldAccountList) {
@@ -66,6 +77,11 @@ void AccountProxy::setSourceModel(QAbstractItemModel *model) {
 	}
 	auto newAccountList = dynamic_cast<AccountList *>(model);
 	if (newAccountList) {
+		connect(newAccountList, &AccountList::initializedChanged, this, [this](bool init) {
+			qDebug() << "AccountProxy initialized";
+			setInitialized(init);
+		});
+		setInitialized(newAccountList->isInitialized());
 		connect(newAccountList, &AccountList::countChanged, this, &AccountProxy::resetDefaultAccount,
 		        Qt::QueuedConnection);
 		connect(newAccountList, &AccountList::defaultAccountChanged, this, &AccountProxy::resetDefaultAccount,
@@ -73,7 +89,7 @@ void AccountProxy::setSourceModel(QAbstractItemModel *model) {
 		connect(newAccountList, &AccountList::haveAccountChanged, this, &AccountProxy::haveAccountChanged,
 		        Qt::QueuedConnection);
 	}
-	QSortFilterProxyModel::setSourceModel(model);
+	setSourceModels(new SortFilterList(model, Qt::AscendingOrder));
 }
 
 //------------------------------------------------------------------------------------------
