@@ -154,8 +154,8 @@ public:
 	static constexpr char LanguagePath[] = ":/languages/";
 
 	// The main windows of Linphone desktop.
-	static constexpr char QmlViewMainWindow[] = "qrc:/Linphone/view/Page/Window/Main/MainWindow.qml";
-	static constexpr char QmlViewCallsWindow[] = "qrc:/Linphone/view/Page/Window/Call/CallsWindow.qml";
+	static constexpr char QmlViewMainWindow[] = "qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml";
+	static constexpr char QmlViewCallsWindow[] = "qrc:/qt/qml/Linphone/view/Page/Window/Call/CallsWindow.qml";
 
 	static constexpr char MainQmlUri[] = "Linphone";
 

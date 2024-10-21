@@ -5,7 +5,7 @@ import QtQuick.Controls.Basic as Control
 import SettingsCpp 1.0
 import UtilsCpp 1.0
 import Linphone
-import 'qrc:/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 AbstractSettingsLayout {
 	contentComponent: content

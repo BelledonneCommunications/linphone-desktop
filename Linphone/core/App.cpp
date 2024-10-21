@@ -438,7 +438,6 @@ void App::initCore() {
 			    selector->setExtraSelectors(selectors);
 			    lInfo() << log().arg("Activated selectors:") << selector->selector()->allSelectors();
 
-			    mEngine->addImportPath(":/");
 			    mEngine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
 #ifdef APPLICATION_VENDOR
 			    mEngine->rootContext()->setContextProperty("applicationVendor", APPLICATION_VENDOR);
@@ -482,7 +481,7 @@ void App::initCore() {
 			            Qt::UniqueConnection);
 			    setLocale(settings->getConfigLocale());
 
-			    const QUrl url(u"qrc:/Linphone/view/Page/Window/Main/MainWindow.qml"_qs);
+			    const QUrl url(u"qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml"_qs);
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,
 			        [this, url](QObject *obj, const QUrl &objUrl) {
@@ -714,7 +713,7 @@ bool App::notify(QObject *receiver, QEvent *event) {
 QQuickWindow *App::getCallsWindow(QVariant callGui) {
 	mustBeInMainThread(getClassName());
 	if (!mCallsWindow) {
-		const QUrl callUrl("qrc:/Linphone/view/Page/Window/Call/CallsWindow.qml");
+		const QUrl callUrl("qrc:/qt/qml/Linphone/view/Page/Window/Call/CallsWindow.qml");
 
 		lInfo() << log().arg("Creating subwindow: `%1`.").arg(callUrl.toString());
 

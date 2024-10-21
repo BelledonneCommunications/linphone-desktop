@@ -45,7 +45,7 @@ DEFINE_ABSTRACT_OBJECT(Notifier)
 using namespace std;
 
 namespace {
-constexpr char NotificationsPath[] = "qrc:/Linphone/view/Control/Popup/Notification/";
+constexpr char NotificationsPath[] = "qrc:/qt/qml/Linphone/view/Control/Popup/Notification/";
 
 // ---------------------------------------------------------------------------
 // Notifications QML properties/methods.

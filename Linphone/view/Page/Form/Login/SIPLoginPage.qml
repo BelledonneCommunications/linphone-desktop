@@ -4,7 +4,7 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import ConstantsCpp
 import SettingsCpp
-import 'qrc:/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 LoginLayout {
 	id: mainItem
