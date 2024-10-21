@@ -163,6 +163,14 @@ Item {
 								mainItem.openNumPadRequest()
 							}
 						}
+                        Connections {
+                            target: mainItem
+                            function onCallCreated() {
+                                magicSearchBar.focus = false
+                                magicSearchBar.clearText()
+                            }
+                        }
+
 						onTextChanged: {
 							if (text.length != 0) listPopup.open()
 							else listPopup.close()
