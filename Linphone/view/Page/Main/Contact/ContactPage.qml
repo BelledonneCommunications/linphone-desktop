@@ -591,6 +591,7 @@ AbstractMainPage {
 						}
 						RoundedPane {
 							Layout.preferredWidth: 360 * DefaultStyle.dp
+							bottomPadding: 21 * DefaultStyle.dp
 							contentItem: ColumnLayout {
 								spacing: 13 * DefaultStyle.dp
 								Text {
@@ -637,9 +638,12 @@ AbstractMainPage {
 										}
 										
 										Button {
+											Layout.preferredHeight: 30 * DefaultStyle.dp
 											visible: modelData.securityLevel != LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 											color: DefaultStyle.main1_100
 											icon.source: AppIcons.warningCircle
+											icon.height: 14 * DefaultStyle.dp
+											icon.width: 14 * DefaultStyle.dp
 											contentImageColor: DefaultStyle.main1_500_main
 											textColor: DefaultStyle.main1_500_main
 											textSize: 13 * DefaultStyle.dp

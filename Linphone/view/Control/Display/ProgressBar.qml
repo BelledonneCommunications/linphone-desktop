@@ -9,9 +9,17 @@ ProgressBar {
 	
 	property color backgroundColor: DefaultStyle.main2_100
 	property color innerColor: DefaultStyle.info_500_main
-	property color innerTextColor: DefaultStyle.grey_0
+	property color innerTextColor: centeredText ? DefaultStyle.info_500_main : DefaultStyle.grey_0
 	property bool innerTextVisible: true
 	property string innerText: Number.parseFloat(value*100).toFixed(0) + "%"
+	
+	property int barWidth: mainItem.visualPosition * mainItem.width
+	property bool centeredText: textSize.width >= barWidth
+	
+	TextMetrics{
+		id: textSize
+		text: mainItem.innerText
+	}
 
 	background: Rectangle {
 		color: mainItem.backgroundColor
@@ -22,19 +30,20 @@ ProgressBar {
 	}
 	contentItem: Item {
 		Rectangle {
+			id: bar
 			color: mainItem.innerColor
 			radius: 50 * DefaultStyle.dp
-			width: mainItem.visualPosition * mainItem.width
+			width: mainItem.barWidth
 			height: parent.height
-			Text {
-				visible: innerTextVisible && mainItem.value > 0
-				text: mainItem.innerText
-				anchors.centerIn: parent
-				color: mainItem.innerTextColor
-				font {
-					pixelSize: 10 * DefaultStyle.dp
-					weight: 700 * DefaultStyle.dp
-				}
+		}
+		Text {
+			visible: mainItem.innerTextVisible
+			text: mainItem.innerText
+			anchors.centerIn: mainItem.centeredText ? parent : bar
+			color: mainItem.innerTextColor
+			font {
+				pixelSize: 10 * DefaultStyle.dp
+				weight: 700 * DefaultStyle.dp
 			}
 		}
 	}
