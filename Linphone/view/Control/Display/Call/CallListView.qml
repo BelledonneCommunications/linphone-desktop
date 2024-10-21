@@ -19,6 +19,7 @@ ListView {
 	signal transferCallToAnotherRequested(CallGui dest)
 
 	property bool isTransferList: false
+	property string currentRemoteAddress: callProxy.currentCall ? callProxy.currentCall.core.remoteAddress : ""
 
 	delegate: Item {
 		id: callDelegate
@@ -60,7 +61,7 @@ ListView {
 				id: transferButton
 				Layout.preferredWidth: 24 * DefaultStyle.dp
 				Layout.preferredHeight: 24 * DefaultStyle.dp
-				visible: mainItem.isTransferList && callProxy?.currentCall.core.remoteAddress !== modelData.core.remoteAddress
+				visible: mainItem.isTransferList && mainItem.currentRemoteAddress !== modelData.core.remoteAddress
 				onClicked: {
 					mainItem.transferCallToAnotherRequested(modelData)
 				}

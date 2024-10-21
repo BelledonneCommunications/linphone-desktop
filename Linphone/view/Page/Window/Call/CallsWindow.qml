@@ -625,6 +625,7 @@ AbstractWindow {
 				id: newCallPanel
 				NewCallForm {
 					id: newCallForm
+					objectName: "newCallPanel"
 					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Nouvel appel")
 					anchors.fill: parent
 					anchors.topMargin: 21 * DefaultStyle.dp
@@ -635,7 +636,7 @@ AbstractWindow {
 					searchBarBorderColor: DefaultStyle.grey_200
 					numPadPopup: numericPad
 					onContactClicked: (contact) => {
-						startCallWithContact(contact, false, rightPanel)
+						mainWindow.startCallWithContact(contact, false, rightPanel)
 					}
 					
 					Item {
@@ -1419,6 +1420,7 @@ AbstractWindow {
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
 						icon.height: 32 * DefaultStyle.dp
+						checked: rightPanel.visible && rightPanel.currentItem.objectName === "newCallPanel"
 						onCheckedChanged: {
 							if (checked) {
 								rightPanel.visible = true
