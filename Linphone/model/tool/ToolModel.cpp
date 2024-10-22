@@ -79,10 +79,17 @@ std::shared_ptr<linphone::AudioDevice> ToolModel::findAudioDevice(const QString 
 QString ToolModel::getDisplayName(const std::shared_ptr<const linphone::Address> &address) {
 	QString displayName;
 	if (address) {
-		displayName = Utils::coreStringToAppString(address->getDisplayName());
+		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(address);
+		if (linFriend) {
+			if (auto vcard = linFriend->getVcard()) displayName = Utils::coreStringToAppString(vcard->getFullName());
+			if (displayName.isEmpty()) displayName = Utils::coreStringToAppString(linFriend->getName());
+		}
 		if (displayName.isEmpty()) {
-			displayName = Utils::coreStringToAppString(address->getUsername());
-			displayName.replace('.', ' ');
+			displayName = Utils::coreStringToAppString(address->getDisplayName());
+			if (displayName.isEmpty()) {
+				displayName = Utils::coreStringToAppString(address->getUsername());
+				displayName.replace('.', ' ');
+			}
 		}
 		// TODO
 		//	std::shared_ptr<linphone::Address> cleanAddress = address->clone();
