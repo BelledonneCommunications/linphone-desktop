@@ -14,6 +14,8 @@ AbstractWindow {
 	property bool firstConnection: true
 
 	color: DefaultStyle.grey_0
+	minimumWidth: 1020
+	minimumHeight: 700
 
 	signal callCreated()
 	property var accountProxy

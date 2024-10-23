@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import QtQuick.Effects
 import Linphone
@@ -41,8 +40,8 @@ FocusScope{
 		}
 	
 		Item {
-			Layout.preferredHeight: contentItem.height
-			Layout.preferredWidth: contentItem.width
+			Layout.preferredHeight: childrenRect.height
+			Layout.preferredWidth: childrenRect.width
 			Item {
 				id: contentItem
 				height: childrenRect.height
@@ -52,7 +51,6 @@ FocusScope{
 				id: errorText
 				anchors.top: contentItem.bottom
 				color: DefaultStyle.danger_500main
-				Layout.preferredWidth: implicitWidth
 			}
 		}
 	

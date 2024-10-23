@@ -84,11 +84,6 @@ LoginLayout {
 			anchors.leftMargin: 127 * DefaultStyle.dp
 			anchors.topMargin: 70 * DefaultStyle.dp
 			anchors.bottom: parent.bottom
-			width: contentWidth
-			contentWidth: content.implicitWidth
-			contentHeight: content.implicitHeight
-			clip: true
-			flickableDirection: Flickable.VerticalFlick
 			ColumnLayout {
 				id: content
 				spacing: 0

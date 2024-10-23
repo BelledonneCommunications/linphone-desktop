@@ -42,16 +42,12 @@ LoginLayout {
 			Layout.rightMargin: 50 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignVCenter | Layout.AlignRight
 			background: Item {
-				visible: false
 			}
-			contentItem: Text {
-				text: qsTr("Passer")
-				font {
-					underline: true
-					pixelSize: 13 * DefaultStyle.dp
-					weight: 600 * DefaultStyle.dp
-				}
-			}
+			text: qsTr("Passer")
+			textColor: DefaultStyle.main2_600
+			underline: true
+			textSize: 13 * DefaultStyle.dp
+			textWeight: 600 * DefaultStyle.dp
 			onClicked: {
 				console.debug("[WelcomePage] User: Click skip")
 				mainItem.startButtonPressed()

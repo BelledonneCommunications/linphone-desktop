@@ -16,6 +16,7 @@ Popup {
 	underlineColor: DefaultStyle.main1_500_main
 	radius: title.length === 0 ? 16 * DefaultStyle.dp : 0
 	property string title
+	property var titleColor: DefaultStyle.main2_600
 	property string text
 	property string details
 	property string firstButtonText: firstButtonAccept ? qsTr("Oui") : qsTr("Annuler")
@@ -52,7 +53,7 @@ Popup {
 				Layout.fillWidth: true
 				visible: text.length != 0
 				text: mainItem.title
-				color: DefaultStyle.main1_500_main
+				color: mainItem.titleColor
 				font {
 					pixelSize: 22 * DefaultStyle.dp
 					weight: 800 * DefaultStyle.dp

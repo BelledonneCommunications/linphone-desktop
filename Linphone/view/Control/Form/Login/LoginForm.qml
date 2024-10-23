@@ -6,7 +6,7 @@ import ConstantsCpp 1.0
 
 ColumnLayout {
 	id: mainItem
-	spacing: 25 * DefaultStyle.dp
+	spacing: 10 * DefaultStyle.dp
 	signal connectionSucceed()
 
 	FormItemLayout {
@@ -35,23 +35,23 @@ ColumnLayout {
 				Layout.preferredHeight: 49 * DefaultStyle.dp
 				hidden: true
 			}
-		}
-
-		TemporaryText {
-			id: errorText
-			anchors.top: password.bottom
-			Connections {
-				target: LoginPageCpp
-				function onErrorMessageChanged() {
-					errorText.setText(LoginPageCpp.errorMessage)
-				}
-				function onRegistrationStateChanged() {
-					if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
-						mainItem.connectionSucceed()
+			TemporaryText {
+				id: errorText
+				anchors.bottom: parent.bottom
+				Connections {
+					target: LoginPageCpp
+					function onErrorMessageChanged() {
+						errorText.setText(LoginPageCpp.errorMessage)
+					}
+					function onRegistrationStateChanged() {
+						if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
+							mainItem.connectionSucceed()
+						}
 					}
 				}
 			}
 		}
+
 	}
 
 	RowLayout {
@@ -101,6 +101,7 @@ ColumnLayout {
 			function trigger() {
 				username.errorMessage = ""
 				password.errorMessage = ""
+				errorText.text = ""
 
 				if (usernameEdit.text.length == 0 || passwordEdit.text.length == 0) {
 					if (usernameEdit.text.length == 0)

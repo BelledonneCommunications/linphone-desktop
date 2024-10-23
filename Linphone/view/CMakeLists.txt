@@ -34,6 +34,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 
 	view/Control/Display/BusyIndicator.qml
 	view/Control/Display/EffectImage.qml
+	view/Control/Display/Flickable.qml
 	view/Control/Display/TemporaryText.qml
 	view/Control/Display/ProgressBar.qml
 	view/Control/Display/RoundedPane.qml

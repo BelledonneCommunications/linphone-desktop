@@ -623,6 +623,7 @@ AbstractWindow {
 					searchBarBorderColor: DefaultStyle.grey_200
 					numPadPopup: numericPad
 					onContactClicked: (contact) => {
+						rightPanel.visible = false
 						mainWindow.startCallWithContact(contact, false, rightPanel)
 					}
 					
@@ -637,6 +638,7 @@ AbstractWindow {
 						topPadding: 41 * DefaultStyle.dp
 						bottomPadding: 18 * DefaultStyle.dp
 						onLaunchCall: {
+							rightPanel.visible = false
 							UtilsCpp.createCall(newCallForm.searchBar.text)
 						}
 						Component.onCompleted: parent.height = height
@@ -1016,7 +1018,8 @@ AbstractWindow {
 				visible: middleItemStackView.currentItem.objectName == "inCallItem"
 
 				function refreshLayout() {
-					if (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning) {
+					if (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
+					|| mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote) {
 						connectedCallButtons.visible = bottomButtonsLayout.visible
 						moreOptionsButton.visible = bottomButtonsLayout.visible
 						bottomButtonsLayout.layoutDirection = Qt.RightToLeft
@@ -1103,6 +1106,7 @@ AbstractWindow {
 						icon.height: 32 * DefaultStyle.dp
 						contentImageColor: enabled ? DefaultStyle.grey_0 : DefaultStyle.grey_500
 						onCheckedChanged: {
+							console.log("checked transfer changed", checked)
 							if (checked) {
 								rightPanel.visible = true
 								rightPanel.replace(callTransferPanel)
@@ -1123,14 +1127,18 @@ AbstractWindow {
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
 						icon.height: 32 * DefaultStyle.dp
-						checked: rightPanel.visible && rightPanel.currentItem ? rightPanel.currentItem.objectName === "newCallPanel" : false
 						onCheckedChanged: {
+							console.log("checked newcall changed", checked)
 							if (checked) {
 								rightPanel.visible = true
 								rightPanel.replace(newCallPanel)
 							} else {
 								rightPanel.visible = false
 							}
+						}
+						Connections {
+							target: rightPanel
+							function onVisibleChanged() { if(!rightPanel.visible) newCallButton.checked = false}
 						}
 					}
 				}

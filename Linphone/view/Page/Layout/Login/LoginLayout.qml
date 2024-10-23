@@ -7,20 +7,116 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 
 import Linphone
+import ConstantsCpp
 
 Rectangle {
 	id: mainItem
 	property alias titleContent : titleLayout.children
 	property alias centerContent : centerLayout.children
 	color: DefaultStyle.grey_0
+
+	component AboutLine: RowLayout {
+		id: line
+		spacing: 20 * DefaultStyle.dp
+		property var imageSource
+		property string title
+		property string text
+		signal contentClicked()
+		EffectImage {
+			Layout.preferredWidth: 32 * DefaultStyle.dp
+			Layout.preferredHeight: 32 * DefaultStyle.dp
+			imageSource: parent.imageSource
+			colorizationColor: DefaultStyle.main1_500_main
+		}
+		ColumnLayout {
+			spacing: 0
+			Text {
+				Layout.fillWidth: true
+				text: line.title
+				color: DefaultStyle.main2_600
+				font {
+					pixelSize: 15 * DefaultStyle.dp
+					weight: 600 * DefaultStyle.dp
+				}
+				horizontalAlignment: Layout.AlignLeft
+			}
+			Text {
+				id: content
+				Layout.fillWidth: true
+				text: line.text
+				color: DefaultStyle.main2_500main
+				font.pixelSize: 14 * DefaultStyle.dp
+				horizontalAlignment: Layout.AlignLeft
+				Keys.onPressed: (event)=> {
+					if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+						line.contentClicked(undefined)
+						event.accepted = true;
+					}
+				}
+				MouseArea {
+					id: privateMouseArea
+					anchors.fill: parent
+					hoverEnabled: true
+					cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+					onClicked: line.contentClicked()
+				}
+			}
+		}
+		// Item {Layout.fillWidth: true}
+	}
+
+	Dialog {
+		id: aboutPopup
+		anchors.centerIn: parent
+		width: 637 * DefaultStyle.dp
+		title: qsTr("À propos de Linphone")
+		bottomPadding: 10 * DefaultStyle.dp
+		buttons: []
+		content: RowLayout {
+			ColumnLayout {
+				spacing: 17 * DefaultStyle.dp
+				Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+				AboutLine {
+					imageSource: AppIcons.detective
+					title: qsTr("Politique de confidentialité")
+					text: qsTr("Visiter notre potilique de confidentialité")
+					onContentClicked: Qt.openUrlExternally(ConstantsCpp.PrivatePolicyUrl)
+				}
+				AboutLine {
+					imageSource: AppIcons.info
+					title: qsTr("Version")
+					text: Qt.application.version
+				}
+				AboutLine {
+					imageSource: AppIcons.checkSquareOffset
+					title: qsTr("Licence")
+					text: applicationLicence
+				}
+				AboutLine {
+					imageSource: AppIcons.copyright
+					title: qsTr("Copyright")
+					text: applicationVendor
+				}
+				Item {
+					// Item to shift close button
+					Layout.preferredHeight: 10 * DefaultStyle.dp
+				}
+			}
+			Button {
+				Layout.alignment: Qt.AlignRight | Qt.AlignBottom
+				text: qsTr("Fermer")
+				leftPadding: 16 * DefaultStyle.dp
+				rightPadding: 16 * DefaultStyle.dp
+				topPadding: 10 * DefaultStyle.dp
+				bottomPadding: 10 * DefaultStyle.dp
+				onClicked: aboutPopup.close()
+			}
+		}
+	}
+
 	ColumnLayout {
-		// anchors.leftMargin: 119 * DefaultStyle.dp
 		id: contentLayout
-		// anchors.top: parent.top
-		// anchors.left: parent.left
-		// anchors.right: parent.right
 		anchors.fill: parent
-		// anchors.bottom: bottomMountains.top
 		spacing: 0
 		RowLayout {
 			Layout.fillWidth: true
@@ -40,7 +136,7 @@ Rectangle {
 				textSize: 14 * DefaultStyle.dp
 				textWeight: 400 * DefaultStyle.dp
 				textColor: DefaultStyle.main2_500main
-				onClicked: console.debug("[LoginLayout]User: open about popup")
+				onClicked: aboutPopup.open()
 				
 				background: Item{}
 			}
@@ -59,7 +155,6 @@ Rectangle {
 		}
 		Image {
 			id: bottomMountains
-			z: -1
 			source: AppIcons.belledonne
 			fillMode: Image.Stretch
 			Layout.fillWidth: true
