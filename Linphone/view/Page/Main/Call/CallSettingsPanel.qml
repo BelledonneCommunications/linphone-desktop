@@ -17,8 +17,9 @@ Control.Page {
 	signal returnRequested()
 	signal validateRequested()
 
-	topPadding: 16 * DefaultStyle.dp
-	// bottomPadding: 16 * DefaultStyle.dp
+	topPadding: 20 * DefaultStyle.dp
+	leftPadding: 17 * DefaultStyle.dp
+	rightPadding: 17 * DefaultStyle.dp
 
 	background: Rectangle {
 		width: mainItem.width

@@ -41,6 +41,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Text.qml
 	view/Control/Display/ToolTip.qml
 	view/Control/Display/Call/CallListView.qml
+	view/Control/Display/Call/CallStatistics.qml
 	view/Control/Display/Contact/Avatar.qml
 	view/Control/Display/Contact/Contact.qml
 	view/Control/Display/Contact/ContactListView.qml
@@ -51,6 +52,8 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Settings/SettingsMenuItem.qml
 
 	view/Control/Form/Login/LoginForm.qml
+	view/Control/Form/Call/ChangeLayoutForm.qml
+	view/Control/Form/Settings/EncryptionSettings.qml
 	view/Control/Form/Settings/MultimediaSettings.qml
 	view/Control/Form/Settings/ScreencastSettings.qml
 

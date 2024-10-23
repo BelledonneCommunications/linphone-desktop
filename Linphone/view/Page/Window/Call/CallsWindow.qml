@@ -541,13 +541,22 @@ AbstractWindow {
 					headerStack.currentIndex: 0
 					contentStackView.initialItem: callsListPanel
 					headerValidateButtonText: qsTr("Ajouter")
+
+					Item {
+						id: numericPadContainer
+						anchors.bottom: parent.bottom
+						anchors.left: parent.left
+						anchors.right: parent.right
+						height: childrenRect.height
+					}
 				}
 			}
 			
 		
 			Component {
-				id: contactsListPanel
-				Item {
+				id: callTransferPanel
+				NewCallForm {
+					id: newCallForm
 					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Transférer %1 à :").arg(mainWindow.call.core.remoteName)
 					Keys.onPressed: (event)=> {
 						if (event.key == Qt.Key_Escape) {
@@ -555,69 +564,58 @@ AbstractWindow {
 							event.accepted = true;
 						}
 					}
-					NewCallForm {
-						id: newCallForm
-						anchors.fill: parent
-						anchors.topMargin: 21 * DefaultStyle.dp
-						anchors.leftMargin: 16 * DefaultStyle.dp
-						anchors.rightMargin: 16 * DefaultStyle.dp
-						groupCallVisible: false
-						displayCurrentCalls: true
-						searchBarColor: DefaultStyle.grey_0
-						searchBarBorderColor: DefaultStyle.grey_200
-						onContactClicked: (contact) => {
-							var callsWin = UtilsCpp.getCallsWindow()
-							if (contact) callsWin.showConfirmationLambdaPopup(
-								qsTr("Confirmer le transfert ?"),
-								qsTr("Vous allez transférer %1 à %2.").arg(mainWindow.call.core.remoteName).arg(contact.core.displayName),
-								"",
-								function (confirmed) {
-									if (confirmed) {
-										mainWindow.transferCallToContact(mainWindow.call, contact, newCallForm)
-									}
+					groupCallVisible: false
+					displayCurrentCalls: true
+					searchBarColor: DefaultStyle.grey_0
+					searchBarBorderColor: DefaultStyle.grey_200
+					onContactClicked: (contact) => {
+						var callsWin = UtilsCpp.getCallsWindow()
+						if (contact) callsWin.showConfirmationLambdaPopup(
+							qsTr("Confirmer le transfert ?"),
+							qsTr("Vous allez transférer %1 à %2.").arg(mainWindow.call.core.remoteName).arg(contact.core.displayName),
+							"",
+							function (confirmed) {
+								if (confirmed) {
+									mainWindow.transferCallToContact(mainWindow.call, contact, newCallForm)
 								}
-							)
-						}
-						onTransferCallToAnotherRequested: (dest) => {
-							var callsWin = UtilsCpp.getCallsWindow()
-							console.log("transfer to", dest)
-							callsWin.showConfirmationLambdaPopup(
-								qsTr("Confirmer le transfert ?"),
-								qsTr("Vous allez transférer %1 à %2.").arg(mainWindow.call.core.remoteName).arg(dest.core.remoteName),
-								"",
-								function (confirmed) {
-									if (confirmed) {
-										mainWindow.call.core.lTransferCallToAnother(dest.core.remoteAddress)
-									}
-								}
-							)
-						}
-						numPadPopup: numPadPopup
-						Binding {
-							target: numPadPopup
-							property: "visible"
-							value: true
-							when: newCallForm.searchBar.numericPadButton.checked
-							restoreMode: Binding.RestoreValue
-						}
-						
-						Item {
-							anchors.bottom: parent.bottom
-							anchors.left: parent.left
-							anchors.right: parent.right
-							height: 402 * DefaultStyle.dp
-							NumericPadPopup {
-								id: numPadPopup
-								width: parent.width
-								roundedBottom: true
-								lastRowVisible: false
-								visible: false
-								leftPadding: 40 * DefaultStyle.dp
-								rightPadding: 40 * DefaultStyle.dp
-								topPadding: 41 * DefaultStyle.dp
-								bottomPadding: 18 * DefaultStyle.dp
 							}
-						}
+						)
+					}
+					onTransferCallToAnotherRequested: (dest) => {
+						var callsWin = UtilsCpp.getCallsWindow()
+						console.log("transfer to", dest)
+						callsWin.showConfirmationLambdaPopup(
+							qsTr("Confirmer le transfert ?"),
+							qsTr("Vous allez transférer %1 à %2.").arg(mainWindow.call.core.remoteName).arg(dest.core.remoteName),
+							"",
+							function (confirmed) {
+								if (confirmed) {
+									mainWindow.call.core.lTransferCallToAnother(dest.core.remoteAddress)
+								}
+							}
+						)
+					}
+					numPadPopup: numPadPopup
+					Binding {
+						target: numPadPopup
+						property: "visible"
+						value: true
+						when: newCallForm.searchBar.numericPadButton.checked
+						restoreMode: Binding.RestoreValue
+					}
+
+					NumericPadPopup {
+						id: numPadPopup
+						parent: numericPadContainer
+						width: parent.width
+						roundedBottom: true
+						lastRowVisible: false
+						visible: false
+						leftPadding: 40 * DefaultStyle.dp
+						rightPadding: 40 * DefaultStyle.dp
+						topPadding: 41 * DefaultStyle.dp
+						bottomPadding: 18 * DefaultStyle.dp
+						Component.onCompleted: parent.height = height
 					}
 				}
 			}
@@ -627,10 +625,6 @@ AbstractWindow {
 					id: newCallForm
 					objectName: "newCallPanel"
 					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Nouvel appel")
-					anchors.fill: parent
-					anchors.topMargin: 21 * DefaultStyle.dp
-					anchors.leftMargin: 16 * DefaultStyle.dp
-					anchors.rightMargin: 16 * DefaultStyle.dp
 					groupCallVisible: false
 					searchBarColor: DefaultStyle.grey_0
 					searchBarBorderColor: DefaultStyle.grey_200
@@ -639,30 +633,27 @@ AbstractWindow {
 						mainWindow.startCallWithContact(contact, false, rightPanel)
 					}
 					
-					Item {
-						anchors.bottom: parent.bottom
-						anchors.left: parent.left
-						anchors.right: parent.right
-						height: 402 * DefaultStyle.dp
-						NumericPadPopup {
-							id: numericPad
-							width: parent.width
-							roundedBottom: true
-							visible: newCallForm.searchBar.numericPadButton.checked
-							leftPadding: 40 * DefaultStyle.dp
-							rightPadding: 40 * DefaultStyle.dp
-							topPadding: 41 * DefaultStyle.dp
-							bottomPadding: 18 * DefaultStyle.dp
-							onLaunchCall: {
-								UtilsCpp.createCall(newCallForm.searchBar.text)
-							}
+					NumericPadPopup {
+						id: numericPad
+						width: parent.width
+						parent: numericPadContainer
+						roundedBottom: true
+						visible: newCallForm.searchBar.numericPadButton.checked
+						leftPadding: 40 * DefaultStyle.dp
+						rightPadding: 40 * DefaultStyle.dp
+						topPadding: 41 * DefaultStyle.dp
+						bottomPadding: 18 * DefaultStyle.dp
+						onLaunchCall: {
+							UtilsCpp.createCall(newCallForm.searchBar.text)
 						}
+						Component.onCompleted: parent.height = height
 					}
 				}
 			}
 			Component {
 				id: dialerPanel
 				ColumnLayout {
+					id: dialerPanelContent
 					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Dialer")
 					spacing: 0
 					Keys.onPressed: (event)=> {
@@ -688,32 +679,30 @@ AbstractWindow {
 						numericPadButton.visible: false
 						enabled: false
 					}
-					Item {
-						Layout.preferredWidth: parent.width
-						Layout.preferredHeight: numPadPopup.height
-						Layout.topMargin: 10 * DefaultStyle.dp
-						NumericPadPopup {
-							id: numPadPopup
-							width: parent.width
-							closeButtonVisible: false
-							roundedBottom: true
-							visible: parent.visible
-							currentCall: callsModel.currentCall
-							lastRowVisible: false
-							leftPadding: 40 * DefaultStyle.dp
-							rightPadding: 40 * DefaultStyle.dp
-							topPadding: 41 * DefaultStyle.dp
-							bottomPadding: 18 * DefaultStyle.dp
-							onLaunchCall: {
-								UtilsCpp.createCall(dialerTextInput.text)
-							}
+					
+					NumericPadPopup {
+						id: numPadPopup
+						width: parent.width
+						parent: numericPadContainer
+						closeButtonVisible: false
+						roundedBottom: true
+						visible: dialerPanelContent.visible
+						currentCall: callsModel.currentCall
+						lastRowVisible: false
+						leftPadding: 40 * DefaultStyle.dp
+						rightPadding: 40 * DefaultStyle.dp
+						topPadding: 41 * DefaultStyle.dp
+						bottomPadding: 18 * DefaultStyle.dp
+						onLaunchCall: {
+							UtilsCpp.createCall(dialerTextInput.text)
 						}
+						Component.onCompleted: parent.height = height
 					}
 				}
 			}
 			Component {
 				id: changeLayoutPanel
-				FocusScope {
+				ChangeLayoutForm {
 					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Modifier la disposition")
 					Keys.onPressed: (event)=> {
 						if (event.key == Qt.Key_Escape) {
@@ -721,66 +710,9 @@ AbstractWindow {
 							event.accepted = true;
 						}
 					}
-					ColumnLayout {
-						anchors.fill: parent
-						anchors.topMargin: 16 * DefaultStyle.dp
-						anchors.bottomMargin: 16 * DefaultStyle.dp
-						anchors.leftMargin: 17 * DefaultStyle.dp
-						anchors.rightMargin: 17 * DefaultStyle.dp
-						spacing: 12 * DefaultStyle.dp
-						Text {
-							Layout.fillWidth: true
-							text: qsTr("La disposition choisie sera enregistrée pour vos prochaines réunions")
-							font.pixelSize: 14 * DefaultStyle.dp
-							color: DefaultStyle.main2_500main
-						}
-						RoundedPane {
-							Layout.fillWidth: true
-							contentItem: ColumnLayout {
-								spacing: 0
-								Repeater {
-									model: [
-										{text: qsTr("Mosaïque"), imgUrl: AppIcons.squaresFour},
-										{text: qsTr("Intervenant actif"), imgUrl: AppIcons.pip},
-										{text: qsTr("Audio seulement"), imgUrl: AppIcons.waveform}
-									]
-									RadioButton {
-										id: radiobutton
-										checkOnClick: false
-										color: DefaultStyle.main1_500_main
-										indicatorSize: 20 * DefaultStyle.dp
-										leftPadding: indicator.width + spacing
-										spacing: 8 * DefaultStyle.dp
-										checkable: false	// Qt Documentation is wrong: It is true by default. We don't want to change the checked state if the layout change is not effective.
-										checked: index == 0
-													? mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.Grid
-													: index == 1
-														? mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.ActiveSpeaker
-														: mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.AudioOnly
-										onClicked: mainWindow.changeLayout(index)
-
-										contentItem: RowLayout {
-											spacing: 5 * DefaultStyle.dp
-											EffectImage {
-												id: radioButtonImg
-												Layout.preferredWidth: 32 * DefaultStyle.dp
-												Layout.preferredHeight: 32 * DefaultStyle.dp
-												imageSource: modelData.imgUrl
-												colorizationColor: DefaultStyle.main2_500main
-											}
-											Text {
-												text: modelData.text
-												color: DefaultStyle.main2_500main
-												verticalAlignment: Text.AlignVCenter
-												font.pixelSize: 14 * DefaultStyle.dp
-												Layout.fillWidth: true
-											}
-										}
-									}
-								}
-							}
-						}
-						Item {Layout.fillHeight: true}
+					call: mainWindow.call
+					onChangeLayoutRequested: (index) => {
+						mainWindow.changeLayout(index)
 					}
 				}
 			}
@@ -997,243 +929,21 @@ AbstractWindow {
 			}
 			Component {
 				id: encryptionPanel
-				ColumnLayout {
+				EncryptionSettings {
+					call: mainWindow.call
 					Control.StackView.onActivated: {
 						rightPanel.headerTitleText = qsTr("Chiffrement")
 					}
-					RoundedPane {
-						Layout.fillWidth: true
-						leftPadding: 16 * DefaultStyle.dp
-						rightPadding: 16 * DefaultStyle.dp
-						topPadding: 13 * DefaultStyle.dp
-						bottomPadding: 13 * DefaultStyle.dp
-
-						Layout.topMargin: 13 * DefaultStyle.dp
-						Layout.leftMargin: 16 * DefaultStyle.dp
-						Layout.rightMargin: 16 * DefaultStyle.dp
-						
-						contentItem: ColumnLayout {
-							spacing: 12 * DefaultStyle.dp
-							Text {
-								text: qsTr("Chiffrement :")
-								Layout.alignment: Qt.AlignHCenter
-								font {
-									pixelSize: 12 * DefaultStyle.dp
-									weight: 700 * DefaultStyle.dp
-								}
-							}
-							ColumnLayout {
-								Layout.alignment: Qt.AlignHCenter
-								spacing: 7 * DefaultStyle.dp
-								Text {
-									property bool isPostQuantum: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && mainWindow.call.core.zrtpStats.isPostQuantum
-									text: qsTr("Chiffrement du média : %1%2").arg(isPostQuantum ? "post Quantum " : "").arg(mainWindow.call.core.encryptionString)
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
-									}
-								}
-								ColumnLayout {
-									visible: mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-									Text {
-										text: qsTr("Cipher algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.cipherAlgo)
-										Layout.alignment: Qt.AlignHCenter
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
-										}
-									}
-									Text {
-										text: qsTr("Key agreement algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.keyAgreementAlgo)
-										Layout.alignment: Qt.AlignHCenter
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
-										}
-									}
-									Text {
-										text: qsTr("Hash algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.hashAlgo)
-										Layout.alignment: Qt.AlignHCenter
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
-										}
-									}
-									Text {
-										text: qsTr("Authentication algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.authenticationAlgo)
-										Layout.alignment: Qt.AlignHCenter
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
-										}
-									}
-									Text {
-										text: qsTr("SAS algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.sasAlgo)
-										Layout.alignment: Qt.AlignHCenter
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
-										}
-									}
-								}
-							}
-						}
-					}
-					Item{Layout.fillHeight: true}
-					Button {
-						visible: mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-						Layout.fillWidth: true
-						text: qsTr("Validation chiffrement")
-						onClicked: zrtpValidation.open()
-						Layout.bottomMargin: 13 * DefaultStyle.dp
-						Layout.leftMargin: 16 * DefaultStyle.dp
-						Layout.rightMargin: 16 * DefaultStyle.dp
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
-						topPadding: 11 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
-					}
+					onEncryptionValidationRequested: zrtpValidation.open()
 				}
 			}
 			Component {
 				id: statsPanel
-				ColumnLayout {
-					property string objectName: "statsPanel"
-					spacing: 20 * DefaultStyle.dp
+				CallStatistics {
 					Control.StackView.onActivated: {
 						rightPanel.headerTitleText = qsTr("Statistiques")
 					}
-					RoundedPane {
-						Layout.fillWidth: true
-						leftPadding: 16 * DefaultStyle.dp
-						rightPadding: 16 * DefaultStyle.dp
-						topPadding: 13 * DefaultStyle.dp
-						bottomPadding: 13 * DefaultStyle.dp
-
-						Layout.topMargin: 13 * DefaultStyle.dp
-						Layout.leftMargin: 16 * DefaultStyle.dp
-						Layout.rightMargin: 16 * DefaultStyle.dp
-						
-						contentItem: ColumnLayout {
-							spacing: 12 * DefaultStyle.dp
-							Layout.alignment: Qt.AlignHCenter
-							Text {
-								text: qsTr("Audio")
-								Layout.alignment: Qt.AlignHCenter
-								font {
-									pixelSize: 12 * DefaultStyle.dp
-									weight: 700 * DefaultStyle.dp
-								}
-							}
-							ColumnLayout {
-								spacing: 8 * DefaultStyle.dp
-								Layout.alignment: Qt.AlignHCenter
-								Text {
-									text: mainWindow.call ? mainWindow.call.core.audioStats.codec : ""
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
-									}
-								}
-								Text {
-									text: mainWindow.call ? mainWindow.call.core.audioStats.bandwidth : ""
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
-									}
-								}
-								Text {
-									text: mainWindow.call ? mainWindow.call.core.audioStats.lossRate : ""
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
-									}
-								}
-								Text {
-									text: mainWindow.call ? mainWindow.call.core.audioStats.jitterBufferSize : ""
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
-									}
-								}
-							}
-						}
-					}
-					RoundedPane {
-						Layout.fillWidth: true
-						leftPadding: 16 * DefaultStyle.dp
-						rightPadding: 16 * DefaultStyle.dp
-						topPadding: 13 * DefaultStyle.dp
-						bottomPadding: 13 * DefaultStyle.dp
-
-						Layout.leftMargin: 16 * DefaultStyle.dp
-						Layout.rightMargin: 16 * DefaultStyle.dp
-
-						visible: mainWindow.localVideoEnabled || mainWindow.remoteVideoEnabled
-
-						contentItem: ColumnLayout {
-							spacing: 12 * DefaultStyle.dp
-							Layout.alignment: Qt.AlignHCenter
-							Text {
-								text: qsTr("Vidéo")
-								Layout.alignment: Qt.AlignHCenter
-								font {
-									pixelSize: 12 * DefaultStyle.dp
-									weight: 700 * DefaultStyle.dp
-								}
-							}
-							ColumnLayout {
-								spacing: 8 * DefaultStyle.dp
-								Layout.alignment: Qt.AlignHCenter
-								Text {
-									text: mainWindow.call ? mainWindow.call.core.videoStats.codec : ""
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
-									}
-								}
-								Text {
-									text: mainWindow.call ? mainWindow.call.core.videoStats.bandwidth : ""
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
-									}
-								}
-								Text {
-									text: mainWindow.call ? mainWindow.call.core.videoStats.lossRate : ""
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
-									}
-								}
-								Text {
-									text: mainWindow.call ? mainWindow.call.core.videoStats.resolution : ""
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
-									}
-								}
-								Text {
-									text: mainWindow.call ? mainWindow.call.core.videoStats.fps : ""
-									Layout.alignment: Qt.AlignHCenter
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
-									}
-								}
-							}
-						}
-					}
-					Item{Layout.fillHeight: true}
+					call: mainWindow.call
 				}
 			}
 			Component {
@@ -1402,7 +1112,7 @@ AbstractWindow {
 						onCheckedChanged: {
 							if (checked) {
 								rightPanel.visible = true
-								rightPanel.replace(contactsListPanel)
+								rightPanel.replace(callTransferPanel)
 							} else {
 								rightPanel.visible = false
 							}
@@ -1420,7 +1130,7 @@ AbstractWindow {
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
 						icon.height: 32 * DefaultStyle.dp
-						checked: rightPanel.visible && rightPanel.currentItem.objectName === "newCallPanel"
+						checked: rightPanel.visible && rightPanel.currentItem ? rightPanel.currentItem.objectName === "newCallPanel" : false
 						onCheckedChanged: {
 							if (checked) {
 								rightPanel.visible = true
