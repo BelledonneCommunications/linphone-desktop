@@ -196,7 +196,7 @@ private:
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;
 	int mCaptureGraphListenerCount = 0;
 
-	static std::shared_ptr<SettingsModel> gCoreModel;
+	static std::shared_ptr<SettingsModel> gSettingsModel;
 
 	DECLARE_ABSTRACT_OBJECT
 };

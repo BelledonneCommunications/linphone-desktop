@@ -20,16 +20,15 @@
 
 #include "Thread.hpp"
 #include "core/App.hpp"
-#include "model/core/CoreModel.hpp"
 #include <QDebug>
 
 Thread::Thread(QObject *parent) : QThread(parent) {
 }
 
 void Thread::run() {
+	mThreadId = new QObject();
 	setlocale(LC_CTYPE, ".UTF8");
 	int toExit = false;
-	mThreadId = new QObject();
 	while (!toExit) {
 		int result = exec();
 		if (result <= 0) toExit = true;
@@ -44,7 +43,7 @@ QObject *Thread::getThreadId() {
 }
 
 bool Thread::isInLinphoneThread() {
-	return CoreModel::getInstance() && QThread::currentThread() == CoreModel::getInstance()->thread();
+	return QThread::currentThread() == App::getLinphoneThread();
 }
 
 bool Thread::mustBeInLinphoneThread(const QString &context) {

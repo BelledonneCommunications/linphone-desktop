@@ -267,10 +267,6 @@ App::App(int &argc, char *argv[])
 	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
 	// If not OpenGL, createRender is never call.
 	QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
-	// Ignore vertical sync. This way, we avoid blinking on resizes(and other refresh like layouts etc.).
-	auto ignoreVSync = QSurfaceFormat::defaultFormat();
-	ignoreVSync.setSwapInterval(0);
-	QSurfaceFormat::setDefaultFormat(ignoreVSync);
 	setWindowIcon(QIcon(Constants::WindowIconPath));
 	lInfo() << "Loading Fonts";
 	QDirIterator it(":/font/", QDirIterator::Subdirectories);
@@ -382,9 +378,10 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	    new SafeConnection<App, CliModel>(me, CliModel::getInstance()), &QObject::deleteLater);
 	mCliModelConnection->makeConnectToCore(&App::receivedMessage, [this](int, const QByteArray &byteArray) {
 		QString command(byteArray);
-		if (command.isEmpty())
-			mCliModelConnection->invokeToModel([command]() { CliModel::getInstance()->runProcess(); });
-		else {
+		if (command.isEmpty()) {
+			lDebug() << log().arg("Check with CliModel for commands");
+			mCliModelConnection->invokeToModel([]() { CliModel::getInstance()->runProcess(); });
+		} else {
 			qInfo() << QStringLiteral("Received command from other application: `%1`.").arg(command);
 			mCliModelConnection->invokeToModel([command]() { CliModel::getInstance()->executeCommand(command); });
 		}
@@ -396,6 +393,10 @@ void App::setSelf(QSharedPointer<App>(me)) {
 
 App *App::getInstance() {
 	return dynamic_cast<App *>(QApplication::instance());
+}
+
+QThread *App::getLinphoneThread() {
+	return App::getInstance()->mLinphoneThread;
 }
 
 Notifier *App::getNotifier() const {
@@ -415,8 +416,10 @@ void App::init() {
 	mParser->process(*this);
 
 	if (!mLinphoneThread->isRunning()) {
-		lDebug() << log().arg("Starting Thread");
+		lInfo() << log().arg("Starting Thread");
 		mLinphoneThread->start();
+		while (!mLinphoneThread->getThreadId()) // Wait for running thread
+			processEvents();
 	}
 
 	lInfo() << log().arg("Display server : %1").arg(platformName());
@@ -430,10 +433,14 @@ void App::initCore() {
 	QMetaObject::invokeMethod(
 	    mLinphoneThread->getThreadId(),
 	    [this]() mutable {
+		    lInfo() << log().arg("Starting Core");
 		    CoreModel::getInstance()->start();
 		    auto coreStarted = CoreModel::getInstance()->getCore()->getGlobalState() == linphone::GlobalState::On;
+		    lDebug() << log().arg("Creating SettingsModel");
 		    SettingsModel::create();
+		    lDebug() << log().arg("Creating SettingsCore");
 		    auto settings = SettingsCore::create();
+		    lDebug() << log().arg("Creating Ui");
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings, coreStarted] {
 			    // QML
 			    mEngine = new QQmlApplicationEngine(this);
@@ -490,6 +497,22 @@ void App::initCore() {
 			            Qt::UniqueConnection);
 			    setLocale(settings->getConfigLocale());
 
+			    if (mSettings) {
+				    mEngine->setObjectOwnership(mSettings.get(), QQmlEngine::CppOwnership);
+				    setAutoStart(mSettings->getAutoStart());
+				    setQuitOnLastWindowClosed(mSettings->getExitOnClose());
+				    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
+				            Qt::UniqueConnection);
+				    setLocale(mSettings->getConfigLocale());
+				    QObject::connect(mSettings.get(), &SettingsCore::autoStartChanged, [this]() {
+					    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+					    setAutoStart(mSettings->getAutoStart());
+				    });
+				    QObject::connect(mSettings.get(), &SettingsCore::configLocaleChanged, [this]() {
+					    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+					    if (mSettings) setLocale(mSettings->getConfigLocale());
+				    });
+			    }
 			    const QUrl url(u"qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml"_qs);
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,
@@ -510,23 +533,16 @@ void App::initCore() {
 #endif // ifndef __APPLE__
 					        static bool firstOpen = true;
 					        if (!firstOpen || !mParser->isSet("minimized")) {
+						        lDebug() << log().arg("Openning window");
 						        window->show();
-					        }
+					        } else lInfo() << log().arg("Stay minimized");
 					        firstOpen = false;
 				        }
 			        },
 			        Qt::QueuedConnection);
-			    QObject::connect(mSettings.get(), &SettingsCore::autoStartChanged, [this]() {
-				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
-				    setAutoStart(mSettings->getAutoStart());
-			    });
-			    QObject::connect(mSettings.get(), &SettingsCore::configLocaleChanged, [this]() {
-				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
-				    setLocale(mSettings->getConfigLocale());
-			    });
+
 			    mEngine->load(url);
 		    });
-		    // coreModel.reset();
 	    },
 	    Qt::BlockingQueuedConnection);
 }
@@ -628,9 +644,12 @@ void App::clean() {
 		delete mEngine;
 	}
 	mEngine = nullptr;
+	mSettings = nullptr; // Need it because of SettingsModel singleton for letting thread to remove it.
 	// Wait 500ms to let time for log te be stored.
 	// mNotifier destroyed in mEngine deletion as it is its parent
-	qApp->processEvents(QEventLoop::AllEvents, 500);
+	// Hack: exec() must be used to process cleaning QSharedPointers memory. processEvents doesn't work.
+	QTimer::singleShot(500, [this]() { exit(0); });
+	exec();
 	if (mLinphoneThread) {
 		mLinphoneThread->exit();
 		mLinphoneThread->wait();
@@ -698,7 +717,8 @@ void App::sendCommand() {
 				receivedMessage(0, i.toLocal8Bit());
 			}
 		}
-	} else if (isPrimary()) { // Run waiting process
+	} else if (isPrimary()) {
+		lDebug() << "Run waiting process";
 		receivedMessage(0, "");
 	}
 }
@@ -825,8 +845,8 @@ QSharedPointer<SettingsCore> App::getSettings() const {
 
 void App::onExitOnCloseChanged() {
 	setSysTrayIcon(); // Restore button depends from this option
-	setQuitOnLastWindowClosed(mSettings->getExitOnClose());
-	setAutoStart(mSettings->getAutoStart());
+	if (mSettings) setQuitOnLastWindowClosed(mSettings->getExitOnClose());
+	if (mSettings) setAutoStart(mSettings->getAutoStart());
 }
 
 #ifdef Q_OS_LINUX
@@ -952,7 +972,7 @@ void App::setSysTrayIcon() {
 
 	// trayIcon: Right click actions.
 	QAction *restoreAction = nullptr;
-	if (!mSettings->getExitOnClose()) {
+	if (mSettings && !mSettings->getExitOnClose()) {
 		restoreAction = new QAction(root);
 		auto setRestoreActionText = [restoreAction](bool visible) {
 			restoreAction->setText(visible ? tr("Cacher") : tr("Afficher"));

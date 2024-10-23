@@ -46,6 +46,7 @@ public:
 	~App();
 	void setSelf(QSharedPointer<App>(me));
 	static App *getInstance();
+	static QThread *getLinphoneThread();
 	Notifier *getNotifier() const;
 
 	// App::postModelAsync(<lambda>) => run lambda in model thread and continue.

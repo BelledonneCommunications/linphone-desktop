@@ -395,9 +395,10 @@ void CliModel::addProcess(ProcessCommand process) {
 
 void CliModel::runProcess() {
 	if (mQueue.size() > 0) {
+		lInfo() << log().arg("Processing command from queue");
 		mQueue.first().run();
 		mQueue.pop_front();
-	}
+	} else lInfo() << log().arg("Queue is empty. Nothing to do.");
 }
 
 void CliModel::resetProcesses() {
