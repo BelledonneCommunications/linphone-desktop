@@ -26,7 +26,8 @@
 DEFINE_ABSTRACT_OBJECT(CallProxy)
 
 CallProxy::CallProxy(QObject *parent) : LimitProxy(parent) {
-	setSourceModel(App::getInstance()->getCallList().get());
+	connect(this, &CallProxy::sourceModelChanged, this, &CallProxy::resetCurrentCall);
+	connect(this, &CallProxy::sourceModelChanged, this, &CallProxy::haveCallChanged);
 }
 
 CallProxy::~CallProxy() {
@@ -49,7 +50,8 @@ void CallProxy::resetCurrentCall() {
 }
 
 bool CallProxy::getHaveCall() const {
-	return getListModel<CallList>()->getHaveCall();
+	auto model = getListModel<CallList>();
+	return model ? model->getHaveCall() : false;
 }
 
 void CallProxy::setSourceModel(QAbstractItemModel *model) {

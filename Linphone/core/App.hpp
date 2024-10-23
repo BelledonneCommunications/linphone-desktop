@@ -39,6 +39,8 @@ class QSystemTrayIcon;
 class App : public SingleApplication, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(bool coreStarted READ getCoreStarted WRITE setCoreStarted NOTIFY coreStartedChanged)
+	Q_PROPERTY(AccountList *accounts READ getAccounts NOTIFY accountsChanged)
+	Q_PROPERTY(CallList *calls READ getCalls NOTIFY callsChanged)
 public:
 	App(int &argc, char *argv[]);
 	~App();
@@ -124,7 +126,12 @@ public:
 	QQuickWindow *getMainWindow() const;
 	void setMainWindow(QQuickWindow *data);
 	QSharedPointer<AccountList> getAccountList() const;
+	void setAccountList(QSharedPointer<AccountList> data);
+	Q_INVOKABLE AccountList *getAccounts() const;
+
 	QSharedPointer<CallList> getCallList() const;
+	void setCallList(QSharedPointer<CallList> data);
+	Q_INVOKABLE CallList *getCalls() const;
 	QSharedPointer<SettingsCore> getSettings() const;
 
 	void onExitOnCloseChanged(); // Can be used for UniqueConnection
@@ -146,6 +153,8 @@ public:
 signals:
 	void mainWindowChanged();
 	void coreStartedChanged(bool coreStarted);
+	void accountsChanged();
+	void callsChanged();
 	// void executeCommand(QString command);
 
 private:

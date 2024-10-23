@@ -3,8 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import QtQuick.Controls.Basic as Control
 import Linphone
-import UtilsCpp 1.0
-import LinphoneAccountsCpp
+import UtilsCpp
 
 RowLayout {
 	id: mainItem
@@ -32,6 +31,7 @@ RowLayout {
 				mutedStatus: microButton.checked
 				AccountProxy {
 					id: accounts
+					sourceModel: AppCpp.accounts
 				}
 				account: accounts.defaultAccount
 			}

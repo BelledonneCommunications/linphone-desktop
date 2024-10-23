@@ -3,14 +3,16 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
-import UtilsCpp 1.0
-import SettingsCpp 1.0
-import LinphoneAccountsCpp
+import UtilsCpp
+import SettingsCpp
 
 AbstractSettingsMenu {
 	layoutsPath: "qrc:/qt/qml/Linphone/view/Page/Layout/Settings"
 	titleText: qsTr("Mon compte")
-	property AccountProxy  accounts: AccountProxy {id: accountProxy}
+	property AccountProxy  accounts: AccountProxy {
+		id: accountProxy
+		sourceModel: AppCpp.accounts
+	}
 	property AccountGui account: accountProxy.defaultAccount
 	signal accountRemoved()
 	families: [

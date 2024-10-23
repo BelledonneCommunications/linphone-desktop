@@ -4,7 +4,6 @@ import QtQuick.Layouts as Layout
 import QtQuick.Effects
 import Linphone
 import UtilsCpp
-import LinphoneCallsCpp
 
 FocusScope{
 	id: mainItem

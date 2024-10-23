@@ -10,6 +10,7 @@ ListView {
 	id: mainItem
 	model: CallProxy {
 		id: callProxy
+		sourceModel: AppCpp.calls
 	}
 	implicitHeight: contentHeight
 	spacing: 15 * DefaultStyle.dp

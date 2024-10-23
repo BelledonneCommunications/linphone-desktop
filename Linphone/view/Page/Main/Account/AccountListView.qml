@@ -7,7 +7,6 @@ import QtQuick.Dialogs
 import Linphone
 import UtilsCpp
 import SettingsCpp
-import LinphoneAccountsCpp
 
 Item {
 	id: mainItem
@@ -38,7 +37,7 @@ Item {
 			Layout.preferredHeight: contentHeight
 			Layout.fillWidth: true
 			spacing: mainItem.spacing
-			model: LinphoneAccountsCpp
+			model: AppCpp.accounts
 			delegate: Contact{
 				id: contactItem
 				width: list.width

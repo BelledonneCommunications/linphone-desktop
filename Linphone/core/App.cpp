@@ -482,8 +482,8 @@ void App::initCore() {
 			    mSettings = settings;
 			    mEngine->setObjectOwnership(mSettings.get(), QQmlEngine::CppOwnership);
 			    mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
-			    mAccountList = AccountList::create();
-			    mCallList = CallList::create();
+			    setAccountList(AccountList::create());
+			    setCallList(CallList::create());
 			    setAutoStart(mSettings->getAutoStart());
 			    setQuitOnLastWindowClosed(mSettings->getExitOnClose());
 			    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
@@ -561,12 +561,6 @@ void App::initCppInterfaces() {
 	qmlRegisterSingletonType<SettingsCore>(
 	    "SettingsCpp", 1, 0, "SettingsCpp",
 	    [this](QQmlEngine *engine, QJSEngine *) -> QObject * { return mSettings.get(); });
-	qmlRegisterSingletonType<AccountList>(
-	    "LinphoneAccountsCpp", 1, 0, "LinphoneAccountsCpp",
-	    [this](QQmlEngine *engine, QJSEngine *) -> QObject * { return mAccountList.get(); });
-	qmlRegisterSingletonType<CallList>(
-	    "LinphoneCallsCpp", 1, 0, "LinphoneCallsCpp",
-	    [this](QQmlEngine *engine, QJSEngine *) -> QObject * { return mCallList.get(); });
 
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
 	qmlRegisterType<VariantObject>(Constants::MainQmlUri, 1, 0, "VariantObject");
@@ -799,8 +793,30 @@ QSharedPointer<AccountList> App::getAccountList() const {
 	return mAccountList;
 }
 
+void App::setAccountList(QSharedPointer<AccountList> data) {
+	if (mAccountList != data) {
+		mAccountList = data;
+		emit accountsChanged();
+	}
+}
+
+AccountList *App::getAccounts() const {
+	return mAccountList.get();
+}
+
 QSharedPointer<CallList> App::getCallList() const {
 	return mCallList;
+}
+
+void App::setCallList(QSharedPointer<CallList> data) {
+	if (mCallList != data) {
+		mCallList = data;
+		emit callsChanged();
+	}
+}
+
+CallList *App::getCalls() const {
+	return mCallList.get();
 }
 
 QSharedPointer<SettingsCore> App::getSettings() const {

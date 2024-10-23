@@ -2,9 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
-import UtilsCpp 1.0
-import LinphoneAccountsCpp
-import LinphoneCallsCpp
+import UtilsCpp
 
 // Snippet
 Window {

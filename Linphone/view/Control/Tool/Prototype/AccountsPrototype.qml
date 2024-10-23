@@ -3,7 +3,6 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp 1.0
-import LinphoneAccountsCpp
 
 // Snippet
 

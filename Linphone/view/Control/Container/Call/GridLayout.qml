@@ -3,7 +3,6 @@ import QtQuick.Layouts
 import QtQml.Models
 
 import Linphone
-import LinphoneAccountsCpp
 
 // =============================================================================
 
@@ -23,7 +22,9 @@ Mosaic {
 			qmlName: "G"
 			Component.onCompleted: console.log("Loaded : " +allDevices + " = " +allDevices.count)
 		}
-		property AccountProxy  accounts: AccountProxy {id: accountProxy
+		property AccountProxy  accounts: AccountProxy {
+			id: accountProxy
+			sourceModel: AppCpp.accounts
 		}
 		model: grid.call && grid.call.core.isConference ? participantDevices: [0,1]
 		delegate: Item{

@@ -11,7 +11,6 @@ import QtQuick.Effects
 import Linphone
 import UtilsCpp
 import SettingsCpp
-import LinphoneAccountsCpp
 
 Item {
 	id: mainItem
@@ -70,11 +69,13 @@ Item {
 
 	AccountProxy  {
 		id: accountProxy
+		sourceModel: AppCpp.accounts
 		onDefaultAccountChanged: if (tabbar.currentIndex === 0 && defaultAccount) defaultAccount.core?.lResetMissedCalls()
 	}
 
 	CallProxy {
 		id: callsModel
+		sourceModel: AppCpp.calls
 	}
 
 

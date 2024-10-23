@@ -24,17 +24,18 @@
 #include "core/App.hpp"
 
 AccountProxy::AccountProxy(QObject *parent) : LimitProxy(parent) {
-	setSourceModel(App::getInstance()->getAccountList().get());
+	connect(this, &AccountProxy::initializedChanged, this, &AccountProxy::resetDefaultAccount);
+	connect(this, &AccountProxy::initializedChanged, this, &AccountProxy::haveAccountChanged);
 }
 
 AccountProxy::~AccountProxy() {
-	setSourceModel(nullptr);
 }
 
 AccountGui *AccountProxy::getDefaultAccount() {
-	if (!mDefaultAccount)
-		mDefaultAccount = dynamic_cast<AccountList *>(dynamic_cast<SortFilterList *>(sourceModel())->sourceModel())
-		                      ->getDefaultAccountCore();
+	if (!mDefaultAccount) {
+		auto model = getListModel<AccountList>();
+		if (model) mDefaultAccount = model->getDefaultAccountCore();
+	}
 	return new AccountGui(mDefaultAccount);
 }
 
@@ -48,15 +49,21 @@ void AccountProxy::resetDefaultAccount() {
 }
 
 AccountGui *AccountProxy::findAccountByAddress(const QString &address) {
-	return getListModel<AccountList>()->findAccountByAddress(address);
+	auto model = getListModel<AccountList>();
+	if (model) return model->findAccountByAddress(address);
+	else return nullptr;
 }
 
 AccountGui *AccountProxy::firstAccount() {
-	return getListModel<AccountList>()->firstAccount();
+	auto model = getListModel<AccountList>();
+	if (model) return model->firstAccount();
+	else return nullptr;
 }
 
 bool AccountProxy::getHaveAccount() const {
-	return getListModel<AccountList>()->getHaveAccount();
+	auto model = getListModel<AccountList>();
+	if (model) return model->getHaveAccount();
+	else return false;
 }
 
 bool AccountProxy::isInitialized() const {
@@ -81,7 +88,6 @@ void AccountProxy::setSourceModel(QAbstractItemModel *model) {
 			qDebug() << "AccountProxy initialized";
 			setInitialized(init);
 		});
-		setInitialized(newAccountList->isInitialized());
 		connect(newAccountList, &AccountList::countChanged, this, &AccountProxy::resetDefaultAccount,
 		        Qt::QueuedConnection);
 		connect(newAccountList, &AccountList::defaultAccountChanged, this, &AccountProxy::resetDefaultAccount,
@@ -90,6 +96,7 @@ void AccountProxy::setSourceModel(QAbstractItemModel *model) {
 		        Qt::QueuedConnection);
 	}
 	setSourceModels(new SortFilterList(model, Qt::AscendingOrder));
+	if (newAccountList) setInitialized(newAccountList->isInitialized());
 }
 
 //------------------------------------------------------------------------------------------

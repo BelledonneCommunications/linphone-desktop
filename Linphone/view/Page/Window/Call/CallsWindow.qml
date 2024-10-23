@@ -3,11 +3,10 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import QtQuick.Controls.Basic as Control
 import Linphone
-import EnumsToStringCpp 1.0
-import UtilsCpp 1.0
-import SettingsCpp 1.0
-import DesktopToolsCpp 1.0
-import LinphoneCallsCpp
+import EnumsToStringCpp
+import UtilsCpp
+import SettingsCpp
+import DesktopToolsCpp
 
 AbstractWindow {
     id: mainWindow
@@ -165,6 +164,7 @@ AbstractWindow {
 
 	CallProxy{
 		id: callsModel
+		sourceModel: AppCpp.calls
 		onCurrentCallChanged: {
 			if(currentCall) {
 				mainWindow.call = currentCall

@@ -4,10 +4,9 @@ import QtQuick.Effects
 import QtQml.Models
 import QtQuick.Controls.Basic as Control
 import Linphone
-import EnumsToStringCpp 1.0
-import UtilsCpp 1.0
-import SettingsCpp 1.0
-import LinphoneAccountsCpp
+import EnumsToStringCpp
+import UtilsCpp
+import SettingsCpp
 // =============================================================================
 
 Item{
@@ -171,6 +170,7 @@ Item{
 		videoEnabled: preview.visible && mainItem.call && mainItem.call.core.localVideoEnabled
 		onVideoEnabledChanged: console.log("P : " +videoEnabled + " / " +visible +" / " +mainItem.call)
 		property AccountProxy  accounts: AccountProxy {id: accountProxy
+			sourceModel: AppCpp.accounts
 		}
 		account: accountProxy.findAccountByAddress(mainItem.localAddress)
 		call: mainItem.call

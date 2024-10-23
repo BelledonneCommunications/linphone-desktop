@@ -3,9 +3,8 @@ import QtQuick.Layouts
 import QtQuick.Window
 import QtQuick.Controls.Basic
 import Linphone
-import UtilsCpp 1.0
-import SettingsCpp 1.0
-import LinphoneAccountsCpp
+import UtilsCpp
+import SettingsCpp
 
 AbstractWindow {
 	id: mainWindow
@@ -17,7 +16,7 @@ AbstractWindow {
 	color: DefaultStyle.grey_0
 
 	signal callCreated()
-	property var accountProxy: accountProxyLoader.item
+	property var accountProxy
 	
 	// TODO : use this to make the border transparent
 	// flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint
@@ -98,11 +97,11 @@ AbstractWindow {
 		id: accountProxyLoader
 		active: AppCpp.coreStarted
 		sourceComponent: AccountProxy {
-			Component.onCompleted: {
+			sourceModel: AppCpp.accounts
+			onInitializedChanged: {
 				mainWindow.accountProxy = this
 				mainWindow.initStackViewItem()
 			}
-			onInitializedChanged: mainWindow.initStackViewItem()
 		}
 	}
 
