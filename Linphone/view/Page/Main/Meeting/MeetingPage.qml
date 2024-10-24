@@ -266,19 +266,11 @@ AbstractMainPage {
 						Layout.preferredWidth: 57 * DefaultStyle.dp
 						topPadding: 6 * DefaultStyle.dp
 						bottomPadding: 6 * DefaultStyle.dp
+						textSize: 13 * DefaultStyle.dp
+						text: qsTr("Créer")
 						KeyNavigation.left: backButton
 						KeyNavigation.down: meetingSetup
-						contentItem: Text {
-							text: qsTr("Créer")
-							horizontalAlignment: Text.AlignHCenter
-							verticalAlignment: Text.AlignVCenter
-	
-							font {
-								pixelSize: 13 * DefaultStyle.dp
-								weight: 600 * DefaultStyle.dp
-							}
-							color: DefaultStyle.grey_0
-						}
+						
 						onClicked: {
 							if (meetingSetup.conferenceInfoGui.core.subject.length === 0) {
 								UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir un sujet"), false)
