@@ -232,6 +232,7 @@ if(${ENABLE_APP_PACKAGING})
 		set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/Linphone/data/icon.ico")
 		set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/Linphone/data/icon.ico")
 		set(CPACK_NSIS_DISPLAY_NAME "${APPLICATION_NAME}")	# = The display name string that appears in the Windows Add/Remove Program control panel
+		set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY "${APPLICATION_NAME}")
 		
 		if (LINPHONE_MICRO_VERSION)# CPACK_NSIS_PACKAGE_NAME = Title at the top of the installer
 			set(CPACK_NSIS_PACKAGE_NAME "${APPLICATION_NAME} ${LINPHONE_MAJOR_VERSION}.${LINPHONE_MINOR_VERSION}.${LINPHONE_MICRO_VERSION}")
