@@ -33,6 +33,8 @@ AbstractMainPage {
 	signal createCallFromSearchBarRequested()
 	signal createContactRequested(string name, string address)
 	signal openNumPadRequest()
+	
+	property alias numericPadPopup: numericPadPopupItem
 
 	Connections {
 		enabled: confInfoGui
@@ -111,7 +113,7 @@ AbstractMainPage {
 			anchors.right: parent.right
 			height: 402 * DefaultStyle.dp
 			NumericPadPopup {
-				id: numericPadPopup
+				id: numericPadPopupItem
 				width: parent.width
 				height: parent.height
 				visible: false
@@ -479,7 +481,7 @@ AbstractMainPage {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					focus: true
-					numPadPopup: numericPadPopup
+					numPadPopup: numericPadPopupItem
 					groupCallVisible: true
 					searchBarColor: DefaultStyle.grey_100
 					onContactClicked: (contact) => {
@@ -492,13 +494,6 @@ AbstractMainPage {
 					Connections {
 						target: mainItem
 						function onCreateCallFromSearchBarRequested(){ UtilsCpp.createCall(callContactsList.searchBar.text)}
-						function onOpenNumPadRequest(){ if (!callContactsList.searchBar.numericPadButton.checked) callContactsList.searchBar.numericPadButton.checked = true}
-					}
-					Binding {
-						target: numericPadPopup
-						property: "visible"
-						value: true
-						when: callContactsList.searchBar.numericPadButton.checked
 					}
 				}
 			}

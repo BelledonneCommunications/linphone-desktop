@@ -596,13 +596,6 @@ AbstractWindow {
 						)
 					}
 					numPadPopup: numPadPopup
-					Binding {
-						target: numPadPopup
-						property: "visible"
-						value: true
-						when: newCallForm.searchBar.numericPadButton.checked
-						restoreMode: Binding.RestoreValue
-					}
 
 					NumericPadPopup {
 						id: numPadPopup

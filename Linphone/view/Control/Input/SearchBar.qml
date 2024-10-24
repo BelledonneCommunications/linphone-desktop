@@ -18,9 +18,9 @@ FocusScope {
 	property alias numericPadButton: dialerButton
 	readonly property bool hasActiveFocus: textField.activeFocus
 	property alias color: backgroundItem.color
-
-	onVisibleChanged: if (!visible && numericPadPopup) numericPadPopup.close()
-
+	
+	signal openNumericPadRequested()// Useful for redirection before displaying numeric pad.
+	
 	function clearText() {
 		textField.text = ""
 	}
@@ -28,8 +28,6 @@ FocusScope {
 	Connections {
 		enabled: numericPadPopup != undefined
 		target: numericPadPopup ? numericPadPopup : null
-		function onAboutToHide() { mainItem.numericPadButton.checked = false }
-		function onAboutToShow() { mainItem.numericPadButton.checked = true }
 		function onButtonPressed(text) {
 			console.log("text", text)
 			textField.text += text
@@ -89,8 +87,7 @@ FocusScope {
 	Button {
 		id: dialerButton
 		visible: numericPadPopup != undefined && textField.text.length === 0
-		checkable: true
-		checked: false
+		checked: numericPadPopup?.visible || false
 		background: Rectangle {
 			color: "transparent"
 		}
@@ -102,6 +99,12 @@ FocusScope {
 		anchors.verticalCenter: parent.verticalCenter 
 		anchors.right: parent.right
 		anchors.rightMargin: 15 * DefaultStyle.dp
+		onClicked: {
+			if(!checked){
+				mainItem.openNumericPadRequested()
+				mainItem.numericPadPopup.open()
+			} else mainItem.numericPadPopup.close()
+		}
 	}
 	Button {
 		id: clearTextButton

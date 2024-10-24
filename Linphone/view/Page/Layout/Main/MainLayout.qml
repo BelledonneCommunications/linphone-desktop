@@ -157,13 +157,9 @@ Item {
 						focusedBorderColor: DefaultStyle.main1_500_main
 						numericPadButton.visible: text.length === 0
 						numericPadButton.checkable: false
-						Connections {
-							target: magicSearchBar.numericPadButton
-							function onClicked() {
-								mainItem.goToNewCall()
-								mainItem.openNumPadRequest()
-							}
-						}
+						
+						onOpenNumericPadRequested:mainItem.goToNewCall()
+					
                         Connections {
                             target: mainItem
                             function onCallCreated() {
@@ -608,6 +604,9 @@ Item {
 							}
 							onCreateContactRequested: (name, address) => {
 								mainItem.createContact(name, address)
+							}
+							Component.onCompleted: {
+								magicSearchBar.numericPadPopup = callPage.numericPadPopup
 							}
 						}
 						ContactPage{
