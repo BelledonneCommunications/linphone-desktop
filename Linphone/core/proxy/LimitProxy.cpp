@@ -23,6 +23,7 @@
 LimitProxy::LimitProxy(QObject *parent) : QSortFilterProxyModel(parent) {
 	connect(this, &LimitProxy::rowsInserted, this, &LimitProxy::countChanged);
 	connect(this, &LimitProxy::rowsRemoved, this, &LimitProxy::countChanged);
+	connect(this, &LimitProxy::modelReset, this, &LimitProxy::countChanged);
 }
 /*
 LimitProxy::LimitProxy(QAbstractItemModel *sortFilterProxy, QObject *parent) : QSortFilterProxyModel(parent) {

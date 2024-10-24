@@ -25,11 +25,9 @@ ColumnLayout {
 
 	Control.ComboBox {
 		id: combobox
+		currentIndex: phoneNumberModel.count > 0 ? Math.max(0, phoneNumberModel.findIndexByCountryCallingCode(defaultCallingCode)) : -1
 		model: PhoneNumberProxy {
 			id: phoneNumberModel
-			onCountChanged: {
-				combobox.currentIndex = Math.max(0, findIndexByCountryCallingCode(defaultCallingCode))
-			}
 		}
 		background: Rectangle {
 			implicitWidth: mainItem.implicitWidth
@@ -120,7 +118,6 @@ ColumnLayout {
 					height: listView.height
 					color: DefaultStyle.main2_300
 					// radius: 15 * DefaultStyle.dp
-					y: listView.currentItem? listView.currentItem.y : 0
 				}
 
 				delegate: Item {

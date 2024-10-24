@@ -23,6 +23,7 @@
 Proxy::Proxy(QObject *parent) : QAbstractListModel(parent) {
 	connect(this, &Proxy::rowsInserted, this, &Proxy::countChanged);
 	connect(this, &Proxy::rowsRemoved, this, &Proxy::countChanged);
+	connect(this, &Proxy::modelReset, this, &Proxy::countChanged);
 }
 
 int Proxy::getCount() const {
