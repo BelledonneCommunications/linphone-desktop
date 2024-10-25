@@ -56,6 +56,7 @@ AbstractMainPage {
 	
 	MagicSearchProxy {
 		id: allFriends
+		showLdapContacts: SettingsCpp.syncLdapContacts
 	}
 
 	function deleteContact(contact) {
@@ -446,6 +447,7 @@ AbstractMainPage {
 				button.topPadding: 10 * DefaultStyle.dp
 				button.bottomPadding: 10 * DefaultStyle.dp
 				button.onClicked: mainItem.editContact(mainItem.selectedContact)
+				button.visible: !mainItem.selectedContact?.core.readOnly
 				property string contactAddress: contact ? contact.core.defaultAddress : ""
 				property var computedContactNameObj: UtilsCpp.getDisplayName(contactAddress)
 				property string computedContactName: computedContactNameObj ? computedContactNameObj.value : ""

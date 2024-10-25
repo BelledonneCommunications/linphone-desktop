@@ -26,6 +26,7 @@ ListView {
 	property bool displayNameCapitalization: true
 	property bool showFavoritesOnly: false
 	property bool showDefaultAddress: false
+	property bool showLdapContacts: false
 
 	property var listProxy: MagicSearchProxy{}
 
@@ -112,6 +113,7 @@ ListView {
 		}
 		aggregationFlag: mainItem.aggregationFlag
 		parentProxy: mainItem.listProxy
+		showLdapContacts: mainItem.showLdapContacts
 		sourceFlags: mainItem.sourceFlags
 		onInitialized: {
 			magicSearchProxy.forceUpdate()

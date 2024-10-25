@@ -249,6 +249,7 @@ Item {
 								actionLayoutVisible: true
 								selectionEnabled: false
 								showDefaultAddress: true
+								showLdapContacts: true
 								Control.ScrollBar.vertical: scrollbar
 								searchText: magicSearchBar.text
 								

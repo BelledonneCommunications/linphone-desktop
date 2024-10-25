@@ -79,6 +79,28 @@ CallHistoryCore::~CallHistoryCore() {
 void CallHistoryCore::setSelf(QSharedPointer<CallHistoryCore> me) {
 	mHistoryModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, CallHistoryModel>>(
 	    new SafeConnection<CallHistoryCore, CallHistoryModel>(me, mCallHistoryModel), &QObject::deleteLater);
+	mCoreModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, CoreModel>>(
+	    new SafeConnection<CallHistoryCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	if (!ToolModel::findFriendByAddress(mRemoteAddress)) {
+		mCoreModelConnection->makeConnectToModel(
+		    &CoreModel::friendCreated,
+		    [this, remoteAddress = mRemoteAddress](const std::shared_ptr<linphone::Friend> &f) {
+			    auto inFriend = Utils::findFriendByAddress(remoteAddress);
+			    QString displayName;
+			    if (inFriend) {
+				    auto friendGui = inFriend->getValue().value<FriendGui *>();
+				    if (friendGui) displayName = friendGui->getCore()->getDisplayName();
+			    }
+			    if (!displayName.isEmpty()) {
+				    mCoreModelConnection->invokeToCore([this, displayName]() {
+					    if (displayName != mDisplayName) {
+						    mDisplayName = displayName;
+						    emit displayNameChanged();
+					    }
+				    });
+			    }
+		    });
+	}
 }
 
 ConferenceInfoGui *CallHistoryCore::getConferenceInfoGui() const {

@@ -175,6 +175,10 @@ Loader{
 							shadowColor: DefaultStyle.grey_1000
 							shadowOpacity: 0.1
 						}
+						Connections {
+							target: mainItem.call?.core ? mainItem.call.core : null
+							onRemoteNameChanged: initialItem.initials = UtilsCpp.getInitials(mainItem.call.core.remoteName)
+						}
 					}
 				}
 				Component{

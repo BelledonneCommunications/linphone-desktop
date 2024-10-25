@@ -22,6 +22,7 @@
 #include "core/App.hpp"
 #include "core/conference/ConferenceCore.hpp"
 #include "core/conference/ConferenceGui.hpp"
+#include "core/friend/FriendCore.hpp"
 #include "core/setting/SettingsCore.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
@@ -129,6 +130,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 		mRemoteName = Utils::coreStringToAppString(
 		    linphoneFriend->getVcard() ? linphoneFriend->getVcard()->getFullName() : linphoneFriend->getName());
 	if (mRemoteName.isEmpty()) mRemoteName = ToolModel::getDisplayName(mRemoteAddress);
+	mShouldFindRemoteLdapFriend = !linphoneFriend && !CoreModel::getInstance()->getCore()->getLdapList().empty();
 	mLocalAddress = Utils::coreStringToAppString(call->getCallLog()->getLocalAddress()->asStringUriOnly());
 	mStatus = LinphoneEnums::fromLinphone(call->getCallLog()->getStatus());
 
@@ -466,13 +468,10 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    setVideoStats(videoStats);
 		    }
 	    });
+	if (mShouldFindRemoteLdapFriend) findRemoteLdapFriend(me);
 }
 
 DEFINE_GET_SET_API(CallCore, bool, isStarted, IsStarted)
-
-QString CallCore::getRemoteName() const {
-	return mRemoteName;
-}
 
 QString CallCore::getRemoteAddress() const {
 	return mRemoteAddress;
@@ -817,4 +816,33 @@ void CallCore::setVideoStats(VideoStats stats) {
 		mVideoStats = stats;
 		emit videoStatsChanged();
 	}
+}
+
+void CallCore::findRemoteLdapFriend(QSharedPointer<CallCore> me) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto linphoneSearch = CoreModel::getInstance()->getCore()->createMagicSearch();
+	linphoneSearch->setLimitedSearch(true);
+	mLdapMagicSearchModel = Utils::makeQObject_ptr<MagicSearchModel>(linphoneSearch);
+	mLdapMagicSearchModel->setSourceFlags((int)LinphoneEnums::MagicSearchSource::LdapServers);
+	mLdapMagicSearchModel->setAggregationFlag(LinphoneEnums::MagicSearchAggregation::Friend);
+	mLdapMagicSearchModel->setSelf(mLdapMagicSearchModel);
+	mLdapMagicSearchModelConnection = QSharedPointer<SafeConnection<CallCore, MagicSearchModel>>(
+	    new SafeConnection<CallCore, MagicSearchModel>(me, mLdapMagicSearchModel), &QObject::deleteLater);
+	mLdapMagicSearchModelConnection->makeConnectToModel(
+	    &MagicSearchModel::searchResultsReceived,
+	    [this, remoteAdress = mRemoteAddress](const std::list<std::shared_ptr<linphone::SearchResult>> &results) {
+		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		    auto ldapFriend = ToolModel::findFriendByAddress(remoteAdress);
+		    if (ldapFriend) {
+			    auto ldapName = Utils::coreStringToAppString(ldapFriend->getName());
+			    mLdapMagicSearchModelConnection->invokeToCore([this, ldapName]() {
+				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+				    if (ldapName != mRemoteName) {
+					    mRemoteName = ldapName;
+					    emit remoteNameChanged();
+				    }
+			    });
+		    }
+	    });
+	mLdapMagicSearchModel->search(mRemoteAddress);
 }

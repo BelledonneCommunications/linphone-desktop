@@ -74,6 +74,7 @@ private:
 	std::shared_ptr<MagicSearchModel> mMagicSearch;
 	QSharedPointer<SafeConnection<MagicSearchList, MagicSearchModel>> mModelConnection;
 	QSharedPointer<SafeConnection<MagicSearchList, CoreModel>> mCoreModelConnection;
+
 	DECLARE_ABSTRACT_OBJECT
 };
 

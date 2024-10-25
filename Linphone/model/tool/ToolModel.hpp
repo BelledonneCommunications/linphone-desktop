@@ -59,6 +59,9 @@ public:
 	                       linphone::MediaEncryption = linphone::MediaEncryption::None,
 	                       QString *errorMessage = nullptr);
 
+	static std::shared_ptr<linphone::FriendList> getLdapFriendList();
+	static bool friendIsInLdapFriendList(const std::shared_ptr<linphone::Friend> &f);
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 };

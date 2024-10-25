@@ -34,7 +34,7 @@ class CallHistoryModel;
 class CallHistoryCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
-	Q_PROPERTY(QString displayName MEMBER mDisplayName CONSTANT)
+	Q_PROPERTY(QString displayName MEMBER mDisplayName NOTIFY displayNameChanged)
 	Q_PROPERTY(QString remoteAddress MEMBER mRemoteAddress CONSTANT)
 	Q_PROPERTY(bool isOutgoing MEMBER mIsOutgoing CONSTANT)
 	Q_PROPERTY(bool isConference MEMBER mIsConference CONSTANT)
@@ -66,12 +66,14 @@ public:
 
 signals:
 	void durationChanged(QString duration);
+	void displayNameChanged();
 
 private:
 	QString mDuration;
 	QSharedPointer<ConferenceInfoCore> mConferenceInfo = nullptr;
 	std::shared_ptr<CallHistoryModel> mCallHistoryModel;
 	QSharedPointer<SafeConnection<CallHistoryCore, CallHistoryModel>> mHistoryModelConnection;
+	QSharedPointer<SafeConnection<CallHistoryCore, CoreModel>> mCoreModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };

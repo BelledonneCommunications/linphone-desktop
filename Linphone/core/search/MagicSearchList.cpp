@@ -122,8 +122,6 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 						    contact->appendPhoneNumber(tr("Phone"), Utils::coreStringToAppString(it->getPhoneNumber()));
 						    contacts->append(contact);
 					    }
-					    bool isLdap = (it->getSourceFlags() & (int)LinphoneEnums::MagicSearchSource::LdapServers) != 0;
-					    if (contact) contact->setIsLdap(isLdap);
 				    }
 				    mModelConnection->invokeToCore([this, contacts]() {
 					    setResults(*contacts);

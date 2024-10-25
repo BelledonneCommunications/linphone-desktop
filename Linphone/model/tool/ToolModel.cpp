@@ -275,3 +275,22 @@ bool ToolModel::isLocal(const std::shared_ptr<linphone::Conference> &conference,
 	auto gruuAddress = findAccount(callAddress)->getContactAddress();
 	return deviceAddress->equal(gruuAddress);
 }
+
+std::shared_ptr<linphone::FriendList> ToolModel::getLdapFriendList() {
+	auto core = CoreModel::getInstance()->getCore();
+	auto ldapFriendList = core->getFriendListByName("ldap_friends");
+	if (!ldapFriendList) {
+		ldapFriendList = core->createFriendList();
+		ldapFriendList->setDisplayName("ldap_friends");
+		core->addFriendList(ldapFriendList);
+	}
+	return ldapFriendList;
+}
+
+bool ToolModel::friendIsInLdapFriendList(const std::shared_ptr<linphone::Friend> &f) {
+	auto ldapFriendList = getLdapFriendList();
+	for (auto ldapFriend : ldapFriendList->getFriends()) {
+		if (f == ldapFriend) return true;
+	}
+	return false;
+}

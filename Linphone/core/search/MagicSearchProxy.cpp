@@ -68,7 +68,10 @@ void MagicSearchProxy::setList(QSharedPointer<MagicSearchList> newList) {
 		    Qt::QueuedConnection);
 	}
 	auto sortFilterList = new SortFilterList(mList.get(), Qt::AscendingOrder);
-	if (oldModel) sortFilterList->mShowFavoritesOnly = oldModel->mShowFavoritesOnly;
+	if (oldModel) {
+		sortFilterList->mShowFavoritesOnly = oldModel->mShowFavoritesOnly;
+		sortFilterList->mShowLdapContacts = oldModel->mShowLdapContacts;
+	}
 	setSourceModels(sortFilterList);
 }
 
@@ -133,7 +136,7 @@ void MagicSearchProxy::setAggregationFlag(LinphoneEnums::MagicSearchAggregation 
 bool MagicSearchProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	auto friendCore = getItemAtSource<MagicSearchList, FriendCore>(sourceRow);
 	if (friendCore) {
-		return !mShowFavoritesOnly || friendCore->getStarred();
+		return (!mShowFavoritesOnly || friendCore->getStarred()) && (mShowLdapContacts || !friendCore->isLdap());
 	}
 	return false;
 }
@@ -148,4 +151,16 @@ bool MagicSearchProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, c
 		return lName < rName;
 	}
 	return true;
+}
+
+bool MagicSearchProxy::showLdapContacts() const {
+	return dynamic_cast<SortFilterList *>(sourceModel())->mShowLdapContacts;
+}
+
+void MagicSearchProxy::setShowLdapContacts(bool show) {
+	auto list = dynamic_cast<SortFilterList *>(sourceModel());
+	if (list->mShowLdapContacts != show) {
+		list->mShowLdapContacts = show;
+		list->invalidate();
+	}
 }

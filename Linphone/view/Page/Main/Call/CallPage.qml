@@ -655,7 +655,12 @@ AbstractMainPage {
 				contact: contactObj && contactObj.value || null
 				conferenceInfo: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.conferenceInfo || null
 				specificAddress: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
-				
+				Connections {
+					target: mainItem.selectedRowHistoryGui?.core ? mainItem.selectedRowHistoryGui.core : null
+					onDisplayNameChanged: {
+						mainItem.onSelectedRowHistoryGuiChanged() // to cover displayName & Avatar.
+					}
+				}
 				buttonContent: PopupButton {
 					id: detailOptions
 					anchors.right: parent.right
@@ -687,6 +692,7 @@ AbstractMainPage {
 								textColor: DefaultStyle.main2_500main
 								contentImageColor: DefaultStyle.main2_600
 								background: Item {}
+								visible: SettingsCpp.syncLdapContacts || !detailOptions.friendGui?.core?.isLdap
 								onClicked: {
 									detailOptions.close()
 									if (detailOptions.friendGui) mainWindow.displayContactPage(contactDetail.contactAddress)

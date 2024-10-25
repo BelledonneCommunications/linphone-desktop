@@ -36,9 +36,11 @@ class MagicSearchProxy : public LimitProxy {
 	               NOTIFY aggregationFlagChanged)
 	Q_PROPERTY(bool showFavoritesOnly READ showFavoritesOnly WRITE setShowFavoritesOnly NOTIFY showFavoriteOnlyChanged)
 	Q_PROPERTY(MagicSearchProxy *parentProxy WRITE setParentProxy NOTIFY parentProxyChanged)
+	Q_PROPERTY(bool showLdapContacts READ showLdapContacts WRITE setShowLdapContacts CONSTANT)
 
 public:
-	DECLARE_SORTFILTER_CLASS(bool mShowFavoritesOnly = false;)
+	DECLARE_SORTFILTER_CLASS(bool mShowFavoritesOnly = false; bool mShowLdapContacts = false;)
+
 	MagicSearchProxy(QObject *parent = Q_NULLPTR);
 	~MagicSearchProxy();
 
@@ -53,6 +55,9 @@ public:
 
 	bool showFavoritesOnly() const;
 	void setShowFavoritesOnly(bool show);
+
+	bool showLdapContacts() const;
+	void setShowLdapContacts(bool show);
 
 	void setList(QSharedPointer<MagicSearchList> list);
 	Q_INVOKABLE void setParentProxy(MagicSearchProxy *proxy);

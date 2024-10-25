@@ -49,8 +49,7 @@ Notification {
 				}
 				ColumnLayout {
 					Text {
-						property var remoteAddress: UtilsCpp.getDisplayName(call.core.remoteAddress)
-						text: remoteAddress ? remoteAddress.value : ""
+						text: call.core.remoteName
 						color: DefaultStyle.grey_600
 						font {
 							pixelSize: 20 * DefaultStyle.dp

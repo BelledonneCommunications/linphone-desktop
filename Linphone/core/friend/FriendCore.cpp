@@ -99,7 +99,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 		mStarred = false;
 	}
 
-	mIsLdap = false;
+	mIsLdap = ToolModel::friendIsInLdapFriendList(contact);
 	connect(this, &FriendCore::addressChanged, &FriendCore::allAddressesChanged);
 	connect(this, &FriendCore::phoneNumberChanged, &FriendCore::allAddressesChanged);
 }
@@ -670,17 +670,11 @@ void FriendCore::undo() { // Retrieve values from model
 	}
 }
 
-bool FriendCore::getIsLdap() const {
+bool FriendCore::isLdap() const {
 	return mIsLdap;
-}
-void FriendCore::setIsLdap(bool data) {
-	if (mIsLdap != data) {
-		mIsLdap = data;
-		emit readOnlyChanged();
-	}
 }
 
 bool FriendCore::getReadOnly() const {
-	return getIsLdap(); // TODO add conditions for friends retrieved via HTTP [misc]vcards-contacts-list=<URL> &
-	                    // CardDAV
+	return isLdap(); // TODO add conditions for friends retrieved via HTTP [misc]vcards-contacts-list=<URL> &
+	                 // CardDAV
 }

@@ -25,6 +25,7 @@
 #include "core/conference/ConferenceGui.hpp"
 #include "core/videoSource/VideoSourceDescriptorGui.hpp"
 #include "model/call/CallModel.hpp"
+#include "model/search/MagicSearchModel.hpp"
 #include "tool/LinphoneEnums.hpp"
 #include "tool/thread/SafeConnection.hpp"
 #include <QObject>
@@ -104,7 +105,7 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool speakerMuted READ getSpeakerMuted WRITE lSetSpeakerMuted NOTIFY speakerMutedChanged)
 	Q_PROPERTY(bool microphoneMuted READ getMicrophoneMuted WRITE lSetMicrophoneMuted NOTIFY microphoneMutedChanged)
 	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
-	Q_PROPERTY(QString remoteName READ getRemoteName CONSTANT)
+	Q_PROPERTY(QString remoteName MEMBER mRemoteName NOTIFY remoteNameChanged)
 	Q_PROPERTY(QString remoteAddress READ getRemoteAddress CONSTANT)
 	Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT)
 	Q_PROPERTY(bool tokenVerified READ getTokenVerified WRITE setTokenVerified NOTIFY securityUpdated)
@@ -146,7 +147,6 @@ public:
 	~CallCore();
 	void setSelf(QSharedPointer<CallCore> me);
 
-	QString getRemoteName() const;
 	QString getRemoteAddress() const;
 	QString getLocalAddress() const;
 
@@ -245,6 +245,8 @@ public:
 	VideoStats getVideoStats() const;
 	void setVideoStats(VideoStats stats);
 
+	void findRemoteLdapFriend(QSharedPointer<CallCore> me);
+
 signals:
 	void statusChanged(LinphoneEnums::CallStatus status);
 	void stateChanged(LinphoneEnums::CallState state);
@@ -274,6 +276,7 @@ signals:
 	void zrtpStatsChanged();
 	void audioStatsChanged();
 	void videoStatsChanged();
+	void remoteNameChanged();
 
 	// Linphone commands
 	void lAccept(bool withVideo); // Accept an incoming call
@@ -355,6 +358,9 @@ private:
 	ZrtpStats mZrtpStats;
 	AudioStats mAudioStats;
 	VideoStats mVideoStats;
+	std::shared_ptr<MagicSearchModel> mLdapMagicSearchModel;
+	bool mShouldFindRemoteLdapFriend;
+	QSharedPointer<SafeConnection<CallCore, MagicSearchModel>> mLdapMagicSearchModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };
