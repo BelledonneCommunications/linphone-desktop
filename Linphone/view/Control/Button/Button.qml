@@ -28,8 +28,6 @@ Control.Button {
 	// rightPadding: 20 * DefaultStyle.dp
 	// topPadding: 11 * DefaultStyle.dp
 	// bottomPadding: 11 * DefaultStyle.dp
-	implicitHeight: contentItem.implicitHeight + bottomPadding + topPadding
-	implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
@@ -58,12 +56,6 @@ Control.Button {
 						: mainItem.disabledColor
 				radius: mainItem.radius
 				border.color: inversedColors ? mainItem.color : mainItem.borderColor
-				
-				MouseArea {
-					anchors.fill: parent
-					hoverEnabled: true
-					cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-				}
 			}
 			MultiEffect {
 				enabled: mainItem.shadowEnabled
@@ -80,8 +72,10 @@ Control.Button {
 	}
 	
 	component ButtonText: Text {
+		id: buttonText
 		horizontalAlignment: mainItem.textHAlignment
 		verticalAlignment: Text.AlignVCenter
+		width: textMetrics.advanceWidth
 		wrapMode: Text.WrapAnywhere
 		text: mainItem.text
 		maximumLineCount: 1
@@ -93,6 +87,11 @@ Control.Button {
 			capitalization: mainItem.capitalization
 			underline: mainItem.underline
 			bold: mainItem.font.bold
+		}
+		TextMetrics {
+			id: textMetrics
+			text: mainItem.text
+			font: buttonText.font
 		}
 	}
 	
@@ -106,11 +105,6 @@ Control.Button {
 	
 	contentItem: Control.StackView{
 		id: stacklayout
-		width: mainItem.width
-		height: mainItem.height
-		// TODO Qt bug : contentItem is never changed....
-		implicitHeight: !!contentItem && contentItem.implicitHeight ? contentItem.implicitHeight : 0
-		implicitWidth: !!contentItem && contentItem.implicitWidth ? contentItem.implicitWidth: 0
 		function updateComponent(){
 			var item
 			var component = mainItem.text.length != 0 && mainItem.icon.source.toString().length != 0
@@ -143,8 +137,6 @@ Control.Button {
 		Component{
 			id: imageTextComponent
 			RowLayout {
-				width: stacklayout.width
-				height: stacklayout.height
 				spacing: mainItem.spacing
 				ButtonImage{
 					Layout.preferredWidth: mainItem.icon.width
@@ -152,6 +144,9 @@ Control.Button {
 				}
 				ButtonText{
 					Layout.fillHeight: true
+					horizontalAlignment: Text.AlignLeft
+				}
+				Item{
 					Layout.fillWidth: true
 				}
 			}
