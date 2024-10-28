@@ -152,9 +152,9 @@ linphone::Call::Dir LinphoneEnums::toLinphone(const LinphoneEnums::CallDir &data
 QString LinphoneEnums::toString(const LinphoneEnums::CallDir &data) {
 	switch (data) {
 		case LinphoneEnums::CallDir::Incoming:
-			return "Incoming";
+			return QObject::tr("Entrant");
 		case LinphoneEnums::CallDir::Outgoing:
-			return "Outgoing";
+			return QObject::tr("Sortant");
 		default:
 			return QString();
 	}

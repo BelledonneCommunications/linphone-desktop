@@ -78,12 +78,13 @@ ListView {
 				Layout.leftMargin: 14 * DefaultStyle.dp
 				popup.contentItem: ColumnLayout {
 					spacing: 0
+					width: childrenRect.width
 					MenuButton {
 						id: pausingButton
 						onClicked: modelData.core.lSetPaused(!modelData.core.paused)
 						KeyNavigation.up: endCallButton
 						KeyNavigation.down: endCallButton
-						Layout.fillWidth: true
+						Layout.preferredWidth: implicitWidth
 						Layout.preferredHeight: icon.height
 						icon.source: modelData.core.state === LinphoneEnums.CallState.Paused 
 						|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
@@ -97,6 +98,7 @@ ListView {
 						onClicked: mainWindow.endCall(modelData)
 						KeyNavigation.up: pausingButton
 						KeyNavigation.down: pausingButton
+						Layout.preferredWidth: width
 						icon.source: AppIcons.endCall
 						contentImageColor: DefaultStyle.danger_500main
 						textColor: DefaultStyle.danger_500main

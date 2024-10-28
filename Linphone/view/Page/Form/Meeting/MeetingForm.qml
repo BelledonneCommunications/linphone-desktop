@@ -97,14 +97,20 @@ FocusScope {
 				}
 				TextInput {
 					id: confTitle
-					text: qsTr("Ajouter un titre")
+					Layout.fillWidth: true
+					property string defaultText: qsTr("Ajouter un titre")
+					text: defaultText
 					color: DefaultStyle.main2_600
 					font {
 						pixelSize: 20 * DefaultStyle.dp
 						weight: 800 * DefaultStyle.dp
 					}
 					focus: true
-					onActiveFocusChanged: if(activeFocus) selectAll()
+					onActiveFocusChanged: if(activeFocus) {
+						if (text == defaultText)
+							clear()
+						else selectAll()
+					}
 					onEditingFinished: mainItem.conferenceInfoGui.core.subject = text
 					KeyNavigation.down: startDate
 				}
@@ -193,6 +199,7 @@ FocusScope {
 					Layout.preferredWidth: 307 * DefaultStyle.dp
 					Layout.preferredHeight: 30 * DefaultStyle.dp
 					hoverEnabled: true
+					oneLine: true
 					listView.implicitHeight: 250 * DefaultStyle.dp
 					constantImageSource: AppIcons.globe
 					weight: 700 * DefaultStyle.dp

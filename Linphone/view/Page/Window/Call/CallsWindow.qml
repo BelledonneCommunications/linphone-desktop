@@ -319,7 +319,7 @@ AbstractWindow {
 									id: callStatusText
 									property string remoteName: mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
 										? mainWindow.call.core.remoteName
-										: EnumsToStringCpp.dirToString(mainWindow.call.core.dir) + qsTr(" call")
+										: qsTr("Appel %1").arg(EnumsToStringCpp.dirToString(mainWindow.call.core.dir))
 									text: (mainWindow.callState === LinphoneEnums.CallState.End  || mainWindow.callState === LinphoneEnums.CallState.Released)
 										? qsTr("Fin d'appel")
 										: mainWindow.call && (mainWindow.call.core.paused

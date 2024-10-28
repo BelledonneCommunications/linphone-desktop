@@ -110,6 +110,21 @@ QString Utils::getInitials(const QString &username) {
 	return QLocale().toUpper(initials.join(""));
 }
 
+VariantObject *Utils::findLocalAccountByAddress(const QString &address) {
+	VariantObject *data = new VariantObject();
+	if (!data) return nullptr;
+	data->makeRequest([address]() {
+		auto linAccount = ToolModel::findAccount(address);
+		if (linAccount) {
+			auto accountCore = AccountCore::create(linAccount);
+			return QVariant::fromValue(new AccountGui(accountCore));
+		}
+		return QVariant();
+	});
+	data->requestValue();
+	return data;
+}
+
 void Utils::createCall(const QString &sipAddress,
                        QVariantMap options,
                        LinphoneEnums::MediaEncryption mediaEncryption,

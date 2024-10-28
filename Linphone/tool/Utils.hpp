@@ -59,6 +59,7 @@ public:
 	Q_INVOKABLE static QString getGivenNameFromFullName(const QString &fullName);
 	Q_INVOKABLE static QString getFamilyNameFromFullName(const QString &fullName);
 	Q_INVOKABLE static QString getInitials(const QString &username); // Support UTF32
+	Q_INVOKABLE static VariantObject *findLocalAccountByAddress(const QString &address);
 
 	Q_INVOKABLE static void
 	createCall(const QString &sipAddress,

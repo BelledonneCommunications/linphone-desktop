@@ -169,10 +169,8 @@ Item{
 		anchors.bottomMargin: 10 * DefaultStyle.dp
 		videoEnabled: preview.visible && mainItem.call && mainItem.call.core.localVideoEnabled
 		onVideoEnabledChanged: console.log("P : " +videoEnabled + " / " +visible +" / " +mainItem.call)
-		property AccountProxy  accounts: AccountProxy {id: accountProxy
-			sourceModel: AppCpp.accounts
-		}
-		account: accountProxy.findAccountByAddress(mainItem.localAddress)
+		property var accountObj: UtilsCpp.findLocalAccountByAddress(mainItem.localAddress)
+		account: accountObj ? accountObj.value : null
 		call: mainItem.call
 		displayAll: false
 		displayPresence: false

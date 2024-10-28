@@ -28,6 +28,7 @@ ColumnLayout {
 			spacing: mainItem.spacing
 			ColumnLayout {
 				spacing: 12 * DefaultStyle.dp
+				visible: mainItem.ringerDevicesVisible
 				RowLayout {
 					spacing: 8 * DefaultStyle.dp
 					EffectImage {

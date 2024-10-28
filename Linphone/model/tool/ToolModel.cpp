@@ -170,7 +170,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 
 	bool micEnabled = options.contains("microEnabled") ? options["microEnabled"].toBool() : true;
 	params->enableMic(micEnabled);
-
+	params->enableVideo(localVideoEnabled);
 	params->setMediaEncryption(mediaEncryption);
 	if (Utils::coreStringToAppString(params->getRecordFile()).isEmpty()) {
 
@@ -231,15 +231,21 @@ std::shared_ptr<linphone::Account> ToolModel::findAccount(const std::shared_ptr<
 	return account;
 }
 
+std::shared_ptr<linphone::Account> ToolModel::findAccount(const QString &address) {
+	auto linAddr = ToolModel::interpretUrl(address);
+	return findAccount(linAddr);
+}
+
 bool ToolModel::isMe(const QString &address) {
 	bool isMe = false;
 	auto linAddr = ToolModel::interpretUrl(address);
-	if (!CoreModel::getInstance()->getCore()->getDefaultAccount()) {
+	auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+	if (!defaultAccount) {
 		for (auto &account : CoreModel::getInstance()->getCore()->getAccountList()) {
 			if (account->getContactAddress()->weakEqual(linAddr)) return true;
 		}
 	} else {
-		auto accountAddr = CoreModel::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
+		auto accountAddr = defaultAccount->getContactAddress();
 		isMe = linAddr && accountAddr ? accountAddr->weakEqual(linAddr) : false;
 	}
 	return isMe;
@@ -261,6 +267,7 @@ bool ToolModel::isMe(const std::shared_ptr<const linphone::Address> &address) {
 		return findAccount(address) != nullptr;
 	} else return address ? currentAccount->getContactAddress()->weakEqual(address) : false;
 }
+
 bool ToolModel::isLocal(const std::shared_ptr<linphone::Conference> &conference,
                         const std::shared_ptr<const linphone::ParticipantDevice> &device) {
 	auto deviceAddress = device->getAddress();
