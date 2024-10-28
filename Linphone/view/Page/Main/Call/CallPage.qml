@@ -645,7 +645,7 @@ AbstractMainPage {
 			objectName: "contactDetailComp"
 			width: parent?.width
 			height: parent?.height
-			ContactLayout {
+			CallHistoryLayout {
 				id: contactDetail
 				anchors.fill: parent
 				anchors.topMargin: 45 * DefaultStyle.dp

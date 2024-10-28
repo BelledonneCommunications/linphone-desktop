@@ -57,6 +57,7 @@ QtObject {
 	property string backspaceFill: "image://internal/backspace-fill.svg"
 	property string closeX: "image://internal/x.svg"
 	property string arrowDownLeft: "image://internal/arrow-down-left.svg"
+	property string arrowRight: "image://internal/arrow-right.svg"
 	property string arrowUpRight: "image://internal/arrow-up-right.svg"
 	property string arrowElbow: "image://internal/arrow-elbow-left.svg"
 	property string microphone: "image://internal/microphone.svg"

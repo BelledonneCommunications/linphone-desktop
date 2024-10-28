@@ -25,6 +25,8 @@ MainRightPanel {
 	property string title: qsTr("Modifier contact")
 	property string saveButtonText: qsTr("Enregistrer")
 	property string oldPictureUri
+	property int addressCount: 0
+	
 	signal closeEdition()
 
 	Dialog {
@@ -64,19 +66,21 @@ MainRightPanel {
 			}
 	]
 
-	content: ColumnLayout {
+	content: ContactLayout {
 		anchors.fill: parent
-		spacing : 0
-		ColumnLayout {
-			spacing: 8 * DefaultStyle.dp
-			Layout.alignment: Qt.AlignHCenter
-			Layout.topMargin: 69 * DefaultStyle.dp
-			Avatar {
-				contact: mainItem.contact
-				Layout.preferredWidth: 72 * DefaultStyle.dp
-				Layout.preferredHeight: 72 * DefaultStyle.dp
-				Layout.alignment: Qt.AlignHCenter
+		contact: mainItem.contact
+		button.text: mainItem.saveButtonText
+
+		button.onClicked: {
+			if (contact.core.givenName.length === 0 || (addressesList.count === 0 && phoneNumberList.count === 0)) {
+				if (contact.core.givenName.length === 0) givenName.errorMessage = qsTr("Veuillez saisir un prénom")
+				if (addressesList.count === 0 && phoneNumberList.count === 0) addressesErrorText.text = qsTr("Veuillez saisir une adresse ou un numéro de téléphone")
+				return
 			}
+			mainItem.contact.core.save()
+			mainItem.closeEdition()
+		}
+		bannerContent: [
 			IconLabelButton {
 				id: addPictureButton
 				visible: !mainItem.contact || mainItem.contact.core.pictureUri.length === 0
@@ -88,7 +92,7 @@ MainRightPanel {
 				text: qsTr("Ajouter une image")
 				KeyNavigation.down: editButton.visible ? editButton : givenNameEdit
 				onClicked: fileDialog.open()
-			}
+			},
 			RowLayout {
 				visible: mainItem.contact && mainItem.contact.core.pictureUri.length != 0
 				Layout.alignment: Qt.AlignHCenter
@@ -100,7 +104,7 @@ MainRightPanel {
 					iconSize: 17 * DefaultStyle.dp
 					backgroundColor: "transparent"
 					text: qsTr("Modifier")
-					KeyNavigation.down: givenNameEdit
+					KeyNavigation.right: removeButton
 					onClicked: fileDialog.open()
 				}
 				FileDialog {
@@ -122,35 +126,47 @@ MainRightPanel {
 					iconSource: AppIcons.trashCan
 					backgroundColor: "transparent"
 					text: qsTr("Supprimer")
-					KeyNavigation.down: givenNameEdit
+					KeyNavigation.left: editButton
 					onClicked: mainItem.contact.core.pictureUri = ""
 				}
-			}
-		}
-		RowLayout {
+			},
+			Item{Layout.fillWidth: true}
+		]
+		content: Flickable {
+			id: editFlicakble
 			Layout.fillHeight: true
 			Layout.fillWidth: true
-			Layout.alignment: Qt.AlignHCenter
-			Layout.topMargin: 63 * DefaultStyle.dp
-			Layout.bottomMargin: 78 * DefaultStyle.dp
-			spacing: 100 * DefaultStyle.dp
-			Flickable {
-				Layout.preferredWidth: contentWidth
-				Layout.fillHeight: true
-				Layout.leftMargin: 100 * DefaultStyle.dp
-				contentWidth: content.implicitWidth
-				contentHeight: content.height
-				clip: true
+			// width: parent.width
+			// height: parent.height
+			function ensureVisible(r) {
+				if (contentY >= r.y)
+					contentY = r.y;
+				else if (contentY+height <= r.y+r.height+content.spacing)
+					contentY = r.y+r.height-height;
+			}
 
+			ScrollBar.vertical: Control.ScrollBar {
+			}
+			ScrollBar.horizontal: Control.ScrollBar {
+			}
+
+			RowLayout {
+				spacing: 100 * DefaultStyle.dp
+				// anchors.left: parent.left
+				// anchors.right: parent.right
 				ColumnLayout {
 					spacing: 20 * DefaultStyle.dp
-					anchors.fill: parent
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+
 					FormItemLayout {
 						id: givenName
 						enableErrorText: true
 						label: qsTr("Prénom")
+						Layout.fillWidth: true
 						contentItem: TextField {
 							id: givenNameEdit
+							Layout.fillWidth: true
 							initialText: contact.core.givenName
 							onTextEdited: contact.core.givenName = text
 							backgroundColor: DefaultStyle.grey_0
@@ -202,44 +218,14 @@ MainRightPanel {
 					}
 					Item{Layout.fillHeight: true}
 				}
-			}
-			Flickable {
-				id: addressesFlickable
-				Layout.preferredWidth: contentWidth
-				Layout.fillHeight: true
-				Layout.rightMargin: 76 * DefaultStyle.dp
-				contentWidth: content.implicitWidth
-				contentHeight: content.implicitHeight
-				clip: true
-
-				flickableDirection: Flickable.VerticalFlick
-				function ensureVisible(r)
-				{
-					if (contentY >= r.y)
-						contentY = r.y;
-					else if (contentY+height <= r.y+r.height+content.spacing)
-						contentY = r.y+r.height-height;
-				}
-
-				Control.ScrollBar.vertical: Control.ScrollBar{
-					id: scrollbar
-					active: true
-					interactive: true
-					policy: Control.ScrollBar.AlwaysOff
-					anchors.top: parent.top
-					anchors.bottom: parent.bottom
-					anchors.right: parent.right
-					anchors.leftMargin: 15 * DefaultStyle.dp
-				}
-				Control.ScrollBar.horizontal: Control.ScrollBar{
-					visible: false
-				}
 				ColumnLayout {
-					id: content
-					anchors.fill: parent
 					spacing: 20 * DefaultStyle.dp
+					Layout.fillWidth: true
+					Layout.fillHeight: true
 					Repeater {
 						id: addressesList
+						Layout.fillWidth: true
+						onCountChanged: mainItem.addressCount = count
 						model: VariantList {
 							model: mainItem.contact && mainItem.contact.core.addresses || []
 						}
@@ -296,7 +282,7 @@ MainRightPanel {
 						}
 					}
 					RowLayout {
-						onYChanged: addressesFlickable.ensureVisible(this)
+						onYChanged: editFlicakble.ensureVisible(this)
 						spacing: 10 * DefaultStyle.dp
 						FormItemLayout {
 							label: qsTr("Adresse SIP")
@@ -387,7 +373,7 @@ MainRightPanel {
 						}
 					}
 					RowLayout {
-						onYChanged: addressesFlickable.ensureVisible(this)
+						onYChanged: editFlicakble.ensureVisible(this)
 						spacing: 10 * DefaultStyle.dp
 						FormItemLayout {
 							id: phoneNumberInput
@@ -431,29 +417,8 @@ MainRightPanel {
 				}
 			}
 		}
-
-		Button {
-			id: saveButton
-			Layout.bottomMargin: 100 * DefaultStyle.dp
-			Layout.preferredWidth: 165 * DefaultStyle.dp
-			Layout.alignment: Qt.AlignHCenter
-			enabled: mainItem.contact && mainItem.contact.core.allAddresses.length > 0
-			text: mainItem.saveButtonText
-			leftPadding: 20 * DefaultStyle.dp
-			rightPadding: 20 * DefaultStyle.dp
-			topPadding: 11 * DefaultStyle.dp
-			bottomPadding: 11 * DefaultStyle.dp
-			KeyNavigation.up: phoneNumberInputTextField
-			KeyNavigation.down: givenNameEdit
-			onClicked: {
-				if (givenNameEdit.text.length === 0 || (addressesList.count === 0 && phoneNumberList.count === 0)) {
-					if (givenNameEdit.text.length === 0) givenName.errorMessage = qsTr("Veuillez saisir un prénom")
-					if (addressesList.count === 0 && phoneNumberList.count === 0) addressesErrorText.text = qsTr("Veuillez saisir une adresse ou un numéro de téléphone")
-					return
-				}
-				mainItem.contact.core.save()
-				mainItem.closeEdition()
-			}
-		}
+		
 	}
+
+	
 }

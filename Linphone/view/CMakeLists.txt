@@ -26,6 +26,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Container/TabBar.qml
 	view/Control/Container/VerticalTabBar.qml
 	view/Control/Container/Call/ActiveSpeakerLayout.qml
+	view/Control/Container/Call/CallHistoryLayout.qml
 	view/Control/Container/Call/CallLayout.qml
 	view/Control/Container/Call/GridLayout.qml
 	view/Control/Container/Call/Mosaic.qml
@@ -35,6 +36,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/BusyIndicator.qml
 	view/Control/Display/EffectImage.qml
 	view/Control/Display/Flickable.qml
+	view/Control/Display/GradientRectangle.qml
 	view/Control/Display/TemporaryText.qml
 	view/Control/Display/ProgressBar.qml
 	view/Control/Display/RoundedPane.qml

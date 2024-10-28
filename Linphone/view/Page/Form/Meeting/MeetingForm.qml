@@ -328,7 +328,7 @@ FocusScope {
 			]
 		}
 		Switch {
-			text: qsTr("Send invitation to participants")
+			text: qsTr("Envoyerune invitation aux participants")
 			checked: mainItem.conferenceInfoGui.core.inviteEnabled
 			onToggled: mainItem.conferenceInfoGui.core.inviteEnabled = checked
 		}

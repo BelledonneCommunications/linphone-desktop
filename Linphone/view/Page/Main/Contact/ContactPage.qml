@@ -73,81 +73,89 @@ AbstractMainPage {
 		)
 	}
 
-	Popup {
+	Dialog {
 		id: verifyDevicePopup
 		property string deviceName
 		property string deviceAddress
 		padding: 30 * DefaultStyle.dp
+		width: 637 * DefaultStyle.dp
 		anchors.centerIn: parent
 		closePolicy: Control.Popup.CloseOnEscape
 		modal: true
 		onAboutToHide: neverDisplayAgainCheckbox.checked = false
-		contentItem: ColumnLayout {
-			spacing: 45 * DefaultStyle.dp
-			ColumnLayout {
-				spacing: 10 * DefaultStyle.dp
-				Text {
-					text: qsTr("Augmenter la confiance")
-					font {
-						pixelSize: 22 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
-					}
+		title: qsTr("Augmenter la confiance")
+		text: qsTr("Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.<br><br>Vous êtes sur le point d’appeler “%1” voulez vous continuer ?").arg(verifyDevicePopup.deviceName)
+		buttons: RowLayout {
+			RowLayout {
+				spacing: 7 * DefaultStyle.dp
+				CheckBox{
+					id: neverDisplayAgainCheckbox
 				}
-				ColumnLayout {
-					spacing: 24 * DefaultStyle.dp
-					Text {
-						Layout.preferredWidth: 529 * DefaultStyle.dp
-						text: qsTr("Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.")
-						font.pixelSize: 14 * DefaultStyle.dp
-					}
-					Text {
-						Layout.preferredWidth: 529 * DefaultStyle.dp
-						text: qsTr("Vous êtes sur le point d’appeler “%1” voulez vous continuer ?").arg(verifyDevicePopup.deviceName)
-						font.pixelSize: 14 * DefaultStyle.dp
+				Text {
+					text: qsTr("Ne plus afficher")
+					font.pixelSize: 14 * DefaultStyle.dp
+					MouseArea {
+						anchors.fill: parent
+						onClicked: neverDisplayAgainCheckbox.toggle()
 					}
 				}
 			}
+			Item{Layout.fillWidth: true}
 			RowLayout {
-				RowLayout {
-					spacing: 7 * DefaultStyle.dp
-					CheckBox{
-						id: neverDisplayAgainCheckbox
-					}
-					Text {
-						text: qsTr("Ne plus afficher")
-						font.pixelSize: 14 * DefaultStyle.dp
-						MouseArea {
-							anchors.fill: parent
-							onClicked: neverDisplayAgainCheckbox.toggle()
-						}
-					}
+				spacing: 15 * DefaultStyle.dp
+				Button {
+					inversedColors: true
+					text: qsTr("Annuler")
+					leftPadding: 20 * DefaultStyle.dp
+					rightPadding: 20 * DefaultStyle.dp
+					topPadding: 11 * DefaultStyle.dp
+					bottomPadding: 11 * DefaultStyle.dp
+					onClicked: verifyDevicePopup.close()
 				}
-				Item{Layout.fillWidth: true}
-				RowLayout {
-					spacing: 15 * DefaultStyle.dp
-					Button {
-						inversedColors: true
-						text: qsTr("Annuler")
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
-						topPadding: 11 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
+				Button {
+					text: qsTr("Appeler")
+					leftPadding: 20 * DefaultStyle.dp
+					rightPadding: 20 * DefaultStyle.dp
+					topPadding: 11 * DefaultStyle.dp
+					bottomPadding: 11 * DefaultStyle.dp
+					onClicked: {
+						SettingsCpp.setDisplayDeviceCheckConfirmation(!neverDisplayAgainCheckbox.checked)
+						UtilsCpp.createCall(verifyDevicePopup.deviceAddress, {}, LinphoneEnums.MediaEncryption.Zrtp)
 						onClicked: verifyDevicePopup.close()
 					}
-					Button {
-						text: qsTr("Appeler")
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
-						topPadding: 11 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
-						onClicked: {
-							SettingsCpp.setDisplayDeviceCheckConfirmation(!neverDisplayAgainCheckbox.checked)
-							UtilsCpp.createCall(verifyDevicePopup.deviceAddress, {}, LinphoneEnums.MediaEncryption.Zrtp)
-							onClicked: verifyDevicePopup.close()
-						}
-					}
 				}
 			}
+		}
+	}
+	Dialog {
+		id: trustInfoDialog
+		width: 637 * DefaultStyle.dp
+		title: qsTr("Niveau de confiance")
+		text: qsTr("Vérifiez les appareils de votre contact pour confirmer que vos communications seront sécurisées et sans compromission. <br>Quand tous seront vérifiés, vous atteindrez le niveau de confiance maximal.")
+		content: RowLayout {
+			spacing: 50 * DefaultStyle.dp
+			Avatar {
+				_address: "sip:a.c@sip.linphone.org"
+				Layout.preferredWidth: 45 * DefaultStyle.dp
+				Layout.preferredHeight: 45 * DefaultStyle.dp
+			}
+			EffectImage {
+				imageSource: AppIcons.arrowRight
+				Layout.preferredWidth: 45 * DefaultStyle.dp
+				Layout.preferredHeight: 45 * DefaultStyle.dp
+			}
+			Avatar {
+				_address: "sip:a.c@sip.linphone.org"
+				secured: true
+				Layout.preferredWidth: 45 * DefaultStyle.dp
+				Layout.preferredHeight: 45 * DefaultStyle.dp
+			}
+		}
+		buttons: Button {
+			text: qsTr("Ok")
+			leftPadding: 30 * DefaultStyle.dp
+			rightPadding: 30 * DefaultStyle.dp
+			onClicked: trustInfoDialog.close()
 		}
 	}
 
@@ -178,6 +186,7 @@ AbstractMainPage {
 			}
 			Button {
 				id: createContactButton
+				visible: !rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName !== "contactEdition"
 				background: Item {
 				}
 				icon.source: AppIcons.plusCircle
@@ -372,56 +381,193 @@ AbstractMainPage {
 			width: parent?.width
 			height: parent?.height
 			property string objectName: "contactDetail"
-			Control.StackView.onActivated: mainItem.leftPanelEnabled = true
-			Control.StackView.onDeactivated: mainItem.leftPanelEnabled = false
-			RowLayout {
-				visible: mainItem.selectedContact != undefined
-				anchors.fill: parent
-				anchors.topMargin: 45 * DefaultStyle.dp
-				anchors.bottomMargin: 23 * DefaultStyle.dp
-				ContactLayout {
-					Layout.fillWidth: true
-					Layout.fillHeight: true
-					Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-					contact: mainItem.selectedContact
-					Layout.preferredWidth: 360 * DefaultStyle.dp
-					buttonContent: Button {
-						width: 24 * DefaultStyle.dp
-						height: 24 * DefaultStyle.dp
+			component ContactDetailLayout: ColumnLayout {
+				id: contactDetailLayout
+				spacing: 15 * DefaultStyle.dp
+				property string label
+				property var icon
+				property alias content: contentControl.contentItem
+				signal titleIconClicked()
+				RowLayout {
+					spacing: 10 * DefaultStyle.dp
+					Text {
+						text: contactDetailLayout.label
+						color: DefaultStyle.main1_500_main
+						font {
+							pixelSize: 16 * DefaultStyle.dp
+							weight: 800 * DefaultStyle.dp
+						}
+					}
+					Button {
+						visible: contactDetailLayout.icon != undefined
+						icon.source: contactDetailLayout.icon
+						contentImageColor: DefaultStyle.main1_500_main
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+						background: Item{}
+						onClicked: contactDetailLayout.titleIconClicked()
+					}
+					Item{Layout.fillWidth: true}
+					Button {
+						id: expandButton
+						background: Item{}
+						checkable: true
+						checked: true
+						icon.source: checked ? AppIcons.upArrow : AppIcons.downArrow
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
 						icon.width: 24 * DefaultStyle.dp
 						icon.height: 24 * DefaultStyle.dp
-						background: Item{}
-						onClicked: mainItem.editContact(mainItem.selectedContact)
-						icon.source: AppIcons.pencil
-						visible: !mainItem.selectedContact?.core.readOnly
+						contentImageColor: DefaultStyle.main2_600
+						KeyNavigation.down: contentControl
 					}
-					detailContent: ColumnLayout {
-						Layout.fillWidth: false
-						Layout.preferredWidth: 360 * DefaultStyle.dp
-						spacing: 32 * DefaultStyle.dp
-						ColumnLayout {
-							spacing: 9 * DefaultStyle.dp
-							Text {
-								Layout.leftMargin: 10 * DefaultStyle.dp
-								text: qsTr("Informations")
-								font {
-									pixelSize: 16 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
-								}
+				}
+				RoundedPane {
+					id: contentControl
+					visible: expandButton.checked
+					Layout.fillWidth: true
+					leftPadding: 20 * DefaultStyle.dp
+					rightPadding: 20 * DefaultStyle.dp
+					topPadding: 17 * DefaultStyle.dp
+					bottomPadding: 17 * DefaultStyle.dp
+				}
+			}
+			ContactLayout {
+				id: contactDetail
+				anchors.fill: parent
+				contact: mainItem.selectedContact
+				button.color: DefaultStyle.main1_100
+				button.text: qsTr("Modifier")
+				button.icon.source: AppIcons.pencil
+				button.textColor: DefaultStyle.main1_500_main
+				button.contentImageColor: DefaultStyle.main1_500_main
+				button.leftPadding: 16 * DefaultStyle.dp
+				button.rightPadding: 16 * DefaultStyle.dp
+				button.topPadding: 10 * DefaultStyle.dp
+				button.bottomPadding: 10 * DefaultStyle.dp
+				button.onClicked: mainItem.editContact(mainItem.selectedContact)
+				property string contactAddress: contact ? contact.core.defaultAddress : ""
+				property var computedContactNameObj: UtilsCpp.getDisplayName(contactAddress)
+				property string computedContactName: computedContactNameObj ? computedContactNameObj.value : ""
+				property string contactName: contact
+					? contact.core.displayName
+					: computedContactName
+				component LabelButton: ColumnLayout {
+					id: labelButton
+					// property alias image: buttonImg
+					property alias button: button
+					property string label
+					spacing: 8 * DefaultStyle.dp
+					Button {
+						id: button
+						Layout.alignment: Qt.AlignHCenter
+						Layout.preferredWidth: 56 * DefaultStyle.dp
+						Layout.preferredHeight: 56 * DefaultStyle.dp
+						topPadding: 16 * DefaultStyle.dp
+						bottomPadding: 16 * DefaultStyle.dp
+						leftPadding: 16 * DefaultStyle.dp
+						rightPadding: 16 * DefaultStyle.dp
+						contentImageColor: DefaultStyle.main2_600
+						background: Rectangle {
+							anchors.fill: parent
+							radius: 40 * DefaultStyle.dp
+							color: DefaultStyle.main2_200
+						}
+					}
+					Text {
+						Layout.alignment: Qt.AlignHCenter
+						text: labelButton.label
+						font {
+							pixelSize: 14 * DefaultStyle.dp
+							weight: 400 * DefaultStyle.dp
+						}
+					}
+				}
+				bannerContent: [
+					ColumnLayout {
+						spacing: 0
+						Text {
+							text: contactDetail.contactName
+							font {
+								pixelSize: 29 * DefaultStyle.dp
+								weight: 800 * DefaultStyle.dp
 							}
-							
-							RoundedPane {
-								Layout.preferredHeight: Math.min(226 * DefaultStyle.dp, addrList.contentHeight + topPadding + bottomPadding)
-								height: Math.min(226 * DefaultStyle.dp, addrList.contentHeight)
+						}
+						Text {
+							visible: contactDetail.contact
+							property var mode : contactDetail.contact ? contactDetail.contact.core.consolidatedPresence : -1
+							horizontalAlignment: Text.AlignLeft
+							Layout.fillWidth: true
+							text: mode === LinphoneEnums.ConsolidatedPresence.Online
+								? qsTr("En ligne")
+								: mode === LinphoneEnums.ConsolidatedPresence.Busy
+									? qsTr("Occupé")
+									: mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
+										? qsTr("Ne pas déranger")
+										: qsTr("Hors ligne")
+							color: mode === LinphoneEnums.ConsolidatedPresence.Online
+								? DefaultStyle.success_500main
+								: mode === LinphoneEnums.ConsolidatedPresence.Busy
+									? DefaultStyle.warning_600
+									: mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
+										? DefaultStyle.danger_500main
+										: DefaultStyle.main2_500main
+							font.pixelSize: 14 * DefaultStyle.dp
+						}
+					},
+					Item{Layout.fillWidth: true},
+					RowLayout {
+						spacing: 58 * DefaultStyle.dp
+						LabelButton {
+							button.icon.source: AppIcons.phone
+							label: qsTr("Appel")
+							width: 56 * DefaultStyle.dp
+							height: 56 * DefaultStyle.dp
+							button.icon.width: 24 * DefaultStyle.dp
+							button.icon.height: 24 * DefaultStyle.dp
+							button.onClicked: mainWindow.startCallWithContact(contactDetail.contact, false, mainItem)
+						}
+						LabelButton {
+							button.icon.source: AppIcons.chatTeardropText
+							visible: !SettingsCpp.disableChatFeature
+							label: qsTr("Message")
+							width: 56 * DefaultStyle.dp
+							height: 56 * DefaultStyle.dp
+							button.icon.width: 24 * DefaultStyle.dp
+							button.icon.height: 24 * DefaultStyle.dp
+							button.onClicked: console.debug("[ContactLayout.qml] TODO : open conversation")
+						}
+						LabelButton {
+							button.icon.source: AppIcons.videoCamera
+							label: qsTr("Appel vidéo")
+							width: 56 * DefaultStyle.dp
+							height: 56 * DefaultStyle.dp
+							button.icon.width: 24 * DefaultStyle.dp
+							button.icon.height: 24 * DefaultStyle.dp
+							button.onClicked: mainWindow.startCallWithContact(contactDetail.contact, true, mainItem)
+						}
+					}
+				]
+				content: Flickable {
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					contentWidth: parent.width
+					ColumnLayout {
+						spacing: 32 * DefaultStyle.dp
+						anchors.left: parent.left
+						anchors.right: parent.right
+						ColumnLayout {
+							spacing: 15 * DefaultStyle.dp
+							Layout.fillWidth: true
+							ContactDetailLayout {
+								id: infoLayout
 								Layout.fillWidth: true
-								topPadding: 12 * DefaultStyle.dp
-								bottomPadding: 12 * DefaultStyle.dp
-								leftPadding: 20 * DefaultStyle.dp
-								rightPadding: 20 * DefaultStyle.dp
-								contentItem: ListView {
+								label: qsTr("Informations")
+								content: ListView {
 									id: addrList
-									width: 360 * DefaultStyle.dp
 									height: contentHeight
+									implicitHeight: contentHeight
+									width: parent.width
 									clip: true
 									spacing: 9 * DefaultStyle.dp
 									model: VariantList {
@@ -491,108 +637,96 @@ AbstractMainPage {
 									}
 								}
 							}
-						}
-						RoundedPane {
-							visible: companyText.text.length != 0 || jobText.text.length != 0
-							Layout.fillWidth: true
-							topPadding: 17 * DefaultStyle.dp
-							bottomPadding: 17 * DefaultStyle.dp
-							leftPadding: 20 * DefaultStyle.dp
-							rightPadding: 20 * DefaultStyle.dp
-							// Layout.fillHeight: true
+							RoundedPane {
+								visible: infoLayout.visible && companyText.text.length != 0 || jobText.text.length != 0
+								Layout.fillWidth: true
+								topPadding: 17 * DefaultStyle.dp
+								bottomPadding: 17 * DefaultStyle.dp
+								leftPadding: 20 * DefaultStyle.dp
+								rightPadding: 20 * DefaultStyle.dp
 
-							contentItem: ColumnLayout {
-								// height: 100 * DefaultStyle.dp
-								RowLayout {
-									height: 50 * DefaultStyle.dp
-									Text {
-										text: qsTr("Company :")
-										font {
-											pixelSize: 13 * DefaultStyle.dp
-											weight: 700 * DefaultStyle.dp
-										}
-									}
-									Text {
-										id: companyText
-										text: mainItem.selectedContact && mainItem.selectedContact.core.organization
-										font {
-											pixelSize: 14 * DefaultStyle.dp
-											weight: 400 * DefaultStyle.dp
-										}
-									}
-								}
-								RowLayout {
-									height: 50 * DefaultStyle.dp
-									Text {
-										text: qsTr("Job :")
-										font {
-											pixelSize: 13 * DefaultStyle.dp
-											weight: 700 * DefaultStyle.dp
-										}
-									}
-									Text {
-										id: jobText
-										text: mainItem.selectedContact && mainItem.selectedContact.core.job
-										font {
-											pixelSize: 14 * DefaultStyle.dp
-											weight: 400 * DefaultStyle.dp
-										}
-									}
-								}
-							}
-							ColumnLayout {
-								visible: false
-								Text {
-									text: qsTr("Medias")
-									font {
-										pixelSize: 16 * DefaultStyle.dp
-										weight: 800 * DefaultStyle.dp
-									}
-								}
-								Button {
-									Rectangle {
-										anchors.fill: parent
-										color: DefaultStyle.grey_0
-										radius: 15 * DefaultStyle.dp
-									}
-									contentItem: RowLayout {
-										Image {
-											Layout.preferredWidth: 24 * DefaultStyle.dp
-											Layout.preferredHeight: 24 * DefaultStyle.dp
-											source: AppIcons.shareNetwork
+								contentItem: ColumnLayout {
+									RowLayout {
+										height: 50 * DefaultStyle.dp
+										visible: companyText.text.length != 0
+										Text {
+											text: qsTr("Company :")
+											font {
+												pixelSize: 13 * DefaultStyle.dp
+												weight: 700 * DefaultStyle.dp
+											}
 										}
 										Text {
-											text: qsTr("Show media shared")
+											id: companyText
+											text: mainItem.selectedContact && mainItem.selectedContact.core.organization
 											font {
 												pixelSize: 14 * DefaultStyle.dp
 												weight: 400 * DefaultStyle.dp
 											}
 										}
 									}
-									onClicked: console.debug("TODO : go to shared media")
+									RowLayout {
+										height: 50 * DefaultStyle.dp
+										visible: jobText.text.length != 0
+										Text {
+											text: qsTr("Job :")
+											font {
+												pixelSize: 13 * DefaultStyle.dp
+												weight: 700 * DefaultStyle.dp
+											}
+										}
+										Text {
+											id: jobText
+											text: mainItem.selectedContact && mainItem.selectedContact.core.job
+											font {
+												pixelSize: 14 * DefaultStyle.dp
+												weight: 400 * DefaultStyle.dp
+											}
+										}
+									}
 								}
 							}
 						}
-					}
-				}
-				ColumnLayout {
-					spacing: 10 * DefaultStyle.dp
-					Layout.rightMargin: 90 * DefaultStyle.dp
-					ColumnLayout {
-						RowLayout {
-							Text {
-								text: qsTr("Confiance")
-								Layout.leftMargin: 10 * DefaultStyle.dp
-								font {
-									pixelSize: 16 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+						ContactDetailLayout {
+							visible: !SettingsCpp.disableChatFeature
+							label: qsTr("Medias")
+							Layout.fillWidth: true
+							content: Button {
+								background: Rectangle {
+									anchors.fill: parent
+									color: DefaultStyle.grey_0
+									radius: 15 * DefaultStyle.dp
 								}
+								contentItem: RowLayout {
+									Image {
+										Layout.preferredWidth: 24 * DefaultStyle.dp
+										Layout.preferredHeight: 24 * DefaultStyle.dp
+										source: AppIcons.shareNetwork
+									}
+									Text {
+										text: qsTr("Show media shared")
+										font {
+											pixelSize: 14 * DefaultStyle.dp
+											weight: 400 * DefaultStyle.dp
+										}
+									}
+									Item{Layout.fillWidth: true}
+									EffectImage {
+										Layout.preferredWidth: 24 * DefaultStyle.dp
+										Layout.preferredHeight: 24 * DefaultStyle.dp
+										imageSource: AppIcons.rightArrow
+										colorizationColor: DefaultStyle.main2_600
+									}
+								}
+								onClicked: console.debug("TODO : go to shared media")
 							}
 						}
-						RoundedPane {
-							Layout.preferredWidth: 360 * DefaultStyle.dp
-							bottomPadding: 21 * DefaultStyle.dp
-							contentItem: ColumnLayout {
+						ContactDetailLayout {
+							Layout.fillWidth: true
+							label: qsTr("Confiance")
+							icon: AppIcons.question
+							onTitleIconClicked: trustInfoDialog.open()
+							content:  ColumnLayout {
 								spacing: 13 * DefaultStyle.dp
 								Text {
 									text: qsTr("Niveau de confiance - Appareils vérifiés")
@@ -607,7 +741,7 @@ AbstractMainPage {
 								}
 								ProgressBar {
 									visible: deviceList.count > 0
-									Layout.preferredWidth: 320 * DefaultStyle.dp
+									Layout.fillWidth: true
 									Layout.preferredHeight: 28 * DefaultStyle.dp
 									value: mainItem.selectedContact ? mainItem.selectedContact.core.verifiedDeviceCount / deviceList.count : 0
 								}
@@ -648,10 +782,10 @@ AbstractMainPage {
 											textColor: DefaultStyle.main1_500_main
 											textSize: 13 * DefaultStyle.dp
 											text: qsTr("Vérifier")
-											leftPadding: 12 * DefaultStyle.dp
-											rightPadding: 12 * DefaultStyle.dp
-											topPadding: 6 * DefaultStyle.dp
-											bottomPadding: 6 * DefaultStyle.dp
+											// leftPadding: 12 * DefaultStyle.dp
+											// rightPadding: 12 * DefaultStyle.dp
+											// topPadding: 6 * DefaultStyle.dp
+											// bottomPadding: 6 * DefaultStyle.dp
 											onClicked: {
 												if (SettingsCpp.getDisplayDeviceCheckConfirmation()) {
 													verifyDevicePopup.deviceName = deviceDelegate.deviceName
@@ -668,62 +802,40 @@ AbstractMainPage {
 								}
 							}
 						}
-					}
-					ColumnLayout {
-						spacing: 9 * DefaultStyle.dp
-						Text {
-							Layout.preferredHeight: 22 * DefaultStyle.dp
-							Layout.leftMargin: 10 * DefaultStyle.dp
-							text: qsTr("Other actions")
-							font {
-								pixelSize: 16 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
-							}
-						}
-						RoundedPane {
-							Layout.preferredWidth: 360 * DefaultStyle.dp
-							contentItem: ColumnLayout {
+						ContactDetailLayout {
+							Layout.fillWidth: true
+							label: qsTr("Autres actions")
+							content:  ColumnLayout {
 								width: parent.width
-								
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
 									Layout.preferredHeight: 50 * DefaultStyle.dp
 									iconSize: 24 * DefaultStyle.dp
 									iconSource: AppIcons.pencil
-									text: qsTr("Edit")
+									text: qsTr("Éditer")
 									onClicked: mainItem.editContact(mainItem.selectedContact)
 									visible: !mainItem.selectedContact?.core.readOnly
 								}
 								Rectangle {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
 									Layout.preferredHeight: 1 * DefaultStyle.dp
 									color: DefaultStyle.main2_200
 								}
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
 									Layout.preferredHeight: 50 * DefaultStyle.dp
 									iconSize: 24 * DefaultStyle.dp
 									iconSource: mainItem.selectedContact && mainItem.selectedContact.core.starred ? AppIcons.heartFill : AppIcons.heart
-									text: mainItem.selectedContact && mainItem.selectedContact.core.starred ? qsTr("Remove from favorites") : qsTr("Add to favorites")
+									text: mainItem.selectedContact && mainItem.selectedContact.core.starred ? qsTr("Retirer des favoris") : qsTr("Ajouter aux favoris")
 									onClicked: if (mainItem.selectedContact) mainItem.selectedContact.core.lSetStarred(!mainItem.selectedContact.core.starred)
 								}
 								Rectangle {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
 									Layout.preferredHeight: 1 * DefaultStyle.dp
 									color: DefaultStyle.main2_200
 								}
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
 									Layout.preferredHeight: 50 * DefaultStyle.dp
 									iconSize: 24 * DefaultStyle.dp
 									iconSource: AppIcons.shareNetwork
@@ -741,60 +853,52 @@ AbstractMainPage {
 								}
 								Rectangle {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
 									Layout.preferredHeight: 1 * DefaultStyle.dp
 									color: DefaultStyle.main2_200
 								}
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
 									Layout.preferredHeight: 50 * DefaultStyle.dp
 									iconSize: 24 * DefaultStyle.dp
 									iconSource: AppIcons.bellSlash
-									text: qsTr("Mute")
+									text: qsTr("Mettre en sourdine")
 									onClicked: console.log("TODO : mute contact")
 								}
 								Rectangle {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
 									Layout.preferredHeight: 1 * DefaultStyle.dp
 									color: DefaultStyle.main2_200
 								}
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
 									Layout.preferredHeight: 50 * DefaultStyle.dp
 									iconSize: 24 * DefaultStyle.dp
 									iconSource: AppIcons.empty
-									text: qsTr("Block")
+									text: qsTr("Bloquer")
 									onClicked: console.log("TODO : block contact")
 								}
 								Rectangle {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
 									Layout.preferredHeight: 1 * DefaultStyle.dp
 									color: DefaultStyle.main2_200
 								}
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
 									Layout.preferredHeight: 50 * DefaultStyle.dp
 									iconSize: 24 * DefaultStyle.dp
 									iconSource: AppIcons.trashCan
 									color: DefaultStyle.danger_500main
-									text: qsTr("Delete this contact")
+									text: qsTr("Supprimer ce contact")
 									visible: !mainItem.selectedContact?.core.readOnly
 									onClicked: {
 										mainItem.deleteContact(contact)
 									}
 								}
 							}
+							
+						}
+						Item{
+							Layout.fillHeight: true
 						}
 					}
 				}
@@ -805,9 +909,9 @@ AbstractMainPage {
 	Component {
 		id: contactEdition
 		ContactEdition {
-			width: rightPanelStackView.width
-			height: rightPanelStackView.height
 			property string objectName: "contactEdition"
+			Control.StackView.onActivated: mainItem.leftPanelEnabled = false
+			Control.StackView.onDeactivated: mainItem.leftPanelEnabled = true
 			onCloseEdition: {
 				if (rightPanelStackView.depth <= 1) rightPanelStackView.clear()
 				else rightPanelStackView.pop(Control.StackView.Immediate)

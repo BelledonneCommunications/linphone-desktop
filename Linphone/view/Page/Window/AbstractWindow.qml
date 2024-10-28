@@ -62,15 +62,17 @@ ApplicationWindow {
 		contentItem: ColumnLayout {
 			spacing: 16 * DefaultStyle.dp
 			RowLayout {
-				spacing: 0
+				spacing: 5 * DefaultStyle.dp
+				width: startCallPopup.width
 				Text {
-					text: qsTr("Which channel do you choose?")
+					text: qsTr("Quelle addresse souhaitez-vous appeler ?")
+					wrapMode: Text.Wrap
+					Layout.fillWidth: true
 					font {
 						pixelSize: 16 * DefaultStyle.dp
 						weight: 800 * DefaultStyle.dp
 					}
 				}
-				Item{Layout.fillWidth: true}
 				Button {
 					Layout.preferredWidth: 24 * DefaultStyle.dp
 					Layout.preferredHeight: 24 * DefaultStyle.dp

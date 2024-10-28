@@ -91,7 +91,6 @@ Control.Button {
 		TextMetrics {
 			id: textMetrics
 			text: mainItem.text
-			font: buttonText.font
 		}
 	}
 	

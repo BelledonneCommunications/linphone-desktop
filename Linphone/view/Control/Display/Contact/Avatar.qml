@@ -87,9 +87,9 @@ Loader{
 						color: mainItem.secured ? DefaultStyle.info_500_main : DefaultStyle.danger_500main
 					}
 					Image {
-						x: stackView.width / 7
+						x: parent.width / 7
 						anchors.bottom: parent.bottom
-						width: stackView.width / 4.5
+						width: parent.width / 4.5
 						height: width
 						asynchronous: true
 						source: mainItem.secured ? AppIcons.trusted : AppIcons.notTrusted
