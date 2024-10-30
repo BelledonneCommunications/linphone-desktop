@@ -76,33 +76,43 @@ ListView {
 				Layout.preferredHeight: 24 * DefaultStyle.dp
 				Layout.rightMargin: 10 * DefaultStyle.dp
 				Layout.leftMargin: 14 * DefaultStyle.dp
+				popup.rightPadding: 10 * DefaultStyle.dp
 				popup.contentItem: ColumnLayout {
-					spacing: 0
-					width: childrenRect.width
+					spacing: 16 * DefaultStyle.dp
 					MenuButton {
 						id: pausingButton
 						onClicked: modelData.core.lSetPaused(!modelData.core.paused)
 						KeyNavigation.up: endCallButton
 						KeyNavigation.down: endCallButton
-						Layout.preferredWidth: implicitWidth
-						Layout.preferredHeight: icon.height
+						Layout.preferredWidth: icon.width + spacing + pauseMeter.advanceWidth + leftPadding + rightPadding
 						icon.source: modelData.core.state === LinphoneEnums.CallState.Paused 
 						|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
 						? AppIcons.phone : AppIcons.pause
 						text: modelData.core.state === LinphoneEnums.CallState.Paused 
 						|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
 						? qsTr("Reprendre l'appel") : qsTr("Mettre en pause")
+						TextMetrics {
+							id: pauseMeter
+							text: pausingButton.text
+						}
 					}
 					MenuButton {
 						id: endCallButton
-						onClicked: mainWindow.endCall(modelData)
+						onClicked: {
+							mainWindow.callTerminatedByUser = true
+							mainWindow.endCall(modelData)
+						}
 						KeyNavigation.up: pausingButton
 						KeyNavigation.down: pausingButton
-						Layout.preferredWidth: width
+						Layout.preferredWidth: icon.width + spacing + endMeter.advanceWidth + leftPadding + rightPadding
 						icon.source: AppIcons.endCall
 						contentImageColor: DefaultStyle.danger_500main
 						textColor: DefaultStyle.danger_500main
 						text: qsTr("Terminer l'appel")
+						TextMetrics {
+							id: endMeter
+							text: endCallButton.text
+						}
 					}
 				}
 			}

@@ -41,15 +41,13 @@ Item {
 		anchors.topMargin: 25 * DefaultStyle.dp
 		z: 1
 		visible: callState === LinphoneEnums.CallState.End || callState === LinphoneEnums.CallState.Error || callState === LinphoneEnums.CallState.Released
-		text: callState === LinphoneEnums.CallState.End
-			? mainItem.conference
+		text: mainItem.conference
 				? qsTr("Vous avez quitté la conférence")
 				: mainItem.callStarted 
 					? mainItem.callTerminatedByUser
 						? qsTr("Vous avez terminé l'appel") 
 						: qsTr("Votre correspondant a terminé l'appel")
-					: call.core.lastErrorMessage
-			: call && call.core.lastErrorMessage || ""
+					: call && call.core.lastErrorMessage || ""
 		color: DefaultStyle.grey_0
 		font {
 			pixelSize: 22 * DefaultStyle.dp

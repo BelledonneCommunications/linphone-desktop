@@ -1245,7 +1245,6 @@ AbstractWindow {
 								: DefaultStyle.grey_600
 							radius: 40 * DefaultStyle.dp
 						}
-						popup.x: width/2
 						Connections {
 							target: moreOptionsButton.popup
 							function onOpened() {
@@ -1258,10 +1257,7 @@ AbstractWindow {
 
 							MenuButton {
 								visible: mainWindow.conference
-								Layout.fillWidth: true
 								icon.source: AppIcons.squaresFour
-								icon.width: 32 * DefaultStyle.dp
-								icon.height: 32 * DefaultStyle.dp
 								text: qsTr("Modifier la disposition")
 								onClicked: {
 									rightPanel.visible = true
@@ -1271,10 +1267,7 @@ AbstractWindow {
 							}
 							MenuButton {
 								visible: mainWindow.conference
-								Layout.fillWidth: true
 								icon.source: AppIcons.fullscreen
-								icon.width: 32 * DefaultStyle.dp
-								icon.height: 32 * DefaultStyle.dp
 								text: qsTr("Mode Plein écran")
 								checkable: true
 								onToggled: {
@@ -1289,7 +1282,6 @@ AbstractWindow {
 							}
 							MenuButton {
 								icon.source: AppIcons.callList
-								Layout.fillWidth: true
 								text: qsTr("Liste d'appel")
 								onClicked: {
 									rightPanel.visible = true
@@ -1300,7 +1292,6 @@ AbstractWindow {
 							MenuButton {
 								icon.source: AppIcons.dialer
 								text: qsTr("Dialer")
-								Layout.fillWidth: true
 								onClicked: {
 									rightPanel.visible = true
 									rightPanel.replace(dialerPanel)
@@ -1312,8 +1303,6 @@ AbstractWindow {
 								visible: mainWindow.call && !mainWindow.conference && !SettingsCpp.disableCallRecordings
 								enabled: mainWindow.call && mainWindow.call.core.recordable
 								icon.source: AppIcons.recordFill
-								icon.width: 32 * DefaultStyle.dp
-								icon.height: 32 * DefaultStyle.dp
 								checked: mainWindow.call && mainWindow.call.core.recording
 								contentImageColor: down 
 									? DefaultStyle.main1_500_main
@@ -1326,7 +1315,6 @@ AbstractWindow {
 								 	:mainWindow.call && mainWindow.call.core.recording 
 										? DefaultStyle.danger_500main
 										: DefaultStyle.main2_500main
-								Layout.fillWidth: true
 								onToggled: {
 									if (mainWindow.call)
 										if (mainWindow.call.core.recording) mainWindow.call.core.lStopRecording()
@@ -1336,8 +1324,6 @@ AbstractWindow {
 							MenuButton {
 								checkable: true
 								icon.source: !mainWindow.call || mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
-								icon.width: 32 * DefaultStyle.dp
-								icon.height: 32 * DefaultStyle.dp
 								contentImageColor: down 
 									? DefaultStyle.main1_500_main
 								 	: mainWindow.call && mainWindow.call.core.speakerMuted 
@@ -1349,13 +1335,11 @@ AbstractWindow {
 								 	:mainWindow.call && mainWindow.call.core.speakerMuted 
 										? DefaultStyle.danger_500main
 										: DefaultStyle.main2_500main
-								Layout.fillWidth: true
 								onCheckedChanged: {
 									if (mainWindow.call) mainWindow.call.core.lSetSpeakerMuted(!mainWindow.call.core.speakerMuted)
 								}
 							}
 							MenuButton {
-								Layout.fillWidth: true
 								icon.source: AppIcons.settings
 								text: qsTr("Paramètres")
 								onClicked: {
