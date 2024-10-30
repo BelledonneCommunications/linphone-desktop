@@ -630,7 +630,10 @@ Item {
 					id: accountSettingsPageComponent
 					AccountSettingsPage {
 						onGoBack: closeContextualMenuComponent()
-						onAccountRemoved: mainItem.accountRemoved()
+						onAccountRemoved: {
+							closeContextualMenuComponent()
+							mainItem.accountRemoved()
+						}
 					}
 				}
 				Component {
