@@ -160,6 +160,7 @@ FocusScope{
 					searchBarText: searchbar.text
 					sourceFlags: LinphoneEnums.MagicSearchSource.All
 					multiSelectionEnabled: true
+					displayNameCapitalization: false
 					onContactAddedToSelection: (address) => {
 						contactList.addContactToSelection(address)
 						participantList.positionViewAtEnd()

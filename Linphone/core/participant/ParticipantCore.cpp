@@ -61,7 +61,6 @@ ParticipantCore::ParticipantCore(const std::shared_ptr<linphone::Participant> &p
 			mParticipantDevices.append(map);
 		}
 	} else mIsMe = false;
-	connect(this, &ParticipantCore::sipAddressChanged, this, &ParticipantCore::updateIsMe);
 }
 
 ParticipantCore::~ParticipantCore() {
@@ -74,6 +73,7 @@ void ParticipantCore::setSelf(QSharedPointer<ParticipantCore> me) {
 	mParticipantConnection->makeConnectToCore(&ParticipantCore::lStartInvitation, [this](const int &secs) {
 		QTimer::singleShot(secs * 1000, this, &ParticipantCore::onEndOfInvitation);
 	});
+	connect(this, &ParticipantCore::sipAddressChanged, this, &ParticipantCore::updateIsMe);
 }
 
 int ParticipantCore::getSecurityLevel() const {

@@ -175,14 +175,14 @@ FocusScope {
 								bottomPadding: 11 * DefaultStyle.dp
 								leftPadding: 20 * DefaultStyle.dp
 								rightPadding: 20 * DefaultStyle.dp
-								icon.source: AppIcons.newItemIconSource
+								icon.source: mainItem.newItemIconSource
 								icon.width: 24 * DefaultStyle.dp
 								icon.height: 24 * DefaultStyle.dp
 								contentImageColor: DefaultStyle.grey_0
 								text: mainItem.noItemButtonText
 								textSize: 18 * DefaultStyle.dp
 								textWeight: 600 * DefaultStyle.dp
-								
+								spacing: 8 * DefaultStyle.dp
 								onPressed: mainItem.noItemButtonPressed()
 							}
 							Item {

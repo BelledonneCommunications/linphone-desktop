@@ -12,9 +12,9 @@ Item {
 	id: mainItem
 	width: 517 * DefaultStyle.dp
 	readonly property int topPadding: 23 * DefaultStyle.dp
-	readonly property int bottomPadding: 23 * DefaultStyle.dp
-	readonly property int leftPadding: 32 * DefaultStyle.dp
-	readonly property int rightPadding: 32 * DefaultStyle.dp
+	readonly property int bottomPadding: 18 * DefaultStyle.dp
+	readonly property int leftPadding: 24 * DefaultStyle.dp
+	readonly property int rightPadding: 24 * DefaultStyle.dp
 	readonly property int spacing: 16 * DefaultStyle.dp
 	property AccountProxy  accountProxy
 	
@@ -37,14 +37,25 @@ Item {
 			Layout.preferredHeight: contentHeight
 			Layout.fillWidth: true
 			spacing: mainItem.spacing
-			model: AppCpp.accounts
+			model: AccountProxy {
+				sourceModel: AppCpp.accounts
+			}
 			delegate: Contact{
 				id: contactItem
 				width: list.width
 				account: modelData
 				onAvatarClicked: fileDialog.open()
-				onBackgroundClicked: modelData.core.lSetDefaultAccount()
+				onBackgroundClicked: {
+					list.currentIndex = index
+					modelData.core.lSetDefaultAccount()
+				}
 				onEdit: editAccount(modelData)
+				hoverEnabled: true
+				backgroundColor: list.currentIndex === index 
+					? DefaultStyle.grey_200
+					: hovered
+						? DefaultStyle.main2_100
+						: DefaultStyle.grey_0
 				FileDialog {
 					id: fileDialog
 					currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]

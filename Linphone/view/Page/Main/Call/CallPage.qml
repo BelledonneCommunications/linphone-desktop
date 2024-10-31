@@ -55,7 +55,7 @@ AbstractMainPage {
 
 	onNoItemButtonPressed: goToNewCall()
 
-	showDefaultItem: listStackView.currentItem && listStackView.currentItem.listView && listStackView.currentItem.listView.count === 0 && listStackView.currentItem.listView.model.sourceModel.count === 0 || false
+	showDefaultItem: listStackView.currentItem && listStackView.currentItem.listView && listStackView.currentItem.listView.count === 0
 
 	function goToNewCall() {
 		if (listStackView.currentItem && listStackView.currentItem.objectName != "newCallItem") listStackView.push(newCallItem)
@@ -199,6 +199,7 @@ AbstractMainPage {
 		id: historyListItem
 		FocusScope{
 			objectName: "historyListItem"
+			property var listView: historyListView
 			Control.StackView.onActivated: titleLoader.sourceComponent = historyListTitle
 			ColumnLayout {
 				anchors.fill: parent

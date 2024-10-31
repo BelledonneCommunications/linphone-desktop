@@ -42,8 +42,8 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	// Init data
 	auto address = account->getContactAddress();
 	mContactAddress = address ? Utils::coreStringToAppString(account->getContactAddress()->asStringUriOnly()) : "";
-	auto params = account->getParams();
-	auto identityAddress = params->getIdentityAddress();
+	auto params = account->getParams()->clone();
+	auto identityAddress = params->getIdentityAddress()->clone();
 	mIdentityAddress = identityAddress ? Utils::coreStringToAppString(identityAddress->asStringUriOnly()) : "";
 	mPictureUri = Utils::coreStringToAppString(params->getPictureUri());
 	mRegistrationState = LinphoneEnums::fromLinphone(account->getState());
@@ -53,6 +53,9 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mDisplayName = Utils::coreStringToAppString(identityAddress->getDisplayName());
 	if (mDisplayName.isEmpty()) {
 		mDisplayName = ToolModel::getDisplayName(mIdentityAddress);
+		identityAddress->setDisplayName(Utils::appStringToCoreString(mDisplayName));
+		params->setIdentityAddress(identityAddress);
+		account->setParams(params);
 	}
 	mRegisterEnabled = params->registerEnabled();
 	mMwiServerAddress =

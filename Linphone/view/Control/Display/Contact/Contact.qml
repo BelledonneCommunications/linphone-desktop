@@ -9,21 +9,26 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 
-Rectangle{
+Control.Control{
 	id: mainItem
+	padding: 10 * DefaultStyle.dp
 	property AccountGui account
+	property color backgroundColor: DefaultStyle.grey_0
 
 	signal avatarClicked()
 	signal backgroundClicked()
 	signal edit()
-	
-	height: 45 * DefaultStyle.dp
-	MouseArea{
-		anchors.fill: parent
-		onClicked: mainItem.backgroundClicked()
+
+	background: Rectangle {
+		radius: 10 * DefaultStyle.dp
+		color: mainItem.backgroundColor
+		MouseArea{
+			id: mouseArea
+			anchors.fill: parent
+			onClicked: mainItem.backgroundClicked()
+		}
 	}
-	RowLayout{
-		anchors.fill: parent
+	contentItem: RowLayout{
 		spacing: 0
 		RowLayout {
 			spacing: 10 * DefaultStyle.dp

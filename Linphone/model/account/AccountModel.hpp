@@ -37,13 +37,6 @@ public:
 	AccountModel(const std::shared_ptr<linphone::Account> &account, QObject *parent = nullptr);
 	~AccountModel();
 
-	virtual void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
-	                                        linphone::RegistrationState state,
-	                                        const std::string &message) override;
-	virtual void
-	onMessageWaitingIndicationChanged(const std::shared_ptr<linphone::Account> &account,
-	                                  const std::shared_ptr<const linphone::MessageWaitingIndication> &mwi) override;
-
 	void onDefaultAccountChanged();
 
 	std::string getConfigAccountUiSection();
@@ -103,6 +96,14 @@ signals:
 	void voicemailCountChanged(int count);
 
 private:
+	/**Linphone **/
+	virtual void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
+	                                        linphone::RegistrationState state,
+	                                        const std::string &message) override;
+	virtual void
+	onMessageWaitingIndicationChanged(const std::shared_ptr<linphone::Account> &account,
+	                                  const std::shared_ptr<const linphone::MessageWaitingIndication> &mwi) override;
+
 	// UserData
 	static void setUserData(const std::shared_ptr<linphone::Account> &account, std::shared_ptr<AccountUserData> &data);
 	static std::shared_ptr<AccountUserData> getUserData(const std::shared_ptr<linphone::Account> &account);

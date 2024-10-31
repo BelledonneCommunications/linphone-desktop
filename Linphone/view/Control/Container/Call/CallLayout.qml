@@ -15,7 +15,7 @@ Item {
 	property ConferenceGui conference: call && call.core.conference
 	property bool callTerminatedByUser: false
 	property bool callStarted: call?.core.isStarted
-	readonly property var callState: call && call.core.state || undefined
+	readonly property var callState: call? call.core.state : undefined
 	property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
 	// property int participantDeviceCount: conference ? conference.core.participantDeviceCount : -1
 	// onParticipantDeviceCountChanged: {
@@ -40,14 +40,14 @@ Item {
 		anchors.top: parent.top
 		anchors.topMargin: 25 * DefaultStyle.dp
 		z: 1
-		visible: callState === LinphoneEnums.CallState.End || callState === LinphoneEnums.CallState.Error || callState === LinphoneEnums.CallState.Released
+		visible: mainItem.callState === LinphoneEnums.CallState.End || mainItem.callState === LinphoneEnums.CallState.Error || mainItem.callState === LinphoneEnums.CallState.Released
 		text: mainItem.conference
 				? qsTr("Vous avez quitté la conférence")
-				: mainItem.callStarted 
-					? mainItem.callTerminatedByUser
-						? qsTr("Vous avez terminé l'appel") 
-						: qsTr("Votre correspondant a terminé l'appel")
-					: call && call.core.lastErrorMessage || ""
+				: mainItem.callTerminatedByUser
+					? qsTr("Vous avez terminé l'appel") 
+					: mainItem.callStarted 
+						? qsTr("Votre correspondant a terminé l'appel")
+						: call && call.core.lastErrorMessage || ""
 		color: DefaultStyle.grey_0
 		font {
 			pixelSize: 22 * DefaultStyle.dp

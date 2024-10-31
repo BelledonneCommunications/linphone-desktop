@@ -21,6 +21,7 @@ Rectangle {
 		property var imageSource
 		property string title
 		property string text
+		property bool enableMouseArea: false
 		signal contentClicked()
 		EffectImage {
 			Layout.preferredWidth: 32 * DefaultStyle.dp
@@ -55,6 +56,7 @@ Rectangle {
 				}
 				MouseArea {
 					id: privateMouseArea
+					enabled: line.enableMouseArea
 					anchors.fill: parent
 					hoverEnabled: true
 					cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
@@ -80,6 +82,7 @@ Rectangle {
 					imageSource: AppIcons.detective
 					title: qsTr("Politique de confidentialité")
 					text: qsTr("Visiter notre potilique de confidentialité")
+					enableMouseArea: true
 					onContentClicked: Qt.openUrlExternally(ConstantsCpp.PrivatePolicyUrl)
 				}
 				AboutLine {

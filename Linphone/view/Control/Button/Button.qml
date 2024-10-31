@@ -141,8 +141,7 @@ Control.Button {
 					Layout.preferredWidth: mainItem.icon.width
 					Layout.preferredHeight: mainItem.icon.height
 				}
-				ButtonText{
-					Layout.fillHeight: true
+				ButtonText {
 					horizontalAlignment: Text.AlignLeft
 				}
 				Item{
