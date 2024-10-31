@@ -128,6 +128,7 @@ AbstractMainPage {
 			Control.StackView.onActivated: {
 				mainItem.selectedConference = conferenceList.selectedConference
 			}
+			
 			ColumnLayout {
 				id: listLayoutIn
 				anchors.fill: parent
@@ -163,24 +164,26 @@ AbstractMainPage {
                     Layout.topMargin: 18 * DefaultStyle.dp
                     Layout.rightMargin: 38 * DefaultStyle.dp
 					placeholderText: qsTr("Rechercher une réunion")
-                    visible: conferenceList.count !== 0
+					visible: conferenceList.count !== 0 || text.length !== 0
 					KeyNavigation.up: conferenceList
 					KeyNavigation.down: conferenceList
+					Binding {
+						target: mainItem
+						property: "showDefaultItem"
+						when: searchBar.text.length !== 0
+						value: false
+						restoreMode: Binding.RestoreBindingOrValue
+					}
 				}
 				Text {
-                    Layout.topMargin: 137 * DefaultStyle.dp
+					visible: conferenceList.count === 0 || searchBar.text.length != 0
+					Layout.topMargin: 137 * DefaultStyle.dp
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignHCenter
-					text: mainItem.emptyListText
+					text: qsTr("Aucune réunion%1").arg(searchBar.text.length !== 0 ? " correspondante" : "")
 					font {
 						pixelSize: 16 * DefaultStyle.dp
 						weight: 800 * DefaultStyle.dp
-					}
-					visible: mainItem.showDefaultItem
-					Binding on text {
-						when: searchBar.text.length !== 0
-						value: qsTr("Aucune réunion correspondante")
-						restoreMode: Binding.RestoreBindingOrValue
 					}
 				}
 				MeetingListView {
@@ -189,6 +192,7 @@ AbstractMainPage {
 					Layout.topMargin: 38 * DefaultStyle.dp - 24 * DefaultStyle.dp
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					implicitHeight: contentHeight
 					hoverEnabled: mainItem.leftPanelEnabled
 					highlightFollowsCurrentItem: true
 					preferredHighlightBegin: height/2 - 10
@@ -218,6 +222,7 @@ AbstractMainPage {
 						
 					}
 				}
+				Item{Layout.fillHeight: true}
 			}
 		}
 	}
@@ -339,7 +344,7 @@ AbstractMainPage {
 			id: editFocusScope
 			property bool isCreation
 			property ConferenceInfoGui conferenceInfoGui
-			width : parent.width
+			width: parent.width
 			height: editLayout.implicitHeight
 			ColumnLayout {
 				id: editLayout

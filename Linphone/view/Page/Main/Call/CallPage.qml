@@ -9,7 +9,7 @@ import SettingsCpp
 AbstractMainPage {
 	id: mainItem
 	noItemButtonText: qsTr("Nouvel appel")
-	emptyListText: qsTr("Aucun appel")
+	emptyListText: qsTr("Historique d'appel vide")
 	newItemIconSource: AppIcons.newCall
 
 	property var selectedRowHistoryGui
@@ -208,10 +208,17 @@ AbstractMainPage {
 					Layout.fillWidth: true
 					Layout.rightMargin: 39 * DefaultStyle.dp
 					placeholderText: qsTr("Rechercher un appel")
-                    visible: historyListView.count !== 0
+                    visible: historyListView.count !== 0 || text.length !== 0
 					focus: true
 					KeyNavigation.up: titleLoader
 					KeyNavigation.down: historyListView
+					Binding {
+						target: mainItem
+						property: "showDefaultItem"
+						when: searchBar.text.length != 0
+						value: false
+						restoreMode: Binding.RestoreBindingOrValue
+					}
 				}
                 Item {
                     Layout.topMargin: 38 * DefaultStyle.dp
@@ -225,16 +232,12 @@ AbstractMainPage {
                         background: Item{}
                         contentItem: ColumnLayout {
 								Text {
-									visible: historyListView.count === 0
+									visible: historyListView.count === 0 || searchBar.text.length != 0
 									Layout.alignment: Qt.AlignHCenter
-									text: qsTr("Aucun appel")
+									text: qsTr("Aucun appel%1").arg(searchBar.text.length != 0 ? " correspondant" : "")
 									font {
 										pixelSize: 16 * DefaultStyle.dp
 										weight: 800 * DefaultStyle.dp
-									}
-									Binding on text {
-										when: searchBar.text.length !== 0
-										value: qsTr("Aucun appel correspondant")
 									}
 								}
 								ListView {

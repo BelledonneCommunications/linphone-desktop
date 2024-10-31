@@ -52,7 +52,7 @@ AbstractMainPage {
 
 	// rightPanelStackView.initialItem: contactDetail
 	
-	showDefaultItem: rightPanelStackView.depth == 0 && contactList.count == 0
+	showDefaultItem: rightPanelStackView.depth == 0 && contactList.count === 0 && searchBar.text.length === 0
 	
 	MagicSearchProxy {
 		id: allFriends
@@ -211,7 +211,7 @@ AbstractMainPage {
 			spacing: 38 * DefaultStyle.dp
 			SearchBar {
 				id: searchBar
-				visible: contactList.count != 0
+				visible: contactList.count != 0 || text.length !== 0
 				Layout.leftMargin: leftPanel.leftMargin
 				Layout.rightMargin: leftPanel.rightMargin
 				Layout.topMargin: 18 * DefaultStyle.dp
@@ -236,10 +236,10 @@ AbstractMainPage {
 						width: parent.width
 						spacing: 15 * DefaultStyle.dp
 						Text {
-							visible: contactList.count === 0 && favoriteList.count === 0
+							visible: contactList.count === 0 || searchBar.text.length != 0
 							Layout.alignment: Qt.AlignHCenter
 							Layout.topMargin: 137 * DefaultStyle.dp
-							text: qsTr("Aucun contact")
+							text: qsTr("Aucun contact%1").arg(searchBar.text.length !== 0 ? " correspondant" : "")
 							font {
 								pixelSize: 16 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
