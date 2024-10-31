@@ -160,14 +160,15 @@ AbstractMainPage {
 				SearchBar {
 					id: searchBar
 					Layout.fillWidth: true
-					Layout.topMargin: 18 * DefaultStyle.dp
-					Layout.rightMargin: 38 * DefaultStyle.dp
+                    Layout.topMargin: 18 * DefaultStyle.dp
+                    Layout.rightMargin: 38 * DefaultStyle.dp
 					placeholderText: qsTr("Rechercher une réunion")
+                    visible: conferenceList.count !== 0
 					KeyNavigation.up: conferenceList
 					KeyNavigation.down: conferenceList
 				}
 				Text {
-					Layout.topMargin: 38 * DefaultStyle.dp
+                    Layout.topMargin: 137 * DefaultStyle.dp
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignHCenter
 					text: mainItem.emptyListText

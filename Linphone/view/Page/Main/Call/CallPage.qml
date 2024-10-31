@@ -208,23 +208,22 @@ AbstractMainPage {
 					Layout.fillWidth: true
 					Layout.rightMargin: 39 * DefaultStyle.dp
 					placeholderText: qsTr("Rechercher un appel")
+                    visible: historyListView.count !== 0
 					focus: true
 					KeyNavigation.up: titleLoader
 					KeyNavigation.down: historyListView
 				}
-				Item {
-					Layout.topMargin: 38 * DefaultStyle.dp
+                Item {
+                    Layout.topMargin: 38 * DefaultStyle.dp
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					Control.Control {
-						id: listLayout
-						anchors.fill: parent
-						anchors.rightMargin: 39 * DefaultStyle.dp
+                    Control.Control {
+                        id: listLayout
+                        anchors.fill: parent
+                        anchors.rightMargin: 39 * DefaultStyle.dp
 	
-						background: Item{}
-						ColumnLayout {
-							anchors.fill: parent
-							ColumnLayout {
+                        background: Item{}
+                        contentItem: ColumnLayout {
 								Text {
 									visible: historyListView.count === 0
 									Layout.alignment: Qt.AlignHCenter
@@ -411,18 +410,18 @@ AbstractMainPage {
 									Control.ScrollBar.vertical: scrollbar
 								}
 							}
-						}
-					}
-					ScrollBar {
-						id: scrollbar
-						anchors.top: parent.top
-						anchors.bottom: parent.bottom
-						anchors.right: parent.right
-						anchors.rightMargin: 8 * DefaultStyle.dp
-						active: true
-						policy: Control.ScrollBar.AsNeeded
-					}
-				}
+
+                    }
+                    ScrollBar {
+                        id: scrollbar
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.right: parent.right
+                        anchors.rightMargin: 8 * DefaultStyle.dp
+                        active: true
+                        policy: Control.ScrollBar.AsNeeded
+                    }
+                }
 			}
 		}
 	}

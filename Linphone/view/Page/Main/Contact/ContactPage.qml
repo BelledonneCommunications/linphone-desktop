@@ -62,7 +62,7 @@ AbstractMainPage {
 		if (!contact) return
 		var mainWin = UtilsCpp.getMainWindow()
 		mainWin.showConfirmationLambdaPopup("",
-			contact.core.displayName + qsTr("sera supprimé des contacts. Voulez-vous continuer ?"),
+            qsTr("%1 sera supprimé des contacts. Voulez-vous continuer ?").arg(contact.core.displayName),
 			"",
 			function (confirmed) {
 				if (confirmed) {
