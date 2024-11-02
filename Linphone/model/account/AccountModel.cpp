@@ -67,8 +67,10 @@ void AccountModel::onMessageWaitingIndicationChanged(
 		auto userData = getUserData(account);
 		if (!userData) userData = std::make_shared<AccountUserData>();
 		userData->voicemailCount = summary->getNbNew();
+		userData->showMwi = mwi->hasMessageWaiting();
 		setUserData(account, userData);
 		emit voicemailCountChanged(summary->getNbNew());
+		emit showMwiChanged(mwi->hasMessageWaiting());
 	}
 }
 
@@ -309,6 +311,12 @@ int AccountModel::getVoicemailCount() {
 	auto userData = getUserData(mMonitor);
 	if (userData) return userData->voicemailCount;
 	else return 0;
+}
+
+bool AccountModel::getShowMwi() {
+	auto userData = getUserData(mMonitor);
+	if (userData) return userData->showMwi;
+	else return false;
 }
 
 // UserData (see hpp for explanations)

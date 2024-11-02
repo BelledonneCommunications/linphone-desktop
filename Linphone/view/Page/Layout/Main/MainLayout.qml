@@ -398,14 +398,29 @@ Item {
 							Layout.preferredWidth: 27 * DefaultStyle.dp
 							Layout.preferredHeight: 28 * DefaultStyle.dp
 							
-							function cumulatedVoicemailCount() {
+							Repeater {
+								model: accountProxy
+								Connections {
+									target: modelData.core
+									onMwiChanged: updateCumulatedMwi()
+								}
+							}
+
+							function updateCumulatedMwi() {
 								var count = 0
-								for (var i=0 ; i < accountProxy.count ; i++ )
+								var show = false
+								for (var i=0 ; i < accountProxy.count ; i++ ) {
 									count += accountProxy.getAt(i).core.voicemailCount
-								return count
+									show |= accountProxy.getAt(i).core.showMwi
+								}
+								voicemail.visible = show
+								voicemail.voicemailCount = count
+							}
+
+							Component.onCompleted: {
+								updateCumulatedMwi()
 							}
 							
-							voicemailCount: cumulatedVoicemailCount()
 							onClicked: {
 								if (accountProxy.count > 1) {
 									avatarButton.popup.open()

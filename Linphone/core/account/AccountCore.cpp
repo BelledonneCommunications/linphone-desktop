@@ -97,6 +97,7 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	}
 
 	INIT_CORE_MEMBER(VoicemailCount, mAccountModel)
+	INIT_CORE_MEMBER(ShowMwi, mAccountModel)
 }
 
 AccountCore::~AccountCore() {
@@ -268,6 +269,7 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 
 	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, int, voicemailCount,
 	                        VoicemailCount)
+	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, int, showMwi, ShowMwi)
 }
 
 const std::shared_ptr<AccountModel> &AccountCore::getModel() const {

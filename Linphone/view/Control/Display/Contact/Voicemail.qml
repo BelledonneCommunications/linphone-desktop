@@ -9,7 +9,6 @@ import SettingsCpp
 Rectangle{
 	id: mainItem
 	property int voicemailCount: 0
-	visible: voicemailCount > 0
 	width: 27 * DefaultStyle.dp
 	height: 28 * DefaultStyle.dp
 	signal clicked()

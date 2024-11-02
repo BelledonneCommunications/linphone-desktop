@@ -67,6 +67,7 @@ public:
 	void setLimeServerUrl(QString value);
 	QString dialPlanAsString(const std::shared_ptr<linphone::DialPlan> &dialPlan);
 	int getVoicemailCount();
+	bool getShowMwi();
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
@@ -94,6 +95,7 @@ signals:
 	void limeServerUrlChanged(QString value);
 	void removed();
 	void voicemailCountChanged(int count);
+	void showMwiChanged(bool show);
 
 private:
 	/**Linphone **/
@@ -118,6 +120,7 @@ private:
 
 struct AccountUserData {
 	int voicemailCount;
+	bool showMwi;
 	// ..
 };
 
