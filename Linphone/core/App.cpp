@@ -1003,9 +1003,17 @@ void App::setSysTrayIcon() {
 		menu->addSeparator();
 	}
 	menu->addAction(quitAction);
-	if (!mSystemTrayIcon)
+	if (!mSystemTrayIcon) {
 		systemTrayIcon->setContextMenu(menu); // This is a Qt bug. We cannot call setContextMenu more than once. So we
 		                                      // have to keep an instance of the menu.
+		connect(systemTrayIcon, &QSystemTrayIcon::activated, this, [this](QSystemTrayIcon::ActivationReason reason) {
+			// Left-Click and Double Left-Click
+			if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::DoubleClick) {
+				auto mainWindow = getMainWindow();
+				if (mainWindow) mainWindow->show();
+			}
+		});
+	}
 	systemTrayIcon->setIcon(QIcon(Constants::WindowIconPath));
 	systemTrayIcon->setToolTip(APPLICATION_NAME);
 	systemTrayIcon->show();
