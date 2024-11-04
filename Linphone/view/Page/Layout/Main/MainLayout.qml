@@ -550,8 +550,8 @@ Item {
 										text: qsTr("Quitter Linphone")
 										iconSource: AppIcons.power
 										onClicked: {
-												settingsMenuButton.popup.close()
-												UtilsCpp.getMainWindow().showConfirmationLambdaPopup(
+											settingsMenuButton.popup.close()
+											UtilsCpp.getMainWindow().showConfirmationLambdaPopup("",
 												qsTr("Quitter Linphone ?"),
 												"",
 												function (confirmed) {
