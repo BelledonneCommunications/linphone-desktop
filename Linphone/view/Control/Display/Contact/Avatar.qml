@@ -24,10 +24,12 @@ Loader{
 				: ''
 	readonly property string address: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_address) : _address
 	property var displayNameObj: UtilsCpp.getDisplayName(_address)
-	property string displayNameVal: contact
-		? contact.core.displayName
-		: displayNameObj
-			? displayNameObj.value
+	property string displayNameVal: account && account.core.displayName
+		? account.core.displayName
+		: contact && contact.core.displayName
+			? contact.core.displayName
+			: displayNameObj
+				? displayNameObj.value
 			: ""
 	property bool haveAvatar: (account && account.core?.pictureUri || false)
 							  || (contact && contact.core.pictureUri)
