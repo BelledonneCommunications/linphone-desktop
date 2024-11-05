@@ -88,7 +88,7 @@ QString QtLogger::formatLog(QString contextFile, int contextLine, QString msg) {
 void QtLogger::onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
 	QString out;
 	QString message = QtLogger::formatLog(context.file, context.line, msg);
-	if (gLogger.mVerboseEnabled) {
+	if (gLogger.mVerboseEnabled || !gLogger.isSignalConnected(QMetaMethod::fromSignal(&QtLogger::qtLogReceived))) {
 		gLogger.printLog(&out, Constants::AppDomain, LinphoneEnums::toLinphone(type),
 		                 Utils::appStringToCoreString(message));
 	}

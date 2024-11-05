@@ -204,7 +204,7 @@ FocusScope {
 					constantImageSource: AppIcons.globe
 					weight: 700 * DefaultStyle.dp
 					leftMargin: 0
-					currentIndex: mainItem.conferenceInfoGui ? model.getIndex(mainItem.conferenceInfoGui.core.timeZoneModel) : -1
+					currentIndex: mainItem.conferenceInfoGui && model.count > 0 ? model.getIndex(mainItem.conferenceInfoGui.core.timeZoneModel) : -1
 					background: Rectangle {
 						visible: parent.hovered || parent.down
 						anchors.fill: parent
@@ -212,6 +212,7 @@ FocusScope {
 					}
 					model: TimeZoneProxy{
 					}
+					visible: model.count > 0
 					onCurrentIndexChanged: {
 						var modelIndex = timeZoneCbox.model.index(currentIndex, 0)
 						mainItem.conferenceInfoGui.core.timeZoneModel = timeZoneCbox.model.data(modelIndex, Qt.DisplayRole + 1)

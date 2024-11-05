@@ -23,6 +23,7 @@ Control.ComboBox {
 	onCurrentIndexChanged: {
 		var item = model[currentIndex]
 		if (!item) item = model.getAt(currentIndex)
+		if (!item) return
 		selectedItemText.text = item.text
 									? item.text
 									: item 
@@ -142,7 +143,7 @@ Control.ComboBox {
 			clip: true
 			implicitHeight: contentHeight
 			height: contentHeight
-			model: mainItem.model
+			model: visible? mainItem.model : []
 			currentIndex: mainItem.highlightedIndex >= 0 ? mainItem.highlightedIndex : 0
 			highlightFollowsCurrentItem: true
 			highlightMoveDuration: -1

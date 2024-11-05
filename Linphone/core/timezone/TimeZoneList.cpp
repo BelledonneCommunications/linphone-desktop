@@ -21,7 +21,10 @@
 #include "TimeZoneList.hpp"
 #include "core/App.hpp"
 
+#include <QFuture>
 #include <QTimeZone>
+#include <QtConcurrent>
+#include <set>
 
 // =============================================================================
 
@@ -37,7 +40,8 @@ QSharedPointer<TimeZoneList> TimeZoneList::create() {
 
 TimeZoneList::TimeZoneList(QObject *parent) : ListProxy(parent) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
-	initTimeZones();
+	// There is too much items (more than 400) to be sort in main thread. Dispatch the process.
+	QFuture<void> future = QtConcurrent::run([this]() { initTimeZones(); });
 }
 
 TimeZoneList::~TimeZoneList() {
@@ -47,6 +51,8 @@ TimeZoneList::~TimeZoneList() {
 
 void TimeZoneList::initTimeZones() {
 	QList<QSharedPointer<QObject>> models;
+	QElapsedTimer benchmark;
+	benchmark.start();
 	for (auto id : QTimeZone::availableTimeZoneIds()) {
 		auto model = QSharedPointer<TimeZoneModel>::create(QTimeZone(id));
 		if (std::find_if(mList.begin(), mList.end(), [id](const QSharedPointer<QObject> &a) {
@@ -57,7 +63,16 @@ void TimeZoneList::initTimeZones() {
 			}
 		}
 	}
-	resetData(models);
+	std::sort(models.begin(), models.end(), [](QSharedPointer<QObject> a, QSharedPointer<QObject> b) {
+		auto tA = a.objectCast<TimeZoneModel>();
+		auto tB = b.objectCast<TimeZoneModel>();
+		auto timeA = tA->getStandardTimeOffset() / 3600;
+		auto timeB = tB->getStandardTimeOffset() / 3600;
+		return timeA < timeB || (timeA == timeB && tA->getCountryName() < tB->getCountryName());
+	});
+	lDebug() << log().arg("Sorting %1 TZ : %2ms").arg(models.size()).arg(benchmark.elapsed());
+	// Reset models inside main thread.
+	QMetaObject::invokeMethod(this, [this, models]() { resetData(models); });
 }
 
 QHash<int, QByteArray> TimeZoneList::roleNames() const {
@@ -73,11 +88,11 @@ QVariant TimeZoneList::data(const QModelIndex &index, int role) const {
 	if (!index.isValid() || row < 0 || row >= mList.count()) return QVariant();
 	auto timeZoneModel = getAt<TimeZoneModel>(row);
 	if (!timeZoneModel) return QVariant();
-	int offset = timeZoneModel->getStandardTimeOffset() / 3600;
-	int absOffset = std::abs(offset);
 	if (role == Qt::DisplayRole + 1) {
-		return QVariant::fromValue(new TimeZoneModel(timeZoneModel->getTimeZone()));
+		return QVariant::fromValue(timeZoneModel.get());
 	} else {
+		int offset = timeZoneModel->getStandardTimeOffset() / 3600;
+		int absOffset = std::abs(offset);
 		return QStringLiteral("(GMT%1%2%3:00) %4 %5")
 		    .arg(offset >= 0 ? "+" : "-")
 		    .arg(absOffset < 10 ? "0" : "")

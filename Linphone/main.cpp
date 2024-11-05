@@ -37,12 +37,8 @@ void cleanStream() {
 	}
 #endif
 }
-void fallbackLog(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
-	QString message = QtLogger::formatLog(context.file, context.line, msg);
-	std::cout << message.toStdString() << std::endl;
-}
+
 int main(int argc, char *argv[]) {
-	qInstallMessageHandler(fallbackLog); // Use for messages prior QCoreApplication generation.
 	/*
 	#if defined _WIN32
 	    // log in console only if launched from console

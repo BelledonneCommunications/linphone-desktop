@@ -26,7 +26,8 @@
 
 TimeZoneProxy::TimeZoneProxy(QObject *parent) : LimitProxy(parent) {
 	mList = TimeZoneList::create();
-	setSourceModels(new SortFilterList(mList.get(), Qt::AscendingOrder));
+	auto a = new SortFilterList(mList.get()); // Avoid using sort because it is too slow
+	setSourceModels(a);
 }
 
 // -----------------------------------------------------------------------------
