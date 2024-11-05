@@ -703,22 +703,27 @@ void App::sendCommand() {
 	auto arguments = mParser->positionalArguments();
 	if (mParser->isSet("fetch-config")) arguments << "fetch-config=" + mParser->value("fetch-config");
 	static bool firstStart = true; // We can't erase positional arguments. So we get them on each restart.
-	if (firstStart && arguments.size() > 0) {
+	if (firstStart) {
 		firstStart = false;
 		if (isSecondary()) { // Send to primary
-			lDebug() << "Sending " << arguments;
-			for (auto i : arguments) {
-				sendMessage(i.toLocal8Bit(), -1);
+			if (arguments.size() > 0) {
+				lDebug() << log().arg("Sending") << arguments;
+				for (auto i : arguments) {
+					sendMessage(i.toLocal8Bit(), -1);
+				}
+			} else {
+				lDebug() << log().arg("No arguments. Sending show command");
+				sendMessage("show", -1);
 			}
-		} else { // Execute
-			lDebug() << "Executing " << arguments;
+		} else if (arguments.size() > 0) { // Execute
+			lDebug() << log().arg("Executing ") << arguments;
 			for (auto i : arguments) {
 				QString command(i);
 				receivedMessage(0, i.toLocal8Bit());
 			}
 		}
 	} else if (isPrimary()) {
-		lDebug() << "Run waiting process";
+		lDebug() << log().arg("Run waiting process");
 		receivedMessage(0, "");
 	}
 }
