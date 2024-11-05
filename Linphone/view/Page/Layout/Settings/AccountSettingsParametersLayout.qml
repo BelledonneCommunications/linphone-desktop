@@ -53,6 +53,13 @@ AbstractSettingsLayout {
 						isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
 						toValidate: true
 					}
+					DecoratedTextField {
+						propertyName: "voicemailAddress"
+						propertyOwner: account.core
+						title: qsTr("URI de messagerie vocale")
+						isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
+						toValidate: true
+					}
 					Item {
 						Layout.fillHeight: true
 						Layout.fillWidth: true

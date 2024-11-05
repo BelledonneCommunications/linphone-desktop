@@ -425,10 +425,10 @@ Item {
 								if (accountProxy.count > 1) {
 									avatarButton.popup.open()
 								} else {
-									if (accountProxy.defaultAccount.core.mwiServerAddress.length > 0)
-										UtilsCpp.createCall(accountProxy.defaultAccount.core.mwiServerAddress)
+									if (accountProxy.defaultAccount.core.voicemailAddress.length > 0)
+										UtilsCpp.createCall(accountProxy.defaultAccount.core.voicemailAddress)
 									else
-										UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("L'adresse de la messagerie vocale n'est pas définie."), false)
+										UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("L'URI de messagerie vocale n'est pas définie."), false)
 								}
 							}
 						}

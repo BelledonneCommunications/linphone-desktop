@@ -151,10 +151,10 @@ Control.Control{
 			visible: mainItem.account.core.showMwi
 			voicemailCount: mainItem.account.core.voicemailCount >= 100 ? '99+' : mainItem.account.core.voicemailCount
 			onClicked: {
-				if (mainItem.account.core.mwiServerAddress.length > 0)
-					UtilsCpp.createCall(mainItem.account.core.mwiServerAddress)
+				if (mainItem.account.core.voicemailAddress.length > 0)
+					UtilsCpp.createCall(mainItem.account.core.voicemailAddress)
 				else
-					UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("L'adresse de la messagerie vocale n'est pas définie."), false)
+					UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("L'URI de messagerie vocale n'est pas définie."), false)
 			}
 		}
 		Item{Layout.fillWidth: true}

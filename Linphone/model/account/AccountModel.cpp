@@ -319,6 +319,17 @@ bool AccountModel::getShowMwi() {
 	else return false;
 }
 
+void AccountModel::setVoicemailAddress(QString value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
+	if (address) {
+		params->setVoicemailAddress(address);
+		mMonitor->setParams(params);
+		emit voicemailAddressChanged(value);
+	} else qWarning() << "Unable to set VoicemailAddress, failed creating address from" << value;
+}
+
 // UserData (see hpp for explanations)
 
 static QMap<const std::shared_ptr<linphone::Account>, std::shared_ptr<AccountUserData>> userDataMap;
