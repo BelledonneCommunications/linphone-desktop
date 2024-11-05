@@ -19,7 +19,7 @@ AbstractWindow {
 
 	signal callCreated()
 	property var accountProxy
-	
+
 	// TODO : use this to make the border transparent
 	// flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint
 	// menuBar: Rectangle {

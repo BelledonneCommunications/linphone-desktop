@@ -960,14 +960,12 @@ AbstractWindow {
 						when: middleItemStackView.currentItem.objectName === "waitingRoom"
 						property: "imageSource"
 						value: AppIcons.usersThree
-						restoreMode: Binding.RestoreBindingOrValue
 					}
 					Binding {
 						target: callStatusText
 						when: middleItemStackView.currentItem.objectName === "waitingRoom"
 						property: "text"
 						value: waitingRoomIn.conferenceInfo ? waitingRoomIn.conferenceInfo.core.subject : ''
-						restoreMode: Binding.RestoreBindingOrValue
 					}
 					Binding {
 						target: conferenceDate

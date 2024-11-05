@@ -14,7 +14,6 @@ FocusScope{
 	property bool enableErrorText: false
 	property bool errorTextVisible: errorText.text.length > 0
 	implicitHeight: layout.implicitHeight
-	implicitWidth: layout.implicitWidth
 
 	function clearErrorText() {
 		errorText.clear()
@@ -22,6 +21,8 @@ FocusScope{
 	ColumnLayout {
 		id: layout
 		spacing: 5 * DefaultStyle.dp
+		anchors.left: parent.left
+		anchors.right: parent.right
 	
 		Text {
 			visible: label.length > 0
@@ -41,11 +42,12 @@ FocusScope{
 	
 		Item {
 			Layout.preferredHeight: childrenRect.height
-			Layout.preferredWidth: childrenRect.width
-			Item {
+			Layout.fillWidth: true
+			StackLayout {
 				id: contentItem
 				height: childrenRect.height
-				width: childrenRect.width
+				anchors.left: parent.left
+				anchors.right: parent.right
 			}
 			TemporaryText {
 				id: errorText

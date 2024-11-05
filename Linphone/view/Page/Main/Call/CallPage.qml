@@ -217,7 +217,6 @@ AbstractMainPage {
 						property: "showDefaultItem"
 						when: searchBar.text.length != 0
 						value: false
-						restoreMode: Binding.RestoreBindingOrValue
 					}
 				}
                 Item {

@@ -11,28 +11,30 @@ ColumnLayout {
 
 	FormItemLayout {
 		id: username
+		Layout.preferredWidth: 346 * DefaultStyle.dp
 		label: qsTr("Nom d'utilisateur")
 		mandatory: true
 		enableErrorText: true
 		contentItem: TextField {
 			id: usernameEdit
-			isError: username.errorTextVisible || errorText.visible
 			Layout.preferredWidth: 360 * DefaultStyle.dp
 			Layout.preferredHeight: 49 * DefaultStyle.dp
+			isError: username.errorTextVisible || errorText.visible
 		}
 	}
 	Item {
 		Layout.preferredHeight: password.implicitHeight
 		FormItemLayout {
 			id: password
+			width: 346 * DefaultStyle.dp
 			label: qsTr("Mot de passe")
 			mandatory: true
 			enableErrorText: true
 			contentItem: TextField {
 				id: passwordEdit
-				isError: password.errorTextVisible || errorText.visible
 				Layout.preferredWidth: 360 * DefaultStyle.dp
 				Layout.preferredHeight: 49 * DefaultStyle.dp
+				isError: password.errorTextVisible || errorText.visible
 				hidden: true
 			}
 			TemporaryText {

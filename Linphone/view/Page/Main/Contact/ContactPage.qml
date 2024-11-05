@@ -14,7 +14,7 @@ AbstractMainPage {
 	newItemIconSource: AppIcons.plusCircle
 
 	// disable left panel contact list interaction while a contact is being edited
-	property bool leftPanelEnabled: true
+	property bool leftPanelEnabled: !rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName != "contactEdition"
 	property FriendGui selectedContact
 	property string initialFriendToDisplay
 
@@ -551,8 +551,6 @@ AbstractMainPage {
 					}
 				]
 				content: Flickable {
-					Layout.fillWidth: true
-					Layout.fillHeight: true
 					contentWidth: parent.width
 					ColumnLayout {
 						spacing: 32 * DefaultStyle.dp
@@ -912,8 +910,6 @@ AbstractMainPage {
 		id: contactEdition
 		ContactEdition {
 			property string objectName: "contactEdition"
-			Control.StackView.onActivated: mainItem.leftPanelEnabled = false
-			Control.StackView.onDeactivated: mainItem.leftPanelEnabled = true
 			onCloseEdition: {
 				if (rightPanelStackView.depth <= 1) rightPanelStackView.clear()
 				else rightPanelStackView.pop(Control.StackView.Immediate)

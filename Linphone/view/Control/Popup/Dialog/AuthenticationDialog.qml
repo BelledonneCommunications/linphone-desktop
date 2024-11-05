@@ -20,6 +20,7 @@ Dialog {
 	bottomPadding: 20 * DefaultStyle.dp
 	leftPadding: 20 * DefaultStyle.dp
 	rightPadding: 20 * DefaultStyle.dp
+	width: 637 * DefaultStyle.dp
 	content: ColumnLayout {
 		spacing: 20 * DefaultStyle.dp
 		id: contentLayout
@@ -39,7 +40,6 @@ Dialog {
 				label: qsTr("Identité")
 				contentItem: TextField {
 					enabled: false
-					customWidth: parent.width
 					initialText: mainItem.identity
 				}
 			}

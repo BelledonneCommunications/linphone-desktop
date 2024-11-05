@@ -59,7 +59,7 @@ ColumnLayout {
 			height: childrenRect.height
 		}
 	}
-	ColumnLayout {
+	StackLayout {
 		id: detailLayout
 		Layout.alignment: Qt.AlignCenter
 		Layout.topMargin: 30 * DefaultStyle.dp

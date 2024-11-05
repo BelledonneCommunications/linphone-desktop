@@ -47,6 +47,7 @@ AbstractSettingsLayout {
 					Layout.leftMargin: 64 * DefaultStyle.dp
 					Layout.topMargin: 20 * DefaultStyle.dp
 					DecoratedTextField {
+						Layout.fillWidth: true
 						propertyName: "mwiServerAddress"
 						propertyOwner: account.core
 						title: qsTr("URI du serveur de messagerie vocale")
@@ -114,6 +115,7 @@ AbstractSettingsLayout {
 						propertyOwner: account.core
 					}
 					DecoratedTextField {
+						Layout.fillWidth: true
 						title: qsTr("URL du serveur mandataire")
 						propertyName: "serverAddress"
 						propertyOwner: account.core
@@ -126,6 +128,7 @@ AbstractSettingsLayout {
 						propertyOwner: account.core
 					}
 					DecoratedTextField {
+						Layout.fillWidth: true
 						propertyName: "stunServer"
 						propertyOwner: account.core
 						title: qsTr("Adresse du serveur STUN")
@@ -148,6 +151,7 @@ AbstractSettingsLayout {
 						propertyOwner: account.core
 					}
 					DecoratedTextField {
+						Layout.fillWidth: true
 						propertyName: "expire"
 						propertyOwner: account.core
 						title: qsTr("Expiration (en seconde)")
@@ -156,6 +160,7 @@ AbstractSettingsLayout {
 						toValidate: true
 					}
 					DecoratedTextField {
+						Layout.fillWidth: true
 						title: qsTr("URI de l’usine à conversations")
 						propertyName: "conferenceFactoryAddress"
 						propertyOwner: account.core
@@ -163,6 +168,7 @@ AbstractSettingsLayout {
 						toValidate: true
 					}
 					DecoratedTextField {
+						Layout.fillWidth: true
 						title: qsTr("URI de l’usine à réunions")
 						propertyName: "audioVideoConferenceFactoryAddress"
 						propertyOwner: account.core
@@ -171,6 +177,7 @@ AbstractSettingsLayout {
 						toValidate: true
 					}
 					DecoratedTextField {
+						Layout.fillWidth: true
 						title: qsTr("URL du serveur d’échange de clés de chiffrement")
 						propertyName: "limeServerUrl"
 						propertyOwner: account.core

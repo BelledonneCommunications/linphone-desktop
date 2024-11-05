@@ -82,7 +82,7 @@ LoginLayout {
 	Component {
 		id: firstItem
 		Flickable {
-			width: contentWidth
+			width: parent.width
 			contentWidth: content.implicitWidth
 			contentHeight: content.implicitHeight
 			clip: true
@@ -188,7 +188,7 @@ LoginLayout {
 	Component {
 		id: secondItem
 		Flickable {
-			width: contentWidth
+			width: parent.width
 			contentWidth: content.implicitWidth
 			contentHeight: content.implicitHeight
 			clip: true
@@ -196,6 +196,8 @@ LoginLayout {
 			ColumnLayout {
 				id: content
 				spacing: 2 * DefaultStyle.dp
+				width: 361 * DefaultStyle.dp
+				
 				ColumnLayout {
 					spacing: 16 * DefaultStyle.dp
 					FormItemLayout {
@@ -203,6 +205,7 @@ LoginLayout {
 						label: qsTr("Nom d'utilisateur")
 						mandatory: true
 						enableErrorText: true
+						Layout.fillWidth: true
 						contentItem: TextField {
 							id: usernameEdit
 							isError: username.errorTextVisible
@@ -215,6 +218,7 @@ LoginLayout {
 						label: qsTr("Mot de passe")
 						mandatory: true
 						enableErrorText: true
+						Layout.fillWidth: true
 						contentItem: TextField {
 							id: passwordEdit
 							isError: password.errorTextVisible
@@ -229,6 +233,7 @@ LoginLayout {
 						label: qsTr("Domaine")
 						mandatory: true
 						enableErrorText: true
+						Layout.fillWidth: true
 						contentItem: TextField {
 							id: domainEdit
 							isError: domain.errorTextVisible
@@ -246,6 +251,7 @@ LoginLayout {
 					}
 					FormItemLayout {
 						label: qsTr("Nom d'affichage")
+						Layout.fillWidth: true
 						contentItem: TextField {
 							id: displayName
 							Layout.preferredWidth: 360 * DefaultStyle.dp
@@ -256,6 +262,7 @@ LoginLayout {
 				}
 				FormItemLayout {
 					label: qsTr("Transport")
+					Layout.fillWidth: true
 					contentItem: ComboBox {
 						id: transportCbox
 						height: 49 * DefaultStyle.dp
@@ -276,6 +283,7 @@ LoginLayout {
 
 				TemporaryText {
 					id: errorText
+					Layout.fillWidth: true
 					Connections {
 						target: LoginPageCpp
 						function onErrorMessageChanged(error) {

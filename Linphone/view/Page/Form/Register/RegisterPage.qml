@@ -93,60 +93,62 @@ LoginLayout {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
 				ColumnLayout {
+					anchors.left: parent.left
+					anchors.right: parent.right
 					spacing: 22 * DefaultStyle.dp
 					ColumnLayout {
 						spacing: 24 * DefaultStyle.dp
 						RowLayout {
+							Layout.preferredHeight: usernameItem.height
 							spacing: 16 * DefaultStyle.dp
 							FormItemLayout {
 								id: usernameItem
 								label: qsTr("Username")
 								mandatory: true
 								enableErrorText: true
+								Layout.preferredWidth: 346 * DefaultStyle.dp
 								contentItem: TextField {
 									id: usernameInput
-									Layout.preferredWidth: 346 * DefaultStyle.dp
 									backgroundBorderColor: usernameItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 								}
 							}
 							RowLayout {
 								spacing: 10 * DefaultStyle.dp
-								Layout.alignment: Qt.AlignBottom
 								ComboBox {
-									enabled: false
-									model: [{text:"@sip.linphone.org"}]
 									Layout.preferredWidth: 210 * DefaultStyle.dp
 									Layout.preferredHeight: 49 * DefaultStyle.dp
+									enabled: false
+									model: [{text:"@sip.linphone.org"}]
 								}
 								EffectImage {
-									imageSource: AppIcons.lock
-									colorizationColor: DefaultStyle.main2_600
 									Layout.preferredWidth: 16 * DefaultStyle.dp
 									Layout.preferredHeight: 16 * DefaultStyle.dp
+									imageSource: AppIcons.lock
+									colorizationColor: DefaultStyle.main2_600
 								}
 							}
 						}
 						StackLayout {
 							currentIndex: bar.currentIndex
-							Layout.fillWidth: true
 							PhoneNumberInput {
 								id: phoneNumberInput
+								Layout.preferredWidth: 346 * DefaultStyle.dp
 								property string completePhoneNumber: countryCode + phoneNumber
 								label: qsTr("Numéro de téléphone")
 								enableErrorText: true
 								mandatory: true
 								placeholderText: "Phone number"
 								defaultCallingCode: "33"
-								Layout.preferredWidth: 346 * DefaultStyle.dp
 							}
 							FormItemLayout {
 								id: emailItem
+								Layout.fillWidth: false
+								Layout.preferredWidth: 346 * DefaultStyle.dp
 								label: qsTr("Email")
 								mandatory: true
 								enableErrorText: true
 								contentItem: TextField {
 									id: emailInput
-									Layout.preferredWidth: 346 * DefaultStyle.dp
 									backgroundBorderColor: emailItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 								}
 							}
@@ -158,33 +160,29 @@ LoginLayout {
 							RowLayout {
 								id: rowlayout
 								spacing: 16 * DefaultStyle.dp
-								ColumnLayout {
-									spacing: 5 * DefaultStyle.dp
-									FormItemLayout {
-										id: passwordItem
-										label: qsTr("Mot de passe")
-										mandatory: true
-										enableErrorText: true
-										contentItem: TextField {
-											id: pwdInput
-											hidden: true
-											Layout.preferredWidth: 346 * DefaultStyle.dp
-											backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
-										}
+								FormItemLayout {
+									id: passwordItem
+									Layout.preferredWidth: 346 * DefaultStyle.dp
+									label: qsTr("Mot de passe")
+									mandatory: true
+									enableErrorText: true
+									contentItem: TextField {
+										id: pwdInput
+										hidden: true
+										Layout.preferredWidth: 346 * DefaultStyle.dp
+										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 									}
 								}
-								ColumnLayout {
-									spacing: 5 * DefaultStyle.dp
-									FormItemLayout {
-										label: qsTr("Confirmation mot de passe")
-										mandatory: true
-										enableErrorText: true
-										contentItem: TextField {
-											id: confirmPwdInput
-											hidden: true
-											Layout.preferredWidth: 346 * DefaultStyle.dp
-											backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
-										}
+								FormItemLayout {
+									Layout.preferredWidth: 346 * DefaultStyle.dp
+									label: qsTr("Confirmation mot de passe")
+									mandatory: true
+									enableErrorText: true
+									contentItem: TextField {
+										id: confirmPwdInput
+										hidden: true
+										Layout.preferredWidth: 346 * DefaultStyle.dp
+										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 									}
 								}
 							}
@@ -216,80 +214,80 @@ LoginLayout {
 					// 		}
 					// 	}
 
+					RowLayout {
+						spacing: 10 * DefaultStyle.dp
+						CheckBox {
+							id: termsCheckBox
+						}
 						RowLayout {
-							spacing: 10 * DefaultStyle.dp
-							CheckBox {
-								id: termsCheckBox
+							spacing: 0
+							Layout.fillWidth: true
+							Text {
+								text: qsTr("J'accepte les ")
+								font {
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+								}
+								MouseArea {
+									anchors.fill: parent
+									onClicked: termsCheckBox.toggle()
+								}
 							}
-							RowLayout {
-								spacing: 0
-								Layout.fillWidth: true
-								Text {
-									text: qsTr("J'accepte les ")
-									font {
-										pixelSize: 14 * DefaultStyle.dp
-										weight: 400 * DefaultStyle.dp
-									}
-									MouseArea {
-										anchors.fill: parent
-										onClicked: termsCheckBox.toggle()
+							Text {
+								activeFocusOnTab: true
+								font {
+									underline: true
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+									bold: activeFocus
+								}
+								text: qsTr("conditions d’utilisation")
+								Keys.onPressed: (event)=> {
+									if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+										cguMouseArea.clicked(undefined)
+										event.accepted = true;
 									}
 								}
-								Text {
-									activeFocusOnTab: true
-									font {
-										underline: true
-										pixelSize: 14 * DefaultStyle.dp
-										weight: 400 * DefaultStyle.dp
-										bold: activeFocus
-									}
-									text: qsTr("conditions d’utilisation")
-									Keys.onPressed: (event)=> {
-										if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-											cguMouseArea.clicked(undefined)
-											event.accepted = true;
-										}
-									}
-									MouseArea {
-										id: cguMouseArea
-										anchors.fill: parent
-										hoverEnabled: true
-										cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-										onClicked: Qt.openUrlExternally(ConstantsCpp.CguUrl)
+								MouseArea {
+									id: cguMouseArea
+									anchors.fill: parent
+									hoverEnabled: true
+									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+									onClicked: Qt.openUrlExternally(ConstantsCpp.CguUrl)
+								}
+							}
+							Text {
+								text: qsTr(" et la ")
+								font {
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+								}
+							}
+							Text {
+								activeFocusOnTab: true
+								font {
+									underline: true
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+									bold: activeFocus
+								}
+								text: qsTr("politique de confidentialité.")
+								Keys.onPressed: (event)=> {
+									if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+										privateMouseArea.clicked(undefined)
+										event.accepted = true;
 									}
 								}
-								Text {
-									text: qsTr(" et la ")
-									font {
-										pixelSize: 14 * DefaultStyle.dp
-										weight: 400 * DefaultStyle.dp
-									}
-								}
-								Text {
-									activeFocusOnTab: true
-									font {
-										underline: true
-										pixelSize: 14 * DefaultStyle.dp
-										weight: 400 * DefaultStyle.dp
-										bold: activeFocus
-									}
-									text: qsTr("politique de confidentialité.")
-									Keys.onPressed: (event)=> {
-										if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-											privateMouseArea.clicked(undefined)
-											event.accepted = true;
-										}
-									}
-									MouseArea {
-										id: privateMouseArea
-										anchors.fill: parent
-										hoverEnabled: true
-										cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-										onClicked: Qt.openUrlExternally(ConstantsCpp.PrivatePolicyUrl)
-									}
+								MouseArea {
+									id: privateMouseArea
+									anchors.fill: parent
+									hoverEnabled: true
+									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+									onClicked: Qt.openUrlExternally(ConstantsCpp.PrivatePolicyUrl)
 								}
 							}
 						}
+					}
 					// }
 					Button {
 						enabled: termsCheckBox.checked

@@ -83,9 +83,9 @@ MainRightPanel {
 		bannerContent: [
 			IconLabelButton {
 				id: addPictureButton
-				visible: !mainItem.contact || mainItem.contact.core.pictureUri.length === 0
 				Layout.preferredWidth: width
 				Layout.preferredHeight: 17 * DefaultStyle.dp
+				visible: !mainItem.contact || mainItem.contact.core.pictureUri.length === 0
 				iconSource: AppIcons.camera
 				iconSize: 17 * DefaultStyle.dp
 				backgroundColor: "transparent"
@@ -133,11 +133,9 @@ MainRightPanel {
 			Item{Layout.fillWidth: true}
 		]
 		content: Flickable {
-			id: editFlicakble
-			Layout.fillHeight: true
-			Layout.fillWidth: true
-			// width: parent.width
-			// height: parent.height
+			id: editionLayout
+			contentWidth: 421 * DefaultStyle.dp
+
 			function ensureVisible(r) {
 				if (contentY >= r.y)
 					contentY = r.y;
@@ -146,275 +144,254 @@ MainRightPanel {
 			}
 
 			ScrollBar.vertical: Control.ScrollBar {
+				anchors.right: parent.right
 			}
 			ScrollBar.horizontal: Control.ScrollBar {
 			}
+			ColumnLayout {
+				spacing: 20 * DefaultStyle.dp
+				anchors.left: parent.left
+				anchors.right: parent.right
 
-			RowLayout {
-				spacing: 100 * DefaultStyle.dp
-				// anchors.left: parent.left
-				// anchors.right: parent.right
-				ColumnLayout {
-					spacing: 20 * DefaultStyle.dp
+				FormItemLayout {
+					id: givenName
 					Layout.fillWidth: true
-					Layout.fillHeight: true
-
-					FormItemLayout {
-						id: givenName
-						enableErrorText: true
-						label: qsTr("Prénom")
-						Layout.fillWidth: true
-						contentItem: TextField {
-							id: givenNameEdit
-							Layout.fillWidth: true
-							initialText: contact.core.givenName
-							onTextEdited: contact.core.givenName = text
-							backgroundColor: DefaultStyle.grey_0
-							backgroundBorderColor: givenName.errorTextVisible ? DefaultStyle.danger_500main : DefaultStyle.grey_200
-							KeyNavigation.up: editButton.visible ? editButton : addPictureButton
-							KeyNavigation.down: nameTextField
+					enableErrorText: true
+					label: qsTr("Prénom")
+					contentItem: TextField {
+						id: givenNameEdit
+						Layout.preferredHeight: 49 * DefaultStyle.dp
+						initialText: contact.core.givenName
+						onTextEdited: contact.core.givenName = text
+						backgroundColor: DefaultStyle.grey_0
+						backgroundBorderColor: givenName.errorTextVisible ? DefaultStyle.danger_500main : DefaultStyle.grey_200
+						KeyNavigation.up: editButton.visible ? editButton : addPictureButton
+						KeyNavigation.down: nameTextField
+					}
+				}
+				FormItemLayout {
+					label: qsTr("Nom")
+					Layout.fillWidth: true
+					contentItem: TextField {
+						id: nameTextField
+						initialText: contact.core.familyName
+						onTextEdited: contact.core.familyName = text
+						backgroundColor: DefaultStyle.grey_0
+						KeyNavigation.up: givenNameEdit
+						KeyNavigation.down: companyTextField
+					}
+				}
+				FormItemLayout {
+					label: qsTr("Entreprise")
+					Layout.fillWidth: true
+					contentItem: TextField {
+						id: companyTextField
+						initialText: contact.core.organization
+						onTextEdited: contact.core.organization = text
+						backgroundColor: DefaultStyle.grey_0
+						KeyNavigation.up: nameTextField
+						KeyNavigation.down: jobTextField
+					}
+				}
+				FormItemLayout {
+					label: qsTr("Fonction")
+					Layout.fillWidth: true
+					contentItem: TextField {
+						id: jobTextField
+						initialText: contact.core.job
+						onTextEdited: contact.core.job = text
+						backgroundColor: DefaultStyle.grey_0
+						KeyNavigation.up: companyTextField
+						Keys.onPressed: (event) => {
+							if(event.key == Qt.Key_Down){
+								if(addressesList.count > 0)
+									addressesList.itemAt(0).forceActiveFocus()
+								else
+									newAddressTextField.forceActiveFocus()
+								event.accepted = true
+							}
 						}
 					}
-					FormItemLayout {
-						label: qsTr("Nom")
-						contentItem: TextField {
-							id: nameTextField
-							initialText: contact.core.familyName
-							onTextEdited: contact.core.familyName = text
-							backgroundColor: DefaultStyle.grey_0
-							KeyNavigation.up: givenNameEdit
-							KeyNavigation.down: companyTextField
-						}
+				}
+				Repeater {
+					id: addressesList
+					onCountChanged: mainItem.addressCount = count
+					model: VariantList {
+						model: mainItem.contact && mainItem.contact.core.addresses || []
 					}
-					FormItemLayout {
-						label: qsTr("Entreprise")
-						contentItem: TextField {
-							id: companyTextField
-							initialText: contact.core.organization
-							onTextEdited: contact.core.organization = text
-							backgroundColor: DefaultStyle.grey_0
-							KeyNavigation.up: nameTextField
-							KeyNavigation.down: jobTextField
-						}
-					}
-					FormItemLayout {
-						label: qsTr("Fonction")
-						contentItem: TextField {
-							id: jobTextField
-							initialText: contact.core.job
-							onTextEdited: contact.core.job = text
-							backgroundColor: DefaultStyle.grey_0
-							KeyNavigation.up: companyTextField
-							Keys.onPressed: (event) => {
-								if(event.key == Qt.Key_Down){
-									if(addressesList.count > 0)
-										addressesList.itemAt(0).forceActiveFocus()
+					delegate: FormItemLayout {
+						label: modelData.label
+						contentItem: RowLayout {
+							id: addressLayout
+							spacing: 10 * DefaultStyle.dp
+							function updateFocus(event){
+								if(event.key == Qt.Key_Up){
+									if(index - 1 >=0 )
+										addressesList.itemAt(index - 1).forceActiveFocus()
+									else
+										jobTextField.forceActiveFocus()
+									event.accepted = true
+								}else if(event.key == Qt.Key_Down){
+									if(index + 1 < addressesList.count)
+										addressesList.itemAt(index+1).forceActiveFocus()
 									else
 										newAddressTextField.forceActiveFocus()
 									event.accepted = true
 								}
 							}
+							TextField {
+								id: addressTextField
+								Layout.preferredWidth: 421 * DefaultStyle.dp
+								Layout.preferredHeight: height
+								onEditingFinished: {
+									if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Adresse SIP"), text)
+								}
+								property string _initialText: modelData.address
+								initialText: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_initialText) : _initialText
+								backgroundColor: DefaultStyle.grey_0
+								focus: true
+								KeyNavigation.right: removeAddressButton
+								Keys.onPressed: (event) => addressLayout.updateFocus(event)
+							}
+							Button {
+								id: removeAddressButton
+								Layout.preferredWidth: 24 * DefaultStyle.dp
+								Layout.preferredHeight: 24 * DefaultStyle.dp
+								Layout.alignment: Qt.AlignVCenter
+								width: 24 * DefaultStyle.dp
+								height: 24 * DefaultStyle.dp
+								icon.source: AppIcons.closeX
+								icon.width: 24 * DefaultStyle.dp
+								icon.height: 24 * DefaultStyle.dp
+								background: Item{}
+								KeyNavigation.left: addressTextField
+								Keys.onPressed: (event) => addressLayout.updateFocus(event)
+								onClicked: mainItem.contact.core.removeAddress(index)
+							}
 						}
 					}
-					Item{Layout.fillHeight: true}
 				}
-				ColumnLayout {
-					spacing: 20 * DefaultStyle.dp
+				FormItemLayout {
+					label: qsTr("Adresse SIP")
 					Layout.fillWidth: true
-					Layout.fillHeight: true
-					Repeater {
-						id: addressesList
-						Layout.fillWidth: true
-						onCountChanged: mainItem.addressCount = count
-						model: VariantList {
-							model: mainItem.contact && mainItem.contact.core.addresses || []
-						}
-						delegate: FormItemLayout {
-							label: modelData.label
-							contentItem: RowLayout {
-								id: addressLayout
-								spacing: 10 * DefaultStyle.dp
-								function updateFocus(event){
-									if(event.key == Qt.Key_Up){
-										if(index - 1 >=0 )
-											addressesList.itemAt(index - 1).forceActiveFocus()
-										else
-											jobTextField.forceActiveFocus()
-										event.accepted = true
-									}else if(event.key == Qt.Key_Down){
-										if(index + 1 < addressesList.count)
-											addressesList.itemAt(index+1).forceActiveFocus()
-										else
-											newAddressTextField.forceActiveFocus()
-										event.accepted = true
-									}
-								}
-								TextField {
-									id: addressTextField
-									onEditingFinished: {
-										if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Adresse SIP"), text)
-									}
-									property string _initialText: modelData.address
-									initialText: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_initialText) : _initialText
-									backgroundColor: DefaultStyle.grey_0
-									Layout.preferredWidth: width
-									Layout.preferredHeight: height
-									focus: true
-									KeyNavigation.right: removeAddressButton
-									Keys.onPressed: (event) => addressLayout.updateFocus(event)
-								}
-								Button {
-									id: removeAddressButton
-									Layout.preferredWidth: 24 * DefaultStyle.dp
-									Layout.preferredHeight: 24 * DefaultStyle.dp
-									Layout.alignment: Qt.AlignVCenter
-									background: Item{}
-									icon.source: AppIcons.closeX
-									width: 24 * DefaultStyle.dp
-									height: 24 * DefaultStyle.dp
-									icon.width: 24 * DefaultStyle.dp
-									icon.height: 24 * DefaultStyle.dp
-									KeyNavigation.left: addressTextField
-									Keys.onPressed: (event) => addressLayout.updateFocus(event)
-									onClicked: mainItem.contact.core.removeAddress(index)
-								}
+					onYChanged: editionLayout.ensureVisible(this)
+					contentItem: TextField {
+						id: newAddressTextField
+						backgroundColor: DefaultStyle.grey_0
+						Keys.onPressed: (event) => {
+							if(event.key == Qt.Key_Up){
+								if(addressesList.count > 0 )
+									addressesList.itemAt(addressesList.count - 1).forceActiveFocus()
+								else
+									jobTextField.forceActiveFocus()
+								event.accepted = true
+							}else if(event.key == Qt.Key_Down){
+								if(phoneNumberList.count > 0)
+									phoneNumberList.itemAt(0).forceActiveFocus()
+								else
+									phoneNumberInputTextField.forceActiveFocus()
+								event.accepted = true
 							}
 						}
-					}
-					RowLayout {
-						onYChanged: editFlicakble.ensureVisible(this)
-						spacing: 10 * DefaultStyle.dp
-						FormItemLayout {
-							label: qsTr("Adresse SIP")
-							contentItem: TextField {
-								id: newAddressTextField
-								backgroundColor: DefaultStyle.grey_0
-								Keys.onPressed: (event) => {
-									if(event.key == Qt.Key_Up){
-										if(addressesList.count > 0 )
-											addressesList.itemAt(addressesList.count - 1).forceActiveFocus()
-										else
-											jobTextField.forceActiveFocus()
-										event.accepted = true
-									}else if(event.key == Qt.Key_Down){
-										if(phoneNumberList.count > 0)
-											phoneNumberList.itemAt(0).forceActiveFocus()
-										else
-											phoneNumberInputTextField.forceActiveFocus()
-										event.accepted = true
-									}
-								}
-								onEditingFinished: {
-									mainItem.contact.core.appendAddress(text)
-									newAddressTextField.clear()
-								}
-							}
-						}
-						Item {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+						onEditingFinished: {
+							mainItem.contact.core.appendAddress(text)
+							newAddressTextField.clear()
 						}
 					}
-					Repeater {
-						// phone numbers
-						id: phoneNumberList
-						model: VariantList {
-							model: mainItem.contact && mainItem.contact.core.phoneNumbers || []
-						}
-						delegate: FormItemLayout {
-							label: modelData.label
-							contentItem: RowLayout {
-								id: phoneNumberLayout
-								spacing: 10 * DefaultStyle.dp
-								function updateFocus(event){
-									if(event.key == Qt.Key_Up){
-										if(index - 1 >=0 )
-											phoneNumberList.itemAt(index - 1).forceActiveFocus()
-										else
-											newAddressTextField.forceActiveFocus()
-										event.accepted = true
-									}else if(event.key == Qt.Key_Down){
-										if(index + 1 < phoneNumberList.count)
-											addressesList.phoneNumberList(index+1).forceActiveFocus()
-										else
-											phoneNumberInputTextField.forceActiveFocus()
-										event.accepted = true
-									}
-								}
-								TextField {
-									id: phoneTextField
-									initialText: modelData.address
-									onTextEdited: {
-										if (text.length != 0) mainItem.contact.core.setPhoneNumberAt(index, qsTr("Téléphone"), text)
-									}
-									backgroundColor: DefaultStyle.grey_0
-									Layout.preferredWidth: width
-									Layout.preferredHeight: height
-									focus: true
-									KeyNavigation.right: removePhoneButton
-									Keys.onPressed: (event) => phoneNumberLayout.updateFocus(event)
-								}
-								Button {
-									id: removePhoneButton
-									Layout.preferredWidth: 24 * DefaultStyle.dp
-									Layout.preferredHeight: 24 * DefaultStyle.dp
-									Layout.alignment: Qt.AlignVCenter
-									background: Item{}
-									icon.source: AppIcons.closeX
-									width: 24 * DefaultStyle.dp
-									height: 24 * DefaultStyle.dp
-									icon.width: 24 * DefaultStyle.dp
-									icon.height: 24 * DefaultStyle.dp
-									KeyNavigation.left: phoneTextField
-									Keys.onPressed: (event) => phoneNumberLayout.updateFocus(event)
-									onClicked: mainItem.contact.core.removePhoneNumber(index)
-								}
-							}
-						}
-					}
-					RowLayout {
-						onYChanged: editFlicakble.ensureVisible(this)
-						spacing: 10 * DefaultStyle.dp
-						FormItemLayout {
-							id: phoneNumberInput
-							label: qsTr("Phone")
-							contentItem: TextField {
-								id: phoneNumberInputTextField
-								backgroundColor: DefaultStyle.grey_0
-								Keys.onPressed: (event) => {
-									if(event.key == Qt.Key_Up){
-										if(phoneNumberList.count > 0 )
-											phoneNumberList.itemAt(phoneNumberList.count - 1).forceActiveFocus()
-										else
-											newAddressTextField.forceActiveFocus()
-										event.accepted = true
-									}else if(event.key == Qt.Key_Down){
-										if(saveButton.enabled)
-											saveButton.forceActiveFocus()
-										else
-											givenNameEdit.forceActiveFocus()
-										event.accepted = true
-									}
-								}
-								onEditingFinished: {
-									if (text.length != 0) mainItem.contact.core.appendPhoneNumber(phoneNumberInput.label, text)
-									text = ""
-								}
-							}
-						}
-						Item {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-						}
-					}
-					TemporaryText {
-						id: addressesErrorText
-						wrapMode: Text.WordWrap
-						elide: Text.ElideRight
-						Layout.fillWidth: true
-					}
-					Item{Layout.fillHeight: true}
 				}
+				Repeater {
+					id: phoneNumberList
+					model: VariantList {
+						model: mainItem.contact && mainItem.contact.core.phoneNumbers || []
+					}
+					delegate: FormItemLayout {
+						label: modelData.label
+						contentItem: RowLayout {
+							id: phoneNumberLayout
+							spacing: 10 * DefaultStyle.dp
+							function updateFocus(event){
+								if(event.key == Qt.Key_Up){
+									if(index - 1 >=0 )
+										phoneNumberList.itemAt(index - 1).forceActiveFocus()
+									else
+										newAddressTextField.forceActiveFocus()
+									event.accepted = true
+								}else if(event.key == Qt.Key_Down){
+									if(index + 1 < phoneNumberList.count)
+										phoneNumberList.itemAt(index+1).forceActiveFocus()
+									else
+										phoneNumberInputTextField.forceActiveFocus()
+									event.accepted = true
+								}
+							}
+							TextField {
+								id: phoneTextField
+								Layout.preferredWidth: 421 * DefaultStyle.dp
+								Layout.preferredHeight: height
+								initialText: modelData.address
+								backgroundColor: DefaultStyle.grey_0
+								focus: true
+								KeyNavigation.right: removePhoneButton
+								Keys.onPressed: (event) => phoneNumberLayout.updateFocus(event)
+								onEditingFinished: {
+									if (text.length != 0) mainItem.contact.core.setPhoneNumberAt(index, qsTr("Téléphone"), text)
+								}
+							}
+							Button {
+								id: removePhoneButton
+								Layout.preferredWidth: 24 * DefaultStyle.dp
+								Layout.preferredHeight: 24 * DefaultStyle.dp
+								Layout.alignment: Qt.AlignVCenter
+								width: 24 * DefaultStyle.dp
+								height: 24 * DefaultStyle.dp
+								background: Item{}
+								icon.source: AppIcons.closeX
+								icon.width: 24 * DefaultStyle.dp
+								icon.height: 24 * DefaultStyle.dp
+								KeyNavigation.left: phoneTextField
+								Keys.onPressed: (event) => phoneNumberLayout.updateFocus(event)
+								onClicked: mainItem.contact.core.removePhoneNumber(index)
+							}
+						}
+					}
+				}
+				FormItemLayout {
+					id: phoneNumberInput
+					Layout.fillWidth: true
+					label: qsTr("Phone")
+					onYChanged: editionLayout.ensureVisible(this)
+					contentItem: TextField {
+						id: phoneNumberInputTextField
+						backgroundColor: DefaultStyle.grey_0
+						Keys.onPressed: (event) => {
+							if(event.key == Qt.Key_Up){
+								if(phoneNumberList.count > 0 )
+									phoneNumberList.itemAt(phoneNumberList.count - 1).forceActiveFocus()
+								else
+									newAddressTextField.forceActiveFocus()
+								event.accepted = true
+							}else if(event.key == Qt.Key_Down){
+								if(saveButton.enabled)
+									saveButton.forceActiveFocus()
+								else
+									givenNameEdit.forceActiveFocus()
+								event.accepted = true
+							}
+						}
+						onEditingFinished: {
+							if (text.length != 0) mainItem.contact.core.appendPhoneNumber(phoneNumberInput.label, text)
+							text = ""
+						}
+					}
+				}
+				TemporaryText {
+					id: addressesErrorText
+					Layout.fillWidth: true
+					wrapMode: Text.WordWrap
+					elide: Text.ElideRight
+					onTextChanged: editionLayout.ensureVisible(this)
+				}
+				Item{Layout.fillHeight: true}
 			}
 		}
 		
