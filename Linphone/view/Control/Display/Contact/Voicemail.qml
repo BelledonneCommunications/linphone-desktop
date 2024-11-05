@@ -31,7 +31,8 @@ Rectangle{
 		font.weight: 700 * DefaultStyle.dp
 		font.pixelSize: 10 * DefaultStyle.dp
 		color: DefaultStyle.danger_500main
-		text: voicemailCount
+		text: voicemailCount >= 100 ? '99+' : voicemailCount
+		visible: voicemailCount > 0
 		maximumLineCount: 1
 	}
 }

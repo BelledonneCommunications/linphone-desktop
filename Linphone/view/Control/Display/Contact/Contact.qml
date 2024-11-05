@@ -149,7 +149,7 @@ Control.Control{
 			Layout.preferredWidth: 27 * DefaultStyle.dp
 			Layout.preferredHeight: 28 * DefaultStyle.dp
 			visible: mainItem.account.core.showMwi
-			voicemailCount: mainItem.account.core.voicemailCount >= 100 ? '99+' : mainItem.account.core.voicemailCount
+			voicemailCount: mainItem.account.core.voicemailCount
 			onClicked: {
 				if (mainItem.account.core.voicemailAddress.length > 0)
 					UtilsCpp.createCall(mainItem.account.core.voicemailAddress)
