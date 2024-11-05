@@ -310,7 +310,7 @@ QString AccountModel::dialPlanAsString(const std::shared_ptr<linphone::DialPlan>
 int AccountModel::getVoicemailCount() {
 	auto userData = getUserData(mMonitor);
 	if (userData) return userData->voicemailCount;
-	else return 0;
+	else return 1;
 }
 
 bool AccountModel::getShowMwi() {
