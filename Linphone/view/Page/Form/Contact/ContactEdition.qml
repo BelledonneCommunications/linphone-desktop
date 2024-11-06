@@ -72,9 +72,11 @@ MainRightPanel {
 		button.text: mainItem.saveButtonText
 
 		button.onClicked: {
-			if (contact.core.givenName.length === 0 || (addressesList.count === 0 && phoneNumberList.count === 0)) {
-				if (contact.core.givenName.length === 0) givenName.errorMessage = qsTr("Veuillez saisir un prénom")
-				if (addressesList.count === 0 && phoneNumberList.count === 0) addressesErrorText.text = qsTr("Veuillez saisir une adresse ou un numéro de téléphone")
+			if (contact.core.givenName.length === 0) {
+				givenName.errorMessage = qsTr("Veuillez saisir un prénom")
+				return
+			} else if (addressesList.count === 0 && phoneNumberList.count === 0) {
+				addressesErrorText.setText(qsTr("Veuillez saisir une adresse ou un numéro de téléphone"))
 				return
 			}
 			mainItem.contact.core.save()
@@ -135,11 +137,12 @@ MainRightPanel {
 		content: Flickable {
 			id: editionLayout
 			contentWidth: 421 * DefaultStyle.dp
+			contentY: 0
 
 			function ensureVisible(r) {
 				if (contentY >= r.y)
 					contentY = r.y;
-				else if (contentY+height <= r.y+r.height+content.spacing)
+				else if (contentY+height <= r.y+r.height)
 					contentY = r.y+r.height-height;
 			}
 
@@ -162,7 +165,9 @@ MainRightPanel {
 						id: givenNameEdit
 						Layout.preferredHeight: 49 * DefaultStyle.dp
 						initialText: contact.core.givenName
-						onTextEdited: contact.core.givenName = text
+						onTextChanged: {
+							contact.core.givenName = givenNameEdit.text
+						}
 						backgroundColor: DefaultStyle.grey_0
 						backgroundBorderColor: givenName.errorTextVisible ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 						KeyNavigation.up: editButton.visible ? editButton : addPictureButton
@@ -175,7 +180,7 @@ MainRightPanel {
 					contentItem: TextField {
 						id: nameTextField
 						initialText: contact.core.familyName
-						onTextEdited: contact.core.familyName = text
+						onEditingFinished: contact.core.familyName = text
 						backgroundColor: DefaultStyle.grey_0
 						KeyNavigation.up: givenNameEdit
 						KeyNavigation.down: companyTextField
@@ -187,7 +192,7 @@ MainRightPanel {
 					contentItem: TextField {
 						id: companyTextField
 						initialText: contact.core.organization
-						onTextEdited: contact.core.organization = text
+						onEditingFinished: contact.core.organization = text
 						backgroundColor: DefaultStyle.grey_0
 						KeyNavigation.up: nameTextField
 						KeyNavigation.down: jobTextField
@@ -199,7 +204,7 @@ MainRightPanel {
 					contentItem: TextField {
 						id: jobTextField
 						initialText: contact.core.job
-						onTextEdited: contact.core.job = text
+						onEditingFinished: contact.core.job = text
 						backgroundColor: DefaultStyle.grey_0
 						KeyNavigation.up: companyTextField
 						Keys.onPressed: (event) => {
@@ -274,7 +279,7 @@ MainRightPanel {
 				FormItemLayout {
 					label: qsTr("Adresse SIP")
 					Layout.fillWidth: true
-					onYChanged: editionLayout.ensureVisible(this)
+					// onYChanged: editionLayout.ensureVisible(this)
 					contentItem: TextField {
 						id: newAddressTextField
 						backgroundColor: DefaultStyle.grey_0
@@ -294,8 +299,9 @@ MainRightPanel {
 							}
 						}
 						onEditingFinished: {
-							mainItem.contact.core.appendAddress(text)
+							if (text.length > 0) mainItem.contact.core.appendAddress(text)
 							newAddressTextField.clear()
+							editionLayout.ensureVisible(this)
 						}
 					}
 				}
@@ -359,7 +365,7 @@ MainRightPanel {
 					id: phoneNumberInput
 					Layout.fillWidth: true
 					label: qsTr("Phone")
-					onYChanged: editionLayout.ensureVisible(this)
+					// onYChanged: editionLayout.ensureVisible(this)
 					contentItem: TextField {
 						id: phoneNumberInputTextField
 						backgroundColor: DefaultStyle.grey_0
@@ -380,7 +386,8 @@ MainRightPanel {
 						}
 						onEditingFinished: {
 							if (text.length != 0) mainItem.contact.core.appendPhoneNumber(phoneNumberInput.label, text)
-							text = ""
+							phoneNumberInputTextField.clear()
+							editionLayout.ensureVisible(this)
 						}
 					}
 				}
@@ -389,7 +396,7 @@ MainRightPanel {
 					Layout.fillWidth: true
 					wrapMode: Text.WordWrap
 					elide: Text.ElideRight
-					onTextChanged: editionLayout.ensureVisible(this)
+					onTextChanged: if(text.length > 0) editionLayout.ensureVisible(this)
 				}
 				Item{Layout.fillHeight: true}
 			}

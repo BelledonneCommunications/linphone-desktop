@@ -17,6 +17,7 @@ FocusScope {
 	ColumnLayout {
 		id: formLayout
 		spacing: 16 * DefaultStyle.dp
+		anchors.fill: parent
 		Connections {
 			target: mainItem.conferenceInfoGui.core
 			function onSchedulerStateChanged() {
@@ -153,7 +154,6 @@ FocusScope {
 						TimeComboBox {
 							id: startHour
 							indicator.visible: mainItem.isCreation
-							// Layout.fillWidth: true
 							Layout.preferredWidth: 94 * DefaultStyle.dp
 							Layout.preferredHeight: 30 * DefaultStyle.dp
 							background.visible: mainItem.isCreation
@@ -196,7 +196,7 @@ FocusScope {
 
 				ComboBox {
 					id: timeZoneCbox
-					Layout.preferredWidth: 307 * DefaultStyle.dp
+					Layout.fillWidth: true
 					Layout.preferredHeight: 30 * DefaultStyle.dp
 					hoverEnabled: true
 					oneLine: true

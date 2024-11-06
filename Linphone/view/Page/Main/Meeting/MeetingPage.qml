@@ -175,7 +175,7 @@ AbstractMainPage {
 					}
 				}
 				Text {
-					visible: conferenceList.count === 0 || searchBar.text.length != 0
+					visible: conferenceList.count === 0
 					Layout.topMargin: 137 * DefaultStyle.dp
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignHCenter
@@ -191,7 +191,6 @@ AbstractMainPage {
 					Layout.topMargin: 38 * DefaultStyle.dp - 24 * DefaultStyle.dp
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					implicitHeight: contentHeight
 					hoverEnabled: mainItem.leftPanelEnabled
 					highlightFollowsCurrentItem: true
 					preferredHighlightBegin: height/2 - 10
@@ -343,14 +342,14 @@ AbstractMainPage {
 			id: editFocusScope
 			property bool isCreation
 			property ConferenceInfoGui conferenceInfoGui
-			width: parent?.width
+			width: overridenRightPanelStackView.width
 			height: editLayout.implicitHeight
 			ColumnLayout {
 				id: editLayout
 				anchors.fill: parent
+				anchors.topMargin: 58 * DefaultStyle.dp
 				spacing: 0
 				Section {
-					Layout.topMargin: 58 * DefaultStyle.dp
 					content: RowLayout {
 						spacing: 10 * DefaultStyle.dp
 						Button {
@@ -420,6 +419,7 @@ AbstractMainPage {
 					property bool isCreation
 					isCreation: editFocusScope.isCreation
 					conferenceInfoGui: editFocusScope.conferenceInfoGui
+					Layout.fillWidth: true
 					Connections {
 						target: conferenceEdit.conferenceInfoGui ? conferenceEdit.conferenceInfoGui.core : null
 						function onConferenceSchedulerStateChanged() {
@@ -464,6 +464,7 @@ AbstractMainPage {
 						}
 					}
 				}
+				Item { Layout.fillHeight: true}
 			}
 		}
 	}
@@ -551,10 +552,10 @@ AbstractMainPage {
 			ColumnLayout {
 				id: meetingDetailsLayout
 				anchors.fill: parent
+				anchors.topMargin: 58 * DefaultStyle.dp
 				visible: mainItem.selectedConference
 				spacing: 25 * DefaultStyle.dp
 				Section {
-					Layout.topMargin: 58 * DefaultStyle.dp
 					visible: mainItem.selectedConference
 					content: RowLayout {
 						spacing: 8 * DefaultStyle.dp

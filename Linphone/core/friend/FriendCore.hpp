@@ -57,7 +57,7 @@ class FriendCore : public QObject, public AbstractObject {
 	Q_PROPERTY(int verifiedDeviceCount MEMBER mVerifiedDeviceCount NOTIFY verifiedDevicesChanged)
 	Q_PROPERTY(QString givenName READ getGivenName WRITE setGivenName NOTIFY givenNameChanged)
 	Q_PROPERTY(QString familyName READ getFamilyName WRITE setFamilyName NOTIFY familyNameChanged)
-	Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged)
+	Q_PROPERTY(QString displayName READ getDisplayName NOTIFY displayNameChanged)
 	Q_PROPERTY(QString organization READ getOrganization WRITE setOrganization NOTIFY organizationChanged)
 	Q_PROPERTY(QString job READ getJob WRITE setJob NOTIFY jobChanged)
 	Q_PROPERTY(QString defaultAddress READ getDefaultAddress WRITE setDefaultAddress NOTIFY defaultAddressChanged)
@@ -178,7 +178,6 @@ protected:
 	QDateTime mPresenceTimestamp;
 	QString mGivenName;
 	QString mFamilyName;
-	QString mFullName;
 	QString mOrganization;
 	QString mJob;
 	bool mStarred;

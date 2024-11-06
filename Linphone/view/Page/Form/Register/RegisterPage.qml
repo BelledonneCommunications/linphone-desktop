@@ -21,11 +21,11 @@ LoginLayout {
 			else if (field == "password") pwdItem.errorMessage = errorMessage
 			else if (field == "phone") phoneNumberInput.errorMessage = errorMessage
 			else if (field == "email") emailItem.errorMessage = errorMessage
-			else otherErrorText.text = errorMessage
+			else otherErrorText.setText(errorMessage)
 		}
 		function onRegisterNewAccountFailed(errorMessage) {
 			console.log("register failed", errorMessage)
-			otherErrorText.text = errorMessage
+			otherErrorText.setText(errorMessage)
 		}
 	}
 

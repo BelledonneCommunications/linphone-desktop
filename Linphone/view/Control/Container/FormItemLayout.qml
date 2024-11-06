@@ -12,7 +12,7 @@ FocusScope{
 	property alias errorTextItem: errorText
 	property alias errorMessage: errorText.text
 	property bool enableErrorText: false
-	property bool errorTextVisible: errorText.text.length > 0
+	property bool errorTextVisible: errorText.isVisible
 	implicitHeight: layout.implicitHeight
 
 	function clearErrorText() {

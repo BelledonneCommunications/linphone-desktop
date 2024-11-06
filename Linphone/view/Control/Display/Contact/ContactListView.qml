@@ -25,7 +25,7 @@ ListView {
 	property bool initialHeadersVisible: true
 	property bool displayNameCapitalization: true
 	property bool showFavoritesOnly: false
-	property bool showDefaultAddress: true
+	property bool showDefaultAddress: false
 	property bool showLdapContacts: false
 	property bool searchOnInitialization: false
 
@@ -203,10 +203,11 @@ ListView {
 					Layout.fillWidth: true
 				}
 				Text {
-					Layout.topMargin: 2 * DefaultStyle.dp
+					maximumLineCount: 1
 					visible: mainItem.showDefaultAddress
 					text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(modelData.core.defaultAddress) : modelData.core.defaultAddress
-					
+					Layout.fillWidth: true
+					Layout.topMargin: 2 * DefaultStyle.dp
 					font {
 						weight: 300 * DefaultStyle.dp
 						pixelSize: 12 * DefaultStyle.dp
@@ -244,8 +245,8 @@ ListView {
 						icon.width: 24 * DefaultStyle.dp
 						icon.height: 24 * DefaultStyle.dp
 						icon.source: AppIcons.phone
+						contentImageColor: DefaultStyle.main2_600
 						focus: visible
-						contentImageColor: DefaultStyle.main2_500main
 						background: Rectangle {
 							anchors.fill: parent
 							radius: 40 * DefaultStyle.dp

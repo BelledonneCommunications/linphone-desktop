@@ -79,7 +79,7 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 
 QDateTime ConferenceInfoModel::getDateTime() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	return QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000, Qt::LocalTime);
+	return QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000);
 }
 
 int ConferenceInfoModel::getDuration() const {

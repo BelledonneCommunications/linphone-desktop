@@ -137,6 +137,7 @@ FocusScope{
 					contactMenuVisible: false
 					confInfoGui: mainItem.conferenceInfoGui
 					searchBarText: searchbar.text
+					searchOnInitialization: true
 					onContactAddedToSelection: (address) => {
 						suggestionList.addContactToSelection(address)
 					}

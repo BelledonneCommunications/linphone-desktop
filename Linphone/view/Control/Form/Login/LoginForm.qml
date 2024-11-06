@@ -19,7 +19,7 @@ ColumnLayout {
 			id: usernameEdit
 			Layout.preferredWidth: 360 * DefaultStyle.dp
 			Layout.preferredHeight: 49 * DefaultStyle.dp
-			isError: username.errorTextVisible || errorText.visible
+			isError: username.errorTextVisible || (errorText.isVisible && text.length > 0)
 		}
 	}
 	Item {
@@ -34,7 +34,7 @@ ColumnLayout {
 				id: passwordEdit
 				Layout.preferredWidth: 360 * DefaultStyle.dp
 				Layout.preferredHeight: 49 * DefaultStyle.dp
-				isError: password.errorTextVisible || errorText.visible
+				isError: password.errorTextVisible || (errorText.isVisible && text.length > 0)
 				hidden: true
 			}
 			TemporaryText {
@@ -43,7 +43,8 @@ ColumnLayout {
 				Connections {
 					target: LoginPageCpp
 					function onErrorMessageChanged() {
-						errorText.setText(LoginPageCpp.errorMessage)
+						if (passwordEdit.text.length > 0 || usernameEdit.text.length > 0)
+							errorText.setText(LoginPageCpp.errorMessage)
 					}
 					function onRegistrationStateChanged() {
 						if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {

@@ -7,7 +7,7 @@ import Linphone
 Text {
 	id: mainItem
 	color: DefaultStyle.danger_500main
-	visible: text.length > 0
+	property bool isVisible: text.length > 0
 	function clear() {
 		autoHideErrorMessage.stop()
 		text = ""

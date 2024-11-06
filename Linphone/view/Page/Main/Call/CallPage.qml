@@ -55,7 +55,7 @@ AbstractMainPage {
 
 	onNoItemButtonPressed: goToNewCall()
 
-	showDefaultItem: listStackView.currentItem && listStackView.currentItem.listView && listStackView.currentItem.listView.count === 0
+	showDefaultItem: listStackView.currentItem && listStackView.currentItem.objectName == "historyListItem" && listStackView.currentItem.listView.count === 0
 
 	function goToNewCall() {
 		if (listStackView.currentItem && listStackView.currentItem.objectName != "newCallItem") listStackView.push(newCallItem)
@@ -185,6 +185,7 @@ AbstractMainPage {
 					Layout.rightMargin: 39 * DefaultStyle.dp
 					icon.width: 28 * DefaultStyle.dp
 					icon.height: 28 * DefaultStyle.dp
+					contentImageColor: DefaultStyle.main2_600
 					KeyNavigation.left: removeHistory
 					KeyNavigation.down: listStackView
 					onClicked: {
@@ -199,7 +200,7 @@ AbstractMainPage {
 		id: historyListItem
 		FocusScope{
 			objectName: "historyListItem"
-			property var listView: historyListView
+			property alias listView: historyListView
 			Control.StackView.onActivated: titleLoader.sourceComponent = historyListTitle
 			ColumnLayout {
 				anchors.fill: parent
@@ -231,7 +232,7 @@ AbstractMainPage {
                         background: Item{}
                         contentItem: ColumnLayout {
 								Text {
-									visible: historyListView.count === 0 || searchBar.text.length != 0
+									visible: historyListView.count === 0
 									Layout.alignment: Qt.AlignHCenter
 									text: qsTr("Aucun appel%1").arg(searchBar.text.length != 0 ? " correspondant" : "")
 									font {
@@ -362,6 +363,7 @@ AbstractMainPage {
 													Layout.preferredHeight: 24 * DefaultStyle.dp
 													icon.width: 24 * DefaultStyle.dp
 													icon.height: 24 * DefaultStyle.dp
+													contentImageColor: DefaultStyle.main2_600
 													focus: true
 													activeFocusOnTab: false
 													onClicked: {

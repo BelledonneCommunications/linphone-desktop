@@ -208,7 +208,7 @@ LoginLayout {
 						Layout.fillWidth: true
 						contentItem: TextField {
 							id: usernameEdit
-							isError: username.errorTextVisible
+							isError: username.errorTextVisible || errorText.isVisible
 							Layout.preferredWidth: 360 * DefaultStyle.dp
 							KeyNavigation.down: passwordEdit
 						}
@@ -221,7 +221,7 @@ LoginLayout {
 						Layout.fillWidth: true
 						contentItem: TextField {
 							id: passwordEdit
-							isError: password.errorTextVisible
+							isError: password.errorTextVisible || errorText.isVisible
 							hidden: true
 							Layout.preferredWidth: 360 * DefaultStyle.dp
 							KeyNavigation.up: usernameEdit
@@ -287,7 +287,7 @@ LoginLayout {
 					Connections {
 						target: LoginPageCpp
 						function onErrorMessageChanged(error) {
-							errorText.text = error
+							errorText.setText(error)
 						}
 						function onRegistrationStateChanged() {
 							if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
@@ -345,7 +345,7 @@ LoginLayout {
 						username.errorMessage = ""
 						password.errorMessage = ""
 						domain.errorMessage = ""
-						errorText.text = ""
+						errorText.clear()
 
 						if (usernameEdit.text.length == 0 || passwordEdit.text.length == 0 || domainEdit.text.length == 0) {
 							if (usernameEdit.text.length == 0)

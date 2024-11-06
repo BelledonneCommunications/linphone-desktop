@@ -69,7 +69,7 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		mUri = address && address->isValid() && !address->getDomain().empty()
 		           ? Utils::coreStringToAppString(address->asStringUriOnly())
 		           : "";
-		mDateTime = QDateTime::fromMSecsSinceEpoch(conferenceInfo->getDateTime() * 1000, Qt::LocalTime);
+		mDateTime = QDateTime::fromMSecsSinceEpoch(conferenceInfo->getDateTime() * 1000);
 		mDuration = conferenceInfo->getDuration();
 		mEndDateTime = mDateTime.addSecs(mDuration * 60);
 		mIsScheduled = mDateTime.isValid();

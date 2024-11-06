@@ -163,6 +163,7 @@ FocusScope {
 								Layout.preferredHeight: contentHeight
 								Control.ScrollBar.vertical.visible: false
 								contactMenuVisible: false
+								searchOnInitialization: true
 								searchBarText: searchBar.text
 								onContactClicked: (contact) => {
 									mainItem.contactClicked(contact)
