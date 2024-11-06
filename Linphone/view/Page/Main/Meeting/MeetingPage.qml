@@ -587,6 +587,7 @@ AbstractMainPage {
 								contentImageColor: DefaultStyle.danger_500main
 								inversedColors: true
 								property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core.organizerAddress)
+								property bool canCancel: isMeObj && isMeObj.value && mainItem.selectedConference.core.state !== LinphoneEnums.ConferenceInfoState.Cancelled
 								icon.source: AppIcons.trashCan
 								icon.width: 24 * DefaultStyle.dp
 								icon.height: 24 * DefaultStyle.dp
@@ -597,7 +598,7 @@ AbstractMainPage {
 								
 								onClicked: {
 									if (mainItem.selectedConference) {
-										cancelAndDeleteConfDialog.cancel = isMeObj? isMeObj.value : false
+										cancelAndDeleteConfDialog.cancel = canCancel
 										cancelAndDeleteConfDialog.open()
 										// mainItem.contactDeletionRequested(mainItem.selectedConference)
 										deletePopup.close()
@@ -754,6 +755,7 @@ AbstractMainPage {
 					}
 				}
 				Section {
+					visible: participantList.count > 0
 					content: RowLayout {
 						Layout.preferredHeight: participantList.height
 						width: 393 * DefaultStyle.dp
@@ -802,6 +804,7 @@ AbstractMainPage {
 				}
 				Button {
 					id: joinButton
+					visible: mainItem.selectedConference && mainItem.selectedConference.core.state !== LinphoneEnums.ConferenceInfoState.Cancelled
 					Layout.fillWidth: true
 					text: qsTr("Rejoindre la réunion")
 					topPadding: 11 * DefaultStyle.dp

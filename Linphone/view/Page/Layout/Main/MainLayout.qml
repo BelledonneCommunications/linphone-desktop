@@ -400,9 +400,11 @@ Item {
 							
 							Repeater {
 								model: accountProxy
-								Connections {
-									target: modelData.core
-									onMwiChanged: updateCumulatedMwi()
+								delegate: Item {
+									Connections {
+										target: modelData.core
+										onMwiChanged: updateCumulatedMwi()
+									}
 								}
 							}
 

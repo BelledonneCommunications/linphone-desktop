@@ -175,8 +175,7 @@ private:
 	QVariantList mParticipants;
 	QSharedPointer<TimeZoneModel> mTimeZoneModel;
 	LinphoneEnums::ConferenceSchedulerState mConferenceSchedulerState;
-	LinphoneEnums::ConferenceInfoState mConferenceInfoState =
-	    LinphoneEnums::ConferenceInfoState::ConferenceInfoStateNew;
+	LinphoneEnums::ConferenceInfoState mConferenceInfoState = LinphoneEnums::ConferenceInfoState::New;
 	bool mHaveModel = false;
 	bool mIsScheduled;
 	bool mIsEnded = false;

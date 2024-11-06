@@ -28,6 +28,7 @@
 
 class CoreModel;
 class ConferenceInfoCore;
+class AccountCore;
 
 class ConferenceInfoList : public ListProxy, public AbstractObject {
 	Q_OBJECT
@@ -65,6 +66,7 @@ private:
 	QSharedPointer<SafeConnection<ConferenceInfoList, CoreModel>> mCoreModelConnection;
 	std::shared_ptr<CoreModel> mCoreModel;
 	QSharedPointer<ConferenceInfoCore> mLastConfInfoInserted;
+	QSharedPointer<AccountCore> mCurrentAccountCore;
 	bool mHaveCurrentDate = false;
 	int mCurrentDateIndex = -1;
 	DECLARE_ABSTRACT_OBJECT

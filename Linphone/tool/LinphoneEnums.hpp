@@ -221,10 +221,10 @@ Q_ENUM_NS(ConferenceLayout)
 linphone::Conference::Layout toLinphone(const LinphoneEnums::ConferenceLayout &layout);
 LinphoneEnums::ConferenceLayout fromLinphone(const linphone::Conference::Layout &layout);
 
-enum ConferenceInfoState {
-	ConferenceInfoStateNew = int(linphone::ConferenceInfo::State::New),
-	ConferenceInfoStateUpdated = int(linphone::ConferenceInfo::State::Updated),
-	ConferenceInfoStateCancelled = int(linphone::ConferenceInfo::State::Cancelled)
+enum class ConferenceInfoState {
+	New = int(linphone::ConferenceInfo::State::New),
+	Updated = int(linphone::ConferenceInfo::State::Updated),
+	Cancelled = int(linphone::ConferenceInfo::State::Cancelled)
 };
 Q_ENUM_NS(ConferenceInfoState)
 

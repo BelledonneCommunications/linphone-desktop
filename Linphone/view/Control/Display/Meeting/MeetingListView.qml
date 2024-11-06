@@ -4,7 +4,7 @@ import QtQuick.Effects
 
 import Linphone
 import QtQml
-import UtilsCpp 1.0
+import UtilsCpp
 
 ListView {
 	id: mainItem
@@ -68,6 +68,7 @@ ListView {
 		id: itemDelegate
 		height: 63 * DefaultStyle.dp + topOffset
 		width: mainItem.width
+		enabled: !isCanceled
 		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
 		property var dateTime: !!$modelData && $modelData.core.haveModel ? $modelData.core.dateTime : UtilsCpp.getCurrentDateTime()
 		property string day : UtilsCpp.toDateDayNameString(dateTime)
@@ -76,8 +77,9 @@ ListView {
 		property bool isFirst : ListView.previousSection !== ListView.section
 		property int topOffset: (dateDay.visible && !isFirst? 8 * DefaultStyle.dp : 0)
 		property var endDateTime: $modelData ? $modelData.core.endDateTime : UtilsCpp.getCurrentDateTime()
-				
-		property var haveModel: $modelData && $modelData.core.haveModel || false
+
+		property var haveModel: !!$modelData && $modelData != undefined && $modelData.core.haveModel || false
+		property bool isCanceled: $modelData.core.state === LinphoneEnums.ConferenceInfoState.Cancelled
 		
 		
 		RowLayout{
@@ -167,8 +169,8 @@ ListView {
 							}
 						}
 						Text {
-							text: UtilsCpp.toDateHourString(dateTime) + " - " + UtilsCpp.toDateHourString(endDateTime)
-							color: DefaultStyle.main2_500main
+							text: itemDelegate.isCanceled ? qsTr("Réunion annulée") : UtilsCpp.toDateHourString(dateTime) + " - " + UtilsCpp.toDateHourString(endDateTime)
+							color: itemDelegate.isCanceled ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
 							font {
 								pixelSize: 14 * DefaultStyle.dp
 								weight: 400 * DefaultStyle.dp

@@ -63,7 +63,16 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			items->push_back(nullptr); // Add Dummy conference for today
 			for (auto conferenceInfo : conferenceInfos) {
 				auto confInfoCore = build(conferenceInfo);
-				if (confInfoCore) items->push_back(confInfoCore);
+				// Cancelled conference organized ourself me must be hidden
+				if (conferenceInfo->getState() == linphone::ConferenceInfo::State::Cancelled) {
+					auto myAddress = defaultAccount->getContactAddress();
+					if (myAddress && myAddress->weakEqual(conferenceInfo->getOrganizer())) continue;
+				}
+				if (confInfoCore) {
+					qDebug() << log().arg("Add conf") << confInfoCore->getSubject() << "with state"
+					         << confInfoCore->getConferenceInfoState();
+					items->push_back(confInfoCore);
+				}
 			}
 			mCoreModelConnection->invokeToCore([this, items]() {
 				mustBeInMainThread(getClassName());
@@ -86,7 +95,23 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 		});
 	});
 
-	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, &ConferenceInfoList::lUpdate);
+	// This is needed because account does not have a contact address until
+	// it is connected, so we can't verify if it is the organizer of a deleted
+	// conference (which must hidden)
+	auto connectModel = [this] {
+		mCoreModelConnection->invokeToModel([this]() {
+			if (mCurrentAccountCore) disconnect(mCurrentAccountCore.get());
+			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+			if (defaultAccount) {
+				mCurrentAccountCore = AccountCore::create(defaultAccount);
+				connect(mCurrentAccountCore.get(), &AccountCore::registrationStateChanged, this,
+				        &ConferenceInfoList::lUpdate);
+			}
+		});
+	};
+	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, connectModel);
+	connectModel();
+
 	mCoreModelConnection->makeConnectToModel(&CoreModel::conferenceInfoReceived, &ConferenceInfoList::lUpdate);
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::conferenceInfoCreated, [this](const std::shared_ptr<linphone::ConferenceInfo> &confInfo) {
