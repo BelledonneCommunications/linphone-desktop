@@ -54,7 +54,7 @@ public:
 	DECLARE_GETSET(QString, nameAttribute, NameAttribute)
 	DECLARE_GETSET(QString, sipAttribute, SipAttribute)
 	DECLARE_GETSET(QString, sipDomain, SipDomain)
-	DECLARE_GETSET(linphone::Ldap::DebugLevel, debugLevel, DebugLevel)
+	DECLARE_GETSET(bool, debug, Debug)
 
 signals:
 	void saved();

@@ -176,6 +176,11 @@ AbstractSettingsLayout {
 						title: qsTr("Domaine SIP")
 						toValidate: true
 					}
+					SwitchSetting {
+						titleText: qsTr("Débogage")
+						propertyName: "debug"
+						propertyOwner: ldapGui.core
+					}
 				}
 			}
 		}

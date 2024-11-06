@@ -63,6 +63,19 @@ void LdapModel::remove() {
 	emit removed();
 }
 
+bool LdapModel::getDebug() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return mLdapParamsClone->getDebugLevel() == linphone::Ldap::DebugLevel::Verbose;
+}
+void LdapModel::setDebug(bool data) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (getDebug() != data) {
+		mLdapParamsClone->setDebugLevel(data ? linphone::Ldap::DebugLevel::Verbose : linphone::Ldap::DebugLevel::Off);
+		save();
+		emit debugChanged(data);
+	}
+}
+
 DEFINE_GETSET(LdapModel, bool, enabled, Enabled, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, server, Server, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, bindDn, BindDn, mLdapParamsClone)
@@ -83,4 +96,3 @@ DEFINE_GETSET(LdapModel, int, minChars, MinChars, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, nameAttribute, NameAttribute, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, sipAttribute, SipAttribute, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, sipDomain, SipDomain, mLdapParamsClone)
-DEFINE_GETSET(LdapModel, linphone::Ldap::DebugLevel, debugLevel, DebugLevel, mLdapParamsClone)

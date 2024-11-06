@@ -60,7 +60,7 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(QString, nameAttribute, NameAttribute)
 	DECLARE_CORE_GETSET_MEMBER(QString, sipAttribute, SipAttribute)
 	DECLARE_CORE_GETSET_MEMBER(QString, sipDomain, SipDomain)
-	DECLARE_CORE_GETSET_MEMBER(linphone::Ldap::DebugLevel, debugLevel, DebugLevel)
+	DECLARE_CORE_GETSET_MEMBER(bool, debug, Debug)
 
 private:
 	std::shared_ptr<LdapModel> mLdapModel;

@@ -51,7 +51,7 @@ LdapCore::LdapCore(const std::shared_ptr<linphone::Ldap> &ldap) : QObject(nullpt
 	INIT_CORE_MEMBER(NameAttribute, mLdapModel)
 	INIT_CORE_MEMBER(SipAttribute, mLdapModel)
 	INIT_CORE_MEMBER(SipDomain, mLdapModel)
-	INIT_CORE_MEMBER(DebugLevel, mLdapModel)
+	INIT_CORE_MEMBER(Debug, mLdapModel)
 }
 
 LdapCore::~LdapCore() {
@@ -101,13 +101,12 @@ void LdapCore::setSelf(QSharedPointer<LdapCore> me) {
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, sipAttribute,
 	                           SipAttribute)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, sipDomain, SipDomain)
-	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, linphone::Ldap::DebugLevel,
-	                           debugLevel, DebugLevel)
+	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, bool, debug, Debug)
 
 	mLdapModelConnection->makeConnectToModel(&LdapModel::saved, [this]() {
-		mLdapModelConnection->invokeToCore([this]() { emit App::getInstance()->getSettings()->ldapConfigChanged(); });
+		mLdapModelConnection->invokeToCore([this]() { emit App::getInstance() -> getSettings()->ldapConfigChanged(); });
 	});
 	mLdapModelConnection->makeConnectToModel(&LdapModel::removed, [this]() {
-		mLdapModelConnection->invokeToCore([this]() { emit App::getInstance()->getSettings()->ldapConfigChanged(); });
+		mLdapModelConnection->invokeToCore([this]() { emit App::getInstance() -> getSettings()->ldapConfigChanged(); });
 	});
 }
