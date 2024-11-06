@@ -11,10 +11,10 @@ ListView {
 	id: mainItem
 	height: contentHeight
 	visible: contentHeight > 0
-	clip: true
+	clip: true	
+	currentIndex: -1
 	//keyNavigationWraps: true
 	// rightMargin: 5 * DefaultStyle.dp
-
 
 	property bool selectionEnabled: true
 	property bool hoverEnabled: true
@@ -25,11 +25,12 @@ ListView {
 	property bool initialHeadersVisible: true
 	property bool displayNameCapitalization: true
 	property bool showFavoritesOnly: false
-	property bool showDefaultAddress: false
+	property bool showDefaultAddress: true
 	property bool showLdapContacts: false
 	property bool searchOnInitialization: false
 
 	property var listProxy: MagicSearchProxy{}
+	property alias hideListProxy: magicSearchProxy.hideListProxy
 
 	// Model properties
 	// set searchBarText without specifying a model to bold
@@ -44,19 +45,8 @@ ListView {
 	property bool multiSelectionEnabled: false
 	property list<string> selectedContacts
 	property int selectedContactCount: selectedContacts.length
-	Component.onCompleted: {
-		if (confInfoGui) {
-			for(var i = 0; i < confInfoGui.core.participants.length; ++i) {
-				selectedContacts.push(confInfoGui.core.getParticipantAddressAt(i));
-			}
-		}
-	}
-	currentIndex: -1
 
 	property FriendGui selectedContact: model.getAt(currentIndex) || null
-
-	onCurrentIndexChanged: selectedContact = model.getAt(currentIndex) || null
-	onCountChanged: selectedContact = model.getAt(currentIndex) || null
 
 	signal contactStarredChanged()
 	signal contactDeletionRequested(FriendGui contact)
@@ -94,6 +84,21 @@ ListView {
 			contactRemovedFromSelection(address)
 		}
 	}
+	function haveAddress(address){
+		var index = magicSearchProxy.findFriendIndexByAddress(address)
+		return  index != -1
+	}
+	
+	onCurrentIndexChanged: selectedContact = model.getAt(currentIndex) || null
+	onCountChanged: selectedContact = model.getAt(currentIndex) || null
+	
+	Component.onCompleted: {
+		if (confInfoGui) {
+			for(var i = 0; i < confInfoGui.core.participants.length; ++i) {
+				selectedContacts.push(confInfoGui.core.getParticipantAddressAt(i));
+			}
+		}
+	}
 
 	// strange behaviour with this lines
 	// When a popup opens after clicking on a contact, the selected contact
@@ -109,13 +114,13 @@ ListView {
 		// considering its starred status. Otherwise, the row in the list still
 		// exists even if its delegate is not visible, and creates navigation issues
 		showFavoritesOnly: mainItem.showFavoritesOnly
-		onFriendCreated: (index) => {
-			mainItem.currentIndex = index
-		}
 		aggregationFlag: mainItem.aggregationFlag
 		parentProxy: mainItem.listProxy
 		showLdapContacts: mainItem.showLdapContacts
 		sourceFlags: mainItem.sourceFlags
+		onFriendCreated: (index) => {
+			mainItem.currentIndex = index
+		}
 		onInitialized: {
 			if(mainItem.searchOnInitialization) magicSearchProxy.forceUpdate()
 		}
@@ -201,6 +206,7 @@ ListView {
 					Layout.topMargin: 2 * DefaultStyle.dp
 					visible: mainItem.showDefaultAddress
 					text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(modelData.core.defaultAddress) : modelData.core.defaultAddress
+					
 					font {
 						weight: 300 * DefaultStyle.dp
 						pixelSize: 12 * DefaultStyle.dp

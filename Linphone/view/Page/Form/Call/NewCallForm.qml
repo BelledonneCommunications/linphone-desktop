@@ -181,15 +181,16 @@ FocusScope {
 							}
 							ContactListView{
 								id: searchList
-								contactMenuVisible: false
 								Layout.fillWidth: true
 								Layout.fillHeight: true
-								Control.ScrollBar.vertical.visible: false
 								Layout.preferredHeight: contentHeight
+								contactMenuVisible: false
+								Control.ScrollBar.vertical.visible: false
 								initialHeadersVisible: false
 								displayNameCapitalization: false
 								searchBarText: searchBar.text
 								sourceFlags: LinphoneEnums.MagicSearchSource.All
+								hideListProxy: contactList.model
 								onContactClicked: (contact) => {
 									mainItem.contactClicked(contact)
 								}

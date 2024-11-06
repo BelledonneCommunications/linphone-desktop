@@ -156,17 +156,18 @@ FocusScope{
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					Layout.preferredHeight: contentHeight
+					Control.ScrollBar.vertical.visible: false
 					contactMenuVisible: false
 					searchBarText: searchbar.text
 					sourceFlags: LinphoneEnums.MagicSearchSource.All
 					multiSelectionEnabled: true
 					displayNameCapitalization: false
+					hideListProxy: contactList.model
 					onContactAddedToSelection: (address) => {
 						contactList.addContactToSelection(address)
 						participantList.positionViewAtEnd()
 					}
 					onContactRemovedFromSelection: (address) => contactList.removeSelectedContactByAddress(address)
-					Control.ScrollBar.vertical.visible: false
 				}
 			}
 		}

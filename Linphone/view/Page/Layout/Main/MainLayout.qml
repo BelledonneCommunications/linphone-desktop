@@ -280,8 +280,9 @@ Item {
 								footer:  FocusScope{
 									id: suggestionFocusScope
 									width: contactList.width
-									height: content.implicitHeight
+									height: visible ? content.implicitHeight : 0
 									onActiveFocusChanged: if(activeFocus) contactList.positionViewAtEnd()
+									visible: !contactList.haveAddress(suggestionText.text)
 									Rectangle{
 										anchors.left: parent.left
 										anchors.right: parent.right
@@ -317,12 +318,14 @@ Item {
 										RowLayout {
 											id: suggestionRow
 											spacing: 10 * DefaultStyle.dp
+											
 											Avatar {
 												Layout.preferredWidth: 45 * DefaultStyle.dp
 												Layout.preferredHeight: 45 * DefaultStyle.dp
 												_address: magicSearchBar.text
 											}
 											Text {
+												id: suggestionText
 												property var urlObj: UtilsCpp.interpretUrl(magicSearchBar.text)
 												text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(urlObj?.value) : urlObj?.value
 												font {

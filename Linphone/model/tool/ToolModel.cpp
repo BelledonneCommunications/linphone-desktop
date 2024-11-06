@@ -299,8 +299,6 @@ bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList>
                                      const std::shared_ptr<linphone::Friend> &f) {
 	for (auto contact : friendList->getFriends()) {
 		if (f == contact) {
-			qWarning() << Utils::coreStringToAppString(f->getAddress()->asStringUriOnly()) << " / "
-			           << Utils::coreStringToAppString(contact->getAddress()->asStringUriOnly());
 			return true;
 		}
 	}

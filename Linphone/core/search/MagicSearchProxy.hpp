@@ -36,10 +36,13 @@ class MagicSearchProxy : public LimitProxy {
 	               NOTIFY aggregationFlagChanged)
 	Q_PROPERTY(bool showFavoritesOnly READ showFavoritesOnly WRITE setShowFavoritesOnly NOTIFY showFavoriteOnlyChanged)
 	Q_PROPERTY(MagicSearchProxy *parentProxy WRITE setParentProxy NOTIFY parentProxyChanged)
+	Q_PROPERTY(MagicSearchProxy *hideListProxy READ getHideListProxy WRITE setHideListProxy NOTIFY hideListProxyChanged)
+
 	Q_PROPERTY(bool showLdapContacts READ showLdapContacts WRITE setShowLdapContacts CONSTANT)
 
 public:
-	DECLARE_SORTFILTER_CLASS(bool mShowFavoritesOnly = false; bool mShowLdapContacts = false;)
+	DECLARE_SORTFILTER_CLASS(bool mShowFavoritesOnly = false; bool mShowLdapContacts = false;
+	                         MagicSearchProxy *mHideListProxy = nullptr;)
 
 	MagicSearchProxy(QObject *parent = Q_NULLPTR);
 	~MagicSearchProxy();
@@ -62,6 +65,9 @@ public:
 	void setList(QSharedPointer<MagicSearchList> list);
 	Q_INVOKABLE void setParentProxy(MagicSearchProxy *proxy);
 
+	MagicSearchProxy *getHideListProxy() const;
+	void setHideListProxy(MagicSearchProxy *proxy);
+
 	// Q_INVOKABLE forceUpdate();
 	Q_INVOKABLE int findFriendIndexByAddress(const QString &address);
 
@@ -73,6 +79,7 @@ signals:
 	void friendCreated(int index);
 	void showFavoriteOnlyChanged();
 	void parentProxyChanged();
+	void hideListProxyChanged();
 	void initialized();
 
 protected:

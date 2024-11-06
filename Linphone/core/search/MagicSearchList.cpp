@@ -194,8 +194,7 @@ QVariant MagicSearchList::data(const QModelIndex &index, int role) const {
 }
 
 int MagicSearchList::findFriendIndexByAddress(const QString &address) {
-	int i = 0;
-	for (int i = 0; i < getCount();) {
+	for (int i = 0; i < getCount(); ++i) {
 		auto friendCore = getAt<FriendCore>(i);
 		if (!friendCore) continue;
 		for (auto &friendAddress : friendCore->getAllAddresses()) {
@@ -204,7 +203,6 @@ int MagicSearchList::findFriendIndexByAddress(const QString &address) {
 				return i;
 			}
 		}
-		++i;
 	}
 	return -1;
 }
