@@ -40,6 +40,22 @@ if(ENABLE_BUILD_VERBOSE)
 	message("User Args : ${USER_ARGS}")
 endif()
 
+if(POLICY CMP0149)
+    # VS generator looks for most recent Windows SDK, ignoring
+    # CMAKE_SYSTEM_VERSION and allowing override by WindowsSDKVersion
+    # environment variable. New in 3.27. This is to allow override
+    # in the Windows CI builds.
+    # This MUST be set before any project() or or enable_language() command.
+    cmake_policy(SET CMP0149 NEW)
+endif()
+
+if(POLICY CMP0141)
+    # Changes the way debug info on Windows are stored (forces /Z7)
+    # This is a requirement to use build cache on Windows, since /Zi is another Microsoft cache, incompatible with any third party cache known to date
+    set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT Embedded)
+    cmake_policy(SET CMP0141 NEW)
+endif()
+
 project(linphoneqt)
 
 include(GNUInstallDirs)
