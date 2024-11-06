@@ -148,8 +148,8 @@ FocusScope {
 							}
 						}
 						ColumnLayout {
-							visible: contactList.contentHeight > 0
 							spacing: 18 * DefaultStyle.dp
+							visible: contactList.contentHeight > 0
 							Text {
 								text: qsTr("Contacts")
 								font {
@@ -171,6 +171,7 @@ FocusScope {
 						}
 						ColumnLayout {
 							spacing: 18 * DefaultStyle.dp
+							visible: searchList.count > 0
 							Text {
 								text: qsTr("Suggestions")
 								font {

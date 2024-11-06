@@ -27,6 +27,7 @@ ListView {
 	property bool showFavoritesOnly: false
 	property bool showDefaultAddress: false
 	property bool showLdapContacts: false
+	property bool searchOnInitialization: false
 
 	property var listProxy: MagicSearchProxy{}
 
@@ -116,7 +117,7 @@ ListView {
 		showLdapContacts: mainItem.showLdapContacts
 		sourceFlags: mainItem.sourceFlags
 		onInitialized: {
-			magicSearchProxy.forceUpdate()
+			if(mainItem.searchOnInitialization) magicSearchProxy.forceUpdate()
 		}
 	}
 

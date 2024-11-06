@@ -284,6 +284,7 @@ AbstractMainPage {
 								Layout.preferredHeight: contentHeight
 								Control.ScrollBar.vertical.visible: false
 								showFavoritesOnly: true
+								searchOnInitialization: true
 								contactMenuVisible: true
 								searchBarText: searchBar.text
 								listProxy: allFriends
@@ -331,23 +332,18 @@ AbstractMainPage {
 							}
 							ContactListView{
 								id: contactList
-								onCountChanged: {
-									if (initialFriendToDisplay.length !== 0) {
-										if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
-									}
-								}
 								Layout.fillWidth: true
 								Layout.preferredHeight: contentHeight
 								Control.ScrollBar.vertical.visible: false
 								hoverEnabled: mainItem.leftPanelEnabled
 								contactMenuVisible: true
+								searchOnInitialization: true
 								highlightFollowsCurrentItem: true
 								searchBarText: searchBar.text
 								listProxy: allFriends
-								Connections {
-									target: contactList.model
-									function onFriendCreated(index) {
-										contactList.currentIndex = index
+								onCountChanged: {
+									if (initialFriendToDisplay.length !== 0) {
+										if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
 									}
 								}
 								onSelectedContactChanged: {
@@ -358,6 +354,12 @@ AbstractMainPage {
 								}
 								onContactDeletionRequested: (contact) => {
 									mainItem.deleteContact(contact)
+								}
+								Connections {
+									target: contactList.model
+									function onFriendCreated(index) {
+										contactList.currentIndex = index
+									}
 								}
 							}
 						}
