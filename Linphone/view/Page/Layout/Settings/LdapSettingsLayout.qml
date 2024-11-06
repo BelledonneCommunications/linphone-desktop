@@ -99,12 +99,14 @@ AbstractSettingsLayout {
 						propertyOwner: ldapGui.core
 						title: qsTr("URL du serveur (ne peut être vide)")
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					DecoratedTextField {
 						propertyName: "bindDn"
 						propertyOwner: ldapGui.core
 						title: qsTr("Bind DN")
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					DecoratedTextField {
 						propertyName: "password"
@@ -112,6 +114,7 @@ AbstractSettingsLayout {
 						propertyOwner: ldapGui.core
 						title: qsTr("Mot de passe")
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					SwitchSetting {
 						titleText: qsTr("Utiliser TLS")
@@ -123,12 +126,14 @@ AbstractSettingsLayout {
 						propertyOwner: ldapGui.core
 						title: qsTr("Base de recherche (ne peut être vide)")
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					DecoratedTextField {
 						propertyName: "filter"
 						propertyOwner: ldapGui.core
 						title: qsTr("Filtre")
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					DecoratedTextField {
 						propertyName: "maxResults"
@@ -136,6 +141,7 @@ AbstractSettingsLayout {
 						validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 						title: qsTr("Nombre maximum de résultats")
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					DecoratedTextField {
 						propertyName: "delay"
@@ -143,6 +149,7 @@ AbstractSettingsLayout {
 						validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 						title: qsTr("Délai entre 2 requêtes (en millisecondes)")
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					DecoratedTextField {
 						propertyName: "timeout"
@@ -150,6 +157,7 @@ AbstractSettingsLayout {
 						title: qsTr("Durée maximun (en secondes)")
 						validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					DecoratedTextField {
 						propertyName: "minChars"
@@ -157,24 +165,28 @@ AbstractSettingsLayout {
 						title: qsTr("Nombre minimum de caractères pour la requête")
 						validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					DecoratedTextField {
 						propertyName: "nameAttribute"
 						propertyOwner: ldapGui.core
 						title: qsTr("Attributs de nom")
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					DecoratedTextField {
 						propertyName: "sipAttribute"
 						propertyOwner: ldapGui.core
 						title: qsTr("Attributs SIP")
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					DecoratedTextField {
 						propertyName: "sipDomain"
 						propertyOwner: ldapGui.core
 						title: qsTr("Domaine SIP")
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					SwitchSetting {
 						titleText: qsTr("Débogage")
