@@ -324,7 +324,7 @@ Item {
 											}
 											Text {
 												property var urlObj: UtilsCpp.interpretUrl(magicSearchBar.text)
-												text: urlObj?.value
+												text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(urlObj?.value) : urlObj?.value
 												font {
 													pixelSize: 12 * DefaultStyle.dp
 													weight: 300 * DefaultStyle.dp

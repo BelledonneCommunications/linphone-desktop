@@ -199,7 +199,7 @@ ListView {
 				Text {
 					Layout.topMargin: 2 * DefaultStyle.dp
 					visible: mainItem.showDefaultAddress
-					text: modelData.core.defaultAddress
+					text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(modelData.core.defaultAddress) : modelData.core.defaultAddress
 					font {
 						weight: 300 * DefaultStyle.dp
 						pixelSize: 12 * DefaultStyle.dp

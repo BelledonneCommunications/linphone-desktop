@@ -112,7 +112,8 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 					    } else if (auto address = it->getAddress()) {
 						    auto linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
 						    contact = FriendCore::create(linphoneFriend);
-						    contact->setGivenName(Utils::coreStringToAppString(address->asStringUriOnly()));
+						    contact->setDisplayName(Utils::coreStringToAppString(address->getDisplayName()));
+						    contact->setGivenName(Utils::coreStringToAppString(address->getUsername()));
 						    contact->appendAddress(Utils::coreStringToAppString(address->asStringUriOnly()));
 						    contacts->append(contact);
 					    } else if (!it->getPhoneNumber().empty()) {

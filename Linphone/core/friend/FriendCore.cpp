@@ -232,6 +232,7 @@ void FriendCore::reset(const FriendCore &contact) {
 	resetAddresses(contact.getAddresses());
 	resetPhoneNumbers(contact.getPhoneNumbers());
 	setDefaultAddress(contact.getDefaultAddress());
+	setDisplayName(contact.getDisplayName());
 	setGivenName(contact.getGivenName());
 	setFamilyName(contact.getFamilyName());
 	setOrganization(contact.getOrganization());
@@ -242,6 +243,14 @@ void FriendCore::reset(const FriendCore &contact) {
 
 QString FriendCore::getDisplayName() const {
 	return !mFullName.isEmpty() ? mFullName : mGivenName + " " + mFamilyName;
+}
+
+void FriendCore::setDisplayName(const QString &name) {
+	if (mFullName != name) {
+		mFullName = name;
+		emit displayNameChanged();
+		setIsSaved(false);
+	}
 }
 
 QString FriendCore::getGivenName() const {

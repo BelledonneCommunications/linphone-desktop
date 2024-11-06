@@ -109,7 +109,7 @@ ColumnLayout {
 				Layout.fillWidth: true
 				horizontalAlignment: Text.AlignHCenter
 				visible: mainItem.specificAddress != ""
-				text: mainItem.specificAddress
+				text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(mainItem.specificAddress) : mainItem.specificAddress
 				elide: Text.ElideMiddle
 				maximumLineCount: 1
 				font {
