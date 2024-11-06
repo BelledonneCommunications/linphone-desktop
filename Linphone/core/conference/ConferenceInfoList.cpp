@@ -77,8 +77,9 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			mCoreModelConnection->invokeToCore([this, items]() {
 				mustBeInMainThread(getClassName());
 				int currentDateIndex = sort(*items);
+				auto itemAfterDummy = currentDateIndex < items->size() - 1 ? items->at(currentDateIndex + 1) : nullptr;
+				updateHaveCurrentDate(itemAfterDummy);
 				resetData<ConferenceInfoCore>(*items);
-				updateHaveCurrentDate();
 				if (mLastConfInfoInserted) {
 					int index = -1;
 					// TODO : uncomment when linphone conference scheduler updated
@@ -158,6 +159,11 @@ void ConferenceInfoList::updateHaveCurrentDate() {
 		}
 	}
 	setHaveCurrentDate(false);
+}
+
+void ConferenceInfoList::updateHaveCurrentDate(QSharedPointer<ConferenceInfoCore> itemToCompare) {
+	setHaveCurrentDate(itemToCompare &&
+	                   itemToCompare->getDateTimeUtc().date() == QDateTime::currentDateTimeUtc().date());
 }
 
 int ConferenceInfoList::getCurrentDateIndex() const {

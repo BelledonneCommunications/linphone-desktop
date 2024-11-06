@@ -43,6 +43,7 @@ public:
 	bool haveCurrentDate() const;
 	void setHaveCurrentDate(bool have);
 	void updateHaveCurrentDate();
+	void updateHaveCurrentDate(QSharedPointer<ConferenceInfoCore> itemToCompare);
 
 	int getCurrentDateIndex() const;
 	void setCurrentDateIndex(int index);

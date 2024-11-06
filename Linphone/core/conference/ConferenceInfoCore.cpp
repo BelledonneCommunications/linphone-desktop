@@ -546,8 +546,9 @@ void ConferenceInfoCore::writeIntoModel(std::shared_ptr<ConferenceInfoModel> mod
 	model->enableInvite(mInviteEnabled);
 	if (!mOrganizerAddress.isEmpty()) {
 		model->setOrganizer(mOrganizerAddress);
-		lDebug() << "Use of " << mOrganizerAddress;
-	} else lDebug() << "Use of " << model->getOrganizerAddress();
+		lDebug() << log().arg("Use of %1").arg(mOrganizerAddress);
+	} else lDebug() << log().arg("Use of %1").arg(model->getOrganizerAddress());
+
 	model->setDescription(mDescription);
 	std::list<std::shared_ptr<linphone::ParticipantInfo>> participantInfos;
 	for (auto &p : mParticipants) {

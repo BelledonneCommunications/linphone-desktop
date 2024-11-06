@@ -23,7 +23,9 @@ ListView {
 	// using highlight doesn't center, take time before moving and don't work for not visible item (like not loaded)
 	highlightFollowsCurrentItem: false
 
-	onCountChanged: selectedConference = model && currentIndex != -1 && currentIndex < model.count ? model.getAt(currentIndex) : null
+	onCountChanged: {
+		selectedConference = model && currentIndex != -1 && currentIndex < model.count ? model.getAt(currentIndex) : null
+	}
 	onCurrentIndexChanged: {
 		selectedConference = model.getAt(currentIndex) || null
 	}
@@ -68,7 +70,7 @@ ListView {
 		id: itemDelegate
 		height: 63 * DefaultStyle.dp + topOffset
 		width: mainItem.width
-		enabled: !isCanceled
+		enabled: !isCanceled && haveModel
 		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
 		property var dateTime: !!$modelData && $modelData.core.haveModel ? $modelData.core.dateTime : UtilsCpp.getCurrentDateTime()
 		property string day : UtilsCpp.toDateDayNameString(dateTime)
@@ -161,7 +163,7 @@ ListView {
 								Layout.preferredHeight: 24 * DefaultStyle.dp
 							}
 							Text {
-								text: $modelData.core.subject
+								text: $modelData? $modelData.core.subject : ""
 								font {
 									pixelSize: 13 * DefaultStyle.dp
 									weight: 700 * DefaultStyle.dp
