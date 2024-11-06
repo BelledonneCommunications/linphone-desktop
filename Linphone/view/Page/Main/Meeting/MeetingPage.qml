@@ -343,7 +343,7 @@ AbstractMainPage {
 			id: editFocusScope
 			property bool isCreation
 			property ConferenceInfoGui conferenceInfoGui
-			width: parent.width
+			width: parent?.width
 			height: editLayout.implicitHeight
 			ColumnLayout {
 				id: editLayout
@@ -420,6 +420,26 @@ AbstractMainPage {
 					property bool isCreation
 					isCreation: editFocusScope.isCreation
 					conferenceInfoGui: editFocusScope.conferenceInfoGui
+					Connections {
+						target: conferenceEdit.conferenceInfoGui ? conferenceEdit.conferenceInfoGui.core : null
+						function onConferenceSchedulerStateChanged() {
+							var mainWin = UtilsCpp.getMainWindow()
+							if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
+								|| conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
+								mainWin.showLoadingPopup(qsTr("Modification de la réunion en cours..."))
+							} else {
+								if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
+									UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La modification de la conférence a échoué"), false)
+								}
+								mainWin.closeLoadingPopup()
+							}
+							editFocusScope.enabled = conferenceEdit.conferenceInfoGui.core.schedulerState != LinphoneEnums.ConferenceSchedulerState.AllocationPending
+						}
+						function onSaveFailed() {
+							var mainWin = UtilsCpp.getMainWindow()
+							mainWin.closeLoadingPopup()
+						}
+					}
 					onSaveSucceed: {
 						overridenRightPanelStackView.pop()
 						UtilsCpp.showInformationPopup(qsTr("Enregistré"), qsTr("Réunion modifiée avec succès"), true)
