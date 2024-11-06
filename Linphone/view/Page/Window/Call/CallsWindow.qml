@@ -539,7 +539,7 @@ AbstractWindow {
 						contentStackView.replace(id, Control.StackView.Immediate)
 					}
 					headerStack.currentIndex: 0
-					contentStackView.initialItem: callsListPanel
+					contentStackView.initialItem: callListPanel
 					headerValidateButtonText: qsTr("Ajouter")
 
 					Item {
@@ -712,7 +712,7 @@ AbstractWindow {
 				}
 			}
 			Component {
-				id: callsListPanel
+				id: callListPanel
 				ColumnLayout {
 					Control.StackView.onActivated: {
 						rightPanel.headerTitleText = qsTr("Liste d'appel")
@@ -1088,7 +1088,7 @@ AbstractWindow {
 								: DefaultStyle.grey_600
 						}
 						enabled: mainWindow.conference || mainWindow.callState != LinphoneEnums.CallState.PausedByRemote
-						icon.source: enabled && checked ? AppIcons.play : AppIcons.pause
+						icon.source: enabled && checked ? AppIcons.play : AppIcons.phonePause
 						checked: mainWindow.call && mainWindow.callState == LinphoneEnums.CallState.Paused || mainWindow.callState == LinphoneEnums.CallState.Pausing || (!mainWindow.conference && mainWindow.callState == LinphoneEnums.CallState.PausedByRemote)
 						onClicked: {
 							mainWindow.call.core.lSetPaused(!mainWindow.call.core.paused)
@@ -1130,6 +1130,27 @@ AbstractWindow {
 							if (checked) {
 								rightPanel.visible = true
 								rightPanel.replace(newCallPanel)
+							} else {
+								rightPanel.visible = false
+							}
+						}
+						Connections {
+							target: rightPanel
+							function onVisibleChanged() { if(!rightPanel.visible) newCallButton.checked = false}
+						}
+					}
+					CheckableButton {
+						id: callListButton
+						Layout.preferredWidth: 55 * DefaultStyle.dp
+						Layout.preferredHeight: 55 * DefaultStyle.dp
+						checkable: true
+						icon.source: AppIcons.callList
+						icon.width: 32 * DefaultStyle.dp
+						icon.height: 32 * DefaultStyle.dp
+						onCheckedChanged: {
+							if (checked) {
+								rightPanel.visible = true
+								rightPanel.replace(callListPanel)
 							} else {
 								rightPanel.visible = false
 							}
@@ -1276,15 +1297,6 @@ AbstractWindow {
 										DesktopToolsCpp.screenSaverStatus = true
 										mainWindow.showNormal()
 									}
-								}
-							}
-							MenuButton {
-								icon.source: AppIcons.callList
-								text: qsTr("Liste d'appel")
-								onClicked: {
-									rightPanel.visible = true
-									rightPanel.replace(callsListPanel)
-									moreOptionsButton.close()
 								}
 							}
 							MenuButton {
