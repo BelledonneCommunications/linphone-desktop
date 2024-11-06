@@ -276,21 +276,33 @@ bool ToolModel::isLocal(const std::shared_ptr<linphone::Conference> &conference,
 	return deviceAddress->equal(gruuAddress);
 }
 
-std::shared_ptr<linphone::FriendList> ToolModel::getLdapFriendList() {
+std::shared_ptr<linphone::FriendList> ToolModel::getFriendList(const std::string &listName) {
 	auto core = CoreModel::getInstance()->getCore();
-	auto ldapFriendList = core->getFriendListByName("ldap_friends");
-	if (!ldapFriendList) {
-		ldapFriendList = core->createFriendList();
-		ldapFriendList->setDisplayName("ldap_friends");
-		core->addFriendList(ldapFriendList);
+	auto friendList = core->getFriendListByName(listName);
+	if (!friendList) {
+		friendList = core->createFriendList();
+		friendList->setDisplayName(listName);
+		core->addFriendList(friendList);
 	}
-	return ldapFriendList;
+	return friendList;
 }
 
-bool ToolModel::friendIsInLdapFriendList(const std::shared_ptr<linphone::Friend> &f) {
-	auto ldapFriendList = getLdapFriendList();
-	for (auto ldapFriend : ldapFriendList->getFriends()) {
-		if (f == ldapFriend) return true;
+std::shared_ptr<linphone::FriendList> ToolModel::getAppFriendList() {
+	return getFriendList("app_friends");
+}
+
+std::shared_ptr<linphone::FriendList> ToolModel::getLdapFriendList() {
+	return getFriendList("ldap_friends");
+}
+
+bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList> &friendList,
+                                     const std::shared_ptr<linphone::Friend> &f) {
+	for (auto contact : friendList->getFriends()) {
+		if (f == contact) {
+			qWarning() << Utils::coreStringToAppString(f->getAddress()->asStringUriOnly()) << " / "
+			           << Utils::coreStringToAppString(contact->getAddress()->asStringUriOnly());
+			return true;
+		}
 	}
 	return false;
 }

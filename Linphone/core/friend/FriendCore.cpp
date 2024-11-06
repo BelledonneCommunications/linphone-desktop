@@ -99,7 +99,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 		mStarred = false;
 	}
 
-	mIsLdap = ToolModel::friendIsInLdapFriendList(contact);
+	mIsLdap = ToolModel::friendIsInFriendList(ToolModel::getLdapFriendList(), contact);
 	connect(this, &FriendCore::addressChanged, &FriendCore::allAddressesChanged);
 	connect(this, &FriendCore::phoneNumberChanged, &FriendCore::allAddressesChanged);
 }
@@ -636,7 +636,7 @@ void FriendCore::save() { // Save Values to model
 						mVCardString = mFriendModel->getVCardAsString();
 						auto carddavListForNewFriends = SettingsModel::getCarddavListForNewFriends();
 						auto listWhereToAddFriend = carddavListForNewFriends != nullptr ? carddavListForNewFriends
-						                                                                : core->getDefaultFriendList();
+						                                                                : ToolModel::getAppFriendList();
 						bool created = (listWhereToAddFriend->addFriend(contact) == linphone::FriendList::Status::OK);
 						if (created) {
 							listWhereToAddFriend->updateSubscriptions();

@@ -371,7 +371,7 @@ VariantObject *Utils::findAvatarByAddress(const QString &address) {
 	if (!data) return nullptr;
 	data->makeRequest([address]() -> QVariant {
 		QString avatar;
-		auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
+		auto defaultFriendList = ToolModel::getAppFriendList();
 		if (!defaultFriendList) return QVariant();
 		auto linphoneAddr = ToolModel::interpretUrl(address);
 		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
@@ -399,7 +399,7 @@ VariantObject *Utils::getFriendAddressSecurityLevel(const QString &address) {
 	VariantObject *data = new VariantObject();
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
-		auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
+		auto defaultFriendList = ToolModel::getAppFriendList();
 		if (!defaultFriendList) return QVariant();
 		auto linphoneAddr = ToolModel::interpretUrl(address);
 		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
