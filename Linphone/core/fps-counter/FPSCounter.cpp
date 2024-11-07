@@ -29,6 +29,8 @@
 FPSCounter::FPSCounter(QQuickItem *parent) : QQuickPaintedItem(parent), _currentFPS(0), _cacheCount(0) {
 	_times.clear();
 	setFlag(QQuickItem::ItemHasContents);
+	connect(this, &FPSCounter::visibleChanged, this,
+	        [this]() { update(); }); // If not call at first, item will never call paint.
 }
 
 FPSCounter::~FPSCounter() {
@@ -56,15 +58,8 @@ int FPSCounter::fps() const {
 }
 
 void FPSCounter::paint(QPainter *painter) {
-	recalculateFPS();
-	// lDebug()<< __FUNCTION__;
-	/*
-	QBrush brush(Qt::yellow);
-
-	painter->setBrush(brush);
-	painter->setPen(Qt::NoPen);
-	painter->setRenderHint(QPainter::Antialiasing);
-	painter->drawRoundedRect(0, 0, boundingRect().width(), boundingRect().height(), 0, 0);
-*/
-	update();
+	if (isVisible()) {
+		recalculateFPS();
+		update(); // Request next frame
+	}
 }

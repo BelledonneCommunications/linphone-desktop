@@ -26,7 +26,7 @@ class FPSCounter : public QQuickPaintedItem {
 public:
 	FPSCounter(QQuickItem *parent = 0);
 	~FPSCounter();
-	void paint(QPainter *);
+	virtual void paint(QPainter *) override;
 	Q_INVOKABLE int fps() const;
 
 signals:
