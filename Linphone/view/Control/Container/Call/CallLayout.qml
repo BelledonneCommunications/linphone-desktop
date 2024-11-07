@@ -73,7 +73,7 @@ Item {
 	}
 	Component{
 		id: gridComponent
-		GridLayout{
+		CallGridLayout{
 			Layout.Layout.fillWidth: true
 			Layout.Layout.fillHeight: true
 			call: mainItem.call

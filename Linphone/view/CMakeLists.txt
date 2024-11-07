@@ -28,7 +28,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Container/Call/ActiveSpeakerLayout.qml
 	view/Control/Container/Call/CallHistoryLayout.qml
 	view/Control/Container/Call/CallLayout.qml
-	view/Control/Container/Call/GridLayout.qml
+	view/Control/Container/Call/CallGridLayout.qml
 	view/Control/Container/Call/Mosaic.qml
 	view/Control/Container/Contact/ContactLayout.qml
 	view/Control/Container/Main/MainRightPanel.qml

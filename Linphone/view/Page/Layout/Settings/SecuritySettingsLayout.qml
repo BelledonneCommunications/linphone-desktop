@@ -6,10 +6,17 @@ import SettingsCpp 1.0
 import Linphone
 
 AbstractSettingsLayout {
-	contentComponent: content
+	width: parent?.width
+	contentModel: [
+		{
+			title: "",
+			subTitle: "",
+			contentComponent: content
+		}
+	]
 	Component {
 		id: content
-		Column {
+		ColumnLayout {
 			spacing: 40 * DefaultStyle.dp
 			SwitchSetting {
 				titleText: qsTr("Chiffrer tous les fichiers")

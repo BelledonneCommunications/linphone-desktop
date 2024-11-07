@@ -12,7 +12,13 @@ AbstractSettingsLayout {
 	Layout.fillHeight: true
 	id: mainItem
 	property string logsUrl
-	contentComponent: content
+	contentModel: [
+		{
+			title: "",
+			subTitle: "",
+			contentComponent: content
+		}
+	]
 
 	Dialog {
 		id: deleteLogs
