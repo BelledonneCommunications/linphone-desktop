@@ -23,14 +23,6 @@
 
 DEFINE_ABSTRACT_OBJECT(CarddavGui)
 
-CarddavGui::CarddavGui(QObject *parent) : QObject(parent) {
-	mustBeInMainThread(getClassName());
-	App::postModelSync([this]() {
-		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		mCore = CarddavCore::create(nullptr);
-	});
-}
-
 CarddavGui::CarddavGui(QSharedPointer<CarddavCore> core) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;

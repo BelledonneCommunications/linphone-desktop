@@ -23,14 +23,6 @@
 
 DEFINE_ABSTRACT_OBJECT(LdapGui)
 
-LdapGui::LdapGui(QObject *parent) : QObject(parent) {
-	mustBeInMainThread(getClassName());
-	App::postModelSync([this]() {
-		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		mCore = LdapCore::create(nullptr);
-	});
-}
-
 LdapGui::LdapGui(QSharedPointer<LdapCore> core) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;

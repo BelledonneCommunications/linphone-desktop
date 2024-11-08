@@ -31,7 +31,6 @@ class LdapGui : public QObject, public AbstractObject {
 	Q_PROPERTY(LdapCore *core READ getCore CONSTANT)
 
 public:
-	LdapGui(QObject *parent = nullptr);
 	LdapGui(QSharedPointer<LdapCore> core);
 	~LdapGui();
 	LdapCore *getCore() const;
