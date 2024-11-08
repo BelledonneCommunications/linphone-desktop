@@ -47,12 +47,12 @@ AbstractSettingsLayout {
 					Layout.leftMargin: 64 * DefaultStyle.dp
 					Layout.topMargin: 20 * DefaultStyle.dp
 					DecoratedTextField {
-						Layout.fillWidth: true
 						propertyName: "mwiServerAddress"
 						propertyOwner: account.core
 						title: qsTr("URI du serveur de messagerie vocale")
 						isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					DecoratedTextField {
 						propertyName: "voicemailAddress"
@@ -60,6 +60,7 @@ AbstractSettingsLayout {
 						title: qsTr("URI de messagerie vocale")
 						isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
 						toValidate: true
+						Layout.fillWidth: true
 					}
 					Item {
 						Layout.fillHeight: true
