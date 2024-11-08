@@ -72,7 +72,6 @@ class AccountCore : public QObject, public AbstractObject {
 	               lSetAudioVideoConferenceFactoryAddress NOTIFY audioVideoConferenceFactoryAddressChanged)
 	Q_PROPERTY(QString limeServerUrl READ getLimeServerUrl WRITE lSetLimeServerUrl NOTIFY limeServerUrlChanged)
 	DECLARE_CORE_GET(int, voicemailCount, VoicemailCount)
-	DECLARE_CORE_GET(bool, showMwi, ShowMwi)
 	DECLARE_CORE_GETSET_MEMBER(QString, voicemailAddress, VoicemailAddress)
 
 public:
@@ -142,6 +141,8 @@ public:
 	void onConferenceFactoryAddressChanged(QString value);
 	void onAudioVideoConferenceFactoryAddressChanged(QString value);
 	void onLimeServerUrlChanged(QString value);
+
+	DECLARE_CORE_GET(bool, showMwi, ShowMwi)
 
 signals:
 	void pictureUriChanged();

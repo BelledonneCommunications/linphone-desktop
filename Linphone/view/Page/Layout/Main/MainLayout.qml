@@ -406,7 +406,7 @@ Item {
 								delegate: Item {
 									Connections {
 										target: modelData.core
-										onMwiChanged: updateCumulatedMwi()
+										onShowMwiChanged: voicemail.updateCumulatedMwi()
 									}
 								}
 							}

@@ -12,6 +12,7 @@ Rectangle{
 	width: 27 * DefaultStyle.dp
 	height: 28 * DefaultStyle.dp
 	signal clicked()
+	color: 'transparent'
 	Button {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
