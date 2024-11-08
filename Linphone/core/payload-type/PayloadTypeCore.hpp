@@ -33,25 +33,32 @@ class PayloadTypeCore : public QObject, public AbstractObject {
 
 	Q_ENUMS(Family)
 	Q_PROPERTY(Family family MEMBER mFamily CONSTANT)
-	DECLARE_CORE_GETSET_MEMBER(bool, enabled, Enabled)
 	DECLARE_CORE_MEMBER(int, clockRate, ClockRate)
-	DECLARE_CORE_MEMBER(QString, mimeType, MimeType)
 	DECLARE_CORE_MEMBER(QString, recvFmtp, RecvFmtp)
 
 public:
-	
 	enum Family { None, Audio, Video, Text };
 
-	static QSharedPointer<PayloadTypeCore> create(const std::shared_ptr<linphone::PayloadType> &payloadType,
-	                                              Family family);
-	PayloadTypeCore(const std::shared_ptr<linphone::PayloadType> &payloadType, Family family);
+	static QSharedPointer<PayloadTypeCore> create(Family family,
+	                                              const std::shared_ptr<linphone::PayloadType> &payloadType);
+
+	PayloadTypeCore(Family family, const std::shared_ptr<linphone::PayloadType> &payloadType);
+	PayloadTypeCore() {};
 	~PayloadTypeCore();
+
 	void setSelf(QSharedPointer<PayloadTypeCore> me);
 	Family getFamily();
+	bool getDownloadable();
 	QString getMimeType();
 
-private:
+protected:
 	Family mFamily;
+	bool mDownloadable = false;
+	DECLARE_CORE_GETSET_MEMBER(bool, enabled, Enabled)
+	DECLARE_CORE_MEMBER(QString, mimeType, MimeType)
+	DECLARE_CORE_MEMBER(QString, encoderDescription, EncoderDescription)
+
+private:
 	std::shared_ptr<PayloadTypeModel> mPayloadTypeModel;
 	QSharedPointer<SafeConnection<PayloadTypeCore, PayloadTypeModel>> mPayloadTypeModelConnection;
 

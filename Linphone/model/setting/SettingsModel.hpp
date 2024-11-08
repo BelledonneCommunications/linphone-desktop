@@ -155,6 +155,7 @@ public:
 	DECLARE_GETSET(bool, syncLdapContacts, SyncLdapContacts)
 	DECLARE_GETSET(bool, ipv6Enabled, Ipv6Enabled)
 	DECLARE_GETSET(QString, configLocale, ConfigLocale)
+	DECLARE_GETSET(QString, downloadFolder, DownloadFolder)
 
 signals:
 

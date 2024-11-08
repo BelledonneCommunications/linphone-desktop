@@ -80,6 +80,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/address-books/carddav/CarddavList.cpp
 
 	core/payload-type/PayloadTypeCore.cpp
+	core/payload-type/DownloadablePayloadTypeCore.cpp
 	core/payload-type/PayloadTypeGui.cpp
 	core/payload-type/PayloadTypeProxy.cpp
 	core/payload-type/PayloadTypeList.cpp

@@ -684,34 +684,33 @@ function computeAvatarSize (container, maxSize, ratio) {
 
 // -----------------------------------------------------------------------------
 
-function openCodecOnlineInstallerDialog (window, codecInfo, cb) {
-  var VideoCodecsModel = Linphone.VideoCodecsModel
-  window.attachVirtualWindow(buildCommonDialogUri('ConfirmDialog'), {
-    descriptionText: qsTr('downloadCodecDescription')
-      .replace('%1', codecInfo.mime)
-      .replace('%2', codecInfo.encoderDescription)
-  }, function (status) {
-    if (status) {
-      window.attachVirtualWindow(buildLinphoneDialogUri('OnlineInstallerDialog'), {
-        downloadUrl: codecInfo.downloadUrl,
-        extract: true,
-        installFolder: VideoCodecsModel.codecsFolder,
-        installName: codecInfo.installName,
-        mime: codecInfo.mime,
-        checksum: codecInfo.checksum
-      }, function (status) {
-        if (status) {
-          VideoCodecsModel.reload()
-        }
-        if (cb) {
-          cb(window)
-        }
-      })
-    }
-    else if (cb) {
-      cb(window)
-    }
-  })
+function openCodecOnlineInstallerDialog (mainWindow, coreObject, cancelCallBack, successCallBack) {
+	mainWindow.showConfirmationLambdaPopup("",
+		qsTr("Installation de codec"),
+		qsTr("Télécharger le codec ") + capitalizeFirstLetter(coreObject.mimeType) + " ("+coreObject.encoderDescription+")"+" ?",
+		function (confirmed) {
+			if (confirmed) {
+				coreObject.success.connect(function() {
+					if (successCallBack)
+						successCallBack()
+					mainWindow.closeLoadingPopup()
+					mainWindow.showInformationPopup(qsTr("Succès"), qsTr("Le codec a été téléchargé avec succès."), true)
+				})
+				coreObject.extractError.connect(function() {
+					mainWindow.closeLoadingPopup()
+					mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être sauvegardé."), true)
+				})
+				coreObject.downloadError.connect(function() {
+					mainWindow.closeLoadingPopup()
+					mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être téléchargé."), true)
+				})
+				mainWindow.showLoadingPopup(qsTr("Téléchargement en cours ..."))
+				coreObject.downloadAndExtract()
+			} else
+				if (cancelCallBack)
+					cancelCallBack()
+		}
+	)
 }
 
 function printObject(o) {

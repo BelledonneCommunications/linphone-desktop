@@ -19,8 +19,10 @@
  */
 
 #include "PayloadTypeList.hpp"
+#include "DownloadablePayloadTypeCore.hpp"
 #include "PayloadTypeGui.hpp"
 #include "core/App.hpp"
+#include "core/path/Paths.hpp"
 #include "model/object/VariantObject.hpp"
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
@@ -37,12 +39,12 @@ QSharedPointer<PayloadTypeList> PayloadTypeList::create() {
 }
 
 PayloadTypeList::PayloadTypeList(QObject *parent) : ListProxy(parent) {
-	mustBeInMainThread(getClassName());
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 }
 
 PayloadTypeList::~PayloadTypeList() {
-	mustBeInMainThread("~" + getClassName());
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	mModelConnection = nullptr;
 }
 
@@ -52,21 +54,40 @@ void PayloadTypeList::setSelf(QSharedPointer<PayloadTypeList> me) {
 	mModelConnection->makeConnectToCore(&PayloadTypeList::lUpdate, [this]() {
 		mModelConnection->invokeToModel([this]() {
 			QList<QSharedPointer<PayloadTypeCore>> *payloadTypes = new QList<QSharedPointer<PayloadTypeCore>>();
-			mustBeInLinphoneThread(getClassName());
+			mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+
+			Utils::loadDownloadedCodecs();
+
+			// Audio
 			for (auto payloadType : CoreModel::getInstance()->getCore()->getAudioPayloadTypes()) {
-				auto model = PayloadTypeCore::create(payloadType, PayloadTypeCore::Family::Audio);
-				payloadTypes->push_back(model);
+				auto core = PayloadTypeCore::create(PayloadTypeCore::Family::Audio, payloadType);
+				payloadTypes->push_back(core);
 			}
-			for (auto payloadType : CoreModel::getInstance()->getCore()->getVideoPayloadTypes()) {
-				auto model = PayloadTypeCore::create(payloadType, PayloadTypeCore::Family::Video);
-				payloadTypes->push_back(model);
+
+			// Video
+			auto videoCodecs = CoreModel::getInstance()->getCore()->getVideoPayloadTypes();
+			for (auto payloadType : videoCodecs) {
+				auto core = PayloadTypeCore::create(PayloadTypeCore::Family::Video, payloadType);
+				payloadTypes->push_back(core);
 			}
+
+			// Downloadable Video
+			for (auto downloadableVideoCodec : Utils::getDownloadableVideoPayloadTypes()) {
+				if (find_if(videoCodecs.begin(), videoCodecs.end(),
+				            [downloadableVideoCodec](const std::shared_ptr<linphone::PayloadType> &codec) {
+					            return Utils::coreStringToAppString(codec->getMimeType()) ==
+					                   downloadableVideoCodec->getMimeType();
+				            }) == videoCodecs.end())
+					payloadTypes->append(downloadableVideoCodec.dynamicCast<PayloadTypeCore>());
+			}
+
+			// Text
 			for (auto payloadType : CoreModel::getInstance()->getCore()->getTextPayloadTypes()) {
-				auto model = PayloadTypeCore::create(payloadType, PayloadTypeCore::Family::Text);
-				payloadTypes->push_back(model);
+				auto core = PayloadTypeCore::create(PayloadTypeCore::Family::Text, payloadType);
+				payloadTypes->push_back(core);
 			}
 			mModelConnection->invokeToCore([this, payloadTypes]() {
-				mustBeInMainThread(getClassName());
+				mustBeInMainThread(log().arg(Q_FUNC_INFO));
 				resetData<PayloadTypeCore>(*payloadTypes);
 				delete payloadTypes;
 			});

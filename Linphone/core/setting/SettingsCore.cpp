@@ -98,6 +98,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(SyncLdapContacts, settingsModel)
 	INIT_CORE_MEMBER(Ipv6Enabled, settingsModel)
 	INIT_CORE_MEMBER(ConfigLocale, settingsModel)
+	INIT_CORE_MEMBER(DownloadFolder, settingsModel)
 }
 
 SettingsCore::~SettingsCore() {
@@ -348,6 +349,8 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                           Ipv6Enabled)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
 	                           configLocale, ConfigLocale)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
+	                           downloadFolder, DownloadFolder)
 
 	auto coreModelConnection = QSharedPointer<SafeConnection<SettingsCore, CoreModel>>(
 	    new SafeConnection<SettingsCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
@@ -522,4 +525,10 @@ bool SettingsCore::getSyncLdapContacts() const {
 
 QString SettingsCore::getConfigLocale() const {
 	return mConfigLocale;
+}
+
+QString SettingsCore::getDownloadFolder() const {
+	auto path = mDownloadFolder;
+	if (mDownloadFolder.isEmpty()) path = Paths::getDownloadDirPath();
+	return QDir::cleanPath(path) + QDir::separator();
 }

@@ -150,14 +150,41 @@ AbstractSettingsLayout {
 					Layout.leftMargin: 64 * DefaultStyle.dp
 					Repeater {
 						model: PayloadTypeProxy {
+							id: videoPayloadTypeProxy
 							family: PayloadTypeCore.Video
 						}
 						SwitchSetting {
 							Layout.fillWidth: true
 							titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
-							subTitleText: modelData.core.recvFmtp
+							subTitleText: modelData.core.encoderDescription
 							propertyName: "enabled"
 							propertyOwner: modelData.core
+						}
+					}
+					Repeater {
+						model: PayloadTypeProxy {
+							id: downloadableVideoPayloadTypeProxy
+							family: PayloadTypeCore.Video
+							downloadable: true
+						}
+						SwitchSetting {
+							Layout.fillWidth: true
+							titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
+							subTitleText: modelData.core.encoderDescription
+							onCheckChanged: function(checked) {
+								if (checked)
+									UtilsCpp.getMainWindow().showConfirmationLambdaPopup("",
+										qsTr("Installation"),
+										qsTr("Télécharger le codec ") + Utils.capitalizeFirstLetter(modelData.core.mimeType) + " ("+modelData.core.encoderDescription+")"+" ?",
+										function (confirmed) {
+											if (confirmed) {
+												UtilsCpp.getMainWindow().showLoadingPopup(qsTr("Téléchargement en cours ..."))
+												modelData.core.downloadAndExtract()
+											} else
+												setChecked(false)
+										}
+									)
+							}
 						}
 					}
 				}

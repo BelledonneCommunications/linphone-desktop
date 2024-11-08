@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 AbstractWindow {
 	id: mainWindow
@@ -140,6 +141,7 @@ AbstractWindow {
 			onGoToRegister: mainWindowStackView.replace(registerPage)
 			onConnectionSucceed: {
 				openMainPage()
+				proposeH264CodecsDownload()
 			}
 		}
 	}
@@ -156,6 +158,7 @@ AbstractWindow {
 			
 			onConnectionSucceed: {
 				openMainPage()
+				proposeH264CodecsDownload()
 			}
 		}
 	}
@@ -225,4 +228,25 @@ AbstractWindow {
 			// StackView.onActivated: connectionSecured(0) // TODO : connect to cpp part when ready
 		}
 	}
+
+	// H264 Cisco codec download
+	PayloadTypeProxy {
+		id: downloadableVideoPayloadTypeProxy
+		family: PayloadTypeCore.Video
+		downloadable: true
+	}
+	Repeater {
+		id: codecDownloader
+		model: null
+		Item {
+			Component.onCompleted: {
+				if (modelData.core.mimeType == "H264")
+					Utils.openCodecOnlineInstallerDialog(mainWindow, modelData.core)
+			}
+		}
+	}
+	function proposeH264CodecsDownload() {
+		codecDownloader.model = downloadableVideoPayloadTypeProxy
+	}
+
 }

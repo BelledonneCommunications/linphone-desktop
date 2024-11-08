@@ -36,7 +36,7 @@ class PayloadTypeList : public ListProxy, public AbstractObject {
 
 public:
 	static QSharedPointer<PayloadTypeList> create();
-	
+
 	PayloadTypeList(QObject *parent = Q_NULLPTR);
 	~PayloadTypeList();
 
@@ -49,6 +49,7 @@ signals:
 
 private:
 	QSharedPointer<SafeConnection<PayloadTypeList, CoreModel>> mModelConnection;
+
 	DECLARE_ABSTRACT_OBJECT
 };
 

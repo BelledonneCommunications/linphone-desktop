@@ -159,3 +159,4 @@ constexpr char Constants::LinphoneBZip2_exe[];
 constexpr char Constants::LinphoneBZip2_dll[];
 constexpr char Constants::DefaultRlsUri[];
 constexpr char Constants::DefaultLogsEmail[];
+constexpr char Constants::DownloadDefaultFileName[];

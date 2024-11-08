@@ -35,6 +35,7 @@ public:
 	int getClockRate() const;
 	QString getMimeType() const;
 	QString getRecvFmtp() const;
+	QString getEncoderDescription() const;
 
 	DECLARE_GETSET(bool, enabled, Enabled)
 

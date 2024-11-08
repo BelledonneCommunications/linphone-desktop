@@ -175,6 +175,8 @@ public:
 	                                           // 4 = RTP bundle mode
 	                                           // 5 = Video Conference URI
 	                                           // 6 = Publish expires
+	static constexpr char DownloadDefaultFileName[] = "download";
+
 //--------------------------------------------------------------------------------
 //								CISCO
 //--------------------------------------------------------------------------------

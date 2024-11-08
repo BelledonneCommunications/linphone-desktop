@@ -12,6 +12,12 @@ RowLayout {
 	property bool enabled: true
 	spacing : 20 * DefaultStyle.dp
 	Layout.minimumHeight: 32 * DefaultStyle.dp
+	signal checkedChanged(bool checked)
+
+	function setChecked(value) {
+		switchButton.checked = value
+	}
+
 	ColumnLayout {
 		Text {
 			text: titleText
@@ -34,9 +40,8 @@ RowLayout {
 		Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 		checked: propertyOwner[mainItem.propertyName]
 		enabled: mainItem.enabled
-		onToggled: {
-			binding.when = true
-		}
+		onCheckedChanged: mainItem.checkedChanged(checked)
+		onToggled: binding.when = true
 	}
 	Binding {
 		id: binding

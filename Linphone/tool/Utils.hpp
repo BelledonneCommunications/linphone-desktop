@@ -26,6 +26,7 @@
 #include <QString>
 
 #include "Constants.hpp"
+#include "tool/AbstractObject.hpp"
 #include "tool/LinphoneEnums.hpp"
 
 // =============================================================================
@@ -47,8 +48,9 @@ class QQuickWindow;
 class VariantObject;
 class CallGui;
 class ConferenceInfoGui;
+class DownloadablePayloadTypeCore;
 
-class Utils : public QObject {
+class Utils : public QObject, public AbstractObject {
 	Q_OBJECT
 public:
 	Utils(QObject *parent = nullptr) : QObject(parent) {
@@ -131,10 +133,15 @@ public:
 	Q_INVOKABLE void playDtmf(const QString &dtmf);
 	Q_INVOKABLE bool isInteger(const QString &text);
 	Q_INVOKABLE QString boldTextPart(const QString &text, const QString &regex);
+	Q_INVOKABLE static QString getFileChecksum(const QString &filePath);
 
 	static QString getApplicationProduct();
 	static QString getOsProduct();
 	static QString computeUserAgent();
+	static QList<QSharedPointer<DownloadablePayloadTypeCore>> getDownloadableVideoPayloadTypes();
+	static void checkDownloadedCodecsUpdates();
+	static void loadDownloadedCodecs();
+	static void updateCodecs();
 
 	static inline QString coreStringToAppString(const std::string &str) {
 		if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) return QString::fromStdString(str);
@@ -165,6 +172,9 @@ public:
 
 		return (volume - VuMin) / (VuMax - VuMin);
 	}
+
+private:
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #define lDebug() qDebug().noquote()

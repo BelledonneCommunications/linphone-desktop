@@ -23,16 +23,16 @@
 
 DEFINE_ABSTRACT_OBJECT(PayloadTypeCore)
 
-QSharedPointer<PayloadTypeCore> PayloadTypeCore::create(const std::shared_ptr<linphone::PayloadType> &payloadType,
-                                                        Family family) {
+QSharedPointer<PayloadTypeCore> PayloadTypeCore::create(Family family,
+                                                        const std::shared_ptr<linphone::PayloadType> &payloadType) {
 	auto sharedPointer =
-	    QSharedPointer<PayloadTypeCore>(new PayloadTypeCore(payloadType, family), &QObject::deleteLater);
+	    QSharedPointer<PayloadTypeCore>(new PayloadTypeCore(family, payloadType), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
 	sharedPointer->moveToThread(App::getInstance()->thread());
 	return sharedPointer;
 }
 
-PayloadTypeCore::PayloadTypeCore(const std::shared_ptr<linphone::PayloadType> &payloadType, Family family)
+PayloadTypeCore::PayloadTypeCore(Family family, const std::shared_ptr<linphone::PayloadType> &payloadType)
     : QObject(nullptr) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
@@ -42,6 +42,7 @@ PayloadTypeCore::PayloadTypeCore(const std::shared_ptr<linphone::PayloadType> &p
 	INIT_CORE_MEMBER(ClockRate, mPayloadTypeModel)
 	INIT_CORE_MEMBER(MimeType, mPayloadTypeModel)
 	INIT_CORE_MEMBER(RecvFmtp, mPayloadTypeModel)
+	INIT_CORE_MEMBER(EncoderDescription, mPayloadTypeModel)
 }
 
 PayloadTypeCore::~PayloadTypeCore() {
@@ -61,4 +62,8 @@ PayloadTypeCore::Family PayloadTypeCore::getFamily() {
 
 QString PayloadTypeCore::getMimeType() {
 	return mMimeType;
+}
+
+bool PayloadTypeCore::getDownloadable() {
+	return mDownloadable;
 }

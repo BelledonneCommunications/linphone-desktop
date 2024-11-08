@@ -15,6 +15,10 @@ list(APPEND _LINPHONEAPP_SOURCES
 
 	tool/request/RequestDialog.cpp
 	tool/request/AuthenticationDialog.cpp
+
+	tool/file/FileDownloader.cpp
+	tool/file/FileExtractor.cpp
+
 )
 
 if (APPLE)

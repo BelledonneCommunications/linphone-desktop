@@ -433,8 +433,11 @@ void App::initCore() {
 	QMetaObject::invokeMethod(
 	    mLinphoneThread->getThreadId(),
 	    [this]() mutable {
+		    lInfo() << log().arg("Updating downloaded codec files");
+		    Utils::updateCodecs(); // removing codec updates suffic (.in) before the core is created.
 		    lInfo() << log().arg("Starting Core");
 		    CoreModel::getInstance()->start();
+		    Utils::loadDownloadedCodecs();
 		    auto coreStarted = CoreModel::getInstance()->getCore()->getGlobalState() == linphone::GlobalState::On;
 		    lDebug() << log().arg("Creating SettingsModel");
 		    SettingsModel::create();
@@ -541,6 +544,8 @@ void App::initCore() {
 			        },
 			        Qt::QueuedConnection);
 
+			    Utils::checkDownloadedCodecsUpdates();
+
 			    mEngine->load(url);
 		    });
 	    },
@@ -631,6 +636,7 @@ void App::initCppInterfaces() {
 	qmlRegisterType<PayloadTypeGui>(Constants::MainQmlUri, 1, 0, "PayloadTypeGui");
 	qmlRegisterType<PayloadTypeProxy>(Constants::MainQmlUri, 1, 0, "PayloadTypeProxy");
 	qmlRegisterType<PayloadTypeCore>(Constants::MainQmlUri, 1, 0, "PayloadTypeCore");
+	qmlRegisterType<PayloadTypeCore>(Constants::MainQmlUri, 1, 0, "DownloadablePayloadTypeCore");
 
 	LinphoneEnums::registerMetaTypes();
 }
