@@ -232,8 +232,7 @@ AbstractWindow {
 	// H264 Cisco codec download
 	PayloadTypeProxy {
 		id: downloadableVideoPayloadTypeProxy
-		family: PayloadTypeCore.Video
-		downloadable: true
+		filterType: PayloadTypeProxy.Video | PayloadTypeProxy.Downloadable
 	}
 	Repeater {
 		id: codecDownloader

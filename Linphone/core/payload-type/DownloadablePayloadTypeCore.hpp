@@ -62,7 +62,6 @@ private:
 	QString mDownloadUrl;
 	QString mInstallName;
 	QString mCheckSum;
-	bool mInstalled;
 	QString mVersion;
 
 	DECLARE_ABSTRACT_OBJECT

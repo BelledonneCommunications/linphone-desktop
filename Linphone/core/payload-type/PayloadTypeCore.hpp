@@ -37,7 +37,7 @@ class PayloadTypeCore : public QObject, public AbstractObject {
 	DECLARE_CORE_MEMBER(QString, recvFmtp, RecvFmtp)
 
 public:
-	enum Family { None, Audio, Video, Text };
+	enum Family { Audio, Video, Text };
 
 	static QSharedPointer<PayloadTypeCore> create(Family family,
 	                                              const std::shared_ptr<linphone::PayloadType> &payloadType);
@@ -48,7 +48,7 @@ public:
 
 	void setSelf(QSharedPointer<PayloadTypeCore> me);
 	Family getFamily();
-	bool getDownloadable();
+	bool isDownloadable();
 	QString getMimeType();
 
 protected:

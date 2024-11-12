@@ -65,6 +65,8 @@ public:
 
 	static bool friendIsInFriendList(const std::shared_ptr<linphone::FriendList> &friendList,
 	                                 const std::shared_ptr<linphone::Friend> &f);
+	static void loadDownloadedCodecs();
+	static void updateCodecs();
 
 private:
 	DECLARE_ABSTRACT_OBJECT

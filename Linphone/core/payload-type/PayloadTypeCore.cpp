@@ -64,6 +64,6 @@ QString PayloadTypeCore::getMimeType() {
 	return mMimeType;
 }
 
-bool PayloadTypeCore::getDownloadable() {
+bool PayloadTypeCore::isDownloadable() {
 	return mDownloadable;
 }

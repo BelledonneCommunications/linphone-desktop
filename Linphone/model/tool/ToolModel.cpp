@@ -24,6 +24,8 @@
 #include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
 #include <QDebug>
+#include <QDirIterator>
+#include <QLibrary>
 #include <QTest>
 
 DEFINE_ABSTRACT_OBJECT(ToolModel)
@@ -303,4 +305,48 @@ bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList>
 		}
 	}
 	return false;
+}
+
+// Load downloaded codecs like OpenH264 (needs to be after core is created and has loaded its plugins, as
+// reloadMsPlugins modifies plugin path for the factory)
+void ToolModel::loadDownloadedCodecs() {
+	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+#if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+	QDirIterator it(Paths::getCodecsDirPath());
+	while (it.hasNext()) {
+		QFileInfo info(it.next());
+		const QString filename(info.fileName());
+		if (QLibrary::isLibrary(filename)) {
+			qInfo() << QStringLiteral("Loading `%1` symbols...").arg(filename);
+			if (!QLibrary(info.filePath()).load()) // lib.load())
+				qWarning() << QStringLiteral("Failed to load `%1` symbols.").arg(filename);
+			else qInfo() << QStringLiteral("Loaded `%1` symbols...").arg(filename);
+		}
+	}
+	CoreModel::getInstance()->getCore()->reloadMsPlugins("");
+#endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+}
+
+// Removes .in suffix from downloaded updates.
+// Updates are downloaded with .in suffix as they can't overwrite already loaded plugin
+// they are loaded at next app startup.
+
+void ToolModel::updateCodecs() {
+	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+#if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+	static const QString codecSuffix = QStringLiteral(".%1").arg(Constants::LibraryExtension);
+
+	QDirIterator it(Paths::getCodecsDirPath());
+	while (it.hasNext()) {
+		QFileInfo info(it.next());
+		if (info.suffix() == QLatin1String("in")) {
+			QString codecName = info.completeBaseName();
+			if (codecName.endsWith(codecSuffix)) {
+				QString codecPath = info.dir().path() + QDir::separator() + codecName;
+				QFile::remove(codecPath);
+				QFile::rename(info.filePath(), codecPath);
+			}
+		}
+	}
+#endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 }

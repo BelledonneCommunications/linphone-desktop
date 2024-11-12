@@ -32,33 +32,16 @@ PayloadTypeProxy::PayloadTypeProxy(QObject *parent) : LimitProxy(parent) {
 PayloadTypeProxy::~PayloadTypeProxy() {
 }
 
-PayloadTypeCore::Family PayloadTypeProxy::getFamily() const {
-	return dynamic_cast<SortFilterList *>(sourceModel())->mFamily;
-}
-
-void PayloadTypeProxy::setFamily(PayloadTypeCore::Family data) {
-	auto list = dynamic_cast<SortFilterList *>(sourceModel());
-	if (list->mFamily != data) {
-		list->mFamily = data;
-		familyChanged();
-	}
-}
-
-bool PayloadTypeProxy::isDownloadable() const {
-	return dynamic_cast<SortFilterList *>(sourceModel())->mDownloadable;
-}
-
-void PayloadTypeProxy::setDownloadable(bool data) {
-	auto list = dynamic_cast<SortFilterList *>(sourceModel());
-	if (list->mDownloadable != data) {
-		list->mDownloadable = data;
-		downloadableChanged();
-	}
-}
-
 bool PayloadTypeProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	auto payload = qobject_cast<PayloadTypeList *>(sourceModel())->getAt<PayloadTypeCore>(sourceRow);
-	return payload->getFamily() == mFamily && payload->getDownloadable() == mDownloadable;
+	int payloadFlag = PayloadTypeProxyFiltering::All;
+	payloadFlag += payload->isDownloadable() ? PayloadTypeProxyFiltering::Downloadable
+	                                         : PayloadTypeProxyFiltering::NotDownloadable;
+	auto family = payload->getFamily();
+	payloadFlag += family == PayloadTypeCore::Family::Audio ? PayloadTypeProxyFiltering::Audio : 0;
+	payloadFlag += family == PayloadTypeCore::Family::Video ? PayloadTypeProxyFiltering::Video : 0;
+	payloadFlag += family == PayloadTypeCore::Family::Text ? PayloadTypeProxyFiltering::Text : 0;
+	return mFilterType == payloadFlag;
 }
 
 bool PayloadTypeProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {

@@ -81,6 +81,7 @@
 #include "core/variant/VariantList.hpp"
 #include "core/videoSource/VideoSourceDescriptorGui.hpp"
 #include "model/object/VariantObject.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Constants.hpp"
 #include "tool/EnumsToString.hpp"
 #include "tool/Utils.hpp"
@@ -434,10 +435,10 @@ void App::initCore() {
 	    mLinphoneThread->getThreadId(),
 	    [this]() mutable {
 		    lInfo() << log().arg("Updating downloaded codec files");
-		    Utils::updateCodecs(); // removing codec updates suffic (.in) before the core is created.
+		    ToolModel::updateCodecs(); // removing codec updates suffic (.in) before the core is created.
 		    lInfo() << log().arg("Starting Core");
 		    CoreModel::getInstance()->start();
-		    Utils::loadDownloadedCodecs();
+		    ToolModel::loadDownloadedCodecs();
 		    auto coreStarted = CoreModel::getInstance()->getCore()->getGlobalState() == linphone::GlobalState::On;
 		    lDebug() << log().arg("Creating SettingsModel");
 		    SettingsModel::create();

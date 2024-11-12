@@ -30,25 +30,23 @@
 class PayloadTypeProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
 
-	Q_PROPERTY(PayloadTypeCore::Family family READ getFamily WRITE setFamily NOTIFY familyChanged)
-	Q_PROPERTY(bool downloadable READ isDownloadable WRITE setDownloadable NOTIFY downloadableChanged)
-
 public:
-	DECLARE_SORTFILTER_CLASS(PayloadTypeCore::Family mFamily; bool mDownloadable;)
+	enum PayloadTypeProxyFiltering {
+		All = 0,
+		Audio = 2,
+		Video = 4,
+		Text = 8,
+		Downloadable = 16,
+		NotDownloadable = 32
+	};
+	Q_ENUMS(PayloadTypeProxyFiltering)
+
+	DECLARE_SORTFILTER_CLASS()
 
 	Q_INVOKABLE void reload();
 
 	PayloadTypeProxy(QObject *parent = Q_NULLPTR);
 	~PayloadTypeProxy();
-
-	PayloadTypeCore::Family getFamily() const;
-	void setFamily(PayloadTypeCore::Family data);
-	bool isDownloadable() const;
-	void setDownloadable(bool data);
-
-signals:
-	void familyChanged();
-	void downloadableChanged();
 
 protected:
 	QSharedPointer<PayloadTypeList> mPayloadTypeList;

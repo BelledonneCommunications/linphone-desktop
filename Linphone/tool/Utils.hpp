@@ -140,8 +140,6 @@ public:
 	static QString computeUserAgent();
 	static QList<QSharedPointer<DownloadablePayloadTypeCore>> getDownloadableVideoPayloadTypes();
 	static void checkDownloadedCodecsUpdates();
-	static void loadDownloadedCodecs();
-	static void updateCodecs();
 
 	static inline QString coreStringToAppString(const std::string &str) {
 		if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) return QString::fromStdString(str);

@@ -24,6 +24,7 @@
 #include "core/App.hpp"
 #include "core/path/Paths.hpp"
 #include "model/object/VariantObject.hpp"
+#include "model/tool/ToolModel.hpp"
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
 
@@ -56,7 +57,7 @@ void PayloadTypeList::setSelf(QSharedPointer<PayloadTypeList> me) {
 			QList<QSharedPointer<PayloadTypeCore>> *payloadTypes = new QList<QSharedPointer<PayloadTypeCore>>();
 			mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 
-			Utils::loadDownloadedCodecs();
+			ToolModel::loadDownloadedCodecs();
 
 			// Audio
 			for (auto payloadType : CoreModel::getInstance()->getCore()->getAudioPayloadTypes()) {

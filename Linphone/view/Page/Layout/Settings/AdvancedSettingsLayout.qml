@@ -100,7 +100,7 @@ AbstractSettingsLayout {
 					Layout.leftMargin: 64 * DefaultStyle.dp
 					Repeater {
 						model: PayloadTypeProxy {
-							family: PayloadTypeCore.Audio
+							filterType: PayloadTypeProxy.Audio | PayloadTypeProxy.NotDownloadable
 						}
 						SwitchSetting {
 							Layout.fillWidth: true
@@ -151,7 +151,7 @@ AbstractSettingsLayout {
 					Repeater {
 						model: PayloadTypeProxy {
 							id: videoPayloadTypeProxy
-							family: PayloadTypeCore.Video
+							filterType: PayloadTypeProxy.Video | PayloadTypeProxy.NotDownloadable
 						}
 						SwitchSetting {
 							Layout.fillWidth: true
@@ -164,26 +164,15 @@ AbstractSettingsLayout {
 					Repeater {
 						model: PayloadTypeProxy {
 							id: downloadableVideoPayloadTypeProxy
-							family: PayloadTypeCore.Video
-							downloadable: true
+							filterType: PayloadTypeProxy.Video | PayloadTypeProxy.Downloadable
 						}
 						SwitchSetting {
 							Layout.fillWidth: true
 							titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 							subTitleText: modelData.core.encoderDescription
-							onCheckChanged: function(checked) {
+							onCheckedChanged: function(checked) {
 								if (checked)
-									UtilsCpp.getMainWindow().showConfirmationLambdaPopup("",
-										qsTr("Installation"),
-										qsTr("Télécharger le codec ") + Utils.capitalizeFirstLetter(modelData.core.mimeType) + " ("+modelData.core.encoderDescription+")"+" ?",
-										function (confirmed) {
-											if (confirmed) {
-												UtilsCpp.getMainWindow().showLoadingPopup(qsTr("Téléchargement en cours ..."))
-												modelData.core.downloadAndExtract()
-											} else
-												setChecked(false)
-										}
-									)
+									Utils.openCodecOnlineInstallerDialog(mainWindow, modelData.core)
 							}
 						}
 					}
