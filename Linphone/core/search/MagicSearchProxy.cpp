@@ -20,6 +20,7 @@
 
 #include "MagicSearchProxy.hpp"
 #include "MagicSearchList.hpp"
+#include "core/App.hpp"
 #include "core/friend/FriendGui.hpp"
 
 MagicSearchProxy::MagicSearchProxy(QObject *parent) : LimitProxy(parent) {
@@ -30,6 +31,7 @@ MagicSearchProxy::MagicSearchProxy(QObject *parent) : LimitProxy(parent) {
 	connect(this, &MagicSearchProxy::forceUpdate, [this] {
 		if (mList) emit mList->lSearch(mSearchText);
 	});
+	connect(App::getInstance(), &App::currentDateChanged, this, &MagicSearchProxy::forceUpdate);
 }
 
 MagicSearchProxy::~MagicSearchProxy() {

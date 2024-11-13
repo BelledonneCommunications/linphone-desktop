@@ -287,7 +287,18 @@ App::App(int &argc, char *argv[])
 	               .arg(Utils::getOsProduct())
 	               .arg(qVersion());
 
+	mCurrentDate = QDate::currentDate();
 	mAutoStart = autoStartEnabled();
+	mDateUpdateTimer.setInterval(60000);
+	mDateUpdateTimer.setSingleShot(false);
+	connect(&mDateUpdateTimer, &QTimer::timeout, this, [this] {
+		auto date = QDate::currentDate();
+		if (date != mCurrentDate) {
+			mCurrentDate = date;
+			emit currentDateChanged();
+		}
+	});
+	mDateUpdateTimer.start();
 }
 
 App::~App() {
@@ -645,6 +656,7 @@ void App::initCppInterfaces() {
 //------------------------------------------------------------
 
 void App::clean() {
+	mDateUpdateTimer.stop();
 	if (mEngine) {
 		mEngine->clearComponentCache();
 		mEngine->clearSingletons();

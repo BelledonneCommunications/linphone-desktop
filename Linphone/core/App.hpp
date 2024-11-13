@@ -156,6 +156,7 @@ signals:
 	void coreStartedChanged(bool coreStarted);
 	void accountsChanged();
 	void callsChanged();
+	void currentDateChanged();
 	// void executeCommand(QString command);
 
 private:
@@ -177,6 +178,8 @@ private:
 	bool mAutoStart = false;
 	bool mCoreStarted = false;
 	QLocale mLocale = QLocale::system();
+	QTimer mDateUpdateTimer;
+	QDate mCurrentDate;
 
 	DECLARE_ABSTRACT_OBJECT
 };

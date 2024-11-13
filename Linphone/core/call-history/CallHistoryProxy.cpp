@@ -21,12 +21,14 @@
 #include "CallHistoryProxy.hpp"
 #include "CallHistoryGui.hpp"
 #include "CallHistoryList.hpp"
+#include "core/App.hpp"
 
 DEFINE_ABSTRACT_OBJECT(CallHistoryProxy)
 
 CallHistoryProxy::CallHistoryProxy(QObject *parent) : LimitProxy(parent) {
 	mHistoryList = CallHistoryList::create();
 	setSourceModels(new SortFilterList(mHistoryList.get(), Qt::DescendingOrder));
+	connect(App::getInstance(), &App::currentDateChanged, this, [this] { emit mHistoryList->lUpdate(); });
 }
 
 CallHistoryProxy::~CallHistoryProxy() {
