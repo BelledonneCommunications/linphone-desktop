@@ -31,7 +31,11 @@ Item{
 	Rectangle{
 		anchors.fill: parent
 		id: buttonBackground
-		color: mainItem.shadowEnabled ? mainItem.backgroundPressedColor : mainItem.backgroundColor
+        color: mainItem.shadowEnabled
+            ? mainItem.backgroundPressedColor
+            : mainItem.containsMouse
+                ? DefaultStyle.main2_100
+                : mainItem.backgroundColor
 		radius: mainItem.radius
 	}/*
 	MultiEffect {

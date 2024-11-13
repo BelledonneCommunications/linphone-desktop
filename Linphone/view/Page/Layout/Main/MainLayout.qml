@@ -476,7 +476,7 @@ Item {
 								ColumnLayout {
 									id: settingsButtons
 									anchors.fill: parent
-									spacing: 20 * DefaultStyle.dp
+                                    spacing: 16 * DefaultStyle.dp
 									
 									function getPreviousItem(index){
 										if(visibleChildren.length == 0) return null
