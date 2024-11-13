@@ -78,17 +78,6 @@ Item {
 		sourceModel: AppCpp.calls
 	}
 
-	MouseArea {
-		anchors.fill: parent
-		focus: true
-        z: 100
-		onPressed: {
-			if (mainStackView.currentItem.objectName === "mainStackLayout" && mainStackView.currentItem.currentIndex === 0
-				&& accountProxy.defaultAccount && accountProxy.defaultAccount.core.unreadCallNotifications > 0) accountProxy.defaultAccount.core.lResetMissedCalls()
-			mouse.accepted = false
-		}
-	}
-
 	Item{
 		Popup {
 			id: currentCallNotif
