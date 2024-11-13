@@ -17,14 +17,6 @@ Control.TabBar {
 	onDefaultAccountChanged: {
 		if (defaultAccount) defaultAccount.core?.lRefreshNotifications()
 	}
-	Connections {
-		enabled: defaultAccount
-		target: defaultAccount.core
-		onUnreadCallNotificationsChanged: {
-			console.log("unread changed", currentIndex)
-			if (currentIndex === 0) defaultAccount?.core.lResetMissedCalls()
-		}
-	}
 
 	component UnreadNotification: Rectangle {
 		id: unreadNotifications

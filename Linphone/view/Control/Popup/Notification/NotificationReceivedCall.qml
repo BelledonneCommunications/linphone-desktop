@@ -7,8 +7,8 @@ import UtilsCpp
 Notification {
 	id: mainItem
 	radius: 20 * DefaultStyle.dp
-	overriddenWidth: content.implicitWidth//101 * DefaultStyle.dp
-	overriddenHeight: content.implicitHeight//422 * DefaultStyle.dp
+    overriddenWidth: content.width//101 * DefaultStyle.dp
+    overriddenHeight: content.height//422 * DefaultStyle.dp
 	
 	readonly property var call: notificationData && notificationData.call
 	property var state: call.core.state

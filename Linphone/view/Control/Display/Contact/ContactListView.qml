@@ -181,11 +181,13 @@ ListView {
 			id: contactDelegate
 			anchors.left: initial.visible ? initial.right : parent.left
 			anchors.right: parent.right
-			anchors.rightMargin: 5 * DefaultStyle.dp
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 16 * DefaultStyle.dp
 			z: 1
 			Avatar {
+				Layout.leftMargin: 5 * DefaultStyle.dp
 				Layout.preferredWidth: 45 * DefaultStyle.dp
 				Layout.preferredHeight: 45 * DefaultStyle.dp
 				contact: modelData
@@ -343,8 +345,6 @@ ListView {
 				}
 			}
 		}
-
-
 		
 		MouseArea {
 			id: contactArea
@@ -358,7 +358,8 @@ ListView {
 			Rectangle {
 				anchors.fill: contactArea
 				opacity: 0.7
-				color: DefaultStyle.main2_100
+				radius: 8 * DefaultStyle.dp
+				color: mainItem.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
 				visible: contactArea.containsMouse || friendPopup.hovered || mainItem.currentIndex === index
 			}
 			Keys.onPressed: (event)=> {

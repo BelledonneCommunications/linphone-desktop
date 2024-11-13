@@ -276,131 +276,126 @@ AbstractMainPage {
 									}							
 									onAtYEndChanged: if(atYEnd) callHistoryProxy.displayMore()
 									delegate: FocusScope {
-											width:historyListView.width
-											height: 56 * DefaultStyle.dp
-											anchors.topMargin: 5 * DefaultStyle.dp
-											anchors.bottomMargin: 5 * DefaultStyle.dp
-											visible: !!modelData
-											RowLayout {
-												z: 1
-												anchors.fill: parent
-												spacing: 10 * DefaultStyle.dp
-												Avatar {
-													id: historyAvatar
-													property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.remoteAddress)
-													contact: contactObj && contactObj.value || null
-													_address: modelData.core.remoteAddress
-													width: 45 * DefaultStyle.dp
-													height: 45 * DefaultStyle.dp
-												}
-												ColumnLayout {
-													Layout.fillHeight: true
+										width:historyListView.width
+										height: 56 * DefaultStyle.dp
+										anchors.topMargin: 5 * DefaultStyle.dp
+										anchors.bottomMargin: 5 * DefaultStyle.dp
+										visible: !!modelData
+										RowLayout {
+											z: 1
+											anchors.fill: parent
+											anchors.leftMargin: 5 * DefaultStyle.dp
+											anchors.rightMargin: 5 * DefaultStyle.dp
+											spacing: 10 * DefaultStyle.dp
+											Avatar {
+												id: historyAvatar
+												property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.remoteAddress)
+												contact: contactObj && contactObj.value || null
+												_address: modelData.core.remoteAddress
+												width: 45 * DefaultStyle.dp
+												height: 45 * DefaultStyle.dp
+											}
+											ColumnLayout {
+												Layout.fillHeight: true
+												Layout.fillWidth: true
+												spacing: 5 * DefaultStyle.dp
+												Text {
+													id: friendAddress
 													Layout.fillWidth: true
-													spacing: 5 * DefaultStyle.dp
-													Text {
-														id: friendAddress
-														Layout.fillWidth: true
-														maximumLineCount: 1
-														text: modelData.core.displayName
-														font {
-															pixelSize: 14 * DefaultStyle.dp
-															weight: 400 * DefaultStyle.dp
-															capitalization: Font.Capitalize
-														}
-													}
-													RowLayout {
-														spacing: 6 * DefaultStyle.dp
-														EffectImage {
-															id: statusIcon
-															imageSource: modelData.core.status === LinphoneEnums.CallStatus.Declined
-															|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-															|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-															|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-																? AppIcons.arrowElbow 
-																: modelData.core.isOutgoing
-																	? AppIcons.arrowUpRight
-																	: AppIcons.arrowDownLeft
-															colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined
-															|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-															|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-															|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-															|| modelData.core.status === LinphoneEnums.CallStatus.Missed
-																? DefaultStyle.danger_500main
-																: modelData.core.isOutgoing
-																	? DefaultStyle.info_500_main
-																	: DefaultStyle.success_500main
-															Layout.preferredWidth: 12 * DefaultStyle.dp
-															Layout.preferredHeight: 12 * DefaultStyle.dp
-															transform: Rotation {
-																angle: modelData.core.isOutgoing && (modelData.core.status === LinphoneEnums.CallStatus.Declined
-																	|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-																	|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-																	|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
-																origin {
-																	x: statusIcon.width/2
-																	y: statusIcon.height/2
-																}
-															}
-														}
-														Text {
-															// text: modelData.core.date
-															text: UtilsCpp.formatDate(modelData.core.date)
-															font {
-																pixelSize: 12 * DefaultStyle.dp
-																weight: 300 * DefaultStyle.dp
-															}
-														}
+													maximumLineCount: 1
+													text: modelData.core.displayName
+													font {
+														pixelSize: 14 * DefaultStyle.dp
+														weight: 400 * DefaultStyle.dp
+														capitalization: Font.Capitalize
 													}
 												}
-												Button {
-													Layout.rightMargin: 5 * DefaultStyle.dp
-													padding: 0
-													background: Item {
-														visible: false
-													}
-													icon.source: AppIcons.phone
-													Layout.preferredWidth: 24 * DefaultStyle.dp
-													Layout.preferredHeight: 24 * DefaultStyle.dp
-													icon.width: 24 * DefaultStyle.dp
-													icon.height: 24 * DefaultStyle.dp
-													contentImageColor: DefaultStyle.main2_600
-													focus: true
-													activeFocusOnTab: false
-													onClicked: {
-														if (modelData.core.isConference) {
-															var callsWindow = UtilsCpp.getCallsWindow()
-															callsWindow.setupConference(modelData.core.conferenceInfo)
-															callsWindow.show()
+												RowLayout {
+													spacing: 6 * DefaultStyle.dp
+													EffectImage {
+														id: statusIcon
+														imageSource: modelData.core.status === LinphoneEnums.CallStatus.Declined
+														|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+														|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+														|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
+															? AppIcons.arrowElbow 
+															: modelData.core.isOutgoing
+																? AppIcons.arrowUpRight
+																: AppIcons.arrowDownLeft
+														colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined
+														|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+														|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+														|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
+														|| modelData.core.status === LinphoneEnums.CallStatus.Missed
+															? DefaultStyle.danger_500main
+															: modelData.core.isOutgoing
+																? DefaultStyle.info_500_main
+																: DefaultStyle.success_500main
+														Layout.preferredWidth: 12 * DefaultStyle.dp
+														Layout.preferredHeight: 12 * DefaultStyle.dp
+														transform: Rotation {
+															angle: modelData.core.isOutgoing && (modelData.core.status === LinphoneEnums.CallStatus.Declined
+																|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+																|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+																|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
+															origin {
+																x: statusIcon.width/2
+																y: statusIcon.height/2
+															}
 														}
-														else {
-															UtilsCpp.createCall(modelData.core.remoteAddress)
+													}
+													Text {
+														// text: modelData.core.date
+														text: UtilsCpp.formatDate(modelData.core.date)
+														font {
+															pixelSize: 12 * DefaultStyle.dp
+															weight: 300 * DefaultStyle.dp
 														}
 													}
 												}
 											}
-											MouseArea {
-												hoverEnabled: true
-												anchors.fill: parent
+											Button {
+												padding: 0
+												background: Item {
+													visible: false
+												}
+												icon.source: AppIcons.phone
+												Layout.preferredWidth: 24 * DefaultStyle.dp
+												Layout.preferredHeight: 24 * DefaultStyle.dp
+												icon.width: 24 * DefaultStyle.dp
+												icon.height: 24 * DefaultStyle.dp
+												contentImageColor: DefaultStyle.main2_600
 												focus: true
-												Rectangle {
-													anchors.fill: parent
-													opacity: 0.1
-													color: DefaultStyle.main2_500main
-													visible: parent.containsMouse
-												}
-												Rectangle {
-													anchors.fill: parent
-													visible: historyListView.currentIndex === model.index
-													color: DefaultStyle.main2_100
-												}
-												onPressed: {
-													historyListView.currentIndex = model.index
-													historyListView.forceActiveFocus()
+												activeFocusOnTab: false
+												onClicked: {
+													if (modelData.core.isConference) {
+														var callsWindow = UtilsCpp.getCallsWindow()
+														callsWindow.setupConference(modelData.core.conferenceInfo)
+														callsWindow.show()
+													}
+													else {
+														UtilsCpp.createCall(modelData.core.remoteAddress)
+													}
 												}
 											}
 										}
-									//}
-									//}
+										MouseArea {
+											hoverEnabled: true
+											anchors.fill: parent
+											focus: true
+											Rectangle {
+												anchors.fill: parent
+												opacity: 0.7
+												radius: 8 * DefaultStyle.dp
+												color: historyListView.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
+												visible: parent.containsMouse || historyListView.currentIndex === index
+											}
+											onPressed: {
+												historyListView.currentIndex = model.index
+												historyListView.forceActiveFocus()
+											}
+										}
+									}
 									onCurrentIndexChanged: {
 										positionViewAtIndex(currentIndex, ListView.Visible)
 										mainItem.selectedRowHistoryGui = model.getAt(currentIndex)

@@ -20,6 +20,7 @@ FocusScope {
 	signal transferCallToAnotherRequested(CallGui dest)
 	signal contactClicked(FriendGui contact)
 	clip: true
+	onVisibleChanged: if (numPadPopup.opened) numPadPopup.close()
 
 	ColumnLayout {
 		anchors.fill: parent

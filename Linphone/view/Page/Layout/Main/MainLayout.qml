@@ -78,6 +78,16 @@ Item {
 		sourceModel: AppCpp.calls
 	}
 
+	MouseArea {
+		anchors.fill: parent
+		focus: true
+        z: 100
+		onPressed: {
+			if (mainStackView.currentItem.objectName === "mainStackLayout" && mainStackView.currentItem.currentIndex === 0
+				&& accountProxy.defaultAccount && accountProxy.defaultAccount.core.unreadCallNotifications > 0) accountProxy.defaultAccount.core.lResetMissedCalls()
+			mouse.accepted = false
+		}
+	}
 
 	Item{
 		Popup {
@@ -612,6 +622,7 @@ Item {
 					id: mainStackLayoutComponent
 					StackLayout {
 						id: mainStackLayout
+						objectName: "mainStackLayout"
 						currentIndex: tabbar.currentIndex
 						onActiveFocusChanged: if(activeFocus && currentIndex >= 0) children[currentIndex].forceActiveFocus()
 						CallPage {
