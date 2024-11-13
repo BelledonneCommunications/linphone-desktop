@@ -61,17 +61,18 @@ void AccountModel::onRegistrationStateChanged(const std::shared_ptr<linphone::Ac
 void AccountModel::onMessageWaitingIndicationChanged(
     const std::shared_ptr<linphone::Account> &account,
     const std::shared_ptr<const linphone::MessageWaitingIndication> &mwi) {
+	auto userData = getUserData(account);
+	if (!userData) userData = std::make_shared<AccountUserData>();
+	userData->showMwi = mwi->hasMessageWaiting();
 	for (auto summary : mwi->getSummaries()) {
 		qInfo() << "[MWI] new" << summary->getNbNew() << "new+urgent" << summary->getNbNewUrgent() << "old"
 		        << summary->getNbOld() << "old+urgent" << summary->getNbOldUrgent();
-		auto userData = getUserData(account);
-		if (!userData) userData = std::make_shared<AccountUserData>();
+
 		userData->voicemailCount = summary->getNbNew();
-		userData->showMwi = mwi->hasMessageWaiting();
-		setUserData(account, userData);
 		emit voicemailCountChanged(summary->getNbNew());
-		emit showMwiChanged(mwi->hasMessageWaiting());
 	}
+	setUserData(account, userData);
+	emit showMwiChanged(mwi->hasMessageWaiting());
 }
 
 void AccountModel::setPictureUri(QString uri) {
