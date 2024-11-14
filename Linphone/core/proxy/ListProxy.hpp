@@ -116,6 +116,21 @@ public:
 	virtual bool remove(QSharedPointer<QObject> itemToRemove) {
 		return remove(itemToRemove.get());
 	}
+
+	template <class T>
+	void replace(QSharedPointer<T> itemToReplace, QSharedPointer<T> replacementItem) {
+		lInfo() << QStringLiteral("Replacing ") << itemToReplace->metaObject()->className() << QStringLiteral(" : ")
+		        << itemToReplace << " by " << replacementItem;
+		int index = mList.indexOf(itemToReplace);
+		if (index == -1) {
+			lWarning() << QStringLiteral("Unable to replace ") << itemToReplace->metaObject()->className()
+			           << QStringLiteral(" : ") << itemToReplace << " not found in list";
+			return;
+		}
+		mList[index] = replacementItem;
+		QModelIndex modelIndex = createIndex(index, 0);
+		emit dataChanged(modelIndex, modelIndex, {Qt::DisplayRole});
+	}
 };
 
 #endif

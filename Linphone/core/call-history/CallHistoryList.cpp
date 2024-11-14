@@ -90,12 +90,8 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 			    });
 			    if (oldLog == mList.end()) { // New
 				    prepend(*callLogs);
-			    } else { // Update
-				    qWarning() << log()
-				                      .arg("LinphoneCore::onCallLogUpdated has been call for an existant log which "
-				                           "should not be the "
-				                           "case. Check with the SDK. CallID=%1")
-				                      .arg((*callLogs)->mCallId);
+			    } else { // Update (status, duration, etc ...)
+				    replace(oldLog->objectCast<CallHistoryCore>(), *callLogs);
 			    }
 			    delete[] callLogs;
 		    });
