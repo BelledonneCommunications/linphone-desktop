@@ -50,6 +50,8 @@ Notification {
 				ColumnLayout {
 					Text {
 						text: call.core.remoteName
+						Layout.fillWidth: true
+						maximumLineCount: 1
 						color: DefaultStyle.grey_600
 						font {
 							pixelSize: 20 * DefaultStyle.dp

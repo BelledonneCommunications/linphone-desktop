@@ -92,12 +92,16 @@ MainRightPanel {
 				iconSize: 17 * DefaultStyle.dp
 				backgroundColor: "transparent"
 				text: qsTr("Ajouter une image")
+				color: DefaultStyle.main2_700
+				textSize: 16 * DefaultStyle.dp
+				textWeight: 800 * DefaultStyle.dp
 				KeyNavigation.down: editButton.visible ? editButton : givenNameEdit
 				onClicked: fileDialog.open()
 			},
 			RowLayout {
 				visible: mainItem.contact && mainItem.contact.core.pictureUri.length != 0
 				Layout.alignment: Qt.AlignHCenter
+				spacing: 32 * DefaultStyle.dp
 				IconLabelButton {
 					id: editButton
 					Layout.preferredWidth: width
@@ -106,6 +110,9 @@ MainRightPanel {
 					iconSize: 17 * DefaultStyle.dp
 					backgroundColor: "transparent"
 					text: qsTr("Modifier")
+					color: DefaultStyle.main2_700
+					textSize: 16 * DefaultStyle.dp
+					textWeight: 800 * DefaultStyle.dp
 					KeyNavigation.right: removeButton
 					onClicked: fileDialog.open()
 				}
@@ -128,6 +135,9 @@ MainRightPanel {
 					iconSource: AppIcons.trashCan
 					backgroundColor: "transparent"
 					text: qsTr("Supprimer")
+					color: DefaultStyle.main2_700
+					textSize: 16 * DefaultStyle.dp
+					textWeight: 800 * DefaultStyle.dp
 					KeyNavigation.left: editButton
 					onClicked: mainItem.contact.core.pictureUri = ""
 				}

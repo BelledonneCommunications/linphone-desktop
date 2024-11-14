@@ -183,7 +183,6 @@ ListView {
 			anchors.right: parent.right
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
-			anchors.verticalCenter: parent.verticalCenter
 			spacing: 16 * DefaultStyle.dp
 			z: 1
 			Avatar {

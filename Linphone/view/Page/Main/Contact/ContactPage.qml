@@ -493,6 +493,8 @@ AbstractMainPage {
 						spacing: 0
 						Text {
 							text: contactDetail.contactName
+							Layout.fillWidth: true
+							maximumLineCount: 1
 							font {
 								pixelSize: 29 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
