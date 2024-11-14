@@ -90,6 +90,7 @@ AbstractSettingsLayout {
 			spacing: 20 * DefaultStyle.dp
 			Repeater {
 				model: PayloadTypeProxy {
+					id: videoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.NotDownloadable
 				}
 				SwitchSetting {
@@ -118,6 +119,9 @@ AbstractSettingsLayout {
 						function successCallBack() {
 							videoPayloadTypeProxy.reload()
 							downloadableVideoPayloadTypeProxy.reload()
+						},
+						function errorCallBack() {
+							setChecked(false)
 						})
 				}
 			}

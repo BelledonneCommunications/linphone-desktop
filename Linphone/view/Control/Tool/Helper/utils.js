@@ -684,25 +684,29 @@ function computeAvatarSize (container, maxSize, ratio) {
 
 // -----------------------------------------------------------------------------
 
-function openCodecOnlineInstallerDialog (mainWindow, coreObject, cancelCallBack, successCallBack) {
+function openCodecOnlineInstallerDialog (mainWindow, coreObject, cancelCallBack, successCallBack, errorCallBack) {
 	mainWindow.showConfirmationLambdaPopup("",
 		qsTr("Installation de codec"),
 		qsTr("Télécharger le codec ") + capitalizeFirstLetter(coreObject.mimeType) + " ("+coreObject.encoderDescription+")"+" ?",
 		function (confirmed) {
 			if (confirmed) {
 				coreObject.success.connect(function() {
-					if (successCallBack)
-						successCallBack()
 					mainWindow.closeLoadingPopup()
 					mainWindow.showInformationPopup(qsTr("Succès"), qsTr("Le codec a été téléchargé avec succès."), true)
+					if (successCallBack)
+						successCallBack()
 				})
 				coreObject.extractError.connect(function() {
 					mainWindow.closeLoadingPopup()
 					mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être sauvegardé."), true)
+					if (errorCallBack)
+						errorCallBack()
 				})
 				coreObject.downloadError.connect(function() {
 					mainWindow.closeLoadingPopup()
 					mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être téléchargé."), true)
+					if (errorCallBack)
+						errorCallBack()
 				})
 				mainWindow.showLoadingPopup(qsTr("Téléchargement en cours ..."))
 				coreObject.downloadAndExtract()
