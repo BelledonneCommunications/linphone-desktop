@@ -31,7 +31,7 @@ Loader{
 			: displayNameObj
 				? displayNameObj.value
 			: ""
-	property bool haveAvatar: (account && account.core?.pictureUri || false)
+	property bool haveAvatar: (account && account.core.pictureUri)
 							  || (contact && contact.core.pictureUri)
 							  || computedAvatarUri.length != 0
 	property var avatarObj: UtilsCpp.findAvatarByAddress(_address)
@@ -75,7 +75,9 @@ Loader{
 				
 				Connections{
 					target: mainItem
-					onHaveAvatarChanged: function(haveAvatar) {stackView.replace(haveAvatar ? avatar : initials, StackView.Immediate)}
+					onHaveAvatarChanged: {
+						console.log("have avatar changed", mainItem.haveAvatar, mainItem._address)
+						stackView.replace(mainItem.haveAvatar ? avatar : initials, StackView.Immediate)}
 				}
 				
 				Rectangle {
@@ -198,9 +200,11 @@ Loader{
 							sourceSize.height: avatarItem.height
 							fillMode: Image.PreserveAspectCrop
 							anchors.centerIn: parent
-							source: mainItem.account && mainItem.account.core.pictureUri 
-									|| mainItem.contact && mainItem.contact.core.pictureUri
-									|| computedAvatarUri
+							source: mainItem.account
+								? mainItem.account.core.pictureUri 
+								: mainItem.contact
+									? mainItem.contact.core.pictureUri
+									: computedAvatarUri
 							mipmap: true
 							layer.enabled: true
 						}

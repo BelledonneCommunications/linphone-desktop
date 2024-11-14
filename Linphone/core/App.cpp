@@ -528,7 +528,7 @@ void App::initCore() {
 					    if (mSettings) setLocale(mSettings->getConfigLocale());
 				    });
 			    }
-			    const QUrl url(u"qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml"_qs);
+			    const QUrl url("qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml");
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,
 			        [this, url, coreStarted](QObject *obj, const QUrl &objUrl) {
