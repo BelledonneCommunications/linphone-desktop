@@ -332,6 +332,7 @@ private:
 
 	QString mLastErrorMessage;
 	QString mRemoteName;
+	QString mRemoteUsername;
 	QString mRemoteAddress;
 	QString mLocalAddress;
 	bool mTokenVerified = false;

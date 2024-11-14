@@ -125,6 +125,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
 	mState = LinphoneEnums::fromLinphone(call->getState());
 	mRemoteAddress = Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
+	mRemoteUsername = Utils::coreStringToAppString(call->getRemoteAddress()->getUsername());
 	auto linphoneFriend = ToolModel::findFriendByAddress(mRemoteAddress);
 	if (linphoneFriend)
 		mRemoteName = Utils::coreStringToAppString(
@@ -844,5 +845,5 @@ void CallCore::findRemoteLdapFriend(QSharedPointer<CallCore> me) {
 			    });
 		    }
 	    });
-	mLdapMagicSearchModel->search(mRemoteAddress);
+	mLdapMagicSearchModel->search(mRemoteUsername);
 }
