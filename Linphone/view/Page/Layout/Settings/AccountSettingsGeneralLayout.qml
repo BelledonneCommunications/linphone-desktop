@@ -187,18 +187,10 @@ AbstractSettingsLayout {
 					Layout.rightMargin: 5 * DefaultStyle.dp
 					Layout.preferredWidth: 24 * DefaultStyle.dp
 					Layout.preferredHeight: 24 * DefaultStyle.dp
-					contentItem: RowLayout {
-						Layout.alignment: Qt.AlignRight
-						EffectImage {
-							imageSource: AppIcons.trashCan
-							width: 24 * DefaultStyle.dp
-							height: 24 * DefaultStyle.dp
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-							fillMode: Image.PreserveAspectFit
-							colorizationColor: DefaultStyle.danger_500main
-						}
-					}
+					icon.source: AppIcons.trashCan
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
+					contentImageColor: DefaultStyle.danger_500main					
 					onClicked: {
 						var mainWin = UtilsCpp.getMainWindow()
 						mainWin.showConfirmationLambdaPopup("",
