@@ -23,6 +23,7 @@
 #include <QDebug>
 
 #include "model/core/CoreModel.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
@@ -37,35 +38,43 @@ MagicSearchModel::~MagicSearchModel() {
 	mustBeInLinphoneThread("~" + getClassName());
 }
 
-void MagicSearchModel::search(QString filter) {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+void MagicSearchModel::search(QString filter,
+                              int sourceFlags,
+                              LinphoneEnums::MagicSearchAggregation aggregation,
+                              int maxResults) {
 	mLastSearch = filter;
-	mMonitor->getContactsListAsync(filter != "*" ? Utils::appStringToCoreString(filter) : "", "", mSourceFlags,
-	                               LinphoneEnums::toLinphone(mAggregationFlag));
-}
-
-void MagicSearchModel::setSourceFlags(int flags) {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	if (mSourceFlags != flags) {
-		mSourceFlags = flags;
-		emit sourceFlagsChanged(mSourceFlags);
+	setMaxResults(maxResults);
+	if ((filter == "" || filter == "*") && ((sourceFlags & (int)LinphoneEnums::MagicSearchSource::LdapServers) > 0) &&
+	    !SettingsModel::getInstance()->getSyncLdapContacts()) {
+		sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::LdapServers;
 	}
+	qInfo() << log().arg("Searching ") << filter << " from " << sourceFlags << " with limit " << maxResults;
+	mMonitor->getContactsListAsync(filter != "*" ? Utils::appStringToCoreString(filter) : "", "", sourceFlags,
+	                               LinphoneEnums::toLinphone(aggregation));
 }
 
-void MagicSearchModel::setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag) {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	if (mAggregationFlag != flag) {
-		mAggregationFlag = flag;
-		emit aggregationFlagChanged(mAggregationFlag);
+int MagicSearchModel::getMaxResults() const {
+	if (!mMonitor->getLimitedSearch()) return -1;
+	else return mMonitor->getSearchLimit();
+}
+
+void MagicSearchModel::setMaxResults(int maxResults) {
+	if (maxResults <= 0 && mMonitor->getLimitedSearch() ||
+	    maxResults > 0 && (!mMonitor->getLimitedSearch() || maxResults != mMonitor->getSearchLimit())) {
+		mMonitor->setLimitedSearch(maxResults > 0);
+		if (maxResults > 0) mMonitor->setSearchLimit(maxResults);
+		emit maxResultsChanged(maxResults);
 	}
 }
 
 void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> &magicSearch) {
-	for (auto it : magicSearch->getLastSearch()) {
+	qDebug() << log().arg("SDK send callback: onSearchResultsReceived");
+	auto results = magicSearch->getLastSearch();
+	for (auto it : results) {
 		bool isLdap = (it->getSourceFlags() & (int)LinphoneEnums::MagicSearchSource::LdapServers) != 0;
 		if (isLdap && it->getFriend()) updateLdapFriendListWithFriend(it->getFriend());
 	}
-	emit searchResultsReceived(magicSearch->getLastSearch());
+	emit searchResultsReceived(results);
 }
 
 void MagicSearchModel::onLdapHaveMoreResults(const std::shared_ptr<linphone::MagicSearch> &magicSearch,

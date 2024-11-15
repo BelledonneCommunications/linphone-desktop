@@ -65,6 +65,7 @@ class FriendCore : public QObject, public AbstractObject {
 	Q_PROPERTY(LinphoneEnums::ConsolidatedPresence consolidatedPresence READ getConsolidatedPresence NOTIFY
 	               consolidatedPresenceChanged)
 	Q_PROPERTY(bool isSaved READ getIsSaved NOTIFY isSavedChanged)
+	Q_PROPERTY(bool isStored READ getIsStored NOTIFY isStoredChanged)
 	Q_PROPERTY(QString pictureUri READ getPictureUri WRITE setPictureUri NOTIFY pictureUriChanged)
 	Q_PROPERTY(bool starred READ getStarred WRITE lSetStarred NOTIFY starredChanged)
 	Q_PROPERTY(bool readOnly READ getReadOnly CONSTANT)
@@ -72,8 +73,8 @@ class FriendCore : public QObject, public AbstractObject {
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
-	static QSharedPointer<FriendCore> create(const std::shared_ptr<linphone::Friend> &contact);
-	FriendCore(const std::shared_ptr<linphone::Friend> &contact);
+	static QSharedPointer<FriendCore> create(const std::shared_ptr<linphone::Friend> &contact, bool isStored = true);
+	FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool isStored = true);
 	FriendCore(const FriendCore &friendCore);
 	~FriendCore();
 	void setSelf(QSharedPointer<FriendCore> me);
@@ -81,7 +82,6 @@ public:
 	void reset(const FriendCore &contact);
 
 	QString getDisplayName() const;
-	void setDisplayName(const QString &name);
 
 	QString getFamilyName() const;
 	void setFamilyName(const QString &name);
@@ -131,6 +131,9 @@ public:
 	bool getIsSaved() const;
 	void setIsSaved(bool isSaved);
 
+	bool getIsStored() const; // Exist in DB
+	void setIsStored(bool isStored);
+
 	QString getPictureUri() const;
 	void setPictureUri(const QString &uri);
 	void onPictureUriChanged(QString uri);
@@ -163,6 +166,7 @@ signals:
 	void pictureUriChanged();
 	void saved();
 	void isSavedChanged(bool isSaved);
+	void isStoredChanged();
 	void removed(FriendCore *contact);
 	void defaultAddressChanged();
 	void allAddressesChanged();
@@ -189,6 +193,7 @@ protected:
 	QString mDefaultAddress;
 	QString mPictureUri;
 	bool mIsSaved;
+	bool mIsStored;
 	QString mVCardString;
 	bool mIsLdap;
 	std::shared_ptr<FriendModel> mFriendModel;

@@ -88,3 +88,7 @@ void SortFilterProxy::setSortOrder(const Qt::SortOrder &order) {
 void SortFilterProxy::remove(int index, int count) {
 	QSortFilterProxyModel::removeRows(index, count);
 }
+
+void SortFilterProxy::invalidateFilter() {
+	QSortFilterProxyModel::invalidateFilter();
+}

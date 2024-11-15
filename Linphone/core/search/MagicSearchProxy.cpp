@@ -20,16 +20,14 @@
 
 #include "MagicSearchProxy.hpp"
 #include "MagicSearchList.hpp"
+
 #include "core/App.hpp"
-#include "core/friend/FriendGui.hpp"
+#include "core/friend/FriendCore.hpp"
 
 MagicSearchProxy::MagicSearchProxy(QObject *parent) : LimitProxy(parent) {
-	mSourceFlags = (int)LinphoneEnums::MagicSearchSource::Friends | (int)LinphoneEnums::MagicSearchSource::LdapServers;
-	mAggregationFlag = LinphoneEnums::MagicSearchAggregation::Friend;
 	setList(MagicSearchList::create());
-	sort(0);
 	connect(this, &MagicSearchProxy::forceUpdate, [this] {
-		if (mList) emit mList->lSearch(mSearchText);
+		if (mList) emit mList->lSearch(mSearchText, getSourceFlags(), getAggregationFlag(), getMaxResults());
 	});
 	connect(App::getInstance(), &App::currentDateChanged, this, &MagicSearchProxy::forceUpdate);
 }
@@ -50,28 +48,28 @@ void MagicSearchProxy::setList(QSharedPointer<MagicSearchList> newList) {
 		        Qt::QueuedConnection);
 		connect(mList.get(), &MagicSearchList::aggregationFlagChanged, this, &MagicSearchProxy::aggregationFlagChanged,
 		        Qt::QueuedConnection);
+
 		connect(
 		    mList.get(), &MagicSearchList::friendCreated, this,
-		    [this](int index) {
-			    auto proxyIndex =
-			        dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(mList->index(index, 0)).row();
-			    // auto proxyIndex = mapFromSource(sourceModel()->index(index, 0)); // OLD (keep for checking new proxy
-			    // behavior)
-			    emit friendCreated(proxyIndex);
+		    [this](int index, FriendGui *data) {
+			    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
+			    sortModel->invalidate();
+			    if (!data->mCore->isLdap()) {
+				    auto proxyIndex = sortModel->mapFromSource(mList->index(index, 0)).row();
+				    // auto proxyIndex = mapFromSource(sourceModel()->index(index, 0)); // OLD (keep for checking new
+				    // proxy behavior)
+				    emit localFriendCreated(proxyIndex);
+			    }
 		    },
 		    Qt::QueuedConnection);
 		connect(
-		    mList.get(), &MagicSearchList::initialized, this,
-		    [this, newList = mList.get()] {
-			    emit newList->lSetSourceFlags(mSourceFlags);
-			    emit newList->lSetAggregationFlag(mAggregationFlag);
-			    emit initialized();
-		    },
+		    mList.get(), &MagicSearchList::initialized, this, [this, newList = mList.get()] { emit initialized(); },
 		    Qt::QueuedConnection);
 	}
 	auto sortFilterList = new SortFilterList(mList.get(), Qt::AscendingOrder);
 	if (oldModel) {
 		sortFilterList->mShowFavoritesOnly = oldModel->mShowFavoritesOnly;
+		sortFilterList->mHideSuggestions = oldModel->mHideSuggestions;
 		sortFilterList->mShowLdapContacts = oldModel->mShowLdapContacts;
 		sortFilterList->mHideListProxy = oldModel->mHideListProxy;
 		if (sortFilterList->mHideListProxy) {
@@ -81,7 +79,14 @@ void MagicSearchProxy::setList(QSharedPointer<MagicSearchList> newList) {
 			        [this, sortFilterList]() { sortFilterList->invalidate(); });
 		}
 	}
+	connect(
+	    mList.get(), &MagicSearchList::friendStarredChanged, this,
+	    [this, sortFilterList]() {
+		    if (showFavoritesOnly()) sortFilterList->invalidate();
+	    },
+	    Qt::QueuedConnection);
 	setSourceModels(sortFilterList);
+	sort(0);
 }
 
 int MagicSearchProxy::findFriendIndexByAddress(const QString &address) {
@@ -105,14 +110,19 @@ void MagicSearchProxy::setSearchText(const QString &search) {
 }
 
 int MagicSearchProxy::getSourceFlags() const {
-	return mSourceFlags;
+	return mList->getSourceFlags();
 }
 
 void MagicSearchProxy::setSourceFlags(int flags) {
-	if (flags != mSourceFlags) {
-		mSourceFlags = flags;
-		emit mList->lSetSourceFlags(flags);
-	}
+	mList->setSourceFlags(flags);
+}
+
+int MagicSearchProxy::getMaxResults() const {
+	return mList->getMaxResults();
+}
+
+void MagicSearchProxy::setMaxResults(int flags) {
+	mList->setMaxResults(flags);
 }
 
 bool MagicSearchProxy::showFavoritesOnly() const {
@@ -128,9 +138,28 @@ void MagicSearchProxy::setShowFavoritesOnly(bool show) {
 	}
 }
 
-void MagicSearchProxy::setParentProxy(MagicSearchProxy *proxy) {
-	setList(proxy->mList);
-	emit parentProxyChanged();
+bool MagicSearchProxy::getHideSuggestions() const {
+	return dynamic_cast<SortFilterList *>(sourceModel())->mHideSuggestions;
+}
+void MagicSearchProxy::setHideSuggestions(bool data) {
+	auto list = dynamic_cast<SortFilterList *>(sourceModel());
+	if (list->mHideSuggestions != data) {
+		list->mHideSuggestions = data;
+		list->invalidate();
+		emit hideSuggestionsChanged();
+	}
+}
+
+MagicSearchProxy *MagicSearchProxy::getParentProxy() const {
+	return mParentProxy;
+}
+
+void MagicSearchProxy::setParentProxy(MagicSearchProxy *parentProxy) {
+	if (parentProxy && parentProxy->mList) {
+		mParentProxy = parentProxy;
+		setList(parentProxy->mList);
+		emit parentProxyChanged();
+	}
 }
 
 MagicSearchProxy *MagicSearchProxy::getHideListProxy() const {
@@ -138,36 +167,34 @@ MagicSearchProxy *MagicSearchProxy::getHideListProxy() const {
 	return list ? list->mHideListProxy : nullptr;
 }
 
-void MagicSearchProxy::setHideListProxy(MagicSearchProxy *proxy) {
+void MagicSearchProxy::setHideListProxy(MagicSearchProxy *hideListProxy) {
 	auto list = dynamic_cast<SortFilterList *>(sourceModel());
-	if (list && list->mHideListProxy != proxy) {
+	if (list && list->mHideListProxy != hideListProxy) {
 		if (list->mHideListProxy) list->disconnect(list->mHideListProxy);
-		list->mHideListProxy = proxy;
+		list->mHideListProxy = hideListProxy;
 		list->invalidate();
-		if (proxy) {
-			connect(proxy, &MagicSearchProxy::countChanged, list, [this, list]() { list->invalidate(); });
-			connect(proxy, &MagicSearchProxy::modelReset, list, [this, list]() { list->invalidate(); });
+		if (hideListProxy) {
+			connect(hideListProxy, &MagicSearchProxy::countChanged, list, [this, list]() { list->invalidateFilter(); });
+			connect(hideListProxy, &MagicSearchProxy::modelReset, list, [this, list]() { list->invalidateFilter(); });
 		}
 		emit hideListProxyChanged();
 	}
 }
 
 LinphoneEnums::MagicSearchAggregation MagicSearchProxy::getAggregationFlag() const {
-	return mAggregationFlag;
+	return mList->getAggregationFlag();
 }
 
 void MagicSearchProxy::setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag) {
-	if (flag != mAggregationFlag) {
-		mAggregationFlag = flag;
-		emit mList->lSetAggregationFlag(flag);
-	}
+	mList->setAggregationFlag(flag);
 }
 
 bool MagicSearchProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	auto friendCore = getItemAtSource<MagicSearchList, FriendCore>(sourceRow);
 	auto toShow = false;
 	if (friendCore) {
-		toShow = (!mShowFavoritesOnly || friendCore->getStarred()) && (mShowLdapContacts || !friendCore->isLdap());
+		toShow = (!mHideSuggestions || friendCore->getIsStored()) &&
+		         (!mShowFavoritesOnly || friendCore->getStarred()) && (mShowLdapContacts || !friendCore->isLdap());
 		if (toShow && mHideListProxy) {
 			for (auto &friendAddress : friendCore->getAllAddresses()) {
 				toShow = mHideListProxy->findFriendIndexByAddress(friendAddress.toMap()["address"].toString()) == -1;
@@ -184,6 +211,10 @@ bool MagicSearchProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, c
 	auto r = getItemAtSource<MagicSearchList, FriendCore>(sourceRight.row());
 
 	if (l && r) {
+		bool lIsStored = l->getIsStored();
+		bool rIsStored = r->getIsStored();
+		if (lIsStored && !rIsStored) return true;
+		else if (!lIsStored && rIsStored) return false;
 		auto lName = l->getDisplayName().toLower();
 		auto rName = r->getDisplayName().toLower();
 		return lName < rName;

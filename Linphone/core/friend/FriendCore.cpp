@@ -44,14 +44,14 @@ QVariant createFriendDevice(const QString &name, const QString &address, Linphon
 	return map;
 }
 
-QSharedPointer<FriendCore> FriendCore::create(const std::shared_ptr<linphone::Friend> &contact) {
-	auto sharedPointer = QSharedPointer<FriendCore>(new FriendCore(contact), &QObject::deleteLater);
+QSharedPointer<FriendCore> FriendCore::create(const std::shared_ptr<linphone::Friend> &contact, bool isStored) {
+	auto sharedPointer = QSharedPointer<FriendCore>(new FriendCore(contact, isStored), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
 	sharedPointer->moveToThread(App::getInstance()->thread());
 	return sharedPointer;
 }
 
-FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObject(nullptr) {
+FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool isStored) : QObject(nullptr) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	if (contact) {
 		mustBeInLinphoneThread(getClassName());
@@ -60,6 +60,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 		mConsolidatedPresence = LinphoneEnums::fromLinphone(contact->getConsolidatedPresence());
 		mPresenceTimestamp = mFriendModel->getPresenceTimestamp();
 		mPictureUri = Utils::coreStringToAppString(contact->getPhoto());
+		auto defaultAddress = contact->getAddress();
 		auto vcard = contact->getVcard();
 		if (vcard) {
 			mOrganization = Utils::coreStringToAppString(vcard->getOrganization());
@@ -69,13 +70,16 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 			mFullName = Utils::coreStringToAppString(vcard->getFullName());
 			mVCardString = Utils::coreStringToAppString(vcard->asVcard4String());
 		}
+		if (defaultAddress) {
+			if (mGivenName.isEmpty()) mGivenName = Utils::coreStringToAppString(defaultAddress->getUsername());
+		}
 		auto addresses = contact->getAddresses();
 		for (auto &address : addresses) {
 			mAddressList.append(
 			    createFriendAddressVariant(_addressLabel, Utils::coreStringToAppString(address->asStringUriOnly())));
 		}
 		mDefaultAddress =
-		    contact->getAddress() ? Utils::coreStringToAppString(contact->getAddress()->asStringUriOnly()) : QString();
+		    defaultAddress ? Utils::coreStringToAppString(contact->getAddress()->asStringUriOnly()) : QString();
 		auto phoneNumbers = contact->getPhoneNumbersWithLabel();
 		for (auto &phoneNumber : phoneNumbers) {
 			mPhoneNumberList.append(
@@ -94,9 +98,11 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 
 		mStarred = contact->getStarred();
 		mIsSaved = true;
+		mIsStored = isStored;
 	} else {
 		mIsSaved = false;
 		mStarred = false;
+		mIsStored = false;
 	}
 
 	mIsLdap = ToolModel::friendIsInFriendList(ToolModel::getLdapFriendList(), contact);
@@ -502,7 +508,18 @@ bool FriendCore::getIsSaved() const {
 void FriendCore::setIsSaved(bool data) {
 	if (mIsSaved != data) {
 		mIsSaved = data;
+		if (mIsSaved) setIsStored(true);
 		emit isSavedChanged(mIsSaved);
+	}
+}
+
+bool FriendCore::getIsStored() const {
+	return mIsStored;
+}
+void FriendCore::setIsStored(bool data) {
+	if (mIsStored != data) {
+		mIsStored = data;
+		emit isStoredChanged();
 	}
 }
 
@@ -510,7 +527,9 @@ void FriendCore::writeIntoModel(std::shared_ptr<FriendModel> model) const {
 	mustBeInLinphoneThread(QString("[") + gClassName + "] " + Q_FUNC_INFO);
 	model->getFriend()->edit();
 	// needed to create the vcard if not created yet
-	model->setName(mGivenName + (mFamilyName.isEmpty() || mGivenName.isEmpty() ? "" : " ") + mFamilyName);
+	model->setName(mFullName.isEmpty()
+	                   ? mGivenName + (mFamilyName.isEmpty() || mGivenName.isEmpty() ? "" : " ") + mFamilyName
+	                   : mFullName);
 	auto core = CoreModel::getInstance()->getCore();
 
 	std::list<std::shared_ptr<linphone::Address>> addresses;

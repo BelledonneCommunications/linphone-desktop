@@ -69,6 +69,7 @@ public:
 	void setFilterText(const QString &filter);
 
 	Q_INVOKABLE void remove(int index, int count = 1);
+	void invalidateFilter();
 
 signals:
 	void countChanged();

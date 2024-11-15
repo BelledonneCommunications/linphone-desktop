@@ -21,7 +21,6 @@
 #include "MagicSearchList.hpp"
 #include "core/App.hpp"
 #include "core/friend/FriendCore.hpp"
-#include "core/friend/FriendGui.hpp"
 #include "tool/Utils.hpp"
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
@@ -62,7 +61,7 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 		    if (haveContact == mList.end()) {
 			    connect(friendCore.get(), &FriendCore::removed, this, qOverload<QObject *>(&MagicSearchList::remove));
 			    add(friendCore);
-			    emit friendCreated(getCount() - 1);
+			    emit friendCreated(getCount() - 1, new FriendGui(friendCore));
 		    }
 	    });
 	mCoreModelConnection->invokeToModel([this] {
@@ -71,34 +70,17 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 		auto magicSearch = Utils::makeQObject_ptr<MagicSearchModel>(linphoneSearch);
 		mCoreModelConnection->invokeToCore([this, magicSearch] {
 			mMagicSearch = magicSearch;
-			mMagicSearch->mSourceFlags = mSourceFlags;
-			mMagicSearch->mAggregationFlag = mAggregationFlag;
 			mMagicSearch->setSelf(mMagicSearch);
 			mModelConnection = QSharedPointer<SafeConnection<MagicSearchList, MagicSearchModel>>(
 			    new SafeConnection<MagicSearchList, MagicSearchModel>(mCoreModelConnection->mCore.mQData, mMagicSearch),
 			    &QObject::deleteLater);
-			mModelConnection->makeConnectToCore(&MagicSearchList::lSearch, [this](QString filter) {
-				mModelConnection->invokeToModel([this, filter]() { mMagicSearch->search(filter); });
-			});
-			mModelConnection->makeConnectToCore(&MagicSearchList::lSetSourceFlags, [this](int flags) {
-				mModelConnection->invokeToModel([this, flags]() { mMagicSearch->setSourceFlags(flags); });
-			});
-			mModelConnection->makeConnectToCore(&MagicSearchList::lSetAggregationFlag,
-			                                    [this](LinphoneEnums::MagicSearchAggregation aggregation) {
-				                                    mModelConnection->invokeToModel([this, aggregation]() {
-					                                    mMagicSearch->setAggregationFlag(aggregation);
-				                                    });
-			                                    });
 			mModelConnection->makeConnectToCore(
-			    &MagicSearchList::lSetAggregationFlag, [this](LinphoneEnums::MagicSearchAggregation flag) {
-				    mModelConnection->invokeToModel([this, flag]() { mMagicSearch->setAggregationFlag(flag); });
-			    });
-			mModelConnection->makeConnectToModel(&MagicSearchModel::sourceFlagsChanged, [this](int flags) {
-				mModelConnection->invokeToCore([this, flags]() { setSourceFlags(flags); });
-			});
-			mModelConnection->makeConnectToModel(
-			    &MagicSearchModel::aggregationFlagChanged, [this](LinphoneEnums::MagicSearchAggregation flag) {
-				    mModelConnection->invokeToCore([this, flag]() { setAggregationFlag(flag); });
+			    &MagicSearchList::lSearch,
+			    [this](QString filter, int sourceFlags, LinphoneEnums::MagicSearchAggregation aggregationFlag,
+			           int maxResults) {
+				    mModelConnection->invokeToModel([this, filter, sourceFlags, aggregationFlag, maxResults]() {
+					    mMagicSearch->search(filter, sourceFlags, aggregationFlag, maxResults);
+				    });
 			    });
 			mModelConnection->makeConnectToModel(
 			    &MagicSearchModel::searchResultsReceived,
@@ -106,26 +88,30 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 				    auto *contacts = new QList<QSharedPointer<FriendCore>>();
 				    for (auto it : results) {
 					    QSharedPointer<FriendCore> contact;
-					    if (it->getFriend()) {
-						    contact = FriendCore::create(it->getFriend());
+					    auto linphoneFriend = it->getFriend();
+					    // Considered LDAP results as stored.
+					    bool isStored = (it->getSourceFlags() & (int)linphone::MagicSearch::Source::LdapServers) > 0;
+					    if (linphoneFriend) {
+						    contact = FriendCore::create(linphoneFriend);
 						    contacts->append(contact);
 					    } else if (auto address = it->getAddress()) {
 						    auto linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
-						    contact = FriendCore::create(linphoneFriend);
-						    auto displayname = Utils::coreStringToAppString(address->getDisplayName());
-						    auto splitted = displayname.split(" ");
-						    if (splitted.size() > 0) {
+						    linphoneFriend->setAddress(address);
+						    contact = FriendCore::create(linphoneFriend, isStored);
+						    auto displayName = Utils::coreStringToAppString(address->getDisplayName());
+						    auto splitted = displayName.split(" ");
+						    if (!displayName.isEmpty() && splitted.size() > 0) {
 							    contact->setGivenName(splitted[0]);
 							    splitted.removeFirst();
 							    contact->setFamilyName(splitted.join(" "));
 						    } else {
 							    contact->setGivenName(Utils::coreStringToAppString(address->getUsername()));
 						    }
-						    contact->appendAddress(Utils::coreStringToAppString(address->asStringUriOnly()));
 						    contacts->append(contact);
 					    } else if (!it->getPhoneNumber().empty()) {
-						    auto linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
-						    contact = FriendCore::create(linphoneFriend);
+						    linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
+						    linphoneFriend->setAddress(address);
+						    contact = FriendCore::create(linphoneFriend, isStored);
 						    contact->setGivenName(Utils::coreStringToAppString(it->getPhoneNumber()));
 						    contact->appendPhoneNumber(tr("Phone"), Utils::coreStringToAppString(it->getPhoneNumber()));
 						    contacts->append(contact);
@@ -148,10 +134,11 @@ void MagicSearchList::setResults(const QList<QSharedPointer<FriendCore>> &contac
 		if (!isFriendCore) continue;
 		disconnect(isFriendCore.get());
 	}
+	qDebug() << log().arg("SetResults: %1").arg(contacts.size());
 	resetData<FriendCore>(contacts);
 	for (auto it : contacts) {
 		connect(it.get(), &FriendCore::removed, this, qOverload<QObject *>(&MagicSearchList::remove));
-		connect(it.get(), &FriendCore::starredChanged, this, [this] { lSearch(mSearchFilter); });
+		connect(it.get(), &FriendCore::starredChanged, this, &MagicSearchList::friendStarredChanged);
 	}
 }
 
@@ -161,7 +148,7 @@ void MagicSearchList::addResult(const QSharedPointer<FriendCore> &contact) {
 void MagicSearchList::setSearch(const QString &search) {
 	mSearchFilter = search;
 	if (!search.isEmpty()) {
-		lSearch(search);
+		emit lSearch(search, mSourceFlags, mAggregationFlag, mMaxResults);
 	} else {
 		beginResetModel();
 		mList.clear();
@@ -180,6 +167,17 @@ void MagicSearchList::setSourceFlags(int flags) {
 	}
 }
 
+int MagicSearchList::getMaxResults() const {
+	return mMaxResults;
+}
+
+void MagicSearchList::setMaxResults(int maxResults) {
+	if (mMaxResults != maxResults) {
+		mMaxResults = maxResults;
+		emit maxResultsChanged(mMaxResults);
+	}
+}
+
 LinphoneEnums::MagicSearchAggregation MagicSearchList::getAggregationFlag() const {
 	return mAggregationFlag;
 }
@@ -191,11 +189,20 @@ void MagicSearchList::setAggregationFlag(LinphoneEnums::MagicSearchAggregation f
 	}
 }
 
+QHash<int, QByteArray> MagicSearchList::roleNames() const {
+	QHash<int, QByteArray> roles;
+	roles[Qt::DisplayRole] = "$modelData";
+	roles[Qt::DisplayRole + 1] = "isStored";
+	return roles;
+}
+
 QVariant MagicSearchList::data(const QModelIndex &index, int role) const {
 	int row = index.row();
 	if (!index.isValid() || row < 0 || row >= mList.count()) return QVariant();
 	if (role == Qt::DisplayRole) {
 		return QVariant::fromValue(new FriendGui(mList[row].objectCast<FriendCore>()));
+	} else if (role == Qt::DisplayRole + 1) {
+		return mList[row].objectCast<FriendCore>()->getIsStored();
 	}
 	return QVariant();
 }

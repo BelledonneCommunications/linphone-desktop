@@ -20,7 +20,6 @@ FocusScope {
 	signal transferCallToAnotherRequested(CallGui dest)
 	signal contactClicked(FriendGui contact)
 	clip: true
-	onVisibleChanged: if (numPadPopup.opened) numPadPopup.close()
 
 	ColumnLayout {
 		anchors.fill: parent
@@ -71,7 +70,7 @@ FocusScope {
 					Layout.alignment: Qt.AlignTop
 					Layout.fillWidth: true
 					Layout.rightMargin: 39 * DefaultStyle.dp
-					Layout.maximumWidth: mainItem.width
+					//Layout.maximumWidth: mainItem.width
 					focus: true
 					color: mainItem.searchBarColor
 					borderColor: mainItem.searchBarBorderColor
@@ -79,127 +78,72 @@ FocusScope {
 					numericPadPopup: mainItem.numPadPopup
 					KeyNavigation.down: grouCallButton
 				}
-				Flickable {
-					Layout.fillWidth: true
-					Layout.fillHeight: true
-					Layout.topMargin: 25 * DefaultStyle.dp
-					contentWidth: width
-					contentHeight: content.height
-					clip: true
-					Control.ScrollBar.vertical: ScrollBar {
-						active: true
-						interactive: true
-						policy: Control.ScrollBar.AsNeeded
-						anchors.top: parent.top
-						anchors.bottom: parent.bottom
-						anchors.right: parent.right
-						anchors.rightMargin: 8 * DefaultStyle.dp
+				ColumnLayout {
+					id: content
+					spacing: 32 * DefaultStyle.dp
+					Button {
+						id: grouCallButton
+						visible: mainItem.groupCallVisible && !SettingsCpp.disableMeetingsFeature
+						Layout.preferredWidth: 320 * DefaultStyle.dp
+						Layout.preferredHeight: 44 * DefaultStyle.dp
+						padding: 0
+						KeyNavigation.up: searchBar
+						KeyNavigation.down: contactLoader.item
+						onClicked: mainItem.groupCallCreationRequested()
+						background: Rectangle {
+							anchors.fill: parent
+							radius: 50 * DefaultStyle.dp
+							gradient: Gradient {
+								orientation: Gradient.Horizontal
+								GradientStop { position: 0.0; color: DefaultStyle.main2_100}
+								GradientStop { position: 1.0; color: DefaultStyle.grey_0}
+							}
+						}
+						contentItem: RowLayout {
+							spacing: 16 * DefaultStyle.dp
+							anchors.verticalCenter: parent.verticalCenter
+							Image {
+								source: AppIcons.groupCall
+								Layout.preferredWidth: 44 * DefaultStyle.dp
+								sourceSize.width: 44 * DefaultStyle.dp
+								fillMode: Image.PreserveAspectFit
+							}
+							Text {
+								text: "Appel de groupe"
+								color: DefaultStyle.grey_1000
+								font {
+									pixelSize: 16 * DefaultStyle.dp
+									weight: 800 * DefaultStyle.dp
+									underline: grouCallButton.shadowEnabled
+								}
+							}
+							Item {
+								Layout.fillWidth: true
+							}
+							Image {
+								source: AppIcons.rightArrow
+								Layout.preferredWidth: 24 * DefaultStyle.dp
+								Layout.preferredHeight: 24 * DefaultStyle.dp
+							}
+						}
 					}
-
-					ColumnLayout {
-						id: content
-						spacing: 32 * DefaultStyle.dp
-						anchors.left: parent.left
-						anchors.right: parent.right
-						anchors.rightMargin: 39 * DefaultStyle.dp
-						Button {
-							id: grouCallButton
-							visible: mainItem.groupCallVisible && !SettingsCpp.disableMeetingsFeature
-							Layout.preferredWidth: 320 * DefaultStyle.dp
-							Layout.preferredHeight: 44 * DefaultStyle.dp
-							padding: 0
-							KeyNavigation.up: searchBar
-							KeyNavigation.down: contactList.count >0 ? contactList : searchList
-							onClicked: mainItem.groupCallCreationRequested()
-							background: Rectangle {
-								anchors.fill: parent
-								radius: 50 * DefaultStyle.dp
-								gradient: Gradient {
-									orientation: Gradient.Horizontal
-									GradientStop { position: 0.0; color: DefaultStyle.main2_100}
-									GradientStop { position: 1.0; color: DefaultStyle.grey_0}
-								}
-							}
-							contentItem: RowLayout {
-								spacing: 16 * DefaultStyle.dp
-								anchors.verticalCenter: parent.verticalCenter
-								Image {
-									source: AppIcons.groupCall
-									Layout.preferredWidth: 44 * DefaultStyle.dp
-									sourceSize.width: 44 * DefaultStyle.dp
-									fillMode: Image.PreserveAspectFit
-								}
-								Text {
-									text: "Appel de groupe"
-									color: DefaultStyle.grey_1000
-									font {
-										pixelSize: 16 * DefaultStyle.dp
-										weight: 800 * DefaultStyle.dp
-										underline: grouCallButton.shadowEnabled
-									}
-								}
-								Item {
-									Layout.fillWidth: true
-								}
-								Image {
-									source: AppIcons.rightArrow
-									Layout.preferredWidth: 24 * DefaultStyle.dp
-									Layout.preferredHeight: 24 * DefaultStyle.dp
-								}
-							}
+					Loader{
+					// This is a hack for an incomprehensible behavior on sections title where they doesn't match with their delegate and can be unordered after resetting models.
+						id: contactLoader
+						Layout.fillWidth: true
+						Layout.fillHeight: true
+						property string t: searchBar.text
+						onTChanged: {
+							contactLoader.active = false
+							Qt.callLater(function(){contactLoader.active=true})
 						}
-						ColumnLayout {
-							spacing: 18 * DefaultStyle.dp
-							visible: contactList.contentHeight > 0
-							Text {
-								text: qsTr("Contacts")
-								font {
-									pixelSize: 16 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
-								}
+						//-------------------------------------------------------------
+						sourceComponent: ContactListView{
+							id: contactList
+							searchBarText: searchBar.text
+							onContactClicked: (contact) => {
+								mainItem.contactClicked(contact)
 							}
-							ContactListView{
-								id: contactList
-								Layout.fillWidth: true
-								Layout.preferredHeight: contentHeight
-								Control.ScrollBar.vertical.visible: false
-								contactMenuVisible: false
-								searchOnInitialization: true
-								searchBarText: searchBar.text
-								onContactClicked: (contact) => {
-									mainItem.contactClicked(contact)
-								}
-							}
-						}
-						ColumnLayout {
-							spacing: 18 * DefaultStyle.dp
-							visible: searchList.count > 0
-							Text {
-								text: qsTr("Suggestions")
-								font {
-									pixelSize: 16 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
-								}
-							}
-							ContactListView{
-								id: searchList
-								Layout.fillWidth: true
-								Layout.fillHeight: true
-								Layout.preferredHeight: contentHeight
-								contactMenuVisible: false
-								Control.ScrollBar.vertical.visible: false
-								initialHeadersVisible: false
-								displayNameCapitalization: false
-								searchBarText: searchBar.text
-								sourceFlags: LinphoneEnums.MagicSearchSource.All
-								hideListProxy: contactList.model
-								onContactClicked: (contact) => {
-									mainItem.contactClicked(contact)
-								}
-							}
-						}
-						Item {
-							Layout.fillHeight: true
 						}
 					}
 				}

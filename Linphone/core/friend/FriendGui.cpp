@@ -26,11 +26,13 @@ DEFINE_ABSTRACT_OBJECT(FriendGui)
 FriendGui::FriendGui(QObject *parent) : QObject(parent) {
 	mustBeInMainThread(getClassName());
 	mCore = FriendCore::create(nullptr);
+	connect(mCore.get(), &FriendCore::isStoredChanged, this, &FriendGui::isStoredChanged);
 }
 FriendGui::FriendGui(QSharedPointer<FriendCore> core) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;
 	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
+	connect(mCore.get(), &FriendCore::isStoredChanged, this, &FriendGui::isStoredChanged);
 }
 
 FriendGui::~FriendGui() {
@@ -42,4 +44,8 @@ void FriendGui::createContact(const QString &address) {
 
 FriendCore *FriendGui::getCore() const {
 	return mCore.get();
+}
+
+bool FriendGui::getIsStored() {
+	return mCore ? mCore->getIsStored() : false;
 }

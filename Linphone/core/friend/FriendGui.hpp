@@ -29,6 +29,7 @@ class FriendGui : public QObject, public AbstractObject {
 	Q_OBJECT
 
 	Q_PROPERTY(FriendCore *core READ getCore CONSTANT)
+	Q_PROPERTY(bool isStored READ getIsStored NOTIFY isStoredChanged)
 
 public:
 	FriendGui(QObject *parent = nullptr);
@@ -37,6 +38,12 @@ public:
 	FriendCore *getCore() const;
 	Q_INVOKABLE void createContact(const QString &address);
 	QSharedPointer<FriendCore> mCore;
+
+	bool getIsStored();
+signals:
+	void isStoredChanged();
+
+public:
 	DECLARE_ABSTRACT_OBJECT
 };
 

@@ -824,8 +824,6 @@ void CallCore::findRemoteLdapFriend(QSharedPointer<CallCore> me) {
 	auto linphoneSearch = CoreModel::getInstance()->getCore()->createMagicSearch();
 	linphoneSearch->setLimitedSearch(true);
 	mLdapMagicSearchModel = Utils::makeQObject_ptr<MagicSearchModel>(linphoneSearch);
-	mLdapMagicSearchModel->setSourceFlags((int)LinphoneEnums::MagicSearchSource::LdapServers);
-	mLdapMagicSearchModel->setAggregationFlag(LinphoneEnums::MagicSearchAggregation::Friend);
 	mLdapMagicSearchModel->setSelf(mLdapMagicSearchModel);
 	mLdapMagicSearchModelConnection = QSharedPointer<SafeConnection<CallCore, MagicSearchModel>>(
 	    new SafeConnection<CallCore, MagicSearchModel>(me, mLdapMagicSearchModel), &QObject::deleteLater);
@@ -845,5 +843,6 @@ void CallCore::findRemoteLdapFriend(QSharedPointer<CallCore> me) {
 			    });
 		    }
 	    });
-	mLdapMagicSearchModel->search(mRemoteUsername);
+	mLdapMagicSearchModel->search(mRemoteAddress, (int)LinphoneEnums::MagicSearchSource::LdapServers,
+	                              LinphoneEnums::MagicSearchAggregation::Friend, -1);
 }

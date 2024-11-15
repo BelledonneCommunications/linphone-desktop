@@ -11,13 +11,14 @@ FocusScope {
 	property int textInputWidth: 350 * DefaultStyle.dp
 	property color borderColor: "transparent"
 	property color focusedBorderColor: DefaultStyle.main2_500main
-	property string text: textField.text
+	property string text: textField.searchText
 	property bool magnifierVisible: true
 	property var validator: RegularExpressionValidator{}
 	property Control.Popup numericPadPopup
 	property alias numericPadButton: dialerButton
 	readonly property bool hasActiveFocus: textField.activeFocus
 	property alias color: backgroundItem.color
+	property bool delaySearch: true	// Wait some idle time after typing to start searching
 	
 	signal openNumericPadRequested()// Useful for redirection before displaying numeric pad.
 	
@@ -62,6 +63,9 @@ FocusScope {
 		anchors.leftMargin: magnifier.visible ? 0 : 10 * DefaultStyle.dp
 		anchors.right: clearTextButton.left
 		anchors.verticalCenter: parent.verticalCenter
+		
+		property string searchText
+		
 		focus: true
 		placeholderText: mainItem.placeholderText
 		placeholderTextColor: mainItem.placeholderTextColor
@@ -75,6 +79,7 @@ FocusScope {
 		color: DefaultStyle.main2_600
 		selectByMouse: true
 		validator: mainItem.validator
+		onTextChanged: mainItem.delaySearch ? delayTimer.restart() : searchText = text
 		background: Item {
 			opacity: 0.
 		}
@@ -82,6 +87,12 @@ FocusScope {
 			visible: textField.cursorVisible
 			color: DefaultStyle.main2_500main
 			width: 1 * DefaultStyle.dp
+		}
+		Timer{
+			id: delayTimer
+			interval: 300
+			repeat: false
+			onTriggered: textField.searchText = textField.text
 		}
 	}
 	Button {

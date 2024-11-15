@@ -171,8 +171,8 @@ Item {
 							if (text.length != 0) listPopup.open()
 							else listPopup.close()
 						}
-						KeyNavigation.down: contactList.count > 0 ? contactList : contactList.footerItem
-						KeyNavigation.up: contactList.footerItem
+						KeyNavigation.down: contactLoader.item?.count > 0 || !contactLoader.item?.footerItem? contactLoader.item : contactLoader.item?.footerItem
+						KeyNavigation.up: contactLoader.item?.footerItem ? contactLoader.item?.footerItem : contactLoader.item
 						
 						component MagicSearchButton: Button {
 							id: button
@@ -196,13 +196,13 @@ Item {
 							id: listPopup
 							width: magicSearchBar.width
 							property int maxHeight: 400 * DefaultStyle.dp
-							property bool displayScrollbar: contactList.contentHeight + topPadding + bottomPadding> maxHeight
-							height: Math.min(contactList.contentHeight + topPadding + bottomPadding, maxHeight)
+							property bool displayScrollbar: contactLoader.item?.contentHeight + topPadding + bottomPadding> maxHeight
+							height: Math.min(contactLoader.item?.contentHeight + topPadding + bottomPadding, maxHeight)
 							y: magicSearchBar.height
 							// closePolicy: Popup.NoAutoClose
 							topPadding: 20 * DefaultStyle.dp
 							bottomPadding: 20 * DefaultStyle.dp
-							rightPadding: 20 * DefaultStyle.dp
+							rightPadding: 10 * DefaultStyle.dp
 							leftPadding: 20 * DefaultStyle.dp
 							
 							background: Item {
@@ -213,7 +213,7 @@ Item {
 									color: DefaultStyle.grey_0
 									anchors.fill: parent
 									border.color: DefaultStyle.main1_500_main
-									border.width: contactList.activeFocus ? 2 : 0
+									border.width: contactLoader.item?.activeFocus ? 2 : 0
 									
 								}
 								MultiEffect {
@@ -237,125 +237,138 @@ Item {
 									
 								}
 							}
-							contentItem: ContactListView {
-								id: contactList
-								visible: magicSearchBar.text.length != 0
-								Layout.preferredHeight: contentHeight
+							contentItem: Loader{
+								// This is a hack for an incomprehensible behavior on sections title where they doesn't match with their delegate and can be unordered after resetting models.
+								id: contactLoader
 								Layout.fillWidth: true
-								Layout.rightMargin: 5 * DefaultStyle.dp
-								initialHeadersVisible: false
-								contactMenuVisible: false
-								actionLayoutVisible: true
-								selectionEnabled: false
-								showDefaultAddress: true
-								showLdapContacts: true
-								Control.ScrollBar.vertical: scrollbar
-								searchText: magicSearchBar.text
-								
-								Keys.onPressed: (event) => {
-									if(event.key == Qt.Key_Down){
-										if(contactList.currentIndex == contactList.count -1) {
-											contactList.currentIndex = -1
-											contactList.footerItem.forceActiveFocus()
-											event.accepted = true
-										}
-									} else if(event.key == Qt.Key_Up){
-										if(contactList.currentIndex <= 0) {
-											contactList.currentIndex = -1
-											contactList.footerItem.forceActiveFocus()
-											event.accepted = true
-										}
-									}
+								Layout.fillHeight: true
+								property bool deactivate: false
+								active: !deactivate && magicSearchBar.text != ''
+								property string t: magicSearchBar.text
+								onTChanged: {
+									contactLoader.deactivate = true
+									Qt.callLater(function(){contactLoader.deactivate=false})
 								}
-								header: Text {
-									visible: contactList.count > 0
-									text: qsTr("Contact")
-									color: DefaultStyle.main2_500main
-									font {
-										pixelSize: 13 * DefaultStyle.dp
-										weight: 700 * DefaultStyle.dp
-									}
-								}
-								footer:  FocusScope{
-									id: suggestionFocusScope
-									width: contactList.width
-									height: visible ? content.implicitHeight : 0
-									onActiveFocusChanged: if(activeFocus) contactList.positionViewAtEnd()
-									visible: !contactList.haveAddress(suggestionText.text)
-									Rectangle{
-										anchors.left: parent.left
-										anchors.right: parent.right
-										anchors.bottom: parent.bottom
-										height: suggestionRow.implicitHeight
-										color: suggestionFocusScope.activeFocus ? DefaultStyle.numericPadPressedButtonColor : 'transparent'
-									}
-									ColumnLayout {
-										id: content
-										anchors.fill: parent
-										anchors.rightMargin: 5 * DefaultStyle.dp
-										
-										spacing: 10 * DefaultStyle.dp			
-										Text {
-											text: qsTr("Suggestion")
-											color: DefaultStyle.main2_500main
-											font {
-												pixelSize: 13 * DefaultStyle.dp
-												weight: 700 * DefaultStyle.dp
-											}
-										}
-										
-										Keys.onPressed: (event) => {
-											if(contactList.count <= 0) return;
-											if(event.key == Qt.Key_Down){
-												contactList.currentIndex = 0
+								//-------------------------------------------------------------
+								sourceComponent: ContactListView {
+									id: contactList
+									visible: magicSearchBar.text.length != 0
+									Layout.preferredHeight: item?.contentHeight
+									Layout.fillWidth: true
+									itemsRightMargin: 5 * DefaultStyle.dp	//(Actions have already 10 of margin)
+									showInitials: false
+									showContactMenu: false
+									showActions: true
+									showFavorites: false
+									selectionEnabled: false
+									showDefaultAddress: true
+									hideSuggestions: true
+									
+									sectionsPixelSize: 13 * DefaultStyle.dp
+									sectionsWeight: 700 * DefaultStyle.dp
+									sectionsSpacing: 5 * DefaultStyle.dp
+									
+									Control.ScrollBar.vertical: scrollbar
+									searchBarText: magicSearchBar.text
+									
+									Keys.onPressed: (event) => {
+										if(event.key == Qt.Key_Down){
+											if(contactList.currentIndex == contactList.count -1) {
+												contactList.currentIndex = -1
+												contactList.footerItem.forceActiveFocus()
 												event.accepted = true
-											} else if(event.key == Qt.Key_Up){
-												contactList.currentIndex = contactList.count - 1
+											}
+										} else if(event.key == Qt.Key_Up){
+											if(contactList.currentIndex <= 0) {
+												contactList.currentIndex = -1
+												contactList.footerItem.forceActiveFocus()
 												event.accepted = true
 											}
 										}
-										RowLayout {
-											id: suggestionRow
-											spacing: 10 * DefaultStyle.dp
+									}
+									
+									footer:  FocusScope{
+										id: suggestionFocusScope
+										width: contactList.width
+										height: visible ? content.implicitHeight : 0
+										onActiveFocusChanged: if(activeFocus) contactList.positionViewAtEnd()
+										visible: !contactList.haveAddress(suggestionText.text)
+										Rectangle{
+											anchors.left: parent.left
+											anchors.right: parent.right
+											anchors.bottom: parent.bottom
+											height: suggestionRow.implicitHeight
+											color: suggestionFocusScope.activeFocus ? DefaultStyle.numericPadPressedButtonColor : 'transparent'
+										}
+										ColumnLayout {
+											id: content
+											anchors.fill: parent
+											anchors.leftMargin: 5 * DefaultStyle.dp
+											anchors.rightMargin: 15 * DefaultStyle.dp
 											
-											Avatar {
-												Layout.preferredWidth: 45 * DefaultStyle.dp
-												Layout.preferredHeight: 45 * DefaultStyle.dp
-												_address: magicSearchBar.text
-											}
+											spacing: 10 * DefaultStyle.dp			
 											Text {
-												id: suggestionText
-												property var urlObj: UtilsCpp.interpretUrl(magicSearchBar.text)
-												text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(urlObj?.value) : urlObj?.value
+												text: qsTr("Suggestion")
+												color: DefaultStyle.main2_500main
 												font {
-													pixelSize: 12 * DefaultStyle.dp
-													weight: 300 * DefaultStyle.dp
+													pixelSize: 13 * DefaultStyle.dp
+													weight: 700 * DefaultStyle.dp
 												}
 											}
-											Item {
-												Layout.fillWidth: true
-											}
-											MagicSearchButton {
-												id: callButton
-												Layout.preferredWidth: 45 * DefaultStyle.dp
-												Layout.preferredHeight: 45 * DefaultStyle.dp
-												icon.source: AppIcons.phone
-												focus: true
-												onClicked: {
-													UtilsCpp.createCall(magicSearchBar.text)
-													magicSearchBar.clearText()
+											
+											Keys.onPressed: (event) => {
+												if(contactList.count <= 0) return;
+												if(event.key == Qt.Key_Down){
+													contactList.currentIndex = 0
+													event.accepted = true
+												} else if(event.key == Qt.Key_Up){
+													contactList.currentIndex = contactList.count - 1
+													event.accepted = true
 												}
-												KeyNavigation.right: chatButton
-												KeyNavigation.left: chatButton
 											}
-											MagicSearchButton {
-												id: chatButton
-												visible: !SettingsCpp.disableChatFeature
-												Layout.preferredWidth: 45 * DefaultStyle.dp
-												Layout.preferredHeight: 45 * DefaultStyle.dp
-												icon.source: AppIcons.chatTeardropText
-												KeyNavigation.right: callButton
-												KeyNavigation.left: callButton
+											RowLayout {
+												id: suggestionRow
+												spacing: 10 * DefaultStyle.dp
+												
+												Avatar {
+													Layout.preferredWidth: 45 * DefaultStyle.dp
+													Layout.preferredHeight: 45 * DefaultStyle.dp
+													_address: magicSearchBar.text
+												}
+												Text {
+													id: suggestionText
+													property var urlObj: UtilsCpp.interpretUrl(magicSearchBar.text)
+													text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(urlObj?.value) : urlObj?.value
+													font {
+														pixelSize: 12 * DefaultStyle.dp
+														weight: 300 * DefaultStyle.dp
+													}
+												}
+												Item {
+													Layout.fillWidth: true
+												}
+												MagicSearchButton {
+													id: callButton
+													Layout.preferredWidth: 45 * DefaultStyle.dp
+													Layout.preferredHeight: 45 * DefaultStyle.dp
+													icon.source: AppIcons.phone
+													focus: true
+													onClicked: {
+														UtilsCpp.createCall(magicSearchBar.text)
+														magicSearchBar.clearText()
+													}
+													KeyNavigation.right: chatButton
+													KeyNavigation.left: chatButton
+												}
+												MagicSearchButton {
+													id: chatButton
+													visible: !SettingsCpp.disableChatFeature
+													Layout.preferredWidth: 45 * DefaultStyle.dp
+													Layout.preferredHeight: 45 * DefaultStyle.dp
+													icon.source: AppIcons.chatTeardropText
+													KeyNavigation.right: callButton
+													KeyNavigation.left: callButton
+												}
 											}
 										}
 									}

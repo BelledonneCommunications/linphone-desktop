@@ -37,17 +37,14 @@ public:
 	MagicSearchModel(const std::shared_ptr<linphone::MagicSearch> &data, QObject *parent = nullptr);
 	~MagicSearchModel();
 
-	void search(QString filter);
-	void setSourceFlags(int flags);
-	void setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag);
+	void search(QString filter, int sourceFlags, LinphoneEnums::MagicSearchAggregation aggregation, int maxResults);
 
-	int mSourceFlags = (int)linphone::MagicSearch::Source::All;
-	LinphoneEnums::MagicSearchAggregation mAggregationFlag = LinphoneEnums::MagicSearchAggregation::None;
+	int getMaxResults() const;
+	void setMaxResults(int maxResults);
 	QString mLastSearch;
 
 signals:
-	void sourceFlagsChanged(int sourceFlags);
-	void aggregationFlagChanged(LinphoneEnums::MagicSearchAggregation aggregationFlag);
+	void maxResultsChanged(int maxResults);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

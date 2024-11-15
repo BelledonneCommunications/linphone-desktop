@@ -10,7 +10,7 @@ FocusScope{
 	id: mainItem
 	
 	property string placeHolderText: qsTr("Rechercher des contacts")
-	property list<string> selectedParticipants: suggestionList.selectedContacts
+	property list<string> selectedParticipants//: contactLoader.item ? contactLoader.item.selectedContacts
 	property int selectedParticipantsCount: selectedParticipants.length
 	property ConferenceInfoGui conferenceInfoGui
 	property color searchBarColor: DefaultStyle.grey_100
@@ -30,7 +30,7 @@ FocusScope{
 			Layout.preferredHeight: contentHeight
 			Layout.maximumHeight: mainItem.height / 3
 			width: mainItem.width
-			model: suggestionList.selectedContacts
+			model: mainItem.selectedParticipants
 			clip: true
 			focus: participantList.count > 0
 			Keys.onPressed: (event) => {
@@ -40,7 +40,7 @@ FocusScope{
 			}
 			delegate: FocusScope {
 				height: 56 * DefaultStyle.dp
-				width: participantList.width - scrollbar.implicitWidth - 12 * DefaultStyle.dp
+				width: participantList.width - scrollbar.implicitWidth - 28 * DefaultStyle.dp
 				RowLayout {
 					anchors.fill: parent
 					spacing: 10 * DefaultStyle.dp
@@ -67,7 +67,7 @@ FocusScope{
 						icon.height: 24 * DefaultStyle.dp
 						focus: true
 						contentImageColor: DefaultStyle.main1_500_main
-						onClicked: suggestionList.removeSelectedContactByAddress(modelData)
+						onClicked: if(contactLoader.item) contactLoader.item.removeSelectedContactByAddress(modelData)
 					}
 				}
 			}
@@ -83,7 +83,7 @@ FocusScope{
 			}
 		}
 		SearchBar {
-			id: searchbar
+			id: searchBar
 			Layout.fillWidth: true
 			Layout.topMargin: 6 * DefaultStyle.dp
 			Layout.rightMargin: 28 * DefaultStyle.dp
@@ -95,86 +95,49 @@ FocusScope{
 			KeyNavigation.up: participantList.count > 0
 								? participantList
 								: nextItemInFocusChain(false)
-			KeyNavigation.down: contactList
+			KeyNavigation.down: contactLoader.item
 		}
-		Flickable {
-			Layout.fillWidth: true
-			Layout.fillHeight: true
-			contentWidth: width
-			contentHeight: content.height
-			clip: true
-			Control.ScrollBar.vertical: ScrollBar {
-				id: contactsScrollBar
-				active: true
-				interactive: true
-				policy: Control.ScrollBar.AsNeeded
-				anchors.top: parent.top
-				anchors.bottom: parent.bottom
-				anchors.right: parent.right
-				anchors.rightMargin: 8 * DefaultStyle.dp
+		ColumnLayout {
+			id: content
+			spacing: 15 * DefaultStyle.dp
+			Text {
+				visible: !contactLoader.item?.loading && contactLoader.item?.count === 0
+				Layout.alignment: Qt.AlignHCenter
+				Layout.topMargin: 137 * DefaultStyle.dp
+				text: qsTr("Aucun contact%1").arg(searchBar.text.length !== 0 ? " correspondant" : "")
+				font {
+					pixelSize: 16 * DefaultStyle.dp
+					weight: 800 * DefaultStyle.dp
+				}
 			}
-			ColumnLayout {
-				id: content
-				anchors.left: parent.left
-				anchors.right: parent.right
-				anchors.rightMargin: contactsScrollBar.implicitWidth + 12 * DefaultStyle.dp
-				Text {
-					Layout.topMargin: 6 * DefaultStyle.dp
-					text: qsTr("Contacts")
-					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
-					}
+			Loader{
+			// This is a hack for an incomprehensible behavior on sections title where they doesn't match with their delegate and can be unordered after resetting models.
+				id: contactLoader
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+				property string t: searchBar.text
+				onTChanged: {
+					contactLoader.active = false
+					Qt.callLater(function(){contactLoader.active=true})
 				}
-				ContactListView {
+				//-------------------------------------------------------------
+				sourceComponent: ContactListView{
 					id: contactList
-					visible: contentHeight > 0 || searchbar.text.length > 0
-					Layout.fillWidth: true
-					// Layout.fillHeight: true
-					Layout.topMargin: 8 * DefaultStyle.dp
-					Layout.preferredHeight: contentHeight
-					multiSelectionEnabled: true
-					contactMenuVisible: false
-					confInfoGui: mainItem.conferenceInfoGui
-					searchBarText: searchbar.text
-					searchOnInitialization: true
-					onContactAddedToSelection: (address) => {
-						suggestionList.addContactToSelection(address)
-					}
-					onContactRemovedFromSelection: (address) => suggestionList.removeSelectedContactByAddress(address)
-					Control.ScrollBar.vertical.visible: false
-				}
-				Text {
-					Layout.topMargin: 6 * DefaultStyle.dp
-					text: qsTr("Suggestions")
-					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
-					}
-				}
-				ContactListView {
-					id: suggestionList
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					Layout.preferredHeight: contentHeight
-					Control.ScrollBar.vertical.visible: false
-					contactMenuVisible: false
-					searchBarText: searchbar.text
-					sourceFlags: LinphoneEnums.MagicSearchSource.All
+					itemsRightMargin: 28 * DefaultStyle.dp
 					multiSelectionEnabled: true
-					displayNameCapitalization: false
-					hideListProxy: contactList.model
+					showContactMenu: false
+					confInfoGui: mainItem.conferenceInfoGui
+					selectedContacts: mainItem.selectedParticipants
+					onSelectedContactsChanged: Qt.callLater(function(){mainItem.selectedParticipants = selectedContacts})
+					searchBarText: searchBar.text
 					onContactAddedToSelection: (address) => {
 						contactList.addContactToSelection(address)
-						participantList.positionViewAtEnd()
 					}
 					onContactRemovedFromSelection: (address) => contactList.removeSelectedContactByAddress(address)
 				}
 			}
 		}
-
-		// Item {
-		// 	Layout.fillHeight: true
-		// }
 	}
 }

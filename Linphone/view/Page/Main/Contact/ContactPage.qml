@@ -20,8 +20,7 @@ AbstractMainPage {
 
 	onVisibleChanged: if (!visible) {
 		rightPanelStackView.clear()
-		contactList.currentIndex = -1
-		favoriteList.currentIndex = -1
+		if(contactLoader.item) contactLoader.item.currentIndex = -1
 	}
 
 	onSelectedContactChanged: {
@@ -52,13 +51,8 @@ AbstractMainPage {
 
 	// rightPanelStackView.initialItem: contactDetail
 	
-	showDefaultItem: rightPanelStackView.depth == 0 && leftPanelNoItemText.visible && searchBar.text.length === 0
+	showDefaultItem: rightPanelStackView.depth == 0 && contactLoader.item?.count === 0 && searchBar.text.length === 0
 	
-	MagicSearchProxy {
-		id: allFriends
-		showLdapContacts: SettingsCpp.syncLdapContacts
-	}
-
 	function deleteContact(contact) {
 		if (!contact) return
 		var mainWin = UtilsCpp.getMainWindow()
@@ -211,169 +205,59 @@ AbstractMainPage {
 			spacing: 38 * DefaultStyle.dp
 			SearchBar {
 				id: searchBar
-				visible: contactList.count != 0 || text.length !== 0
+				visible: !contactLoader.item || contactLoader.item.loading || contactLoader.item.count != 0 || text.length !== 0
 				Layout.leftMargin: leftPanel.leftMargin
 				Layout.rightMargin: leftPanel.rightMargin
 				Layout.topMargin: 18 * DefaultStyle.dp
 				Layout.fillWidth: true
 				placeholderText: qsTr("Rechercher un contact")
 				KeyNavigation.up: createContactButton
-				KeyNavigation.down: favoriteList.contentHeight > 0 ? favoriteExpandButton : contactExpandButton
+				KeyNavigation.down: contactLoader.item
 			}
-			
-			RowLayout {
-				Flickable {
-					id: listLayout
-					contentWidth: width
-					contentHeight: content.height
-					clip: true
-					Control.ScrollBar.vertical: contactsScrollbar
+			ColumnLayout {
+				id: content
+				spacing: 15 * DefaultStyle.dp
+				Text {
+					visible: contactLoader.item && !contactLoader.item.loading && contactLoader.item.count === 0
+					Layout.alignment: Qt.AlignHCenter
+					Layout.topMargin: 137 * DefaultStyle.dp
+					text: qsTr("Aucun contact%1").arg(searchBar.text.length !== 0 ? " correspondant" : "")
+					font {
+						pixelSize: 16 * DefaultStyle.dp
+						weight: 800 * DefaultStyle.dp
+					}
+				}
+				Loader{
+				// This is a hack for an incomprehensible behavior on sections title where they doesn't match with their delegate and can be unordered after resetting models.
+					id: contactLoader
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-
-					ColumnLayout {
-						id: content
-						width: parent.width
-						spacing: 15 * DefaultStyle.dp
-						Text {
-							id: leftPanelNoItemText
-							visible: contactList.count === 0
-							Layout.alignment: Qt.AlignHCenter
-							Layout.topMargin: 137 * DefaultStyle.dp
-							text: qsTr("Aucun contact%1").arg(searchBar.text.length !== 0 ? " correspondant" : "")
-							font {
-								pixelSize: 16 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
-							}
+					Layout.leftMargin: 45 * DefaultStyle.dp
+					property string t: searchBar.text
+					active: leftPanel.visible
+					onTChanged: {
+						contactLoader.active = false
+						Qt.callLater(function(){contactLoader.active=true})
+					}
+					//-------------------------------------------------------------
+					sourceComponent: ContactListView{
+						id: contactList
+						searchBarText: searchBar.text
+						hideSuggestions: true
+						sourceFlags: LinphoneEnums.MagicSearchSource.Friends | LinphoneEnums.MagicSearchSource.FavoriteFriends | LinphoneEnums.MagicSearchSource.LdapServers
+						
+						onSelectedContactChanged: {
+							mainItem.selectedContact = selectedContact
 						}
-						ColumnLayout {
-							visible: favoriteList.contentHeight > 0
-							onVisibleChanged: if (visible && !favoriteList.visible) favoriteList.visible = true
-							Layout.leftMargin: leftPanel.leftMargin
-							Layout.rightMargin: leftPanel.rightMargin
-							spacing: 18 * DefaultStyle.dp
-							RowLayout {
-								spacing: 0
-								Text {
-									text: qsTr("Favoris")
-									font {
-										pixelSize: 16 * DefaultStyle.dp
-										weight: 800 * DefaultStyle.dp
-									}
-								}
-								Item {
-									Layout.fillWidth: true
-								}
-								Button {
-									id: favoriteExpandButton
-									background: Item{}
-									icon.source: favoriteList.visible ? AppIcons.upArrow :						  AppIcons.downArrow
-									Layout.preferredWidth: 24 * DefaultStyle.dp
-									Layout.preferredHeight: 24 * DefaultStyle.dp
-									icon.width: 24 * DefaultStyle.dp
-									icon.height: 24 * DefaultStyle.dp
-									onClicked: favoriteList.visible = !favoriteList.visible
-									KeyNavigation.up: searchBar
-									KeyNavigation.down: favoriteList
-								}
-							}
-							ContactListView{
-								id: favoriteList
-								hoverEnabled: mainItem.leftPanelEnabled
-								highlightFollowsCurrentItem: true
-								Layout.fillWidth: true
-								Layout.preferredHeight: contentHeight
-								Control.ScrollBar.vertical.visible: false
-								showFavoritesOnly: true
-								searchOnInitialization: true
-								contactMenuVisible: true
-								searchBarText: searchBar.text
-								listProxy: allFriends
-								onSelectedContactChanged: {
-									if (selectedContact) {
-										contactList.currentIndex = -1
-									}
-									mainItem.selectedContact = selectedContact
-								}
-								onContactDeletionRequested: (contact) => {
-									mainItem.deleteContact(contact)
-								}
-							}
+						onContactDeletionRequested: (contact) => {
+							mainItem.deleteContact(contact)
 						}
-						ColumnLayout {
-							visible: contactList.contentHeight > 0
-							onVisibleChanged: if (visible && !contactList.visible) contactList.visible = true
-							Layout.leftMargin: leftPanel.leftMargin
-							Layout.rightMargin: leftPanel.rightMargin
-							spacing: 16 * DefaultStyle.dp
-							RowLayout {
-								spacing: 0
-								Text {
-									text: qsTr("Contacts")
-									font {
-										pixelSize: 16 * DefaultStyle.dp
-										weight: 800 * DefaultStyle.dp
-									}
-								}
-								Item {
-									Layout.fillWidth: true
-								}
-								Button {
-									id: contactExpandButton
-									background: Item{}
-									icon.source: contactList.visible ? AppIcons.upArrow : AppIcons.downArrow
-									Layout.preferredWidth: 24 * DefaultStyle.dp
-									Layout.preferredHeight: 24 * DefaultStyle.dp
-									icon.width: 24 * DefaultStyle.dp
-									icon.height: 24 * DefaultStyle.dp
-									onClicked: contactList.visible = !contactList.visible
-									KeyNavigation.up: favoriteList.visible ? favoriteList : searchBar
-									KeyNavigation.down: contactList
-								}
-							}
-							ContactListView{
-								id: contactList
-								Layout.fillWidth: true
-								Layout.preferredHeight: contentHeight
-								Control.ScrollBar.vertical.visible: false
-								hoverEnabled: mainItem.leftPanelEnabled
-								contactMenuVisible: true
-								searchOnInitialization: true
-								highlightFollowsCurrentItem: true
-								searchBarText: searchBar.text
-								listProxy: allFriends
-								onCountChanged: {
-									if (initialFriendToDisplay.length !== 0) {
-										if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
-									}
-								}
-								onSelectedContactChanged: {
-									if (selectedContact) {
-										favoriteList.currentIndex = -1
-									}
-									mainItem.selectedContact = selectedContact
-								}
-								onContactDeletionRequested: (contact) => {
-									mainItem.deleteContact(contact)
-								}
-								Connections {
-									target: contactList.model
-									function onFriendCreated(index) {
-										contactList.currentIndex = index
-									}
-								}
+						onCountChanged: {
+							if (initialFriendToDisplay.length !== 0) {
+								if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
 							}
 						}
 					}
-				}
-				ScrollBar {
-					id: contactsScrollbar
-					Layout.fillHeight: true
-					Layout.rightMargin: 8 * DefaultStyle.dp
-					height: listLayout.height
-					active: true
-					interactive: true
-					policy: Control.ScrollBar.AsNeeded
 				}
 			}
 		}
@@ -493,8 +377,6 @@ AbstractMainPage {
 						spacing: 0
 						Text {
 							text: contactDetail.contactName
-							Layout.fillWidth: true
-							maximumLineCount: 1
 							font {
 								pixelSize: 29 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
@@ -579,6 +461,7 @@ AbstractMainPage {
 										model:  mainItem.selectedContact ? mainItem.selectedContact.core.allAddresses : []
 									}
 									delegate: Item {
+										property var listViewModelData: modelData
 										width: addrList.width
 										height: 46 * DefaultStyle.dp
 
@@ -595,7 +478,7 @@ AbstractMainPage {
 													Layout.fillWidth: true
 													Text {
 														Layout.fillWidth: true
-														text: modelData.label
+														text: listViewModelData.label
 														font {
 															pixelSize: 13 * DefaultStyle.dp
 															weight: 700 * DefaultStyle.dp
@@ -603,7 +486,7 @@ AbstractMainPage {
 													}
 													Text {
 														Layout.fillWidth: true
-														property string _text: modelData.address
+														property string _text: listViewModelData.address
 														text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
 														font {
 															pixelSize: 14 * DefaultStyle.dp
@@ -624,7 +507,7 @@ AbstractMainPage {
 													icon.width: 24 * DefaultStyle.dp
 													icon.height: 24 * DefaultStyle.dp
 													onClicked: {
-														UtilsCpp.createCall(modelData.address)
+														UtilsCpp.createCall(listViewModelData.address)
 													}
 												}
 											}
@@ -761,16 +644,17 @@ AbstractMainPage {
 										id: deviceDelegate
 										width: deviceList.width
 										height: 30 * DefaultStyle.dp
+										property var listViewModelData: modelData
 										property var callObj
 										property CallGui deviceCall: callObj ? callObj.value : null
-										property string deviceName: modelData.name.length != 0 ? modelData.name : qsTr("Appareil sans nom")
+										property string deviceName: listViewModelData.name.length != 0 ? listViewModelData.name : qsTr("Appareil sans nom")
 										Text {
 											text: deviceDelegate.deviceName
 											font.pixelSize: 14 * DefaultStyle.dp
 										}
 										Item{Layout.fillWidth: true}
 										Image{
-											visible: modelData.securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
+											visible: listViewModelData.securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 											source: AppIcons.trusted
 											width: 22 * DefaultStyle.dp
 											height: 22 * DefaultStyle.dp
@@ -778,7 +662,7 @@ AbstractMainPage {
 										
 										Button {
 											Layout.preferredHeight: 30 * DefaultStyle.dp
-											visible: modelData.securityLevel != LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
+											visible: listViewModelData.securityLevel != LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 											color: DefaultStyle.main1_100
 											icon.source: AppIcons.warningCircle
 											icon.height: 14 * DefaultStyle.dp
@@ -794,12 +678,12 @@ AbstractMainPage {
 											onClicked: {
 												if (SettingsCpp.getDisplayDeviceCheckConfirmation()) {
 													verifyDevicePopup.deviceName = deviceDelegate.deviceName
-													verifyDevicePopup.deviceAddress = modelData.address
+													verifyDevicePopup.deviceAddress = listViewModelData.address
 													verifyDevicePopup.open()
 												}
 												else {
-													UtilsCpp.createCall(modelData.address, {}, LinphoneEnums.MediaEncryption.Zrtp)
-													parent.callObj = UtilsCpp.getCallByAddress(modelData.address)
+													UtilsCpp.createCall(listViewModelData.address, {}, LinphoneEnums.MediaEncryption.Zrtp)
+													parent.callObj = UtilsCpp.getCallByAddress(listViewModelData.address)
 												}
 											}
 										}

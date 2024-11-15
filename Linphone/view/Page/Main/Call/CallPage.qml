@@ -55,7 +55,7 @@ AbstractMainPage {
 
 	onNoItemButtonPressed: goToNewCall()
 
-	showDefaultItem: listStackView.currentItem && listStackView.currentItem.objectName == "historyListItem" && listStackView.currentItem.listView.count === 0
+	showDefaultItem: listStackView.currentItem && listStackView.currentItem.objectName == "historyListItem" && listStackView.currentItem.listView.count === 0 || false
 
 	function goToNewCall() {
 		if (listStackView.currentItem && listStackView.currentItem.objectName != "newCallItem") listStackView.push(newCallItem)

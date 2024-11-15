@@ -22,6 +22,7 @@
 #define MAGIC_SEARCH_LIST_H_
 
 #include "../proxy/ListProxy.hpp"
+#include "core/friend/FriendGui.hpp"
 #include "model/search/MagicSearchModel.hpp"
 #include "tool/AbstractObject.hpp"
 #include "tool/thread/SafeConnection.hpp"
@@ -50,19 +51,24 @@ public:
 	LinphoneEnums::MagicSearchAggregation getAggregationFlag() const;
 	void setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag);
 
+	int getMaxResults() const;
+	void setMaxResults(int maxResults);
+
+	virtual QHash<int, QByteArray> roleNames() const override;
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 	int findFriendIndexByAddress(const QString &address);
 
 signals:
-	void lSearch(QString filter);
-	void lSetSourceFlags(int sourceFlags);
-	void lSetAggregationFlag(LinphoneEnums::MagicSearchAggregation aggregationFlag);
+	void
+	lSearch(QString filter, int sourceFlags, LinphoneEnums::MagicSearchAggregation aggregationFlag, int maxResults);
 
 	void sourceFlagsChanged(int sourceFlags);
 	void aggregationFlagChanged(LinphoneEnums::MagicSearchAggregation flag);
+	void maxResultsChanged(int maxResults);
 
-	void friendCreated(int index);
+	void friendCreated(int index, FriendGui *data);
+	void friendStarredChanged();
 
 	void initialized();
 
@@ -70,6 +76,7 @@ private:
 	int mSourceFlags;
 	LinphoneEnums::MagicSearchAggregation mAggregationFlag;
 	QString mSearchFilter;
+	int mMaxResults = -1;
 
 	std::shared_ptr<MagicSearchModel> mMagicSearch;
 	QSharedPointer<SafeConnection<MagicSearchList, MagicSearchModel>> mModelConnection;

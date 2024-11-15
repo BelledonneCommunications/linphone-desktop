@@ -47,6 +47,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Call/CallStatistics.qml
 	view/Control/Display/Contact/Avatar.qml
 	view/Control/Display/Contact/Contact.qml
+	view/Control/Display/Contact/ContactListItem.qml
 	view/Control/Display/Contact/ContactListView.qml
 	view/Control/Display/Contact/Voicemail.qml
 	view/Control/Display/Meeting/MeetingListView.qml

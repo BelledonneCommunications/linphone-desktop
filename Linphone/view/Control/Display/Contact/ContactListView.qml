@@ -7,52 +7,56 @@ import UtilsCpp 1.0
 import ConstantsCpp 1.0
 import SettingsCpp
 
+
 ListView {
 	id: mainItem
-	height: contentHeight
-	visible: contentHeight > 0
-	clip: true	
-	currentIndex: -1
-	//keyNavigationWraps: true
-	// rightMargin: 5 * DefaultStyle.dp
 
-	property bool selectionEnabled: true
-	property bool hoverEnabled: true
-	// dots popup menu
-	property bool contactMenuVisible: true
-	// call, video call etc menu
-	property bool actionLayoutVisible: false
-	property bool initialHeadersVisible: true
-	property bool displayNameCapitalization: true
-	property bool showFavoritesOnly: false
-	property bool showDefaultAddress: false
-	property bool showLdapContacts: false
+	property bool showInitials: true	// Display Initials of Display name.
+	property bool showDefaultAddress: true	// Display address below display name.
+	property bool showActions: false	// Display actions layout (call buttons)
+	property bool showContactMenu: true	// Display the dot menu for contacts.
+	property bool showFavorites: true	// Display the favorites in the header
+	property bool hideSuggestions: false	// Hide not stored contacts (not suggestions)
+	property string highlightText	// Bold characters in Display name.
+	property var sourceFlags: LinphoneEnums.MagicSearchSource.All
+	
+	property bool displayNameCapitalization: true	// Capitalize display name.
+	
+	property bool selectionEnabled: true		// Contact can be selected
+	property bool multiSelectionEnabled: false	//Multiple items can be selected.
+	property list<string> selectedContacts		// List of default address on selected contacts.
+	property FriendGui selectedContact//: model.getAt(currentIndex) || null
+		
 	property bool searchOnInitialization: false
-
-	property var listProxy: MagicSearchProxy{}
-	property alias hideListProxy: magicSearchProxy.hideListProxy
+	property bool loading: false
+	property bool pauseSearch: false // true = don't search on text change
 
 	// Model properties
 	// set searchBarText without specifying a model to bold
 	// matching names
 	property string searchBarText
-	property string searchText: searchBarText.length === 0 ? "*" : searchBarText
-	property var aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
-	property var sourceFlags: LinphoneEnums.MagicSearchSource.Friends | ((searchText.length > 0 && searchText != "*") || SettingsCpp.syncLdapContacts ? LinphoneEnums.MagicSearchSource.LdapServers : 0)
-
+	property string searchText// Binding is done on searchBarTextChanged
 	property ConferenceInfoGui confInfoGui
-
-	property bool multiSelectionEnabled: false
-	property list<string> selectedContacts
-	property int selectedContactCount: selectedContacts.length
-
-	property FriendGui selectedContact: model.getAt(currentIndex) || null
-
+	
+	property bool haveFavorites: false
+	property int sectionsPixelSize: 16 * DefaultStyle.dp
+	property int sectionsWeight: 800 * DefaultStyle.dp
+	property int sectionsSpacing: 18 * DefaultStyle.dp
+	
+	property int itemsRightMargin: 39 * DefaultStyle.dp
+	
+	signal resultsReceived()
 	signal contactStarredChanged()
 	signal contactDeletionRequested(FriendGui contact)
 	signal contactAddedToSelection(string address)
 	signal contactRemovedFromSelection(string address)
 	signal contactClicked(FriendGui contact)
+	
+	clip: true
+	highlightFollowsCurrentItem: true
+	cacheBuffer: 400
+	// Binding loop hack
+	onContentHeightChanged: Qt.callLater(function(){cacheBuffer = Math.max(0,contentHeight)})
 
 	function selectContact(address) {
 		var index = magicSearchProxy.findFriendIndexByAddress(address)
@@ -89,9 +93,75 @@ ListView {
 		return  index != -1
 	}
 	
-	onCurrentIndexChanged: selectedContact = model.getAt(currentIndex) || null
-	onCountChanged: selectedContact = model.getAt(currentIndex) || null
-	
+	onResultsReceived: {
+		loading = false
+		mainItem.positionViewAtBeginning()
+	}
+	onSearchBarTextChanged: {
+		loading = true
+		if(!pauseSearch) {
+			searchText = searchBarText.length === 0 ? "*" : searchBarText
+		}
+	}
+	onPauseSearchChanged: {
+		if(!pauseSearch){
+			searchText = searchBarText.length === 0 ? "*" : searchBarText
+		}
+	}
+	onAtYEndChanged: if(atYEnd) magicSearchProxy.displayMore()
+	keyNavigationEnabled: false
+	Keys.onPressed: (event)=> {
+		if(header.activeFocus) return;
+		if(event.key == Qt.Key_Up || event.key == Qt.Key_Down){
+			if (currentIndex == 0 && event.key == Qt.Key_Up) {
+				if( headerItem.list.count > 0) {
+					mainItem.highlightFollowsCurrentItem = false
+					currentIndex = -1
+					headerItem.list.currentIndex = headerItem.list.count -1
+					var item = headerItem.list.itemAtIndex(headerItem.list.currentIndex)
+					mainItem.selectedContact = item.searchResultItem
+					item.forceActiveFocus()
+					headerItem.updatePosition()
+					event.accepted = true;
+				}else{
+					mainItem.currentIndex = mainItem.count - 1
+					var item = itemAtIndex(mainItem.currentIndex)
+					mainItem.selectedContact = item.searchResultItem
+					item.forceActiveFocus()
+					event.accepted = true;
+				}
+			}else if(currentIndex >= mainItem.count -1 && event.key == Qt.Key_Down){
+				if( headerItem.list.count > 0) {
+					mainItem.highlightFollowsCurrentItem = false
+					mainItem.currentIndex = -1
+					headerItem.list.currentIndex = 0
+					var item = headerItem.list.itemAtIndex(headerItem.list.currentIndex)
+					mainItem.selectedContact = item.searchResultItem
+					item.forceActiveFocus()
+					headerItem.updatePosition()
+					event.accepted = true;
+				}else{
+					mainItem.currentIndex = 0
+					var item = itemAtIndex(mainItem.currentIndex)
+					mainItem.selectedContact = item.searchResultItem
+					item.forceActiveFocus()
+					event.accepted = true;
+				}
+			}else if(event.key == Qt.Key_Up){
+				mainItem.highlightFollowsCurrentItem = true
+				var item = itemAtIndex(--mainItem.currentIndex)
+				mainItem.selectedContact = item.searchResultItem
+				item.forceActiveFocus()
+				event.accepted = true;
+			}else if(event.key == Qt.Key_Down){
+				mainItem.highlightFollowsCurrentItem = true
+				var item = itemAtIndex(++mainItem.currentIndex)
+				mainItem.selectedContact = item.searchResultItem
+				item.forceActiveFocus()
+				event.accepted = true;
+			}
+		}
+	}
 	Component.onCompleted: {
 		if (confInfoGui) {
 			for(var i = 0; i < confInfoGui.core.participants.length; ++i) {
@@ -99,33 +169,7 @@ ListView {
 			}
 		}
 	}
-
-	// strange behaviour with this lines
-	// When a popup opens after clicking on a contact, the selected contact
-	// changes because we lose focus on the list
-	// onActiveFocusChanged: if(activeFocus && (!footerItem || !footerItem.activeFocus)) {
-	// 	currentIndex = 0
-	// }
-
-	model: MagicSearchProxy {
-		id: magicSearchProxy
-		searchText: mainItem.searchText
-		// This property is needed instead of playing on the delegate visibility
-		// considering its starred status. Otherwise, the row in the list still
-		// exists even if its delegate is not visible, and creates navigation issues
-		showFavoritesOnly: mainItem.showFavoritesOnly
-		aggregationFlag: mainItem.aggregationFlag
-		parentProxy: mainItem.listProxy
-		showLdapContacts: mainItem.showLdapContacts
-		sourceFlags: mainItem.sourceFlags
-		onFriendCreated: (index) => {
-			mainItem.currentIndex = index
-		}
-		onInitialized: {
-			if(mainItem.searchOnInitialization) magicSearchProxy.forceUpdate()
-		}
-	}
-
+	
 	Connections {
 		target: SettingsCpp
 		onLdapConfigChanged: {
@@ -136,255 +180,302 @@ ListView {
 
 	Control.ScrollBar.vertical: ScrollBar {
 		id: scrollbar
+		rightPadding: 8 * DefaultStyle.dp
+		topPadding: mainItem.haveFavorites ? 24 * DefaultStyle.dp : 0	// Avoid to be on top of collapse button
+		
 		active: true
 		interactive: true
-		// anchors.top: parent.top
-		// anchors.bottom: parent.bottom
-		// anchors.right: parent.right
+		policy: mainItem.contentHeight > mainItem.height ? Control.ScrollBar.AlwaysOn : Control.ScrollBar.AlwaysOff
 	}
-	Keys.onPressed: (event)=>{
-		if(event.key == Qt.Key_Tab && !mainItem.itemAtIndex(mainItem.currentIndex).activeFocus){
-			mainItem.itemAtIndex(mainItem.currentIndex).forceActiveFocus()
+	
+	model: MagicSearchProxy {
+		id: magicSearchProxy
+		searchText: mainItem.searchText
+		aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
+		sourceFlags: mainItem.sourceFlags
+					   
+		hideSuggestions: mainItem.hideSuggestions
+		initialDisplayItems: 20
+		onLocalFriendCreated: (index) => {
+			var item = itemAtIndex(index)
+			if(item){
+				mainItem.currentIndex = index
+				mainItem.selectedContact = item.searchResultItem
+				item.forceActiveFocus()
+			}
 		}
+		onInitialized: {
+			mainItem.loading = true
+			magicSearchProxy.forceUpdate()
+		}
+		onModelReset: mainItem.resultsReceived()
 	}
-	delegate: FocusScope {
-		id: itemDelegate
-		height: 56 * DefaultStyle.dp
-		width: mainItem.width
-		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
-		property var previousDisplayName: previousItem ? previousItem.core.displayName : ""
-		property var displayName: modelData.core.displayName
-
-		Connections {
-			enabled: modelData.core
-			target: modelData.core
-			function onStarredChanged() { mainItem.contactStarredChanged()}
+	
+	section.property: "isStored"
+	//section.criteria: ViewSection.FirstCharacter
+	section.delegate: Item{
+			width: mainItem.width
+			height: textItem.implicitHeight + sectionsSpacing * 2				
+			required property bool section
+			Text {
+				id: textItem
+				anchors.fill: parent
+				text: section ? qsTr("Contacts") : qsTr("Suggestions")
+				horizontalAlignment: Text.AlignLeft
+				verticalAlignment: Text.AlignVCenter
+				font {
+					pixelSize: sectionsPixelSize
+					weight: sectionsWeight
+				}
+			}
+			
 		}
-		Text {
-			id: initial
-			anchors.left: parent.left
-			visible: mainItem.initialHeadersVisible && mainItem.model.sourceFlags != LinphoneEnums.MagicSearchSource.All
-			anchors.verticalCenter: parent.verticalCenter
-			anchors.rightMargin: 15 * DefaultStyle.dp
-			verticalAlignment: Text.AlignVCenter
-			width: 20 * DefaultStyle.dp
-			opacity: (!previousItem || !previousDisplayName.toLocaleLowerCase(ConstantsCpp.DefaultLocale).startsWith(displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale))) ? 1 : 0
-			text: displayName[0]
-			color: DefaultStyle.main2_400
-			font {
-				pixelSize: 20 * DefaultStyle.dp
-				weight: 500 * DefaultStyle.dp
-				capitalization: Font.AllUppercase
-			}
-		}
-		RowLayout {
-			id: contactDelegate
-			anchors.left: initial.visible ? initial.right : parent.left
-			anchors.right: parent.right
-			anchors.top: parent.top
-			anchors.bottom: parent.bottom
-			spacing: 16 * DefaultStyle.dp
-			z: 1
-			Avatar {
-				Layout.leftMargin: 5 * DefaultStyle.dp
-				Layout.preferredWidth: 45 * DefaultStyle.dp
-				Layout.preferredHeight: 45 * DefaultStyle.dp
-				contact: modelData
-			}
-			ColumnLayout {
-				spacing: 0
-				Text {
-					text: UtilsCpp.boldTextPart(itemDelegate.displayName, mainItem.searchBarText)
-					font{
-						pixelSize: mainItem.showDefaultAddress ? 16 * DefaultStyle.dp : 14 * DefaultStyle.dp
-						capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
-						weight: mainItem.showDefaultAddress ? 800 * DefaultStyle.dp : 400 * DefaultStyle.dp
-					}
-					maximumLineCount: 1
-					Layout.fillWidth: true
-				}
-				Text {
-					maximumLineCount: 1
-					visible: mainItem.showDefaultAddress
-					text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(modelData.core.defaultAddress) : modelData.core.defaultAddress
-					Layout.fillWidth: true
-					Layout.topMargin: 2 * DefaultStyle.dp
-					font {
-						weight: 300 * DefaultStyle.dp
-						pixelSize: 12 * DefaultStyle.dp
+	header: FocusScope{
+				id: headerItem
+				width: mainItem.width
+				height: favoritesContents.implicitHeight
+				property alias list: favoriteList
+				
+				// Hack because changing currentindex change focus.
+				Timer{
+					id: focusDelay
+					interval: 10
+					onTriggered: {
+						mainItem.highlightFollowsCurrentItem = !headerItem.activeFocus
 					}
 				}
-			}
-			Item{Layout.fillWidth: true}
-			RowLayout {
-				id: actionsRow
-				z: 1
-				visible: actionButtons || friendPopup.visible || mainItem.multiSelectionEnabled
-				spacing: visible ? 16 * DefaultStyle.dp : 0
-				EffectImage {
-					id: isSelectedCheck
-					// visible: mainItem.multiSelectionEnabled && (mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress) != -1)
-					visible: mainItem.multiSelectionEnabled && (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					imageSource: AppIcons.check
-					colorizationColor: DefaultStyle.main1_500_main
-					Connections {
-						target: mainItem
-						// onParticipantsChanged: isSelectedCheck.visible = mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress) != -1
-						function onSelectedContactCountChanged(){ isSelectedCheck.visible = (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)}
+				onActiveFocusChanged:focusDelay.restart()
+				//---------------------------------------------------
+				
+				function updatePosition(){
+					var item = favoriteList.itemAtIndex(favoriteList.currentIndex)
+					if( item){
+						// For debugging just in case
+						//var listPosition = item.mapToItem(favoriteList, item.x, item.y)
+						//var newPosition = favoriteList.mapToItem(mainItem, listPosition.x, listPosition.y)
+						//console.log("item pos: " +item.x + " / " +item.y)
+						//console.log("fav pos: " +favoriteList.x + " / " +favoriteList.y)
+						//console.log("fav content: " +favoriteList.contentX + " / " +favoriteList.contentY)
+						//console.log("main pos: " +mainItem.x + " / " +mainItem.y)
+						//console.log("main content: " +mainItem.contentX + " / " +mainItem.contentY)
+						//console.log("list pos: " +listPosition.x + " / " +listPosition.y)
+						//console.log("new pos: " +newPosition.x + " / " +newPosition.y)
+						//console.log("header pos: " +headerItem.x + " / " +headerItem.y)
+						//console.log("Moving to " + (headerItem.y+item.y))
+						mainItem.contentY = headerItem.y+item.y
 					}
-				}
-				RowLayout{
-					id: actionButtons
-					visible: mainItem.actionLayoutVisible
-					spacing: visible ? 10 * DefaultStyle.dp : 0
-					Button {
-						id: callButton
-						Layout.preferredWidth: 45 * DefaultStyle.dp
-						Layout.preferredHeight: 45 * DefaultStyle.dp
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
-						icon.source: AppIcons.phone
-						contentImageColor: DefaultStyle.main2_600
-						focus: visible
-						background: Rectangle {
-							anchors.fill: parent
-							radius: 40 * DefaultStyle.dp
-							color: DefaultStyle.main2_200
-						}
-						onClicked: UtilsCpp.createCall(modelData.core.defaultAddress)
-						KeyNavigation.right: chatButton
-						KeyNavigation.left: chatButton
-					}
-					Button {
-						id: chatButton
-						visible: actionButtons.visible && !SettingsCpp.disableChatFeature
-						Layout.preferredWidth: 45 * DefaultStyle.dp
-						Layout.preferredHeight: 45 * DefaultStyle.dp
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
-						icon.source: AppIcons.chatTeardropText
-						focus: visible && !callButton.visible
-						contentImageColor: DefaultStyle.main2_500main
-						background: Rectangle {
-							anchors.fill: parent
-							radius: 40 * DefaultStyle.dp
-							color: DefaultStyle.main2_200
-						}
-						KeyNavigation.right: callButton
-						KeyNavigation.left: callButton
-					}
-				}
-				PopupButton {
-					id: friendPopup
-					z: 1
-					// Layout.rightMargin: 13 * DefaultStyle.dp
-					Layout.alignment: Qt.AlignVCenter
-					Layout.rightMargin: 8 * DefaultStyle.dp
-					popup.x: 0
-					popup.padding: 10 * DefaultStyle.dp
-					hoverEnabled: mainItem.hoverEnabled
-					visible: mainItem.contactMenuVisible && (contactArea.containsMouse || hovered || popup.opened) && (!mainItem.delegateButtons || mainItem.delegateButtons.length === 0)
 					
-					popup.contentItem: ColumnLayout {
-						Button {
-							text: $modelData.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
-							background: Item{}
-							icon.source: modelData.core.starred ? AppIcons.heartFill : AppIcons.heart
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
-							spacing: 10 * DefaultStyle.dp
-							textSize: 14 * DefaultStyle.dp
-							textWeight: 400 * DefaultStyle.dp
-							textColor: DefaultStyle.main2_500main
-							contentImageColor: modelData.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
-							onClicked: {
-								modelData.core.lSetStarred(!modelData.core.starred)
-								friendPopup.close()
+				}
+				
+				ColumnLayout {
+					id: favoritesContents
+					width: parent.width
+					spacing: mainItem.haveFavorites ? sectionsSpacing : 0
+					BusyIndicator {
+						Layout.alignment: Qt.AlignCenter
+						Layout.preferredHeight: visible ? 60 * DefaultStyle.dp : 0
+						Layout.preferredWidth: 60 * DefaultStyle.dp
+						indicatorHeight: 60 * DefaultStyle.dp
+						indicatorWidth: 60 * DefaultStyle.dp
+						visible: mainItem.loading
+						indicatorColor: DefaultStyle.main1_500_main
+						
+					}
+					Item{// Do not use directly RowLayout : there is an issue where the layout doesn't update on visible
+						Layout.fillWidth: true
+						Layout.preferredHeight: mainItem.haveFavorites ? favoriteTitle.implicitHeight : 0
+						RowLayout {
+							id: favoriteTitle
+							anchors.fill: parent
+							spacing: 0
+							
+							// Need this because it can stay at 0 on display without manual relayouting (moving position, resize)
+							visible: mainItem.haveFavorites
+							onVisibleChanged: if(visible) {
+												Qt.callLater(mainItem.positionViewAtBeginning)// If not later, the view will not move to favoris at startup
+											  }
+							Text {
+								//Layout.fillHeight: true
+								text: qsTr("Favoris")
+								font {
+									pixelSize: sectionsPixelSize
+									weight: sectionsWeight
+								}
+							}
+							Item {
+								Layout.fillWidth: true
+							}
+							Button {
+								id: favoriteExpandButton
+								background: Item{}
+								icon.source: favoriteList.visible ? AppIcons.upArrow : AppIcons.downArrow
+								Layout.fillHeight: true
+								Layout.preferredWidth: height
+								//Layout.preferredWidth: 24 * DefaultStyle.dp
+								//Layout.preferredHeight: 24 * DefaultStyle.dp
+								Layout.rightMargin: 23 * DefaultStyle.dp 
+								icon.width: 24 * DefaultStyle.dp
+								icon.height: 24 * DefaultStyle.dp
+								focus: true
+								onClicked: favoriteList.visible = !favoriteList.visible
+								KeyNavigation.down: favoriteList
 							}
 						}
-						Button {
-							text: qsTr("Partager")
-							background: Item{}
-							icon.source: AppIcons.shareNetwork
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
-							spacing: 10 * DefaultStyle.dp
-							textSize: 14 * DefaultStyle.dp
-							textWeight: 400 * DefaultStyle.dp
-							textColor: DefaultStyle.main2_500main
-							onClicked: {
-								var vcard = modelData.core.getVCard()
-								var username = modelData.core.givenName + modelData.core.familyName
-								var filepath = UtilsCpp.createVCardFile(username, vcard)
-								if (filepath == "") UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création du fichier vcard a échoué"), false)
-								else mainWindow.showInformationPopup(qsTr("VCard créée"), qsTr("VCard du contact enregistrée dans %1").arg(filepath))
-								UtilsCpp.shareByEmail(qsTr("Partage de contact"), vcard, filepath)
+					}
+					ListView{
+						id: favoriteList
+						Layout.fillWidth: true
+						Layout.preferredHeight: count > 0 ? contentHeight : 0// Show full and avoid scrolling
+						
+						
+						
+						onCountChanged: mainItem.haveFavorites = count > 0
+						Keys.onPressed: (event)=> {
+							if(event.key == Qt.Key_Up || event.key == Qt.Key_Down) {
+								if (favoriteList.currentIndex == 0 && event.key == Qt.Key_Up) {
+									if( mainItem.count > 0) {
+										mainItem.highlightFollowsCurrentItem = true
+										favoriteList.currentIndex = -1
+										mainItem.currentIndex = mainItem.count-1
+										var item = mainItem.itemAtIndex(mainItem.currentIndex)
+										mainItem.selectedContact = item.searchResultItem
+										item.forceActiveFocus()
+										event.accepted = true;
+									}else{
+										favoriteList.currentIndex = favoriteList.count - 1
+										var item = itemAtIndex(favoriteList.currentIndex)
+										mainItem.selectedContact = item.searchResultItem
+										item.forceActiveFocus()
+										event.accepted = true;			
+									}
+								}else if(currentIndex >= favoriteList.count -1 && event.key == Qt.Key_Down) {
+									if( mainItem.count > 0) {
+										mainItem.highlightFollowsCurrentItem = true
+										favoriteList.currentIndex = -1
+										mainItem.currentIndex = 0
+										var item = mainItem.itemAtIndex(mainItem.currentIndex)
+										mainItem.selectedContact = item.searchResultItem
+										item.forceActiveFocus()
+										event.accepted = true;
+									}else{
+										favoriteList.currentIndex = 0
+										var item = itemAtIndex(favoriteList.currentIndex)
+										mainItem.selectedContact = item.searchResultItem
+										item.forceActiveFocus()
+										event.accepted = true;			
+									}
+								}else if(event.key == Qt.Key_Up){
+									mainItem.highlightFollowsCurrentItem = false
+									var item = itemAtIndex(--favoriteList.currentIndex)
+									mainItem.selectedContact = item.searchResultItem
+									item.forceActiveFocus()
+									headerItem.updatePosition()
+									event.accepted = true;
+								}else if(event.key == Qt.Key_Down){
+									mainItem.highlightFollowsCurrentItem = false
+									var item = itemAtIndex(++favoriteList.currentIndex)
+									mainItem.selectedContact = item.searchResultItem
+									item.forceActiveFocus()
+									headerItem.updatePosition()
+									event.accepted = true;
+								}
 							}
 						}
-						Button {
-							text: qsTr("Supprimer")
-							background: Item{}
-							icon.source: AppIcons.trashCan
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
-							spacing: 10 * DefaultStyle.dp
-							textSize: 14 * DefaultStyle.dp
-							textWeight: 400 * DefaultStyle.dp
-							textColor: DefaultStyle.danger_500main
-							contentImageColor: DefaultStyle.danger_500main
-							visible: !modelData.core.readOnly
-							onClicked: {
-								mainItem.contactDeletionRequested(modelData)
-								friendPopup.close()
+						property MagicSearchProxy proxy: MagicSearchProxy{
+							parentProxy: mainItem.model
+							showFavoritesOnly: true
+							hideSuggestions: mainItem.hideSuggestions
+						}
+						model : showFavorites && mainItem.searchBarText == '' ? proxy : []
+						delegate: ContactListItem{
+							width: favoriteList.width
+							focus: true
+							
+							searchResultItem: $modelData
+							showInitials: mainItem.showInitials
+							showDefaultAddress: mainItem.showDefaultAddress
+							showActions: mainItem.showActions
+							showContactMenu: mainItem.showContactMenu
+							highlightText: mainItem.highlightText
+							
+							displayNameCapitalization: mainItem.displayNameCapitalization
+							itemsRightMargin: mainItem.itemsRightMargin
+							selectionEnabled: mainItem.selectionEnabled
+							multiSelectionEnabled: mainItem.multiSelectionEnabled
+							selectedContacts: mainItem.selectedContacts
+							isSelected: mainItem.selectedContact &&  mainItem.selectedContact.core == searchResultItem.core
+							previousInitial: ''//favoriteList.count > 0 ? favoriteList.itemAtIndex(index-1)?.initial : ''	// Binding on count
+							initial: ''	// Hide initials but keep space
+							
+							onIsSelectedChanged: if(isSelected) favoriteList.currentIndex = index
+							onContactStarredChanged: mainItem.contactStarredChanged()
+							onContactDeletionRequested: (contact) => mainItem.contactDeletionRequested(contact)
+							onClicked: (mouse) => {
+								mainItem.highlightFollowsCurrentItem = false
+								favoriteList.currentIndex = index
+								mainItem.selectedContact = searchResultItem
+								forceActiveFocus()
+								headerItem.updatePosition()
+								if (mainItem.multiSelectionEnabled) {
+									var indexInSelection = mainItem.selectedContacts.indexOf(searchResultItem.core.defaultAddress)
+									if (indexInSelection == -1) {
+										mainItem.addContactToSelection(searchResultItem.core.defaultAddress)
+									}
+									else {
+										mainItem.removeContactFromSelection(indexInSelection, 1)
+									}
+								}
+								mainItem.contactClicked(searchResultItem)
 							}
 						}
 					}
 				}
 			}
-		}
+	
+	delegate: ContactListItem{
+		id: contactItem
+		width: mainItem.width
+		focus: true
 		
-		MouseArea {
-			id: contactArea
-			enabled: mainItem.selectionEnabled
-			hoverEnabled: mainItem.hoverEnabled
-			anchors.fill: contactDelegate
-			height: mainItem.height
-			acceptedButtons: Qt.AllButtons
-			z: -1
-			focus: !actionButtons.visible
-			Rectangle {
-				anchors.fill: contactArea
-				opacity: 0.7
-				radius: 8 * DefaultStyle.dp
-				color: mainItem.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
-				visible: contactArea.containsMouse || friendPopup.hovered || mainItem.currentIndex === index
-			}
-			Keys.onPressed: (event)=> {
-				if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-					contactArea.clicked(undefined)
-					event.accepted = true;
-				}
-			}
-			onClicked: (mouse) => {
-				if (mouse && mouse.button == Qt.RightButton) {
-					friendPopup.open()
-				} else {
-					mainItem.forceActiveFocus()
-					mainItem.currentIndex = index
-					if (mainItem.multiSelectionEnabled) {
-						var indexInSelection = mainItem.selectedContacts.indexOf(modelData.core.defaultAddress)
-						if (indexInSelection == -1) {
-							mainItem.addContactToSelection(modelData.core.defaultAddress)
-						}
-						else {
-							mainItem.removeContactFromSelection(indexInSelection, 1)
-						}
-					}
-					mainItem.contactClicked(modelData)
-				}
-			}
+		searchResultItem: $modelData
+		showInitials: mainItem.showInitials && searchResultItem.core.isStored
+		showDefaultAddress: mainItem.showDefaultAddress
+		showActions: mainItem.showActions
+		showContactMenu: searchResultItem.core.isStored
+		highlightText: mainItem.highlightText
+		
+		displayNameCapitalization: mainItem.displayNameCapitalization
+		itemsRightMargin: mainItem.itemsRightMargin
+		
+		selectionEnabled: mainItem.selectionEnabled
+		multiSelectionEnabled: mainItem.multiSelectionEnabled
+		selectedContacts: mainItem.selectedContacts
+		isSelected: mainItem.selectedContact && mainItem.selectedContact.core == searchResultItem.core
+		previousInitial: mainItem.itemAtIndex(index-1)?.initial
+		
+		onIsSelectedChanged: if(isSelected) mainItem.currentIndex = index
+		onContactStarredChanged: mainItem.contactStarredChanged()
+		onContactDeletionRequested: (contact) => mainItem.contactDeletionRequested(contact)
+		onClicked: (mouse) => {
+			mainItem.highlightFollowsCurrentItem = true
+		   if (mouse && mouse.button == Qt.RightButton) {
+			   friendPopup.open()
+		   } else {
+			   forceActiveFocus()
+				if(mainItem.selectedContact && mainItem.selectedContact.core != contactItem.searchResultItem.core)
+					headerItem.list.currentIndex = -1
+				mainItem.selectedContact = contactItem.searchResultItem
+			   if (mainItem.multiSelectionEnabled) {
+				   var indexInSelection = mainItem.selectedContacts.indexOf(searchResultItem.core.defaultAddress)
+				   if (indexInSelection == -1) {
+					   mainItem.addContactToSelection(searchResultItem.core.defaultAddress)
+				   }
+				   else {
+					   mainItem.removeContactFromSelection(indexInSelection, 1)
+				   }
+			   }
+			   mainItem.contactClicked(searchResultItem)
+		   }
 		}
 	}
 }
