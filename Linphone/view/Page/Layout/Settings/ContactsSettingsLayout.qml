@@ -12,12 +12,14 @@ AbstractSettingsLayout {
 		{
 			title: qsTr("Annuaires LDAP"),
 			subTitle: qsTr("Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la magic search bar."),
-			contentComponent: ldapParametersComponent
+			contentComponent: ldapParametersComponent,
+			hideTopMargin: true
 		},
 		{
 			title: qsTr("Carnet d'adresse CardDAV"),
 			subTitle: qsTr("Ajouter un carnet d’adresse CardDAV pour synchroniser vos contacts Linphone avec un carnet d’adresse tiers."),
-			contentComponent: cardDavParametersComponent
+			contentComponent: cardDavParametersComponent,
+			hideTopMargin: true
 		}
 	]
 

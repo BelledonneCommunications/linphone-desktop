@@ -95,11 +95,11 @@ Rectangle {
 				model: mainItem.contentModel
 				delegate: ColumnLayout {
 					Rectangle {
-						Layout.topMargin: 16 * DefaultStyle.dp
+						Layout.topMargin: (modelData.hideTopSeparator ? 0 : 16) * DefaultStyle.dp
 						Layout.bottomMargin: 16 * DefaultStyle.dp
 						Layout.fillWidth: true
 						height: 1 * DefaultStyle.dp
-						color: DefaultStyle.main2_500main
+						color: modelData.hideTopSeparator ? 'transparent' : DefaultStyle.main2_500main
 					}
 					GridLayout {
 						rows: 1
@@ -133,9 +133,9 @@ Rectangle {
 							}
 						}
 						RowLayout {
-							anchors.topMargin: 21 * DefaultStyle.dp
-							anchors.bottomMargin: 21 * DefaultStyle.dp
-							anchors.leftMargin: (mainItem.useVerticalLayout ? 0 : 17) * DefaultStyle.dp
+							Layout.topMargin: (modelData.hideTopMargin ? 0 : (mainItem.useVerticalLayout ? 10 : 21)) * DefaultStyle.dp
+							Layout.bottomMargin: 21 * DefaultStyle.dp
+							Layout.leftMargin: (mainItem.useVerticalLayout ? 0 : 17) * DefaultStyle.dp
 							Layout.preferredWidth: (modelData.customWidth > 0 ? modelData.customWidth : 545) * DefaultStyle.dp
 							Layout.alignment: Qt.AlignRight
 							Loader {

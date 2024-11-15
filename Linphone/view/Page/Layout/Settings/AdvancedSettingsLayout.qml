@@ -11,17 +11,23 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-			title: qsTr("Configuration distante"),
+			title: qsTr("Système"),
 			subTitle: "",
-			contentComponent: remoteProvisioningComponent
+			contentComponent: systemComponent
 		},
 		{
-			title: qsTr("Codecs Audio"),
+			title: qsTr("Configuration distante"),
+			subTitle: "",
+			contentComponent: remoteProvisioningComponent,
+			hideTopSeparator: true
+		},
+		{
+			title: qsTr("Codecs audio"),
 			subTitle: "",
 			contentComponent: audioCodecsComponent,
 		},
 		{
-			title: qsTr("Codecs Vidéo"),
+			title: qsTr("Codecs vidéo"),
 			subTitle: "",
 			contentComponent: videoCodecsComponent
 		},
@@ -32,13 +38,29 @@ AbstractSettingsLayout {
 		}
 	]
 
+	// System
+	/////////
+
+	Component {
+		id: systemComponent
+		ColumnLayout {
+			spacing: 40 * DefaultStyle.dp
+			SwitchSetting {
+				Layout.fillWidth: true
+				titleText: qsTr("Démarrer automatiquement Linphone")
+				propertyName: "autoStart"
+				propertyOwner: SettingsCpp
+			}
+		}
+	}
+
 	// Remote Provisioning
 	//////////////////////
 
 	Component {
 		id: remoteProvisioningComponent
 		ColumnLayout {
-			spacing: 20 * DefaultStyle.dp
+			spacing: 6 * DefaultStyle.dp
 			DecoratedTextField {
 				Layout.fillWidth: true
 				id: configUri
@@ -46,6 +68,7 @@ AbstractSettingsLayout {
 				toValidate: true
 			}
 			SmallButton {
+				Layout.topMargin: -20 * DefaultStyle.dp
 				Layout.alignment: Qt.AlignRight
 				text: qsTr("Télécharger et appliquer")
 				onClicked: {
@@ -59,7 +82,7 @@ AbstractSettingsLayout {
 		}
 	}
 
-	//Audio codecs
+	// Audio codecs
 	//////////////
 
 	Component {
@@ -81,7 +104,7 @@ AbstractSettingsLayout {
 		}
 	}
 
-	//Video codecs
+	// Video codecs
 	//////////////
 
 	Component {

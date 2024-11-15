@@ -6,8 +6,8 @@ import Linphone
 
 Button {
 	id: mainItem
-	textSize: Typography.b2.pixelSize
-	textWeight: Typography.b2.weight
+	textSize: Typography.b3.pixelSize
+	textWeight: Typography.b3.weight
 	color: DefaultStyle.main1_100
 	textColor: DefaultStyle.main1_500_main
 	leftPadding: 12 * DefaultStyle.dp
