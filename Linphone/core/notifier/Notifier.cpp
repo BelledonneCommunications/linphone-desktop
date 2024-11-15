@@ -169,19 +169,28 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 						    window->setProperty(NotificationPropertyData, data);
 						    //						    for (auto it = data.begin(); it != data.end(); ++it)
 						    //							    window->setProperty(it.key().toLatin1(), it.value());
-						    int *screenHeightOffset = &mScreenHeightOffset[screen->name()]; // Access optimization
-						    QRect availableGeometry = screen->availableGeometry();
-						    int heightOffset =
-						        availableGeometry.y() +
-						        (availableGeometry.height() -
-						         window->height()); //*screen->devicePixelRatio(); when using manual scaler
-
-						    window->setX(availableGeometry.x() +
-						                 (availableGeometry.width() -
-						                  window->property("width")
-						                      .toInt())); //*screen->devicePixelRatio()); when using manual scaler
-						    window->setY(heightOffset - (*screenHeightOffset % heightOffset));
 						    const int timeout = Notifications[type].getTimeout() * 1000;
+						    auto updateNotificationCoordinates = [this, window, screen](int width, int height) {
+							    int *screenHeightOffset = &mScreenHeightOffset[screen->name()]; // Access optimization
+							    QRect availableGeometry = screen->availableGeometry();
+							    int heightOffset = availableGeometry.y() +
+							                       (availableGeometry.height() -
+							                        height); //*screen->devicePixelRatio(); when using manual scaler
+
+							    window->setX(availableGeometry.x() +
+							                 (availableGeometry.width() -
+							                  width)); //*screen->devicePixelRatio()); when using manual scaler
+							    window->setY(heightOffset - (*screenHeightOffset % heightOffset));
+						    };
+						    QObject::connect(window, &QQuickWindow::widthChanged,
+						                     [window, updateNotificationCoordinates](int w) {
+							                     updateNotificationCoordinates(w, window->height());
+						                     });
+						    QObject::connect(window, &QQuickWindow::heightChanged,
+						                     [window, updateNotificationCoordinates](int h) {
+							                     updateNotificationCoordinates(window->width(), h);
+						                     });
+						    updateNotificationCoordinates(window->width(), window->height());
 						    QObject::connect(window, &QQuickWindow::closing, window,
 						                     [this, window] { deleteNotification(QVariant::fromValue(window)); });
 						    showNotification(window, timeout);

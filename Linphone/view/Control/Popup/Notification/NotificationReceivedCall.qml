@@ -7,8 +7,8 @@ import UtilsCpp
 Notification {
 	id: mainItem
 	radius: 20 * DefaultStyle.dp
-    overriddenWidth: content.width//101 * DefaultStyle.dp
-    overriddenHeight: content.height//422 * DefaultStyle.dp
+    overriddenWidth: 450 * DefaultStyle.dp//content.width//101 * DefaultStyle.dp
+    overriddenHeight: 101 * DefaultStyle.dp//content.height//
 	
 	readonly property var call: notificationData && notificationData.call
 	property var state: call.core.state
@@ -33,7 +33,7 @@ Notification {
 		contentItem: RowLayout {
 			id: notifContent
 			
-			spacing: 30 * DefaultStyle.dp
+			spacing: 15 * DefaultStyle.dp
 			height: childrenRect.height
 			width: childrenRect.width
 			RowLayout {
@@ -51,6 +51,7 @@ Notification {
 					Text {
 						text: call.core.remoteName
 						Layout.fillWidth: true
+						Layout.maximumWidth: 200 * DefaultStyle.dp
 						maximumLineCount: 1
 						color: DefaultStyle.grey_600
 						font {
