@@ -66,6 +66,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 			mJob = Utils::coreStringToAppString(vcard->getJobTitle());
 			mGivenName = Utils::coreStringToAppString(vcard->getGivenName());
 			mFamilyName = Utils::coreStringToAppString(vcard->getFamilyName());
+			mFullName = Utils::coreStringToAppString(vcard->getFullName());
 			mVCardString = Utils::coreStringToAppString(vcard->asVcard4String());
 		}
 		auto addresses = contact->getAddresses();
@@ -112,6 +113,7 @@ FriendCore::FriendCore(const FriendCore &friendCore) {
 	mDefaultAddress = friendCore.mDefaultAddress;
 	mGivenName = friendCore.mGivenName;
 	mFamilyName = friendCore.mFamilyName;
+	mFullName = friendCore.mFullName;
 	mOrganization = friendCore.mOrganization;
 	mJob = friendCore.mJob;
 	mPictureUri = friendCore.mPictureUri;
@@ -241,7 +243,8 @@ void FriendCore::reset(const FriendCore &contact) {
 }
 
 QString FriendCore::getDisplayName() const {
-	return mGivenName + " " + mFamilyName;
+	if (mFullName.isEmpty()) return mGivenName + " " + mFamilyName;
+	else return mFullName;
 }
 
 QString FriendCore::getGivenName() const {
