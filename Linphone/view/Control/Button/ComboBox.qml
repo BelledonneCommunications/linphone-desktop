@@ -9,8 +9,6 @@ Control.ComboBox {
 	// Usage : each item of the model list must be {text: ..., img: ...}
 	// If string list, only text part of the delegate will be filled
 	// readonly property string currentText: selectedItemText.text
-	// Layout.preferredWidth: mainItem.width
-	// Layout.preferredHeight: mainItem.height
 	property alias listView: listView
 	property string constantImageSource
 	property int pixelSize: 14 * DefaultStyle.dp
@@ -24,7 +22,9 @@ Control.ComboBox {
 		var item = model[currentIndex]
 		if (!item) item = model.getAt(currentIndex)
 		if (!item) return
-		selectedItemText.text = item.text
+		selectedItemText.text = mainItem.textRole
+								? item[mainItem.textRole]
+								: item.text
 									? item.text
 									: item 
 										? item
@@ -99,19 +99,6 @@ Control.ComboBox {
 			anchors.rightMargin: 20 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 		}
-
-		Component.onCompleted: {
-			var index = mainItem.currentIndex < 0 ? 0 : mainItem.currentIndex
-			if (mainItem.model && mainItem.model[index]) {
-				if (mainItem.model[index] && mainItem.model[index].img) {
-					selectedItemImg.source = mainItem.model[index].img
-				}
-				else if (mainItem.model[index] && mainItem.model[index].text)
-					selectedItemText.text = mainItem.model[index].text
-				else
-					selectedItemText.text = mainItem.model[index]
-			}
-		}
 	}
 
 
@@ -183,11 +170,15 @@ Control.ComboBox {
 
 				Text {
 					text: typeof(modelData) != "undefined"
-							? modelData.text
-								? modelData.text
-								: modelData
+							? mainItem.textRole
+								? modelData[mainItem.textRole]
+								: modelData.text
+									? modelData.text
+									: modelData
 							: $modelData
-								? $modelData
+								? mainItem.textRole
+									? $modelData[mainItem.textRole]
+									: $modelData
 								: ""
 					elide: Text.ElideRight
 					maximumLineCount: 1

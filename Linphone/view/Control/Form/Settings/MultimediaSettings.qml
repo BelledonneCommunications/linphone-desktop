@@ -53,6 +53,7 @@ ColumnLayout {
 					entries: SettingsCpp.ringerDevices
 					propertyName: "ringerDevice"
 					propertyOwner: SettingsCpp
+					textRole: 'display_name'
 				}
 				Item {
 					Layout.fillHeight: true
@@ -84,6 +85,7 @@ ColumnLayout {
 					entries: SettingsCpp.playbackDevices
 					propertyName: "playbackDevice"
 					propertyOwner: SettingsCpp
+					textRole: 'display_name'
 				}
 				Slider {
 					id: speakerVolume
@@ -123,6 +125,7 @@ ColumnLayout {
 					entries: SettingsCpp.captureDevices
 					propertyName: "captureDevice"
 					propertyOwner: SettingsCpp
+					textRole: 'display_name'
 				}
 				Slider {
 					id: microVolume

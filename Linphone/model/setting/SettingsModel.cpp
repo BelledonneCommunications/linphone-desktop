@@ -88,27 +88,6 @@ std::string SettingsModel::getEntryFullName(const std::string &section, const st
 	return isReadOnly(section, name) ? name + "/readonly" : name;
 }
 
-QStringList SettingsModel::getVideoDevices() const {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto core = CoreModel::getInstance()->getCore();
-	QStringList result;
-	for (auto &device : core->getVideoDevicesList()) {
-		result.append(Utils::coreStringToAppString(device));
-	}
-	return result;
-}
-
-QString SettingsModel::getVideoDevice() const {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	return Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getVideoDevice());
-}
-
-void SettingsModel::setVideoDevice(const QString &device) {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	CoreModel::getInstance()->getCore()->setVideoDevice(Utils::appStringToCoreString(device));
-	emit videoDeviceChanged(device);
-}
-
 // =============================================================================
 // Audio.
 // =============================================================================
@@ -125,8 +104,9 @@ void SettingsModel::resetCaptureGraph() {
 }
 void SettingsModel::createCaptureGraph() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	mSimpleCaptureGraph = new MediastreamerUtils::SimpleCaptureGraph(Utils::appStringToCoreString(getCaptureDevice()),
-	                                                                 Utils::appStringToCoreString(getPlaybackDevice()));
+	mSimpleCaptureGraph =
+	    new MediastreamerUtils::SimpleCaptureGraph(Utils::appStringToCoreString(getCaptureDevice()["id"].toString()),
+	                                               Utils::appStringToCoreString(getPlaybackDevice()["id"].toString()));
 	mSimpleCaptureGraph->start();
 	emit captureGraphRunningChanged(getCaptureGraphRunning());
 }
@@ -245,56 +225,68 @@ void SettingsModel::setCaptureGain(float gain) {
 	if ((int)(oldGain * 1000) != (int)(gain * 1000)) emit captureGainChanged(gain);
 }
 
-QStringList SettingsModel::getCaptureDevices() const {
+QVariantList SettingsModel::getCaptureDevices() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
-	QStringList list;
+	QVariantList list;
 
 	for (const auto &device : core->getExtendedAudioDevices()) {
-		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityRecord))
-			list << Utils::coreStringToAppString(device->getId());
+		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityRecord)) {
+			list << ToolModel::createVariant(device);
+		}
 	}
 	return list;
 }
 
-QStringList SettingsModel::getPlaybackDevices() const {
+QVariantList SettingsModel::getPlaybackDevices() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
-	QStringList list;
+	QVariantList list;
 
 	for (const auto &device : core->getExtendedAudioDevices()) {
 		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityPlay))
-			list << Utils::coreStringToAppString(device->getId());
+			list << ToolModel::createVariant(device);
 	}
 
 	return list;
 }
 
-QStringList SettingsModel::getRingerDevices() const {
+QVariantList SettingsModel::getRingerDevices() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
-	QStringList list;
+	QVariantList list;
 
 	for (const auto &device : core->getExtendedAudioDevices()) {
 		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityPlay))
-			list << Utils::coreStringToAppString(device->getId());
+			list << ToolModel::createVariant(device);
 	}
 
 	return list;
+}
+
+QStringList SettingsModel::getVideoDevices() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto core = CoreModel::getInstance()->getCore();
+	QStringList result;
+	for (auto &device : core->getVideoDevicesList()) {
+		result.append(Utils::coreStringToAppString(device));
+	}
+	return result;
 }
 
 // -----------------------------------------------------------------------------
 
-QString SettingsModel::getCaptureDevice() const {
+QVariantMap SettingsModel::getCaptureDevice() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto audioDevice = CoreModel::getInstance()->getCore()->getInputAudioDevice();
 	if (!audioDevice) audioDevice = CoreModel::getInstance()->getCore()->getDefaultInputAudioDevice();
-	return Utils::coreStringToAppString(audioDevice ? audioDevice->getId() : "");
+	return ToolModel::createVariant(audioDevice);
 }
 
-void SettingsModel::setCaptureDevice(const QString &device) {
+void SettingsModel::setCaptureDevice(const QVariantMap &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto audioDevice = ToolModel::findAudioDevice(device, linphone::AudioDevice::Capabilities::CapabilityRecord);
+	auto audioDevice =
+	    ToolModel::findAudioDevice(device["id"].toString(), linphone::AudioDevice::Capabilities::CapabilityRecord);
 	if (audioDevice) {
 		CoreModel::getInstance()->getCore()->setDefaultInputAudioDevice(audioDevice);
 		CoreModel::getInstance()->getCore()->setInputAudioDevice(audioDevice);
@@ -305,16 +297,17 @@ void SettingsModel::setCaptureDevice(const QString &device) {
 
 // -----------------------------------------------------------------------------
 
-QString SettingsModel::getPlaybackDevice() const {
+QVariantMap SettingsModel::getPlaybackDevice() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto audioDevice = CoreModel::getInstance()->getCore()->getOutputAudioDevice();
 	if (!audioDevice) audioDevice = CoreModel::getInstance()->getCore()->getDefaultOutputAudioDevice();
-	return Utils::coreStringToAppString(audioDevice ? audioDevice->getId() : "");
+	return ToolModel::createVariant(audioDevice);
 }
 
-void SettingsModel::setPlaybackDevice(const QString &device) {
+void SettingsModel::setPlaybackDevice(const QVariantMap &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto audioDevice = ToolModel::findAudioDevice(device, linphone::AudioDevice::Capabilities::CapabilityPlay);
+	auto audioDevice =
+	    ToolModel::findAudioDevice(device["id"].toString(), linphone::AudioDevice::Capabilities::CapabilityPlay);
 	if (audioDevice) {
 		CoreModel::getInstance()->getCore()->setDefaultOutputAudioDevice(audioDevice);
 		CoreModel::getInstance()->getCore()->setOutputAudioDevice(audioDevice);
@@ -325,22 +318,32 @@ void SettingsModel::setPlaybackDevice(const QString &device) {
 
 // -----------------------------------------------------------------------------
 
-QString SettingsModel::getRingerDevice() const {
+QVariantMap SettingsModel::getRingerDevice() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	return Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getRingerDevice());
+	auto id = Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getRingerDevice());
+	auto audioDevice = ToolModel::findAudioDevice(id, linphone::AudioDevice::Capabilities::CapabilityPlay);
+	return ToolModel::createVariant(audioDevice);
 }
 
-void SettingsModel::setRingerDevice(const QString &device) {
+void SettingsModel::setRingerDevice(const QVariantMap &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto audioDevice = ToolModel::findAudioDevice(device, linphone::AudioDevice::Capabilities::CapabilityPlay);
-
-	if (audioDevice) {
-		CoreModel::getInstance()->getCore()->setRingerDevice(audioDevice->getId());
-		emit ringerDeviceChanged(device);
-	} else qWarning() << "Cannot set Ringer device. The ID cannot be matched with an existant device : " << device;
+	CoreModel::getInstance()->getCore()->setRingerDevice(Utils::appStringToCoreString(device["id"].toString()));
+	emit ringerDeviceChanged(device);
 }
 
 // -----------------------------------------------------------------------------
+
+QString SettingsModel::getVideoDevice() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getVideoDevice());
+}
+
+void SettingsModel::setVideoDevice(const QString &device) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	CoreModel::getInstance()->getCore()->setVideoDevice(Utils::appStringToCoreString(device));
+	emit videoDeviceChanged(device);
+}
+
 bool SettingsModel::getVideoEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return CoreModel::getInstance()->getCore()->videoEnabled();

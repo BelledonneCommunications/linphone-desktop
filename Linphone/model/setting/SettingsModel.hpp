@@ -82,26 +82,25 @@ public:
 	float getCaptureGain() const;
 	void setCaptureGain(float gain);
 
-	QStringList getCaptureDevices() const;
-	QStringList getPlaybackDevices() const;
-	QStringList getRingerDevices() const;
+	QVariantList getCaptureDevices() const;
+	QVariantList getPlaybackDevices() const;
+	QVariantList getRingerDevices() const;
+	QStringList getVideoDevices() const; // There is no VideoDevice API from SDK
 
-	QString getCaptureDevice() const;
-	void setCaptureDevice(const QString &device);
+	QVariantMap getCaptureDevice() const;
+	void setCaptureDevice(const QVariantMap &device);
 
-	QString getPlaybackDevice() const;
-	void setPlaybackDevice(const QString &device);
+	QVariantMap getPlaybackDevice() const;
+	void setPlaybackDevice(const QVariantMap &device);
 
-	QString getRingerDevice() const;
-	void setRingerDevice(const QString &device);
-
-	void startEchoCancellerCalibration();
-	int getEchoCancellationCalibration() const;
-
-	QStringList getVideoDevices() const;
+	QVariantMap getRingerDevice() const;
+	void setRingerDevice(const QVariantMap &device);
 
 	QString getVideoDevice() const;
 	void setVideoDevice(const QString &device);
+
+	void startEchoCancellerCalibration();
+	int getEchoCancellationCalibration() const;
 
 	bool getLogsEnabled() const;
 	void setLogsEnabled(bool status);
@@ -172,18 +171,17 @@ signals:
 	void playbackGainChanged(float gain);
 	void captureGainChanged(float gain);
 
-	void captureDevicesChanged(const QStringList &devices);
-	void playbackDevicesChanged(const QStringList &devices);
-	void ringerDevicesChanged(const QStringList &devices);
+	void captureDevicesChanged(QVariantList devices);
+	void playbackDevicesChanged(QVariantList devices);
+	void ringerDevicesChanged(QVariantList devices);
+	void videoDevicesChanged(QStringList devices);
 
-	void captureDeviceChanged(const QString &device);
-	void playbackDeviceChanged(const QString &device);
-	void ringerDeviceChanged(const QString &device);
+	void captureDeviceChanged(QVariantMap device);
+	void playbackDeviceChanged(QVariantMap device);
+	void ringerDeviceChanged(QVariantMap device);
+	void videoDeviceChanged(QString device);
 
 	void showAudioCodecsChanged(bool status);
-
-	void videoDevicesChanged(const QStringList &devices);
-	void videoDeviceChanged(const QString &device);
 
 	void micVolumeChanged(float volume);
 

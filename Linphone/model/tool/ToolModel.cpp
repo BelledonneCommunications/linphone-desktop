@@ -350,3 +350,12 @@ void ToolModel::updateCodecs() {
 	}
 #endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 }
+
+QVariantMap ToolModel::createVariant(const std::shared_ptr<const linphone::AudioDevice> &device) {
+	QVariantMap map;
+	map.insert("id", device ? Utils::coreStringToAppString(device->getId()) : "");
+	map.insert("display_name",
+	           device ? Utils::coreStringToAppString(device->getDriverName() + ": " + device->getDeviceName())
+	                  : tr("Unknown device"));
+	return map;
+}

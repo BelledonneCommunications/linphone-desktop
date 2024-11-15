@@ -46,16 +46,16 @@ class SettingsCore : public QObject, public AbstractObject {
 
 	Q_PROPERTY(bool captureGraphRunning READ getCaptureGraphRunning NOTIFY captureGraphRunningChanged)
 
-	Q_PROPERTY(QStringList captureDevices READ getCaptureDevices NOTIFY captureDevicesChanged)
-	Q_PROPERTY(QStringList playbackDevices READ getPlaybackDevices NOTIFY playbackDevicesChanged)
-	Q_PROPERTY(QStringList ringerDevices READ getRingerDevices NOTIFY ringerDevicesChanged)
+	Q_PROPERTY(QVariantList captureDevices READ getCaptureDevices NOTIFY captureDevicesChanged)
+	Q_PROPERTY(QVariantList playbackDevices READ getPlaybackDevices NOTIFY playbackDevicesChanged)
+	Q_PROPERTY(QVariantList ringerDevices READ getRingerDevices NOTIFY ringerDevicesChanged)
 
 	Q_PROPERTY(float playbackGain READ getPlaybackGain WRITE lSetPlaybackGain NOTIFY playbackGainChanged)
 	Q_PROPERTY(float captureGain READ getCaptureGain WRITE lSetCaptureGain NOTIFY captureGainChanged)
 
-	Q_PROPERTY(QString captureDevice READ getCaptureDevice WRITE lSetCaptureDevice NOTIFY captureDeviceChanged)
-	Q_PROPERTY(QString playbackDevice READ getPlaybackDevice WRITE lSetPlaybackDevice NOTIFY playbackDeviceChanged)
-	Q_PROPERTY(QString ringerDevice READ getRingerDevice WRITE lSetRingerDevice NOTIFY ringerDeviceChanged)
+	Q_PROPERTY(QVariantMap captureDevice READ getCaptureDevice WRITE lSetCaptureDevice NOTIFY captureDeviceChanged)
+	Q_PROPERTY(QVariantMap playbackDevice READ getPlaybackDevice WRITE lSetPlaybackDevice NOTIFY playbackDeviceChanged)
+	Q_PROPERTY(QVariantMap ringerDevice READ getRingerDevice WRITE lSetRingerDevice NOTIFY ringerDeviceChanged)
 
 	Q_PROPERTY(QStringList videoDevices READ getVideoDevices NOTIFY videoDevicesChanged)
 	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE lSetVideoDevice NOTIFY videoDeviceChanged)
@@ -109,14 +109,13 @@ public:
 
 	float getCaptureGain() const;
 
-	QStringList getCaptureDevices() const;
-	QStringList getPlaybackDevices() const;
-	QStringList getRingerDevices() const;
+	QVariantList getCaptureDevices() const;
+	QVariantList getPlaybackDevices() const;
+	QVariantList getRingerDevices() const;
 
-	QString getCaptureDevice() const;
-
-	QString getPlaybackDevice() const;
-	QString getRingerDevice() const;
+	QVariantMap getCaptureDevice() const;
+	QVariantMap getPlaybackDevice() const;
+	QVariantMap getRingerDevice() const;
 
 	QString getVideoDevice() const {
 		return mVideoDevice;
@@ -191,18 +190,18 @@ signals:
 	void playbackGainChanged(float gain);
 	void captureGainChanged(float gain);
 
-	void captureDevicesChanged(const QStringList &devices);
-	void playbackDevicesChanged(const QStringList &devices);
-	void ringerDevicesChanged(const QStringList &devices);
+	void captureDevicesChanged(const QVariantList &devices);
+	void playbackDevicesChanged(const QVariantList &devices);
+	void ringerDevicesChanged(const QVariantList &devices);
 
-	void lSetCaptureDevice(const QString &device);
-	void captureDeviceChanged(const QString &device);
+	void lSetCaptureDevice(const QVariantMap &device);
+	void captureDeviceChanged(const QVariantMap &device);
 
-	void lSetPlaybackDevice(const QString &device);
-	void playbackDeviceChanged(const QString &device);
+	void lSetPlaybackDevice(const QVariantMap &device);
+	void playbackDeviceChanged(const QVariantMap &device);
 
-	void lSetRingerDevice(const QString &device);
-	void ringerDeviceChanged(const QString &device);
+	void lSetRingerDevice(const QVariantMap &device);
+	void ringerDeviceChanged(const QVariantMap &device);
 
 	void lSetVideoDevice(const QString &device);
 	void videoDeviceChanged();
@@ -247,12 +246,12 @@ private:
 	bool mAutomaticallyRecordCallsEnabled;
 
 	// Audio
-	QStringList mCaptureDevices;
-	QStringList mPlaybackDevices;
-	QStringList mRingerDevices;
-	QString mCaptureDevice;
-	QString mPlaybackDevice;
-	QString mRingerDevice;
+	QVariantList mCaptureDevices;
+	QVariantList mPlaybackDevices;
+	QVariantList mRingerDevices;
+	QVariantMap mCaptureDevice;
+	QVariantMap mPlaybackDevice;
+	QVariantMap mRingerDevice;
 
 	// Video
 	QStringList mVideoDevices;

@@ -164,31 +164,34 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                                             });
 
 	// Audio device(s)
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureDevice, [this](const QString id) {
-		mSettingsModelConnection->invokeToModel([this, id]() { SettingsModel::getInstance()->setCaptureDevice(id); });
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureDevice, [this](QVariantMap device) {
+		mSettingsModelConnection->invokeToModel(
+		    [this, device]() { SettingsModel::getInstance()->setCaptureDevice(device); });
 	});
-	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureDeviceChanged, [this](const QString device) {
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureDeviceChanged, [this](QVariantMap device) {
 		mSettingsModelConnection->invokeToCore([this, device]() {
 			mCaptureDevice = device;
 			emit captureDeviceChanged(device);
 		});
 	});
 
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetPlaybackDevice, [this](const QString id) {
-		mSettingsModelConnection->invokeToModel([this, id]() { SettingsModel::getInstance()->setPlaybackDevice(id); });
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetPlaybackDevice, [this](QVariantMap device) {
+		mSettingsModelConnection->invokeToModel(
+		    [this, device]() { SettingsModel::getInstance()->setPlaybackDevice(device); });
 	});
 
-	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackDeviceChanged, [this](const QString device) {
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackDeviceChanged, [this](QVariantMap device) {
 		mSettingsModelConnection->invokeToCore([this, device]() {
 			mPlaybackDevice = device;
 			emit playbackDeviceChanged(device);
 		});
 	});
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetRingerDevice, [this](const QString id) {
-		mSettingsModelConnection->invokeToModel([this, id]() { SettingsModel::getInstance()->setRingerDevice(id); });
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetRingerDevice, [this](QVariantMap device) {
+		mSettingsModelConnection->invokeToModel(
+		    [this, device]() { SettingsModel::getInstance()->setRingerDevice(device); });
 	});
 
-	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ringerDeviceChanged, [this](const QString device) {
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ringerDeviceChanged, [this](QVariantMap device) {
 		mSettingsModelConnection->invokeToCore([this, device]() {
 			mRingerDevice = device;
 			emit ringerDeviceChanged(device);
@@ -223,28 +226,25 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		mSettingsModelConnection->invokeToCore([this, value]() { emit micVolumeChanged(value); });
 	});
 
-	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureDevicesChanged,
-	                                             [this](const QStringList devices) {
-		                                             mSettingsModelConnection->invokeToCore([this, devices]() {
-			                                             mCaptureDevices = devices;
-			                                             emit captureDevicesChanged(devices);
-		                                             });
-	                                             });
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureDevicesChanged, [this](QVariantList devices) {
+		mSettingsModelConnection->invokeToCore([this, devices]() {
+			mCaptureDevices = devices;
+			emit captureDevicesChanged(devices);
+		});
+	});
 
-	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackDevicesChanged,
-	                                             [this](const QStringList devices) {
-		                                             mSettingsModelConnection->invokeToCore([this, devices]() {
-			                                             mPlaybackDevices = devices;
-			                                             emit playbackDevicesChanged(devices);
-		                                             });
-	                                             });
-	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ringerDevicesChanged,
-	                                             [this](const QStringList devices) {
-		                                             mSettingsModelConnection->invokeToCore([this, devices]() {
-			                                             mRingerDevices = devices;
-			                                             emit ringerDevicesChanged(devices);
-		                                             });
-	                                             });
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackDevicesChanged, [this](QVariantList devices) {
+		mSettingsModelConnection->invokeToCore([this, devices]() {
+			mPlaybackDevices = devices;
+			emit playbackDevicesChanged(devices);
+		});
+	});
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ringerDevicesChanged, [this](QVariantList devices) {
+		mSettingsModelConnection->invokeToCore([this, devices]() {
+			mRingerDevices = devices;
+			emit ringerDevicesChanged(devices);
+		});
+	});
 
 	// Video device(s)
 	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetVideoDevice, [this](const QString id) {
@@ -379,15 +379,15 @@ QString SettingsCore::getConfigPath(const QCommandLineParser &parser) {
 	return configPath;
 }
 
-QStringList SettingsCore::getCaptureDevices() const {
+QVariantList SettingsCore::getCaptureDevices() const {
 	return mCaptureDevices;
 }
 
-QStringList SettingsCore::getPlaybackDevices() const {
+QVariantList SettingsCore::getPlaybackDevices() const {
 	return mPlaybackDevices;
 }
 
-QStringList SettingsCore::getRingerDevices() const {
+QVariantList SettingsCore::getRingerDevices() const {
 	return mRingerDevices;
 }
 
@@ -411,15 +411,15 @@ float SettingsCore::getPlaybackGain() const {
 	return mPlaybackGain;
 }
 
-QString SettingsCore::getCaptureDevice() const {
+QVariantMap SettingsCore::getCaptureDevice() const {
 	return mCaptureDevice;
 }
 
-QString SettingsCore::getPlaybackDevice() const {
+QVariantMap SettingsCore::getPlaybackDevice() const {
 	return mPlaybackDevice;
 }
 
-QString SettingsCore::getRingerDevice() const {
+QVariantMap SettingsCore::getRingerDevice() const {
 	return mRingerDevice;
 }
 

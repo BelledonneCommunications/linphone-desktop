@@ -68,6 +68,8 @@ public:
 	static void loadDownloadedCodecs();
 	static void updateCodecs();
 
+	static QVariantMap createVariant(const std::shared_ptr<const linphone::AudioDevice> &device);
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 };

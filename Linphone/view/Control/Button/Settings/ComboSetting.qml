@@ -5,23 +5,24 @@ import Linphone
 import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 ComboBox {
-	id: comboBox
+	id: mainItem
 	Layout.preferredHeight: 49 * DefaultStyle.dp
 	property string propertyName
+	
 	property var propertyOwner
-	property alias entries: comboBox.model
+	property alias entries: mainItem.model
 	oneLine: true
 	currentIndex: Utils.findIndex(model, function (entry) {
-		return entry === propertyOwner[propertyName]
+		return Utils.equalObject(entry,propertyOwner[propertyName])
 	})
-	onCurrentTextChanged: {
-		binding.when = currentText != propertyOwner[propertyName]
+	onCurrentValueChanged: {
+		binding.when = !Utils.equalObject(currentValue,propertyOwner[propertyName])
 	}
 	Binding {
 		id: binding
 		target: propertyOwner
 		property: propertyName
-		value: comboBox.currentText
+		value: mainItem.currentValue
 		when: false
 	}
 }

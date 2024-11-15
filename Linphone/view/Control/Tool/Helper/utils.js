@@ -728,6 +728,19 @@ function printObject(o) {
     return out;
 }
 
+function equalObject(a, b) {
+	var countA = 0, countB = 0;
+	if(a == b) return true // operator could be performed
+	for (var i in a) {// Check for all members
+		if(a[i] != b[i]) return false
+		else ++countA
+	}
+	for (var j in b) {// Check count
+		++countB
+	}
+	return countB == countA && countA > 0 // if count=0; then the first '==' should already worked
+}
+
 function infoDialog(window, message) {
 	window.attachVirtualWindow(buildCommonDialogUri('ConfirmDialog'), {
 		buttonTexts : ['',qsTr('okButton')],
