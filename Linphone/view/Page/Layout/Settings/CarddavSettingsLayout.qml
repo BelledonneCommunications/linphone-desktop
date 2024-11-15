@@ -81,6 +81,7 @@ AbstractSettingsLayout {
 				title: qsTr("Nom d’affichage")
 				canBeEmpty: false
 				toValidate: true
+				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "uri"
@@ -88,12 +89,14 @@ AbstractSettingsLayout {
 				title: qsTr("URL du serveur")
 				canBeEmpty: false
 				toValidate: true
+				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "username"
 				propertyOwner: carddavGui.core
 				title: qsTr("Nom d’utilisateur")
 				toValidate: true
+				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "password"
@@ -101,12 +104,14 @@ AbstractSettingsLayout {
 				propertyOwner: carddavGui.core
 				title: qsTr("Mot de passe")
 				toValidate: true
+				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "realm"
 				propertyOwner: carddavGui.core
 				title: qsTr("Domaine d’authentification")
 				toValidate: true
+				Layout.fillWidth: true
 			}
 			SwitchSetting {
 				titleText: qsTr("Stocker ici les contacts nouvellement crées")
