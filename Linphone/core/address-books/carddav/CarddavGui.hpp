@@ -32,6 +32,7 @@ class CarddavGui : public QObject, public AbstractObject {
 
 public:
 	CarddavGui(QSharedPointer<CarddavCore> core);
+	CarddavGui(QObject *parent = nullptr);
 	~CarddavGui();
 	CarddavCore *getCore() const;
 	QSharedPointer<CarddavCore> mCore;

@@ -29,6 +29,14 @@ CarddavGui::CarddavGui(QSharedPointer<CarddavCore> core) {
 	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
 }
 
+CarddavGui::CarddavGui(QObject *parent) : QObject(parent) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	App::postModelSync([this]() {
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		mCore = CarddavCore::create(nullptr);
+	});
+}
+
 CarddavGui::~CarddavGui() {
 	mustBeInMainThread("~" + getClassName());
 }

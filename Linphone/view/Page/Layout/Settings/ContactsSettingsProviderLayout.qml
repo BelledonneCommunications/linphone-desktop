@@ -76,7 +76,8 @@ RowLayout {
 				}
 			}
 			onVisibleChanged: {
-				proxyModel.updateView()
+				if (visible)
+					proxyModel.updateView()
 			}
 			Component.onCompleted: {
 				proxyModel.updateView()

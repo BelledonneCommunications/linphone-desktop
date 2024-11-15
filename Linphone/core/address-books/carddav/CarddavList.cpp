@@ -72,12 +72,14 @@ void CarddavList::setSelf(QSharedPointer<CarddavList> me) {
 			});
 		});
 	});
-	QObject::connect(
-	    CoreModel::getInstance().get(), &CoreModel::friendListRemoved, this,
+
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::friendListRemoved,
 	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::FriendList> &friendList) {
 		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 		    emit lUpdate();
 	    });
+
 	emit lUpdate();
 }
 
