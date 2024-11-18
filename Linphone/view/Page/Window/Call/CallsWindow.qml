@@ -572,7 +572,7 @@ AbstractWindow {
 						var callsWin = UtilsCpp.getCallsWindow()
 						if (contact) callsWin.showConfirmationLambdaPopup(
 							qsTr("Confirmer le transfert ?"),
-							qsTr("Vous allez transférer %1 à %2.").arg(mainWindow.call.core.remoteName).arg(contact.core.displayName),
+							qsTr("Vous allez transférer %1 à %2.").arg(mainWindow.call.core.remoteName).arg(contact.core.fullName),
 							"",
 							function (confirmed) {
 								if (confirmed) {

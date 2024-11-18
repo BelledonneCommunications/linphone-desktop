@@ -57,11 +57,11 @@ AbstractMainPage {
 		if (!contact) return
 		var mainWin = UtilsCpp.getMainWindow()
 		mainWin.showConfirmationLambdaPopup("",
-            qsTr("%1 sera supprimé des contacts. Voulez-vous continuer ?").arg(contact.core.displayName),
+            qsTr("%1 sera supprimé des contacts. Voulez-vous continuer ?").arg(contact.core.fullName),
 			"",
 			function (confirmed) {
 				if (confirmed) {
-					var name = contact.core.displayName
+					var name = contact.core.fullName
 					contact.core.remove()
 					UtilsCpp.showInformationPopup(qsTr("Supprimé"), qsTr("%1 a été supprimé").arg(name))				}
 			}
@@ -339,7 +339,7 @@ AbstractMainPage {
 				property var computedContactNameObj: UtilsCpp.getDisplayName(contactAddress)
 				property string computedContactName: computedContactNameObj ? computedContactNameObj.value : ""
 				property string contactName: contact
-					? contact.core.displayName
+					? contact.core.fullName
 					: computedContactName
 				component LabelButton: ColumnLayout {
 					id: labelButton

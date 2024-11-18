@@ -215,8 +215,8 @@ bool MagicSearchProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, c
 		bool rIsStored = r->getIsStored();
 		if (lIsStored && !rIsStored) return true;
 		else if (!lIsStored && rIsStored) return false;
-		auto lName = l->getDisplayName().toLower();
-		auto rName = r->getDisplayName().toLower();
+		auto lName = l->getFullName().toLower();
+		auto rName = r->getFullName().toLower();
 		return lName < rName;
 	}
 	return true;

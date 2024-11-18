@@ -66,7 +66,7 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 		auto inFriend = Utils::findFriendByAddress(mRemoteAddress);
 		if (inFriend) {
 			auto friendGui = inFriend->getValue().value<FriendGui *>();
-			if (friendGui) mDisplayName = friendGui->getCore()->getDisplayName();
+			if (friendGui) mDisplayName = friendGui->getCore()->getFullName();
 		}
 	}
 }
@@ -89,7 +89,7 @@ void CallHistoryCore::setSelf(QSharedPointer<CallHistoryCore> me) {
 			    QString displayName;
 			    if (inFriend) {
 				    auto friendGui = inFriend->getValue().value<FriendGui *>();
-				    if (friendGui) displayName = friendGui->getCore()->getDisplayName();
+				    if (friendGui) displayName = friendGui->getCore()->getFullName();
 			    }
 			    if (!displayName.isEmpty()) {
 				    mCoreModelConnection->invokeToCore([this, displayName]() {

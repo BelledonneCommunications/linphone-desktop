@@ -70,9 +70,9 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 			mFullName = Utils::coreStringToAppString(vcard->getFullName());
 			mVCardString = Utils::coreStringToAppString(vcard->asVcard4String());
 		}
-		if (defaultAddress) {
-			if (mGivenName.isEmpty()) mGivenName = Utils::coreStringToAppString(defaultAddress->getUsername());
-		}
+		if (mFullName.isEmpty()) mFullName = Utils::coreStringToAppString(contact->getName());
+		if (mFullName.isEmpty()) mFullName = Utils::coreStringToAppString(contact->getOrganization());
+
 		auto addresses = contact->getAddresses();
 		for (auto &address : addresses) {
 			mAddressList.append(
@@ -108,8 +108,12 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 	mIsLdap = ToolModel::friendIsInFriendList(ToolModel::getLdapFriendList(), contact);
 	connect(this, &FriendCore::addressChanged, &FriendCore::allAddressesChanged);
 	connect(this, &FriendCore::phoneNumberChanged, &FriendCore::allAddressesChanged);
-	connect(this, &FriendCore::givenNameChanged, &FriendCore::displayNameChanged);
-	connect(this, &FriendCore::familyNameChanged, &FriendCore::displayNameChanged);
+	auto updateFullName = [this] {
+		auto name = (mGivenName.isEmpty() ? "" : mGivenName) + (mFamilyName.isEmpty() ? "" : mFamilyName);
+		if (!name.isEmpty()) setFullName(name);
+	};
+	connect(this, &FriendCore::givenNameChanged, updateFullName);
+	connect(this, &FriendCore::familyNameChanged, updateFullName);
 }
 
 FriendCore::FriendCore(const FriendCore &friendCore) {
@@ -248,9 +252,16 @@ void FriendCore::reset(const FriendCore &contact) {
 	setIsSaved(mFriendModel != nullptr);
 }
 
-QString FriendCore::getDisplayName() const {
+QString FriendCore::getFullName() const {
 	if (mFullName.isEmpty()) return mGivenName + " " + mFamilyName;
 	else return mFullName;
+}
+
+void FriendCore::setFullName(const QString &name) {
+	if (mFullName != name) {
+		mFullName = name;
+		emit fullNameChanged(name);
+	}
 }
 
 QString FriendCore::getGivenName() const {
@@ -527,9 +538,8 @@ void FriendCore::writeIntoModel(std::shared_ptr<FriendModel> model) const {
 	mustBeInLinphoneThread(QString("[") + gClassName + "] " + Q_FUNC_INFO);
 	model->getFriend()->edit();
 	// needed to create the vcard if not created yet
-	model->setName(mFullName.isEmpty()
-	                   ? mGivenName + (mFamilyName.isEmpty() || mGivenName.isEmpty() ? "" : " ") + mFamilyName
-	                   : mFullName);
+	auto name = mGivenName + (mFamilyName.isEmpty() || mGivenName.isEmpty() ? "" : " ") + mFamilyName;
+	model->setName(name.isEmpty() ? (mFullName.isEmpty() ? mOrganization : mFullName) : name);
 	auto core = CoreModel::getInstance()->getCore();
 
 	std::list<std::shared_ptr<linphone::Address>> addresses;

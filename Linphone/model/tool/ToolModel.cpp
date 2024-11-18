@@ -83,7 +83,6 @@ QString ToolModel::getDisplayName(const std::shared_ptr<const linphone::Address>
 	if (address) {
 		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(address);
 		if (linFriend) {
-			if (auto vcard = linFriend->getVcard()) displayName = Utils::coreStringToAppString(vcard->getFullName());
 			if (displayName.isEmpty()) displayName = Utils::coreStringToAppString(linFriend->getName());
 		}
 		if (displayName.isEmpty()) {

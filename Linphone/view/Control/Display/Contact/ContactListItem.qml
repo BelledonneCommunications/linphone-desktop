@@ -28,7 +28,7 @@ FocusScope {
 	property var previousInitial	// Use directly previous initial
 	property int itemsRightMargin: 39 * DefaultStyle.dp
 	
-	property var displayName: searchResultItem.core.displayName
+	property var displayName: searchResultItem.core.fullName
 	property string initial: displayName ? displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale) : ''
 	
 	signal clicked(var mouse)

@@ -57,7 +57,7 @@ class FriendCore : public QObject, public AbstractObject {
 	Q_PROPERTY(int verifiedDeviceCount MEMBER mVerifiedDeviceCount NOTIFY verifiedDevicesChanged)
 	Q_PROPERTY(QString givenName READ getGivenName WRITE setGivenName NOTIFY givenNameChanged)
 	Q_PROPERTY(QString familyName READ getFamilyName WRITE setFamilyName NOTIFY familyNameChanged)
-	Q_PROPERTY(QString displayName READ getDisplayName NOTIFY displayNameChanged)
+	Q_PROPERTY(QString fullName READ getFullName NOTIFY fullNameChanged)
 	Q_PROPERTY(QString organization READ getOrganization WRITE setOrganization NOTIFY organizationChanged)
 	Q_PROPERTY(QString job READ getJob WRITE setJob NOTIFY jobChanged)
 	Q_PROPERTY(QString defaultAddress READ getDefaultAddress WRITE setDefaultAddress NOTIFY defaultAddressChanged)
@@ -81,7 +81,8 @@ public:
 	void setSelf(SafeSharedPointer<FriendCore> me);
 	void reset(const FriendCore &contact);
 
-	QString getDisplayName() const;
+	QString getFullName() const;
+	void setFullName(const QString &name);
 
 	QString getFamilyName() const;
 	void setFamilyName(const QString &name);
@@ -154,8 +155,9 @@ protected:
 signals:
 	void contactUpdated();
 	void displayNameChanged();
-	void givenNameChanged(const QString &name);
-	void familyNameChanged(const QString &name);
+	void givenNameChanged(QString name);
+	void familyNameChanged(QString name);
+	void fullNameChanged(QString name);
 	void starredChanged();
 	void phoneNumberChanged();
 	void addressChanged();

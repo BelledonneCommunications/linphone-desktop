@@ -26,8 +26,8 @@ Loader{
 	property var displayNameObj: UtilsCpp.getDisplayName(_address)
 	property string displayNameVal: account && account.core.displayName
 		? account.core.displayName
-		: contact && contact.core.displayName
-			? contact.core.displayName
+		: contact && contact.core.fullName
+			? contact.core.fullName
 			: displayNameObj
 				? displayNameObj.value
 			: ""

@@ -149,7 +149,7 @@ ApplicationWindow {
 		if (parentItem == undefined) parentItem = mainWindow.contentItem
 		startCallPopup.parent = parentItem
 		if (contact) {
-			console.log("START CALL WITH", contact.core.displayName, "addresses count", contact.core.allAddresses.length)
+			console.log("START CALL WITH", contact.core.fullName, "addresses count", contact.core.allAddresses.length)
 			if (contact.core.allAddresses.length > 1) {
 				startCallPopup.contact = contact
 				startCallPopup.videoEnabled = videoEnabled
@@ -171,7 +171,7 @@ ApplicationWindow {
 		if (parentItem == undefined) parentItem = mainWindow.contentItem
 		startCallPopup.parent = parentItem
 		if (contact) {
-			console.log("[AbstractWindow] Transfer call to", contact.core.displayName, "addresses count", contact.core.allAddresses.length, call)
+			console.log("[AbstractWindow] Transfer call to", contact.core.fullName, "addresses count", contact.core.allAddresses.length, call)
 			if (contact.core.allAddresses.length > 1) {
 				startCallPopup.contact = contact
 				startCallPopup.currentCall = call

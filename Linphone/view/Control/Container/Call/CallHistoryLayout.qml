@@ -17,7 +17,7 @@ ColumnLayout {
 	property var computedContactNameObj: UtilsCpp.getDisplayName(contactAddress)
 	property string computedContactName: computedContactNameObj ? computedContactNameObj.value: ""
 	property string contactName: contact
-		? contact.core.displayName 
+		? contact.core.fullName 
 		: conferenceInfo
 			? conferenceInfo.core.subject
 			: computedContactName
