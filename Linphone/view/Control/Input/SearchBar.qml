@@ -19,6 +19,7 @@ FocusScope {
 	readonly property bool hasActiveFocus: textField.activeFocus
 	property alias color: backgroundItem.color
 	property bool delaySearch: true	// Wait some idle time after typing to start searching
+	property bool handleNumericPadPopupButtonsPressed: true
 	
 	signal openNumericPadRequested()// Useful for redirection before displaying numeric pad.
 	
@@ -27,10 +28,9 @@ FocusScope {
 	}
 
 	Connections {
-		enabled: numericPadPopup != undefined
+		enabled: numericPadPopup != undefined && handleNumericPadPopupButtonsPressed
 		target: numericPadPopup ? numericPadPopup : null
 		function onButtonPressed(text) {
-			console.log("text", text)
 			textField.text += text
 		}
 		function onWipe(){ textField.text = textField.text.slice(0, -1)}

@@ -156,7 +156,8 @@ Item {
 						focusedBorderColor: DefaultStyle.main1_500_main
 						numericPadButton.visible: text.length === 0
 						numericPadButton.checkable: false
-						
+						handleNumericPadPopupButtonsPressed: false
+
 						onOpenNumericPadRequested:mainItem.goToNewCall()
 					
                         Connections {
