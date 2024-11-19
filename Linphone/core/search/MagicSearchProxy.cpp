@@ -193,8 +193,9 @@ bool MagicSearchProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 	auto friendCore = getItemAtSource<MagicSearchList, FriendCore>(sourceRow);
 	auto toShow = false;
 	if (friendCore) {
-		toShow = (!mHideSuggestions || friendCore->getIsStored()) &&
-		         (!mShowFavoritesOnly || friendCore->getStarred()) && (mShowLdapContacts || !friendCore->isLdap());
+		toShow = (!mHideSuggestions || friendCore->getIsStored() || friendCore->isLdap()) &&
+		         (!mShowFavoritesOnly || friendCore->getStarred()) &&
+		         (mShowLdapContacts || (!friendCore->isLdap() || friendCore->getIsStored()));
 		if (toShow && mHideListProxy) {
 			for (auto &friendAddress : friendCore->getAllAddresses()) {
 				toShow = mHideListProxy->findFriendIndexByAddress(friendAddress.toMap()["address"].toString()) == -1;
@@ -211,8 +212,8 @@ bool MagicSearchProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, c
 	auto r = getItemAtSource<MagicSearchList, FriendCore>(sourceRight.row());
 
 	if (l && r) {
-		bool lIsStored = l->getIsStored();
-		bool rIsStored = r->getIsStored();
+		bool lIsStored = l->getIsStored() || l->isLdap();
+		bool rIsStored = r->getIsStored() || r->isLdap();
 		if (lIsStored && !rIsStored) return true;
 		else if (!lIsStored && rIsStored) return false;
 		auto lName = l->getFullName().toLower();
@@ -230,6 +231,6 @@ void MagicSearchProxy::setShowLdapContacts(bool show) {
 	auto list = dynamic_cast<SortFilterList *>(sourceModel());
 	if (list->mShowLdapContacts != show) {
 		list->mShowLdapContacts = show;
-		list->invalidate();
+		list->invalidateFilter();
 	}
 }

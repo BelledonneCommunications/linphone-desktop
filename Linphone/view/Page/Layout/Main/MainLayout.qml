@@ -262,7 +262,6 @@ Item {
 									showFavorites: false
 									selectionEnabled: false
 									showDefaultAddress: true
-									hideSuggestions: true
 									
 									sectionsPixelSize: 13 * DefaultStyle.dp
 									sectionsWeight: 700 * DefaultStyle.dp
@@ -283,92 +282,6 @@ Item {
 												contactList.currentIndex = -1
 												contactList.footerItem.forceActiveFocus()
 												event.accepted = true
-											}
-										}
-									}
-									
-									footer:  FocusScope{
-										id: suggestionFocusScope
-										width: contactList.width
-										height: visible ? content.implicitHeight : 0
-										onActiveFocusChanged: if(activeFocus) contactList.positionViewAtEnd()
-										visible: !contactList.haveAddress(suggestionText.text)
-										Rectangle{
-											anchors.left: parent.left
-											anchors.right: parent.right
-											anchors.bottom: parent.bottom
-											height: suggestionRow.implicitHeight
-											color: suggestionFocusScope.activeFocus ? DefaultStyle.numericPadPressedButtonColor : 'transparent'
-										}
-										ColumnLayout {
-											id: content
-											anchors.fill: parent
-											anchors.leftMargin: 5 * DefaultStyle.dp
-											anchors.rightMargin: 15 * DefaultStyle.dp
-											
-											spacing: 10 * DefaultStyle.dp			
-											Text {
-												text: qsTr("Suggestion")
-												color: DefaultStyle.main2_500main
-												font {
-													pixelSize: 13 * DefaultStyle.dp
-													weight: 700 * DefaultStyle.dp
-												}
-											}
-											
-											Keys.onPressed: (event) => {
-												if(contactList.count <= 0) return;
-												if(event.key == Qt.Key_Down){
-													contactList.currentIndex = 0
-													event.accepted = true
-												} else if(event.key == Qt.Key_Up){
-													contactList.currentIndex = contactList.count - 1
-													event.accepted = true
-												}
-											}
-											RowLayout {
-												id: suggestionRow
-												spacing: 10 * DefaultStyle.dp
-												
-												Avatar {
-													Layout.preferredWidth: 45 * DefaultStyle.dp
-													Layout.preferredHeight: 45 * DefaultStyle.dp
-													_address: magicSearchBar.text
-												}
-												Text {
-													id: suggestionText
-													property var urlObj: UtilsCpp.interpretUrl(magicSearchBar.text)
-													text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(urlObj?.value) : urlObj?.value
-													font {
-														pixelSize: 12 * DefaultStyle.dp
-														weight: 300 * DefaultStyle.dp
-													}
-												}
-												Item {
-													Layout.fillWidth: true
-												}
-												MagicSearchButton {
-													id: callButton
-													Layout.preferredWidth: 45 * DefaultStyle.dp
-													Layout.preferredHeight: 45 * DefaultStyle.dp
-													icon.source: AppIcons.phone
-													focus: true
-													onClicked: {
-														UtilsCpp.createCall(magicSearchBar.text)
-														magicSearchBar.clearText()
-													}
-													KeyNavigation.right: chatButton
-													KeyNavigation.left: chatButton
-												}
-												MagicSearchButton {
-													id: chatButton
-													visible: !SettingsCpp.disableChatFeature
-													Layout.preferredWidth: 45 * DefaultStyle.dp
-													Layout.preferredHeight: 45 * DefaultStyle.dp
-													icon.source: AppIcons.chatTeardropText
-													KeyNavigation.right: callButton
-													KeyNavigation.left: callButton
-												}
 											}
 										}
 									}

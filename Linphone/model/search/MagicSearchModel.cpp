@@ -26,6 +26,7 @@
 #include "model/setting/SettingsModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
+#include <functional>
 
 DEFINE_ABSTRACT_OBJECT(MagicSearchModel)
 
@@ -44,9 +45,14 @@ void MagicSearchModel::search(QString filter,
                               int maxResults) {
 	mLastSearch = filter;
 	setMaxResults(maxResults);
-	if ((filter == "" || filter == "*") && ((sourceFlags & (int)LinphoneEnums::MagicSearchSource::LdapServers) > 0) &&
-	    !SettingsModel::getInstance()->getSyncLdapContacts()) {
-		sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::LdapServers;
+	if (filter == "" || filter == "*") {
+		if (((sourceFlags & (int)LinphoneEnums::MagicSearchSource::LdapServers) > 0) &&
+		    !SettingsModel::getInstance()->getSyncLdapContacts())
+			sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::LdapServers;
+		// For complete search, we search only on local contacts.
+		sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::CallLogs;
+		sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::ChatRooms;
+		sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::ConferencesInfo;
 	}
 	qInfo() << log().arg("Searching ") << filter << " from " << sourceFlags << " with limit " << maxResults;
 	mMonitor->getContactsListAsync(filter != "*" ? Utils::appStringToCoreString(filter) : "", "", sourceFlags,
@@ -70,11 +76,24 @@ void MagicSearchModel::setMaxResults(int maxResults) {
 void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> &magicSearch) {
 	qDebug() << log().arg("SDK send callback: onSearchResultsReceived");
 	auto results = magicSearch->getLastSearch();
+	auto appFriends = ToolModel::getAppFriendList();
+	std::list<std::shared_ptr<linphone::SearchResult>> finalResults;
 	for (auto it : results) {
 		bool isLdap = (it->getSourceFlags() & (int)LinphoneEnums::MagicSearchSource::LdapServers) != 0;
-		if (isLdap && it->getFriend()) updateLdapFriendListWithFriend(it->getFriend());
+		bool toAdd = true;
+		if (isLdap && it->getFriend()) {
+			updateLdapFriendListWithFriend(it->getFriend());
+			if (appFriends->findFriendByAddress(it->getFriend()->getAddress())) { // Already exist in app list
+				toAdd = false;
+			}
+		}
+		if (toAdd &&
+		    std::find_if(finalResults.begin(), finalResults.end(), [it](std::shared_ptr<linphone::SearchResult> r) {
+			    return r->getAddress()->weakEqual(it->getAddress());
+		    }) == finalResults.end())
+			finalResults.push_back(it);
 	}
-	emit searchResultsReceived(results);
+	emit searchResultsReceived(finalResults);
 }
 
 void MagicSearchModel::onLdapHaveMoreResults(const std::shared_ptr<linphone::MagicSearch> &magicSearch,

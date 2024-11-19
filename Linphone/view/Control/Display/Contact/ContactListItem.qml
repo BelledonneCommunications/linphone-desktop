@@ -88,7 +88,8 @@ FocusScope {
 				Layout.topMargin: 2 * DefaultStyle.dp
 				Layout.fillWidth: true
 				visible: mainItem.showDefaultAddress
-				text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(searchResultItem.core.defaultAddress) : searchResultItem.core.defaultAddress
+				property string address: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(searchResultItem.core.defaultAddress) : searchResultItem.core.defaultAddress
+				text: UtilsCpp.boldTextPart(address, mainItem.highlightText)
 				maximumLineCount: 1
 				elide: Text.ElideRight
 				font {

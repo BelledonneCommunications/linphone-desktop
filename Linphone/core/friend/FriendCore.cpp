@@ -128,6 +128,7 @@ FriendCore::FriendCore(const FriendCore &friendCore) {
 	mJob = friendCore.mJob;
 	mPictureUri = friendCore.mPictureUri;
 	mIsSaved = friendCore.mIsSaved;
+	mIsStored = friendCore.mIsStored;
 	mIsLdap = friendCore.mIsLdap;
 }
 
@@ -633,10 +634,11 @@ void FriendCore::save() { // Save Values to model
 		mCoreModelConnection->invokeToModel([this, thisCopy]() {
 			std::shared_ptr<linphone::Friend> contact;
 			auto core = CoreModel::getInstance()->getCore();
+			auto appFriends = ToolModel::getAppFriendList();
 			for (auto &addr : mAddressList) {
 				auto friendAddress = addr.toMap();
 				auto linphoneAddr = ToolModel::interpretUrl(friendAddress["address"].toString());
-				contact = core->findFriend(linphoneAddr);
+				contact = appFriends->findFriendByAddress(linphoneAddr);
 				if (contact) break;
 			}
 			if (contact != nullptr) {

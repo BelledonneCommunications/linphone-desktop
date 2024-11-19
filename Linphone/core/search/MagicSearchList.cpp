@@ -21,6 +21,7 @@
 #include "MagicSearchList.hpp"
 #include "core/App.hpp"
 #include "core/friend/FriendCore.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
@@ -86,13 +87,16 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 			    &MagicSearchModel::searchResultsReceived,
 			    [this](const std::list<std::shared_ptr<linphone::SearchResult>> &results) {
 				    auto *contacts = new QList<QSharedPointer<FriendCore>>();
+				    auto ldapContacts = ToolModel::getLdapFriendList();
+
 				    for (auto it : results) {
 					    QSharedPointer<FriendCore> contact;
 					    auto linphoneFriend = it->getFriend();
-					    // Considered LDAP results as stored.
-					    bool isStored = (it->getSourceFlags() & (int)linphone::MagicSearch::Source::LdapServers) > 0;
+					    bool isStored = false;
 					    if (linphoneFriend) {
-						    contact = FriendCore::create(linphoneFriend);
+						    isStored =
+						        (ldapContacts->findFriendByAddress(linphoneFriend->getAddress()) != linphoneFriend);
+						    contact = FriendCore::create(linphoneFriend, isStored);
 						    contacts->append(contact);
 					    } else if (auto address = it->getAddress()) {
 						    auto linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
@@ -202,7 +206,7 @@ QVariant MagicSearchList::data(const QModelIndex &index, int role) const {
 	if (role == Qt::DisplayRole) {
 		return QVariant::fromValue(new FriendGui(mList[row].objectCast<FriendCore>()));
 	} else if (role == Qt::DisplayRole + 1) {
-		return mList[row].objectCast<FriendCore>()->getIsStored();
+		return mList[row].objectCast<FriendCore>()->getIsStored() || mList[row].objectCast<FriendCore>()->isLdap();
 	}
 	return QVariant();
 }

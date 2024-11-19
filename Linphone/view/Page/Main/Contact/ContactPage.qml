@@ -205,7 +205,6 @@ AbstractMainPage {
 			spacing: 38 * DefaultStyle.dp
 			SearchBar {
 				id: searchBar
-				visible: !contactLoader.item || contactLoader.item.loading || contactLoader.item.count != 0 || text.length !== 0
 				Layout.leftMargin: leftPanel.leftMargin
 				Layout.rightMargin: leftPanel.rightMargin
 				Layout.topMargin: 18 * DefaultStyle.dp
@@ -218,7 +217,7 @@ AbstractMainPage {
 				id: content
 				spacing: 15 * DefaultStyle.dp
 				Text {
-					visible: contactLoader.item && !contactLoader.item.loading && contactLoader.item.count === 0
+					visible: contactLoader.item && !contactLoader.item.loading && !contactLoader.item.haveContacts
 					Layout.alignment: Qt.AlignHCenter
 					Layout.topMargin: 137 * DefaultStyle.dp
 					text: qsTr("Aucun contact%1").arg(searchBar.text.length !== 0 ? " correspondant" : "")
@@ -244,6 +243,7 @@ AbstractMainPage {
 						id: contactList
 						searchBarText: searchBar.text
 						hideSuggestions: true
+						showDefaultAddress: false
 						sourceFlags: LinphoneEnums.MagicSearchSource.Friends | LinphoneEnums.MagicSearchSource.FavoriteFriends | LinphoneEnums.MagicSearchSource.LdapServers
 						
 						onSelectedContactChanged: {

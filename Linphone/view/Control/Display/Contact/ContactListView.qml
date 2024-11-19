@@ -17,7 +17,7 @@ ListView {
 	property bool showContactMenu: true	// Display the dot menu for contacts.
 	property bool showFavorites: true	// Display the favorites in the header
 	property bool hideSuggestions: false	// Hide not stored contacts (not suggestions)
-	property string highlightText	// Bold characters in Display name.
+	property string highlightText: searchText	// Bold characters in Display name.
 	property var sourceFlags: LinphoneEnums.MagicSearchSource.All
 	
 	property bool displayNameCapitalization: true	// Capitalize display name.
@@ -39,6 +39,7 @@ ListView {
 	property ConferenceInfoGui confInfoGui
 	
 	property bool haveFavorites: false
+	property bool haveContacts: count > 0 || (showFavorites && headerItem.list.count > 0)
 	property int sectionsPixelSize: 16 * DefaultStyle.dp
 	property int sectionsWeight: 800 * DefaultStyle.dp
 	property int sectionsSpacing: 18 * DefaultStyle.dp
@@ -195,6 +196,7 @@ ListView {
 		sourceFlags: mainItem.sourceFlags
 					   
 		hideSuggestions: mainItem.hideSuggestions
+		showLdapContacts: mainItem.searchText != '*' && mainItem.searchText != '' || SettingsCpp.syncLdapContacts
 		initialDisplayItems: 20
 		onLocalFriendCreated: (index) => {
 			var item = itemAtIndex(index)
@@ -438,10 +440,11 @@ ListView {
 		focus: true
 		
 		searchResultItem: $modelData
-		showInitials: mainItem.showInitials && searchResultItem.core.isStored
+		showInitials: mainItem.showInitials && isStored
 		showDefaultAddress: mainItem.showDefaultAddress
 		showActions: mainItem.showActions
 		showContactMenu: searchResultItem.core.isStored
+		
 		highlightText: mainItem.highlightText
 		
 		displayNameCapitalization: mainItem.displayNameCapitalization
