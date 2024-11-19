@@ -12,8 +12,6 @@ AbstractMainPage {
 	emptyListText: qsTr("Aucune réunion")
 	newItemIconSource: AppIcons.plusCircle
 	rightPanelColor: selectedConference ? DefaultStyle.grey_0 : DefaultStyle.grey_100 
-	// disable left panel contact list interaction while a contact is being edited
-	property bool leftPanelEnabled: true
 	property ConferenceInfoGui selectedConference
 	property int meetingListCount
 	signal returnRequested()
@@ -130,11 +128,9 @@ AbstractMainPage {
 			}
 			
 			ColumnLayout {
-				id: listLayoutIn
 				anchors.fill: parent
 				spacing: 0
 				RowLayout {
-					enabled: mainItem.leftPanelEnabled
 					Layout.rightMargin: 38 * DefaultStyle.dp
 					spacing: 0					
 					Text {
@@ -164,7 +160,6 @@ AbstractMainPage {
                     Layout.topMargin: 18 * DefaultStyle.dp
                     Layout.rightMargin: 38 * DefaultStyle.dp
 					placeholderText: qsTr("Rechercher une réunion")
-					visible: conferenceList.count !== 0 || text.length !== 0
 					KeyNavigation.up: conferenceList
 					KeyNavigation.down: conferenceList
 					Binding {
@@ -191,8 +186,7 @@ AbstractMainPage {
 					Layout.topMargin: 38 * DefaultStyle.dp - 24 * DefaultStyle.dp
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					hoverEnabled: mainItem.leftPanelEnabled
-					highlightFollowsCurrentItem: true
+					
 					preferredHighlightBegin: height/2 - 10
 					preferredHighlightEnd: height/2 + 10
 					highlightRangeMode: ListView.ApplyRange
@@ -220,7 +214,6 @@ AbstractMainPage {
 						
 					}
 				}
-				Item{Layout.fillHeight: true}
 			}
 		}
 	}
