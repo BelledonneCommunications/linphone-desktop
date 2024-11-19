@@ -109,7 +109,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 	connect(this, &FriendCore::addressChanged, &FriendCore::allAddressesChanged);
 	connect(this, &FriendCore::phoneNumberChanged, &FriendCore::allAddressesChanged);
 	auto updateFullName = [this] {
-		auto name = (mGivenName.isEmpty() ? "" : mGivenName) + (mFamilyName.isEmpty() ? "" : mFamilyName);
+		auto name = mGivenName + (!mGivenName.isEmpty() && !mFamilyName.isEmpty() ? " " : "") + mFamilyName;
 		if (!name.isEmpty()) setFullName(name);
 	};
 	connect(this, &FriendCore::givenNameChanged, updateFullName);

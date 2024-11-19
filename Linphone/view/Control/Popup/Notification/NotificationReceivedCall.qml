@@ -7,8 +7,8 @@ import UtilsCpp
 Notification {
 	id: mainItem
 	radius: 20 * DefaultStyle.dp
-    overriddenWidth: 450 * DefaultStyle.dp//content.width//101 * DefaultStyle.dp
-    overriddenHeight: 101 * DefaultStyle.dp//content.height//
+	overriddenWidth: 450 * DefaultStyle.dp//content.width
+	overriddenHeight: 101 * DefaultStyle.dp//content.height
 	
 	readonly property var call: notificationData && notificationData.call
 	property var state: call.core.state
@@ -25,17 +25,15 @@ Notification {
 	Popup {
 		id: content
 		visible: mainItem.visible
-		leftPadding: 19 * DefaultStyle.dp
-		rightPadding: 19 * DefaultStyle.dp
+		width: parent.width
+		height: parent.height
+		leftPadding: 26 * DefaultStyle.dp
+		rightPadding: 26 * DefaultStyle.dp
 		topPadding: 15 * DefaultStyle.dp
 		bottomPadding: 15 * DefaultStyle.dp
 		background: Item{}
 		contentItem: RowLayout {
-			id: notifContent
-			
 			spacing: 15 * DefaultStyle.dp
-			height: childrenRect.height
-			width: childrenRect.width
 			RowLayout {
 				Layout.fillWidth: true
 				Layout.alignment: Qt.AlignLeft
@@ -80,7 +78,7 @@ Notification {
 					}
 				}
 			}
-		
+			Item{Layout.fillWidth: true}
 			RowLayout {
 				Layout.alignment: Qt.AlignHCenter
 				Layout.fillWidth: true

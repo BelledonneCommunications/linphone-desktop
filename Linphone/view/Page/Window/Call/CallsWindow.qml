@@ -149,7 +149,7 @@ AbstractWindow {
 	
 	Timer {
 		id: autoCloseWindow
-		interval: 3000
+		interval: mainWindow.callTerminatedByUser ? 1000 : 2000
 		onTriggered: {
 			UtilsCpp.closeCallsWindow()
 		} 
@@ -157,7 +157,10 @@ AbstractWindow {
 
 	Dialog {
 		id: terminateAllCallsDialog
-		onAccepted: call.core.lTerminateAllCalls()
+		onAccepted: {
+			mainWindow.callTerminatedByUser = true
+			call.core.lTerminateAllCalls()
+		}
 		width: 278 * DefaultStyle.dp
 		text: qsTr("La fenêtre est sur le point d'être fermée. Cela terminera tous les appels en cours. Souhaitez vous continuer ?")
 	}
