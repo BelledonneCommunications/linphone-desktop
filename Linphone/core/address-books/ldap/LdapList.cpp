@@ -36,7 +36,7 @@ QSharedPointer<LdapList> LdapList::create() {
 	return model;
 }
 
-QSharedPointer<LdapCore> LdapList::createLdapCore(const std::shared_ptr<linphone::Ldap> &ldap) {
+QSharedPointer<LdapCore> LdapList::createLdapCore(const std::shared_ptr<linphone::RemoteContactDirectory> &ldap) {
 	auto LdapCore = LdapCore::create(ldap);
 	return LdapCore;
 }
@@ -58,9 +58,11 @@ void LdapList::setSelf(QSharedPointer<LdapList> me) {
 		mModelConnection->invokeToModel([this]() {
 			QList<QSharedPointer<LdapCore>> *ldaps = new QList<QSharedPointer<LdapCore>>();
 			mustBeInLinphoneThread(getClassName());
-			for (auto ldap : CoreModel::getInstance()->getCore()->getLdapList()) {
-				auto model = createLdapCore(ldap);
-				ldaps->push_back(model);
+			for (auto server : CoreModel::getInstance()->getCore()->getRemoteContactDirectories()) {
+				if (server->getType() == linphone::RemoteContactDirectory::Type::Ldap) {
+					auto model = createLdapCore(server);
+					ldaps->push_back(model);
+				}
 			}
 			mModelConnection->invokeToCore([this, ldaps]() {
 				mustBeInMainThread(getClassName());

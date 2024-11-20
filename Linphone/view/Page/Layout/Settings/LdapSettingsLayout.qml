@@ -76,7 +76,7 @@ AbstractSettingsLayout {
 			Layout.leftMargin: 64 * DefaultStyle.dp
 			DecoratedTextField {
 				id: server
-				propertyName: "server"
+				propertyName: "serverUrl"
 				propertyOwner: ldapGui.core
 				title: qsTr("URL du serveur (ne peut être vide)")
 				toValidate: true
@@ -117,7 +117,7 @@ AbstractSettingsLayout {
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
-				propertyName: "maxResults"
+				propertyName: "limit"
 				propertyOwner: ldapGui.core
 				validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 				title: qsTr("Nombre maximum de résultats")
@@ -141,7 +141,7 @@ AbstractSettingsLayout {
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
-				propertyName: "minChars"
+				propertyName: "minCharacters"
 				propertyOwner: ldapGui.core
 				title: qsTr("Nombre minimum de caractères pour la requête")
 				validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }

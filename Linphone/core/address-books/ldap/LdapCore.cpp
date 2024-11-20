@@ -23,20 +23,20 @@
 
 DEFINE_ABSTRACT_OBJECT(LdapCore)
 
-QSharedPointer<LdapCore> LdapCore::create(const std::shared_ptr<linphone::Ldap> &ldap) {
+QSharedPointer<LdapCore> LdapCore::create(const std::shared_ptr<linphone::RemoteContactDirectory> &ldap) {
 	auto sharedPointer = QSharedPointer<LdapCore>(new LdapCore(ldap), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
 	sharedPointer->moveToThread(App::getInstance()->thread());
 	return sharedPointer;
 }
 
-LdapCore::LdapCore(const std::shared_ptr<linphone::Ldap> &ldap) : QObject(nullptr) {
+LdapCore::LdapCore(const std::shared_ptr<linphone::RemoteContactDirectory> &ldap) : QObject(nullptr) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mLdapModel = Utils::makeQObject_ptr<LdapModel>(ldap);
 
 	INIT_CORE_MEMBER(Enabled, mLdapModel)
-	INIT_CORE_MEMBER(Server, mLdapModel)
+	INIT_CORE_MEMBER(ServerUrl, mLdapModel)
 	INIT_CORE_MEMBER(BindDn, mLdapModel)
 	INIT_CORE_MEMBER(Password, mLdapModel)
 	INIT_CORE_MEMBER(AuthMethod, mLdapModel)
@@ -44,10 +44,10 @@ LdapCore::LdapCore(const std::shared_ptr<linphone::Ldap> &ldap) : QObject(nullpt
 	INIT_CORE_MEMBER(ServerCertificatesVerificationMode, mLdapModel)
 	INIT_CORE_MEMBER(BaseObject, mLdapModel)
 	INIT_CORE_MEMBER(Filter, mLdapModel)
-	INIT_CORE_MEMBER(MaxResults, mLdapModel)
+	INIT_CORE_MEMBER(Limit, mLdapModel)
 	INIT_CORE_MEMBER(Timeout, mLdapModel)
 	INIT_CORE_MEMBER(Delay, mLdapModel)
-	INIT_CORE_MEMBER(MinChars, mLdapModel)
+	INIT_CORE_MEMBER(MinCharacters, mLdapModel)
 	INIT_CORE_MEMBER(NameAttribute, mLdapModel)
 	INIT_CORE_MEMBER(SipAttribute, mLdapModel)
 	INIT_CORE_MEMBER(SipDomain, mLdapModel)
@@ -73,7 +73,7 @@ void LdapCore::remove() {
 }
 
 bool LdapCore::isValid() {
-	return !mServer.isEmpty() && !mBaseObject.isEmpty();
+	return !mServerUrl.isEmpty() && !mBaseObject.isEmpty();
 }
 
 void LdapCore::setSelf(QSharedPointer<LdapCore> me) {
@@ -81,7 +81,7 @@ void LdapCore::setSelf(QSharedPointer<LdapCore> me) {
 	    new SafeConnection<LdapCore, LdapModel>(me, mLdapModel), &QObject::deleteLater);
 
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, bool, enabled, Enabled)
-	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, server, Server)
+	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, serverUrl, ServerUrl)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, bindDn, BindDn)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, password, Password)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, linphone::Ldap::AuthMethod,
@@ -92,10 +92,10 @@ void LdapCore::setSelf(QSharedPointer<LdapCore> me) {
 	                           ServerCertificatesVerificationMode)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, baseObject, BaseObject)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, filter, Filter)
-	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, int, maxResults, MaxResults)
+	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, int, limit, Limit)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, int, timeout, Timeout)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, int, delay, Delay)
-	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, int, minChars, MinChars)
+	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, int, minCharacters, MinCharacters)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, nameAttribute,
 	                           NameAttribute)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, sipAttribute,

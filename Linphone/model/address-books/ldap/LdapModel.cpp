@@ -24,19 +24,20 @@
 
 DEFINE_ABSTRACT_OBJECT(LdapModel)
 
-LdapModel::LdapModel(const std::shared_ptr<linphone::Ldap> &ldap, QObject *parent) {
+LdapModel::LdapModel(const std::shared_ptr<linphone::RemoteContactDirectory> &ldap, QObject *parent) {
 	mustBeInLinphoneThread(getClassName());
 	if (ldap) {
 		mLdap = ldap;
-		mLdapParamsClone = mLdap->getParams()->clone();
+		mLdapParamsClone = mLdap->getLdapParams();
 	} else {
-		mLdap = nullptr;
 		mLdapParamsClone = CoreModel::getInstance()->getCore()->createLdapParams();
-		mLdapParamsClone->setTimeout(5);
-		mLdapParamsClone->setMaxResults(50);
 		mLdapParamsClone->setDelay(2000);
-		mLdapParamsClone->setMinChars(0); // Needs to be 0 if Contacts list should be synchronized with LDAP AB
 		mLdapParamsClone->enableTls(true);
+
+		mLdap = CoreModel::getInstance()->getCore()->createLdapRemoteContactDirectory(mLdapParamsClone);
+		mLdap->setTimeout(5);
+		mLdap->setLimit(50);
+		mLdap->setMinCharacters(0); // Needs to be 0 if Contacts list should be synchronized with LDAP AB
 	}
 }
 
@@ -46,19 +47,29 @@ LdapModel::~LdapModel() {
 
 void LdapModel::save() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	if (mLdap)
-		CoreModel::getInstance()->getCore()->removeLdap(
+	int oldTimeout = 5;
+	int oldLimit = 50;
+	int oldMinChars = 0;
+	if (mLdap) {
+		oldTimeout = mLdap->getTimeout();
+		oldLimit = mLdap->getLimit();
+		oldMinChars = mLdap->getMinCharacters();
+		CoreModel::getInstance()->getCore()->removeRemoteContactDirectory(
 		    mLdap); // Need to do remove/add when updating, as setParams on existing one also adds it to core.
-	mLdap = CoreModel::getInstance()->getCore()->createLdapWithParams(mLdapParamsClone);
-	CoreModel::getInstance()->getCore()->addLdap(mLdap);
+	}
+	mLdap = CoreModel::getInstance()->getCore()->createLdapRemoteContactDirectory(mLdapParamsClone);
+	mLdap->setTimeout(oldTimeout);
+	mLdap->setLimit(oldLimit);
+	mLdap->setMinCharacters(oldMinChars);
+	CoreModel::getInstance()->getCore()->addRemoteContactDirectory(mLdap);
 	lDebug() << log().arg("LDAP Server saved");
-	mLdapParamsClone = mLdap->getParams()->clone();
+	mLdapParamsClone = mLdap->getLdapParams();
 	emit saved();
 }
 
 void LdapModel::remove() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	CoreModel::getInstance()->getCore()->removeLdap(mLdap);
+	CoreModel::getInstance()->getCore()->removeRemoteContactDirectory(mLdap);
 	lDebug() << log().arg("LDAP Server removed");
 	emit removed();
 }
@@ -77,7 +88,7 @@ void LdapModel::setDebug(bool data) {
 }
 
 DEFINE_GETSET(LdapModel, bool, enabled, Enabled, mLdapParamsClone)
-DEFINE_GETSET_MODEL_STRING(LdapModel, server, Server, mLdapParamsClone)
+DEFINE_GETSET_MODEL_STRING(LdapModel, serverUrl, ServerUrl, mLdap)
 DEFINE_GETSET_MODEL_STRING(LdapModel, bindDn, BindDn, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, password, Password, mLdapParamsClone)
 DEFINE_GETSET(LdapModel, linphone::Ldap::AuthMethod, authMethod, AuthMethod, mLdapParamsClone)
@@ -89,10 +100,10 @@ DEFINE_GETSET(LdapModel,
               mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, baseObject, BaseObject, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, filter, Filter, mLdapParamsClone)
-DEFINE_GETSET(LdapModel, int, maxResults, MaxResults, mLdapParamsClone)
-DEFINE_GETSET(LdapModel, int, timeout, Timeout, mLdapParamsClone)
+DEFINE_GETSET(LdapModel, int, limit, Limit, mLdap)
+DEFINE_GETSET(LdapModel, int, timeout, Timeout, mLdap)
 DEFINE_GETSET(LdapModel, int, delay, Delay, mLdapParamsClone)
-DEFINE_GETSET(LdapModel, int, minChars, MinChars, mLdapParamsClone)
+DEFINE_GETSET(LdapModel, int, minCharacters, MinCharacters, mLdap)
 DEFINE_GETSET_MODEL_STRING(LdapModel, nameAttribute, NameAttribute, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, sipAttribute, SipAttribute, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, sipDomain, SipDomain, mLdapParamsClone)

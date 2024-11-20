@@ -32,8 +32,8 @@ class LdapCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
 public:
-	static QSharedPointer<LdapCore> create(const std::shared_ptr<linphone::Ldap> &ldap);
-	LdapCore(const std::shared_ptr<linphone::Ldap> &ldap);
+	static QSharedPointer<LdapCore> create(const std::shared_ptr<linphone::RemoteContactDirectory> &ldap);
+	LdapCore(const std::shared_ptr<linphone::RemoteContactDirectory> &ldap);
 	~LdapCore();
 
 	void setSelf(QSharedPointer<LdapCore> me);
@@ -43,7 +43,7 @@ public:
 	Q_INVOKABLE bool isValid();
 
 	DECLARE_CORE_GETSET_MEMBER(bool, enabled, Enabled)
-	DECLARE_CORE_GETSET_MEMBER(QString, server, Server)
+	DECLARE_CORE_GETSET_MEMBER(QString, serverUrl, ServerUrl)
 	DECLARE_CORE_GETSET_MEMBER(QString, bindDn, BindDn)
 	DECLARE_CORE_GETSET_MEMBER(QString, password, Password)
 	DECLARE_CORE_GETSET_MEMBER(linphone::Ldap::AuthMethod, authMethod, AuthMethod)
@@ -53,10 +53,10 @@ public:
 	                           ServerCertificatesVerificationMode)
 	DECLARE_CORE_GETSET_MEMBER(QString, baseObject, BaseObject)
 	DECLARE_CORE_GETSET_MEMBER(QString, filter, Filter)
-	DECLARE_CORE_GETSET_MEMBER(int, maxResults, MaxResults)
+	DECLARE_CORE_GETSET_MEMBER(int, limit, Limit)
 	DECLARE_CORE_GETSET_MEMBER(int, timeout, Timeout)
 	DECLARE_CORE_GETSET_MEMBER(int, delay, Delay)
-	DECLARE_CORE_GETSET_MEMBER(int, minChars, MinChars)
+	DECLARE_CORE_GETSET_MEMBER(int, minCharacters, MinCharacters)
 	DECLARE_CORE_GETSET_MEMBER(QString, nameAttribute, NameAttribute)
 	DECLARE_CORE_GETSET_MEMBER(QString, sipAttribute, SipAttribute)
 	DECLARE_CORE_GETSET_MEMBER(QString, sipDomain, SipDomain)

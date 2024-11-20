@@ -36,7 +36,7 @@ class LdapList : public ListProxy, public AbstractObject {
 public:
 	static QSharedPointer<LdapList> create();
 	// Create a LdapCore and make connections to List.
-	QSharedPointer<LdapCore> createLdapCore(const std::shared_ptr<linphone::Ldap> &ldap);
+	QSharedPointer<LdapCore> createLdapCore(const std::shared_ptr<linphone::RemoteContactDirectory> &ldap);
 	LdapList(QObject *parent = Q_NULLPTR);
 	~LdapList();
 

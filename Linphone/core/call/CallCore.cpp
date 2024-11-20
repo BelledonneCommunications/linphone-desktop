@@ -131,7 +131,18 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 		mRemoteName = Utils::coreStringToAppString(
 		    linphoneFriend->getVcard() ? linphoneFriend->getVcard()->getFullName() : linphoneFriend->getName());
 	if (mRemoteName.isEmpty()) mRemoteName = ToolModel::getDisplayName(mRemoteAddress);
-	mShouldFindRemoteLdapFriend = !linphoneFriend && !CoreModel::getInstance()->getCore()->getLdapList().empty();
+	mShouldFindRemoteLdapFriend = !linphoneFriend; //
+	if (mShouldFindRemoteLdapFriend) {
+		auto servers = CoreModel::getInstance()->getCore()->getRemoteContactDirectories();
+		bool haveLdap = false;
+		for (auto s : servers) {
+			if (s->getType() == linphone::RemoteContactDirectory::Type::Ldap) {
+				haveLdap = true;
+				break;
+			}
+		}
+		mShouldFindRemoteLdapFriend = haveLdap;
+	}
 	mLocalAddress = Utils::coreStringToAppString(call->getCallLog()->getLocalAddress()->asStringUriOnly());
 	mStatus = LinphoneEnums::fromLinphone(call->getCallLog()->getStatus());
 

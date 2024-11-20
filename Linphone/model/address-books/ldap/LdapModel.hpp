@@ -29,7 +29,7 @@ class LdapModel : public QObject, public AbstractObject {
 	Q_OBJECT
 
 public:
-	LdapModel(const std::shared_ptr<linphone::Ldap> &ldap, QObject *parent = nullptr);
+	LdapModel(const std::shared_ptr<linphone::RemoteContactDirectory> &ldap, QObject *parent = nullptr);
 	~LdapModel();
 
 	void setDefaultParams();
@@ -37,7 +37,7 @@ public:
 	void remove();
 
 	DECLARE_GETSET(bool, enabled, Enabled)
-	DECLARE_GETSET(QString, server, Server)
+	DECLARE_GETSET(QString, serverUrl, ServerUrl)
 	DECLARE_GETSET(QString, bindDn, BindDn)
 	DECLARE_GETSET(QString, password, Password)
 	DECLARE_GETSET(linphone::Ldap::AuthMethod, authMethod, AuthMethod)
@@ -47,10 +47,10 @@ public:
 	               ServerCertificatesVerificationMode)
 	DECLARE_GETSET(QString, baseObject, BaseObject)
 	DECLARE_GETSET(QString, filter, Filter)
-	DECLARE_GETSET(int, maxResults, MaxResults)
+	DECLARE_GETSET(int, limit, Limit)
 	DECLARE_GETSET(int, timeout, Timeout)
 	DECLARE_GETSET(int, delay, Delay)
-	DECLARE_GETSET(int, minChars, MinChars)
+	DECLARE_GETSET(int, minCharacters, MinCharacters)
 	DECLARE_GETSET(QString, nameAttribute, NameAttribute)
 	DECLARE_GETSET(QString, sipAttribute, SipAttribute)
 	DECLARE_GETSET(QString, sipDomain, SipDomain)
@@ -61,7 +61,7 @@ signals:
 	void removed();
 
 private:
-	std::shared_ptr<linphone::Ldap> mLdap;
+	std::shared_ptr<linphone::RemoteContactDirectory> mLdap;
 	std::shared_ptr<linphone::LdapParams> mLdapParamsClone;
 
 	DECLARE_ABSTRACT_OBJECT

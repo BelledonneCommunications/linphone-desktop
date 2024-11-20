@@ -42,7 +42,7 @@ AbstractSettingsLayout {
 			newItemGui: createGuiObject('Ldap')
 			settingsLayout: layoutUrl("LdapSettingsLayout")
 			owner: mainItem
-			titleProperty: "server"
+			titleProperty: "serverUrl"
 			supportsEnableDisable: true
 			showAddButton: true
 		}
