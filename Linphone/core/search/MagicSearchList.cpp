@@ -224,3 +224,17 @@ int MagicSearchList::findFriendIndexByAddress(const QString &address) {
 	}
 	return -1;
 }
+
+QSharedPointer<FriendCore> MagicSearchList::findFriendByAddress(const QString &address) {
+	for (int i = 0; i < getCount(); ++i) {
+		auto friendCore = getAt<FriendCore>(i);
+		if (!friendCore) continue;
+		for (auto &friendAddress : friendCore->getAllAddresses()) {
+			auto map = friendAddress.toMap();
+			if (map["address"].toString() == address) {
+				return friendCore;
+			}
+		}
+	}
+	return nullptr;
+}

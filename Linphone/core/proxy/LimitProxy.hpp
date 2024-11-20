@@ -32,6 +32,7 @@ public:
 	               initialDisplayItemsChanged)
 	Q_PROPERTY(int maxDisplayItems READ getMaxDisplayItems WRITE setMaxDisplayItems NOTIFY maxDisplayItemsChanged)
 	Q_PROPERTY(int displayItemsStep READ getDisplayItemsStep WRITE setDisplayItemsStep NOTIFY displayItemsStepChanged)
+	Q_PROPERTY(bool haveMore READ getHaveMore NOTIFY haveMoreChanged)
 
 	// Propagation
 	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
@@ -72,6 +73,8 @@ public:
 	int getDisplayItemsStep() const;
 	void setDisplayItemsStep(int step);
 
+	bool getHaveMore() const;
+
 	//-------------------------------------------------------------
 	QString getFilterText() const;
 	void setFilterText(const QString &filter);
@@ -92,6 +95,7 @@ signals:
 	void initialDisplayItemsChanged();
 	void maxDisplayItemsChanged();
 	void displayItemsStepChanged();
+	void haveMoreChanged();
 	//-----------------------------------------------------------------
 	void filterTypeChanged(int filterType);
 	void filterTextChanged();

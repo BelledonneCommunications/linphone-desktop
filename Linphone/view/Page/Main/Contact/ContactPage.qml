@@ -239,22 +239,21 @@ AbstractMainPage {
 						Qt.callLater(function(){contactLoader.active=true})
 					}
 					//-------------------------------------------------------------
-					sourceComponent: ContactListView{
+					sourceComponent: AllContactListView{
 						id: contactList
 						searchBarText: searchBar.text
 						hideSuggestions: true
 						showDefaultAddress: false
 						sourceFlags: LinphoneEnums.MagicSearchSource.Friends | LinphoneEnums.MagicSearchSource.FavoriteFriends | LinphoneEnums.MagicSearchSource.LdapServers
-						
-						onSelectedContactChanged: {
-							mainItem.selectedContact = selectedContact
-						}
+						onHighlightedContactChanged: mainItem.selectedContact = highlightedContact
 						onContactDeletionRequested: (contact) => {
 							mainItem.deleteContact(contact)
 						}
-						onCountChanged: {
-							if (initialFriendToDisplay.length !== 0) {
-								if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
+						onLoadingChanged: {
+							if(!loading && initialFriendToDisplay.length !== 0) {
+								Qt.callLater(function(){
+									if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
+								})
 							}
 						}
 					}

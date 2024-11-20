@@ -68,9 +68,7 @@ void MagicSearchProxy::setList(QSharedPointer<MagicSearchList> newList) {
 	}
 	auto sortFilterList = new SortFilterList(mList.get(), Qt::AscendingOrder);
 	if (oldModel) {
-		sortFilterList->mShowFavoritesOnly = oldModel->mShowFavoritesOnly;
-		sortFilterList->mHideSuggestions = oldModel->mHideSuggestions;
-		sortFilterList->mShowLdapContacts = oldModel->mShowLdapContacts;
+		sortFilterList->mFilterType = oldModel->mFilterType;
 		sortFilterList->mHideListProxy = oldModel->mHideListProxy;
 		if (sortFilterList->mHideListProxy) {
 			connect(sortFilterList->mHideListProxy, &MagicSearchProxy::countChanged, sortFilterList,
@@ -82,7 +80,7 @@ void MagicSearchProxy::setList(QSharedPointer<MagicSearchList> newList) {
 	connect(
 	    mList.get(), &MagicSearchList::friendStarredChanged, this,
 	    [this, sortFilterList]() {
-		    if (showFavoritesOnly()) sortFilterList->invalidate();
+		    if ((getFilterType() & (int)FilteringTypes::Favorites) > 0) sortFilterList->invalidate();
 	    },
 	    Qt::QueuedConnection);
 	setSourceModels(sortFilterList);
@@ -96,6 +94,27 @@ int MagicSearchProxy::findFriendIndexByAddress(const QString &address) {
 		if (listIndex == -1) return -1;
 		return dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(magicSearchList->index(listIndex, 0)).row();
 	} else return -1;
+}
+
+FriendGui *MagicSearchProxy::findFriendByAddress(const QString &address) {
+	auto magicSearchList = getListModel<MagicSearchList>();
+	if (magicSearchList) {
+		auto friendCore = magicSearchList->findFriendByAddress(address);
+		return friendCore ? new FriendGui(friendCore) : nullptr;
+	} else return nullptr;
+}
+
+int MagicSearchProxy::loadUntil(const QString &address) {
+	auto magicSearchList = getListModel<MagicSearchList>();
+	if (magicSearchList) {
+		auto listIndex = magicSearchList->findFriendIndexByAddress(address);
+		if (listIndex == -1) return -1;
+		listIndex =
+		    dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(magicSearchList->index(listIndex, 0)).row();
+		if (mMaxDisplayItems < listIndex) setMaxDisplayItems(listIndex + 1);
+		return listIndex;
+	}
+	return -1;
 }
 
 QString MagicSearchProxy::getSearchText() const {
@@ -123,31 +142,6 @@ int MagicSearchProxy::getMaxResults() const {
 
 void MagicSearchProxy::setMaxResults(int flags) {
 	mList->setMaxResults(flags);
-}
-
-bool MagicSearchProxy::showFavoritesOnly() const {
-	return dynamic_cast<SortFilterList *>(sourceModel())->mShowFavoritesOnly;
-}
-
-void MagicSearchProxy::setShowFavoritesOnly(bool show) {
-	auto list = dynamic_cast<SortFilterList *>(sourceModel());
-	if (list->mShowFavoritesOnly != show) {
-		list->mShowFavoritesOnly = show;
-		list->invalidate();
-		emit showFavoriteOnlyChanged();
-	}
-}
-
-bool MagicSearchProxy::getHideSuggestions() const {
-	return dynamic_cast<SortFilterList *>(sourceModel())->mHideSuggestions;
-}
-void MagicSearchProxy::setHideSuggestions(bool data) {
-	auto list = dynamic_cast<SortFilterList *>(sourceModel());
-	if (list->mHideSuggestions != data) {
-		list->mHideSuggestions = data;
-		list->invalidate();
-		emit hideSuggestionsChanged();
-	}
 }
 
 MagicSearchProxy *MagicSearchProxy::getParentProxy() const {
@@ -193,9 +187,23 @@ bool MagicSearchProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 	auto friendCore = getItemAtSource<MagicSearchList, FriendCore>(sourceRow);
 	auto toShow = false;
 	if (friendCore) {
-		toShow = (!mHideSuggestions || friendCore->getIsStored() || friendCore->isLdap()) &&
-		         (!mShowFavoritesOnly || friendCore->getStarred()) &&
-		         (mShowLdapContacts || (!friendCore->isLdap() || friendCore->getIsStored()));
+		if (mFilterType == (int)FilteringTypes::None) return false;
+		if ((mFilterType & (int)FilteringTypes::Favorites) > 0) {
+			toShow = friendCore->getStarred();
+			if (!toShow) return false;
+		}
+		if ((mFilterType & (int)FilteringTypes::Ldap) > 0) {
+			toShow = friendCore->isLdap();
+			// if (!toShow) return false;
+		}
+		if (!toShow && (mFilterType & (int)FilteringTypes::App) > 0) {
+			toShow = friendCore->getIsStored();
+			// if (!toShow) return false;
+		}
+		if (!toShow && (mFilterType & (int)FilteringTypes::Other) > 0) {
+			toShow = !friendCore->getIsStored() && !friendCore->isLdap();
+		}
+
 		if (toShow && mHideListProxy) {
 			for (auto &friendAddress : friendCore->getAllAddresses()) {
 				toShow = mHideListProxy->findFriendIndexByAddress(friendAddress.toMap()["address"].toString()) == -1;
@@ -221,16 +229,4 @@ bool MagicSearchProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, c
 		return lName < rName;
 	}
 	return true;
-}
-
-bool MagicSearchProxy::showLdapContacts() const {
-	return dynamic_cast<SortFilterList *>(sourceModel())->mShowLdapContacts;
-}
-
-void MagicSearchProxy::setShowLdapContacts(bool show) {
-	auto list = dynamic_cast<SortFilterList *>(sourceModel());
-	if (list->mShowLdapContacts != show) {
-		list->mShowLdapContacts = show;
-		list->invalidateFilter();
-	}
 }

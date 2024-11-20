@@ -8,7 +8,7 @@ import ConstantsCpp 1.0
 import SettingsCpp
 FocusScope {
 	id: mainItem
-	implicitHeight: 56 * DefaultStyle.dp
+	implicitHeight: visible ? 56 * DefaultStyle.dp : 0
 	property var searchResultItem
 	property bool showInitials: true	// Display Initials of Display name.
 	property bool showDefaultAddress: true	// Display address below display name.
@@ -21,10 +21,8 @@ FocusScope {
 	property bool selectionEnabled: true		// Contact can be selected
 	property bool multiSelectionEnabled: false	//Multiple items can be selected.
 	property list<string> selectedContacts		// List of default address on selected contacts.
-	property int selectedContactCount: selectedContacts.length
 	property bool isSelected: false	// selected in list => currentIndex == index
-	
-	
+		
 	property var previousInitial	// Use directly previous initial
 	property int itemsRightMargin: 39 * DefaultStyle.dp
 	
@@ -32,14 +30,7 @@ FocusScope {
 	property string initial: displayName ? displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale) : ''
 	
 	signal clicked(var mouse)
-	signal contactStarredChanged()
 	signal contactDeletionRequested(FriendGui contact)
-
-	Connections {
-		enabled: searchResultItem.core
-		target: searchResultItem.core
-		function onStarredChanged() { mainItem.contactStarredChanged()}
-	}
 
 	Text {
 		id: initial
@@ -63,7 +54,8 @@ FocusScope {
 		anchors.left: initial.visible ? initial.right : parent.left
 		anchors.right: parent.right
 		anchors.rightMargin: mainItem.itemsRightMargin
-		anchors.verticalCenter: parent.verticalCenter
+		anchors.top: parent.top
+		anchors.bottom: parent.bottom
 		spacing: 16 * DefaultStyle.dp
 		z: 1
 		Avatar {
@@ -106,19 +98,11 @@ FocusScope {
 			spacing: visible ? 16 * DefaultStyle.dp : 0
 			EffectImage {
 				id: isSelectedCheck
-				// visible: mainItem.multiSelectionEnabled && (mainItem.confInfoGui.core.getParticipantIndex(searchResultItem.core.defaultAddress) != -1)
 				visible: mainItem.multiSelectionEnabled && (mainItem.selectedContacts.indexOf(searchResultItem.core.defaultAddress) != -1)
 				Layout.preferredWidth: 24 * DefaultStyle.dp
 				Layout.preferredHeight: 24 * DefaultStyle.dp
 				imageSource: AppIcons.check
 				colorizationColor: DefaultStyle.main1_500_main
-				Connections {
-					target: mainItem
-					// onParticipantsChanged: isSelectedCheck.visible = mainItem.confInfoGui.core.getParticipantIndex(searchResultItem.core.defaultAddress) != -1
-					function onSelectedContactCountChanged(){
-						isSelectedCheck.visible = (mainItem.selectedContacts.indexOf(searchResultItem.core.defaultAddress) != -1)
-					}
-				}
 			}
 			RowLayout{
 				id: actionButtons

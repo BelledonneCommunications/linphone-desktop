@@ -88,7 +88,7 @@ FocusScope {
 						Layout.preferredHeight: 44 * DefaultStyle.dp
 						padding: 0
 						KeyNavigation.up: searchBar
-						KeyNavigation.down: contactLoader.item
+						KeyNavigation.down: contactList
 						onClicked: mainItem.groupCallCreationRequested()
 						background: Rectangle {
 							anchors.fill: parent
@@ -127,23 +127,13 @@ FocusScope {
 							}
 						}
 					}
-					Loader{
-					// This is a hack for an incomprehensible behavior on sections title where they doesn't match with their delegate and can be unordered after resetting models.
-						id: contactLoader
+					AllContactListView{
+						id: contactList
 						Layout.fillWidth: true
 						Layout.fillHeight: true
-						property string t: searchBar.text
-						onTChanged: {
-							contactLoader.active = false
-							Qt.callLater(function(){contactLoader.active=true})
-						}
-						//-------------------------------------------------------------
-						sourceComponent: ContactListView{
-							id: contactList
-							searchBarText: searchBar.text
-							onContactClicked: (contact) => {
-								mainItem.contactClicked(contact)
-							}
+						searchBarText: searchBar.text
+						onContactSelected: (contact) => {
+							mainItem.contactClicked(contact)
 						}
 					}
 				}

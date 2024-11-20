@@ -58,6 +58,7 @@ public:
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 	int findFriendIndexByAddress(const QString &address);
+	QSharedPointer<FriendCore> findFriendByAddress(const QString &address);
 
 signals:
 	void

@@ -10,7 +10,7 @@ FocusScope{
 	id: mainItem
 	
 	property string placeHolderText: qsTr("Rechercher des contacts")
-	property list<string> selectedParticipants//: contactLoader.item ? contactLoader.item.selectedContacts
+	property list<string> selectedParticipants
 	property int selectedParticipantsCount: selectedParticipants.length
 	property ConferenceInfoGui conferenceInfoGui
 	property color searchBarColor: DefaultStyle.grey_100
@@ -32,7 +32,6 @@ FocusScope{
 			width: mainItem.width
 			model: mainItem.selectedParticipants
 			clip: true
-			focus: participantList.count > 0
 			Keys.onPressed: (event) => {
 				if(currentIndex <=0 && event.key == Qt.Key_Up){
 					nextItemInFocusChain(false).forceActiveFocus()
@@ -67,7 +66,7 @@ FocusScope{
 						icon.height: 24 * DefaultStyle.dp
 						focus: true
 						contentImageColor: DefaultStyle.main1_500_main
-						onClicked: if(contactLoader.item) contactLoader.item.removeSelectedContactByAddress(modelData)
+						onClicked: contactList.removeSelectedContactByAddress(modelData)
 					}
 				}
 			}
@@ -95,13 +94,13 @@ FocusScope{
 			KeyNavigation.up: participantList.count > 0
 								? participantList
 								: nextItemInFocusChain(false)
-			KeyNavigation.down: contactLoader.item
+			KeyNavigation.down: contactList
 		}
 		ColumnLayout {
 			id: content
 			spacing: 15 * DefaultStyle.dp
 			Text {
-				visible: !contactLoader.item?.loading && contactLoader.item?.count === 0
+				visible: !contactList.loading && contactList.count === 0
 				Layout.alignment: Qt.AlignHCenter
 				Layout.topMargin: 137 * DefaultStyle.dp
 				text: qsTr("Aucun contact%1").arg(searchBar.text.length !== 0 ? " correspondant" : "")
@@ -110,33 +109,21 @@ FocusScope{
 					weight: 800 * DefaultStyle.dp
 				}
 			}
-			Loader{
-			// This is a hack for an incomprehensible behavior on sections title where they doesn't match with their delegate and can be unordered after resetting models.
-				id: contactLoader
+			 AllContactListView{
+				id: contactList
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				property string t: searchBar.text
-				onTChanged: {
-					contactLoader.active = false
-					Qt.callLater(function(){contactLoader.active=true})
+				itemsRightMargin: 28 * DefaultStyle.dp
+				multiSelectionEnabled: true
+				showContactMenu: false
+				confInfoGui: mainItem.conferenceInfoGui
+				selectedContacts: mainItem.selectedParticipants
+				onSelectedContactsChanged: Qt.callLater(function(){mainItem.selectedParticipants = selectedContacts})
+				searchBarText: searchBar.text
+				onContactAddedToSelection: (address) => {
+					contactList.addContactToSelection(address)
 				}
-				//-------------------------------------------------------------
-				sourceComponent: ContactListView{
-					id: contactList
-					Layout.fillWidth: true
-					Layout.fillHeight: true
-					itemsRightMargin: 28 * DefaultStyle.dp
-					multiSelectionEnabled: true
-					showContactMenu: false
-					confInfoGui: mainItem.conferenceInfoGui
-					selectedContacts: mainItem.selectedParticipants
-					onSelectedContactsChanged: Qt.callLater(function(){mainItem.selectedParticipants = selectedContacts})
-					searchBarText: searchBar.text
-					onContactAddedToSelection: (address) => {
-						contactList.addContactToSelection(address)
-					}
-					onContactRemovedFromSelection: (address) => contactList.removeSelectedContactByAddress(address)
-				}
+				onContactRemovedFromSelection: (address) => contactList.removeSelectedContactByAddress(address)
 			}
 		}
 	}

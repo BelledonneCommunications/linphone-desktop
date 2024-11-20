@@ -22,7 +22,6 @@
 #define MAGIC_SEARCH_PROXY_H_
 
 #include "../proxy/LimitProxy.hpp"
-#include "core/friend/FriendGui.hpp"
 #include "core/search/MagicSearchList.hpp"
 #include "tool/LinphoneEnums.hpp"
 
@@ -30,24 +29,22 @@
 
 class MagicSearchProxy : public LimitProxy {
 	Q_OBJECT
-
+	Q_CLASSINFO("RegisterEnumClassesUnscoped", "false") // Avoid name clashes
 	Q_PROPERTY(QString searchText READ getSearchText WRITE setSearchText NOTIFY searchTextChanged)
 	Q_PROPERTY(int sourceFlags READ getSourceFlags WRITE setSourceFlags NOTIFY sourceFlagsChanged)
 
 	Q_PROPERTY(int maxResults READ getMaxResults WRITE setMaxResults NOTIFY maxResultsChanged)
 	Q_PROPERTY(LinphoneEnums::MagicSearchAggregation aggregationFlag READ getAggregationFlag WRITE setAggregationFlag
 	               NOTIFY aggregationFlagChanged)
-	Q_PROPERTY(bool showFavoritesOnly READ showFavoritesOnly WRITE setShowFavoritesOnly NOTIFY showFavoriteOnlyChanged)
+
 	Q_PROPERTY(MagicSearchProxy *parentProxy READ getParentProxy WRITE setParentProxy NOTIFY parentProxyChanged)
 	Q_PROPERTY(MagicSearchProxy *hideListProxy READ getHideListProxy WRITE setHideListProxy NOTIFY hideListProxyChanged)
 
-	Q_PROPERTY(bool showLdapContacts READ showLdapContacts WRITE setShowLdapContacts CONSTANT)
-	Q_PROPERTY(bool hideSuggestions READ getHideSuggestions WRITE setHideSuggestions NOTIFY hideSuggestionsChanged)
-
 public:
-	DECLARE_SORTFILTER_CLASS(bool mShowFavoritesOnly = false; bool mShowLdapContacts = true;
-	                         bool mHideSuggestions = false;
-	                         MagicSearchProxy *mHideListProxy = nullptr;)
+	enum class FilteringTypes { None = 0, Favorites = 1, App = 2, Ldap = 4, Other = 8 };
+	Q_ENUM(FilteringTypes)
+
+	DECLARE_SORTFILTER_CLASS(MagicSearchProxy *mHideListProxy = nullptr;)
 	MagicSearchProxy(QObject *parent = Q_NULLPTR);
 	~MagicSearchProxy();
 
@@ -63,15 +60,6 @@ public:
 	int getMaxResults() const;
 	void setMaxResults(int maxResults);
 
-	bool showFavoritesOnly() const;
-	void setShowFavoritesOnly(bool show);
-
-	bool showLdapContacts() const;
-	void setShowLdapContacts(bool show);
-
-	bool getHideSuggestions() const;
-	void setHideSuggestions(bool data);
-
 	MagicSearchProxy *getParentProxy() const;
 	void setList(QSharedPointer<MagicSearchList> list);
 	Q_INVOKABLE void setParentProxy(MagicSearchProxy *proxy);
@@ -81,6 +69,8 @@ public:
 
 	// Q_INVOKABLE forceUpdate();
 	Q_INVOKABLE int findFriendIndexByAddress(const QString &address);
+	Q_INVOKABLE FriendGui *findFriendByAddress(const QString &address);
+	Q_INVOKABLE int loadUntil(const QString &address);
 
 signals:
 	void searchTextChanged();
@@ -89,8 +79,6 @@ signals:
 	void maxResultsChanged(int maxResults);
 	void forceUpdate();
 	void localFriendCreated(int index);
-	void showFavoriteOnlyChanged();
-	void hideSuggestionsChanged();
 	void parentProxyChanged();
 	void hideListProxyChanged();
 	void initialized();

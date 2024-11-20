@@ -71,14 +71,15 @@ public:
 	Q_INVOKABLE void remove(int index, int count = 1);
 	void invalidateFilter();
 
+	int mFilterType = 0;
+	QString mFilterText;
+
 signals:
 	void countChanged();
 	void filterTypeChanged(int filterType);
 	void filterTextChanged();
 
 protected:
-	int mFilterType = 0;
-	QString mFilterText;
 	bool mDeleteSourceModel = false;
 };
 

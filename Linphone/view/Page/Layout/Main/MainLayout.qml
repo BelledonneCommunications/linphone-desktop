@@ -172,8 +172,8 @@ Item {
 							if (text.length != 0) listPopup.open()
 							else listPopup.close()
 						}
-						KeyNavigation.down: contactLoader.item?.count > 0 || !contactLoader.item?.footerItem? contactLoader.item : contactLoader.item?.footerItem
-						KeyNavigation.up: contactLoader.item?.footerItem ? contactLoader.item?.footerItem : contactLoader.item
+						KeyNavigation.down: contactList //contactLoader.item?.count > 0 || !contactLoader.item?.footerItem? contactLoader.item : contactLoader.item?.footerItem
+						KeyNavigation.up: contactList//contactLoader.item?.footerItem ? contactLoader.item?.footerItem : contactLoader.item
 						
 						component MagicSearchButton: Button {
 							id: button
@@ -197,8 +197,8 @@ Item {
 							id: listPopup
 							width: magicSearchBar.width
 							property int maxHeight: 400 * DefaultStyle.dp
-							property bool displayScrollbar: contactLoader.item?.contentHeight + topPadding + bottomPadding> maxHeight
-							height: Math.min(contactLoader.item?.contentHeight + topPadding + bottomPadding, maxHeight)
+							property bool displayScrollbar: contactList.contentHeight + topPadding + bottomPadding> maxHeight
+							height: Math.min(contactList.contentHeight + topPadding + bottomPadding, maxHeight)
 							y: magicSearchBar.height
 							// closePolicy: Popup.NoAutoClose
 							topPadding: 20 * DefaultStyle.dp
@@ -214,7 +214,7 @@ Item {
 									color: DefaultStyle.grey_0
 									anchors.fill: parent
 									border.color: DefaultStyle.main1_500_main
-									border.width: contactLoader.item?.activeFocus ? 2 : 0
+									border.width: contactList.activeFocus ? 2 : 0
 									
 								}
 								MultiEffect {
@@ -238,23 +238,10 @@ Item {
 									
 								}
 							}
-							contentItem: Loader{
-								// This is a hack for an incomprehensible behavior on sections title where they doesn't match with their delegate and can be unordered after resetting models.
-								id: contactLoader
-								Layout.fillWidth: true
-								Layout.fillHeight: true
-								property bool deactivate: false
-								active: !deactivate && magicSearchBar.text != ''
-								property string t: magicSearchBar.text
-								onTChanged: {
-									contactLoader.deactivate = true
-									Qt.callLater(function(){contactLoader.deactivate=false})
-								}
-								//-------------------------------------------------------------
-								sourceComponent: ContactListView {
+							contentItem: AllContactListView {
 									id: contactList
 									visible: magicSearchBar.text.length != 0
-									Layout.preferredHeight: item?.contentHeight
+									Layout.preferredHeight: contentHeight
 									Layout.fillWidth: true
 									itemsRightMargin: 5 * DefaultStyle.dp	//(Actions have already 10 of margin)
 									showInitials: false
@@ -263,6 +250,7 @@ Item {
 									showFavorites: false
 									selectionEnabled: false
 									showDefaultAddress: true
+									searchOnEmpty: false
 									
 									sectionsPixelSize: 13 * DefaultStyle.dp
 									sectionsWeight: 700 * DefaultStyle.dp
@@ -270,24 +258,7 @@ Item {
 									
 									Control.ScrollBar.vertical: scrollbar
 									searchBarText: magicSearchBar.text
-									
-									Keys.onPressed: (event) => {
-										if(event.key == Qt.Key_Down){
-											if(contactList.currentIndex == contactList.count -1) {
-												contactList.currentIndex = -1
-												contactList.footerItem.forceActiveFocus()
-												event.accepted = true
-											}
-										} else if(event.key == Qt.Key_Up){
-											if(contactList.currentIndex <= 0) {
-												contactList.currentIndex = -1
-												contactList.footerItem.forceActiveFocus()
-												event.accepted = true
-											}
-										}
-									}
 								}
-							}
 						}
 					}
 					RowLayout {

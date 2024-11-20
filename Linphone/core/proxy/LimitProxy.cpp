@@ -24,6 +24,7 @@ LimitProxy::LimitProxy(QObject *parent) : QSortFilterProxyModel(parent) {
 	connect(this, &LimitProxy::rowsInserted, this, &LimitProxy::countChanged);
 	connect(this, &LimitProxy::rowsRemoved, this, &LimitProxy::countChanged);
 	connect(this, &LimitProxy::modelReset, this, &LimitProxy::countChanged);
+	connect(this, &LimitProxy::countChanged, this, &LimitProxy::haveMoreChanged);
 }
 /*
 LimitProxy::LimitProxy(QAbstractItemModel *sortFilterProxy, QObject *parent) : QSortFilterProxyModel(parent) {
@@ -79,7 +80,7 @@ int LimitProxy::getInitialDisplayItems() const {
 }
 
 void LimitProxy::setInitialDisplayItems(int initialItems) {
-	if (initialItems != 0 && mInitialDisplayItems != initialItems) {
+	if (mInitialDisplayItems != initialItems) {
 		mInitialDisplayItems = initialItems;
 		if (getMaxDisplayItems() <= mInitialDisplayItems) setMaxDisplayItems(initialItems);
 		if (getDisplayItemsStep() <= 0) setDisplayItemsStep(initialItems);
@@ -99,7 +100,7 @@ int LimitProxy::getMaxDisplayItems() const {
 	return mMaxDisplayItems;
 }
 void LimitProxy::setMaxDisplayItems(int maxItems) {
-	if (maxItems != 0 && mMaxDisplayItems != maxItems) {
+	if (mMaxDisplayItems != maxItems) {
 		auto model = sourceModel();
 		int modelCount = model ? model->rowCount() : 0;
 		int oldCount = getDisplayCount(modelCount);
@@ -123,6 +124,12 @@ void LimitProxy::setDisplayItemsStep(int step) {
 		mDisplayItemsStep = step;
 		emit displayItemsStepChanged();
 	}
+}
+
+bool LimitProxy::getHaveMore() const {
+	auto model = sourceModel();
+	int modelCount = model ? model->rowCount() : 0;
+	return getCount() < modelCount;
 }
 
 //--------------------------------------------------------------------------------------------------
