@@ -41,6 +41,10 @@ class App : public SingleApplication, public AbstractObject {
 	Q_PROPERTY(bool coreStarted READ getCoreStarted WRITE setCoreStarted NOTIFY coreStartedChanged)
 	Q_PROPERTY(AccountList *accounts READ getAccounts NOTIFY accountsChanged)
 	Q_PROPERTY(CallList *calls READ getCalls NOTIFY callsChanged)
+	Q_PROPERTY(QString shortApplicationVersion READ getShortApplicationVersion CONSTANT)
+	Q_PROPERTY(QString gitBranchName READ getGitBranchName CONSTANT)
+	Q_PROPERTY(QString sdkVersion READ getSdkVersion CONSTANT)
+
 public:
 	App(int &argc, char *argv[]);
 	~App();
@@ -136,6 +140,10 @@ public:
 	QSharedPointer<SettingsCore> getSettings() const;
 
 	void onExitOnCloseChanged(); // Can be used for UniqueConnection
+
+	QString getShortApplicationVersion();
+	QString getGitBranchName();
+	QString getSdkVersion();
 
 #ifdef Q_OS_LINUX
 	Q_INVOKABLE void exportDesktopFile();

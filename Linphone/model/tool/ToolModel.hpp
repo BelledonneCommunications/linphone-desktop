@@ -70,6 +70,9 @@ public:
 
 	static QVariantMap createVariant(const std::shared_ptr<const linphone::AudioDevice> &device);
 
+	static QString getOsProduct();
+	static QString computeUserAgent(const std::shared_ptr<linphone::Config> &config);
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 };

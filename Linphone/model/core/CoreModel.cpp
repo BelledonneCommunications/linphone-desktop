@@ -31,6 +31,7 @@
 #include "core/App.hpp"
 #include "core/notifier/Notifier.hpp"
 #include "core/path/Paths.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
 // =============================================================================
@@ -90,6 +91,8 @@ void CoreModel::start() {
 	}
 	mCore->enableVideoPreview(false);         // SDK doesn't write the state in configuration if not ready.
 	config->setInt("video", "show_local", 0); // So : write ourself to turn off camera before starting the core.
+	QString userAgent = ToolModel::computeUserAgent(config);
+	mCore->setUserAgent(Utils::appStringToCoreString(userAgent), LINPHONESDK_VERSION);
 	mCore->start();
 	setPathAfterStart();
 	mCore->enableFriendListSubscription(true);

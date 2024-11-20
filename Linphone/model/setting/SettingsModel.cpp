@@ -546,6 +546,15 @@ void SettingsModel::setCarddavListForNewFriends(std::string name) {
 }
 
 // =============================================================================
+// Device name.
+// =============================================================================
+
+QString SettingsModel::getDeviceName(const std::shared_ptr<linphone::Config> &config) {
+	return Utils::coreStringToAppString(
+	    config->getString(UiSection, "device_name", Utils::appStringToCoreString(QSysInfo::machineHostName())));
+}
+
+// =============================================================================
 // Ui.
 // =============================================================================
 /*

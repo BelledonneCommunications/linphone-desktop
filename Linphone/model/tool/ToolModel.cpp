@@ -358,3 +358,13 @@ QVariantMap ToolModel::createVariant(const std::shared_ptr<const linphone::Audio
 	                  : tr("Unknown device"));
 	return map;
 }
+
+// User agent
+
+QString ToolModel::computeUserAgent(const std::shared_ptr<linphone::Config> &config) {
+	return QStringLiteral("%1 (%2) %3 Qt/%4 LinphoneSDK")
+	    .arg(Utils::getApplicationProduct())
+	    .arg(SettingsModel::getDeviceName(config).replace('\\', "\\\\").replace('(', "\\(").replace(')', "\\)"))
+	    .arg(Utils::getOsProduct())
+	    .arg(qVersion());
+}

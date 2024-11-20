@@ -505,18 +505,6 @@ QString Utils::getOsProduct() {
 	return product + "/" + version;
 }
 
-QString Utils::computeUserAgent() {
-	// Placeholder
-	return "Linphone 6.0";
-	/*
-	    const std::shared_ptr<linphone::Config> &config
-	    return QStringLiteral("%1 (%2) %3 Qt/%4 LinphoneSDK")
-	        .arg(Utils::getApplicationProduct())
-	        .arg(SettingsModel::getDeviceName(config).replace('\\', "\\\\").replace('(', "\\(").replace(')', "\\)"))
-	        .arg(Utils::getOsProduct())
-	        .arg(qVersion());
-	        */
-}
 QString Utils::getCountryName(const QLocale::Territory &p_country) {
 	QString countryName;
 	switch (p_country) {

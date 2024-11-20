@@ -75,7 +75,7 @@ AbstractMainPage {
 				Layout.fillWidth: true
 				iconSource: AppIcons.info
 				title: qsTr("Version")
-				subTitle: qsTr("1.0")
+				subTitle: AppCpp.shortApplicationVersion
 				onClicked: {}
 			}
 			HelpIconLabelButton {

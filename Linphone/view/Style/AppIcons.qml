@@ -122,4 +122,6 @@ QtObject {
 	property string bellRinger: "image://internal/bell-ringer.svg"
 	property string voicemail: "image://internal/voicemail.svg"
 	property string power: "image://internal/power.svg"
+	property string resourcePackage: "image://internal/resource-package.svg"
+	property string appWindow: "image://internal/app-window.svg"
 }

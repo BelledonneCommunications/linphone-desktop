@@ -16,7 +16,12 @@ AbstractSettingsLayout {
 		{
 			title: "",
 			subTitle: "",
-			contentComponent: content
+			contentComponent: versionContent
+		},
+		{
+			title: "",
+			subTitle: "",
+			contentComponent: logContent
 		}
 	]
 
@@ -53,9 +58,9 @@ AbstractSettingsLayout {
 	}
 	
 	Component {
-		id: content
+		id: logContent
 		ColumnLayout {
-			spacing: 40 * DefaultStyle.dp
+			spacing: 20 * DefaultStyle.dp
 			SwitchSetting {
 				titleText: qsTr("Activer les traces de débogage")
 				propertyName: "logsEnabled"
@@ -66,18 +71,83 @@ AbstractSettingsLayout {
 				propertyName: "fullLogsEnabled"
 				propertyOwner: SettingsCpp
 			}
-			MediumButton {
-				text: qsTr("Supprimer les traces")
-				onClicked: {
-					deleteLogs.open()
+			RowLayout {
+				spacing: 20 * DefaultStyle.dp
+				Layout.alignment: Qt.AlignRight
+				MediumButton {
+					text: qsTr("Supprimer les traces")
+					onClicked: {
+						deleteLogs.open()
+					}
+				}
+				MediumButton {
+					text: qsTr("Partager les traces")
+					enabled: SettingsCpp.logsEnabled || SettingsCpp.fullLogsEnabled
+					onClicked: {
+						UtilsCpp.getMainWindow().showLoadingPopup(qsTr("Téléversement des traces en cours ..."))
+						SettingsCpp.sendLogs()
+					}
 				}
 			}
-			MediumButton {
-				text: qsTr("Partager les traces")
-				enabled: SettingsCpp.logsEnabled || SettingsCpp.fullLogsEnabled
-				onClicked: {
-					UtilsCpp.getMainWindow().showLoadingPopup(qsTr("Téléversement des traces en cours ..."))
-					SettingsCpp.sendLogs()
+		}
+	}
+	
+	Component {
+	id: versionContent
+		ColumnLayout {
+			spacing: 20 * DefaultStyle.dp
+			RowLayout {
+				EffectImage {
+					imageSource: AppIcons.appWindow
+					colorizationColor: DefaultStyle.main1_500_main
+					Layout.preferredWidth: 24 * DefaultStyle.dp
+					Layout.preferredHeight: 24 * DefaultStyle.dp
+					imageWidth: 24 * DefaultStyle.dp
+					imageHeight: 24 * DefaultStyle.dp
+					Layout.alignment: Qt.AlignTop
+				}
+				ColumnLayout {
+					Text {
+						text: qsTr("Version de l'application")
+						font: Typography.p2l
+						wrapMode: Text.WordWrap
+						color: DefaultStyle.main2_600
+						Layout.fillWidth: true
+					}
+					Text {
+						text: AppCpp.applicationVersion + ' ('+ AppCpp.gitBranchName + ')'
+						font: Typography.p1
+						wrapMode: Text.WordWrap
+						color: DefaultStyle.main2_600
+						Layout.fillWidth: true
+					}
+				}
+			}
+			RowLayout {
+				EffectImage {
+					imageSource: AppIcons.resourcePackage
+					colorizationColor: DefaultStyle.main1_500_main
+					Layout.preferredWidth: 24 * DefaultStyle.dp
+					Layout.preferredHeight: 24 * DefaultStyle.dp
+					imageWidth: 24 * DefaultStyle.dp
+					imageHeight: 24 * DefaultStyle.dp
+					Layout.alignment: Qt.AlignTop
+				}
+				ColumnLayout {
+					Text {
+						text: qsTr("Version du SDK")
+						font: Typography.p2l
+						wrapMode: Text.WordWrap
+						color: DefaultStyle.main2_600
+						Layout.fillWidth: true
+					}
+					Text {
+						text: AppCpp.sdkVersion
+						font: Typography.p1
+						wrapMode: Text.WordWrap
+						color: DefaultStyle.main2_600
+						Layout.fillWidth: true
+					}
 				}
 			}
 		}

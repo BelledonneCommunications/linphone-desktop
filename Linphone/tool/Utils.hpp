@@ -137,7 +137,7 @@ public:
 
 	static QString getApplicationProduct();
 	static QString getOsProduct();
-	static QString computeUserAgent();
+
 	static QList<QSharedPointer<DownloadablePayloadTypeCore>> getDownloadableVideoPayloadTypes();
 	static void checkDownloadedCodecsUpdates();
 

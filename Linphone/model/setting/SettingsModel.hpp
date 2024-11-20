@@ -132,6 +132,8 @@ public:
 	static const std::shared_ptr<linphone::FriendList> getCarddavListForNewFriends();
 	static void setCarddavListForNewFriends(std::string listName);
 
+	static QString getDeviceName(const std::shared_ptr<linphone::Config> &config);
+
 	// UI
 	DECLARE_GETSET(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_GETSET(bool, disableMeetingsFeature, DisableMeetingsFeature)

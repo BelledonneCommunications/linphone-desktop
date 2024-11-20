@@ -1069,3 +1069,31 @@ void App::setLocale(QString configLocale) {
 QLocale App::getLocale() {
 	return mLocale;
 }
+
+//-----------------------------------------------------------
+//		Version infos.
+//-----------------------------------------------------------
+
+QString App::getShortApplicationVersion() {
+#ifdef LINPHONEAPP_SHORT_VERSION
+	return QStringLiteral(LINPHONEAPP_SHORT_VERSION);
+#else
+	return tr("inconnue");
+#endif
+}
+
+QString App::getGitBranchName() {
+#ifdef GIT_BRANCH_NAME
+	return QStringLiteral(GIT_BRANCH_NAME);
+#else
+	return tr("inconnue");
+#endif
+}
+
+QString App::getSdkVersion() {
+#ifdef LINPHONESDK_VERSION
+	return QStringLiteral(LINPHONESDK_VERSION);
+#else
+	return tr("inconnue");
+#endif
+}
