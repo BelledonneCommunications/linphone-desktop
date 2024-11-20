@@ -98,10 +98,11 @@ AbstractMainPage {
 
 	leftPanelContent: Control.StackView {
 		id: leftPanelStackView
-		Layout.fillHeight: true
 		Layout.fillWidth: true
+		Layout.fillHeight: true
 		Layout.leftMargin: 45 * DefaultStyle.dp
 		initialItem: listLayout
+		clip: true
 	}
 
 	Item {
@@ -129,7 +130,7 @@ AbstractMainPage {
 			
 			ColumnLayout {
 				anchors.fill: parent
-				spacing: 0
+				spacing: 0 
 				RowLayout {
 					Layout.rightMargin: 38 * DefaultStyle.dp
 					spacing: 0					

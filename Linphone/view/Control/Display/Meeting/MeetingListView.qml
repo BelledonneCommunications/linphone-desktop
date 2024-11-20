@@ -34,7 +34,7 @@ ListView {
 		delayMove.restart()	// Move to exact position after load.
 	}
 	onAtYEndChanged: if(atYEnd) confInfoProxy.displayMore()
-	
+
 	Timer{
 		id: delayMove
 		interval: 60
@@ -68,7 +68,7 @@ ListView {
 
 	delegate: FocusScope {
 		id: itemDelegate
-		height: 63 * DefaultStyle.dp + topOffset
+		height: 63 * DefaultStyle.dp
 		width: mainItem.width
 		enabled: !isCanceled && haveModel
 		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
@@ -79,14 +79,16 @@ ListView {
 		property bool isFirst : ListView.previousSection !== ListView.section
 		property int topOffset: (dateDay.visible && !isFirst? 8 * DefaultStyle.dp : 0)
 		property var endDateTime: $modelData ? $modelData.core.endDateTime : UtilsCpp.getCurrentDateTime()
-
 		property var haveModel: !!$modelData && $modelData != undefined && $modelData.core.haveModel || false
 		property bool isCanceled: $modelData.core.state === LinphoneEnums.ConferenceInfoState.Cancelled
-		
+		Component.onCompleted: if (!isFirst && dateDay.visible) {
+			height = (63+topOffset)*DefaultStyle.dp
+			delegateIn.anchors.topMargin = topOffset
+		}
 		
 		RowLayout{
+			id: delegateIn
 			anchors.fill: parent
-			anchors.topMargin:parent.topOffset
 			spacing: 0
 			Item{
 				Layout.preferredWidth: 32 * DefaultStyle.dp

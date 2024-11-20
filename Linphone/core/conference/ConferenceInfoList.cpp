@@ -66,7 +66,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 				// Cancelled conference organized ourself me must be hidden
 				if (conferenceInfo->getState() == linphone::ConferenceInfo::State::Cancelled) {
 					auto myAddress = defaultAccount->getContactAddress();
-					if (myAddress && myAddress->weakEqual(conferenceInfo->getOrganizer())) continue;
+					if (!myAddress || myAddress->weakEqual(conferenceInfo->getOrganizer())) continue;
 				}
 				if (confInfoCore) {
 					qDebug() << log().arg("Add conf") << confInfoCore->getSubject() << "with state"
