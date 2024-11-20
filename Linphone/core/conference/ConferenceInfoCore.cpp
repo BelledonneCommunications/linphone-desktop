@@ -596,6 +596,8 @@ void ConferenceInfoCore::save() {
 						mOrganizerAddress = Utils::coreStringToAppString(accountAddress->asStringUriOnly());
 				} else lCritical() << "No contact address";
 			} else lCritical() << "No default account";
+			// Add text capability for chat in conf
+			linphoneConf->setCapability(linphone::StreamType::Text, true);
 			auto confInfoModel = Utils::makeQObject_ptr<ConferenceInfoModel>(linphoneConf);
 			auto confSchedulerModel = confInfoModel->getConferenceScheduler();
 			if (!confSchedulerModel) {
