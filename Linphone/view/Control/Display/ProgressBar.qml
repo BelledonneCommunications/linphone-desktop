@@ -19,6 +19,10 @@ ProgressBar {
 	TextMetrics{
 		id: textSize
 		text: mainItem.innerText
+		font {
+			pixelSize: 10 * DefaultStyle.dp
+			weight: 700 * DefaultStyle.dp
+		}
 	}
 
 	background: Rectangle {
@@ -45,6 +49,7 @@ ProgressBar {
 				pixelSize: 10 * DefaultStyle.dp
 				weight: 700 * DefaultStyle.dp
 			}
+			width: textSize.advanceWidth
 		}
 	}
 }
