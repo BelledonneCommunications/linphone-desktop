@@ -400,9 +400,6 @@ AbstractMainPage {
 										positionViewAtIndex(currentIndex, ListView.Visible)
 										mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
 									}
-									onCountChanged: {
-										mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
-									}
 									onVisibleChanged: {
 										if (!visible) currentIndex = -1
 									}
@@ -654,12 +651,7 @@ AbstractMainPage {
 				contact: contactObj && contactObj.value || null
 				conferenceInfo: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.conferenceInfo || null
 				specificAddress: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
-				Connections {
-					target: mainItem.selectedRowHistoryGui?.core ? mainItem.selectedRowHistoryGui.core : null
-					onDisplayNameChanged: {
-						mainItem.onSelectedRowHistoryGuiChanged() // to cover displayName & Avatar.
-					}
-				}
+				
 				buttonContent: PopupButton {
 					id: detailOptions
 					anchors.right: parent.right

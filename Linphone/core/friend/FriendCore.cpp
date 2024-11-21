@@ -60,6 +60,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		mConsolidatedPresence = LinphoneEnums::fromLinphone(contact->getConsolidatedPresence());
 		mPresenceTimestamp = mFriendModel->getPresenceTimestamp();
 		mPictureUri = Utils::coreStringToAppString(contact->getPhoto());
+		mFullName = mFriendModel->getFullName();
 		auto defaultAddress = contact->getAddress();
 		auto vcard = contact->getVcard();
 		if (vcard) {
@@ -67,11 +68,8 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 			mJob = Utils::coreStringToAppString(vcard->getJobTitle());
 			mGivenName = Utils::coreStringToAppString(vcard->getGivenName());
 			mFamilyName = Utils::coreStringToAppString(vcard->getFamilyName());
-			mFullName = Utils::coreStringToAppString(vcard->getFullName());
 			mVCardString = Utils::coreStringToAppString(vcard->asVcard4String());
 		}
-		if (mFullName.isEmpty()) mFullName = Utils::coreStringToAppString(contact->getName());
-		if (mFullName.isEmpty()) mFullName = Utils::coreStringToAppString(contact->getOrganization());
 
 		auto addresses = contact->getAddresses();
 		for (auto &address : addresses) {
@@ -108,12 +106,6 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 	mIsLdap = ToolModel::friendIsInFriendList(ToolModel::getLdapFriendList(), contact);
 	connect(this, &FriendCore::addressChanged, &FriendCore::allAddressesChanged);
 	connect(this, &FriendCore::phoneNumberChanged, &FriendCore::allAddressesChanged);
-	auto updateFullName = [this] {
-		auto name = mGivenName + (!mGivenName.isEmpty() && !mFamilyName.isEmpty() ? " " : "") + mFamilyName;
-		if (!name.isEmpty()) setFullName(name);
-	};
-	connect(this, &FriendCore::givenNameChanged, updateFullName);
-	connect(this, &FriendCore::familyNameChanged, updateFullName);
 }
 
 FriendCore::FriendCore(const FriendCore &friendCore) {
@@ -180,6 +172,9 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 			});
 			mFriendModelConnection->makeConnectToModel(&FriendModel::organizationChanged, [this](const QString &orga) {
 				mFriendModelConnection->invokeToCore([this, orga]() { setOrganization(orga); });
+			});
+			mFriendModelConnection->makeConnectToModel(&FriendModel::fullNameChanged, [this](const QString &name) {
+				mFriendModelConnection->invokeToCore([this, name]() { setFullName(name); });
 			});
 			mFriendModelConnection->makeConnectToModel(&FriendModel::jobChanged, [this](const QString &job) {
 				mFriendModelConnection->invokeToCore([this, job]() { setJob(job); });
@@ -248,14 +243,14 @@ void FriendCore::reset(const FriendCore &contact) {
 	setGivenName(contact.getGivenName());
 	setFamilyName(contact.getFamilyName());
 	setOrganization(contact.getOrganization());
+	setFullName(contact.getFullName());
 	setJob(contact.getJob());
 	setPictureUri(contact.getPictureUri());
 	setIsSaved(mFriendModel != nullptr);
 }
 
 QString FriendCore::getFullName() const {
-	if (mFullName.isEmpty()) return mGivenName + " " + mFamilyName;
-	else return mFullName;
+	return mFullName;
 }
 
 void FriendCore::setFullName(const QString &name) {
@@ -563,13 +558,14 @@ void FriendCore::writeIntoModel(std::shared_ptr<FriendModel> model) const {
 		phones.push_back(num);
 	}
 	model->resetPhoneNumbers(phones);
-
 	model->setGivenName(mGivenName);
 	model->setFamilyName(mFamilyName);
 	model->setOrganization(mOrganization);
+	model->setFullName(mFullName);
 	model->setJob(mJob);
 	model->setPictureUri(mPictureUri);
 	model->getFriend()->done();
+	emit CoreModel::getInstance()->friendUpdated(model->getFriend());
 }
 
 void FriendCore::writeFromModel(const std::shared_ptr<FriendModel> &model) {

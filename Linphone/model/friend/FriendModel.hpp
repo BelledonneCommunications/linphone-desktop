@@ -45,6 +45,7 @@ public:
 	QDateTime getPresenceTimestamp() const;
 	std::list<std::shared_ptr<linphone::FriendPhoneNumber>> getPhoneNumbers() const;
 	std::list<std::shared_ptr<linphone::Address>> getAddresses() const;
+	QString getFullName() const;
 	QString getName() const;
 	QString getGivenName() const;
 	QString getFamilyName() const;
@@ -72,6 +73,7 @@ protected:
 	void removeAddress(const std::shared_ptr<linphone::Address> &addr);
 	void clearAddresses();
 
+	void setFullName(const QString &name);
 	void setName(const QString &name);
 	void setGivenName(const QString &name);
 	void setFamilyName(const QString &name);
@@ -81,6 +83,8 @@ protected:
 	void setPictureUri(const QString &uri);
 	void setStarred(bool starred);
 
+	QString mFullName;
+
 signals:
 	void pictureUriChanged(const QString &uri);
 	void starredChanged(bool starred);
@@ -88,6 +92,7 @@ signals:
 	void defaultAddressChanged();
 	void phoneNumbersChanged();
 	// void nameChanged(const QString &name);
+	void fullNameChanged(const QString &name);
 	void givenNameChanged(const QString &name);
 	void familyNameChanged(const QString &name);
 	void organizationChanged(const QString &orga);

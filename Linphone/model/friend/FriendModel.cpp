@@ -21,6 +21,7 @@
 #include "FriendModel.hpp"
 
 #include "core/path/Paths.hpp"
+#include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include <QDebug>
@@ -41,6 +42,31 @@ FriendModel::FriendModel(const std::shared_ptr<linphone::Friend> &contact, const
 	});
 	if (!contact->getName().empty() || !name.isEmpty())
 		mMonitor->setName(contact->getName().empty() ? Utils::appStringToCoreString(name) : contact->getName());
+	auto vcard = contact->getVcard();
+	if (vcard) {
+		mFullName = Utils::coreStringToAppString(vcard->getFullName());
+	}
+	if (mFullName.isEmpty()) mFullName = Utils::coreStringToAppString(contact->getName());
+	if (mFullName.isEmpty()) mFullName = Utils::coreStringToAppString(contact->getOrganization());
+	auto updateFullName = [this] {
+		QStringList fullName;
+		fullName << getGivenName() << getFamilyName();
+		fullName.removeAll("");
+		setFullName(fullName.join(" "));
+	};
+	connect(this, &FriendModel::givenNameChanged, updateFullName);
+	connect(this, &FriendModel::familyNameChanged, updateFullName);
+	connect(CoreModel::getInstance().get(), &CoreModel::friendUpdated,
+	        [this](const std::shared_ptr<linphone::Friend> &f) {
+		        if (f == mMonitor) {
+			        emit givenNameChanged(getGivenName());
+			        emit familyNameChanged(getFamilyName());
+			        emit organizationChanged(getOrganization());
+			        emit jobChanged(getJob());
+			        emit pictureUriChanged(getPictureUri());
+			        // emit starredChanged(getStarred());    // FriendCore do save() on change. Do not call it.
+		        }
+	        });
 };
 
 FriendModel::~FriendModel() {
@@ -138,6 +164,18 @@ void FriendModel::clearAddresses() {
 	for (auto &addr : mMonitor->getAddresses())
 		if (addr) mMonitor->removeAddress(addr);
 	emit addressesChanged();
+}
+
+QString FriendModel::getFullName() const {
+	if (mFullName.isEmpty()) return getGivenName() + " " + getFamilyName();
+	else return mFullName;
+}
+
+void FriendModel::setFullName(const QString &name) {
+	if (mFullName != name) {
+		mFullName = name;
+		emit fullNameChanged(name);
+	}
 }
 
 QString FriendModel::getName() const {

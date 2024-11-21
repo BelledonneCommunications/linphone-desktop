@@ -154,7 +154,6 @@ protected:
 
 signals:
 	void contactUpdated();
-	void displayNameChanged();
 	void givenNameChanged(QString name);
 	void familyNameChanged(QString name);
 	void fullNameChanged(QString name);

@@ -30,6 +30,7 @@
 #include <linphone++/linphone.hh>
 
 class CallHistoryModel;
+class FriendModel;
 
 class CallHistoryCore : public QObject, public AbstractObject {
 	Q_OBJECT
@@ -72,6 +73,8 @@ private:
 	QString mDuration;
 	QSharedPointer<ConferenceInfoCore> mConferenceInfo = nullptr;
 	std::shared_ptr<CallHistoryModel> mCallHistoryModel;
+	std::shared_ptr<FriendModel> mFriendModel;
+	QSharedPointer<SafeConnection<CallHistoryCore, FriendModel>> mFriendModelConnection;
 	QSharedPointer<SafeConnection<CallHistoryCore, CallHistoryModel>> mHistoryModelConnection;
 	QSharedPointer<SafeConnection<CallHistoryCore, CoreModel>> mCoreModelConnection;
 

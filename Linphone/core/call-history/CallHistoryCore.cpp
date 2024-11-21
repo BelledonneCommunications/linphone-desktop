@@ -62,12 +62,11 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 		mDisplayName = Utils::coreStringToAppString(confinfo->getSubject());
 	} else {
 		mRemoteAddress = Utils::coreStringToAppString(addr->asStringUriOnly());
-		mDisplayName = ToolModel::getDisplayName(Utils::coreStringToAppString(addr->asStringUriOnly()));
-		auto inFriend = Utils::findFriendByAddress(mRemoteAddress);
-		if (inFriend) {
-			auto friendGui = inFriend->getValue().value<FriendGui *>();
-			if (friendGui) mDisplayName = friendGui->getCore()->getFullName();
-		}
+		auto linphoneFriend = ToolModel::findFriendByAddress(mRemoteAddress);
+		if (linphoneFriend) {
+			mFriendModel = Utils::makeQObject_ptr<FriendModel>(linphoneFriend);
+			mDisplayName = mFriendModel->getFullName();
+		} else mDisplayName = ToolModel::getDisplayName(Utils::coreStringToAppString(addr->asStringUriOnly()));
 	}
 }
 
@@ -81,24 +80,44 @@ void CallHistoryCore::setSelf(QSharedPointer<CallHistoryCore> me) {
 	    new SafeConnection<CallHistoryCore, CallHistoryModel>(me, mCallHistoryModel), &QObject::deleteLater);
 	mCoreModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, CoreModel>>(
 	    new SafeConnection<CallHistoryCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	if (mFriendModel) {
+		mFriendModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, FriendModel>>(
+		    new SafeConnection<CallHistoryCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
+		mFriendModelConnection->makeConnectToModel(&FriendModel::fullNameChanged, [this]() {
+			auto fullName = mFriendModel->getFullName();
+			mCoreModelConnection->invokeToCore([this, fullName]() {
+				if (fullName != mDisplayName) {
+					mDisplayName = fullName;
+					emit displayNameChanged();
+				}
+			});
+		});
+	}
 	if (!ToolModel::findFriendByAddress(mRemoteAddress)) {
 		mCoreModelConnection->makeConnectToModel(
 		    &CoreModel::friendCreated,
 		    [this, remoteAddress = mRemoteAddress](const std::shared_ptr<linphone::Friend> &f) {
-			    auto inFriend = Utils::findFriendByAddress(remoteAddress);
-			    QString displayName;
-			    if (inFriend) {
-				    auto friendGui = inFriend->getValue().value<FriendGui *>();
-				    if (friendGui) displayName = friendGui->getCore()->getFullName();
-			    }
-			    if (!displayName.isEmpty()) {
-				    mCoreModelConnection->invokeToCore([this, displayName]() {
-					    if (displayName != mDisplayName) {
-						    mDisplayName = displayName;
-						    emit displayNameChanged();
-					    }
+			    auto friendModel = Utils::makeQObject_ptr<FriendModel>(f);
+			    auto displayName = friendModel->getFullName();
+			    mCoreModelConnection->invokeToCore([this, friendModel, displayName]() {
+				    mFriendModel = friendModel;
+				    auto me = mCoreModelConnection->mCore.mQData; // Locked from previous call.
+				    mFriendModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, FriendModel>>(
+				        new SafeConnection<CallHistoryCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
+				    mFriendModelConnection->makeConnectToModel(&FriendModel::fullNameChanged, [this]() {
+					    auto fullName = mFriendModel->getFullName();
+					    mCoreModelConnection->invokeToCore([this, fullName]() {
+						    if (fullName != mDisplayName) {
+							    mDisplayName = fullName;
+							    emit displayNameChanged();
+						    }
+					    });
 				    });
-			    }
+				    if (displayName != mDisplayName) {
+					    mDisplayName = displayName;
+					    emit displayNameChanged();
+				    }
+			    });
 		    });
 	}
 }
