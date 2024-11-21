@@ -50,9 +50,9 @@ void MagicSearchModel::search(QString filter,
 		    !SettingsModel::getInstance()->getSyncLdapContacts())
 			sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::LdapServers;
 		// For complete search, we search only on local contacts.
-		sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::CallLogs;
-		sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::ChatRooms;
-		sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::ConferencesInfo;
+		// sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::CallLogs;
+		// sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::ChatRooms;
+		// sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::ConferencesInfo;
 	}
 	qInfo() << log().arg("Searching ") << filter << " from " << sourceFlags << " with limit " << maxResults;
 	mMonitor->getContactsListAsync(filter != "*" ? Utils::appStringToCoreString(filter) : "", "", sourceFlags,

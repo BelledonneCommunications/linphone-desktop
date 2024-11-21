@@ -20,7 +20,7 @@ AbstractMainPage {
 
 	onVisibleChanged: if (!visible) {
 		rightPanelStackView.clear()
-		if(contactLoader.item) contactLoader.item.currentIndex = -1
+		contactList.resetSelections()
 	}
 
 	onSelectedContactChanged: {
@@ -51,7 +51,7 @@ AbstractMainPage {
 
 	// rightPanelStackView.initialItem: contactDetail
 	
-	showDefaultItem: rightPanelStackView.depth == 0 && contactLoader.item?.count === 0 && searchBar.text.length === 0
+	showDefaultItem: rightPanelStackView.depth == 0 && !contactList.haveContacts && searchBar.text.length === 0
 	
 	function deleteContact(contact) {
 		if (!contact) return
@@ -63,6 +63,7 @@ AbstractMainPage {
 				if (confirmed) {
 					var name = contact.core.fullName
 					contact.core.remove()
+					contactList.resetSelections()
 					UtilsCpp.showInformationPopup(qsTr("Supprimé"), qsTr("%1 a été supprimé").arg(name))				}
 			}
 		)
@@ -211,13 +212,13 @@ AbstractMainPage {
 				Layout.fillWidth: true
 				placeholderText: qsTr("Rechercher un contact")
 				KeyNavigation.up: createContactButton
-				KeyNavigation.down: contactLoader.item
+				KeyNavigation.down: contactList
 			}
 			ColumnLayout {
 				id: content
 				spacing: 15 * DefaultStyle.dp
 				Text {
-					visible: contactLoader.item && !contactLoader.item.loading && !contactLoader.item.haveContacts
+					visible: !contactList.loading && !contactList.haveContacts
 					Layout.alignment: Qt.AlignHCenter
 					Layout.topMargin: 137 * DefaultStyle.dp
 					text: qsTr("Aucun contact%1").arg(searchBar.text.length !== 0 ? " correspondant" : "")
@@ -226,35 +227,24 @@ AbstractMainPage {
 						weight: 800 * DefaultStyle.dp
 					}
 				}
-				Loader{
-				// This is a hack for an incomprehensible behavior on sections title where they doesn't match with their delegate and can be unordered after resetting models.
-					id: contactLoader
+				AllContactListView{
+					id: contactList
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					Layout.leftMargin: 45 * DefaultStyle.dp
-					property string t: searchBar.text
-					active: leftPanel.visible
-					onTChanged: {
-						contactLoader.active = false
-						Qt.callLater(function(){contactLoader.active=true})
+					searchBarText: searchBar.text
+					hideSuggestions: true
+					showDefaultAddress: false
+					sourceFlags: LinphoneEnums.MagicSearchSource.Friends | LinphoneEnums.MagicSearchSource.FavoriteFriends | LinphoneEnums.MagicSearchSource.LdapServers
+					onHighlightedContactChanged: mainItem.selectedContact = highlightedContact
+					onContactDeletionRequested: (contact) => {
+						mainItem.deleteContact(contact)
 					}
-					//-------------------------------------------------------------
-					sourceComponent: AllContactListView{
-						id: contactList
-						searchBarText: searchBar.text
-						hideSuggestions: true
-						showDefaultAddress: false
-						sourceFlags: LinphoneEnums.MagicSearchSource.Friends | LinphoneEnums.MagicSearchSource.FavoriteFriends | LinphoneEnums.MagicSearchSource.LdapServers
-						onHighlightedContactChanged: mainItem.selectedContact = highlightedContact
-						onContactDeletionRequested: (contact) => {
-							mainItem.deleteContact(contact)
-						}
-						onLoadingChanged: {
-							if(!loading && initialFriendToDisplay.length !== 0) {
-								Qt.callLater(function(){
-									if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
-								})
-							}
+					onLoadingChanged: {
+						if(!loading && initialFriendToDisplay.length !== 0) {
+							Qt.callLater(function(){
+								if (selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
+							})
 						}
 					}
 				}

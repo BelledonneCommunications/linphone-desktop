@@ -79,6 +79,7 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 			    &MagicSearchList::lSearch,
 			    [this](QString filter, int sourceFlags, LinphoneEnums::MagicSearchAggregation aggregationFlag,
 			           int maxResults) {
+				    resetData();
 				    mModelConnection->invokeToModel([this, filter, sourceFlags, aggregationFlag, maxResults]() {
 					    mMagicSearch->search(filter, sourceFlags, aggregationFlag, maxResults);
 				    });

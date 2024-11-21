@@ -87,6 +87,12 @@ public:
 		AbstractListProxy<QSharedPointer<QObject>>::prepend(items);
 	}
 
+	virtual void resetData() {
+		beginResetModel();
+		mList.clear();
+		endResetModel();
+	}
+
 	template <class T>
 	void resetData(QList<QSharedPointer<T>> items) {
 		beginResetModel();

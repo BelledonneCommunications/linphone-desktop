@@ -6,7 +6,7 @@ import Linphone
 import UtilsCpp 1.0
 import ConstantsCpp 1.0
 import SettingsCpp
-
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 ListView {
 	id: mainItem
@@ -53,8 +53,8 @@ ListView {
 	clip: true
 	highlightFollowsCurrentItem: false
 	cacheBuffer: 400
-	implicitHeight: contentHeight + headerItem?.height
-	spacing: 4 * DefaultStyle.dp
+	implicitHeight: contentHeight
+	spacing: expanded ? 4 * DefaultStyle.dp : 0
 		
 	property bool _moveToIndex: false
 	
@@ -72,14 +72,17 @@ ListView {
 		}else{
 			mainItem.currentIndex = -1
 			mainItem.highlightedContact = null
-			if(headerItem) headerItem.forceActiveFocus()
+			if(headerItem) {
+				headerItem.forceActiveFocus()
+			}
 		}
 	}
-	onCountChanged: if(_moveToIndex >= 0 && count > mainItem.currentIndex ){
+	onCountChanged: if(_moveToIndex && count > mainItem.currentIndex ){
 		_moveToIndex = false
 		selectIndex(mainItem.currentIndex)
-	}
+	}	
 	onContactSelected: updatePosition()
+	onExpandedChanged: if(!expanded) updatePosition()
 	keyNavigationEnabled: false
 	Keys.onPressed: (event)=> {
 		if(event.key == Qt.Key_Up || event.key == Qt.Key_Down){
@@ -123,10 +126,11 @@ ListView {
 		ColumnLayout {
 			id: headerContents
 			width: parent.width
-			spacing: mainItem.count > 0 ? sectionsSpacing : 0
+			spacing: 0
 			Item{// Do not use directly RowLayout : there is an issue where the layout doesn't update on visible
 				Layout.fillWidth: true
 				Layout.preferredHeight: mainItem.count > 0 ? headerTitleLayout.implicitHeight : 0
+				Layout.bottomMargin: 4 * DefaultStyle.dp
 				RowLayout {
 					id: headerTitleLayout
 					anchors.fill: parent
@@ -182,7 +186,7 @@ ListView {
 		
 		onIsSelectedChanged: if(isSelected) mainItem.currentIndex = index
 		onContactDeletionRequested: (contact) => mainItem.contactDeletionRequested(contact)
-		
+
 		onClicked: (mouse) => {
 		   if (mouse && mouse.button == Qt.RightButton) {
 			   friendPopup.open()

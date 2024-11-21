@@ -198,11 +198,11 @@ Item {
 							width: magicSearchBar.width
 							property int maxHeight: 400 * DefaultStyle.dp
 							property bool displayScrollbar: contactList.contentHeight + topPadding + bottomPadding> maxHeight
-							height: Math.min(contactList.contentHeight + topPadding + bottomPadding, maxHeight)
+							height: contactList.haveContacts ? Math.min(contactList.contentHeight + topPadding + bottomPadding, maxHeight) : 0
 							y: magicSearchBar.height
 							// closePolicy: Popup.NoAutoClose
-							topPadding: 20 * DefaultStyle.dp
-							bottomPadding: 20 * DefaultStyle.dp
+							topPadding: contactList.haveContacts ? 20 * DefaultStyle.dp : 0
+							bottomPadding: contactList.haveContacts ? 20 * DefaultStyle.dp : 0
 							rightPadding: 10 * DefaultStyle.dp
 							leftPadding: 20 * DefaultStyle.dp
 							
@@ -240,8 +240,8 @@ Item {
 							}
 							contentItem: AllContactListView {
 									id: contactList
-									visible: magicSearchBar.text.length != 0
-									Layout.preferredHeight: contentHeight
+									visible: !loading && magicSearchBar.text.length != 0
+									Layout.preferredHeight: visible ? contentHeight : 0
 									Layout.fillWidth: true
 									itemsRightMargin: 5 * DefaultStyle.dp	//(Actions have already 10 of margin)
 									showInitials: false

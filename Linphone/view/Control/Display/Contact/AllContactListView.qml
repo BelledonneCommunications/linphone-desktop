@@ -45,7 +45,7 @@ Flickable{
 	property int sectionsSpacing: 18 * DefaultStyle.dp
 	
 	property int itemsRightMargin: 39 * DefaultStyle.dp
-	property int count: contactsList.count
+	property int count: contactsList.count + suggestionsList.count + favoritesList.count
 	
 	signal resultsReceived()
 	signal contactStarredChanged()
@@ -94,6 +94,13 @@ Flickable{
 		return  index != -1
 	}
 	
+	function resetSelections(){
+		mainItem.highlightedContact = null
+		favoritesList.currentIndex = -1
+		contactsList.currentIndex = -1
+		suggestionsList.currentIndex = -1
+	}
+	
 	onHighlightedContactChanged:{
 		favoritesList.highlightedContact = highlightedContact
 		contactsList.highlightedContact = highlightedContact
@@ -116,7 +123,7 @@ Flickable{
 	}
 	onSearchTextChanged: loading = true
 	onAtYEndChanged: if(atYEnd) {
-		if( contactsProxy.haveMore || mainItem.hideSuggestions) contactsProxy.displayMore()
+		if( (contactsProxy.haveMore && contactList.expanded ) || mainItem.hideSuggestions) contactsProxy.displayMore()
 		else suggestionsProxy.displayMore()
 	}
 	function findNextList(item, count, direction){
@@ -134,7 +141,7 @@ Flickable{
 	function updatePosition(list){
 		var item = list.itemAtIndex(list.currentIndex)
 		var centerPos = list.y - height/2
-		if( item){
+		if( item && list.expanded){
 			// For debugging just in case
 			//var listPosition = item.mapToItem(favoriteList, item.x, item.y)
 			//var newPosition = favoriteList.mapToItem(mainItem, listPosition.x, listPosition.y)
@@ -149,7 +156,7 @@ Flickable{
 			//console.log("Moving to " + (headerItem.y+item.y))
 			centerPos += item.y
 		}
-		mainItem.contentY = Math.max(0, centerPos)
+		mainItem.contentY = Math.min(Math.max(0, centerPos), mainItem.contentHeight - mainItem.height)
 	}
 	Behavior on contentY{
 		NumberAnimation {
@@ -163,9 +170,9 @@ Flickable{
 				var newItem
 				var direction = (event.key == Qt.Key_Up ? -1 : 1)
 				if(suggestionsList.activeFocus) newItem = findNextList(suggestionsList, 0, direction)
-				if(contactsList.activeFocus) newItem = findNextList(contactsList, 0, direction)
-				if(favoritesList.activeFocus) newItem = findNextList(favoritesList, 0, direction)
-				
+				else if(contactsList.activeFocus) newItem = findNextList(contactsList, 0, direction)
+				else if(favoritesList.activeFocus) newItem = findNextList(favoritesList, 0, direction)
+				else newItem = findNextList(suggestionsList, 0, direction)
 				if(newItem){
 					newItem.selectIndex(direction > 0 ? -1 : newItem.model.count - 1)
 					event.accepted = true
@@ -194,7 +201,10 @@ Flickable{
 		searchText: mainItem.searchText
 		aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
 		sourceFlags: mainItem.sourceFlags
-		onModelReset: mainItem.resultsReceived()
+		onModelReset: {
+			mainItem.resetSelections()
+			mainItem.resultsReceived()
+		}
 		
 		onInitialized: {
 			if(mainItem.searchOnEmpty || searchText != '' ) {
@@ -219,7 +229,7 @@ Flickable{
 	ColumnLayout{
 		id: contentsLayout
 		width: parent.width
-		
+		spacing: 0
 		BusyIndicator {
 			Layout.alignment: Qt.AlignCenter
 			Layout.preferredHeight: visible ? 60 * DefaultStyle.dp : 0
@@ -265,6 +275,7 @@ Flickable{
 			id: contactsList
 			Layout.fillWidth: true
 			Layout.preferredHeight: implicitHeight
+			Layout.topMargin: favoritesList.height > 0 ? 4 * DefaultStyle.dp : 0
 			interactive: false
 			highlightText: mainItem.highlightText
 			showActions: mainItem.showActions
@@ -284,7 +295,7 @@ Flickable{
 			onContactDeletionRequested: (contact) => {mainItem.contactDeletionRequested(contact)}
 			onAddContactToSelection: (address) => {mainItem.addContactToSelection(address)}
 			onRemoveContactFromSelection: (index) => {mainItem.removeContactFromSelection(index)}
-			
+						
 			model:MagicSearchProxy {
 				id: contactsProxy
 				parentProxy: mainItem.mainModel
@@ -300,6 +311,7 @@ Flickable{
 			id: suggestionsList
 			Layout.fillWidth: true
 			Layout.preferredHeight: implicitHeight
+			Layout.topMargin: contactsList.height + favoritesList.height > 0 ? 4 * DefaultStyle.dp : 0
 			interactive: false
 			showInitials: false
 			highlightText: mainItem.highlightText
@@ -319,13 +331,14 @@ Flickable{
 			onContactDeletionRequested: (contact) => {mainItem.contactDeletionRequested(contact)}
 			onAddContactToSelection: (address) => {mainItem.addContactToSelection(address)}
 			onRemoveContactFromSelection: (index) => {mainItem.removeContactFromSelection(index)}
-			
 			model:MagicSearchProxy {
 				id: suggestionsProxy
 				parentProxy: mainItem.mainModel
 				filterType: mainItem.hideSuggestions ? MagicSearchProxy.FilteringTypes.None : MagicSearchProxy.FilteringTypes.Other
-				initialDisplayItems: 0
+				initialDisplayItems: contactsProxy.haveMore && contactsList.expanded ? 0 : 20
+				onInitialDisplayItemsChanged: maxDisplayItems = initialDisplayItems
 				displayItemsStep: 5
+				onModelReset: maxDisplayItems = initialDisplayItems
 			}
 		}
 	}
