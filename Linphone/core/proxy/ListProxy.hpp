@@ -135,7 +135,7 @@ public:
 		}
 		mList[index] = replacementItem;
 		QModelIndex modelIndex = createIndex(index, 0);
-		emit dataChanged(modelIndex, modelIndex, {Qt::DisplayRole});
+		emit dataChanged(modelIndex, modelIndex);
 	}
 };
 
