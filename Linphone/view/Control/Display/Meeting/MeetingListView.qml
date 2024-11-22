@@ -28,6 +28,7 @@ ListView {
 	}
 	onCurrentIndexChanged: {
 		selectedConference = model.getAt(currentIndex) || null
+		positionViewAtIndex(currentIndex, ListView.Center)
 	}
 	onVisibleChanged: if( visible) {
 		mainItem.positionViewAtIndex(currentIndex, ListView.Center)// First approximative move

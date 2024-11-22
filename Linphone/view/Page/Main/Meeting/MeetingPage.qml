@@ -188,9 +188,6 @@ AbstractMainPage {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					
-					preferredHighlightBegin: height/2 - 10
-					preferredHighlightEnd: height/2 + 10
-					highlightRangeMode: ListView.ApplyRange
 					onCountChanged: mainItem.meetingListCount = count
 					searchBarText: searchBar.text
 					Keys.onPressed: (event) => {

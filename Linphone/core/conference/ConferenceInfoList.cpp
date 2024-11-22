@@ -88,9 +88,9 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 					// int index2;
 					// get(mLastConfInfoInserted.get(), &index2);
 					if (index != -1) setCurrentDateIndex(index);
-					else setCurrentDateIndex(mHaveCurrentDate ? currentDateIndex + 1 : currentDateIndex);
+					else setCurrentDateIndex(mHaveCurrentDate ? currentDateIndex : currentDateIndex + 1);
 					mLastConfInfoInserted = nullptr;
-				} else setCurrentDateIndex(mHaveCurrentDate ? currentDateIndex + 1 : currentDateIndex);
+				} else setCurrentDateIndex(mHaveCurrentDate ? currentDateIndex : currentDateIndex + 1);
 				delete items;
 			});
 		});
