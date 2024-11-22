@@ -16,8 +16,6 @@ ListView {
 	property var delegateButtons
 	property ConferenceInfoGui selectedConference: model && currentIndex != -1 ? model.getAt(currentIndex) : null
 	
-	signal conferenceSelected(var contact)
-	
 	spacing: 8 * DefaultStyle.dp
 	currentIndex: confInfoProxy.currentDateIndex
 	// using highlight doesn't center, take time before moving and don't work for not visible item (like not loaded)
@@ -26,9 +24,15 @@ ListView {
 	onCountChanged: {
 		selectedConference = model && currentIndex != -1 && currentIndex < model.count ? model.getAt(currentIndex) : null
 	}
+	Connections {
+		target: confInfoProxy
+		function onCurrentDateIndexChanged(index) {
+			mainItem.currentIndex = index
+		}
+	}
 	onCurrentIndexChanged: {
 		selectedConference = model.getAt(currentIndex) || null
-		positionViewAtIndex(currentIndex, ListView.Center)
+		if (currentIndex != -1) positionViewAtIndex(currentIndex, ListView.Contain)
 	}
 	onVisibleChanged: if( visible) {
 		mainItem.positionViewAtIndex(currentIndex, ListView.Center)// First approximative move
@@ -214,23 +218,10 @@ ListView {
 					visible: itemDelegate.haveModel
 					onClicked: {
 						mainItem.currentIndex = index
-						mainItem.conferenceSelected($modelData)
 						itemDelegate.forceActiveFocus()
 					}
 				}
 			}
 		}
-
-		// MouseArea {
-		// 	id: confArea
-		// 	hoverEnabled: mainItem.hoverEnabled
-		// 	visible: !dateDay.visible && itemDelegate.haveModel
-		// 	anchors.fill: parent
-		// 	cursorShape: Qt.PointingHandCursor
-		// 	onClicked: {
-		// 		mainItem.currentIndex = index
-		// 		mainItem.conferenceSelected($modelData)
-		// 	}
-		// }
 	}
 }

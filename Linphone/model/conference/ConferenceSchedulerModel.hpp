@@ -40,6 +40,7 @@ public:
 
 	QString getUri();
 	linphone::ConferenceScheduler::State getState() const;
+	std::shared_ptr<const linphone::ConferenceInfo> getConferenceInfo() const;
 	void setInfo(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
 	void cancelConference(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
 

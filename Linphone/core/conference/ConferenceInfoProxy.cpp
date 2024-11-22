@@ -57,10 +57,8 @@ int ConferenceInfoProxy::getCurrentDateIndex() const {
 
 void ConferenceInfoProxy::updateCurrentDateIndex() {
 	int newIndex = mapFromSource(sourceModel()->index(mList->getCurrentDateIndex(), 0)).row();
-	if (mCurrentDateIndex != newIndex) {
-		mCurrentDateIndex = newIndex;
-		emit currentDateIndexChanged();
-	}
+	mCurrentDateIndex = newIndex;
+	emit currentDateIndexChanged(newIndex);
 }
 
 bool ConferenceInfoProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {

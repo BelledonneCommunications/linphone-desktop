@@ -61,7 +61,7 @@ signals:
 	void lUpdate();
 	void addCurrentDateChanged();
 	void haveCurrentDateChanged();
-	void currentDateIndexChanged();
+	void currentDateIndexChanged(int index);
 
 private:
 	QSharedPointer<SafeConnection<ConferenceInfoList, CoreModel>> mCoreModelConnection;

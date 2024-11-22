@@ -48,7 +48,7 @@ public:
 
 signals:
 	void haveCurrentDateChanged();
-	void currentDateIndexChanged();
+	void currentDateIndexChanged(int index);
 
 private:
 	QSharedPointer<ConferenceInfoList> mList;

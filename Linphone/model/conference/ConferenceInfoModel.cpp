@@ -41,10 +41,6 @@ ConferenceInfoModel::~ConferenceInfoModel() {
 	if (mConferenceSchedulerModel) mConferenceSchedulerModel->removeListener();
 }
 
-void ConferenceInfoModel::createConferenceScheduler() {
-	mustBeInLinphoneThread(getClassName() + "::createConferenceScheduler()");
-}
-
 std::shared_ptr<linphone::ConferenceInfo> ConferenceInfoModel::getConferenceInfo() const {
 	return mConferenceInfo;
 }
@@ -64,6 +60,8 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 		mConferenceSchedulerModel = model;
 		connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::stateChanged,
 		        [this](linphone::ConferenceScheduler::State state) {
+			        if (mConferenceSchedulerModel->getConferenceInfo())
+				        mConferenceInfo = mConferenceSchedulerModel->getConferenceInfo()->clone();
 			        if (state == linphone::ConferenceScheduler::State::Ready && mInviteEnabled) {
 				        auto params = CoreModel::getInstance()->getCore()->createDefaultChatRoomParams();
 				        // TODO : wait for new sdk api to send the invitations again

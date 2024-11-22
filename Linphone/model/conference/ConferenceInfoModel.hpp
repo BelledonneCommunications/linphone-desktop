@@ -34,8 +34,6 @@ public:
 	ConferenceInfoModel(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo, QObject *parent = nullptr);
 	~ConferenceInfoModel();
 
-	void createConferenceScheduler();
-
 	std::shared_ptr<linphone::ConferenceInfo> getConferenceInfo() const;
 
 	std::shared_ptr<ConferenceSchedulerModel> getConferenceScheduler() const;

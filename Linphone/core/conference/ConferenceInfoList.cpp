@@ -62,12 +62,12 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			    defaultAccount->getConferenceInformationList();
 			items->push_back(nullptr); // Add Dummy conference for today
 			for (auto conferenceInfo : conferenceInfos) {
-				auto confInfoCore = build(conferenceInfo);
-				// Cancelled conference organized ourself me must be hidden
 				if (conferenceInfo->getState() == linphone::ConferenceInfo::State::Cancelled) {
 					auto myAddress = defaultAccount->getContactAddress();
 					if (!myAddress || myAddress->weakEqual(conferenceInfo->getOrganizer())) continue;
 				}
+				auto confInfoCore = build(conferenceInfo);
+				// Cancelled conference organized ourself me must be hidden
 				if (confInfoCore) {
 					qDebug() << log().arg("Add conf") << confInfoCore->getSubject() << "with state"
 					         << confInfoCore->getConferenceInfoState();
@@ -85,8 +85,6 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 					// TODO : uncomment when linphone conference scheduler updated
 					// and model returns the scheduler conferenceInfo uri
 					index = findConfInfoIndexByUri(mLastConfInfoInserted->getUri());
-					// int index2;
-					// get(mLastConfInfoInserted.get(), &index2);
 					if (index != -1) setCurrentDateIndex(index);
 					else setCurrentDateIndex(mHaveCurrentDate ? currentDateIndex : currentDateIndex + 1);
 					mLastConfInfoInserted = nullptr;
@@ -113,7 +111,6 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, connectModel);
 	connectModel();
 
-	mCoreModelConnection->makeConnectToModel(&CoreModel::conferenceInfoReceived, &ConferenceInfoList::lUpdate);
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::conferenceInfoCreated, [this](const std::shared_ptr<linphone::ConferenceInfo> &confInfo) {
 		    auto confInfoCore = ConferenceInfoCore::create(confInfo);
@@ -132,8 +129,8 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	    &CoreModel::conferenceInfoReceived,
 	    [this](const std::shared_ptr<linphone::Core> &core,
 	           const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
-		    lDebug() << log().arg("conference info received") << conferenceInfo->getOrganizer()->asStringUriOnly()
-		             << conferenceInfo->getSubject();
+		    lDebug() << log().arg("conference info received") << conferenceInfo->getSubject();
+		    emit lUpdate();
 	    });
 	emit lUpdate();
 }
@@ -171,19 +168,18 @@ int ConferenceInfoList::getCurrentDateIndex() const {
 }
 
 void ConferenceInfoList::setCurrentDateIndex(int index) {
-	if (mCurrentDateIndex != index) {
-		mCurrentDateIndex = index;
-		emit currentDateIndexChanged();
-	}
+	mCurrentDateIndex = index;
+	emit currentDateIndexChanged(index);
 }
 
 int ConferenceInfoList::findConfInfoIndexByUri(const QString &uri) {
-	auto items = getSharedList<ConferenceInfoCore>();
-	for (int i = 0; i < items.size(); ++i) {
-		if (!items[i]) continue;
-		if (items[i]->getUri() == uri) return i;
-	}
-	return -1;
+	auto confInList = std::find_if(mList.begin(), mList.end(), [uri](const QSharedPointer<QObject> &item) {
+		auto isConfInfo = item.objectCast<ConferenceInfoCore>();
+		if (!isConfInfo) return false;
+		return isConfInfo->getUri() == uri;
+	});
+
+	return (confInList == mList.end() ? -1 : std::distance(mList.begin(), confInList));
 }
 
 QSharedPointer<ConferenceInfoCore>

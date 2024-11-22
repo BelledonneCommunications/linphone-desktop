@@ -52,6 +52,10 @@ linphone::ConferenceScheduler::State ConferenceSchedulerModel::getState() const 
 	return mState;
 }
 
+std::shared_ptr<const linphone::ConferenceInfo> ConferenceSchedulerModel::getConferenceInfo() const {
+	return mMonitor->getInfo();
+}
+
 void ConferenceSchedulerModel::setInfo(const std::shared_ptr<linphone::ConferenceInfo> &confInfo) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setInfo(confInfo);
