@@ -42,34 +42,30 @@ public:
 
 	bool haveCurrentDate() const;
 	void setHaveCurrentDate(bool have);
+
 	void updateHaveCurrentDate();
-	void updateHaveCurrentDate(QSharedPointer<ConferenceInfoCore> itemToCompare);
 
-	int getCurrentDateIndex() const;
-	void setCurrentDateIndex(int index);
+	int getCurrentDateIndex();
 
-	int findConfInfoIndexByUri(const QString &uri);
-
-	QSharedPointer<ConferenceInfoCore> build(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo) const;
+	QSharedPointer<ConferenceInfoCore> build(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo);
+	void connectItem(QSharedPointer<ConferenceInfoCore> confInfoCore);
 
 	QHash<int, QByteArray> roleNames() const override;
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	static int sort(QList<QSharedPointer<ConferenceInfoCore>> &listToSort); // return the index of null item.
 
 signals:
-	void lUpdate();
+	void lUpdate(bool isInitialization = false);
+	void initialized();
 	void addCurrentDateChanged();
 	void haveCurrentDateChanged();
 	void currentDateIndexChanged(int index);
+	void confInfoInserted(int index, ConferenceInfoGui *data);
 
 private:
 	QSharedPointer<SafeConnection<ConferenceInfoList, CoreModel>> mCoreModelConnection;
-	std::shared_ptr<CoreModel> mCoreModel;
-	QSharedPointer<ConferenceInfoCore> mLastConfInfoInserted;
 	QSharedPointer<AccountCore> mCurrentAccountCore;
 	bool mHaveCurrentDate = false;
-	int mCurrentDateIndex = -1;
 	DECLARE_ABSTRACT_OBJECT
 };
 #endif // CONFERENCE_INFO_LIST_H_

@@ -188,8 +188,9 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 			mConfInfoModelConnection->makeConnectToCore(&ConferenceInfoCore::lDeleteConferenceInfo, [this]() {
 				mConfInfoModelConnection->invokeToModel([this] { mConferenceInfoModel->deleteConferenceInfo(); });
 			});
-			mConfInfoModelConnection->makeConnectToModel(&ConferenceInfoModel::conferenceInfoDeleted,
-			                                             &ConferenceInfoCore::removed);
+			mConfInfoModelConnection->makeConnectToModel(&ConferenceInfoModel::conferenceInfoDeleted, [this] {
+				mConfInfoModelConnection->invokeToCore([this] { removed(this); });
+			});
 
 			mConfInfoModelConnection->makeConnectToModel(
 			    &ConferenceInfoModel::schedulerStateChanged, [this](linphone::ConferenceScheduler::State state) {

@@ -153,7 +153,7 @@ signals:
 	void saveFailed();
 
 	void invitationsSent();
-	void removed();
+	void removed(ConferenceInfoCore* confInfo);
 
 	void lCancelConferenceInfo();
 	void lDeleteConferenceInfo(); // Remove completly this conference info from DB

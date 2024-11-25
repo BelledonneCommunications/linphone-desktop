@@ -27,21 +27,26 @@ DEFINE_ABSTRACT_OBJECT(ConferenceInfoProxy)
 
 ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
 	mList = ConferenceInfoList::create();
-	setSourceModels(new SortFilterList(mList.get()));
-	connect(
-	    this, &ConferenceInfoProxy::filterTextChanged, this, [this] { updateCurrentDateIndex(); },
-	    Qt::QueuedConnection);
+	setSourceModels(new SortFilterList(mList.get(), Qt::AscendingOrder));
 	connect(
 	    mList.get(), &ConferenceInfoList::haveCurrentDateChanged, this,
 	    [this] {
-		    invalidate();
-		    updateCurrentDateIndex();
+		    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
+		    sortModel->invalidate();
 	    },
 	    Qt::QueuedConnection);
-	connect(mList.get(), &ConferenceInfoList::haveCurrentDateChanged, this,
-	        &ConferenceInfoProxy::haveCurrentDateChanged, Qt::QueuedConnection);
-	connect(mList.get(), &ConferenceInfoList::currentDateIndexChanged, this,
-	        &ConferenceInfoProxy::updateCurrentDateIndex, Qt::QueuedConnection);
+	connect(
+	    mList.get(), &ConferenceInfoList::confInfoInserted, this,
+	    [this](int index, ConferenceInfoGui *data) {
+		    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
+		    if (sortModel) {
+			    auto proxyIndex = sortModel->mapFromSource(mList->index(index, 0)).row();
+			    if (proxyIndex >= getMaxDisplayItems()) setMaxDisplayItems(proxyIndex + 1);
+			    emit conferenceInfoCreated(proxyIndex);
+		    }
+	    },
+	    Qt::QueuedConnection);
+	connect(mList.get(), &ConferenceInfoList::initialized, this, &ConferenceInfoProxy::initialized);
 }
 
 ConferenceInfoProxy::~ConferenceInfoProxy() {
@@ -49,16 +54,6 @@ ConferenceInfoProxy::~ConferenceInfoProxy() {
 
 bool ConferenceInfoProxy::haveCurrentDate() const {
 	return mList->haveCurrentDate();
-}
-
-int ConferenceInfoProxy::getCurrentDateIndex() const {
-	return mCurrentDateIndex;
-}
-
-void ConferenceInfoProxy::updateCurrentDateIndex() {
-	int newIndex = mapFromSource(sourceModel()->index(mList->getCurrentDateIndex(), 0)).row();
-	mCurrentDateIndex = newIndex;
-	emit currentDateIndexChanged(newIndex);
 }
 
 bool ConferenceInfoProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
@@ -84,12 +79,30 @@ bool ConferenceInfoProxy::SortFilterList::filterAcceptsRow(int sourceRow, const 
 			return res;
 		} else return mFilterType == -1;
 	} else {
-		return !list->haveCurrentDate() && list->getCount() > 1 && mFilterText.isEmpty();
 		// if mlist count == 1 there is only the dummy row which we don't display alone
+		return !list->haveCurrentDate() && list->getCount() > 1 && mFilterText.isEmpty();
 	}
+}
+
+int ConferenceInfoProxy::getCurrentDateIndex() const {
+	auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
+	auto modelIndex = mList->getCurrentDateIndex();
+	auto proxyIndex = sortModel->mapFromSource(mList->index(modelIndex, 0)).row();
+	return proxyIndex;
 }
 
 bool ConferenceInfoProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft,
                                                    const QModelIndex &sourceRight) const {
-	return true; // Not used
+	auto l = getItemAtSource<ConferenceInfoList, ConferenceInfoCore>(sourceLeft.row());
+	auto r = getItemAtSource<ConferenceInfoList, ConferenceInfoCore>(sourceRight.row());
+	if (!l && !r) {
+		return true;
+	}
+	auto nowDate = QDate::currentDate();
+	if (!l || !r) { // sort on date
+		auto rdate = r ? r->getDateTimeUtc().date() : QDate::currentDate();
+		return !l ? nowDate <= r->getDateTimeUtc().date() : l->getDateTimeUtc().date() < nowDate;
+	} else {
+		return l->getDateTimeUtc() < r->getDateTimeUtc();
+	}
 }

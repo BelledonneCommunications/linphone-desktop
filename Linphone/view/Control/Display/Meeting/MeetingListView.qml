@@ -17,34 +17,16 @@ ListView {
 	property ConferenceInfoGui selectedConference: model && currentIndex != -1 ? model.getAt(currentIndex) : null
 	
 	spacing: 8 * DefaultStyle.dp
-	currentIndex: confInfoProxy.currentDateIndex
-	// using highlight doesn't center, take time before moving and don't work for not visible item (like not loaded)
-	highlightFollowsCurrentItem: false
+	highlightFollowsCurrentItem: true
+	highlightMoveVelocity: 1500
 
 	onCountChanged: {
 		selectedConference = model && currentIndex != -1 && currentIndex < model.count ? model.getAt(currentIndex) : null
 	}
-	Connections {
-		target: confInfoProxy
-		function onCurrentDateIndexChanged(index) {
-			mainItem.currentIndex = index
-		}
-	}
 	onCurrentIndexChanged: {
 		selectedConference = model.getAt(currentIndex) || null
-		if (currentIndex != -1) positionViewAtIndex(currentIndex, ListView.Contain)
-	}
-	onVisibleChanged: if( visible) {
-		mainItem.positionViewAtIndex(currentIndex, ListView.Center)// First approximative move
-		delayMove.restart()	// Move to exact position after load.
 	}
 	onAtYEndChanged: if(atYEnd) confInfoProxy.displayMore()
-
-	Timer{
-		id: delayMove
-		interval: 60
-		onTriggered: mainItem.positionViewAtIndex(currentIndex, ListView.Center)
-	}
 	
 	model: ConferenceInfoProxy {
 		id: confInfoProxy
@@ -52,6 +34,14 @@ ListView {
 		filterType: ConferenceInfoProxy.None
 		initialDisplayItems: mainItem.height / (63 * DefaultStyle.dp) + 5
 		displayItemsStep: initialDisplayItems/2
+		onConferenceInfoCreated: (index) => {
+			mainItem.currentIndex = index
+		}
+		onInitialized: {
+			var initIndex = confInfoProxy.getCurrentDateIndex()
+			if (initIndex >= maxDisplayItems) maxDisplayItems = initIndex + 1
+			mainItem.currentIndex = initIndex
+		}
 	}
 
 	section {
@@ -85,7 +75,7 @@ ListView {
 		property int topOffset: (dateDay.visible && !isFirst? 8 * DefaultStyle.dp : 0)
 		property var endDateTime: $modelData ? $modelData.core.endDateTime : UtilsCpp.getCurrentDateTime()
 		property var haveModel: !!$modelData && $modelData != undefined && $modelData.core.haveModel || false
-		property bool isCanceled: $modelData.core.state === LinphoneEnums.ConferenceInfoState.Cancelled
+		property bool isCanceled: $modelData?.core.state === LinphoneEnums.ConferenceInfoState.Cancelled || false
 		Component.onCompleted: if (!isFirst && dateDay.visible) {
 			height = (63+topOffset)*DefaultStyle.dp
 			delegateIn.anchors.topMargin = topOffset

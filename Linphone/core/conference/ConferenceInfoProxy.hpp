@@ -30,7 +30,7 @@ class ConferenceInfoProxy : public LimitProxy, public AbstractObject {
 
 	Q_OBJECT
 	Q_PROPERTY(bool haveCurrentDate READ haveCurrentDate NOTIFY haveCurrentDateChanged)
-	Q_PROPERTY(int currentDateIndex READ getCurrentDateIndex NOTIFY currentDateIndexChanged)
+	// Q_PROPERTY(int currentDateIndex READ getCurrentDateIndex NOTIFY currentDateIndexChanged)
 
 public:
 	enum ConferenceInfoFiltering { None = 0, Future = 1 };
@@ -43,12 +43,12 @@ public:
 
 	bool haveCurrentDate() const;
 
-	int getCurrentDateIndex() const;
-	void updateCurrentDateIndex();
+	Q_INVOKABLE int getCurrentDateIndex() const;
 
 signals:
 	void haveCurrentDateChanged();
-	void currentDateIndexChanged(int index);
+	void conferenceInfoCreated(int index);
+	void initialized();
 
 private:
 	QSharedPointer<ConferenceInfoList> mList;
