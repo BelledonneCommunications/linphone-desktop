@@ -146,9 +146,11 @@ Control.Control{
 		Voicemail {
 			Layout.leftMargin: 18 * DefaultStyle.dp
 			Layout.rightMargin: 20 * DefaultStyle.dp
-			Layout.preferredWidth: 27 * DefaultStyle.dp
-			Layout.preferredHeight: 28 * DefaultStyle.dp
-			visible: mainItem.account.core.showMwi
+			Layout.preferredWidth: 30 * DefaultStyle.dp
+			Layout.preferredHeight: 26 * DefaultStyle.dp
+			scaleFactor: 0.7
+			showMwi: mainItem.account.core.showMwi
+			visible: mainItem.account.core.voicemailAddress.length > 0 || mainItem.account.core.showMwi
 			voicemailCount: mainItem.account.core.voicemailCount
 			onClicked: {
 				if (mainItem.account.core.voicemailAddress.length > 0)

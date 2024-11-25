@@ -295,28 +295,32 @@ Item {
 						}
 						Voicemail {
 							id: voicemail
-							Layout.preferredWidth: 27 * DefaultStyle.dp
-							Layout.preferredHeight: 28 * DefaultStyle.dp
-							
+							Layout.preferredWidth: 42 * DefaultStyle.dp
+							Layout.preferredHeight: 36 * DefaultStyle.dp
 							Repeater {
 								model: accountProxy
 								delegate: Item {
 									Connections {
 										target: modelData.core
 										onShowMwiChanged: voicemail.updateCumulatedMwi()
+										onVoicemailAddressChanged: voicemail.updateCumulatedMwi()
 									}
 								}
 							}
 
 							function updateCumulatedMwi() {
 								var count = 0
-								var show = false
+								var showMwi = false
+								var supportsVoiceMail = false
 								for (var i=0 ; i < accountProxy.count ; i++ ) {
-									count += accountProxy.getAt(i).core.voicemailCount
-									show |= accountProxy.getAt(i).core.showMwi
+									var core = accountProxy.getAt(i).core
+									count += core.voicemailCount
+									showMwi |= core.showMwi
+									supportsVoiceMail |= core.voicemailAddress.length > 0
 								}
-								voicemail.visible = show
+								voicemail.showMwi = showMwi
 								voicemail.voicemailCount = count
+								voicemail.visible = showMwi || supportsVoiceMail
 							}
 
 							Component.onCompleted: {

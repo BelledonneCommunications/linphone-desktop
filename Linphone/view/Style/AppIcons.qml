@@ -124,4 +124,5 @@ QtObject {
 	property string power: "image://internal/power.svg"
 	property string resourcePackage: "image://internal/resource-package.svg"
 	property string appWindow: "image://internal/app-window.svg"
+	property string bellMwi: "image://internal/bell-mwi.svg"
 }
