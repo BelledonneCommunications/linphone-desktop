@@ -114,12 +114,13 @@ AbstractSettingsLayout {
 						color: DefaultStyle.main2_600
 						Layout.fillWidth: true
 					}
-					Text {
+					TextEdit {
 						text: AppCpp.applicationVersion + ' ('+ AppCpp.gitBranchName + ')'
 						font: Typography.p1
 						wrapMode: Text.WordWrap
 						color: DefaultStyle.main2_600
 						Layout.fillWidth: true
+						readOnly: true
 					}
 				}
 			}
@@ -141,12 +142,13 @@ AbstractSettingsLayout {
 						color: DefaultStyle.main2_600
 						Layout.fillWidth: true
 					}
-					Text {
+					TextEdit {
 						text: AppCpp.sdkVersion
 						font: Typography.p1
 						wrapMode: Text.WordWrap
 						color: DefaultStyle.main2_600
 						Layout.fillWidth: true
+						readOnly: true
 					}
 				}
 			}
