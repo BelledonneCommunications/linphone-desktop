@@ -189,8 +189,10 @@ void AccountModel::setNotificationsAllowed(bool value) {
 void AccountModel::setMwiServerAddress(QString value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
-	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
-	if (address) {
+	auto address = value.isEmpty()
+	                   ? nullptr
+	                   : CoreModel::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(value), false);
+	if (value.isEmpty() || address) {
 		params->setMwiServerAddress(address);
 		mMonitor->setParams(params);
 		emit mwiServerAddressChanged(value);
@@ -208,7 +210,7 @@ void AccountModel::setTransport(linphone::TransportType value) {
 void AccountModel::setServerAddress(QString value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
-	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
+	auto address = CoreModel::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(value), false);
 	if (address) {
 		params->setServerAddress(address);
 		mMonitor->setParams(params);
@@ -230,6 +232,7 @@ void AccountModel::setStunServer(QString value) {
 	auto policy = params->getNatPolicy();
 	if (!policy) policy = mMonitor->getCore()->createNatPolicy();
 	policy->setStunServer(Utils::appStringToCoreString(value));
+	policy->enableStun(!value.isEmpty());
 	params->setNatPolicy(policy);
 	mMonitor->setParams(params);
 	emit stunServerChanged(value);
@@ -273,8 +276,10 @@ void AccountModel::setExpire(int value) {
 void AccountModel::setConferenceFactoryAddress(QString value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
-	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
-	if (address) {
+	auto address = value.isEmpty()
+	                   ? nullptr
+	                   : CoreModel::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(value), false);
+	if (value.isEmpty() || address) {
 		params->setConferenceFactoryAddress(address);
 		mMonitor->setParams(params);
 		emit conferenceFactoryAddressChanged(value);
@@ -284,8 +289,10 @@ void AccountModel::setConferenceFactoryAddress(QString value) {
 void AccountModel::setAudioVideoConferenceFactoryAddress(QString value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
-	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
-	if (address) {
+	auto address = value.isEmpty()
+	                   ? nullptr
+	                   : CoreModel::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(value), false);
+	if (value.isEmpty() || address) {
 		params->setAudioVideoConferenceFactoryAddress(address);
 		mMonitor->setParams(params);
 		emit audioVideoConferenceFactoryAddressChanged(value);
@@ -296,7 +303,6 @@ void AccountModel::setAudioVideoConferenceFactoryAddress(QString value) {
 void AccountModel::setLimeServerUrl(QString value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
-	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
 	params->setLimeServerUrl(Utils::appStringToCoreString(value));
 	mMonitor->setParams(params);
 	emit limeServerUrlChanged(value);
@@ -323,8 +329,10 @@ bool AccountModel::getShowMwi() {
 void AccountModel::setVoicemailAddress(QString value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
-	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
-	if (address) {
+	auto address = value.isEmpty()
+	                   ? nullptr
+	                   : CoreModel::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(value), false);
+	if (value.isEmpty() || address) {
 		params->setVoicemailAddress(address);
 		mMonitor->setParams(params);
 		emit voicemailAddressChanged(value);

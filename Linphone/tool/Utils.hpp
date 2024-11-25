@@ -117,9 +117,6 @@ public:
 	Q_INVOKABLE static int timeOffset(QDateTime start, QDateTime end);
 	Q_INVOKABLE static int daysOffset(QDateTime start, QDateTime end);
 	Q_INVOKABLE static VariantObject *interpretUrl(QString uri);
-	Q_INVOKABLE static VariantObject *isValidSIPAddress(QString uri);
-	Q_INVOKABLE static bool isValidIPAddress(const QString &host);
-	Q_INVOKABLE static bool isValidHostname(const QString &hostname);
 	Q_INVOKABLE static bool isValidURL(const QString &url);
 	Q_INVOKABLE static VariantObject *findAvatarByAddress(const QString &address);
 	Q_INVOKABLE static VariantObject *findFriendByAddress(const QString &address);

@@ -36,16 +36,14 @@ AbstractSettingsLayout {
 				propertyName: "mwiServerAddress"
 				propertyOwner: account.core
 				title: qsTr("URI du serveur de messagerie vocale")
-				isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
-				toValidate: true
 				Layout.fillWidth: true
+				isValid: function(text) { return text.length == 0 || !text.endsWith(".") } // work around sdk crash when adress ends with .
+				toValidate: true
 			}
 			DecoratedTextField {
 				propertyName: "voicemailAddress"
 				propertyOwner: account.core
 				title: qsTr("URI de messagerie vocale")
-				isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
-				toValidate: true
 				Layout.fillWidth: true
 			}
 		}
@@ -76,8 +74,6 @@ AbstractSettingsLayout {
 				title: qsTr("URL du serveur mandataire")
 				propertyName: "serverAddress"
 				propertyOwner: account.core
-				isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
-				toValidate: true
 			}
 			SwitchSetting {
 				titleText: qsTr("Serveur mandataire sortant")
@@ -89,8 +85,6 @@ AbstractSettingsLayout {
 				propertyName: "stunServer"
 				propertyOwner: account.core
 				title: qsTr("Adresse du serveur STUN")
-				isValid: function(text) { return UtilsCpp.isValidIPAddress(text) || UtilsCpp.isValidHostname(text); }
-				toValidate: true
 			}
 			SwitchSetting {
 				titleText: qsTr("Activer ICE")
@@ -113,7 +107,7 @@ AbstractSettingsLayout {
 				propertyOwner: account.core
 				title: qsTr("Expiration (en seconde)")
 				canBeEmpty: false
-				isValid: function(text) { return !isNaN(Number(text)); }
+				isValid: function(text) { return !isNaN(Number(text)) }
 				toValidate: true
 			}
 			DecoratedTextField {
@@ -121,25 +115,19 @@ AbstractSettingsLayout {
 				title: qsTr("URI de l’usine à conversations")
 				propertyName: "conferenceFactoryAddress"
 				propertyOwner: account.core
-				isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
-				toValidate: true
 			}
 			DecoratedTextField {
 				Layout.fillWidth: true
 				title: qsTr("URI de l’usine à réunions")
 				propertyName: "audioVideoConferenceFactoryAddress"
 				propertyOwner: account.core
-				isValid: function(text) { return UtilsCpp.isValidSIPAddress(text); }
 				visible: !SettingsCpp.disableMeetingsFeature
-				toValidate: true
 			}
 			DecoratedTextField {
 				Layout.fillWidth: true
 				title: qsTr("URL du serveur d’échange de clés de chiffrement")
 				propertyName: "limeServerUrl"
 				propertyOwner: account.core
-				isValid: function(text) { return UtilsCpp.isValidURL(text); }
-				toValidate: true
 			}
 		}
 	}

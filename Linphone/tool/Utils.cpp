@@ -339,33 +339,6 @@ VariantObject *Utils::interpretUrl(QString uri) {
 	return data;
 }
 
-VariantObject *Utils::isValidSIPAddress(QString uri) {
-	VariantObject *data = new VariantObject(QVariant(false));
-	if (!data) return nullptr;
-	data->makeRequest([uri]() -> QVariant {
-		return QVariant(linphone::Factory::get()->createAddress(Utils::appStringToCoreString(uri)) != nullptr);
-	});
-	data->requestValue();
-	return data;
-}
-
-bool Utils::isValidIPAddress(const QString &host) {
-	QHostAddress address;
-	return address.setAddress(host);
-}
-
-bool Utils::isValidHostname(const QString &hostname) {
-	QRegularExpression regex("^[a-zA-Z0-9]([a-zA-Z0-9-]{0,62}[a-zA-Z0-9])?$");
-	QStringList labels = hostname.split('.');
-	if (labels.size() > 127) // More than 127 labels is invalid
-		return false;
-	foreach (const QString &label, labels) {
-		if (!regex.match(label).hasMatch() || label.length() > 63) // Label length must be between 1 and 63
-			return false;
-	}
-	return hostname.length() <= 253; // Total length should be <= 253
-}
-
 bool Utils::isValidURL(const QString &url) {
 	return QUrl(url).isValid();
 }
