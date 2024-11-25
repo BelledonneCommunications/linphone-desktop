@@ -166,6 +166,8 @@ ListView {
 							}
 							Text {
 								text: $modelData? $modelData.core.subject : ""
+								Layout.fillWidth: true
+								maximumLineCount: 1
 								font {
 									pixelSize: 13 * DefaultStyle.dp
 									weight: 700 * DefaultStyle.dp
