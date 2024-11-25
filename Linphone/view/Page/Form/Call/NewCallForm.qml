@@ -62,6 +62,7 @@ FocusScope {
 			background: Item {
 				anchors.fill: parent
 			}
+			onVisibleChanged: if (!visible) mainItem.numPadPopup.close()
 			contentItem: ColumnLayout {
 				// anchors.fill: parent
 				spacing: 10 * DefaultStyle.dp
