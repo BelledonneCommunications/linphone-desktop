@@ -734,32 +734,32 @@ AbstractMainPage {
 									Layout.preferredHeight: 1 * DefaultStyle.dp
 									color: DefaultStyle.main2_200
 								}
-								IconLabelButton {
-									Layout.fillWidth: true
-									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
-									iconSource: AppIcons.bellSlash
-									text: qsTr("Mettre en sourdine")
-									onClicked: console.log("TODO : mute contact")
-								}
-								Rectangle {
-									Layout.fillWidth: true
-									Layout.preferredHeight: 1 * DefaultStyle.dp
-									color: DefaultStyle.main2_200
-								}
-								IconLabelButton {
-									Layout.fillWidth: true
-									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
-									iconSource: AppIcons.empty
-									text: qsTr("Bloquer")
-									onClicked: console.log("TODO : block contact")
-								}
-								Rectangle {
-									Layout.fillWidth: true
-									Layout.preferredHeight: 1 * DefaultStyle.dp
-									color: DefaultStyle.main2_200
-								}
+								// IconLabelButton {
+								// 	Layout.fillWidth: true
+								// 	Layout.preferredHeight: 50 * DefaultStyle.dp
+								// 	iconSize: 24 * DefaultStyle.dp
+								// 	iconSource: AppIcons.bellSlash
+								// 	text: qsTr("Mettre en sourdine")
+								// 	onClicked: console.log("TODO : mute contact")
+								// }
+								// Rectangle {
+								// 	Layout.fillWidth: true
+								// 	Layout.preferredHeight: 1 * DefaultStyle.dp
+								// 	color: DefaultStyle.main2_200
+								// }
+								// IconLabelButton {
+								// 	Layout.fillWidth: true
+								// 	Layout.preferredHeight: 50 * DefaultStyle.dp
+								// 	iconSize: 24 * DefaultStyle.dp
+								// 	iconSource: AppIcons.empty
+								// 	text: qsTr("Bloquer")
+								// 	onClicked: console.log("TODO : block contact")
+								// }
+								// Rectangle {
+								// 	Layout.fillWidth: true
+								// 	Layout.preferredHeight: 1 * DefaultStyle.dp
+								// 	color: DefaultStyle.main2_200
+								// }
 								IconLabelButton {
 									Layout.fillWidth: true
 									Layout.preferredHeight: 50 * DefaultStyle.dp
