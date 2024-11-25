@@ -7,8 +7,10 @@ import UtilsCpp
 Notification {
 	id: mainItem
 	radius: 20 * DefaultStyle.dp
-	overriddenWidth: 450 * DefaultStyle.dp//content.width
-	overriddenHeight: 101 * DefaultStyle.dp//content.height
+	backgroundColor: DefaultStyle.grey_600
+	backgroundOpacity: 0.8
+	overriddenWidth: 245 * DefaultStyle.dp//
+	overriddenHeight: content.height //126 * DefaultStyle.dp//
 	
 	readonly property var call: notificationData && notificationData.call
 	property var state: call.core.state
@@ -25,75 +27,85 @@ Notification {
 	Popup {
 		id: content
 		visible: mainItem.visible
-		width: parent.width
-		height: parent.height
-		leftPadding: 26 * DefaultStyle.dp
-		rightPadding: 26 * DefaultStyle.dp
-		topPadding: 15 * DefaultStyle.dp
-		bottomPadding: 15 * DefaultStyle.dp
+		leftPadding: 16 * DefaultStyle.dp
+		rightPadding: 16 * DefaultStyle.dp
+		topPadding: 3 * DefaultStyle.dp
+		bottomPadding: 3 * DefaultStyle.dp
+		anchors.centerIn: parent
 		background: Item{}
-		contentItem: RowLayout {
-			spacing: 15 * DefaultStyle.dp
+		contentItem: ColumnLayout {
+			anchors.centerIn: parent
+			spacing: 9 * DefaultStyle.dp
 			RowLayout {
-				Layout.fillWidth: true
-				Layout.alignment: Qt.AlignLeft
-				spacing: 13 * DefaultStyle.dp
-				Layout.preferredHeight: childrenRect.height
-				Layout.preferredWidth: childrenRect.width
-				Avatar {
-					Layout.preferredWidth: 45 * DefaultStyle.dp
-					Layout.preferredHeight: 45 * DefaultStyle.dp
-					call: mainItem.call
+				spacing: 4 * DefaultStyle.dp
+				Layout.alignment: Qt.AlignHCenter
+				Image {
+					Layout.preferredWidth: 10 * DefaultStyle.dp
+					Layout.preferredHeight: 10 * DefaultStyle.dp
+					source: AppIcons.logo
 				}
-				ColumnLayout {
-					Text {
-						text: call.core.remoteName
-						Layout.fillWidth: true
-						Layout.maximumWidth: 200 * DefaultStyle.dp
-						maximumLineCount: 1
-						color: DefaultStyle.grey_600
-						font {
-							pixelSize: 20 * DefaultStyle.dp
-							weight: 800 * DefaultStyle.dp
-							capitalization: Font.Capitalize
-						}
-					}
-					RowLayout {
-						EffectImage {
-							imageSource: AppIcons.arrowDownLeft
-							colorizationColor: DefaultStyle.success_500main
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-						}
-						Text {
-							Layout.fillWidth: true
-							property var localAddress: UtilsCpp.getDisplayName(call.core.localAddress)
-							text: qsTr("Appel entrant")//.arg(localAddress ? qsTr(" pour %1").arg(localAddress.value) : "") //call.core.remoteAddress
-							color: DefaultStyle.grey_600
-							font {
-								pixelSize: 13 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
-							}
-						}
+				Text {
+					text: "Linphone"
+					color: DefaultStyle.grey_0
+					font {
+						pixelSize: 8 * DefaultStyle.dp
+						weight: 600 * DefaultStyle.dp
+						capitalization: Font.Capitalize
 					}
 				}
 			}
-			Item{Layout.fillWidth: true}
+			ColumnLayout {
+				spacing: 2 * DefaultStyle.dp
+				Layout.alignment: Qt.AlignHCenter
+				Avatar {
+					Layout.preferredWidth: 40 * DefaultStyle.dp
+					Layout.preferredHeight: 40 * DefaultStyle.dp
+					Layout.alignment: Qt.AlignHCenter
+					call: mainItem.call
+				}
+				Text {
+					text: call.core.remoteName
+					Layout.fillWidth: true
+					Layout.maximumWidth: 200 * DefaultStyle.dp
+					Layout.alignment: Qt.AlignHCenter
+					horizontalAlignment: Text.AlignHCenter
+					maximumLineCount: 1
+					color: DefaultStyle.grey_0
+					font {
+						pixelSize: 14 * DefaultStyle.dp
+						weight: 600 * DefaultStyle.dp
+						capitalization: Font.Capitalize
+					}
+				}
+				Text {
+					text: qsTr("Vous appelle...")
+					Layout.alignment: Qt.AlignHCenter
+					color: DefaultStyle.grey_0
+					font {
+						pixelSize: 10 * DefaultStyle.dp
+						weight: 500 * DefaultStyle.dp
+					}
+				}
+			}
 			RowLayout {
 				Layout.alignment: Qt.AlignHCenter
 				Layout.fillWidth: true
 				spacing: 26 * DefaultStyle.dp
 				Button {
+					spacing: 6 * DefaultStyle.dp
 					color: DefaultStyle.success_500main
-					Layout.preferredWidth: 75 * DefaultStyle.dp
-					Layout.preferredHeight: 55 * DefaultStyle.dp
+					borderColor: color
+					Layout.preferredWidth: 93 * DefaultStyle.dp
+					Layout.preferredHeight: 25 * DefaultStyle.dp
 					asynchronous: false
-					contentItem: EffectImage {
-						colorizationColor: DefaultStyle.grey_0
-						imageSource: AppIcons.phone
-						imageWidth: 32 * DefaultStyle.dp
-						imageHeight: 32 * DefaultStyle.dp
-					}
+					icon.source: AppIcons.phone
+					icon.width: 14 * DefaultStyle.dp
+					icon.height: 14 * DefaultStyle.dp
+					contentImageColor: DefaultStyle.grey_0
+					text: qsTr("Répondre")
+					textColor: DefaultStyle.grey_0
+					textSize: 10 * DefaultStyle.dp
+					textWeight: 500 * DefaultStyle.dp
 					onClicked: {
 						console.debug("[NotificationReceivedCall] Accept click")
 						UtilsCpp.openCallsWindow(mainItem.call)
@@ -101,16 +113,20 @@ Notification {
 					}
 				}
 				Button {
+					spacing: 6 * DefaultStyle.dp
 					color: DefaultStyle.danger_500main
-					Layout.preferredWidth: 75 * DefaultStyle.dp
-					Layout.preferredHeight: 55 * DefaultStyle.dp
+					borderColor: color
+					Layout.preferredWidth: 93 * DefaultStyle.dp
+					Layout.preferredHeight: 25 * DefaultStyle.dp
 					asynchronous: false
-					contentItem: EffectImage {
-						colorizationColor: DefaultStyle.grey_0
-						imageSource: AppIcons.endCall
-						imageWidth: 32 * DefaultStyle.dp
-						imageHeight: 32 * DefaultStyle.dp
-					}
+					icon.source: AppIcons.endCall
+					icon.width: 14 * DefaultStyle.dp
+					icon.height: 14 * DefaultStyle.dp
+					contentImageColor: DefaultStyle.grey_0
+					text: qsTr("Refuser")
+					textColor: DefaultStyle.grey_0
+					textSize: 10 * DefaultStyle.dp
+					textWeight: 500 * DefaultStyle.dp
 					onClicked: {
 						console.debug("[NotificationReceivedCall] Decline click")
 						mainItem.call.core.lDecline()

@@ -14,6 +14,8 @@ DesktopPopup {
 	property int overriddenHeight: 120 * DefaultStyle.dp
 	property int overriddenWidth: 300 * DefaultStyle.dp
 	property double radius: 0
+	property color backgroundColor: DefaultStyle.grey_0
+	property double backgroundOpacity: 1
 	default property alias _content: content.data
 	
 	signal deleteNotification (var notification)
@@ -34,12 +36,9 @@ DesktopPopup {
 	Rectangle {
 		anchors.fill: parent
 		visible: backgroundLoader.status != Loader.Ready
-		color: DefaultStyle.grey_0
+		color: mainItem.backgroundColor
 		radius: mainItem.radius
-		border {
-			color: DefaultStyle.grey_400
-			width: 1 * DefaultStyle.dp
-		}
+		opacity: mainItem.backgroundOpacity
 	}
 	
 	Loader{
@@ -52,12 +51,13 @@ DesktopPopup {
 				id: background
 				anchors.fill: parent
 				visible: backgroundLoader.status != Loader.Ready
-				color: DefaultStyle.grey_0
+				color: mainItem.backgroundColor
 				radius: mainItem.radius
-				border {
-					color: DefaultStyle.grey_400
-					width: 1 * DefaultStyle.dp
-				}
+				opacity: mainItem.backgroundOpacity
+				// border {
+				// 	color: DefaultStyle.grey_400
+				// 	width: 1 * DefaultStyle.dp
+				// }
 			}
 			MultiEffect {
 				source: background

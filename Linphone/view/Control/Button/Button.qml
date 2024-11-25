@@ -135,17 +135,21 @@ Control.Button {
 		
 		Component{
 			id: imageTextComponent
-			RowLayout {
-				spacing: mainItem.spacing
-				ButtonImage{
-					Layout.preferredWidth: mainItem.icon.width
-					Layout.preferredHeight: mainItem.icon.height
-				}
-				ButtonText {
-					horizontalAlignment: Text.AlignLeft
-				}
-				Item{
-					Layout.fillWidth: true
+			// Workaround for centering the content when its
+			// width is smaller than the button width
+			Item {
+				implicitWidth: content.implicitWidth
+				implicitHeight: content.implicitHeight
+				RowLayout {
+					id: content
+					spacing: mainItem.spacing
+					anchors.centerIn: parent
+					ButtonImage{
+						Layout.preferredWidth: mainItem.icon.width
+						Layout.preferredHeight: mainItem.icon.height
+					}
+					ButtonText {
+					}
 				}
 			}
 		}

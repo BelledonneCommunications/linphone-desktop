@@ -3,6 +3,7 @@ import QtQuick
 
 QtObject {
 	property string welcomeLinphoneLogo: "image://internal/linphone.svg"
+	property string logo: "image://internal/logo.svg"
 	property string welcomeLock: "image://internal/secured.svg"
 	property string lock: "image://internal/lock.svg"
 	property string lockSimple: "image://internal/lock-simple.svg"
