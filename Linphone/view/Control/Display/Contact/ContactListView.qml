@@ -42,6 +42,7 @@ ListView {
 	
 	property int itemsRightMargin: 39 * DefaultStyle.dp
 	property bool expanded: true
+	property int headerHeight: headerItem?.height
 	
 	signal resultsReceived()
 	signal contactDeletionRequested(FriendGui contact)
@@ -119,9 +120,6 @@ ListView {
 		id: headerItem
 		width: mainItem.width
 		height: headerContents.implicitHeight
-		onActiveFocusChanged: {  
-			if(activeFocus) mainItem.updatePosition()
-		}
 				
 		ColumnLayout {
 			id: headerContents

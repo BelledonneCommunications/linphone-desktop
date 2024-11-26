@@ -133,6 +133,11 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 	});
 }
 
+void MagicSearchList::connectContact(FriendCore *data) {
+	connect(data, &FriendCore::removed, this, qOverload<QObject *>(&MagicSearchList::remove));
+	connect(data, &FriendCore::starredChanged, this, &MagicSearchList::friendStarredChanged);
+}
+
 void MagicSearchList::setResults(const QList<QSharedPointer<FriendCore>> &contacts) {
 	for (auto item : mList) {
 		auto isFriendCore = item.objectCast<FriendCore>();
@@ -142,12 +147,13 @@ void MagicSearchList::setResults(const QList<QSharedPointer<FriendCore>> &contac
 	qDebug() << log().arg("SetResults: %1").arg(contacts.size());
 	resetData<FriendCore>(contacts);
 	for (auto it : contacts) {
-		connect(it.get(), &FriendCore::removed, this, qOverload<QObject *>(&MagicSearchList::remove));
-		connect(it.get(), &FriendCore::starredChanged, this, &MagicSearchList::friendStarredChanged);
+		connectContact(it.get());
 	}
 }
 
-void MagicSearchList::addResult(const QSharedPointer<FriendCore> &contact) {
+void MagicSearchList::add(QSharedPointer<FriendCore> contact) {
+	connectContact(contact.get());
+	ListProxy::add(contact);
 }
 
 void MagicSearchList::setSearch(const QString &search) {

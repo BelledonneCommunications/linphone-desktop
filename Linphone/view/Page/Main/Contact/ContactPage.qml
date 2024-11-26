@@ -769,7 +769,7 @@ AbstractMainPage {
 									text: qsTr("Supprimer ce contact")
 									visible: !mainItem.selectedContact?.core.readOnly
 									onClicked: {
-										mainItem.deleteContact(contact)
+										mainItem.deleteContact(mainItem.selectedContact)
 									}
 								}
 							}

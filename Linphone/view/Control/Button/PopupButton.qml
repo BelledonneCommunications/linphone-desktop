@@ -76,9 +76,10 @@ Button {
 		onVisibleChanged: {
 			if (!visible) return
 			// Do not use popup.height as it is not consistent.
-			var position = mainItem.mapToItem(mainItem.Window.contentItem, mainItem.x + popup.implicitContentWidth + popup.padding, mainItem.y + mainItem.height + popup.implicitContentHeight + popup.padding)
-			if (position.y >= mainItem.Window.height) {
-				y = -mainItem.height - popup.implicitContentHeight - popup.padding
+			var popupHeight = mainItem.height + popup.implicitContentHeight + popup.padding
+			var position = mainItem.mapToItem(mainItem.Window.contentItem, mainItem.x + popup.implicitContentWidth + popup.padding, mainItem.y + popupHeight)
+			if (position.y + popupHeight >= mainItem.Window.height) {
+				y = -popupHeight
 			}else {
 				y = mainItem.height + popup.padding
 			}

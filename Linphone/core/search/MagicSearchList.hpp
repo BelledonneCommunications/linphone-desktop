@@ -41,9 +41,10 @@ public:
 	~MagicSearchList();
 
 	void setSelf(QSharedPointer<MagicSearchList> me);
+	void connectContact(FriendCore* data);
 	void setSearch(const QString &search);
 	void setResults(const QList<QSharedPointer<FriendCore>> &contacts);
-	void addResult(const QSharedPointer<FriendCore> &contact);
+	void add(QSharedPointer<FriendCore> contact);
 
 	int getSourceFlags() const;
 	void setSourceFlags(int flags);

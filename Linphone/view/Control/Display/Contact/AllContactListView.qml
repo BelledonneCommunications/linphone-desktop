@@ -140,7 +140,7 @@ Flickable{
 	}
 	function updatePosition(list){
 		var item = list.itemAtIndex(list.currentIndex)
-		var centerPos = list.y - height/2
+		var centerItemPos = 0
 		if( item && list.expanded){
 			// For debugging just in case
 			//var listPosition = item.mapToItem(favoriteList, item.x, item.y)
@@ -154,9 +154,10 @@ Flickable{
 			//console.log("new pos: " +newPosition.x + " / " +newPosition.y)
 			//console.log("header pos: " +headerItem.x + " / " +headerItem.y)
 			//console.log("Moving to " + (headerItem.y+item.y))
-			centerPos += item.y
+			centerItemPos = item.y + list.y + list.headerHeight +item.height/2
 		}
-		mainItem.contentY = Math.min(Math.max(0, centerPos), mainItem.contentHeight - mainItem.height)
+		var centerPos = centerItemPos - height/2
+		mainItem.contentY = Math.max(0, Math.min(centerPos, height, contentHeight-height))
 	}
 	Behavior on contentY{
 		NumberAnimation {
