@@ -238,9 +238,12 @@ ApplicationWindow {
 		onPopupCountChanged: {
 			nextY = mainWindow.height
 			for(var i = 0; i < popupCount; ++i) {
-				popupList[i].y = nextY - popupList[i].height
-				popupList[i].index = i
-				nextY = nextY - popupList[i].height - 15
+				var popupItem = popupList[i]
+				if( popupItem ){
+					popupItem.y = nextY - popupItem.height
+					popupItem.index = i
+					nextY = nextY - popupItem.height - 15
+				}
 			}
 		}
 	}

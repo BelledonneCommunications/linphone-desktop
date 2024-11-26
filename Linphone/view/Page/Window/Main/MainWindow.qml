@@ -135,7 +135,7 @@ AbstractWindow {
 	Component {
 		id: loginPage
 		LoginPage {
-			showBackButton: accountProxy.haveAccount
+			showBackButton: accountProxy?.haveAccount || false
 			onGoBack: openMainPage()
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
 			onGoToRegister: mainWindowStackView.replace(registerPage)

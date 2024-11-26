@@ -444,7 +444,7 @@ void App::initCore() {
 	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
 	QMetaObject::invokeMethod(
 	    mLinphoneThread->getThreadId(),
-	    [this]() mutable {
+	    [this, settings = mSettings]() mutable {
 		    lInfo() << log().arg("Updating downloaded codec files");
 		    ToolModel::updateCodecs(); // removing codec updates suffic (.in) before the core is created.
 		    lInfo() << log().arg("Starting Core");
@@ -454,7 +454,7 @@ void App::initCore() {
 		    lDebug() << log().arg("Creating SettingsModel");
 		    SettingsModel::create();
 		    lDebug() << log().arg("Creating SettingsCore");
-		    auto settings = SettingsCore::create();
+		    if (!settings) settings = SettingsCore::create();
 		    lDebug() << log().arg("Creating Ui");
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings, coreStarted] {
 			    // QML
@@ -501,24 +501,22 @@ void App::initCore() {
 
 			    // Enable notifications.
 			    mNotifier = new Notifier(mEngine);
-			    mSettings = settings;
-			    mEngine->setObjectOwnership(mSettings.get(), QQmlEngine::CppOwnership);
+			    mEngine->setObjectOwnership(settings.get(), QQmlEngine::CppOwnership);
 			    mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
-			    setAccountList(AccountList::create());
-			    setCallList(CallList::create());
-			    setAutoStart(mSettings->getAutoStart());
-			    setQuitOnLastWindowClosed(mSettings->getExitOnClose());
-			    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
-			            Qt::UniqueConnection);
-			    setLocale(settings->getConfigLocale());
+			    if (!mAccountList) setAccountList(AccountList::create());
+			    else mAccountList->lUpdate();
+			    if (!mCallList) setCallList(CallList::create());
+			    else mCallList->lUpdate();
 
-			    if (mSettings) {
+			    if (!mSettings) {
+				    mSettings = settings;
+				    setLocale(settings->getConfigLocale());
+				    setAutoStart(settings->getAutoStart());
+				    setQuitOnLastWindowClosed(settings->getExitOnClose());
 				    mEngine->setObjectOwnership(mSettings.get(), QQmlEngine::CppOwnership);
-				    setAutoStart(mSettings->getAutoStart());
-				    setQuitOnLastWindowClosed(mSettings->getExitOnClose());
+
 				    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
 				            Qt::UniqueConnection);
-				    setLocale(mSettings->getConfigLocale());
 				    QObject::connect(mSettings.get(), &SettingsCore::autoStartChanged, [this]() {
 					    mustBeInMainThread(log().arg(Q_FUNC_INFO));
 					    setAutoStart(mSettings->getAutoStart());
@@ -527,6 +525,12 @@ void App::initCore() {
 					    mustBeInMainThread(log().arg(Q_FUNC_INFO));
 					    if (mSettings) setLocale(mSettings->getConfigLocale());
 				    });
+				    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
+				            Qt::UniqueConnection);
+			    } else {
+				    setLocale(settings->getConfigLocale());
+				    setAutoStart(settings->getAutoStart());
+				    setQuitOnLastWindowClosed(settings->getExitOnClose());
 			    }
 			    const QUrl url("qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml");
 			    QObject::connect(
@@ -683,14 +687,14 @@ void App::restart() {
 			mEngine->clearSingletons();
 			delete mEngine;
 			mEngine = nullptr;
-			if (mSettings) mSettings.reset();
+			// if (mSettings) mSettings.reset();
 			initCore();
 			// Retrieve self from current Core/Model connection and reset Qt connections.
-			auto oldConnection = mCoreModelConnection;
-			oldConnection->mCore.lock();
-			auto me = oldConnection->mCore.mQData;
-			setSelf(me);
-			oldConnection->mCore.unlock();
+			// auto oldConnection = mCoreModelConnection;
+			// oldConnection->mCore.lock();
+			// auto me = oldConnection->mCore.mQData;
+			// setSelf(me);
+			// oldConnection->mCore.unlock();
 			exit((int)StatusCode::gRestartCode);
 		});
 	});

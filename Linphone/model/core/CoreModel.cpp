@@ -56,6 +56,7 @@ CoreModel::~CoreModel() {
 }
 
 std::shared_ptr<CoreModel> CoreModel::create(const QString &configPath, QThread *parent) {
+	if (gCoreModel) return gCoreModel;
 	auto model = std::make_shared<CoreModel>(configPath, parent);
 	model->setSelf(model);
 	gCoreModel = model;

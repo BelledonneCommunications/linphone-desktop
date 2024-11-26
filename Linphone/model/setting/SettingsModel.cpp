@@ -70,6 +70,7 @@ SettingsModel::~SettingsModel() {
 
 shared_ptr<SettingsModel> SettingsModel::create() {
 	// auto model = Utils::makeQObject_ptr<SettingsModel>();
+	if (gSettingsModel) return gSettingsModel;
 	auto model = make_shared<SettingsModel>();
 	gSettingsModel = model;
 	return model;
