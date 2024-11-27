@@ -197,7 +197,7 @@ bool MagicSearchProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 			// if (!toShow) return false;
 		}
 		if (!toShow && (mFilterType & (int)FilteringTypes::App) > 0) {
-			toShow = friendCore->getIsStored();
+			toShow = friendCore->getIsStored() && !friendCore->isLdap();
 			// if (!toShow) return false;
 		}
 		if (!toShow && (mFilterType & (int)FilteringTypes::Other) > 0) {

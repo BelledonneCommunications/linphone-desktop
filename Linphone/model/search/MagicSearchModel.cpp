@@ -74,24 +74,34 @@ void MagicSearchModel::setMaxResults(int maxResults) {
 }
 
 void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> &magicSearch) {
-	qDebug() << log().arg("SDK send callback: onSearchResultsReceived");
 	auto results = magicSearch->getLastSearch();
+	qDebug() << log().arg("SDK send callback: onSearchResultsReceived : %1 results.").arg(results.size());
 	auto appFriends = ToolModel::getAppFriendList();
+	auto ldapFriends = ToolModel::getLdapFriendList();
 	std::list<std::shared_ptr<linphone::SearchResult>> finalResults;
-	for (auto it : results) {
-		bool isLdap = (it->getSourceFlags() & (int)LinphoneEnums::MagicSearchSource::LdapServers) != 0;
-		bool toAdd = true;
-		if (isLdap && it->getFriend()) {
-			updateLdapFriendListWithFriend(it->getFriend());
-			if (appFriends->findFriendByAddress(it->getFriend()->getAddress())) { // Already exist in app list
-				toAdd = false;
-			}
+	for (auto result : results) {
+		auto f = result->getFriend();
+		auto fList = f ? f->getFriendList() : nullptr;
+
+		qDebug() << log().arg("") << (f ? f->getName().c_str() : "NoFriend") << ", "
+		         << (result->getAddress() ? result->getAddress()->asString().c_str() : "NoAddr") << " / "
+		         << (fList ? fList->getDisplayName().c_str() : "NoList") << result->getSourceFlags() << " / "
+		         << (f ? f.get() : nullptr);
+
+		bool isLdap = (result->getSourceFlags() & (int)LinphoneEnums::MagicSearchSource::LdapServers) != 0;
+		// Do not add it into ldap_friends if it already exists in app_friends.
+		if (isLdap && f && (!fList || fList->getDisplayName() != "app_friends") &&
+		    !ToolModel::friendIsInFriendList(appFriends, f)) { // Double check because of SDK merging that lead to
+			                                                   // use a ldap result as of app_friends/ldap_friends.
+			updateLdapFriendListWithFriend(f);
 		}
-		if (toAdd &&
-		    std::find_if(finalResults.begin(), finalResults.end(), [it](std::shared_ptr<linphone::SearchResult> r) {
-			    return r->getAddress()->weakEqual(it->getAddress());
-		    }) == finalResults.end())
-			finalResults.push_back(it);
+
+		auto resultIt =
+		    std::find_if(finalResults.begin(), finalResults.end(), [result](std::shared_ptr<linphone::SearchResult> r) {
+			    return r->getAddress()->weakEqual(result->getAddress());
+		    });
+		if (resultIt == finalResults.end()) finalResults.push_back(result);
+		else if (fList && fList->getDisplayName() == "app_friends") *resultIt = result; // replace if local friend
 	}
 	emit searchResultsReceived(finalResults);
 }
@@ -110,6 +120,8 @@ void MagicSearchModel::updateLdapFriendListWithFriend(const std::shared_ptr<linp
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	auto ldapFriendList = ToolModel::getLdapFriendList();
+	if (ToolModel::friendIsInFriendList(ldapFriendList, linphoneFriend))
+		return; // Already exist. We don't need to manipulate list.
 	for (auto address : linphoneFriend->getAddresses()) {
 		auto existingFriend = ldapFriendList->findFriendByAddress(address);
 		if (existingFriend) {
@@ -126,6 +138,7 @@ void MagicSearchModel::updateLdapFriendListWithFriend(const std::shared_ptr<linp
 			return;
 		}
 	}
+	qDebug() << log().arg("Adding Friend:") << linphoneFriend.get();
 	ldapFriendList->addFriend(linphoneFriend);
 	emit CoreModel::getInstance()->friendCreated(linphoneFriend);
 }
