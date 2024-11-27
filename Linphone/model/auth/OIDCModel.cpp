@@ -56,7 +56,15 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	mOidc.setClientIdentifier(OIDCClientId);
 	mAuthInfo->setClientId(OIDCClientId);
 	mOidc.setScope(OIDCScope);
+	mTimeout.setInterval(1000 * 60 * 2); // 2minutes
 
+	connect(&mTimeout, &QTimer::timeout, [this]() {
+		qWarning() << log().arg("Timeout reached for OpenID connection.");
+		dynamic_cast<OAuthHttpServerReplyHandler *>(mOidc.replyHandler())->close();
+		CoreModel::getInstance()->getCore()->abortAuthentication(mAuthInfo);
+		emit statusChanged("Timeout: Not authenticated");
+		emit finished();
+	});
 	connect(mOidc.networkAccessManager(), &QNetworkAccessManager::authenticationRequired,
 	        [=](QNetworkReply *reply, QAuthenticator *authenticator) {
 		        lWarning() << log().arg("authenticationRequired received but not implemented");
@@ -65,11 +73,13 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	connect(&mOidc, &QOAuth2AuthorizationCodeFlow::statusChanged, [=](QAbstractOAuth::Status status) {
 		switch (status) {
 			case QAbstractOAuth::Status::Granted: {
+				mTimeout.stop();
 				emit statusChanged("Authentication granted");
 				emit authenticated();
 				break;
 			}
 			case QAbstractOAuth::Status::NotAuthenticated: {
+				mTimeout.stop();
 				emit statusChanged("Not authenticated");
 				emit finished();
 				break;
@@ -88,6 +98,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	});
 
 	connect(&mOidc, &QOAuth2AuthorizationCodeFlow::requestFailed, [=](QAbstractOAuth::Error error) {
+		mTimeout.stop();
 		qWarning() << "RequestFailed:" << (int)error;
 		switch (error) {
 			case QAbstractOAuth::Error::NetworkError:
@@ -114,6 +125,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	connect(&mOidc, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, [this](const QUrl &url) {
 		qDebug() << "Browser authentication url : " << url;
 		emit statusChanged("Requesting authorization from browser");
+		mTimeout.start();
 		QDesktopServices::openUrl(url);
 	});
 
@@ -177,12 +189,12 @@ void OIDCModel::openIdConfigReceived() {
 
 void OIDCModel::setBearers() {
 	auto expiration = QDateTime::currentDateTime().secsTo(mOidc.expirationAt());
+	auto timeT = mOidc.expirationAt().toSecsSinceEpoch();
 	qDebug() << "Authenticated for " << expiration << "s";
 	auto refreshBearer =
-	    linphone::Factory::get()->createBearerToken(Utils::appStringToCoreString(mOidc.refreshToken()), expiration);
+	    linphone::Factory::get()->createBearerToken(Utils::appStringToCoreString(mOidc.refreshToken()), timeT);
 
-	auto accessBearer =
-	    linphone::Factory::get()->createBearerToken(Utils::appStringToCoreString(mOidc.token()), expiration);
+	auto accessBearer = linphone::Factory::get()->createBearerToken(Utils::appStringToCoreString(mOidc.token()), timeT);
 	mAuthInfo->setRefreshToken(refreshBearer);
 	mAuthInfo->setAccessToken(accessBearer);
 	CoreModel::getInstance()->getCore()->addAuthInfo(mAuthInfo);

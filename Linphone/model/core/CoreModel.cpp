@@ -243,14 +243,13 @@ void CoreModel::onAuthenticationRequested(const std::shared_ptr<linphone::Core> 
                                           const std::shared_ptr<linphone::AuthInfo> &authInfo,
                                           linphone::AuthMethod method) {
 	if (method == linphone::AuthMethod::Bearer) {
-		auto serverUrl = authInfo->getAuthorizationServer();
-		auto username = authInfo->getUsername();
-		auto realm = authInfo->getRealm();
-		if (!serverUrl.empty()) {
-			qDebug() << "onAuthenticationRequested for Bearer. Initialize OpenID connection for " << username.c_str()
-			         << " at " << serverUrl.c_str();
-			QString key = Utils::coreStringToAppString(username) + '@' + Utils::coreStringToAppString(realm) + ' ' +
-			              Utils::coreStringToAppString(serverUrl);
+		auto serverUrl = Utils::coreStringToAppString(authInfo->getAuthorizationServer());
+		auto username = Utils::coreStringToAppString(authInfo->getUsername());
+		auto realm = Utils::coreStringToAppString(authInfo->getRealm());
+		if (!serverUrl.isEmpty()) {
+			qDebug() << "onAuthenticationRequested for Bearer. Initialize OpenID connection for " << username << "@"
+			         << realm << " at " << serverUrl;
+			QString key = username + '@' + realm + ' ' + serverUrl;
 			if (mOpenIdConnections.contains(key)) mOpenIdConnections[key]->deleteLater();
 			mOpenIdConnections[key] = new OIDCModel(authInfo, this);
 		}

@@ -10,17 +10,27 @@ import SettingsCpp
 
 Dialog {
 	id: mainItem
+	
 	property string identity
 	property string domain
 	readonly property string password: passwordEdit.text
-	onRejected: close()
-	modal: true
-	closePolicy: Popup.NoAutoClose
+	property var callback// Define cb(var) function
+		
 	topPadding: 20 * DefaultStyle.dp
 	bottomPadding: 20 * DefaultStyle.dp
 	leftPadding: 20 * DefaultStyle.dp
 	rightPadding: 20 * DefaultStyle.dp
 	width: 637 * DefaultStyle.dp
+	modal: true
+	closePolicy: Popup.NoAutoClose
+	
+	onAccepted: {
+		if( callback) callback.cb(password)
+		close()
+	}
+	onRejected: close()
+	Component.onDestruction: if(callback) callback.destroy()
+	
 	content: ColumnLayout {
 		spacing: 20 * DefaultStyle.dp
 		id: contentLayout
@@ -60,7 +70,7 @@ Dialog {
 				}
 			}
 			FormItemLayout {
-				id: password
+				id: passwordItem
 				Layout.fillWidth: true
 				label: qsTr("Mot de passe")
 				enableErrorText: true
@@ -68,7 +78,7 @@ Dialog {
 				contentItem: TextField {
 					id: passwordEdit
 					hidden: true
-					isError: password.errorTextVisible
+					isError: passwordItem.errorTextVisible
 					KeyNavigation.up: usernameEdit
 					KeyNavigation.down: cancelButton
 				}
@@ -93,9 +103,9 @@ Dialog {
 			KeyNavigation.up: passwordEdit
 			KeyNavigation.right: cancelButton
 			onClicked: {
-				password.errorMessage = ""
+				passwordItem.errorMessage = ""
 				if (passwordEdit.text.length == 0) {
-					password.errorMessage = qsTr("Veuillez saisir un mot de passe")
+					passwordItem.errorMessage = qsTr("Veuillez saisir un mot de passe")
 					return
 				}
 				mainItem.accepted()

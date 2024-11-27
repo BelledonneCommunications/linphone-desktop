@@ -68,24 +68,18 @@ AbstractWindow {
 	Component {
 		id: authenticationPopupComp
 		AuthenticationDialog{
-			property var authenticationDialog
-			property var callback: authenticationDialog.result
-			identity: authenticationDialog.username
-			domain: authenticationDialog.domain
-			onAccepted: {
-				authenticationDialog ? authenticationDialog.result(password) : callback(password)
-				close()
-			}
 			onOpened: mainWindow.authenticationPopupOpened = true
-			onClosed: mainWindow.authenticationPopupOpened = false
+			onClosed: {
+				mainWindow.authenticationPopupOpened = false
+				destroy()
+			}
 		}
 	}
 
-	function reauthenticateAccount(authenticationDialog){
-		if (mainWindowStackView.currentItem.objectName !== "mainPage") return
+	function reauthenticateAccount(identity, domain, callback){
 		if (authenticationPopupOpened) return
 		console.log("Showing authentication dialog")
-		var popup = authenticationPopupComp.createObject(mainWindow, {"authenticationDialog": authenticationDialog})
+		var popup = authenticationPopupComp.createObject(mainWindow, {"identity": identity, "domain": domain, "callback":callback})	// Callback ownership is not passed
 		popup.open()
 	}
 

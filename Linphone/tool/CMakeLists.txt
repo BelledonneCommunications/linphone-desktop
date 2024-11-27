@@ -14,7 +14,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	tool/native/DesktopTools.hpp
 
 	tool/request/RequestDialog.cpp
-	tool/request/AuthenticationDialog.cpp
+	tool/request/CallbackHelper.cpp
 
 	tool/file/FileDownloader.cpp
 	tool/file/FileExtractor.cpp

@@ -140,6 +140,9 @@ public:
 	QSharedPointer<SettingsCore> getSettings() const;
 
 	void onExitOnCloseChanged(); // Can be used for UniqueConnection
+	void onAuthenticationRequested(const std::shared_ptr<linphone::Core> &core,
+	                               const std::shared_ptr<linphone::AuthInfo> &authInfo,
+	                               linphone::AuthMethod method);
 
 	QString getShortApplicationVersion();
 	QString getGitBranchName();

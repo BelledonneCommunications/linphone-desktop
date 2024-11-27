@@ -23,6 +23,7 @@
 
 #include "tool/AbstractObject.hpp"
 #include <QOAuth2AuthorizationCodeFlow>
+#include <QTimer>
 #include <linphone++/linphone.hh>
 
 // =============================================================================
@@ -45,6 +46,7 @@ signals:
 private:
 	QOAuth2AuthorizationCodeFlow mOidc;
 	std::shared_ptr<linphone::AuthInfo> mAuthInfo;
+	QTimer mTimeout;
 
 	DECLARE_ABSTRACT_OBJECT
 };

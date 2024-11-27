@@ -18,25 +18,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AUTHENTICATION_DIALOG_H_
-#define AUTHENTICATION_DIALOG_H_
+#ifndef CALLBACK_HELPER_H_
+#define CALLBACK_HELPER_H_
 
 #include <QDebug>
 #include <QObject>
 #include <QString>
 
-class AuthenticationDialog : public QObject {
+class CallbackHelper : public QObject {
 	Q_OBJECT
-	Q_PROPERTY(QString username MEMBER mUsername NOTIFY usernameChanged)
-	Q_PROPERTY(QString domain MEMBER mDomain NOTIFY domainChanged)
 public:
-	AuthenticationDialog(QString username, QString domain, QObject *parent = nullptr);
-
-	QString mUsername;
-	QString mDomain;
+	CallbackHelper(QObject *parent = nullptr);
 signals:
-	void usernameChanged();
-	void domainChanged();
-	void result(QString password);
+	void cb(QVariant arg);
 };
 #endif

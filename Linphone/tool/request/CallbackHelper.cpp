@@ -18,8 +18,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "AuthenticationDialog.hpp"
+#include "CallbackHelper.hpp"
+#include "core/App.hpp"
+#include <QQmlEngine>
 
-AuthenticationDialog::AuthenticationDialog(QString username, QString domain, QObject *parent)
-    : QObject(parent), mUsername(username), mDomain(domain) {
+CallbackHelper::CallbackHelper(QObject *parent) : QObject(parent) {
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 }
