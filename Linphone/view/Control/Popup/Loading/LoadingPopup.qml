@@ -7,6 +7,7 @@ Popup {
 	id: mainItem
 	property string text
 	property bool cancelButtonVisible: false
+	property var callback
 	modal: true
 	closePolicy: Control.Popup.NoAutoClose
 	anchors.centerIn: parent
@@ -35,7 +36,10 @@ Popup {
 			visible: mainItem.cancelButtonVisible
 			Layout.alignment: Qt.AlignHCenter
 			text: qsTr("Annuler")
-			onClicked: mainItem.close()
+			onClicked: {
+				if (callback) mainItem.callback()
+				mainItem.close()
+			}
 		}
 	}
 }

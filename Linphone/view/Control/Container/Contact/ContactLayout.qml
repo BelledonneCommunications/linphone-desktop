@@ -17,20 +17,7 @@ ColumnLayout {
 	property alias bannerContent: bannerLayout.data
 	property alias secondLineContent: verticalLayoutSecondLine.data
 	property int minimumWidthForSwitchintToRowLayout: 756 * DefaultStyle.dp
-	property var useVerticalLayout
-	function setResponsivityFlags() {
-		var mainWin = UtilsCpp.getMainWindow()
-		var newValue = width < minimumWidthForSwitchintToRowLayout * DefaultStyle.dp
-		if (useVerticalLayout != newValue) {
-			useVerticalLayout = newValue
-		}
-	}
-	onWidthChanged: {
-		setResponsivityFlags()
-    }
-	Component.onCompleted: {
-			setResponsivityFlags()
-	}
+	property var useVerticalLayout: width < minimumWidthForSwitchintToRowLayout * DefaultStyle.dp
 
 	GridLayout {
 		Layout.leftMargin: 64 * DefaultStyle.dp

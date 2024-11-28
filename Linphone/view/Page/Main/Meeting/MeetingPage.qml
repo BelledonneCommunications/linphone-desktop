@@ -275,7 +275,9 @@ AbstractMainPage {
 								UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir au moins un participant"), false)
 							} else {
 								meetingSetup.conferenceInfoGui.core.save()
-								mainWindow.showLoadingPopup(qsTr("Création de la réunion en cours ..."), true)
+								mainWindow.showLoadingPopup(qsTr("Création de la réunion en cours ..."), true, function () {
+									leftPanelStackView.pop()
+								})
 							}
 						}
 					}
@@ -293,7 +295,9 @@ AbstractMainPage {
 							var mainWin = UtilsCpp.getMainWindow()
 							if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
 								|| meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
-								mainWin.showLoadingPopup(qsTr("Création de la réunion en cours..."))
+								mainWin.showLoadingPopup(qsTr("Création de la réunion en cours..."), true, function () {
+									leftPanelStackView.pop()
+								})
 							} else {
 								if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
 									UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La création de la conférence a échoué"), false)
@@ -339,14 +343,14 @@ AbstractMainPage {
 				id: editLayout
 				anchors.left: parent.left
 				anchors.right: parent.right
+				anchors.top: parent.top
 				anchors.topMargin: 58 * DefaultStyle.dp
 				spacing: 0
 				Section {
 					Layout.preferredWidth: 393 * DefaultStyle.dp
 					content: RowLayout {
-						spacing: 8 * DefaultStyle.dp
+						spacing: 16 * DefaultStyle.dp
 						Layout.preferredWidth: overridenRightPanelStackView.width
-						Layout.preferredHeight: childrenRect.height
 						Button {
 							id: backButton
 							Layout.preferredWidth: 24 * DefaultStyle.dp
@@ -364,47 +368,56 @@ AbstractMainPage {
 							}
 							background: Item{}
 						}
-						TextInput {
-							id: titleText
-							Layout.fillWidth: true
-							color: DefaultStyle.main2_600
-							clip: true
-							font {
-								pixelSize: 20 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
+						RowLayout {
+							spacing: 8 * DefaultStyle.dp
+							EffectImage{
+								imageSource: AppIcons.usersThree
+								colorizationColor: DefaultStyle.main2_600
+								Layout.preferredWidth: 24 * DefaultStyle.dp
+								Layout.preferredHeight: 24 * DefaultStyle.dp
 							}
-							KeyNavigation.left: backButton
-							KeyNavigation.right: saveButton
-							KeyNavigation.down: conferenceEdit
-							KeyNavigation.up: conferenceEdit
-							onActiveFocusChanged: if(activeFocus==true) selectAll()
-							onEditingFinished: mainItem.selectedConference.core.subject = text
-							Component.onCompleted: {
-								text = mainItem.selectedConference.core.subject
+							TextInput {
+								id: titleText
+								Layout.fillWidth: true
+								color: DefaultStyle.main2_600
+								clip: true
+								font {
+									pixelSize: 20 * DefaultStyle.dp
+									weight: 800 * DefaultStyle.dp
+								}
+								KeyNavigation.left: backButton
+								KeyNavigation.right: saveButton
+								KeyNavigation.down: conferenceEdit
+								KeyNavigation.up: conferenceEdit
+								onActiveFocusChanged: if(activeFocus==true) selectAll()
+								onEditingFinished: mainItem.selectedConference.core.subject = text
+								Component.onCompleted: {
+									text = mainItem.selectedConference.core.subject
+								}
 							}
-						}
-						Button {
-							id: saveButton
-							topPadding: 6 * DefaultStyle.dp
-							bottomPadding: 6 * DefaultStyle.dp
-							leftPadding: 12 * DefaultStyle.dp
-							rightPadding: 12 * DefaultStyle.dp
-							focus: true
-							text: qsTr("Save")
-							textSize: 13 * DefaultStyle.dp
-							KeyNavigation.left: titleText
-							KeyNavigation.right: backButton
-							KeyNavigation.down: conferenceEdit
-							KeyNavigation.up: conferenceEdit
-							onClicked: {
-								if (mainItem.selectedConference.core.subject.length === 0) {
-									UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir un sujet"), false)
-								} else if (mainItem.selectedConference.core.duration <= 0) {
-									UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La fin de la conférence doit être plus récente que son début"), false)
-								} else if (mainItem.selectedConference.core.participantCount === 0) {
-									UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir au moins un participant"), false)
-								} else {
-									mainItem.selectedConference.core.save()
+							Button {
+								id: saveButton
+								topPadding: 6 * DefaultStyle.dp
+								bottomPadding: 6 * DefaultStyle.dp
+								leftPadding: 12 * DefaultStyle.dp
+								rightPadding: 12 * DefaultStyle.dp
+								focus: true
+								text: qsTr("Save")
+								textSize: 13 * DefaultStyle.dp
+								KeyNavigation.left: titleText
+								KeyNavigation.right: backButton
+								KeyNavigation.down: conferenceEdit
+								KeyNavigation.up: conferenceEdit
+								onClicked: {
+									if (mainItem.selectedConference.core.subject.length === 0) {
+										UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir un sujet"), false)
+									} else if (mainItem.selectedConference.core.duration <= 0) {
+										UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La fin de la conférence doit être plus récente que son début"), false)
+									} else if (mainItem.selectedConference.core.participantCount === 0) {
+										UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir au moins un participant"), false)
+									} else {
+										mainItem.selectedConference.core.save()
+									}
 								}
 							}
 						}
@@ -547,7 +560,9 @@ AbstractMainPage {
 			height: meetingDetailsLayout.implicitHeight
 			ColumnLayout {
 				id: meetingDetailsLayout
-				anchors.fill: parent
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.top: parent.top
 				anchors.topMargin: 58 * DefaultStyle.dp
 				visible: mainItem.selectedConference
 				spacing: 25 * DefaultStyle.dp
@@ -556,8 +571,9 @@ AbstractMainPage {
 					Layout.fillWidth: true
 					content: RowLayout {
 						spacing: 8 * DefaultStyle.dp
-						Image {
-							source: AppIcons.usersThree
+						EffectImage {
+							imageSource: AppIcons.usersThree
+							colorizationColor: DefaultStyle.main2_600
 							Layout.preferredWidth: 24 * DefaultStyle.dp
 							Layout.preferredHeight: 24 * DefaultStyle.dp
 						}
@@ -803,6 +819,7 @@ AbstractMainPage {
 								}
 								Text {
 									text: modelData.displayName
+									maximumLineCount: 1
 									Layout.fillWidth: true
 									font {
 										pixelSize: 14 * DefaultStyle.dp

@@ -199,9 +199,10 @@ ApplicationWindow {
 		infoPopup.open()
 		infoPopup.closePopup.connect(removeFromPopupLayout)
 	}
-	function showLoadingPopup(text, cancelButtonVisible) {
+	function showLoadingPopup(text, cancelButtonVisible, callback) {
 		if (cancelButtonVisible == undefined) cancelButtonVisible = false
 		loadingPopup.text = text
+		loadingPopup.callback = callback
 		loadingPopup.cancelButtonVisible = cancelButtonVisible
 		loadingPopup.open()
 	}
