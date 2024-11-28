@@ -361,11 +361,44 @@ AbstractMainPage {
 						}
 					}
 				}
+				component ActionsButtons: RowLayout {
+					spacing: 58 * DefaultStyle.dp
+					LabelButton {
+						button.icon.source: AppIcons.phone
+						label: qsTr("Appel")
+						width: 56 * DefaultStyle.dp
+						height: 56 * DefaultStyle.dp
+						button.icon.width: 24 * DefaultStyle.dp
+						button.icon.height: 24 * DefaultStyle.dp
+						button.onClicked: mainWindow.startCallWithContact(contactDetail.contact, false, mainItem)
+					}
+					LabelButton {
+						button.icon.source: AppIcons.chatTeardropText
+						visible: !SettingsCpp.disableChatFeature
+						label: qsTr("Message")
+						width: 56 * DefaultStyle.dp
+						height: 56 * DefaultStyle.dp
+						button.icon.width: 24 * DefaultStyle.dp
+						button.icon.height: 24 * DefaultStyle.dp
+						button.onClicked: console.debug("[ContactLayout.qml] TODO : open conversation")
+					}
+					LabelButton {
+						button.icon.source: AppIcons.videoCamera
+						label: qsTr("Appel vidéo")
+						width: 56 * DefaultStyle.dp
+						height: 56 * DefaultStyle.dp
+						button.icon.width: 24 * DefaultStyle.dp
+						button.icon.height: 24 * DefaultStyle.dp
+						button.onClicked: mainWindow.startCallWithContact(contactDetail.contact, true, mainItem)
+					}
+				}
 				bannerContent: [
 					ColumnLayout {
 						spacing: 0
 						Text {
 							text: contactDetail.contactName
+							Layout.fillWidth: true
+							maximumLineCount: 1
 							font {
 								pixelSize: 29 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
@@ -393,39 +426,11 @@ AbstractMainPage {
 							font.pixelSize: 14 * DefaultStyle.dp
 						}
 					},
-					Item{Layout.fillWidth: true},
-					RowLayout {
-						spacing: 58 * DefaultStyle.dp
-						LabelButton {
-							button.icon.source: AppIcons.phone
-							label: qsTr("Appel")
-							width: 56 * DefaultStyle.dp
-							height: 56 * DefaultStyle.dp
-							button.icon.width: 24 * DefaultStyle.dp
-							button.icon.height: 24 * DefaultStyle.dp
-							button.onClicked: mainWindow.startCallWithContact(contactDetail.contact, false, mainItem)
-						}
-						LabelButton {
-							button.icon.source: AppIcons.chatTeardropText
-							visible: !SettingsCpp.disableChatFeature
-							label: qsTr("Message")
-							width: 56 * DefaultStyle.dp
-							height: 56 * DefaultStyle.dp
-							button.icon.width: 24 * DefaultStyle.dp
-							button.icon.height: 24 * DefaultStyle.dp
-							button.onClicked: console.debug("[ContactLayout.qml] TODO : open conversation")
-						}
-						LabelButton {
-							button.icon.source: AppIcons.videoCamera
-							label: qsTr("Appel vidéo")
-							width: 56 * DefaultStyle.dp
-							height: 56 * DefaultStyle.dp
-							button.icon.width: 24 * DefaultStyle.dp
-							button.icon.height: 24 * DefaultStyle.dp
-							button.onClicked: mainWindow.startCallWithContact(contactDetail.contact, true, mainItem)
-						}
+					ActionsButtons {
+						visible: !contactDetail.useVerticalLayout
 					}
 				]
+				secondLineContent: ActionsButtons{}
 				content: Flickable {
 					contentWidth: parent.width
 					ColumnLayout {

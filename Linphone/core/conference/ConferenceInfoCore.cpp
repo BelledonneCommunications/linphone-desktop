@@ -86,12 +86,7 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		for (auto item : conferenceInfo->getParticipantInfos()) {
 			QVariantMap participant;
 			auto address = item->getAddress();
-			auto name = Utils::coreStringToAppString(address->getDisplayName());
-			if (name.isEmpty()) {
-				name = Utils::coreStringToAppString(address->getUsername());
-				name.replace(".", " ");
-			}
-			participant["displayName"] = name;
+			participant["displayName"] = ToolModel::getDisplayName(address);
 			participant["address"] = Utils::coreStringToAppString(address->asStringUriOnly());
 			participant["role"] = (int)LinphoneEnums::fromLinphone(item->getRole());
 			mParticipants.append(participant);

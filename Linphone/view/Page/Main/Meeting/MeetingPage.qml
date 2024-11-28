@@ -334,15 +334,19 @@ AbstractMainPage {
 			property bool isCreation
 			property ConferenceInfoGui conferenceInfoGui
 			width: overridenRightPanelStackView.width
-			height: editLayout.implicitHeight
+			height: editLayout.height
 			ColumnLayout {
 				id: editLayout
-				anchors.fill: parent
+				anchors.left: parent.left
+				anchors.right: parent.right
 				anchors.topMargin: 58 * DefaultStyle.dp
 				spacing: 0
 				Section {
+					Layout.preferredWidth: 393 * DefaultStyle.dp
 					content: RowLayout {
-						spacing: 10 * DefaultStyle.dp
+						spacing: 8 * DefaultStyle.dp
+						Layout.preferredWidth: overridenRightPanelStackView.width
+						Layout.preferredHeight: childrenRect.height
 						Button {
 							id: backButton
 							Layout.preferredWidth: 24 * DefaultStyle.dp
@@ -360,11 +364,11 @@ AbstractMainPage {
 							}
 							background: Item{}
 						}
-	
-						TextField {
+						TextInput {
 							id: titleText
 							Layout.fillWidth: true
 							color: DefaultStyle.main2_600
+							clip: true
 							font {
 								pixelSize: 20 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
@@ -375,8 +379,9 @@ AbstractMainPage {
 							KeyNavigation.up: conferenceEdit
 							onActiveFocusChanged: if(activeFocus==true) selectAll()
 							onEditingFinished: mainItem.selectedConference.core.subject = text
-							Component.onCompleted: text = mainItem.selectedConference.core.subject
-							background: Item{}
+							Component.onCompleted: {
+								text = mainItem.selectedConference.core.subject
+							}
 						}
 						Button {
 							id: saveButton
@@ -411,6 +416,7 @@ AbstractMainPage {
 					isCreation: editFocusScope.isCreation
 					conferenceInfoGui: editFocusScope.conferenceInfoGui
 					Layout.fillWidth: true
+					Layout.fillHeight: true
 					Connections {
 						target: conferenceEdit.conferenceInfoGui ? conferenceEdit.conferenceInfoGui.core : null
 						function onConferenceSchedulerStateChanged() {
@@ -455,7 +461,6 @@ AbstractMainPage {
 						}
 					}
 				}
-				Item { Layout.fillHeight: true}
 			}
 		}
 	}
@@ -548,6 +553,7 @@ AbstractMainPage {
 				spacing: 25 * DefaultStyle.dp
 				Section {
 					visible: mainItem.selectedConference
+					Layout.fillWidth: true
 					content: RowLayout {
 						spacing: 8 * DefaultStyle.dp
 						Image {
@@ -556,7 +562,9 @@ AbstractMainPage {
 							Layout.preferredHeight: 24 * DefaultStyle.dp
 						}
 						Text {
+							Layout.fillWidth: true
 							text: mainItem.selectedConference ? mainItem.selectedConference.core.subject : ""
+							maximumLineCount: 1
 							font {
 								pixelSize: 20 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
