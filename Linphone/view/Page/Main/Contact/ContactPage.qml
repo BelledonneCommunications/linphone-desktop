@@ -625,7 +625,7 @@ AbstractMainPage {
 									visible: deviceList.count > 0
 									Layout.fillWidth: true
 									Layout.preferredHeight: 28 * DefaultStyle.dp
-									value: mainItem.selectedContact ? mainItem.selectedContact.core.verifiedDeviceCount / deviceList.count : 0
+                                    value: mainItem.selectedContact ? mainItem.selectedContact.core.verifiedDeviceCount / deviceList.count : 0
 								}
 								ListView {
 									id: deviceList

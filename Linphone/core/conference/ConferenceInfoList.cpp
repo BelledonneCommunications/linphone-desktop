@@ -42,6 +42,12 @@ QSharedPointer<ConferenceInfoList> ConferenceInfoList::create() {
 ConferenceInfoList::ConferenceInfoList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
+	connect(App::getInstance(), &App::currentDateChanged, this, [this] {
+		updateHaveCurrentDate();
+		int dummyIndex = -1;
+		get(nullptr, &dummyIndex);
+		if (dummyIndex != -1) emit dataChanged(index(dummyIndex, 0), index(dummyIndex, 0));
+	});
 }
 
 ConferenceInfoList::~ConferenceInfoList() {
@@ -161,9 +167,15 @@ void ConferenceInfoList::updateHaveCurrentDate() {
 }
 
 int ConferenceInfoList::getCurrentDateIndex() {
-	// Dummy item (nullptr) is QDate::currentDate()
+	auto today = QDate::currentDate();
 	auto confInfoList = getSharedList<ConferenceInfoCore>();
-	auto it = std::find(confInfoList.begin(), confInfoList.end(), nullptr);
+	QList<QSharedPointer<ConferenceInfoCore>>::iterator it;
+	if (mHaveCurrentDate) {
+		it = std::find_if(confInfoList.begin(), confInfoList.end(),
+		                  [today](const QSharedPointer<ConferenceInfoCore> &item) {
+			                  return item && item->getDateTimeUtc().date() == today;
+		                  });
+	} else it = std::find(confInfoList.begin(), confInfoList.end(), nullptr);
 	return it == confInfoList.end() ? -1 : std::distance(confInfoList.begin(), it);
 }
 

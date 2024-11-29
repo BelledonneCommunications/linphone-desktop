@@ -11,19 +11,18 @@ ProgressBar {
 	property color innerColor: DefaultStyle.info_500_main
 	property color innerTextColor: centeredText ? DefaultStyle.info_500_main : DefaultStyle.grey_0
 	property bool innerTextVisible: true
-	property string innerText: Number.parseFloat(value*100).toFixed(0) + "%"
-	
+    property string innerText: Number.parseFloat(value*100).toFixed(0) + "%"
 	property int barWidth: mainItem.visualPosition * mainItem.width
 	property bool centeredText: textSize.width >= barWidth
-	
-	TextMetrics{
-		id: textSize
-		text: mainItem.innerText
-		font {
-			pixelSize: 10 * DefaultStyle.dp
-			weight: 700 * DefaultStyle.dp
-		}
-	}
+
+    TextMetrics{
+        id: textSize
+        text: mainItem.innerText
+        font {
+            pixelSize: 10 * DefaultStyle.dp
+            weight: 700 * DefaultStyle.dp
+        }
+    }
 
 	background: Rectangle {
 		color: mainItem.backgroundColor
@@ -33,6 +32,7 @@ ProgressBar {
 		height: mainItem.height
 	}
 	contentItem: Item {
+		id: content
 		Rectangle {
 			id: bar
 			color: mainItem.innerColor
@@ -43,13 +43,16 @@ ProgressBar {
 		Text {
 			visible: mainItem.innerTextVisible
 			text: mainItem.innerText
-			anchors.centerIn: mainItem.centeredText ? parent : bar
+			parent: mainItem.centeredText ? content : bar
+			anchors.fill: parent
+			horizontalAlignment: Text.AlignHCenter
+			verticalAlignment: Text.AlignVCenter
 			color: mainItem.innerTextColor
+			maximumLineCount: 1
 			font {
 				pixelSize: 10 * DefaultStyle.dp
 				weight: 700 * DefaultStyle.dp
-			}
-			width: textSize.advanceWidth
+            }
 		}
 	}
 }

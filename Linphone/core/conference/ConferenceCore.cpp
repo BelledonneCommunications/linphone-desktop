@@ -21,6 +21,7 @@
 #include "ConferenceCore.hpp"
 #include "core/App.hpp"
 #include "model/conference/ConferenceModel.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/thread/SafeConnection.hpp"
 
@@ -39,6 +40,8 @@ ConferenceCore::ConferenceCore(const std::shared_ptr<linphone::Conference> &conf
 	mConferenceModel = ConferenceModel::create(conference);
 	mSubject = Utils::coreStringToAppString(conference->getSubject());
 	mParticipantDeviceCount = conference->getParticipantDeviceList().size();
+	auto activeSpeaker = conference->getActiveSpeakerParticipantDevice();
+	if (activeSpeaker) mActiveSpeaker = ParticipantDeviceCore::create(activeSpeaker);
 	mIsLocalScreenSharing = mConferenceModel->isLocalScreenSharing();
 	mIsScreenSharingEnabled = mConferenceModel->isScreenSharingEnabled();
 	mIsRecording = conference->isRecording();
@@ -67,9 +70,49 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 		mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
 	});
 
-	mConferenceModelConnection->makeConnectToModel(&ConferenceModel::participantDeviceCountChanged, [this](int count) {
-		mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
-	});
+	mConferenceModelConnection->makeConnectToModel(
+	    &ConferenceModel::conferenceStateChanged,
+	    [this](const std::shared_ptr<linphone::Conference> &conference, linphone::Conference::State newState) {
+		    if (newState != linphone::Conference::State::Created) return;
+		    if (!mActiveSpeaker) {
+			    if (auto participantDevice = conference->getActiveSpeakerParticipantDevice()) {
+				    auto device = ParticipantDeviceCore::create(participantDevice);
+				    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeaker(device); });
+			    } else if (conference->getParticipantDeviceList().size() > 1) {
+				    for (auto &device : conference->getParticipantDeviceList()) {
+					    if (!ToolModel::isMe(device->getAddress())) {
+						    auto activeSpeaker = ParticipantDeviceCore::create(device);
+						    mConferenceModelConnection->invokeToCore(
+						        [this, activeSpeaker]() { setActiveSpeaker(activeSpeaker); });
+						    break;
+					    }
+				    }
+			    }
+		    }
+		    int count = mConferenceModel->getParticipantDeviceCount();
+		    mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
+	    });
+
+	mConferenceModelConnection->makeConnectToModel(
+	    &ConferenceModel::participantDeviceCountChanged,
+	    [this](const std::shared_ptr<linphone::Conference> &conference, int count) {
+		    if (!mActiveSpeaker) {
+			    if (auto participantDevice = conference->getActiveSpeakerParticipantDevice()) {
+				    auto device = ParticipantDeviceCore::create(participantDevice);
+				    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeaker(device); });
+			    } else if (conference->getParticipantDeviceList().size() > 1) {
+				    for (auto &device : conference->getParticipantDeviceList()) {
+					    if (!ToolModel::isMe(device->getAddress())) {
+						    auto activeSpeaker = ParticipantDeviceCore::create(device);
+						    mConferenceModelConnection->invokeToCore(
+						        [this, activeSpeaker]() { setActiveSpeaker(activeSpeaker); });
+						    break;
+					    }
+				    }
+			    }
+		    }
+		    mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
+	    });
 	mConferenceModelConnection->makeConnectToModel(&ConferenceModel::isLocalScreenSharingChanged, [this]() {
 		auto state = mConferenceModel->isLocalScreenSharing();
 		mConferenceModelConnection->invokeToCore([this, state]() { setIsLocalScreenSharing(state); });

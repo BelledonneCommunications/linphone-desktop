@@ -44,11 +44,12 @@ public:
 	bool haveCurrentDate() const;
 
 	Q_INVOKABLE int getCurrentDateIndex() const;
+	Q_INVOKABLE void setCurrentDateIndex(int index);
 
 signals:
 	void haveCurrentDateChanged();
 	void conferenceInfoCreated(int index);
-	void initialized();
+	void currentDateIndexChanged(int index);
 
 private:
 	QSharedPointer<ConferenceInfoList> mList;

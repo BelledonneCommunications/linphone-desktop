@@ -49,6 +49,8 @@ FocusScope{
 						_address: modelData
 					}
 					Text {
+						Layout.fillWidth: true
+						maximumLineCount: 1
 						property var nameObj: UtilsCpp.getDisplayName(modelData)
 						text: nameObj ? nameObj.value : ""
 						font.pixelSize: 14 * DefaultStyle.dp

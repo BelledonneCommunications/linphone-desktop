@@ -75,7 +75,7 @@ signals:
 	void outputAudioDeviceChanged(const std::string &id);
 	void isLocalScreenSharingChanged(bool enabled);
 	void isScreenSharingEnabledChanged(bool enabled);
-	void participantDeviceCountChanged(int count);
+	void participantDeviceCountChanged(const std::shared_ptr<linphone::Conference> &conference, int count);
 
 private:
 	// LINPHONE LISTENERS
@@ -137,7 +137,8 @@ signals:
 	                                        bool isSpeaking);
 	void participantDeviceScreenSharingChanged(const std::shared_ptr<const linphone::ParticipantDevice> &device,
 	                                           bool enabled);
-	void conferenceStateChanged(linphone::Conference::State newState);
+	void conferenceStateChanged(const std::shared_ptr<linphone::Conference> &conference,
+	                            linphone::Conference::State newState);
 	void subjectChanged(const std::string &subject);
 
 private:

@@ -142,7 +142,8 @@ void ParticipantDeviceList::setSelf(QSharedPointer<ParticipantDeviceList> me) {
 			    });
 		    });
 		mConferenceModelConnection->makeConnectToModel(
-		    &ConferenceModel::conferenceStateChanged, [this](linphone::Conference::State state) {
+		    &ConferenceModel::conferenceStateChanged,
+		    [this](const std::shared_ptr<linphone::Conference> &conference, linphone::Conference::State state) {
 			    lDebug() << "[ParticipantDeviceList] new state = " << (int)state;
 			    if (state == linphone::Conference::State::Created) {
 				    lDebug() << "[ParticipantDeviceList] : build devices";

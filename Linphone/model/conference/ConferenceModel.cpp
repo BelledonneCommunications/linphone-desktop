@@ -175,13 +175,13 @@ void ConferenceModel::onParticipantAdded(const std::shared_ptr<linphone::Confere
                                          const std::shared_ptr<linphone::Participant> &participant) {
 	lDebug() << "onParticipant Added" << participant->getAddress()->asStringUriOnly();
 	emit participantAdded(participant);
-	emit participantDeviceCountChanged(getParticipantDeviceCount());
+	emit participantDeviceCountChanged(conference, getParticipantDeviceCount());
 }
 void ConferenceModel::onParticipantRemoved(const std::shared_ptr<linphone::Conference> &conference,
                                            const std::shared_ptr<const linphone::Participant> &participant) {
 	lDebug() << "onParticipant Removed" << participant->getAddress()->asStringUriOnly();
 	emit participantRemoved(participant);
-	emit participantDeviceCountChanged(getParticipantDeviceCount());
+	emit participantDeviceCountChanged(conference, getParticipantDeviceCount());
 }
 void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> &conference,
                                                const std::shared_ptr<linphone::ParticipantDevice> &participantDevice) {
@@ -191,7 +191,7 @@ void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::C
 		for (auto d : conference->getMe()->getDevices())
 			lDebug() << "\t--> " << d->getAddress()->asString().c_str();
 	emit participantDeviceAdded(participantDevice);
-	emit participantDeviceCountChanged(getParticipantDeviceCount());
+	emit participantDeviceCountChanged(conference, getParticipantDeviceCount());
 }
 void ConferenceModel::onParticipantDeviceRemoved(
     const std::shared_ptr<linphone::Conference> &conference,
@@ -201,7 +201,7 @@ void ConferenceModel::onParticipantDeviceRemoved(
 	lDebug() << "Me devices : " << conference->getMe()->getDevices().size();
 	if (participantDevice->screenSharingEnabled()) emit isScreenSharingEnabledChanged(false);
 	emit participantDeviceRemoved(participantDevice);
-	emit participantDeviceCountChanged(getParticipantDeviceCount());
+	emit participantDeviceCountChanged(conference, getParticipantDeviceCount());
 }
 void ConferenceModel::onParticipantDeviceStateChanged(const std::shared_ptr<linphone::Conference> &conference,
                                                       const std::shared_ptr<const linphone::ParticipantDevice> &device,
@@ -257,11 +257,11 @@ void ConferenceModel::onStateChanged(const std::shared_ptr<linphone::Conference>
                                      linphone::Conference::State newState) {
 	lDebug() << "onStateChanged:" << (int)newState;
 	if (newState == linphone::Conference::State::Created) {
-		emit participantDeviceCountChanged(mMonitor->getParticipantDeviceList().size());
+		emit participantDeviceCountChanged(conference, mMonitor->getParticipantDeviceList().size());
 		if (mMonitor->getScreenSharingParticipant()) emit isScreenSharingEnabledChanged(true);
 	}
 	// updateLocalParticipant();
-	emit conferenceStateChanged(newState);
+	emit conferenceStateChanged(conference, newState);
 }
 void ConferenceModel::onSubjectChanged(const std::shared_ptr<linphone::Conference> &conference,
                                        const std::string &subject) {

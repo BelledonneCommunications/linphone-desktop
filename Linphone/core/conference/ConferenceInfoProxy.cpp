@@ -22,6 +22,7 @@
 #include "ConferenceInfoCore.hpp"
 #include "ConferenceInfoGui.hpp"
 #include "ConferenceInfoList.hpp"
+#include "core/App.hpp"
 
 DEFINE_ABSTRACT_OBJECT(ConferenceInfoProxy)
 
@@ -31,9 +32,13 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
 	connect(
 	    mList.get(), &ConferenceInfoList::haveCurrentDateChanged, this,
 	    [this] {
+		    setCurrentDateIndex(getCurrentDateIndex());
 		    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
 		    sortModel->invalidate();
 	    },
+	    Qt::QueuedConnection);
+	connect(
+	    App::getInstance(), &App::currentDateChanged, this, [this] { setCurrentDateIndex(getCurrentDateIndex()); },
 	    Qt::QueuedConnection);
 	connect(
 	    mList.get(), &ConferenceInfoList::confInfoInserted, this,
@@ -46,7 +51,8 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
 		    }
 	    },
 	    Qt::QueuedConnection);
-	connect(mList.get(), &ConferenceInfoList::initialized, this, &ConferenceInfoProxy::initialized);
+	connect(mList.get(), &ConferenceInfoList::initialized, this,
+	        [this] { setCurrentDateIndex(getCurrentDateIndex()); });
 }
 
 ConferenceInfoProxy::~ConferenceInfoProxy() {
@@ -89,6 +95,14 @@ int ConferenceInfoProxy::getCurrentDateIndex() const {
 	auto modelIndex = mList->getCurrentDateIndex();
 	auto proxyIndex = sortModel->mapFromSource(mList->index(modelIndex, 0)).row();
 	return proxyIndex;
+}
+
+void ConferenceInfoProxy::setCurrentDateIndex(int index) {
+	if (mCurrentDateIndex != index) {
+		if (index >= mMaxDisplayItems) setMaxDisplayItems(index + 1);
+		mCurrentDateIndex = index;
+		emit currentDateIndexChanged(index);
+	}
 }
 
 bool ConferenceInfoProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft,

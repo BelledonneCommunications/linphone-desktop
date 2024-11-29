@@ -37,11 +37,7 @@ ListView {
 		onConferenceInfoCreated: (index) => {
 			mainItem.currentIndex = index
 		}
-		onInitialized: {
-			var initIndex = confInfoProxy.getCurrentDateIndex()
-			if (initIndex >= maxDisplayItems) maxDisplayItems = initIndex + 1
-			mainItem.currentIndex = initIndex
-		}
+		onCurrentDateIndexChanged: (index) => mainItem.currentIndex = index
 	}
 
 	section {
