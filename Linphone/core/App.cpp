@@ -407,7 +407,7 @@ void App::init() {
 		lInfo() << log().arg("Starting Thread");
 		mLinphoneThread->start();
 		while (!mLinphoneThread->getThreadId()) // Wait for running thread
-			processEvents();
+			QThread::msleep(100);
 	}
 
 	lInfo() << log().arg("Display server : %1").arg(platformName());
