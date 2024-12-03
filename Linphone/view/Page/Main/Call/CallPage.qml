@@ -382,7 +382,7 @@ AbstractMainPage {
 													if (modelData.core.isConference) {
 														var callsWindow = UtilsCpp.getCallsWindow()
 														callsWindow.setupConference(modelData.core.conferenceInfo)
-														callsWindow.show()
+														UtilsCpp.smartShowWindow(callsWindow)
 													}
 													else {
 														UtilsCpp.createCall(modelData.core.remoteAddress)

@@ -855,7 +855,7 @@ AbstractMainPage {
 						console.log(mainItem.selectedConference.core.uri)
 						var callsWindow = UtilsCpp.getCallsWindow()
 						callsWindow.setupConference(mainItem.selectedConference)
-						callsWindow.show()
+						UtilsCpp.smartShowWindow(callsWindow)
 					}
 				}
 				Item { Layout.fillHeight: true}

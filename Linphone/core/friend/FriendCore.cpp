@@ -63,7 +63,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		}
 		mDefaultAddress = defaultAddress ? Utils::coreStringToAppString(defaultAddress->asStringUriOnly()) : QString();
 		mDefaultFullAddress = defaultAddress ? Utils::coreStringToAppString(defaultAddress->asString()) : QString();
-		qWarning() << mDefaultAddress << " / " << mDefaultFullAddress;
+		// lDebug() << mDefaultAddress << " / " << mDefaultFullAddress;
 		auto phoneNumbers = contact->getPhoneNumbersWithLabel();
 		for (auto &phoneNumber : phoneNumbers) {
 			mPhoneNumberList.append(

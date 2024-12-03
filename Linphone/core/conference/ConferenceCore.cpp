@@ -65,16 +65,12 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 		    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeaker(device); });
 	    });
 
-	mConferenceModelConnection->makeConnectToModel(&ConferenceModel::participantDeviceStateChanged, [this]() {
-		int count = mConferenceModel->getParticipantDeviceCount();
-		mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
-	});
-
 	mConferenceModelConnection->makeConnectToModel(
 	    &ConferenceModel::conferenceStateChanged,
 	    [this](const std::shared_ptr<linphone::Conference> &conference, linphone::Conference::State newState) {
-		    if (newState != linphone::Conference::State::Created) return;
-		    if (!mActiveSpeaker) {
+		    int count = mConferenceModel->getParticipantDeviceCount();
+		    mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
+		    if (newState == linphone::Conference::State::Created && !mActiveSpeaker) {
 			    if (auto participantDevice = conference->getActiveSpeakerParticipantDevice()) {
 				    auto device = ParticipantDeviceCore::create(participantDevice);
 				    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeaker(device); });
@@ -89,25 +85,21 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 				    }
 			    }
 		    }
-		    int count = mConferenceModel->getParticipantDeviceCount();
-		    mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
 	    });
 
 	mConferenceModelConnection->makeConnectToModel(
 	    &ConferenceModel::participantDeviceCountChanged,
 	    [this](const std::shared_ptr<linphone::Conference> &conference, int count) {
-		    if (!mActiveSpeaker) {
-			    if (auto participantDevice = conference->getActiveSpeakerParticipantDevice()) {
-				    auto device = ParticipantDeviceCore::create(participantDevice);
-				    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeaker(device); });
-			    } else if (conference->getParticipantDeviceList().size() > 1) {
-				    for (auto &device : conference->getParticipantDeviceList()) {
-					    if (!ToolModel::isMe(device->getAddress())) {
-						    auto activeSpeaker = ParticipantDeviceCore::create(device);
-						    mConferenceModelConnection->invokeToCore(
-						        [this, activeSpeaker]() { setActiveSpeaker(activeSpeaker); });
-						    break;
-					    }
+		    if (auto participantDevice = conference->getActiveSpeakerParticipantDevice()) {
+			    auto device = ParticipantDeviceCore::create(participantDevice);
+			    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeaker(device); });
+		    } else if (conference->getParticipantDeviceList().size() > 1) {
+			    for (auto &device : conference->getParticipantDeviceList()) {
+				    if (!ToolModel::isMe(device->getAddress())) {
+					    auto activeSpeaker = ParticipantDeviceCore::create(device);
+					    mConferenceModelConnection->invokeToCore(
+					        [this, activeSpeaker]() { setActiveSpeaker(activeSpeaker); });
+					    break;
 				    }
 			    }
 		    }

@@ -125,7 +125,8 @@ signals:
 	void participantRemoved(const std::shared_ptr<const linphone::Participant> &participant);
 	void participantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> &participant);
 	void participantDeviceAdded(const std::shared_ptr<linphone::ParticipantDevice> &participantDevice);
-	void participantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice);
+	void participantDeviceRemoved(const std::shared_ptr<linphone::Conference> &conference,
+	                              const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice);
 	void participantDeviceStateChanged(const std::shared_ptr<linphone::Conference> &conference,
 	                                   const std::shared_ptr<const linphone::ParticipantDevice> &device,
 	                                   linphone::ParticipantDevice::State state);

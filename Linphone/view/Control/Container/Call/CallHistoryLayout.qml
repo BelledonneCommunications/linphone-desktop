@@ -159,7 +159,7 @@ ColumnLayout {
 				if (mainItem.conferenceInfo) {
 					var callsWindow = UtilsCpp.getCallsWindow()
 					callsWindow.setupConference(mainItem.conferenceInfo)
-					callsWindow.show()
+					UtilsCpp.smartShowWindow(callsWindow)
 				}
 			}
 		}

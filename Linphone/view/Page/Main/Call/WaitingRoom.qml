@@ -13,6 +13,7 @@ RowLayout {
 	property ConferenceInfoGui conferenceInfo
 	signal joinConfRequested(string uri)
 	signal cancelJoiningRequested()
+	signal cancelAfterJoinRequested()
 	RowLayout {
 		Layout.fillWidth: false
 		Layout.fillHeight: false
@@ -124,7 +125,7 @@ RowLayout {
 						rightPadding: 20 * DefaultStyle.dp
 						topPadding: 11 * DefaultStyle.dp
 						bottomPadding: 11 * DefaultStyle.dp
-						text: qsTr("Join")
+						text: qsTr("Rejoindre")
 						onClicked: {
 							settingsButton.checked = false
 							stackLayout.currentIndex = 1
@@ -137,7 +138,7 @@ RowLayout {
 						rightPadding: 20 * DefaultStyle.dp
 						bottomPadding: 11 * DefaultStyle.dp
 						inversedColors: true
-						text: qsTr("Cancel")
+						text: qsTr("Annuler")
 						onClicked: {
 							mainItem.cancelJoiningRequested()
 						}
@@ -172,6 +173,20 @@ RowLayout {
 					Layout.alignment: Qt.AlignHCenter
 					Layout.preferredWidth: 48 * DefaultStyle.dp
 					Layout.preferredHeight: 48 * DefaultStyle.dp
+				}
+				Button {
+					Layout.preferredWidth: 292 * DefaultStyle.dp
+					Layout.alignment: Qt.AlignHCenter
+					leftPadding: 20 * DefaultStyle.dp
+					rightPadding: 20 * DefaultStyle.dp
+					topPadding: 11 * DefaultStyle.dp
+					bottomPadding: 11 * DefaultStyle.dp
+					text: qsTr("Annuler")
+					onClicked: {
+						settingsButton.checked = false
+						stackLayout.currentIndex = 1
+						mainItem.cancelAfterJoinRequested()
+					}
 				}
 			}
 		}

@@ -128,17 +128,20 @@ void ParticipantDeviceList::setSelf(QSharedPointer<ParticipantDeviceList> me) {
 			    auto deviceCore = ParticipantDeviceCore::create(device);
 			    mConferenceModelConnection->invokeToCore([this, deviceCore]() {
 				    lDebug() << "[ParticipantDeviceList] : add a device";
-				    this->add(deviceCore);
+				    add(deviceCore);
 			    });
 		    });
 		mConferenceModelConnection->makeConnectToModel(
 		    &ConferenceModel::participantDeviceRemoved,
-		    [this](const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-			    QString uniqueAddress = Utils::coreStringToAppString(participantDevice->getAddress()->asString());
+		    [this](const std::shared_ptr<linphone::Conference> &conference,
+		           const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
+			    QString uniqueAddress =
+			        Utils::coreStringToAppString(participantDevice->getAddress()->asString().c_str());
 			    auto deviceCore = findDeviceByUniqueAddress(uniqueAddress);
 			    mConferenceModelConnection->invokeToCore([this, deviceCore]() {
-				    lDebug() << "[ParticipantDeviceList] : remove a device";
-				    this->remove(deviceCore);
+				    lDebug() << "[ParticipantDeviceList] : remove a device" << deviceCore;
+				    if (!remove(deviceCore))
+					    lWarning() << log().arg("Unable to remove") << deviceCore << "as it is not part of the list";
 			    });
 		    });
 		mConferenceModelConnection->makeConnectToModel(

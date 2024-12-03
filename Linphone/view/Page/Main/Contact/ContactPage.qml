@@ -404,6 +404,7 @@ AbstractMainPage {
 							font {
 								pixelSize: 29 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
+								capitalization: Font.Capitalize
 							}
 						}
 						Text {

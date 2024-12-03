@@ -100,6 +100,9 @@ AbstractWindow {
 				autoCloseWindow.restart()
 			}
 		} else {
+			if (middleItemStackView.currentItem.objectName === "waitingRoom") {
+				middleItemStackView.replace(inCallItem)
+			}
 			mainWindow.call = callsModel.currentCall
 		}
 	}
@@ -123,6 +126,9 @@ AbstractWindow {
 			mainWindow.call = callsModel.currentCall
 		}
 		middleItemStackView.replace(inCallItem)
+	}
+	function cancelAfterJoin() {
+		endCall(mainWindow.call)
 	}
 	
 	Connections {
@@ -830,7 +836,6 @@ AbstractWindow {
 						initialItem: participantListComp
 						onCurrentItemChanged: rightPanel.headerStack.currentIndex = currentItem.Control.StackView.index
 						property list<string> selectedParticipants
-						signal participantAdded()
 
 						Connections {
 							target: rightPanel
@@ -886,7 +891,6 @@ AbstractWindow {
 									function onValidateRequested() {
 										participantList.model.addAddresses(participantsStack.selectedParticipants)
 										participantsStack.pop()
-										participantsStack.participantAdded()
 									}
 								}
 							}
@@ -980,6 +984,8 @@ AbstractWindow {
 						mainWindow.joinConference(uri, {'microEnabled':microEnabled, 'localVideoEnabled':localVideoEnabled})
 					}
 					onCancelJoiningRequested: mainWindow.cancelJoinConference()
+					onCancelAfterJoinRequested: mainWindow.cancelAfterJoin()
+					
 				}
 			}
 			Component {
