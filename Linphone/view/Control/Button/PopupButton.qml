@@ -72,24 +72,24 @@ Button {
 		closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside | Popup.CloseOnEscape
 		padding: 10 * DefaultStyle.dp
 		parent: mainItem	// Explicit define for coordinates references.
-
-		onVisibleChanged: {
+		function updatePosition(){
 			if (!visible) return
-			// Do not use popup.height as it is not consistent.
-			var popupHeight = mainItem.height + popup.implicitContentHeight + popup.padding
-			var position = mainItem.mapToItem(mainItem.Window.contentItem, mainItem.x + popup.implicitContentWidth + popup.padding, mainItem.y + popupHeight)
-			if (position.y + popupHeight >= mainItem.Window.height) {
-				y = -popupHeight
-			}else {
-				y = mainItem.height + popup.padding
-			}
-			if (position.x >= mainItem.Window.width) {
-				x = mainItem.width - Math.max(popup.width, popup.implicitContentWidth)
-			} else {
-				x = 0
-			}
+			var popupHeight = popup.height + popup.padding
+			var popupWidth = popup.width + popup.padding
+			var winPosition = mainItem.Window.contentItem.mapToItem(mainItem,0 , 0)
+			
+			y = Math.max( Math.min( winPosition.y + mainItem.Window.height - popupHeight, mainItem.height), winPosition.y)
+			x = Math.max( Math.min( winPosition.x + mainItem.Window.width - popupWidth, 0), winPosition.x)
 			popup.contentItem.forceActiveFocus()
 		}
+		onHeightChanged: Qt.callLater(updatePosition)
+		onWidthChanged: Qt.callLater(updatePosition)
+		Connections{
+			target: mainItem.Window
+			function onHeightChanged(){ Qt.callLater(popup.updatePosition)}
+			function onWidthChanged(){ Qt.callLater(popup.updatePosition)}
+		}
+		onVisibleChanged: Qt.callLater(updatePosition)
 
 		background: Item {
 			anchors.fill: parent

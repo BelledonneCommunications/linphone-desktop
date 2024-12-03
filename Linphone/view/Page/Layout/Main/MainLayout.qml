@@ -369,6 +369,7 @@ Item {
 							popup.contentItem: FocusScope {
 								id: popupFocus
 								implicitHeight: settingsButtons.implicitHeight
+								implicitWidth: settingsButtons.implicitWidth
 								Keys.onPressed: (event)=> {
 										if (event.key == Qt.Key_Left || event.key == Qt.Key_Escape) {
 											settingsMenuButton.popup.close()
