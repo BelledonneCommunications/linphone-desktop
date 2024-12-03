@@ -30,7 +30,7 @@
     <entry name="protocols" overwrite="true">stun,ice</entry>
   </section>
   <section name="misc">
-    <entry name="file_transfer_server_url" overwrite="true">https://www.linphone.org:444/lft.php</entry>
+    <entry name="file_transfer_server_url" overwrite="true">https://files.linphone.org:443/http-file-transfer-server/hft.php</entry>
   </section>
   <section name="sip">
     <entry name="rls_uri" overwrite="true">sips:rls@sip.linphone.org</entry>
