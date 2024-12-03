@@ -2,19 +2,23 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic
 import Linphone
-import UtilsCpp 1.0
-import SettingsCpp 1.0
+import UtilsCpp
+import SettingsCpp
+import DesktopToolsCpp
 
 ApplicationWindow {
 	id: mainWindow
 	x: 0
 	y: 0
-    width: Math.min(1512 * DefaultStyle.dp, Screen.desktopAvailableWidth)
-    height: Math.min(982 * DefaultStyle.dp, Screen.desktopAvailableHeight)
+	width: Math.min(1512 * DefaultStyle.dp, Screen.desktopAvailableWidth)
+	height: Math.min(982 * DefaultStyle.dp, Screen.desktopAvailableHeight)
+	
+	property bool isFullscreen: visibility == Window.FullScreen
+	onIsFullscreenChanged: DesktopToolsCpp.screenSaverStatus = !isFullscreen
 
 	MouseArea {
 		anchors.fill: parent
-		onClicked: forceActiveFocus()
+		onClicked: mainWindow.contentItem.forceActiveFocus()
 	}
 
 	Component {

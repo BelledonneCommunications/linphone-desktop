@@ -664,8 +664,8 @@ AbstractMainPage {
 						implicitHeight: detailsButtons.implicitHeight
 						implicitWidth: detailsButtons.implicitWidth
 						Keys.onPressed: (event)=> {
-								if (event.key == Qt.Key_Left || event.key == Qt.Key_Escape) {
-									detailOptions.popup.close()
+							if (event.key == Qt.Key_Left || event.key == Qt.Key_Escape) {
+								detailOptions.popup.close()
 								event.accepted = true;
 							}
 						}

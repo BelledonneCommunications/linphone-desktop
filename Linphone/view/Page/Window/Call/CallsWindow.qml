@@ -126,10 +126,10 @@ AbstractWindow {
 	}
 	
 	Connections {
-		enabled: !!call
-		target: call && call.core
+		enabled: !!mainWindow.call
+		target: mainWindow.call && mainWindow.call.core
 		function onSecurityUpdated() {
-			if (call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
+			if (mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
 				if (call.core.tokenVerified) {
 					zrtpValidation.close()
 					zrtpValidationToast.open()
@@ -266,6 +266,10 @@ AbstractWindow {
 	Rectangle {
 		anchors.fill: parent
 		color: DefaultStyle.grey_900
+		Keys.onEscapePressed: {
+			if(mainWindow.visibility == Window.FullScreen) mainWindow.showNormal()
+		}
+		
 		ColumnLayout {
 			anchors.fill: parent
 			spacing: 10 * DefaultStyle.dp
@@ -561,11 +565,9 @@ AbstractWindow {
 				NewCallForm {
 					id: newCallForm
 					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Transférer %1 à :").arg(mainWindow.call.core.remoteName)
-					Keys.onPressed: (event)=> {
-						if (event.key == Qt.Key_Escape) {
-							rightPanel.visible = false
-							event.accepted = true;
-						}
+					Keys.onEscapePressed: (event) => {
+						rightPanel.visible = false
+						event.accepted = true
 					}
 					groupCallVisible: false
 					displayCurrentCalls: true
@@ -654,11 +656,9 @@ AbstractWindow {
 					id: dialerPanelContent
 					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Dialer")
 					spacing: 0
-					Keys.onPressed: (event)=> {
-						if (event.key == Qt.Key_Escape) {
-							rightPanel.visible = false
-							event.accepted = true;
-						}
+					Keys.onEscapePressed: (event) => {
+						rightPanel.visible = false
+						event.accepted = true
 					}
 					Item {
 						Layout.fillWidth: true
@@ -702,11 +702,9 @@ AbstractWindow {
 				id: changeLayoutPanel
 				ChangeLayoutForm {
 					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Modifier la disposition")
-					Keys.onPressed: (event)=> {
-						if (event.key == Qt.Key_Escape) {
-							rightPanel.visible = false
-							event.accepted = true;
-						}
+					Keys.onEscapePressed: (event) => {
+						rightPanel.visible = false
+						event.accepted = true
 					}
 					call: mainWindow.call
 					onChangeLayoutRequested: (index) => {
@@ -721,11 +719,9 @@ AbstractWindow {
 						rightPanel.headerTitleText = qsTr("Liste d'appel")
 						rightPanel.customHeaderButtons = mergeCallPopupButton.createObject(rightPanel)
 					}
-					Keys.onPressed: (event)=> {
-						if (event.key == Qt.Key_Escape) {
-							rightPanel.visible = false
-							event.accepted = true;
-						}
+					Keys.onEscapePressed: (event) => {
+						rightPanel.visible = false
+						event.accepted = true
 					}
 					spacing: 0
 					Component {
@@ -784,11 +780,9 @@ AbstractWindow {
 					Control.StackView.onActivated: {
 						rightPanel.headerTitleText = qsTr("Paramètres")
 					}
-					Keys.onPressed: (event)=> {
-						if (event.key == Qt.Key_Escape) {
-							rightPanel.visible = false
-							event.accepted = true;
-						}
+					Keys.onEscapePressed: (event) => {
+						rightPanel.visible = false
+						event.accepted = true
 					}
 					MultimediaSettings {
 						id: inSettingsPanel
@@ -805,11 +799,9 @@ AbstractWindow {
 				id: screencastPanel
 				Item {
 					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Partage de votre écran")
-					Keys.onPressed: (event)=> {
-						if (event.key == Qt.Key_Escape) {
-							rightPanel.visible = false
-							event.accepted = true;
-						}
+					Keys.onEscapePressed: (event) => {
+						rightPanel.visible = false
+						event.accepted = true
 					}
 					ScreencastSettings {
 						anchors.fill: parent
@@ -825,11 +817,9 @@ AbstractWindow {
 				id: participantListPanel
 				Item {
 					objectName: "participantListPanel"
-					Keys.onPressed: (event)=> {
-						if (event.key == Qt.Key_Escape) {
-							rightPanel.visible = false
-							event.accepted = true;
-						}
+					Keys.onEscapePressed: (event) => {
+						rightPanel.visible = false
+						event.accepted = true
 					}
 					Control.StackView {
 						id: participantsStack
@@ -1288,16 +1278,14 @@ AbstractWindow {
 								}
 							}
 							MenuButton {
-								visible: mainWindow.conference
 								icon.source: AppIcons.fullscreen
 								text: qsTr("Mode Plein écran")
 								checkable: true
+								Binding on checked { value: mainWindow.visibility === Window.FullScreen }
 								onToggled: {
 									if(checked) {
-										DesktopToolsCpp.screenSaverStatus = false
 										mainWindow.showFullScreen()
 									}else{
-										DesktopToolsCpp.screenSaverStatus = true
 										mainWindow.showNormal()
 									}
 								}
