@@ -536,8 +536,12 @@ Function InstDirValidation
 	Call isEmptyDir
 	Pop $0
 	StrCmp $0 0 0 isEmpty
-		MessageBox MB_OK "$INSTDIR is not empty. Please delete it and retry."
-		Abort
+		MessageBox MB_YESNO|MB_ICONEXCLAMATION "The folder: $INSTDIR already exists.$\r$\n$\r$\nWould you like to install to that folder anyway?$\r$\nIt will be deleted before installation." IDYES true IDNO false
+		true:
+			Goto next
+		false:
+			Abort
+		next:
 	isEmpty:
 FunctionEnd
 
@@ -683,6 +687,11 @@ FunctionEnd
 Section "-Core installation"
   ;Use the entire tree produced by the INSTALL target.  Keep the
   ;list of directories here in sync with the RMDir commands below.
+  
+  Delete "$INSTDIR\*.*"
+  SetOutPath "$PROGRAMFILES"
+  RMDir /r "$INSTDIR"
+  
   SetOutPath "$INSTDIR"
   @CPACK_NSIS_EXTRA_PREINSTALL_COMMANDS@
   @CPACK_NSIS_FULL_INSTALL@
@@ -881,13 +890,6 @@ Section "Uninstall"
   Delete "$INSTDIR\AddRemove.exe"
 !endif
 
-  ;Remove the uninstaller itself.
-  Delete "$INSTDIR\Uninstall.exe"
-  DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\@CPACK_PACKAGE_INSTALL_REGISTRY_KEY@"
-
-  ;Remove the installation directory if it is empty.
-  RMDir "$INSTDIR"
-
   ; Remove the registry entries.
   DeleteRegKey SHCTX "Software\@CPACK_PACKAGE_VENDOR@\@CPACK_PACKAGE_INSTALL_REGISTRY_KEY@"
 
@@ -895,6 +897,16 @@ Section "Uninstall"
   !insertmacro SectionList "RemoveSection_CPack"
 
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
+  
+  ;Remove the uninstaller itself.
+  Delete "$INSTDIR\Uninstall.exe"
+  DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\@CPACK_PACKAGE_INSTALL_REGISTRY_KEY@"
+
+  Delete "$INSTDIR\*.*"
+
+  ;Remove the installation directory.
+  SetOutPath "$PROGRAMFILES"
+  RMDir /r "$INSTDIR"
 
   Delete "$SMPROGRAMS\$MUI_TEMP\Uninstall.lnk"
 @CPACK_NSIS_DELETE_ICONS@
