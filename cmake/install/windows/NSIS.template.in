@@ -964,10 +964,11 @@ SectionEnd
 
 
 Function .onInit
+  retry:
   ClearErrors
   ExecWait '"cmd" /C ""%SystemRoot%\System32\tasklist" /NH /FI "IMAGENAME eq @CPACK_NSIS_MUI_FINISHPAGE_RUN@" | "%SystemRoot%\System32\find" /I /C "@CPACK_NSIS_MUI_FINISHPAGE_RUN@""' $0
   IntCmp $0 1 notRunning
-  MessageBox MB_OK|MB_ICONEXCLAMATION "@CPACK_NSIS_MUI_FINISHPAGE_RUN@ is running. Please close it first from the application menu and restart the installation." /SD IDOK
+  MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "@CPACK_NSIS_MUI_FINISHPAGE_RUN@ is running. Please close it first from the application menu and restart the installation." /SD IDCANCEL IDRETRY retry
   Abort
 
 notRunning:
