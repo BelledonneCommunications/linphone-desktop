@@ -159,6 +159,7 @@ public:
 	DECLARE_GETSET(QString, downloadFolder, DownloadFolder)
 
 signals:
+	void logsUploadUrlChanged();
 
 	// VFS. --------------------------------------------------------------------
 	void vfsEnabledChanged(bool enabled);

@@ -22,7 +22,6 @@ username_regex=^[a-z0-9+_.\-]*$
 lime_update_threshold=86400
 
 [misc]
-log_collection_upload_server_url=https://www.linphone.org:444/lft.php
 aggregate_imdn=1
 enable_basic_to_client_group_chat_room_migration=0
 enable_simple_group_chat_message_state=0

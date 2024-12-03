@@ -457,6 +457,21 @@ QString SettingsModel::getLogsFolder(const shared_ptr<linphone::Config> &config)
 	              : Paths::getLogsDirPath();
 }
 
+QString SettingsModel::getLogsUploadUrl() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto core = CoreModel::getInstance()->getCore();
+	return Utils::coreStringToAppString(core->getLogCollectionUploadServerUrl());
+}
+
+void SettingsModel::setLogsUploadUrl(const QString &serverUrl) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (serverUrl != getLogsUploadUrl()) {
+		auto core = CoreModel::getInstance()->getCore();
+		core->setLogCollectionUploadServerUrl(Utils::appStringToCoreString(serverUrl));
+		emit logsUploadUrlChanged();
+	}
+}
+
 void SettingsModel::cleanLogs() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	CoreModel::getInstance()->getCore()->resetLogCollection();

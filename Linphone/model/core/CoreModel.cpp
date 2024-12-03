@@ -102,6 +102,8 @@ void CoreModel::start() {
 	videoPolicy->setAutomaticallyAccept(true);
 	videoPolicy->setAutomaticallyInitiate(false);
 	mCore->setVideoActivationPolicy(videoPolicy);
+	if (mCore->getLogCollectionUploadServerUrl().empty())
+		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
 	mIterateTimer->start();
 }
 // -----------------------------------------------------------------------------
