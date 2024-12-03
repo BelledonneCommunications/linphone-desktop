@@ -39,6 +39,7 @@ public:
 
 	Q_INVOKABLE void removeAllEntries();
 	Q_INVOKABLE void removeEntriesWithFilter();
+	Q_INVOKABLE void reload();
 
 protected:
 	QSharedPointer<CallHistoryList> mHistoryList;

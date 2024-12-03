@@ -45,8 +45,12 @@ void CallHistoryProxy::removeEntriesWithFilter() {
 		itemList[i] = item;
 	}
 	for (auto item : itemList) {
-		mHistoryList->ListProxy::remove(item.get());
+		item->remove();
 	}
+}
+
+void CallHistoryProxy::reload() {
+	emit mHistoryList->lUpdate();
 }
 
 //------------------------------------------------------------------------------------------

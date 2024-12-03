@@ -67,6 +67,7 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 			}
 			for (auto it : linphoneCallLogs) {
 				auto model = createCallHistoryCore(it);
+				toConnect(model.get());
 				callLogs->push_back(model);
 			}
 			mModelConnection->invokeToCore([this, callLogs]() {
@@ -88,6 +89,7 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 			    auto oldLog = std::find_if(mList.begin(), mList.end(), [callLogs](QSharedPointer<QObject> log) {
 				    return (*callLogs)->mCallId == log.objectCast<CallHistoryCore>()->mCallId;
 			    });
+			    toConnect(callLogs->get());
 			    if (oldLog == mList.end()) { // New
 				    prepend(*callLogs);
 			    } else { // Update (status, duration, etc ...)
@@ -97,6 +99,10 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 		    });
 	    });
 	emit lUpdate();
+}
+
+void CallHistoryList::toConnect(CallHistoryCore *data) {
+	connect(data, &CallHistoryCore::removed, this, [this, data]() { ListProxy::remove(data); });
 }
 
 void CallHistoryList::removeAllEntries() {
@@ -110,10 +116,8 @@ void CallHistoryList::removeAllEntries() {
 }
 
 void CallHistoryList::remove(const int &row) {
-	beginRemoveRows(QModelIndex(), row, row);
 	auto item = mList[row].objectCast<CallHistoryCore>();
-	item->remove();
-	endRemoveRows();
+	if (item) item->remove();
 }
 
 QVariant CallHistoryList::data(const QModelIndex &index, int role) const {

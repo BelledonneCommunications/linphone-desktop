@@ -68,6 +68,7 @@ public:
 signals:
 	void durationChanged(QString duration);
 	void displayNameChanged();
+	void removed();
 
 private:
 	QString mDuration;

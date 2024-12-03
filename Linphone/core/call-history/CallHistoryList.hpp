@@ -41,6 +41,7 @@ public:
 	~CallHistoryList();
 
 	void setSelf(QSharedPointer<CallHistoryList> me);
+	void toConnect(CallHistoryCore *data);
 
 	void removeAllEntries();
 	void remove(const int &row);
@@ -54,7 +55,7 @@ public:
 	// 	roles[Qt::DisplayRole + 2] = "date";
 	// 	return roles;
 	// }
-	//void displayMore();
+	// void displayMore();
 
 signals:
 	void lUpdate();

@@ -251,6 +251,7 @@ AbstractMainPage {
 										onFilterTextChanged: maxDisplayItems = initialDisplayItems
 										initialDisplayItems: historyListView.height / (56 * DefaultStyle.dp) + 5
 										displayItemsStep: initialDisplayItems / 2
+										
 									}
 									cacheBuffer: contentHeight>0 ? contentHeight : 0// cache all items
 									flickDeceleration: 10000
@@ -273,7 +274,13 @@ AbstractMainPage {
 										function onAccepted() {
 											historyListView.model.removeAllEntries()
 										}
-									}							
+									}
+									Connections{
+										target: mainItem
+										function onListViewUpdated(){
+											callHistoryProxy.reload()
+										}
+									}
 									onAtYEndChanged: if(atYEnd) callHistoryProxy.displayMore()
 									delegate: FocusScope {
 										width:historyListView.width

@@ -139,5 +139,8 @@ void CallHistoryCore::setDuration(const QString &duration) {
 }
 
 void CallHistoryCore::remove() {
-	mHistoryModelConnection->invokeToModel([this]() { mCallHistoryModel->removeCallHistory(); });
+	mHistoryModelConnection->invokeToModel([this]() {
+		mCallHistoryModel->removeCallHistory();
+		emit removed();
+	});
 }
