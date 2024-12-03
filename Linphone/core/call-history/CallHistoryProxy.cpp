@@ -59,8 +59,7 @@ bool CallHistoryProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 		                          QRegularExpression::CaseInsensitiveOption |
 		                              QRegularExpression::UseUnicodePropertiesOption);
 		auto callLog = getItemAtSource<CallHistoryList, CallHistoryCore>(sourceRow);
-		show =
-		    callLog->mIsConference ? callLog->mDisplayName.contains(search) : callLog->mRemoteAddress.contains(search);
+		show = callLog->mDisplayName.contains(search) || callLog->mRemoteAddress.contains(search);
 	}
 	return show;
 }
