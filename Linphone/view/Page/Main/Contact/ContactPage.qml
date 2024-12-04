@@ -17,6 +17,7 @@ AbstractMainPage {
 	property bool leftPanelEnabled: !rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName != "contactEdition"
 	property FriendGui selectedContact
 	property string initialFriendToDisplay
+	onInitialFriendToDisplayChanged: if (initialFriendToDisplay != '' && contactList.selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
 
 	onVisibleChanged: if (!visible) {
 		rightPanelStackView.clear()
