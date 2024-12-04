@@ -92,6 +92,10 @@
   extends: .windows-vs
   tags: [ "windows-powershell-vs-17-2022" ]
 
+.windows-codesigning:
+  extends: .windows-vs
+  tags: [ "windows-powershell-vs-17-2022-apps" ]
+
 .windows-msbuild-variables:
   variables:
     PARALLEL_OPTIONS: "-- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false"
@@ -188,7 +192,7 @@ win64-ninja-vs2022-package-windows:
     CMAKE_ARCHITECTURE: ""
     PARALLEL_OPTIONS: ""
   extends:
-    - .windows-vs2022
+    - .windows-codesigning
     - .windows-ninja-variables
     - .vs-win64-package
 
