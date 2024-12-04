@@ -123,7 +123,7 @@ FocusScope {
 						radius: 40 * DefaultStyle.dp
 						color: DefaultStyle.main2_200
 					}
-					onClicked: UtilsCpp.createCall(searchResultItem.core.defaultAddress)
+					onClicked: UtilsCpp.createCall(searchResultItem.core.defaultFullAddress)
 					KeyNavigation.right: chatButton
 					KeyNavigation.left: chatButton
 				}

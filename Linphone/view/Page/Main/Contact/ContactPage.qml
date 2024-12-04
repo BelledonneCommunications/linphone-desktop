@@ -41,6 +41,7 @@ AbstractMainPage {
 		friendGui.core.givenName = UtilsCpp.getGivenNameFromFullName(name)
 		friendGui.core.familyName = UtilsCpp.getFamilyNameFromFullName(name)
 		friendGui.core.defaultAddress = address
+		friendGui.core.defaultFullAddress = address
 		if (!rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName != "contactEdition")
 			rightPanelStackView.push(contactEdition, {"contact": friendGui, "title": qsTr("Nouveau contact"), "saveButtonText": qsTr("Créer")})
 	}

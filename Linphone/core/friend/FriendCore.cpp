@@ -76,8 +76,9 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 			mAddressList.append(
 			    createFriendAddressVariant(_addressLabel, Utils::coreStringToAppString(address->asStringUriOnly())));
 		}
-		mDefaultAddress =
-		    defaultAddress ? Utils::coreStringToAppString(contact->getAddress()->asStringUriOnly()) : QString();
+		mDefaultAddress = defaultAddress ? Utils::coreStringToAppString(defaultAddress->asStringUriOnly()) : QString();
+		mDefaultFullAddress = defaultAddress ? Utils::coreStringToAppString(defaultAddress->asString()) : QString();
+		qWarning() << mDefaultAddress << " / " << mDefaultFullAddress;
 		auto phoneNumbers = contact->getPhoneNumbersWithLabel();
 		for (auto &phoneNumber : phoneNumbers) {
 			mPhoneNumberList.append(
@@ -113,6 +114,7 @@ FriendCore::FriendCore(const FriendCore &friendCore) {
 	mAddressList = friendCore.mAddressList;
 	mPhoneNumberList = friendCore.mPhoneNumberList;
 	mDefaultAddress = friendCore.mDefaultAddress;
+	mDefaultFullAddress = friendCore.mDefaultFullAddress;
 	mGivenName = friendCore.mGivenName;
 	mFamilyName = friendCore.mFamilyName;
 	mFullName = friendCore.mFullName;
@@ -240,6 +242,7 @@ void FriendCore::reset(const FriendCore &contact) {
 	resetAddresses(contact.getAddresses());
 	resetPhoneNumbers(contact.getPhoneNumbers());
 	setDefaultAddress(contact.getDefaultAddress());
+	setDefaultFullAddress(contact.getDefaultFullAddress());
 	setGivenName(contact.getGivenName());
 	setFamilyName(contact.getFamilyName());
 	setOrganization(contact.getOrganization());
@@ -394,7 +397,7 @@ void FriendCore::setAddressAt(int index, QString label, QString address) {
 void FriendCore::removeAddress(int index) {
 	if (index < 0 && index >= mAddressList.size()) return;
 	auto map = mAddressList[index].toMap();
-	if (map["address"].toString() == mDefaultAddress) mDefaultAddress.clear();
+	if (map["address"].toString() == mDefaultFullAddress) mDefaultFullAddress.clear();
 	mAddressList.remove(index);
 	emit addressChanged();
 }
@@ -408,7 +411,7 @@ void FriendCore::appendAddress(const QString &addr) {
 			if (interpretedAddress.isEmpty()) Utils::showInformationPopup(tr("Erreur"), tr("Adresse invalide"), false);
 			else {
 				mAddressList.append(createFriendAddressVariant(_addressLabel, interpretedAddress));
-				if (mDefaultAddress.isEmpty()) mDefaultAddress = interpretedAddress;
+				if (mDefaultFullAddress.isEmpty()) mDefaultFullAddress = interpretedAddress;
 				emit addressChanged();
 			}
 		});
@@ -455,14 +458,25 @@ LinphoneEnums::SecurityLevel FriendCore::getSecurityLevelForAddress(const QStrin
 	return LinphoneEnums::SecurityLevel::None;
 }
 
+QString FriendCore::getDefaultFullAddress() const {
+	return mDefaultFullAddress;
+}
+
+void FriendCore::setDefaultFullAddress(const QString &address) {
+	auto it = std::find_if(mAddressList.begin(), mAddressList.end(),
+	                       [address](const QVariant &a) { return a.toMap()["address"].toString() == address; });
+	if (it == mAddressList.end()) appendAddress(address);
+	if (mDefaultFullAddress != address) {
+		mDefaultFullAddress = address;
+		emit defaultFullAddressChanged();
+	}
+}
+
 QString FriendCore::getDefaultAddress() const {
 	return mDefaultAddress;
 }
 
 void FriendCore::setDefaultAddress(const QString &address) {
-	auto it = std::find_if(mAddressList.begin(), mAddressList.end(),
-	                       [address](const QVariant &a) { return a.toMap()["address"].toString() == address; });
-	if (it == mAddressList.end()) appendAddress(address);
 	if (mDefaultAddress != address) {
 		mDefaultAddress = address;
 		emit defaultAddressChanged();
@@ -547,7 +561,7 @@ void FriendCore::writeIntoModel(std::shared_ptr<FriendModel> model) const {
 	}
 	model->resetAddresses(addresses);
 
-	model->setAddress(ToolModel::interpretUrl(mDefaultAddress));
+	model->setAddress(ToolModel::interpretUrl(mDefaultFullAddress));
 
 	std::list<std::shared_ptr<linphone::FriendPhoneNumber>> phones;
 	for (auto &number : mPhoneNumberList) {
@@ -606,15 +620,15 @@ void FriendCore::save() { // Save Values to model
 	mustBeInMainThread(getClassName() + "::save()");
 	if (mAddressList.size() > 0) {
 		auto it = std::find_if(mAddressList.begin(), mAddressList.end(), [this](const QVariant &a) {
-			return a.toMap()["address"].toString() == mDefaultAddress;
+			return a.toMap()["address"].toString() == mDefaultFullAddress;
 		});
 		if (it == mAddressList.end()) {
-			mDefaultAddress = mAddressList[0].toMap()["address"].toString();
-			emit defaultAddressChanged();
+			mDefaultFullAddress = mAddressList[0].toMap()["address"].toString();
+			emit defaultFullAddressChanged();
 		}
 	} else {
-		mDefaultAddress = "";
-		emit defaultAddressChanged();
+		mDefaultFullAddress = "";
+		emit defaultFullAddressChanged();
 	}
 	FriendCore *thisCopy = new FriendCore(*this); // Pointer to avoid multiple copies in lambdas
 	if (mFriendModel) {

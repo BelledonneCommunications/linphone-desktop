@@ -61,6 +61,8 @@ class FriendCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString organization READ getOrganization WRITE setOrganization NOTIFY organizationChanged)
 	Q_PROPERTY(QString job READ getJob WRITE setJob NOTIFY jobChanged)
 	Q_PROPERTY(QString defaultAddress READ getDefaultAddress WRITE setDefaultAddress NOTIFY defaultAddressChanged)
+	Q_PROPERTY(QString defaultFullAddress READ getDefaultFullAddress WRITE setDefaultFullAddress NOTIFY
+	               defaultFullAddressChanged)
 	Q_PROPERTY(QDateTime presenceTimestamp READ getPresenceTimestamp NOTIFY presenceTimestampChanged)
 	Q_PROPERTY(LinphoneEnums::ConsolidatedPresence consolidatedPresence READ getConsolidatedPresence NOTIFY
 	               consolidatedPresenceChanged)
@@ -115,6 +117,8 @@ public:
 
 	void setDefaultAddress(const QString &address);
 	QString getDefaultAddress() const;
+	void setDefaultFullAddress(const QString &address);
+	QString getDefaultFullAddress() const;
 
 	QList<QVariant> getAllAddresses() const;
 
@@ -170,6 +174,7 @@ signals:
 	void isStoredChanged();
 	void removed(FriendCore *contact);
 	void defaultAddressChanged();
+	void defaultFullAddressChanged();
 	void allAddressesChanged();
 	void devicesChanged();
 	void verifiedDevicesChanged();
@@ -191,7 +196,8 @@ protected:
 	QList<QVariant> mAddressList;
 	QList<QVariant> mDeviceList;
 	int mVerifiedDeviceCount;
-	QString mDefaultAddress;
+	QString mDefaultAddress; // Uri only
+	QString mDefaultFullAddress;
 	QString mPictureUri;
 	bool mIsSaved;
 	bool mIsStored;

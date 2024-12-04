@@ -112,6 +112,8 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 						    } else {
 							    contact->setGivenName(Utils::coreStringToAppString(address->getUsername()));
 						    }
+						    contact->setDefaultFullAddress(Utils::coreStringToAppString(
+						        address->asString())); // linphone Friend object remove specific address.
 						    contacts->append(contact);
 					    } else if (!it->getPhoneNumber().empty()) {
 						    linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
