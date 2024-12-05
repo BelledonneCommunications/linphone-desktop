@@ -35,6 +35,13 @@ QSharedPointer<AccountCore> AccountCore::create(const std::shared_ptr<linphone::
 	return model;
 }
 
+QVariantMap createDialPlanVariant(QString flag, QString text) {
+	QVariantMap m;
+	m["flag"] = flag;
+	m["text"] = text;
+	return m;
+}
+
 AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QObject(nullptr) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	// Should be call from model Thread
@@ -87,12 +94,14 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mAccountModel = Utils::makeQObject_ptr<AccountModel>(account); // OK
 	mAccountModel->setSelf(mAccountModel);
 	mNotificationsAllowed = mAccountModel->getNotificationsAllowed();
-	mDialPlan = " ";
+	mDialPlan = createDialPlanVariant("", " ");
 	mDialPlans << mDialPlan;
 	for (auto dialPlan : linphone::Factory::get()->getDialPlans()) {
-		mDialPlans << mAccountModel->dialPlanAsString(dialPlan);
+		mDialPlans << createDialPlanVariant(
+		    Utils::coreStringToAppString(dialPlan->getFlag()),
+		    Utils::coreStringToAppString(dialPlan->getCountry() + " | +" + dialPlan->getCountryCallingCode()));
 		if (dialPlan->getCountryCallingCode() == account->getParams()->getInternationalPrefix()) {
-			mDialPlan = mAccountModel->dialPlanAsString(dialPlan);
+			mDialPlan = mDialPlans.last().toMap();
 		}
 	}
 	mVoicemailAddress =
@@ -136,7 +145,7 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 		mAccountModelConnection->invokeToCore([this, displayName]() { onDisplayNameChanged(displayName); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::dialPlanChanged, [this](int index) {
-		auto dialPlan = mDialPlans[index + 1];
+		auto dialPlan = mDialPlans[index + 1].toMap();
 		mAccountModelConnection->invokeToCore([this, dialPlan]() { onDialPlanChanged(dialPlan); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::registerEnabledChanged, [this](bool enabled) {
@@ -215,7 +224,7 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetDisplayName, [this](QString displayName) {
 		mAccountModelConnection->invokeToModel([this, displayName]() { mAccountModel->setDisplayName(displayName); });
 	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetDialPlan, [this](QString dialPlan) {
+	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetDialPlan, [this](QVariantMap dialPlan) {
 		auto dialPlanIndex = getDialPlanIndex(dialPlan);
 		mAccountModelConnection->invokeToModel(
 		    [this, dialPlanIndex]() { mAccountModel->setDialPlan(dialPlanIndex - 1); });
@@ -367,22 +376,22 @@ void AccountCore::onDisplayNameChanged(QString displayName) {
 	}
 }
 
-QStringList AccountCore::getDialPlans() {
+QVariantList AccountCore::getDialPlans() {
 	return mDialPlans;
 }
 
-QString AccountCore::getDialPlan() const {
+QVariantMap AccountCore::getDialPlan() const {
 	return mDialPlan;
 }
 
-void AccountCore::onDialPlanChanged(QString dialPlan) {
+void AccountCore::onDialPlanChanged(QVariantMap dialPlan) {
 	if (dialPlan != mDialPlan) {
 		mDialPlan = dialPlan;
 		emit dialPlanChanged();
 	}
 }
 
-int AccountCore::getDialPlanIndex(QString dialPlanString) {
+int AccountCore::getDialPlanIndex(QVariantMap dialPlanString) {
 	return mDialPlans.indexOf(dialPlanString);
 }
 

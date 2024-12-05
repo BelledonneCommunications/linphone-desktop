@@ -42,8 +42,8 @@ class AccountCore : public QObject, public AbstractObject {
 	Q_PROPERTY(
 	    int unreadMessageNotifications READ getUnreadMessageNotifications NOTIFY unreadMessageNotificationsChanged)
 	Q_PROPERTY(QString displayName READ getDisplayName WRITE lSetDisplayName NOTIFY displayNameChanged)
-	Q_PROPERTY(QStringList dialPlans READ getDialPlans CONSTANT)
-	Q_PROPERTY(QString dialPlan READ getDialPlan WRITE lSetDialPlan NOTIFY dialPlanChanged)
+	Q_PROPERTY(QVariantList dialPlans READ getDialPlans CONSTANT)
+	Q_PROPERTY(QVariantMap dialPlan READ getDialPlan WRITE lSetDialPlan NOTIFY dialPlanChanged)
 	Q_PROPERTY(
 	    QString humaneReadableRegistrationState READ getHumanReadableRegistrationState NOTIFY registrationStateChanged)
 	Q_PROPERTY(QString humaneReadableRegistrationStateExplained READ getHumanReadableRegistrationStateExplained NOTIFY
@@ -104,10 +104,10 @@ public:
 	Q_INVOKABLE void removeAccount();
 	QString getDisplayName() const;
 	void onDisplayNameChanged(QString displayName);
-	QStringList getDialPlans();
-	int getDialPlanIndex(QString dialPlanString);
-	QString getDialPlan() const;
-	void onDialPlanChanged(QString internationalPrefix);
+	QVariantList getDialPlans();
+	int getDialPlanIndex(QVariantMap dialPlanString);
+	QVariantMap getDialPlan() const;
+	void onDialPlanChanged(QVariantMap internationalPrefix);
 	QString getHumanReadableRegistrationState() const;
 	QString getHumanReadableRegistrationStateExplained() const;
 	bool getRegisterEnabled() const;
@@ -177,7 +177,7 @@ signals:
 	void lResetMissedCalls();
 	void lRefreshNotifications();
 	void lSetDisplayName(QString displayName);
-	void lSetDialPlan(QString internationalPrefix);
+	void lSetDialPlan(QVariantMap internationalPrefix);
 	void lSetRegisterEnabled(bool enabled);
 	void lSetNotificationsAllowed(bool value);
 	void lSetMwiServerAddress(QString value);
@@ -198,8 +198,8 @@ private:
 	QString mIdentityAddress;
 	QString mPictureUri;
 	QString mDisplayName;
-	QStringList mDialPlans;
-	QString mDialPlan;
+	QVariantList mDialPlans;
+	QVariantMap mDialPlan;
 	bool mRegisterEnabled;
 	bool mIsDefaultAccount = false;
 	LinphoneEnums::RegistrationState mRegistrationState;

@@ -16,6 +16,7 @@ Control.ComboBox {
 	property int leftMargin: 10 * DefaultStyle.dp
 	property bool oneLine: false
 	property bool shadowEnabled: mainItem.activeFocus || mainItem.hovered
+	property string flagRole// Specific case if flag is shown (special font)
 
 	onConstantImageSourceChanged: if (constantImageSource)  selectedItemImg.source = constantImageSource
 	onCurrentIndexChanged: {
@@ -29,6 +30,7 @@ Control.ComboBox {
 									: item 
 										? item
 										: ""
+		if(mainItem.flagRole) selectedItemFlag.text = item[mainItem.flagRole]
 		selectedItemImg.source = constantImageSource 
 			? constantImageSource 
 			: item.img
@@ -67,37 +69,47 @@ Control.ComboBox {
 			shadowOpacity: mainItem.shadowEnabled ? 0.1 : 0.0
 		}
 	}
-	contentItem: Item {
+	contentItem: RowLayout {
 		anchors.fill: parent
 		anchors.leftMargin: 10 * DefaultStyle.dp
 		anchors.rightMargin: indicImage.width + 10 * DefaultStyle.dp
+		spacing: 5 * DefaultStyle.dp
 		Image {
 			id: selectedItemImg
+			Layout.preferredWidth: visible ? 24 * DefaultStyle.dp : 0
+			Layout.leftMargin: mainItem.leftMargin
 			source: mainItem.constantImageSource ? mainItem.constantImageSource : ""
 			visible: source != ""
 			sourceSize.width: 24 * DefaultStyle.dp
-			width: visible ? 24 * DefaultStyle.dp : 0
 			fillMode: Image.PreserveAspectFit
-			anchors.verticalCenter: parent.verticalCenter
-			anchors.left: parent.left
-			anchors.leftMargin: visible ? mainItem.leftMargin : 0
 		}
-
+		Text {
+			id: selectedItemFlag
+			Layout.preferredWidth: implicitWidth
+			Layout.leftMargin: selectedItemImg.visible ? 0 : 5 * DefaultStyle.dp
+			Layout.alignment: Qt.AlignCenter
+			color: mainItem.enabled ? DefaultStyle.main2_600 : DefaultStyle.grey_400
+			font {
+				family: DefaultStyle.flagFont
+				pixelSize: mainItem.pixelSize
+				weight: mainItem.weight
+			}
+		}
 		Text {
 			id: selectedItemText
+			Layout.fillWidth: true
+			Layout.leftMargin: selectedItemImg.visible ? 0 : 5 * DefaultStyle.dp
+			Layout.rightMargin: 20 * DefaultStyle.dp
+			Layout.alignment: Qt.AlignCenter
 			color: mainItem.enabled ? DefaultStyle.main2_600 : DefaultStyle.grey_400
 			elide: Text.ElideRight
 			maximumLineCount: oneLine ? 1 : 2
 			wrapMode: Text.WrapAnywhere
 			font {
+				family: DefaultStyle.defaultFont
 				pixelSize: mainItem.pixelSize
 				weight: mainItem.weight
 			}
-			anchors.left: selectedItemImg.right
-			anchors.leftMargin: selectedItemImg.visible ? 5 * DefaultStyle.dp : 10 * DefaultStyle.dp
-			anchors.right: parent.right
-			anchors.rightMargin: 20 * DefaultStyle.dp
-			anchors.verticalCenter: parent.verticalCenter
 		}
 	}
 
@@ -117,7 +129,7 @@ Control.ComboBox {
 		id: popup
 		y: mainItem.height - 1
 		width: mainItem.width
-		implicitHeight: contentItem.implicitHeight
+		implicitHeight: Math.min(contentItem.implicitHeight, mainWindow.height)
 		padding: 1 * DefaultStyle.dp
 		//height: Math.min(implicitHeight, 300)
 
@@ -129,7 +141,7 @@ Control.ComboBox {
 			id: listView
 			clip: true
 			implicitHeight: contentHeight
-			height: contentHeight
+			height: popup.height
 			model: visible? mainItem.model : []
 			currentIndex: mainItem.highlightedIndex >= 0 ? mainItem.highlightedIndex : 0
 			highlightFollowsCurrentItem: true
@@ -155,43 +167,59 @@ Control.ComboBox {
 				height: mainItem.height
 				// anchors.left: listView.left
 				// anchors.right: listView.right
-
-				Image {
-					id: delegateImg
-					visible: source != ""
-					width: visible ? 20 * DefaultStyle.dp : 0
-					sourceSize.width: 20 * DefaultStyle.dp
-					source: typeof(modelData) != "undefined" && modelData.img ? modelData.img : ""
-					fillMode: Image.PreserveAspectFit
-					anchors.left: parent.left
-					anchors.leftMargin: visible ? 10 * DefaultStyle.dp : 0
-					anchors.verticalCenter: parent.verticalCenter
-				}
-
-				Text {
-					text: typeof(modelData) != "undefined"
-							? mainItem.textRole
-								? modelData[mainItem.textRole]
-								: modelData.text
-									? modelData.text
-									: modelData
-							: $modelData
-								? mainItem.textRole
-									? $modelData[mainItem.textRole]
-									: $modelData
-								: ""
-					elide: Text.ElideRight
-					maximumLineCount: 1
-					wrapMode: Text.WrapAnywhere
-					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 400 * DefaultStyle.dp
+				RowLayout{
+					anchors.fill: parent
+					Image {
+						id: delegateImg
+						Layout.preferredWidth: visible ? 20 * DefaultStyle.dp : 0
+						Layout.leftMargin: 10 * DefaultStyle.dp
+						visible: source != ""
+						sourceSize.width: 20 * DefaultStyle.dp
+						source: typeof(modelData) != "undefined" && modelData.img ? modelData.img : ""
+						fillMode: Image.PreserveAspectFit
 					}
-					anchors.verticalCenter: parent.verticalCenter
-					anchors.left: delegateImg.right
-					anchors.leftMargin: delegateImg.visible ? 5 * DefaultStyle.dp : 10 * DefaultStyle.dp
-					anchors.right: parent.right
-					anchors.rightMargin: 20 * DefaultStyle.dp
+					
+					Text {
+						Layout.preferredWidth: implicitWidth
+						Layout.leftMargin: delegateImg.visible ? 0 : 5 * DefaultStyle.dp
+						Layout.alignment: Qt.AlignCenter
+						visible: mainItem.flagRole
+						font {
+							family: DefaultStyle.flagFont
+							pixelSize: mainItem.pixelSize
+							weight: mainItem.weight
+						}
+						text: mainItem.flagRole
+								? typeof(modelData) != "undefined"
+									? modelData[mainItem.flagRole]
+									: $modelData[mainItem.flagRole]
+								: ""
+					}
+					Text {
+						Layout.fillWidth: true
+						Layout.leftMargin: delegateImg.visible ? 0 : 5 * DefaultStyle.dp
+						Layout.rightMargin: 20 * DefaultStyle.dp
+						Layout.alignment: Qt.AlignCenter
+						text: typeof(modelData) != "undefined"
+								? mainItem.textRole
+									? modelData[mainItem.textRole]
+									: modelData.text
+										? modelData.text
+										: modelData
+								: $modelData
+									? mainItem.textRole
+										? $modelData[mainItem.textRole]
+										: $modelData
+									: ""
+						elide: Text.ElideRight
+						maximumLineCount: 1
+						wrapMode: Text.WrapAnywhere
+						font {
+							family: DefaultStyle.defaultFont
+							pixelSize: 14 * DefaultStyle.dp
+							weight: 400 * DefaultStyle.dp
+						}
+					}
 				}
 
 				MouseArea {

@@ -51,7 +51,7 @@ ColumnLayout {
 				visible: text.length > 0
 				font.pixelSize: 21 * DefaultStyle.dp
 				text: parent.currentItem ? parent.currentItem.flag : ""
-				font.family: DefaultStyle.emojiFont
+				font.family: DefaultStyle.flagFont
 				anchors.rightMargin: 5 * DefaultStyle.dp
 				anchors.verticalCenter: parent.verticalCenter
 			}
@@ -122,17 +122,20 @@ ColumnLayout {
 
 				delegate: Item {
 					width: listView.width
-					height: combobox.height
+					height: contentLayout.implicitHeight
 					RowLayout {
+						id: contentLayout
 						anchors.fill: parent
 						anchors.leftMargin: 20 * DefaultStyle.dp
+						spacing: 0
+						
 						Text {
 							id: delegateImg
 							visible: text.length > 0
 							text: $modelData.flag
 							font {
 								pixelSize: 28 * DefaultStyle.dp
-								family: DefaultStyle.emojiFont
+								family: DefaultStyle.flagFont
 							}
 						}
 

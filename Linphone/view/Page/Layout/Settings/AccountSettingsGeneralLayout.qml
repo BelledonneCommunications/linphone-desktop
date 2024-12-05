@@ -151,6 +151,8 @@ AbstractSettingsLayout {
 				entries: account.core.dialPlans
 				propertyName: "dialPlan"
 				propertyOwner: account.core
+				textRole: 'text'
+				flagRole: 'flag'
 			}
 			SwitchSetting {
 				titleText: account?.core.humaneReadableRegistrationState
