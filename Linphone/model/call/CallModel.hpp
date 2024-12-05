@@ -85,9 +85,7 @@ public:
 	int getScreenSharingIndex() const;
 	void setVideoSourceDescriptorModel(std::shared_ptr<VideoSourceDescriptorModel> model = nullptr);
 
-	static void activateLocalVideo(std::shared_ptr<linphone::CallParams> &params,
-	                               const std::shared_ptr<const linphone::CallParams> &currentParams,
-	                               bool enable);
+	static void activateLocalVideo(std::shared_ptr<linphone::CallParams> &params, bool enable);
 
 	void sendDtmf(const QString &dtmf);
 
