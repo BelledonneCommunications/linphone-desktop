@@ -168,6 +168,14 @@ public:
 		return (volume - VuMin) / (VuMax - VuMin);
 	}
 
+	// Variant creators:
+
+	static QVariantMap createDeviceVariant(const QString &id, const QString &name);
+	static QVariantMap createDialPlanVariant(QString flag, QString text);
+	static QVariantMap createFriendAddressVariant(const QString &label, const QString &address);
+	static QVariantMap
+	createFriendDeviceVariant(const QString &name, const QString &address, LinphoneEnums::SecurityLevel level);
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 };

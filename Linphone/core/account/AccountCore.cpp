@@ -35,13 +35,6 @@ QSharedPointer<AccountCore> AccountCore::create(const std::shared_ptr<linphone::
 	return model;
 }
 
-QVariantMap createDialPlanVariant(QString flag, QString text) {
-	QVariantMap m;
-	m["flag"] = flag;
-	m["text"] = text;
-	return m;
-}
-
 AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QObject(nullptr) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	// Should be call from model Thread
@@ -94,10 +87,10 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mAccountModel = Utils::makeQObject_ptr<AccountModel>(account); // OK
 	mAccountModel->setSelf(mAccountModel);
 	mNotificationsAllowed = mAccountModel->getNotificationsAllowed();
-	mDialPlan = createDialPlanVariant("", " ");
+	mDialPlan = Utils::createDialPlanVariant("", " ");
 	mDialPlans << mDialPlan;
 	for (auto dialPlan : linphone::Factory::get()->getDialPlans()) {
-		mDialPlans << createDialPlanVariant(
+		mDialPlans << Utils::createDialPlanVariant(
 		    Utils::coreStringToAppString(dialPlan->getFlag()),
 		    Utils::coreStringToAppString(dialPlan->getCountry() + " | +" + dialPlan->getCountryCallingCode()));
 		if (dialPlan->getCountryCallingCode() == account->getParams()->getInternationalPrefix()) {

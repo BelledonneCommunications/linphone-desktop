@@ -1398,3 +1398,35 @@ void Utils::checkDownloadedCodecsUpdates() {
 		if (codec->shouldDownloadUpdate()) codec->downloadAndExtract(true);
 	}
 }
+
+// VARIANT CREATORS
+
+QVariantMap Utils::createDeviceVariant(const QString &id, const QString &name) {
+	QVariantMap map;
+	map.insert("id", id);
+	map.insert("name", name);
+	return map;
+}
+
+QVariantMap Utils::createDialPlanVariant(QString flag, QString text) {
+	QVariantMap m;
+	m["flag"] = flag;
+	m["text"] = text;
+	return m;
+}
+
+QVariantMap Utils::createFriendAddressVariant(const QString &label, const QString &address) {
+	QVariantMap map;
+	map.insert("label", label);
+	map.insert("address", address);
+	return map;
+}
+
+QVariantMap
+Utils::createFriendDeviceVariant(const QString &name, const QString &address, LinphoneEnums::SecurityLevel level) {
+	QVariantMap map;
+	map.insert("name", name);
+	map.insert("address", address);
+	map.insert("securityLevel", QVariant::fromValue(level));
+	return map;
+}

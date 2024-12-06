@@ -29,21 +29,6 @@ DEFINE_ABSTRACT_OBJECT(FriendCore)
 const QString _addressLabel = FriendCore::tr("Adresse SIP");
 const QString _phoneLabel = FriendCore::tr("Téléphone");
 
-QVariant createFriendAddressVariant(const QString &label, const QString &address) {
-	QVariantMap map;
-	map.insert("label", label);
-	map.insert("address", address);
-	return map;
-}
-
-QVariant createFriendDevice(const QString &name, const QString &address, LinphoneEnums::SecurityLevel level) {
-	QVariantMap map;
-	map.insert("name", name);
-	map.insert("address", address);
-	map.insert("securityLevel", QVariant::fromValue(level));
-	return map;
-}
-
 QSharedPointer<FriendCore> FriendCore::create(const std::shared_ptr<linphone::Friend> &contact, bool isStored) {
 	auto sharedPointer = QSharedPointer<FriendCore>(new FriendCore(contact, isStored), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
@@ -73,8 +58,8 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 
 		auto addresses = contact->getAddresses();
 		for (auto &address : addresses) {
-			mAddressList.append(
-			    createFriendAddressVariant(_addressLabel, Utils::coreStringToAppString(address->asStringUriOnly())));
+			mAddressList.append(Utils::createFriendAddressVariant(
+			    _addressLabel, Utils::coreStringToAppString(address->asStringUriOnly())));
 		}
 		mDefaultAddress = defaultAddress ? Utils::coreStringToAppString(defaultAddress->asStringUriOnly()) : QString();
 		mDefaultFullAddress = defaultAddress ? Utils::coreStringToAppString(defaultAddress->asString()) : QString();
@@ -82,16 +67,17 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		auto phoneNumbers = contact->getPhoneNumbersWithLabel();
 		for (auto &phoneNumber : phoneNumbers) {
 			mPhoneNumberList.append(
-			    createFriendAddressVariant(Utils::coreStringToAppString(phoneNumber->getLabel()),
-			                               Utils::coreStringToAppString(phoneNumber->getPhoneNumber())));
+			    Utils::createFriendAddressVariant(Utils::coreStringToAppString(phoneNumber->getLabel()),
+			                                      Utils::coreStringToAppString(phoneNumber->getPhoneNumber())));
 		}
 
 		auto devices = contact->getDevices();
 		for (auto &device : devices) {
-			mDeviceList.append(createFriendDevice(Utils::coreStringToAppString(device->getDisplayName()),
-			                                      // do not use uri only as we want the unique device
-			                                      Utils::coreStringToAppString(device->getAddress()->asString()),
-			                                      LinphoneEnums::fromLinphone(device->getSecurityLevel())));
+			mDeviceList.append(
+			    Utils::createFriendDeviceVariant(Utils::coreStringToAppString(device->getDisplayName()),
+			                                     // do not use uri only as we want the unique device
+			                                     Utils::coreStringToAppString(device->getAddress()->asString()),
+			                                     LinphoneEnums::fromLinphone(device->getSecurityLevel())));
 		}
 		updateVerifiedDevicesCount();
 
@@ -145,11 +131,11 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 				    auto devices = mFriendModel->getDevices();
 				    QVariantList devicesList;
 				    for (auto &device : devices) {
-					    devicesList.append(
-					        createFriendDevice(Utils::coreStringToAppString(device->getDisplayName()),
-					                           // do not use uri only as we want the unique device
-					                           Utils::coreStringToAppString(device->getAddress()->asString()),
-					                           LinphoneEnums::fromLinphone(device->getSecurityLevel())));
+					    devicesList.append(Utils::createFriendDeviceVariant(
+					        Utils::coreStringToAppString(device->getDisplayName()),
+					        // do not use uri only as we want the unique device
+					        Utils::coreStringToAppString(device->getAddress()->asString()),
+					        LinphoneEnums::fromLinphone(device->getSecurityLevel())));
 				    }
 				    mFriendModelConnection->invokeToCore(
 				        [this, consolidatedPresence, presenceTimestamp, devicesList]() {
@@ -185,8 +171,8 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 				auto numbers = mFriendModel->getAddresses();
 				QList<QVariant> addr;
 				for (auto &num : numbers) {
-					addr.append(createFriendAddressVariant(_addressLabel,
-					                                       Utils::coreStringToAppString(num->asStringUriOnly())));
+					addr.append(Utils::createFriendAddressVariant(
+					    _addressLabel, Utils::coreStringToAppString(num->asStringUriOnly())));
 				}
 				mFriendModelConnection->invokeToCore([this, addr]() { resetPhoneNumbers(addr); });
 			});
@@ -194,8 +180,8 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 				auto numbers = mFriendModel->getPhoneNumbers();
 				QList<QVariant> addr;
 				for (auto &num : numbers) {
-					addr.append(
-					    createFriendAddressVariant(_phoneLabel, Utils::coreStringToAppString(num->getPhoneNumber())));
+					addr.append(Utils::createFriendAddressVariant(_phoneLabel,
+					                                              Utils::coreStringToAppString(num->getPhoneNumber())));
 				}
 				mFriendModelConnection->invokeToCore([this, addr]() { resetPhoneNumbers(addr); });
 			});
@@ -219,11 +205,11 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 				    auto devices = mFriendModel->getDevices();
 				    QVariantList devicesList;
 				    for (auto &device : devices) {
-					    devicesList.append(
-					        createFriendDevice(Utils::coreStringToAppString(device->getDisplayName()),
-					                           // do not use uri only as we want the unique device
-					                           Utils::coreStringToAppString(device->getAddress()->asString()),
-					                           LinphoneEnums::fromLinphone(device->getSecurityLevel())));
+					    devicesList.append(Utils::createFriendDeviceVariant(
+					        Utils::coreStringToAppString(device->getDisplayName()),
+					        // do not use uri only as we want the unique device
+					        Utils::coreStringToAppString(device->getAddress()->asString()),
+					        LinphoneEnums::fromLinphone(device->getSecurityLevel())));
 				    }
 				    mCoreModelConnection->invokeToCore([this, devicesList]() {
 					    setDevices(devicesList);
@@ -339,7 +325,8 @@ void FriendCore::setPhoneNumberAt(int index, const QString &label, const QString
 	auto map = mPhoneNumberList[index].toMap();
 	auto oldLabel = map["label"].toString();
 	if (/*oldLabel != label || */ map["address"] != phoneNumber) {
-		mPhoneNumberList.replace(index, createFriendAddressVariant(label.isEmpty() ? oldLabel : label, phoneNumber));
+		mPhoneNumberList.replace(index,
+		                         Utils::createFriendAddressVariant(label.isEmpty() ? oldLabel : label, phoneNumber));
 		emit phoneNumberChanged();
 		setIsSaved(false);
 	}
@@ -351,7 +338,7 @@ void FriendCore::removePhoneNumber(int index) {
 }
 
 void FriendCore::appendPhoneNumber(const QString &label, const QString &number) {
-	mPhoneNumberList.append(createFriendAddressVariant(label, number));
+	mPhoneNumberList.append(Utils::createFriendAddressVariant(label, number));
 	emit phoneNumberChanged();
 }
 
@@ -381,14 +368,14 @@ void FriendCore::setAddressAt(int index, QString label, QString address) {
 			QString interpretedAddr = Utils::coreStringToAppString(linphoneAddr->asStringUriOnly());
 			if (interpretedAddr != currentAddress) {
 				mCoreModelConnection->invokeToCore([this, index, label, interpretedAddr]() {
-					mAddressList.replace(index, createFriendAddressVariant(label, interpretedAddr));
+					mAddressList.replace(index, Utils::createFriendAddressVariant(label, interpretedAddr));
 					emit addressChanged();
 					setIsSaved(false);
 				});
 			}
 		});
 	} else if (address != currentAddress) {
-		mAddressList.replace(index, createFriendAddressVariant(label, address));
+		mAddressList.replace(index, Utils::createFriendAddressVariant(label, address));
 		emit addressChanged();
 		setIsSaved(false);
 	}
@@ -410,7 +397,7 @@ void FriendCore::appendAddress(const QString &addr) {
 		mCoreModelConnection->invokeToCore([this, interpretedAddress]() {
 			if (interpretedAddress.isEmpty()) Utils::showInformationPopup(tr("Erreur"), tr("Adresse invalide"), false);
 			else {
-				mAddressList.append(createFriendAddressVariant(_addressLabel, interpretedAddress));
+				mAddressList.append(Utils::createFriendAddressVariant(_addressLabel, interpretedAddress));
 				if (mDefaultFullAddress.isEmpty()) mDefaultFullAddress = interpretedAddress;
 				emit addressChanged();
 			}
@@ -588,14 +575,14 @@ void FriendCore::writeFromModel(const std::shared_ptr<FriendModel> &model) {
 	QList<QVariant> addresses;
 	for (auto &addr : model->getAddresses()) {
 		addresses.append(
-		    createFriendAddressVariant(_addressLabel, Utils::coreStringToAppString(addr->asStringUriOnly())));
+		    Utils::createFriendAddressVariant(_addressLabel, Utils::coreStringToAppString(addr->asStringUriOnly())));
 	}
 	mAddressList = addresses;
 
 	QList<QVariant> phones;
 	for (auto &number : model->getPhoneNumbers()) {
-		phones.append(createFriendAddressVariant(Utils::coreStringToAppString(number->getLabel()),
-		                                         Utils::coreStringToAppString(number->getPhoneNumber())));
+		phones.append(Utils::createFriendAddressVariant(Utils::coreStringToAppString(number->getLabel()),
+		                                                Utils::coreStringToAppString(number->getPhoneNumber())));
 	}
 	mPhoneNumberList = phones;
 	mGivenName = model->getGivenName();

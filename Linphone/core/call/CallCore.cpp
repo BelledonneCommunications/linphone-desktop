@@ -90,13 +90,6 @@ bool VideoStats::operator!=(VideoStats s) {
 
 /***********************************************************************/
 
-QVariant createDeviceVariant(const QString &id, const QString &name) {
-	QVariantMap map;
-	map.insert("id", id);
-	map.insert("name", name);
-	return map;
-}
-
 QSharedPointer<CallCore> CallCore::create(const std::shared_ptr<linphone::Call> &call) {
 	auto sharedPointer = QSharedPointer<CallCore>(new CallCore(call), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
