@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
+import QtQuick.Controls.Basic
 
 import Linphone
 import QtQml
@@ -8,25 +9,95 @@ import UtilsCpp
 
 ListView {
 	id: mainItem
-	visible: count > 0
-	clip: true
-
 	property string searchBarText
 	property bool hoverEnabled: true	
 	property var delegateButtons
-	property ConferenceInfoGui selectedConference: model && currentIndex != -1 ? model.getAt(currentIndex) : null
+	property ConferenceInfoGui selectedConference
+	property bool _moveToIndex: false
+
+	visible: count > 0
+	clip: true
+	cacheBuffer: height/2
 	
 	spacing: 8 * DefaultStyle.dp
-	highlightFollowsCurrentItem: true
-	highlightMoveVelocity: 1500
-
-	onCountChanged: {
-		selectedConference = model && currentIndex != -1 && currentIndex < model.count ? model.getAt(currentIndex) : null
+	highlightFollowsCurrentItem: false
+	
+	function selectIndex(index){
+		mainItem.currentIndex = index
 	}
-	onCurrentIndexChanged: {
-		selectedConference = model.getAt(currentIndex) || null
+		
+	function resetSelections(){
+		mainItem.selectedConference = null
+		mainItem.currentIndex = -1
+	}
+	// Issues Notes:
+	// positionViewAtIndex: 
+	//	- if currentItem was in cache, it will not go to it (ex: contentY=63, currentItem.y=3143)
+	//	- Animation don't work
+	function moveToCurrentItem(){
+		var centerItemPos = 0
+		if( currentItem){
+			centerItemPos = currentItem.y + currentItem.height/2
+		}
+		var centerPos = centerItemPos - height/2
+		moveBehaviorTimer.startAnimation()
+		mainItem.contentY = Math.max(0, Math.min(centerPos, contentHeight-height))
+	}
+	onCurrentItemChanged: {
+		moveToCurrentItem()
+		if(currentItem) {
+			mainItem.selectedConference = currentItem.itemGui
+			currentItem.forceActiveFocus()
+		}
+	}
+	// When cache is updating, contentHeight changes. Update position if we are moving the view.
+	onContentHeightChanged:{
+		if(moveBehavior.enabled){
+			moveToCurrentItem()
+		}
 	}
 	onAtYEndChanged: if(atYEnd) confInfoProxy.displayMore()
+	
+	Timer{
+		id: moveBehaviorTimer
+		interval: 501
+		onTriggered: moveBehavior.enabled = false
+		function startAnimation(){
+			moveBehavior.enabled = true
+			moveBehaviorTimer.restart()
+		}
+	}
+	
+	Behavior on contentY{
+		id: moveBehavior
+		enabled: false
+		NumberAnimation {
+			duration: 500
+			easing.type: Easing.OutExpo
+			onFinished: {// Not call if on Behavior. Callback just in case.
+				moveBehavior.enabled = false
+			}
+		}
+	}
+	Keys.onPressed: (event)=> {
+		if(event.key == Qt.Key_Up) {
+			if(currentIndex > 0 ) {
+				selectIndex(mainItem.currentIndex-1)
+				event.accepted = true
+			} else {
+				selectIndex(model.count - 1)
+				event.accepted = true
+			}
+		}else if(event.key == Qt.Key_Down){
+			if(currentIndex < model.count - 1) {
+				selectIndex(currentIndex+1)
+				event.accepted = true
+			} else {
+				selectIndex(0)
+				event.accepted = true
+			}
+		}
+	}
 	
 	model: ConferenceInfoProxy {
 		id: confInfoProxy
@@ -34,10 +105,25 @@ ListView {
 		filterType: ConferenceInfoProxy.None
 		initialDisplayItems: mainItem.height / (63 * DefaultStyle.dp) + 5
 		displayItemsStep: initialDisplayItems/2
-		onConferenceInfoCreated: (index) => {
-			mainItem.currentIndex = index
+		function selectData(confInfoGui){
+			mainItem.currentIndex = loadUntil(confInfoGui)
 		}
-		onCurrentDateIndexChanged: (index) => mainItem.currentIndex = index
+		onConferenceInfoCreated: (confInfoGui) => {
+			selectData(confInfoGui)
+		}
+		onInitialized: {
+			// Move to currentDate
+			selectData(null)
+		}
+	}
+	
+	ScrollBar.vertical: ScrollBar {
+		id: scrollbar
+		rightPadding: 8 * DefaultStyle.dp
+		
+		active: true
+		interactive: true
+		policy: mainItem.contentHeight > mainItem.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
 	}
 
 	section {
@@ -56,30 +142,31 @@ ListView {
 		}
 		property: '$sectionMonth'
 	}
-
+	
 	delegate: FocusScope {
 		id: itemDelegate
-		height: 63 * DefaultStyle.dp
+		height: 63 * DefaultStyle.dp + (!isFirst && dateDay.visible ? topOffset : 0)
 		width: mainItem.width
 		enabled: !isCanceled && haveModel
-		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
-		property var dateTime: !!$modelData && $modelData.core.haveModel ? $modelData.core.dateTime : UtilsCpp.getCurrentDateTime()
+		
+		property var itemGui: $modelData
+		// Do not use itemAtIndex because of caching items. Using getAt ensure to have a GUI
+		property var previousConfInfoGui : mainItem.model.getAt(index-1)
+		property var dateTime: itemGui.core ? itemGui.core.dateTimeUtc : UtilsCpp.getCurrentDateTime()
 		property string day : UtilsCpp.toDateDayNameString(dateTime)
 		property string dateString:  UtilsCpp.toDateString(dateTime)
-		property string previousDateString: previousItem ? UtilsCpp.toDateString(previousItem.core ? previousItem.core.dateTimeUtc : UtilsCpp.getCurrentDateTimeUtc()) : ''
+		property string previousDateString: previousConfInfoGui ? UtilsCpp.toDateString(previousConfInfoGui.core ? previousConfInfoGui.core.dateTimeUtc : UtilsCpp.getCurrentDateTimeUtc()) : ''
 		property bool isFirst : ListView.previousSection !== ListView.section
 		property int topOffset: (dateDay.visible && !isFirst? 8 * DefaultStyle.dp : 0)
-		property var endDateTime: $modelData ? $modelData.core.endDateTime : UtilsCpp.getCurrentDateTime()
-		property var haveModel: !!$modelData && $modelData != undefined && $modelData.core.haveModel || false
-		property bool isCanceled: $modelData?.core.state === LinphoneEnums.ConferenceInfoState.Cancelled || false
-		Component.onCompleted: if (!isFirst && dateDay.visible) {
-			height = (63+topOffset)*DefaultStyle.dp
-			delegateIn.anchors.topMargin = topOffset
-		}
+		property var endDateTime: itemGui.core ? itemGui.core.endDateTime : UtilsCpp.getCurrentDateTime()
+		property bool haveModel: itemGui.core ? itemGui.core.haveModel : false
+		property bool isCanceled: itemGui.core ? itemGui.core.state === LinphoneEnums.ConferenceInfoState.Cancelled : false
+		property bool isSelected: itemGui.core == mainItem.selectedConference?.core
 		
 		RowLayout{
 			id: delegateIn
 			anchors.fill: parent
+			anchors.topMargin: !itemDelegate.isFirst && dateDay.visible ? itemDelegate.topOffset : 0
 			spacing: 0
 			Item{
 				Layout.preferredWidth: 32 * DefaultStyle.dp
@@ -141,7 +228,7 @@ ListView {
 					anchors.rightMargin: 5	// margin to avoid clipping shadows at right
 					radius: 10 * DefaultStyle.dp
 					visible: itemDelegate.haveModel || itemDelegate.activeFocus
-					color: mainItem.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.grey_0
+					color: itemDelegate.isSelected ? DefaultStyle.main2_200 : DefaultStyle.grey_0 // mainItem.currentIndex === index
 					ColumnLayout {
 						anchors.fill: parent
 						anchors.left: parent.left
@@ -156,7 +243,7 @@ ListView {
 								Layout.preferredHeight: 24 * DefaultStyle.dp
 							}
 							Text {
-								text: $modelData? $modelData.core.subject : ""
+								text: itemGui.core? itemGui.core.subject : ""
 								Layout.fillWidth: true
 								maximumLineCount: 1
 								font {
@@ -203,8 +290,7 @@ ListView {
 					cursorShape: Qt.PointingHandCursor
 					visible: itemDelegate.haveModel
 					onClicked: {
-						mainItem.currentIndex = index
-						itemDelegate.forceActiveFocus()
+						mainItem.selectIndex(index)
 					}
 				}
 			}

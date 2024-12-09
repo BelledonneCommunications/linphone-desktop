@@ -100,6 +100,41 @@ Flickable{
 		contactsList.currentIndex = -1
 		suggestionsList.currentIndex = -1
 	}
+
+	function findNextList(item, count, direction){
+		if(count == 3) return null
+		var nextItem
+		switch(item){
+		case suggestionsList:nextItem=(direction > 0 ? favoritesList : contactsList);break;
+		case contactsList:nextItem=(direction > 0 ? suggestionsList : favoritesList);break;
+		case favoritesList:nextItem=(direction > 0 ? contactsList : suggestionsList);break;
+		default: return null
+		}
+		if( nextItem.model.count > 0) return nextItem
+		else return findNextList(nextItem, count+1, direction)
+	}
+
+	function updatePosition(list){
+		var item = list.itemAtIndex(list.currentIndex)
+		var centerItemPos = 0
+		if( item && list.expanded){
+			// For debugging just in case
+			//var listPosition = item.mapToItem(favoriteList, item.x, item.y)
+			//var newPosition = favoriteList.mapToItem(mainItem, listPosition.x, listPosition.y)
+			//console.log("item pos: " +item.x + " / " +item.y)
+			//console.log("fav pos: " +favoriteList.x + " / " +favoriteList.y)
+			//console.log("fav content: " +favoriteList.contentX + " / " +favoriteList.contentY)
+			//console.log("main pos: " +mainItem.x + " / " +mainItem.y)
+			//console.log("main content: " +mainItem.contentX + " / " +mainItem.contentY)
+			//console.log("list pos: " +listPosition.x + " / " +listPosition.y)
+			//console.log("new pos: " +newPosition.x + " / " +newPosition.y)
+			//console.log("header pos: " +headerItem.x + " / " +headerItem.y)
+			//console.log("Moving to " + (headerItem.y+item.y))
+			centerItemPos = item.y + list.y + list.headerHeight +item.height/2
+		}
+		var centerPos = centerItemPos - height/2
+		mainItem.contentY = Math.max(0, Math.min(centerPos, height, contentHeight-height))
+	}
 	
 	onHighlightedContactChanged:{
 		favoritesList.highlightedContact = highlightedContact
@@ -125,39 +160,6 @@ Flickable{
 	onAtYEndChanged: if(atYEnd) {
 		if( (contactsProxy.haveMore && contactList.expanded ) || mainItem.hideSuggestions) contactsProxy.displayMore()
 		else suggestionsProxy.displayMore()
-	}
-	function findNextList(item, count, direction){
-		if(count == 3) return null
-		var nextItem
-		switch(item){
-		case suggestionsList:nextItem=(direction > 0 ? favoritesList : contactsList);break;
-		case contactsList:nextItem=(direction > 0 ? suggestionsList : favoritesList);break;
-		case favoritesList:nextItem=(direction > 0 ? contactsList : suggestionsList);break;
-		default: return null
-		}
-		if( nextItem.model.count > 0) return nextItem
-		else return findNextList(nextItem, count+1, direction)
-	}
-	function updatePosition(list){
-		var item = list.itemAtIndex(list.currentIndex)
-		var centerItemPos = 0
-		if( item && list.expanded){
-			// For debugging just in case
-			//var listPosition = item.mapToItem(favoriteList, item.x, item.y)
-			//var newPosition = favoriteList.mapToItem(mainItem, listPosition.x, listPosition.y)
-			//console.log("item pos: " +item.x + " / " +item.y)
-			//console.log("fav pos: " +favoriteList.x + " / " +favoriteList.y)
-			//console.log("fav content: " +favoriteList.contentX + " / " +favoriteList.contentY)
-			//console.log("main pos: " +mainItem.x + " / " +mainItem.y)
-			//console.log("main content: " +mainItem.contentX + " / " +mainItem.contentY)
-			//console.log("list pos: " +listPosition.x + " / " +listPosition.y)
-			//console.log("new pos: " +newPosition.x + " / " +newPosition.y)
-			//console.log("header pos: " +headerItem.x + " / " +headerItem.y)
-			//console.log("Moving to " + (headerItem.y+item.y))
-			centerItemPos = item.y + list.y + list.headerHeight +item.height/2
-		}
-		var centerPos = centerItemPos - height/2
-		mainItem.contentY = Math.max(0, Math.min(centerPos, height, contentHeight-height))
 	}
 	Behavior on contentY{
 		NumberAnimation {

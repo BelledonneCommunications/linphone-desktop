@@ -39,13 +39,17 @@ public:
 	~ConferenceInfoList();
 
 	void setSelf(QSharedPointer<ConferenceInfoList> me);
+	void resetData(QList<QSharedPointer<ConferenceInfoCore>> data);
+
+	void addConference(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
+	void updateCurrentAccount();
 
 	bool haveCurrentDate() const;
 	void setHaveCurrentDate(bool have);
-
 	void updateHaveCurrentDate();
 
 	int getCurrentDateIndex();
+	QSharedPointer<ConferenceInfoCore> getCurrentDateConfInfo();
 
 	QSharedPointer<ConferenceInfoCore> build(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo);
 	void connectItem(QSharedPointer<ConferenceInfoCore> confInfoCore);
@@ -60,7 +64,7 @@ signals:
 	void addCurrentDateChanged();
 	void haveCurrentDateChanged();
 	void currentDateIndexChanged(int index);
-	void confInfoInserted(int index, ConferenceInfoGui *data);
+	void confInfoInserted(QSharedPointer<ConferenceInfoCore> data);
 
 private:
 	QSharedPointer<SafeConnection<ConferenceInfoList, CoreModel>> mCoreModelConnection;

@@ -29,6 +29,7 @@ ConferenceInfoGui::ConferenceInfoGui() {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
 }
+
 ConferenceInfoGui::ConferenceInfoGui(QSharedPointer<ConferenceInfoCore> core) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;

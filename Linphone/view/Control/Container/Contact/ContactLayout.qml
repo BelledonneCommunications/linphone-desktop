@@ -26,7 +26,6 @@ ColumnLayout {
 		Layout.fillWidth: true
 		columns: mainItem.useVerticalLayout ? 1 : children.length
 		rows: 1
-		onColumnsChanged: console.log("columns changed", columns, rows)
 		columnSpacing: 49 * DefaultStyle.dp
 		rowSpacing: 27 * DefaultStyle.dp
 

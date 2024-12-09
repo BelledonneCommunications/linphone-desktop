@@ -31,7 +31,6 @@ AbstractMainPage {
 			if (rightPanelStackView.currentItem && rightPanelStackView.currentItem.objectName === "contactDetail") rightPanelStackView.clear()
 		}
 	}
-	signal forceListsUpdate()
 
 	onNoItemButtonPressed: createContact("", "")
 

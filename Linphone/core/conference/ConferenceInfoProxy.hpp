@@ -25,12 +25,13 @@
 #include "tool/AbstractObject.hpp"
 
 class ConferenceInfoList;
+class ConferenceInfoGui;
+class ConferenceInfoCore;
 
 class ConferenceInfoProxy : public LimitProxy, public AbstractObject {
 
 	Q_OBJECT
 	Q_PROPERTY(bool haveCurrentDate READ haveCurrentDate NOTIFY haveCurrentDateChanged)
-	// Q_PROPERTY(int currentDateIndex READ getCurrentDateIndex NOTIFY currentDateIndexChanged)
 
 public:
 	enum ConferenceInfoFiltering { None = 0, Future = 1 };
@@ -43,17 +44,18 @@ public:
 
 	bool haveCurrentDate() const;
 
-	Q_INVOKABLE int getCurrentDateIndex() const;
-	Q_INVOKABLE void setCurrentDateIndex(int index);
-
+	Q_INVOKABLE void clear();
+	Q_INVOKABLE int loadUntil(ConferenceInfoGui *confInfo);
+	int loadUntil(QSharedPointer<ConferenceInfoCore> data);
 signals:
+	void initialized();
 	void haveCurrentDateChanged();
-	void conferenceInfoCreated(int index);
-	void currentDateIndexChanged(int index);
+	void conferenceInfoCreated(ConferenceInfoGui *confInfo);
 
 private:
 	QSharedPointer<ConferenceInfoList> mList;
-	int mCurrentDateIndex = -1;
+	ConferenceInfoCore *mCurrentConfInfo = nullptr;
+	// int mCurrentDateIndex = -1;
 
 	DECLARE_ABSTRACT_OBJECT
 };

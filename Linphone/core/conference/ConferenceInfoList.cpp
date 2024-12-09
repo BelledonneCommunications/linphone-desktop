@@ -86,8 +86,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 				for (auto &item : *items) {
 					connectItem(item);
 				}
-				resetData<ConferenceInfoCore>(*items);
-				updateHaveCurrentDate();
+				resetData(*items);
 				delete items;
 				if (isInitialization) {
 					emit initialized();
@@ -99,50 +98,60 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	// This is needed because account does not have a contact address until
 	// it is connected, so we can't verify if it is the organizer of a deleted
 	// conference (which must hidden)
-	auto connectModel = [this] {
-		mCoreModelConnection->invokeToModel([this]() {
-			if (mCurrentAccountCore) disconnect(mCurrentAccountCore.get());
-			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
-			if (defaultAccount) {
-				mCurrentAccountCore = AccountCore::create(defaultAccount);
-				connect(mCurrentAccountCore.get(), &AccountCore::registrationStateChanged, this,
-				        [this] { emit lUpdate(); });
-			}
-		});
-	};
-	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, connectModel);
-	connectModel();
-
-	auto addConference = [this](const std::shared_ptr<linphone::ConferenceInfo> &confInfo) {
-		auto list = getSharedList<ConferenceInfoCore>();
-		auto haveConf =
-		    std::find_if(list.begin(), list.end(), [confInfo](const QSharedPointer<ConferenceInfoCore> &item) {
-			    std::shared_ptr<linphone::Address> confAddr = nullptr;
-			    if (item) ToolModel::interpretUrl(item->getUri());
-			    return confInfo->getUri()->weakEqual(confAddr);
-		    });
-		if (haveConf == list.end()) {
-			auto confInfoCore = build(confInfo);
-			mCoreModelConnection->invokeToCore([this, confInfoCore] {
-				add(confInfoCore);
-				connectItem(confInfoCore);
-				updateHaveCurrentDate();
-				emit confInfoInserted(getCount() - 1, new ConferenceInfoGui(confInfoCore));
-			});
-		}
-	};
+	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged,
+	                                         &ConferenceInfoList::updateCurrentAccount);
+	updateCurrentAccount();
 
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::conferenceInfoCreated,
-	    [addConference](const std::shared_ptr<linphone::ConferenceInfo> &confInfo) { addConference(confInfo); });
+	    [this](const std::shared_ptr<linphone::ConferenceInfo> &confInfo) { addConference(confInfo); });
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::conferenceInfoReceived,
-	    [this, addConference](const std::shared_ptr<linphone::Core> &core,
-	                          const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
+	    [this](const std::shared_ptr<linphone::Core> &core,
+	           const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
 		    lDebug() << log().arg("conference info received") << conferenceInfo->getSubject();
 		    addConference(conferenceInfo->clone());
 	    });
 	emit lUpdate(true);
+}
+
+void ConferenceInfoList::resetData(QList<QSharedPointer<ConferenceInfoCore>> data) {
+	beginResetModel();
+	mList.clear();
+	for (auto i : data)
+		mList << i.template objectCast<QObject>();
+	updateHaveCurrentDate(); // Set have current date before resetting models to let proxy having this info.
+	endResetModel();
+}
+
+void ConferenceInfoList::addConference(const std::shared_ptr<linphone::ConferenceInfo> &confInfo) {
+	auto list = getSharedList<ConferenceInfoCore>();
+	auto haveConf = std::find_if(list.begin(), list.end(), [confInfo](const QSharedPointer<ConferenceInfoCore> &item) {
+		std::shared_ptr<linphone::Address> confAddr = nullptr;
+		if (item) ToolModel::interpretUrl(item->getUri());
+		return confInfo->getUri()->weakEqual(confAddr);
+	});
+	if (haveConf == list.end()) {
+		auto confInfoCore = build(confInfo);
+		mCoreModelConnection->invokeToCore([this, confInfoCore] {
+			connectItem(confInfoCore);
+			add(confInfoCore);
+			updateHaveCurrentDate();
+			emit confInfoInserted(confInfoCore);
+		});
+	}
+}
+
+void ConferenceInfoList::updateCurrentAccount() {
+	mCoreModelConnection->invokeToModel([this]() {
+		if (mCurrentAccountCore) disconnect(mCurrentAccountCore.get());
+		auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+		if (defaultAccount) {
+			mCurrentAccountCore = AccountCore::create(defaultAccount);
+			connect(mCurrentAccountCore.get(), &AccountCore::registrationStateChanged, this,
+			        [this] { emit lUpdate(true); });
+		}
+	});
 }
 
 bool ConferenceInfoList::haveCurrentDate() const {
@@ -179,6 +188,19 @@ int ConferenceInfoList::getCurrentDateIndex() {
 	return it == confInfoList.end() ? -1 : std::distance(confInfoList.begin(), it);
 }
 
+QSharedPointer<ConferenceInfoCore> ConferenceInfoList::getCurrentDateConfInfo() {
+	auto today = QDate::currentDate();
+	auto confInfoList = getSharedList<ConferenceInfoCore>();
+	QList<QSharedPointer<ConferenceInfoCore>>::iterator it;
+	if (mHaveCurrentDate) {
+		it = std::find_if(confInfoList.begin(), confInfoList.end(),
+		                  [today](const QSharedPointer<ConferenceInfoCore> &item) {
+			                  return item && item->getDateTimeUtc().date() == today;
+		                  });
+	} else it = std::find(confInfoList.begin(), confInfoList.end(), nullptr);
+	return it != confInfoList.end() ? *it : nullptr;
+}
+
 QSharedPointer<ConferenceInfoCore>
 ConferenceInfoList::build(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo) {
 	auto me = CoreModel::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
@@ -196,10 +218,11 @@ ConferenceInfoList::build(const std::shared_ptr<linphone::ConferenceInfo> &confe
 }
 
 void ConferenceInfoList::connectItem(QSharedPointer<ConferenceInfoCore> confInfoCore) {
-	connect(confInfoCore.get(), &ConferenceInfoCore::removed, this, [this](ConferenceInfoCore *confInfo) {
-		remove(confInfo);
-		updateHaveCurrentDate();
-	});
+	if (confInfoCore)
+		connect(confInfoCore.get(), &ConferenceInfoCore::removed, this, [this](ConferenceInfoCore *confInfo) {
+			remove(confInfo);
+			updateHaveCurrentDate();
+		});
 }
 
 QHash<int, QByteArray> ConferenceInfoList::roleNames() const {
@@ -221,7 +244,7 @@ QVariant ConferenceInfoList::data(const QModelIndex &index, int role) const {
 		}
 	} else { // Dummy date
 		if (role == Qt::DisplayRole) {
-			return QVariant::fromValue(new ConferenceInfoGui());
+			return QVariant::fromValue(new ConferenceInfoGui(nullptr));
 		} else if (role == Qt::DisplayRole + 1) {
 			return Utils::toDateMonthString(QDateTime::currentDateTimeUtc());
 		}
