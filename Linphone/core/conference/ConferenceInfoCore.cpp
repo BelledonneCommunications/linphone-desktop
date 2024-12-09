@@ -105,7 +105,7 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 					auto cleanedClonedAddress = accountAddress->clone();
 					cleanedClonedAddress->clean();
 					auto address = Utils::coreStringToAppString(cleanedClonedAddress->asStringUriOnly());
-					App::postCoreAsync([this, address]() { setOrganizerAddress(address); });
+					App::postCoreAsync([this, address]() { mOrganizerAddress = address; });
 				}
 			}
 		});
