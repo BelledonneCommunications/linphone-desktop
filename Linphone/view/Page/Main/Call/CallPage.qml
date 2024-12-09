@@ -267,6 +267,10 @@ AbstractMainPage {
 											event.accepted = true
 										}
 									}
+									// remove binding loop
+									onContentHeightChanged: Qt.callLater(function(){
+										historyListView.cacheBuffer = Math.max(contentHeight,0)
+									})
 									onActiveFocusChanged: if(activeFocus && currentIndex <0) currentIndex = 0
 	
 									Connections {

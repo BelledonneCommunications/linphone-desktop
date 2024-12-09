@@ -31,6 +31,7 @@
 class AccountCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
+public:
 	Q_PROPERTY(QString contactAddress READ getContactAddress CONSTANT)
 	Q_PROPERTY(QString identityAddress READ getIdentityAddress CONSTANT)
 	Q_PROPERTY(QString pictureUri READ getPictureUri WRITE lSetPictureUri NOTIFY pictureUriChanged)
@@ -71,10 +72,9 @@ class AccountCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString audioVideoConferenceFactoryAddress READ getAudioVideoConferenceFactoryAddress WRITE
 	               lSetAudioVideoConferenceFactoryAddress NOTIFY audioVideoConferenceFactoryAddressChanged)
 	Q_PROPERTY(QString limeServerUrl READ getLimeServerUrl WRITE lSetLimeServerUrl NOTIFY limeServerUrlChanged)
+
 	DECLARE_CORE_GET(int, voicemailCount, VoicemailCount)
 	DECLARE_CORE_GETSET_MEMBER(QString, voicemailAddress, VoicemailAddress)
-
-public:
 	static QSharedPointer<AccountCore> create(const std::shared_ptr<linphone::Account> &account);
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	AccountCore(const std::shared_ptr<linphone::Account> &account);
@@ -170,6 +170,7 @@ signals:
 	void audioVideoConferenceFactoryAddressChanged();
 	void limeServerUrlChanged();
 	void removed();
+	// void voicemailAddressChanged();
 
 	// Account requests
 	void lSetPictureUri(QString pictureUri);

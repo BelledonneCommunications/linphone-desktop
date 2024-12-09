@@ -32,6 +32,7 @@
 class SettingsCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
+public:
 	// Security
 	Q_PROPERTY(bool vfsEnabled READ getVfsEnabled WRITE setVfsEnabled NOTIFY vfsEnabledChanged)
 
@@ -69,7 +70,6 @@ class SettingsCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString logsFolder READ getLogsFolder)
 	Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
 
-public:
 	static QSharedPointer<SettingsCore> create();
 	SettingsCore(QObject *parent = Q_NULLPTR);
 	virtual ~SettingsCore();

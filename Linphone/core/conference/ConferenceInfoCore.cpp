@@ -97,14 +97,15 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		mIsScheduled = true;
 		mDuration = 60;
 		mEndDateTime = mDateTime.addSecs(mDuration * 60);
-		App::postModelSync([this]() {
+		App::postModelAsync([this]() {
 			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 			if (defaultAccount) {
 				auto accountAddress = defaultAccount->getContactAddress();
 				if (accountAddress) {
 					auto cleanedClonedAddress = accountAddress->clone();
 					cleanedClonedAddress->clean();
-					mOrganizerAddress = Utils::coreStringToAppString(cleanedClonedAddress->asStringUriOnly());
+					auto address = Utils::coreStringToAppString(cleanedClonedAddress->asStringUriOnly());
+					App::postCoreAsync([this, address]() { setOrganizerAddress(address); });
 				}
 			}
 		});

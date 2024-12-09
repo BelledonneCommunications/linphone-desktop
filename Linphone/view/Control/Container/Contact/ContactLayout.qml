@@ -67,7 +67,7 @@ ColumnLayout {
 		}
 		Item {
 			id: verticalLayoutSecondLine
-			visible: contactDetail.useVerticalLayout
+			visible: mainItem.useVerticalLayout
 			Layout.alignment: Qt.AlignHCenter
 			Layout.preferredWidth: childrenRect.width
 			Layout.preferredHeight: childrenRect.height

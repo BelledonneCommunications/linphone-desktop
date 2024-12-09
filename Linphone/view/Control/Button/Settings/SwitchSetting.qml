@@ -38,14 +38,14 @@ RowLayout {
 	Switch {
 		id: switchButton
 		Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-		checked: propertyOwner[mainItem.propertyName]
+		checked: propertyOwner ? propertyOwner[mainItem.propertyName] : false
 		enabled: mainItem.enabled
 		onCheckedChanged: mainItem.checkedChanged(checked)
 		onToggled: binding.when = true
 	}
 	Binding {
 		id: binding
-		target: propertyOwner
+		target: propertyOwner ? propertyOwner : null
 		property: mainItem.propertyName
 		value: switchButton.checked
 		when: false

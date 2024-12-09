@@ -272,6 +272,7 @@ enum class MagicSearchSource {
 	Request = int(linphone::MagicSearch::Source::Request),
 	FavoriteFriends = int(linphone::MagicSearch::Source::FavoriteFriends),
 	ConferencesInfo = int(linphone::MagicSearch::Source::ConferencesInfo),
+	RemoteCardDAV = int(linphone::MagicSearch::Source::RemoteCardDAV),
 	All = int(linphone::MagicSearch::Source::All)
 };
 Q_ENUM_NS(MagicSearchSource);

@@ -302,8 +302,8 @@ Item {
 								delegate: Item {
 									Connections {
 										target: modelData.core
-										onShowMwiChanged: voicemail.updateCumulatedMwi()
-										onVoicemailAddressChanged: voicemail.updateCumulatedMwi()
+										function onShowMwiChanged() {voicemail.updateCumulatedMwi()}
+										function onVoicemailAddressChanged(){voicemail.updateCumulatedMwi()}
 									}
 								}
 							}

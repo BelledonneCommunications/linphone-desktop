@@ -80,7 +80,7 @@ ColumnLayout {
 		Layout.leftMargin: 16 * DefaultStyle.dp
 		Layout.rightMargin: 16 * DefaultStyle.dp
 
-		visible: mainItem.localVideoEnabled || mainItem.remoteVideoEnabled
+		visible: mainItem.call?.core.localVideoEnabled || mainItem.call?.core.remoteVideoEnabled || false
 
 		contentItem: ColumnLayout {
 			spacing: 12 * DefaultStyle.dp

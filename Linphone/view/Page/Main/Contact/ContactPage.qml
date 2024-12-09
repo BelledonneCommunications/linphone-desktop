@@ -237,7 +237,7 @@ AbstractMainPage {
 					searchBarText: searchBar.text
 					hideSuggestions: true
 					showDefaultAddress: false
-					sourceFlags: LinphoneEnums.MagicSearchSource.Friends | LinphoneEnums.MagicSearchSource.FavoriteFriends | LinphoneEnums.MagicSearchSource.LdapServers
+					sourceFlags: LinphoneEnums.MagicSearchSource.Friends | LinphoneEnums.MagicSearchSource.FavoriteFriends | LinphoneEnums.MagicSearchSource.LdapServers | LinphoneEnums.MagicSearchSource.RemoteCardDAV
 					onHighlightedContactChanged: mainItem.selectedContact = highlightedContact
 					onContactDeletionRequested: (contact) => {
 						mainItem.deleteContact(contact)

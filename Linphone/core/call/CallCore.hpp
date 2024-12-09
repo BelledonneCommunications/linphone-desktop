@@ -96,6 +96,7 @@ public:
 class CallCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
+public:
 	Q_PROPERTY(LinphoneEnums::CallStatus status READ getStatus NOTIFY statusChanged)
 	Q_PROPERTY(LinphoneEnums::CallDir dir READ getDir NOTIFY dirChanged)
 	Q_PROPERTY(LinphoneEnums::CallState state READ getState NOTIFY stateChanged)
@@ -140,7 +141,6 @@ class CallCore : public QObject, public AbstractObject {
 
 	DECLARE_GUI_GETSET(bool, isStarted, IsStarted)
 
-public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	static QSharedPointer<CallCore> create(const std::shared_ptr<linphone::Call> &call);
 	CallCore(const std::shared_ptr<linphone::Call> &call);

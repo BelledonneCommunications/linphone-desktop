@@ -18,7 +18,7 @@ MainRightPanel {
 			if (contact.core.isSaved) {
 				var mainWin = UtilsCpp.getMainWindow()
 				UtilsCpp.smartShowWindow(mainWin)
-				mainWin.goToContactDetail(contact)
+				mainWin.displayContactPage(contact)
 			}
 		}
 	}

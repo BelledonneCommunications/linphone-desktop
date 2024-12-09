@@ -31,19 +31,19 @@
 class PayloadTypeCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
+public:
 	Q_ENUMS(Family)
 	Q_PROPERTY(Family family MEMBER mFamily CONSTANT)
 	DECLARE_CORE_MEMBER(int, clockRate, ClockRate)
 	DECLARE_CORE_MEMBER(QString, recvFmtp, RecvFmtp)
 
-public:
 	enum Family { Audio, Video, Text };
 
 	static QSharedPointer<PayloadTypeCore> create(Family family,
 	                                              const std::shared_ptr<linphone::PayloadType> &payloadType);
 
 	PayloadTypeCore(Family family, const std::shared_ptr<linphone::PayloadType> &payloadType);
-	PayloadTypeCore() {};
+	PayloadTypeCore(){};
 	~PayloadTypeCore();
 
 	void setSelf(QSharedPointer<PayloadTypeCore> me);

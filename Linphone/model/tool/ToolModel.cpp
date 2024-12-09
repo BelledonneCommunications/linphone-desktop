@@ -365,5 +365,6 @@ QString ToolModel::computeUserAgent(const std::shared_ptr<linphone::Config> &con
 	    .arg(Utils::getApplicationProduct())
 	    .arg(SettingsModel::getDeviceName(config).replace('\\', "\\\\").replace('(', "\\(").replace(')', "\\)"))
 	    .arg(Utils::getOsProduct())
-	    .arg(qVersion());
+	    .arg(qVersion())
+	    .remove("'");
 }
