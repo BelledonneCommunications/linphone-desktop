@@ -22,6 +22,11 @@ AbstractSettingsLayout {
 			hideTopSeparator: true
 		},
 		{
+			title: qsTr("Sécurité / Chiffrement"),
+			subTitle: "",
+			contentComponent: securityComponent,
+		},
+		{
 			title: qsTr("Codecs audio"),
 			subTitle: "",
 			contentComponent: audioCodecsComponent,
@@ -78,6 +83,37 @@ AbstractSettingsLayout {
 					else
 						UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Format d'url invalide"), false, UtilsCpp.getMainWindow())
 				}
+			}
+		}
+	}
+
+	Component {
+		id: securityComponent
+		ColumnLayout {
+			spacing: 20 * DefaultStyle.dp
+			ColumnLayout {
+				spacing: 5 * DefaultStyle.dp
+				Text {
+					text: qsTr("Chiffrement du média")
+					font {
+						pixelSize: 14 * DefaultStyle.dp
+						weight: 700 * DefaultStyle.dp
+					}
+				}
+				ComboSetting {
+					Layout.fillWidth: true
+					Layout.preferredWidth: parent.width
+					entries: SettingsCpp.mediaEncryptions
+					propertyName: "mediaEncryption"
+					textRole: 'display_name'
+					propertyOwner: SettingsCpp
+				}
+			}
+			SwitchSetting {
+				Layout.fillWidth: true
+				titleText: qsTr("Chiffrement du média obligatoire")
+				propertyName: "mediaEncryptionMandatory"
+				propertyOwner: SettingsCpp
 			}
 		}
 	}

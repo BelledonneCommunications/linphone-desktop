@@ -93,6 +93,15 @@ public:
 	QVariantMap getPlaybackDevice() const;
 	void setPlaybackDevice(const QVariantMap &device);
 
+	linphone::Conference::Layout getDefaultConferenceLayout() const;
+	void setDefaultConferenceLayout(const linphone::Conference::Layout layout);
+
+	linphone::MediaEncryption getDefaultMediaEncryption() const;
+	void setDefaultMediaEncryption(const linphone::MediaEncryption encryption);
+
+	bool getMediaEncryptionMandatory() const;
+	void setMediaEncryptionMandatory(bool mandatory);
+
 	QVariantMap getRingerDevice() const;
 	void setRingerDevice(const QVariantMap &device);
 
@@ -183,6 +192,9 @@ signals:
 	void playbackDeviceChanged(QVariantMap device);
 	void ringerDeviceChanged(QVariantMap device);
 	void videoDeviceChanged(QString device);
+	void conferenceLayoutChanged();
+	void mediaEncryptionChanged();
+	void mediaEncryptionMandatoryChanged();
 
 	void showAudioCodecsChanged(bool status);
 

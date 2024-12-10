@@ -58,6 +58,16 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	mCaptureDevice = settingsModel->getCaptureDevice();
 	mPlaybackDevice = settingsModel->getPlaybackDevice();
 
+	mConferenceLayouts = LinphoneEnums::conferenceLayoutsToVariant();
+	mConferenceLayout =
+	    LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(settingsModel->getDefaultConferenceLayout()));
+
+	mMediaEncryptions = LinphoneEnums::mediaEncryptionsToVariant();
+	mMediaEncryption =
+	    LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(settingsModel->getDefaultMediaEncryption()));
+
+	mMediaEncryptionMandatory = settingsModel->getMediaEncryptionMandatory();
+
 	mCaptureGain = settingsModel->getCaptureGain();
 	mPlaybackGain = settingsModel->getPlaybackGain();
 
@@ -258,6 +268,46 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		});
 	});
 
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetConferenceLayout, [this](QVariantMap layout) {
+		auto linLayout = LinphoneEnums::toLinphone(LinphoneEnums::ConferenceLayout(layout["id"].toInt()));
+		mSettingsModelConnection->invokeToModel(
+		    [this, linLayout]() { SettingsModel::getInstance()->setDefaultConferenceLayout(linLayout); });
+	});
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::conferenceLayoutChanged, [this]() {
+		auto layout = LinphoneEnums::fromLinphone(SettingsModel::getInstance()->getDefaultConferenceLayout());
+		mSettingsModelConnection->invokeToCore([this, layout]() {
+			mConferenceLayout = LinphoneEnums::toVariant(layout);
+			emit conferenceLayoutChanged();
+		});
+	});
+
+	mSettingsModelConnection->makeConnectToCore(
+	    &SettingsCore::lSetMediaEncryption, [this](const QVariantMap &encryption) {
+		    auto linEncryption = LinphoneEnums::toLinphone(LinphoneEnums::MediaEncryption(encryption["id"].toInt()));
+		    mSettingsModelConnection->invokeToModel(
+		        [this, linEncryption]() { SettingsModel::getInstance()->setDefaultMediaEncryption(linEncryption); });
+	    });
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::mediaEncryptionChanged, [this]() {
+		auto encryption = LinphoneEnums::toVariant(
+		    LinphoneEnums::fromLinphone(SettingsModel::getInstance()->getDefaultMediaEncryption()));
+		mSettingsModelConnection->invokeToCore([this, encryption]() {
+			mMediaEncryption = encryption;
+			emit mediaEncryptionChanged();
+		});
+	});
+
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetMediaEncryptionMandatory, [this](bool mandatory) {
+		mSettingsModelConnection->invokeToModel(
+		    [this, mandatory]() { SettingsModel::getInstance()->setMediaEncryptionMandatory(mandatory); });
+	});
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::mediaEncryptionMandatoryChanged, [this]() {
+		auto mandatory = SettingsModel::getInstance()->getMediaEncryptionMandatory();
+		mSettingsModelConnection->invokeToCore([this, mandatory]() {
+			mMediaEncryptionMandatory = mandatory;
+			emit mediaEncryptionMandatoryChanged(mandatory);
+		});
+	});
+
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::videoDevicesChanged,
 	                                             [this](const QStringList devices) {
 		                                             mSettingsModelConnection->invokeToCore([this, devices]() {
@@ -391,6 +441,18 @@ QVariantList SettingsCore::getRingerDevices() const {
 	return mRingerDevices;
 }
 
+QVariantList SettingsCore::getConferenceLayouts() const {
+	return mConferenceLayouts;
+}
+
+QVariantList SettingsCore::getMediaEncryptions() const {
+	return mMediaEncryptions;
+}
+
+bool SettingsCore::isMediaEncryptionMandatory() const {
+	return mMediaEncryptionMandatory;
+}
+
 int SettingsCore::getVideoDeviceIndex() const {
 	return mVideoDevices.indexOf(mVideoDevice);
 }
@@ -405,6 +467,14 @@ bool SettingsCore::getCaptureGraphRunning() {
 
 float SettingsCore::getCaptureGain() const {
 	return mCaptureGain;
+}
+
+QVariantMap SettingsCore::getConferenceLayout() const {
+	return mConferenceLayout;
+}
+
+QVariantMap SettingsCore::getMediaEncryption() const {
+	return mMediaEncryption;
 }
 
 float SettingsCore::getPlaybackGain() const {

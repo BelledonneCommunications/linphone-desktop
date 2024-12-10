@@ -9,11 +9,7 @@ import SettingsCpp
 AbstractSettingsMenu {
 	layoutsPath: "qrc:/qt/qml/Linphone/view/Page/Layout/Settings"
 	titleText: qsTr("Mon compte")
-	property AccountProxy  accounts: AccountProxy {
-		id: accountProxy
-		sourceModel: AppCpp.accounts
-	}
-	property AccountGui account: accountProxy.defaultAccount
+	property AccountGui account
 	signal accountRemoved()
 	families: [
 		{title: qsTr("Général"), layout: "AccountSettingsGeneralLayout", model: account},

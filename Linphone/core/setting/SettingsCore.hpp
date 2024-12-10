@@ -50,6 +50,8 @@ public:
 	Q_PROPERTY(QVariantList captureDevices READ getCaptureDevices NOTIFY captureDevicesChanged)
 	Q_PROPERTY(QVariantList playbackDevices READ getPlaybackDevices NOTIFY playbackDevicesChanged)
 	Q_PROPERTY(QVariantList ringerDevices READ getRingerDevices NOTIFY ringerDevicesChanged)
+	Q_PROPERTY(QVariantList conferenceLayouts READ getConferenceLayouts NOTIFY conferenceLayoutsChanged)
+	Q_PROPERTY(QVariantList mediaEncryptions READ getMediaEncryptions NOTIFY mediaEncryptionsChanged)
 
 	Q_PROPERTY(float playbackGain READ getPlaybackGain WRITE lSetPlaybackGain NOTIFY playbackGainChanged)
 	Q_PROPERTY(float captureGain READ getCaptureGain WRITE lSetCaptureGain NOTIFY captureGainChanged)
@@ -57,6 +59,13 @@ public:
 	Q_PROPERTY(QVariantMap captureDevice READ getCaptureDevice WRITE lSetCaptureDevice NOTIFY captureDeviceChanged)
 	Q_PROPERTY(QVariantMap playbackDevice READ getPlaybackDevice WRITE lSetPlaybackDevice NOTIFY playbackDeviceChanged)
 	Q_PROPERTY(QVariantMap ringerDevice READ getRingerDevice WRITE lSetRingerDevice NOTIFY ringerDeviceChanged)
+
+	Q_PROPERTY(
+	    QVariantMap conferenceLayout READ getConferenceLayout WRITE lSetConferenceLayout NOTIFY conferenceLayoutChanged)
+	Q_PROPERTY(
+	    QVariantMap mediaEncryption READ getMediaEncryption WRITE lSetMediaEncryption NOTIFY mediaEncryptionChanged)
+	Q_PROPERTY(bool mediaEncryptionMandatory READ isMediaEncryptionMandatory WRITE lSetMediaEncryptionMandatory NOTIFY
+	               mediaEncryptionMandatoryChanged)
 
 	Q_PROPERTY(QStringList videoDevices READ getVideoDevices NOTIFY videoDevicesChanged)
 	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE lSetVideoDevice NOTIFY videoDeviceChanged)
@@ -109,13 +118,19 @@ public:
 
 	float getCaptureGain() const;
 
+	QVariantMap getMediaEncryption() const;
+	bool isMediaEncryptionMandatory() const;
+
 	QVariantList getCaptureDevices() const;
 	QVariantList getPlaybackDevices() const;
 	QVariantList getRingerDevices() const;
+	QVariantList getConferenceLayouts() const;
+	QVariantList getMediaEncryptions() const;
 
 	QVariantMap getCaptureDevice() const;
 	QVariantMap getPlaybackDevice() const;
 	QVariantMap getRingerDevice() const;
+	QVariantMap getConferenceLayout() const;
 
 	QString getVideoDevice() const {
 		return mVideoDevice;
@@ -193,9 +208,20 @@ signals:
 	void captureDevicesChanged(const QVariantList &devices);
 	void playbackDevicesChanged(const QVariantList &devices);
 	void ringerDevicesChanged(const QVariantList &devices);
+	void conferenceLayoutsChanged(const QVariantList &layouts);
+	void mediaEncryptionsChanged(const QVariantList &encryptions);
 
 	void lSetCaptureDevice(const QVariantMap &device);
 	void captureDeviceChanged(const QVariantMap &device);
+
+	void lSetConferenceLayout(QVariantMap confLayout);
+	void conferenceLayoutChanged();
+
+	void lSetMediaEncryption(const QVariantMap &id);
+	void mediaEncryptionChanged();
+
+	void lSetMediaEncryptionMandatory(bool mandatory);
+	void mediaEncryptionMandatoryChanged(bool mandatory);
 
 	void lSetPlaybackDevice(const QVariantMap &device);
 	void playbackDeviceChanged(const QVariantMap &device);
@@ -239,6 +265,9 @@ private:
 
 	// Security
 	bool mVfsEnabled;
+	QVariantList mMediaEncryptions;
+	QVariantMap mMediaEncryption;
+	bool mMediaEncryptionMandatory;
 
 	// Call
 	bool mVideoEnabled;
@@ -249,9 +278,11 @@ private:
 	QVariantList mCaptureDevices;
 	QVariantList mPlaybackDevices;
 	QVariantList mRingerDevices;
+	QVariantList mConferenceLayouts;
 	QVariantMap mCaptureDevice;
 	QVariantMap mPlaybackDevice;
 	QVariantMap mRingerDevice;
+	QVariantMap mConferenceLayout;
 
 	// Video
 	QStringList mVideoDevices;

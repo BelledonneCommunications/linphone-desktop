@@ -296,6 +296,39 @@ void SettingsModel::setCaptureDevice(const QVariantMap &device) {
 	} else qWarning() << "Cannot set Capture device. The ID cannot be matched with an existant device : " << device;
 }
 
+linphone::Conference::Layout SettingsModel::getDefaultConferenceLayout() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return CoreModel::getInstance()->getCore()->getDefaultConferenceLayout();
+}
+
+void SettingsModel::setDefaultConferenceLayout(const linphone::Conference::Layout layout) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	CoreModel::getInstance()->getCore()->setDefaultConferenceLayout(layout);
+	emit conferenceLayoutChanged();
+}
+
+linphone::MediaEncryption SettingsModel::getDefaultMediaEncryption() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return CoreModel::getInstance()->getCore()->getMediaEncryption();
+}
+
+void SettingsModel::setDefaultMediaEncryption(const linphone::MediaEncryption encryption) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	CoreModel::getInstance()->getCore()->setMediaEncryption(encryption);
+	emit mediaEncryptionChanged();
+}
+
+bool SettingsModel::getMediaEncryptionMandatory() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return CoreModel::getInstance()->getCore()->isMediaEncryptionMandatory();
+}
+
+void SettingsModel::setMediaEncryptionMandatory(bool mandatory) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	CoreModel::getInstance()->getCore()->setMediaEncryptionMandatory(mandatory);
+	emit mediaEncryptionMandatoryChanged();
+}
+
 // -----------------------------------------------------------------------------
 
 QVariantMap SettingsModel::getPlaybackDevice() const {

@@ -17,12 +17,12 @@ FocusScope {
 		anchors.leftMargin: 17 * DefaultStyle.dp
 		anchors.rightMargin: 17 * DefaultStyle.dp
 		spacing: 12 * DefaultStyle.dp
-		Text {
-			Layout.fillWidth: true
-			text: qsTr("La disposition choisie sera enregistrée pour vos prochaines réunions")
-			font.pixelSize: 14 * DefaultStyle.dp
-			color: DefaultStyle.main2_500main
-		}
+		// Text {
+		// 	Layout.fillWidth: true
+		// 	text: qsTr("La disposition choisie sera enregistrée pour vos prochaines réunions")
+		// 	font.pixelSize: 14 * DefaultStyle.dp
+		// 	color: DefaultStyle.main2_500main
+		// }
 		RoundedPane {
 			Layout.fillWidth: true
 			contentItem: ColumnLayout {

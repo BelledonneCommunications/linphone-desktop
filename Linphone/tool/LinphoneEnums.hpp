@@ -45,6 +45,9 @@ Q_ENUM_NS(MediaEncryption)
 linphone::MediaEncryption toLinphone(const LinphoneEnums::MediaEncryption &encryption);
 LinphoneEnums::MediaEncryption fromLinphone(const linphone::MediaEncryption &encryption);
 QString toString(LinphoneEnums::MediaEncryption encryption);
+QVariantList mediaEncryptionsToVariant(QList<MediaEncryption> list = {MediaEncryption::None, MediaEncryption::Srtp,
+                                                                      MediaEncryption::Zrtp, MediaEncryption::Dtls});
+QVariantMap toVariant(LinphoneEnums::MediaEncryption encryption);
 
 enum class FriendCapability {
 	None = int(linphone::Friend::Capability::None),
@@ -220,6 +223,10 @@ Q_ENUM_NS(ConferenceLayout)
 
 linphone::Conference::Layout toLinphone(const LinphoneEnums::ConferenceLayout &layout);
 LinphoneEnums::ConferenceLayout fromLinphone(const linphone::Conference::Layout &layout);
+QVariantList conferenceLayoutsToVariant(QList<ConferenceLayout> list = {ConferenceLayout::Grid,
+                                                                        ConferenceLayout::ActiveSpeaker});
+QVariantMap toVariant(LinphoneEnums::ConferenceLayout layout);
+QString toString(LinphoneEnums::ConferenceLayout layout);
 
 enum class ConferenceInfoState {
 	New = int(linphone::ConferenceInfo::State::New),

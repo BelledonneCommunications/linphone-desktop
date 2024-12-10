@@ -57,16 +57,41 @@ LinphoneEnums::MediaEncryption LinphoneEnums::fromLinphone(const linphone::Media
 QString LinphoneEnums::toString(LinphoneEnums::MediaEncryption encryption) {
 	switch (encryption) {
 		case LinphoneEnums::MediaEncryption::Dtls:
-			return "DTLS";
+			return QObject::tr("DTLS");
 		case LinphoneEnums::MediaEncryption::None:
-			return "None";
+			return QObject::tr("None");
 		case LinphoneEnums::MediaEncryption::Srtp:
-			return "SRTP";
+			return QObject::tr("SRTP");
 		case LinphoneEnums::MediaEncryption::Zrtp:
-			return "ZRTP";
+			return QObject::tr("ZRTP - Post quantique");
 		default:
 			return QString();
 	}
+}
+
+QVariantList LinphoneEnums::mediaEncryptionsToVariant(QList<LinphoneEnums::MediaEncryption> list) {
+	QVariantList variantList;
+	for (auto &item : list)
+		variantList.append(LinphoneEnums::toVariant(item));
+	return variantList;
+}
+
+QVariantMap LinphoneEnums::toVariant(LinphoneEnums::MediaEncryption encryption) {
+	QVariantMap map;
+	if (encryption == LinphoneEnums::MediaEncryption::None) {
+		map.insert("id", QVariant::fromValue(encryption));
+		map.insert("display_name", toString(encryption));
+	} else if (encryption == LinphoneEnums::MediaEncryption::Srtp) {
+		map.insert("id", QVariant::fromValue(encryption));
+		map.insert("display_name", toString(encryption));
+	} else if (encryption == LinphoneEnums::MediaEncryption::Zrtp) {
+		map.insert("id", QVariant::fromValue(encryption));
+		map.insert("display_name", toString(encryption));
+	} else if (encryption == LinphoneEnums::MediaEncryption::Dtls) {
+		map.insert("id", QVariant::fromValue(encryption));
+		map.insert("display_name", toString(encryption));
+	}
+	return map;
 }
 
 linphone::Friend::Capability LinphoneEnums::toLinphone(const LinphoneEnums::FriendCapability &data) {
@@ -175,6 +200,31 @@ linphone::Conference::Layout LinphoneEnums::toLinphone(const LinphoneEnums::Conf
 
 LinphoneEnums::ConferenceLayout LinphoneEnums::fromLinphone(const linphone::Conference::Layout &layout) {
 	return static_cast<LinphoneEnums::ConferenceLayout>(layout);
+}
+
+QString LinphoneEnums::toString(LinphoneEnums::ConferenceLayout layout) {
+	if (layout == LinphoneEnums::ConferenceLayout::ActiveSpeaker) return QObject::tr("Participant actif");
+	else if (layout == LinphoneEnums::ConferenceLayout::Grid) return QObject::tr("Grille");
+	else return QObject::tr("Audio seulement");
+}
+
+QVariantList LinphoneEnums::conferenceLayoutsToVariant(QList<LinphoneEnums::ConferenceLayout> list) {
+	QVariantList variantList;
+	for (auto &item : list)
+		variantList.append(LinphoneEnums::toVariant(item));
+	return variantList;
+}
+
+QVariantMap LinphoneEnums::toVariant(LinphoneEnums::ConferenceLayout layout) {
+	QVariantMap map;
+	if (layout == LinphoneEnums::ConferenceLayout::ActiveSpeaker) {
+		map.insert("id", QVariant::fromValue(layout));
+		map.insert("display_name", toString(layout));
+	} else {
+		map.insert("id", QVariant::fromValue(layout));
+		map.insert("display_name", toString(layout));
+	}
+	return map;
 }
 
 linphone::ConferenceInfo::State LinphoneEnums::toLinphone(const LinphoneEnums::ConferenceInfoState &state) {
