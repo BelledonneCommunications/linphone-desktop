@@ -22,6 +22,7 @@
 #define DOWNLOADABLE_PAYLOAD_TYPE_CORE_H_
 
 #include "PayloadTypeCore.hpp"
+#include "model/payload-type/DownloadablePayloadTypeModel.hpp"
 #include "tool/AbstractObject.hpp"
 #include <QObject>
 #include <QSharedPointer>
@@ -52,17 +53,22 @@ public:
 	void setSelf(QSharedPointer<DownloadablePayloadTypeCore> me);
 
 signals:
-	void success();
+	void extractSuccess(QString filePath);
 	void downloadError();
 	void extractError();
 	void installedChanged();
 	void versionChanged();
+	void loaded(bool success);
 
 private:
 	QString mDownloadUrl;
 	QString mInstallName;
 	QString mCheckSum;
 	QString mVersion;
+
+	std::shared_ptr<DownloadablePayloadTypeModel> mDownloadablePayloadTypeModel;
+	QSharedPointer<SafeConnection<DownloadablePayloadTypeCore, DownloadablePayloadTypeModel>>
+	    mDownloadablePayloadTypeModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };

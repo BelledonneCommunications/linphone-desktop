@@ -35,6 +35,7 @@ QSharedPointer<DownloadablePayloadTypeCore> DownloadablePayloadTypeCore::create(
 	auto sharedPointer = QSharedPointer<DownloadablePayloadTypeCore>(
 	    new DownloadablePayloadTypeCore(family, mimeType, encoderDescription, downloadUrl, installName, checkSum),
 	    &QObject::deleteLater);
+	sharedPointer->setSelf(sharedPointer);
 	sharedPointer->moveToThread(App::getInstance()->thread());
 	return sharedPointer;
 }
@@ -47,6 +48,7 @@ DownloadablePayloadTypeCore::DownloadablePayloadTypeCore(PayloadTypeCore::Family
                                                          const QString &checkSum)
     : PayloadTypeCore() {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
+	mDownloadablePayloadTypeModel = Utils::makeQObject_ptr<DownloadablePayloadTypeModel>();
 
 	mFamily = family;
 	mMimeType = mimeType;
@@ -61,6 +63,25 @@ DownloadablePayloadTypeCore::DownloadablePayloadTypeCore(PayloadTypeCore::Family
 
 DownloadablePayloadTypeCore::~DownloadablePayloadTypeCore() {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+}
+
+void DownloadablePayloadTypeCore::setSelf(QSharedPointer<DownloadablePayloadTypeCore> me) {
+	mDownloadablePayloadTypeModelConnection =
+	    QSharedPointer<SafeConnection<DownloadablePayloadTypeCore, DownloadablePayloadTypeModel>>(
+	        new SafeConnection<DownloadablePayloadTypeCore, DownloadablePayloadTypeModel>(
+	            me, mDownloadablePayloadTypeModel),
+	        &QObject::deleteLater);
+
+	mDownloadablePayloadTypeModelConnection->makeConnectToCore(
+	    &DownloadablePayloadTypeCore::extractSuccess, [this](QString filePath) {
+		    mDownloadablePayloadTypeModelConnection->invokeToModel(
+		        [this, filePath]() { mDownloadablePayloadTypeModel->loadLibrary(filePath); });
+	    });
+
+	mDownloadablePayloadTypeModelConnection->makeConnectToModel(
+	    &DownloadablePayloadTypeModel::loaded, [this](bool success) {
+		    mDownloadablePayloadTypeModelConnection->invokeToCore([this, success]() { emit loaded(success); });
+	    });
 }
 
 void DownloadablePayloadTypeCore::downloadAndExtract(bool isUpdate) {
@@ -95,22 +116,23 @@ void DownloadablePayloadTypeCore::downloadAndExtract(bool isUpdate) {
 		emit downloadError();
 	});
 
-	QObject::connect(fileExtractor, &FileExtractor::extractFinished,
-	                 [this, fileDownloader, fileExtractor, versionFilePath, downloadUrl = mDownloadUrl]() {
-		                 QFile versionFile(versionFilePath);
-		                 if (!versionFile.open(QIODevice::WriteOnly)) {
-			                 lWarning() << log().arg("Unable to write codec version in: `%1`.").arg(versionFilePath);
-			                 emit extractError();
-		                 } else if (versionFile.write(Utils::appStringToCoreString(downloadUrl).c_str(),
-		                                              downloadUrl.length()) == -1) {
-			                 fileExtractor->remove();
-			                 versionFile.close();
-			                 versionFile.remove();
-			                 emit extractError();
-		                 } else emit success();
-		                 fileDownloader->remove();
-		                 fileDownloader->deleteLater();
-	                 });
+	QObject::connect(
+	    fileExtractor, &FileExtractor::extractFinished,
+	    [this, fileDownloader, fileExtractor, versionFilePath, downloadUrl = mDownloadUrl]() {
+		    QFile versionFile(versionFilePath);
+		    if (!versionFile.open(QIODevice::WriteOnly)) {
+			    lWarning() << log().arg("Unable to write codec version in: `%1`.").arg(versionFilePath);
+			    emit extractError();
+		    } else if (versionFile.write(Utils::appStringToCoreString(downloadUrl).c_str(), downloadUrl.length()) ==
+		               -1) {
+			    fileExtractor->remove();
+			    versionFile.close();
+			    versionFile.remove();
+			    emit extractError();
+		    } else emit extractSuccess(fileExtractor->getExtractFolder() + "/" + fileExtractor->getExtractName());
+		    fileDownloader->remove();
+		    fileDownloader->deleteLater();
+	    });
 
 	QObject::connect(fileExtractor, &FileExtractor::extractFailed, [this, fileDownloader]() {
 		fileDownloader->remove();

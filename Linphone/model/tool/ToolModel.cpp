@@ -310,18 +310,21 @@ bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList>
 void ToolModel::loadDownloadedCodecs() {
 	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+	qInfo() << QStringLiteral("Loading downloaded codecs in folder %1...").arg(Paths::getCodecsDirPath());
 	QDirIterator it(Paths::getCodecsDirPath());
 	while (it.hasNext()) {
 		QFileInfo info(it.next());
 		const QString filename(info.fileName());
 		if (QLibrary::isLibrary(filename)) {
 			qInfo() << QStringLiteral("Loading `%1` symbols...").arg(filename);
-			if (!QLibrary(info.filePath()).load()) // lib.load())
-				qWarning() << QStringLiteral("Failed to load `%1` symbols.").arg(filename);
+			auto library = QLibrary(info.filePath());
+			if (!library.load()) // lib.load())
+				qWarning() << QStringLiteral("Failed to load `%1` symbols.").arg(filename) << library.errorString();
 			else qInfo() << QStringLiteral("Loaded `%1` symbols...").arg(filename);
-		}
+		} else qWarning() << QStringLiteral("Found codec file `%1` that is not a library").arg(filename);
 	}
 	CoreModel::getInstance()->getCore()->reloadMsPlugins("");
+	qInfo() << QStringLiteral("Finished loading downloaded codecs.");
 #endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 }
 

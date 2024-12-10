@@ -690,21 +690,27 @@ function openCodecOnlineInstallerDialog (mainWindow, coreObject, cancelCallBack,
 		qsTr("Télécharger le codec ") + capitalizeFirstLetter(coreObject.mimeType) + " ("+coreObject.encoderDescription+")"+" ?",
 		function (confirmed) {
 			if (confirmed) {
-				coreObject.success.connect(function() {
+				coreObject.loaded.connect(function(success) {
 					mainWindow.closeLoadingPopup()
-					mainWindow.showInformationPopup(qsTr("Succès"), qsTr("Le codec a été téléchargé avec succès."), true)
-					if (successCallBack)
-						successCallBack()
+					if (success) {
+						mainWindow.showInformationPopup(qsTr("Succès"), qsTr("Le codec a été installé avec succès."), true)
+						if (successCallBack)
+							successCallBack()
+					} else {
+						mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être installé."), false)
+						if (errorCallBack)
+							errorCallBack()
+					}
 				})
 				coreObject.extractError.connect(function() {
 					mainWindow.closeLoadingPopup()
-					mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être sauvegardé."), true)
+					mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être sauvegardé."), false)
 					if (errorCallBack)
 						errorCallBack()
 				})
 				coreObject.downloadError.connect(function() {
 					mainWindow.closeLoadingPopup()
-					mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être téléchargé."), true)
+					mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être téléchargé."), false)
 					if (errorCallBack)
 						errorCallBack()
 				})
