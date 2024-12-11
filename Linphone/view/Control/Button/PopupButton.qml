@@ -27,13 +27,54 @@ Button {
 	function open() {
 		popup.open()
 	}
+	
+	function isFocusable(item){
+		return item.activeFocusOnTab
+	}
+	function getPreviousItem(index){
+		return _getPreviousItem(popup.contentItem instanceof FocusScope ? popup.contentItem.children[0] : popup.contentItem, index)
+	}
+	function getNextItem(index){
+		return _getNextItem(popup.contentItem instanceof FocusScope ? popup.contentItem.children[0] : popup.contentItem, index)
+	}
+	
+	function _getPreviousItem(content, index){
+		if(content.visibleChildren.length == 0) return null
+		--index
+		while(index >= 0){
+			if( isFocusable(content.children[index]) && content.children[index].visible) return content.children[index]
+			--index
+		}
+		return _getPreviousItem(content, content.children.length)
+	}
+	function _getNextItem(content, index){
+		++index
+		while(index < content.children.length){
+			if( isFocusable(content.children[index]) && content.children[index].visible) return content.children[index]
+			++index
+		}
+		return _getNextItem(content, -1)
+	}
 
 	Keys.onPressed: (event) => {
-		if(popup.checked && event.key == Qt.Key_Escape){
-			mainItem.close()
+		if(mainItem.checked){
+			if( event.key == Qt.Key_Escape || event.key == Qt.Key_Left || event.key == Qt.Key_Space){
+				mainItem.close()
+				mainItem.forceActiveFocus()
+				event.accepted = true
+			}else if(event.key == Qt.Key_Up){
+				getPreviousItem(0).forceActiveFocus()
+				event.accepted = true
+			}else if(event.key == Qt.Key_Tab || event.key == Qt.Key_Down){
+				getNextItem(-1).forceActiveFocus()
+				event.accepted = true
+			}
+		}else if(event.key == Qt.Key_Space){
+			mainItem.open()
 			event.accepted = true
 		}
 	}
+	
 	background: Item {
 		anchors.fill: mainItem
 		Rectangle {
@@ -84,16 +125,17 @@ Button {
 			if( y < mainItem.height && y + popupHeight > 0){
 				x += mainItem.width
 			}
-			popup.contentItem.forceActiveFocus()
 		}
+		
 		onHeightChanged: Qt.callLater(updatePosition)
 		onWidthChanged: Qt.callLater(updatePosition)
+		onVisibleChanged: Qt.callLater(updatePosition)
+		
 		Connections{
 			target: mainItem.Window
 			function onHeightChanged(){ Qt.callLater(popup.updatePosition)}
 			function onWidthChanged(){ Qt.callLater(popup.updatePosition)}
 		}
-		onVisibleChanged: Qt.callLater(updatePosition)
 
 		background: Item {
 			anchors.fill: parent

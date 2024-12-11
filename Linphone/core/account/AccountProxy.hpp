@@ -31,7 +31,7 @@
 class AccountProxy : public LimitProxy {
 	Q_OBJECT
 
-	Q_PROPERTY(AccountGui *defaultAccount READ getDefaultAccount WRITE setDefaultAccount NOTIFY defaultAccountChanged)
+	Q_PROPERTY(AccountGui *defaultAccount READ getDefaultAccount NOTIFY defaultAccountChanged)
 	Q_PROPERTY(bool haveAccount READ getHaveAccount NOTIFY haveAccountChanged)
 	Q_PROPERTY(bool isInitialized READ isInitialized NOTIFY initializedChanged)
 
@@ -41,9 +41,8 @@ public:
 	AccountProxy(QObject *parent = Q_NULLPTR);
 	~AccountProxy();
 
-	AccountGui *getDefaultAccount();             // Get a new object from List or give the stored one.
-	void setDefaultAccount(AccountGui *account); // TODO
-	void resetDefaultAccount();                  // Reset the default account to let UI build its new object if needed.
+	AccountGui *getDefaultAccount(); // Get a new object from List or give the stored one.
+	void resetDefaultAccount();      // Reset the default account to let UI build its new object if needed.
 	Q_INVOKABLE AccountGui *findAccountByAddress(const QString &address);
 	Q_INVOKABLE AccountGui *firstAccount();
 

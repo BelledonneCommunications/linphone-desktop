@@ -60,7 +60,7 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 			QSharedPointer<AccountCore> defaultAccountCore;
 			for (auto it : linphoneAccounts) {
 				auto model = AccountCore::create(it);
-				if (it == defaultAccount) defaultAccountCore = AccountCore::create(defaultAccount);
+				if (it == defaultAccount) defaultAccountCore = model;
 				accounts->push_back(model);
 			}
 			mModelConnection->invokeToCore([this, accounts, defaultAccountCore, isInitialization]() {
@@ -76,8 +76,10 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 	mModelConnection->makeConnectToModel(
 	    &CoreModel::defaultAccountChanged,
 	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
-		    if (account) {
-			    auto model = AccountCore::create(account);
+		    if (account && account->getParams()->getIdentityAddress()) {
+			    auto address =
+			        Utils::coreStringToAppString(account->getParams()->getIdentityAddress()->asStringUriOnly());
+			    auto model = findAccountByAddress(address);
 			    mModelConnection->invokeToCore([this, model]() { setDefaultAccount(model); });
 		    } else mModelConnection->invokeToCore([this]() { setDefaultAccount(nullptr); });
 	    });
@@ -104,12 +106,10 @@ void AccountList::setDefaultAccount(QSharedPointer<AccountCore> account) {
 	}
 }
 
-AccountGui *AccountList::findAccountByAddress(const QString &address) {
-	for (auto &item : mList) {
-		if (auto isAccount = item.objectCast<AccountCore>()) {
-			if (isAccount->getIdentityAddress() == address) {
-				return new AccountGui(isAccount);
-			}
+QSharedPointer<AccountCore> AccountList::findAccountByAddress(const QString &address) {
+	for (auto &item : getSharedList<AccountCore>()) {
+		if (item->getIdentityAddress() == address) {
+			return item;
 		}
 	}
 	return nullptr;

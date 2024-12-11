@@ -371,46 +371,28 @@ Item {
 								implicitHeight: settingsButtons.implicitHeight
 								implicitWidth: settingsButtons.implicitWidth
 								Keys.onPressed: (event)=> {
-										if (event.key == Qt.Key_Left || event.key == Qt.Key_Escape) {
-											settingsMenuButton.popup.close()
+									if (event.key == Qt.Key_Left || event.key == Qt.Key_Escape) {
+										settingsMenuButton.popup.close()
 										event.accepted = true;
 									}
 								}
+								
 								ColumnLayout {
 									id: settingsButtons
+									spacing: 16 * DefaultStyle.dp
 									anchors.fill: parent
-                                    spacing: 16 * DefaultStyle.dp
-									
-									function getPreviousItem(index){
-										if(visibleChildren.length == 0) return null
-										--index
-										while(index >= 0){
-											if( index!= 4 && children[index].visible) return children[index]
-											--index
-										}
-										return getPreviousItem(children.length)
-									}
-									function getNextItem(index){
-										++index
-										while(index < children.length){
-											if( index!= 4 && children[index].visible) return children[index]
-											++index
-										}
-										return getNextItem(-1)
-									}
 									
 									IconLabelButton {
 										id: accountButton
 										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
 										visible: !SettingsCpp.hideAccountSettings
-										focus: visible
 										iconSize: 32 * DefaultStyle.dp
 										text: qsTr("Mon compte")
 										iconSource: AppIcons.manageProfile
 										onClicked: openAccountSettings(accountProxy.defaultAccount ? accountProxy.defaultAccount : accountProxy.firstAccount())
-										KeyNavigation.up: visibleChildren.length != 0 ? settingsButtons.getPreviousItem(0) : null
-										KeyNavigation.down: visibleChildren.length != 0 ? settingsButtons.getNextItem(0) : null
+										KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(0) : null
+										KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(0) : null
 									}
 									IconLabelButton {
 										id: dndButton
@@ -423,51 +405,47 @@ Item {
 											settingsMenuButton.popup.close()
 											SettingsCpp.dnd = !SettingsCpp.dnd
 										}
-										KeyNavigation.up: visibleChildren.length != 0 ? settingsButtons.getPreviousItem(0) : null
-										KeyNavigation.down: visibleChildren.length != 0 ? settingsButtons.getNextItem(0) : null
+										KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(1) : null
+										KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(1) : null
 									}
 									IconLabelButton {
 										id: settingsButton
 										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
 										visible: !SettingsCpp.hideSettings
-										focus: !accountButton.visible && visible
 										iconSize: 32 * DefaultStyle.dp
 										text: qsTr("Paramètres")
 										iconSource: AppIcons.settings
 										onClicked:  openContextualMenuComponent(settingsPageComponent)
-										KeyNavigation.up: visibleChildren.length != 0 ? settingsButtons.getPreviousItem(1) : null
-										KeyNavigation.down: visibleChildren.length != 0 ? settingsButtons.getNextItem(1) : null
+										KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(2) : null
+										KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(2) : null
 									}
 									IconLabelButton {
 										id: recordsButton
 										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
 										visible: !SettingsCpp.disableCallRecordings
-										focus: !accountButton.visible && !settingsButton.visible && visible
 										iconSize: 32 * DefaultStyle.dp
 										text: qsTr("Enregistrements")
 										iconSource: AppIcons.micro
-										KeyNavigation.up: visibleChildren.length != 0 ?  settingsButtons.getPreviousItem(2) : null
-										KeyNavigation.down: visibleChildren.length != 0 ? settingsButtons.getNextItem(2) : null
+										KeyNavigation.up: visibleChildren.length != 0 ?  settingsMenuButton.getPreviousItem(3) : null
+										KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(3) : null
 									}
 									IconLabelButton {
 										id: helpButton
 										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
 										iconSize: 32 * DefaultStyle.dp
-										focus: !accountButton.visible && !settingsButton.visible && !recordsButton.visible
 										text: qsTr("Aide")
 										iconSource: AppIcons.question
 										onClicked: openContextualMenuComponent(helpPageComponent)
-										KeyNavigation.up: visibleChildren.length != 0 ? settingsButtons.getPreviousItem(3) : null
-										KeyNavigation.down: visibleChildren.length != 0 ?  settingsButtons.getNextItem(3) : null
+										KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(4) : null
+										KeyNavigation.down: visibleChildren.length != 0 ?  settingsMenuButton.getNextItem(4) : null
 									}
 									IconLabelButton {
 										id: quitButton
 										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
-										focus: !accountButton.visible && !settingsButton.visible && visible
 										iconSize: 32 * DefaultStyle.dp
 										text: qsTr("Quitter Linphone")
 										iconSource: AppIcons.power
@@ -484,8 +462,8 @@ Item {
 												}
 											)
 										}
-										KeyNavigation.up: visibleChildren.length != 0 ?  settingsButtons.getPreviousItem(4) : null
-										KeyNavigation.down: visibleChildren.length != 0 ? settingsButtons.getNextItem(4) : null
+										KeyNavigation.up: visibleChildren.length != 0 ?  settingsMenuButton.getPreviousItem(5) : null
+										KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(5) : null
 									}
 									Rectangle {
 										Layout.fillWidth: true
@@ -502,8 +480,8 @@ Item {
 										text: qsTr("Ajouter un compte")
 										iconSource: AppIcons.plusCircle
 										onClicked: mainItem.addAccountRequest()
-										KeyNavigation.up: visibleChildren.length != 0 ? settingsButtons.getPreviousItem(5) : null
-										KeyNavigation.down: visibleChildren.length != 0 ? settingsButtons.getNextItem(5) : null
+										KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(7) : null
+										KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(7) : null
 									}
 								}
 							}

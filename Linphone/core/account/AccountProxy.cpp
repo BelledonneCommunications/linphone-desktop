@@ -39,9 +39,6 @@ AccountGui *AccountProxy::getDefaultAccount() {
 	return new AccountGui(mDefaultAccount);
 }
 
-void AccountProxy::setDefaultAccount(AccountGui *account) {
-}
-
 // Reset the default account to let UI build its new object if needed.
 void AccountProxy::resetDefaultAccount() {
 	mDefaultAccount = nullptr;
@@ -50,7 +47,7 @@ void AccountProxy::resetDefaultAccount() {
 
 AccountGui *AccountProxy::findAccountByAddress(const QString &address) {
 	auto model = getListModel<AccountList>();
-	if (model) return model->findAccountByAddress(address);
+	if (model) return new AccountGui(model->findAccountByAddress(address));
 	else return nullptr;
 }
 

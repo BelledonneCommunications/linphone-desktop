@@ -38,20 +38,21 @@ Item {
 			Layout.fillWidth: true
 			spacing: mainItem.spacing
 			model: AccountProxy {
+				id: accountProxy
 				sourceModel: AppCpp.accounts
 			}
 			delegate: Contact{
 				id: contactItem
 				width: list.width
 				account: modelData
+				property bool isSelected: modelData && accountProxy.defaultAccount && modelData.core === accountProxy.defaultAccount.core
 				onAvatarClicked: fileDialog.open()
 				onBackgroundClicked: {
-					list.currentIndex = index
 					modelData.core.lSetDefaultAccount()
 				}
 				onEdit: editAccount(modelData)
 				hoverEnabled: true
-				backgroundColor: list.currentIndex === index 
+				backgroundColor: contactItem.isSelected 
 					? DefaultStyle.grey_200
 					: hovered
 						? DefaultStyle.main2_100
