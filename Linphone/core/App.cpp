@@ -432,6 +432,8 @@ void App::initCore() {
 		    if (!settings) settings = SettingsCore::create();
 		    lDebug() << log().arg("Creating Ui");
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings] {
+			    // Initialize DestopTools here to have logs into files in case of errors.
+			    DesktopTools::init();
 			    // QML
 			    mEngine = new QQmlApplicationEngine(this);
 			    assert(mEngine);

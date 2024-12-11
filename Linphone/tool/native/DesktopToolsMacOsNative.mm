@@ -8,15 +8,24 @@
 #include <QThread>
 
 void DesktopTools::init(){
+}
+
+void DesktopTools::requestPermissions(){
 // Request permissions
 	if([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] != AVAuthorizationStatusAuthorized) {
-		qDebug() << "Requesting Video permission";
-		[AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL) {}];
-	}
+		qInfo() << "Requesting Video permission";
+		[AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+			qInfo() << "Video permission has" << (granted ? "" : " not") << " been granted";
+		}];
+	} else
+		qInfo() << "Video permission is already granted";
 	if([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] != AVAuthorizationStatusAuthorized){
-		qDebug() << "Requesting Audio permission";
-		[AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL) {}];
-	}
+		qInfo() << "Requesting Audio permission";
+		[AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
+			qInfo() << "Audio permission has" << (granted ? "" : " not") << " been granted";
+		}];
+	} else
+		qInfo() << "Audio permission is already granted";
 }
 
 bool isWindowMinimized(CGWindowID id) {

@@ -21,10 +21,10 @@
 #ifndef DESKTOP_TOOLS_MAC_OS_H_
 #define DESKTOP_TOOLS_MAC_OS_H_
 
-#include <QObject>
 #include <QImage>
-#include <QVariantList>
 #include <QList>
+#include <QObject>
+#include <QVariantList>
 // =============================================================================
 class VideoSourceDescriptorModel;
 
@@ -43,6 +43,9 @@ public:
 
 	static void init(); // Do first initialization
 	static void applicationStateChanged(Qt::ApplicationState currentState);
+
+	// Not used yet because AVSession request automatically permissions when trying to record something.
+	static void requestPermissions();
 
 	static QList<QVariantMap> getWindows();
 	static QImage takeScreenshot(void *window);

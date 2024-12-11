@@ -56,7 +56,7 @@ if(APPLE)
 	#CPack doesn't sign all files.
 	if (DO_SIGNING)
 		execute_process(COMMAND bash "@CMAKE_SOURCE_DIR@/cmake/install/sign_package.sh" codesign "@LINPHONE_BUILDER_SIGNING_IDENTITY@" "${CPACK_TEMPORARY_INSTALL_DIRECTORY}")
-		#execute_process(COMMAND codesign --entitlements" "@CMAKE_CURRENT_BINARY_DIR@/../../entitlements.xml" "--force" "--deep" "--timestamp" "--options" "runtime,library" "--verbose" "-s" "@LINPHONE_BUILDER_SIGNING_IDENTITY@" "@APPLICATION_OUTPUT_DIR@/@APPLICATION_NAME@.app")
+		execute_process(COMMAND codesign "--entitlements" "@CMAKE_CURRENT_BINARY_DIR@/cmake/install/macos/entitlements.xml" "--force" "--deep" "--timestamp" "--options" "runtime,library" "--verbose" "-s" "@LINPHONE_BUILDER_SIGNING_IDENTITY@" "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@APPLICATION_NAME@.app")
 	else()
 		execute_process(COMMAND codesign --force --deep --sign "-" "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@APPLICATION_NAME@.app" )#If not code signed, app can crash because of APPLE on "Code Signature Invalid" (spotted for ARM64)
 	endif()
