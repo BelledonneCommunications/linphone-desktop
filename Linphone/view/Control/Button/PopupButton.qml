@@ -77,9 +77,13 @@ Button {
 			var popupHeight = popup.height + popup.padding
 			var popupWidth = popup.width + popup.padding
 			var winPosition = mainItem.Window.contentItem ? mainItem.Window.contentItem.mapToItem(mainItem,0 , 0) : {x:0,y:0}
-			
+// Stay inside main window
 			y = Math.max( Math.min( winPosition.y + mainItem.Window.height - popupHeight, mainItem.height), winPosition.y)
 			x = Math.max( Math.min( winPosition.x + mainItem.Window.width - popupWidth, 0), winPosition.x)
+// Avoid overlapping with popup button by going to the right (todo: check if left is better?)
+			if( y < mainItem.height && y + popupHeight > 0){
+				x += mainItem.width
+			}
 			popup.contentItem.forceActiveFocus()
 		}
 		onHeightChanged: Qt.callLater(updatePosition)
