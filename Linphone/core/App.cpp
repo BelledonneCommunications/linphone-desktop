@@ -403,6 +403,16 @@ void App::init() {
 	createCommandParser(); // Recreate parser in order to use translations from config.
 	mParser->process(*this);
 
+	if (mParser->isSet("help")) {
+		mParser->showHelp();
+		::exit(EXIT_SUCCESS);
+	}
+
+	if (mParser->isSet("version")) {
+		mParser->showVersion();
+		::exit(EXIT_SUCCESS);
+	}
+
 	if (!mLinphoneThread->isRunning()) {
 		lInfo() << log().arg("Starting Thread");
 		mLinphoneThread->start();
@@ -678,22 +688,26 @@ void App::createCommandParser() {
 	if (!mParser) delete mParser;
 
 	mParser = new QCommandLineParser();
-	mParser->setApplicationDescription(tr("applicationDescription"));
-	mParser->addPositionalArgument("command", tr("commandLineDescription").replace("%1", APPLICATION_NAME),
-	                               "[command]");
+	mParser->setApplicationDescription(tr("A free (libre) SIP video-phone."));
+	mParser->addPositionalArgument(
+	    "command", tr("Send an order to the application towards a command line").replace("%1", APPLICATION_NAME),
+	    "[command]");
 	mParser->addOptions({
-	    {{"h", "help"}, tr("commandLineOptionHelp")},
-	    {"cli-help", tr("commandLineOptionCliHelp").replace("%1", APPLICATION_NAME)},
-	    {{"v", "version"}, tr("commandLineOptionVersion")},
-	    {"config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg")},
-	    {"fetch-config", tr("commandLineOptionFetchConfig").replace("%1", EXECUTABLE_NAME),
-	     tr("commandLineOptionFetchConfigArg")},
-	    {{"c", "call"}, tr("commandLineOptionCall").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionCallArg")},
+	    {{"h", "help"}, tr("Show this help")},
+	    //{"cli-help", tr("commandLineOptionCliHelp").replace("%1", APPLICATION_NAME)},
+	    {{"v", "version"}, tr("Show app version")},
+	    //{"config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg")},
+	    {"fetch-config",
+	     tr("Specify the linphone configuration file to be fetched. It will be merged with the current "
+	        "configuration.")
+	         .replace("%1", EXECUTABLE_NAME),
+	     tr("URL, path or file")},
+	//{{"c", "call"}, tr("commandLineOptionCall").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionCallArg")},
 #ifndef Q_OS_MACOS
-	    {"minimized", tr("commandLineOptionMinimized")},
+	//{"minimized", tr("commandLineOptionMinimized")},
 #endif // ifndef Q_OS_MACOS
-	    {{"V", "verbose"}, tr("commandLineOptionVerbose")},
-	    {"qt-logs-only", tr("commandLineOptionQtLogsOnly")},
+	    {{"V", "verbose"}, tr("Log to stdout some debug information while running")},
+	    {"qt-logs-only", tr("Print only logs from the application")},
 	});
 }
 // Should be call only at first start
