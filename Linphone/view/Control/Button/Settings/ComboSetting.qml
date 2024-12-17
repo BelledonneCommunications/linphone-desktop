@@ -26,5 +26,3 @@ ComboBox {
 		when: false
 	}
 }
-
-

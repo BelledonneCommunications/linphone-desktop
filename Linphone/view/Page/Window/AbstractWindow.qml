@@ -218,17 +218,16 @@ ApplicationWindow {
 	function showConfirmationPopup(requestDialog){
 		console.log("Showing confirmation popup")
 		var popup = confirmPopupComp.createObject(popupLayout, {"requestDialog": requestDialog})
-		popup.index = popupLayout.popupList.length
-		popupLayout.popupList.push(popup)
 		popup.open()
 		popup.closePopup.connect(removeFromPopupLayout)
 	}
 	
-	function showConfirmationLambdaPopup(title,text, details,callback){
+	function showConfirmationLambdaPopup(title,text, details,callback, firstButtonText, secondButtonText){
 		console.log("Showing confirmation lambda popup")
 		var popup = confirmPopupComp.createObject(popupLayout, {"title": title, "text": text, "details":details,"callback":callback})
-		popup.index = popupLayout.popupList.length
-		popupLayout.popupList.push(popup)
+		if (firstButtonText != undefined) popup.firstButtonText = firstButtonText
+		if (secondButtonText != undefined) popup.secondButtonText = secondButtonText
+		popup.titleColor = DefaultStyle.main1_500_main
 		popup.open()
 		popup.closePopup.connect(removeFromPopupLayout)
 	}

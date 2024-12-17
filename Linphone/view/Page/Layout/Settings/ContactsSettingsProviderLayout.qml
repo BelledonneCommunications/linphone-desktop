@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import SettingsCpp 1.0
+import UtilsCpp
 import Linphone
 
 RowLayout {
@@ -19,6 +20,9 @@ RowLayout {
 	property string titleProperty
 	property bool supportsEnableDisable
 	property bool showAddButton
+
+	signal save()
+	signal undo()
 
 	spacing: 5 * DefaultStyle.dp
 	ColumnLayout {
@@ -64,7 +68,6 @@ RowLayout {
 					visible: supportsEnableDisable
 					onToggled: {
 						binding.when = true
-						modelData.core.save()
 					}
 				}
 				Binding {
@@ -74,6 +77,22 @@ RowLayout {
 					value: switchButton.checked
 					when: false
 				}
+				Connections {
+					target: mainItem
+					function onSave() {
+						modelData.core.save()
+					}
+					function onUndo() {
+						modelData.core.undo()
+					}
+				}
+				Connections {
+					target: modelData.core
+					function onSavedChanged() {
+						if (modelData.core.saved) UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("Les changements ont été sauvegardés"), true, mainWindow)
+					}
+				} 
+
 			}
 			onVisibleChanged: {
 				if (visible)

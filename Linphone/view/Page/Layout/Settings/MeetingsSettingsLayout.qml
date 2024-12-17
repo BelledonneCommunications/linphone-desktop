@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import SettingsCpp 1.0
+import UtilsCpp
 import Linphone
 
 AbstractSettingsLayout {
@@ -16,6 +17,11 @@ AbstractSettingsLayout {
 			hideTopMargin: true
 		}
 	]
+
+	onSave: {
+		SettingsCpp.save()
+	}
+	onUndo: SettingsCpp.undo()
 
 	Component {
 		id: confDisplayParametersComponent

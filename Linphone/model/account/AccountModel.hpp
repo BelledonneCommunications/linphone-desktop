@@ -53,15 +53,27 @@ public:
 	void setRegisterEnabled(bool enabled);
 	bool getNotificationsAllowed();
 	void setNotificationsAllowed(bool value);
+	QString getMwiServerAddress() const;
 	void setMwiServerAddress(QString value);
+	linphone::TransportType getTransport() const;
 	void setTransport(linphone::TransportType value);
+	QString getServerAddress() const;
 	void setServerAddress(QString value);
+	bool getOutboundProxyEnabled() const;
 	void setOutboundProxyEnabled(bool value);
+	QString getStunServer() const;
 	void setStunServer(QString value);
+	bool getIceEnabled() const;
 	void setIceEnabled(bool value);
+	bool getAvpfEnabled() const;
 	void setAvpfEnabled(bool value);
+	bool getBundleModeEnabled() const;
 	void setBundleModeEnabled(bool value);
+	int getExpire() const;
 	void setExpire(int value);
+	QString getConferenceFactoryAddress() const;
+	QString getAudioVideoConferenceFactoryAddress() const;
+	QString getLimeServerUrl() const;
 	void setConferenceFactoryAddress(QString value);
 	void setAudioVideoConferenceFactoryAddress(QString value);
 	void setLimeServerUrl(QString value);
@@ -69,6 +81,7 @@ public:
 	int getVoicemailCount();
 	bool getShowMwi();
 	void setVoicemailAddress(QString value);
+	QString getVoicemailAddress() const;
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,

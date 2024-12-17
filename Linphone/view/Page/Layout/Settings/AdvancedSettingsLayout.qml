@@ -43,6 +43,11 @@ AbstractSettingsLayout {
 		}
 	]
 
+	onSave: {
+		SettingsCpp.save()
+	}
+	onUndo: SettingsCpp.undo()
+
 	// System
 	/////////
 

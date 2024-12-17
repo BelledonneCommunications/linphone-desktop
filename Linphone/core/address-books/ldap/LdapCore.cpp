@@ -35,7 +35,6 @@ LdapCore::LdapCore(const std::shared_ptr<linphone::RemoteContactDirectory> &ldap
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mLdapModel = Utils::makeQObject_ptr<LdapModel>(ldap);
 
-	INIT_CORE_MEMBER(Enabled, mLdapModel)
 	INIT_CORE_MEMBER(ServerUrl, mLdapModel)
 	INIT_CORE_MEMBER(BindDn, mLdapModel)
 	INIT_CORE_MEMBER(Password, mLdapModel)
@@ -58,13 +57,6 @@ LdapCore::~LdapCore() {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 }
 
-void LdapCore::save() {
-	mLdapModelConnection->invokeToModel([this]() {
-		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		mLdapModel->save();
-	});
-}
-
 void LdapCore::remove() {
 	mLdapModelConnection->invokeToModel([this]() {
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
@@ -80,7 +72,6 @@ void LdapCore::setSelf(QSharedPointer<LdapCore> me) {
 	mLdapModelConnection = QSharedPointer<SafeConnection<LdapCore, LdapModel>>(
 	    new SafeConnection<LdapCore, LdapModel>(me, mLdapModel), &QObject::deleteLater);
 
-	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, bool, enabled, Enabled)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, serverUrl, ServerUrl)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, bindDn, BindDn)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, password, Password)
@@ -109,4 +100,52 @@ void LdapCore::setSelf(QSharedPointer<LdapCore> me) {
 	mLdapModelConnection->makeConnectToModel(&LdapModel::removed, [this]() {
 		mLdapModelConnection->invokeToCore([this]() { emit App::getInstance()->getSettings()->ldapConfigChanged(); });
 	});
+}
+
+bool LdapCore::isEnabled() const {
+	return mEnabled;
+}
+
+void LdapCore::setEnabled(bool enabled) {
+	if (mEnabled != enabled) {
+		mEnabled = enabled;
+		emit enabledChanged();
+		setSaved(false);
+	}
+}
+
+bool LdapCore::isSaved() const {
+	return mIsSaved;
+}
+
+void LdapCore::setSaved(bool saved) {
+	if (mIsSaved != saved) {
+		mIsSaved = saved;
+		emit savedChanged();
+	}
+}
+
+void LdapCore::writeIntoModel(std::shared_ptr<LdapModel> model) const {
+	mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
+	model->setEnabled(mEnabled);
+}
+
+void LdapCore::writeFromModel(const std::shared_ptr<LdapModel> &model) {
+	mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
+	setEnabled(model->getEnabled());
+}
+
+void LdapCore::save() {
+	mLdapModelConnection->invokeToModel([this]() {
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		mLdapModel->save();
+		writeIntoModel(mLdapModel);
+		mLdapModelConnection->invokeToCore([this] { setSaved(true); });
+	});
+}
+
+void LdapCore::undo() {
+	if (mLdapModel) {
+		mLdapModelConnection->invokeToModel([this] { writeFromModel(mLdapModel); });
+	}
 }

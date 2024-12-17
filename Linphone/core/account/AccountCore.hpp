@@ -55,31 +55,35 @@ public:
 	Q_PROPERTY(bool notificationsAllowed READ getNotificationsAllowed WRITE lSetNotificationsAllowed NOTIFY
 	               notificationsAllowedChanged)
 	Q_PROPERTY(
-	    QString mwiServerAddress READ getMwiServerAddress WRITE lSetMwiServerAddress NOTIFY mwiServerAddressChanged)
+	    QString mwiServerAddress READ getMwiServerAddress WRITE setMwiServerAddress NOTIFY mwiServerAddressChanged)
 	Q_PROPERTY(QStringList transports READ getTransports CONSTANT)
-	Q_PROPERTY(QString transport READ getTransport WRITE lSetTransport NOTIFY transportChanged)
-	Q_PROPERTY(QString serverAddress READ getServerAddress WRITE lSetServerAddress NOTIFY serverAddressChanged)
-	Q_PROPERTY(bool outboundProxyEnabled READ getOutboundProxyEnabled WRITE lSetOutboundProxyEnabled NOTIFY
+	Q_PROPERTY(QString transport READ getTransport WRITE setTransport NOTIFY transportChanged)
+	Q_PROPERTY(QString serverAddress READ getServerAddress WRITE setServerAddress NOTIFY serverAddressChanged)
+	Q_PROPERTY(bool outboundProxyEnabled READ getOutboundProxyEnabled WRITE setOutboundProxyEnabled NOTIFY
 	               outboundProxyEnabledChanged)
-	Q_PROPERTY(QString stunServer READ getStunServer WRITE lSetStunServer NOTIFY stunServerChanged)
-	Q_PROPERTY(bool iceEnabled READ getIceEnabled WRITE lSetIceEnabled NOTIFY iceEnabledChanged)
-	Q_PROPERTY(bool avpfEnabled READ getAvpfEnabled WRITE lSetAvpfEnabled NOTIFY avpfEnabledChanged)
+	Q_PROPERTY(QString stunServer READ getStunServer WRITE setStunServer NOTIFY stunServerChanged)
+	Q_PROPERTY(bool iceEnabled READ getIceEnabled WRITE setIceEnabled NOTIFY iceEnabledChanged)
+	Q_PROPERTY(bool avpfEnabled READ getAvpfEnabled WRITE setAvpfEnabled NOTIFY avpfEnabledChanged)
 	Q_PROPERTY(
-	    bool bundleModeEnabled READ getBundleModeEnabled WRITE lSetBundleModeEnabled NOTIFY bundleModeEnabledChanged)
-	Q_PROPERTY(int expire READ getExpire WRITE lSetExpire NOTIFY expireChanged)
-	Q_PROPERTY(QString conferenceFactoryAddress READ getConferenceFactoryAddress WRITE lSetConferenceFactoryAddress
+	    bool bundleModeEnabled READ getBundleModeEnabled WRITE setBundleModeEnabled NOTIFY bundleModeEnabledChanged)
+	Q_PROPERTY(int expire READ getExpire WRITE setExpire NOTIFY expireChanged)
+	Q_PROPERTY(QString conferenceFactoryAddress READ getConferenceFactoryAddress WRITE setConferenceFactoryAddress
 	               NOTIFY conferenceFactoryAddressChanged)
 	Q_PROPERTY(QString audioVideoConferenceFactoryAddress READ getAudioVideoConferenceFactoryAddress WRITE
-	               lSetAudioVideoConferenceFactoryAddress NOTIFY audioVideoConferenceFactoryAddressChanged)
-	Q_PROPERTY(QString limeServerUrl READ getLimeServerUrl WRITE lSetLimeServerUrl NOTIFY limeServerUrlChanged)
+	               setAudioVideoConferenceFactoryAddress NOTIFY audioVideoConferenceFactoryAddressChanged)
+	Q_PROPERTY(QString limeServerUrl READ getLimeServerUrl WRITE setLimeServerUrl NOTIFY limeServerUrlChanged)
+	Q_PROPERTY(bool isSaved READ isSaved WRITE setIsSaved NOTIFY isSavedChanged)
+	Q_PROPERTY(
+	    QString voicemailAddress READ getVoicemailAddress WRITE setVoicemailAddress NOTIFY voicemailAddressChanged)
 
 	DECLARE_CORE_GET(int, voicemailCount, VoicemailCount)
-	DECLARE_CORE_GETSET_MEMBER(QString, voicemailAddress, VoicemailAddress)
 	static QSharedPointer<AccountCore> create(const std::shared_ptr<linphone::Account> &account);
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	AccountCore(const std::shared_ptr<linphone::Account> &account);
 	~AccountCore();
+	AccountCore(const AccountCore &accountCore);
 	void setSelf(QSharedPointer<AccountCore> me);
+	void reset(const AccountCore &accountCore);
 
 	const std::shared_ptr<AccountModel> &getModel() const;
 
@@ -127,6 +131,24 @@ public:
 	QString getConferenceFactoryAddress();
 	QString getAudioVideoConferenceFactoryAddress();
 	QString getLimeServerUrl();
+	QString getVoicemailAddress();
+
+	void setMwiServerAddress(QString value);
+	void setTransport(QString value);
+	void setServerAddress(QString value);
+	void setOutboundProxyEnabled(bool value);
+	void setStunServer(QString value);
+	void setIceEnabled(bool value);
+	void setAvpfEnabled(bool value);
+	void setBundleModeEnabled(bool value);
+	void setExpire(int value);
+	void setConferenceFactoryAddress(QString value);
+	void setAudioVideoConferenceFactoryAddress(QString value);
+	void setLimeServerUrl(QString value);
+	void setVoicemailAddress(QString value);
+
+	bool isSaved() const;
+	void setIsSaved(bool saved);
 
 	void onNotificationsAllowedChanged(bool value);
 	void onMwiServerAddressChanged(QString value);
@@ -143,6 +165,9 @@ public:
 	void onLimeServerUrlChanged(QString value);
 
 	DECLARE_CORE_GET(bool, showMwi, ShowMwi)
+
+	Q_INVOKABLE void save();
+	Q_INVOKABLE void undo();
 
 signals:
 	void pictureUriChanged();
@@ -170,7 +195,8 @@ signals:
 	void audioVideoConferenceFactoryAddressChanged();
 	void limeServerUrlChanged();
 	void removed();
-	// void voicemailAddressChanged();
+	void isSavedChanged();
+	void voicemailAddressChanged();
 
 	// Account requests
 	void lSetPictureUri(QString pictureUri);
@@ -181,18 +207,10 @@ signals:
 	void lSetDialPlan(QVariantMap internationalPrefix);
 	void lSetRegisterEnabled(bool enabled);
 	void lSetNotificationsAllowed(bool value);
-	void lSetMwiServerAddress(QString value);
-	void lSetTransport(QString value);
-	void lSetServerAddress(QString value);
-	void lSetOutboundProxyEnabled(bool value);
-	void lSetStunServer(QString value);
-	void lSetIceEnabled(bool value);
-	void lSetAvpfEnabled(bool value);
-	void lSetBundleModeEnabled(bool value);
-	void lSetExpire(int value);
-	void lSetConferenceFactoryAddress(QString value);
-	void lSetAudioVideoConferenceFactoryAddress(QString value);
-	void lSetLimeServerUrl(QString value);
+
+protected:
+	void writeIntoModel(std::shared_ptr<AccountModel> model) const;
+	void writeFromModel(const std::shared_ptr<AccountModel> &model);
 
 private:
 	QString mContactAddress;
@@ -222,7 +240,9 @@ private:
 	QString mConferenceFactoryAddress;
 	QString mAudioVideoConferenceFactoryAddress;
 	QString mLimeServerUrl;
+	QString mVoicemailAddress;
 
+	bool mIsSaved = true;
 	std::shared_ptr<AccountModel> mAccountModel;
 	QSharedPointer<SafeConnection<AccountCore, AccountModel>> mAccountModelConnection;
 	QSharedPointer<SafeConnection<AccountCore, CoreModel>> mCoreModelConnection;

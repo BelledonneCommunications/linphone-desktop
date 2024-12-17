@@ -9,6 +9,7 @@ import UtilsCpp
 
 AbstractSettingsLayout {
 	id: mainItem
+	saveButtonVisible: false
 
 	width: parent?.width
 	contentModel: [

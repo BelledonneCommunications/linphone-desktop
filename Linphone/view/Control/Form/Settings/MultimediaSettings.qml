@@ -95,7 +95,7 @@ ColumnLayout {
 					value: mainItem.call ? mainItem.call.core.speakerVolumeGain : SettingsCpp.playbackGain
 					onMoved: {
 						if (mainItem.call) mainItem.call.core.lSetSpeakerVolumeGain(value)
-						SettingsCpp.lSetPlaybackGain(value)
+						SettingsCpp.playbackGain = value
 					}
 				}
 			}
@@ -135,7 +135,7 @@ ColumnLayout {
 					value: mainItem.call ? mainItem.call.core.microphoneVolumeGain : SettingsCpp.captureGain
 					onMoved: {
 						if (mainItem.call) mainItem.call.core.lSetMicrophoneVolumeGain(value)
-						SettingsCpp.lSetCaptureGain(value)
+						SettingsCpp.captureGain = value
 					}
 				}
 				Timer {

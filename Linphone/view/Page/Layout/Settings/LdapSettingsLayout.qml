@@ -21,6 +21,15 @@ AbstractSettingsLayout {
 	topbarOptionalComponent: topBar
 	property alias ldapGui: mainItem.model
 	property bool isNew: false
+	
+	onSave: {
+		if (ldapGui.core.isValid()) {
+			ldapGui.core.save()
+			UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("L'annuaire LDAP a été sauvegardé"), true, mainWindow)
+		} else {
+			UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Une erreur s'est produite, la configuration LDAP n'a pas été sauvegardée !"), false, mainWindow)
+		}
+	}
 
 	Component {
 		id: topBar
@@ -45,22 +54,6 @@ AbstractSettingsLayout {
 							}
 						}
 					)
-				}
-			}
-			Button {
-				leftPadding: 16 * DefaultStyle.dp
-				rightPadding: 16 * DefaultStyle.dp
-				topPadding: 10 * DefaultStyle.dp
-				bottomPadding: 10 * DefaultStyle.dp
-				textSize: 15 * DefaultStyle.dp
-				text: qsTr("Enregistrer")
-				onClicked: {
-					if (ldapGui.core.isValid()) {
-						ldapGui.core.save()
-						UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("L'annuaire LDAP a été sauvegardé"), true, mainWindow)
-					} else {
-						UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Une erreur s'est produite, la configuration LDAP n'a pas été sauvegardée !"), false, mainWindow)
-					}
 				}
 			}
 		}

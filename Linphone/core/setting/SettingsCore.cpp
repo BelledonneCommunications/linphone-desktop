@@ -57,6 +57,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	mRingerDevices = settingsModel->getRingerDevices();
 	mCaptureDevice = settingsModel->getCaptureDevice();
 	mPlaybackDevice = settingsModel->getPlaybackDevice();
+	mRingerDevice = settingsModel->getRingerDevice();
 
 	mConferenceLayouts = LinphoneEnums::conferenceLayoutsToVariant();
 	mConferenceLayout =
@@ -111,6 +112,74 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(DownloadFolder, settingsModel)
 }
 
+SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
+	// Security
+	mVfsEnabled = settingsCore.mVfsEnabled;
+	mMediaEncryptions = settingsCore.mMediaEncryptions;
+	mMediaEncryption = settingsCore.mMediaEncryption;
+	mMediaEncryptionMandatory = settingsCore.mMediaEncryptionMandatory;
+
+	// Call
+	mVideoEnabled = settingsCore.mVfsEnabled;
+	mEchoCancellationEnabled = settingsCore.mEchoCancellationEnabled;
+	mAutomaticallyRecordCallsEnabled = settingsCore.mAutomaticallyRecordCallsEnabled;
+
+	// Audio
+	mCaptureDevices = settingsCore.mCaptureDevices;
+	mPlaybackDevices = settingsCore.mPlaybackDevices;
+	mRingerDevices = settingsCore.mRingerDevices;
+	mCaptureDevice = settingsCore.mCaptureDevice;
+	mPlaybackDevice = settingsCore.mPlaybackDevice;
+	mRingerDevice = settingsCore.mRingerDevice;
+
+	mConferenceLayouts = settingsCore.mConferenceLayouts;
+	mConferenceLayout = settingsCore.mConferenceLayout;
+
+	// Video
+	mVideoDevice = settingsCore.mVideoDevice;
+	mVideoDevices = settingsCore.mVideoDevices;
+
+	mCaptureGain = settingsCore.mCaptureGain;
+	mPlaybackGain = settingsCore.mPlaybackGain;
+
+	mEchoCancellationCalibration = settingsCore.mEchoCancellationCalibration;
+
+	// Logs
+	mLogsEnabled = settingsCore.mLogsEnabled;
+	mFullLogsEnabled = settingsCore.mFullLogsEnabled;
+	mLogsFolder = settingsCore.mLogsFolder;
+	mLogsEmail = settingsCore.mLogsEmail;
+
+	// DND
+	mDndEnabled = settingsCore.mDndEnabled;
+
+	// UI
+	mDisableChatFeature = settingsCore.mDisableChatFeature;
+	mDisableMeetingsFeature = settingsCore.mDisableMeetingsFeature;
+	mDisableBroadcastFeature = settingsCore.mDisableBroadcastFeature;
+	mHideSettings = settingsCore.mHideSettings;
+	mHideAccountSettings = settingsCore.mHideAccountSettings;
+	mHideFps = settingsCore.mHideFps;
+	mDisableCallRecordings = settingsCore.mDisableCallRecordings;
+	mAssistantHideCreateAccount = settingsCore.mAssistantHideCreateAccount;
+	mAssistantHideCreateAccount = settingsCore.mAssistantHideCreateAccount;
+	mAssistantDisableQrCode = settingsCore.mAssistantDisableQrCode;
+
+	mAssistantHideThirdPartyAccount = settingsCore.mAssistantHideThirdPartyAccount;
+	mOnlyDisplaySipUriUsername = settingsCore.mOnlyDisplaySipUriUsername;
+	mDarkModeAllowed = settingsCore.mDarkModeAllowed;
+	mMaxAccount = settingsCore.mMaxAccount;
+	mAssistantGoDirectlyToThirdPartySipAccountLogin = settingsCore.mAssistantGoDirectlyToThirdPartySipAccountLogin;
+	mAssistantThirdPartySipAccountDomain = settingsCore.mAssistantThirdPartySipAccountDomain;
+	mAssistantThirdPartySipAccountTransport = settingsCore.mAssistantThirdPartySipAccountTransport;
+	mAutoStart = settingsCore.mAutoStart;
+	mExitOnClose = settingsCore.mExitOnClose;
+	mSyncLdapContacts = settingsCore.mSyncLdapContacts;
+	mIpv6Enabled = settingsCore.mIpv6Enabled;
+	mConfigLocale = settingsCore.mConfigLocale;
+	mDownloadFolder = settingsCore.mDownloadFolder;
+}
+
 SettingsCore::~SettingsCore() {
 }
 
@@ -120,116 +189,46 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	    new SafeConnection<SettingsCore, SettingsModel>(me, SettingsModel::getInstance()), &QObject::deleteLater);
 
 	// VFS
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::setVfsEnabled, [this](const bool enabled) {
-		mSettingsModelConnection->invokeToModel(
-		    [this, enabled]() { SettingsModel::getInstance()->setVfsEnabled(enabled); });
-	});
-
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::vfsEnabledChanged, [this](const bool enabled) {
-		mSettingsModelConnection->invokeToCore([this, enabled]() {
-			mVfsEnabled = enabled;
-			emit vfsEnabledChanged();
-		});
+		mSettingsModelConnection->invokeToCore([this, enabled]() { setVfsEnabled(enabled); });
 	});
 
 	// Video Calls
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::setVideoEnabled, [this](const bool enabled) {
-		mSettingsModelConnection->invokeToModel(
-		    [this, enabled]() { SettingsModel::getInstance()->setVideoEnabled(enabled); });
-	});
-
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::videoEnabledChanged, [this](const bool enabled) {
-		mSettingsModelConnection->invokeToCore([this, enabled]() {
-			mVideoEnabled = enabled;
-			emit videoEnabledChanged();
-		});
+		mSettingsModelConnection->invokeToCore([this, enabled]() { setVideoEnabled(enabled); });
 	});
 
 	// Echo cancelling
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::setEchoCancellationEnabled, [this](const bool enabled) {
-		mSettingsModelConnection->invokeToModel(
-		    [this, enabled]() { SettingsModel::getInstance()->setEchoCancellationEnabled(enabled); });
-	});
-
-	mSettingsModelConnection->makeConnectToModel(&SettingsModel::echoCancellationEnabledChanged,
-	                                             [this](const bool enabled) {
-		                                             mSettingsModelConnection->invokeToCore([this, enabled]() {
-			                                             mEchoCancellationEnabled = enabled;
-			                                             emit echoCancellationEnabledChanged();
-		                                             });
-	                                             });
+	mSettingsModelConnection->makeConnectToModel(
+	    &SettingsModel::echoCancellationEnabledChanged, [this](const bool enabled) {
+		    mSettingsModelConnection->invokeToCore([this, enabled]() { setEchoCancellationEnabled(enabled); });
+	    });
 
 	// Auto recording
-	mSettingsModelConnection->makeConnectToCore(
-	    &SettingsCore::setAutomaticallyRecordCallsEnabled, [this](const bool enabled) {
-		    mSettingsModelConnection->invokeToModel(
-		        [this, enabled]() { SettingsModel::getInstance()->setAutomaticallyRecordCallsEnabled(enabled); });
+	mSettingsModelConnection->makeConnectToModel(
+	    &SettingsModel::automaticallyRecordCallsEnabledChanged, [this](const bool enabled) {
+		    mSettingsModelConnection->invokeToCore([this, enabled]() { setAutomaticallyRecordCallsEnabled(enabled); });
 	    });
-	mSettingsModelConnection->makeConnectToModel(&SettingsModel::automaticallyRecordCallsEnabledChanged,
-	                                             [this](const bool enabled) {
-		                                             mSettingsModelConnection->invokeToCore([this, enabled]() {
-			                                             mAutomaticallyRecordCallsEnabled = enabled;
-			                                             emit automaticallyRecordCallsEnabledChanged();
-		                                             });
-	                                             });
 
 	// Audio device(s)
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureDevice, [this](QVariantMap device) {
-		mSettingsModelConnection->invokeToModel(
-		    [this, device]() { SettingsModel::getInstance()->setCaptureDevice(device); });
-	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureDeviceChanged, [this](QVariantMap device) {
-		mSettingsModelConnection->invokeToCore([this, device]() {
-			mCaptureDevice = device;
-			emit captureDeviceChanged(device);
-		});
-	});
-
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetPlaybackDevice, [this](QVariantMap device) {
-		mSettingsModelConnection->invokeToModel(
-		    [this, device]() { SettingsModel::getInstance()->setPlaybackDevice(device); });
+		mSettingsModelConnection->invokeToCore([this, device]() { setCaptureDevice(device); });
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackDeviceChanged, [this](QVariantMap device) {
-		mSettingsModelConnection->invokeToCore([this, device]() {
-			mPlaybackDevice = device;
-			emit playbackDeviceChanged(device);
-		});
-	});
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetRingerDevice, [this](QVariantMap device) {
-		mSettingsModelConnection->invokeToModel(
-		    [this, device]() { SettingsModel::getInstance()->setRingerDevice(device); });
+		mSettingsModelConnection->invokeToCore([this, device]() { setPlaybackDevice(device); });
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ringerDeviceChanged, [this](QVariantMap device) {
-		mSettingsModelConnection->invokeToCore([this, device]() {
-			mRingerDevice = device;
-			emit ringerDeviceChanged(device);
-		});
-	});
-
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetPlaybackGain, [this](const float value) {
-		mSettingsModelConnection->invokeToModel(
-		    [this, value]() { SettingsModel::getInstance()->setPlaybackGain(value); });
+		mSettingsModelConnection->invokeToCore([this, device]() { setRingerDevice(device); });
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackGainChanged, [this](const float value) {
-		mSettingsModelConnection->invokeToCore([this, value]() {
-			mPlaybackGain = value;
-			emit playbackGainChanged(value);
-		});
-	});
-
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureGain, [this](const float value) {
-		mSettingsModelConnection->invokeToModel(
-		    [this, value]() { SettingsModel::getInstance()->setCaptureGain(value); });
+		mSettingsModelConnection->invokeToCore([this, value]() { setPlaybackGain(value); });
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureGainChanged, [this](const float value) {
-		mSettingsModelConnection->invokeToCore([this, value]() {
-			mCaptureGain = value;
-			emit captureGainChanged(value);
-		});
+		mSettingsModelConnection->invokeToCore([this, value]() { setCaptureGain(value); });
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::micVolumeChanged, [this](const float value) {
@@ -237,108 +236,50 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureDevicesChanged, [this](QVariantList devices) {
-		mSettingsModelConnection->invokeToCore([this, devices]() {
-			mCaptureDevices = devices;
-			emit captureDevicesChanged(devices);
-		});
+		mSettingsModelConnection->invokeToCore([this, devices]() { setCaptureDevices(devices); });
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackDevicesChanged, [this](QVariantList devices) {
-		mSettingsModelConnection->invokeToCore([this, devices]() {
-			mPlaybackDevices = devices;
-			emit playbackDevicesChanged(devices);
-		});
+		mSettingsModelConnection->invokeToCore([this, devices]() { setPlaybackDevices(devices); });
 	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ringerDevicesChanged, [this](QVariantList devices) {
-		mSettingsModelConnection->invokeToCore([this, devices]() {
-			mRingerDevices = devices;
-			emit ringerDevicesChanged(devices);
-		});
+		mSettingsModelConnection->invokeToCore([this, devices]() { setRingerDevices(devices); });
 	});
 
 	// Video device(s)
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetVideoDevice, [this](const QString id) {
-		mSettingsModelConnection->invokeToModel([this, id]() { SettingsModel::getInstance()->setVideoDevice(id); });
-	});
-
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::videoDeviceChanged, [this](const QString device) {
-		mSettingsModelConnection->invokeToCore([this, device]() {
-			mVideoDevice = device;
-			emit videoDeviceChanged();
-		});
+		mSettingsModelConnection->invokeToCore([this, device]() { setVideoDevice(device); });
 	});
 
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetConferenceLayout, [this](QVariantMap layout) {
-		auto linLayout = LinphoneEnums::toLinphone(LinphoneEnums::ConferenceLayout(layout["id"].toInt()));
-		mSettingsModelConnection->invokeToModel(
-		    [this, linLayout]() { SettingsModel::getInstance()->setDefaultConferenceLayout(linLayout); });
-	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::conferenceLayoutChanged, [this]() {
 		auto layout = LinphoneEnums::fromLinphone(SettingsModel::getInstance()->getDefaultConferenceLayout());
-		mSettingsModelConnection->invokeToCore([this, layout]() {
-			mConferenceLayout = LinphoneEnums::toVariant(layout);
-			emit conferenceLayoutChanged();
-		});
+		mSettingsModelConnection->invokeToCore(
+		    [this, layout]() { setConferenceLayout(LinphoneEnums::toVariant(layout)); });
 	});
 
-	mSettingsModelConnection->makeConnectToCore(
-	    &SettingsCore::lSetMediaEncryption, [this](const QVariantMap &encryption) {
-		    auto linEncryption = LinphoneEnums::toLinphone(LinphoneEnums::MediaEncryption(encryption["id"].toInt()));
-		    mSettingsModelConnection->invokeToModel(
-		        [this, linEncryption]() { SettingsModel::getInstance()->setDefaultMediaEncryption(linEncryption); });
-	    });
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::mediaEncryptionChanged, [this]() {
 		auto encryption = LinphoneEnums::toVariant(
 		    LinphoneEnums::fromLinphone(SettingsModel::getInstance()->getDefaultMediaEncryption()));
-		mSettingsModelConnection->invokeToCore([this, encryption]() {
-			mMediaEncryption = encryption;
-			emit mediaEncryptionChanged();
-		});
+		mSettingsModelConnection->invokeToCore([this, encryption]() { setMediaEncryption(encryption); });
 	});
 
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetMediaEncryptionMandatory, [this](bool mandatory) {
-		mSettingsModelConnection->invokeToModel(
-		    [this, mandatory]() { SettingsModel::getInstance()->setMediaEncryptionMandatory(mandatory); });
-	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::mediaEncryptionMandatoryChanged, [this]() {
 		auto mandatory = SettingsModel::getInstance()->getMediaEncryptionMandatory();
-		mSettingsModelConnection->invokeToCore([this, mandatory]() {
-			mMediaEncryptionMandatory = mandatory;
-			emit mediaEncryptionMandatoryChanged(mandatory);
-		});
+		mSettingsModelConnection->invokeToCore([this, mandatory]() { setMediaEncryptionMandatory(mandatory); });
 	});
 
-	mSettingsModelConnection->makeConnectToModel(&SettingsModel::videoDevicesChanged,
-	                                             [this](const QStringList devices) {
-		                                             mSettingsModelConnection->invokeToCore([this, devices]() {
-			                                             mVideoDevices = devices;
-			                                             emit videoDevicesChanged();
-		                                             });
-	                                             });
+	mSettingsModelConnection->makeConnectToModel(
+	    &SettingsModel::videoDevicesChanged, [this](const QStringList devices) {
+		    mSettingsModelConnection->invokeToCore([this, devices]() { setVideoDevices(devices); });
+	    });
 
 	// Logs
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::setLogsEnabled, [this](const bool status) {
-		mSettingsModelConnection->invokeToModel(
-		    [this, status]() { SettingsModel::getInstance()->setLogsEnabled(status); });
-	});
-
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::logsEnabledChanged, [this](const bool status) {
-		mSettingsModelConnection->invokeToCore([this, status]() {
-			mLogsEnabled = status;
-			emit logsEnabledChanged();
-		});
-	});
-
-	mSettingsModelConnection->makeConnectToCore(&SettingsCore::setFullLogsEnabled, [this](const bool status) {
-		mSettingsModelConnection->invokeToModel(
-		    [this, status]() { SettingsModel::getInstance()->setFullLogsEnabled(status); });
+		mSettingsModelConnection->invokeToCore([this, status]() { setLogsEnabled(status); });
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::fullLogsEnabledChanged, [this](const bool status) {
-		mSettingsModelConnection->invokeToCore([this, status]() {
-			mFullLogsEnabled = status;
-			emit fullLogsEnabledChanged();
-		});
+		mSettingsModelConnection->invokeToCore([this, status]() { setFullLogsEnabled(status); });
 	});
 
 	// DND
@@ -346,10 +287,7 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		mSettingsModelConnection->invokeToModel([this, value]() { SettingsModel::getInstance()->enableDnd(value); });
 	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::dndChanged, [this](const bool value) {
-		mSettingsModelConnection->invokeToCore([this, value]() {
-			mDndEnabled = value;
-			emit dndChanged();
-		});
+		mSettingsModelConnection->invokeToCore([this, value]() { setDndEnabled(value); });
 	});
 
 	auto settingsModel = SettingsModel::getInstance();
@@ -417,6 +355,72 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	    });
 }
 
+void SettingsCore::reset(const SettingsCore &settingsCore) {
+	// Security
+	setVfsEnabled(settingsCore.mVfsEnabled);
+
+	// Call
+	setVideoEnabled(settingsCore.mVfsEnabled);
+	setEchoCancellationEnabled(settingsCore.mEchoCancellationEnabled);
+	setAutomaticallyRecordCallsEnabled(settingsCore.mAutomaticallyRecordCallsEnabled);
+
+	// Audio
+	setCaptureDevices(settingsCore.mCaptureDevices);
+	setPlaybackDevices(settingsCore.mPlaybackDevices);
+	setRingerDevices(settingsCore.mRingerDevices);
+	setCaptureDevice(settingsCore.mCaptureDevice);
+	setPlaybackDevice(settingsCore.mPlaybackDevice);
+
+	setConferenceLayouts(settingsCore.mConferenceLayouts);
+	setConferenceLayout(settingsCore.mConferenceLayout);
+
+	setMediaEncryptions(settingsCore.mMediaEncryptions);
+	setMediaEncryption(settingsCore.mMediaEncryption);
+
+	setMediaEncryptionMandatory(settingsCore.mMediaEncryptionMandatory);
+
+	setCaptureGain(settingsCore.mCaptureGain);
+	setPlaybackGain(settingsCore.mPlaybackGain);
+
+	// Video
+	setVideoDevice(settingsCore.mVideoDevice);
+	setVideoDevices(settingsCore.mVideoDevices);
+
+	// Logs
+	setLogsEnabled(settingsCore.mLogsEnabled);
+	setFullLogsEnabled(settingsCore.mFullLogsEnabled);
+	setLogsFolder(settingsCore.mLogsFolder);
+
+	// DND
+	setDndEnabled(settingsCore.mDndEnabled);
+
+	// UI
+	setDisableChatFeature(settingsCore.mDisableChatFeature);
+	setDisableMeetingsFeature(settingsCore.mDisableMeetingsFeature);
+	setDisableBroadcastFeature(settingsCore.mDisableBroadcastFeature);
+	setHideSettings(settingsCore.mHideSettings);
+	setHideAccountSettings(settingsCore.mHideAccountSettings);
+	setHideFps(settingsCore.mHideFps);
+	setDisableCallRecordings(settingsCore.mDisableCallRecordings);
+	setAssistantHideCreateAccount(settingsCore.mAssistantHideCreateAccount);
+	setAssistantHideCreateAccount(settingsCore.mAssistantHideCreateAccount);
+	setAssistantDisableQrCode(settingsCore.mAssistantDisableQrCode);
+
+	setAssistantHideThirdPartyAccount(settingsCore.mAssistantHideThirdPartyAccount);
+	setOnlyDisplaySipUriUsername(settingsCore.mOnlyDisplaySipUriUsername);
+	setDarkModeAllowed(settingsCore.mDarkModeAllowed);
+	setMaxAccount(settingsCore.mMaxAccount);
+	setAssistantGoDirectlyToThirdPartySipAccountLogin(settingsCore.mAssistantGoDirectlyToThirdPartySipAccountLogin);
+	setAssistantThirdPartySipAccountDomain(settingsCore.mAssistantThirdPartySipAccountDomain);
+	setAssistantThirdPartySipAccountTransport(settingsCore.mAssistantThirdPartySipAccountTransport);
+	setAutoStart(settingsCore.mAutoStart);
+	setExitOnClose(settingsCore.mExitOnClose);
+	setSyncLdapContacts(settingsCore.mSyncLdapContacts);
+	setIpv6Enabled(settingsCore.mIpv6Enabled);
+	setConfigLocale(settingsCore.mConfigLocale);
+	setDownloadFolder(settingsCore.mDownloadFolder);
+}
+
 QString SettingsCore::getConfigPath(const QCommandLineParser &parser) {
 	QString filePath = parser.isSet("config") ? parser.value("config") : "";
 	QString configPath;
@@ -429,28 +433,120 @@ QString SettingsCore::getConfigPath(const QCommandLineParser &parser) {
 	return configPath;
 }
 
+void SettingsCore::setVfsEnabled(bool enabled) {
+	if (mVfsEnabled != enabled) {
+		mVfsEnabled = enabled;
+		emit vfsEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setVideoEnabled(bool enabled) {
+	if (mVideoEnabled != enabled) {
+		mVideoEnabled = enabled;
+		emit videoEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setEchoCancellationEnabled(bool enabled) {
+	if (mEchoCancellationEnabled != enabled) {
+		mEchoCancellationEnabled = enabled;
+		emit echoCancellationEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setAutomaticallyRecordCallsEnabled(bool enabled) {
+	if (mAutomaticallyRecordCallsEnabled != enabled) {
+		mAutomaticallyRecordCallsEnabled = enabled;
+		emit automaticallyRecordCallsEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
 QVariantList SettingsCore::getCaptureDevices() const {
 	return mCaptureDevices;
+}
+
+void SettingsCore::setCaptureDevices(QVariantList devices) {
+	mCaptureDevices = devices;
+	emit captureDevicesChanged(devices);
 }
 
 QVariantList SettingsCore::getPlaybackDevices() const {
 	return mPlaybackDevices;
 }
 
+void SettingsCore::setPlaybackDevices(QVariantList devices) {
+	mPlaybackDevices = devices;
+	emit captureDevicesChanged(devices);
+}
+
 QVariantList SettingsCore::getRingerDevices() const {
 	return mRingerDevices;
+}
+
+void SettingsCore::setRingerDevices(QVariantList devices) {
+	mRingerDevices = devices;
+	emit captureDevicesChanged(devices);
 }
 
 QVariantList SettingsCore::getConferenceLayouts() const {
 	return mConferenceLayouts;
 }
 
+void SettingsCore::setConferenceLayouts(QVariantList layouts) {
+	mConferenceLayouts = layouts;
+	emit conferenceLayoutsChanged(layouts);
+}
+
 QVariantList SettingsCore::getMediaEncryptions() const {
 	return mMediaEncryptions;
 }
 
+void SettingsCore::setMediaEncryptions(QVariantList encryptions) {
+	mMediaEncryptions = encryptions;
+	emit mediaEncryptionsChanged(encryptions);
+}
+
 bool SettingsCore::isMediaEncryptionMandatory() const {
 	return mMediaEncryptionMandatory;
+}
+
+void SettingsCore::setMediaEncryptionMandatory(bool mandatory) {
+	if (mMediaEncryptionMandatory != mandatory) {
+		mMediaEncryptionMandatory = mandatory;
+		emit mediaEncryptionMandatoryChanged(mandatory);
+		setIsSaved(false);
+	}
+}
+
+bool SettingsCore::isSaved() const {
+	return mIsSaved;
+}
+
+void SettingsCore::setIsSaved(bool saved) {
+	if (mIsSaved != saved) {
+		mIsSaved = saved;
+		emit isSavedChanged();
+	}
+}
+
+void SettingsCore::setVideoDevice(QString device) {
+	if (mVideoDevice != device) {
+		mVideoDevice = device;
+		emit videoDeviceChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setVideoDevices(QStringList devices) {
+	if (mVideoDevices != devices) {
+		mVideoDevices = devices;
+		emit videoDevicesChanged();
+		setIsSaved(false);
+	}
 }
 
 int SettingsCore::getVideoDeviceIndex() const {
@@ -469,28 +565,84 @@ float SettingsCore::getCaptureGain() const {
 	return mCaptureGain;
 }
 
+void SettingsCore::setCaptureGain(float gain) {
+	if (mCaptureGain != gain) {
+		mCaptureGain = gain;
+		emit captureGainChanged(gain);
+		setIsSaved(false);
+	}
+}
+
 QVariantMap SettingsCore::getConferenceLayout() const {
 	return mConferenceLayout;
+}
+
+void SettingsCore::setConferenceLayout(QVariantMap layout) {
+	if (mConferenceLayout["id"] != layout["id"]) {
+		mConferenceLayout = layout;
+		emit conferenceLayoutChanged();
+		setIsSaved(false);
+	}
 }
 
 QVariantMap SettingsCore::getMediaEncryption() const {
 	return mMediaEncryption;
 }
 
+void SettingsCore::setMediaEncryption(QVariantMap encryption) {
+	if (mMediaEncryption != encryption) {
+		mMediaEncryption = encryption;
+		emit mediaEncryptionChanged();
+		setIsSaved(false);
+	}
+}
+
 float SettingsCore::getPlaybackGain() const {
 	return mPlaybackGain;
+}
+
+void SettingsCore::setPlaybackGain(float gain) {
+	if (mPlaybackGain != gain) {
+		mPlaybackGain = gain;
+		emit playbackGainChanged(gain);
+		setIsSaved(false);
+	}
 }
 
 QVariantMap SettingsCore::getCaptureDevice() const {
 	return mCaptureDevice;
 }
 
+void SettingsCore::setCaptureDevice(QVariantMap device) {
+	if (mCaptureDevice["id"] != device["id"]) {
+		mCaptureDevice = device;
+		emit captureDeviceChanged(device);
+		setIsSaved(false);
+	}
+}
+
 QVariantMap SettingsCore::getPlaybackDevice() const {
 	return mPlaybackDevice;
 }
 
+void SettingsCore::setPlaybackDevice(QVariantMap device) {
+	if (mPlaybackDevice["id"] != device["id"]) {
+		mPlaybackDevice = device;
+		emit playbackDeviceChanged(device);
+		setIsSaved(false);
+	}
+}
+
 QVariantMap SettingsCore::getRingerDevice() const {
 	return mRingerDevice;
+}
+
+void SettingsCore::setRingerDevice(QVariantMap device) {
+	if (mRingerDevice["id"] != device["id"]) {
+		mRingerDevice = device;
+		emit ringerDeviceChanged(mRingerDevice);
+		setIsSaved(false);
+	}
 }
 
 int SettingsCore::getEchoCancellationCalibration() const {
@@ -557,8 +709,24 @@ bool SettingsCore::getLogsEnabled() const {
 	return mLogsEnabled;
 }
 
+void SettingsCore::setLogsEnabled(bool enabled) {
+	if (mLogsEnabled != enabled) {
+		mLogsEnabled = enabled;
+		emit logsEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
 bool SettingsCore::getFullLogsEnabled() const {
 	return mFullLogsEnabled;
+}
+
+void SettingsCore::setFullLogsEnabled(bool enabled) {
+	if (mFullLogsEnabled != enabled) {
+		mFullLogsEnabled = enabled;
+		emit fullLogsEnabledChanged();
+		setIsSaved(false);
+	}
 }
 
 void SettingsCore::cleanLogs() const {
@@ -577,8 +745,23 @@ QString SettingsCore::getLogsFolder() const {
 	return mLogsFolder;
 }
 
+void SettingsCore::setLogsFolder(QString folder) {
+	if (mLogsFolder != folder) {
+		mLogsFolder = folder;
+		emit logsFolderChanged(folder);
+		setIsSaved(false);
+	}
+}
+
 bool SettingsCore::dndEnabled() const {
 	return mDndEnabled;
+}
+
+void SettingsCore::setDndEnabled(bool enabled) {
+	if (mDndEnabled != enabled) {
+		mDndEnabled = enabled;
+		emit dndChanged();
+	}
 }
 
 bool SettingsCore::getAutoStart() const {
@@ -601,4 +784,156 @@ QString SettingsCore::getDownloadFolder() const {
 	auto path = mDownloadFolder;
 	if (mDownloadFolder.isEmpty()) path = Paths::getDownloadDirPath();
 	return QDir::cleanPath(path) + QDir::separator();
+}
+
+void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
+	mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
+	// Security
+	model->setVfsEnabled(mVfsEnabled);
+
+	// Call
+	model->setVideoEnabled(mVfsEnabled);
+	model->setEchoCancellationEnabled(mEchoCancellationEnabled);
+	model->setAutomaticallyRecordCallsEnabled(mAutomaticallyRecordCallsEnabled);
+
+	// Audio
+	model->setRingerDevice(mRingerDevice);
+	model->setCaptureDevice(mCaptureDevice);
+	model->setPlaybackDevice(mPlaybackDevice);
+
+	model->setDefaultConferenceLayout(
+	    LinphoneEnums::toLinphone(LinphoneEnums::ConferenceLayout(mConferenceLayout["id"].toInt())));
+
+	model->setDefaultMediaEncryption(
+	    LinphoneEnums::toLinphone(LinphoneEnums::MediaEncryption(mMediaEncryption["id"].toInt())));
+
+	model->setMediaEncryptionMandatory(mMediaEncryptionMandatory);
+
+	model->setCaptureGain(mCaptureGain);
+	model->setPlaybackGain(mPlaybackGain);
+
+	// Video
+	model->setVideoDevice(mVideoDevice);
+
+	// Logs
+	model->setLogsEnabled(mLogsEnabled);
+	model->setFullLogsEnabled(mFullLogsEnabled);
+
+	// UI
+	model->setDisableChatFeature(mDisableChatFeature);
+	model->setDisableMeetingsFeature(mDisableMeetingsFeature);
+	model->setDisableBroadcastFeature(mDisableBroadcastFeature);
+	model->setHideSettings(mHideSettings);
+	model->setHideAccountSettings(mHideAccountSettings);
+	model->setHideFps(mHideFps);
+	model->setDisableCallRecordings(mDisableCallRecordings);
+	model->setAssistantHideCreateAccount(mAssistantHideCreateAccount);
+	model->setAssistantHideCreateAccount(mAssistantHideCreateAccount);
+	model->setAssistantDisableQrCode(mAssistantDisableQrCode);
+
+	model->setAssistantHideThirdPartyAccount(mAssistantHideThirdPartyAccount);
+	model->setOnlyDisplaySipUriUsername(mOnlyDisplaySipUriUsername);
+	model->setDarkModeAllowed(mDarkModeAllowed);
+	model->setMaxAccount(mMaxAccount);
+	model->setAssistantGoDirectlyToThirdPartySipAccountLogin(mAssistantGoDirectlyToThirdPartySipAccountLogin);
+	model->setAssistantThirdPartySipAccountDomain(mAssistantThirdPartySipAccountDomain);
+	model->setAssistantThirdPartySipAccountTransport(mAssistantThirdPartySipAccountTransport);
+	model->setAutoStart(mAutoStart);
+	model->setExitOnClose(mExitOnClose);
+	model->setSyncLdapContacts(mSyncLdapContacts);
+	model->setIpv6Enabled(mIpv6Enabled);
+	model->setConfigLocale(mConfigLocale);
+	model->setDownloadFolder(mDownloadFolder);
+}
+
+void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
+	mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
+
+	// Security
+	mVfsEnabled = model->getVfsEnabled();
+
+	// Call
+	mVideoEnabled = model->getVideoEnabled();
+	mEchoCancellationEnabled = model->getEchoCancellationEnabled();
+	mAutomaticallyRecordCallsEnabled = model->getAutomaticallyRecordCallsEnabled();
+
+	// Audio
+	mCaptureDevices = model->getCaptureDevices();
+	mPlaybackDevices = model->getPlaybackDevices();
+	mRingerDevices = model->getRingerDevices();
+	mRingerDevice = model->getRingerDevice();
+	mCaptureDevice = model->getCaptureDevice();
+	mPlaybackDevice = model->getPlaybackDevice();
+
+	mConferenceLayout = LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(model->getDefaultConferenceLayout()));
+
+	mMediaEncryption = LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(model->getDefaultMediaEncryption()));
+
+	mMediaEncryptionMandatory = model->getMediaEncryptionMandatory();
+
+	mCaptureGain = model->getCaptureGain();
+	mPlaybackGain = model->getPlaybackGain();
+
+	// Video
+	mVideoDevice = model->getVideoDevice();
+	mVideoDevices = model->getVideoDevices();
+
+	// Logs
+	mLogsEnabled = model->getLogsEnabled();
+	mFullLogsEnabled = model->getFullLogsEnabled();
+	mLogsFolder = model->getLogsFolder();
+	mLogsEmail = model->getLogsEmail();
+
+	// UI
+	mDisableChatFeature = model->getDisableChatFeature();
+	mDisableMeetingsFeature = model->getDisableMeetingsFeature();
+	mDisableBroadcastFeature = model->getDisableBroadcastFeature();
+	mHideSettings = model->getHideSettings();
+	mHideAccountSettings = model->getHideAccountSettings();
+	mHideFps = model->getHideFps();
+	mDisableCallRecordings = model->getDisableCallRecordings();
+	mAssistantHideCreateAccount = model->getAssistantHideCreateAccount();
+	mAssistantHideCreateAccount = model->getAssistantHideCreateAccount();
+	mAssistantDisableQrCode = model->getAssistantDisableQrCode();
+
+	mAssistantHideThirdPartyAccount = model->getAssistantHideThirdPartyAccount();
+	mOnlyDisplaySipUriUsername = model->getOnlyDisplaySipUriUsername();
+	mDarkModeAllowed = model->getDarkModeAllowed();
+	mMaxAccount = model->getMaxAccount();
+	mAssistantGoDirectlyToThirdPartySipAccountLogin = model->getAssistantGoDirectlyToThirdPartySipAccountLogin();
+	mAssistantThirdPartySipAccountDomain = model->getAssistantThirdPartySipAccountDomain();
+	mAssistantThirdPartySipAccountTransport = model->getAssistantThirdPartySipAccountTransport();
+	mAutoStart = model->getAutoStart();
+	mExitOnClose = model->getExitOnClose();
+	mSyncLdapContacts = model->getSyncLdapContacts();
+	mIpv6Enabled = model->getIpv6Enabled();
+	mConfigLocale = model->getConfigLocale();
+	mDownloadFolder = model->getDownloadFolder();
+}
+
+void SettingsCore::save() {
+	mustBeInMainThread(getClassName() + Q_FUNC_INFO);
+	SettingsCore *thisCopy = new SettingsCore(*this);
+	if (SettingsModel::getInstance()) {
+		mSettingsModelConnection->invokeToModel([this, thisCopy] {
+			mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
+			thisCopy->writeIntoModel(SettingsModel::getInstance());
+			thisCopy->deleteLater();
+			mSettingsModelConnection->invokeToCore([this]() { setIsSaved(true); });
+		});
+	}
+}
+
+void SettingsCore::undo() {
+	if (SettingsModel::getInstance()) {
+		mSettingsModelConnection->invokeToModel([this] {
+			SettingsCore *settings = new SettingsCore(*this);
+			settings->writeFromModel(SettingsModel::getInstance());
+			settings->moveToThread(App::getInstance()->thread());
+			mSettingsModelConnection->invokeToCore([this, settings]() {
+				this->reset(*settings);
+				settings->deleteLater();
+			});
+		});
+	}
 }

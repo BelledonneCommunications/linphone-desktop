@@ -14,6 +14,7 @@ AbstractMainPage {
 	property var titleText
 
 	signal goBack()
+	signal goBackRequested()
 	
 	function layoutUrl(name) {
 		return layoutsPath+"/"+name+".qml"
@@ -41,7 +42,7 @@ AbstractMainPage {
 				height: 24 * DefaultStyle.dp
 				focus: true
 				onClicked: {
-					mainItem.goBack()
+					mainItem.goBackRequested()
 				}
 				background: Item {
 					anchors.fill: parent

@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
 import SettingsCpp 1.0
+import UtilsCpp
 
 AbstractSettingsLayout {
 	id: mainItem
@@ -22,6 +23,11 @@ AbstractSettingsLayout {
 			customRightMargin: 36
 		}
 	]
+
+	onSave: {
+		SettingsCpp.save()
+	}
+	onUndo: SettingsCpp.undo()
 
 	// Generic call parameters
 	//////////////////////////

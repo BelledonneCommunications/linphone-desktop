@@ -64,5 +64,4 @@ Item {
 		font: Typography.h4
 	}
 	
-	
 }

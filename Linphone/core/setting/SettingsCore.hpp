@@ -53,22 +53,22 @@ public:
 	Q_PROPERTY(QVariantList conferenceLayouts READ getConferenceLayouts NOTIFY conferenceLayoutsChanged)
 	Q_PROPERTY(QVariantList mediaEncryptions READ getMediaEncryptions NOTIFY mediaEncryptionsChanged)
 
-	Q_PROPERTY(float playbackGain READ getPlaybackGain WRITE lSetPlaybackGain NOTIFY playbackGainChanged)
-	Q_PROPERTY(float captureGain READ getCaptureGain WRITE lSetCaptureGain NOTIFY captureGainChanged)
+	Q_PROPERTY(float playbackGain READ getPlaybackGain WRITE setPlaybackGain NOTIFY playbackGainChanged)
+	Q_PROPERTY(float captureGain READ getCaptureGain WRITE setCaptureGain NOTIFY captureGainChanged)
 
-	Q_PROPERTY(QVariantMap captureDevice READ getCaptureDevice WRITE lSetCaptureDevice NOTIFY captureDeviceChanged)
-	Q_PROPERTY(QVariantMap playbackDevice READ getPlaybackDevice WRITE lSetPlaybackDevice NOTIFY playbackDeviceChanged)
-	Q_PROPERTY(QVariantMap ringerDevice READ getRingerDevice WRITE lSetRingerDevice NOTIFY ringerDeviceChanged)
+	Q_PROPERTY(QVariantMap captureDevice READ getCaptureDevice WRITE setCaptureDevice NOTIFY captureDeviceChanged)
+	Q_PROPERTY(QVariantMap playbackDevice READ getPlaybackDevice WRITE setPlaybackDevice NOTIFY playbackDeviceChanged)
+	Q_PROPERTY(QVariantMap ringerDevice READ getRingerDevice WRITE setRingerDevice NOTIFY ringerDeviceChanged)
 
 	Q_PROPERTY(
-	    QVariantMap conferenceLayout READ getConferenceLayout WRITE lSetConferenceLayout NOTIFY conferenceLayoutChanged)
+	    QVariantMap conferenceLayout READ getConferenceLayout WRITE setConferenceLayout NOTIFY conferenceLayoutChanged)
 	Q_PROPERTY(
-	    QVariantMap mediaEncryption READ getMediaEncryption WRITE lSetMediaEncryption NOTIFY mediaEncryptionChanged)
-	Q_PROPERTY(bool mediaEncryptionMandatory READ isMediaEncryptionMandatory WRITE lSetMediaEncryptionMandatory NOTIFY
+	    QVariantMap mediaEncryption READ getMediaEncryption WRITE setMediaEncryption NOTIFY mediaEncryptionChanged)
+	Q_PROPERTY(bool mediaEncryptionMandatory READ isMediaEncryptionMandatory WRITE setMediaEncryptionMandatory NOTIFY
 	               mediaEncryptionMandatoryChanged)
 
 	Q_PROPERTY(QStringList videoDevices READ getVideoDevices NOTIFY videoDevicesChanged)
-	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE lSetVideoDevice NOTIFY videoDeviceChanged)
+	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE setVideoDevice NOTIFY videoDeviceChanged)
 	Q_PROPERTY(int videoDeviceIndex READ getVideoDeviceIndex NOTIFY videoDeviceChanged)
 
 	Q_PROPERTY(float micVolume MEMBER _dummy_int NOTIFY micVolumeChanged)
@@ -78,12 +78,15 @@ public:
 	Q_PROPERTY(QString logsEmail READ getLogsEmail)
 	Q_PROPERTY(QString logsFolder READ getLogsFolder)
 	Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
+	Q_PROPERTY(bool isSaved READ isSaved WRITE setIsSaved NOTIFY isSavedChanged)
 
 	static QSharedPointer<SettingsCore> create();
 	SettingsCore(QObject *parent = Q_NULLPTR);
+	SettingsCore(const SettingsCore &settingsCore);
 	virtual ~SettingsCore();
 
 	void setSelf(QSharedPointer<SettingsCore> me);
+	void reset(const SettingsCore &settingsCore);
 
 	QString getConfigPath(const QCommandLineParser &parser = QCommandLineParser());
 
@@ -101,42 +104,64 @@ public:
 	bool getVfsEnabled() {
 		return mVfsEnabled;
 	}
+	void setVfsEnabled(bool enabled);
 
 	// Call. --------------------------------------------------------------------
 
 	bool getVideoEnabled() {
 		return mVideoEnabled;
 	}
+	void setVideoEnabled(bool enabled);
+
 	bool getEchoCancellationEnabled() {
 		return mEchoCancellationEnabled;
 	}
+	void setEchoCancellationEnabled(bool enabled);
+
 	bool getAutomaticallyRecordCallsEnabled() {
 		return mAutomaticallyRecordCallsEnabled;
 	}
+	void setAutomaticallyRecordCallsEnabled(bool enabled);
 
 	float getPlaybackGain() const;
+	void setPlaybackGain(float gain);
 
 	float getCaptureGain() const;
-
-	QVariantMap getMediaEncryption() const;
-	bool isMediaEncryptionMandatory() const;
+	void setCaptureGain(float gain);
 
 	QVariantList getCaptureDevices() const;
+	void setCaptureDevices(QVariantList devices);
 	QVariantList getPlaybackDevices() const;
+	void setPlaybackDevices(QVariantList devices);
 	QVariantList getRingerDevices() const;
+	void setRingerDevices(QVariantList devices);
 	QVariantList getConferenceLayouts() const;
+	void setConferenceLayouts(QVariantList layouts);
 	QVariantList getMediaEncryptions() const;
+	void setMediaEncryptions(QVariantList encryptions);
 
 	QVariantMap getCaptureDevice() const;
+	void setCaptureDevice(QVariantMap device);
 	QVariantMap getPlaybackDevice() const;
+	void setPlaybackDevice(QVariantMap device);
 	QVariantMap getRingerDevice() const;
+	void setRingerDevice(QVariantMap device);
 	QVariantMap getConferenceLayout() const;
+	void setConferenceLayout(QVariantMap layout);
+	QVariantMap getMediaEncryption() const;
+	void setMediaEncryption(QVariantMap encryption);
+	bool isMediaEncryptionMandatory() const;
+	void setMediaEncryptionMandatory(bool mandatory);
+	bool isSaved() const;
+	void setIsSaved(bool saved);
 
 	QString getVideoDevice() const {
 		return mVideoDevice;
 	}
+	void setVideoDevice(QString device);
 	int getVideoDeviceIndex() const;
 	QStringList getVideoDevices() const;
+	void setVideoDevices(QStringList devices);
 
 	bool getCaptureGraphRunning();
 
@@ -148,14 +173,22 @@ public:
 	Q_INVOKABLE void updateMicVolume() const;
 
 	bool getLogsEnabled() const;
+	void setLogsEnabled(bool enabled);
+
 	bool getFullLogsEnabled() const;
+	void setFullLogsEnabled(bool enabled);
 
 	Q_INVOKABLE void cleanLogs() const;
 	Q_INVOKABLE void sendLogs() const;
 	QString getLogsEmail() const;
 	QString getLogsFolder() const;
+	void setLogsFolder(QString folder);
 
 	bool dndEnabled() const;
+	void setDndEnabled(bool enabled);
+
+	Q_INVOKABLE void save();
+	Q_INVOKABLE void undo();
 
 	DECLARE_CORE_GETSET_MEMBER(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableMeetingsFeature, DisableMeetingsFeature)
@@ -187,17 +220,13 @@ public:
 signals:
 
 	// Security
-	void setVfsEnabled(const bool enabled);
 	void vfsEnabledChanged();
 
 	// Call
-	void setVideoEnabled(const bool enabled);
 	void videoEnabledChanged();
 
-	void setEchoCancellationEnabled(const bool enabled);
 	void echoCancellationEnabledChanged();
 
-	void setAutomaticallyRecordCallsEnabled(const bool enabled);
 	void automaticallyRecordCallsEnabledChanged();
 
 	void captureGraphRunningChanged(bool running);
@@ -211,30 +240,22 @@ signals:
 	void conferenceLayoutsChanged(const QVariantList &layouts);
 	void mediaEncryptionsChanged(const QVariantList &encryptions);
 
-	void lSetCaptureDevice(const QVariantMap &device);
 	void captureDeviceChanged(const QVariantMap &device);
 
-	void lSetConferenceLayout(QVariantMap confLayout);
 	void conferenceLayoutChanged();
 
-	void lSetMediaEncryption(const QVariantMap &id);
 	void mediaEncryptionChanged();
 
-	void lSetMediaEncryptionMandatory(bool mandatory);
 	void mediaEncryptionMandatoryChanged(bool mandatory);
 
-	void lSetPlaybackDevice(const QVariantMap &device);
+	void isSavedChanged();
+
 	void playbackDeviceChanged(const QVariantMap &device);
 
-	void lSetRingerDevice(const QVariantMap &device);
 	void ringerDeviceChanged(const QVariantMap &device);
 
-	void lSetVideoDevice(const QString &device);
 	void videoDeviceChanged();
 	void videoDevicesChanged();
-
-	void lSetCaptureGain(float gain);
-	void lSetPlaybackGain(float gain);
 
 	void echoCancellationCalibrationChanged();
 	void micVolumeChanged(float volume);
@@ -242,11 +263,7 @@ signals:
 	void logsEnabledChanged();
 	void fullLogsEnabledChanged();
 
-	void setLogsEnabled(bool status);
-	void setFullLogsEnabled(bool status);
-
 	void logsUploadTerminated(bool status, QString url);
-	void logsEmailChanged(const QString &email);
 	void logsFolderChanged(const QString &folder);
 
 	void firstLaunchChanged(bool firstLaunch);
@@ -255,9 +272,14 @@ signals:
 	void lastActiveTabIndexChanged();
 
 	void dndChanged();
-	void lEnableDnd(bool value);
 
 	void ldapConfigChanged();
+
+	void lEnableDnd(bool value);
+
+protected:
+	void writeIntoModel(std::shared_ptr<SettingsModel> model) const;
+	void writeFromModel(const std::shared_ptr<SettingsModel> &model);
 
 private:
 	// Dummy properties (for properties that use values from core received through signals)
@@ -278,12 +300,13 @@ private:
 	QVariantList mCaptureDevices;
 	QVariantList mPlaybackDevices;
 	QVariantList mRingerDevices;
-	QVariantList mConferenceLayouts;
 	QVariantMap mCaptureDevice;
 	QVariantMap mPlaybackDevice;
 	QVariantMap mRingerDevice;
-	QVariantMap mConferenceLayout;
 
+	QVariantList mConferenceLayouts;
+	QVariantMap mConferenceLayout;
+	
 	// Video
 	QStringList mVideoDevices;
 	QString mVideoDevice;
@@ -302,6 +325,7 @@ private:
 	// DND
 	bool mDndEnabled;
 
+	bool mIsSaved = true;
 	QSettings mAppSettings;
 	QSharedPointer<SafeConnection<SettingsCore, SettingsModel>> mSettingsModelConnection;
 

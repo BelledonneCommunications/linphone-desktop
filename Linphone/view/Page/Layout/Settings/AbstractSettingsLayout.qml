@@ -18,6 +18,9 @@ Rectangle {
 	property int contentHeight: contentRepeater.count > 0 ? contentRepeater.itemAt(0).height * contentRepeater.count : 0
 	property int minimumWidthForSwitchintToRowLayout: 981 * DefaultStyle.dp
 	property var useVerticalLayout
+	property bool saveButtonVisible: true
+	signal save()
+	signal undo()
 	function setResponsivityFlags() {
 		var newValue = width < minimumWidthForSwitchintToRowLayout * DefaultStyle.dp
 		if (useVerticalLayout != newValue) {
@@ -88,6 +91,20 @@ Rectangle {
 					Layout.alignment: Qt.AlignRight
 					sourceComponent: mainItem.topbarOptionalComponent
 					Layout.rightMargin: 34 * DefaultStyle.dp
+				}
+				Button {
+					id: saveButton
+					text: qsTr("Enregistrer")
+					Layout.rightMargin: 6 * DefaultStyle.dp
+					visible: mainItem.saveButtonVisible
+					textSize: 15 * DefaultStyle.dp
+					leftPadding: 16 * DefaultStyle.dp
+					rightPadding: 16 * DefaultStyle.dp
+					topPadding: 10 * DefaultStyle.dp
+					bottomPadding: 10 * DefaultStyle.dp
+					onClicked: {
+						mainItem.save()
+					}
 				}
 			}
 			Repeater {

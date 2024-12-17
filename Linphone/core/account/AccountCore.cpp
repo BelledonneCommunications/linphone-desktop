@@ -109,6 +109,36 @@ AccountCore::~AccountCore() {
 	emit mAccountModel->removeListener();
 }
 
+AccountCore::AccountCore(const AccountCore &accountCore) {
+	mContactAddress = accountCore.mContactAddress;
+	mIdentityAddress = accountCore.mIdentityAddress;
+	mPictureUri = accountCore.mPictureUri;
+	mDisplayName = accountCore.mDisplayName;
+	mDialPlans = accountCore.mDialPlans;
+	mDialPlan = accountCore.mDialPlan;
+	mRegisterEnabled = accountCore.mRegisterEnabled;
+	mIsDefaultAccount = accountCore.mIsDefaultAccount;
+	mRegistrationState = accountCore.mRegistrationState;
+	mUnreadNotifications = accountCore.mUnreadNotifications;
+	mUnreadCallNotifications = accountCore.mUnreadCallNotifications;
+	mUnreadMessageNotifications = accountCore.mUnreadMessageNotifications;
+	mDevices = accountCore.mDevices;
+	mNotificationsAllowed = accountCore.mNotificationsAllowed;
+	mMwiServerAddress = accountCore.mMwiServerAddress;
+	mTransport = accountCore.mTransport;
+	mTransports = accountCore.mTransports;
+	mServerAddress = accountCore.mServerAddress;
+	mOutboundProxyEnabled = accountCore.mOutboundProxyEnabled;
+	mStunServer = accountCore.mStunServer;
+	mIceEnabled = accountCore.mIceEnabled;
+	mAvpfEnabled = accountCore.mAvpfEnabled;
+	mBundleModeEnabled = accountCore.mBundleModeEnabled;
+	mExpire = accountCore.mExpire;
+	mConferenceFactoryAddress = accountCore.mConferenceFactoryAddress;
+	mAudioVideoConferenceFactoryAddress = accountCore.mAudioVideoConferenceFactoryAddress;
+	mLimeServerUrl = accountCore.mLimeServerUrl;
+}
+
 void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection = QSharedPointer<SafeConnection<AccountCore, AccountModel>>(
 	    new SafeConnection<AccountCore, AccountModel>(me, mAccountModel));
@@ -228,54 +258,33 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetNotificationsAllowed, [this](bool value) {
 		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setNotificationsAllowed(value); });
 	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetMwiServerAddress, [this](QString value) {
-		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setMwiServerAddress(value); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetTransport, [this](QString value) {
-		LinphoneEnums::TransportType transport;
-		LinphoneEnums::fromString(value, &transport);
-		mAccountModelConnection->invokeToModel(
-		    [this, value, transport]() { mAccountModel->setTransport(LinphoneEnums::toLinphone(transport)); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetServerAddress, [this](QString value) {
-		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setServerAddress(value); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetOutboundProxyEnabled, [this](bool value) {
-		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setOutboundProxyEnabled(value); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetStunServer, [this](QString value) {
-		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setStunServer(value); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetIceEnabled, [this](bool value) {
-		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setIceEnabled(value); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetAvpfEnabled, [this](bool value) {
-		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setAvpfEnabled(value); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetBundleModeEnabled, [this](bool value) {
-		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setBundleModeEnabled(value); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetExpire, [this](int value) {
-		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setExpire(value); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetConferenceFactoryAddress, [this](QString value) {
-		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setConferenceFactoryAddress(value); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetAudioVideoConferenceFactoryAddress,
-	                                           [this](QString value) {
-		                                           mAccountModelConnection->invokeToModel([this, value]() {
-			                                           mAccountModel->setAudioVideoConferenceFactoryAddress(value);
-		                                           });
-	                                           });
-	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetLimeServerUrl, [this](QString value) {
-		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setLimeServerUrl(value); });
-	});
 
 	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, int, voicemailCount,
 	                        VoicemailCount)
 	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, int, showMwi, ShowMwi)
-	DEFINE_CORE_GETSET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, QString,
-	                           voicemailAddress, VoicemailAddress)
+	// DEFINE_CORE_GETSET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, QString,
+	//    voicemailAddress, VoicemailAddress)
+	mAccountModelConnection->makeConnectToModel(&AccountModel::voicemailAddressChanged, [this](QString value) {
+		mAccountModelConnection->invokeToCore([this, value]() { setVoicemailAddress(value); });
+	});
+}
+
+void AccountCore::reset(const AccountCore &accountCore) {
+	setUnreadNotifications(accountCore.mUnreadNotifications);
+	setUnreadCallNotifications(accountCore.mUnreadCallNotifications);
+	setUnreadMessageNotifications(accountCore.mUnreadMessageNotifications);
+	setMwiServerAddress(accountCore.mMwiServerAddress);
+	setTransport(accountCore.mTransport);
+	setServerAddress(accountCore.mServerAddress);
+	setOutboundProxyEnabled(accountCore.mOutboundProxyEnabled);
+	setStunServer(accountCore.mStunServer);
+	setIceEnabled(accountCore.mIceEnabled);
+	setAvpfEnabled(accountCore.mAvpfEnabled);
+	setBundleModeEnabled(accountCore.mBundleModeEnabled);
+	setExpire(accountCore.mExpire);
+	setConferenceFactoryAddress(accountCore.mConferenceFactoryAddress);
+	setAudioVideoConferenceFactoryAddress(accountCore.mAudioVideoConferenceFactoryAddress);
+	setLimeServerUrl(accountCore.mLimeServerUrl);
 }
 
 const std::shared_ptr<AccountModel> &AccountCore::getModel() const {
@@ -487,6 +496,125 @@ QString AccountCore::getLimeServerUrl() {
 	return mLimeServerUrl;
 }
 
+QString AccountCore::getVoicemailAddress() {
+	return mVoicemailAddress;
+}
+
+void AccountCore::setMwiServerAddress(QString value) {
+	if (mMwiServerAddress != value) {
+		mMwiServerAddress = value;
+		emit mwiServerAddressChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setTransport(QString value) {
+	if (mTransport != value) {
+		mTransport = value;
+		emit transportChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setServerAddress(QString value) {
+	if (mServerAddress != value) {
+		mServerAddress = value;
+		emit serverAddressChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setOutboundProxyEnabled(bool value) {
+	if (mOutboundProxyEnabled != value) {
+		mOutboundProxyEnabled = value;
+		emit outboundProxyEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setStunServer(QString value) {
+	if (mStunServer != value) {
+		mStunServer = value;
+		emit stunServerChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setIceEnabled(bool value) {
+	if (mIceEnabled != value) {
+		mIceEnabled = value;
+		emit iceEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setAvpfEnabled(bool value) {
+	if (mAvpfEnabled != value) {
+		mAvpfEnabled = value;
+		emit avpfEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setBundleModeEnabled(bool value) {
+	if (mBundleModeEnabled != value) {
+		mBundleModeEnabled = value;
+		emit bundleModeEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setExpire(int value) {
+	if (mExpire != value) {
+		mExpire = value;
+		emit expireChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setConferenceFactoryAddress(QString value) {
+	if (mConferenceFactoryAddress != value) {
+		mConferenceFactoryAddress = value;
+		emit conferenceFactoryAddressChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setAudioVideoConferenceFactoryAddress(QString value) {
+	if (mAudioVideoConferenceFactoryAddress != value) {
+		mAudioVideoConferenceFactoryAddress = value;
+		emit audioVideoConferenceFactoryAddressChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setLimeServerUrl(QString value) {
+	if (mLimeServerUrl != value) {
+		mLimeServerUrl = value;
+		emit limeServerUrlChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setVoicemailAddress(QString value) {
+	if (mVoicemailAddress != value) {
+		mVoicemailAddress = value;
+		emit voicemailAddressChanged();
+		setIsSaved(false);
+	}
+}
+
+bool AccountCore::isSaved() const {
+	return mIsSaved;
+}
+
+void AccountCore::setIsSaved(bool saved) {
+	if (mIsSaved != saved) {
+		mIsSaved = saved;
+		emit isSavedChanged();
+	}
+}
+
 void AccountCore::onNotificationsAllowedChanged(bool value) {
 	if (value != mNotificationsAllowed) {
 		mNotificationsAllowed = value;
@@ -574,5 +702,71 @@ void AccountCore::onLimeServerUrlChanged(QString value) {
 	if (value != mLimeServerUrl) {
 		mLimeServerUrl = value;
 		emit limeServerUrlChanged();
+	}
+}
+
+void AccountCore::writeIntoModel(std::shared_ptr<AccountModel> model) const {
+	mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
+	model->setMwiServerAddress(mMwiServerAddress);
+	LinphoneEnums::TransportType transport;
+	LinphoneEnums::fromString(mTransport, &transport);
+	model->setTransport(LinphoneEnums::toLinphone(transport));
+	model->setServerAddress(mServerAddress);
+	model->setOutboundProxyEnabled(mOutboundProxyEnabled);
+	model->setStunServer(mStunServer);
+	model->setIceEnabled(mIceEnabled);
+	model->setAvpfEnabled(mAvpfEnabled);
+	model->setBundleModeEnabled(mBundleModeEnabled);
+	model->setExpire(mExpire);
+	model->setConferenceFactoryAddress(mConferenceFactoryAddress);
+	model->setAudioVideoConferenceFactoryAddress(mAudioVideoConferenceFactoryAddress);
+	model->setLimeServerUrl(mLimeServerUrl);
+	model->setVoicemailAddress(mVoicemailAddress);
+}
+
+void AccountCore::writeFromModel(const std::shared_ptr<AccountModel> &model) {
+	mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
+
+	mUnreadCallNotifications = model->getMissedCallsCount();
+	mUnreadMessageNotifications = model->getUnreadMessagesCount();
+	mMwiServerAddress = model->getMwiServerAddress();
+	mTransport = LinphoneEnums::toString(LinphoneEnums::fromLinphone(model->getTransport()));
+	mServerAddress = model->getServerAddress();
+	mOutboundProxyEnabled = model->getOutboundProxyEnabled();
+	mStunServer = model->getStunServer();
+	mIceEnabled = model->getIceEnabled();
+	mAvpfEnabled = model->getAvpfEnabled();
+	mBundleModeEnabled = model->getBundleModeEnabled();
+	mExpire = model->getExpire();
+	mConferenceFactoryAddress = model->getConferenceFactoryAddress();
+	mAudioVideoConferenceFactoryAddress = model->getAudioVideoConferenceFactoryAddress();
+	mLimeServerUrl = model->getLimeServerUrl();
+	mVoicemailAddress = model->getVoicemailAddress();
+}
+
+void AccountCore::save() {
+	mustBeInMainThread(getClassName() + Q_FUNC_INFO);
+	if (mAccountModel) {
+		AccountCore *thisCopy = new AccountCore(*this);
+		mAccountModelConnection->invokeToModel([this, thisCopy] {
+			mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
+			thisCopy->writeIntoModel(mAccountModel);
+			thisCopy->deleteLater();
+			mAccountModelConnection->invokeToCore([this]() { setIsSaved(true); });
+		});
+	}
+}
+
+void AccountCore::undo() {
+	if (mAccountModel) {
+		mAccountModelConnection->invokeToModel([this] {
+			AccountCore *account = new AccountCore(*this);
+			account->writeFromModel(mAccountModel);
+			account->moveToThread(App::getInstance()->thread());
+			mAccountModelConnection->invokeToCore([this, account]() {
+				this->reset(*account);
+				account->deleteLater();
+			});
+		});
 	}
 }

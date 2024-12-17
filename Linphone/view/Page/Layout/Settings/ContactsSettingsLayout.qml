@@ -45,6 +45,12 @@ AbstractSettingsLayout {
 			titleProperty: "serverUrl"
 			supportsEnableDisable: true
 			showAddButton: true
+
+			Connections {
+				target: mainItem
+				function onSave() { save()}
+				function onUndo() { undo()}
+			}
 		}
 	}
 
@@ -68,6 +74,12 @@ AbstractSettingsLayout {
 			owner: mainItem
 			titleProperty: "displayName"
 			supportsEnableDisable: false
+
+			Connections {
+				target: mainItem
+				function onSave() { save()}
+				function onUndo() { undo()}
+			}
 		}
 	}
 }

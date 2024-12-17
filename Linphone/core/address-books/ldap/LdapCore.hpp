@@ -40,9 +40,12 @@ public:
 
 	Q_INVOKABLE void remove();
 	Q_INVOKABLE void save();
+	Q_INVOKABLE void undo();
 	Q_INVOKABLE bool isValid();
 
-	DECLARE_CORE_GETSET_MEMBER(bool, enabled, Enabled)
+	Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
+	Q_PROPERTY(bool saved READ isSaved WRITE setSaved NOTIFY savedChanged)
+
 	DECLARE_CORE_GETSET_MEMBER(QString, serverUrl, ServerUrl)
 	DECLARE_CORE_GETSET_MEMBER(QString, bindDn, BindDn)
 	DECLARE_CORE_GETSET_MEMBER(QString, password, Password)
@@ -62,7 +65,24 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(QString, sipDomain, SipDomain)
 	DECLARE_CORE_GETSET_MEMBER(bool, debug, Debug)
 
+public:
+	bool isEnabled() const;
+	void setEnabled(bool enabled);
+
+	bool isSaved() const;
+	void setSaved(bool saved);
+
+signals:
+	void enabledChanged();
+	void savedChanged();
+
+protected:
+	void writeIntoModel(std::shared_ptr<LdapModel> model) const;
+	void writeFromModel(const std::shared_ptr<LdapModel> &model);
+
 private:
+	bool mEnabled = false;
+	bool mIsSaved = false;
 	std::shared_ptr<LdapModel> mLdapModel;
 	QSharedPointer<SafeConnection<LdapCore, LdapModel>> mLdapModelConnection;
 

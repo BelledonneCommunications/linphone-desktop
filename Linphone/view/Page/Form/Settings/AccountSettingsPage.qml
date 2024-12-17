@@ -7,6 +7,7 @@ import UtilsCpp
 import SettingsCpp
 
 AbstractSettingsMenu {
+	id: mainItem
 	layoutsPath: "qrc:/qt/qml/Linphone/view/Page/Layout/Settings"
 	titleText: qsTr("Mon compte")
 	property AccountGui account
@@ -19,4 +20,18 @@ AbstractSettingsMenu {
 		target: account.core
 		onRemoved: accountRemoved()
 	}
+	onGoBackRequested: if (!account.core.isSaved) {
+		UtilsCpp.getMainWindow().showConfirmationLambdaPopup(qsTr("Modifications non enregistrées"),
+			qsTr("Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?"),
+			"",
+			function (confirmed) {
+				if (confirmed) {
+					account.core.save()
+				} else {
+					account.core.undo()
+				}
+				mainItem.goBack()
+			}, qsTr("Ne pas enregistrer"), qsTr("Enregistrer")
+		)
+	} else {mainItem.goBack()}
 }

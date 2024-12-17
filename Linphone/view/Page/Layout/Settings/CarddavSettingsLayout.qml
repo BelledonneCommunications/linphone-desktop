@@ -20,6 +20,22 @@ AbstractSettingsLayout {
 	topbarOptionalComponent: topBar
 	property alias carddavGui: mainItem.model
 	property bool isNew: false
+	onSave: {
+		if (carddavGui.core.isValid()) {
+			carddavGui.core.save()
+		} else {
+			UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Vérifiez que toutes les informations ont été saisies."), false, mainWindow)
+		}
+	}
+	Connections {
+		target: carddavGui.core
+		function onSaved(success) {
+			if (success)
+				UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("Le carnet d'adresse CardDAV est synchronisé."), true, mainWindow)
+			else
+				UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Erreur de synchronisation!"), false, mainWindow)
+		}
+	}
 	Component {
 		id: topBar
 		RowLayout {
@@ -43,25 +59,6 @@ AbstractSettingsLayout {
 							}
 						}
 					)
-				}
-			}
-			Button {
-				text: qsTr("Enregistrer")
-				onClicked: {
-					if (carddavGui.core.isValid()) {
-						carddavGui.core.save()
-					} else {
-						UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Vérifiez que toutes les informations ont été saisies."), false, mainWindow)
-					}
-				}
-				Connections {
-					target: carddavGui.core
-					function onSaved(success) {
-						if (success)
-							UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("Le carnet d'adresse CardDAV est synchronisé."), true, mainWindow)
-						else
-							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Erreur de synchronisation!"), false, mainWindow)
-					}
 				}
 			}
 		}

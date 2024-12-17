@@ -17,12 +17,25 @@ AbstractSettingsLayout {
 			contentComponent: generalParametersComponent
 		},
 		{
-			title: qsTr("Paramètres avancés"),
+			title: qsTr("Paramètres de compte"),
 			subTitle: "",
 			contentComponent: advancedParametersComponent
 		}
 	]
 
+	property alias account: mainItem.model
+
+	onSave: {
+		account.core.save()
+	}
+	onUndo: account.core.undo()
+	Connections {
+		target: account.core
+		function onIsSavedChanged() {
+			if (account.core.isSaved) UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("Les changements ont été sauvegardés"), true, mainWindow)
+		}
+	}
+	
 	// General parameters
 	/////////////////////
 
@@ -37,7 +50,7 @@ AbstractSettingsLayout {
 				propertyOwner: account.core
 				title: qsTr("URI du serveur de messagerie vocale")
 				Layout.fillWidth: true
-				isValid: function(text) { return text.length == 0 || !text.endsWith(".") } // work around sdk crash when adress ends with .
+				isValid: function(text) { return text.length == 0 || !text.endsWith(".") } // work around sdk crash when adress ends with .
 				toValidate: true
 			}
 			DecoratedTextField {

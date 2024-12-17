@@ -114,14 +114,15 @@ Popup {
 					id:firstButtonId
 					visible: mainItem.buttons.length === 2
 					text: mainItem.firstButtonText
+					textSize: 15 * DefaultStyle.dp
 					leftPadding: 20 * DefaultStyle.dp
 					rightPadding: 20 * DefaultStyle.dp
 					topPadding: 11 * DefaultStyle.dp
 					bottomPadding: 11 * DefaultStyle.dp
 					inversedColors: !mainItem.firstButtonAccept
-					focus: !firstButtonAccept
+					focus: !mainItem.firstButtonAccept
 					onClicked: {
-						if(firstButtonAccept)
+						if(mainItem.firstButtonAccept)
 							mainItem.accepted()
 						else
 							mainItem.rejected()
@@ -134,13 +135,14 @@ Popup {
 					id: secondButtonId
 					visible: mainItem.buttons.length === 2
 					text: mainItem.secondButtonText
+					textSize: 15 * DefaultStyle.dp
 					leftPadding: 20 * DefaultStyle.dp
 					rightPadding: 20 * DefaultStyle.dp
 					topPadding: 11 * DefaultStyle.dp
 					bottomPadding: 11 * DefaultStyle.dp
-					focus: !secondButtonAccept
+					focus: !mainItem.secondButtonAccept
 					onClicked: {
-						if(secondButtonAccept)
+						if(mainItem.secondButtonAccept)
 							mainItem.accepted()
 						else
 							mainItem.rejected()

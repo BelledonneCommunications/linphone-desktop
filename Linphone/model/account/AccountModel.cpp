@@ -186,6 +186,11 @@ void AccountModel::setNotificationsAllowed(bool value) {
 	emit notificationsAllowedChanged(value);
 }
 
+QString AccountModel::getMwiServerAddress() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return Utils::coreStringToAppString(mMonitor->getParams()->getMwiServerAddress()->asString());
+}
+
 void AccountModel::setMwiServerAddress(QString value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
@@ -199,12 +204,20 @@ void AccountModel::setMwiServerAddress(QString value) {
 	} else qWarning() << "Unable to set MWI address, failed creating address from" << value;
 }
 
+linphone::TransportType AccountModel::getTransport() const {
+	return mMonitor->getParams()->getTransport();
+}
+
 void AccountModel::setTransport(linphone::TransportType value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
 	params->setTransport(value);
 	mMonitor->setParams(params);
 	emit transportChanged(value);
+}
+
+QString AccountModel::getServerAddress() const {
+	return Utils::coreStringToAppString(mMonitor->getParams()->getServerAddress()->asString());
 }
 
 void AccountModel::setServerAddress(QString value) {
@@ -218,12 +231,22 @@ void AccountModel::setServerAddress(QString value) {
 	} else qWarning() << "Unable to set ServerAddress, failed creating address from" << value;
 }
 
+bool AccountModel::getOutboundProxyEnabled() const {
+	return mMonitor->getParams()->outboundProxyEnabled();
+}
+
 void AccountModel::setOutboundProxyEnabled(bool value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
 	params->enableOutboundProxy(value);
 	mMonitor->setParams(params);
 	emit outboundProxyEnabledChanged(value);
+}
+
+QString AccountModel::getStunServer() const {
+	auto policy = mMonitor->getParams()->getNatPolicy();
+	if (policy) return Utils::coreStringToAppString(policy->getStunServer());
+	else return QString();
 }
 
 void AccountModel::setStunServer(QString value) {
@@ -238,6 +261,12 @@ void AccountModel::setStunServer(QString value) {
 	emit stunServerChanged(value);
 }
 
+bool AccountModel::getIceEnabled() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto policy = mMonitor->getParams()->getNatPolicy();
+	return policy && policy->iceEnabled();
+}
+
 void AccountModel::setIceEnabled(bool value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
@@ -249,12 +278,20 @@ void AccountModel::setIceEnabled(bool value) {
 	emit iceEnabledChanged(value);
 }
 
+bool AccountModel::getAvpfEnabled() const {
+	return mMonitor->getParams()->getAvpfMode() == linphone::AVPFMode::Enabled;
+}
+
 void AccountModel::setAvpfEnabled(bool value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
 	params->setAvpfMode(value ? linphone::AVPFMode::Enabled : linphone::AVPFMode::Disabled);
 	mMonitor->setParams(params);
 	emit avpfEnabledChanged(value);
+}
+
+bool AccountModel::getBundleModeEnabled() const {
+	return mMonitor->getParams()->rtpBundleEnabled();
 }
 
 void AccountModel::setBundleModeEnabled(bool value) {
@@ -265,12 +302,21 @@ void AccountModel::setBundleModeEnabled(bool value) {
 	emit bundleModeEnabledChanged(value);
 }
 
+int AccountModel::getExpire() const {
+	return mMonitor->getParams()->getExpires();
+}
+
 void AccountModel::setExpire(int value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
 	params->setExpires(value);
 	mMonitor->setParams(params);
 	emit expireChanged(value);
+}
+
+QString AccountModel::getConferenceFactoryAddress() const {
+	auto confAddress = mMonitor->getParams()->getConferenceFactoryAddress();
+	return confAddress ? Utils::coreStringToAppString(confAddress->asString()) : QString();
 }
 
 void AccountModel::setConferenceFactoryAddress(QString value) {
@@ -286,6 +332,11 @@ void AccountModel::setConferenceFactoryAddress(QString value) {
 	} else qWarning() << "Unable to set ConferenceFactoryAddress address, failed creating address from" << value;
 }
 
+QString AccountModel::getAudioVideoConferenceFactoryAddress() const {
+	auto confAddress = mMonitor->getParams()->getAudioVideoConferenceFactoryAddress();
+	return confAddress ? Utils::coreStringToAppString(confAddress->asString()) : QString();
+}
+
 void AccountModel::setAudioVideoConferenceFactoryAddress(QString value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
@@ -298,6 +349,10 @@ void AccountModel::setAudioVideoConferenceFactoryAddress(QString value) {
 		emit audioVideoConferenceFactoryAddressChanged(value);
 	} else
 		qWarning() << "Unable to set AudioVideoConferenceFactoryAddress address, failed creating address from" << value;
+}
+
+QString AccountModel::getLimeServerUrl() const {
+	return Utils::coreStringToAppString(mMonitor->getParams()->getLimeServerUrl());
 }
 
 void AccountModel::setLimeServerUrl(QString value) {
@@ -337,6 +392,10 @@ void AccountModel::setVoicemailAddress(QString value) {
 		mMonitor->setParams(params);
 		emit voicemailAddressChanged(value);
 	} else qWarning() << "Unable to set VoicemailAddress, failed creating address from" << value;
+}
+
+QString AccountModel::getVoicemailAddress() const {
+	return Utils::coreStringToAppString(mMonitor->getParams()->getVoicemailAddress()->asString());
 }
 
 // UserData (see hpp for explanations)
