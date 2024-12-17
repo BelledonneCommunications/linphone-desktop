@@ -193,14 +193,18 @@ QString AccountModel::getMwiServerAddress() const {
 
 void AccountModel::setMwiServerAddress(QString value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto params = mMonitor->getParams()->clone();
 	auto address = value.isEmpty()
 	                   ? nullptr
 	                   : CoreModel::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(value), false);
+
 	if (value.isEmpty() || address) {
-		params->setMwiServerAddress(address);
-		mMonitor->setParams(params);
-		emit mwiServerAddressChanged(value);
+		auto params = mMonitor->getParams();
+		auto oldAddress = params->getMwiServerAddress();
+		if (address != oldAddress && (!address || !address->weakEqual(oldAddress))) {
+			auto newParams = params->clone();
+			newParams->setMwiServerAddress(address);
+			if (!mMonitor->setParams(newParams)) emit mwiServerAddressChanged(value);
+		}
 	} else qWarning() << "Unable to set MWI address, failed creating address from" << value;
 }
 
@@ -395,7 +399,8 @@ void AccountModel::setVoicemailAddress(QString value) {
 }
 
 QString AccountModel::getVoicemailAddress() const {
-	return Utils::coreStringToAppString(mMonitor->getParams()->getVoicemailAddress()->asString());
+	auto addr = mMonitor->getParams()->getVoicemailAddress();
+	return addr ? Utils::coreStringToAppString(addr->asString()) : "";
 }
 
 // UserData (see hpp for explanations)

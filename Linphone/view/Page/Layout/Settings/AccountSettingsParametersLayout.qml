@@ -47,7 +47,7 @@ AbstractSettingsLayout {
 			spacing: 20 * DefaultStyle.dp
 			DecoratedTextField {
 				propertyName: "mwiServerAddress"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 				title: qsTr("URI du serveur de messagerie vocale")
 				Layout.fillWidth: true
 				isValid: function(text) { return text.length == 0 || !text.endsWith(".") } // work around sdk crash when adress ends with .
@@ -55,7 +55,7 @@ AbstractSettingsLayout {
 			}
 			DecoratedTextField {
 				propertyName: "voicemailAddress"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 				title: qsTr("URI de messagerie vocale")
 				Layout.fillWidth: true
 			}
@@ -80,44 +80,44 @@ AbstractSettingsLayout {
 				Layout.topMargin: -15 * DefaultStyle.dp
 				entries: account.core.transports
 				propertyName: "transport"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 			}
 			DecoratedTextField {
 				Layout.fillWidth: true
 				title: qsTr("URL du serveur mandataire")
 				propertyName: "serverAddress"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 			}
 			SwitchSetting {
 				titleText: qsTr("Serveur mandataire sortant")
 				propertyName: "outboundProxyEnabled"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 			}
 			DecoratedTextField {
 				Layout.fillWidth: true
 				propertyName: "stunServer"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 				title: qsTr("Adresse du serveur STUN")
 			}
 			SwitchSetting {
 				titleText: qsTr("Activer ICE")
 				propertyName: "iceEnabled"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 			}
 			SwitchSetting {
 				titleText: qsTr("AVPF")
 				propertyName: "avpfEnabled"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 			}
 			SwitchSetting {
 				titleText: qsTr("Mode bundle")
 				propertyName: "bundleModeEnabled"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 			}
 			DecoratedTextField {
 				Layout.fillWidth: true
 				propertyName: "expire"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 				title: qsTr("Expiration (en seconde)")
 				canBeEmpty: false
 				isValid: function(text) { return !isNaN(Number(text)) }
@@ -127,20 +127,20 @@ AbstractSettingsLayout {
 				Layout.fillWidth: true
 				title: qsTr("URI de l’usine à conversations")
 				propertyName: "conferenceFactoryAddress"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 			}
 			DecoratedTextField {
 				Layout.fillWidth: true
 				title: qsTr("URI de l’usine à réunions")
 				propertyName: "audioVideoConferenceFactoryAddress"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 				visible: !SettingsCpp.disableMeetingsFeature
 			}
 			DecoratedTextField {
 				Layout.fillWidth: true
 				title: qsTr("URL du serveur d’échange de clés de chiffrement")
 				propertyName: "limeServerUrl"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 			}
 		}
 	}

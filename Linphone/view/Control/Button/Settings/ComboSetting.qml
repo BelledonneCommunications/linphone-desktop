@@ -10,17 +10,25 @@ ComboBox {
 	property string propertyName
 	
 	property var propertyOwner
+	property var propertyOwnerGui
 	property alias entries: mainItem.model
 	oneLine: true
 	currentIndex: Utils.findIndex(model, function (entry) {
-		return Utils.equalObject(entry,propertyOwner[propertyName])
+		if(propertyOwnerGui)
+			return Utils.equalObject(entry,propertyOwnerGui.core[propertyName])
+		else
+			return Utils.equalObject(entry,propertyOwner[propertyName])
 	})
 	onCurrentValueChanged: {
-		binding.when = !Utils.equalObject(currentValue,propertyOwner[propertyName])
+		if(propertyOwnerGui) {
+			binding.when = !Utils.equalObject(currentValue,propertyOwnerGui.core[propertyName])
+		}else{
+			binding.when = !Utils.equalObject(currentValue,propertyOwner[propertyName])
+		}
 	}
 	Binding {
 		id: binding
-		target: propertyOwner
+		target: propertyOwnerGui ? propertyOwnerGui : propertyOwner
 		property: propertyName
 		value: mainItem.currentValue
 		when: false

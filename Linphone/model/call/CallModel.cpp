@@ -30,7 +30,7 @@ DEFINE_ABSTRACT_OBJECT(CallModel)
 
 CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *parent)
     : ::Listener<linphone::Call, linphone::CallListener>(call, parent) {
-	lDebug() << "[CallModel] new" << this;
+	lDebug() << "[CallModel] new" << this << " / SDKModel=" << call.get();
 	mustBeInLinphoneThread(getClassName());
 	mDurationTimer.setInterval(1000);
 	mDurationTimer.setSingleShot(false);

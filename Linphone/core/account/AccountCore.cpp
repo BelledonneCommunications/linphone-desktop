@@ -106,7 +106,7 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 
 AccountCore::~AccountCore() {
 	mustBeInMainThread("~" + getClassName());
-	emit mAccountModel->removeListener();
+	if (mAccountModel) emit mAccountModel->removeListener();
 }
 
 AccountCore::AccountCore(const AccountCore &accountCore) {
@@ -752,7 +752,10 @@ void AccountCore::save() {
 			mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
 			thisCopy->writeIntoModel(mAccountModel);
 			thisCopy->deleteLater();
-			mAccountModelConnection->invokeToCore([this]() { setIsSaved(true); });
+			mAccountModelConnection->invokeToCore([this, thisCopy]() {
+				setIsSaved(true);
+				undo(); // Reset new values because some values can be invalid and not changed.
+			});
 		});
 	}
 }

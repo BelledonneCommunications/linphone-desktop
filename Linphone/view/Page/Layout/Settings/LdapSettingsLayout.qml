@@ -70,14 +70,14 @@ AbstractSettingsLayout {
 			DecoratedTextField {
 				id: server
 				propertyName: "serverUrl"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				title: qsTr("URL du serveur (ne peut être vide)")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "bindDn"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				title: qsTr("Bind DN")
 				toValidate: true
 				Layout.fillWidth: true
@@ -85,7 +85,7 @@ AbstractSettingsLayout {
 			DecoratedTextField {
 				propertyName: "password"
 				hidden: true
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				title: qsTr("Mot de passe")
 				toValidate: true
 				Layout.fillWidth: true
@@ -93,25 +93,25 @@ AbstractSettingsLayout {
 			SwitchSetting {
 				titleText: qsTr("Utiliser TLS")
 				propertyName: "tls"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 			}
 			DecoratedTextField {
 				propertyName: "baseObject"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				title: qsTr("Base de recherche (ne peut être vide)")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "filter"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				title: qsTr("Filtre")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "limit"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 				title: qsTr("Nombre maximum de résultats")
 				toValidate: true
@@ -119,7 +119,7 @@ AbstractSettingsLayout {
 			}
 			DecoratedTextField {
 				propertyName: "delay"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 				title: qsTr("Délai entre 2 requêtes (en millisecondes)")
 				toValidate: true
@@ -127,7 +127,7 @@ AbstractSettingsLayout {
 			}
 			DecoratedTextField {
 				propertyName: "timeout"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				title: qsTr("Durée maximun (en secondes)")
 				validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 				toValidate: true
@@ -135,7 +135,7 @@ AbstractSettingsLayout {
 			}
 			DecoratedTextField {
 				propertyName: "minCharacters"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				title: qsTr("Nombre minimum de caractères pour la requête")
 				validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 				toValidate: true
@@ -143,21 +143,21 @@ AbstractSettingsLayout {
 			}
 			DecoratedTextField {
 				propertyName: "nameAttribute"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				title: qsTr("Attributs de nom")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "sipAttribute"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				title: qsTr("Attributs SIP")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "sipDomain"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 				title: qsTr("Domaine SIP")
 				toValidate: true
 				Layout.fillWidth: true
@@ -165,7 +165,7 @@ AbstractSettingsLayout {
 			SwitchSetting {
 				titleText: qsTr("Débogage")
 				propertyName: "debug"
-				propertyOwner: ldapGui.core
+				propertyOwnerGui: ldapGui
 			}
 		}
 	}

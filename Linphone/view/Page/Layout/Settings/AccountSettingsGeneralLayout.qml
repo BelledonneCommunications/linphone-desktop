@@ -151,7 +151,7 @@ AbstractSettingsLayout {
 				Layout.topMargin: -15 * DefaultStyle.dp
 				entries: account.core.dialPlans
 				propertyName: "dialPlan"
-				propertyOwner: account.core
+				propertyOwnerGui: account
 				textRole: 'text'
 				flagRole: 'flag'
 			}
@@ -159,7 +159,7 @@ AbstractSettingsLayout {
 				titleText: account?.core.humaneReadableRegistrationState
 				subTitleText: account?.core.humaneReadableRegistrationStateExplained
 				propertyName: "registerEnabled"
-				propertyOwner: account?.core
+				propertyOwnerGui: account
 			}
 			RowLayout {
 				id:mainItem

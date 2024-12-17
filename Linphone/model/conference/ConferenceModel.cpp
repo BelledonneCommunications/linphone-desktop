@@ -38,7 +38,7 @@ std::shared_ptr<ConferenceModel> ConferenceModel::create(const std::shared_ptr<l
 ConferenceModel::ConferenceModel(const std::shared_ptr<linphone::Conference> &conference, QObject *parent)
     : ::Listener<linphone::Conference, linphone::ConferenceListener>(conference, parent) {
 	mustBeInLinphoneThread(getClassName());
-	lDebug() << "[ConferenceModel] new" << this << conference.get();
+	lDebug() << "[ConferenceModel] new " << this << ", SDKModel=" << conference.get();
 	connect(this, &ConferenceModel::isScreenSharingEnabledChanged, this,
 	        &ConferenceModel::onIsScreenSharingEnabledChanged);
 }
@@ -149,8 +149,13 @@ void ConferenceModel::toggleScreenSharing() {
 			                              ? linphone::MediaDirection::SendRecv
 			                              : linphone::MediaDirection::SendOnly);
 		}
-		if (params->isValid()) mMonitor->getCall()->update(params);
-		else lCritical() << log().arg("Cannot toggle screen sharing because parameters are invalid");
+		if (params->isValid()) {
+			lInfo() << log()
+			               .arg("Toggling screen sharing %1, direction=%2")
+			               .arg(enable)
+			               .arg((int)params->getVideoDirection());
+			mMonitor->getCall()->update(params);
+		} else lCritical() << log().arg("Cannot toggle screen sharing because parameters are invalid");
 	}
 }
 
@@ -276,6 +281,7 @@ void ConferenceModel::onAudioDeviceChanged(const std::shared_ptr<linphone::Confe
 void ConferenceModel::onIsScreenSharingEnabledChanged() {
 	auto call = mMonitor->getCall();
 	std::shared_ptr<linphone::CallParams> params = CoreModel::getInstance()->getCore()->createCallParams(call);
+	lDebug() << log().arg("Old Layout=%1").arg((int)params->getConferenceVideoLayout());
 	if (params->getConferenceVideoLayout() == linphone::Conference::Layout::Grid && params->videoEnabled()) {
 		params->setConferenceVideoLayout(linphone::Conference::Layout::ActiveSpeaker);
 	}

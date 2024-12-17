@@ -22,6 +22,7 @@ Control.TextField {
 	selectByMouse: true
 	activeFocusOnTab: true
 	KeyNavigation.right: eyeButton
+	text: initialText
 
 	property bool controlIsDown: false
 	property bool hidden: false
@@ -37,26 +38,64 @@ Control.TextField {
 	// fill propertyName and propertyOwner to check text validity
 	property string propertyName
 	property var propertyOwner
+	property var propertyOwnerGui
 	property var initialReading: true
 	property var isValid: function(text) {
         return true
     }
 	property bool toValidate: false
 	property int idleTimeOut: 200
-	property bool empty: mainItem.propertyOwner!= undefined && mainItem.propertyOwner[mainItem.propertyName]?.length == 0
+	property bool empty: propertyOwnerGui ? mainItem.propertyOwnerGui.core != undefined && mainItem.propertyOwnerGui.core[mainItem.propertyName]?.length == 0
+										  :  mainItem.propertyOwner != undefined && mainItem.propertyOwner[mainItem.propertyName]?.length == 0
 	property bool canBeEmpty: true
 
 	signal validationChecked(bool valid)
-
-	Component.onCompleted: {
-		text = initialText
-	}
 
 	function resetText() {
 		text = initialText
 	}
 
 	signal enterPressed()
+	
+	onAccepted: {// No need to process changing focus because of TextEdited callback.
+		idleTimer.stop()
+		updateText()
+	}
+	onTextEdited: {
+		if(mainItem.toValidate) {
+			idleTimer.restart()
+		}
+	}
+	function updateText() {
+		mainItem.empty = text.length == 0
+		if (initialReading) {
+			initialReading = false
+		}
+		if (mainItem.empty && !mainItem.canBeEmpty) {
+			mainItem.validationChecked(false)
+			return
+		}
+		if (mainItem.propertyName && isValid(text)) {
+			if(mainItem.propertyOwnerGui){
+				if (mainItem.propertyOwnerGui.core[mainItem.propertyName] != text)
+					mainItem.propertyOwnerGui.core[mainItem.propertyName] = text
+			}else{
+				if (mainItem.propertyOwner[mainItem.propertyName] != text)
+					mainItem.propertyOwner[mainItem.propertyName] = text
+			}
+			mainItem.validationChecked(true)
+		} else mainItem.validationChecked(false)
+	}
+	// Validation textfield functions
+	Timer {
+		id: idleTimer
+		running: false
+		interval: mainItem.idleTimeOut
+		repeat: false
+		onTriggered: {
+			mainItem.accepted()
+		}
+	}
 
 	background: Rectangle {
 		id: inputBackground
@@ -137,40 +176,6 @@ Control.TextField {
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.right: parent.right
 		anchors.rightMargin: rightMargin
-	}
-
-	// Validation textfield functions
-	Timer {
-		id: idleTimer
-		running: false
-		interval: mainItem.idleTimeOut
-		repeat: false
-		onTriggered: mainItem.editingFinished()
-	}
-	onEditingFinished: {
-		updateText()
-	}
-	onTextChanged: {
-		if(mainItem.toValidate) {
-			// Restarting
-			idleTimer.restart()
-		}
-		// updateText()
-	}
-	function updateText() {
-		mainItem.empty = text.length == 0
-		if (initialReading) {
-			initialReading = false
-		}
-		if (mainItem.empty && !mainItem.canBeEmpty) {
-			mainItem.validationChecked(false)
-			return
-		}
-		if (isValid(text) && mainItem.propertyOwner && mainItem.propertyName) {
-			if (mainItem.propertyOwner[mainItem.propertyName] != text)
-				mainItem.propertyOwner[mainItem.propertyName] = text
-			mainItem.validationChecked(true)
-		} else mainItem.validationChecked(false)
 	}
 }
 

@@ -12,6 +12,7 @@ FormItemLayout {
 	enableErrorText: true
 	property string propertyName: "value"
 	property var propertyOwner: new Array
+	property var propertyOwnerGui
 	property var title
 	property var placeHolder
 	property bool useTitleAsPlaceHolder: true
@@ -19,7 +20,7 @@ FormItemLayout {
 	property bool toValidate: false
 
 	function value() {
-		return propertyOwner[propertyName]
+		return propertyOwnerGui ? propertyOwnerGui.core[propertyName] : propertyOwner[propertyName]
 	}
 
     property alias hidden: textField.hidden
@@ -33,10 +34,11 @@ FormItemLayout {
 		id: textField
 		Layout.preferredWidth: 360 * DefaultStyle.dp
 		placeholderText: useTitleAsPlaceHolder ? mainItem.title : mainItem.placeHolder
-		initialText: mainItem.propertyOwner[mainItem.propertyName] || ''
+		initialText: (mainItem.propertyOwnerGui ? mainItem.propertyOwnerGui.core[mainItem.propertyName] : mainItem.propertyOwner[mainItem.propertyName]) || ''
 		customWidth: mainItem.parent.width
 		propertyName: mainItem.propertyName
 		propertyOwner: mainItem.propertyOwner
+		propertyOwnerGui: mainItem.propertyOwnerGui
 		canBeEmpty: mainItem.canBeEmpty
 		isValid: mainItem.isValid
 		toValidate: mainItem.toValidate

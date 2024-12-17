@@ -139,7 +139,7 @@ AbstractSettingsLayout {
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.clockRate + " Hz"
 					propertyName: "enabled"
-					propertyOwner: modelData.core
+					propertyOwnerGui: modelData
 				}
 			}
 		}
@@ -162,7 +162,7 @@ AbstractSettingsLayout {
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
 					propertyName: "enabled"
-					propertyOwner: modelData.core
+					propertyOwnerGui: modelData
 				}
 			}
 			Repeater {

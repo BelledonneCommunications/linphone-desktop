@@ -9,6 +9,7 @@ RowLayout {
 	property string subTitleText
 	property string propertyName
 	property var propertyOwner
+	property var propertyOwnerGui
 	property bool enabled: true
 	spacing : 20 * DefaultStyle.dp
 	Layout.minimumHeight: 32 * DefaultStyle.dp
@@ -38,14 +39,15 @@ RowLayout {
 	Switch {
 		id: switchButton
 		Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-		checked: propertyOwner ? propertyOwner[mainItem.propertyName] : false
+		checked: propertyOwnerGui ? propertyOwnerGui.core[mainItem.propertyName]
+						: propertyOwner ? propertyOwner[mainItem.propertyName] : false
 		enabled: mainItem.enabled
 		onCheckedChanged: mainItem.checkedChanged(checked)
 		onToggled: binding.when = true
 	}
 	Binding {
 		id: binding
-		target: propertyOwner ? propertyOwner : null
+		target: propertyOwnerGui ? propertyOwnerGui : propertyOwner ? propertyOwner : null
 		property: mainItem.propertyName
 		value: switchButton.checked
 		when: false
