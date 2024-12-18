@@ -129,7 +129,7 @@ public:
 	Q_PROPERTY(float microVolume READ getMicrophoneVolume WRITE setMicrophoneVolume NOTIFY microphoneVolumeChanged)
 	Q_PROPERTY(LinphoneEnums::CallState transferState READ getTransferState NOTIFY transferStateChanged)
 	Q_PROPERTY(ConferenceGui *conference READ getConferenceGui NOTIFY conferenceChanged)
-	Q_PROPERTY(bool isConference READ isConference NOTIFY conferenceChanged)
+	Q_PROPERTY(bool isConference READ isConference NOTIFY isConferenceChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceLayout conferenceVideoLayout READ getConferenceVideoLayout WRITE
 	               lSetConferenceVideoLayout NOTIFY conferenceVideoLayoutChanged)
 
@@ -186,6 +186,7 @@ public:
 	ConferenceGui *getConferenceGui() const;
 	QSharedPointer<ConferenceCore> getConferenceCore() const;
 	void setConference(const QSharedPointer<ConferenceCore> &conference);
+	void setIsConference(bool isConf);
 
 	bool isConference() const;
 
@@ -271,6 +272,7 @@ signals:
 	void microphoneVolumeChanged();
 	void microphoneVolumeGainChanged();
 	void conferenceChanged();
+	void isConferenceChanged();
 	void conferenceVideoLayoutChanged();
 	void videoSourceDescriptorChanged();
 	void zrtpStatsChanged();

@@ -278,7 +278,12 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	                                                                          const std::string &message) {
 		double speakerVolume = mSpeakerVolumeGain;
 		double micVolumeGain = mMicrophoneVolumeGain;
-		if (state == linphone::Call::State::StreamsRunning) {
+		bool isConf = false;
+		if (state == linphone::Call::State::Connected) {
+			// The conference object is not ready until the StreamRunning status,
+			// so it can't be used at this point
+			isConf = call->getConference() != nullptr;
+		} else if (state == linphone::Call::State::StreamsRunning) {
 			speakerVolume = mCallModel->getSpeakerVolumeGain();
 			if (speakerVolume < 0) {
 				speakerVolume = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
@@ -289,12 +294,13 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			}
 		}
 		auto subject = call->getConference() ? Utils::coreStringToAppString(call->getConference()->getSubject()) : "";
-		mCallModelConnection->invokeToCore([this, state, speakerVolume, micVolumeGain, subject]() {
+		mCallModelConnection->invokeToCore([this, state, speakerVolume, micVolumeGain, subject, isConf]() {
 			setSpeakerVolumeGain(speakerVolume);
 			setMicrophoneVolumeGain(micVolumeGain);
 			setRecordable(state == linphone::Call::State::StreamsRunning);
 			setPaused(state == linphone::Call::State::Paused || state == linphone::Call::State::PausedByRemote);
 			if (mConference) mConference->setSubject(subject);
+			setIsConference(isConf);
 		});
 		mCallModelConnection->invokeToCore([this, state, message]() { setState(LinphoneEnums::fromLinphone(state)); });
 	});
@@ -634,9 +640,17 @@ void CallCore::setConference(const QSharedPointer<ConferenceCore> &conference) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	if (mConference != conference) {
 		mConference = conference;
-		mIsConference = (mConference != nullptr);
 		lDebug() << "[CallCore] Set conference : " << mConference;
+		setIsConference(conference != nullptr);
 		emit conferenceChanged();
+	}
+}
+
+void CallCore::setIsConference(bool isConf) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	if (mIsConference != isConf) {
+		mIsConference = isConf;
+		emit isConferenceChanged();
 	}
 }
 

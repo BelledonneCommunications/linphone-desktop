@@ -415,6 +415,7 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
                                const std::string &message) {
 	lDebug() << "CallModel::onStateChanged" << (int)state;
 	if (state == linphone::Call::State::StreamsRunning) {
+		setConference(call->getConference());
 		mDurationTimer.start();
 		// After UpdatedByRemote, video direction could be changed.
 		auto videoDirection = call->getCurrentParams()->getVideoDirection();
@@ -422,7 +423,6 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		                              videoDirection == linphone::MediaDirection::SendRecv);
 		emit remoteVideoEnabledChanged(videoDirection == linphone::MediaDirection::RecvOnly ||
 		                               videoDirection == linphone::MediaDirection::SendRecv);
-		setConference(call->getConference());
 		updateConferenceVideoLayout();
 	} else if (state == linphone::Call::State::End || state == linphone::Call::State::Error) {
 		mDurationTimer.stop();

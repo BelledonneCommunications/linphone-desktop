@@ -16,6 +16,7 @@ AbstractWindow {
 	property CallGui call
 
 	property ConferenceGui conference: call && call.core.conference || null
+	property bool isConference: call ? call.core.isConference : false
 
 	property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
 	property bool localVideoEnabled: call && call.core.localVideoEnabled
@@ -31,7 +32,7 @@ AbstractWindow {
 				middleItemStackView.replace(inCallItem)
 				bottomButtonsLayout.visible = true
 			}
-			if(call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && !mainWindow.conference && (!call.core.tokenVerified || call.core.isMismatch)) {
+			if(call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && !mainWindow.isConference && (!call.core.tokenVerified || call.core.isMismatch)) {
 				zrtpValidation.open()
 			}
 		}
@@ -380,8 +381,16 @@ AbstractWindow {
 								}
 							}
 							RowLayout {
+								id: securityStateLayout
 								spacing: 5 * DefaultStyle.dp
-								visible: mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
+								visible: false
+								Connections {
+									target: mainWindow
+									function onCallStateChanged() {
+										if (mainWindow.callState === LinphoneEnums.CallState.Connected) securityStateLayout.visible = true
+										else if (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released) securityStateLayout.visible = false
+									}
+								}
 								BusyIndicator  {
 									visible: mainWindow.call && mainWindow.callState != LinphoneEnums.CallState.Connected && mainWindow.callState != LinphoneEnums.CallState.StreamsRunning
 									Layout.preferredWidth: 15 * DefaultStyle.dp
