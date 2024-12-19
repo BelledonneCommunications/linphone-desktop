@@ -122,7 +122,7 @@ ApplicationWindow {
 							}
 							Text {
 								Layout.leftMargin: 5 * DefaultStyle.dp
-								text: modelData.address
+								text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(modelData.address) : modelData.address
 								font {
 									pixelSize: 14 * DefaultStyle.dp
 									weight: 400 * DefaultStyle.dp
