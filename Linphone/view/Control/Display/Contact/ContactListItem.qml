@@ -124,8 +124,26 @@ FocusScope {
 						color: DefaultStyle.main2_200
 					}
 					onClicked: UtilsCpp.createCall(searchResultItem.core.defaultFullAddress)
-					KeyNavigation.right: chatButton
 					KeyNavigation.left: chatButton
+					KeyNavigation.right: videoCallButton
+				}
+				Button {
+					id: videoCallButton
+					Layout.preferredWidth: 45 * DefaultStyle.dp
+					Layout.preferredHeight: 45 * DefaultStyle.dp
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
+					icon.source: AppIcons.videoCamera
+					focus: visible && !callButton.visible
+					contentImageColor: DefaultStyle.main2_500main
+					background: Rectangle {
+						anchors.fill: parent
+						radius: 40 * DefaultStyle.dp
+						color: DefaultStyle.main2_200
+					}
+					onClicked: UtilsCpp.createCall(searchResultItem.core.defaultFullAddress, {'localVideoEnabled': true})
+					KeyNavigation.left: callButton
+					KeyNavigation.right: chatButton
 				}
 				Button {
 					id: chatButton
@@ -135,15 +153,15 @@ FocusScope {
 					icon.width: 24 * DefaultStyle.dp
 					icon.height: 24 * DefaultStyle.dp
 					icon.source: AppIcons.chatTeardropText
-					focus: visible && !callButton.visible
+					focus: visible && !callButton.visible && !videoCallButton.visible
 					contentImageColor: DefaultStyle.main2_500main
 					background: Rectangle {
 						anchors.fill: parent
 						radius: 40 * DefaultStyle.dp
 						color: DefaultStyle.main2_200
 					}
+					KeyNavigation.left: videoCallButton
 					KeyNavigation.right: callButton
-					KeyNavigation.left: callButton
 				}
 			}
 			PopupButton {
