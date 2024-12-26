@@ -305,6 +305,7 @@ AbstractMainPage {
 												_address: modelData.core.remoteAddress
 												width: 45 * DefaultStyle.dp
 												height: 45 * DefaultStyle.dp
+												isConferenceInfo: modelData.core.isConference
 											}
 											ColumnLayout {
 												Layout.fillHeight: true

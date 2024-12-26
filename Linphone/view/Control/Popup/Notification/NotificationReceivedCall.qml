@@ -64,6 +64,7 @@ Notification {
 						Layout.preferredHeight: 60 * DefaultStyle.dp
 						Layout.alignment: Qt.AlignHCenter
 						call: mainItem.call
+						isConferenceInfo: mainItem.call && mainItem.call.core.isConference
 					}
 					ColumnLayout {
 						spacing: 0
