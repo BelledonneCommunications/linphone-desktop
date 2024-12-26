@@ -58,6 +58,7 @@ AbstractSettingsLayout {
 				propertyOwnerGui: account
 				title: qsTr("URI de messagerie vocale")
 				Layout.fillWidth: true
+				toValidate: true
 			}
 		}
 	}
@@ -87,6 +88,7 @@ AbstractSettingsLayout {
 				title: qsTr("URL du serveur mandataire")
 				propertyName: "serverAddress"
 				propertyOwnerGui: account
+				toValidate: true
 			}
 			SwitchSetting {
 				titleText: qsTr("Serveur mandataire sortant")
@@ -98,6 +100,7 @@ AbstractSettingsLayout {
 				propertyName: "stunServer"
 				propertyOwnerGui: account
 				title: qsTr("Adresse du serveur STUN")
+				toValidate: true
 			}
 			SwitchSetting {
 				titleText: qsTr("Activer ICE")
@@ -128,6 +131,7 @@ AbstractSettingsLayout {
 				title: qsTr("URI de l’usine à conversations")
 				propertyName: "conferenceFactoryAddress"
 				propertyOwnerGui: account
+				toValidate: true
 			}
 			DecoratedTextField {
 				Layout.fillWidth: true
@@ -135,12 +139,14 @@ AbstractSettingsLayout {
 				propertyName: "audioVideoConferenceFactoryAddress"
 				propertyOwnerGui: account
 				visible: !SettingsCpp.disableMeetingsFeature
+				toValidate: true
 			}
 			DecoratedTextField {
 				Layout.fillWidth: true
 				title: qsTr("URL du serveur d’échange de clés de chiffrement")
 				propertyName: "limeServerUrl"
 				propertyOwnerGui: account
+				toValidate: true
 			}
 		}
 	}

@@ -18,7 +18,7 @@ AbstractSettingsMenu {
 	]
 	Connections {
 		target: account.core
-		onRemoved: accountRemoved()
+		function onRemoved() { accountRemoved() }
 	}
 	onGoBackRequested: if (!account.core.isSaved) {
 		UtilsCpp.getMainWindow().showConfirmationLambdaPopup(qsTr("Modifications non enregistrées"),
