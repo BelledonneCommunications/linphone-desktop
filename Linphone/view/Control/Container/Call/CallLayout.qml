@@ -29,7 +29,7 @@ Item {
 
 	function setConferenceLayout() {
 		callLayout.sourceComponent = undefined	// unload old view before opening the new view to avoid conflicts in Video UI.
-		callLayout.sourceComponent = mainItem.conferenceLayout == LinphoneEnums.ConferenceLayout.ActiveSpeaker
+		callLayout.sourceComponent = !conference || mainItem.conferenceLayout == LinphoneEnums.ConferenceLayout.ActiveSpeaker
 			? activeSpeakerComponent
 			: gridComponent
 	}
