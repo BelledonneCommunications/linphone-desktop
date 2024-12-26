@@ -31,13 +31,14 @@ ListProxy::~ListProxy() {
 }
 
 QSharedPointer<QObject> ListProxy::get(QObject *itemToGet, int *index) const {
-	int row = 0;
-	for (auto item : mList)
-		if (item.get() == itemToGet) {
-			if (index) *index = row;
-			return item;
-		} else ++row;
-	return nullptr;
+	auto it = std::find(mList.begin(), mList.end(), itemToGet);
+	if (it != mList.end()) {
+		if (index != nullptr) *index = std::distance(mList.begin(), it);
+		return *it;
+	} else {
+		if (index != nullptr) *index = -1;
+		return nullptr;
+	}
 }
 
 // -----------------------------------------------------------------------------

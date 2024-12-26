@@ -218,11 +218,28 @@ ConferenceInfoList::build(const std::shared_ptr<linphone::ConferenceInfo> &confe
 }
 
 void ConferenceInfoList::connectItem(QSharedPointer<ConferenceInfoCore> confInfoCore) {
-	if (confInfoCore)
+	if (confInfoCore) {
 		connect(confInfoCore.get(), &ConferenceInfoCore::removed, this, [this](ConferenceInfoCore *confInfo) {
 			remove(confInfo);
 			updateHaveCurrentDate();
 		});
+		connect(confInfoCore.get(), &ConferenceInfoCore::dateTimeChanged, this, [this, confInfoCore]() {
+			int i = -1;
+			get(confInfoCore.get(), &i);
+			if (i != -1) {
+				auto modelIndex = index(i);
+				emit dataChanged(modelIndex, modelIndex);
+			}
+		});
+		connect(confInfoCore.get(), &ConferenceInfoCore::endDateTimeChanged, this, [this, confInfoCore]() {
+			int i = -1;
+			get(confInfoCore.get(), &i);
+			if (i != -1) {
+				auto modelIndex = index(i);
+				emit dataChanged(modelIndex, modelIndex);
+			}
+		});
+	}
 }
 
 QHash<int, QByteArray> ConferenceInfoList::roleNames() const {

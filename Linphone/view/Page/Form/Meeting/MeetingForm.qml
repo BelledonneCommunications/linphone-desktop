@@ -160,13 +160,15 @@ FocusScope {
 							contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
 							KeyNavigation.up: startDate
 							KeyNavigation.down: timeZoneCbox
-							KeyNavigation.left: startDate
+							KeyNavigation.left: endHour
 							KeyNavigation.right: endHour
 							onSelectedDateTimeChanged: {
+								mainItem.conferenceInfoGui.core.dateTime = selectedDateTime
 								endHour.minTime = selectedDateTime
 								endHour.maxTime = UtilsCpp.createDateTime(selectedDateTime, 23, 59)
-								mainItem.conferenceInfoGui.core.dateTime = selectedDateTime
-								endHour.selectedDateTime = UtilsCpp.addSecs(selectedDateTime, 3600)
+								if (mainItem.isCreation) {
+									endHour.selectedDateTime = UtilsCpp.addSecs(selectedDateTime, 3600)
+								}
 							}
 						}
 						TimeComboBox {
@@ -177,6 +179,10 @@ FocusScope {
 							background.visible: mainItem.isCreation
 							contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
 							onSelectedDateTimeChanged: mainItem.conferenceInfoGui.core.endDateTime = selectedDateTime
+							KeyNavigation.up: startDate
+							KeyNavigation.down: timeZoneCbox
+							KeyNavigation.left: startHour
+							KeyNavigation.right: startHour
 						}
 						Item {
 							Layout.fillWidth: true

@@ -568,6 +568,9 @@ void ConferenceInfoCore::save() {
 			thisCopy->writeIntoModel(mConferenceInfoModel);
 			thisCopy->deleteLater();
 			mConferenceInfoModel->updateConferenceInfo();
+			mConfInfoModelConnection->invokeToCore([this] {
+				undo(); // Reset new values because some values can be invalid and not changed.
+			});
 		});
 	} else {
 		mCoreModelConnection->invokeToModel([this, thisCopy]() {

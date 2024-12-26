@@ -401,7 +401,7 @@ AbstractMainPage {
 								leftPadding: 12 * DefaultStyle.dp
 								rightPadding: 12 * DefaultStyle.dp
 								focus: true
-								text: qsTr("Save")
+								text: qsTr("Enregistrer")
 								textSize: 13 * DefaultStyle.dp
 								KeyNavigation.left: titleText
 								KeyNavigation.right: backButton
