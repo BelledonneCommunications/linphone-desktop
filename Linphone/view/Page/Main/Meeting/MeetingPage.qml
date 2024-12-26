@@ -718,8 +718,8 @@ AbstractMainPage {
 							}
 							Text {
 								text: mainItem.selectedConference
-										? UtilsCpp.toDateString(mainItem.selectedConference.core?.dateTimeUtc) 
-										+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core?.dateTimeUtc) 
+										? UtilsCpp.toDateString(mainItem.selectedConference.core?.dateTime) 
+										+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core?.dateTime) 
 										+ " - " 
 										+ UtilsCpp.toDateHourString(mainItem.selectedConference.core?.endDateTime)
 										: ''

@@ -152,10 +152,10 @@ ListView {
 		property var itemGui: $modelData
 		// Do not use itemAtIndex because of caching items. Using getAt ensure to have a GUI
 		property var previousConfInfoGui : mainItem.model.getAt(index-1)
-		property var dateTime: itemGui.core ? itemGui.core.dateTimeUtc : UtilsCpp.getCurrentDateTime()
+		property var dateTime: itemGui.core ? itemGui.core.dateTime : UtilsCpp.getCurrentDateTime()
 		property string day : UtilsCpp.toDateDayNameString(dateTime)
 		property string dateString:  UtilsCpp.toDateString(dateTime)
-		property string previousDateString: previousConfInfoGui ? UtilsCpp.toDateString(previousConfInfoGui.core ? previousConfInfoGui.core.dateTimeUtc : UtilsCpp.getCurrentDateTimeUtc()) : ''
+		property string previousDateString: previousConfInfoGui ? UtilsCpp.toDateString(previousConfInfoGui.core ? previousConfInfoGui.core.dateTime : UtilsCpp.getCurrentDateTime()) : ''
 		property bool isFirst : ListView.previousSection !== ListView.section
 		property int topOffset: (dateDay.visible && !isFirst? 8 * DefaultStyle.dp : 0)
 		property var endDateTime: itemGui.core ? itemGui.core.endDateTime : UtilsCpp.getCurrentDateTime()
