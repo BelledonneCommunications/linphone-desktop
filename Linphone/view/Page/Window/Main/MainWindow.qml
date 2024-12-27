@@ -78,6 +78,9 @@ AbstractWindow {
 
 	function reauthenticateAccount(identity, domain, callback){
 		if (authenticationPopupOpened) return
+		if (mainWindowStackView.currentItem.objectName === "loginPage" 
+		|| mainWindowStackView.currentItem.objectName === "sipLoginPage")
+			return
 		console.log("Showing authentication dialog")
 		var popup = authenticationPopupComp.createObject(mainWindow, {"identity": identity, "domain": domain, "callback":callback})	// Callback ownership is not passed
 		popup.open()
@@ -132,6 +135,7 @@ AbstractWindow {
 	Component {
 		id: loginPage
 		LoginPage {
+			objectName: "loginPage"
 			showBackButton: accountProxy?.haveAccount || false
 			onGoBack: openMainPage()
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
@@ -145,6 +149,7 @@ AbstractWindow {
 	Component {
 		id: sipLoginPage
 		SIPLoginPage {
+			objectName: "sipLoginPage"
 			onGoBack: {
 				if(SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin){
 					openMainPage()
