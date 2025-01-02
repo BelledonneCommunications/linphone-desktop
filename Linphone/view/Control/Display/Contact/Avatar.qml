@@ -15,7 +15,7 @@ Loader{
 	property AccountGui account: null
 	property FriendGui contact: null
 	property CallGui call: null
-	property bool isConferenceInfo: false
+	property bool isConference: false
 	property string _address: account
 		? account.core?.identityAddress || ""
 		: call
@@ -144,7 +144,7 @@ Loader{
 						width: height
 						Rectangle {
 							id: initialItem
-							property string initials: mainItem.isConferenceInfo ? "" : UtilsCpp.getInitials(mainItem.displayNameVal)
+							property string initials: mainItem.isConference ? "" : UtilsCpp.getInitials(mainItem.displayNameVal)
 							radius: width / 2
 							color: DefaultStyle.main2_200
 							height: stackView.height
@@ -166,7 +166,7 @@ Loader{
 								visible: initialItem.initials == ''
 								width: stackView.width/2
 								height: width
-								source: mainItem.isConferenceInfo ? AppIcons.usersThree : AppIcons.profile
+								source: mainItem.isConference ? AppIcons.usersThree : AppIcons.profile
 								sourceSize.width: width
 								sourceSize.height: height
 								anchors.centerIn: parent

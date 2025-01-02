@@ -73,7 +73,7 @@ ColumnLayout {
 				width: 100 * DefaultStyle.dp
 				height: 100 * DefaultStyle.dp
 				contact: mainItem.contact || null
-				isConferenceInfo: mainItem.conferenceInfo
+				isConference: !!mainItem.conferenceInfo
 				_address: mainItem.conferenceInfo
 					? mainItem.conferenceInfo.core.subject
 					: mainItem.contactAddress || mainItem.contactName
