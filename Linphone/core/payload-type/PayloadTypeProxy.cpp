@@ -26,7 +26,7 @@ DEFINE_ABSTRACT_OBJECT(PayloadTypeProxy)
 
 PayloadTypeProxy::PayloadTypeProxy(QObject *parent) : LimitProxy(parent) {
 	mPayloadTypeList = PayloadTypeList::create();
-	setSourceModels(new SortFilterList(mPayloadTypeList.get(), Qt::AscendingOrder));
+	setSourceModels(new SortFilterList(mPayloadTypeList.get()));
 }
 
 PayloadTypeProxy::~PayloadTypeProxy() {

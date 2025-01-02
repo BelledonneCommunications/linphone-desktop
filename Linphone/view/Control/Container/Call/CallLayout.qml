@@ -14,8 +14,8 @@ Item {
 	property CallGui call
 	property ConferenceGui conference: call && call.core.conference
 	property bool callTerminatedByUser: false
-	property bool callStarted: call?.core.isStarted
-	readonly property var callState: call? call.core.state : undefined
+	property bool callStarted: call ? call.core.isStarted : false
+	readonly property var callState: call?.core.state
 	property int conferenceLayout: call ? call.core.conferenceVideoLayout : LinphoneEnums.ConferenceLayout.ActiveSpeaker
 	// property int participantDeviceCount: conference ? conference.core.participantDeviceCount : -1
 	// onParticipantDeviceCountChanged: {

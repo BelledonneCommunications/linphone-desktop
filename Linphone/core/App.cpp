@@ -548,6 +548,8 @@ void App::initCore() {
 			    Utils::checkDownloadedCodecsUpdates();
 
 			    mEngine->load(url);
+
+			    CoreModel::getInstance()->getCore()->setVideoCodecPriorityPolicy(linphone::CodecPriorityPolicy::Auto);
 		    });
 	    },
 	    Qt::BlockingQueuedConnection);
