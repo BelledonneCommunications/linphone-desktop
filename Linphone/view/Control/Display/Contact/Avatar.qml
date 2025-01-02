@@ -32,9 +32,11 @@ Loader{
 			: displayNameObj
 				? displayNameObj.value
 			: ""
-	property bool haveAvatar: (account && account.core.pictureUri)
-							  || (contact && contact.core.pictureUri)
-							  || computedAvatarUri.length != 0
+	property bool haveAvatar: account 
+		? account.core.pictureUri
+		: contact 
+			? contact.core.pictureUri
+			: computedAvatarUri.length != 0
 	property var avatarObj: UtilsCpp.findAvatarByAddress(_address)
 	property string computedAvatarUri: avatarObj ? avatarObj.value : ''
 	

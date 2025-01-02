@@ -32,7 +32,7 @@ Item {
 			: callState === LinphoneEnums.CallState.PausedByRemote
 
 	property string remoteAddress: account 
-		? account.core.identityAddress 
+		? account.core.identityAddress
 		: participantDevice
 			? participantDevice.core.address
 			: call
