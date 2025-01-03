@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QRect>
 #include <QThread>
+#include <Availability.h>
 
 void DesktopTools::init(){
 }
@@ -170,6 +171,7 @@ QImage DesktopTools::getWindowIcon(void *window) {
 }
 
 QImage DesktopTools::takeScreenshot(void *window) {
+#if __MAC_OS_X_VERSION_MIN_REQUIRED > 140000
 	__block bool haveAccess = false;
 	// Must be call from main thread! If not, you may be in deadlock.
 	dispatch_sync(dispatch_get_main_queue(), ^{
@@ -246,9 +248,14 @@ QImage DesktopTools::takeScreenshot(void *window) {
 	[capture release];
 	return image;
 	// Deprecated:
-	//CGWindowID windowId = *(CGWindowID*)&window;
-	//CGImageRef capture = CGWindowListCreateImage(CGRectNull, kCGWindowListOptionIncludingWindow, windowId, kCGWindowImageBoundsIgnoreFraming);
-	//return CGImageToQImage(capture);
+#else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+		CGWindowID windowId = *(CGWindowID*)&window;
+		CGImageRef capture = CGWindowListCreateImage(CGRectNull, kCGWindowListOptionIncludingWindow, windowId, kCGWindowImageBoundsIgnoreFraming);
+#pragma clang diagnostic pop
+		return CGImageToQImage(capture);
+#endif
 }
 
 
