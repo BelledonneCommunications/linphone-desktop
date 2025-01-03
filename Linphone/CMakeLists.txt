@@ -160,7 +160,9 @@ qt6_add_resources(Linphone "resources" PREFIX "/" FILES ${_LINPHONEAPP_RC_FILES}
 ################################################################
 #						TARGETS LINKS
 ################################################################
-
+if(APPLE)
+	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/macos/Info.plist.in" "${CMAKE_BINARY_DIR}/cmake/install/macos/Info.plist" @ONLY)
+endif()
 set_target_properties(${TARGET_NAME} PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER org.linphone
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}

@@ -62,7 +62,6 @@ set(LINPHONE_QML_DIR "${CMAKE_SOURCE_DIR}/Linphone/view")
 set(QT_PATH "${Qt6Core_DIR}/../../..")
 
 if(APPLE)
-	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/macos/Info.plist.in" "${CMAKE_BINARY_DIR}/cmake/install/macos/Info.plist" @ONLY)
 	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/macos/entitlements.xml.in" "${CMAKE_BINARY_DIR}/cmake/install/macos/entitlements.xml" @ONLY)
 	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/macos/linphone.icns" "${CMAKE_BINARY_DIR}/cmake/install/macos/${EXECUTABLE_NAME}.icns" COPYONLY)
 	set(APP_QT_CONF_PATH "[Paths]\nPlugins = PlugIns\nImports = Resources/qml\nQml2Imports = Resources/qml")

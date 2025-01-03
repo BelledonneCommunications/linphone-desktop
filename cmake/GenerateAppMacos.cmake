@@ -25,7 +25,7 @@ include("${LINPHONESDK_DIR}/cmake/LinphoneSdkUtils.cmake")
 linphone_sdk_convert_comma_separated_list_to_cmake_list("${LINPHONEAPP_MACOS_ARCHS}" _MACOS_ARCHS)
 list(GET _MACOS_ARCHS 0 _FIRST_ARCH)
 
-set(MAIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${LINPHONEAPP_NAME})	#OUTPUT/linphone-app/macos
+set(MAIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${LINPHONEAPP_FOLDER})	#OUTPUT/macos
 
 ################################
 # Create the desktop directory that will contain the merged content of all architectures
@@ -113,7 +113,7 @@ foreach(_FILE IN LISTS ${_BINARIES})
 		endif()
 	endif()
 endforeach()
-execute_process(COMMAND codesign --force --deep --sign - "${MAIN_INSTALL_DIR}/${LINPHONEAPP_EXENAME}.app")#If not code signed, app can crash because of APPLE on "Code Signature Invalid".
+execute_process(COMMAND codesign --force --deep --sign - "${MAIN_INSTALL_DIR}/${LINPHONEAPP_APPLICATION_NAME}.app")#If not code signed, app can crash because of APPLE on "Code Signature Invalid".
 
 
 #[[

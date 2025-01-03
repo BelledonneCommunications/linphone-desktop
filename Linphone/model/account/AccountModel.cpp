@@ -188,7 +188,8 @@ void AccountModel::setNotificationsAllowed(bool value) {
 
 QString AccountModel::getMwiServerAddress() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	return Utils::coreStringToAppString(mMonitor->getParams()->getMwiServerAddress()->asString());
+	auto mwiAddress = mMonitor->getParams()->getMwiServerAddress();
+	return mwiAddress ? Utils::coreStringToAppString(mwiAddress->asString()): "";
 }
 
 void AccountModel::setMwiServerAddress(QString value) {

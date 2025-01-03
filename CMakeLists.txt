@@ -72,15 +72,18 @@ endif()
 
 set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 
+set(LINPHONEAPP_APPLICATION_NAME "Linphone6" CACHE STRING "Application name" )
+set(LINPHONEAPP_EXECUTABLE_NAME "linphone6" CACHE STRING "Executable name" )
+
 if( APPLE )
 	set(LINPHONEAPP_MACOS_ARCHS "arm64" CACHE STRING "MacOS architectures to build: comma-separated list of values in [arm64, x86_64]")
 	set(LINPHONESDK_BUILD_TYPE "Default")#Using Mac will remove all SDK targets.
 	set(ENABLE_FAT_BINARY "ON") # Disable XCFrameworks as it is not supported.
 
-	set(CMAKE_INSTALL_BINDIR "${APPLICATION_NAME}.app/Contents/MacOS")
-	set(CMAKE_INSTALL_LIBDIR "${APPLICATION_NAME}.app/Contents/Frameworks")
-	set(CMAKE_INSTALL_INCLUDEDIR "${APPLICATION_NAME}.app/Contents/Resources/include")
-	set(CMAKE_INSTALL_DATAROOTDIR "${APPLICATION_NAME}.app/Contents/Resources/share")
+	set(CMAKE_INSTALL_BINDIR "${LINPHONEAPP_APPLICATION_NAME}.app/Contents/MacOS")
+	set(CMAKE_INSTALL_LIBDIR "${LINPHONEAPP_APPLICATION_NAME}.app/Contents/Frameworks")
+	set(CMAKE_INSTALL_INCLUDEDIR "${LINPHONEAPP_APPLICATION_NAME}.app/Contents/Resources/include")
+	set(CMAKE_INSTALL_DATAROOTDIR "${LINPHONEAPP_APPLICATION_NAME}.app/Contents/Resources/share")
 
 	if( NOT CMAKE_OSX_DEPLOYMENT_TARGET)
 		#set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")#Qt: 'path' is unavailable: introduced in macOS 10.15
@@ -143,9 +146,6 @@ function(add_cache _OPTION_LIST OPTION DESC VALUE)
 	list(APPEND _OPTION_LIST ${${_OPTION_LIST}} "-D${OPTION}=${${OPTION}}")
 	set(${${_OPTION_LIST}} ${_OPTION_LIST} PARENT_SCOPE)
 endfunction()
-
-set(LINPHONEAPP_APPLICATION_NAME "Linphone6" CACHE STRING "Application name" )
-set(LINPHONEAPP_EXECUTABLE_NAME "linphone6" CACHE STRING "Executable name" )
 
 add_option(OPTION_LIST ENABLE_APP_LICENSE "Enable the license in packages." ON)
 add_option(OPTION_LIST ENABLE_APP_OAUTH2 "Build with OAuth2 support for remote provisioning." OFF) # Experimental.
