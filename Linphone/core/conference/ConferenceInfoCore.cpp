@@ -562,7 +562,7 @@ void ConferenceInfoCore::writeIntoModel(std::shared_ptr<ConferenceInfoModel> mod
 void ConferenceInfoCore::save() {
 	mustBeInMainThread(getClassName() + "::save()");
 	ConferenceInfoCore *thisCopy = new ConferenceInfoCore(*this); // Pointer to avoid multiple copies in lambdas
-	if (mConferenceInfoModel) {
+	if (mConferenceInfoModel && mConferenceInfoModel->getConferenceScheduler()) {
 		mConfInfoModelConnection->invokeToModel([this, thisCopy]() { // Copy values to avoid concurrency
 			mustBeInLinphoneThread(getClassName() + "::save()");
 			thisCopy->writeIntoModel(mConferenceInfoModel);
@@ -631,6 +631,12 @@ void ConferenceInfoCore::undo() {
 				conf->deleteLater();
 			});
 		});
+	}
+}
+
+void ConferenceInfoCore::cancelCreation() {
+	if (mConferenceInfoModel) {
+		mConferenceInfoModel->setConferenceScheduler(nullptr);
 	}
 }
 

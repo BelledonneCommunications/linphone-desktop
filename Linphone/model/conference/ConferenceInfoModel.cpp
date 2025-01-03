@@ -58,20 +58,22 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 			mConferenceSchedulerModel->removeListener();
 		}
 		mConferenceSchedulerModel = model;
-		connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::stateChanged,
-		        [this](linphone::ConferenceScheduler::State state) {
-			        if (mConferenceSchedulerModel->getConferenceInfo())
-				        mConferenceInfo = mConferenceSchedulerModel->getConferenceInfo()->clone();
-			        if (state == linphone::ConferenceScheduler::State::Ready && mInviteEnabled) {
-				        auto params = CoreModel::getInstance()->getCore()->createDefaultChatRoomParams();
-				        // TODO : wait for new sdk api to send the invitations again
-				        // mConferenceSchedulerModel->getMonitor()->sendInvitations(params);
-			        }
-			        emit schedulerStateChanged(state);
-		        });
-		connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::invitationsSent, this,
-		        &ConferenceInfoModel::invitationsSent);
-		mConferenceSchedulerModel->setSelf(mConferenceSchedulerModel);
+		if (mConferenceSchedulerModel) {
+			connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::stateChanged,
+			        [this](linphone::ConferenceScheduler::State state) {
+				        if (mConferenceSchedulerModel->getConferenceInfo())
+					        mConferenceInfo = mConferenceSchedulerModel->getConferenceInfo()->clone();
+				        if (state == linphone::ConferenceScheduler::State::Ready && mInviteEnabled) {
+					        auto params = CoreModel::getInstance()->getCore()->createDefaultChatRoomParams();
+					        // TODO : wait for new sdk api to send the invitations again
+					        // mConferenceSchedulerModel->getMonitor()->sendInvitations(params);
+				        }
+				        emit schedulerStateChanged(state);
+			        });
+			connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::invitationsSent, this,
+			        &ConferenceInfoModel::invitationsSent);
+			mConferenceSchedulerModel->setSelf(mConferenceSchedulerModel);
+		}
 	}
 }
 

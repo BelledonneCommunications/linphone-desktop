@@ -275,7 +275,7 @@ AbstractMainPage {
 							} else {
 								meetingSetup.conferenceInfoGui.core.save()
 								mainWindow.showLoadingPopup(qsTr("Création de la réunion en cours ..."), true, function () {
-									leftPanelStackView.pop()
+									meetingSetup.conferenceInfoGui.core.cancelCreation()
 								})
 							}
 						}
