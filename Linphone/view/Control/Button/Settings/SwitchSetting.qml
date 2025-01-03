@@ -47,7 +47,7 @@ RowLayout {
 	}
 	Binding {
 		id: binding
-		target: propertyOwnerGui ? propertyOwnerGui : propertyOwner ? propertyOwner : null
+		target: propertyOwnerGui ? propertyOwnerGui.core : propertyOwner ? propertyOwner : null
 		property: mainItem.propertyName
 		value: switchButton.checked
 		when: false

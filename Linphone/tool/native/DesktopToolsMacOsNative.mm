@@ -170,10 +170,85 @@ QImage DesktopTools::getWindowIcon(void *window) {
 }
 
 QImage DesktopTools::takeScreenshot(void *window) {
-
+	__block bool haveAccess = false;
+	// Must be call from main thread! If not, you may be in deadlock.
+	dispatch_sync(dispatch_get_main_queue(), ^{
+		// Checks whether the current process already has screen capture access
+		haveAccess = CGPreflightScreenCaptureAccess();
+		//Requests event listening access if absent, potentially prompting
+		if(!haveAccess) haveAccess = CGRequestScreenCaptureAccess();
+	});
+	if(!haveAccess){
+		qCritical() << "The application don't have the permission to capture the screen";
+		return QImage();
+	}
+	std::condition_variable condition;
+	std::mutex lock;
+	BOOL ended = FALSE;
+	__block SCContentFilter *filter = nil;
+	__block  CGImageRef capture = nil;
+	__block BOOL *_ended = &ended;
+	__block std::condition_variable *_condition = &condition;
 	CGWindowID windowId = *(CGWindowID*)&window;
-	CGImageRef capture = CGWindowListCreateImage(CGRectNull, kCGWindowListOptionIncludingWindow, windowId, kCGWindowImageBoundsIgnoreFraming);
-	return CGImageToQImage(capture);
+
+	[SCShareableContent
+		getShareableContentWithCompletionHandler:^(SCShareableContent *shareableContent,
+												   NSError *error) {
+			if (!error || error.code == 0) {
+				if(windowId) {
+					for (int i = 0; i < shareableContent.windows.count && !filter; ++i){
+						if (shareableContent.windows[i].windowID == windowId) {
+							filter = [[SCContentFilter alloc] initWithDesktopIndependentWindow:shareableContent.windows[i]];
+						}
+					}
+				}
+			}else
+				qCritical() << "SCShareableContent error: " << error.code;
+			*_ended = TRUE;
+			_condition->notify_all();
+		}];
+	std::unique_lock<std::mutex> locker(lock);
+	condition.wait(locker, [&ended]{ return ended; });
+	if(!filter){
+		qCritical() << "Screenshot: The filter could not be created";
+		return QImage();
+	}
+	*_ended = FALSE;
+
+	SCStreamConfiguration *configuration = [[SCStreamConfiguration alloc] init];
+	configuration.capturesAudio = NO;
+	configuration.excludesCurrentProcessAudio = YES;
+	configuration.preservesAspectRatio = YES;
+	configuration.showsCursor = NO;
+	configuration.captureResolution = SCCaptureResolutionBest;
+	configuration.width = NSWidth(filter.contentRect) * filter.pointPixelScale;
+	configuration.height = NSHeight(filter.contentRect) * filter.pointPixelScale;
+	[SCScreenshotManager captureImageWithFilter:filter
+		configuration:configuration
+		completionHandler:^(CGImageRef sampleBuffer, NSError *error){
+			if (!error || error.code == 0)  {
+				capture = sampleBuffer;
+				[capture retain];
+			}else{
+				qCritical() << "Screenshot: cannot capture: " << error.code;
+			}
+			*_ended = TRUE;
+			_condition->notify_all();
+		}
+	];
+	condition.wait(locker, [&ended]{ return ended; });
+	[configuration dealloc];
+	[filter dealloc];
+	if(!capture) {
+		return QImage();
+	}
+	QImage image = CGImageToQImage(capture);
+	[capture release];
+	return image;
+	// Deprecated:
+	//CGWindowID windowId = *(CGWindowID*)&window;
+	//CGImageRef capture = CGWindowListCreateImage(CGRectNull, kCGWindowListOptionIncludingWindow, windowId, kCGWindowImageBoundsIgnoreFraming);
+	//return CGImageToQImage(capture);
 }
 
 

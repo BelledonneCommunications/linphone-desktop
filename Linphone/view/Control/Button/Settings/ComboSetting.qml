@@ -28,7 +28,7 @@ ComboBox {
 	}
 	Binding {
 		id: binding
-		target: propertyOwnerGui ? propertyOwnerGui : propertyOwner
+		target: propertyOwnerGui ? propertyOwnerGui.core : propertyOwner
 		property: propertyName
 		value: mainItem.currentValue
 		when: false
