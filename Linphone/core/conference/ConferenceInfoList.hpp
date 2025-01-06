@@ -65,6 +65,7 @@ signals:
 	void haveCurrentDateChanged();
 	void currentDateIndexChanged(int index);
 	void confInfoInserted(QSharedPointer<ConferenceInfoCore> data);
+	void confInfoUpdated(QSharedPointer<ConferenceInfoCore> data);
 
 private:
 	QSharedPointer<SafeConnection<ConferenceInfoList, CoreModel>> mCoreModelConnection;

@@ -111,6 +111,9 @@ ListView {
 		onConferenceInfoCreated: (confInfoGui) => {
 			selectData(confInfoGui)
 		}
+		onConferenceInfoUpdated: (confInfoGui) => {
+			selectData(confInfoGui)
+		}
 		onInitialized: {
 			// Move to currentDate
 			selectData(null)

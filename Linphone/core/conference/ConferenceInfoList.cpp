@@ -223,19 +223,12 @@ void ConferenceInfoList::connectItem(QSharedPointer<ConferenceInfoCore> confInfo
 			remove(confInfo);
 			updateHaveCurrentDate();
 		});
-		connect(confInfoCore.get(), &ConferenceInfoCore::dateTimeChanged, this, [this, confInfoCore]() {
+		connect(confInfoCore.get(), &ConferenceInfoCore::dataChanged, this, [this, confInfoCore]() {
 			int i = -1;
 			get(confInfoCore.get(), &i);
 			if (i != -1) {
 				auto modelIndex = index(i);
-				emit dataChanged(modelIndex, modelIndex);
-			}
-		});
-		connect(confInfoCore.get(), &ConferenceInfoCore::endDateTimeChanged, this, [this, confInfoCore]() {
-			int i = -1;
-			get(confInfoCore.get(), &i);
-			if (i != -1) {
-				auto modelIndex = index(i);
+				emit confInfoUpdated(confInfoCore);
 				emit dataChanged(modelIndex, modelIndex);
 			}
 		});

@@ -51,6 +51,7 @@ signals:
 	void initialized();
 	void haveCurrentDateChanged();
 	void conferenceInfoCreated(ConferenceInfoGui *confInfo);
+	void conferenceInfoUpdated(ConferenceInfoGui *confInfo);
 
 private:
 	QSharedPointer<ConferenceInfoList> mList;

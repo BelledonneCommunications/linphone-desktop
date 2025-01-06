@@ -46,6 +46,8 @@ AbstractMainPage {
 	}
 
 	onSelectedConferenceChanged: {
+		// While a conference is being edited, we need to stay on the edit page
+		if (overridenRightPanelStackView.currentItem && overridenRightPanelStackView.currentItem.objectName === "editConf") return
 		overridenRightPanelStackView.clear()
 		if (selectedConference && selectedConference.core && selectedConference.core.haveModel) {
 			if (!overridenRightPanelStackView.currentItem || overridenRightPanelStackView.currentItem != meetingDetail) overridenRightPanelStackView.replace(meetingDetail, Control.StackView.Immediate)
@@ -133,6 +135,7 @@ AbstractMainPage {
 			Control.StackView.onActivated: {
 				mainItem.selectedConference = conferenceList.selectedConference
 			}
+			enabled: !overridenRightPanelStackView.currentItem || overridenRightPanelStackView.currentItem.objectName !== "editConf"
 			
 			ColumnLayout {
 				anchors.fill: parent
@@ -334,6 +337,7 @@ AbstractMainPage {
 		id: editConf
 		FocusScope{
 			id: editFocusScope
+			objectName: "editConf"
 			property bool isCreation
 			property ConferenceInfoGui conferenceInfoGui
 			width: overridenRightPanelStackView.width
@@ -429,30 +433,7 @@ AbstractMainPage {
 					conferenceInfoGui: editFocusScope.conferenceInfoGui
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					Connections {
-						target: conferenceEdit.conferenceInfoGui ? conferenceEdit.conferenceInfoGui.core : null
-						function onConferenceSchedulerStateChanged() {
-							var mainWin = UtilsCpp.getMainWindow()
-							if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
-								|| conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
-								mainWin.showLoadingPopup(qsTr("Modification de la réunion en cours..."))
-							} else {
-								if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
-									UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La modification de la conférence a échoué"), false)
-								}
-								mainWin.closeLoadingPopup()
-							}
-							editFocusScope.enabled = conferenceEdit.conferenceInfoGui.core.schedulerState != LinphoneEnums.ConferenceSchedulerState.AllocationPending
-						}
-						function onSaveFailed() {
-							var mainWin = UtilsCpp.getMainWindow()
-							mainWin.closeLoadingPopup()
-						}
-					}
-					onSaveSucceed: {
-						overridenRightPanelStackView.pop()
-						UtilsCpp.showInformationPopup(qsTr("Enregistré"), qsTr("Réunion modifiée avec succès"), true)
-					}
+					
 					onAddParticipantsRequested: {
 						overridenRightPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": overridenRightPanelStackView})
 					}
@@ -464,11 +445,24 @@ AbstractMainPage {
 						}
 					}
 					Connections {
-						target: conferenceEdit.conferenceInfoGui ? conferenceEdit.conferenceInfoGui.core : null
-						function onConferenceSchedulerStateChanged() {
-							var mainWin = UtilsCpp.getMainWindow()
-							if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
-								UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("L'édition de la conférence a échoué"), false)
+						target: conferenceEdit.conferenceInfoGui.core
+						ignoreUnknownSignals: true
+						function onSaveFailed() {
+							UtilsCpp.getMainWindow().closeLoadingPopup()
+						}
+						function onSchedulerStateChanged() {
+							editFocusScope.enabled = conferenceInfoGui.core.schedulerState != LinphoneEnums.ConferenceSchedulerState.AllocationPending
+							if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) {
+								overridenRightPanelStackView.pop()
+								UtilsCpp.getMainWindow().closeLoadingPopup()
+								UtilsCpp.showInformationPopup(qsTr("Enregistré"), qsTr("Réunion modifiée avec succès"), true)
+							}
+							else if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
+								|| conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
+									UtilsCpp.getMainWindow().showLoadingPopup(qsTr("Modification de la réunion en cours..."))
+							} else if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
+								UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La modification de la conférence a échoué"), false)
+								UtilsCpp.getMainWindow().closeLoadingPopup()
 							}
 						}
 					}

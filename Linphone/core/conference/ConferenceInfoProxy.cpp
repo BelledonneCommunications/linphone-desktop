@@ -45,6 +45,12 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
 		    emit conferenceInfoCreated(new ConferenceInfoGui(data));
 	    },
 	    Qt::QueuedConnection);
+	// When the date of a conference is being modified, it can be moved at another index,
+	// so we need to find this new index to select the right coference info
+	connect(
+	    mList.get(), &ConferenceInfoList::confInfoUpdated, this,
+	    [this](QSharedPointer<ConferenceInfoCore> data) { emit conferenceInfoUpdated(new ConferenceInfoGui(data)); },
+	    Qt::QueuedConnection);
 	connect(mList.get(), &ConferenceInfoList::initialized, this, &ConferenceInfoProxy::initialized);
 }
 

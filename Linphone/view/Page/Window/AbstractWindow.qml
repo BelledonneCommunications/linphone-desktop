@@ -222,11 +222,12 @@ ApplicationWindow {
 		popup.closePopup.connect(removeFromPopupLayout)
 	}
 	
-	function showConfirmationLambdaPopup(title,text, details,callback, firstButtonText, secondButtonText){
+	function showConfirmationLambdaPopup(title,text, details, callback, firstButtonText, secondButtonText, customContent){
 		console.log("Showing confirmation lambda popup")
 		var popup = confirmPopupComp.createObject(popupLayout, {"title": title, "text": text, "details":details,"callback":callback})
 		if (firstButtonText != undefined) popup.firstButtonText = firstButtonText
 		if (secondButtonText != undefined) popup.secondButtonText = secondButtonText
+		if (customContent != undefined) popup.content = customContent
 		popup.titleColor = DefaultStyle.main1_500_main
 		popup.open()
 		popup.closePopup.connect(removeFromPopupLayout)

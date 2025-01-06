@@ -18,14 +18,6 @@ FocusScope {
 		id: formLayout
 		spacing: 16 * DefaultStyle.dp
 		anchors.fill: parent
-		Connections {
-			target: mainItem.conferenceInfoGui.core
-			function onSchedulerStateChanged() {
-				if (mainItem.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) {
-					mainItem.saveSucceed(isCreation)
-				}
-			}
-		}
 
 		Component.onCompleted: {
 			endHour.selectedDateTime = mainItem.conferenceInfoGui.core.endDateTime
@@ -153,7 +145,7 @@ FocusScope {
 					RowLayout {
 						TimeComboBox {
 							id: startHour
-							indicator.visible: mainItem.isCreation
+							// indicator.visible: mainItem.isCreation
 							Layout.preferredWidth: 94 * DefaultStyle.dp
 							Layout.preferredHeight: 30 * DefaultStyle.dp
 							background.visible: mainItem.isCreation
@@ -173,7 +165,7 @@ FocusScope {
 						}
 						TimeComboBox {
 							id: endHour
-							indicator.visible: mainItem.isCreation
+							// indicator.visible: mainItem.isCreation
 							Layout.preferredWidth: 94 * DefaultStyle.dp
 							Layout.preferredHeight: 30 * DefaultStyle.dp
 							background.visible: mainItem.isCreation
