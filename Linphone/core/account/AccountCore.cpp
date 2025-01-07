@@ -125,6 +125,7 @@ AccountCore::AccountCore(const AccountCore &accountCore) {
 	mDevices = accountCore.mDevices;
 	mNotificationsAllowed = accountCore.mNotificationsAllowed;
 	mMwiServerAddress = accountCore.mMwiServerAddress;
+	mVoicemailAddress = accountCore.mVoicemailAddress;
 	mTransport = accountCore.mTransport;
 	mTransports = accountCore.mTransports;
 	mServerAddress = accountCore.mServerAddress;
@@ -179,6 +180,9 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::mwiServerAddressChanged, [this](QString value) {
 		mAccountModelConnection->invokeToCore([this, value]() { onMwiServerAddressChanged(value); });
+	});
+	mAccountModelConnection->makeConnectToModel(&AccountModel::voicemailAddressChanged, [this](QString value) {
+		mAccountModelConnection->invokeToCore([this, value]() { onVoicemailAddressChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::transportChanged, [this](linphone::TransportType value) {
 		mAccountModelConnection->invokeToCore(
@@ -274,6 +278,7 @@ void AccountCore::reset(const AccountCore &accountCore) {
 	setUnreadCallNotifications(accountCore.mUnreadCallNotifications);
 	setUnreadMessageNotifications(accountCore.mUnreadMessageNotifications);
 	setMwiServerAddress(accountCore.mMwiServerAddress);
+	setVoicemailAddress(accountCore.mVoicemailAddress);
 	setTransport(accountCore.mTransport);
 	setServerAddress(accountCore.mServerAddress);
 	setOutboundProxyEnabled(accountCore.mOutboundProxyEnabled);
@@ -448,6 +453,10 @@ QString AccountCore::getMwiServerAddress() {
 	return mMwiServerAddress;
 }
 
+QString AccountCore::getVoicemailAddress() {
+	return mVoicemailAddress;
+}
+
 QStringList AccountCore::getTransports() {
 	return mTransports;
 }
@@ -496,14 +505,18 @@ QString AccountCore::getLimeServerUrl() {
 	return mLimeServerUrl;
 }
 
-QString AccountCore::getVoicemailAddress() {
-	return mVoicemailAddress;
-}
-
 void AccountCore::setMwiServerAddress(QString value) {
 	if (mMwiServerAddress != value) {
 		mMwiServerAddress = value;
 		emit mwiServerAddressChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setVoicemailAddress(QString value) {
+	if (mVoicemailAddress != value) {
+		mVoicemailAddress = value;
+		emit voicemailAddressChanged();
 		setIsSaved(false);
 	}
 }
@@ -596,14 +609,6 @@ void AccountCore::setLimeServerUrl(QString value) {
 	}
 }
 
-void AccountCore::setVoicemailAddress(QString value) {
-	if (mVoicemailAddress != value) {
-		mVoicemailAddress = value;
-		emit voicemailAddressChanged();
-		setIsSaved(false);
-	}
-}
-
 bool AccountCore::isSaved() const {
 	return mIsSaved;
 }
@@ -626,6 +631,13 @@ void AccountCore::onMwiServerAddressChanged(QString value) {
 	if (value != mMwiServerAddress) {
 		mMwiServerAddress = value;
 		emit mwiServerAddressChanged();
+	}
+}
+
+void AccountCore::onVoicemailAddressChanged(QString value) {
+	if (value != mVoicemailAddress) {
+		mVoicemailAddress = value;
+		emit voicemailAddressChanged();
 	}
 }
 

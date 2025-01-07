@@ -152,6 +152,7 @@ public:
 
 	void onNotificationsAllowedChanged(bool value);
 	void onMwiServerAddressChanged(QString value);
+	void onVoicemailAddressChanged(QString value);
 	void onTransportChanged(QString value);
 	void onServerAddressChanged(QString value);
 	void onOutboundProxyEnabledChanged(bool value);
