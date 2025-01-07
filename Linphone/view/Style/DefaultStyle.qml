@@ -38,8 +38,8 @@ QtObject {
 	property double dp: 1
 	
 	// Warning: Qt 6.8.1 (current version) and previous versions, Qt only support COLRv0 fonts. Don't try to use v1.
-	property string emojiFont: "EmojiTwo COLRv0"
-	property string flagFont: "EmojiTwo COLRv0"
+	property string emojiFont: "OpenMoji Color"
+	property string flagFont: "OpenMoji Color"
 	property string defaultFont: "Noto Sans"
 
 	property color numericPadPressedButtonColor: "#EEF7F8"

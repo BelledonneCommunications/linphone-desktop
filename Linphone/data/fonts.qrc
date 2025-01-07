@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>font/EmojiTwoCOLRv0.ttf</file>
         <file>font/Noto_Sans/NotoSans-Black.ttf</file>
         <file>font/Noto_Sans/NotoSans-BlackItalic.ttf</file>
         <file>font/Noto_Sans/NotoSans-Bold.ttf</file>
@@ -19,5 +18,11 @@
         <file>font/Noto_Sans/NotoSans-SemiBoldItalic.ttf</file>
         <file>font/Noto_Sans/NotoSans-Thin.ttf</file>
         <file>font/Noto_Sans/NotoSans-ThinItalic.ttf</file>
+    </qresource>
+    <qresource prefix="/linux">
+        <file>font/OpenMoji-color-cbdt.ttf</file>
+    </qresource>
+    <qresource prefix="/other">
+        <file>font/OpenMoji-color-colr0_svg.ttf</file>
     </qresource>
 </RCC>

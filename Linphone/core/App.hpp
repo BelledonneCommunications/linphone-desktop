@@ -113,6 +113,7 @@ public:
 	void init();
 	void initCore();
 	void initCppInterfaces();
+	void initFonts();
 	void restart();
 	bool autoStartEnabled();
 	void setSysTrayIcon();

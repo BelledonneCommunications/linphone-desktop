@@ -267,14 +267,7 @@ App::App(int &argc, char *argv[])
 	// If not OpenGL, createRender is never call.
 	QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
 	setWindowIcon(QIcon(Constants::WindowIconPath));
-	lInfo() << "Loading Fonts";
-	QDirIterator it(":/font/", QDirIterator::Subdirectories);
-	while (it.hasNext()) {
-		QString ttf = it.next();
-		// lDebug()<< ttf;
-		auto id = QFontDatabase::addApplicationFont(ttf);
-	}
-
+	initFonts();
 	//-------------------
 	mLinphoneThread = new Thread(this);
 
@@ -640,6 +633,42 @@ void App::initCppInterfaces() {
 	qmlRegisterType<PayloadTypeCore>(Constants::MainQmlUri, 1, 0, "DownloadablePayloadTypeCore");
 
 	LinphoneEnums::registerMetaTypes();
+}
+
+//------------------------------------------------------------
+
+void App::initFonts() {
+	lInfo() << "Loading Fonts";
+	QStringList allFamilies;
+	QDirIterator it(":/font/", QDirIterator::Subdirectories);
+	while (it.hasNext()) {
+		QString ttf = it.next();
+		if (it.fileInfo().isFile()) {
+			auto id = QFontDatabase::addApplicationFont(ttf);
+			allFamilies << QFontDatabase::applicationFontFamilies(id);
+		}
+	}
+#ifdef Q_OS_LINUX
+	QDirIterator itFonts(":/linux/font/", QDirIterator::Subdirectories);
+	while (itFonts.hasNext()) {
+		QString ttf = itFonts.next();
+		if (itFonts.fileInfo().isFile()) {
+			auto id = QFontDatabase::addApplicationFont(ttf);
+			allFamilies << QFontDatabase::applicationFontFamilies(id);
+		}
+	}
+#else
+	QDirIterator itFonts(":/other/font/", QDirIterator::Subdirectories);
+	while (itFonts.hasNext()) {
+		QString ttf = itFonts.next();
+		if (itFonts.fileInfo().isFile()) {
+			auto id = QFontDatabase::addApplicationFont(ttf);
+			allFamilies << QFontDatabase::applicationFontFamilies(id);
+		}
+	}
+#endif
+	allFamilies.removeDuplicates();
+	lInfo() << "Font families loaded:\n\t" << allFamilies.join("\n\t");
 }
 
 //------------------------------------------------------------
