@@ -131,9 +131,9 @@ FocusScope {
 						onSelectedDateChanged: {
 							if (!selectedDate || selectedDate == mainItem.conferenceInfoGui.core.dateTime) return
 							mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(selectedDate, startHour.selectedHour, startHour.selectedMin)
-							if (isCreation) {
-								startHour.selectedDateTime = UtilsCpp.createDateTime(selectedDate, startHour.selectedHour, startHour.selectedMin)
-							}
+							mainItem.conferenceInfoGui.core.endDateTime = UtilsCpp.createDateTime(selectedDate, endHour.selectedHour, endHour.selectedMin)
+							startHour.selectedDateTime = UtilsCpp.createDateTime(selectedDate, startHour.selectedHour, startHour.selectedMin)
+							endHour.selectedDateTime = UtilsCpp.createDateTime(selectedDate, endHour.selectedHour, endHour.selectedMin)
 						}
 					}
 				},
