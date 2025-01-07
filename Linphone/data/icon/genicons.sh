@@ -19,10 +19,14 @@
 ## along with this program. If not, see <http://www.gnu.org/licenses/>.
 ##
 
-for i in 16 22 24 32 64 128 256
+for i in 16 22 24 32 64 128 256 512 1024
 do
   mkdir -p hicolor/${i}x${i}/apps
-  inkscape -z -e hicolor/${i}x${i}/apps/icon.png -w $i -h $i ../image/logo.svg
+  inkscape -z -e hicolor/${i}x${i}/apps/icon.png -w $i -h $i ../image/logo_margins.svg
 done
+
+#Windows and Linux
 convert -density 256x256 -background transparent ../image/logo.svg -define icon:auto-resize -colors 256 ../icon.ico
-png2icns ../../../cmake/install/macos/linphone.icns hicolor/16x16/apps/icon.png hicolor/32x32/apps/icon.png hicolor/128x128/apps/icon.png hicolor/256x256/apps/icon.png
+
+#Mac
+png2icns ../../../cmake/install/macos/linphone.icns hicolor/16x16/apps/icon.png hicolor/32x32/apps/icon.png hicolor/128x128/apps/icon.png hicolor/256x256/apps/icon.png hicolor/512x512/apps/icon.png hicolor/1024x1024/apps/icon.png
