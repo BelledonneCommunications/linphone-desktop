@@ -46,6 +46,9 @@ public:
 	void cliShow(QHash<QString, QString> args);
 	void cliFetchConfig(QHash<QString, QString> args);
 	void cliCall(QHash<QString, QString> args);
+	void cliBye(QHash<QString, QString> args);
+	void cliAccept(QHash<QString, QString> args);
+	void cliDecline(QHash<QString, QString> args);
 
 	static QRegularExpression mRegExpArgs;
 	static QRegularExpression mRegExpFunctionName;

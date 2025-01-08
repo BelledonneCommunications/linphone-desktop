@@ -39,6 +39,9 @@ QMap<QString, CliModel::Command> CliModel::mCommands{
     createCommand("show", QT_TR_NOOP("showFunctionDescription"), &CliModel::cliShow, {}, true),
     createCommand("fetch-config", QT_TR_NOOP("fetchConfigFunctionDescription"), &CliModel::cliFetchConfig, {}, true),
     createCommand("call", QT_TR_NOOP("callFunctionDescription"), &CliModel::cliCall, {{"sip-address", {}}}, true),
+    createCommand("bye", QT_TR_NOOP("byeFunctionDescription"), &CliModel::cliBye, {}, true),
+    createCommand("accept", QT_TR_NOOP("acceptFunctionDescription"), &CliModel::cliAccept, {}, true),
+    createCommand("decline", QT_TR_NOOP("declineFunctionDescription"), &CliModel::cliDecline, {}, true),
     /*
     createCommand("initiate-conference", QT_TR_NOOP("initiateConferenceFunctionDescription"), cliInitiateConference, {
         { "sip-address", {} }, { "conference-id", {} }
@@ -48,11 +51,8 @@ QMap<QString, CliModel::Command> CliModel::mCommands{
     }),
     createCommand("join-conference-as", QT_TR_NOOP("joinConferenceAsFunctionDescription"), cliJoinConferenceAs, {
         { "sip-address", {} }, { "conference-id", {} }, { "guest-sip-address", {} }
-    }),
-    createCommand("bye", QT_TR_NOOP("byeFunctionDescription"), cliBye, QHash<QString, Argument>(), true),
-    createCommand("accept", QT_TR_NOOP("acceptFunctionDescription"), cliAccept, QHash<QString, Argument>(), true),
-    createCommand("decline", QT_TR_NOOP("declineFunctionDescription"), cliDecline, QHash<QString, Argument>(), true),
-    */
+    }),*/
+
 };
 
 std::pair<QString, CliModel::Command> CliModel::createCommand(const QString &functionName,
@@ -144,6 +144,69 @@ void CliModel::cliCall(QHash<QString, QString> args) {
 			    CoreModel::getInstance().get(), &CoreModel::globalStateChanged, this, [this, args]() { cliCall(args); },
 			    Qt::SingleShotConnection);
 		else ToolModel::createCall(args["sip-address"]);
+	}
+}
+
+void CliModel::cliBye(QHash<QString, QString> args) {
+	if (!CoreModel::getInstance()->getCore() ||
+	    CoreModel::getInstance()->getCore()->getGlobalState() != linphone::GlobalState::On) {
+		connect(
+		    CoreModel::getInstance().get(), &CoreModel::globalStateChanged, this, [this, args]() { cliBye(args); },
+		    Qt::SingleShotConnection);
+		return;
+	}
+
+	if (args["sip-address"] == "*") // Call with options
+		CoreModel::getInstance()->getCore()->terminateAllCalls();
+	else if (args.size() == 0 || args["sip-address"] == "") {
+		auto currentCall = CoreModel::getInstance()->getCore()->getCurrentCall();
+		if (currentCall) currentCall->terminate();
+		else lWarning() << log().arg("Cannot find a call to bye.");
+	} else {
+		auto address = ToolModel::interpretUrl(args["sip-address"]);
+		auto currentCall = CoreModel::getInstance()->getCore()->getCallByRemoteAddress2(address);
+		if (currentCall) currentCall->terminate();
+		else lWarning() << log().arg("Cannot find a call to bye.");
+	}
+}
+
+void CliModel::cliAccept(QHash<QString, QString> args) {
+	if (!CoreModel::getInstance()->getCore() ||
+	    CoreModel::getInstance()->getCore()->getGlobalState() != linphone::GlobalState::On) {
+		connect(
+		    CoreModel::getInstance().get(), &CoreModel::globalStateChanged, this, [this, args]() { cliBye(args); },
+		    Qt::SingleShotConnection);
+		return;
+	}
+	if (args.size() == 0 || args["sip-address"] == "" || args["sip-address"] == "*") {
+		auto currentCall = CoreModel::getInstance()->getCore()->getCurrentCall();
+		if (currentCall) currentCall->accept();
+		else lWarning() << log().arg("Cannot find a call to accept.");
+	} else {
+		auto address = ToolModel::interpretUrl(args["sip-address"]);
+		auto currentCall = CoreModel::getInstance()->getCore()->getCallByRemoteAddress2(address);
+		if (currentCall) currentCall->accept();
+		else lWarning() << log().arg("Cannot find a call to accept.");
+	}
+}
+
+void CliModel::cliDecline(QHash<QString, QString> args) {
+	if (!CoreModel::getInstance()->getCore() ||
+	    CoreModel::getInstance()->getCore()->getGlobalState() != linphone::GlobalState::On) {
+		connect(
+		    CoreModel::getInstance().get(), &CoreModel::globalStateChanged, this, [this, args]() { cliBye(args); },
+		    Qt::SingleShotConnection);
+		return;
+	}
+	if (args.size() == 0 || args["sip-address"] == "" || args["sip-address"] == "*") {
+		auto currentCall = CoreModel::getInstance()->getCore()->getCurrentCall();
+		if (currentCall) currentCall->decline(linphone::Reason::Declined);
+		else lWarning() << log().arg("Cannot find a call to decline.");
+	} else {
+		auto address = ToolModel::interpretUrl(args["sip-address"]);
+		auto currentCall = CoreModel::getInstance()->getCore()->getCallByRemoteAddress2(address);
+		if (currentCall) currentCall->decline(linphone::Reason::Declined);
+		else lWarning() << log().arg("Cannot find a call to decline.");
 	}
 }
 
