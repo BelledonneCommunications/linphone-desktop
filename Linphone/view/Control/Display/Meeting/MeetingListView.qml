@@ -103,7 +103,7 @@ ListView {
 		id: confInfoProxy
 		filterText: searchBarText
 		filterType: ConferenceInfoProxy.None
-		initialDisplayItems: mainItem.height / (63 * DefaultStyle.dp) + 5
+		initialDisplayItems: 2 * mainItem.height / (63 * DefaultStyle.dp)
 		displayItemsStep: initialDisplayItems/2
 		function selectData(confInfoGui){
 			mainItem.currentIndex = loadUntil(confInfoGui)

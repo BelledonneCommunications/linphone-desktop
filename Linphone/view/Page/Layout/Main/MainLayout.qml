@@ -79,6 +79,8 @@ Item {
 	}
 
 	Item{
+		anchors.fill: parent
+		
 		Popup {
 			id: currentCallNotif
 			background: Item{}
@@ -103,7 +105,6 @@ Item {
 				}
 			}
 		}
-		anchors.fill: parent
 		
 		RowLayout {
 			anchors.fill: parent

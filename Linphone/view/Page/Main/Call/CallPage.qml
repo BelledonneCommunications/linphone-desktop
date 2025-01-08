@@ -249,9 +249,8 @@ AbstractMainPage {
 										id: callHistoryProxy
 										filterText: searchBar.text
 										onFilterTextChanged: maxDisplayItems = initialDisplayItems
-										initialDisplayItems: historyListView.height / (56 * DefaultStyle.dp) + 5
-										displayItemsStep: initialDisplayItems / 2
-										
+										initialDisplayItems: Math.max(20, 2 * historyListView.height / (56 * DefaultStyle.dp))
+										displayItemsStep: 3 * initialDisplayItems / 2
 									}
 									cacheBuffer: contentHeight>0 ? contentHeight : 0// cache all items
 									flickDeceleration: 10000
@@ -271,8 +270,14 @@ AbstractMainPage {
 									onContentHeightChanged: Qt.callLater(function(){
 										historyListView.cacheBuffer = Math.max(contentHeight,0)
 									})
-									onActiveFocusChanged: if(activeFocus && currentIndex <0) currentIndex = 0
-	
+									onActiveFocusChanged: if(activeFocus && currentIndex < 0 && count > 0) currentIndex = 0
+									onCountChanged: {
+										if(currentIndex < 0 && count > 0){
+											historyListView.currentIndex = 0	// Select first item after loading model
+										}
+										if(atYBeginning)
+											positionViewAtBeginning()// Stay at beginning
+									}
 									Connections {
 										target: deleteHistoryPopup
 										function onAccepted() {
@@ -285,7 +290,20 @@ AbstractMainPage {
 											callHistoryProxy.reload()
 										}
 									}
-									onAtYEndChanged: if(atYEnd) callHistoryProxy.displayMore()
+									onAtYEndChanged: {
+										if(atYEnd && count > 0){
+											 callHistoryProxy.displayMore()
+										}
+									}
+									
+									onCurrentIndexChanged: {
+										if(currentIndex == 0) positionViewAtBeginning()
+										else positionViewAtIndex(currentIndex, ListView.Visible)
+										mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
+									}
+									onVisibleChanged: {
+										if (!visible) currentIndex = -1
+									}
 									delegate: FocusScope {
 										width:historyListView.width
 										height: 56 * DefaultStyle.dp
@@ -408,13 +426,7 @@ AbstractMainPage {
 											}
 										}
 									}
-									onCurrentIndexChanged: {
-										positionViewAtIndex(currentIndex, ListView.Visible)
-										mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
-									}
-									onVisibleChanged: {
-										if (!visible) currentIndex = -1
-									}
+									
 									Control.ScrollBar.vertical: scrollbar
 								}
 							}
@@ -788,8 +800,8 @@ AbstractMainPage {
 							id: detailsHistoryProxy
 							filterText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
 							onFilterTextChanged: maxDisplayItems = initialDisplayItems
-							initialDisplayItems: detailListView.height / (56 * DefaultStyle.dp) + 5
-							displayItemsStep: initialDisplayItems / 2
+							initialDisplayItems: Math.max(20, 2 * detailListView.height / (56 * DefaultStyle.dp))
+							displayItemsStep: 3 * initialDisplayItems / 2
 						}
 						onAtYEndChanged: if(atYEnd) detailsHistoryProxy.displayMore()
 						delegate: Item {

@@ -303,8 +303,8 @@ Flickable{
 				id: contactsProxy
 				parentProxy: mainItem.mainModel
 				filterType: MagicSearchProxy.FilteringTypes.App | (mainItem.searchText != '*' && mainItem.searchText != '' || SettingsCpp.syncLdapContacts ? MagicSearchProxy.FilteringTypes.Ldap : 0)
-				initialDisplayItems: 20
-				displayItemsStep: 5
+				initialDisplayItems: Math.max(20, 2 * mainItem.height / (63 * DefaultStyle.dp))
+				displayItemsStep: 3 * initialDisplayItems / 2
 				onLocalFriendCreated: (index) => {
 					contactsList.selectIndex(index)
 				}
@@ -338,9 +338,9 @@ Flickable{
 				id: suggestionsProxy
 				parentProxy: mainItem.mainModel
 				filterType: mainItem.hideSuggestions ? MagicSearchProxy.FilteringTypes.None : MagicSearchProxy.FilteringTypes.Other
-				initialDisplayItems: contactsProxy.haveMore && contactsList.expanded ? 0 : 20
+				initialDisplayItems: contactsProxy.haveMore && contactsList.expanded ? 0 : Math.max(20, 2 * mainItem.height / (63 * DefaultStyle.dp))
 				onInitialDisplayItemsChanged: maxDisplayItems = initialDisplayItems
-				displayItemsStep: 5
+				displayItemsStep: 3 * initialDisplayItems / 2
 				onModelReset: maxDisplayItems = initialDisplayItems
 			}
 		}
