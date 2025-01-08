@@ -36,8 +36,8 @@ class VariantObject : public QObject, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(QVariant value READ getValue NOTIFY valueChanged)
 public:
-	VariantObject(QObject *parent = nullptr);
-	VariantObject(QVariant defaultValue, QObject *parent = nullptr);
+	VariantObject(QString name, QObject *parent = nullptr);
+	VariantObject(QString name, QVariant defaultValue, QObject *parent = nullptr);
 	~VariantObject();
 
 	template <typename Func, typename... Args>
@@ -51,7 +51,7 @@ public:
 		mConnection->makeConnectToModel(
 		    sender, signal, [this]() { mConnection->invokeToCore([this]() { mCoreObject->requestValue(); }); });
 	}
-
+	QString mName; // usefull to know what is this VariantObject
 	QVariant getValue() const;
 	void requestValue();
 	void setDefaultValue(QVariant value);

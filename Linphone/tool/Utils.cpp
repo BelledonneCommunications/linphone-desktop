@@ -63,7 +63,8 @@ VariantObject *Utils::getDisplayName(const QString &address) {
 	QStringList splitted = address.split(":");
 	if (splitted.size() > 0 && splitted[0] == "sip") splitted.removeFirst();
 	VariantObject *data = nullptr;
-	if (splitted.size() != 0) data = new VariantObject(splitted.first().split("@").first()); // Scope : GUI
+	if (splitted.size() != 0)
+		data = new VariantObject("getDisplayName", splitted.first().split("@").first()); // Scope : GUI
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
 		QString displayName = ToolModel::getDisplayName(address);
@@ -115,7 +116,7 @@ QString Utils::getInitials(const QString &username) {
 }
 
 VariantObject *Utils::findLocalAccountByAddress(const QString &address) {
-	VariantObject *data = new VariantObject();
+	VariantObject *data = new VariantObject("findLocalAccountByAddress");
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
 		auto linAccount = ToolModel::findAccount(address);
@@ -191,7 +192,7 @@ void Utils::showInformationPopup(const QString &title,
 }
 
 VariantObject *Utils::haveAccount() {
-	VariantObject *result = new VariantObject();
+	VariantObject *result = new VariantObject("haveAccount");
 	if (!result) return nullptr;
 	// Using connect ensure to have sender() and receiver() alive.
 	result->makeRequest([]() {
@@ -322,7 +323,7 @@ QString Utils::formatDateElapsedTime(const QDateTime &date) {
 }
 
 VariantObject *Utils::interpretUrl(QString uri) {
-	VariantObject *data = new VariantObject(uri);
+	VariantObject *data = new VariantObject("interpretUrl", uri);
 	if (!data) return nullptr;
 	data->makeRequest([uri]() -> QVariant {
 		QString address = uri;
@@ -344,7 +345,7 @@ bool Utils::isValidURL(const QString &url) {
 }
 
 VariantObject *Utils::findAvatarByAddress(const QString &address) {
-	VariantObject *data = new VariantObject("");
+	VariantObject *data = new VariantObject("findAvatarByAddress", "");
 	if (!data) return nullptr;
 	data->makeRequest([address]() -> QVariant {
 		QString avatar;
@@ -360,7 +361,7 @@ VariantObject *Utils::findAvatarByAddress(const QString &address) {
 }
 
 VariantObject *Utils::findFriendByAddress(const QString &address) {
-	VariantObject *data = new VariantObject();
+	VariantObject *data = new VariantObject("findFriendByAddress");
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
 		auto linFriend = ToolModel::findFriendByAddress(address);
@@ -373,7 +374,7 @@ VariantObject *Utils::findFriendByAddress(const QString &address) {
 }
 
 VariantObject *Utils::getFriendAddressSecurityLevel(const QString &address) {
-	VariantObject *data = new VariantObject();
+	VariantObject *data = new VariantObject("getFriendAddressSecurityLevel");
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
 		auto defaultFriendList = ToolModel::getAppFriendList();
@@ -1316,14 +1317,14 @@ int Utils::getYear(const QDate &date) {
 }
 
 VariantObject *Utils::isMe(const QString &address) {
-	VariantObject *data = new VariantObject(QVariant(false));
+	VariantObject *data = new VariantObject("isMe", QVariant(false));
 	if (!data) return nullptr;
 	data->makeRequest([address]() { return QVariant::fromValue(ToolModel::isMe(address)); });
 	data->requestValue();
 	return data;
 }
 VariantObject *Utils::isLocal(const QString &address) {
-	VariantObject *data = new VariantObject(QVariant(false));
+	VariantObject *data = new VariantObject("isLocal", QVariant(false));
 	data->makeRequest([address]() { return QVariant(ToolModel::isLocal(address)); });
 	data->requestValue();
 	return data;

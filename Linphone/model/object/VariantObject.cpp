@@ -26,24 +26,29 @@
 #include "core/App.hpp"
 
 DEFINE_ABSTRACT_OBJECT(VariantObject)
-VariantObject::VariantObject(QObject *parent) : VariantObject(QVariant()) {
+VariantObject::VariantObject(QString name, QObject *parent) : VariantObject(name, QVariant()) {
 }
-VariantObject::VariantObject(QVariant defaultValue, QObject *parent) {
-	mCoreObject = QSharedPointer<SafeObject>::create(defaultValue);
-	mModelObject = QSharedPointer<SafeObject>::create();
+VariantObject::VariantObject(QString name, QVariant defaultValue, QObject *parent) {
+	mName = name;
+	mCoreObject = QSharedPointer<SafeObject>(new SafeObject(defaultValue), &QObject::deleteLater);
+	mModelObject = QSharedPointer<SafeObject>(new SafeObject(), &QObject::deleteLater);
 	mModelObject->moveToThread(CoreModel::getInstance()->thread());
+
+	App::getInstance()->mEngine->setObjectOwnership(mCoreObject.get(), QQmlEngine::CppOwnership);
+	App::getInstance()->mEngine->setObjectOwnership(mModelObject.get(), QQmlEngine::CppOwnership);
 
 	mConnection = QSharedPointer<SafeConnection<SafeObject, SafeObject>>(
 	    new SafeConnection<SafeObject, SafeObject>(mCoreObject, mModelObject), &QObject::deleteLater);
 
-	mConnection->makeConnectToCore(&SafeObject::setValue, [this](QVariant value) {
-		mConnection->invokeToModel([this, value]() {
+	mConnection->makeConnectToCore(&SafeObject::setValue, [this, d = mName](QVariant value) {
+		mConnection->invokeToModel([this, value, d]() {
 			if (mModelObject) mModelObject->onSetValue(value);
 		});
 	});
-	mConnection->makeConnectToModel(&SafeObject::setValue, [this](QVariant value) {
-		mConnection->invokeToCore([this, value]() {
-			if (mCoreObject) mCoreObject->onSetValue(value);
+	mConnection->makeConnectToModel(&SafeObject::setValue, [this, d = mName, coreObject = mCoreObject](QVariant value) {
+		// Note: do not use member because 'this' is managed by GUI and can be deleted.
+		mConnection->invokeToCore([this, d, coreObject, value]() {
+			if (coreObject) coreObject->onSetValue(value);
 		});
 	});
 	mConnection->makeConnectToModel(&SafeObject::valueChanged, [this](QVariant value) {
