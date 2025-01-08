@@ -223,7 +223,7 @@ void ConferenceInfoList::connectItem(QSharedPointer<ConferenceInfoCore> confInfo
 			remove(confInfo);
 			updateHaveCurrentDate();
 		});
-		connect(confInfoCore.get(), &ConferenceInfoCore::dataChanged, this, [this, confInfoCore]() {
+		connect(confInfoCore.get(), &ConferenceInfoCore::dataSaved, this, [this, confInfoCore]() {
 			int i = -1;
 			get(confInfoCore.get(), &i);
 			if (i != -1) {

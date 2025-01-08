@@ -153,7 +153,7 @@ signals:
 	void timeZoneModelChanged();
 	void saveFailed();
 
-	void dataChanged();
+	void dataSaved();
 
 	void invitationsSent();
 	void removed(ConferenceInfoCore *confInfo);

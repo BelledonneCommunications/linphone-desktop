@@ -42,14 +42,20 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
 	    [this](QSharedPointer<ConferenceInfoCore> data) {
 		    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
 		    sortModel->invalidate(); // New conf => sort change. Filter can change if on current date.
-		    emit conferenceInfoCreated(new ConferenceInfoGui(data));
+		    static const QMetaMethod confInfoCreatedSignal =
+		        QMetaMethod::fromSignal(&ConferenceInfoProxy::conferenceInfoCreated);
+		    if (isSignalConnected(confInfoCreatedSignal)) emit conferenceInfoCreated(new ConferenceInfoGui(data));
 	    },
 	    Qt::QueuedConnection);
 	// When the date of a conference is being modified, it can be moved at another index,
-	// so we need to find this new index to select the right coference info
+	// so we need to find this new index to select the right conference info
 	connect(
 	    mList.get(), &ConferenceInfoList::confInfoUpdated, this,
-	    [this](QSharedPointer<ConferenceInfoCore> data) { emit conferenceInfoUpdated(new ConferenceInfoGui(data)); },
+	    [this](QSharedPointer<ConferenceInfoCore> data) {
+		    static const QMetaMethod confInfoUpdatedSignal =
+		        QMetaMethod::fromSignal(&ConferenceInfoProxy::conferenceInfoUpdated);
+		    if (isSignalConnected(confInfoUpdatedSignal)) emit conferenceInfoUpdated(new ConferenceInfoGui(data));
+	    },
 	    Qt::QueuedConnection);
 	connect(mList.get(), &ConferenceInfoList::initialized, this, &ConferenceInfoProxy::initialized);
 }
