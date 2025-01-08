@@ -310,6 +310,13 @@ AbstractMainPage {
 										anchors.topMargin: 5 * DefaultStyle.dp
 										anchors.bottomMargin: 5 * DefaultStyle.dp
 										visible: !!modelData
+										Connections{
+											target: modelData?.core
+											// Update contact with the new friend.
+											function onFriendAdded(){
+												historyAvatar.contactObj = UtilsCpp.findFriendByAddress(modelData.core.remoteAddress)
+											}
+										}
 										RowLayout {
 											z: 1
 											anchors.fill: parent

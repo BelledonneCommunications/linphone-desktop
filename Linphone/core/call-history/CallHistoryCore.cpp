@@ -99,25 +99,35 @@ void CallHistoryCore::setSelf(QSharedPointer<CallHistoryCore> me) {
 		    [this, remoteAddress = mRemoteAddress](const std::shared_ptr<linphone::Friend> &f) {
 			    auto friendModel = Utils::makeQObject_ptr<FriendModel>(f);
 			    auto displayName = friendModel->getFullName();
-			    mCoreModelConnection->invokeToCore([this, friendModel, displayName]() {
-				    mFriendModel = friendModel;
-				    auto me = mCoreModelConnection->mCore.mQData; // Locked from previous call.
-				    mFriendModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, FriendModel>>(
-				        new SafeConnection<CallHistoryCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
-				    mFriendModelConnection->makeConnectToModel(&FriendModel::fullNameChanged, [this]() {
-					    auto fullName = mFriendModel->getFullName();
-					    mCoreModelConnection->invokeToCore([this, fullName]() {
-						    if (fullName != mDisplayName) {
-							    mDisplayName = fullName;
-							    emit displayNameChanged();
-						    }
-					    });
-				    });
-				    if (displayName != mDisplayName) {
-					    mDisplayName = displayName;
-					    emit displayNameChanged();
+			    auto fAddress = ToolModel::interpretUrl(remoteAddress);
+			    bool isThisFriend = false;
+			    for (auto f : friendModel->getAddresses()) {
+				    if (f->weakEqual(fAddress)) {
+					    isThisFriend = true;
+					    break;
 				    }
-			    });
+			    }
+			    if (isThisFriend)
+				    mCoreModelConnection->invokeToCore([this, friendModel, displayName]() {
+					    mFriendModel = friendModel;
+					    auto me = mCoreModelConnection->mCore.mQData; // Locked from previous call.
+					    mFriendModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, FriendModel>>(
+					        new SafeConnection<CallHistoryCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
+					    mFriendModelConnection->makeConnectToModel(&FriendModel::fullNameChanged, [this]() {
+						    auto fullName = mFriendModel->getFullName();
+						    mCoreModelConnection->invokeToCore([this, fullName]() {
+							    if (fullName != mDisplayName) {
+								    mDisplayName = fullName;
+								    emit displayNameChanged();
+							    }
+						    });
+					    });
+					    if (displayName != mDisplayName) {
+						    mDisplayName = displayName;
+						    emit displayNameChanged();
+					    }
+					    emit friendAdded();
+				    });
 		    });
 	}
 }

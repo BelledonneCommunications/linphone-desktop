@@ -68,6 +68,7 @@ public:
 signals:
 	void durationChanged(QString duration);
 	void displayNameChanged();
+	void friendAdded(); // When a friend is created, this log is linked to it.
 	void removed();
 
 private:
