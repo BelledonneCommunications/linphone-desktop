@@ -47,6 +47,7 @@ LdapModel::~LdapModel() {
 
 void LdapModel::save() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto core = CoreModel::getInstance()->getCore();
 	int oldTimeout = 5;
 	int oldLimit = 50;
 	int oldMinChars = 0;
@@ -54,16 +55,19 @@ void LdapModel::save() {
 		oldTimeout = mLdap->getTimeout();
 		oldLimit = mLdap->getLimit();
 		oldMinChars = mLdap->getMinCharacters();
-		CoreModel::getInstance()->getCore()->removeRemoteContactDirectory(
+		core->removeRemoteContactDirectory(
 		    mLdap); // Need to do remove/add when updating, as setParams on existing one also adds it to core.
 	}
-	mLdap = CoreModel::getInstance()->getCore()->createLdapRemoteContactDirectory(mLdapParamsClone);
+	mLdap = core->createLdapRemoteContactDirectory(mLdapParamsClone);
 	mLdap->setTimeout(oldTimeout);
 	mLdap->setLimit(oldLimit);
 	mLdap->setMinCharacters(oldMinChars);
-	CoreModel::getInstance()->getCore()->addRemoteContactDirectory(mLdap);
+	core->addRemoteContactDirectory(mLdap);
 	lDebug() << log().arg("LDAP Server saved");
 	mLdapParamsClone = mLdap->getLdapParams();
+	// Clean cache to take account new searches
+	auto ldapFriendList = core->getFriendListByName("ldap_friends");
+	if (ldapFriendList) core->removeFriendList(ldapFriendList);
 	emit saved();
 }
 

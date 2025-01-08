@@ -578,7 +578,7 @@ AbstractMainPage {
 						}
 						Text {
 							Layout.fillWidth: true
-							text: mainItem.selectedConference ? mainItem.selectedConference.core?.subject : ""
+							text: mainItem.selectedConference && mainItem.selectedConference.core? mainItem.selectedConference.core.subject : ""
 							maximumLineCount: 1
 							font {
 								pixelSize: 20 * DefaultStyle.dp
@@ -669,7 +669,7 @@ AbstractMainPage {
 								id: linkButton
 								Layout.fillWidth: true
 								font.bold: shadowEnabled
-								text: mainItem.selectedConference ? mainItem.selectedConference.core?.uri : ""
+								text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.uri : ""
 								textSize: 14 * DefaultStyle.dp
 								textWeight: 400 * DefaultStyle.dp
 								underline: true
@@ -717,11 +717,11 @@ AbstractMainPage {
 								source: AppIcons.clock
 							}
 							Text {
-								text: mainItem.selectedConference
-										? UtilsCpp.toDateString(mainItem.selectedConference.core?.dateTime) 
-										+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core?.dateTime) 
+								text: mainItem.selectedConference && mainItem.selectedConference.core
+										? UtilsCpp.toDateString(mainItem.selectedConference.core.dateTime) 
+										+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core.dateTime) 
 										+ " - " 
-										+ UtilsCpp.toDateHourString(mainItem.selectedConference.core?.endDateTime)
+										+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
 										: ''
 								font {
 									pixelSize: 14 * DefaultStyle.dp
@@ -737,7 +737,7 @@ AbstractMainPage {
 								source: AppIcons.globe
 							}
 							Text {
-								text: qsTr("Time zone: ") + (mainItem.selectedConference ? (mainItem.selectedConference.core?.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
+								text: qsTr("Time zone: ") + (mainItem.selectedConference && mainItem.selectedConference.core ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
 								font {
 									pixelSize: 14 * DefaultStyle.dp
 									capitalization: Font.Capitalize
@@ -757,7 +757,7 @@ AbstractMainPage {
 							colorizationColor: DefaultStyle.main2_600
 						}
 						Text {
-							text: mainItem.selectedConference ? mainItem.selectedConference.core?.description : ""
+							text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.description : ""
 							Layout.fillWidth: true
 							font {
 								pixelSize: 14 * DefaultStyle.dp
@@ -778,10 +778,10 @@ AbstractMainPage {
 						Avatar {
 							Layout.preferredWidth: 45 * DefaultStyle.dp
 							Layout.preferredHeight: 45 * DefaultStyle.dp
-							_address: mainItem.selectedConference ? mainItem.selectedConference.core?.organizerAddress : ""
+							_address: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerAddress : ""
 						}
 						Text {
-							text: mainItem.selectedConference ? mainItem.selectedConference.core?.organizerName : ""
+							text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerName : ""
 							font {
 								pixelSize: 14 * DefaultStyle.dp
 								capitalization: Font.Capitalize
@@ -806,7 +806,7 @@ AbstractMainPage {
 							id: participantList
 							Layout.preferredHeight: Math.min(184 * DefaultStyle.dp, contentHeight)
 							Layout.fillWidth: true
-							model: mainItem.selectedConference ? mainItem.selectedConference.core?.participants : []
+							model: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.participants : []
 							clip: true
 							delegate: RowLayout {
 								height: 56 * DefaultStyle.dp

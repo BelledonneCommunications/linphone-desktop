@@ -96,6 +96,10 @@ void CoreModel::start() {
 	mCore->setUserAgent(Utils::appStringToCoreString(userAgent), LINPHONESDK_VERSION);
 	mCore->start();
 	setPathAfterStart();
+	// Remove ldap friends cache list. If not, old stored friends will take priority on merge and will not be updated
+	// from new LDAP requests..
+	auto ldapFriendList = mCore->getFriendListByName("ldap_friends");
+	if (ldapFriendList) mCore->removeFriendList(ldapFriendList);
 	mCore->enableFriendListSubscription(true);
 	// TODO : get this from settings
 	auto videoPolicy = mCore->getVideoActivationPolicy()->clone();
