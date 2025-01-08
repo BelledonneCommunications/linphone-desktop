@@ -51,6 +51,7 @@ LdapCore::LdapCore(const std::shared_ptr<linphone::RemoteContactDirectory> &ldap
 	INIT_CORE_MEMBER(SipAttribute, mLdapModel)
 	INIT_CORE_MEMBER(SipDomain, mLdapModel)
 	INIT_CORE_MEMBER(Debug, mLdapModel)
+	INIT_CORE_MEMBER(Enabled, mLdapModel)
 }
 
 LdapCore::~LdapCore() {
@@ -138,8 +139,8 @@ void LdapCore::writeFromModel(const std::shared_ptr<LdapModel> &model) {
 void LdapCore::save() {
 	mLdapModelConnection->invokeToModel([this]() {
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		mLdapModel->save();
 		writeIntoModel(mLdapModel);
+		mLdapModel->save();
 		mLdapModelConnection->invokeToCore([this] { setSaved(true); });
 	});
 }
