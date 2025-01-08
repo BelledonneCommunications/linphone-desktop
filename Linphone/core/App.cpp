@@ -433,6 +433,10 @@ void App::initCore() {
 		    SettingsModel::create();
 		    lDebug() << log().arg("Creating SettingsCore");
 		    if (!settings) settings = SettingsCore::create();
+		    lDebug() << log().arg("Checking downloaded codecs updates");
+		    Utils::checkDownloadedCodecsUpdates();
+		    lDebug() << log().arg("Setting Video Codec Priority Policy");
+		    CoreModel::getInstance()->getCore()->setVideoCodecPriorityPolicy(linphone::CodecPriorityPolicy::Auto);
 		    lDebug() << log().arg("Creating Ui");
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings] {
 			    // Initialize DestopTools here to have logs into files in case of errors.
@@ -538,11 +542,7 @@ void App::initCore() {
 			        },
 			        Qt::QueuedConnection);
 
-			    Utils::checkDownloadedCodecsUpdates();
-
 			    mEngine->load(url);
-
-			    CoreModel::getInstance()->getCore()->setVideoCodecPriorityPolicy(linphone::CodecPriorityPolicy::Auto);
 		    });
 	    },
 	    Qt::BlockingQueuedConnection);
