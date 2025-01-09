@@ -3,7 +3,7 @@
 #Notarization for Mac. Launch it from the build folder
 
 #rm notarize_result.plist
-FILES=OUTPUT/Linphone*/macos/Packages/*.dmg
+FILES=OUTPUT/macos/Packages/*.dmg
 for f in $FILES
 do
 	linphone_file=$f
