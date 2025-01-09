@@ -168,6 +168,8 @@ public:
 	DECLARE_GETSET(bool, ipv6Enabled, Ipv6Enabled)
 	DECLARE_GETSET(QString, configLocale, ConfigLocale)
 	DECLARE_GETSET(QString, downloadFolder, DownloadFolder)
+	DECLARE_GETSET(int, shortcutCount, ShortcutCount)
+	DECLARE_GETSET(QVariantList, shortcuts, Shortcuts)
 
 signals:
 	void logsUploadUrlChanged();
@@ -197,8 +199,6 @@ signals:
 	void conferenceLayoutChanged();
 	void mediaEncryptionChanged();
 	void mediaEncryptionMandatoryChanged();
-
-	void showAudioCodecsChanged(bool status);
 
 	void micVolumeChanged(float volume);
 

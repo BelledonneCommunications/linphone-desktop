@@ -110,6 +110,9 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(Ipv6Enabled, settingsModel)
 	INIT_CORE_MEMBER(ConfigLocale, settingsModel)
 	INIT_CORE_MEMBER(DownloadFolder, settingsModel)
+
+	INIT_CORE_MEMBER(ShortcutCount, settingsModel)
+	INIT_CORE_MEMBER(Shortcuts, settingsModel)
 }
 
 SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
@@ -178,6 +181,8 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mIpv6Enabled = settingsCore.mIpv6Enabled;
 	mConfigLocale = settingsCore.mConfigLocale;
 	mDownloadFolder = settingsCore.mDownloadFolder;
+	mShortcutCount = settingsCore.mShortcutCount;
+	mShortcuts = settingsCore.mShortcuts;
 }
 
 SettingsCore::~SettingsCore() {
@@ -339,6 +344,10 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                           configLocale, ConfigLocale)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
 	                           downloadFolder, DownloadFolder)
+	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, int, shortcutCount,
+	                        ShortcutCount)
+	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QVariantList,
+	                        shortcuts, Shortcuts)
 
 	auto coreModelConnection = QSharedPointer<SafeConnection<SettingsCore, CoreModel>>(
 	    new SafeConnection<SettingsCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);

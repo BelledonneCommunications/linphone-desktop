@@ -11,6 +11,7 @@ import QtQuick.Effects
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 Item {
 	id: mainItem
@@ -116,7 +117,6 @@ Item {
 				Layout.fillHeight: true
 				Layout.preferredWidth: 82 * DefaultStyle.dp
 				defaultAccount: accountProxy.defaultAccount
-				currentIndex: SettingsCpp.getLastActiveTabIndex()
 				Binding on currentIndex {
 					when: mainItem.contextualMenuOpenedComponent != undefined
 					value: -1
@@ -129,7 +129,6 @@ Item {
 				]
 				onCurrentIndexChanged: {
 					if (currentIndex == -1) return
-					SettingsCpp.setLastActiveTabIndex(currentIndex)
                     if (currentIndex === 0 && accountProxy.defaultAccount) accountProxy.defaultAccount.core?.lResetMissedCalls()
 					if (mainItem.contextualMenuOpenedComponent) {
 						closeContextualMenuComponent()
@@ -139,6 +138,16 @@ Item {
 					if(event.key == Qt.Key_Right){
 						mainStackView.currentItem.forceActiveFocus()
 					}
+				}
+				Component.onCompleted:{
+					if(SettingsCpp.shortcutCount > 0){
+						var shortcuts = SettingsCpp.shortcuts
+						shortcuts.forEach((shortcut) => {
+							model.push({icon: shortcut.icon, selectedIcon: shortcut.icon, label: shortcut.name, colored: true, link:shortcut.link})
+						});
+					}
+					initButtons()
+					currentIndex= SettingsCpp.getLastActiveTabIndex()
 				}
 			}
 			ColumnLayout {
@@ -494,8 +503,17 @@ Item {
 					StackLayout {
 						id: mainStackLayout
 						objectName: "mainStackLayout"
-						currentIndex: tabbar.currentIndex
+						property int _currentIndex: tabbar.currentIndex
+						currentIndex: -1
 						onActiveFocusChanged: if(activeFocus && currentIndex >= 0) children[currentIndex].forceActiveFocus()
+						on_CurrentIndexChanged:{
+							if(count > 0 && _currentIndex >= count && tabbar.model[_currentIndex].link){
+								Qt.openUrlExternally(tabbar.model[_currentIndex].link)
+							}else {
+								currentIndex = _currentIndex
+								SettingsCpp.setLastActiveTabIndex(currentIndex)
+							}
+						}
 						CallPage {
 							id: callPage
 							Connections {

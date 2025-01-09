@@ -14,6 +14,12 @@ Control.TabBar {
 	readonly property alias cornerRadius: bottomLeftCorner.radius
 
 	property AccountGui defaultAccount
+	
+	// Call it after model is ready. If done before, Repeater will not be updated
+	function initButtons(){
+		actionsRepeater.model = mainItem.model
+	}
+	
 	onDefaultAccountChanged: {
 		if (defaultAccount) defaultAccount.core?.lRefreshNotifications()
 	}
@@ -77,14 +83,13 @@ Control.TabBar {
 			height: parent.height/2
 		}
 	}
-
+	
 	Repeater {
 		id: actionsRepeater
-		model: mainItem.model
 		Control.TabButton {
 			id: tabButton
 			width: mainItem.width
-			height: visible ? undefined : 0
+			height: visible && buttonIcon.isImageReady ? undefined : 0
 			bottomInset:  32 * DefaultStyle.dp
 			topInset:  32 * DefaultStyle.dp
 			
@@ -112,10 +117,12 @@ Control.TabBar {
 					Layout.preferredHeight: buttonSize
 					Layout.alignment: Qt.AlignHCenter
 					fillMode: Image.PreserveAspectFit
-					colorizationColor: DefaultStyle.grey_0				
+					colorizationColor: DefaultStyle.grey_0
+					useColor: !modelData.colored
 				}
 				Text {
 					id: buttonText
+					visible: buttonIcon.isImageReady
 					text: modelData.label
 					font {
 						weight: mainItem.currentIndex === index ? 800 * DefaultStyle.dp : 400 * DefaultStyle.dp

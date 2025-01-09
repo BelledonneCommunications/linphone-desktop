@@ -17,6 +17,7 @@ Loader {
 	property int imageHeight: height
 	property bool useColor: colorizationColor != undefined
 	property bool shadowEnabled: false
+	property bool isImageReady: false
 	asynchronous: true
 	sourceComponent: Component{Item {
 		Image {
@@ -31,6 +32,7 @@ Loader {
 			Layout.preferredWidth: mainItem.imageWidth
 			Layout.preferredHeight: mainItem.imageHeight
 			anchors.centerIn: parent
+			onStatusChanged: mainItem.isImageReady = (status == Image.Ready)
 		}
 		MultiEffect {
 			id: effect

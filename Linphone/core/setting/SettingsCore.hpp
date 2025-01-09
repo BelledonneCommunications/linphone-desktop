@@ -212,10 +212,11 @@ public:
 	DECLARE_CORE_GETSET(bool, exitOnClose, ExitOnClose)
 	DECLARE_CORE_GETSET(bool, syncLdapContacts, SyncLdapContacts)
 	DECLARE_CORE_GETSET_MEMBER(bool, ipv6Enabled, Ipv6Enabled)
-	DECLARE_CORE_GETSET_MEMBER(QVariantList, audioCodecs, AudioCodecs)
-	DECLARE_CORE_GETSET_MEMBER(QVariantList, videoCodecs, VideoCodecs)
 	DECLARE_CORE_GETSET(QString, configLocale, ConfigLocale)
 	DECLARE_CORE_GETSET(QString, downloadFolder, DownloadFolder)
+	// Read-only
+	DECLARE_CORE_MEMBER(int, shortcutCount, ShortcutCount)
+	DECLARE_CORE_MEMBER(QVariantList, shortcuts, Shortcuts)
 
 signals:
 
@@ -306,7 +307,7 @@ private:
 
 	QVariantList mConferenceLayouts;
 	QVariantMap mConferenceLayout;
-	
+
 	// Video
 	QStringList mVideoDevices;
 	QString mVideoDevice;

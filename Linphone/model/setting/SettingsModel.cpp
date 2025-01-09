@@ -620,6 +620,47 @@ bool SettingsModel::getShowChats() const {
     return mConfig->getBool(UiSection, "disable_chat_feature", false);
 }*/
 
+QVariantList SettingsModel::getShortcuts() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	QVariantList shortcuts;
+	auto sections = mConfig->getSectionsNamesList();
+	for (auto section : sections) {
+		auto sectionTokens = Utils::coreStringToAppString(section).split('_');
+		if (sectionTokens.size() > 1 && sectionTokens[0].compare("shortcut", Qt::CaseInsensitive) == 0) {
+			QVariantMap shortcut;
+			shortcut["id"] = sectionTokens[1].toInt();
+			shortcut["name"] = Utils::coreStringToAppString(mConfig->getString(section, "name", ""));
+			shortcut["link"] = Utils::coreStringToAppString(mConfig->getString(section, "link", ""));
+			shortcut["icon"] = Utils::coreStringToAppString(mConfig->getString(section, "icon", ""));
+			shortcuts << shortcut;
+		}
+	}
+	return shortcuts;
+}
+
+void SettingsModel::setShortcuts(QVariantList data) {
+	if (getShortcuts() != data) {
+		// clean
+		auto sections = mConfig->getSectionsNamesList();
+		for (auto section : sections) {
+			auto sectionTokens = Utils::coreStringToAppString(section).split('_');
+			if (sectionTokens.size() > 1 && sectionTokens[0].compare("shortcut", Qt::CaseInsensitive) == 0) {
+				mConfig->cleanSection(section);
+			}
+		}
+		int count = 0;
+		for (auto shortcut : data) {
+			auto mShortcut = shortcut.toMap();
+			auto key = Utils::appStringToCoreString("shortcut_" + QString::number(count++));
+			mConfig->setString(key, "name", Utils::appStringToCoreString(mShortcut["name"].toString()));
+			mConfig->setString(key, "link", Utils::appStringToCoreString(mShortcut["link"].toString()));
+			mConfig->setString(key, "icon", Utils::appStringToCoreString(mShortcut["icon"].toString()));
+		}
+
+		emit shortcutsChanged(data);
+	}
+}
+
 // clang-format off
 void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(disableChatFeature, DisableChatFeature)
@@ -642,6 +683,8 @@ void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(syncLdapContacts, SyncLdapContacts)
 	DEFINE_NOTIFY_CONFIG_READY(configLocale, ConfigLocale)
 	DEFINE_NOTIFY_CONFIG_READY(downloadFolder, DownloadFolder)
+	DEFINE_NOTIFY_CONFIG_READY(shortcutCount, ShortcutCount)
+	DEFINE_NOTIFY_CONFIG_READY(shortcuts, Shortcuts)
 }
 
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", true)
@@ -749,4 +792,11 @@ DEFINE_GETSET_CONFIG_STRING(SettingsModel,
 							DownloadFolder,
 							"download_folder",
 							"")
+DEFINE_GETSET_CONFIG(SettingsModel,
+						int,
+						Int,
+						shortcutCount,
+						ShortcutCount,
+						"shortcut_count",
+						0)
     // clang-format on
