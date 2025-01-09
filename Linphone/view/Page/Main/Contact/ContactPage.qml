@@ -18,19 +18,25 @@ AbstractMainPage {
 	property bool leftPanelEnabled: !rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName != "contactEdition"
 	property FriendGui selectedContact
 	property string initialFriendToDisplay
-	onInitialFriendToDisplayChanged: if (initialFriendToDisplay != '' && contactList.selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
+	onInitialFriendToDisplayChanged: {
+			if (initialFriendToDisplay != '' && contactList.selectContact(initialFriendToDisplay) != -1) initialFriendToDisplay = ""
+			else if(initialFriendToDisplay != '') console.warn("Abstract not selected yet: ", initialFriendToDisplay)
+	}
 
 	onVisibleChanged: if (!visible) {
 		rightPanelStackView.clear()
 		contactList.resetSelections()
 	}
-
-	onSelectedContactChanged: {
+	function updateRightPanel(){
 		if (selectedContact) {
+			while(rightPanelStackView.depth > 1) rightPanelStackView.pop()
 			if (!rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName != "contactDetail") rightPanelStackView.push(contactDetail)
 		} else {
 			if (rightPanelStackView.currentItem && rightPanelStackView.currentItem.objectName === "contactDetail") rightPanelStackView.clear()
 		}
+	}
+	onSelectedContactChanged: {
+		updateRightPanel()
 	}
 
 	onNoItemButtonPressed: createContact("", "")
@@ -747,9 +753,11 @@ AbstractMainPage {
 		id: contactEdition
 		ContactEdition {
 			property string objectName: "contactEdition"
-			onCloseEdition: {
-				if (rightPanelStackView.depth <= 1) rightPanelStackView.clear()
-				else rightPanelStackView.pop(Control.StackView.Immediate)
+			onCloseEdition: redirectAddress => {
+				updateRightPanel()
+				if(redirectAddress){
+					initialFriendToDisplay = redirectAddress
+				}
 			}
 		}
 	}

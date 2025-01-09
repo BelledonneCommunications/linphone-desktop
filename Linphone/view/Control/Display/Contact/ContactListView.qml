@@ -68,8 +68,10 @@ ListView {
 				mainItem.highlightedContact = item.searchResultItem
 				item.forceActiveFocus()
 				updatePosition()
+				_moveToIndex = false
 			}else{// Move on the next items load.
-				_moveToIndex = true
+				// If visible, try to wait loading
+				_moveToIndex = visible
 			}
 		}else{
 			mainItem.currentIndex = -1
@@ -77,12 +79,10 @@ ListView {
 			if(headerItem) {
 				headerItem.forceActiveFocus()
 			}
+			_moveToIndex = false
 		}
 	}
-	onCountChanged: if(_moveToIndex && count > mainItem.currentIndex ){
-		_moveToIndex = false
-		selectIndex(mainItem.currentIndex)
-	}	
+	
 	onContactSelected: updatePosition()
 	onExpandedChanged: if(!expanded) updatePosition()
 	keyNavigationEnabled: false
@@ -114,6 +114,20 @@ ListView {
 		onLdapConfigChanged: {
 			if (SettingsCpp.syncLdapContacts)
 				magicSearchProxy.forceUpdate()
+		}
+	}
+	// Workaround: itemAtIndex and count are decorellated and are not enough to know when the ListView has load all its children.
+	// So when itemAtIndex is not available, start this timer along count changed signal.
+	Timer{
+		id: delaySelection
+		interval: 100
+		running: _moveToIndex
+		onTriggered: {
+			_moveToIndex = false
+			if(count > mainItem.currentIndex) selectIndex(mainItem.currentIndex)
+			else{
+				_moveToIndex = true
+			}
 		}
 	}
 	

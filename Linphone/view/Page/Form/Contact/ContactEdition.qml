@@ -17,9 +17,7 @@ MainRightPanel {
 		target: contact.core
 		function onIsSavedChanged() {
 			if (contact.core.isSaved) {
-				var mainWin = UtilsCpp.getMainWindow()
-				UtilsCpp.smartShowWindow(mainWin)
-				mainWin.displayContactPage(contact)
+				mainItem.closeEdition(contact.core.defaultFullAddress)
 			}
 		}
 	}
@@ -28,13 +26,13 @@ MainRightPanel {
 	property string oldPictureUri
 	property int addressCount: 0
 	
-	signal closeEdition()
+	signal closeEdition(var redirectAddress)	
 
 	Dialog {
 		id: confirmDialog
 		onAccepted: {
 			mainItem.contact.core.undo()
-			mainItem.closeEdition()
+			mainItem.closeEdition('')
 		}
 		width: 278 * DefaultStyle.dp
 		text: qsTr("Les changements seront annulés. Souhaitez-vous continuer ?")
@@ -81,7 +79,6 @@ MainRightPanel {
 				return
 			}
 			mainItem.contact.core.save()
-			mainItem.closeEdition()
 		}
 		bannerContent: [
 			IconLabelButton {

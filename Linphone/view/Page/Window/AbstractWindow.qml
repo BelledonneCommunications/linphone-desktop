@@ -17,6 +17,7 @@ ApplicationWindow {
 	
 	property bool isFullscreen: visibility == Window.FullScreen
 	onIsFullscreenChanged: DesktopToolsCpp.screenSaverStatus = !isFullscreen
+	
 
 	MouseArea {
 		anchors.fill: parent

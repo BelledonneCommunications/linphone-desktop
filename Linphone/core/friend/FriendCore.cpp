@@ -84,13 +84,13 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		mStarred = contact->getStarred();
 		mIsSaved = true;
 		mIsStored = isStored;
+		mIsLdap = ToolModel::friendIsInFriendList(ToolModel::getLdapFriendList(), contact);
 	} else {
 		mIsSaved = false;
 		mStarred = false;
 		mIsStored = false;
+		mIsLdap = false;
 	}
-
-	mIsLdap = ToolModel::friendIsInFriendList(ToolModel::getLdapFriendList(), contact);
 	connect(this, &FriendCore::addressChanged, &FriendCore::allAddressesChanged);
 	connect(this, &FriendCore::phoneNumberChanged, &FriendCore::allAddressesChanged);
 }

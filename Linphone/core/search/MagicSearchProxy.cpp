@@ -111,7 +111,7 @@ int MagicSearchProxy::loadUntil(const QString &address) {
 		if (listIndex == -1) return -1;
 		listIndex =
 		    dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(magicSearchList->index(listIndex, 0)).row();
-		if (mMaxDisplayItems < listIndex) setMaxDisplayItems(listIndex + mDisplayItemsStep);
+		if (mMaxDisplayItems <= listIndex) setMaxDisplayItems(listIndex + mDisplayItemsStep);
 		return listIndex;
 	}
 	return -1;
