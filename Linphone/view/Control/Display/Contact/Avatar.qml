@@ -40,13 +40,15 @@ Loader{
 	property var avatarObj: UtilsCpp.findAvatarByAddress(_address)
 	property string computedAvatarUri: avatarObj ? avatarObj.value : ''
 	
+	// To get the secured property for a specific address,
+	// override it as secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncrypted
 	property var securityLevelObj: UtilsCpp.getFriendAddressSecurityLevel(_address)
 	property var securityLevel: securityLevelObj ? securityLevelObj.value : LinphoneEnums.SecurityLevel.None
 	property bool secured: call && call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
 						   ? call.core.tokenVerified
 						   : contact
 							 ? contact.core.devices.length != 0 && contact.core.verifiedDeviceCount === contact.core.devices.length
-							 : securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncrypted
+							 : false
 	
 	property bool securityBreach: securityLevel === LinphoneEnums.SecurityLevel.Unsafe
 	
@@ -90,18 +92,16 @@ Loader{
 					z: 1
 					color: "transparent"
 					border {
-						width: 3 * DefaultStyle.dp
+						width: 2 * DefaultStyle.dp
 						color: mainItem.secured ? DefaultStyle.info_500_main : DefaultStyle.danger_500main
 					}
-					Image {
+					EffectImage {
 						x: parent.width / 7
 						anchors.bottom: parent.bottom
 						width: parent.width / 4.5
 						height: width
 						asynchronous: true
-						source: mainItem.secured ? AppIcons.trusted : AppIcons.notTrusted
-						sourceSize.width: width
-						sourceSize.height: height
+						imageSource: mainItem.secured ? AppIcons.trusted : AppIcons.notTrusted
 						fillMode: Image.PreserveAspectFit
 						
 					}
@@ -163,14 +163,13 @@ Loader{
 									capitalization: Font.AllUppercase
 								}
 							}
-							Image {
+							EffectImage {
 								id: initialImg
 								visible: initialItem.initials == ''
 								width: stackView.width/2
 								height: width
-								source: mainItem.isConference ? AppIcons.usersThree : AppIcons.profile
-								sourceSize.width: width
-								sourceSize.height: height
+								colorizationColor: DefaultStyle.main2_600
+								imageSource: mainItem.isConference ? AppIcons.usersThree : AppIcons.profile
 								anchors.centerIn: parent
 							}
 						}

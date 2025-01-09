@@ -91,9 +91,6 @@ ColumnLayout {
 		Layout.bottomMargin: 13 * DefaultStyle.dp
 		Layout.leftMargin: 16 * DefaultStyle.dp
 		Layout.rightMargin: 16 * DefaultStyle.dp
-		leftPadding: 20 * DefaultStyle.dp
-		rightPadding: 20 * DefaultStyle.dp
-		topPadding: 11 * DefaultStyle.dp
-		bottomPadding: 11 * DefaultStyle.dp
+		style: ButtonStyle.main
 	}
 }

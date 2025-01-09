@@ -3,7 +3,11 @@ import QtQuick
 
 QtObject {
 	property color main1_100: "#FFEACB"
+	property color main1_200: "#FFD098"
+	property color main1_300: "#FFB266"
 	property color main1_500_main: "#FE5E00"
+	property color main1_600: "#DA4400"
+	property color main1_700: "#B72D00"
 
 	property color main2_0: "#FAFEFF"
 	property color main2_100: "#EEF6F8"
@@ -19,6 +23,7 @@ QtObject {
 	property color grey_0: "#FFFFFF"
 	property color grey_100: "#F9F9F9"
 	property color grey_200: "#EDEDED"
+	property color grey_300: "#C9C9C9"
 	property color grey_400: "#949494"
 	property color grey_500: "#4E4E4E"
 	property color grey_600: "#2E3030"
@@ -28,7 +33,11 @@ QtObject {
 
 	property color warning_600: "#DBB820"
 	property color danger_500main: "#DD5F5F"
+	property color danger_700: "#9E3548"
+	property color danger_900: "#723333"
 	property color success_500main: "#4FAE80"
+	property color success_700: "#377d71"
+	property color success_900: "#1E4C53"
 	property color info_500_main: "#4AA8FF"
 
 	property color vue_meter_light_green: "#6FF88D"

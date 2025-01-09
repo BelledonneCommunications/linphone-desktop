@@ -25,14 +25,10 @@ AbstractMainPage {
 			Layout.rightMargin: leftPanel.sideMargin
 			spacing: 5 * DefaultStyle.dp
 			Button {
-				Layout.preferredHeight: 24 * DefaultStyle.dp
-				Layout.preferredWidth: 24 * DefaultStyle.dp
 				icon.source: AppIcons.leftArrow
-				width: 24 * DefaultStyle.dp
-				height: 24 * DefaultStyle.dp
-				background: Item {
-					anchors.fill: parent
-				}
+				style: ButtonStyle.noBackground
+				icon.width: 24 * DefaultStyle.dp
+				icon.height: 24 * DefaultStyle.dp
 				onClicked: {
 					mainItem.goBack()
 				}
@@ -53,7 +49,7 @@ AbstractMainPage {
 			Layout.fillWidth: true
 			text: qsTr("À propos de Linphone")
 			color: DefaultStyle.main2_600
-			font: Typography.h3m
+			font: Typography.h4
 		}
 		ColumnLayout {
 			Layout.fillWidth: true
@@ -105,7 +101,7 @@ AbstractMainPage {
 			Layout.fillWidth: true
 			text: qsTr("À propos de Linphone")
 			color: DefaultStyle.main2_600
-			font: Typography.h3m
+			font: Typography.h4
 		}
 		HelpIconLabelButton {
 			id: troubleShooting

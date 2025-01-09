@@ -33,30 +33,18 @@ Rectangle {
 	Component.onCompleted: {
 			setResponsivityFlags()
 	}
-	Control.ScrollView {
-		id: scrollView
-		height: parent.height
-		width: parent.width - 2 * 45 * DefaultStyle.dp
-		anchors.centerIn: parent
-		contentHeight: (contentRepeater.height + header.height) + 20 * DefaultStyle.dp
-		contentWidth: parent.width - 2 * 45 * DefaultStyle.dp
-		Control.ScrollBar.vertical: ScrollBar {
-			active: scrollView.contentHeight > container.height
-			visible: scrollView.contentHeight > container.height
-			interactive: true
-			policy: Control.ScrollBar.AsNeeded
-			anchors.top: parent.top
-			anchors.bottom: parent.bottom
-			anchors.right: parent.right
-			anchors.rightMargin: -15 * DefaultStyle.dp
+	Control.Control {
+		id: header
+		anchors.left: parent.left
+		anchors.right: parent.right
+		leftPadding: 45 * DefaultStyle.dp
+		rightPadding: 45 * DefaultStyle.dp
+		z: 1
+		background: Rectangle {
+			anchors.fill: parent
+			color: DefaultStyle.grey_0
 		}
-		Control.ScrollBar.horizontal: ScrollBar {
-			active: false
-		}
-		ColumnLayout {
-			id: header
-			width: parent.width
-			spacing: 10 * DefaultStyle.dp
+		contentItem: ColumnLayout {
 			RowLayout {
 				Layout.fillWidth: true
 				Layout.topMargin: 20 * DefaultStyle.dp
@@ -67,16 +55,12 @@ Rectangle {
 					Layout.preferredHeight: 24 * DefaultStyle.dp
 					Layout.preferredWidth: 24 * DefaultStyle.dp
 					icon.source: AppIcons.leftArrow
-					width: 24 * DefaultStyle.dp
-					height: 24 * DefaultStyle.dp
 					focus: true
 					visible: mainItem.container.depth > 1
 					Layout.rightMargin: 41 * DefaultStyle.dp
+					style: ButtonStyle.noBackground
 					onClicked: {
 						mainItem.container.pop()
-					}
-					background: Item {
-						anchors.fill: parent
 					}
 				}
 				Text {
@@ -92,26 +76,55 @@ Rectangle {
 					sourceComponent: mainItem.topbarOptionalComponent
 					Layout.rightMargin: 34 * DefaultStyle.dp
 				}
-				Button {
+				MediumButton {
 					id: saveButton
+					style: ButtonStyle.main
 					text: qsTr("Enregistrer")
 					Layout.rightMargin: 6 * DefaultStyle.dp
 					visible: mainItem.saveButtonVisible
-					textSize: 15 * DefaultStyle.dp
-					leftPadding: 16 * DefaultStyle.dp
-					rightPadding: 16 * DefaultStyle.dp
-					topPadding: 10 * DefaultStyle.dp
-					bottomPadding: 10 * DefaultStyle.dp
 					onClicked: {
 						mainItem.save()
 					}
 				}
 			}
+			Rectangle {
+				Layout.fillWidth: true
+				height: 1 * DefaultStyle.dp
+				color: DefaultStyle.main2_500main
+			}
+		}
+	}
+	Control.ScrollView {
+		id: scrollView
+		anchors.top: header.bottom
+		anchors.topMargin: 16 * DefaultStyle.dp
+		anchors.bottom: parent.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		leftPadding: 45 * DefaultStyle.dp
+		rightPadding: 45 * DefaultStyle.dp
+		Control.ScrollBar.vertical: ScrollBar {
+			active: scrollView.contentHeight > scrollView.height
+			visible: scrollView.contentHeight > scrollView.height
+			interactive: true
+			policy: Control.ScrollBar.AsNeeded
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			anchors.right: parent.right
+			anchors.rightMargin: 15 * DefaultStyle.dp
+		}
+		Control.ScrollBar.horizontal: ScrollBar {
+			active: false
+		}
+		ColumnLayout {
+			width: parent.width
+			spacing: 10 * DefaultStyle.dp
 			Repeater {
 				id: contentRepeater
 				model: mainItem.contentModel
 				delegate: ColumnLayout {
 					Rectangle {
+						visible: index !== 0
 						Layout.topMargin: (modelData.hideTopSeparator ? 0 : 16) * DefaultStyle.dp
 						Layout.bottomMargin: 16 * DefaultStyle.dp
 						Layout.fillWidth: true

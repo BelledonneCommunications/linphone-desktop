@@ -67,10 +67,7 @@ RowLayout {
 				CheckableButton {
 					id: settingsButton
 					visible: stackLayout.currentIndex === 0
-					icon.source: AppIcons.more
-					color: DefaultStyle.grey_500
-					checkedColor: DefaultStyle.main2_100
-					contentImageColor: checked ? DefaultStyle.grey_500 : DefaultStyle.grey_0
+					icon.source: AppIcons.verticalDots
 					Layout.preferredWidth: 55 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
 					icon.width: 24 * DefaultStyle.dp
@@ -119,25 +116,19 @@ RowLayout {
 				}
 				ColumnLayout {
 					spacing: 5 * DefaultStyle.dp
-					Button {
+					BigButton {
 						Layout.preferredWidth: 292 * DefaultStyle.dp
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
-						topPadding: 11 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
 						text: qsTr("Rejoindre")
+						style: ButtonStyle.main
 						onClicked: {
 							settingsButton.checked = false
 							stackLayout.currentIndex = 1
 							mainItem.joinConfRequested(mainItem.conferenceInfo.core.uri)
 						}
 					}
-					Button {
+					BigButton {
 						Layout.preferredWidth: 292 * DefaultStyle.dp
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
-						inversedColors: true
+						style: ButtonStyle.secondary
 						text: qsTr("Annuler")
 						onClicked: {
 							mainItem.cancelJoiningRequested()
@@ -174,13 +165,10 @@ RowLayout {
 					Layout.preferredWidth: 48 * DefaultStyle.dp
 					Layout.preferredHeight: 48 * DefaultStyle.dp
 				}
-				Button {
+				BigButton {
 					Layout.preferredWidth: 292 * DefaultStyle.dp
 					Layout.alignment: Qt.AlignHCenter
-					leftPadding: 20 * DefaultStyle.dp
-					rightPadding: 20 * DefaultStyle.dp
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
+					style: ButtonStyle.main
 					text: qsTr("Annuler")
 					onClicked: {
 						settingsButton.checked = false

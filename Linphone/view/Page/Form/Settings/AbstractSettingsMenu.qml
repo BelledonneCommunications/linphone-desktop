@@ -38,14 +38,10 @@ AbstractMainPage {
 				Layout.preferredHeight: 24 * DefaultStyle.dp
 				Layout.preferredWidth: 24 * DefaultStyle.dp
 				icon.source: AppIcons.leftArrow
-				width: 24 * DefaultStyle.dp
-				height: 24 * DefaultStyle.dp
+				style: ButtonStyle.noBackground
 				focus: true
 				onClicked: {
 					mainItem.goBackRequested()
-				}
-				background: Item {
-					anchors.fill: parent
 				}
 			}
 			Text {

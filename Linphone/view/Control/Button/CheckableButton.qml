@@ -1,4 +1,5 @@
 import QtQuick
+import QtQml
 import QtQuick.Layouts
 import QtQuick.Effects
 import QtQuick.Controls.Basic as Control
@@ -8,21 +9,29 @@ Button {
 	id: mainItem
 	property string iconUrl
 	property string checkedIconUrl
-	property color color: DefaultStyle.grey_500
-	property color checkedColor: color
-	property color backgroundColor: mainItem.enabled
-					? mainItem.pressed || mainItem.checked
-						? mainItem.checkedColor
-						: mainItem.color
-					: DefaultStyle.grey_600
+	style: ButtonStyle.checkable
+	color: style?.color?.normal || DefaultStyle.grey_500
+	pressedColor: checkedIconUrl ? color : style?.color?.pressed || DefaultStyle.grey_500
+	hoveredColor: checked ? Qt.darker(pressedColor, 1.05) : style?.color?.hovered || DefaultStyle.grey_500
+	property color backgroundColor: hovered
+		? hoveredColor
+		: checked
+			? pressedColor
+			: color
 	checkable: true
 	background: Rectangle {
 		anchors.fill: parent
 		color: mainItem.backgroundColor
 		radius: mainItem.width /2
+		Rectangle {
+			anchors.fill: parent
+			visible: !mainItem.enabled
+			opacity: 0.2
+			color: DefaultStyle.grey_600
+		}
 	}
 	icon.source: checkedIconUrl && mainItem.checked ? checkedIconUrl : iconUrl
 	icon.width: width * 0.58
 	icon.height: width * 0.58
-	contentImageColor: enabled ? DefaultStyle.grey_0 : DefaultStyle.grey_500
+	contentImageColor: style?.image?.normal || DefaultStyle.grey_0
 }

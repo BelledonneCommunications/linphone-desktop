@@ -94,12 +94,12 @@ Item {
 			y: contentItem.height/2
 			property var currentCall: callsModel.currentCall ? callsModel.currentCall : null
 			property string remoteName: currentCall ? currentCall.core.remoteName : ""
-			contentItem: Button {
+			contentItem: MediumButton {
+				style: ButtonStyle.toast
 				text: currentCallNotif.currentCall 
 				? currentCallNotif.currentCall.core.conference
 					? ("Réunion en cours : ") + currentCallNotif.currentCall.core.conference.core.subject
 					: (("Appel en cours : ") + currentCallNotif.remoteName) : "appel en cours"
-				color: DefaultStyle.success_500main
 				onClicked: {
 					var callsWindow = UtilsCpp.getCallsWindow(currentCallNotif.currentCall)
 					UtilsCpp.smartShowWindow(callsWindow)
@@ -184,24 +184,6 @@ Item {
 						}
 						KeyNavigation.down: contactList //contactLoader.item?.count > 0 || !contactLoader.item?.footerItem? contactLoader.item : contactLoader.item?.footerItem
 						KeyNavigation.up: contactList//contactLoader.item?.footerItem ? contactLoader.item?.footerItem : contactLoader.item
-						
-						component MagicSearchButton: Button {
-							id: button
-							width: 45 * DefaultStyle.dp
-							height: 45 * DefaultStyle.dp
-							topPadding: 16 * DefaultStyle.dp
-							bottomPadding: 16 * DefaultStyle.dp
-							leftPadding: 16 * DefaultStyle.dp
-							rightPadding: 16 * DefaultStyle.dp
-							contentImageColor: DefaultStyle.main2_500main
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
-							background: Rectangle {
-								anchors.fill: parent
-								radius: 40 * DefaultStyle.dp
-								color: DefaultStyle.main2_200
-							}
-						}
 
 						Popup {
 							id: listPopup
@@ -290,12 +272,12 @@ Item {
 							}
 							popup.contentItem: ColumnLayout {
 								IconLabelButton {
-									Layout.preferredHeight: 32 * DefaultStyle.dp
 									Layout.fillWidth: true
 									focus: visible
-									iconSize: 32 * DefaultStyle.dp
+									icon.width: 32 * DefaultStyle.dp
+									icon.height: 32 * DefaultStyle.dp
 									text: qsTr("Désactiver ne pas déranger")
-									iconSource: AppIcons.bellDnd
+									icon.source: AppIcons.bellDnd
 									onClicked: {
 										deactivateDndButton.popup.close()
 										SettingsCpp.dnd = false
@@ -394,23 +376,23 @@ Item {
 									
 									IconLabelButton {
 										id: accountButton
-										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
 										visible: !SettingsCpp.hideAccountSettings
-										iconSize: 32 * DefaultStyle.dp
+										icon.width: 32 * DefaultStyle.dp
+										icon.height: 32 * DefaultStyle.dp
 										text: qsTr("Mon compte")
-										iconSource: AppIcons.manageProfile
+										icon.source: AppIcons.manageProfile
 										onClicked: openAccountSettings(accountProxy.defaultAccount ? accountProxy.defaultAccount : accountProxy.firstAccount())
 										KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(0) : null
 										KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(0) : null
 									}
 									IconLabelButton {
 										id: dndButton
-										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
-										iconSize: 32 * DefaultStyle.dp
+										icon.width: 32 * DefaultStyle.dp
+										icon.height: 32 * DefaultStyle.dp
 										text: SettingsCpp.dnd ? qsTr("Désactiver ne pas déranger") : qsTr("Activer ne pas déranger")
-										iconSource: AppIcons.bellDnd
+										icon.source: AppIcons.bellDnd
 										onClicked: {
 											settingsMenuButton.popup.close()
 											SettingsCpp.dnd = !SettingsCpp.dnd
@@ -420,45 +402,45 @@ Item {
 									}
 									IconLabelButton {
 										id: settingsButton
-										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
 										visible: !SettingsCpp.hideSettings
-										iconSize: 32 * DefaultStyle.dp
+										icon.width: 32 * DefaultStyle.dp
+										icon.height: 32 * DefaultStyle.dp
 										text: qsTr("Paramètres")
-										iconSource: AppIcons.settings
+										icon.source: AppIcons.settings
 										onClicked:  openContextualMenuComponent(settingsPageComponent)
 										KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(2) : null
 										KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(2) : null
 									}
 									IconLabelButton {
 										id: recordsButton
-										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
 										visible: !SettingsCpp.disableCallRecordings
-										iconSize: 32 * DefaultStyle.dp
+										icon.width: 32 * DefaultStyle.dp
+										icon.height: 32 * DefaultStyle.dp
 										text: qsTr("Enregistrements")
-										iconSource: AppIcons.micro
+										icon.source: AppIcons.micro
 										KeyNavigation.up: visibleChildren.length != 0 ?  settingsMenuButton.getPreviousItem(3) : null
 										KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(3) : null
 									}
 									IconLabelButton {
 										id: helpButton
-										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
-										iconSize: 32 * DefaultStyle.dp
+										icon.width: 32 * DefaultStyle.dp
+										icon.height: 32 * DefaultStyle.dp
 										text: qsTr("Aide")
-										iconSource: AppIcons.question
+										icon.source: AppIcons.question
 										onClicked: openContextualMenuComponent(helpPageComponent)
 										KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(4) : null
 										KeyNavigation.down: visibleChildren.length != 0 ?  settingsMenuButton.getNextItem(4) : null
 									}
 									IconLabelButton {
 										id: quitButton
-										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
-										iconSize: 32 * DefaultStyle.dp
+										icon.width: 32 * DefaultStyle.dp
+										icon.height: 32 * DefaultStyle.dp
 										text: qsTr("Quitter Linphone")
-										iconSource: AppIcons.power
+										icon.source: AppIcons.power
 										onClicked: {
 											settingsMenuButton.popup.close()
 											UtilsCpp.getMainWindow().showConfirmationLambdaPopup("",
@@ -483,12 +465,12 @@ Item {
 									}
 									IconLabelButton {
 										id: addAccountButton
-										Layout.preferredHeight: 32 * DefaultStyle.dp
 										Layout.fillWidth: true
 										visible: SettingsCpp.maxAccount == 0 || SettingsCpp.maxAccount > accountProxy.count
-										iconSize: 32 * DefaultStyle.dp
+										icon.width: 32 * DefaultStyle.dp
+										icon.height: 32 * DefaultStyle.dp
 										text: qsTr("Ajouter un compte")
-										iconSource: AppIcons.plusCircle
+										icon.source: AppIcons.plusCircle
 										onClicked: mainItem.addAccountRequest()
 										KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(7) : null
 										KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(7) : null

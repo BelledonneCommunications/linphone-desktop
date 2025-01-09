@@ -45,11 +45,8 @@ ColumnLayout {
 			leftPadding: 16 * DefaultStyle.dp
 			rightPadding: 16 * DefaultStyle.dp
 			contentImageColor: DefaultStyle.main2_600
-			background: Rectangle {
-				anchors.fill: parent
-				radius: 40 * DefaultStyle.dp
-				color: DefaultStyle.main2_200
-			}
+			radius: 40 * DefaultStyle.dp
+			style: ButtonStyle.grey
 		}
 		Text {
 			Layout.alignment: Qt.AlignHCenter
@@ -77,6 +74,7 @@ ColumnLayout {
 				_address: mainItem.conferenceInfo
 					? mainItem.conferenceInfo.core.subject
 					: mainItem.contactAddress || mainItem.contactName
+				secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncrypted
 			}
 			Item {
 				id: rightButton
@@ -90,32 +88,35 @@ ColumnLayout {
 		ColumnLayout {
 			Layout.alignment: Qt.AlignHCenter
 			Layout.preferredWidth: 360 * DefaultStyle.dp
-			spacing: 2 * DefaultStyle.dp
+			spacing: 5 * DefaultStyle.dp
 
-			Text {
-				Layout.preferredWidth: implicitWidth
-				Layout.alignment: Qt.AlignHCenter
-				horizontalAlignment: Text.AlignHCenter
-				elide: Text.ElideRight
-				text: mainItem.contactName
-				maximumLineCount: 1
-				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 400 * DefaultStyle.dp
-					capitalization: Font.Capitalize
+			ColumnLayout {
+				spacing: 2 * DefaultStyle.dp
+				Text {
+					Layout.preferredWidth: implicitWidth
+					Layout.alignment: Qt.AlignHCenter
+					horizontalAlignment: Text.AlignHCenter
+					elide: Text.ElideRight
+					text: mainItem.contactName
+					maximumLineCount: 1
+					font {
+						pixelSize: 14 * DefaultStyle.dp
+						weight: 400 * DefaultStyle.dp
+						capitalization: Font.Capitalize
+					}
 				}
-			}
-			Text {
-				Layout.alignment: Qt.AlignHCenter
-				Layout.fillWidth: true
-				horizontalAlignment: Text.AlignHCenter
-				visible: mainItem.specificAddress != ""
-				text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(mainItem.specificAddress) : mainItem.specificAddress
-				elide: Text.ElideMiddle
-				maximumLineCount: 1
-				font {
-					pixelSize: 12 * DefaultStyle.dp
-					weight: 300 * DefaultStyle.dp
+				Text {
+					Layout.alignment: Qt.AlignHCenter
+					Layout.fillWidth: true
+					horizontalAlignment: Text.AlignHCenter
+					visible: mainItem.specificAddress != ""
+					text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(mainItem.specificAddress) : mainItem.specificAddress
+					elide: Text.ElideMiddle
+					maximumLineCount: 1
+					font {
+						pixelSize: 12 * DefaultStyle.dp
+						weight: 300 * DefaultStyle.dp
+					}
 				}
 			}
 			Text {
@@ -150,12 +151,11 @@ ColumnLayout {
 		spacing: 72 * DefaultStyle.dp
 		Layout.fillWidth: true
 		Layout.preferredHeight: childrenRect.height
-		Button {
+		MediumButton {
 			visible: mainItem.isConference && !SettingsCpp.disableMeetingsFeature
 			Layout.alignment: Qt.AlignHCenter
 			text: qsTr("Rejoindre la réunion")
-			color: DefaultStyle.main2_200
-			textColor: DefaultStyle.main2_600
+			style: ButtonStyle.grey
 			onClicked: {
 				if (mainItem.conferenceInfo) {
 					var callsWindow = UtilsCpp.getCallsWindow()

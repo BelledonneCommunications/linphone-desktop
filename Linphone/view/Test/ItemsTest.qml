@@ -44,10 +44,6 @@ Window {
 				text: "capital button"
 			}
 			Button {
-				text: "inversed colors button"
-				inversedColors: true
-			}
-			Button {
 				text: "button with long tooltip"
 				hoverEnabled: true
 				ToolTip {

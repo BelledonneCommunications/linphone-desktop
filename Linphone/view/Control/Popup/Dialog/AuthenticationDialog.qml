@@ -87,19 +87,20 @@ Dialog {
 	}
 
 	buttons: [
-		Button {
+		MediumButton {
 			id: cancelButton
 			Layout.topMargin: 10 * DefaultStyle.dp
 			text: qsTr("Annuler")
-			inversedColors: true
+			style: ButtonStyle.secondary
 			onClicked: mainItem.rejected()
 			KeyNavigation.up: passwordEdit
 			KeyNavigation.right: connectButton
 		},
-		Button {
+		MediumButton {
 			id: connectButton
 			Layout.topMargin: 10 * DefaultStyle.dp
 			text: qsTr("Se connecter")
+			style: ButtonStyle.main
 			KeyNavigation.up: passwordEdit
 			KeyNavigation.right: cancelButton
 			onClicked: {

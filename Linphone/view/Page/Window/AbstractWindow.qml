@@ -78,20 +78,12 @@ ApplicationWindow {
 						weight: 800 * DefaultStyle.dp
 					}
 				}
-				Button {
+				RoundButton {
+					Layout.alignment: Qt.AlignVCenter
+					style: ButtonStyle.noBackground
 					Layout.preferredWidth: 24 * DefaultStyle.dp
 					Layout.preferredHeight: 24 * DefaultStyle.dp
-					Layout.alignment: Qt.AlignVCenter
-					background: Item{}
 					icon.source:AppIcons.closeX
-					width: 24 * DefaultStyle.dp
-					height: 24 * DefaultStyle.dp
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
-					contentItem: Image {
-						anchors.fill: parent
-						source: AppIcons.closeX
-					}
 					onClicked: startCallPopup.close()
 				}
 			}

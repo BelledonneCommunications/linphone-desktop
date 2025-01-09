@@ -8,24 +8,33 @@ Control.Button {
 	id: mainItem
 	property int capitalization
 	property QtObject style
-	property color color: style ? style.color.normal : DefaultStyle.main1_500_main
-	readonly property color pressedColor: style && style.color.pressed || Qt.darker(color, 1.3)
-	readonly property color hoveredColor: style && style.color.hovered || Qt.darker(color, 1.1)
-	property color textColor: style && style.text.normal || DefaultStyle.grey_0
-	property color pressedTextColor: style && style.text.pressed || textColor
-	property color borderColor: style && style.borderColor || "transparent"
-	property bool inversedColors: false
+	property color color: style?.color?.normal || DefaultStyle.main1_500_main
+	property color hoveredColor: style?.color?.hovered || Qt.darker(color, 1.05)
+	property color pressedColor: style?.color?.pressed || Qt.darker(color, 1.1)
+	property color textColor: style?.text?.normal || DefaultStyle.grey_0
+	property color hoveredTextColor: style?.text?.hovered || Qt.darker(textColor, 1.05)
+	property color pressedTextColor: style?.text?.pressed || Qt.darker(textColor, 1.1)
+	property color borderColor: style?.borderColor || "transparent"
+	ToolTip.visible: hovered && ToolTip.text != ""
+	ToolTip.delay: 1000
+	property color disabledFilterColor: color.hslLightness > 0.5
+		? DefaultStyle.grey_0
+		: DefaultStyle.grey_400
 	property int textSize: 18 * DefaultStyle.dp
 	property int textWeight: 600 * DefaultStyle.dp
 	property var textHAlignment: Text.AlignHCenter
 	property int radius: 48 * DefaultStyle.dp
 	property bool underline: false
 	property bool hasNavigationFocus: enabled && (activeFocus  || hovered)
-	property var contentImageColor: style && style.image.normal || DefaultStyle.main2_600
-	property var pressedImageColor: style && style.image.pressed || DefaultStyle.main2_600
+	property bool shadowEnabled: false
+	property var contentImageColor: style?.image?.normal || DefaultStyle.main2_600
+	property var hoveredImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.05)
+	property var pressedImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.1)
 	property bool asynchronous: true
-	hoverEnabled: true
+	spacing: 5 * DefaultStyle.dp
+	hoverEnabled: enabled
 	activeFocusOnTab: true
+	icon.source: style?.iconSource
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
@@ -50,24 +59,30 @@ Control.Button {
 				radius: mainItem.radius
 				border.color: mainItem.borderColor
 			}
-			Rectangle {
-				id: disableShadow
-				color: "white"
-				opacity: 0.2
-				visible: !mainItem.enabled
-			}
 			MultiEffect {
-				enabled: mainItem.hasNavigationFocus
+				enabled: mainItem.shadowEnabled
 				anchors.fill: buttonBackground
 				source: buttonBackground
-				visible:  mainItem.hasNavigationFocus
+				visible:  mainItem.shadowEnabled
 				// Crash : https://bugreports.qt.io/browse/QTBUG-124730
-				shadowEnabled: mainItem.hasNavigationFocus
+				shadowEnabled: true
 				shadowColor: DefaultStyle.grey_1000
 				shadowBlur: 0.1
 				shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
 			}
 		}
+	}
+
+	Rectangle {
+		id: disableShadow
+		z: 1
+		// color: buttonBackground.color == "transparent" ? "transparent" : "white"
+		color: disabledFilterColor
+		opacity: 0.5
+		visible: !mainItem.enabled && mainItem.color != "transparent"
+		radius: mainItem.radius
+		width: mainItem.width
+		height: mainItem.height
 	}
 	
 	component ButtonText: Text {
@@ -80,18 +95,21 @@ Control.Button {
 		maximumLineCount: 1
 		color: pressed
 			? mainItem.pressedTextColor
-			: mainItem.textColor
+			: mainItem.hovered
+				? mainItem.hoveredTextColor
+				: mainItem.textColor
 		font {
 			pixelSize: mainItem.textSize
 			weight: mainItem.textWeight
 			family: DefaultStyle.defaultFont
 			capitalization: mainItem.capitalization
 			underline: mainItem.underline
-			bold: mainItem.font.bold
+			bold: mainItem.style === ButtonStyle.noBackground && (mainItem.hovered || mainItem.pressed)
 		}
 		TextMetrics {
 			id: textMetrics
 			text: mainItem.text
+			font.bold: true
 		}
 	}
 	
@@ -99,7 +117,11 @@ Control.Button {
 		imageSource: mainItem.icon.source
 		imageWidth: mainItem.icon.width
 		imageHeight: mainItem.icon.height
-		colorizationColor: mainItem.pressed ? mainItem.pressedImageColor : mainItem.contentImageColor
+		colorizationColor: mainItem.pressed 
+			? mainItem.pressedImageColor 
+			: mainItem.hovered
+				? mainItem.hoveredImageColor
+				: mainItem.contentImageColor
 	}
 	
 	contentItem: Control.StackView{

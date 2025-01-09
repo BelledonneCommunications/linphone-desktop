@@ -60,12 +60,9 @@ ColumnLayout {
 	RowLayout {
 		Layout.topMargin: 7 * DefaultStyle.dp
 		spacing: 29 * DefaultStyle.dp
-		Button {
+		BigButton {
 			id: connectionButton
-			leftPadding: 20 * DefaultStyle.dp
-			rightPadding: 20 * DefaultStyle.dp
-			topPadding: 11 * DefaultStyle.dp
-			bottomPadding: 11 * DefaultStyle.dp
+			style: ButtonStyle.main
 			contentItem: StackLayout {
 				id: connectionButtonContent
 				currentIndex: 0
@@ -125,20 +122,11 @@ ColumnLayout {
 			}
 			onPressed: connectionButton.trigger()
 		}
-		Button {
+		SmallButton {
 			id: forgottenButton
-			background: Item {
-				visible: false
-			}
-			contentItem: Text {
-				color: DefaultStyle.main2_500main
-				text: qsTr("Mot de passe oublié ?")
-				font{
-					underline: true
-					pixelSize: 13 * DefaultStyle.dp
-					weight: 600 * DefaultStyle.dp
-				}
-			}
+			style: ButtonStyle.noBackground
+			text: qsTr("Mot de passe oublié ?")
+			underline: true
 			onClicked: Qt.openUrlExternally(ConstantsCpp.PasswordRecoveryUrl)
 		}
 	

@@ -65,11 +65,10 @@ ListView {
 			Layout.alignment: Qt.AlignVCenter
 			visible: mainItem.isTransferList && mainItem.currentRemoteAddress !== modelData.core.remoteAddress
 			icon.source: AppIcons.transferCall
-			contentImageColor: down ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
+			style: ButtonStyle.noBackground
 			onClicked: {
 				mainItem.transferCallToAnotherRequested(modelData)
 			}
-			background: Item {}
 		}
 		Button {
 			id: pausingButton
@@ -93,24 +92,19 @@ ListView {
 			TextMetrics {
 				id: pauseMeter
 				text: pausingButton.text
+				font.bold: true
 			}
 		}
-		Button {
+		SmallButton {
 			id: endCallButton
 			Layout.preferredWidth: 38 * DefaultStyle.dp
 			Layout.preferredHeight: 28 * DefaultStyle.dp
-			leftPadding: 10 * DefaultStyle.dp
-			rightPadding: 10 * DefaultStyle.dp
-			topPadding: 5 * DefaultStyle.dp
-			bottomPadding: 5 * DefaultStyle.dp
-			color: DefaultStyle.danger_500main
+			style: ButtonStyle.phoneRed
 			KeyNavigation.left: pausingButton
 			KeyNavigation.right: pausingButton
-			icon.source: AppIcons.endCall
 			contentImageColor: DefaultStyle.grey_0
 			icon.width: 18 * DefaultStyle.dp
 			icon.height: 18 * DefaultStyle.dp
-			textColor: DefaultStyle.danger_500main
 			onClicked: {
 				mainWindow.callTerminatedByUser = true
 				mainWindow.endCall(modelData)
@@ -118,6 +112,7 @@ ListView {
 			TextMetrics {
 				id: endMeter
 				text: endCallButton.text
+				font.bold: true
 			}
 		}
 	}

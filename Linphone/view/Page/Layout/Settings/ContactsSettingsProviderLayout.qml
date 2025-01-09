@@ -108,14 +108,11 @@ RowLayout {
 			Item {
 				Layout.fillWidth: true
 			}
-			Button {
+			MediumButton {
 				Layout.preferredHeight: 47 * DefaultStyle.dp
 				Layout.alignment: Qt.AlignRight | Qt.AlignHCenter
 				text: qsTr("Ajouter")
-				leftPadding: 20 * DefaultStyle.dp
-				rightPadding: 20 * DefaultStyle.dp
-				topPadding: 11 * DefaultStyle.dp
-				bottomPadding: 11 * DefaultStyle.dp
+				style: ButtonStyle.main
 				visible: mainItem.showAddButton
 				onClicked: {
 					mainItem.owner.container.push(mainItem.settingsLayout, {

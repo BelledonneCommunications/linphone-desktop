@@ -120,6 +120,10 @@ AbstractWindow {
 			Image {
 				anchors.centerIn: parent
 				source: AppIcons.splashscreenLogo
+				sourceSize.width: 395 * DefaultStyle.dp
+				sourceSize.height: 395 * DefaultStyle.dp
+				width: 395 * DefaultStyle.dp
+				height: 395 * DefaultStyle.dp
 			}
 		}
 	}
@@ -136,13 +140,16 @@ AbstractWindow {
 		id: loginPage
 		LoginPage {
 			objectName: "loginPage"
-			showBackButton: accountProxy?.haveAccount || false
+			showBackButton: false
 			onGoBack: openMainPage()
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
 			onGoToRegister: mainWindowStackView.replace(registerPage)
 			onConnectionSucceed: {
 				openMainPage()
 				proposeH264CodecsDownload()
+			}
+			StackView.onActivated:{
+				if (accountProxy?.haveAccount) showBackButton = true
 			}
 		}
 	}

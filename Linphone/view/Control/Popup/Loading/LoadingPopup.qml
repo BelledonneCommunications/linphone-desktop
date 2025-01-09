@@ -32,10 +32,11 @@ Popup {
 			text: mainItem.text
 			font.pixelSize: 14 * DefaultStyle.dp
 		}
-		Button {
+		MediumButton {
 			visible: mainItem.cancelButtonVisible
 			Layout.alignment: Qt.AlignHCenter
 			text: qsTr("Annuler")
+			style: ButtonStyle.main
 			onClicked: {
 				if (callback) mainItem.callback()
 				mainItem.close()

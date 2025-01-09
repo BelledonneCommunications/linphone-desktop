@@ -19,15 +19,11 @@ LoginLayout {
 		Button {
 			enabled: mainItem.showBackButton
 			opacity: mainItem.showBackButton ? 1.0 : 0
-			Layout.preferredHeight: 27 * DefaultStyle.dp
-			Layout.preferredWidth: 27 * DefaultStyle.dp
 			Layout.leftMargin: 79 * DefaultStyle.dp
 			icon.source: AppIcons.leftArrow
-			icon.width: width
-			icon.height: height
-			background: Rectangle {
-				color: "transparent"
-			}
+			icon.width: 24 * DefaultStyle.dp
+			icon.height: 24 * DefaultStyle.dp
+			style: ButtonStyle.noBackground
 			onClicked: {
 				console.debug("[LoginLayout] User: return")
 				mainItem.goBack()
@@ -36,9 +32,10 @@ LoginLayout {
 		RowLayout {
 			spacing: 15 * DefaultStyle.dp
 			Layout.leftMargin: 21 * DefaultStyle.dp
-			Image {
+			EffectImage {
 				fillMode: Image.PreserveAspectFit
-				source: AppIcons.profile
+				imageSource: AppIcons.profile
+				colorizationColor: DefaultStyle.main2_600
 				Layout.preferredHeight: 34 * DefaultStyle.dp
 				Layout.preferredWidth: 34 * DefaultStyle.dp
 			}
@@ -63,12 +60,9 @@ LoginLayout {
 				font.pixelSize: 14 * DefaultStyle.dp
 				font.weight: 400 * DefaultStyle.dp
 			}
-			Button {
+			BigButton {
 				Layout.alignment: Qt.AlignRight
-				leftPadding: 20 * DefaultStyle.dp
-				rightPadding: 20 * DefaultStyle.dp
-				topPadding: 11 * DefaultStyle.dp
-				bottomPadding: 11 * DefaultStyle.dp
+				style: ButtonStyle.main
 				text: qsTr("S'inscrire")
 				onClicked: {
 					console.debug("[LoginPage] User: go to register")
@@ -91,21 +85,21 @@ LoginLayout {
 					id: loginForm
 					onConnectionSucceed: mainItem.connectionSucceed()
 				}
-				Button {
-					inversedColors: true
+				BigButton {
 					Layout.preferredWidth: loginForm.width
 					Layout.preferredHeight: 47 * DefaultStyle.dp
 					Layout.topMargin: 39 * DefaultStyle.dp
 					visible: !SettingsCpp.assistantHideThirdPartyAccount
 					text: qsTr("Compte SIP tiers")
+					style: ButtonStyle.secondary
 					onClicked: {mainItem.useSIPButtonClicked()}
 				}
-				Button {
-					inversedColors: true
+				BigButton {
 					Layout.preferredWidth: loginForm.width
 					Layout.preferredHeight: 47 * DefaultStyle.dp
 					Layout.topMargin: 25 * DefaultStyle.dp
 					text: qsTr("Configuration distante")
+					style: ButtonStyle.secondary
 					onClicked: {fetchConfigDialog.open()}
 				}
 			}
@@ -136,10 +130,11 @@ LoginLayout {
 
 		firstButton.text: 'Annuler'
 		firstButtonAccept: false
-		firstButton.inversedColors: true
+		firstButton.style: ButtonStyle.secondary
 
 		secondButton.text: 'Valider'
 		secondButtonAccept: true
+		secondButton.style: ButtonStyle.main
 		onAccepted:{
 			UtilsCpp.useFetchConfig(configUrl.text)
 		}

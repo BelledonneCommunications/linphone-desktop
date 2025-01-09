@@ -46,13 +46,13 @@ AbstractSettingsLayout {
 			IconLabelButton {
 				visible: model.core.pictureUri.length === 0
 				Layout.preferredWidth: width
-				Layout.preferredHeight: 17 * DefaultStyle.dp
-				iconSource: AppIcons.camera
-				iconSize: 17 * DefaultStyle.dp
+				icon.source: AppIcons.camera
+				icon.width: 17 * DefaultStyle.dp
+				icon.height: 17 * DefaultStyle.dp
 				text: qsTr("Ajouter une image")
+				style: ButtonStyle.noBackground
 				onClicked: fileDialog.open()
 				Layout.alignment: Qt.AlignHCenter
-				color: DefaultStyle.main2_600
 			}
 			RowLayout {
 				visible: model.core.pictureUri.length > 0
@@ -60,20 +60,20 @@ AbstractSettingsLayout {
 				spacing: 5 * DefaultStyle.dp
 				IconLabelButton {
 					Layout.preferredWidth: width
-					Layout.preferredHeight: 17 * DefaultStyle.dp
-					iconSource: AppIcons.pencil
-					iconSize: 17 * DefaultStyle.dp
+					icon.source: AppIcons.pencil
+					icon.width: 17 * DefaultStyle.dp
+					icon.height: 17 * DefaultStyle.dp
 					text: qsTr("Modifier l'image")
-					color: DefaultStyle.main2_600
+					style: ButtonStyle.noBackground
 					onClicked: fileDialog.open()
 				}
 				IconLabelButton {
 					Layout.preferredWidth: width
-					Layout.preferredHeight: 17 * DefaultStyle.dp
-					iconSource: AppIcons.trashCan
-					iconSize: 17 * DefaultStyle.dp
+					icon.source: AppIcons.trashCan
+					icon.width: 17 * DefaultStyle.dp
+					icon.height: 17 * DefaultStyle.dp
 					text: qsTr("Supprimer l'image")
-					color: DefaultStyle.main2_600
+					style: ButtonStyle.noBackground
 					onClicked: model.core.pictureUri = ""
 				}
 			}
@@ -108,11 +108,8 @@ AbstractSettingsLayout {
 				}
 				IconLabelButton {
 					Layout.alignment: Qt.AlignRight
-					Layout.preferredWidth: 20 * DefaultStyle.dp
-					Layout.preferredHeight: 20 * DefaultStyle.dp
-					iconSize: 24 * DefaultStyle.dp
-					iconSource: AppIcons.copy
-					color: DefaultStyle.main2_600
+					icon.source: AppIcons.copy
+					style: ButtonStyle.noBackground
 					onClicked: UtilsCpp.copyToClipboard(model.core.identityAddress)
 				}
 			}
@@ -184,16 +181,11 @@ AbstractSettingsLayout {
 				Item {
 					Layout.fillWidth: true
 				}
-				Button {
-					background: Item{}
+				BigButton {
+					style: ButtonStyle.noBackgroundRed
 					Layout.alignment: Qt.AlignRight
 					Layout.rightMargin: 5 * DefaultStyle.dp
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
 					icon.source: AppIcons.trashCan
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
-					contentImageColor: DefaultStyle.danger_500main					
 					onClicked: {
 						var mainWin = UtilsCpp.getMainWindow()
 						mainWin.showConfirmationLambdaPopup("",
@@ -280,7 +272,7 @@ AbstractSettingsLayout {
 									icon.source: AppIcons.trashCan
 									icon.width: 16 * DefaultStyle.dp
 									icon.height: 16 * DefaultStyle.dp
-									contentImageColor: DefaultStyle.main1_500_main
+									style: ButtonStyle.tertiary
 									onClicked: {
 										var mainWin = UtilsCpp.getMainWindow()
 										mainWin.showConfirmationLambdaPopup("",

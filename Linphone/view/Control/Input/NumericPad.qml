@@ -107,35 +107,24 @@ FocusScope{
 		Repeater {
 			id: numPadRepeater
 			model: 9
-			Button {
+			BigButton {
 				id: numPadButton
 				Layout.Layout.alignment: Qt.AlignHCenter
 				required property int index
 				implicitWidth: 60 * DefaultStyle.dp
 				implicitHeight: 60 * DefaultStyle.dp
 				onClicked: {
-					mainItem.buttonPressed(innerText.text)
+					mainItem.buttonPressed(text)
 				}
 				KeyNavigation.left: numPadGrid.getButtonAt(index - 1)
 				KeyNavigation.right: numPadGrid.getButtonAt(index + 1)
 				KeyNavigation.up: numPadGrid.getButtonAt(index - 3)
 				KeyNavigation.down: numPadGrid.getButtonAt(index + 3)
-				background: Rectangle {
-					anchors.fill: parent
-					color: numPadButton.down  || numPadButton.shadowEnabled? DefaultStyle.numericPadPressedButtonColor : DefaultStyle.grey_0
-					radius: 71 * DefaultStyle.dp
-				}
-				contentItem: Text {
-					id: innerText
-					horizontalAlignment: Text.AlignHCenter
-					verticalAlignment: Text.AlignVCenter
-					anchors.centerIn: parent
-					text: index + 1
-					font {
-						pixelSize: 32 * DefaultStyle.dp
-						weight: 400 * DefaultStyle.dp
-					}
-				}
+				style: ButtonStyle.numericPad
+				radius: 71 * DefaultStyle.dp
+				text: index + 1
+				textSize: 32 * DefaultStyle.dp
+				textWeight: 400 * DefaultStyle.dp
 			}
 		}
 		Repeater {
@@ -145,7 +134,7 @@ FocusScope{
 				{pressText: "0", longPressText: "+"},
 				{pressText: "#"}
 			]
-			Button {
+			BigButton {
 				id: digitButton
 				Layout.Layout.alignment: Qt.AlignHCenter
 				implicitWidth: 60 * DefaultStyle.dp
@@ -158,16 +147,14 @@ FocusScope{
 				KeyNavigation.right: numPadGrid.getButtonAt((index + 1)+9)
 				KeyNavigation.up: numPadGrid.getButtonAt((index - 3)+9)
 				KeyNavigation.down: numPadGrid.getButtonAt((index + 3)+9)
+				radius: 71 * DefaultStyle.dp
+				style: ButtonStyle.numericPad
 
-				background: Rectangle {
-					anchors.fill: parent
-					color: digitButton.down || digitButton.shadowEnabled? DefaultStyle.numericPadPressedButtonColor : DefaultStyle.grey_0
-					radius: 71 * DefaultStyle.dp
-				}
 				contentItem: Item {
 					anchors.fill: parent
 					Text {
 						id: pressText
+						color: digitButton.pressed ? digitButton.style.text.pressed : digitButton.style.text.normal
 						height: contentHeight
 						anchors.left: parent.left
 						anchors.right: parent.right
@@ -181,6 +168,7 @@ FocusScope{
 						height: contentHeight
 						anchors.left: parent.left
 						anchors.right: parent.right
+						color: digitButton.pressed ? digitButton.style.text.pressed : digitButton.style.text.normal
 						y: digitButton.height/2
 						horizontalAlignment: Text.AlignHCenter
 						visible: modelData.longPressText ? modelData.longPressText.length > 0 : false
@@ -200,10 +188,10 @@ FocusScope{
 			implicitWidth: 75 * DefaultStyle.dp
 			implicitHeight: 55 * DefaultStyle.dp
 			Layout.Layout.alignment: Qt.AlignHCenter
-			icon.source: AppIcons.phone
 			icon.width: 32 * DefaultStyle.dp
 			icon.height: 32 * DefaultStyle.dp
-			contentImageColor: DefaultStyle.grey_0
+			radius: 71 * DefaultStyle.dp
+			style: ButtonStyle.phoneGreen
 			
 			onClicked: mainItem.launchCall()
 			
@@ -211,12 +199,6 @@ FocusScope{
 			KeyNavigation.right: eraseButton
 			KeyNavigation.up: numPadGrid.getButtonAt(10)
 			KeyNavigation.down: numPadGrid.getButtonAt(1)
-			
-			background: Rectangle {
-				anchors.fill: parent
-				color: DefaultStyle.success_500main
-				radius: 71 * DefaultStyle.dp
-			}
 		}
 		Button {
 			id: eraseButton
@@ -227,8 +209,11 @@ FocusScope{
 			bottomPadding: 5 * DefaultStyle.dp
 			Layout.Layout.alignment: Qt.AlignHCenter
 			icon.source: AppIcons.backspaceFill
+			style: ButtonStyle.noBackground
 			icon.width: 38 * DefaultStyle.dp
 			icon.height: 38 * DefaultStyle.dp
+			Layout.Layout.preferredWidth: 38 * DefaultStyle.dp
+			Layout.Layout.preferredHeight: 38 * DefaultStyle.dp
 			
 			onClicked: mainItem.wipe()
 			

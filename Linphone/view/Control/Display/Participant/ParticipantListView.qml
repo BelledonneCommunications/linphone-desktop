@@ -81,13 +81,12 @@ ListView {
 					//TODO : Utilser checked et onToggled (pas compris)
 					onToggled: participantModel.setParticipantAdminStatus(modelData.core, position === 1)
 				}
-				Button {
+				SmallButton {
 					Layout.preferredWidth: 20 * DefaultStyle.dp
 					Layout.preferredHeight: 20 * DefaultStyle.dp
 					color: DefaultStyle.main2_100
+					style: ButtonStyle.hoveredBackground
 					icon.source: AppIcons.closeX
-					icon.width: 14 * DefaultStyle.dp
-					icon.height: 14 * DefaultStyle.dp
 					onClicked: participantModel.removeParticipant(modelData.core)
 				}
 			}
@@ -99,22 +98,14 @@ ListView {
 		visible: mainItem.isMeAdmin
 		height: 74 * DefaultStyle.dp
 		width: mainItem.width
-		Button {
+		MediumButton {
 			anchors.centerIn: parent
-			leftPadding: 16 * DefaultStyle.dp
-			rightPadding: 16 * DefaultStyle.dp
-			topPadding: 10 * DefaultStyle.dp
-			bottomPadding: 10 * DefaultStyle.dp
 			height: 40 * DefaultStyle.dp
 			icon.source: AppIcons.plusCircle
 			icon.width: 16 * DefaultStyle.dp
 			icon.height: 16 * DefaultStyle.dp
-			contentImageColor: DefaultStyle.main1_500_main
-			color: DefaultStyle.main1_100
 			text: qsTr("Ajouter des participants")
-			textColor: DefaultStyle.main1_500_main
-			textSize: 15 * DefaultStyle.dp
-			textWeight: 600 * DefaultStyle.dp
+			style: ButtonStyle.secondary
 			onClicked: mainItem.addParticipantRequested()
 		}
 	}

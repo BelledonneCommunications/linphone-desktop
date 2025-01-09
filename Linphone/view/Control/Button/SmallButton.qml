@@ -12,4 +12,6 @@ Button {
 	rightPadding: 12 * DefaultStyle.dp
 	topPadding: 6 * DefaultStyle.dp
 	bottomPadding: 6 * DefaultStyle.dp
+	icon.height: 14 * DefaultStyle.dp
+	icon.width: 14 * DefaultStyle.dp
 }

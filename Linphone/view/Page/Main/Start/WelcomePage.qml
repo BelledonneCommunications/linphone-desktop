@@ -36,18 +36,14 @@ LoginLayout {
 		Item {
 			Layout.fillWidth: true
 		},
-		Button {
+		SmallButton {
 			visible: carousel.currentIndex < (carousel.itemsCount - 1)
 			flat: true
 			Layout.rightMargin: 50 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignVCenter | Layout.AlignRight
-			background: Item {
-			}
+			style: ButtonStyle.noBackground
 			text: qsTr("Passer")
-			textColor: DefaultStyle.main2_600
 			underline: true
-			textSize: 13 * DefaultStyle.dp
-			textWeight: 600 * DefaultStyle.dp
 			onClicked: {
 				console.debug("[WelcomePage] User: Click skip")
 				mainItem.startButtonPressed()
@@ -106,14 +102,11 @@ LoginLayout {
 			}
 		}
 
-		Button {
+		BigButton {
 			Layout.leftMargin: 509 * DefaultStyle.dp
-			leftPadding: 20 * DefaultStyle.dp
-			rightPadding: 20 * DefaultStyle.dp
-			topPadding: 11 * DefaultStyle.dp
-			bottomPadding: 11 * DefaultStyle.dp
+			style: ButtonStyle.main
 			text: carousel.currentIndex < (carousel.itemsCount - 1) ? qsTr("Suivant") : qsTr("Commencer")
-			onClicked: { 
+			onClicked: {
 				if (carousel.currentIndex < carousel.itemsCount - 1) carousel.goToSlide(carousel.currentIndex + 1);
 				else mainItem.startButtonPressed();
 			}

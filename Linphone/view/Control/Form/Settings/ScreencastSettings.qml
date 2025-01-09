@@ -161,5 +161,6 @@ ColumnLayout {
 					? qsTr("Stop")
 					: qsTr("Partager")
 		onClicked: mainItem.conference.core.lToggleScreenSharing()
+		style: ButtonStyle.main
 	}
 }

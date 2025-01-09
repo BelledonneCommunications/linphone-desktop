@@ -47,13 +47,14 @@ FocusScope {
 		color: DefaultStyle.grey_100
 		border.color: textField.activeFocus ? mainItem.focusedBorderColor : mainItem.borderColor
 	}
-	Image {
+	EffectImage {
 		id: magnifier
 		visible: mainItem.magnifierVisible
+		colorizationColor: DefaultStyle.main2_500main
 		anchors.left: parent.left
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.leftMargin: 10 * DefaultStyle.dp
-		source: AppIcons.magnifier
+		imageSource: AppIcons.magnifier
 		width: 20 * DefaultStyle.dp
 		height: 20 * DefaultStyle.dp
 	}
@@ -99,17 +100,15 @@ FocusScope {
 		id: dialerButton
 		visible: numericPadPopup != undefined && textField.text.length === 0
 		checked: numericPadPopup?.visible || false
-		background: Rectangle {
-			color: "transparent"
-		}
-		icon.source: dialerButton.checked ? AppIcons.dialerSelected : AppIcons.dialer
+		style: ButtonStyle.noBackground
+		icon.source: AppIcons.dialer
+		contentImageColor: dialerButton.checked ? DefaultStyle.main1_500_main : DefaultStyle.main2_600 
+		hoveredImageColor: contentImageColor
 		width: 24 * DefaultStyle.dp
 		height: 24 * DefaultStyle.dp
-		icon.width: 24 * DefaultStyle.dp
-		icon.height: 24 * DefaultStyle.dp
 		anchors.verticalCenter: parent.verticalCenter 
 		anchors.right: parent.right
-		anchors.rightMargin: 15 * DefaultStyle.dp
+		anchors.rightMargin: 20 * DefaultStyle.dp
 		onClicked: {
 			if(!checked){
 				mainItem.openNumericPadRequested()
@@ -120,18 +119,14 @@ FocusScope {
 	Button {
 		id: clearTextButton
 		visible: textField.text.length > 0 && mainItem.enabled
-		background: Rectangle {
-			color: "transparent"
-		}
 		width: 24 * DefaultStyle.dp
 		height: 24 * DefaultStyle.dp
+		style: ButtonStyle.noBackground
 		icon.source: AppIcons.closeX
-		icon.width: 24 * DefaultStyle.dp
-		icon.height: 24 * DefaultStyle.dp
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
-		anchors.rightMargin: 15 * DefaultStyle.dp
+		anchors.rightMargin: 20 * DefaultStyle.dp
 		onClicked: {
 			textField.clear()
 		}

@@ -99,17 +99,13 @@ Notification {
 					spacing: 26 * DefaultStyle.dp
 					Button {
 						spacing: 6 * DefaultStyle.dp
-						color: DefaultStyle.success_500main
-						borderColor: color
+						style: ButtonStyle.phoneGreen
 						Layout.preferredWidth: 118 * DefaultStyle.dp
 						Layout.preferredHeight: 32 * DefaultStyle.dp
 						asynchronous: false
-						icon.source: AppIcons.phone
 						icon.width: 19 * DefaultStyle.dp
 						icon.height: 19 * DefaultStyle.dp
-						contentImageColor: DefaultStyle.grey_0
 						text: qsTr("Répondre")
-						textColor: DefaultStyle.grey_0
 						textSize: 14 * DefaultStyle.dp
 						textWeight: 500 * DefaultStyle.dp
 						onClicked: {
@@ -120,17 +116,13 @@ Notification {
 					}
 					Button {
 						spacing: 6 * DefaultStyle.dp
-						color: DefaultStyle.danger_500main
-						borderColor: color
+						style: ButtonStyle.phoneRed
 						Layout.preferredWidth: 118 * DefaultStyle.dp
 						Layout.preferredHeight: 32 * DefaultStyle.dp
 						asynchronous: false
-						icon.source: AppIcons.endCall
 						icon.width: 19 * DefaultStyle.dp
 						icon.height: 19 * DefaultStyle.dp
-						contentImageColor: DefaultStyle.grey_0
 						text: qsTr("Refuser")
-						textColor: DefaultStyle.grey_0
 						textSize: 14 * DefaultStyle.dp
 						textWeight: 500 * DefaultStyle.dp
 						onClicked: {

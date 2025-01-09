@@ -97,16 +97,12 @@ Item {
 				}
 				Item {
 					Layout.fillWidth: true
-					Button {
-						color: "transparent"
+					BigButton {
+						color: pressed ? DefaultStyle.main2_200 : "transparent"
 						borderColor: DefaultStyle.main2_400
 						icon.source: AppIcons.shareNetwork
 						contentImageColor: DefaultStyle.main2_400
 						text: qsTr("Share invitation")
-						topPadding: 11 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
 						anchors.centerIn: parent
 						textColor: DefaultStyle.main2_400
 						onClicked: {
@@ -150,7 +146,6 @@ Item {
 		// 		}
 		// 	}
 		// 	Button {
-		// 		inversedColors: true
 		// 		text: qsTr("Share invitation")
 		// 		icon.source: AppIcons.shareNetwork
 		// 		color: DefaultStyle.main2_400

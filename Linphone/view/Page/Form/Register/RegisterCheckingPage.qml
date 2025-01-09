@@ -22,19 +22,18 @@ LoginLayout {
 				Layout.preferredHeight: 24 * DefaultStyle.dp
 				Layout.preferredWidth: 24 * DefaultStyle.dp
 				icon.source: AppIcons.leftArrow
-				icon.width: 24 * DefaultStyle.dp
-				icon.height: 24 * DefaultStyle.dp
-				background: Rectangle {
-					color: "transparent"
-				}
+				style: ButtonStyle.noBackground
 				onClicked: {
 					console.debug("[RegisterCheckingPage] User: return to register")
 					mainItem.returnToRegister()
 				}
 			}
-			Image {
+			EffectImage {
 				fillMode: Image.PreserveAspectFit
-				source: AppIcons.profile
+				imageSource: AppIcons.profile
+				Layout.preferredHeight: 34 * DefaultStyle.dp
+				Layout.preferredWidth: 34 * DefaultStyle.dp
+				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
 				wrapMode: Text.NoWrap
@@ -146,12 +145,8 @@ LoginLayout {
 					font.pixelSize: 14 * DefaultStyle.dp
 					font.weight: 400 * DefaultStyle.dp
 				}
-				Button {
-					leftPadding: 20 * DefaultStyle.dp
-					rightPadding: 20 * DefaultStyle.dp
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
-					inversedColors: true
+				BigButton {
+					style: ButtonStyle.secondary
 					text: "Resend a code"
 					onClicked: {
 						console.debug("[RegisterCheckingPage] User: Resend code")

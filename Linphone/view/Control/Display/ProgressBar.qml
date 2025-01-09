@@ -19,8 +19,9 @@ ProgressBar {
         id: textSize
         text: mainItem.innerText
         font {
-            pixelSize: 10 * DefaultStyle.dp
-            weight: 700 * DefaultStyle.dp
+			pixelSize: 10 * DefaultStyle.dp
+			weight: 700 * DefaultStyle.dp
+			bold: true
         }
     }
 

@@ -235,13 +235,17 @@ ListView {
 					ColumnLayout {
 						anchors.fill: parent
 						anchors.left: parent.left
-						anchors.leftMargin: 15 * DefaultStyle.dp
+						anchors.leftMargin: 16 * DefaultStyle.dp
+						anchors.rightMargin: 16 * DefaultStyle.dp
+						anchors.topMargin: 10 * DefaultStyle.dp
+						anchors.bottomMargin: 10 * DefaultStyle.dp
 						spacing: 2 * DefaultStyle.dp
 						visible: itemDelegate.haveModel
 						RowLayout {
 							spacing: 8 * DefaultStyle.dp
-							Image {
-								source: AppIcons.usersThree
+							EffectImage {
+								imageSource: AppIcons.usersThree
+								colorizationColor: DefaultStyle.main2_600
 								Layout.preferredWidth: 24 * DefaultStyle.dp
 								Layout.preferredHeight: 24 * DefaultStyle.dp
 							}

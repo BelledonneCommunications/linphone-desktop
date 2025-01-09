@@ -59,10 +59,6 @@ Item {
 	property bool displayAll : !!mainItem.call
 	property bool mutedStatus: participantDevice ? participantDevice.core.isMuted : false
 	clip: false
-	onCallChanged: {
-		waitingTime.seconds = 0
-		waitingTimer.restart()
-	}
 	Rectangle {
 		id: background
 		color: noCameraLayout.visible ? mainItem.color : 'transparent'
@@ -89,32 +85,8 @@ Item {
 				BusyIndicator {
 					indicatorColor: DefaultStyle.main2_100
 					Layout.alignment: Qt.AlignHCenter
-					indicatorHeight: 27 * DefaultStyle.dp
-					indicatorWidth: 27 * DefaultStyle.dp
-				}
-				Timer {
-					id: waitingTimer
-					interval: 1000
-					repeat: true
-					onTriggered: waitingTime.seconds += 1
-				}
-				Text {
-					id: waitingTime
-					property var isMeObj: UtilsCpp.isMe(mainItem.remoteAddress) 
-					visible: isMeObj ? !isMeObj.value : false
-					property int seconds
-					text: UtilsCpp.formatElapsedTime(seconds)
-					color: DefaultStyle.grey_0
-					Layout.alignment: Qt.AlignHCenter
-					horizontalAlignment: Text.AlignHCenter
-					Layout.topMargin: 25 * DefaultStyle.dp
-					font {
-						pixelSize: 30 * DefaultStyle.dp
-						weight: 300 * DefaultStyle.dp
-					}
-					Component.onCompleted: {
-						waitingTimer.restart()
-					}
+					indicatorHeight: 42 * DefaultStyle.dp
+					indicatorWidth: 42 * DefaultStyle.dp
 				}
 			}
 			Item{

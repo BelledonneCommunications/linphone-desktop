@@ -81,6 +81,7 @@ AbstractSettingsLayout {
 				Layout.topMargin: -20 * DefaultStyle.dp
 				Layout.alignment: Qt.AlignRight
 				text: qsTr("Télécharger et appliquer")
+				style: ButtonStyle.tertiary
 				onClicked: {
 					var url = configUri.value()
 					if (UtilsCpp.isValidURL(url))

@@ -71,11 +71,10 @@ ColumnLayout {
 			Layout.preferredWidth: childrenRect.width
 			Layout.preferredHeight: childrenRect.height
 		}
-		Button {
+		MediumButton {
 			id: rightButton
 			Layout.alignment: Qt.AlignHCenter
-			width: childrenRect.width
-			height: childrenRect.height
+			style: ButtonStyle.main
 		}
 	}
 	StackLayout {

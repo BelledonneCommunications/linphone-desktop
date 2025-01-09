@@ -82,6 +82,7 @@ AbstractMainPage {
 		Loader {
 			id: titleLoader
 			anchors.left: parent.left
+			anchors.leftMargin: 45 * DefaultStyle.dp
 			anchors.right: parent.right
 			asynchronous: false
 			onActiveFocusChanged:{
@@ -137,7 +138,6 @@ AbstractMainPage {
 				spacing: 16 * DefaultStyle.dp
 				Text {
 					text: qsTr("Appels")
-					Layout.leftMargin: 45 * DefaultStyle.dp
 					color: DefaultStyle.main2_700
 					font.pixelSize: 29 * DefaultStyle.dp
 					font.weight: 800 * DefaultStyle.dp
@@ -151,18 +151,15 @@ AbstractMainPage {
 					height: 24 * DefaultStyle.dp
 					focus: true
 					popup.x: 0
-					popup.padding: 20 * DefaultStyle.dp
 					KeyNavigation.right: newCallButton
 					KeyNavigation.down: listStackView
 					popup.contentItem: ColumnLayout {
 						IconLabelButton {
-							Layout.preferredHeight: 24 * DefaultStyle.dp
 							Layout.fillWidth: true
 							focus: visible
-							iconSize: 24 * DefaultStyle.dp
 							text: qsTr("Supprimer l'historique")
-							iconSource: AppIcons.trashCan
-							color: DefaultStyle.danger_500main
+							icon.source: AppIcons.trashCan
+							style: ButtonStyle.hoveredBackgroundRed
 							onClicked: {
 								removeHistory.close()
 								deleteHistoryPopup.open()
@@ -320,8 +317,8 @@ AbstractMainPage {
 										RowLayout {
 											z: 1
 											anchors.fill: parent
-											anchors.leftMargin: 5 * DefaultStyle.dp
-											anchors.rightMargin: 5 * DefaultStyle.dp
+											anchors.leftMargin: 10 * DefaultStyle.dp
+											anchors.rightMargin: 15 * DefaultStyle.dp
 											spacing: 10 * DefaultStyle.dp
 											Avatar {
 												id: historyAvatar
@@ -391,17 +388,12 @@ AbstractMainPage {
 													}
 												}
 											}
-											Button {
+											BigButton {
 												padding: 0
-												background: Item {
-													visible: false
-												}
+												style: ButtonStyle.noBackground
 												icon.source: AppIcons.phone
-												Layout.preferredWidth: 24 * DefaultStyle.dp
-												Layout.preferredHeight: 24 * DefaultStyle.dp
-												icon.width: 24 * DefaultStyle.dp
-												icon.height: 24 * DefaultStyle.dp
-												contentImageColor: DefaultStyle.main2_600
+												// Layout.preferredWidth: 24 * DefaultStyle.dp
+												// Layout.preferredHeight: 24 * DefaultStyle.dp
 												focus: true
 												activeFocusOnTab: false
 												onClicked: {
@@ -461,15 +453,12 @@ AbstractMainPage {
 			height: parent.height
 			RowLayout {
 				anchors.fill: parent
+				spacing: 10 * DefaultStyle.dp
 				Button {
-					Layout.leftMargin: 45 * DefaultStyle.dp
-					background: Item {
-					}
 					Layout.preferredWidth: 24 * DefaultStyle.dp
 					Layout.preferredHeight: 24 * DefaultStyle.dp
+					style: ButtonStyle.noBackground
 					icon.source: AppIcons.leftArrow
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
 					focus: true
 					KeyNavigation.down: listStackView
 					onClicked: {
@@ -539,14 +528,11 @@ AbstractMainPage {
 				visible: !SettingsCpp.disableMeetingsFeature
 				Button {
 					id: backGroupCallButton
-					background: Item{}
+					style: ButtonStyle.noBackgroundOrange
 					icon.source: AppIcons.leftArrow
-					contentImageColor: DefaultStyle.main1_500_main
 					Layout.leftMargin: 21 * DefaultStyle.dp
 					Layout.preferredWidth: 24 * DefaultStyle.dp
 					Layout.preferredHeight: 24 * DefaultStyle.dp
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
 					KeyNavigation.down: listStackView
 					KeyNavigation.right: groupCallButton
 					KeyNavigation.left: groupCallButton
@@ -578,16 +564,12 @@ AbstractMainPage {
 						Layout.fillWidth: true
 					}
 				}
-				Button {
+				SmallButton {
 					id: groupCallButton
 					enabled: mainItem.selectedParticipantsCount.length != 0
 					Layout.rightMargin: 21 * DefaultStyle.dp
-					topPadding: 6 * DefaultStyle.dp
-					bottomPadding: 6 * DefaultStyle.dp
-					leftPadding: 12 * DefaultStyle.dp
-					rightPadding: 12 * DefaultStyle.dp
 					text: qsTr("Lancer")
-					textSize: 13 * DefaultStyle.dp
+					style: ButtonStyle.main
 					KeyNavigation.down: listStackView
 					KeyNavigation.left: backGroupCallButton
 					KeyNavigation.right: backGroupCallButton
@@ -686,7 +668,6 @@ AbstractMainPage {
 				buttonContent: PopupButton {
 					id: detailOptions
 					anchors.right: parent.right
-					anchors.rightMargin: 30 * DefaultStyle.dp
 					anchors.verticalCenter: parent.verticalCenter
 					popup.x: width
 					property var friendGuiObj: UtilsCpp.findFriendByAddress(contactDetail.contactAddress)
@@ -703,17 +684,12 @@ AbstractMainPage {
 						ColumnLayout {
 							id: detailsButtons
 							anchors.fill: parent
-							Button {
+							IconLabelButton {
+								Layout.fillWidth: true
 								text: detailOptions.friendGui ? qsTr("Voir le contact") : qsTr("Ajouter aux contacts")
 								icon.source: AppIcons.plusCircle
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
-								spacing: 10 * DefaultStyle.dp
-								textSize: 14 * DefaultStyle.dp
-								textWeight: 400 * DefaultStyle.dp
-								textColor: DefaultStyle.main2_500main
-								contentImageColor: DefaultStyle.main2_600
-								background: Item {}
+								icon.width: 32 * DefaultStyle.dp
+								icon.height: 32 * DefaultStyle.dp
 								visible: SettingsCpp.syncLdapContacts || !detailOptions.friendGui?.core?.isLdap
 								onClicked: {
 									detailOptions.close()
@@ -721,18 +697,12 @@ AbstractMainPage {
 									else mainItem.createContactRequested(contactDetail.contactName, contactDetail.contactAddress)
 								}
 							}
-							Button {
+							IconLabelButton {
+								Layout.fillWidth: true
 								text: qsTr("Copier l'adresse SIP")
 								icon.source: AppIcons.copy
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
-								spacing: 10 * DefaultStyle.dp
-								textSize: 14 * DefaultStyle.dp
-								textWeight: 400 * DefaultStyle.dp
-								textColor: DefaultStyle.main2_500main
-								contentImageColor: DefaultStyle.main2_600
-								background: Item {}
-								
+								icon.width: 32 * DefaultStyle.dp
+								icon.height: 32 * DefaultStyle.dp
 								onClicked: {
 									detailOptions.close()
 									var success = UtilsCpp.copyToClipboard(mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress)
@@ -740,7 +710,7 @@ AbstractMainPage {
 									else UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Erreur lors de la copie de l'adresse"), false)
 								}
 							}
-							// Button {
+							// IconLabelButton {
 							// 	background: Item {}
 							// 	enabled: false
 							// 	contentItem: IconLabel {
@@ -755,18 +725,13 @@ AbstractMainPage {
 								color: DefaultStyle.main2_400
 							}
 							
-							Button {
+							IconLabelButton {
+								Layout.fillWidth: true
 								text: qsTr("Supprimer l'historique")
 								icon.source: AppIcons.trashCan
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
-								spacing: 10 * DefaultStyle.dp
-								textSize: 14 * DefaultStyle.dp
-								textWeight: 400 * DefaultStyle.dp
-								textColor: DefaultStyle.danger_500main
-								contentImageColor: DefaultStyle.danger_500main
-								background: Item {}
-								
+								icon.width: 32 * DefaultStyle.dp
+								icon.height: 32 * DefaultStyle.dp
+								style: ButtonStyle.hoveredBackgroundRed
 								Connections {
 									target: deleteForUserPopup
 									function onAccepted() {

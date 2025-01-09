@@ -8,9 +8,12 @@ LoginLayout {
 	signal modeSelected(int index)
 
 	titleContent: RowLayout {
-		Image {
+		EffectImage {
 			fillMode: Image.PreserveAspectFit
-			source: AppIcons.profile
+			imageSource: AppIcons.profile
+			colorizationColor: DefaultStyle.main2_600
+			Layout.preferredHeight: 34 * DefaultStyle.dp
+			Layout.preferredWidth: 34 * DefaultStyle.dp
 		}
 		ColumnLayout {
 			Text {
@@ -55,15 +58,13 @@ LoginLayout {
 				}
 			}
 		}
-		Button {
+		BigButton {
 			id: continueButton
 			property int selectedIndex: 0
 			Layout.alignment: Qt.AlignHCenter
-			topPadding: 11 * DefaultStyle.dp
-			bottomPadding: 11 * DefaultStyle.dp
-			leftPadding: 100 * DefaultStyle.dp
-			rightPadding: 100 * DefaultStyle.dp
+			Layout.preferredWidth: 360 * DefaultStyle.dp
 			text: qsTr("Continuer")
+			style: ButtonStyle.main
 			onClicked: mainItem.modeSelected(selectedIndex)
 		}
 		Item {

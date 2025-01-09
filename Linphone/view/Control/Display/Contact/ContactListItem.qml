@@ -96,6 +96,7 @@ FocusScope {
 			z: 1
 			visible: actionButtons || friendPopup.visible || mainItem.multiSelectionEnabled
 			spacing: visible ? 16 * DefaultStyle.dp : 0
+			Layout.rightMargin: visible ? 10 * DefaultStyle.dp : 0
 			EffectImage {
 				id: isSelectedCheck
 				visible: mainItem.multiSelectionEnabled && (mainItem.selectedContacts.indexOf(searchResultItem.core.defaultAddress) != -1)
@@ -106,7 +107,6 @@ FocusScope {
 			}
 			RowLayout{
 				id: actionButtons
-				Layout.rightMargin: 10 * DefaultStyle.dp
 				visible: mainItem.showActions
 				spacing: visible ? 10 * DefaultStyle.dp : 0
 				Button {
@@ -117,12 +117,8 @@ FocusScope {
 					icon.height: 24 * DefaultStyle.dp
 					icon.source: AppIcons.phone
 					focus: visible
-					contentImageColor: DefaultStyle.main2_500main
-					background: Rectangle {
-						anchors.fill: parent
-						radius: 40 * DefaultStyle.dp
-						color: DefaultStyle.main2_200
-					}
+					radius: 40 * DefaultStyle.dp
+					style: ButtonStyle.grey
 					onClicked: UtilsCpp.createCall(searchResultItem.core.defaultFullAddress)
 					KeyNavigation.left: chatButton
 					KeyNavigation.right: videoCallButton
@@ -135,12 +131,8 @@ FocusScope {
 					icon.height: 24 * DefaultStyle.dp
 					icon.source: AppIcons.videoCamera
 					focus: visible && !callButton.visible
-					contentImageColor: DefaultStyle.main2_500main
-					background: Rectangle {
-						anchors.fill: parent
-						radius: 40 * DefaultStyle.dp
-						color: DefaultStyle.main2_200
-					}
+					radius: 40 * DefaultStyle.dp
+					style: ButtonStyle.grey
 					onClicked: UtilsCpp.createCall(searchResultItem.core.defaultFullAddress, {'localVideoEnabled': true})
 					KeyNavigation.left: callButton
 					KeyNavigation.right: chatButton
@@ -154,12 +146,8 @@ FocusScope {
 					icon.height: 24 * DefaultStyle.dp
 					icon.source: AppIcons.chatTeardropText
 					focus: visible && !callButton.visible && !videoCallButton.visible
-					contentImageColor: DefaultStyle.main2_500main
-					background: Rectangle {
-						anchors.fill: parent
-						radius: 40 * DefaultStyle.dp
-						color: DefaultStyle.main2_200
-					}
+					radius: 40 * DefaultStyle.dp
+					style: ButtonStyle.grey
 					KeyNavigation.left: videoCallButton
 					KeyNavigation.right: callButton
 				}
@@ -167,39 +155,29 @@ FocusScope {
 			PopupButton {
 				id: friendPopup
 				z: 1
-				// Layout.rightMargin: 13 * DefaultStyle.dp
-				Layout.alignment: Qt.AlignVCenter
-				Layout.rightMargin: 8 * DefaultStyle.dp
 				popup.x: 0
 				popup.padding: 10 * DefaultStyle.dp
 				visible: mainItem.showContactMenu && (contactArea.containsMouse || hovered || popup.opened)
 				
 				popup.contentItem: ColumnLayout {
-					Button {
+					IconLabelButton {
 						visible: searchResultItem.core.isStored
 						text: searchResultItem.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
 						icon.source: searchResultItem.core.starred ? AppIcons.heartFill : AppIcons.heart
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
 						spacing: 10 * DefaultStyle.dp
-						textSize: 14 * DefaultStyle.dp
-						textWeight: 400 * DefaultStyle.dp
 						textColor: DefaultStyle.main2_500main
+						hoveredImageColor: searchResultItem.core.starred ?  DefaultStyle.main1_700 : DefaultStyle.danger_700
 						contentImageColor: searchResultItem.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
 						onClicked: {
 							searchResultItem.core.lSetStarred(!searchResultItem.core.starred)
 							friendPopup.close()
 						}
-						background: Item{}
+						style: ButtonStyle.noBackground
 					}
-					Button {
+					IconLabelButton {
 						text: qsTr("Partager")
 						icon.source: AppIcons.shareNetwork
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
 						spacing: 10 * DefaultStyle.dp
-						textSize: 14 * DefaultStyle.dp
-						textWeight: 400 * DefaultStyle.dp
 						textColor: DefaultStyle.main2_500main
 						onClicked: {
 							var vcard = searchResultItem.core.getVCard()
@@ -209,24 +187,19 @@ FocusScope {
 							else mainWindow.showInformationPopup(qsTr("VCard créée"), qsTr("VCard du contact enregistrée dans %1").arg(filepath))
 							UtilsCpp.shareByEmail(qsTr("Partage de contact"), vcard, filepath)
 						}
-						background: Item{}
+						style: ButtonStyle.noBackground
+
 					}
-					Button {
+					IconLabelButton {
 						text: qsTr("Supprimer")
 						icon.source: AppIcons.trashCan
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
 						spacing: 10 * DefaultStyle.dp
-						textSize: 14 * DefaultStyle.dp
-						textWeight: 400 * DefaultStyle.dp
-						textColor: DefaultStyle.danger_500main
-						contentImageColor: DefaultStyle.danger_500main
 						visible: !searchResultItem.core.readOnly
 						onClicked: {
 							mainItem.contactDeletionRequested(searchResultItem)
 							friendPopup.close()
 						}
-						background: Item{}
+						style: ButtonStyle.noBackgroundRed
 					}
 				}
 			}

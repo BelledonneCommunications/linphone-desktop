@@ -147,7 +147,7 @@ ListView {
 					}
 					Button {
 						id: headerExpandButton
-						background: Item{}
+						style: ButtonStyle.noBackground
 						icon.source: mainItem.expanded ? AppIcons.upArrow : AppIcons.downArrow
 						Layout.fillHeight: true
 						Layout.preferredWidth: height
@@ -171,7 +171,7 @@ ListView {
 		showInitials: mainItem.showInitials && isStored
 		showDefaultAddress: mainItem.showDefaultAddress
 		showActions: mainItem.showActions
-		showContactMenu: searchResultItem.core.isStored
+		showContactMenu: mainItem.showContactMenu && searchResultItem.core.isStored
 		highlightText: mainItem.highlightText
 		displayNameCapitalization: mainItem.displayNameCapitalization
 		

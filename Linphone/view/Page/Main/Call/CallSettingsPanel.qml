@@ -68,17 +68,13 @@ Control.Page {
 				RowLayout {
 					id: customButtonLayout
 				}
-				Button {
+				RoundButton {
 					id: closeButton
 					visible: mainItem.closeButtonVisible
 					background: Item {
 						visible: false
 					}
 					icon.source: AppIcons.closeX
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
 					onClicked: mainItem.visible = false
 				}
 			}
@@ -86,11 +82,10 @@ Control.Page {
 				Layout.alignment: Qt.AlignVCenter
 				spacing: 10 * DefaultStyle.dp
 				Button {
-					background: Item{}
+					style: ButtonStyle.noBackgroundOrange
 					icon.source: AppIcons.leftArrow
 					icon.width: 24 * DefaultStyle.dp
 					icon.height: 24 * DefaultStyle.dp
-					contentImageColor: DefaultStyle.main1_500_main
 					onClicked: mainItem.returnRequested()
 				}
 				ColumnLayout {
@@ -121,15 +116,10 @@ Control.Page {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 				}
-				Button {
+				SmallButton {
+					style: ButtonStyle.main
 					text: mainItem.headerValidateButtonText
-					textSize: 13 * DefaultStyle.dp
-					textWeight: 600 * DefaultStyle.dp
 					onClicked: mainItem.validateRequested()
-					topPadding: 6 * DefaultStyle.dp
-					bottomPadding: 6 * DefaultStyle.dp
-					leftPadding: 12 * DefaultStyle.dp
-					rightPadding: 12 * DefaultStyle.dp
 				}
 			}
 		}

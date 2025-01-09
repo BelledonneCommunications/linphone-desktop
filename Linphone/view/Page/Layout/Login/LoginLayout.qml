@@ -105,13 +105,10 @@ Rectangle {
 					Layout.preferredHeight: 10 * DefaultStyle.dp
 				}
 			}
-			Button {
+			MediumButton {
 				Layout.alignment: Qt.AlignRight | Qt.AlignBottom
 				text: qsTr("Fermer")
-				leftPadding: 16 * DefaultStyle.dp
-				rightPadding: 16 * DefaultStyle.dp
-				topPadding: 10 * DefaultStyle.dp
-				bottomPadding: 10 * DefaultStyle.dp
+				style: ButtonStyle.main
 				onClicked: aboutPopup.close()
 			}
 		}
@@ -129,19 +126,16 @@ Rectangle {
 			Item {
 				Layout.fillWidth: true
 			}
-			Button {
+			BigButton {
 				id: aboutButton
 				Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-				icon.width: 24 * DefaultStyle.dp
-				icon.height: 24 * DefaultStyle.dp
 				icon.source: AppIcons.info
 				text: qsTr("À propos")
-				textSize: 14 * DefaultStyle.dp
-				textWeight: 400 * DefaultStyle.dp
+				textSize: Typography.p1.pixelSize
+				textWeight: Typography.p1.weight
 				textColor: DefaultStyle.main2_500main
 				onClicked: aboutPopup.open()
-				
-				background: Item{}
+				style: ButtonStyle.noBackground
 			}
 		}
 

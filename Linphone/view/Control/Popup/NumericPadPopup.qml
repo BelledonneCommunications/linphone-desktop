@@ -51,22 +51,17 @@ Control.Popup {
 			anchors.fill: parent
 			onClicked: numPad.forceActiveFocus()
 		}
-		Button {
+		BigButton {
 			id: closeButton
 			visible: mainItem.closeButtonVisible
 			anchors.top: parent.top
 			anchors.right: parent.right
 			anchors.topMargin: 10 * DefaultStyle.dp
 			anchors.rightMargin: 10 * DefaultStyle.dp
-			background: Item {
-				anchors.fill: parent
-				visible: false
-			}
 			icon.source: AppIcons.closeX
-			width: 24 * DefaultStyle.dp
-			height: 24 * DefaultStyle.dp
 			icon.width: 24 * DefaultStyle.dp
 			icon.height: 24 * DefaultStyle.dp
+			style: ButtonStyle.noBackground
 			onClicked: mainItem.close()
 		}
 	}

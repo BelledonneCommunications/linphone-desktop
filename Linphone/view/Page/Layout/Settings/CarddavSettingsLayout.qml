@@ -40,12 +40,11 @@ AbstractSettingsLayout {
 		id: topBar
 		RowLayout {
 			spacing: 20 * DefaultStyle.dp
-			Button {
-				background: Item{}
+			BigButton {
+				style: ButtonStyle.noBackground
 				icon.source: AppIcons.trashCan
 				icon.width: 32 * DefaultStyle.dp
 				icon.height: 32 * DefaultStyle.dp
-				contentImageColor: DefaultStyle.main2_600
 				visible: !isNew
 				onClicked: {
 					var mainWin = UtilsCpp.getMainWindow()

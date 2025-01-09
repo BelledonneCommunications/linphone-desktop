@@ -18,7 +18,7 @@ Control.ComboBox {
 	property bool shadowEnabled: mainItem.activeFocus || mainItem.hovered
 	property string flagRole// Specific case if flag is shown (special font)
 
-	onConstantImageSourceChanged: if (constantImageSource)  selectedItemImg.source = constantImageSource
+	onConstantImageSourceChanged: if (constantImageSource)  selectedItemImg.imageSource = constantImageSource
 	onCurrentIndexChanged: {
 		var item = model[currentIndex]
 		if (!item) item = model.getAt(currentIndex)
@@ -31,7 +31,7 @@ Control.ComboBox {
 										? item
 										: ""
 		if(mainItem.flagRole) selectedItemFlag.text = item[mainItem.flagRole]
-		selectedItemImg.source = constantImageSource 
+		selectedItemImg.imageSource = constantImageSource 
 			? constantImageSource 
 			: item.img
 				? item.img
@@ -74,13 +74,14 @@ Control.ComboBox {
 		anchors.leftMargin: 10 * DefaultStyle.dp
 		anchors.rightMargin: indicImage.width + 10 * DefaultStyle.dp
 		spacing: 5 * DefaultStyle.dp
-		Image {
+		EffectImage {
 			id: selectedItemImg
 			Layout.preferredWidth: visible ? 24 * DefaultStyle.dp : 0
+			Layout.preferredHeight: visible ? 24 * DefaultStyle.dp : 0
 			Layout.leftMargin: mainItem.leftMargin
-			source: mainItem.constantImageSource ? mainItem.constantImageSource : ""
-			visible: source != ""
-			sourceSize.width: 24 * DefaultStyle.dp
+			imageSource: mainItem.constantImageSource ? mainItem.constantImageSource : ""
+			colorizationColor: DefaultStyle.main2_600
+			visible: imageSource != ""
 			fillMode: Image.PreserveAspectFit
 		}
 		Text {
@@ -114,13 +115,13 @@ Control.ComboBox {
 	}
 
 
-	indicator: Image {
+	indicator: EffectImage {
 		id: indicImage
 		z: 1
 		anchors.right: parent.right
 		anchors.rightMargin: 10 * DefaultStyle.dp
 		anchors.verticalCenter: parent.verticalCenter
-		source: AppIcons.downArrow
+		imageSource: AppIcons.downArrow
 		width: 14 * DefaultStyle.dp
 		fillMode: Image.PreserveAspectFit
 	}
@@ -169,13 +170,13 @@ Control.ComboBox {
 				// anchors.right: listView.right
 				RowLayout{
 					anchors.fill: parent
-					Image {
+					EffectImage {
 						id: delegateImg
 						Layout.preferredWidth: visible ? 20 * DefaultStyle.dp : 0
 						Layout.leftMargin: 10 * DefaultStyle.dp
-						visible: source != ""
-						sourceSize.width: 20 * DefaultStyle.dp
-						source: typeof(modelData) != "undefined" && modelData.img ? modelData.img : ""
+						visible: imageSource != ""
+						imageWidth: 20 * DefaultStyle.dp
+						imageSource: typeof(modelData) != "undefined" && modelData.img ? modelData.img : ""
 						fillMode: Image.PreserveAspectFit
 					}
 					

@@ -35,15 +35,17 @@ AbstractSettingsLayout {
 		id: shareLogs
 		text: qsTr("Les traces de débogage ont été téléversées. Comment souhaitez-vous partager le lien ? ")
 		buttons: [
-			Button {
+			BigButton {
 				text: qsTr("Presse-papier")
+				style: ButtonStyle.main
 				onClicked: {
 					shareLogs.close()
 					UtilsCpp.copyToClipboard(mainItem.logsUrl)
 				}
 			},
-			Button {
+			BigButton {
 				text: qsTr("E-Mail")
+				style: ButtonStyle.main
 				onClicked: {
 					shareLogs.close()
 					if(!Qt.openUrlExternally(
@@ -75,12 +77,14 @@ AbstractSettingsLayout {
 				spacing: 20 * DefaultStyle.dp
 				Layout.alignment: Qt.AlignRight
 				MediumButton {
+					style: ButtonStyle.tertiary
 					text: qsTr("Supprimer les traces")
 					onClicked: {
 						deleteLogs.open()
 					}
 				}
 				MediumButton {
+					style: ButtonStyle.tertiary
 					text: qsTr("Partager les traces")
 					enabled: SettingsCpp.logsEnabled || SettingsCpp.fullLogsEnabled
 					onClicked: {

@@ -22,23 +22,18 @@ LoginLayout {
 				Layout.preferredHeight: 24 * DefaultStyle.dp
 				Layout.preferredWidth: 24 * DefaultStyle.dp
 				icon.source: AppIcons.leftArrow
-				icon.width: 24 * DefaultStyle.dp
-				icon.height: 24 * DefaultStyle.dp
-				background: Item {
-					anchors.fill: parent
-				}
+				style: ButtonStyle.noBackground
 				onClicked: {
 					console.debug("[SIPLoginPage] User: return")
 					mainItem.goBack()
 				}
 			}
-			Image {
+			EffectImage {
 				fillMode: Image.PreserveAspectFit
 				source: AppIcons.profile
 				Layout.preferredHeight: 34 * DefaultStyle.dp
 				Layout.preferredWidth: 34 * DefaultStyle.dp
-				sourceSize.width: 34 * DefaultStyle.dp
-				sourceSize.height: 34 * DefaultStyle.dp
+				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
 				text: qsTr("Compte SIP tiers")
@@ -64,13 +59,10 @@ LoginLayout {
 					weight: 400 * DefaultStyle.dp
 				}
 			}
-			Button {
+			BigButton {
 				Layout.alignment: Qt.AlignRight
 				text: qsTr("S'inscrire")
-				leftPadding: 20 * DefaultStyle.dp
-				rightPadding: 20 * DefaultStyle.dp
-				topPadding: 11 * DefaultStyle.dp
-				bottomPadding: 11 * DefaultStyle.dp
+				style: ButtonStyle.main
 				onClicked: {
 					console.debug("[SIPLoginPage] User: go to register page")
 					mainItem.goToRegister()
@@ -128,17 +120,12 @@ LoginLayout {
 							text: "Pour les activer dans un projet commercial, veuillez nous contacter. "
 						}
 					}
-					Button {
+					SmallButton {
 						id: openLinkButton
 						Layout.alignment: Qt.AlignCenter
 						Layout.topMargin: 18 * DefaultStyle.dp
 						text: "linphone.org/contact"
-						textSize: 13 * DefaultStyle.dp
-						inversedColors: true
-						leftPadding: 12 * DefaultStyle.dp
-						rightPadding: 12 * DefaultStyle.dp
-						topPadding: 6 * DefaultStyle.dp
-						bottomPadding: 6 * DefaultStyle.dp
+						style: ButtonStyle.secondary
 						onClicked: {
 							Qt.openUrlExternally(ConstantsCpp.ContactUrl)
 						}
@@ -148,16 +135,11 @@ LoginLayout {
 				}
 				ColumnLayout {
 					spacing: 20 * DefaultStyle.dp
-					Button {
+					BigButton {
 						id: createAccountButton
-						// Layout.topMargin: 85 * DefaultStyle.dp
+						style: ButtonStyle.secondary
 						Layout.fillWidth: true
-						inversedColors: true
 						text: qsTr("Créer un compte linphone")
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
-						topPadding: 11 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
 						onClicked: {
 							console.debug("[SIPLoginPage] User: click register")
 							mainItem.goToRegister()
@@ -165,14 +147,11 @@ LoginLayout {
 						KeyNavigation.up: openLinkButton
 						KeyNavigation.down: continueButton
 					}
-					Button {
+					BigButton {
 						id: continueButton
 						Layout.fillWidth: true
 						text: qsTr("Je comprends")
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
-						topPadding: 11 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
+						style: ButtonStyle.main
 						onClicked: {
 							rootStackView.replace(secondItem)
 						}
@@ -297,13 +276,10 @@ LoginLayout {
 					}
 				}
 
-				Button {
+				BigButton {
 					id: connectionButton
 					Layout.topMargin: 32 * DefaultStyle.dp
-					leftPadding: 20 * DefaultStyle.dp
-					rightPadding: 20 * DefaultStyle.dp
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
+					style: ButtonStyle.main
 					contentItem: StackLayout {
 						id: connectionButtonContent
 						currentIndex: 0

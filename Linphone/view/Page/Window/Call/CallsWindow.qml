@@ -217,6 +217,7 @@ AbstractWindow {
 		id: zrtpValidation
 		call: mainWindow.call
 		modal: true
+		closePolicy: Popup.NoAutoClose
 	}
 	Timer {
 		id: autoCloseZrtpToast
@@ -528,9 +529,10 @@ AbstractWindow {
 									: ""
 							}
 						}
-						Button {
+						BigButton {
 							visible: mainWindow.call && mainWindow.call.core.recording
 							text: qsTr("Arrêter l'enregistrement")
+							style: ButtonStyle.main
 							onPressed: mainWindow.call.core.lStopRecording()
 						}
 					}
@@ -1047,26 +1049,21 @@ AbstractWindow {
 						children[i].enabled = false
 					}
 				}
-				Button {
+				BigButton {
 					Layout.row: 0
-					icon.source: AppIcons.endCall
 					icon.width: 32 * DefaultStyle.dp
 					icon.height: 32 * DefaultStyle.dp
+					ToolTip.text: qsTr("Terminer l'appel")
 					Layout.preferredWidth: 75 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
-					contentImageColor: DefaultStyle.grey_0
-					checkable: false
+					radius: 71 * DefaultStyle.dp
+					style: ButtonStyle.phoneRed
 					Layout.column: mainWindow.callState == LinphoneEnums.CallState.OutgoingInit
 										|| mainWindow.callState == LinphoneEnums.CallState.OutgoingProgress
 										|| mainWindow.callState == LinphoneEnums.CallState.OutgoingRinging
 										|| mainWindow.callState == LinphoneEnums.CallState.OutgoingEarlyMedia
 										|| mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
 										? 0 : bottomButtonsLayout.columns - 1
-					background: Rectangle {
-						anchors.fill: parent
-						color: DefaultStyle.danger_500main
-						radius: 71 * DefaultStyle.dp
-					}
 					onClicked: {
 						mainWindow.callTerminatedByUser = true
 						mainWindow.endCall(mainWindow.call)
@@ -1084,6 +1081,7 @@ AbstractWindow {
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
 						icon.height: 32 * DefaultStyle.dp
+						ToolTip.text: checked ? qsTr("Reprendre l'appel") : qsTr("Mettre l'appel en pause")
 						background: Rectangle {
 							anchors.fill: parent
 							radius: 71 * DefaultStyle.dp
@@ -1110,7 +1108,8 @@ AbstractWindow {
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
 						icon.height: 32 * DefaultStyle.dp
-						contentImageColor: enabled ? DefaultStyle.grey_0 : DefaultStyle.grey_500
+						contentImageColor: DefaultStyle.grey_0
+						ToolTip.text: qsTr("Transférer l'appel")
 						onCheckedChanged: {
 							console.log("checked transfer changed", checked)
 							if (checked) {
@@ -1133,6 +1132,7 @@ AbstractWindow {
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
 						icon.height: 32 * DefaultStyle.dp
+						ToolTip.text: qsTr("Initier un nouvel appel")
 						onCheckedChanged: {
 							console.log("checked newcall changed", checked)
 							if (checked) {
@@ -1155,6 +1155,7 @@ AbstractWindow {
 						icon.source: AppIcons.callList
 						icon.width: 32 * DefaultStyle.dp
 						icon.height: 32 * DefaultStyle.dp
+						ToolTip.text: qsTr("Afficher la liste d'appels")
 						onCheckedChanged: {
 							if (checked) {
 								rightPanel.visible = true
@@ -1183,6 +1184,7 @@ AbstractWindow {
 						enabled: mainWindow.conferenceInfo || (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning)
 						iconUrl: AppIcons.videoCamera
 						checkedIconUrl: AppIcons.videoCameraSlash
+						ToolTip.text: mainWindow.localVideoEnabled ? qsTr("Désactiver la vidéo") :qsTr("Activer la vidéo")
 						checked: !mainWindow.localVideoEnabled
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
@@ -1192,6 +1194,7 @@ AbstractWindow {
 					}
 					CheckableButton {
 						iconUrl: AppIcons.microphone
+						ToolTip.text: mainWindow.call && mainWindow.call.core.microphoneMuted ? qsTr("Activer le son") :qsTr("Désactiver le son")
 						checkedIconUrl: AppIcons.microphoneSlash
 						checked: mainWindow.call && mainWindow.call.core.microphoneMuted
 						Layout.preferredWidth: 55 * DefaultStyle.dp
@@ -1203,7 +1206,7 @@ AbstractWindow {
 					CheckableButton {
 						iconUrl: AppIcons.screencast
                         visible: !!mainWindow.conference
-						checkedColor: DefaultStyle.main2_400
+						ToolTip.text: qsTr("Partager l'écran...")
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
@@ -1220,8 +1223,8 @@ AbstractWindow {
 					CheckableButton {
 						visible: false
 						checkable: false
-						checkedColor: DefaultStyle.main2_400
 						iconUrl: AppIcons.handWaving
+						ToolTip.text: qsTr("Lever la main")
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
@@ -1230,7 +1233,7 @@ AbstractWindow {
 					CheckableButton {
 						visible: false
 						iconUrl: AppIcons.smiley
-						checkedColor: DefaultStyle.main2_400
+						ToolTip.text: qsTr("Envoyer une réaction")
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
@@ -1238,9 +1241,9 @@ AbstractWindow {
 					}
 					CheckableButton {
 						id: participantListButton
+						ToolTip.text: qsTr("Gérer les participants")
 						visible: mainWindow.conference
 						iconUrl: AppIcons.usersTwo
-						checkedColor: DefaultStyle.main2_400
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
@@ -1260,18 +1263,17 @@ AbstractWindow {
 					}
 					PopupButton {
 						id: moreOptionsButton
+						ToolTip.text: qsTr("Plus d'options...")
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
-						contentImageColor: enabled && !checked ? DefaultStyle.grey_0 : DefaultStyle.grey_500
-						background: Rectangle {
-							anchors.fill: moreOptionsButton
-							color: moreOptionsButton.enabled
-								? moreOptionsButton.checked 
-									? DefaultStyle.main2_400
-									: DefaultStyle.grey_500
-								: DefaultStyle.grey_600
-							radius: 40 * DefaultStyle.dp
-						}
+						popup.topPadding: 20 * DefaultStyle.dp
+						popup.bottomPadding: 20 * DefaultStyle.dp
+						popup.leftPadding: 10 * DefaultStyle.dp
+						popup.rightPadding: 10 * DefaultStyle.dp
+						style: ButtonStyle.checkable
+						icon.width: 32 * DefaultStyle.dp
+						icon.height: 32 * DefaultStyle.dp
+
 						Connections {
 							target: moreOptionsButton.popup
 							function onOpened() {
@@ -1282,20 +1284,28 @@ AbstractWindow {
 							id: optionsList
 							spacing: 5 * DefaultStyle.dp
 
-							MenuButton {
+							IconLabelButton {
+								Layout.fillWidth: true
 								visible: mainWindow.conference
 								icon.source: AppIcons.squaresFour
+								icon.width: 32 * DefaultStyle.dp 
+								icon.height: 32 * DefaultStyle.dp 
 								text: qsTr("Modifier la disposition")
+								style: ButtonStyle.noBackground
 								onClicked: {
 									rightPanel.visible = true
 									rightPanel.replace(changeLayoutPanel)
 									moreOptionsButton.close()
 								}
 							}
-							MenuButton {
+							IconLabelButton {
+								Layout.fillWidth: true
 								icon.source: AppIcons.fullscreen
 								text: qsTr("Mode Plein écran")
+								icon.width: 32 * DefaultStyle.dp 
+								icon.height: 32 * DefaultStyle.dp 
 								checkable: true
+								style: ButtonStyle.noBackground
 								Binding on checked { value: mainWindow.visibility === Window.FullScreen }
 								onToggled: {
 									if(checked) {
@@ -1303,61 +1313,74 @@ AbstractWindow {
 									}else{
 										mainWindow.showNormal()
 									}
+									moreOptionsButton.close()
 								}
 							}
-							MenuButton {
+							IconLabelButton {
+								Layout.fillWidth: true
 								icon.source: AppIcons.dialer
 								text: qsTr("Dialer")
+								icon.width: 32 * DefaultStyle.dp 
+								icon.height: 32 * DefaultStyle.dp 
+								style: ButtonStyle.noBackground
 								onClicked: {
 									rightPanel.visible = true
 									rightPanel.replace(dialerPanel)
 									moreOptionsButton.close()
 								}
 							}
-							MenuButton {
+							IconLabelButton {
+								Layout.fillWidth: true
 								checkable: true
+								style: ButtonStyle.noBackground
+								icon.width: 32 * DefaultStyle.dp 
+								icon.height: 32 * DefaultStyle.dp 
 								visible: mainWindow.call && !mainWindow.conference && !SettingsCpp.disableCallRecordings
 								enabled: mainWindow.call && mainWindow.call.core.recordable
 								icon.source: AppIcons.recordFill
 								checked: mainWindow.call && mainWindow.call.core.recording
-								contentImageColor: down 
-									? DefaultStyle.main1_500_main
-								 	:mainWindow.call && mainWindow.call.core.recording 
-										? DefaultStyle.danger_500main 
-										: DefaultStyle.main2_500main
+								hoveredImageColor: contentImageColor
+								contentImageColor: mainWindow.call && mainWindow.call.core.recording 
+									? DefaultStyle.danger_500main 
+									: DefaultStyle.main2_500main
 								text: mainWindow.call && mainWindow.call.core.recording ? qsTr("Terminer l'enregistrement") : qsTr("Enregistrer l'appel")
-								textColor: down 
-									? DefaultStyle.main1_500_main
-								 	:mainWindow.call && mainWindow.call.core.recording 
-										? DefaultStyle.danger_500main
-										: DefaultStyle.main2_500main
+								textColor: mainWindow.call && mainWindow.call.core.recording 
+									? DefaultStyle.danger_500main
+									: DefaultStyle.main2_500main
+								hoveredTextColor : textColor
 								onToggled: {
 									if (mainWindow.call)
 										if (mainWindow.call.core.recording) mainWindow.call.core.lStopRecording()
 										else mainWindow.call.core.lStartRecording()
 								}
 							}
-							MenuButton {
+							IconLabelButton {
+								Layout.fillWidth: true
 								checkable: true
+								style: ButtonStyle.noBackground
+								icon.width: 32 * DefaultStyle.dp 
+								icon.height: 32 * DefaultStyle.dp 
 								icon.source: !mainWindow.call || mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
-								contentImageColor: down 
-									? DefaultStyle.main1_500_main
-								 	: mainWindow.call && mainWindow.call.core.speakerMuted 
-										? DefaultStyle.danger_500main 
-										: DefaultStyle.main2_500main
+								contentImageColor: mainWindow.call && mainWindow.call.core.speakerMuted 
+									? DefaultStyle.danger_500main 
+									: DefaultStyle.main2_500main
+								hoveredImageColor: contentImageColor
 								text: mainWindow.call && mainWindow.call.core.speakerMuted ? qsTr("Activer le son") : qsTr("Désactiver le son")
-								textColor: down 
-									? DefaultStyle.main1_500_main
-								 	:mainWindow.call && mainWindow.call.core.speakerMuted 
-										? DefaultStyle.danger_500main
-										: DefaultStyle.main2_500main
+								textColor: mainWindow.call && mainWindow.call.core.speakerMuted 
+									? DefaultStyle.danger_500main
+									: DefaultStyle.main2_500main
+								hoveredTextColor: textColor
 								onCheckedChanged: {
 									if (mainWindow.call) mainWindow.call.core.lSetSpeakerMuted(!mainWindow.call.core.speakerMuted)
 								}
 							}
-							MenuButton {
+							IconLabelButton {
+								Layout.fillWidth: true
 								icon.source: AppIcons.settings
+								icon.width: 32 * DefaultStyle.dp 
+								icon.height: 32 * DefaultStyle.dp 
 								text: qsTr("Paramètres")
+								style: ButtonStyle.noBackground
 								onClicked: {
 									rightPanel.visible = true
 									rightPanel.replace(settingsPanel)

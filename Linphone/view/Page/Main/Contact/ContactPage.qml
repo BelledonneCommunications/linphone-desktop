@@ -100,21 +100,14 @@ AbstractMainPage {
 			Item{Layout.fillWidth: true}
 			RowLayout {
 				spacing: 15 * DefaultStyle.dp
-				Button {
-					inversedColors: true
+				BigButton {
+					style: ButtonStyle.secondary
 					text: qsTr("Annuler")
-					leftPadding: 20 * DefaultStyle.dp
-					rightPadding: 20 * DefaultStyle.dp
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
 					onClicked: verifyDevicePopup.close()
 				}
-				Button {
+				BigButton {
+					style: ButtonStyle.main
 					text: qsTr("Appeler")
-					leftPadding: 20 * DefaultStyle.dp
-					rightPadding: 20 * DefaultStyle.dp
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
 					onClicked: {
 						SettingsCpp.setDisplayDeviceCheckConfirmation(!neverDisplayAgainCheckbox.checked)
 						UtilsCpp.createCall(verifyDevicePopup.deviceAddress, {}, LinphoneEnums.MediaEncryption.Zrtp)
@@ -138,6 +131,7 @@ AbstractMainPage {
 			}
 			EffectImage {
 				imageSource: AppIcons.arrowRight
+				colorizationColor: DefaultStyle.main2_600
 				Layout.preferredWidth: 45 * DefaultStyle.dp
 				Layout.preferredHeight: 45 * DefaultStyle.dp
 			}
@@ -150,6 +144,7 @@ AbstractMainPage {
 		}
 		buttons: Button {
 			text: qsTr("Ok")
+			style: ButtonStyle.main
 			leftPadding: 30 * DefaultStyle.dp
 			rightPadding: 30 * DefaultStyle.dp
 			onClicked: trustInfoDialog.close()
@@ -187,10 +182,10 @@ AbstractMainPage {
 				background: Item {
 				}
 				icon.source: AppIcons.plusCircle
-				Layout.preferredWidth: 30 * DefaultStyle.dp
-				Layout.preferredHeight: 30 * DefaultStyle.dp
-				icon.width: 30 * DefaultStyle.dp
-				icon.height: 30 * DefaultStyle.dp
+				Layout.preferredWidth: 28 * DefaultStyle.dp
+				Layout.preferredHeight: 28 * DefaultStyle.dp
+				icon.width: 28 * DefaultStyle.dp
+				icon.height: 28 * DefaultStyle.dp
 				onClicked: {
 					mainItem.createContact("", "")
 				}
@@ -276,27 +271,20 @@ AbstractMainPage {
 							weight: 800 * DefaultStyle.dp
 						}
 					}
-					Button {
+					RoundButton {
 						visible: contactDetailLayout.icon != undefined
 						icon.source: contactDetailLayout.icon
 						contentImageColor: DefaultStyle.main1_500_main
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
 						background: Item{}
 						onClicked: contactDetailLayout.titleIconClicked()
 					}
 					Item{Layout.fillWidth: true}
-					Button {
+					RoundButton {
 						id: expandButton
-						background: Item{}
+						style: ButtonStyle.noBackground
 						checkable: true
 						checked: true
 						icon.source: checked ? AppIcons.upArrow : AppIcons.downArrow
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
-						contentImageColor: DefaultStyle.main2_600
 						KeyNavigation.down: contentControl
 					}
 				}
@@ -316,13 +304,8 @@ AbstractMainPage {
 				contact: mainItem.selectedContact
 				button.color: DefaultStyle.main1_100
 				button.text: qsTr("Modifier")
+				button.style: ButtonStyle.tertiary
 				button.icon.source: AppIcons.pencil
-				button.textColor: DefaultStyle.main1_500_main
-				button.contentImageColor: DefaultStyle.main1_500_main
-				button.leftPadding: 16 * DefaultStyle.dp
-				button.rightPadding: 16 * DefaultStyle.dp
-				button.topPadding: 10 * DefaultStyle.dp
-				button.bottomPadding: 10 * DefaultStyle.dp
 				button.onClicked: mainItem.editContact(mainItem.selectedContact)
 				button.visible: !mainItem.selectedContact?.core.readOnly
 				property string contactAddress: contact ? contact.core.defaultAddress : ""
@@ -337,21 +320,12 @@ AbstractMainPage {
 					property alias button: button
 					property string label
 					spacing: 8 * DefaultStyle.dp
-					Button {
+					RoundButton {
 						id: button
 						Layout.alignment: Qt.AlignHCenter
 						Layout.preferredWidth: 56 * DefaultStyle.dp
 						Layout.preferredHeight: 56 * DefaultStyle.dp
-						topPadding: 16 * DefaultStyle.dp
-						bottomPadding: 16 * DefaultStyle.dp
-						leftPadding: 16 * DefaultStyle.dp
-						rightPadding: 16 * DefaultStyle.dp
-						contentImageColor: DefaultStyle.main2_600
-						background: Rectangle {
-							anchors.fill: parent
-							radius: 40 * DefaultStyle.dp
-							color: DefaultStyle.main2_200
-						}
+						style: ButtonStyle.grey
 					}
 					Text {
 						Layout.alignment: Qt.AlignHCenter
@@ -493,15 +467,9 @@ AbstractMainPage {
 												Item {
 													Layout.fillWidth: true
 												}
-												Button {
+												RoundButton {
 													background: Item{}
-													Layout.preferredWidth: 24 * DefaultStyle.dp
-													Layout.preferredHeight: 24 * DefaultStyle.dp
 													icon.source: AppIcons.phone
-													width: 24 * DefaultStyle.dp
-													height: 24 * DefaultStyle.dp
-													icon.width: 24 * DefaultStyle.dp
-													icon.height: 24 * DefaultStyle.dp
 													onClicked: {
 														UtilsCpp.createCall(listViewModelData.address)
 													}
@@ -534,7 +502,7 @@ AbstractMainPage {
 										height: 50 * DefaultStyle.dp
 										visible: companyText.text.length != 0
 										Text {
-											text: qsTr("Company :")
+											text: qsTr("Société :")
 											font {
 												pixelSize: 13 * DefaultStyle.dp
 												weight: 700 * DefaultStyle.dp
@@ -553,7 +521,7 @@ AbstractMainPage {
 										height: 50 * DefaultStyle.dp
 										visible: jobText.text.length != 0
 										Text {
-											text: qsTr("Job :")
+											text: qsTr("Poste :")
 											font {
 												pixelSize: 13 * DefaultStyle.dp
 												weight: 700 * DefaultStyle.dp
@@ -576,22 +544,19 @@ AbstractMainPage {
 							label: qsTr("Medias")
 							Layout.fillWidth: true
 							content: Button {
-								background: Rectangle {
-									anchors.fill: parent
-									color: DefaultStyle.grey_0
-									radius: 15 * DefaultStyle.dp
-								}
+								background: Item{}
 								contentItem: RowLayout {
-									Image {
+									EffectImage {
 										Layout.preferredWidth: 24 * DefaultStyle.dp
 										Layout.preferredHeight: 24 * DefaultStyle.dp
 										source: AppIcons.shareNetwork
+										colorizationColor: DefaultStyle.main2_600
 									}
 									Text {
-										text: qsTr("Show media shared")
+										text: qsTr("Afficher les medias partagés")
 										font {
-											pixelSize: 14 * DefaultStyle.dp
-											weight: 400 * DefaultStyle.dp
+											pixelSize: Typography.p1.pixelSize
+											weight: Typography.p1.weight
 										}
 									}
 									Item{Layout.fillWidth: true}
@@ -656,21 +621,12 @@ AbstractMainPage {
 											height: 22 * DefaultStyle.dp
 										}
 										
-										Button {
-											Layout.preferredHeight: 30 * DefaultStyle.dp
+										SmallButton {
+											// Layout.preferredHeight: 30 * DefaultStyle.dp
 											visible: listViewModelData.securityLevel != LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
-											color: DefaultStyle.main1_100
 											icon.source: AppIcons.warningCircle
-											icon.height: 14 * DefaultStyle.dp
-											icon.width: 14 * DefaultStyle.dp
-											contentImageColor: DefaultStyle.main1_500_main
-											textColor: DefaultStyle.main1_500_main
-											textSize: 13 * DefaultStyle.dp
+											style: ButtonStyle.tertiary
 											text: qsTr("Vérifier")
-											// leftPadding: 12 * DefaultStyle.dp
-											// rightPadding: 12 * DefaultStyle.dp
-											// topPadding: 6 * DefaultStyle.dp
-											// bottomPadding: 6 * DefaultStyle.dp
 											onClicked: {
 												if (SettingsCpp.getDisplayDeviceCheckConfirmation()) {
 													verifyDevicePopup.deviceName = deviceDelegate.deviceName
@@ -695,11 +651,11 @@ AbstractMainPage {
 								IconLabelButton {
 									Layout.fillWidth: true
 									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
-									iconSource: AppIcons.pencil
+									icon.source: AppIcons.pencil
 									text: qsTr("Éditer")
 									onClicked: mainItem.editContact(mainItem.selectedContact)
 									visible: !mainItem.selectedContact?.core.readOnly
+									style: ButtonStyle.noBackground
 								}
 								Rectangle {
 									Layout.fillWidth: true
@@ -709,9 +665,9 @@ AbstractMainPage {
 								IconLabelButton {
 									Layout.fillWidth: true
 									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
-									iconSource: mainItem.selectedContact && mainItem.selectedContact.core.starred ? AppIcons.heartFill : AppIcons.heart
+									icon.source: mainItem.selectedContact && mainItem.selectedContact.core.starred ? AppIcons.heartFill : AppIcons.heart
 									text: mainItem.selectedContact && mainItem.selectedContact.core.starred ? qsTr("Retirer des favoris") : qsTr("Ajouter aux favoris")
+									style: ButtonStyle.noBackground
 									onClicked: if (mainItem.selectedContact) mainItem.selectedContact.core.lSetStarred(!mainItem.selectedContact.core.starred)
 								}
 								Rectangle {
@@ -722,9 +678,9 @@ AbstractMainPage {
 								IconLabelButton {
 									Layout.fillWidth: true
 									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
-									iconSource: AppIcons.shareNetwork
+									icon.source: AppIcons.shareNetwork
 									text: qsTr("Partager")
+									style: ButtonStyle.noBackground
 									onClicked: {
 										if (mainItem.selectedContact) {
 											var vcard = mainItem.selectedContact.core.getVCard()
@@ -744,8 +700,7 @@ AbstractMainPage {
 								// IconLabelButton {
 								// 	Layout.fillWidth: true
 								// 	Layout.preferredHeight: 50 * DefaultStyle.dp
-								// 	iconSize: 24 * DefaultStyle.dp
-								// 	iconSource: AppIcons.bellSlash
+								// 	icon.source: AppIcons.bellSlash
 								// 	text: qsTr("Mettre en sourdine")
 								// 	onClicked: console.log("TODO : mute contact")
 								// }
@@ -757,8 +712,7 @@ AbstractMainPage {
 								// IconLabelButton {
 								// 	Layout.fillWidth: true
 								// 	Layout.preferredHeight: 50 * DefaultStyle.dp
-								// 	iconSize: 24 * DefaultStyle.dp
-								// 	iconSource: AppIcons.empty
+								// 	icon.source: AppIcons.empty
 								// 	text: qsTr("Bloquer")
 								// 	onClicked: console.log("TODO : block contact")
 								// }
@@ -770,14 +724,13 @@ AbstractMainPage {
 								IconLabelButton {
 									Layout.fillWidth: true
 									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
-									iconSource: AppIcons.trashCan
-									color: DefaultStyle.danger_500main
+									icon.source: AppIcons.trashCan
 									text: qsTr("Supprimer ce contact")
 									visible: !mainItem.selectedContact?.core.readOnly
 									onClicked: {
 										mainItem.deleteContact(mainItem.selectedContact)
 									}
+									style: ButtonStyle.noBackgroundRed
 								}
 							}
 							

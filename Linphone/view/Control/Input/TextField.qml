@@ -165,9 +165,7 @@ Control.TextField {
 		z: 1
 		visible: mainItem.hidden
 		checkable: true
-		background: Rectangle {
-			color: "transparent"
-		}
+		background: Item{}
 		icon.source: eyeButton.checked ? AppIcons.eyeShow : AppIcons.eyeHide
 		width: 20 * DefaultStyle.dp
 		height: 20 * DefaultStyle.dp

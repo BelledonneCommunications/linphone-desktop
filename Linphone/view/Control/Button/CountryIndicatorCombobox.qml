@@ -89,10 +89,11 @@ ColumnLayout {
 			}
 		}
 		
-		indicator: Image {
+		indicator: EffectImage {
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.right: parent.right
-			source: AppIcons.downArrow
+			imageSource: AppIcons.downArrow
+			colorizationColor: DefaultStyle.main2_600
 		}
 
 		popup: Control.Popup {

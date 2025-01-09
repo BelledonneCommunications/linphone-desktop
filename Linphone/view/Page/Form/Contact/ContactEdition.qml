@@ -86,15 +86,14 @@ MainRightPanel {
 			IconLabelButton {
 				id: addPictureButton
 				Layout.preferredWidth: width
-				Layout.preferredHeight: 17 * DefaultStyle.dp
 				visible: !mainItem.contact || mainItem.contact.core.pictureUri.length === 0
-				iconSource: AppIcons.camera
-				iconSize: 17 * DefaultStyle.dp
-				backgroundColor: "transparent"
+				icon.source: AppIcons.camera
 				text: qsTr("Ajouter une image")
-				color: DefaultStyle.main2_700
 				textSize: 16 * DefaultStyle.dp
 				textWeight: 800 * DefaultStyle.dp
+				textColor: DefaultStyle.main2_700
+				hoveredTextColor: DefaultStyle.main2_800
+				pressedTextColor: DefaultStyle.main2_900
 				KeyNavigation.down: editButton.visible ? editButton : givenNameEdit
 				onClicked: fileDialog.open()
 			},
@@ -105,12 +104,11 @@ MainRightPanel {
 				IconLabelButton {
 					id: editButton
 					Layout.preferredWidth: width
-					Layout.preferredHeight: 17 * DefaultStyle.dp
-					iconSource: AppIcons.pencil
-					iconSize: 17 * DefaultStyle.dp
-					backgroundColor: "transparent"
+					icon.source: AppIcons.pencil
 					text: qsTr("Modifier")
-					color: DefaultStyle.main2_700
+					textColor: DefaultStyle.main2_700
+					hoveredTextColor: DefaultStyle.main2_800
+					pressedTextColor: DefaultStyle.main2_900
 					textSize: 16 * DefaultStyle.dp
 					textWeight: 800 * DefaultStyle.dp
 					KeyNavigation.right: removeButton
@@ -129,13 +127,12 @@ MainRightPanel {
 				}
 				IconLabelButton {
 					id: removeButton
-					Layout.preferredHeight: 17 * DefaultStyle.dp
 					Layout.preferredWidth: width
-					iconSize: 17 * DefaultStyle.dp
-					iconSource: AppIcons.trashCan
-					backgroundColor: "transparent"
+					icon.source: AppIcons.trashCan
 					text: qsTr("Supprimer")
-					color: DefaultStyle.main2_700
+					textColor: DefaultStyle.main2_700
+					hoveredTextColor: DefaultStyle.main2_800
+					pressedTextColor: DefaultStyle.main2_900
 					textSize: 16 * DefaultStyle.dp
 					textWeight: 800 * DefaultStyle.dp
 					KeyNavigation.left: editButton

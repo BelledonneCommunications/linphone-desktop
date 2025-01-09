@@ -115,16 +115,16 @@ FocusScope {
 								font {
 									pixelSize: 16 * DefaultStyle.dp
 									weight: 800 * DefaultStyle.dp
-									underline: grouCallButton.shadowEnabled
 								}
 							}
 							Item {
 								Layout.fillWidth: true
 							}
-							Image {
-								source: AppIcons.rightArrow
+							EffectImage {
+								imageSource: AppIcons.rightArrow
 								Layout.preferredWidth: 24 * DefaultStyle.dp
 								Layout.preferredHeight: 24 * DefaultStyle.dp
+								colorizationColor: DefaultStyle.main2_500main
 							}
 						}
 					}

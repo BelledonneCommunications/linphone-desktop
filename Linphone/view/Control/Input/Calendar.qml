@@ -60,7 +60,7 @@ ListView {
 					Layout.preferredHeight: 20 * DefaultStyle.dp
 					icon.width: width
 					icon.height: height
-					background: Item{}
+					style: ButtonStyle.noBackground
 					icon.source: AppIcons.leftArrow
 					onClicked: if (mainItem.currentIndex > 0) mainItem.currentIndex = mainItem.currentIndex - 1
 				}
@@ -70,7 +70,7 @@ ListView {
 					Layout.preferredHeight: 20 * DefaultStyle.dp
 					icon.width: width
 					icon.height: height
-					background: Item{}
+					style: ButtonStyle.noBackground
 					icon.source: AppIcons.rightArrow
 					onClicked: if (mainItem.currentIndex < mainItem.count) mainItem.currentIndex = mainItem.currentIndex + 1
 				}

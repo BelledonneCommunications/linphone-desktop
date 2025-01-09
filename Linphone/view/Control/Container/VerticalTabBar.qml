@@ -128,6 +128,7 @@ Control.TabBar {
 						weight: mainItem.currentIndex === index ? 800 * DefaultStyle.dp : 400 * DefaultStyle.dp
 						pixelSize: 9 * DefaultStyle.dp
 						underline: tabButton.activeFocus || tabButton.hovered
+						bold: true
 					}
 					color: DefaultStyle.grey_0
 					Layout.fillWidth: true
@@ -151,8 +152,7 @@ Control.TabBar {
 				mainItem.setCurrentIndex(TabBar.index)
 			}
 
-			background: Item {
-			}
+			background: Item {}
 		}
 	}
 }

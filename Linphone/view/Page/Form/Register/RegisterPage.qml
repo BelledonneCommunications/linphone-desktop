@@ -33,9 +33,12 @@ LoginLayout {
 		RowLayout {
 			spacing: 21 * DefaultStyle.dp
 			Layout.leftMargin: 119 * DefaultStyle.dp
-			Image {
+			EffectImage {
 				fillMode: Image.PreserveAspectFit
-				source: AppIcons.profile
+				imageSource: AppIcons.profile
+				Layout.preferredHeight: 34 * DefaultStyle.dp
+				Layout.preferredWidth: 34 * DefaultStyle.dp
+				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
 				Layout.preferredWidth: width
@@ -63,11 +66,8 @@ LoginLayout {
 					weight: 400 * DefaultStyle.dp
 				}
 			}
-			Button {
-				leftPadding: 20 * DefaultStyle.dp
-				rightPadding: 20 * DefaultStyle.dp
-				topPadding: 11 * DefaultStyle.dp
-				bottomPadding: 11 * DefaultStyle.dp
+			BigButton {
+				style: ButtonStyle.main
 				text: qsTr("Connexion")
 				onClicked: {
 					console.debug("[RegisterPage] User: return")
@@ -291,10 +291,7 @@ LoginLayout {
 					// }
 					Button {
 						enabled: termsCheckBox.checked
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
-						topPadding: 11 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
+						style: ButtonStyle.main
 						text: qsTr("Créer")
 						onClicked:{
 							if (usernameInput.text.length === 0) {

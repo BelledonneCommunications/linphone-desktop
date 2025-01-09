@@ -6,9 +6,16 @@ import Linphone
 Button {
 	id: mainItem
 	property alias popup: popup
-	property var contentImageColor
-	property bool shadowEnabled: mainItem.activeFocus  || hovered
+	property bool shadowEnabled: mainItem.activeFocus || hovered
 	property alias popupBackgroundColor: popupBackground.color
+	property color backgroundColor: checked
+		? pressedColor
+		: hovered
+			? hoveredColor
+			: color
+	color: style?.color?.normal || "transparent"
+	hoveredColor: style?.color?.hovered || DefaultStyle.grey_100
+	pressedColor: style?.color?.pressed || DefaultStyle.main2_300
 	checked: popup.visible
 	implicitWidth: 24 * DefaultStyle.dp
 	implicitHeight: 24 * DefaultStyle.dp
@@ -18,7 +25,7 @@ Button {
 	rightPadding: 0
 	topPadding: 0
 	bottomPadding: 0
-	icon.source: AppIcons.more
+	icon.source: AppIcons.verticalDots
 	icon.width: 24 * DefaultStyle.dp
 	icon.height: 24 * DefaultStyle.dp
 	function close() {
@@ -80,8 +87,7 @@ Button {
 		Rectangle {
 			id: buttonBackground
 			anchors.fill: parent
-			visible: mainItem.checked || mainItem.shadowEnabled
-			color:  mainItem.checked ? DefaultStyle.main2_300 : DefaultStyle.grey_100
+			color: mainItem.backgroundColor
 			radius: 40 * DefaultStyle.dp
 		}
 		MultiEffect {

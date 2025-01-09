@@ -110,16 +110,11 @@ Popup {
 	
 				// Default buttons only visible if no other children
 				// have been set
-				Button {
+				MediumButton {
 					id:firstButtonId
 					visible: mainItem.buttons.length === 2
 					text: mainItem.firstButtonText
-					textSize: 15 * DefaultStyle.dp
-					leftPadding: 20 * DefaultStyle.dp
-					rightPadding: 20 * DefaultStyle.dp
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
-					inversedColors: !mainItem.firstButtonAccept
+					style: mainItem.firstButtonAccept ? ButtonStyle.main : ButtonStyle.secondary
 					focus: !mainItem.firstButtonAccept
 					onClicked: {
 						if(mainItem.firstButtonAccept)
@@ -131,15 +126,11 @@ Popup {
 					KeyNavigation.left: secondButtonId
 					KeyNavigation.right: secondButtonId
 				}
-				Button {
+				MediumButton {
 					id: secondButtonId
 					visible: mainItem.buttons.length === 2
 					text: mainItem.secondButtonText
-					textSize: 15 * DefaultStyle.dp
-					leftPadding: 20 * DefaultStyle.dp
-					rightPadding: 20 * DefaultStyle.dp
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
+					style: mainItem.firstButtonAccept ? ButtonStyle.secondary : ButtonStyle.main
 					focus: !mainItem.secondButtonAccept
 					onClicked: {
 						if(mainItem.secondButtonAccept)

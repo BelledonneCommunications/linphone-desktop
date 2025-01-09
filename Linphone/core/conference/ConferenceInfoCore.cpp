@@ -388,7 +388,7 @@ void ConferenceInfoCore::addParticipant(const QString &address) {
 	}
 	QVariantMap participant;
 	auto displayNameObj = Utils::getDisplayName(address);
-	participant["displayName"] = displayNameObj ? displayNameObj->getValue() : "";
+	participant["displayNameObj"] = QVariant::fromValue(displayNameObj);
 	participant["address"] = address;
 	participant["role"] = (int)LinphoneEnums::ParticipantRole::Listener;
 	mParticipants.append(participant);
@@ -404,7 +404,7 @@ void ConferenceInfoCore::addParticipants(const QStringList &addresses) {
 		if (found == mParticipants.end()) {
 			QVariantMap participant;
 			auto displayNameObj = Utils::getDisplayName(address);
-			participant["displayName"] = displayNameObj ? displayNameObj->getValue() : "";
+			participant["displayNameObj"] = QVariant::fromValue(displayNameObj);
 			participant["address"] = address;
 			participant["role"] = (int)LinphoneEnums::ParticipantRole::Listener;
 			mParticipants.append(participant);
@@ -450,9 +450,8 @@ void ConferenceInfoCore::resetParticipants(const QStringList &adresses) {
 	for (auto &address : adresses) {
 		QVariantMap participant;
 		QString name;
-		auto nameObj = Utils::getDisplayName(address);
-		if (nameObj) name = nameObj->getValue().toString();
-		participant["displayName"] = name;
+		auto displayNameObj = Utils::getDisplayName(address);
+		participant["displayNameObj"] = QVariant::fromValue(displayNameObj);
 		participant["address"] = address;
 		participant["role"] = (int)LinphoneEnums::ParticipantRole::Listener;
 		mParticipants.append(participant);

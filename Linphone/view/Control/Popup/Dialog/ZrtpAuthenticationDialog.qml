@@ -82,15 +82,11 @@ Dialog {
 				anchors.topMargin: 10 * DefaultStyle.dp
 				anchors.rightMargin: 17 * DefaultStyle.dp
 				background: Item{}
-				contentItem: Text {
-					text: qsTr("Passer")
-					color: DefaultStyle.grey_0
-					font {
-						pixelSize: 13 * DefaultStyle.dp
-						weight: 600 * DefaultStyle.dp
-						underline: true
-					}
-				}
+				textSize: 13 * DefaultStyle.dp
+				textWeight: 600 * DefaultStyle.dp
+				text: qsTr("Passer")
+				textColor: DefaultStyle.grey_0
+				underline: true
 				onClicked: {
 					call.core.lSkipZrtpAuthentication()
 					mainItem.close()
@@ -182,40 +178,20 @@ Dialog {
 						property var modelList
 						Repeater {
 							model: mainItem.call && mainItem.call.core.remoteTokens || ""
-							Item {
+							Button {
+								Layout.Layout.preferredWidth: 70 * DefaultStyle.dp
+								Layout.Layout.preferredHeight: 70 * DefaultStyle.dp
 								width: 70 * DefaultStyle.dp
 								height: 70 * DefaultStyle.dp
-								Rectangle {
-									id: code
-									anchors.fill: parent
-									color: DefaultStyle.grey_0
-									radius: 71 * DefaultStyle.dp
-									Text {
-										anchors.fill: parent
-										verticalAlignment: Text.AlignVCenter
-										horizontalAlignment: Text.AlignHCenter
-										text: modelData
-										font {
-											pixelSize: 32 * DefaultStyle.dp
-											weight: 400 * DefaultStyle.dp
-										}
-									}
-									MouseArea {
-										anchors.fill: parent
-										hoverEnabled: true
-										cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-										onClicked: {
-											console.log("CHECK TOKEN", modelData)
-											if(mainItem.call) mainItem.call.core.lCheckAuthenticationTokenSelected(modelData)
-										}
-									}
-								}
-								MultiEffect {
-									source: code
-									anchors.fill: code
-									shadowEnabled: true
-									shadowOpacity: 0.1
-									shadowBlur: 0.1
+								color: DefaultStyle.grey_0
+								textSize: 32 * DefaultStyle.dp
+								textWeight: 400 * DefaultStyle.dp
+								text: modelData
+								radius: 71 * DefaultStyle.dp
+								textColor: DefaultStyle.main2_600
+								onClicked: {
+									console.log("CHECK TOKEN", modelData)
+									if(mainItem.call) mainItem.call.core.lCheckAuthenticationTokenSelected(modelData)
 								}
 							}
 						}
@@ -252,36 +228,26 @@ Dialog {
 
 	buttons: Layout.ColumnLayout {
 		Layout.Layout.alignment: Qt.AlignHCenter
-		Button {
+		MediumButton {
 			Layout.Layout.alignment: Qt.AlignHCenter
+			Layout.Layout.preferredWidth: 247 * DefaultStyle.dp
 			text: qsTr("Aucune correspondance")
-			color: DefaultStyle.danger_500main
-			inversedColors: true
-			textSize: 15 * DefaultStyle.dp
+			color: DefaultStyle.grey_0
+			borderColor: DefaultStyle.danger_500main
+			textColor: DefaultStyle.danger_500main
 			visible: !mainItem.securityError
-			leftPadding: 16 * DefaultStyle.dp
-			rightPadding: 16 * DefaultStyle.dp
-			topPadding: 10 * DefaultStyle.dp
-			bottomPadding: 10 * DefaultStyle.dp
-			width: 247 * DefaultStyle.dp
 			onClicked: {
 				if(mainItem.call) mainItem.call.core.lCheckAuthenticationTokenSelected(" ")
 			}
 		}
-		Button {
-			Layout.Layout.preferredWidth: 247 * DefaultStyle.dp  
+		MediumButton {
+			Layout.Layout.preferredWidth: 247 * DefaultStyle.dp
+			Layout.Layout.alignment: Qt.AlignHCenter
 			visible: mainItem.securityError
-			leftPadding: (247 * DefaultStyle.dp - contentItem.implicitWidth) /2
-			rightPadding: (247 * DefaultStyle.dp - contentItem.implicitWidth) /2
-			topPadding: 10 * DefaultStyle.dp
-			bottomPadding: 10 * DefaultStyle.dp
-			color: DefaultStyle.danger_500main
+			style: ButtonStyle.phoneRed
 			onClicked: mainItem.call.core.lTerminate()
 			spacing: 15 * DefaultStyle.dp
-			icon.source: AppIcons.endCall
-			contentImageColor: DefaultStyle.grey_0
 			text: qsTr("Raccrocher")
-			textColor: DefaultStyle.grey_0
 		}
 	}
 }

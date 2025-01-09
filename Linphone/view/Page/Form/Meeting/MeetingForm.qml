@@ -25,35 +25,6 @@ FocusScope {
 			startDate.calendar.selectedDate = mainItem.conferenceInfoGui.core.dateTime
 		}
 
-		component CheckableButton: Button {
-			id: checkableButton
-			checkable: true
-			autoExclusive: true
-			contentImageColor: checked ? DefaultStyle.grey_0 : DefaultStyle.main1_500_main
-			inversedColors: !checked
-			topPadding: 10 * DefaultStyle.dp
-			bottomPadding: 10 * DefaultStyle.dp
-			leftPadding: 16 * DefaultStyle.dp
-			rightPadding: 16 * DefaultStyle.dp
-			contentItem: RowLayout {
-				spacing: 8 * DefaultStyle.dp
-				EffectImage {
-					imageSource: checkableButton.icon.source
-					colorizationColor: checkableButton.checked ? DefaultStyle.grey_0 : DefaultStyle.main1_500_main
-					width: 24 * DefaultStyle.dp
-					height: 24 * DefaultStyle.dp
-				}
-				Text {
-					text: checkableButton.text
-					color: checkableButton.checked ? DefaultStyle.grey_0 : DefaultStyle.main1_500_main
-					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 400 * DefaultStyle.dp
-					}
-				}
-			}
-		}
-
 		RowLayout {
 			visible: mainItem.isCreation && !SettingsCpp.disableBroadcastFeature
 			Layout.topMargin: 20 * DefaultStyle.dp
@@ -67,6 +38,8 @@ FocusScope {
 				enabled: false
 				text: qsTr("Réunion")
 				checked: true
+				autoExclusive: true
+				style: ButtonStyle.secondary
 			}
 			CheckableButton {
 				Layout.preferredWidth: 151 * DefaultStyle.dp
@@ -75,6 +48,8 @@ FocusScope {
 				icon.width: 24 * DefaultStyle.dp
 				icon.height: 24 * DefaultStyle.dp
 				text: qsTr("Broadcast")
+				autoExclusive: true
+				style: ButtonStyle.secondary
 			}
 		}
 		Section {
@@ -104,7 +79,7 @@ FocusScope {
 							clear()
 						else selectAll()
 					}
-					onEditingFinished: mainItem.conferenceInfoGui.core.subject = text
+					onTextEdited: mainItem.conferenceInfoGui.core.subject = text
 					KeyNavigation.down: startDate
 				}
 			}
@@ -240,6 +215,7 @@ FocusScope {
 					placeholderTextColor: DefaultStyle.main2_600
 					placeholderWeight: 700 * DefaultStyle.dp
 					color: DefaultStyle.main2_600
+					Component.onCompleted: text = conferenceInfoGui.core.description
 					font {
 						pixelSize: 14 * DefaultStyle.dp
 						weight: 400 * DefaultStyle.dp
@@ -310,7 +286,7 @@ FocusScope {
 								_address: modelData.address
 							}
 							Text {
-								text: modelData.displayName
+								text: modelData.displayName || modelData.displayNameObj?.value || ""
 								font.pixelSize: 14 * DefaultStyle.dp
 								font.capitalization: Font.Capitalize
 							}
