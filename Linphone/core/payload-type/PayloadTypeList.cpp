@@ -94,12 +94,14 @@ void PayloadTypeList::setSelf(QSharedPointer<PayloadTypeList> me) {
 			});
 		});
 	});
-	QObject::connect(CoreModel::getInstance().get(), &CoreModel::configuringStatus, this,
-	                 [this](const std::shared_ptr<linphone::Core> &core, linphone::ConfiguringState status,
-	                        const std::string &message) {
-		                 mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		                 if (status == linphone::ConfiguringState::Successful) emit lUpdate();
-	                 });
+
+	mModelConnection->makeConnectToModel(&CoreModel::configuringStatus,
+	                                     [this](const std::shared_ptr<linphone::Core> &core,
+	                                            linphone::ConfiguringState status, const std::string &message) {
+		                                     mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		                                     if (status == linphone::ConfiguringState::Successful) emit lUpdate();
+	                                     });
+
 	emit lUpdate();
 }
 
