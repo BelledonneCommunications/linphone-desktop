@@ -7,27 +7,25 @@ import Linphone
 Control.Button {
 	id: mainItem
 	property int capitalization
-	property color color: DefaultStyle.main1_500_main
-	property color disabledColor: Qt.darker(color, 1.5)
-	property color borderColor: DefaultStyle.grey_0
-	readonly property color pressedColor: Qt.darker(color, 1.1)
+	property QtObject style
+	property color color: style ? style.color.normal : DefaultStyle.main1_500_main
+	readonly property color pressedColor: style && style.color.pressed || Qt.darker(color, 1.3)
+	readonly property color hoveredColor: style && style.color.hovered || Qt.darker(color, 1.1)
+	property color textColor: style && style.text.normal || DefaultStyle.grey_0
+	property color pressedTextColor: style && style.text.pressed || textColor
+	property color borderColor: style && style.borderColor || "transparent"
 	property bool inversedColors: false
 	property int textSize: 18 * DefaultStyle.dp
 	property int textWeight: 600 * DefaultStyle.dp
 	property var textHAlignment: Text.AlignHCenter
 	property int radius: 48 * DefaultStyle.dp
-	property color textColor: DefaultStyle.grey_0
-	property bool underline: activeFocus || containsMouse
-	property bool shadowEnabled: enabled && (activeFocus  || containsMouse)
-	property var contentImageColor
-	property alias containsMouse: mouseArea.containsMouse
+	property bool underline: false
+	property bool hasNavigationFocus: enabled && (activeFocus  || hovered)
+	property var contentImageColor: style && style.image.normal || DefaultStyle.main2_600
+	property var pressedImageColor: style && style.image.pressed || DefaultStyle.main2_600
 	property bool asynchronous: true
 	hoverEnabled: true
 	activeFocusOnTab: true
-	// leftPadding: 20 * DefaultStyle.dp
-	// rightPadding: 20 * DefaultStyle.dp
-	// topPadding: 11 * DefaultStyle.dp
-	// bottomPadding: 11 * DefaultStyle.dp
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
@@ -40,30 +38,31 @@ Control.Button {
 		asynchronous: mainItem.asynchronous
 		anchors.fill: parent
 		
-		sourceComponent:
-			Item {
+		sourceComponent: Item {
 			Rectangle {
 				id: buttonBackground
 				anchors.fill: parent
-				color: mainItem.enabled
-						? inversedColors
-							? mainItem.pressed || mainItem.shadowEnabled
-								? DefaultStyle.grey_100
-								: mainItem.borderColor
-							: mainItem.pressed || mainItem.shadowEnabled
-								? mainItem.pressedColor
-								: mainItem.color
-						: mainItem.disabledColor
+				color: mainItem.pressed
+					? mainItem.pressedColor
+					: mainItem.hovered || mainItem.hasNavigationFocus
+						? mainItem.hoveredColor
+						: mainItem.color
 				radius: mainItem.radius
-				border.color: inversedColors ? mainItem.color : mainItem.borderColor
+				border.color: mainItem.borderColor
+			}
+			Rectangle {
+				id: disableShadow
+				color: "white"
+				opacity: 0.2
+				visible: !mainItem.enabled
 			}
 			MultiEffect {
-				enabled: mainItem.shadowEnabled
+				enabled: mainItem.hasNavigationFocus
 				anchors.fill: buttonBackground
 				source: buttonBackground
-				visible:  mainItem.shadowEnabled
+				visible:  mainItem.hasNavigationFocus
 				// Crash : https://bugreports.qt.io/browse/QTBUG-124730
-				shadowEnabled: true //mainItem.shadowEnabled
+				shadowEnabled: mainItem.hasNavigationFocus
 				shadowColor: DefaultStyle.grey_1000
 				shadowBlur: 0.1
 				shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
@@ -79,7 +78,9 @@ Control.Button {
 		wrapMode: Text.WrapAnywhere
 		text: mainItem.text
 		maximumLineCount: 1
-		color: inversedColors ? mainItem.color : mainItem.textColor
+		color: pressed
+			? mainItem.pressedTextColor
+			: mainItem.textColor
 		font {
 			pixelSize: mainItem.textSize
 			weight: mainItem.textWeight
@@ -98,8 +99,7 @@ Control.Button {
 		imageSource: mainItem.icon.source
 		imageWidth: mainItem.icon.width
 		imageHeight: mainItem.icon.height
-		colorizationColor: mainItem.contentImageColor
-		shadowEnabled: mainItem.shadowEnabled
+		colorizationColor: mainItem.pressed ? mainItem.pressedImageColor : mainItem.contentImageColor
 	}
 	
 	contentItem: Control.StackView{

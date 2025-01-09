@@ -135,6 +135,8 @@ void Utils::createCall(const QString &sipAddress,
                        LinphoneEnums::MediaEncryption mediaEncryption,
                        const QString &prepareTransfertAddress,
                        const QHash<QString, QString> &headers) {
+	mediaEncryption =
+	    App::getInstance()->getSettings()->getMediaEncryption()["id"].value<LinphoneEnums::MediaEncryption>();
 	lDebug() << "[Utils] create call with uri :" << sipAddress << mediaEncryption;
 	App::postModelAsync([sipAddress, options, mediaEncryption, prepareTransfertAddress, headers]() {
 		QString errorMessage;
