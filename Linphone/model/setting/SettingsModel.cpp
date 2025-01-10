@@ -603,6 +603,15 @@ QString SettingsModel::getDeviceName(const std::shared_ptr<linphone::Config> &co
 	    config->getString(UiSection, "device_name", Utils::appStringToCoreString(QSysInfo::machineHostName())));
 }
 
+// ==============================================================================
+// Clears the local "ldap_friends" friend list upon startup (Ldap contacts cache)
+// ==============================================================================
+
+bool SettingsModel::clearLocalLdapFriendsUponStartup(const shared_ptr<linphone::Config> &config) {
+	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+	return config ? config->getBool(UiSection, "clear_local_ldap_friends_upon_startup", false) : false;
+}
+
 // =============================================================================
 // Ui.
 // =============================================================================
