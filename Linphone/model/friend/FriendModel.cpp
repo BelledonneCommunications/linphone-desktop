@@ -56,17 +56,16 @@ FriendModel::FriendModel(const std::shared_ptr<linphone::Friend> &contact, const
 	};
 	connect(this, &FriendModel::givenNameChanged, updateFullName);
 	connect(this, &FriendModel::familyNameChanged, updateFullName);
-	connect(CoreModel::getInstance().get(), &CoreModel::friendUpdated,
-	        [this](const std::shared_ptr<linphone::Friend> &f) {
-		        if (f == mMonitor) {
-			        emit givenNameChanged(getGivenName());
-			        emit familyNameChanged(getFamilyName());
-			        emit organizationChanged(getOrganization());
-			        emit jobChanged(getJob());
-			        emit pictureUriChanged(getPictureUri());
-			        // emit starredChanged(getStarred());    // FriendCore do save() on change. Do not call it.
-		        }
-	        });
+	connect(this, &FriendModel::friendUpdated, [this]() {
+		if (mMonitor) {
+			emit givenNameChanged(getGivenName());
+			emit familyNameChanged(getFamilyName());
+			emit organizationChanged(getOrganization());
+			emit jobChanged(getJob());
+			emit pictureUriChanged(getPictureUri());
+			// emit starredChanged(getStarred());    // FriendCore do save() on change. Do not call it.
+		}
+	});
 };
 
 FriendModel::~FriendModel() {

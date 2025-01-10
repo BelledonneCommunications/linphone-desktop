@@ -98,6 +98,7 @@ signals:
 	void organizationChanged(const QString &orga);
 	void jobChanged(const QString &job);
 	void presenceReceived(LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp);
+	void friendUpdated();
 
 private:
 	DECLARE_ABSTRACT_OBJECT

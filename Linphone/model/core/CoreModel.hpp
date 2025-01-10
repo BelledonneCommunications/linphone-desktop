@@ -66,7 +66,6 @@ public:
 signals:
 	void loggerInitialized();
 	void friendCreated(const std::shared_ptr<linphone::Friend> &f);
-	void friendUpdated(const std::shared_ptr<linphone::Friend> &f);
 	void friendRemoved(const std::shared_ptr<linphone::Friend> &f);
 	void conferenceInfoCreated(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
 	void unreadNotificationsChanged();

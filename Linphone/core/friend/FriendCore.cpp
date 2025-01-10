@@ -566,7 +566,7 @@ void FriendCore::writeIntoModel(std::shared_ptr<FriendModel> model) const {
 	model->setJob(mJob);
 	model->setPictureUri(mPictureUri);
 	model->getFriend()->done();
-	emit CoreModel::getInstance()->friendUpdated(model->getFriend());
+	emit model->friendUpdated();
 }
 
 void FriendCore::writeFromModel(const std::shared_ptr<FriendModel> &model) {
