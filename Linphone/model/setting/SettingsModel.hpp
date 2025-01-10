@@ -170,6 +170,7 @@ public:
 	DECLARE_GETSET(QString, downloadFolder, DownloadFolder)
 	DECLARE_GETSET(int, shortcutCount, ShortcutCount)
 	DECLARE_GETSET(QVariantList, shortcuts, Shortcuts)
+	DECLARE_GETSET(bool, usernameOnlyForLdapLookupsInCalls, UsernameOnlyForLdapLookupsInCalls)
 
 signals:
 	void logsUploadUrlChanged();

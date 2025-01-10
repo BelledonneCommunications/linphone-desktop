@@ -685,6 +685,7 @@ void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(downloadFolder, DownloadFolder)
 	DEFINE_NOTIFY_CONFIG_READY(shortcutCount, ShortcutCount)
 	DEFINE_NOTIFY_CONFIG_READY(shortcuts, Shortcuts)
+	DEFINE_NOTIFY_CONFIG_READY(usernameOnlyForLdapLookupsInCalls, UsernameOnlyForLdapLookupsInCalls)
 }
 
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", true)
@@ -799,4 +800,11 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 						ShortcutCount,
 						"shortcut_count",
 						0)
+DEFINE_GETSET_CONFIG(SettingsModel,
+							bool,
+							Bool,
+							usernameOnlyForLdapLookupsInCalls,
+							UsernameOnlyForLdapLookupsInCalls,
+							"username_only_for_ldap_lookups_in_calls",
+							false)
     // clang-format on

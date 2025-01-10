@@ -861,6 +861,7 @@ void CallCore::findRemoteLdapFriend(QSharedPointer<CallCore> me) {
 			    });
 		    }
 	    });
-	mLdapMagicSearchModel->search(mRemoteAddress, (int)LinphoneEnums::MagicSearchSource::LdapServers,
-	                              LinphoneEnums::MagicSearchAggregation::Friend, -1);
+	mLdapMagicSearchModel->search(
+	    SettingsModel::getInstance()->getUsernameOnlyForLdapLookupsInCalls() ? mRemoteUsername : mRemoteAddress,
+	    (int)LinphoneEnums::MagicSearchSource::LdapServers, LinphoneEnums::MagicSearchAggregation::Friend, -1);
 }
