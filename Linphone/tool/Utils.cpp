@@ -1396,7 +1396,7 @@ QList<QSharedPointer<DownloadablePayloadTypeCore>> Utils::getDownloadableVideoPa
 
 void Utils::checkDownloadedCodecsUpdates() {
 	for (auto codec : getDownloadableVideoPayloadTypes()) {
-		if (codec->shouldDownloadUpdate()) codec->downloadAndExtract(true);
+		if (codec->shouldDownloadUpdate()) App::postCoreAsync([codec]() { codec->downloadAndExtract(true); });
 	}
 }
 

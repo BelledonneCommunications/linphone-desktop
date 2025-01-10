@@ -85,6 +85,7 @@ void DownloadablePayloadTypeCore::setSelf(QSharedPointer<DownloadablePayloadType
 }
 
 void DownloadablePayloadTypeCore::downloadAndExtract(bool isUpdate) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	lInfo() << log().arg("Downloading `%1` codec...").arg(mMimeType);
 	auto codecsFolder = Paths::getCodecsDirPath();
 	QString versionFilePath = codecsFolder + mMimeType + ".txt";
