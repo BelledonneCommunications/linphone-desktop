@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import QtQuick.Layouts
+import QtQml
 import Linphone
 
 Control.Button {
