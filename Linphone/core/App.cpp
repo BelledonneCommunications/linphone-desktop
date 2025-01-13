@@ -733,10 +733,8 @@ void App::createCommandParser() {
 	        "configuration.")
 	         .replace("%1", EXECUTABLE_NAME),
 	     tr("URL, path or file")},
-	//{{"c", "call"}, tr("commandLineOptionCall").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionCallArg")},
-#ifndef Q_OS_MACOS
-	//{"minimized", tr("commandLineOptionMinimized")},
-#endif // ifndef Q_OS_MACOS
+	    //{{"c", "call"}, tr("commandLineOptionCall").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionCallArg")},
+	    {"minimized", tr("commandLineOptionMinimized")},
 	    {{"V", "verbose"}, tr("Log to stdout some debug information while running")},
 	    {"qt-logs-only", tr("Print only logs from the application")},
 	});
