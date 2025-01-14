@@ -614,7 +614,10 @@ void ConferenceInfoCore::save() {
 					thisCopy->writeIntoModel(mConferenceInfoModel);
 					thisCopy->deleteLater();
 					confSchedulerModel->setInfo(linphoneConf);
-					mCoreModelConnection->invokeToCore([this]() { setSelf(mCoreModelConnection->mCore); });
+					mCoreModelConnection->invokeToCore([this]() {
+						setSelf(mCoreModelConnection->mCore);
+						emit dataSaved();
+					});
 				});
 			});
 		});
