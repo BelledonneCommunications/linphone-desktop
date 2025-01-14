@@ -117,6 +117,7 @@ Item {
 				Layout.fillHeight: true
 				Layout.preferredWidth: 82 * DefaultStyle.dp
 				defaultAccount: accountProxy.defaultAccount
+				currentIndex: 0
 				Binding on currentIndex {
 					when: mainItem.contextualMenuOpenedComponent != undefined
 					value: -1
@@ -489,11 +490,13 @@ Item {
 						currentIndex: -1
 						onActiveFocusChanged: if(activeFocus && currentIndex >= 0) children[currentIndex].forceActiveFocus()
 						on_CurrentIndexChanged:{
-							if(count > 0 && _currentIndex >= count && tabbar.model[_currentIndex].link){
-								Qt.openUrlExternally(tabbar.model[_currentIndex].link)
-							}else {
-								currentIndex = _currentIndex
-								SettingsCpp.setLastActiveTabIndex(currentIndex)
+							if (count > 0) {
+								if(_currentIndex >= count && tabbar.model[_currentIndex].link){
+									Qt.openUrlExternally(tabbar.model[_currentIndex].link)
+								}else if (_currentIndex >= 0){
+									currentIndex = _currentIndex
+									SettingsCpp.setLastActiveTabIndex(currentIndex)
+								}
 							}
 						}
 						CallPage {
