@@ -6,6 +6,7 @@ import Linphone
 import UtilsCpp
 import EnumsToStringCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 AbstractMainPage {
 	id: mainItem
@@ -179,8 +180,7 @@ AbstractMainPage {
 			Button {
 				id: createContactButton
 				visible: !rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName !== "contactEdition"
-				background: Item {
-				}
+				style: ButtonStyle.noBackground
 				icon.source: AppIcons.plusCircle
 				Layout.preferredWidth: 28 * DefaultStyle.dp
 				Layout.preferredHeight: 28 * DefaultStyle.dp
@@ -274,8 +274,7 @@ AbstractMainPage {
 					RoundButton {
 						visible: contactDetailLayout.icon != undefined
 						icon.source: contactDetailLayout.icon
-						contentImageColor: DefaultStyle.main1_500_main
-						background: Item{}
+						style: ButtonStyle.noBackgroundOrange
 						onClicked: contactDetailLayout.titleIconClicked()
 					}
 					Item{Layout.fillWidth: true}
@@ -468,7 +467,7 @@ AbstractMainPage {
 													Layout.fillWidth: true
 												}
 												RoundButton {
-													background: Item{}
+													style: ButtonStyle.noBackground
 													icon.source: AppIcons.phone
 													onClicked: {
 														UtilsCpp.createCall(listViewModelData.address)
@@ -544,7 +543,7 @@ AbstractMainPage {
 							label: qsTr("Medias")
 							Layout.fillWidth: true
 							content: Button {
-								background: Item{}
+								style: ButtonStyle.noBackground
 								contentItem: RowLayout {
 									EffectImage {
 										Layout.preferredWidth: 24 * DefaultStyle.dp

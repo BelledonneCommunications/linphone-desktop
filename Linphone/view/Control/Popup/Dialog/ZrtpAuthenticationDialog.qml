@@ -4,6 +4,7 @@ import QtQuick.Effects
 
 import Linphone
 import UtilsCpp 1.0
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 // =============================================================================
 Dialog {
@@ -75,17 +76,17 @@ Dialog {
 				}
 				Item{Layout.Layout.fillHeight: true}
 			}
-			Button {
+			SmallButton {
 				visible: !mainItem.securityError
 				anchors.top: parent.top
 				anchors.right: parent.right
 				anchors.topMargin: 10 * DefaultStyle.dp
 				anchors.rightMargin: 17 * DefaultStyle.dp
-				background: Item{}
-				textSize: 13 * DefaultStyle.dp
-				textWeight: 600 * DefaultStyle.dp
+				style: ButtonStyle.noBackground
 				text: qsTr("Passer")
 				textColor: DefaultStyle.grey_0
+				hoveredTextColor: DefaultStyle.grey_100
+				pressedTextColor: DefaultStyle.grey_200
 				underline: true
 				onClicked: {
 					call.core.lSkipZrtpAuthentication()

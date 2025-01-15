@@ -6,6 +6,7 @@ import QtQuick.Effects
 import Linphone
 import ConstantsCpp 1.0
 import UtilsCpp 1.0
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ListView {
 	id: mainItem

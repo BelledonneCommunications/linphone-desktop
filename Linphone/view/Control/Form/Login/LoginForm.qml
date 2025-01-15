@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
 import ConstantsCpp 1.0
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ColumnLayout {
 	id: mainItem

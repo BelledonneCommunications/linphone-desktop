@@ -8,6 +8,7 @@ import QtQuick.Controls.Basic as Control
 
 import Linphone
 import ConstantsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Rectangle {
 	id: mainItem

@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 FocusScope {
 	id: mainItem
@@ -299,9 +300,8 @@ FocusScope {
 								icon.width: 24 * DefaultStyle.dp
 								icon.height: 24 * DefaultStyle.dp
 								Layout.rightMargin: 10 * DefaultStyle.dp
-								background: Item{}
 								icon.source: AppIcons.closeX
-								contentImageColor: DefaultStyle.main1_500_main
+								style: ButtonStyle.noBackgroundOrange
 								onClicked: mainItem.conferenceInfoGui.core.removeParticipant(index)
 							}
 						}

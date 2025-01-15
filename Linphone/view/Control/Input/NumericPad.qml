@@ -4,6 +4,7 @@ import QtQuick.Layouts as Layout
 import QtQuick.Effects
 import Linphone
 import UtilsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 FocusScope{
 	id: mainItem
@@ -154,7 +155,7 @@ FocusScope{
 					anchors.fill: parent
 					Text {
 						id: pressText
-						color: digitButton.pressed ? digitButton.style.text.pressed : digitButton.style.text.normal
+						color: digitButton.pressed ? digitButton.pressedTextColor : digitButton.textColor
 						height: contentHeight
 						anchors.left: parent.left
 						anchors.right: parent.right
@@ -168,7 +169,7 @@ FocusScope{
 						height: contentHeight
 						anchors.left: parent.left
 						anchors.right: parent.right
-						color: digitButton.pressed ? digitButton.style.text.pressed : digitButton.style.text.normal
+						color: digitButton.pressed ? digitButton.pressedTextColor : digitButton.textColor
 						y: digitButton.height/2
 						horizontalAlignment: Text.AlignHCenter
 						visible: modelData.longPressText ? modelData.longPressText.length > 0 : false

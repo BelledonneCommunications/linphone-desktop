@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 AbstractMainPage {
 

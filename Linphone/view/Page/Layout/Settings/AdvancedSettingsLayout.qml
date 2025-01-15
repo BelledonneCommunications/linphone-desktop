@@ -6,6 +6,7 @@ import SettingsCpp 1.0
 import UtilsCpp 1.0
 import Linphone
 import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 AbstractSettingsLayout {
 	width: parent?.width

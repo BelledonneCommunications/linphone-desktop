@@ -62,12 +62,11 @@ FocusScope{
 					Button {
 						Layout.preferredWidth: 24 * DefaultStyle.dp
 						Layout.preferredHeight: 24 * DefaultStyle.dp
-						background: Item{}
+						style: ButtonStyle.noBackgroundOrange
 						icon.source: AppIcons.closeX
 						icon.width: 24 * DefaultStyle.dp
 						icon.height: 24 * DefaultStyle.dp
 						focus: true
-						contentImageColor: DefaultStyle.main1_500_main
 						onClicked: contactList.removeSelectedContactByAddress(modelData)
 					}
 				}

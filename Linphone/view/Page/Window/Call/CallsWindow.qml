@@ -7,6 +7,7 @@ import EnumsToStringCpp
 import UtilsCpp
 import SettingsCpp
 import DesktopToolsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 AbstractWindow {
     id: mainWindow
@@ -746,21 +747,12 @@ AbstractWindow {
 						PopupButton {
 							visible: callsModel.count >= 2
 							id: popupbutton
-							popup.contentItem: Button {
-								background: Item{}
-								contentItem: RowLayout {
-									spacing: 5 * DefaultStyle.dp
-									EffectImage {
-										colorizationColor: DefaultStyle.main2_600
-										imageSource: AppIcons.arrowsMerge
-										Layout.preferredWidth: 32 * DefaultStyle.dp
-										Layout.preferredHeight: 32 * DefaultStyle.dp
-									}
-									Text {
-										text: qsTr("Merger tous les appels")
-										font.pixelSize: 14 * DefaultStyle.dp
-									}
-								}
+							popup.contentItem: IconLabelButton {
+								icon.source: AppIcons.arrowsMerge
+								icon.width: 32 * DefaultStyle.dp
+								icon.height: 32 * DefaultStyle.dp
+								text: qsTr("Merger tous les appels")
+								textSize: 14 * DefaultStyle.dp
 								onClicked: {
 									callsModel.lMergeAll()
 									popupbutton.close()
@@ -860,21 +852,9 @@ AbstractWindow {
 								Component {
 									id: headerbutton
 									PopupButton {
-										popup.contentItem: Button {
-											background: Item{}
-											contentItem: RowLayout {
-												spacing: 0
-												EffectImage {
-													colorizationColor: DefaultStyle.main2_600
-													imageSource: AppIcons.shareNetwork
-													Layout.preferredWidth: 24 * DefaultStyle.dp
-													Layout.preferredHeight: 24 * DefaultStyle.dp
-												}
-												Text {
-													text: qsTr("Partager le lien de la réunion")
-													font.pixelSize: 14 * DefaultStyle.dp
-												}
-											}
+										popup.contentItem: IconLabelButton {
+											icon.source: AppIcons.shareNetwork
+											text: qsTr("Partager le lien de la réunion")
 											onClicked: {
 												UtilsCpp.copyToClipboard(mainWindow.call.core.remoteAddress)
 												showInformationPopup(qsTr("Copié"), qsTr("Le lien de la réunion a été copié dans le presse-papier"), true)

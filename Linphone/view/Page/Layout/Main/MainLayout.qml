@@ -12,6 +12,7 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Item {
 	id: mainItem

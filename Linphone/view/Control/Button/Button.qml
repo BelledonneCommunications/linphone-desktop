@@ -4,11 +4,12 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import QtQml
 import Linphone
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Control.Button {
 	id: mainItem
 	property int capitalization
-	property QtObject style
+	property var style
 	property color color: style?.color?.normal || DefaultStyle.main1_500_main
 	property color hoveredColor: style?.color?.hovered || Qt.darker(color, 1.05)
 	property color pressedColor: style?.color?.pressed || Qt.darker(color, 1.1)
@@ -35,7 +36,7 @@ Control.Button {
 	spacing: 5 * DefaultStyle.dp
 	hoverEnabled: enabled
 	activeFocusOnTab: true
-	icon.source: style?.iconSource
+	icon.source: style?.iconSource || ""
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent

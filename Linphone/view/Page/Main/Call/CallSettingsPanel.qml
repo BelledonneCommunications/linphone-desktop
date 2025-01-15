@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Control.Page {
 	id: mainItem
@@ -71,9 +72,7 @@ Control.Page {
 				RoundButton {
 					id: closeButton
 					visible: mainItem.closeButtonVisible
-					background: Item {
-						visible: false
-					}
+					style: ButtonStyle.noBackground
 					icon.source: AppIcons.closeX
 					onClicked: mainItem.visible = false
 				}

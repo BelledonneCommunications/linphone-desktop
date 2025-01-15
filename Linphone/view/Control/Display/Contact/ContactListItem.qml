@@ -6,6 +6,8 @@ import Linphone
 import UtilsCpp 1.0
 import ConstantsCpp 1.0
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+
 FocusScope {
 	id: mainItem
 	implicitHeight: visible ? 56 * DefaultStyle.dp : 0

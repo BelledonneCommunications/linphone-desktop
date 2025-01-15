@@ -4,6 +4,7 @@ import QtQuick.Effects
 import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp 1.0
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ColumnLayout {
 	id: mainItem

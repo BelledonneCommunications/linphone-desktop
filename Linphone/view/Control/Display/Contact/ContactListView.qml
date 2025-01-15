@@ -7,6 +7,7 @@ import UtilsCpp 1.0
 import ConstantsCpp 1.0
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ListView {
 	id: mainItem

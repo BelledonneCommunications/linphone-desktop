@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import SettingsCpp 1.0
 import UtilsCpp
 import Linphone
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 RowLayout {
 	id: mainItem
@@ -48,11 +49,10 @@ RowLayout {
 					Layout.fillWidth: true
 				}
 				Button {
-					background: Item{}
+					style: ButtonStyle.noBackground
 					icon.source: AppIcons.pencil
 					icon.width: 24 * DefaultStyle.dp
 					icon.height: 24 * DefaultStyle.dp
-					contentImageColor: DefaultStyle.main2_600
 					onClicked: {
 						mainItem.owner.container.push(mainItem.settingsLayout, {
 							titleText: mainItem.editText,

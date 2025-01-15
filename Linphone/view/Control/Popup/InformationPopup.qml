@@ -68,7 +68,7 @@ Popup {
 					icon.height: 20 * DefaultStyle.dp
 					Layout.alignment: Qt.AlignTop | Qt.AlignRight
 					visible: mainItem.hovered || hovered
-					background: Item{}
+					style: ButtonStyle.noBackground
 					icon.source: AppIcons.closeX
 					onClicked: mainItem.close()
 				}

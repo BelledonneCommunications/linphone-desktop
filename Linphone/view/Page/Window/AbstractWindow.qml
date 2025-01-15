@@ -6,6 +6,7 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import DesktopToolsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ApplicationWindow {
 	id: mainWindow

@@ -51,7 +51,7 @@ MainRightPanel {
 				}
 			},
 			Button {
-				background: Item{}
+				style: ButtonStyle.noBackground
 				anchors.right: parent.right
 				anchors.rightMargin: 41 * DefaultStyle.dp
 				anchors.verticalCenter: parent.verticalCenter
@@ -270,12 +270,10 @@ MainRightPanel {
 								Layout.preferredWidth: 24 * DefaultStyle.dp
 								Layout.preferredHeight: 24 * DefaultStyle.dp
 								Layout.alignment: Qt.AlignVCenter
-								width: 24 * DefaultStyle.dp
-								height: 24 * DefaultStyle.dp
 								icon.source: AppIcons.closeX
 								icon.width: 24 * DefaultStyle.dp
 								icon.height: 24 * DefaultStyle.dp
-								background: Item{}
+								style: ButtonStyle.noBackground
 								KeyNavigation.left: addressTextField
 								Keys.onPressed: (event) => addressLayout.updateFocus(event)
 								onClicked: mainItem.contact.core.removeAddress(index)
@@ -355,9 +353,7 @@ MainRightPanel {
 								Layout.preferredWidth: 24 * DefaultStyle.dp
 								Layout.preferredHeight: 24 * DefaultStyle.dp
 								Layout.alignment: Qt.AlignVCenter
-								width: 24 * DefaultStyle.dp
-								height: 24 * DefaultStyle.dp
-								background: Item{}
+								style: ButtonStyle.noBackground
 								icon.source: AppIcons.closeX
 								icon.width: 24 * DefaultStyle.dp
 								icon.height: 24 * DefaultStyle.dp

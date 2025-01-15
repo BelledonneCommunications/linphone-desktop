@@ -6,6 +6,7 @@ import QtQuick.Dialogs
 import Linphone
 import SettingsCpp 1.0
 import UtilsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 AbstractSettingsLayout {
 	id: mainItem

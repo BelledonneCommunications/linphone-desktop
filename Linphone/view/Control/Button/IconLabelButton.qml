@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Button {
 	id: mainItem

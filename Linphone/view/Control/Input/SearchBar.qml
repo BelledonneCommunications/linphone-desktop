@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import Linphone
-
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 FocusScope {
 	id: mainItem

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import Linphone
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Button {
 	id: mainItem
@@ -13,9 +14,7 @@ Button {
 		: hovered
 			? hoveredColor
 			: color
-	color: style?.color?.normal || "transparent"
-	hoveredColor: style?.color?.hovered || DefaultStyle.grey_100
-	pressedColor: style?.color?.pressed || DefaultStyle.main2_300
+	style: ButtonStyle.popupButton
 	checked: popup.visible
 	implicitWidth: 24 * DefaultStyle.dp
 	implicitHeight: 24 * DefaultStyle.dp

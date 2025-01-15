@@ -5,6 +5,7 @@ import Linphone
 import ConstantsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 LoginLayout {
 	id: mainItem

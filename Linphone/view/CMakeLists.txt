@@ -145,7 +145,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 
 list(APPEND _LINPHONEAPP_QML_SINGLETONS
 	view/Style/AppIcons.qml
-	view/Style/ButtonStyle.qml
+	view/Style/buttonStyle.js
 	view/Style/DefaultStyle.qml
 	view/Style/Typography.qml
 )

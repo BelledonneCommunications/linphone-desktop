@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 AbstractMainPage {
 	id: mainItem
@@ -175,14 +176,13 @@ AbstractMainPage {
 				}
 				Button {
 					id: newCallButton
-					background: Item {}
+					style: ButtonStyle.noBackground
 					icon.source: AppIcons.newCall
 					Layout.preferredWidth: 28 * DefaultStyle.dp
 					Layout.preferredHeight: 28 * DefaultStyle.dp
 					Layout.rightMargin: 39 * DefaultStyle.dp
 					icon.width: 28 * DefaultStyle.dp
 					icon.height: 28 * DefaultStyle.dp
-					contentImageColor: DefaultStyle.main2_600
 					KeyNavigation.left: removeHistory
 					KeyNavigation.down: listStackView
 					onClicked: {

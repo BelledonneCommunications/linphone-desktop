@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 // TODO : spacing
 AbstractMainPage {
@@ -142,7 +143,7 @@ AbstractMainPage {
 					}
 					Item{Layout.fillWidth: true}
 					Button {
-						background: Item {}
+						style: ButtonStyle.noBackground
 						icon.source: AppIcons.plusCircle
 						Layout.preferredWidth: 28 * DefaultStyle.dp
 						Layout.preferredHeight: 28 * DefaultStyle.dp
@@ -556,12 +557,11 @@ AbstractMainPage {
 							property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core?.organizerAddress)
 							visible: mainItem.selectedConference && isMeObj && isMeObj.value || false
 							icon.source: AppIcons.pencil
-							contentImageColor: DefaultStyle.main1_500_main
+							style: ButtonStyle.noBackgroundOrange
 							KeyNavigation.left: leftPanelStackView.currentItem
 							KeyNavigation.right: deletePopup
 							KeyNavigation.up: joinButton
 							KeyNavigation.down: shareNetworkButton
-							background: Item{}
 							onClicked: mainItem.editConference(mainItem.selectedConference)
 						}
 						PopupButton {
@@ -640,7 +640,7 @@ AbstractMainPage {
 							}
 							RoundButton {
 								id: shareNetworkButton
-								background: Item{}
+								style: ButtonStyle.noBackground
 								icon.source: AppIcons.shareNetwork
 								KeyNavigation.left: linkButton
 								KeyNavigation.right: linkButton

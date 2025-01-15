@@ -4,6 +4,7 @@ import QtQuick.Effects
 import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 RowLayout {
 	id: mainItem
@@ -44,8 +45,6 @@ RowLayout {
 					iconUrl: AppIcons.videoCamera
 					checkedIconUrl: AppIcons.videoCameraSlash
 					checked: !mainItem.localVideoEnabled
-					color: DefaultStyle.grey_500
-					contentImageColor: DefaultStyle.main2_0
 					Layout.preferredWidth: 55 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
 					icon.width: 32 * DefaultStyle.dp
@@ -56,8 +55,6 @@ RowLayout {
 					id: microButton
 					iconUrl: AppIcons.microphone
 					checkedIconUrl: AppIcons.microphoneSlash
-					color: DefaultStyle.grey_500
-					contentImageColor: DefaultStyle.main2_0
 					Layout.preferredWidth: 55 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
 					icon.width: 32 * DefaultStyle.dp
@@ -78,8 +75,6 @@ RowLayout {
 					visible: stackLayout.currentIndex === 1
 					iconUrl: AppIcons.speaker
 					checkedIconUrl: AppIcons.speakerSlash
-					color: DefaultStyle.grey_500
-					contentImageColor: DefaultStyle.main2_0
 					Layout.preferredWidth: 55 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
 					icon.width: 32 * DefaultStyle.dp

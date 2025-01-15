@@ -4,6 +4,7 @@ import QtQuick.Layouts as Layout
 import QtQuick.Effects
 import Linphone
 import UtilsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Control.Popup {
 	id: mainItem
