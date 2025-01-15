@@ -358,6 +358,13 @@ VariantObject *Utils::findAvatarByAddress(const QString &address) {
 		if (linFriend) avatar = Utils::coreStringToAppString(linFriend->getPhoto());
 		return QVariant(avatar);
 	});
+	// Rebuild avatar if needed
+	auto updateValue = [data, address](const std::shared_ptr<linphone::Friend> &f) -> void {
+		if (f && f->getAddress()->weakEqual(ToolModel::interpretUrl(address))) data->invokeRequestValue();
+	};
+	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendCreated, updateValue);
+	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendRemoved, updateValue);
+	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendUpdated, updateValue);
 	data->requestValue();
 	return data;
 }
@@ -365,12 +372,18 @@ VariantObject *Utils::findAvatarByAddress(const QString &address) {
 VariantObject *Utils::findFriendByAddress(const QString &address) {
 	VariantObject *data = new VariantObject("findFriendByAddress");
 	if (!data) return nullptr;
-	data->makeRequest([address]() {
+	data->makeRequest([data, address]() {
 		auto linFriend = ToolModel::findFriendByAddress(address);
 		if (!linFriend) return QVariant();
 		auto friendCore = FriendCore::create(linFriend);
+		connect(friendCore.get(), &FriendCore::removed, data, &VariantObject::invokeRequestValue);
 		return QVariant::fromValue(new FriendGui(friendCore));
 	});
+	// Rebuild friend if needed
+	auto updateValue = [data, address](const std::shared_ptr<linphone::Friend> &f) -> void {
+		if (f->getAddress()->weakEqual(ToolModel::interpretUrl(address))) data->invokeRequestValue();
+	};
+	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendCreated, updateValue); // New Friend
 	data->requestValue();
 	return data;
 }

@@ -48,13 +48,21 @@ public:
 	}
 	template <typename Sender, typename SenderClass>
 	void makeUpdate(Sender sender, SenderClass signal) {
-		mConnection->makeConnectToModel(
-		    sender, signal, [this]() { mConnection->invokeToCore([this]() { mCoreObject->requestValue(); }); });
+		mConnection->makeConnectToModel(sender, signal, [this]() { invokeRequestValue(); });
 	}
+	template <typename Sender, typename SenderSignal, typename ReceiverSlot>
+	void makeUpdateCond(Sender sender, SenderSignal signal, ReceiverSlot slot) {
+		mConnection->makeConnectToModel(sender, signal, slot);
+	}
+
 	QString mName; // usefull to know what is this VariantObject
 	QVariant getValue() const;
 	void requestValue();
 	void setDefaultValue(QVariant value);
+
+	void invokeRequestValue() {
+		mConnection->invokeToCore([this]() { mCoreObject->requestValue(); });
+	}
 
 	QSharedPointer<SafeObject> mCoreObject, mModelObject;
 	QSharedPointer<SafeConnection<SafeObject, SafeObject>> mConnection;

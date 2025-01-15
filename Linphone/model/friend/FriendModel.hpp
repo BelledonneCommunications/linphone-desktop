@@ -59,7 +59,6 @@ public:
 	linphone::SecurityLevel getSecurityLevel() const;
 	linphone::SecurityLevel getSecurityLevelForAddress(const std::shared_ptr<linphone::Address> address) const;
 
-protected:
 	void setAddress(const std::shared_ptr<linphone::Address> &address);
 	void appendPhoneNumber(const std::shared_ptr<linphone::FriendPhoneNumber> &number);
 	void appendPhoneNumbers(const std::list<std::shared_ptr<linphone::FriendPhoneNumber>> &numbers);
@@ -83,6 +82,13 @@ protected:
 	void setPictureUri(const QString &uri);
 	void setStarred(bool starred);
 
+	void remove();
+
+	bool isThisFriend(const std::shared_ptr<linphone::Friend> &data);
+
+	void onUpdated(const std::shared_ptr<linphone::Friend> &data);
+	void onRemoved(const std::shared_ptr<linphone::Friend> &data);
+
 	QString mFullName;
 
 signals:
@@ -98,7 +104,8 @@ signals:
 	void organizationChanged(const QString &orga);
 	void jobChanged(const QString &job);
 	void presenceReceived(LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp);
-	void friendUpdated();
+	void updated();
+	void removed();
 
 private:
 	DECLARE_ABSTRACT_OBJECT

@@ -114,8 +114,9 @@ public:
 					break;
 				} else ++index;
 			if (!removed)
-				qWarning() << QStringLiteral("Unable to remove ") << itemToRemove->metaObject()->className()
-				           << QStringLiteral(" : ") << itemToRemove;
+				qWarning() << QStringLiteral("Item not found. Unable to remove ")
+				           << itemToRemove->metaObject()->className() << QStringLiteral(" : ") << itemToRemove
+				           << ", Count=" << mList.count() << ", index=" << index;
 		}
 		return removed;
 	}

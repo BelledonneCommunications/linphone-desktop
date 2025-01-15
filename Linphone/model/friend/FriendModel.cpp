@@ -22,6 +22,7 @@
 
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include <QDebug>
@@ -56,20 +57,14 @@ FriendModel::FriendModel(const std::shared_ptr<linphone::Friend> &contact, const
 	};
 	connect(this, &FriendModel::givenNameChanged, updateFullName);
 	connect(this, &FriendModel::familyNameChanged, updateFullName);
-	connect(this, &FriendModel::friendUpdated, [this]() {
-		if (mMonitor) {
-			emit givenNameChanged(getGivenName());
-			emit familyNameChanged(getFamilyName());
-			emit organizationChanged(getOrganization());
-			emit jobChanged(getJob());
-			emit pictureUriChanged(getPictureUri());
-			// emit starredChanged(getStarred());    // FriendCore do save() on change. Do not call it.
-		}
-	});
+
+	connect(this, &FriendModel::updated, [this]() { emit CoreModel::getInstance()->friendUpdated(mMonitor); });
+	connect(CoreModel::getInstance().get(), &CoreModel::friendRemoved, this, &FriendModel::onRemoved);
 };
 
 FriendModel::~FriendModel() {
 	mustBeInLinphoneThread("~" + getClassName());
+	mMonitor = nullptr;
 }
 
 std::shared_ptr<linphone::Friend> FriendModel::getFriend() const {
@@ -77,7 +72,7 @@ std::shared_ptr<linphone::Friend> FriendModel::getFriend() const {
 }
 
 QDateTime FriendModel::getPresenceTimestamp() const {
-	if (mMonitor->getPresenceModel()) {
+	if (mMonitor && mMonitor->getPresenceModel()) {
 		time_t timestamp = mMonitor->getPresenceModel()->getLatestActivityTimestamp();
 		if (timestamp == -1) return QDateTime();
 		else return QDateTime::fromMSecsSinceEpoch(timestamp * 1000);
@@ -85,6 +80,7 @@ QDateTime FriendModel::getPresenceTimestamp() const {
 }
 
 void FriendModel::setAddress(const std::shared_ptr<linphone::Address> &address) {
+	if (!mMonitor) return;
 	if (address) {
 		mMonitor->setAddress(address);
 		emit defaultAddressChanged();
@@ -96,6 +92,7 @@ std::list<std::shared_ptr<linphone::FriendPhoneNumber>> FriendModel::getPhoneNum
 }
 
 void FriendModel::appendPhoneNumber(const std::shared_ptr<linphone::FriendPhoneNumber> &number) {
+	if (!mMonitor) return;
 	if (number) {
 		mMonitor->addPhoneNumberWithLabel(number);
 		emit phoneNumbersChanged();
@@ -103,12 +100,14 @@ void FriendModel::appendPhoneNumber(const std::shared_ptr<linphone::FriendPhoneN
 }
 
 void FriendModel::appendPhoneNumbers(const std::list<std::shared_ptr<linphone::FriendPhoneNumber>> &numbers) {
+	if (!mMonitor) return;
 	for (auto &num : numbers)
 		if (num) mMonitor->addPhoneNumberWithLabel(num);
 	emit phoneNumbersChanged();
 }
 
 void FriendModel::resetPhoneNumbers(const std::list<std::shared_ptr<linphone::FriendPhoneNumber>> &numbers) {
+	if (!mMonitor) return;
 	for (auto &num : mMonitor->getPhoneNumbers())
 		mMonitor->removePhoneNumber(num);
 	for (auto &num : numbers)
@@ -128,10 +127,11 @@ void FriendModel::clearPhoneNumbers() {
 }
 
 std::list<std::shared_ptr<linphone::Address>> FriendModel::getAddresses() const {
-	return mMonitor->getAddresses();
+	return mMonitor ? mMonitor->getAddresses() : std::list<std::shared_ptr<linphone::Address>>();
 }
 
 void FriendModel::appendAddress(const std::shared_ptr<linphone::Address> &addr) {
+	if (!mMonitor) return;
 	if (addr) {
 		mMonitor->addAddress(addr);
 		emit addressesChanged();
@@ -139,12 +139,14 @@ void FriendModel::appendAddress(const std::shared_ptr<linphone::Address> &addr) 
 }
 
 void FriendModel::appendAddresses(const std::list<std::shared_ptr<linphone::Address>> &addresses) {
+	if (!mMonitor) return;
 	for (auto &addr : addresses)
 		if (addr) mMonitor->addAddress(addr);
 	emit addressesChanged();
 }
 
 void FriendModel::resetAddresses(const std::list<std::shared_ptr<linphone::Address>> &addresses) {
+	if (!mMonitor) return;
 	for (auto &addr : mMonitor->getAddresses())
 		mMonitor->removeAddress(addr);
 	for (auto &addr : addresses)
@@ -153,6 +155,7 @@ void FriendModel::resetAddresses(const std::list<std::shared_ptr<linphone::Addre
 }
 
 void FriendModel::removeAddress(const std::shared_ptr<linphone::Address> &addr) {
+	if (!mMonitor) return;
 	if (addr) {
 		mMonitor->removeAddress(addr);
 		emit addressesChanged();
@@ -160,6 +163,7 @@ void FriendModel::removeAddress(const std::shared_ptr<linphone::Address> &addr) 
 }
 
 void FriendModel::clearAddresses() {
+	if (!mMonitor) return;
 	for (auto &addr : mMonitor->getAddresses())
 		if (addr) mMonitor->removeAddress(addr);
 	emit addressesChanged();
@@ -178,6 +182,7 @@ void FriendModel::setFullName(const QString &name) {
 }
 
 QString FriendModel::getName() const {
+	if (!mMonitor) return "";
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -188,6 +193,7 @@ QString FriendModel::getName() const {
 }
 
 void FriendModel::setName(const QString &name) {
+	if (!mMonitor) return;
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -197,6 +203,7 @@ void FriendModel::setName(const QString &name) {
 }
 
 QString FriendModel::getGivenName() const {
+	if (!mMonitor) return "";
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -207,6 +214,7 @@ QString FriendModel::getGivenName() const {
 }
 
 void FriendModel::setGivenName(const QString &name) {
+	if (!mMonitor) return;
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -219,6 +227,7 @@ void FriendModel::setGivenName(const QString &name) {
 }
 
 QString FriendModel::getFamilyName() const {
+	if (!mMonitor) return "";
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -229,6 +238,7 @@ QString FriendModel::getFamilyName() const {
 }
 
 void FriendModel::setFamilyName(const QString &name) {
+	if (!mMonitor) return;
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -241,6 +251,7 @@ void FriendModel::setFamilyName(const QString &name) {
 }
 
 QString FriendModel::getOrganization() const {
+	if (!mMonitor) return "";
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -251,6 +262,7 @@ QString FriendModel::getOrganization() const {
 }
 
 void FriendModel::setOrganization(const QString &orga) {
+	if (!mMonitor) return;
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -263,6 +275,7 @@ void FriendModel::setOrganization(const QString &orga) {
 }
 
 QString FriendModel::getJob() const {
+	if (!mMonitor) return "";
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -273,6 +286,7 @@ QString FriendModel::getJob() const {
 }
 
 void FriendModel::setJob(const QString &job) {
+	if (!mMonitor) return;
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -285,10 +299,11 @@ void FriendModel::setJob(const QString &job) {
 }
 
 bool FriendModel::getStarred() const {
-	return mMonitor->getStarred();
+	return mMonitor ? mMonitor->getStarred() : false;
 }
 
 void FriendModel::setStarred(bool starred) {
+	if (!mMonitor) return;
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setStarred(starred);
 	emit starredChanged(starred);
@@ -298,6 +313,7 @@ void FriendModel::onPresenceReceived(const std::shared_ptr<linphone::Friend> &co
 }
 
 QString FriendModel::getPictureUri() const {
+	if (!mMonitor) return "";
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -308,6 +324,7 @@ QString FriendModel::getPictureUri() const {
 }
 
 QString FriendModel::getVCardAsString() const {
+	if (!mMonitor) return "";
 	auto vcard = mMonitor->getVcard();
 	bool created = false;
 	if (!vcard) {
@@ -318,20 +335,21 @@ QString FriendModel::getVCardAsString() const {
 }
 
 std::list<std::shared_ptr<linphone::FriendDevice>> FriendModel::getDevices() const {
-	return mMonitor->getDevices();
+	return mMonitor ? mMonitor->getDevices() : std::list<std::shared_ptr<linphone::FriendDevice>>();
 }
 
 linphone::SecurityLevel FriendModel::getSecurityLevel() const {
-	return mMonitor->getSecurityLevel();
+	return mMonitor ? mMonitor->getSecurityLevel() : linphone::SecurityLevel::None;
 }
 
 linphone::SecurityLevel
 FriendModel::getSecurityLevelForAddress(const std::shared_ptr<linphone::Address> address) const {
-	return mMonitor->getSecurityLevelForAddress(address);
+	return mMonitor ? mMonitor->getSecurityLevelForAddress(address) : linphone::SecurityLevel::None;
 }
 
 void FriendModel::setPictureUri(const QString &uri) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (!mMonitor) return;
 	auto oldPictureUri = Utils::coreStringToAppString(mMonitor->getPhoto());
 	if (!oldPictureUri.isEmpty()) {
 		QString appPrefix = QStringLiteral("image://%1/").arg(AvatarProvider::ProviderId);
@@ -344,3 +362,42 @@ void FriendModel::setPictureUri(const QString &uri) {
 	mMonitor->setPhoto(Utils::appStringToCoreString(uri));
 	emit pictureUriChanged(uri);
 }
+
+bool FriendModel::isThisFriend(const std::shared_ptr<linphone::Friend> &data) {
+	if (!mMonitor) return false;
+	auto fAddress = mMonitor->getAddress();
+	if (!fAddress) return false;
+	bool isThisFriend = false;
+	for (auto f : data->getAddresses()) {
+		if (f->weakEqual(fAddress)) {
+			isThisFriend = true;
+			break;
+		}
+	}
+	return isThisFriend;
+}
+
+void FriendModel::remove() {
+	if (!mMonitor) return;
+	auto temp = mMonitor;
+	temp->remove(); // mMonitor become null
+	emit CoreModel::getInstance()->friendRemoved(temp);
+}
+
+void FriendModel::onUpdated(const std::shared_ptr<linphone::Friend> &data) {
+	if (isThisFriend(data)) {
+		emit givenNameChanged(getGivenName());
+		emit familyNameChanged(getFamilyName());
+		emit organizationChanged(getOrganization());
+		emit jobChanged(getJob());
+		emit pictureUriChanged(getPictureUri());
+		emit updated();
+	}
+};
+
+void FriendModel::onRemoved(const std::shared_ptr<linphone::Friend> &data) {
+	if (data && isThisFriend(data)) {
+		setMonitor(nullptr);
+		emit removed();
+	}
+};

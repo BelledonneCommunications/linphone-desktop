@@ -45,6 +45,7 @@ public:
 	}
 	~Listener() {
 		setSelf(nullptr);
+		setMonitor(nullptr);
 	}
 	virtual void onRemoveListener() {
 		setSelf(nullptr);

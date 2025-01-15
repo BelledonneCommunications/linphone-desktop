@@ -307,13 +307,7 @@ AbstractMainPage {
 										anchors.topMargin: 5 * DefaultStyle.dp
 										anchors.bottomMargin: 5 * DefaultStyle.dp
 										visible: !!modelData
-										Connections{
-											target: modelData?.core
-											// Update contact with the new friend.
-											function onFriendAdded(){
-												historyAvatar.contactObj = UtilsCpp.findFriendByAddress(modelData.core.remoteAddress)
-											}
-										}
+										
 										RowLayout {
 											z: 1
 											anchors.fill: parent
@@ -323,7 +317,7 @@ AbstractMainPage {
 											Avatar {
 												id: historyAvatar
 												property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.remoteAddress)
-												contact: contactObj && contactObj.value || null
+												contact: contactObj?.value || null
 												_address: modelData.core.remoteAddress
 												width: 45 * DefaultStyle.dp
 												height: 45 * DefaultStyle.dp
@@ -337,7 +331,7 @@ AbstractMainPage {
 													id: friendAddress
 													Layout.fillWidth: true
 													maximumLineCount: 1
-													text: modelData.core.displayName
+													text: historyAvatar.displayNameVal
 													font {
 														pixelSize: 14 * DefaultStyle.dp
 														weight: 400 * DefaultStyle.dp
@@ -660,18 +654,18 @@ AbstractMainPage {
 				anchors.topMargin: 45 * DefaultStyle.dp
 				anchors.bottomMargin: 45 * DefaultStyle.dp
 				visible: mainItem.selectedRowHistoryGui != undefined
-				property var contactObj: UtilsCpp.findFriendByAddress(contactAddress)
+
+				property var contactObj: UtilsCpp.findFriendByAddress(specificAddress)
+
 				contact: contactObj && contactObj.value || null
 				conferenceInfo: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.conferenceInfo || null
 				specificAddress: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
-				
+
 				buttonContent: PopupButton {
 					id: detailOptions
 					anchors.right: parent.right
 					anchors.verticalCenter: parent.verticalCenter
 					popup.x: width
-					property var friendGuiObj: UtilsCpp.findFriendByAddress(contactDetail.contactAddress)
-					property var friendGui: friendGuiObj ? friendGuiObj.value : null
 					popup.contentItem: FocusScope {
 						implicitHeight: detailsButtons.implicitHeight
 						implicitWidth: detailsButtons.implicitWidth
@@ -690,10 +684,10 @@ AbstractMainPage {
 								icon.source: AppIcons.plusCircle
 								icon.width: 32 * DefaultStyle.dp
 								icon.height: 32 * DefaultStyle.dp
-								visible: SettingsCpp.syncLdapContacts || !detailOptions.friendGui?.core?.isLdap
+								visible: SettingsCpp.syncLdapContacts || !contactDetail.contact?.core?.isLdap
 								onClicked: {
 									detailOptions.close()
-									if (detailOptions.friendGui) mainWindow.displayContactPage(contactDetail.contactAddress)
+									if (contactDetail.contact) mainWindow.displayContactPage(contactDetail.contactAddress)
 									else mainItem.createContactRequested(contactDetail.contactName, contactDetail.contactAddress)
 								}
 							}

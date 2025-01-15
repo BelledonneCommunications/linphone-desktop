@@ -410,7 +410,27 @@ void CoreModel::onVersionUpdateCheckResultReceived(const std::shared_ptr<linphon
                                                    const std::string &url) {
 	emit versionUpdateCheckResultReceived(core, result, version, url);
 }
+
 void CoreModel::onFriendListRemoved(const std::shared_ptr<linphone::Core> &core,
                                     const std::shared_ptr<linphone::FriendList> &friendList) {
+	// Hack because of SDK bug. Wait some times before removing friends.
+	// Note: shared pointers can be used with singleShot, they will be destroyed after removing lambda from timer.
+	QTimer::singleShot(500, [this, core, friendList]() {
+		emit friendListRemoved(core, friendList);
+		for (auto f : friendList->getFriends()) {
+			emit friendRemoved(f);
+		}
+	});
+	/* TODO when SDK bug is fixed
 	emit friendListRemoved(core, friendList);
+	qDebug() << "List removed: " << friendList->getDisplayName();
+	for (auto l : core->getFriendsLists()) {
+	    qDebug() << "Still have " << l->getDisplayName();
+	}
+	for (auto f : friendList->getFriends()) {
+	    auto linFriend = CoreModel::getInstance()->getCore()->findFriend(f->getAddress());
+	    if (linFriend) qDebug() << "Friend still exist: " << linFriend->getFriendList()->getDisplayName();
+	    emit friendRemoved(f);
+	}
+*/
 }

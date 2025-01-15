@@ -148,6 +148,8 @@ public:
 	bool isLdap() const;
 	bool getReadOnly() const;
 
+	std::shared_ptr<FriendModel> getFriendModel();
+
 	Q_INVOKABLE void remove();
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
@@ -157,7 +159,7 @@ protected:
 	void resetAddresses(QList<QVariant> newList);
 
 signals:
-	void contactUpdated();
+	void friendUpdated();
 	void givenNameChanged(QString name);
 	void familyNameChanged(QString name);
 	void fullNameChanged(QString name);

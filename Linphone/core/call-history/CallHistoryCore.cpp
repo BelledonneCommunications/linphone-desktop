@@ -93,42 +93,44 @@ void CallHistoryCore::setSelf(QSharedPointer<CallHistoryCore> me) {
 			});
 		});
 	}
-	if (!ToolModel::findFriendByAddress(mRemoteAddress)) {
-		mCoreModelConnection->makeConnectToModel(
-		    &CoreModel::friendCreated,
-		    [this, remoteAddress = mRemoteAddress](const std::shared_ptr<linphone::Friend> &f) {
-			    auto friendModel = Utils::makeQObject_ptr<FriendModel>(f);
-			    auto displayName = friendModel->getFullName();
-			    auto fAddress = ToolModel::interpretUrl(remoteAddress);
-			    bool isThisFriend = false;
-			    for (auto f : friendModel->getAddresses()) {
-				    if (f->weakEqual(fAddress)) {
-					    isThisFriend = true;
-					    break;
-				    }
-			    }
-			    if (isThisFriend)
-				    mCoreModelConnection->invokeToCore([this, friendModel, displayName]() {
-					    mFriendModel = friendModel;
-					    auto me = mCoreModelConnection->mCore.mQData; // Locked from previous call.
-					    mFriendModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, FriendModel>>(
-					        new SafeConnection<CallHistoryCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
-					    mFriendModelConnection->makeConnectToModel(&FriendModel::fullNameChanged, [this]() {
-						    auto fullName = mFriendModel->getFullName();
-						    mCoreModelConnection->invokeToCore([this, fullName]() {
-							    if (fullName != mDisplayName) {
-								    mDisplayName = fullName;
-								    emit displayNameChanged();
-							    }
-						    });
-					    });
-					    if (displayName != mDisplayName) {
-						    mDisplayName = displayName;
-						    emit displayNameChanged();
-					    }
-					    emit friendAdded();
-				    });
-		    });
+	auto update = [this, remoteAddress = mRemoteAddress](const std::shared_ptr<linphone::Friend> &updatedFriend) {
+		auto friendModel = Utils::makeQObject_ptr<FriendModel>(updatedFriend);
+		auto displayName = friendModel->getFullName();
+		auto fAddress = ToolModel::interpretUrl(remoteAddress);
+		bool isThisFriend = false;
+		for (auto f : friendModel->getAddresses()) {
+			if (f->weakEqual(fAddress)) {
+				isThisFriend = true;
+				break;
+			}
+		}
+		if (isThisFriend)
+			mCoreModelConnection->invokeToCore([this, friendModel, displayName]() {
+				mFriendModel = friendModel;
+				auto me = mCoreModelConnection->mCore.mQData; // Locked from previous call.
+				mFriendModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, FriendModel>>(
+				    new SafeConnection<CallHistoryCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
+				mFriendModelConnection->makeConnectToModel(&FriendModel::fullNameChanged, [this]() {
+					auto fullName = mFriendModel->getFullName();
+					mCoreModelConnection->invokeToCore([this, fullName]() {
+						if (fullName != mDisplayName) {
+							mDisplayName = fullName;
+							emit displayNameChanged();
+						}
+					});
+				});
+				if (displayName != mDisplayName) {
+					mDisplayName = displayName;
+					emit displayNameChanged();
+				}
+				emit friendUpdated();
+			});
+	};
+	if (!ToolModel::findFriendByAddress(mRemoteAddress))
+		mCoreModelConnection->makeConnectToModel(&CoreModel::friendCreated, update);
+	else {
+		mCoreModelConnection->makeConnectToModel(&CoreModel::friendUpdated, update);
+		mCoreModelConnection->makeConnectToModel(&CoreModel::friendRemoved, &CallHistoryCore::onRemoved);
 	}
 }
 
@@ -154,3 +156,23 @@ void CallHistoryCore::remove() {
 		emit removed();
 	});
 }
+
+void CallHistoryCore::onRemoved(const std::shared_ptr<linphone::Friend> &updatedFriend) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto fAddress = ToolModel::interpretUrl(mRemoteAddress);
+	bool isThisFriend = mFriendModel && updatedFriend == mFriendModel->getFriend();
+	if (!isThisFriend)
+		for (auto f : updatedFriend->getAddresses()) {
+			if (f->weakEqual(fAddress)) {
+				isThisFriend = true;
+				break;
+			}
+		}
+	if (isThisFriend) {
+		mFriendModel = nullptr;
+		mFriendModelConnection = nullptr;
+		mDisplayName = ToolModel::getDisplayName(mRemoteAddress);
+		emit displayNameChanged();
+		emit friendUpdated();
+	}
+};

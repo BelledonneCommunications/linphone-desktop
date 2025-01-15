@@ -125,6 +125,11 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 		if (mFriendModel) {
 			mFriendModelConnection = QSharedPointer<SafeConnection<FriendCore, FriendModel>>(
 			    new SafeConnection<FriendCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
+			mFriendModelConnection->makeConnectToModel(&FriendModel::updated, [this]() {
+				mFriendModelConnection->invokeToCore([this]() { emit friendUpdated(); });
+			});
+			mFriendModelConnection->makeConnectToModel(
+			    &FriendModel::removed, [this]() { mFriendModelConnection->invokeToCore([this]() { removed(this); }); });
 			mFriendModelConnection->makeConnectToModel(
 			    &FriendModel::presenceReceived,
 			    [this](LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp) {
@@ -566,7 +571,7 @@ void FriendCore::writeIntoModel(std::shared_ptr<FriendModel> model) const {
 	model->setJob(mJob);
 	model->setPictureUri(mPictureUri);
 	model->getFriend()->done();
-	emit model->friendUpdated();
+	emit model->updated();
 }
 
 void FriendCore::writeFromModel(const std::shared_ptr<FriendModel> &model) {
@@ -594,12 +599,7 @@ void FriendCore::writeFromModel(const std::shared_ptr<FriendModel> &model) {
 
 void FriendCore::remove() {
 	if (mFriendModel) { // Update
-		mFriendModelConnection->invokeToModel([this]() {
-			auto contact = mFriendModel->getFriend();
-			// emit CoreModel::getInstance()->friendRemoved(contact);
-			contact->remove();
-			mFriendModelConnection->invokeToCore([this]() { removed(this); });
-		});
+		mFriendModelConnection->invokeToModel([this]() { mFriendModel->remove(); });
 	}
 }
 
@@ -704,4 +704,8 @@ bool FriendCore::isLdap() const {
 bool FriendCore::getReadOnly() const {
 	return isLdap(); // TODO add conditions for friends retrieved via HTTP [misc]vcards-contacts-list=<URL> &
 	                 // CardDAV
+}
+
+std::shared_ptr<FriendModel> FriendCore::getFriendModel() {
+	return mFriendModel;
 }

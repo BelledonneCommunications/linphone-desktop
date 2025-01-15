@@ -55,6 +55,8 @@ public:
 	QString getDuration() const;
 	void setDuration(const QString &duration);
 
+	void onRemoved(const std::shared_ptr<linphone::Friend> &updatedFriend);
+
 	Q_INVOKABLE void remove();
 
 	QString mRemoteAddress;
@@ -68,7 +70,7 @@ public:
 signals:
 	void durationChanged(QString duration);
 	void displayNameChanged();
-	void friendAdded(); // When a friend is created, this log is linked to it.
+	void friendUpdated(); // When a friend is created, this log is linked to it.
 	void removed();
 
 private:
