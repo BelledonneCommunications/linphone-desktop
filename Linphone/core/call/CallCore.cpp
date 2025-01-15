@@ -278,12 +278,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	                                                                          const std::string &message) {
 		double speakerVolume = mSpeakerVolumeGain;
 		double micVolumeGain = mMicrophoneVolumeGain;
-		bool isConf = false;
-		if (state == linphone::Call::State::Connected) {
-			// The conference object is not ready until the StreamRunning status,
-			// so it can't be used at this point
-			isConf = call->getConference() != nullptr;
-		} else if (state == linphone::Call::State::StreamsRunning) {
+		bool isConf = call && call->getConference() != nullptr;
+		if (state == linphone::Call::State::StreamsRunning) {
 			speakerVolume = mCallModel->getSpeakerVolumeGain();
 			if (speakerVolume < 0) {
 				speakerVolume = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
@@ -300,6 +296,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			setRecordable(state == linphone::Call::State::StreamsRunning);
 			setPaused(state == linphone::Call::State::Paused || state == linphone::Call::State::PausedByRemote);
 			if (mConference) mConference->setSubject(subject);
+			// The conference object is not ready until the StreamRunning status,
+			// so it can't be used at this point
 			setIsConference(isConf);
 		});
 		mCallModelConnection->invokeToCore([this, state, message]() { setState(LinphoneEnums::fromLinphone(state)); });
