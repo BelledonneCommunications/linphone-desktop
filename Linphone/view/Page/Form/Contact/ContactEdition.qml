@@ -69,16 +69,25 @@ MainRightPanel {
 		anchors.fill: parent
 		contact: mainItem.contact
 		button.text: mainItem.saveButtonText
-
-		button.onClicked: {
-			if (contact.core.givenName.length === 0) {
-				givenName.errorMessage = qsTr("Veuillez saisir un prénom")
-				return
-			} else if (addressesList.count === 0 && phoneNumberList.count === 0) {
-				addressesErrorText.setText(qsTr("Veuillez saisir une adresse ou un numéro de téléphone"))
-				return
+		
+		// Let some time to GUI to set fields on losing focus.
+		Timer{
+			id: saveDelay
+			interval: 200
+			onTriggered:{
+				if (mainItem.contact.core.givenName.length === 0) {
+					givenName.errorMessage = qsTr("Veuillez saisir un prénom")
+					return
+				} else if (addressesList.count === 0 && phoneNumberList.count === 0) {
+					addressesErrorText.setText(qsTr("Veuillez saisir une adresse ou un numéro de téléphone"))
+					return
+				}
+				mainItem.contact.core.save()
 			}
-			mainItem.contact.core.save()
+		}
+		button.onClicked: {
+			button.forceActiveFocus()
+			saveDelay.restart()
 		}
 		bannerContent: [
 			IconLabelButton {
@@ -397,7 +406,7 @@ MainRightPanel {
 					Layout.fillWidth: true
 					wrapMode: Text.WordWrap
 					elide: Text.ElideRight
-					onTextChanged: if(text.length > 0) editionLayout.ensureVisible(this)
+					onTextChanged: if(addressesErrorText.text.length > 0) editionLayout.ensureVisible(this)
 				}
 				Item{Layout.fillHeight: true}
 			}

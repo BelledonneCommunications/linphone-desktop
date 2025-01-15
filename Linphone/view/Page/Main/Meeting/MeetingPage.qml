@@ -374,7 +374,7 @@ AbstractMainPage {
 								KeyNavigation.down: conferenceEdit
 								KeyNavigation.up: conferenceEdit
 								onActiveFocusChanged: if(activeFocus==true) selectAll()
-								onEditingFinished: mainItem.selectedConference.core.subject = text
+								onTextEdited: mainItem.selectedConference.core.subject = text
 								Component.onCompleted: {
 									text = mainItem.selectedConference.core.subject
 								}
