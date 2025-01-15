@@ -7,6 +7,7 @@ import QtQuick.Layouts
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 MainRightPanel {
 	id: mainItem

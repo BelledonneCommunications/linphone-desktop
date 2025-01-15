@@ -81,7 +81,7 @@ Control.Button {
 		// color: buttonBackground.color == "transparent" ? "transparent" : "white"
 		color: disabledFilterColor
 		opacity: 0.5
-		visible: !mainItem.enabled && mainItem.color != "transparent"
+		visible: !mainItem.enabled && mainItem.color.a !== 0
 		radius: mainItem.radius
 		width: mainItem.width
 		height: mainItem.height

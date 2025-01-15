@@ -92,7 +92,7 @@ Control.TabBar {
 			height: visible && buttonIcon.isImageReady ? undefined : 0
 			bottomInset:  32 * DefaultStyle.dp
 			topInset:  32 * DefaultStyle.dp
-			
+			hoverEnabled: true
 			visible: modelData?.visible != undefined ? modelData?.visible : true
 			UnreadNotification {
 				unread: !defaultAccount 
@@ -106,12 +106,15 @@ Control.TabBar {
 				anchors.rightMargin: 15 * DefaultStyle.dp
 				anchors.top: parent.top
 			}
+			MouseArea {
+				anchors.fill: tabButton
+				cursorShape: tabButton.hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+				acceptedButtons: Qt.NoButton
+			}
 			contentItem: ColumnLayout {
-				// height: tabButton.height
-				// width: tabButton.width
 				EffectImage {
 					id: buttonIcon
-					property int buttonSize: 24 * DefaultStyle.dp
+					property int buttonSize: mainItem.currentIndex !== index && tabButton.hovered ? 26 * DefaultStyle.dp : 24 * DefaultStyle.dp
 					imageSource: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
 					Layout.preferredWidth: buttonSize
 					Layout.preferredHeight: buttonSize
@@ -125,10 +128,12 @@ Control.TabBar {
 					visible: buttonIcon.isImageReady
 					text: modelData.label
 					font {
-						weight: mainItem.currentIndex === index ? 800 * DefaultStyle.dp : 400 * DefaultStyle.dp
-						pixelSize: 9 * DefaultStyle.dp
-						underline: tabButton.activeFocus || tabButton.hovered
-						bold: true
+						weight: mainItem.currentIndex === index 
+							? 800 * DefaultStyle.dp 
+							: tabButton.hovered 
+								? 600 * DefaultStyle.dp 
+								: 400 * DefaultStyle.dp
+						pixelSize: 11 * DefaultStyle.dp
 					}
 					color: DefaultStyle.grey_0
 					Layout.fillWidth: true

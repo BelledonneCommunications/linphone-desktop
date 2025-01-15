@@ -57,7 +57,11 @@ Item {
 									|| (participantDevice && participantDevice.core.videoEnabled)
 	property string qmlName
 	property bool displayAll : !!mainItem.call
-	property bool mutedStatus: participantDevice ? participantDevice.core.isMuted : false
+	property bool mutedStatus: participantDevice 
+		? participantDevice.core.isMuted 
+		: account && call
+			? call.core.conference && call.core.microphoneMuted
+			: false
 	clip: false
 	Rectangle {
 		id: background
