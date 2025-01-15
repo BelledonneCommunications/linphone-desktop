@@ -220,7 +220,8 @@ bool CoreModel::setFetchConfig(QString filePath) {
 	if (!filePath.isEmpty()) {
 		if (mCore) {
 			filePath.replace('\\', '/');
-			fetched = mCore->setProvisioningUri(Utils::appStringToCoreString(filePath)) == 0;
+			QUrl url(filePath);
+			fetched = mCore->setProvisioningUri(Utils::appStringToCoreString(url.toEncoded())) == 0;
 		}
 	}
 	if (!fetched) {
