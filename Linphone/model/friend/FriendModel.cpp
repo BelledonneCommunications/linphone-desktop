@@ -58,7 +58,7 @@ FriendModel::FriendModel(const std::shared_ptr<linphone::Friend> &contact, const
 	connect(this, &FriendModel::givenNameChanged, updateFullName);
 	connect(this, &FriendModel::familyNameChanged, updateFullName);
 
-	connect(this, &FriendModel::updated, [this]() { emit CoreModel::getInstance()->friendUpdated(mMonitor); });
+	connect(CoreModel::getInstance().get(), &CoreModel::friendUpdated, this, &FriendModel::onUpdated);
 	connect(CoreModel::getInstance().get(), &CoreModel::friendRemoved, this, &FriendModel::onRemoved);
 };
 

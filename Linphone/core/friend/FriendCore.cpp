@@ -221,6 +221,10 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 					    updateVerifiedDevicesCount();
 				    });
 			    });
+			mCoreModelConnection->makeConnectToCore(&FriendCore::saved, [this]() {
+				mCoreModelConnection->invokeToModel(
+				    [this, f = mFriendModel->getFriend()]() { emit CoreModel::getInstance()->friendUpdated(f); });
+			});
 
 		} else { // Create
 			mCoreModelConnection = QSharedPointer<SafeConnection<FriendCore, CoreModel>>(
@@ -624,7 +628,7 @@ void FriendCore::save() { // Save Values to model
 			thisCopy->writeIntoModel(mFriendModel);
 			thisCopy->deleteLater();
 			mVCardString = mFriendModel->getVCardAsString();
-			mFriendModelConnection->invokeToCore([this]() { saved(); });
+			mFriendModelConnection->invokeToCore([this]() { emit saved(); });
 			setIsSaved(true);
 		});
 	} else {
@@ -648,7 +652,7 @@ void FriendCore::save() { // Save Values to model
 						thisCopy->deleteLater();
 						mVCardString = mFriendModel->getVCardAsString();
 					});
-					saved();
+					emit saved();
 				});
 			} else {
 				auto contact = core->createFriend();

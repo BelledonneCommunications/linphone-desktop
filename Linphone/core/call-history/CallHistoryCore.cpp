@@ -128,10 +128,8 @@ void CallHistoryCore::setSelf(QSharedPointer<CallHistoryCore> me) {
 	};
 	if (!ToolModel::findFriendByAddress(mRemoteAddress))
 		mCoreModelConnection->makeConnectToModel(&CoreModel::friendCreated, update);
-	else {
-		mCoreModelConnection->makeConnectToModel(&CoreModel::friendUpdated, update);
-		mCoreModelConnection->makeConnectToModel(&CoreModel::friendRemoved, &CallHistoryCore::onRemoved);
-	}
+	mCoreModelConnection->makeConnectToModel(&CoreModel::friendUpdated, update);
+	mCoreModelConnection->makeConnectToModel(&CoreModel::friendRemoved, &CallHistoryCore::onRemoved);
 }
 
 ConferenceInfoGui *CallHistoryCore::getConferenceInfoGui() const {
