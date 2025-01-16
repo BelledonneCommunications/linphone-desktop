@@ -113,6 +113,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 
 	INIT_CORE_MEMBER(ShortcutCount, settingsModel)
 	INIT_CORE_MEMBER(Shortcuts, settingsModel)
+	INIT_CORE_MEMBER(CallToneIndicationsEnabled, settingsModel)
 }
 
 SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
@@ -183,6 +184,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mDownloadFolder = settingsCore.mDownloadFolder;
 	mShortcutCount = settingsCore.mShortcutCount;
 	mShortcuts = settingsCore.mShortcuts;
+	mCallToneIndicationsEnabled = settingsCore.mCallToneIndicationsEnabled;
 }
 
 SettingsCore::~SettingsCore() {
@@ -386,6 +388,8 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                        ShortcutCount)
 	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QVariantList,
 	                        shortcuts, Shortcuts)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
+	                           callToneIndicationsEnabled, CallToneIndicationsEnabled)
 
 	auto coreModelConnection = SafeConnection<SettingsCore, CoreModel>::create(me, CoreModel::getInstance());
 

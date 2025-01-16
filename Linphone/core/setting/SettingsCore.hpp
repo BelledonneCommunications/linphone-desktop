@@ -217,6 +217,7 @@ public:
 	// Read-only
 	DECLARE_CORE_MEMBER(int, shortcutCount, ShortcutCount)
 	DECLARE_CORE_MEMBER(QVariantList, shortcuts, Shortcuts)
+	DECLARE_CORE_GETSET_MEMBER(bool, callToneIndicationsEnabled, CallToneIndicationsEnabled)
 
 signals:
 

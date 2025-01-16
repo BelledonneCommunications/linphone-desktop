@@ -42,9 +42,8 @@ SettingsModel::SettingsModel() {
 	auto core = CoreModel::getInstance()->getCore();
 	mConfig = core->getConfig();
 	CoreModel::getInstance()->getLogger()->applyConfig(mConfig);
-	if (mConfig->hasEntry(UiSection, "do_not_disturb") == 1) {
-		enableDnd(dndEnabled());
-	}
+	// Only activate on enabled. If not, we should keep old configuration.
+	if (dndEnabled()) enableDnd(true);
 	QObject::connect(
 	    CoreModel::getInstance().get(), &CoreModel::globalStateChanged, this,
 	    [this](const std::shared_ptr<linphone::Core> &core, linphone::GlobalState gstate, const std::string &message) {
@@ -426,6 +425,19 @@ void SettingsModel::setAutomaticallyRecordCallsEnabled(bool enabled) {
 	emit automaticallyRecordCallsEnabledChanged(enabled);
 }
 
+bool SettingsModel::getCallToneIndicationsEnabled() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return CoreModel::getInstance()->getCore()->callToneIndicationsEnabled();
+}
+
+void SettingsModel::setCallToneIndicationsEnabled(bool enabled) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (enabled != getCallToneIndicationsEnabled()) {
+		CoreModel::getInstance()->getCore()->enableCallToneIndications(enabled);
+		emit callToneIndicationsEnabledChanged(enabled);
+	}
+}
+
 // =============================================================================
 // VFS.
 // =============================================================================
@@ -539,12 +551,6 @@ bool SettingsModel::dndEnabled() const {
 	return dndEnabled(mConfig);
 }
 
-void SettingsModel::enableTones(const shared_ptr<linphone::Config> &config, bool enable) {
-	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
-	config->setInt("sound", "tone_indications", enable); // General tones
-	config->setInt("misc", "tone_indications", enable);  // Call tones
-}
-
 void SettingsModel::enableRinging(bool enable) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mConfig->setInt("sound", "disable_ringing", !enable); // Ringing
@@ -552,7 +558,7 @@ void SettingsModel::enableRinging(bool enable) {
 
 void SettingsModel::enableDnd(bool enableDnd) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	enableTones(mConfig, !enableDnd);
+	setCallToneIndicationsEnabled(!enableDnd);
 	enableRinging(!enableDnd);
 	mConfig->setInt(UiSection, "do_not_disturb", enableDnd);
 	emit dndChanged(enableDnd);

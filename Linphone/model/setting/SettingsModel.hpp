@@ -108,8 +108,15 @@ public:
 	QString getVideoDevice() const;
 	void setVideoDevice(QString device);
 
+	//------------------------------------------------------------------------------------------------------------
+
 	void startEchoCancellerCalibration();
 	int getEchoCancellationCalibration() const;
+
+	bool getCallToneIndicationsEnabled() const;
+	void setCallToneIndicationsEnabled(bool enabled);
+
+	//------------------------------------------------------------------------------------------------------------
 
 	bool getLogsEnabled() const;
 	void setLogsEnabled(bool status);
@@ -133,7 +140,6 @@ public:
 	bool dndEnabled() const;
 	static bool dndEnabled(const std::shared_ptr<linphone::Config> &config);
 	void enableDnd(bool value);
-	static void enableTones(const std::shared_ptr<linphone::Config> &config, bool enable);
 	void enableRinging(bool enable);
 
 	QString getLogsEmail() const;
@@ -181,8 +187,6 @@ signals:
 	void videoEnabledChanged(bool enabled);
 
 	// Call. --------------------------------------------------------------------
-	void echoCancellationEnabledChanged(bool enabled);
-	void automaticallyRecordCallsEnabledChanged(bool enabled);
 
 	void captureGraphRunningChanged(bool running);
 
@@ -198,9 +202,17 @@ signals:
 	void playbackDeviceChanged(QVariantMap device);
 	void ringerDeviceChanged(QVariantMap device);
 	void videoDeviceChanged(QString device);
+
 	void conferenceLayoutChanged();
 	void mediaEncryptionChanged();
 	void mediaEncryptionMandatoryChanged();
+
+	void echoCancellationEnabledChanged(bool enabled);
+	void automaticallyRecordCallsEnabledChanged(bool enabled);
+
+	void callToneIndicationsEnabledChanged(bool enabled);
+
+	void showAudioCodecsChanged(bool status);
 
 	void micVolumeChanged(float volume);
 
