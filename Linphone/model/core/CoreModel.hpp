@@ -57,6 +57,7 @@ public:
 	QString getFetchConfig(QString filePath, bool *error);
 	void useFetchConfig(QString filePath);
 	bool setFetchConfig(QString filePath);
+	void migrate();
 
 	bool mEnd = false;
 

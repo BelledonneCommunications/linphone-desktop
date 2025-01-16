@@ -95,6 +95,7 @@ void CoreModel::start() {
 	QString userAgent = ToolModel::computeUserAgent(config);
 	mCore->setUserAgent(Utils::appStringToCoreString(userAgent), LINPHONESDK_VERSION);
 	mCore->start();
+	migrate();
 	setPathAfterStart();
 	if (SettingsModel::clearLocalLdapFriendsUponStartup(config)) {
 		// Remove ldap friends cache list. If not, old stored friends will take priority on merge and will not be
@@ -228,6 +229,35 @@ bool CoreModel::setFetchConfig(QString filePath) {
 		qWarning() << "Remote provisionning cannot be retrieved. Command have been cleaned";
 	} else emit requestRestart();
 	return fetched;
+}
+
+void CoreModel::migrate() {
+	std::shared_ptr<linphone::Config> config = mCore->getConfig();
+	int rcVersion = config->getInt(SettingsModel::UiSection, Constants::RcVersionName, 0);
+	if (rcVersion == Constants::RcVersionCurrent) return;
+	if (rcVersion > Constants::RcVersionCurrent) {
+		qWarning() << QStringLiteral("RC file version (%1) is more recent than app rc file version (%2)!!!")
+		                  .arg(rcVersion)
+		                  .arg(Constants::RcVersionCurrent);
+		return;
+	}
+
+	qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).").arg(rcVersion).arg(Constants::RcVersionCurrent);
+	for (const auto &account : mCore->getAccountList()) {
+		auto params = account->getParams();
+		if (params->getDomain() == Constants::LinphoneDomain) {
+			auto newParams = params->clone();
+			QString accountIdentity =
+			    (newParams->getIdentityAddress() ? newParams->getIdentityAddress()->asString().c_str() : "no-identity");
+			if (rcVersion < 1) {
+				newParams->setLimeAlgo("c25519");
+				qInfo() << "Migrating" << accountIdentity << "for version 1. lime algo = c25519";
+			}
+			account->setParams(newParams);
+		}
+	}
+
+	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------

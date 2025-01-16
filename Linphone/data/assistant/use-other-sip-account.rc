@@ -21,6 +21,7 @@
     <entry name="conference_factory_uri" overwrite="true"></entry>
     <entry name="audio_video_conference_factory_uri" overwrite="true"></entry>
     <entry name="lime_server_url" overwrite="true"></entry>
+    <entry name="lime_algo" overwrite="true"></entry>
   </section>
   <section name="default_nat_policy_values">
     <entry name="stun_server" overwrite="true"></entry>
