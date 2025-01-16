@@ -12,8 +12,6 @@ FocusScope {
 	property bool isCreation
 	property ConferenceInfoGui conferenceInfoGui
 	signal addParticipantsRequested()
-	signal returnRequested()
-	signal saveSucceed(bool isCreation)
 
 	ColumnLayout {
 		id: formLayout
@@ -287,7 +285,8 @@ FocusScope {
 								_address: modelData.address
 							}
 							Text {
-								text: modelData.displayName || modelData.displayNameObj?.value || ""
+								property var displayNameObj: UtilsCpp.getDisplayName(modelData.address)
+								text: displayNameObj?.value || ""
 								font.pixelSize: 14 * DefaultStyle.dp
 								font.capitalization: Font.Capitalize
 							}

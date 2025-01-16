@@ -227,6 +227,7 @@ void ConferenceInfoList::connectItem(QSharedPointer<ConferenceInfoCore> confInfo
 			int i = -1;
 			get(confInfoCore.get(), &i);
 			if (i != -1) {
+				updateHaveCurrentDate();
 				auto modelIndex = index(i);
 				emit confInfoUpdated(confInfoCore);
 				emit dataChanged(modelIndex, modelIndex);

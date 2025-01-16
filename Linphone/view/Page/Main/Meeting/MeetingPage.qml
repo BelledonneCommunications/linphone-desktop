@@ -48,7 +48,7 @@ AbstractMainPage {
 
 	onSelectedConferenceChanged: {
 		// While a conference is being edited, we need to stay on the edit page
-		if (overridenRightPanelStackView.currentItem && overridenRightPanelStackView.currentItem.objectName === "editConf") return
+		if (overridenRightPanelStackView.currentItem && (overridenRightPanelStackView.currentItem.objectName === "editConf" || overridenRightPanelStackView.currentItem.objectName === "createConf")) return
 		overridenRightPanelStackView.clear()
 		if (selectedConference && selectedConference.core && selectedConference.core.haveModel) {
 			if (!overridenRightPanelStackView.currentItem || overridenRightPanelStackView.currentItem != meetingDetail) overridenRightPanelStackView.replace(meetingDetail, Control.StackView.Immediate)
@@ -212,6 +212,7 @@ AbstractMainPage {
 		id: createConf
 		FocusScope{
 			id: createConfLayout
+			objectName: "createConf"
 			property ConferenceInfoGui conferenceInfoGui
 			property bool isCreation
 			ColumnLayout {
@@ -278,7 +279,12 @@ AbstractMainPage {
 						target: meetingSetup.conferenceInfoGui ? meetingSetup.conferenceInfoGui.core : null
 						function onConferenceSchedulerStateChanged() {
 							var mainWin = UtilsCpp.getMainWindow()
-							if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
+							if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) {
+								leftPanelStackView.pop()
+								UtilsCpp.showInformationPopup(qsTr("Nouvelle réunion"), qsTr("Réunion planifiée avec succès"), true)
+								mainWindow.closeLoadingPopup()
+							}
+							else if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
 								|| meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
 								mainWin.showLoadingPopup(qsTr("Création de la réunion en cours..."), true, function () {
 									leftPanelStackView.pop()
@@ -295,11 +301,6 @@ AbstractMainPage {
 							var mainWin = UtilsCpp.getMainWindow()
 							mainWin.closeLoadingPopup()
 						}
-					}
-					onSaveSucceed: {
-						leftPanelStackView.pop()
-						UtilsCpp.showInformationPopup(qsTr("Nouvelle réunion"), qsTr("Réunion planifiée avec succès"), true)
-						mainWindow.closeLoadingPopup()
 					}
 					onAddParticipantsRequested: {
 						leftPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": leftPanelStackView})
@@ -763,7 +764,8 @@ AbstractMainPage {
 									_address: modelData.address
 								}
 								Text {
-									text: modelData.displayName || modelData.displayNameObj?.value || ""
+									property var displayNameObj: UtilsCpp.getDisplayName(modelData.address)
+									text: displayNameObj?.value || ""
 									maximumLineCount: 1
 									Layout.fillWidth: true
 									font {

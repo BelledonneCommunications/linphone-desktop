@@ -86,7 +86,6 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		for (auto item : conferenceInfo->getParticipantInfos()) {
 			QVariantMap participant;
 			auto address = item->getAddress();
-			participant["displayName"] = ToolModel::getDisplayName(address);
 			participant["address"] = Utils::coreStringToAppString(address->asStringUriOnly());
 			participant["role"] = (int)LinphoneEnums::fromLinphone(item->getRole());
 			mParticipants.append(participant);
@@ -221,6 +220,7 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 			mConfInfoModelConnection->makeConnectToModel(
 			    &ConferenceInfoModel::invitationsSent,
 			    [this](const std::list<std::shared_ptr<linphone::Address>> &failedInvitations) {});
+
 		} else { // Create
 			mCoreModelConnection = QSharedPointer<SafeConnection<ConferenceInfoCore, CoreModel>>(
 			    new SafeConnection<ConferenceInfoCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
@@ -382,13 +382,12 @@ int ConferenceInfoCore::getParticipantCount() const {
 }
 
 void ConferenceInfoCore::addParticipant(const QString &address) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	for (auto &participant : mParticipants) {
 		auto map = participant.toMap();
 		if (map["address"].toString() == address) return;
 	}
 	QVariantMap participant;
-	auto displayNameObj = Utils::getDisplayName(address);
-	participant["displayNameObj"] = QVariant::fromValue(displayNameObj);
 	participant["address"] = address;
 	participant["role"] = (int)LinphoneEnums::ParticipantRole::Listener;
 	mParticipants.append(participant);
@@ -396,6 +395,7 @@ void ConferenceInfoCore::addParticipant(const QString &address) {
 }
 
 void ConferenceInfoCore::addParticipants(const QStringList &addresses) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	bool addressAdded = false;
 	for (auto &address : addresses) {
 		auto found = std::find_if(mParticipants.begin(), mParticipants.end(), [address](QVariant participant) {
@@ -403,8 +403,6 @@ void ConferenceInfoCore::addParticipants(const QStringList &addresses) {
 		});
 		if (found == mParticipants.end()) {
 			QVariantMap participant;
-			auto displayNameObj = Utils::getDisplayName(address);
-			participant["displayNameObj"] = QVariant::fromValue(displayNameObj);
 			participant["address"] = address;
 			participant["role"] = (int)LinphoneEnums::ParticipantRole::Listener;
 			mParticipants.append(participant);
@@ -446,12 +444,10 @@ void ConferenceInfoCore::resetParticipants(QVariantList participants) {
 }
 
 void ConferenceInfoCore::resetParticipants(const QStringList &adresses) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	mParticipants.clear();
 	for (auto &address : adresses) {
 		QVariantMap participant;
-		QString name;
-		auto displayNameObj = Utils::getDisplayName(address);
-		participant["displayNameObj"] = QVariant::fromValue(displayNameObj);
 		participant["address"] = address;
 		participant["role"] = (int)LinphoneEnums::ParticipantRole::Listener;
 		mParticipants.append(participant);
@@ -522,17 +518,25 @@ void ConferenceInfoCore::setConferenceSchedulerState(LinphoneEnums::ConferenceSc
 
 void ConferenceInfoCore::writeFromModel(const std::shared_ptr<ConferenceInfoModel> &model) {
 	mustBeInLinphoneThread(getClassName() + "::writeFromModel()");
-	setDateTime(model->getDateTime());
-	setDuration(model->getDuration());
-	setSubject(model->getSubject());
-	setOrganizerName(model->getOrganizerName());
-	setOrganizerAddress(model->getOrganizerAddress());
-	setDescription(model->getDescription());
+	mDateTime = model->getDateTime();
+	mDuration = model->getDuration();
+	mSubject = model->getSubject();
+	mOrganizerName = model->getOrganizerName();
+	mOrganizerAddress = model->getOrganizerAddress();
+	mDescription = model->getDescription();
+	mParticipants.clear();
 	QStringList participantAddresses;
 	for (auto &infos : model->getParticipantInfos()) {
 		participantAddresses.append(Utils::coreStringToAppString(infos->getAddress()->asStringUriOnly()));
 	}
-	resetParticipants(participantAddresses);
+	mConfInfoModelConnection->invokeToModel([this, participantAddresses]() { // Copy values to avoid concurrency
+		for (auto &address : participantAddresses) {
+			QVariantMap participant;
+			participant["address"] = address;
+			participant["role"] = (int)LinphoneEnums::ParticipantRole::Listener;
+			mParticipants.append(participant);
+		}
+	});
 }
 
 void ConferenceInfoCore::writeIntoModel(std::shared_ptr<ConferenceInfoModel> model) {
