@@ -27,16 +27,25 @@ AbstractMainPage {
 		rightPanelStackView.clear()
 		contactList.resetSelections()
 	}
-	function updateRightPanel(){
+	function goToContactDetails(){
 		if (selectedContact) {
-			while(rightPanelStackView.depth > 1) rightPanelStackView.pop()
-			if (!rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName != "contactDetail") rightPanelStackView.push(contactDetail)
+			var firstItem = rightPanelStackView.get(0)
+			if( firstItem && firstItem.objectName == "contactDetail")// Go directly to detail
+				rightPanelStackView.popToIndex(0)
+			else{
+				if(rightPanelStackView.depth >= 1) {// Replace in background and go back to it
+					rightPanelStackView.replace(firstItem, contactDetail)
+					rightPanelStackView.popToIndex(0)
+				}else{// empty
+					rightPanelStackView.push(contactDetail)
+				}
+			}
 		} else {
-			if (rightPanelStackView.currentItem && rightPanelStackView.currentItem.objectName === "contactDetail") rightPanelStackView.clear()
+			rightPanelStackView.clear()
 		}
 	}
 	onSelectedContactChanged: {
-		updateRightPanel()
+		goToContactDetails()
 	}
 
 	onNoItemButtonPressed: createContact("", "")
@@ -754,7 +763,7 @@ AbstractMainPage {
 		ContactEdition {
 			property string objectName: "contactEdition"
 			onCloseEdition: redirectAddress => {
-				updateRightPanel()
+				goToContactDetails()
 				if(redirectAddress){
 					initialFriendToDisplay = redirectAddress
 				}
