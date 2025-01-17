@@ -59,6 +59,7 @@ SettingsModel::SettingsModel() {
 	                        const std::string &message) {
 		                 mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 		                 if (status == linphone::ConfiguringState::Successful) {
+			                 mConfig = core->getConfig();
 			                 notifyConfigReady();
 		                 }
 	                 });
