@@ -304,15 +304,12 @@ AbstractMainPage {
 									delegate: FocusScope {
 										width:historyListView.width
 										height: 56 * DefaultStyle.dp
-										anchors.topMargin: 5 * DefaultStyle.dp
-										anchors.bottomMargin: 5 * DefaultStyle.dp
 										visible: !!modelData
 										
 										RowLayout {
 											z: 1
 											anchors.fill: parent
 											anchors.leftMargin: 10 * DefaultStyle.dp
-											anchors.rightMargin: 15 * DefaultStyle.dp
 											spacing: 10 * DefaultStyle.dp
 											Avatar {
 												id: historyAvatar
@@ -383,11 +380,8 @@ AbstractMainPage {
 												}
 											}
 											BigButton {
-												padding: 0
 												style: ButtonStyle.noBackground
 												icon.source: AppIcons.phone
-												// Layout.preferredWidth: 24 * DefaultStyle.dp
-												// Layout.preferredHeight: 24 * DefaultStyle.dp
 												focus: true
 												activeFocusOnTab: false
 												onClicked: {

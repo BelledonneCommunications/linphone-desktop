@@ -109,7 +109,6 @@ RowLayout {
 				Layout.fillWidth: true
 			}
 			MediumButton {
-				Layout.preferredHeight: 47 * DefaultStyle.dp
 				Layout.alignment: Qt.AlignRight | Qt.AlignHCenter
 				text: qsTr("Ajouter")
 				style: ButtonStyle.main

@@ -17,13 +17,11 @@ LoginLayout {
 	signal connectionSucceed()
 
 	titleContent: [
-		Button {
+		BigButton {
 			enabled: mainItem.showBackButton
 			opacity: mainItem.showBackButton ? 1.0 : 0
 			Layout.leftMargin: 79 * DefaultStyle.dp
 			icon.source: AppIcons.leftArrow
-			icon.width: 24 * DefaultStyle.dp
-			icon.height: 24 * DefaultStyle.dp
 			style: ButtonStyle.noBackground
 			onClicked: {
 				console.debug("[LoginLayout] User: return")

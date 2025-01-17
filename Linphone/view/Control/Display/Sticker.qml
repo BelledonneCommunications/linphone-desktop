@@ -16,6 +16,7 @@ Item {
 	height: 300
 	width: 200
 	property bool previewEnabled
+	property bool securityBreach
 	property CallGui call: null
 	property ConferenceGui conference: call && call.core.conference || null
 	property var callState: call && call.core.state || undefined
@@ -108,6 +109,7 @@ Item {
 					account: mainItem.account
 					call: !mainItem.previewEnabled ? mainItem.call : null
 					displayNameVal: mainItem.displayName
+					securityBreach: mainItem.securityBreach ? mainItem.securityBreach : securityLevel === LinphoneEnums.SecurityLevel.Unsafe
 				}
 				ColumnLayout{
 					id: joiningView

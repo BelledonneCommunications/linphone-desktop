@@ -144,6 +144,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mRemoteTokens = mCallModel->getRemoteAtuhenticationTokens();
 	mEncryption = LinphoneEnums::fromLinphone(call->getParams()->getMediaEncryption());
 	auto tokenVerified = call->getAuthenticationTokenVerified();
+	mIsMismatch = call->getZrtpCacheMismatchFlag();
 	mIsSecured = (mEncryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified) ||
 	             mEncryption == LinphoneEnums::MediaEncryption::Srtp ||
 	             mEncryption == LinphoneEnums::MediaEncryption::Dtls;
@@ -236,9 +237,9 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::authenticationTokenVerified,
 	                                         [this](const std::shared_ptr<linphone::Call> &call, bool verified) {
-		                                         auto isMismatch = mCallModel->getZrtpCaseMismatch();
-		                                         mCallModelConnection->invokeToCore([this, verified, isMismatch]() {
+		                                         mCallModelConnection->invokeToCore([this, verified]() {
 			                                         setTokenVerified(verified);
+			                                         setIsMismatch(!verified);
 			                                         emit tokenVerified();
 		                                         });
 	                                         });

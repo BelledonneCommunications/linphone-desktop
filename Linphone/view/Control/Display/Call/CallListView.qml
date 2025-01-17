@@ -73,6 +73,7 @@ ListView {
 		}
 		Button {
 			id: pausingButton
+			enabled: !(modelData.core.state === LinphoneEnums.CallState.PausedByRemote)
 			Layout.preferredWidth: 28 * DefaultStyle.dp
 			Layout.preferredHeight: 28 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignVCenter
@@ -80,13 +81,12 @@ ListView {
 			rightPadding: 5 * DefaultStyle.dp
 			topPadding: 5 * DefaultStyle.dp
 			bottomPadding: 5 * DefaultStyle.dp
-			property bool isPaused: modelData.core.state === LinphoneEnums.CallState.Paused 
-			|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
-			color: isPaused ? DefaultStyle.success_500main : DefaultStyle.grey_500
+			property bool pausedByUser: modelData.core.state === LinphoneEnums.CallState.Paused
+			color: pausedByUser ? DefaultStyle.success_500main : DefaultStyle.grey_500
 			contentImageColor: DefaultStyle.grey_0
 			KeyNavigation.right: endCallButton
 			KeyNavigation.left: endCallButton
-			icon.source: isPaused ? AppIcons.play : AppIcons.pause
+			icon.source: pausedByUser ? AppIcons.play : AppIcons.pause
 			icon.width: 18 * DefaultStyle.dp
 			icon.height: 18 * DefaultStyle.dp
 			onClicked: modelData.core.lSetPaused(!modelData.core.paused)

@@ -525,18 +525,13 @@ void ConferenceInfoCore::writeFromModel(const std::shared_ptr<ConferenceInfoMode
 	mOrganizerAddress = model->getOrganizerAddress();
 	mDescription = model->getDescription();
 	mParticipants.clear();
-	QStringList participantAddresses;
 	for (auto &infos : model->getParticipantInfos()) {
-		participantAddresses.append(Utils::coreStringToAppString(infos->getAddress()->asStringUriOnly()));
+		auto address = Utils::coreStringToAppString(infos->getAddress()->asStringUriOnly());
+		QVariantMap participant;
+		participant["address"] = address;
+		participant["role"] = (int)LinphoneEnums::ParticipantRole::Listener;
+		mParticipants.append(participant);
 	}
-	mConfInfoModelConnection->invokeToModel([this, participantAddresses]() { // Copy values to avoid concurrency
-		for (auto &address : participantAddresses) {
-			QVariantMap participant;
-			participant["address"] = address;
-			participant["role"] = (int)LinphoneEnums::ParticipantRole::Listener;
-			mParticipants.append(participant);
-		}
-	});
 }
 
 void ConferenceInfoCore::writeIntoModel(std::shared_ptr<ConferenceInfoModel> model) {

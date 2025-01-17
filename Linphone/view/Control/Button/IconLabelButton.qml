@@ -15,6 +15,7 @@ Button {
 	style: ButtonStyle.hoveredBackground
 	
 	contentItem: RowLayout {
+        spacing: 5 * DefaultStyle.dp
 		EffectImage {
 			imageSource: mainItem.icon.source
 			imageWidth: mainItem.icon.width
@@ -27,9 +28,9 @@ Button {
 			Layout.preferredWidth: mainItem.icon.width
 			Layout.preferredHeight: mainItem.icon.height
 		}
-		Text{
-			horizontalAlignment: mainItem.textHAlignment
-			verticalAlignment: Text.AlignLeft
+		Text {
+			horizontalAlignment: Text.AlignLeft
+			verticalAlignment: Text.AlignVCenter
 			Layout.preferredWidth: textMetrics.advanceWidth
 			wrapMode: Text.WrapAnywhere
 			text: mainItem.text
@@ -53,6 +54,6 @@ Button {
 				font.bold: true
 			}
 		}
-		Item{Layout.fillWidth: true}
+        Item {Layout.fillWidth: true}
 	}
 }

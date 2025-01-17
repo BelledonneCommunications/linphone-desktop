@@ -46,6 +46,7 @@ Item {
 			property var address: participantDevice && participantDevice.core.address
 			videoEnabled: (participantDevice && participantDevice.core.videoEnabled) || (!participantDevice && call && call.core.remoteVideoEnabled)
 			qmlName: 'AS'
+			securityBreach: !mainItem.conference && mainItem.call?.core.isMismatch
 			displayPresence: false
 			Binding {
 				target: mainItem

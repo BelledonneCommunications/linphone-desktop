@@ -33,7 +33,15 @@ LoginLayout {
 	titleContent: [
 		RowLayout {
 			spacing: 21 * DefaultStyle.dp
-			Layout.leftMargin: 119 * DefaultStyle.dp
+			Layout.leftMargin: 79 * DefaultStyle.dp
+			BigButton {
+				style: ButtonStyle.noBackground
+				icon.source: AppIcons.leftArrow
+				onClicked: {
+					console.debug("[RegisterPage] User: return")
+					returnToLogin()
+				}
+			}
 			EffectImage {
 				fillMode: Image.PreserveAspectFit
 				imageSource: AppIcons.profile
