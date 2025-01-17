@@ -680,7 +680,7 @@ AbstractMainPage {
 							anchors.fill: parent
 							IconLabelButton {
 								Layout.fillWidth: true
-								text: detailOptions.friendGui ? qsTr("Voir le contact") : qsTr("Ajouter aux contacts")
+								text: contactDetail.contact ? qsTr("Voir le contact") : qsTr("Ajouter aux contacts")
 								icon.source: AppIcons.plusCircle
 								icon.width: 32 * DefaultStyle.dp
 								icon.height: 32 * DefaultStyle.dp

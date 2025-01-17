@@ -70,18 +70,21 @@ bool AccountManager::login(QString username,
 	auto params = account->getParams()->clone();
 	// Sip address.
 	auto identity = params->getIdentityAddress()->clone();
+	username = Utils::getUsername(username);
+	identity->setUsername(Utils::appStringToCoreString(username));
 
 	if (mAccountModel) return false;
-	auto accounts = core->getAccountList();
-	for (auto account : accounts) {
-		if (account->getParams()->getIdentityAddress()->getUsername() == Utils::appStringToCoreString(username)) {
+
+	auto otherAccounts = core->getAccountList();
+	for (auto otherAccount : otherAccounts) {
+		auto otherParams = otherAccount->getParams();
+		if (otherParams->getIdentityAddress()->getUsername() == Utils::appStringToCoreString(username) &&
+		    otherParams->getDomain() == Utils::appStringToCoreString(domain)) {
 			*errorMessage = tr("Le compte est déjà connecté");
 			return false;
 		}
 	}
 
-	username = Utils::getUsername(username);
-	identity->setUsername(Utils::appStringToCoreString(username));
 	if (!displayName.isEmpty()) identity->setDisplayName(Utils::appStringToCoreString(displayName));
 	if (!domain.isEmpty()) {
 		identity->setDomain(Utils::appStringToCoreString(domain));
@@ -110,17 +113,26 @@ bool AccountManager::login(QString username,
 		*errorMessage = tr("Impossible de configurer les paramètres du compte.");
 		return false;
 	}
-	core->addAuthInfo(factory->createAuthInfo(Utils::appStringToCoreString(username), // Username.
-	                                          "",                                     // User ID.
-	                                          Utils::appStringToCoreString(password), // Password.
-	                                          "",                                     // HA1.
-	                                          "",                                     // Realm.
-	                                          identity->getDomain()                   // Domain.
-	                                          ));
+	auto authInfo = factory->createAuthInfo(Utils::appStringToCoreString(username), // Username.
+	                                        "",                                     // User ID.
+	                                        Utils::appStringToCoreString(password), // Password.
+	                                        "",                                     // HA1.
+	                                        "",                                     // Realm.
+	                                        identity->getDomain()                   // Domain.
+	);
+	core->addAuthInfo(authInfo);
 	mAccountModel = Utils::makeQObject_ptr<AccountModel>(account);
 	mAccountModel->setSelf(mAccountModel);
 	connect(mAccountModel.get(), &AccountModel::registrationStateChanged, this,
-	        &AccountManager::onRegistrationStateChanged);
+	        [this, authInfo](const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state,
+	                         const std::string &message) {
+		        if (account == mAccountModel->getAccount() && state == linphone::RegistrationState::Failed) {
+			        auto core = CoreModel::getInstance()->getCore();
+			        core->removeAuthInfo(authInfo);
+			        core->removeAccount(account);
+		        }
+		        emit onRegistrationStateChanged(account, state, message);
+	        });
 	auto status = core->addAccount(account);
 	if (status == -1) {
 		*errorMessage = tr("Impossible d'ajouter le compte.");

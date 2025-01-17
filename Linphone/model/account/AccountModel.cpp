@@ -107,9 +107,18 @@ void AccountModel::setDefault() {
 }
 
 void AccountModel::removeAccount() {
-	CoreModel::getInstance()->getCore()->removeAccount(mMonitor);
+	auto core = CoreModel::getInstance()->getCore();
+	auto authInfo = mMonitor->findAuthInfo();
+	if (authInfo) {
+		core->removeAuthInfo(authInfo);
+	}
+	core->removeAccount(mMonitor);
 	removeUserData(mMonitor);
 	emit removed();
+}
+
+std::shared_ptr<linphone::Account> AccountModel::getAccount() const {
+	return mMonitor;
 }
 
 void AccountModel::resetMissedCallsCount() {
@@ -189,7 +198,7 @@ void AccountModel::setNotificationsAllowed(bool value) {
 QString AccountModel::getMwiServerAddress() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto mwiAddress = mMonitor->getParams()->getMwiServerAddress();
-	return mwiAddress ? Utils::coreStringToAppString(mwiAddress->asString()): "";
+	return mwiAddress ? Utils::coreStringToAppString(mwiAddress->asString()) : "";
 }
 
 void AccountModel::setMwiServerAddress(QString value) {
