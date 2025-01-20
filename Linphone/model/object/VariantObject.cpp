@@ -40,24 +40,35 @@ VariantObject::VariantObject(QString name, QVariant defaultValue, QObject *paren
 	mConnection = QSharedPointer<SafeConnection<SafeObject, SafeObject>>(
 	    new SafeConnection<SafeObject, SafeObject>(mCoreObject, mModelObject), &QObject::deleteLater);
 
-	mConnection->makeConnectToCore(&SafeObject::setValue, [this, d = mName](QVariant value) {
-		mConnection->invokeToModel([this, value, d]() {
-			if (mModelObject) mModelObject->onSetValue(value);
-		});
-	});
-	mConnection->makeConnectToModel(&SafeObject::setValue, [this, d = mName, coreObject = mCoreObject](QVariant value) {
-		// Note: do not use member because 'this' is managed by GUI and can be deleted.
-		mConnection->invokeToCore([this, d, coreObject, value]() {
-			if (coreObject) coreObject->onSetValue(value);
-		});
-	});
-	mConnection->makeConnectToModel(&SafeObject::valueChanged, [this](QVariant value) {
-		mConnection->invokeToCore([this, value]() { mCoreObject->valueChanged(value); });
+	// Note: do not use member because 'this' is managed by GUI and can be deleted. Objects scope should have the same
+	// as connections so it should be fine to use the object directly.
+	mConnection->makeConnectToCore(&SafeObject::setValue,
+	                               [this, d = mName, modelObject = mModelObject.get()](QVariant value) {
+		                               if (modelObject && !modelObject->mDeleted)
+			                               mConnection->invokeToModel([this, value, d, modelObject]() {
+				                               if (modelObject && !modelObject->mDeleted)
+					                               modelObject->onSetValue(value);
+			                               });
+	                               });
+	mConnection->makeConnectToModel(&SafeObject::setValue,
+	                                [this, d = mName, coreObject = mCoreObject.get()](QVariant value) {
+		                                if (coreObject && !coreObject->mDeleted)
+			                                mConnection->invokeToCore([this, d, coreObject, value]() {
+				                                if (coreObject && !coreObject->mDeleted) coreObject->onSetValue(value);
+			                                });
+	                                });
+	mConnection->makeConnectToModel(&SafeObject::valueChanged, [this, coreObject = mCoreObject.get()](QVariant value) {
+		if (coreObject && !coreObject->mDeleted)
+			mConnection->invokeToCore([this, value, coreObject]() {
+				if (coreObject && !coreObject->mDeleted) coreObject->valueChanged(value);
+			});
 	});
 	connect(mCoreObject.get(), &SafeObject::valueChanged, this, &VariantObject::valueChanged);
 }
 
 VariantObject::~VariantObject() {
+	mCoreObject->mDeleted = true;
+	mModelObject->mDeleted = true;
 }
 
 QVariant VariantObject::getValue() const {

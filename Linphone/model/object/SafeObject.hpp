@@ -36,6 +36,7 @@ public:
 	QVariant getValue() const;
 	void onSetValue(QVariant value);
 	void setDefaultValue(QVariant value); // Don't send signal
+	bool mDeleted = false;
 signals:
 	void requestValue();
 	void setValue(QVariant value);

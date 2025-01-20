@@ -38,13 +38,18 @@ class VariantObject : public QObject, public AbstractObject {
 public:
 	VariantObject(QString name, QObject *parent = nullptr);
 	VariantObject(QString name, QVariant defaultValue, QObject *parent = nullptr);
-	~VariantObject();
+	virtual ~VariantObject();
 
+	// Note: do not use member because 'this' is managed by GUI and can be deleted. Objects scope should have the same
+	// as connections so it should be fine to use the object directly.
 	template <typename Func, typename... Args>
 	void makeRequest(Func &&callable, Args &&...args) {
-		mConnection->makeConnectToCore(&SafeObject::requestValue, [this, callable, args...]() {
-			mConnection->invokeToModel([this, callable, args...]() { mModelObject->setValue(callable(args...)); });
-		});
+		mConnection->makeConnectToCore(&SafeObject::requestValue,
+		                               [this, modelObject = mModelObject.get(), callable, args...]() {
+			                               mConnection->invokeToModel([this, modelObject, callable, args...]() {
+				                               modelObject->setValue(callable(args...));
+			                               });
+		                               });
 	}
 	template <typename Sender, typename SenderClass>
 	void makeUpdate(Sender sender, SenderClass signal) {
