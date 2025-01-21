@@ -324,22 +324,29 @@ LoginLayout {
 						domain.errorMessage = ""
 						errorText.clear()
 
-						if (usernameEdit.text.length == 0 || passwordEdit.text.length == 0 || domainEdit.text.length == 0) {
-							if (usernameEdit.text.length == 0)
-								username.errorMessage = qsTr("Veuillez saisir un nom d'utilisateur")
-							if (passwordEdit.text.length == 0)
-								password.errorMessage = qsTr("Veuillez saisir un mot de passe")
-							if (domainEdit.text.length == 0)
-								domain.errorMessage = qsTr("Veuillez saisir un nom de domaine")
-							return
-						}
-						console.debug("[SIPLoginPage] User: Log in")
-						LoginPageCpp.login(usernameEdit.text, passwordEdit.text, displayName.text, domainEdit.text, transportCbox.currentValue);
-						connectionButton.enabled = false
-						connectionButtonContent.currentIndex = 1
+						loginDelay.restart()
 					}
 					onPressed: trigger()
 					KeyNavigation.up: transportCbox
+					Timer{
+						id: loginDelay
+						interval: 200
+						onTriggered: {
+							if (usernameEdit.text.length == 0 || passwordEdit.text.length == 0 || domainEdit.text.length == 0) {
+								if (usernameEdit.text.length == 0)
+									username.errorMessage = qsTr("Veuillez saisir un nom d'utilisateur")
+								if (passwordEdit.text.length == 0)
+									password.errorMessage = qsTr("Veuillez saisir un mot de passe")
+								if (domainEdit.text.length == 0)
+									domain.errorMessage = qsTr("Veuillez saisir un nom de domaine")
+								return
+							}
+							console.debug("[SIPLoginPage] User: Log in")
+							LoginPageCpp.login(usernameEdit.text, passwordEdit.text, displayName.text, domainEdit.text, transportCbox.currentValue);
+							connectionButton.enabled = false
+							connectionButtonContent.currentIndex = 1
+						}
+					}
 				}
 				Item {
 					Layout.fillHeight: true
