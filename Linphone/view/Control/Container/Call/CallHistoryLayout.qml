@@ -98,7 +98,7 @@ ColumnLayout {
 					Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
 					elide: Text.ElideRight
-					text: mainItem.contactName
+					text: detailAvatar.displayNameVal
 					maximumLineCount: 1
 					font {
 						pixelSize: 14 * DefaultStyle.dp

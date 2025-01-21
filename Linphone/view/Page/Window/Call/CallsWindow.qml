@@ -239,7 +239,7 @@ AbstractWindow {
 		anchors.horizontalCenter: parent.horizontalCenter
 		clip: true
 		function open() {
-			if (mainItem.isConference) return
+			if (mainWindow.isConference) return
 			y = headerItem.height/2
 			autoCloseZrtpToast.restart()
 		}

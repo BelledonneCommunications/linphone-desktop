@@ -315,7 +315,9 @@ AbstractMainPage {
 												id: historyAvatar
 												property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.remoteAddress)
 												contact: contactObj?.value || null
-												_address: modelData.core.remoteAddress
+												_address: modelData.core.conferenceInfo
+															? modelData.core.conferenceInfo.core.subject
+															: modelData.core.remoteAddress
 												width: 45 * DefaultStyle.dp
 												height: 45 * DefaultStyle.dp
 												isConference: modelData.core.isConference
