@@ -29,6 +29,7 @@ Button {
 			Layout.preferredHeight: mainItem.icon.height
 		}
 		Text {
+			id: textItem
 			horizontalAlignment: Text.AlignLeft
 			verticalAlignment: Text.AlignVCenter
 			Layout.preferredWidth: textMetrics.advanceWidth
@@ -51,7 +52,7 @@ Button {
 			TextMetrics {
 				id: textMetrics
 				text: mainItem.text
-				font.bold: true
+				font: textItem.font
 			}
 		}
         Item {Layout.fillWidth: true}
