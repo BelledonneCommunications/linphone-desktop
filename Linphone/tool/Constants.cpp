@@ -73,6 +73,7 @@ constexpr char Constants::PathCallHistoryList[];
 constexpr char Constants::PathConfig[];
 constexpr char Constants::PathDatabase[];
 constexpr char Constants::PathFactoryConfig[];
+constexpr char Constants::PathFriendsList[];
 constexpr char Constants::PathRootCa[];
 constexpr char Constants::PathLimeDatabase[];
 constexpr char Constants::PathMessageHistoryList[];

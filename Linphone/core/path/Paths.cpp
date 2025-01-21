@@ -154,6 +154,10 @@ static inline QString getAppFactoryConfigFilePath() {
 	return getAppPackageDataDirPath() + Constants::PathFactoryConfig;
 }
 
+static inline QString getAppFriendsFilePath() {
+	return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + Constants::PathFriendsList;
+}
+
 static inline QString getAppRootCaFilePath() {
 	QString rootca = getAppPackageDataDirPath() + Constants::PathRootCa;
 	if (Paths::filePathExists(rootca)) { // Packaged
@@ -242,6 +246,10 @@ QString Paths::getDatabaseFilePath() {
 
 QString Paths::getFactoryConfigFilePath() {
 	return getReadableFilePath(getAppFactoryConfigFilePath());
+}
+
+QString Paths::getFriendsListFilePath() {
+	return getReadableFilePath(getAppFriendsFilePath());
 }
 
 QString Paths::getDownloadDirPath() {
