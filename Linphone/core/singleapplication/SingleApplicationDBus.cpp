@@ -126,3 +126,7 @@ void SingleApplicationPrivate::handleMessageReceived(quint32 instanceId, QByteAr
 	Q_Q(SingleApplication);
 	emit q->receivedMessage(instanceId, message);
 }
+
+void SingleApplicationPrivate::kill() {
+	terminate(0);
+}

@@ -54,6 +54,7 @@ public:
 	// Explicit public slot. Cannot be private, must be exported as a method via D-Bus.
 public slots:
 	void handleMessageReceived(quint32 instanceId, QByteArray message);
+	void kill();
 
 private:
 	Q_DECLARE_PUBLIC(SingleApplication)
