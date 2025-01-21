@@ -70,7 +70,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			items->push_back(nullptr); // Add Dummy conference for today
 			for (auto conferenceInfo : conferenceInfos) {
 				if (conferenceInfo->getState() == linphone::ConferenceInfo::State::Cancelled) {
-					auto myAddress = defaultAccount->getContactAddress();
+					auto myAddress = defaultAccount->getParams()->getIdentityAddress();
 					if (!myAddress || myAddress->weakEqual(conferenceInfo->getOrganizer())) continue;
 				}
 				auto confInfoCore = build(conferenceInfo);
@@ -98,9 +98,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	// This is needed because account does not have a contact address until
 	// it is connected, so we can't verify if it is the organizer of a deleted
 	// conference (which must hidden)
-	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged,
-	                                         &ConferenceInfoList::updateCurrentAccount);
-	updateCurrentAccount();
+	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, [this]() { emit lUpdate(true); });
 
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::conferenceInfoCreated,
@@ -140,18 +138,6 @@ void ConferenceInfoList::addConference(const std::shared_ptr<linphone::Conferenc
 			emit confInfoInserted(confInfoCore);
 		});
 	}
-}
-
-void ConferenceInfoList::updateCurrentAccount() {
-	mCoreModelConnection->invokeToModel([this]() {
-		if (mCurrentAccountCore) disconnect(mCurrentAccountCore.get());
-		auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
-		if (defaultAccount) {
-			mCurrentAccountCore = AccountCore::create(defaultAccount);
-			connect(mCurrentAccountCore.get(), &AccountCore::registrationStateChanged, this,
-			        [this] { emit lUpdate(true); });
-		}
-	});
 }
 
 bool ConferenceInfoList::haveCurrentDate() const {

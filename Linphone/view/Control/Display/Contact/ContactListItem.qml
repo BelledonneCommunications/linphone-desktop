@@ -24,6 +24,7 @@ FocusScope {
 	property bool multiSelectionEnabled: false	//Multiple items can be selected.
 	property list<string> selectedContacts		// List of default address on selected contacts.
 	property bool isSelected: false	// selected in list => currentIndex == index
+	property bool isLastHovered: false
 		
 	property var previousInitial	// Use directly previous initial
 	property int itemsRightMargin: 39 * DefaultStyle.dp
@@ -33,6 +34,7 @@ FocusScope {
 	
 	signal clicked(var mouse)
 	signal contactDeletionRequested(FriendGui contact)
+	signal containsMouseChanged(bool containsMouse)
 
 	Text {
 		id: initial
@@ -217,12 +219,15 @@ FocusScope {
 		acceptedButtons: Qt.AllButtons
 		z: -1
 		focus: !actionButtons.visible
+		onContainsMouseChanged: {
+			mainItem.containsMouseChanged(containsMouse)
+		}
 		Rectangle {
 			anchors.fill: contactArea
 			radius: 8 * DefaultStyle.dp
 			opacity: 0.7
 			color: mainItem.isSelected ? DefaultStyle.main2_200 : DefaultStyle.main2_100
-			visible: contactArea.containsMouse || friendPopup.hovered || mainItem.isSelected || friendPopup.visible
+			visible: mainItem.isLastHovered || friendPopup.hovered || mainItem.isSelected || friendPopup.visible
 		}
 		Keys.onPressed: (event)=> {
 			if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {

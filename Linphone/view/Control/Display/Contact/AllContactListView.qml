@@ -6,6 +6,7 @@ import Linphone
 import UtilsCpp 1.0
 import ConstantsCpp 1.0
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 Flickable{
 	id: mainItem
@@ -113,27 +114,9 @@ Flickable{
 		if( nextItem.model.count > 0) return nextItem
 		else return findNextList(nextItem, count+1, direction)
 	}
-
+	
 	function updatePosition(list){
-		var item = list.itemAtIndex(list.currentIndex)
-		var centerItemPos = 0
-		if( item && list.expanded){
-			// For debugging just in case
-			//var listPosition = item.mapToItem(favoriteList, item.x, item.y)
-			//var newPosition = favoriteList.mapToItem(mainItem, listPosition.x, listPosition.y)
-			//console.log("item pos: " +item.x + " / " +item.y)
-			//console.log("fav pos: " +favoriteList.x + " / " +favoriteList.y)
-			//console.log("fav content: " +favoriteList.contentX + " / " +favoriteList.contentY)
-			//console.log("main pos: " +mainItem.x + " / " +mainItem.y)
-			//console.log("main content: " +mainItem.contentX + " / " +mainItem.contentY)
-			//console.log("list pos: " +listPosition.x + " / " +listPosition.y)
-			//console.log("new pos: " +newPosition.x + " / " +newPosition.y)
-			//console.log("header pos: " +headerItem.x + " / " +headerItem.y)
-			//console.log("Moving to " + (headerItem.y+item.y))
-			centerItemPos = item.y + list.y + list.headerHeight +item.height/2
-		}
-		var centerPos = centerItemPos - height/2
-		mainItem.contentY = Math.max(0, Math.min(centerPos, height, contentHeight-height))
+		Utils.updatePosition(mainItem, list)
 	}
 	
 	onHighlightedContactChanged:{

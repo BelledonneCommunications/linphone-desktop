@@ -57,6 +57,16 @@ ListView {
 	cacheBuffer: 400
 	implicitHeight: contentHeight
 	spacing: expanded ? 4 * DefaultStyle.dp : 0
+	
+	property var _currentItemY: currentItem?.y
+	on_CurrentItemYChanged: if(_currentItemY){
+		updatePosition()
+	}
+	onYChanged: updatePosition()
+	
+	// Qt bug: sometimes, containsMouse may not be send and update on each MouseArea.
+	// So we need to use this variable to switch off all hovered items.
+	property int lastMouseContainsIndex: -1
 		
 	property bool _moveToIndex: false
 	
@@ -82,7 +92,6 @@ ListView {
 			_moveToIndex = false
 		}
 	}
-	
 	onContactSelected: updatePosition()
 	onExpandedChanged: if(!expanded) updatePosition()
 	keyNavigationEnabled: false
@@ -194,6 +203,7 @@ ListView {
 		multiSelectionEnabled: mainItem.multiSelectionEnabled
 		selectedContacts: mainItem.selectedContacts
 		isSelected: mainItem.highlightedContact && mainItem.highlightedContact.core == searchResultItem.core
+		isLastHovered: mainItem.lastMouseContainsIndex == index
 		previousInitial: mainItem.itemAtIndex(index-1)?.initial
 		itemsRightMargin: mainItem.itemsRightMargin
 		
@@ -217,6 +227,12 @@ ListView {
 				}
 				mainItem.contactSelected(searchResultItem)
 			}
+		}
+		onContainsMouseChanged: (containsMouse) => {
+			if(containsMouse)
+				mainItem.lastMouseContainsIndex = index
+			else if( mainItem.lastMouseContainsIndex == index)
+				mainItem.lastMouseContainsIndex = -1
 		}
 	}
 }

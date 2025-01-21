@@ -6,6 +6,7 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 AbstractMainPage {
 	id: mainItem
@@ -252,10 +253,7 @@ AbstractMainPage {
 									cacheBuffer: contentHeight>0 ? contentHeight : 0// cache all items
 									flickDeceleration: 10000
 									spacing: 10 * DefaultStyle.dp
-									highlightFollowsCurrentItem: true
-									preferredHighlightBegin: height/2 - 10
-									preferredHighlightEnd: height/2 + 10
-									highlightRangeMode: ListView.ApplyRange
+																		
 									Keys.onPressed: (event) => {
 										if(event.key == Qt.Key_Escape){
 											console.log("Back")
@@ -292,15 +290,38 @@ AbstractMainPage {
 											 callHistoryProxy.displayMore()
 										}
 									}
+//----------------------------------------------------------------
+									function moveToCurrentItem(){
+										if( historyListView.currentIndex >= 0)
+											Utils.updatePosition(historyListView, historyListView)
+									}
+									onCurrentItemChanged: {
+										moveToCurrentItem()
+									}
+									// Update position only if we are moving to current item and its position is changing.
+									property var _currentItemY: currentItem?.y
+									on_CurrentItemYChanged: if(_currentItemY && moveAnimation.running){
+										moveToCurrentItem()
+									}
+									Behavior on contentY{
+										NumberAnimation {
+										id: moveAnimation
+											duration: 500
+											easing.type: Easing.OutExpo
+											alwaysRunToEnd: true
+										}
+									}
+//----------------------------------------------------------------
 									
 									onCurrentIndexChanged: {
-										if(currentIndex == 0) positionViewAtBeginning()
-										else positionViewAtIndex(currentIndex, ListView.Visible)
 										mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
 									}
 									onVisibleChanged: {
 										if (!visible) currentIndex = -1
 									}
+									// Qt bug: sometimes, containsMouse may not be send and update on each MouseArea.
+									// So we need to use this variable to switch off all hovered items.
+									property int lastMouseContainsIndex: -1
 									delegate: FocusScope {
 										width:historyListView.width
 										height: 56 * DefaultStyle.dp
@@ -402,12 +423,18 @@ AbstractMainPage {
 											hoverEnabled: true
 											anchors.fill: parent
 											focus: true
+											onContainsMouseChanged: {
+												if(containsMouse)
+													historyListView.lastMouseContainsIndex = index
+												else if( historyListView.lastMouseContainsIndex == index)
+													historyListView.lastMouseContainsIndex = -1
+											}	
 											Rectangle {
 												anchors.fill: parent
 												opacity: 0.7
 												radius: 8 * DefaultStyle.dp
 												color: historyListView.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
-												visible: parent.containsMouse || historyListView.currentIndex === index
+												visible: historyListView.lastMouseContainsIndex === index || historyListView.currentIndex === index
 											}
 											onPressed: {
 												historyListView.currentIndex = model.index

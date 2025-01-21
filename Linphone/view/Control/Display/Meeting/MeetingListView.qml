@@ -7,6 +7,8 @@ import Linphone
 import QtQml
 import UtilsCpp
 
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+
 ListView {
 	id: mainItem
 	property string searchBarText
@@ -30,18 +32,11 @@ ListView {
 		mainItem.selectedConference = null
 		mainItem.currentIndex = -1
 	}
-	// Issues Notes:
-	// positionViewAtIndex: 
-	//	- if currentItem was in cache, it will not go to it (ex: contentY=63, currentItem.y=3143)
-	//	- Animation don't work
+	
+//----------------------------------------------------------------	
 	function moveToCurrentItem(){
-		var centerItemPos = 0
-		if( currentItem){
-			centerItemPos = currentItem.y + currentItem.height/2
-		}
-		var centerPos = centerItemPos - height/2
-		moveBehaviorTimer.startAnimation()
-		mainItem.contentY = Math.max(0, Math.min(centerPos, contentHeight-height))
+		if( mainItem.currentIndex >= 0)
+			Utils.updatePosition(mainItem, mainItem)
 	}
 	onCurrentItemChanged: {
 		moveToCurrentItem()
@@ -50,35 +45,23 @@ ListView {
 			currentItem.forceActiveFocus()
 		}
 	}
-	// When cache is updating, contentHeight changes. Update position if we are moving the view.
-	onContentHeightChanged:{
-		if(moveBehavior.enabled){
-			moveToCurrentItem()
-		}
+	// Update position only if we are moving to current item and its position is changing.
+	property var _currentItemY: currentItem?.y
+	on_CurrentItemYChanged: if(_currentItemY && moveAnimation.running){
+		moveToCurrentItem()
 	}
-	onAtYEndChanged: if(atYEnd) confInfoProxy.displayMore()
-	
-	Timer{
-		id: moveBehaviorTimer
-		interval: 501
-		onTriggered: moveBehavior.enabled = false
-		function startAnimation(){
-			moveBehavior.enabled = true
-			moveBehaviorTimer.restart()
-		}
-	}
-	
 	Behavior on contentY{
-		id: moveBehavior
-		enabled: false
 		NumberAnimation {
+			id: moveAnimation
 			duration: 500
 			easing.type: Easing.OutExpo
-			onFinished: {// Not call if on Behavior. Callback just in case.
-				moveBehavior.enabled = false
-			}
+			alwaysRunToEnd: true
 		}
 	}
+//----------------------------------------------------------------
+	onAtYEndChanged: if(atYEnd) confInfoProxy.displayMore()
+	
+	
 	Keys.onPressed: (event)=> {
 		if(event.key == Qt.Key_Up) {
 			if(currentIndex > 0 ) {

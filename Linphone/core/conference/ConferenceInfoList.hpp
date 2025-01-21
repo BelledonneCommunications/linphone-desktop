@@ -42,7 +42,6 @@ public:
 	void resetData(QList<QSharedPointer<ConferenceInfoCore>> data);
 
 	void addConference(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
-	void updateCurrentAccount();
 
 	bool haveCurrentDate() const;
 	void setHaveCurrentDate(bool have);

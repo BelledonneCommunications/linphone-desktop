@@ -754,3 +754,56 @@ function infoDialog(window, message) {
 		showButtonOnly: 1
 	}, function (status) {})
 }
+
+// Set position of list.currentItem into the scrollItem
+function updatePosition(scrollItem, list){
+	if(scrollItem.height == 0) return;
+	var item = list.itemAtIndex(list.currentIndex)
+	var centerItemPos = 0
+	var topItemPos = 0
+	var bottomItemPos = 0
+	if(!item) item = list.currentItem
+	if( item && (list.expanded || list.expanded == undefined)){
+		// For debugging just in case
+		//var listPosition = item.mapToItem(favoriteList, item.x, item.y)
+		//var newPosition = favoriteList.mapToItem(mainItem, listPosition.x, listPosition.y)
+		//console.log("item pos: " +item.x + " / " +item.y)
+		//console.log("fav pos: " +favoriteList.x + " / " +favoriteList.y)
+		//console.log("fav content: " +favoriteList.contentX + " / " +favoriteList.contentY)
+		//console.log("main pos: " +mainItem.x + " / " +mainItem.y)
+		//console.log("main content: " +mainItem.contentX + " / " +mainItem.contentY)
+		//console.log("list pos: " +listPosition.x + " / " +listPosition.y)
+		//console.log("new pos: " +newPosition.x + " / " +newPosition.y)
+		//console.log("header pos: " +headerItem.x + " / " +headerItem.y)
+		//console.log("Moving to " + (headerItem.y+item.y))
+		// Middle position
+		//centerItemPos = item.y + list.y + item.height/2
+		//if( list.headerHeight) centerItemPos += list.headerHeight
+		topItemPos = item.y
+		if( list != scrollItem) topItemPos += list.y
+		if( list.headerHeight) topItemPos += list.headerHeight
+		bottomItemPos = topItemPos +item.height
+	}
+	if(item){
+		// Middle position
+		//var centerPos = centerItemPos - scrollItem.height/2
+		//scrollItem.contentY = Math.max(0, Math.min(centerPos, scrollItem.height, scrollItem.contentHeight-scrollItem.height))
+		// Visible position
+		if( topItemPos < scrollItem.contentY){
+			// Display item at the beginning
+			scrollItem.contentY = topItemPos
+			//console.debug("Set to top", scrollItem.contentY,topItemPos, item.height)
+		}else if(bottomItemPos > scrollItem.contentY + scrollItem.height){
+			// Display item at the end
+			scrollItem.contentY = bottomItemPos - scrollItem.height
+			//console.debug("Set to bottom",scrollItem.contentY,list.y,list.headerHeight, topItemPos, bottomItemPos, scrollItem.height, bottomItemPos - scrollItem.height, item.height)
+		}else{
+			//console.debug("Inside, do not move", topItemPos, bottomItemPos, scrollItem.contentY, (scrollItem.contentY + scrollItem.height))
+		}
+		
+	}else{
+	//	console.debug("Item is null")
+	}
+}
+
+
