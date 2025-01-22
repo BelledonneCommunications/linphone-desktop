@@ -49,6 +49,7 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -DQT_QML_D
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG" )
 set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
 
+
 if(NOT LINPHONEAPP_VERSION)
 	bc_compute_full_version(LINPHONEAPP_VERSION)
 endif()
@@ -155,7 +156,7 @@ qt6_add_qml_module(Linphone
 )
 
 qt6_add_resources(Linphone "resources" PREFIX "/" FILES ${_LINPHONEAPP_RC_FILES})
-
+set_property(TARGET Linphone PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
 
 ################################################################
 #						TARGETS LINKS
