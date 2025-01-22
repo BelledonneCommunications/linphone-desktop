@@ -53,7 +53,7 @@ FriendModel::FriendModel(const std::shared_ptr<linphone::Friend> &contact, const
 		QStringList fullName;
 		fullName << getGivenName() << getFamilyName();
 		fullName.removeAll("");
-		setFullName(fullName.join(" "));
+		if (fullName.size() > 0) setFullName(fullName.join(" "));
 	};
 	connect(this, &FriendModel::givenNameChanged, updateFullName);
 	connect(this, &FriendModel::familyNameChanged, updateFullName);
@@ -177,7 +177,7 @@ QString FriendModel::getFullName() const {
 void FriendModel::setFullName(const QString &name) {
 	if (mFullName != name) {
 		mFullName = name;
-		emit fullNameChanged(name);
+		emit fullNameChanged(getFullName());
 	}
 }
 
