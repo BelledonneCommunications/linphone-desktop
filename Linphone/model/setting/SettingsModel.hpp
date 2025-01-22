@@ -103,10 +103,10 @@ public:
 	void setMediaEncryptionMandatory(bool mandatory);
 
 	QVariantMap getRingerDevice() const;
-	void setRingerDevice(const QVariantMap &device);
+	void setRingerDevice(QVariantMap device);
 
 	QString getVideoDevice() const;
-	void setVideoDevice(const QString &device);
+	void setVideoDevice(QString device);
 
 	void startEchoCancellerCalibration();
 	int getEchoCancellationCalibration() const;

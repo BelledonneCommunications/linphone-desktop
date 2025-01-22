@@ -360,7 +360,7 @@ QVariantMap SettingsModel::getRingerDevice() const {
 	return ToolModel::createVariant(audioDevice);
 }
 
-void SettingsModel::setRingerDevice(const QVariantMap &device) {
+void SettingsModel::setRingerDevice(QVariantMap device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	CoreModel::getInstance()->getCore()->setRingerDevice(Utils::appStringToCoreString(device["id"].toString()));
 	emit ringerDeviceChanged(device);
@@ -373,7 +373,7 @@ QString SettingsModel::getVideoDevice() const {
 	return Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getVideoDevice());
 }
 
-void SettingsModel::setVideoDevice(const QString &device) {
+void SettingsModel::setVideoDevice(QString device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	CoreModel::getInstance()->getCore()->setVideoDevice(Utils::appStringToCoreString(device));
 	emit videoDeviceChanged(device);

@@ -48,8 +48,6 @@ public:
 	void startRecording();
 	void stopRecording();
 	void setRecordFile(const std::string &path);
-	void setSpeakerVolumeGain(float gain);
-	void setMicrophoneVolumeGain(float gain);
 	void setInputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &id);
 	std::shared_ptr<const linphone::AudioDevice> getInputAudioDevice() const;
 	void setOutputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &id);
@@ -64,9 +62,7 @@ public:
 	void transferToAnother(const std::shared_ptr<linphone::Call> &call);
 	void terminateAllCalls();
 
-	float getMicrophoneVolumeGain() const;
 	float getMicrophoneVolume() const;
-	float getSpeakerVolumeGain() const;
 	std::string getRecordFile() const;
 	std::shared_ptr<const linphone::Address> getRemoteAddress();
 	bool getAuthenticationTokenVerified() const;

@@ -169,14 +169,6 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mRecording = call->getParams() && call->getParams()->isRecording();
 	mRemoteRecording = call->getRemoteParams() && call->getRemoteParams()->isRecording();
 	auto settingsModel = SettingsModel::getInstance();
-	mSpeakerVolumeGain = mCallModel->getSpeakerVolumeGain();
-	if (mSpeakerVolumeGain < 0) {
-		mSpeakerVolumeGain = settingsModel->getPlaybackGain();
-	}
-	mMicrophoneVolumeGain = call->getMicrophoneVolumeGain();
-	if (mMicrophoneVolumeGain < 0) {
-		mMicrophoneVolumeGain = settingsModel->getCaptureGain();
-	}
 	mMicrophoneVolume = call->getRecordVolume();
 	mRecordable = mState == LinphoneEnums::CallState::StreamsRunning;
 	mConferenceVideoLayout = LinphoneEnums::fromLinphone(SettingsModel::getInstance()->getDefaultConferenceLayout());
@@ -263,12 +255,6 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::qualityUpdated, [this](float quality) {
 		mCallModelConnection->invokeToCore([this, quality]() { setCurrentQuality(quality); });
 	});
-	mCallModelConnection->makeConnectToModel(&CallModel::speakerVolumeGainChanged, [this](float volume) {
-		mCallModelConnection->invokeToCore([this, volume]() { setSpeakerVolumeGain(volume); });
-	});
-	mCallModelConnection->makeConnectToModel(&CallModel::microphoneVolumeGainChanged, [this](float volume) {
-		mCallModelConnection->invokeToCore([this, volume]() { setMicrophoneVolumeGain(volume); });
-	});
 	mCallModelConnection->makeConnectToModel(&CallModel::microphoneVolumeChanged, [this](float volume) {
 		mCallModelConnection->invokeToCore([this, volume]() { setMicrophoneVolume(volume); });
 	});
@@ -277,23 +263,9 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::stateChanged, [this](std::shared_ptr<linphone::Call> call,
 	                                                                          linphone::Call::State state,
 	                                                                          const std::string &message) {
-		double speakerVolume = mSpeakerVolumeGain;
-		double micVolumeGain = mMicrophoneVolumeGain;
 		bool isConf = call && call->getConference() != nullptr;
-		if (state == linphone::Call::State::StreamsRunning) {
-			speakerVolume = mCallModel->getSpeakerVolumeGain();
-			if (speakerVolume < 0) {
-				speakerVolume = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
-			}
-			micVolumeGain = mCallModel->getMicrophoneVolumeGain();
-			if (micVolumeGain < 0) {
-				micVolumeGain = CoreModel::getInstance()->getCore()->getMicGainDb();
-			}
-		}
 		auto subject = call->getConference() ? Utils::coreStringToAppString(call->getConference()->getSubject()) : "";
-		mCallModelConnection->invokeToCore([this, state, speakerVolume, micVolumeGain, subject, isConf]() {
-			setSpeakerVolumeGain(speakerVolume);
-			setMicrophoneVolumeGain(micVolumeGain);
+		mCallModelConnection->invokeToCore([this, state, subject, isConf]() {
 			setRecordable(state == linphone::Call::State::StreamsRunning);
 			setPaused(state == linphone::Call::State::Paused || state == linphone::Call::State::PausedByRemote);
 			if (mConference) mConference->setSubject(subject);
@@ -357,18 +329,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    mCallModelConnection->invokeToCore([this, zrtpStats]() { setZrtpStats(zrtpStats); });
 		    }
 	    });
-	mCallModelConnection->makeConnectToCore(&CallCore::lSetSpeakerVolumeGain, [this](float gain) {
-		mCallModelConnection->invokeToModel([this, gain]() { mCallModel->setSpeakerVolumeGain(gain); });
-	});
-	mCallModelConnection->makeConnectToModel(&CallModel::speakerVolumeGainChanged, [this](float gain) {
-		mCallModelConnection->invokeToCore([this, gain]() { setSpeakerVolumeGain(gain); });
-	});
-	mCallModelConnection->makeConnectToCore(&CallCore::lSetMicrophoneVolumeGain, [this](float gain) {
-		mCallModelConnection->invokeToModel([this, gain]() { mCallModel->setMicrophoneVolumeGain(gain); });
-	});
-	mCallModelConnection->makeConnectToModel(&CallModel::microphoneVolumeGainChanged, [this](float gain) {
-		mCallModelConnection->invokeToCore([this, gain]() { setMicrophoneVolumeGain(gain); });
-	});
+
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetInputAudioDevice, [this](QString id) {
 		mCallModelConnection->invokeToModel([this, id]() {
 			auto device = ToolModel::findAudioDevice(id, linphone::AudioDevice::Capabilities::CapabilityRecord);
@@ -735,16 +696,6 @@ void CallCore::setRecordable(bool recordable) {
 	}
 }
 
-float CallCore::getSpeakerVolumeGain() const {
-	return mSpeakerVolumeGain;
-}
-void CallCore::setSpeakerVolumeGain(float gain) {
-	if (mSpeakerVolumeGain != gain) {
-		mSpeakerVolumeGain = gain;
-		emit speakerVolumeGainChanged();
-	}
-}
-
 float CallCore::getMicrophoneVolume() const {
 	return mMicrophoneVolume;
 }
@@ -752,16 +703,6 @@ void CallCore::setMicrophoneVolume(float vol) {
 	if (mMicrophoneVolume != vol) {
 		mMicrophoneVolume = vol;
 		emit microphoneVolumeChanged();
-	}
-}
-
-float CallCore::getMicrophoneVolumeGain() const {
-	return mMicrophoneVolumeGain;
-}
-void CallCore::setMicrophoneVolumeGain(float gain) {
-	if (mMicrophoneVolumeGain != gain) {
-		mMicrophoneVolumeGain = gain;
-		emit microphoneVolumeGainChanged();
 	}
 }
 

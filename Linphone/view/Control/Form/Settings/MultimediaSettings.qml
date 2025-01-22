@@ -86,16 +86,23 @@ ColumnLayout {
 					propertyName: "playbackDevice"
 					propertyOwner: SettingsCpp
 					textRole: 'display_name'
+					Connections {
+						enabled: mainItem.call
+						target: outputAudioDeviceCBox
+						function onCurrentValueChanged() {
+							SettingsCpp.lSetPlaybackDevice(outputAudioDeviceCBox.currentValue)
+						}
+					}
 				}
 				Slider {
 					id: speakerVolume
 					Layout.fillWidth: true
 					from: 0.0
 					to: 1.0
-					value: mainItem.call ? mainItem.call.core.speakerVolumeGain : SettingsCpp.playbackGain
+					value: SettingsCpp.playbackGain
 					onMoved: {
-						if (mainItem.call) mainItem.call.core.lSetSpeakerVolumeGain(value)
-						SettingsCpp.playbackGain = value
+						if (mainItem.call) SettingsCpp.lSetPlaybackGain(value)
+						else SettingsCpp.playbackGain = value
 					}
 				}
 			}
@@ -126,16 +133,23 @@ ColumnLayout {
 					propertyName: "captureDevice"
 					propertyOwner: SettingsCpp
 					textRole: 'display_name'
+					Connections {
+						enabled: mainItem.call
+						target: inputAudioDeviceCBox
+						function onCurrentValueChanged() {
+							SettingsCpp.lSetCaptureDevice(inputAudioDeviceCBox.currentValue)
+						}
+					}
 				}
 				Slider {
 					id: microVolume
 					Layout.fillWidth: true
 					from: 0.0
 					to: 1.0
-					value: mainItem.call ? mainItem.call.core.microphoneVolumeGain : SettingsCpp.captureGain
+					value: SettingsCpp.captureGain
 					onMoved: {
-						if (mainItem.call) mainItem.call.core.lSetMicrophoneVolumeGain(value)
-						SettingsCpp.captureGain = value
+						if (mainItem.call) SettingsCpp.lSetCaptureGain(value)
+						else SettingsCpp.captureGain = value
 					}
 				}
 				Timer {
@@ -144,8 +158,7 @@ ColumnLayout {
 					repeat: true
 					running: false
 					onTriggered: {
-						if (mainItem.call) audioTestSlider.value = mainItem.call.core.microVolume
-						else SettingsCpp.updateMicVolume()
+						SettingsCpp.updateMicVolume()
 					}
 				}
 				Slider {
@@ -204,6 +217,13 @@ ColumnLayout {
 					entries: SettingsCpp.videoDevices
 					propertyName: "videoDevice"
 					propertyOwner: SettingsCpp
+					Connections {
+						enabled: mainItem.call
+						target: videoDevicesCbox
+						function onCurrentValueChanged() {
+							SettingsCpp.lSetVideoDevice(videoDevicesCbox.currentValue)
+						}
+					}
 				}
 			}
 			Connections {

@@ -232,7 +232,9 @@ signals:
 
 	void captureGraphRunningChanged(bool running);
 
+	void lSetPlaybackGain(float gain);
 	void playbackGainChanged(float gain);
+	void lSetCaptureGain(float gain);
 	void captureGainChanged(float gain);
 
 	void captureDevicesChanged(const QVariantList &devices);
@@ -241,8 +243,10 @@ signals:
 	void conferenceLayoutsChanged(const QVariantList &layouts);
 	void mediaEncryptionsChanged(const QVariantList &encryptions);
 
+	void lSetCaptureDevice(QVariantMap device);
 	void captureDeviceChanged(const QVariantMap &device);
 
+	void lSetConferenceLayout(QVariantMap layout);
 	void conferenceLayoutChanged();
 
 	void mediaEncryptionChanged();
@@ -251,10 +255,12 @@ signals:
 
 	void isSavedChanged();
 
+	void lSetPlaybackDevice(QVariantMap device);
 	void playbackDeviceChanged(const QVariantMap &device);
 
 	void ringerDeviceChanged(const QVariantMap &device);
 
+	void lSetVideoDevice(QString id);
 	void videoDeviceChanged();
 	void videoDevicesChanged();
 
@@ -327,6 +333,7 @@ private:
 	bool mDndEnabled;
 
 	bool mIsSaved = true;
+	bool mAutoSaved = false;
 	QSettings mAppSettings;
 	QSharedPointer<SafeConnection<SettingsCore, SettingsModel>> mSettingsModelConnection;
 

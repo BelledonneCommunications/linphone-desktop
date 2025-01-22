@@ -216,10 +216,22 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	    });
 
 	// Audio device(s)
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureDevice, [this](QVariantMap device) {
+		mSettingsModelConnection->invokeToModel([this, device]() {
+			mAutoSaved = true;
+			SettingsModel::getInstance()->setCaptureDevice(device);
+		});
+	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureDeviceChanged, [this](QVariantMap device) {
 		mSettingsModelConnection->invokeToCore([this, device]() { setCaptureDevice(device); });
 	});
 
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetPlaybackDevice, [this](QVariantMap device) {
+		mSettingsModelConnection->invokeToModel([this, device]() {
+			mAutoSaved = true;
+			SettingsModel::getInstance()->setPlaybackDevice(device);
+		});
+	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackDeviceChanged, [this](QVariantMap device) {
 		mSettingsModelConnection->invokeToCore([this, device]() { setPlaybackDevice(device); });
 	});
@@ -228,10 +240,22 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		mSettingsModelConnection->invokeToCore([this, device]() { setRingerDevice(device); });
 	});
 
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetPlaybackGain, [this](const float value) {
+		mSettingsModelConnection->invokeToModel([this, value]() {
+			mAutoSaved = true;
+			SettingsModel::getInstance()->setPlaybackGain(value);
+		});
+	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackGainChanged, [this](const float value) {
 		mSettingsModelConnection->invokeToCore([this, value]() { setPlaybackGain(value); });
 	});
 
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureGain, [this](const float value) {
+		mSettingsModelConnection->invokeToModel([this, value]() {
+			mAutoSaved = true;
+			SettingsModel::getInstance()->setCaptureGain(value);
+		});
+	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureGainChanged, [this](const float value) {
 		mSettingsModelConnection->invokeToCore([this, value]() { setCaptureGain(value); });
 	});
@@ -252,8 +276,23 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	});
 
 	// Video device(s)
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetVideoDevice, [this](QString id) {
+		mSettingsModelConnection->invokeToModel([this, id]() {
+			mAutoSaved = true;
+			SettingsModel::getInstance()->setVideoDevice(id);
+		});
+	});
+
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::videoDeviceChanged, [this](const QString device) {
 		mSettingsModelConnection->invokeToCore([this, device]() { setVideoDevice(device); });
+	});
+
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetConferenceLayout, [this](QVariantMap layout) {
+		auto linLayout = LinphoneEnums::toLinphone(LinphoneEnums::ConferenceLayout(layout["id"].toInt()));
+		mSettingsModelConnection->invokeToModel([this, linLayout]() {
+			mAutoSaved = true;
+			SettingsModel::getInstance()->setDefaultConferenceLayout(linLayout);
+		});
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::conferenceLayoutChanged, [this]() {
@@ -546,7 +585,11 @@ void SettingsCore::setVideoDevice(QString device) {
 	if (mVideoDevice != device) {
 		mVideoDevice = device;
 		emit videoDeviceChanged();
-		setIsSaved(false);
+		if (mAutoSaved) {
+			mAutoSaved = false;
+		} else {
+			setIsSaved(false);
+		}
 	}
 }
 
@@ -554,7 +597,6 @@ void SettingsCore::setVideoDevices(QStringList devices) {
 	if (mVideoDevices != devices) {
 		mVideoDevices = devices;
 		emit videoDevicesChanged();
-		setIsSaved(false);
 	}
 }
 
@@ -578,7 +620,11 @@ void SettingsCore::setCaptureGain(float gain) {
 	if (mCaptureGain != gain) {
 		mCaptureGain = gain;
 		emit captureGainChanged(gain);
-		setIsSaved(false);
+		if (mAutoSaved) {
+			mAutoSaved = false;
+		} else {
+			setIsSaved(false);
+		}
 	}
 }
 
@@ -590,7 +636,11 @@ void SettingsCore::setConferenceLayout(QVariantMap layout) {
 	if (mConferenceLayout["id"] != layout["id"]) {
 		mConferenceLayout = layout;
 		emit conferenceLayoutChanged();
-		setIsSaved(false);
+		if (mAutoSaved) {
+			mAutoSaved = false;
+		} else {
+			setIsSaved(false);
+		}
 	}
 }
 
@@ -614,7 +664,11 @@ void SettingsCore::setPlaybackGain(float gain) {
 	if (mPlaybackGain != gain) {
 		mPlaybackGain = gain;
 		emit playbackGainChanged(gain);
-		setIsSaved(false);
+		if (mAutoSaved) {
+			mAutoSaved = false;
+		} else {
+			setIsSaved(false);
+		}
 	}
 }
 
@@ -626,7 +680,11 @@ void SettingsCore::setCaptureDevice(QVariantMap device) {
 	if (mCaptureDevice["id"] != device["id"]) {
 		mCaptureDevice = device;
 		emit captureDeviceChanged(device);
-		setIsSaved(false);
+		if (mAutoSaved) {
+			mAutoSaved = false;
+		} else {
+			setIsSaved(false);
+		}
 	}
 }
 
@@ -638,7 +696,11 @@ void SettingsCore::setPlaybackDevice(QVariantMap device) {
 	if (mPlaybackDevice["id"] != device["id"]) {
 		mPlaybackDevice = device;
 		emit playbackDeviceChanged(device);
-		setIsSaved(false);
+		if (mAutoSaved) {
+			mAutoSaved = false;
+		} else {
+			setIsSaved(false);
+		}
 	}
 }
 

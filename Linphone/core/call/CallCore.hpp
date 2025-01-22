@@ -122,10 +122,6 @@ public:
 	Q_PROPERTY(bool recording READ getRecording WRITE setRecording NOTIFY recordingChanged)
 	Q_PROPERTY(bool remoteRecording READ getRemoteRecording WRITE setRemoteRecording NOTIFY remoteRecordingChanged)
 	Q_PROPERTY(bool recordable READ getRecordable WRITE setRecordable NOTIFY recordableChanged)
-	Q_PROPERTY(
-	    float speakerVolumeGain READ getSpeakerVolumeGain WRITE setSpeakerVolumeGain NOTIFY speakerVolumeGainChanged)
-	Q_PROPERTY(float microphoneVolumeGain READ getMicrophoneVolumeGain WRITE setMicrophoneVolumeGain NOTIFY
-	               microphoneVolumeGainChanged)
 	Q_PROPERTY(float microVolume READ getMicrophoneVolume WRITE setMicrophoneVolume NOTIFY microphoneVolumeChanged)
 	Q_PROPERTY(LinphoneEnums::CallState transferState READ getTransferState NOTIFY transferStateChanged)
 	Q_PROPERTY(ConferenceGui *conference READ getConferenceGui NOTIFY conferenceChanged)
@@ -214,12 +210,6 @@ public:
 	bool getRecordable() const;
 	void setRecordable(bool recordable);
 
-	float getSpeakerVolumeGain() const;
-	void setSpeakerVolumeGain(float gain);
-
-	float getMicrophoneVolumeGain() const;
-	void setMicrophoneVolumeGain(float gain);
-
 	float getMicrophoneVolume() const;
 	void setMicrophoneVolume(float vol);
 
@@ -268,9 +258,7 @@ signals:
 	void recordingChanged();
 	void remoteRecordingChanged();
 	void recordableChanged();
-	void speakerVolumeGainChanged();
 	void microphoneVolumeChanged();
-	void microphoneVolumeGainChanged();
 	void conferenceChanged();
 	void isConferenceChanged();
 	void conferenceVideoLayoutChanged();
@@ -296,8 +284,6 @@ signals:
 	void lStopRecording();
 	void lCheckAuthenticationTokenSelected(const QString &token);
 	void lSkipZrtpAuthentication();
-	void lSetSpeakerVolumeGain(float gain);
-	void lSetMicrophoneVolumeGain(float gain);
 	void lSetInputAudioDevice(QString id);
 	void lSetOutputAudioDevice(QString id);
 	void lSetConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);
@@ -354,9 +340,7 @@ private:
 	bool mIsConference = false;
 	QString mLocalToken;
 	QStringList mRemoteTokens;
-	float mSpeakerVolumeGain;
 	float mMicrophoneVolume;
-	float mMicrophoneVolumeGain;
 	QSharedPointer<SafeConnection<CallCore, CallModel>> mCallModelConnection;
 	ZrtpStats mZrtpStats;
 	AudioStats mAudioStats;

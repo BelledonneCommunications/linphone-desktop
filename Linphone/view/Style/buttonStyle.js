@@ -13,6 +13,10 @@
 		text: {
 			normal: Linphone.DefaultStyle.grey_0,
 			pressed: Linphone.DefaultStyle.grey_0
+		},
+		image: {
+			normal: Linphone.DefaultStyle.grey_0,
+			pressed: Linphone.DefaultStyle.grey_0
 		}
 	}
 

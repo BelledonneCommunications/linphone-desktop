@@ -42,11 +42,6 @@ CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *paren
 	connect(&mMicroVolumeTimer, &QTimer::timeout, this,
 	        [this]() { this->microphoneVolumeChanged(Utils::computeVu(mMonitor->getRecordVolume())); });
 	mMicroVolumeTimer.start();
-
-	// connect(this, &CallModel::stateChanged, this, [this] {
-	// 	auto state = mMonitor->getState();
-	// 	if (state == linphone::Call::State::Paused) setPaused(true);
-	// });
 }
 
 CallModel::~CallModel() {
@@ -164,30 +159,6 @@ void CallModel::setRecordFile(const std::string &path) {
 	auto params = core->createCallParams(mMonitor);
 	params->setRecordFile(path);
 	mMonitor->update(params);
-}
-
-void CallModel::setSpeakerVolumeGain(float gain) {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	mMonitor->setSpeakerVolumeGain(gain);
-	emit speakerVolumeGainChanged(gain);
-}
-
-float CallModel::getSpeakerVolumeGain() const {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto gain = mMonitor->getSpeakerVolumeGain();
-	return gain;
-}
-
-void CallModel::setMicrophoneVolumeGain(float gain) {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	mMonitor->setMicrophoneVolumeGain(gain);
-	emit microphoneVolumeGainChanged(gain);
-}
-
-float CallModel::getMicrophoneVolumeGain() const {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto gain = mMonitor->getMicrophoneVolumeGain();
-	return gain;
 }
 
 float CallModel::getMicrophoneVolume() const {
