@@ -68,9 +68,8 @@ ParticipantDeviceCore::~ParticipantDeviceCore() {
 }
 
 void ParticipantDeviceCore::setSelf(QSharedPointer<ParticipantDeviceCore> me) {
-	mParticipantDeviceModelConnection = QSharedPointer<SafeConnection<ParticipantDeviceCore, ParticipantDeviceModel>>(
-	    new SafeConnection<ParticipantDeviceCore, ParticipantDeviceModel>(me, mParticipantDeviceModel),
-	    &QObject::deleteLater);
+	mParticipantDeviceModelConnection =
+	    SafeConnection<ParticipantDeviceCore, ParticipantDeviceModel>::create(me, mParticipantDeviceModel);
 	mParticipantDeviceModelConnection->makeConnectToModel(
 	    &ParticipantDeviceModel::isSpeakingChanged, [this](bool speaking) {
 		    mParticipantDeviceModelConnection->invokeToCore([this, speaking] { setIsSpeaking(speaking); });

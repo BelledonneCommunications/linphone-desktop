@@ -156,9 +156,8 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 	if (me) {
 		if (mConferenceInfoModel) {
 			mConfInfoModelConnection = nullptr;
-			mConfInfoModelConnection = QSharedPointer<SafeConnection<ConferenceInfoCore, ConferenceInfoModel>>(
-			    new SafeConnection<ConferenceInfoCore, ConferenceInfoModel>(me, mConferenceInfoModel),
-			    &QObject::deleteLater);
+			mConfInfoModelConnection =
+			    SafeConnection<ConferenceInfoCore, ConferenceInfoModel>::create(me, mConferenceInfoModel);
 
 			mConfInfoModelConnection->makeConnectToModel(&ConferenceInfoModel::dateTimeChanged,
 			                                             [this](const QDateTime &date) {
@@ -222,8 +221,7 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 			    [this](const std::list<std::shared_ptr<linphone::Address>> &failedInvitations) {});
 
 		} else { // Create
-			mCoreModelConnection = QSharedPointer<SafeConnection<ConferenceInfoCore, CoreModel>>(
-			    new SafeConnection<ConferenceInfoCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+			mCoreModelConnection = SafeConnection<ConferenceInfoCore, CoreModel>::create(me, CoreModel::getInstance());
 		}
 	}
 }

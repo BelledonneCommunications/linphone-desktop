@@ -64,8 +64,8 @@
 
 template <class A, class B>
 class SafeConnection : public QObject {
-public:
-	// SafeConnection(SafeSharedPointer<QObject> a, SafeSharedPointer<QObject> b);
+	// Use create functions.
+protected:
 	SafeConnection(QSharedPointer<A> a, std::shared_ptr<B> b)
 	    : mCore(a), mModel(b), mCoreObject(a.get()), mModelObject(b.get()) {
 	}
@@ -84,9 +84,28 @@ public:
 			});
 		mLocker.unlock();
 	}
+	void setSelf(QSharedPointer<SafeConnection> me) {
+		mSelf = me;
+	}
+
+public:
+	static QSharedPointer<SafeConnection> create(QSharedPointer<A> a, std::shared_ptr<B> b) {
+		QSharedPointer<SafeConnection> me =
+		    QSharedPointer<SafeConnection<A, B>>(new SafeConnection<A, B>(a, b), &QObject::deleteLater);
+		me->setSelf(me);
+		return me;
+	}
+	static QSharedPointer<SafeConnection> create(QSharedPointer<A> a, QSharedPointer<B> b) {
+		QSharedPointer<SafeConnection> me =
+		    QSharedPointer<SafeConnection<A, B>>(new SafeConnection<A, B>(a, b), &QObject::deleteLater);
+		me->setSelf(me);
+		return me;
+	}
+
 	SafeSharedPointer<A> mCore;
 	SafeSharedPointer<B> mModel;
 	QMutex mLocker;
+	QWeakPointer<SafeConnection> mSelf;
 
 	template <typename Func1, typename Func2>
 	inline QMetaObject::Connection makeConnectToModel(Func1 signal, Func2 slot) {
@@ -112,9 +131,9 @@ public:
 	template <typename Func, typename... Args>
 	void invokeToModel(Func &&callable, Args &&...args) {
 		if (!tryLock()) return;
-		auto model = mModel.get();
-		QMetaObject::invokeMethod(model, [&, model, callable, args...]() { // Is async
-			QMetaObject::invokeMethod(model, callable, args...);           // Is Sync
+		auto connection = mSelf.lock();
+		QMetaObject::invokeMethod(mModel.get(), [&, connection, callable, args...]() { // Is async
+			QMetaObject::invokeMethod(mModel.get(), callable, args...);                // Is Sync
 			unlock();
 		});
 	}
@@ -123,23 +142,27 @@ public:
 	template <typename Func, typename... Args>
 	void invokeToCore(Func &&callable, Args &&...args) {
 		if (!tryLock()) return;
-		QMetaObject::invokeMethod(mCore.get(), [&, callable, args...]() { // Is async
-			QMetaObject::invokeMethod(mCore.get(), callable, args...);    // Is Sync
+		auto connection = mSelf.lock();
+		QMetaObject::invokeMethod(mCore.get(), [&, connection, callable, args...]() { // Is async
+			QMetaObject::invokeMethod(mCore.get(), callable, args...);                // Is Sync
 			unlock();
 		});
 	}
 
 	bool tryLock() {
 		mLocker.lock();
-		if (!mCore.lock() || !mModel.lock()) { // Direct locking
-			mCore.reset();
-			mModel.reset();
+		auto coreLocked = mCore.lock();
+		auto modelLocked = mModel.lock();
+		if (!coreLocked || !modelLocked) {
+			if (coreLocked) mCore.unlock();
+			if (modelLocked) mModel.unlock();
 			mLocker.unlock();
 			return false;
 		}
 		mLocker.unlock();
 		return true;
 	}
+
 	void unlock() {
 		mLocker.lock();
 		mCore.unlock();

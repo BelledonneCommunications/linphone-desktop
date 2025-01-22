@@ -48,9 +48,8 @@ VideoSourceDescriptorCore::~VideoSourceDescriptorCore() {
 }
 
 void VideoSourceDescriptorCore::setSelf(QSharedPointer<VideoSourceDescriptorCore> me) {
-	mVideoDescModelConnection = QSharedPointer<SafeConnection<VideoSourceDescriptorCore, VideoSourceDescriptorModel>>(
-	    new SafeConnection<VideoSourceDescriptorCore, VideoSourceDescriptorModel>(me, mVideoDescModel),
-	    &QObject::deleteLater);
+	mVideoDescModelConnection =
+	    SafeConnection<VideoSourceDescriptorCore, VideoSourceDescriptorModel>::create(me, mVideoDescModel);
 	mVideoDescModelConnection->makeConnectToCore(&VideoSourceDescriptorCore::lSetWindowId, [this](quint64 id) {
 		mVideoDescModelConnection->invokeToModel([this, id]() { mVideoDescModel->setScreenSharingWindow((void *)id); });
 	});

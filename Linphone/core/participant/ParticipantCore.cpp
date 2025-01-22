@@ -68,8 +68,7 @@ ParticipantCore::~ParticipantCore() {
 }
 
 void ParticipantCore::setSelf(QSharedPointer<ParticipantCore> me) {
-	mParticipantConnection = QSharedPointer<SafeConnection<ParticipantCore, ParticipantModel>>(
-	    new SafeConnection<ParticipantCore, ParticipantModel>(me, mParticipantModel), &QObject::deleteLater);
+	mParticipantConnection = SafeConnection<ParticipantCore, ParticipantModel>::create(me, mParticipantModel);
 	mParticipantConnection->makeConnectToCore(&ParticipantCore::lStartInvitation, [this](const int &secs) {
 		QTimer::singleShot(secs * 1000, this, &ParticipantCore::onEndOfInvitation);
 	});

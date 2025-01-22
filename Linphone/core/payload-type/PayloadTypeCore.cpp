@@ -50,8 +50,7 @@ PayloadTypeCore::~PayloadTypeCore() {
 }
 
 void PayloadTypeCore::setSelf(QSharedPointer<PayloadTypeCore> me) {
-	mPayloadTypeModelConnection = QSharedPointer<SafeConnection<PayloadTypeCore, PayloadTypeModel>>(
-	    new SafeConnection<PayloadTypeCore, PayloadTypeModel>(me, mPayloadTypeModel), &QObject::deleteLater);
+	mPayloadTypeModelConnection = SafeConnection<PayloadTypeCore, PayloadTypeModel>::create(me, mPayloadTypeModel);
 	DEFINE_CORE_GETSET_CONNECT(mPayloadTypeModelConnection, PayloadTypeCore, PayloadTypeModel, mPayloadTypeModel, bool,
 	                           enabled, Enabled)
 }

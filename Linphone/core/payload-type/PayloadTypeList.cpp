@@ -50,8 +50,7 @@ PayloadTypeList::~PayloadTypeList() {
 }
 
 void PayloadTypeList::setSelf(QSharedPointer<PayloadTypeList> me) {
-	mModelConnection = QSharedPointer<SafeConnection<PayloadTypeList, CoreModel>>(
-	    new SafeConnection<PayloadTypeList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mModelConnection = SafeConnection<PayloadTypeList, CoreModel>::create(me, CoreModel::getInstance());
 	mModelConnection->makeConnectToCore(&PayloadTypeList::lUpdate, [this]() {
 		mModelConnection->invokeToModel([this]() {
 			QList<QSharedPointer<PayloadTypeCore>> *payloadTypes = new QList<QSharedPointer<PayloadTypeCore>>();

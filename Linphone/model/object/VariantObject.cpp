@@ -37,8 +37,7 @@ VariantObject::VariantObject(QString name, QVariant defaultValue, QObject *paren
 	App::getInstance()->mEngine->setObjectOwnership(mCoreObject.get(), QQmlEngine::CppOwnership);
 	App::getInstance()->mEngine->setObjectOwnership(mModelObject.get(), QQmlEngine::CppOwnership);
 
-	mConnection = QSharedPointer<SafeConnection<SafeObject, SafeObject>>(
-	    new SafeConnection<SafeObject, SafeObject>(mCoreObject, mModelObject), &QObject::deleteLater);
+	mConnection = SafeConnection<SafeObject, SafeObject>::create(mCoreObject, mModelObject);
 
 	// Note: do not use member because 'this' is managed by GUI and can be deleted. Objects scope should have the same
 	// as connections so it should be fine to use the object directly.

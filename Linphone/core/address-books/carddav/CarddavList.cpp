@@ -53,8 +53,7 @@ CarddavList::~CarddavList() {
 }
 
 void CarddavList::setSelf(QSharedPointer<CarddavList> me) {
-	mModelConnection = QSharedPointer<SafeConnection<CarddavList, CoreModel>>(
-	    new SafeConnection<CarddavList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mModelConnection = SafeConnection<CarddavList, CoreModel>::create(me, CoreModel::getInstance());
 	mModelConnection->makeConnectToCore(&CarddavList::lUpdate, [this]() {
 		mModelConnection->invokeToModel([this]() {
 			mustBeInLinphoneThread(getClassName());

@@ -53,8 +53,7 @@ CallHistoryList::~CallHistoryList() {
 }
 
 void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
-	mModelConnection = QSharedPointer<SafeConnection<CallHistoryList, CoreModel>>(
-	    new SafeConnection<CallHistoryList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mModelConnection = SafeConnection<CallHistoryList, CoreModel>::create(me, CoreModel::getInstance());
 
 	mModelConnection->makeConnectToCore(&CallHistoryList::lUpdate, [this]() {
 		mModelConnection->invokeToModel([this]() {

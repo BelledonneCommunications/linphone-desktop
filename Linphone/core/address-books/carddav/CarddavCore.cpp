@@ -72,8 +72,7 @@ void CarddavCore::remove() {
 }
 
 void CarddavCore::setSelf(QSharedPointer<CarddavCore> me) {
-	mCarddavModelConnection = QSharedPointer<SafeConnection<CarddavCore, CarddavModel>>(
-	    new SafeConnection<CarddavCore, CarddavModel>(me, mCarddavModel), &QObject::deleteLater);
+	mCarddavModelConnection = SafeConnection<CarddavCore, CarddavModel>::create(me, mCarddavModel);
 	mCarddavModelConnection->makeConnectToModel(&CarddavModel::saved, [this](bool success) {
 		mCarddavModelConnection->invokeToCore([this, success]() { emit saved(success); });
 	});

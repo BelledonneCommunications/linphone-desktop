@@ -47,8 +47,7 @@ AccountList::~AccountList() {
 }
 
 void AccountList::setSelf(QSharedPointer<AccountList> me) {
-	mModelConnection = QSharedPointer<SafeConnection<AccountList, CoreModel>>(
-	    new SafeConnection<AccountList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mModelConnection = SafeConnection<AccountList, CoreModel>::create(me, CoreModel::getInstance());
 
 	mModelConnection->makeConnectToCore(&AccountList::lUpdate, [this](bool isInitialization) {
 		mModelConnection->invokeToModel([this, isInitialization]() {

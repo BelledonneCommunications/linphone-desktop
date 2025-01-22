@@ -372,11 +372,10 @@ VariantObject *Utils::findAvatarByAddress(const QString &address) {
 VariantObject *Utils::findFriendByAddress(const QString &address) {
 	VariantObject *data = new VariantObject("findFriendByAddress");
 	if (!data) return nullptr;
-	data->makeRequest([data, address]() {
+	data->makeRequest([address]() {
 		auto linFriend = ToolModel::findFriendByAddress(address);
 		if (!linFriend) return QVariant();
 		auto friendCore = FriendCore::create(linFriend);
-		connect(friendCore.get(), &FriendCore::removed, data, &VariantObject::invokeRequestValue);
 		return QVariant::fromValue(new FriendGui(friendCore));
 	});
 	// Rebuild friend if needed
@@ -384,6 +383,7 @@ VariantObject *Utils::findFriendByAddress(const QString &address) {
 		if (f->getAddress()->weakEqual(ToolModel::interpretUrl(address))) data->invokeRequestValue();
 	};
 	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendCreated, updateValue); // New Friend
+	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendRemoved, updateValue); // New Friend
 	data->requestValue();
 	return data;
 }

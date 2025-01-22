@@ -76,13 +76,10 @@ CallHistoryCore::~CallHistoryCore() {
 }
 
 void CallHistoryCore::setSelf(QSharedPointer<CallHistoryCore> me) {
-	mHistoryModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, CallHistoryModel>>(
-	    new SafeConnection<CallHistoryCore, CallHistoryModel>(me, mCallHistoryModel), &QObject::deleteLater);
-	mCoreModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, CoreModel>>(
-	    new SafeConnection<CallHistoryCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mHistoryModelConnection = SafeConnection<CallHistoryCore, CallHistoryModel>::create(me, mCallHistoryModel);
+	mCoreModelConnection = SafeConnection<CallHistoryCore, CoreModel>::create(me, CoreModel::getInstance());
 	if (mFriendModel) {
-		mFriendModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, FriendModel>>(
-		    new SafeConnection<CallHistoryCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
+		mFriendModelConnection = SafeConnection<CallHistoryCore, FriendModel>::create(me, mFriendModel);
 		mFriendModelConnection->makeConnectToModel(&FriendModel::fullNameChanged, [this]() {
 			auto fullName = mFriendModel->getFullName();
 			mCoreModelConnection->invokeToCore([this, fullName]() {
@@ -108,8 +105,7 @@ void CallHistoryCore::setSelf(QSharedPointer<CallHistoryCore> me) {
 			mCoreModelConnection->invokeToCore([this, friendModel, displayName]() {
 				mFriendModel = friendModel;
 				auto me = mCoreModelConnection->mCore.mQData; // Locked from previous call.
-				mFriendModelConnection = QSharedPointer<SafeConnection<CallHistoryCore, FriendModel>>(
-				    new SafeConnection<CallHistoryCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
+				mFriendModelConnection = SafeConnection<CallHistoryCore, FriendModel>::create(me, mFriendModel);
 				mFriendModelConnection->makeConnectToModel(&FriendModel::fullNameChanged, [this]() {
 					auto fullName = mFriendModel->getFullName();
 					mCoreModelConnection->invokeToCore([this, fullName]() {

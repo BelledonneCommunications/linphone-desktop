@@ -296,8 +296,7 @@ App::~App() {
 }
 
 void App::setSelf(QSharedPointer<App>(me)) {
-	mCoreModelConnection = QSharedPointer<SafeConnection<App, CoreModel>>(
-	    new SafeConnection<App, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mCoreModelConnection = SafeConnection<App, CoreModel>::create(me, CoreModel::getInstance());
 	mCoreModelConnection->makeConnectToModel(&CoreModel::callCreated,
 	                                         [this](const std::shared_ptr<linphone::Call> &call) {
 		                                         if (call->getDir() == linphone::Call::Dir::Incoming) return;
@@ -355,8 +354,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 		mCoreModelConnection->invokeToCore([this, state] { setCoreStarted(state == linphone::GlobalState::On); });
 	});
 	//---------------------------------------------------------------------------------------------
-	mCliModelConnection = QSharedPointer<SafeConnection<App, CliModel>>(
-	    new SafeConnection<App, CliModel>(me, CliModel::getInstance()), &QObject::deleteLater);
+	mCliModelConnection = SafeConnection<App, CliModel>::create(me, CliModel::getInstance());
 	mCliModelConnection->makeConnectToCore(&App::receivedMessage, [this](int, const QByteArray &byteArray) {
 		QString command(byteArray);
 		if (command.isEmpty()) {

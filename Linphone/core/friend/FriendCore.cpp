@@ -123,8 +123,7 @@ void FriendCore::setSelf(SafeSharedPointer<FriendCore> me) {
 void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 	if (me) {
 		if (mFriendModel) {
-			mFriendModelConnection = QSharedPointer<SafeConnection<FriendCore, FriendModel>>(
-			    new SafeConnection<FriendCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
+			mFriendModelConnection = SafeConnection<FriendCore, FriendModel>::create(me, mFriendModel);
 			mFriendModelConnection->makeConnectToModel(&FriendModel::updated, [this]() {
 				mFriendModelConnection->invokeToCore([this]() { emit friendUpdated(); });
 			});
@@ -199,8 +198,7 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 				mFriendModelConnection->invokeToModel([this, starred]() { mFriendModel->setStarred(starred); });
 			});
 			if (!mCoreModelConnection) {
-				mCoreModelConnection = QSharedPointer<SafeConnection<FriendCore, CoreModel>>(
-				    new SafeConnection<FriendCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+				mCoreModelConnection = SafeConnection<FriendCore, CoreModel>::create(me, CoreModel::getInstance());
 			}
 			mCoreModelConnection->makeConnectToModel(
 			    &CoreModel::callStateChanged,
@@ -227,8 +225,7 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 			});
 
 		} else { // Create
-			mCoreModelConnection = QSharedPointer<SafeConnection<FriendCore, CoreModel>>(
-			    new SafeConnection<FriendCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+			mCoreModelConnection = SafeConnection<FriendCore, CoreModel>::create(me, CoreModel::getInstance());
 		}
 	}
 }

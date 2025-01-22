@@ -56,8 +56,7 @@ ConferenceCore::~ConferenceCore() {
 }
 
 void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
-	mConferenceModelConnection = QSharedPointer<SafeConnection<ConferenceCore, ConferenceModel>>(
-	    new SafeConnection<ConferenceCore, ConferenceModel>(me, mConferenceModel), &QObject::deleteLater);
+	mConferenceModelConnection = SafeConnection<ConferenceCore, ConferenceModel>::create(me, mConferenceModel);
 	mConferenceModelConnection->makeConnectToModel(
 	    &ConferenceModel::activeSpeakerParticipantDevice,
 	    [this](const std::shared_ptr<linphone::ParticipantDevice> &participantDevice) {

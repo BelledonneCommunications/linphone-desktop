@@ -53,8 +53,7 @@ CallList::~CallList() {
 }
 
 void CallList::setSelf(QSharedPointer<CallList> me) {
-	mModelConnection = QSharedPointer<SafeConnection<CallList, CoreModel>>(
-	    new SafeConnection<CallList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mModelConnection = SafeConnection<CallList, CoreModel>::create(me, CoreModel::getInstance());
 
 	mModelConnection->makeConnectToCore(&CallList::lUpdate, [this]() {
 		mModelConnection->invokeToModel([this]() {

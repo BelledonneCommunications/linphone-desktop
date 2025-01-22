@@ -56,8 +56,7 @@ ConferenceInfoList::~ConferenceInfoList() {
 }
 
 void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
-	mCoreModelConnection = QSharedPointer<SafeConnection<ConferenceInfoList, CoreModel>>(
-	    new SafeConnection<ConferenceInfoList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mCoreModelConnection = SafeConnection<ConferenceInfoList, CoreModel>::create(me, CoreModel::getInstance());
 
 	mCoreModelConnection->makeConnectToCore(&ConferenceInfoList::lUpdate, [this](bool isInitialization) {
 		mCoreModelConnection->invokeToModel([this, isInitialization]() {

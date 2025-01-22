@@ -52,8 +52,7 @@ ParticipantList::~ParticipantList() {
 
 void ParticipantList::setSelf(QSharedPointer<ParticipantList> me) {
 	if (mConferenceModelConnection) mConferenceModelConnection->disconnect();
-	mConferenceModelConnection = QSharedPointer<SafeConnection<ParticipantList, ConferenceModel>>(
-	    new SafeConnection<ParticipantList, ConferenceModel>(me, mConferenceModel), &QObject::deleteLater);
+	mConferenceModelConnection = SafeConnection<ParticipantList, ConferenceModel>::create(me, mConferenceModel);
 	if (mConferenceModel) {
 		mConferenceModelConnection->makeConnectToCore(&ParticipantList::lUpdateParticipants, [this] {
 			mConferenceModelConnection->invokeToModel([this]() {

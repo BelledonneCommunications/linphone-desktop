@@ -52,8 +52,7 @@ LdapList::~LdapList() {
 }
 
 void LdapList::setSelf(QSharedPointer<LdapList> me) {
-	mModelConnection = QSharedPointer<SafeConnection<LdapList, CoreModel>>(
-	    new SafeConnection<LdapList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mModelConnection = SafeConnection<LdapList, CoreModel>::create(me, CoreModel::getInstance());
 	mModelConnection->makeConnectToCore(&LdapList::lUpdate, [this]() {
 		mModelConnection->invokeToModel([this]() {
 			QList<QSharedPointer<LdapCore>> *ldaps = new QList<QSharedPointer<LdapCore>>();

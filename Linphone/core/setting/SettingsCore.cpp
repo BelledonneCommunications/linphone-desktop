@@ -190,8 +190,7 @@ SettingsCore::~SettingsCore() {
 
 void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	mustBeInLinphoneThread(getClassName());
-	mSettingsModelConnection = QSharedPointer<SafeConnection<SettingsCore, SettingsModel>>(
-	    new SafeConnection<SettingsCore, SettingsModel>(me, SettingsModel::getInstance()), &QObject::deleteLater);
+	mSettingsModelConnection = SafeConnection<SettingsCore, SettingsModel>::create(me, SettingsModel::getInstance());
 
 	// VFS
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::vfsEnabledChanged, [this](const bool enabled) {
@@ -388,8 +387,7 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QVariantList,
 	                        shortcuts, Shortcuts)
 
-	auto coreModelConnection = QSharedPointer<SafeConnection<SettingsCore, CoreModel>>(
-	    new SafeConnection<SettingsCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	auto coreModelConnection = SafeConnection<SettingsCore, CoreModel>::create(me, CoreModel::getInstance());
 
 	coreModelConnection->makeConnectToModel(
 	    &CoreModel::logCollectionUploadStateChanged, [this](auto core, auto state, auto info) {

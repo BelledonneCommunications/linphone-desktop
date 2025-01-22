@@ -126,8 +126,7 @@ void AccountDeviceList::deleteDevice(AccountDeviceGui *deviceGui) {
 
 void AccountDeviceList::setSelf(QSharedPointer<AccountDeviceList> me) {
 	if (mCoreModelConnection) mCoreModelConnection->disconnect();
-	mCoreModelConnection = QSharedPointer<SafeConnection<AccountDeviceList, CoreModel>>(
-	    new SafeConnection<AccountDeviceList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mCoreModelConnection = SafeConnection<AccountDeviceList, CoreModel>::create(me, CoreModel::getInstance());
 	mCoreModelConnection->invokeToModel([=] {
 		auto core = CoreModel::getInstance()->getCore();
 		auto ams = core->createAccountManagerServices();
@@ -136,10 +135,8 @@ void AccountDeviceList::setSelf(QSharedPointer<AccountDeviceList> me) {
 			mAccountManagerServicesModel = amsModel;
 			if (mAccountManagerServicesModelConnection) mAccountManagerServicesModelConnection->disconnect();
 			mAccountManagerServicesModelConnection =
-			    QSharedPointer<SafeConnection<AccountDeviceList, AccountManagerServicesModel>>(
-			        new SafeConnection<AccountDeviceList, AccountManagerServicesModel>(me,
-			                                                                           mAccountManagerServicesModel),
-			        &QObject::deleteLater);
+			    SafeConnection<AccountDeviceList, AccountManagerServicesModel>::create(me,
+			                                                                           mAccountManagerServicesModel);
 			mAccountManagerServicesModelConnection->makeConnectToModel(
 			    &AccountManagerServicesModel::requestSuccessfull,
 			    [this](const std::shared_ptr<const linphone::AccountManagerServicesRequest> &request,

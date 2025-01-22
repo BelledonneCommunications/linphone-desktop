@@ -50,8 +50,7 @@ MagicSearchList::~MagicSearchList() {
 }
 
 void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
-	mCoreModelConnection = QSharedPointer<SafeConnection<MagicSearchList, CoreModel>>(
-	    new SafeConnection<MagicSearchList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mCoreModelConnection = SafeConnection<MagicSearchList, CoreModel>::create(me, CoreModel::getInstance());
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::friendCreated, [this](const std::shared_ptr<linphone::Friend> &f) {
 		    auto friendCore = FriendCore::create(f);
@@ -74,9 +73,8 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 		mCoreModelConnection->invokeToCore([this, magicSearch] {
 			mMagicSearch = magicSearch;
 			mMagicSearch->setSelf(mMagicSearch);
-			mModelConnection = QSharedPointer<SafeConnection<MagicSearchList, MagicSearchModel>>(
-			    new SafeConnection<MagicSearchList, MagicSearchModel>(mCoreModelConnection->mCore.mQData, mMagicSearch),
-			    &QObject::deleteLater);
+			mModelConnection = SafeConnection<MagicSearchList, MagicSearchModel>::create(
+			    mCoreModelConnection->mCore.mQData, mMagicSearch);
 			mModelConnection->makeConnectToCore(
 			    &MagicSearchList::lSearch,
 			    [this](QString filter, int sourceFlags, LinphoneEnums::MagicSearchAggregation aggregationFlag,

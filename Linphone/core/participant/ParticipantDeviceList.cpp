@@ -119,8 +119,7 @@ void ParticipantDeviceList::setConferenceModel(const std::shared_ptr<ConferenceM
 
 void ParticipantDeviceList::setSelf(QSharedPointer<ParticipantDeviceList> me) {
 	if (mConferenceModelConnection) mConferenceModelConnection->disconnect();
-	mConferenceModelConnection = QSharedPointer<SafeConnection<ParticipantDeviceList, ConferenceModel>>(
-	    new SafeConnection<ParticipantDeviceList, ConferenceModel>(me, mConferenceModel), &QObject::deleteLater);
+	mConferenceModelConnection = SafeConnection<ParticipantDeviceList, ConferenceModel>::create(me, mConferenceModel);
 	if (mConferenceModel) {
 		mConferenceModelConnection->makeConnectToModel(
 		    &ConferenceModel::participantDeviceAdded,

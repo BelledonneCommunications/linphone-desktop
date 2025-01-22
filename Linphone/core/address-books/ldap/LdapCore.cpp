@@ -70,8 +70,7 @@ bool LdapCore::isValid() {
 }
 
 void LdapCore::setSelf(QSharedPointer<LdapCore> me) {
-	mLdapModelConnection = QSharedPointer<SafeConnection<LdapCore, LdapModel>>(
-	    new SafeConnection<LdapCore, LdapModel>(me, mLdapModel), &QObject::deleteLater);
+	mLdapModelConnection = SafeConnection<LdapCore, LdapModel>::create(me, mLdapModel);
 
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, serverUrl, ServerUrl)
 	DEFINE_CORE_GETSET_CONNECT(mLdapModelConnection, LdapCore, LdapModel, mLdapModel, QString, bindDn, BindDn)

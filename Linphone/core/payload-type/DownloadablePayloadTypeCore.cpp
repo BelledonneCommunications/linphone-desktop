@@ -67,10 +67,8 @@ DownloadablePayloadTypeCore::~DownloadablePayloadTypeCore() {
 
 void DownloadablePayloadTypeCore::setSelf(QSharedPointer<DownloadablePayloadTypeCore> me) {
 	mDownloadablePayloadTypeModelConnection =
-	    QSharedPointer<SafeConnection<DownloadablePayloadTypeCore, DownloadablePayloadTypeModel>>(
-	        new SafeConnection<DownloadablePayloadTypeCore, DownloadablePayloadTypeModel>(
-	            me, mDownloadablePayloadTypeModel),
-	        &QObject::deleteLater);
+	    SafeConnection<DownloadablePayloadTypeCore, DownloadablePayloadTypeModel>::create(
+	        me, mDownloadablePayloadTypeModel);
 
 	mDownloadablePayloadTypeModelConnection->makeConnectToCore(
 	    &DownloadablePayloadTypeCore::extractSuccess, [this](QString filePath) {

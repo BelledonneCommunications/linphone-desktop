@@ -183,8 +183,7 @@ CallCore::~CallCore() {
 }
 
 void CallCore::setSelf(QSharedPointer<CallCore> me) {
-	mCallModelConnection = QSharedPointer<SafeConnection<CallCore, CallModel>>(
-	    new SafeConnection<CallCore, CallModel>(me, mCallModel), &QObject::deleteLater);
+	mCallModelConnection = SafeConnection<CallCore, CallModel>::create(me, mCallModel);
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetMicrophoneMuted, [this](bool isMuted) {
 		mCallModelConnection->invokeToModel([this, isMuted]() { mCallModel->setMicrophoneMuted(isMuted); });
 	});
@@ -783,8 +782,7 @@ void CallCore::findRemoteLdapFriend(QSharedPointer<CallCore> me) {
 	linphoneSearch->setLimitedSearch(true);
 	mLdapMagicSearchModel = Utils::makeQObject_ptr<MagicSearchModel>(linphoneSearch);
 	mLdapMagicSearchModel->setSelf(mLdapMagicSearchModel);
-	mLdapMagicSearchModelConnection = QSharedPointer<SafeConnection<CallCore, MagicSearchModel>>(
-	    new SafeConnection<CallCore, MagicSearchModel>(me, mLdapMagicSearchModel), &QObject::deleteLater);
+	mLdapMagicSearchModelConnection = SafeConnection<CallCore, MagicSearchModel>::create(me, mLdapMagicSearchModel);
 	mLdapMagicSearchModelConnection->makeConnectToModel(
 	    &MagicSearchModel::searchResultsReceived,
 	    [this, remoteAdress = mRemoteAddress](const std::list<std::shared_ptr<linphone::SearchResult>> &results) {
