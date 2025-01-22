@@ -53,6 +53,10 @@ else ()
 		)
 endif ()
 
+if (HAVE_CRASH_HANDLER)
+	list(APPEND _LINPHONEAPP_SOURCES tool/crash_reporter/CrashReporter.cpp)
+endif()
+
 set(_LINPHONEAPP_SOURCES ${_LINPHONEAPP_SOURCES} PARENT_SCOPE)
 
 

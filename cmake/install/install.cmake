@@ -23,19 +23,17 @@
 cmake_minimum_required(VERSION 3.5)
 
 set(TARGET_NAME Linphone)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
-if (GIT_EXECUTABLE AND NOT(LINPHONEAPP_VERSION))
-	execute_process(
-		COMMAND ${GIT_EXECUTABLE} describe --always
-		OUTPUT_VARIABLE LINPHONEAPP_VERSION
-		OUTPUT_STRIP_TRAILING_WHITESPACE
-		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-	)
+if(NOT LINPHONEAPP_VERSION)
+	bc_compute_full_version(LINPHONEAPP_VERSION)
 endif()
 
 if (NOT(LINPHONEAPP_VERSION))
   set(LINPHONEAPP_VERSION "6.1.0")
 endif ()
+
+include(${CMAKE_SOURCE_DIR}/Linphone/application_info.cmake)
 
 set(LINPHONE_MAJOR_VERSION)
 set(LINPHONE_MINOR_VERSION)
@@ -161,6 +159,39 @@ function(deployqt_hack target)
 	endif()
 endfunction()
 
+
+
+################################################################
+#						CRASHPAD
+################################################################
+if(HAVE_CRASH_HANDLER)
+	get_target_property(CRASHPAD_BIN_DIR Crashpad CRASHPAD_BIN_DIR)
+	get_target_property(CRASHPAD_EXECUTABLE_NAME Crashpad CRASHPAD_EXECUTABLE_NAME)
+	install(FILES "${CRASHPAD_BIN_DIR}/${CRASHPAD_EXECUTABLE_NAME}" DESTINATION ${CMAKE_INSTALL_BINDIR} PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+	if(ENABLE_BUGSPLAT_SYMBOLS_UPLOAD)
+		if(NOT LINPHONEAPP_APPLICATION_NAME)
+			message(FATAL_ERROR "Missing application details for Bugsplat. Please fill LINPHONEAPP_APPLICATION_NAME (${LINPHONEAPP_APPLICATION_NAME} - ${LINPHONEAPP_VERSION})")
+		elseif(NOT BUGSPLAT_DATABASE)
+			message(FATAL_ERROR "Missing database application details for Bugsplat. Please fill BUGSPLAT_DATABASE in application_info.cmake")
+		elseif(NOT BUGSPPLAT_CLIENT_ID OR NOT BUGSPPLAT_CLIENT_SECRET)
+			message(FATAL_ERROR "Missing identifications for Bugsplat. Please fill BUGSPPLAT_CLIENT_ID and BUGSPPLAT_CLIENT_SECRET to activate symbol uploading")
+		else()
+			message(STATUS "Preparing symbol uploader Bugsplat for ${LINPHONEAPP_APPLICATION_NAME} - ${LINPHONEAPP_VERSION}.")
+			if(WIN32)
+				set(CRASHPAD_SYMBOLS_UPLOADER "${CMAKE_BINARY_DIR}/symbol-upload-windows.exe")
+				set(CRASHPAD_SYMBOLS_UPLOADER_URL "https://github.com/BugSplat-Git/symbol-upload/releases/download/v10.2.4/symbol-upload-windows.exe")
+			else()
+				set(CRASHPAD_SYMBOLS_UPLOADER "${CMAKE_BINARY_DIR}/symbol-upload-linux")
+				set(CRASHPAD_SYMBOLS_UPLOADER_URL "https://github.com/BugSplat-Git/symbol-upload/releases/download/v10.2.4/symbol-upload-linux")
+			endif()
+			if(NOT EXISTS "${CRASHPAD_SYMBOLS_UPLOADER}")
+				file(DOWNLOAD ${CRASHPAD_SYMBOLS_UPLOADER_URL} ${CRASHPAD_SYMBOLS_UPLOADER})
+				file(CHMOD "${CRASHPAD_SYMBOLS_UPLOADER}" PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+			endif()
+		endif()
+	endif()
+endif()
+
 # ==============================================================================
 #                               CPack.
 # ==============================================================================
@@ -214,13 +245,17 @@ if(${ENABLE_APP_PACKAGING})
 		set(DO_GENERATOR YES)
 		set(PACKAGE_EXT "exe")
 		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}-${BIN_ARCH}")
+		set(CPACK_SOURCE_IGNORE_FILES "*Qt*.pdb;*.lib;*.cmake")	#Doesn't seem to work but we let the option just in case.
 		find_program(NSIS_PROGRAM makensis)
 		if(NOT NSIS_PROGRAM)
-			
-			message(STATUS "Installing windows tools for nsis")
-			execute_process(
-				COMMAND "${MSYS2_PROGRAM}" "-${MINGW_TYPE}" "-here" "-full-path" "-defterm" "-shell" "sh" "-l" "-c" "pacman -Sy ${MINGW_PACKAGE_PREFIX}nsis --noconfirm  --needed"
-			)
+			if(ENABLE_WINDOWS_TOOLS_CHECK)
+				message(STATUS "Installing windows tools for nsis")
+				execute_process(
+					COMMAND "${MSYS2_PROGRAM}" "-${MINGW_TYPE}" "-here" "-full-path" "-defterm" "-shell" "sh" "-l" "-c" "pacman -Sy ${MINGW_PACKAGE_PREFIX}nsis --noconfirm  --needed"
+				)
+			else()
+				message(FATAL_ERROR "`makensis` is needed for packaging. Please use pacman -Sy ${MINGW_PACKAGE_PREFIX}nsis to install it.")
+			endif()
 		endif()
 		set(PACKAGE_EXT "exe")
 		# Use magic `NSIS.template.in` template from the current source directory to force uninstallation
@@ -307,4 +342,3 @@ if(${ENABLE_APP_PACKAGING})
 	endif()
 	include(CPack)
 endif()
-

@@ -143,8 +143,12 @@ public:
 	bool getFullLogsEnabled() const;
 	void setFullLogsEnabled(bool status);
 
+	bool getCrashReporterEnabled() const;
+	void setCrashReporterEnabled(bool status);
+
 	static bool getLogsEnabled(const std::shared_ptr<linphone::Config> &config);
 	static bool getFullLogsEnabled(const std::shared_ptr<linphone::Config> &config);
+	static bool getCrashReporterEnabled(const std::shared_ptr<linphone::Config> &config);
 
 	QString getLogsFolder() const;
 	void setLogsFolder(const QString &folder);
@@ -272,6 +276,7 @@ signals:
 
 	void logsEnabledChanged(bool status);
 	void fullLogsEnabledChanged(bool status);
+	void crashReporterEnabledChanged(bool status);
 
 	void dndChanged(bool value);
 

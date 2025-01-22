@@ -245,6 +245,12 @@ public:
 	static QUrl getAppIcon(const QString &iconName);
 	static QUrl getRegistrationStateIcon(LinphoneEnums::RegistrationState state);
 
+#ifdef Q_OS_WINDOWS
+	static inline std::wstring getNativeString(const QString &s){ return s.toStdWString(); }
+#else
+	static std::string getNativeString(const QString &s){ return s.toStdString(); }
+#endif
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 };

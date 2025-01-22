@@ -48,6 +48,7 @@ bool Thread::isInLinphoneThread() {
 }
 
 bool Thread::mustBeInLinphoneThread(const QString &context) {
+	if(!App::getInstance()) return true;
 	bool isLinphoneThread = isInLinphoneThread();
 	if (!isLinphoneThread) { // Bracket to easier debugging.
 		lCritical() << "[Thread] Not processing in Linphone thread from " << context;

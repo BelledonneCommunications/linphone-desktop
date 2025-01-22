@@ -101,6 +101,9 @@
 #include "tool/accessibility/AccessibilityHelper.hpp"
 #include "tool/accessibility/FocusHelper.hpp"
 #include "tool/accessibility/KeyboardShortcuts.hpp"
+#ifdef HAVE_CRASH_HANDLER
+#include "tool/crash_reporter/CrashReporter.hpp"
+#endif
 #include "tool/native/DesktopTools.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/EmojiProvider.hpp"
@@ -111,6 +114,7 @@
 #include "tool/request/RequestDialog.hpp"
 #include "tool/thread/Thread.hpp"
 #include "tool/ui/DashRectangle.hpp"
+
 
 #if defined(Q_OS_MACOS)
 #include "core/event-count-notifier/EventCountNotifierMacOs.hpp"
@@ -291,6 +295,13 @@ App::App(int &argc, char *argv[])
 	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
 	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
 	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
+	// CarshReporter must be call after app initialization like names.
+#ifdef HAVE_CRASH_HANDLER
+	CrashReporter::start();
+#else
+	lWarning() << "[Main] The application doesn't support the CrashReporter.";
+#endif
+
 	// If not OpenGL, createRender is never call.
 	QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
 	setWindowIcon(QIcon(Constants::WindowIconPath));
@@ -491,7 +502,7 @@ App *App::getInstance() {
 }
 
 Thread *App::getLinphoneThread() {
-	return App::getInstance()->mLinphoneThread;
+	return App::getInstance() ? App::getInstance()->mLinphoneThread : nullptr;
 }
 
 Notifier *App::getNotifier() const {

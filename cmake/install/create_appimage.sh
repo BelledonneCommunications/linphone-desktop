@@ -126,6 +126,8 @@ else
 	echo "-- Code Signing of AppImage"
 	# APPIMAGETOOL_SIGN_PASSPHRASE has to the parent environment (not here). Do not use export.
 	./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage --appimage-extract-and-run ${WORK_DIR}/AppDir --sign --sign-key $4
+
+
 fi
 
 echo "Move Appimages into ${BIN_SOURCE_DIR}/Packages/$2.AppImage"

@@ -97,6 +97,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	// Logs
 	mLogsEnabled = settingsModel->getLogsEnabled();
 	mFullLogsEnabled = settingsModel->getFullLogsEnabled();
+	mCrashReporterEnabled = settingsModel->getCrashReporterEnabled();
 	mLogsFolder = settingsModel->getLogsFolder();
 	mLogsEmail = settingsModel->getLogsEmail();
 
@@ -189,6 +190,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	// Logs
 	mLogsEnabled = settingsCore.mLogsEnabled;
 	mFullLogsEnabled = settingsCore.mFullLogsEnabled;
+	mCrashReporterEnabled = settingsCore.mCrashReporterEnabled;
 	mLogsFolder = settingsCore.mLogsFolder;
 	mLogsEmail = settingsCore.mLogsEmail;
 
@@ -416,7 +418,10 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 
 	// Logs
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::logsEnabledChanged, [this](const bool status) {
-		mSettingsModelConnection->invokeToCore([this, status]() { setLogsEnabled(status); });
+		mSettingsModelConnection->invokeToCore([this, status]() {
+			setCrashReporterEnabled(status);
+			setLogsEnabled(status);
+		});
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::fullLogsEnabledChanged, [this](const bool status) {
@@ -558,6 +563,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	// Logs
 	setLogsEnabled(settingsCore.mLogsEnabled);
 	setFullLogsEnabled(settingsCore.mFullLogsEnabled);
+	setCrashReporterEnabled(settingsCore.mCrashReporterEnabled);
 	setLogsFolder(settingsCore.mLogsFolder);
 
 	// DND
@@ -1007,6 +1013,18 @@ void SettingsCore::setFullLogsEnabled(bool enabled) {
 	}
 }
 
+bool SettingsCore::getCrashReporterEnabled() const {
+	return mCrashReporterEnabled;
+}
+
+void SettingsCore::setCrashReporterEnabled(bool enabled) {
+	if (mCrashReporterEnabled != enabled) {
+		mCrashReporterEnabled = enabled;
+		emit crashReporterEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
 void SettingsCore::setRingtone(QString path) {
 	if (mRingtonePath != path) {
 		mRingtonePath = path;
@@ -1144,6 +1162,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	// Logs
 	model->setLogsEnabled(mLogsEnabled);
 	model->setFullLogsEnabled(mFullLogsEnabled);
+	model->setCrashReporterEnabled(mLogsEnabled);
 
 	// UI
 	model->setDisableChatFeature(mDisableChatFeature);
@@ -1220,6 +1239,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	// Logs
 	mLogsEnabled = model->getLogsEnabled();
 	mFullLogsEnabled = model->getFullLogsEnabled();
+	mCrashReporterEnabled = model->getCrashReporterEnabled();
 	mLogsFolder = model->getLogsFolder();
 	mLogsEmail = model->getLogsEmail();
 

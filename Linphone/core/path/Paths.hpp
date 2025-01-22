@@ -43,6 +43,8 @@ QString getFactoryConfigFilePath();
 QString getFriendsListFilePath();
 QString getLimeDatabasePath();
 QString getLogsDirPath();
+QString getCrashpadDirPath();
+QString getMetricsDirPath();
 QString getMessageHistoryFilePath();
 QString getPackageDataDirPath();
 QString getPackageMsPluginsDirPath();
@@ -56,6 +58,7 @@ QString getToolsDirPath();
 QString getUserCertificatesDirPath();
 QString getZrtpDataFilePath();
 QString getZrtpSecretsFilePath();
+QString getCrashpadHandlerFilePath();
 
 void migrate();
 } // namespace Paths

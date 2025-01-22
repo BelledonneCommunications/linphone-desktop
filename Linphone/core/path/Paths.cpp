@@ -139,6 +139,10 @@ static inline QString getAppPackagePluginsDirPath() {
 	return getAppPackageDir().absolutePath() + Constants::PathPlugins;
 }
 
+static inline QString getAppBinDirPath() {
+	return getAppPackageDir().absolutePath() + Constants::PathBin;
+}
+
 static inline QString getAppAssistantConfigDirPath() {
 	return getAppPackageDataDirPath() + Constants::PathAssistantConfig;
 }
@@ -283,6 +287,20 @@ QString Paths::getLogsDirPath() {
 	                          Constants::PathLogs);
 }
 
+QString Paths::getCrashpadDirPath() {
+#ifdef HAVE_CRASH_HANDLER
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+							  Constants::PathCrashpad);
+#else
+	return "";
+#endif
+}
+
+QString Paths::getMetricsDirPath() {
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+	                          Constants::PathMetrics);
+}
+
 QString Paths::getMessageHistoryFilePath() {
 	return getReadableFilePath(
 	    getAppMessageHistoryFilePath()); // No need to ensure that the file exists as this DB is deprecated
@@ -335,6 +353,14 @@ QString Paths::getUserCertificatesDirPath() {
 QString Paths::getZrtpSecretsFilePath() {
 	return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
 	                           Constants::PathZrtpSecrets);
+}
+
+QString Paths::getCrashpadHandlerFilePath() {
+#ifdef HAVE_CRASH_HANDLER
+	return getAppBinDirPath() + Constants::PathCrashpadHandler;
+#else
+	return "";
+#endif
 }
 
 // -----------------------------------------------------------------------------

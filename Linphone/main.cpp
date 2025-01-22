@@ -3,6 +3,8 @@
 
 #include "core/App.hpp"
 #include "core/logger/QtLogger.hpp"
+#include "core/path/Paths.hpp"
+
 #include <QLocale>
 #include <QSurfaceFormat>
 #include <QTranslator>
@@ -22,11 +24,14 @@ FILE *gStream = NULL;
 #define ACCESSBILITY_WORKAROUND
 #include <QAccessible>
 #include <QAccessibleEvent>
+
 void DummyUpdateHandler(QAccessibleEvent *event) {
 }
 void DummyRootObjectHandler(QObject *) {
 }
 #endif
+
+
 
 void cleanStream() {
 #ifdef _WIN32
@@ -39,6 +44,7 @@ void cleanStream() {
 }
 
 int main(int argc, char *argv[]) {
+
 	/*
 	#if defined _WIN32
 	    // log in console only if launched from console
@@ -48,6 +54,7 @@ int main(int argc, char *argv[]) {
 	    }
 	#endif
 	*/
+
 	// Useful to share camera on Fullscreen (other context) or multiscreens
 	lDebug() << "[Main] Setting ShareOpenGLContexts";
 	QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
@@ -63,6 +70,7 @@ int main(int argc, char *argv[]) {
 	setlocale(LC_CTYPE, ".UTF8");
 	lDebug() << "[Main] Creating application";
 	auto app = QSharedPointer<App>::create(argc, argv);
+
 #ifdef ACCESSBILITY_WORKAROUND
 	QAccessible::installUpdateHandler(DummyUpdateHandler);
 	QAccessible::installRootObjectHandler(DummyRootObjectHandler);

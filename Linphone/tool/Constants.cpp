@@ -60,6 +60,10 @@ constexpr char Constants::PathCodecs[];
 constexpr char Constants::PathData[];
 constexpr char Constants::PathTools[];
 constexpr char Constants::PathLogs[];
+#ifdef HAVE_CRASH_HANDLER
+constexpr char Constants::PathCrashpad[];
+constexpr char Constants::PathCrashpadHandler[];
+#endif
 #ifdef APPLE
 constexpr char Constants::PathPlugins[];
 #else

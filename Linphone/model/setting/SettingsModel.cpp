@@ -25,6 +25,9 @@
 #include "model/tool/ToolModel.hpp"
 // #include "model/tool/VfsUtils.hpp"
 #include "tool/Utils.hpp"
+#ifdef HAVE_CRASH_HANDLER
+#include "tool/crash_reporter/CrashReporter.hpp"
+#endif
 
 // =============================================================================
 
@@ -55,6 +58,7 @@ SettingsModel::SettingsModel() {
 		    if (gstate == linphone::GlobalState::On) { // reached when misc|config-uri is set in config and app starts
 			                                           // and after config is fetched.
 			    notifyConfigReady();
+
 		    }
 	    });
 	QObject::connect(CoreModel::getInstance().get(), &CoreModel::configuringStatus, this,
@@ -618,14 +622,30 @@ void SettingsModel::setFullLogsEnabled(bool status) {
 	emit fullLogsEnabledChanged(status);
 }
 
+bool SettingsModel::getCrashReporterEnabled() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return getCrashReporterEnabled(mConfig);
+}
+
+void SettingsModel::setCrashReporterEnabled(bool status) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mConfig->setInt(AppSection, "send_logs_to_crashlytics", status);
+#ifdef HAVE_CRASH_HANDLER
+	CrashReporter::enable(status);
+#endif
+	emit crashReporterEnabledChanged(status);
+}
+
 bool SettingsModel::getLogsEnabled(const shared_ptr<linphone::Config> &config) {
-	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 	return config ? config->getInt(UiSection, "logs_enabled", false) : true;
 }
 
 bool SettingsModel::getFullLogsEnabled(const shared_ptr<linphone::Config> &config) {
-	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 	return config ? config->getInt(UiSection, "full_logs_enabled", false) : false;
+}
+
+bool SettingsModel::getCrashReporterEnabled(const shared_ptr<linphone::Config> &config) {
+	return config ? config->getInt(AppSection, "send_logs_to_crashlytics", true) : true;
 }
 
 QString SettingsModel::getLogsFolder() const {
@@ -685,6 +705,9 @@ QString SettingsModel::getLogsEmail() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "logs_email", Constants::DefaultLogsEmail));
 }
+
+
+
 
 // =============================================================================
 // Do not disturb

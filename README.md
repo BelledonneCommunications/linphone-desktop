@@ -34,6 +34,11 @@ For Desktop : you will need QT6 (_6.10.0 or newer_). `C++17` support is required
 
 The following QT optional modules are required: qtmultimedia qtnetworkauth qtshadertools .
 
+If you wan't to build with Crash handler, you need to install the following tools:
+- clang
+- curl dev (for C development headers) (ex: `sudo apt install libcurl4-openssl-dev`)
+- httplib2 v0.22.0 (use `pip install httplib2==0.22.0` or `pip3 install httplib2==0.22.0`)
+
 ### Set your environment
 
 1. Make sure you have all your build dependencies installed
@@ -295,6 +300,7 @@ Also, more configurations are available in the docker-files folder of linphone-s
 | ENABLE_UNIT_TESTS | Enable unit test of SDK. | NO |
 | ENABLE_OPENLDAP | Build openLDAP external library. | YES |
 | ENABLE_UPDATE_CHECK | Enable update check. | YES |
+| ENABLE_CRASH_HANDLER | Enable crash handler. | YES |
 | LINPHONE_SDK_MAKE_RELEASE_FILE_URL | Make a RELEASE file that work along check_version and use this URL | "" |
 
 

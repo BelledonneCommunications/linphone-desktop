@@ -57,7 +57,7 @@ if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
 	if(DO_GENERATOR)
 		execute_process( COMMAND ${CMAKE_CPACK_COMMAND} -G @CPACK_GENERATOR@ -C @CMAKE_BUILD_TYPE@ RESULT_VARIABLE CPACK_COMMAND_RESULT)
 		if(CPACK_COMMAND_RESULT)
-			message(FATAL_ERROR "Failed to create @CPACK_GENERATOR@ package!")
+			message(FATAL_ERROR "Failed to create @CPACK_GENERATOR@ package! ${CPACK_COMMAND_RESULT}")
 		endif()
 	endif()
 	if(DO_APPIMAGE)
@@ -69,6 +69,23 @@ if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
 		execute_process( COMMAND "@CMAKE_SOURCE_DIR@/cmake/install/create_appimage.sh" @EXECUTABLE_NAME@ "@CPACK_PACKAGE_FILE_NAME@${ARCH}" @QT_PATH@ @LINPHONE_BUILDER_SIGNING_IDENTITY@ RESULT_VARIABLE CPACK_COMMAND_RESULT WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/.." )
 		if(CPACK_COMMAND_RESULT)
 			message(FATAL_ERROR "Failed to create AppImage package with this command : '@CMAKE_CURRENT_SOURCE_DIR@/../../tools/create_appimage.sh @EXECUTABLE_NAME@ @QT_PATH@ @LINPHONEAPP_VERSION@' at @CMAKE_INSTALL_PREFIX@/..\nMaybe the .appimage already exists and is running. Please remove the file before packaging if it is the case.")
+		elseif(@ENABLE_BUGSPLAT_SYMBOLS_UPLOAD@)
+			execute_process(COMMAND "@CRASHPAD_SYMBOLS_UPLOADER@" -m -b @BUGSPLAT_DATABASE@ -a "@LINPHONEAPP_APPLICATION_NAME@" -v "@LINPHONEAPP_VERSION@" -f "@EXECUTABLE_NAME@" --clientId "@BUGSPPLAT_CLIENT_ID@" --clientSecret "@BUGSPPLAT_CLIENT_SECRET@"
+				WORKING_DIRECTORY @CMAKE_INSTALL_PREFIX@/../WORK/Packages/AppImageDir/AppDir/usr/bin/
+				RESULT_VARIABLE CPACK_COMMAND_RESULT
+				COMMAND_ECHO  NONE
+			)
+			if(CPACK_COMMAND_RESULT)
+				message(FATAL_ERROR "Failed to upload symbols: '@CMAKE_CURRENT_SOURCE_DIR@/../../tools/create_appimage.sh @EXECUTABLE_NAME@ @QT_PATH@ @LINPHONEAPP_VERSION@' at @CMAKE_INSTALL_PREFIX@/..\nMaybe the .appimage already exists and is running. Please remove the file before packaging if it is the case.")
+			endif()
+			execute_process(COMMAND "@CRASHPAD_SYMBOLS_UPLOADER@" -m -b @BUGSPLAT_DATABASE@ -a "@LINPHONEAPP_APPLICATION_NAME@" -v "@LINPHONEAPP_VERSION@" -f "**/*.so{,.*}" --clientId "@BUGSPPLAT_CLIENT_ID@" --clientSecret "@BUGSPPLAT_CLIENT_SECRET@"
+				WORKING_DIRECTORY @CMAKE_INSTALL_PREFIX@/../WORK/Packages/AppImageDir/AppDir/usr/
+				RESULT_VARIABLE CPACK_COMMAND_RESULT
+				COMMAND_ECHO  NONE
+			)
+			if(CPACK_COMMAND_RESULT)
+				message(FATAL_ERROR "Failed to upload symbols: '@CMAKE_CURRENT_SOURCE_DIR@/../../tools/create_appimage.sh @EXECUTABLE_NAME@ @QT_PATH@ @LINPHONEAPP_VERSION@' at @CMAKE_INSTALL_PREFIX@/..\nMaybe the .appimage already exists and is running. Please remove the file before packaging if it is the case.")
+			endif()
 		endif()
 	endif()
 	if (@PERFORM_SIGNING@)

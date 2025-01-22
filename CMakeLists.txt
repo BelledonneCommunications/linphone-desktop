@@ -177,12 +177,19 @@ add_option(OPTION_LIST ENABLE_UNIT_TESTS "Enable unit test of SDK." OFF)
 add_option(OPTION_LIST ENABLE_UPDATE_CHECK "Enable update check." ON)
 add_option(OPTION_LIST ENABLE_VIDEO "Enable Video support." YES)
 add_option(OPTION_LIST ENABLE_WINDOWS_TOOLS_CHECK "Enable tools checks on Windows for auto install." OFF)
+add_option(OPTION_LIST ENABLE_CRASH_HANDLER "Enable Crash Handler" YES)
 
 add_cache(OPTION_LIST LINPHONE_SDK_MAKE_RELEASE_FILE_URL "Make a RELEASE file that work along check_version and use this URL" "")
 
 
 add_option(OPTION_LIST ENABLE_OPENH264 "Enable the use of OpenH264 codec" ${ENABLE_VIDEO})
 add_option(OPTION_LIST ENABLE_SCREENSHARING "Enable screen sharing." ${ENABLE_VIDEO})
+
+add_option(OPTION_LIST ENABLE_BUGSPLAT_SYMBOLS_UPLOAD "Generate and upload symbols to Bugsplat." OFF)
+add_cache(OPTION_LIST BUGSPPLAT_CLIENT_ID "Client ID for Bugsplat." "")
+add_cache(OPTION_LIST BUGSPPLAT_CLIENT_SECRET "Client Secret for Bugsplat." "")
+
+
 
 # QtKeychain
 add_option(OPTION_LIST LIBSECRET_SUPPORT "Build with libsecret support" OFF) # Need libsecret-devel
@@ -226,14 +233,17 @@ if(LINPHONEAPP_BUILD_TYPE STREQUAL "Default")
 
 endif()
 
+
 if(NOT APPLE OR MONO_ARCH)
-	add_custom_target(linphone-deps)
 	if(NOT LINPHONE_QT_ONLY)
 		function(add_external)
 			set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # Prevent project from overriding the options we just set here
 			add_subdirectory("external")
 		endfunction()
 		add_external()
+	endif()
+	if(TARGET Crashpad)
+		set(HAVE_CRASH_HANDLER 1)
 	endif()
 	function(add_linphone_app)
 			set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # Prevent project from overriding the options we just set here
