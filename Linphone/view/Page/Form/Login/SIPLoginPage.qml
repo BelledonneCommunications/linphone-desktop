@@ -12,6 +12,7 @@ LoginLayout {
 	signal goBack()
 	signal goToRegister()
 	signal connectionSucceed()
+	property bool showBackButton: false
 	
 	titleContent: [
 		RowLayout {
@@ -20,6 +21,7 @@ LoginLayout {
 			spacing: 21 * DefaultStyle.dp
 			Button {
 				id: backButton
+				visible: mainItem.showBackButton 
 				Layout.preferredHeight: 24 * DefaultStyle.dp
 				Layout.preferredWidth: 24 * DefaultStyle.dp
 				icon.source: AppIcons.leftArrow

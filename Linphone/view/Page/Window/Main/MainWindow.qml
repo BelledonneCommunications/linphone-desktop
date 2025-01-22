@@ -169,6 +169,9 @@ AbstractWindow {
 				openMainPage()
 				proposeH264CodecsDownload()
 			}
+			StackView.onActivated:{
+				if (!SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin || accountProxy?.haveAccount) showBackButton = true
+			}
 		}
 	}
 	Component {
