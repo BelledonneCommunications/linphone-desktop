@@ -12,7 +12,7 @@ Item {
 	id: mainItem
 	width: 517 * DefaultStyle.dp
 	readonly property int topPadding: 23 * DefaultStyle.dp
-	readonly property int bottomPadding: 18 * DefaultStyle.dp
+	readonly property int bottomPadding: 13 * DefaultStyle.dp
 	readonly property int leftPadding: 24 * DefaultStyle.dp
 	readonly property int rightPadding: 24 * DefaultStyle.dp
 	readonly property int spacing: 16 * DefaultStyle.dp
@@ -21,7 +21,7 @@ Item {
 	signal addAccountRequest()
 	signal editAccount(AccountGui account)
 
-	implicitHeight: list.contentHeight + topPadding + bottomPadding + 32 * DefaultStyle.dp + 1 + newAccountArea.height
+	implicitHeight: list.contentHeight + topPadding + bottomPadding + 32 * DefaultStyle.dp + 1 + addAccountButton.height
 	ColumnLayout{
 		id: childLayout
 		anchors.top: parent.top
@@ -78,37 +78,15 @@ Item {
 			height: 1 * DefaultStyle.dp
 			color: DefaultStyle.main2_300
 		}
-		MouseArea{
+		IconLabelButton{
 			id: addAccountButton
 			Layout.fillWidth: true
-			Layout.preferredHeight: 32 * DefaultStyle.dp
 			visible: SettingsCpp.maxAccount == 0 || SettingsCpp.maxAccount > accountProxy.count
 			onClicked: mainItem.addAccountRequest()
-			RowLayout{
-				id: newAccountArea
-				anchors.fill: parent
-				spacing: 5 * DefaultStyle.dp
-				EffectImage {
-					id: newAccount
-					imageSource: AppIcons.plusCircle
-					width: 32 * DefaultStyle.dp
-					height: 32 * DefaultStyle.dp
-					Layout.preferredWidth: 32 * DefaultStyle.dp
-					Layout.preferredHeight: 32 * DefaultStyle.dp
-					Layout.alignment: Qt.AlignHCenter
-					fillMode: Image.PreserveAspectFit
-					colorizationColor: DefaultStyle.main2_500main
-				}
-				Text{
-					Layout.fillHeight: true
-					Layout.fillWidth: true
-					verticalAlignment: Text.AlignVCenter
-					font.weight: 400 * DefaultStyle.dp
-					font.pixelSize: 14 * DefaultStyle.dp
-					color: DefaultStyle.main2_500main
-					text: 'Ajouter un compte'
-				}
-			}
+			icon.source: AppIcons.plusCircle
+			icon.width: 32 * DefaultStyle.dp
+			icon.height: 32 * DefaultStyle.dp
+			text: 'Ajouter un compte'
 		}
 	}
 }

@@ -909,6 +909,16 @@ void App::onExitOnCloseChanged() {
 void App::onAuthenticationRequested(const std::shared_ptr<linphone::Core> &core,
                                     const std::shared_ptr<linphone::AuthInfo> &authInfo,
                                     linphone::AuthMethod method) {
+	bool authInfoIsInAccounts = false;
+	for (auto &account : core->getAccountList()) {
+		auto accountAuthInfo = account->findAuthInfo();
+		if (authInfo && accountAuthInfo && authInfo->isEqualButAlgorithms(accountAuthInfo)) {
+			authInfoIsInAccounts = true;
+			if (account->getState() == linphone::RegistrationState::Ok) return;
+			break;
+		}
+	}
+	if (!authInfoIsInAccounts) return;
 	mCoreModelConnection->invokeToCore([this, core, authInfo, method]() {
 		auto window = App::getInstance()->getMainWindow();
 		if (!window) {
