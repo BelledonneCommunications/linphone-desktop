@@ -206,6 +206,8 @@ win64-codesigning:
     - .windows-codesigning
   needs:
     - win64-ninja-vs2022-package-windows
+  variables:
+    MINGW_TYPE: mingw64
   rules:
     - !reference [.rules-merge-request-manual, rules]
     - if: $NIGHTLY_MASTER
@@ -213,7 +215,12 @@ win64-codesigning:
     - if: $DEPLOY_WINDOWS
   script:
     - cd build-desktop/OUTPUT/Packages/
-    - ${WINDOWS_SIGN_TOOL} sign /fd SHA256 /t ${WINDOWS_SIGN_TIMESTAMP_URL} /sha1 ${WINDOWS_SIGN_HASH} *.exe
+    - Invoke-Expression "& ${WINDOWS_SIGN_TOOL} sign /fd SHA256 /t ${WINDOWS_SIGN_TIMESTAMP_URL} /sha1 ${WINDOWS_SIGN_HASH} *.exe"
+  artifacts:
+    paths:
+      - build-desktop\OUTPUT\Packages\*
+    when: always
+    expire_in: 1 week
 
 #################################################
 #               DEPLOY
