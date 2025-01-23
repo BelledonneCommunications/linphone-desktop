@@ -29,14 +29,17 @@ DEFINE_ABSTRACT_OBJECT(FriendCore)
 const QString _addressLabel = FriendCore::tr("Adresse SIP");
 const QString _phoneLabel = FriendCore::tr("Téléphone");
 
-QSharedPointer<FriendCore> FriendCore::create(const std::shared_ptr<linphone::Friend> &contact, bool isStored) {
-	auto sharedPointer = QSharedPointer<FriendCore>(new FriendCore(contact, isStored), &QObject::deleteLater);
+QSharedPointer<FriendCore>
+FriendCore::create(const std::shared_ptr<linphone::Friend> &contact, bool isStored, int sourceFlags) {
+	auto sharedPointer =
+	    QSharedPointer<FriendCore>(new FriendCore(contact, isStored, sourceFlags), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
 	sharedPointer->moveToThread(App::getInstance()->thread());
 	return sharedPointer;
 }
 
-FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool isStored) : QObject(nullptr) {
+FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool isStored, int sourceFlags)
+    : QObject(nullptr) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	if (contact) {
 		mustBeInLinphoneThread(getClassName());
@@ -80,17 +83,19 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 			                                     LinphoneEnums::fromLinphone(device->getSecurityLevel())));
 		}
 		updateVerifiedDevicesCount();
-
 		mStarred = contact->getStarred();
 		mIsSaved = true;
 		mIsStored = isStored;
 		mIsLdap = ToolModel::friendIsInFriendList(ToolModel::getLdapFriendList(), contact);
+		mIsCardDAV = (sourceFlags & (int)linphone::MagicSearch::Source::RemoteCardDAV) != 0;
 	} else {
 		mIsSaved = false;
 		mStarred = false;
 		mIsStored = false;
 		mIsLdap = false;
+		mIsCardDAV = false;
 	}
+
 	connect(this, &FriendCore::addressChanged, &FriendCore::allAddressesChanged);
 	connect(this, &FriendCore::phoneNumberChanged, &FriendCore::allAddressesChanged);
 }
@@ -110,6 +115,7 @@ FriendCore::FriendCore(const FriendCore &friendCore) {
 	mIsSaved = friendCore.mIsSaved;
 	mIsStored = friendCore.mIsStored;
 	mIsLdap = friendCore.mIsLdap;
+	mIsCardDAV = friendCore.mIsCardDAV;
 }
 
 FriendCore::~FriendCore() {
@@ -662,7 +668,7 @@ void FriendCore::save() { // Save Values to model
 						thisCopy->writeIntoModel(mFriendModel);
 						thisCopy->deleteLater();
 						mVCardString = mFriendModel->getVCardAsString();
-						auto carddavListForNewFriends = SettingsModel::getCarddavListForNewFriends();
+						auto carddavListForNewFriends = SettingsModel::getCardDAVListForNewFriends();
 						auto listWhereToAddFriend = carddavListForNewFriends != nullptr ? carddavListForNewFriends
 						                                                                : ToolModel::getAppFriendList();
 						bool created = (listWhereToAddFriend->addFriend(contact) == linphone::FriendList::Status::OK);
@@ -702,9 +708,13 @@ bool FriendCore::isLdap() const {
 	return mIsLdap;
 }
 
+bool FriendCore::isCardDAV() const {
+	return mIsCardDAV;
+}
+
 bool FriendCore::getReadOnly() const {
-	return isLdap(); // TODO add conditions for friends retrieved via HTTP [misc]vcards-contacts-list=<URL> &
-	                 // CardDAV
+	return isLdap() || isCardDAV(); // TODO add conditions for friends retrieved via HTTP
+	                                // [misc]vcards-contacts-list=<URL> & CardDAV
 }
 
 std::shared_ptr<FriendModel> FriendCore::getFriendModel() {

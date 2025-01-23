@@ -49,6 +49,8 @@ void MagicSearchModel::search(QString filter,
 		if (((sourceFlags & (int)LinphoneEnums::MagicSearchSource::LdapServers) > 0) &&
 		    !SettingsModel::getInstance()->getSyncLdapContacts())
 			sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::LdapServers;
+		if (((sourceFlags & (int)LinphoneEnums::MagicSearchSource::RemoteCardDAV) > 0))
+			sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::RemoteCardDAV;
 		// For complete search, we search only on local contacts.
 		// sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::CallLogs;
 		// sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::ChatRooms;
@@ -88,12 +90,12 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 		         << (fList ? fList->getDisplayName().c_str() : "NoList") << result->getSourceFlags() << " / "
 		         << (f ? f.get() : nullptr);
 
-		bool isLdap = (result->getSourceFlags() & (int)LinphoneEnums::MagicSearchSource::LdapServers) != 0;
+		bool isLdap = (result->getSourceFlags() & (int)linphone::MagicSearch::Source::LdapServers) != 0;
 		// Do not add it into ldap_friends if it already exists in app_friends.
 		if (isLdap && f && (!fList || fList->getDisplayName() != "app_friends") &&
 		    !ToolModel::friendIsInFriendList(appFriends, f)) { // Double check because of SDK merging that lead to
 			                                                   // use a ldap result as of app_friends/ldap_friends.
-			updateLdapFriendListWithFriend(f);
+			updateFriendListWithFriend(f, ToolModel::getLdapFriendList());
 		}
 
 		auto resultIt =
@@ -106,9 +108,8 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 	emit searchResultsReceived(finalResults);
 }
 
-void MagicSearchModel::onLdapHaveMoreResults(const std::shared_ptr<linphone::MagicSearch> &magicSearch,
-                                             const std::shared_ptr<linphone::Ldap> &ldap) {
-	// emit ldapHaveMoreResults(ldap);
+void MagicSearchModel::onMoreResultsAvailable(const std::shared_ptr<linphone::MagicSearch> &magicSearch,
+                                              linphone::MagicSearch::Source source) {
 }
 
 // Store LDAP friends in separate list so they can still be retrieved by core->findFriend() for display names,
@@ -116,29 +117,30 @@ void MagicSearchModel::onLdapHaveMoreResults(const std::shared_ptr<linphone::Mag
 // Done in this place so the application can benefit from user initiated searches for faster ldap name retrieval
 // upon incoming call / chat message.
 
-void MagicSearchModel::updateLdapFriendListWithFriend(const std::shared_ptr<linphone::Friend> &linphoneFriend) {
+void MagicSearchModel::updateFriendListWithFriend(const std::shared_ptr<linphone::Friend> &linphoneFriend,
+                                                  std::shared_ptr<linphone::FriendList> friendList) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
-	auto ldapFriendList = ToolModel::getLdapFriendList();
-	if (ToolModel::friendIsInFriendList(ldapFriendList, linphoneFriend))
+
+	if (ToolModel::friendIsInFriendList(friendList, linphoneFriend))
 		return; // Already exist. We don't need to manipulate list.
 	for (auto address : linphoneFriend->getAddresses()) {
-		auto existingFriend = ldapFriendList->findFriendByAddress(address);
+		auto existingFriend = friendList->findFriendByAddress(address);
 		if (existingFriend) {
-			ldapFriendList->removeFriend(existingFriend);
-			ldapFriendList->addFriend(linphoneFriend);
+			friendList->removeFriend(existingFriend);
+			friendList->addFriend(linphoneFriend);
 			return;
 		}
 	}
 	for (auto number : linphoneFriend->getPhoneNumbers()) {
-		auto existingFriend = ldapFriendList->findFriendByPhoneNumber(number);
+		auto existingFriend = friendList->findFriendByPhoneNumber(number);
 		if (existingFriend) {
-			ldapFriendList->removeFriend(existingFriend);
-			ldapFriendList->addFriend(linphoneFriend);
+			friendList->removeFriend(existingFriend);
+			friendList->addFriend(linphoneFriend);
 			return;
 		}
 	}
 	qDebug() << log().arg("Adding Friend:") << linphoneFriend.get();
-	ldapFriendList->addFriend(linphoneFriend);
+	friendList->addFriend(linphoneFriend);
 	emit CoreModel::getInstance()->friendCreated(linphoneFriend);
 }

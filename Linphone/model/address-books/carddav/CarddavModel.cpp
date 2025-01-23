@@ -49,7 +49,7 @@ CarddavModel::~CarddavModel() {
 
 bool CarddavModel::storeNewFriendsInIt() {
 	if (!mCarddavFriendList) return false;
-	auto carddavListForNewFriends = SettingsModel::getCarddavListForNewFriends();
+	auto carddavListForNewFriends = SettingsModel::getCardDAVListForNewFriends();
 	return carddavListForNewFriends != nullptr &&
 	       mCarddavFriendList->getDisplayName() == carddavListForNewFriends->getDisplayName();
 }
@@ -100,7 +100,7 @@ void CarddavModel::onSyncStatusChanged(const std::shared_ptr<linphone::FriendLis
 	if (status == linphone::FriendList::SyncStatus::Successful) {
 		lInfo() << log().arg("Successfully synchronized:") << mCarddavFriendList->getUri();
 		setMonitor(nullptr);
-		if (mStoreNewFriendsInIt) SettingsModel::setCarddavListForNewFriends(friendList->getDisplayName());
+		if (mStoreNewFriendsInIt) SettingsModel::setCardDAVListForNewFriends(friendList->getDisplayName());
 		emit saved(true);
 	}
 	if (status == linphone::FriendList::SyncStatus::Failure) {

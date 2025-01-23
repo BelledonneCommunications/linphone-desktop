@@ -53,9 +53,10 @@ private:
 	// LINPHONE
 	//--------------------------------------------------------------------------------
 	virtual void onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> &magicSearch) override;
-	virtual void onLdapHaveMoreResults(const std::shared_ptr<linphone::MagicSearch> &magicSearch,
-	                                   const std::shared_ptr<linphone::Ldap> &ldap) override;
-	void updateLdapFriendListWithFriend(const std::shared_ptr<linphone::Friend> &linphoneFriend);
+	virtual void onMoreResultsAvailable(const std::shared_ptr<linphone::MagicSearch> &magicSearch,
+	                                    linphone::MagicSearch::Source source) override;
+	void updateFriendListWithFriend(const std::shared_ptr<linphone::Friend> &linphoneFriend,
+	                                std::shared_ptr<linphone::FriendList> friendList);
 
 signals:
 	void searchResultsReceived(const std::list<std::shared_ptr<linphone::SearchResult>> &results);

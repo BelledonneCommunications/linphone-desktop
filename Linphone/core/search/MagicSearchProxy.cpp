@@ -54,7 +54,7 @@ void MagicSearchProxy::setList(QSharedPointer<MagicSearchList> newList) {
 		    [this](int index, FriendGui *data) {
 			    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
 			    sortModel->invalidate();
-			    if (!data->mCore->isLdap()) {
+			    if (!data->mCore->isLdap() && !data->mCore->isCardDAV()) {
 				    auto proxyIndex = sortModel->mapFromSource(mList->index(index, 0)).row();
 				    // auto proxyIndex = mapFromSource(sourceModel()->index(index, 0)); // OLD (keep for checking new
 				    // proxy behavior)
@@ -196,6 +196,9 @@ bool MagicSearchProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 			toShow = friendCore->isLdap();
 			// if (!toShow) return false;
 		}
+		if (!toShow && (mFilterType & (int)FilteringTypes::CardDAV) > 0) {
+			toShow = friendCore->isCardDAV();
+		}
 		if (!toShow && (mFilterType & (int)FilteringTypes::App) > 0) {
 			toShow = friendCore->getIsStored() && !friendCore->isLdap();
 			// if (!toShow) return false;
@@ -220,8 +223,8 @@ bool MagicSearchProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, c
 	auto r = getItemAtSource<MagicSearchList, FriendCore>(sourceRight.row());
 
 	if (l && r) {
-		bool lIsStored = l->getIsStored() || l->isLdap();
-		bool rIsStored = r->getIsStored() || r->isLdap();
+		bool lIsStored = l->getIsStored() || l->isLdap() || l->isCardDAV();
+		bool rIsStored = r->getIsStored() || r->isLdap() || r->isCardDAV();
 		if (lIsStored && !rIsStored) return true;
 		else if (!lIsStored && rIsStored) return false;
 		auto lName = l->getFullName().toLower();

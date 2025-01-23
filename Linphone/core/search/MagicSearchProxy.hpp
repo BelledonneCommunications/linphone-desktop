@@ -41,7 +41,7 @@ class MagicSearchProxy : public LimitProxy {
 	Q_PROPERTY(MagicSearchProxy *hideListProxy READ getHideListProxy WRITE setHideListProxy NOTIFY hideListProxyChanged)
 
 public:
-	enum class FilteringTypes { None = 0, Favorites = 1, App = 2, Ldap = 4, Other = 8 };
+	enum class FilteringTypes { None = 0, Favorites = 1, App = 2, Ldap = 4, CardDAV = 8, Other = 16 };
 	Q_ENUM(FilteringTypes)
 
 	DECLARE_SORTFILTER_CLASS(MagicSearchProxy *mHideListProxy = nullptr;)

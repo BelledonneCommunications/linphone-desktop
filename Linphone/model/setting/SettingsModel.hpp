@@ -138,8 +138,8 @@ public:
 
 	QString getLogsEmail() const;
 
-	static const std::shared_ptr<linphone::FriendList> getCarddavListForNewFriends();
-	static void setCarddavListForNewFriends(std::string listName);
+	static const std::shared_ptr<linphone::FriendList> getCardDAVListForNewFriends();
+	static void setCardDAVListForNewFriends(std::string listName);
 
 	static QString getDeviceName(const std::shared_ptr<linphone::Config> &config);
 
@@ -171,6 +171,7 @@ public:
 	DECLARE_GETSET(int, shortcutCount, ShortcutCount)
 	DECLARE_GETSET(QVariantList, shortcuts, Shortcuts)
 	DECLARE_GETSET(bool, usernameOnlyForLdapLookupsInCalls, UsernameOnlyForLdapLookupsInCalls)
+	DECLARE_GETSET(bool, usernameOnlyForCardDAVLookupsInCalls, UsernameOnlyForCardDAVLookupsInCalls)
 
 signals:
 	void logsUploadUrlChanged();

@@ -575,7 +575,7 @@ void SettingsModel::setIpv6Enabled(bool status) {
 // Carddav storage list
 // =============================================================================
 
-const std::shared_ptr<linphone::FriendList> SettingsModel::getCarddavListForNewFriends() {
+const std::shared_ptr<linphone::FriendList> SettingsModel::getCardDAVListForNewFriends() {
 	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	if (core) {
@@ -586,7 +586,7 @@ const std::shared_ptr<linphone::FriendList> SettingsModel::getCarddavListForNewF
 	} else return nullptr;
 }
 
-void SettingsModel::setCarddavListForNewFriends(std::string name) {
+void SettingsModel::setCardDAVListForNewFriends(std::string name) {
 	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	if (core) {
@@ -687,6 +687,7 @@ void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(shortcutCount, ShortcutCount)
 	DEFINE_NOTIFY_CONFIG_READY(shortcuts, Shortcuts)
 	DEFINE_NOTIFY_CONFIG_READY(usernameOnlyForLdapLookupsInCalls, UsernameOnlyForLdapLookupsInCalls)
+	DEFINE_NOTIFY_CONFIG_READY(usernameOnlyForCardDAVLookupsInCalls, UsernameOnlyForCardDAVLookupsInCalls)
 }
 
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", true)
@@ -807,5 +808,12 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 							usernameOnlyForLdapLookupsInCalls,
 							UsernameOnlyForLdapLookupsInCalls,
 							"username_only_for_ldap_lookups_in_calls",
+							false)
+DEFINE_GETSET_CONFIG(SettingsModel,
+							bool,
+							Bool,
+							usernameOnlyForCardDAVLookupsInCalls,
+							UsernameOnlyForCardDAVLookupsInCalls,
+							"username_only_for_carddav_lookups_in_calls",
 							false)
     // clang-format on

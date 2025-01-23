@@ -236,7 +236,7 @@ public:
 	VideoStats getVideoStats() const;
 	void setVideoStats(VideoStats stats);
 
-	void findRemoteLdapFriend(QSharedPointer<CallCore> me);
+	void findRemoteFriend(QSharedPointer<CallCore> me);
 
 signals:
 	void statusChanged(LinphoneEnums::CallStatus status);
@@ -345,9 +345,9 @@ private:
 	ZrtpStats mZrtpStats;
 	AudioStats mAudioStats;
 	VideoStats mVideoStats;
-	std::shared_ptr<MagicSearchModel> mLdapMagicSearchModel;
-	bool mShouldFindRemoteLdapFriend;
-	QSharedPointer<SafeConnection<CallCore, MagicSearchModel>> mLdapMagicSearchModelConnection;
+	std::shared_ptr<MagicSearchModel> mRemoteMagicSearchModel;
+	bool mShouldFindRemoteFriend;
+	QSharedPointer<SafeConnection<CallCore, MagicSearchModel>> mRemoteMagicSearchModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };

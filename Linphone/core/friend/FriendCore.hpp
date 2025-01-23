@@ -72,11 +72,13 @@ class FriendCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool starred READ getStarred WRITE lSetStarred NOTIFY starredChanged)
 	Q_PROPERTY(bool readOnly READ getReadOnly CONSTANT)
 	Q_PROPERTY(bool isLdap READ isLdap CONSTANT)
+	Q_PROPERTY(bool isCardDAV READ isCardDAV CONSTANT)
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
-	static QSharedPointer<FriendCore> create(const std::shared_ptr<linphone::Friend> &contact, bool isStored = true);
-	FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool isStored = true);
+	static QSharedPointer<FriendCore>
+	create(const std::shared_ptr<linphone::Friend> &contact, bool isStored = true, int sourceFlags = 0);
+	FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool isStored = true, int sourceFlags = 0);
 	FriendCore(const FriendCore &friendCore);
 	~FriendCore();
 	void setSelf(QSharedPointer<FriendCore> me);
@@ -146,6 +148,7 @@ public:
 	void onPresenceReceived(LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp);
 
 	bool isLdap() const;
+	bool isCardDAV() const;
 	bool getReadOnly() const;
 
 	std::shared_ptr<FriendModel> getFriendModel();
@@ -204,7 +207,7 @@ protected:
 	bool mIsSaved;
 	bool mIsStored;
 	QString mVCardString;
-	bool mIsLdap;
+	bool mIsLdap, mIsCardDAV;
 	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<FriendCore, FriendModel>> mFriendModelConnection;
 	QSharedPointer<SafeConnection<FriendCore, CoreModel>> mCoreModelConnection;

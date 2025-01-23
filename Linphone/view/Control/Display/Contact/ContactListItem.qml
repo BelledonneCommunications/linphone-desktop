@@ -165,7 +165,7 @@ FocusScope {
 				
 				popup.contentItem: ColumnLayout {
 					IconLabelButton {
-						visible: searchResultItem.core.isStored
+						visible: searchResultItem.core.isStored && !searchResultItem.core.readOnly
 						text: searchResultItem.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
 						icon.source: searchResultItem.core.starred ? AppIcons.heartFill : AppIcons.heart
 						spacing: 10 * DefaultStyle.dp

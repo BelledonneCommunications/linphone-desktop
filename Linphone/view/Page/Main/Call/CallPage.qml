@@ -703,11 +703,13 @@ AbstractMainPage {
 							anchors.fill: parent
 							IconLabelButton {
 								Layout.fillWidth: true
+								property bool isLdap: contactDetail.contact?.core?.isLdap
+								property bool isCardDAV: contactDetail.contact?.core?.isCardDAV
 								text: contactDetail.contact ? qsTr("Voir le contact") : qsTr("Ajouter aux contacts")
 								icon.source: AppIcons.plusCircle
 								icon.width: 32 * DefaultStyle.dp
 								icon.height: 32 * DefaultStyle.dp
-								visible: SettingsCpp.syncLdapContacts || !contactDetail.contact?.core?.isLdap
+								visible: !isLdap && !isCardDAV
 								onClicked: {
 									detailOptions.close()
 									if (contactDetail.contact) mainWindow.displayContactPage(contactDetail.contactAddress)

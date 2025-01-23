@@ -97,12 +97,12 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 					    if (linphoneFriend) {
 						    isStored =
 						        (ldapContacts->findFriendByAddress(linphoneFriend->getAddress()) != linphoneFriend);
-						    contact = FriendCore::create(linphoneFriend, isStored);
+						    contact = FriendCore::create(linphoneFriend, isStored, it->getSourceFlags());
 						    contacts->append(contact);
 					    } else if (auto address = it->getAddress()) {
 						    auto linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
 						    linphoneFriend->setAddress(address);
-						    contact = FriendCore::create(linphoneFriend, isStored);
+						    contact = FriendCore::create(linphoneFriend, isStored, it->getSourceFlags());
 						    auto displayName = Utils::coreStringToAppString(address->getDisplayName());
 						    auto splitted = displayName.split(" ");
 						    if (!displayName.isEmpty() && splitted.size() > 0) {
@@ -118,7 +118,7 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 					    } else if (!it->getPhoneNumber().empty()) {
 						    linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
 						    linphoneFriend->setAddress(address);
-						    contact = FriendCore::create(linphoneFriend, isStored);
+						    contact = FriendCore::create(linphoneFriend, isStored, it->getSourceFlags());
 						    contact->setGivenName(Utils::coreStringToAppString(it->getPhoneNumber()));
 						    contact->appendPhoneNumber(tr("Phone"), Utils::coreStringToAppString(it->getPhoneNumber()));
 						    contacts->append(contact);
@@ -215,7 +215,8 @@ QVariant MagicSearchList::data(const QModelIndex &index, int role) const {
 	if (role == Qt::DisplayRole) {
 		return QVariant::fromValue(new FriendGui(mList[row].objectCast<FriendCore>()));
 	} else if (role == Qt::DisplayRole + 1) {
-		return mList[row].objectCast<FriendCore>()->getIsStored() || mList[row].objectCast<FriendCore>()->isLdap();
+		return mList[row].objectCast<FriendCore>()->getIsStored() || mList[row].objectCast<FriendCore>()->isLdap() ||
+		       mList[row].objectCast<FriendCore>()->isCardDAV();
 	}
 	return QVariant();
 }

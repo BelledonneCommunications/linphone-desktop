@@ -285,7 +285,8 @@ Flickable{
 			model:MagicSearchProxy {
 				id: contactsProxy
 				parentProxy: mainItem.mainModel
-				filterType: MagicSearchProxy.FilteringTypes.App | (mainItem.searchText != '*' && mainItem.searchText != '' || SettingsCpp.syncLdapContacts ? MagicSearchProxy.FilteringTypes.Ldap : 0)
+				filterType: MagicSearchProxy.FilteringTypes.App 
+							| (mainItem.searchText != '*' && mainItem.searchText != '' || SettingsCpp.syncLdapContacts ? MagicSearchProxy.FilteringTypes.Ldap | MagicSearchProxy.FilteringTypes.CardDAV: 0)
 				initialDisplayItems: Math.max(20, 2 * mainItem.height / (63 * DefaultStyle.dp))
 				displayItemsStep: 3 * initialDisplayItems / 2
 				onLocalFriendCreated: (index) => {

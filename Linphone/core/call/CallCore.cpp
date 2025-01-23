@@ -124,17 +124,9 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 		mRemoteName = Utils::coreStringToAppString(
 		    linphoneFriend->getVcard() ? linphoneFriend->getVcard()->getFullName() : linphoneFriend->getName());
 	if (mRemoteName.isEmpty()) mRemoteName = ToolModel::getDisplayName(mRemoteAddress);
-	mShouldFindRemoteLdapFriend = !linphoneFriend; //
-	if (mShouldFindRemoteLdapFriend) {
-		auto servers = CoreModel::getInstance()->getCore()->getRemoteContactDirectories();
-		bool haveLdap = false;
-		for (auto s : servers) {
-			if (s->getType() == linphone::RemoteContactDirectory::Type::Ldap) {
-				haveLdap = true;
-				break;
-			}
-		}
-		mShouldFindRemoteLdapFriend = haveLdap;
+	mShouldFindRemoteFriend = !linphoneFriend;
+	if (mShouldFindRemoteFriend) {
+		mShouldFindRemoteFriend = CoreModel::getInstance()->getCore()->getRemoteContactDirectories().size() > 0;
 	}
 	mLocalAddress = Utils::coreStringToAppString(call->getCallLog()->getLocalAddress()->asStringUriOnly());
 	mStatus = LinphoneEnums::fromLinphone(call->getCallLog()->getStatus());
@@ -438,7 +430,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    setVideoStats(videoStats);
 		    }
 	    });
-	if (mShouldFindRemoteLdapFriend) findRemoteLdapFriend(me);
+	if (mShouldFindRemoteFriend) findRemoteFriend(me);
 }
 
 DEFINE_GET_SET_API(CallCore, bool, isStarted, IsStarted)
@@ -776,30 +768,39 @@ void CallCore::setVideoStats(VideoStats stats) {
 	}
 }
 
-void CallCore::findRemoteLdapFriend(QSharedPointer<CallCore> me) {
+void CallCore::findRemoteFriend(QSharedPointer<CallCore> me) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto linphoneSearch = CoreModel::getInstance()->getCore()->createMagicSearch();
 	linphoneSearch->setLimitedSearch(true);
-	mLdapMagicSearchModel = Utils::makeQObject_ptr<MagicSearchModel>(linphoneSearch);
-	mLdapMagicSearchModel->setSelf(mLdapMagicSearchModel);
-	mLdapMagicSearchModelConnection = SafeConnection<CallCore, MagicSearchModel>::create(me, mLdapMagicSearchModel);
-	mLdapMagicSearchModelConnection->makeConnectToModel(
+
+	mRemoteMagicSearchModel = Utils::makeQObject_ptr<MagicSearchModel>(linphoneSearch);
+	mRemoteMagicSearchModel->setSelf(mRemoteMagicSearchModel);
+	mRemoteMagicSearchModelConnection = SafeConnection<CallCore, MagicSearchModel>::create(me, mRemoteMagicSearchModel);
+	mRemoteMagicSearchModelConnection->makeConnectToModel(
 	    &MagicSearchModel::searchResultsReceived,
 	    [this, remoteAdress = mRemoteAddress](const std::list<std::shared_ptr<linphone::SearchResult>> &results) {
 		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		    auto ldapFriend = ToolModel::findFriendByAddress(remoteAdress);
-		    if (ldapFriend) {
-			    auto ldapName = Utils::coreStringToAppString(ldapFriend->getName());
-			    mLdapMagicSearchModelConnection->invokeToCore([this, ldapName]() {
+		    QString name;
+		    auto remoteFriend = ToolModel::findFriendByAddress(remoteAdress); // Priorize what is stored.
+		    if (!remoteFriend && results.size() > 0) remoteFriend = results.front()->getFriend(); // Then result friend.
+		    if (remoteFriend) name = Utils::coreStringToAppString(remoteFriend->getName());
+		    else if (results.size() > 0) // Then result address.
+			    name = Utils::coreStringToAppString(results.front()->getAddress()->getDisplayName());
+		    if (name.isEmpty()) name = Utils::coreStringToAppString(results.front()->getAddress()->getUsername());
+		    if (!name.isEmpty())
+			    mRemoteMagicSearchModelConnection->invokeToCore([this, name]() {
 				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
-				    if (ldapName != mRemoteName) {
-					    mRemoteName = ldapName;
+				    if (name != mRemoteName) {
+					    mRemoteName = name;
 					    emit remoteNameChanged();
 				    }
 			    });
-		    }
 	    });
-	mLdapMagicSearchModel->search(
-	    SettingsModel::getInstance()->getUsernameOnlyForLdapLookupsInCalls() ? mRemoteUsername : mRemoteAddress,
-	    (int)LinphoneEnums::MagicSearchSource::LdapServers, LinphoneEnums::MagicSearchAggregation::Friend, -1);
+
+	bool ldapSearch = SettingsModel::getInstance()->getUsernameOnlyForLdapLookupsInCalls();
+	bool cardDAVSearch = SettingsModel::getInstance()->getUsernameOnlyForCardDAVLookupsInCalls();
+	mRemoteMagicSearchModel->search(ldapSearch || cardDAVSearch ? mRemoteUsername : mRemoteAddress,
+	                                (ldapSearch ? (int)LinphoneEnums::MagicSearchSource::LdapServers : 0) |
+	                                    (cardDAVSearch ? (int)LinphoneEnums::MagicSearchSource::RemoteCardDAV : 0),
+	                                LinphoneEnums::MagicSearchAggregation::Friend, -1);
 }
