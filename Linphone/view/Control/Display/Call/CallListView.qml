@@ -43,6 +43,8 @@ ListView {
 					? modelData.core.conference.core.subject
 					: remoteNameObj ? remoteNameObj.value : ""
 				font.pixelSize: 14 * DefaultStyle.dp
+				Layout.fillWidth: true
+				maximumLineCount: 1
 			}
 			Text {
 				id: callStateText

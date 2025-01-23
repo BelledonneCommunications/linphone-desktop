@@ -280,17 +280,20 @@ Item {
 		
 		height: 18 * DefaultStyle.dp
 		spacing: 0
-		CheckableButton {
+		Rectangle {
 			id: muteIcon
-			icon.source: AppIcons.microphoneSlash
 			Layout.preferredWidth: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
 			Layout.preferredHeight: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
 			visible: mainItem.mutedStatus
-			icon.width: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
-			icon.height: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
-			enabled: false
-			contentImageColor: DefaultStyle.main2_500main
-			backgroundColor: DefaultStyle.grey_0
+			color: DefaultStyle.grey_0
+			radius: width /2
+			EffectImage {
+				anchors.centerIn: parent
+				imageWidth: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
+				imageHeight: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
+				imageSource: AppIcons.microphoneSlash
+				colorizationColor: DefaultStyle.main2_500main
+			}
 		}
 	}
 }

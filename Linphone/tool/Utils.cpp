@@ -285,7 +285,9 @@ QString Utils::formatDate(const QDateTime &date, bool includeTime) {
 	if (date.date() == QDate::currentDate()) dateDay = tr("Aujourd'hui");
 	else if (date.date() == QDate::currentDate().addDays(-1)) dateDay = tr("Hier");
 	else {
-		QString format = date.date().year() == QDateTime::currentDateTime().date().year() ? "dd MMMM" : "dd MMMM yyyy";
+		QString format = date.date().year() == QDateTime::currentDateTime(date.timeZone()).date().year()
+		                     ? "dd MMMM"
+		                     : "dd MMMM yyyy";
 		dateDay = App::getInstance()->getLocale().toString(date.date(), format);
 	}
 	if (!includeTime) return dateDay;
@@ -305,7 +307,7 @@ QString Utils::formatDateElapsedTime(const QDateTime &date) {
 	// if (M > 0) return QString::number(M) + " months";
 	// auto w = floor(seconds / 604800);
 	// if (w > 0) return QString::number(w) + " week";
-	auto dateSec = date.secsTo(QDateTime::currentDateTime());
+	auto dateSec = date.secsTo(QDateTime::currentDateTime(date.timeZone()));
 
 	auto d = floor(dateSec / 86400);
 	if (d > 7) {
@@ -413,7 +415,7 @@ QString Utils::generateSavedFilename(const QString &from, const QString &to) {
 		return QString(str).replace(regexp, "");
 	};
 	return QStringLiteral("%1_%2_%3")
-	    .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))
+	    .arg(QDateTime::currentDateTime(QTimeZone::systemTimeZone()).toString("yyyy-MM-dd_hh-mm-ss"))
 	    .arg(escape(from))
 	    .arg(escape(to));
 }
@@ -1263,7 +1265,7 @@ QString Utils::toDateMonthAndYearString(const QDateTime &date) {
 
 bool Utils::isCurrentDay(QDateTime date) {
 	auto dateDayNum = date.date().day();
-	auto currentDate = QDateTime::currentDateTime();
+	auto currentDate = QDateTime::currentDateTime(date.timeZone());
 	auto currentDayNum = currentDate.date().day();
 	auto daysTo = date.daysTo(currentDate);
 	return (dateDayNum == currentDayNum && daysTo == 0);
@@ -1289,11 +1291,11 @@ bool Utils::dateisInMonth(const QDate &a, int month, int year) {
 
 QDateTime Utils::createDateTime(const QDate &date, int hour, int min) {
 	QTime time(hour, min);
-	return QDateTime(date, time);
+	return QDateTime(date, time, QTimeZone::systemTimeZone());
 }
 
 QDateTime Utils::getCurrentDateTime() {
-	return QDateTime::currentDateTime();
+	return QDateTime::currentDateTime(QTimeZone::systemTimeZone());
 }
 
 QDateTime Utils::getCurrentDateTimeUtc() {
