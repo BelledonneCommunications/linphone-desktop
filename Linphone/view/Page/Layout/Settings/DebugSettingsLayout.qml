@@ -32,6 +32,10 @@ AbstractSettingsLayout {
 		onAccepted: SettingsCpp.cleanLogs()
 	}
 	
+	onSave: {
+		SettingsCpp.save()
+	}
+	
 	Dialog {
 		id: shareLogs
 		text: qsTr("Les traces de débogage ont été téléversées. Comment souhaitez-vous partager le lien ? ")
