@@ -102,7 +102,7 @@ ubuntu2004-makefile-gcc:
 
 ubuntu2004-makefile-gcc-package:
   stage: package
-  tags: [ "docker-test-liblinphone" ]
+  tags: [ "docker" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-ubuntu-20-04-lts:$UBUNTU_2004_IMAGE_VERSION
   dependencies: []
   rules:
