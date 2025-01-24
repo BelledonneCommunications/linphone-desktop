@@ -137,6 +137,7 @@ ApplicationWindow {
 						onClicked: {
 							if (startCallPopup.currentCall) startCallPopup.currentCall.core.lTransferCall(modelData.address)
 							else UtilsCpp.createCall(modelData.address, {'localVideoEnabled': startCallPopup.videoEnabled})
+							startCallPopup.close()
 						}
 					}
 				}
