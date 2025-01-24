@@ -786,7 +786,8 @@ void CallCore::findRemoteFriend(QSharedPointer<CallCore> me) {
 		    if (remoteFriend) name = Utils::coreStringToAppString(remoteFriend->getName());
 		    else if (results.size() > 0) // Then result address.
 			    name = Utils::coreStringToAppString(results.front()->getAddress()->getDisplayName());
-		    if (name.isEmpty()) name = Utils::coreStringToAppString(results.front()->getAddress()->getUsername());
+		    if (name.isEmpty() && results.size() > 0)
+			    name = Utils::coreStringToAppString(results.front()->getAddress()->getUsername());
 		    if (!name.isEmpty())
 			    mRemoteMagicSearchModelConnection->invokeToCore([this, name]() {
 				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
