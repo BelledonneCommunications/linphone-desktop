@@ -60,7 +60,13 @@ MainRightPanel {
 				icon.width: 24 * DefaultStyle.dp
 				icon.height: 24 * DefaultStyle.dp
 				onClicked: {
-					confirmDialog.open()
+					if (contact.core.isSaved) mainItem.closeEdition('')
+					else showConfirmationLambdaPopup("", qsTr("Les changements seront annulés. Souhaitez-vous continuer ?"), "", function(confirmed) {
+						if (confirmed) {
+							mainItem.contact.core.undo()
+							mainItem.closeEdition('')
+						}
+					})
 				}
 			}
 	]

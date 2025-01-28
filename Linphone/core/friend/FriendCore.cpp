@@ -258,6 +258,7 @@ void FriendCore::setFullName(const QString &name) {
 	if (mFullName != name) {
 		mFullName = name;
 		emit fullNameChanged(name);
+		setIsSaved(false);
 	}
 }
 
@@ -347,11 +348,13 @@ void FriendCore::setPhoneNumberAt(int index, const QString &label, const QString
 void FriendCore::removePhoneNumber(int index) {
 	if (index != -1) mPhoneNumberList.remove(index);
 	emit phoneNumberChanged();
+	setIsSaved(false);
 }
 
 void FriendCore::appendPhoneNumber(const QString &label, const QString &number) {
 	mPhoneNumberList.append(Utils::createFriendAddressVariant(label, number));
 	emit phoneNumberChanged();
+	setIsSaved(false);
 }
 
 void FriendCore::resetPhoneNumbers(QList<QVariant> newList) {
@@ -399,6 +402,7 @@ void FriendCore::removeAddress(int index) {
 	if (map["address"].toString() == mDefaultFullAddress) mDefaultFullAddress.clear();
 	mAddressList.remove(index);
 	emit addressChanged();
+	setIsSaved(false);
 }
 
 void FriendCore::appendAddress(const QString &addr) {
@@ -412,6 +416,7 @@ void FriendCore::appendAddress(const QString &addr) {
 				mAddressList.append(Utils::createFriendAddressVariant(_addressLabel, interpretedAddress));
 				if (mDefaultFullAddress.isEmpty()) mDefaultFullAddress = interpretedAddress;
 				emit addressChanged();
+				setIsSaved(false);
 			}
 		});
 	});
@@ -514,6 +519,7 @@ void FriendCore::setPictureUri(const QString &uri) {
 	if (mPictureUri != uri) {
 		mPictureUri = uri;
 		emit pictureUriChanged();
+		setIsSaved(false);
 	}
 }
 
