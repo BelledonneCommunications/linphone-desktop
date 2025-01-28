@@ -84,14 +84,15 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 	    });
 	mModelConnection->makeConnectToModel(&CoreModel::accountRemoved, [this] { emit lUpdate(); });
 	mModelConnection->makeConnectToModel(&CoreModel::accountAdded, [this] { emit lUpdate(); });
-	QObject::connect(CoreModel::getInstance().get(), &CoreModel::configuringStatus, this,
-	                 [this](const std::shared_ptr<linphone::Core> &core, linphone::ConfiguringState status,
-	                        const std::string &message) {
-		                 mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		                 if (status == linphone::ConfiguringState::Successful) {
-			                 emit lUpdate();
-		                 }
-	                 });
+
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::globalStateChanged,
+	    [this](const std::shared_ptr<linphone::Core> &core, linphone::GlobalState gstate, const std::string &message) {
+		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		    if (gstate == linphone::GlobalState::On) {
+			    emit lUpdate();
+		    }
+	    });
 	lUpdate(true);
 }
 
