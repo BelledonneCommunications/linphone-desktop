@@ -8,7 +8,6 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 ColumnLayout {
 	id: mainItem
 	spacing: 10 * DefaultStyle.dp
-	signal connectionSucceed()
 
 	FormItemLayout {
 		id: username
@@ -46,11 +45,6 @@ ColumnLayout {
 					function onErrorMessageChanged() {
 						if (passwordEdit.text.length > 0 || usernameEdit.text.length > 0)
 							errorText.setText(LoginPageCpp.errorMessage)
-					}
-					function onRegistrationStateChanged() {
-						if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
-							mainItem.connectionSucceed()
-						}
 					}
 				}
 			}

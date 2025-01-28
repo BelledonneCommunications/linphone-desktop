@@ -81,27 +81,11 @@ AbstractMainPage {
 		id: leftPanel
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		Loader {
-			id: titleLoader
-			anchors.left: parent.left
-			anchors.leftMargin: 45 * DefaultStyle.dp
-			anchors.right: parent.right
-			asynchronous: false
-			onActiveFocusChanged:{
-				if(activeFocus && item){
-					item.forceActiveFocus()
-				}
-			}
-		}
 
 		Control.StackView {
 			id: listStackView
-			anchors.top: titleLoader.bottom
-			anchors.topMargin: 18 * DefaultStyle.dp
-			anchors.left: parent.left
+			anchors.fill: parent
 			anchors.leftMargin: 45 * DefaultStyle.dp
-			anchors.right: parent.right
-			anchors.bottom: parent.bottom
 			clip: true
 			initialItem: historyListItem
 			focus: true
@@ -129,82 +113,74 @@ AbstractMainPage {
 	}
 
 	Component {
-		id: historyListTitle
-		FocusScope{
-			objectName: "historyListTitle"
-			width: parent.width
-			height: titleCallLayout.implicitHeight
-			RowLayout {
-				id: titleCallLayout
-				anchors.fill: parent
-				spacing: 16 * DefaultStyle.dp
-				Text {
-					text: qsTr("Appels")
-					color: DefaultStyle.main2_700
-					font.pixelSize: 29 * DefaultStyle.dp
-					font.weight: 800 * DefaultStyle.dp
-				}
-				Item {
-					Layout.fillWidth: true
-				}
-				PopupButton {
-					id: removeHistory
-					width: 24 * DefaultStyle.dp
-					height: 24 * DefaultStyle.dp
-					focus: true
-					popup.x: 0
-					KeyNavigation.right: newCallButton
-					KeyNavigation.down: listStackView
-					popup.contentItem: ColumnLayout {
-						IconLabelButton {
-							Layout.fillWidth: true
-							focus: visible
-							text: qsTr("Supprimer l'historique")
-							icon.source: AppIcons.trashCan
-							style: ButtonStyle.hoveredBackgroundRed
-							onClicked: {
-								removeHistory.close()
-								deleteHistoryPopup.open()
-							}
-						}
-					}
-					Connections {
-						target: deleteHistoryPopup
-						onAccepted: {
-							if (listStackView.currentItem.listView) listStackView.currentItem.listView.model.removeAllEntries()
-						}
-					}
-				}
-				Button {
-					id: newCallButton
-					style: ButtonStyle.noBackground
-					icon.source: AppIcons.newCall
-					Layout.preferredWidth: 28 * DefaultStyle.dp
-					Layout.preferredHeight: 28 * DefaultStyle.dp
-					Layout.rightMargin: 39 * DefaultStyle.dp
-					icon.width: 28 * DefaultStyle.dp
-					icon.height: 28 * DefaultStyle.dp
-					KeyNavigation.left: removeHistory
-					KeyNavigation.down: listStackView
-					onClicked: {
-						console.debug("[CallPage]User: create new call")
-						listStackView.push(newCallItem)
-					}
-				}
-			}
-		}
-	}
-	Component {
 		id: historyListItem
 		FocusScope{
 			objectName: "historyListItem"
 			property alias listView: historyListView
-			Control.StackView.onActivated: titleLoader.sourceComponent = historyListTitle
 			ColumnLayout {
 				anchors.fill: parent
+				spacing: 0
+				RowLayout {
+					id: titleCallLayout
+					spacing: 16 * DefaultStyle.dp
+					Text {
+						text: qsTr("Appels")
+						color: DefaultStyle.main2_700
+						font.pixelSize: 29 * DefaultStyle.dp
+						font.weight: 800 * DefaultStyle.dp
+					}
+					Item {
+						Layout.fillWidth: true
+					}
+					PopupButton {
+						id: removeHistory
+						width: 24 * DefaultStyle.dp
+						height: 24 * DefaultStyle.dp
+						focus: true
+						popup.x: 0
+						KeyNavigation.right: newCallButton
+						KeyNavigation.down: listStackView
+						popup.contentItem: ColumnLayout {
+							IconLabelButton {
+								Layout.fillWidth: true
+								focus: visible
+								text: qsTr("Supprimer l'historique")
+								icon.source: AppIcons.trashCan
+								style: ButtonStyle.hoveredBackgroundRed
+								onClicked: {
+									removeHistory.close()
+									deleteHistoryPopup.open()
+								}
+							}
+						}
+						Connections {
+							target: deleteHistoryPopup
+							onAccepted: {
+								if (listStackView.currentItem.listView) listStackView.currentItem.listView.model.removeAllEntries()
+							}
+						}
+					}
+					Button {
+						id: newCallButton
+						style: ButtonStyle.noBackground
+						icon.source: AppIcons.newCall
+						Layout.preferredWidth: 28 * DefaultStyle.dp
+						Layout.preferredHeight: 28 * DefaultStyle.dp
+						Layout.rightMargin: 39 * DefaultStyle.dp
+						icon.width: 28 * DefaultStyle.dp
+						icon.height: 28 * DefaultStyle.dp
+						KeyNavigation.left: removeHistory
+						KeyNavigation.down: listStackView
+						onClicked: {
+							console.debug("[CallPage]User: create new call")
+							listStackView.push(newCallItem)
+						}
+					}
+				}
 				SearchBar {
 					id: searchBar
 					Layout.fillWidth: true
+					Layout.topMargin: 18 * DefaultStyle.dp
 					Layout.rightMargin: 39 * DefaultStyle.dp
 					placeholderText: qsTr("Rechercher un appel")
                     visible: historyListView.count !== 0 || text.length !== 0
@@ -229,224 +205,224 @@ AbstractMainPage {
 	
                         background: Item{}
                         contentItem: ColumnLayout {
-								Text {
-									visible: historyListView.count === 0
-									Layout.alignment: Qt.AlignHCenter
-									text: qsTr("Aucun appel%1").arg(searchBar.text.length != 0 ? " correspondant" : "")
-									font {
-										pixelSize: 16 * DefaultStyle.dp
-										weight: 800 * DefaultStyle.dp
-									}
-								}
-								ListView {
-									id: historyListView
-									clip: true
-									Layout.fillWidth: true
-									Layout.fillHeight: true
-									model: CallHistoryProxy {
-										id: callHistoryProxy
-										filterText: searchBar.text
-										onFilterTextChanged: maxDisplayItems = initialDisplayItems
-										initialDisplayItems: Math.max(20, 2 * historyListView.height / (56 * DefaultStyle.dp))
-										displayItemsStep: 3 * initialDisplayItems / 2
-									}
-									cacheBuffer: contentHeight>0 ? contentHeight : 0// cache all items
-									flickDeceleration: 10000
-									spacing: 10 * DefaultStyle.dp
-																		
-									Keys.onPressed: (event) => {
-										if(event.key == Qt.Key_Escape){
-											console.log("Back")
-											searchBar.forceActiveFocus()
-											event.accepted = true
-										}
-									}
-									// remove binding loop
-									onContentHeightChanged: Qt.callLater(function(){
-										historyListView.cacheBuffer = Math.max(contentHeight,0)
-									})
-									onActiveFocusChanged: if(activeFocus && currentIndex < 0 && count > 0) currentIndex = 0
-									onCountChanged: {
-										if(currentIndex < 0 && count > 0){
-											historyListView.currentIndex = 0	// Select first item after loading model
-										}
-										if(atYBeginning)
-											positionViewAtBeginning()// Stay at beginning
-									}
-									Connections {
-										target: deleteHistoryPopup
-										function onAccepted() {
-											historyListView.model.removeAllEntries()
-										}
-									}
-									Connections{
-										target: mainItem
-										function onListViewUpdated(){
-											callHistoryProxy.reload()
-										}
-									}
-									onAtYEndChanged: {
-										if(atYEnd && count > 0){
-											 callHistoryProxy.displayMore()
-										}
-									}
-//----------------------------------------------------------------
-									function moveToCurrentItem(){
-										if( historyListView.currentIndex >= 0)
-											Utils.updatePosition(historyListView, historyListView)
-									}
-									onCurrentItemChanged: {
-										moveToCurrentItem()
-									}
-									// Update position only if we are moving to current item and its position is changing.
-									property var _currentItemY: currentItem?.y
-									on_CurrentItemYChanged: if(_currentItemY && moveAnimation.running){
-										moveToCurrentItem()
-									}
-									Behavior on contentY{
-										NumberAnimation {
-										id: moveAnimation
-											duration: 500
-											easing.type: Easing.OutExpo
-											alwaysRunToEnd: true
-										}
-									}
-//----------------------------------------------------------------
-									
-									onCurrentIndexChanged: {
-										mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
-									}
-									onVisibleChanged: {
-										if (!visible) currentIndex = -1
-									}
-									// Qt bug: sometimes, containsMouse may not be send and update on each MouseArea.
-									// So we need to use this variable to switch off all hovered items.
-									property int lastMouseContainsIndex: -1
-									delegate: FocusScope {
-										width:historyListView.width
-										height: 56 * DefaultStyle.dp
-										visible: !!modelData
-										
-										RowLayout {
-											z: 1
-											anchors.fill: parent
-											anchors.leftMargin: 10 * DefaultStyle.dp
-											spacing: 10 * DefaultStyle.dp
-											Avatar {
-												id: historyAvatar
-												property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.remoteAddress)
-												contact: contactObj?.value || null
-												_address: modelData.core.conferenceInfo
-															? modelData.core.conferenceInfo.core.subject
-															: modelData.core.remoteAddress
-												width: 45 * DefaultStyle.dp
-												height: 45 * DefaultStyle.dp
-												isConference: modelData.core.isConference
-											}
-											ColumnLayout {
-												Layout.fillHeight: true
-												Layout.fillWidth: true
-												spacing: 5 * DefaultStyle.dp
-												Text {
-													id: friendAddress
-													Layout.fillWidth: true
-													maximumLineCount: 1
-													text: historyAvatar.displayNameVal
-													font {
-														pixelSize: 14 * DefaultStyle.dp
-														weight: 400 * DefaultStyle.dp
-														capitalization: Font.Capitalize
-													}
-												}
-												RowLayout {
-													spacing: 6 * DefaultStyle.dp
-													EffectImage {
-														id: statusIcon
-														imageSource: modelData.core.status === LinphoneEnums.CallStatus.Declined
-														|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-														|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-														|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-															? AppIcons.arrowElbow 
-															: modelData.core.isOutgoing
-																? AppIcons.arrowUpRight
-																: AppIcons.arrowDownLeft
-														colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined
-														|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-														|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-														|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-														|| modelData.core.status === LinphoneEnums.CallStatus.Missed
-															? DefaultStyle.danger_500main
-															: modelData.core.isOutgoing
-																? DefaultStyle.info_500_main
-																: DefaultStyle.success_500main
-														Layout.preferredWidth: 12 * DefaultStyle.dp
-														Layout.preferredHeight: 12 * DefaultStyle.dp
-														transform: Rotation {
-															angle: modelData.core.isOutgoing && (modelData.core.status === LinphoneEnums.CallStatus.Declined
-																|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-																|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-																|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
-															origin {
-																x: statusIcon.width/2
-																y: statusIcon.height/2
-															}
-														}
-													}
-													Text {
-														// text: modelData.core.date
-														text: UtilsCpp.formatDate(modelData.core.date)
-														font {
-															pixelSize: 12 * DefaultStyle.dp
-															weight: 300 * DefaultStyle.dp
-														}
-													}
-												}
-											}
-											BigButton {
-												style: ButtonStyle.noBackground
-												icon.source: AppIcons.phone
-												focus: true
-												activeFocusOnTab: false
-												onClicked: {
-													if (modelData.core.isConference) {
-														var callsWindow = UtilsCpp.getCallsWindow()
-														callsWindow.setupConference(modelData.core.conferenceInfo)
-														UtilsCpp.smartShowWindow(callsWindow)
-													}
-													else {
-														UtilsCpp.createCall(modelData.core.remoteAddress)
-													}
-												}
-											}
-										}
-										MouseArea {
-											hoverEnabled: true
-											anchors.fill: parent
-											focus: true
-											onContainsMouseChanged: {
-												if(containsMouse)
-													historyListView.lastMouseContainsIndex = index
-												else if( historyListView.lastMouseContainsIndex == index)
-													historyListView.lastMouseContainsIndex = -1
-											}	
-											Rectangle {
-												anchors.fill: parent
-												opacity: 0.7
-												radius: 8 * DefaultStyle.dp
-												color: historyListView.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
-												visible: historyListView.lastMouseContainsIndex === index || historyListView.currentIndex === index
-											}
-											onPressed: {
-												historyListView.currentIndex = model.index
-												historyListView.forceActiveFocus()
-											}
-										}
-									}
-									
-									Control.ScrollBar.vertical: scrollbar
+							Text {
+								visible: historyListView.count === 0
+								Layout.alignment: Qt.AlignHCenter
+								text: qsTr("Aucun appel%1").arg(searchBar.text.length != 0 ? " correspondant" : "")
+								font {
+									pixelSize: 16 * DefaultStyle.dp
+									weight: 800 * DefaultStyle.dp
 								}
 							}
-
+							ListView {
+								id: historyListView
+								clip: true
+								Layout.fillWidth: true
+								Layout.fillHeight: true
+								model: CallHistoryProxy {
+									id: callHistoryProxy
+									filterText: searchBar.text
+									onFilterTextChanged: maxDisplayItems = initialDisplayItems
+									initialDisplayItems: Math.max(20, 2 * historyListView.height / (56 * DefaultStyle.dp))
+									displayItemsStep: 3 * initialDisplayItems / 2
+								}
+								cacheBuffer: contentHeight>0 ? contentHeight : 0// cache all items
+								flickDeceleration: 10000
+								spacing: 10 * DefaultStyle.dp
+																	
+								Keys.onPressed: (event) => {
+									if(event.key == Qt.Key_Escape){
+										console.log("Back")
+										searchBar.forceActiveFocus()
+										event.accepted = true
+									}
+								}
+								// remove binding loop
+								onContentHeightChanged: Qt.callLater(function(){
+									historyListView.cacheBuffer = Math.max(contentHeight,0)
+								})
+								onActiveFocusChanged: if(activeFocus && currentIndex < 0 && count > 0) currentIndex = 0
+								onCountChanged: {
+									if(currentIndex < 0 && count > 0){
+										historyListView.currentIndex = 0	// Select first item after loading model
+									}
+									if(atYBeginning)
+										positionViewAtBeginning()// Stay at beginning
+								}
+								Connections {
+									target: deleteHistoryPopup
+									function onAccepted() {
+										historyListView.model.removeAllEntries()
+									}
+								}
+								Connections{
+									target: mainItem
+									function onListViewUpdated(){
+										callHistoryProxy.reload()
+									}
+								}
+								onAtYEndChanged: {
+									if(atYEnd && count > 0){
+											callHistoryProxy.displayMore()
+									}
+								}
+					//----------------------------------------------------------------
+								function moveToCurrentItem(){
+									if( historyListView.currentIndex >= 0)
+										Utils.updatePosition(historyListView, historyListView)
+								}
+								onCurrentItemChanged: {
+									moveToCurrentItem()
+								}
+								// Update position only if we are moving to current item and its position is changing.
+								property var _currentItemY: currentItem?.y
+								on_CurrentItemYChanged: if(_currentItemY && moveAnimation.running){
+									moveToCurrentItem()
+								}
+								Behavior on contentY{
+									NumberAnimation {
+									id: moveAnimation
+										duration: 500
+										easing.type: Easing.OutExpo
+										alwaysRunToEnd: true
+									}
+								}
+					//----------------------------------------------------------------
+								
+								onCurrentIndexChanged: {
+									mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
+								}
+								onVisibleChanged: {
+									if (!visible) currentIndex = -1
+								}
+								// Qt bug: sometimes, containsMouse may not be send and update on each MouseArea.
+								// So we need to use this variable to switch off all hovered items.
+								property int lastMouseContainsIndex: -1
+								delegate: FocusScope {
+									width:historyListView.width
+									height: 56 * DefaultStyle.dp
+									visible: !!modelData
+									
+									RowLayout {
+										z: 1
+										anchors.fill: parent
+										anchors.leftMargin: 10 * DefaultStyle.dp
+										spacing: 10 * DefaultStyle.dp
+										Avatar {
+											id: historyAvatar
+											property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.remoteAddress)
+											contact: contactObj?.value || null
+											_address: modelData.core.conferenceInfo
+														? modelData.core.conferenceInfo.core.subject
+														: modelData.core.remoteAddress
+											secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
+											width: 45 * DefaultStyle.dp
+											height: 45 * DefaultStyle.dp
+											isConference: modelData.core.isConference
+										}
+										ColumnLayout {
+											Layout.fillHeight: true
+											Layout.fillWidth: true
+											spacing: 5 * DefaultStyle.dp
+											Text {
+												id: friendAddress
+												Layout.fillWidth: true
+												maximumLineCount: 1
+												text: historyAvatar.displayNameVal
+												font {
+													pixelSize: 14 * DefaultStyle.dp
+													weight: 400 * DefaultStyle.dp
+													capitalization: Font.Capitalize
+												}
+											}
+											RowLayout {
+												spacing: 6 * DefaultStyle.dp
+												EffectImage {
+													id: statusIcon
+													imageSource: modelData.core.status === LinphoneEnums.CallStatus.Declined
+													|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+													|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+													|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
+														? AppIcons.arrowElbow 
+														: modelData.core.isOutgoing
+															? AppIcons.arrowUpRight
+															: AppIcons.arrowDownLeft
+													colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined
+													|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+													|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+													|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
+													|| modelData.core.status === LinphoneEnums.CallStatus.Missed
+														? DefaultStyle.danger_500main
+														: modelData.core.isOutgoing
+															? DefaultStyle.info_500_main
+															: DefaultStyle.success_500main
+													Layout.preferredWidth: 12 * DefaultStyle.dp
+													Layout.preferredHeight: 12 * DefaultStyle.dp
+													transform: Rotation {
+														angle: modelData.core.isOutgoing && (modelData.core.status === LinphoneEnums.CallStatus.Declined
+															|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+															|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+															|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
+														origin {
+															x: statusIcon.width/2
+															y: statusIcon.height/2
+														}
+													}
+												}
+												Text {
+													// text: modelData.core.date
+													text: UtilsCpp.formatDate(modelData.core.date)
+													font {
+														pixelSize: 12 * DefaultStyle.dp
+														weight: 300 * DefaultStyle.dp
+													}
+												}
+											}
+										}
+										BigButton {
+											style: ButtonStyle.noBackground
+											icon.source: AppIcons.phone
+											focus: true
+											activeFocusOnTab: false
+											onClicked: {
+												if (modelData.core.isConference) {
+													var callsWindow = UtilsCpp.getCallsWindow()
+													callsWindow.setupConference(modelData.core.conferenceInfo)
+													UtilsCpp.smartShowWindow(callsWindow)
+												}
+												else {
+													UtilsCpp.createCall(modelData.core.remoteAddress)
+												}
+											}
+										}
+									}
+									MouseArea {
+										hoverEnabled: true
+										anchors.fill: parent
+										focus: true
+										onContainsMouseChanged: {
+											if(containsMouse)
+												historyListView.lastMouseContainsIndex = index
+											else if( historyListView.lastMouseContainsIndex == index)
+												historyListView.lastMouseContainsIndex = -1
+										}	
+										Rectangle {
+											anchors.fill: parent
+											opacity: 0.7
+											radius: 8 * DefaultStyle.dp
+											color: historyListView.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
+											visible: historyListView.lastMouseContainsIndex === index || historyListView.currentIndex === index
+										}
+										onPressed: {
+											historyListView.currentIndex = model.index
+											historyListView.forceActiveFocus()
+										}
+									}
+								}
+								
+								Control.ScrollBar.vertical: scrollbar
+							}
+						}
                     }
                     ScrollBar {
                         id: scrollbar
@@ -463,54 +439,45 @@ AbstractMainPage {
 	}
 
 	Component {
-		id: newCallTitle
-		FocusScope{
-			objectName: "newCallTitle"
-			width: parent.width
-			height: parent.height
-			RowLayout {
-				anchors.fill: parent
-				spacing: 10 * DefaultStyle.dp
-				Button {
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					style: ButtonStyle.noBackground
-					icon.source: AppIcons.leftArrow
-					focus: true
-					KeyNavigation.down: listStackView
-					onClicked: {
-						console.debug("[CallPage]User: return to call history")
-						listStackView.pop()
-						listStackView.forceActiveFocus()
-					}
-				}
-				Text {
-					text: qsTr("Nouvel appel")
-					color: DefaultStyle.main2_700
-					font.pixelSize: 29 * DefaultStyle.dp
-					font.weight: 800 * DefaultStyle.dp
-				}
-				Item {
-					Layout.fillWidth: true
-				}
-			}
-		}
-	}
-	Component {
 		id: newCallItem
 		FocusScope{
 			objectName: "newCallItem"
 			width: parent?.width
 			height: parent?.height
 			Control.StackView.onActivated:{
-				titleLoader.sourceComponent = newCallTitle
 				callContactsList.forceActiveFocus()
 			}
-			
 			ColumnLayout {
 				anchors.fill: parent
+				spacing: 0
+				RowLayout {
+					spacing: 10 * DefaultStyle.dp
+					Button {
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+						style: ButtonStyle.noBackground
+						icon.source: AppIcons.leftArrow
+						focus: true
+						KeyNavigation.down: listStackView
+						onClicked: {
+							console.debug("[CallPage]User: return to call history")
+							listStackView.pop()
+							listStackView.forceActiveFocus()
+						}
+					}
+					Text {
+						text: qsTr("Nouvel appel")
+						color: DefaultStyle.main2_700
+						font.pixelSize: 29 * DefaultStyle.dp
+						font.weight: 800 * DefaultStyle.dp
+					}
+					Item {
+						Layout.fillWidth: true
+					}
+				}
 				NewCallForm {
 					id: callContactsList
+					Layout.topMargin: 18 * DefaultStyle.dp
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					focus: true
@@ -534,83 +501,72 @@ AbstractMainPage {
 	}
 
 	Component {
-		id: groupCallTitle
-		FocusScope{
-			objectName: "groupCallTitle"
-			width: parent.width
-			height: parent.height
-			RowLayout {
-				anchors.fill: parent
-				spacing: 10 * DefaultStyle.dp
-				visible: !SettingsCpp.disableMeetingsFeature
-				Button {
-					id: backGroupCallButton
-					style: ButtonStyle.noBackgroundOrange
-					icon.source: AppIcons.leftArrow
-					Layout.leftMargin: 21 * DefaultStyle.dp
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					KeyNavigation.down: listStackView
-					KeyNavigation.right: groupCallButton
-					KeyNavigation.left: groupCallButton
-					onClicked: {
-						listStackView.pop()
-						titleLoader.item.forceActiveFocus()
-					}
-				}
-				ColumnLayout {
-					spacing: 3 * DefaultStyle.dp
-					Text {
-						text: qsTr("Appel de groupe")
-						color: DefaultStyle.main1_500_main
-						maximumLineCount: 1
-						font {
-							pixelSize: 18 * DefaultStyle.dp
-							weight: 800 * DefaultStyle.dp
-						}
-						Layout.fillWidth: true
-					}
-					Text {
-						text: qsTr("%1 participant%2 sélectionné").arg(mainItem.selectedParticipantsCount).arg(mainItem.selectedParticipantsCount > 1 ? "s" : "")
-						color: DefaultStyle.main2_500main
-						maximumLineCount: 1
-						font {
-							pixelSize: 12 * DefaultStyle.dp
-							weight: 300 * DefaultStyle.dp
-						}
-						Layout.fillWidth: true
-					}
-				}
-				SmallButton {
-					id: groupCallButton
-					enabled: mainItem.selectedParticipantsCount.length != 0
-					Layout.rightMargin: 21 * DefaultStyle.dp
-					text: qsTr("Lancer")
-					style: ButtonStyle.main
-					KeyNavigation.down: listStackView
-					KeyNavigation.left: backGroupCallButton
-					KeyNavigation.right: backGroupCallButton
-					onClicked: {
-						mainItem.startGroupCallRequested()
-					}
-				}
-			}
-		}
-	}
-
-	Component {
 		id: groupCallItem
 		FocusScope{
 			objectName: "groupCallItem"
 			Control.StackView.onActivated: {
-				titleLoader.sourceComponent = groupCallTitle
 				addParticipantsLayout.forceActiveFocus()
 			}
 			ColumnLayout {
-				spacing: 5 * DefaultStyle.dp
+				spacing: 0
 				anchors.fill: parent
 				RowLayout {
+					spacing: 10 * DefaultStyle.dp
+					visible: !SettingsCpp.disableMeetingsFeature
+					Button {
+						id: backGroupCallButton
+						style: ButtonStyle.noBackgroundOrange
+						icon.source: AppIcons.leftArrow
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+						KeyNavigation.down: listStackView
+						KeyNavigation.right: groupCallButton
+						KeyNavigation.left: groupCallButton
+						onClicked: {
+							listStackView.pop()
+							titleLoader.item.forceActiveFocus()
+						}
+					}
+					ColumnLayout {
+						spacing: 3 * DefaultStyle.dp
+						Text {
+							text: qsTr("Appel de groupe")
+							color: DefaultStyle.main1_500_main
+							maximumLineCount: 1
+							font {
+								pixelSize: 18 * DefaultStyle.dp
+								weight: 800 * DefaultStyle.dp
+							}
+							Layout.fillWidth: true
+						}
+						Text {
+							text: qsTr("%1 participant%2 sélectionné").arg(mainItem.selectedParticipantsCount).arg(mainItem.selectedParticipantsCount > 1 ? "s" : "")
+							color: DefaultStyle.main2_500main
+							maximumLineCount: 1
+							font {
+								pixelSize: 12 * DefaultStyle.dp
+								weight: 300 * DefaultStyle.dp
+							}
+							Layout.fillWidth: true
+						}
+					}
+					SmallButton {
+						id: groupCallButton
+						enabled: mainItem.selectedParticipantsCount.length != 0
+						Layout.rightMargin: 21 * DefaultStyle.dp
+						text: qsTr("Lancer")
+						style: ButtonStyle.main
+						KeyNavigation.down: listStackView
+						KeyNavigation.left: backGroupCallButton
+						KeyNavigation.right: backGroupCallButton
+						onClicked: {
+							mainItem.startGroupCallRequested()
+						}
+					}
+				}
+				RowLayout {
 					spacing: 0
+					Layout.topMargin: 18 * DefaultStyle.dp
 					Layout.rightMargin: 38 * DefaultStyle.dp
 					Text {
 						font.pixelSize: 13 * DefaultStyle.dp
@@ -636,6 +592,7 @@ AbstractMainPage {
 					id: addParticipantsLayout
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					Layout.topMargin: 15 * DefaultStyle.dp
 					onSelectedParticipantsCountChanged: mainItem.selectedParticipantsCount = selectedParticipantsCount
 					focus: true
 					Connections {

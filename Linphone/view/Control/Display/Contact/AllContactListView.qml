@@ -215,7 +215,7 @@ Flickable{
 	ColumnLayout{
 		id: contentsLayout
 		width: parent.width
-		spacing: 0
+		spacing: 20 * DefaultStyle.dp
 		BusyIndicator {
 			Layout.alignment: Qt.AlignCenter
 			Layout.preferredHeight: visible ? 60 * DefaultStyle.dp : 0
@@ -228,6 +228,7 @@ Flickable{
 		
 		ContactListView{
 			id: favoritesList
+			visible: contentHeight > 0
 			Layout.fillWidth: true
 			Layout.preferredHeight: implicitHeight
 			interactive: false
@@ -259,6 +260,7 @@ Flickable{
 	
 		ContactListView{
 			id: contactsList
+			visible: contentHeight > 0
 			Layout.fillWidth: true
 			Layout.preferredHeight: implicitHeight
 			Layout.topMargin: favoritesList.height > 0 ? 4 * DefaultStyle.dp : 0
@@ -296,6 +298,7 @@ Flickable{
 		}
 		ContactListView{
 			id: suggestionsList
+			visible: contentHeight > 0
 			Layout.fillWidth: true
 			Layout.preferredHeight: implicitHeight
 			Layout.topMargin: contactsList.height + favoritesList.height > 0 ? 4 * DefaultStyle.dp : 0

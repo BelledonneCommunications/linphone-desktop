@@ -11,7 +11,6 @@ LoginLayout {
 	id: mainItem
 	signal goBack()
 	signal goToRegister()
-	signal connectionSucceed()
 	property bool showBackButton: false
 	
 	titleContent: [
@@ -270,11 +269,6 @@ LoginLayout {
 						target: LoginPageCpp
 						function onErrorMessageChanged(error) {
 							errorText.setText(error)
-						}
-						function onRegistrationStateChanged() {
-							if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
-								mainItem.connectionSucceed()
-							}
 						}
 					}
 				}

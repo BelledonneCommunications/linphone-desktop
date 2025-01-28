@@ -14,7 +14,6 @@ LoginLayout {
 	signal useSIPButtonClicked()
 	signal useRemoteConfigButtonClicked()
 	signal goToRegister()
-	signal connectionSucceed()
 
 	titleContent: [
 		BigButton {
@@ -82,7 +81,6 @@ LoginLayout {
 				spacing: 0
 				LoginForm {
 					id: loginForm
-					onConnectionSucceed: mainItem.connectionSucceed()
 				}
 				BigButton {
 					Layout.preferredWidth: loginForm.width

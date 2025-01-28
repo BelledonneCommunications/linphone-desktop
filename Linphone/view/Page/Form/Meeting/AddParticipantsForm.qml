@@ -28,6 +28,7 @@ FocusScope{
 		ListView {
 			id: participantList
 			Layout.fillWidth: true
+			visible: contentHeight > 0
 			Layout.preferredHeight: contentHeight
 			Layout.maximumHeight: mainItem.height / 3
 			width: mainItem.width

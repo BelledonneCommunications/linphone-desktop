@@ -64,14 +64,12 @@ FocusScope {
 			}
 			onVisibleChanged: if (!visible) mainItem.numPadPopup.close()
 			contentItem: ColumnLayout {
-				// anchors.fill: parent
-				spacing: 10 * DefaultStyle.dp
+				spacing: 38 * DefaultStyle.dp
 				SearchBar {
 					id: searchBar
 					Layout.alignment: Qt.AlignTop
 					Layout.fillWidth: true
 					Layout.rightMargin: 39 * DefaultStyle.dp
-					//Layout.maximumWidth: mainItem.width
 					focus: true
 					color: mainItem.searchBarColor
 					borderColor: mainItem.searchBarBorderColor

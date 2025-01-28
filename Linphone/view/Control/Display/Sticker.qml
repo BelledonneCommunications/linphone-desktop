@@ -245,10 +245,13 @@ Item {
 		}
 		Text {
 			anchors.left: parent.left
+			anchors.right: parent.right
 			anchors.bottom: parent.bottom
 			anchors.leftMargin: 10 * DefaultStyle.dp
+			anchors.rightMargin: 10 * DefaultStyle.dp
 			anchors.bottomMargin: 10 * DefaultStyle.dp
 			width: implicitWidth
+			maximumLineCount: 1
 			property string _text: mainItem.displayName != ''
 				? mainItem.displayName
 				: mainItem.account && mainItem.identityAddress

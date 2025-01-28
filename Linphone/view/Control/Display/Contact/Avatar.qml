@@ -41,7 +41,7 @@ Loader{
 	property string computedAvatarUri: avatarObj ? avatarObj.value : ''
 	
 	// To get the secured property for a specific address,
-	// override it as secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncrypted
+	// override it as secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 	property var securityLevelObj: UtilsCpp.getFriendAddressSecurityLevel(_address)
 	property var securityLevel: securityLevelObj ? securityLevelObj.value : LinphoneEnums.SecurityLevel.None
 	property bool secured: call && call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp

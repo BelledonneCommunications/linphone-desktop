@@ -227,7 +227,6 @@ ColumnLayout {
 				}
 			}
 			Connections {
-				enabled: !mainItem.call
 				target: SettingsCpp
 				onMicVolumeChanged: (value) => {
 					audioTestSlider.value = value

@@ -75,7 +75,7 @@ ColumnLayout {
 				_address: mainItem.conferenceInfo
 					? mainItem.conferenceInfo.core.subject
 					: mainItem.contactAddress || mainItem.contactName
-				secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncrypted
+				secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 			}
 			Item {
 				id: rightButton

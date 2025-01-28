@@ -29,8 +29,9 @@ AbstractWindow {
 	// 	color: DefaultStyle.grey_100
 	// }
 
-	function openMainPage(){
+	function openMainPage(connectionSucceed){
 		if (mainWindowStackView.currentItem.objectName !== "mainPage") mainWindowStackView.replace(mainPage, StackView.Immediate)
+		if (connectionSucceed) mainWindow.showInformationPopup(qsTr("Connexion réussie"), qsTr("Vous êtes connecté en mode %1").arg("interopérable"))
 	}
 	function goToCallHistory() {
 		openMainPage()
@@ -46,7 +47,7 @@ AbstractWindow {
 	}
 	function transferCallSucceed() {
 		openMainPage()
-		UtilsCpp.showInformationPopup(qsTr("Appel transféré"), qsTr("Votre correspondant a été transféré au contact sélectionné"))
+		mainWindow.showInformationPopup(qsTr("Appel transféré"), qsTr("Votre correspondant a été transféré au contact sélectionné"))
 	}
 	function initStackViewItem() {
 		if(accountProxy && accountProxy.isInitialized) {
@@ -93,6 +94,16 @@ AbstractWindow {
 		}
 		function onIsSavedChanged() {
 			if (SettingsCpp.isSaved) UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("Les changements ont été sauvegardés"), true, mainWindow)
+		}
+	}
+
+	Connections {
+		target: LoginPageCpp
+		function onRegistrationStateChanged() {
+			if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
+				openMainPage(true)
+				proposeH264CodecsDownload()
+			}
 		}
 	}
 
@@ -144,10 +155,6 @@ AbstractWindow {
 			onGoBack: openMainPage()
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
 			onGoToRegister: mainWindowStackView.replace(registerPage)
-			onConnectionSucceed: {
-				openMainPage()
-				proposeH264CodecsDownload()
-			}
 			StackView.onActivated:{
 				if (accountProxy?.haveAccount) showBackButton = true
 			}
@@ -164,11 +171,6 @@ AbstractWindow {
 					mainWindowStackView.pop()
 			}
 			onGoToRegister: mainWindowStackView.replace(registerPage)
-			
-			onConnectionSucceed: {
-				openMainPage()
-				proposeH264CodecsDownload()
-			}
 			StackView.onActivated:{
 				if (!SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin || accountProxy?.haveAccount) showBackButton = true
 			}

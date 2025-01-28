@@ -454,24 +454,26 @@ AbstractMainPage {
 		ColumnLayout {
 			property Control.StackView container
 			property ConferenceInfoGui conferenceInfoGui
+			spacing: 18 * DefaultStyle.dp
 			FocusScope{
 				Layout.fillWidth: true
-				Layout.preferredHeight: addParticipantsButtons.implicitHeight
-				RowLayout {
-					id: addParticipantsButtons
-					spacing: 5 * DefaultStyle.dp
-					Button {
-						id: removeButton
-						style: ButtonStyle.noBackgroundOrange
-						icon.source: AppIcons.leftArrow
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
-						KeyNavigation.right: addButton
-						KeyNavigation.down: addParticipantLayout
-						onClicked: container.pop()
-					}
-					ColumnLayout {
-						spacing: 8 * DefaultStyle.dp
+				Layout.preferredHeight: childrenRect.height
+				ColumnLayout {
+					spacing: 4 * DefaultStyle.dp
+					Layout.fillWidth: true
+					RowLayout {
+						id: addParticipantsButtons
+						spacing: 10 * DefaultStyle.dp
+						Button {
+							id: addParticipantsBackButton
+							style: ButtonStyle.noBackgroundOrange
+							icon.source: AppIcons.leftArrow
+							icon.width: 24 * DefaultStyle.dp
+							icon.height: 24 * DefaultStyle.dp
+							KeyNavigation.right: addButton
+							KeyNavigation.down: addParticipantLayout
+							onClicked: container.pop()
+						}
 						Text {
 							text: qsTr("Ajouter des participants")
 							color: DefaultStyle.main1_500_main
@@ -482,29 +484,30 @@ AbstractMainPage {
 							}
 							Layout.fillWidth: true
 						}
-						Text {
-							text: qsTr("%1 participant%2 sélectionné%2").arg(addParticipantLayout.selectedParticipantsCount).arg(addParticipantLayout.selectedParticipantsCount > 1 ? "s" : "")
-							color: DefaultStyle.main2_500main
-							maximumLineCount: 1
-							font {
-								pixelSize: 12 * DefaultStyle.dp
-								weight: 300 * DefaultStyle.dp
+						SmallButton {
+							id: addButton
+							enabled: addParticipantLayout.selectedParticipantsCount.length != 0
+							Layout.leftMargin: 11 * DefaultStyle.dp
+							focus: enabled
+							style: ButtonStyle.main
+							text: qsTr("Ajouter")
+							KeyNavigation.left: addParticipantsBackButton
+							KeyNavigation.down: addParticipantLayout
+							onClicked: {
+								mainItem.addParticipantsValidated(addParticipantLayout.selectedParticipants)
 							}
-							Layout.fillWidth: true
 						}
 					}
-					SmallButton {
-						id: addButton
-						enabled: addParticipantLayout.selectedParticipantsCount.length != 0
-						Layout.rightMargin: 21 * DefaultStyle.dp
-						focus: enabled
-						style: ButtonStyle.main
-						text: qsTr("Ajouter")
-						KeyNavigation.left: removeButton
-						KeyNavigation.down: addParticipantLayout
-						onClicked: {
-							mainItem.addParticipantsValidated(addParticipantLayout.selectedParticipants)
+					Text {
+						text: qsTr("%1 participant%2 sélectionné%2").arg(addParticipantLayout.selectedParticipantsCount).arg(addParticipantLayout.selectedParticipantsCount > 1 ? "s" : "")
+						color: DefaultStyle.main2_500main
+						Layout.leftMargin: addParticipantsBackButton.width + addParticipantsButtons.spacing
+						maximumLineCount: 1
+						font {
+							pixelSize: 12 * DefaultStyle.dp
+							weight: 300 * DefaultStyle.dp
 						}
+						Layout.fillWidth: true
 					}
 				}
 			}

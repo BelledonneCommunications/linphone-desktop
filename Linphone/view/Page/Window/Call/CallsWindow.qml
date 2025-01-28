@@ -647,8 +647,11 @@ AbstractWindow {
 					searchBarBorderColor: DefaultStyle.grey_200
 					numPadPopup: numericPad
 					onContactClicked: (contact) => {
-						rightPanel.visible = false
 						mainWindow.startCallWithContact(contact, false, rightPanel)
+					}
+					Connections {
+						target: mainWindow
+						function onCallChanged(){ if (newCallForm.Control.StackView.status === Control.StackView.Active) rightPanel.visible = false}
 					}
 					
 					NumericPadPopup {

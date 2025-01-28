@@ -628,11 +628,11 @@ AbstractMainPage {
 											font.pixelSize: 14 * DefaultStyle.dp
 										}
 										Item{Layout.fillWidth: true}
-										Image{
+										EffectImage {
 											visible: listViewModelData.securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 											source: AppIcons.trusted
-											width: 22 * DefaultStyle.dp
-											height: 22 * DefaultStyle.dp
+											Layout.preferredWidth: 22 * DefaultStyle.dp
+											Layout.preferredHeight: 22 * DefaultStyle.dp
 										}
 										
 										SmallButton {
