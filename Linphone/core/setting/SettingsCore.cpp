@@ -123,7 +123,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mMediaEncryptionMandatory = settingsCore.mMediaEncryptionMandatory;
 
 	// Call
-	mVideoEnabled = settingsCore.mVfsEnabled;
+	mVideoEnabled = settingsCore.mVideoEnabled;
 	mEchoCancellationEnabled = settingsCore.mEchoCancellationEnabled;
 	mAutomaticallyRecordCallsEnabled = settingsCore.mAutomaticallyRecordCallsEnabled;
 
@@ -406,7 +406,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setVfsEnabled(settingsCore.mVfsEnabled);
 
 	// Call
-	setVideoEnabled(settingsCore.mVfsEnabled);
+	setVideoEnabled(settingsCore.mVideoEnabled);
 	setEchoCancellationEnabled(settingsCore.mEchoCancellationEnabled);
 	setAutomaticallyRecordCallsEnabled(settingsCore.mAutomaticallyRecordCallsEnabled);
 
@@ -861,7 +861,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	model->setVfsEnabled(mVfsEnabled);
 
 	// Call
-	model->setVideoEnabled(mVfsEnabled);
+	model->setVideoEnabled(mVideoEnabled);
 	model->setEchoCancellationEnabled(mEchoCancellationEnabled);
 	model->setAutomaticallyRecordCallsEnabled(mAutomaticallyRecordCallsEnabled);
 
