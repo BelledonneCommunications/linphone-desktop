@@ -105,8 +105,8 @@ Rectangle {
 		leftPadding: 45 * DefaultStyle.dp
 		rightPadding: 45 * DefaultStyle.dp
 		Control.ScrollBar.vertical: ScrollBar {
-			active: scrollView.contentHeight > scrollView.height
-			visible: scrollView.contentHeight > scrollView.height
+			active: scrollViewContent.implicitHeight > scrollView.height
+			visible: scrollViewContent.implicitHeight > scrollView.height
 			interactive: true
 			policy: Control.ScrollBar.AsNeeded
 			anchors.top: parent.top
@@ -118,6 +118,7 @@ Rectangle {
 			active: false
 		}
 		ColumnLayout {
+			id: scrollViewContent
 			width: parent.width
 			spacing: 10 * DefaultStyle.dp
 			Repeater {
