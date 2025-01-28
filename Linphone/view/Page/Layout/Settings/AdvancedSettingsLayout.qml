@@ -155,6 +155,7 @@ AbstractSettingsLayout {
 		ColumnLayout {
 			spacing: 20 * DefaultStyle.dp
 			Repeater {
+				Layout.preferredHeight: implicitHeight
 				model: PayloadTypeProxy {
 					id: videoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.NotDownloadable
@@ -168,6 +169,7 @@ AbstractSettingsLayout {
 				}
 			}
 			Repeater {
+				Layout.preferredHeight: implicitHeight
 				model: PayloadTypeProxy {
 					id: downloadableVideoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.Downloadable

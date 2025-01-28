@@ -124,6 +124,7 @@ Rectangle {
 			Repeater {
 				id: contentRepeater
 				model: mainItem.contentModel
+				Layout.preferredHeight: implicitHeight
 				delegate: ColumnLayout {
 					Rectangle {
 						visible: index !== 0
