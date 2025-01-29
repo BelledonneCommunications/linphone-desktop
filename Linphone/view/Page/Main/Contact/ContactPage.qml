@@ -630,7 +630,7 @@ AbstractMainPage {
 										Item{Layout.fillWidth: true}
 										EffectImage {
 											visible: listViewModelData.securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
-											source: AppIcons.trusted
+											imageSource: AppIcons.trusted
 											Layout.preferredWidth: 22 * DefaultStyle.dp
 											Layout.preferredHeight: 22 * DefaultStyle.dp
 										}

@@ -164,6 +164,8 @@ Item {
 				anchors.horizontalCenter: parent.horizontalCenter
 				anchors.top: centerItem.bottom
 				anchors.topMargin: 21 * DefaultStyle.dp
+				anchors.left: parent.left
+				anchors.right: parent.right
 				Text {
 					Layout.fillWidth: true
 					horizontalAlignment: Text.AlignHCenter

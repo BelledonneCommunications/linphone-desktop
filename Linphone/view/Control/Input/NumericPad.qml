@@ -8,6 +8,8 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 FocusScope{
 	id: mainItem
+	width: numPadGrid.width
+	height: numPadGrid.height
 
 	property var currentCall
 	property bool lastRowVisible: true
@@ -87,7 +89,6 @@ FocusScope{
 
 	Layout.GridLayout {
 		id: numPadGrid
-		anchors.fill: parent
 		columns: 3
 		columnSpacing: 40 * DefaultStyle.dp
 		rowSpacing: 10 * DefaultStyle.dp

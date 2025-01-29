@@ -185,7 +185,7 @@ AbstractMainPage {
 					placeholderText: qsTr("Rechercher un appel")
                     visible: historyListView.count !== 0 || text.length !== 0
 					focus: true
-					KeyNavigation.up: titleLoader
+					KeyNavigation.up: newCallButton
 					KeyNavigation.down: historyListView
 					Binding {
 						target: mainItem
@@ -524,7 +524,7 @@ AbstractMainPage {
 						KeyNavigation.left: groupCallButton
 						onClicked: {
 							listStackView.pop()
-							titleLoader.item.forceActiveFocus()
+							listStackView.currentItem?.forceActiveFocus()
 						}
 					}
 					ColumnLayout {
@@ -660,8 +660,8 @@ AbstractMainPage {
 							anchors.fill: parent
 							IconLabelButton {
 								Layout.fillWidth: true
-								property bool isLdap: contactDetail.contact?.core?.isLdap
-								property bool isCardDAV: contactDetail.contact?.core?.isCardDAV
+								property bool isLdap: contactDetail.contact?.core?.isLdap || false
+								property bool isCardDAV: contactDetail.contact?.core?.isCardDAV || false
 								text: contactDetail.contact ? qsTr("Voir le contact") : qsTr("Ajouter aux contacts")
 								icon.source: AppIcons.plusCircle
 								icon.width: 32 * DefaultStyle.dp

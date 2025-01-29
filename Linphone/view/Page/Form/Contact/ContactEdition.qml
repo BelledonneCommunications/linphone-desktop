@@ -159,11 +159,23 @@ MainRightPanel {
 			contentWidth: 421 * DefaultStyle.dp
 			contentY: 0
 
+			signal ensureVisibleRequested(Item item)
+
 			function ensureVisible(r) {
 				if (contentY >= r.y)
 					contentY = r.y;
 				else if (contentY+height <= r.y+r.height)
-					contentY = r.y+r.height-height;
+					contentY = r.y + r.height - height;
+			}
+
+			// Hack to ensure the empty textfield is really visible, because
+			// its y changes too late after the editingFinished is emitted
+			function connectOnce(sig, slot) {
+				var f = function() {
+					slot.apply(this, arguments)
+					sig.disconnect(f)
+				}
+				sig.connect(f)
 			}
 
 			ScrollBar.vertical: Control.ScrollBar {
@@ -295,9 +307,12 @@ MainRightPanel {
 					}
 				}
 				FormItemLayout {
+					id: newAddressSipTextField
 					label: qsTr("Adresse SIP")
 					Layout.fillWidth: true
-					// onYChanged: editionLayout.ensureVisible(this)
+					onYChanged: {
+						editionLayout.ensureVisibleRequested(newAddressSipTextField)
+					}
 					contentItem: TextField {
 						id: newAddressTextField
 						backgroundColor: DefaultStyle.grey_0
@@ -319,7 +334,7 @@ MainRightPanel {
 						onEditingFinished: {
 							if (text.length > 0) mainItem.contact.core.appendAddress(text)
 							newAddressTextField.clear()
-							editionLayout.ensureVisible(this)
+							editionLayout.connectOnce(editionLayout.ensureVisibleRequested, editionLayout.ensureVisible)
 						}
 					}
 				}
@@ -381,7 +396,9 @@ MainRightPanel {
 					id: phoneNumberInput
 					Layout.fillWidth: true
 					label: qsTr("Phone")
-					// onYChanged: editionLayout.ensureVisible(this)
+					onYChanged: {
+						editionLayout.ensureVisibleRequested(phoneNumberInput)
+					}
 					contentItem: TextField {
 						id: phoneNumberInputTextField
 						backgroundColor: DefaultStyle.grey_0
@@ -403,7 +420,7 @@ MainRightPanel {
 						onEditingFinished: {
 							if (text.length != 0) mainItem.contact.core.appendPhoneNumber(phoneNumberInput.label, text)
 							phoneNumberInputTextField.clear()
-							editionLayout.ensureVisible(this)
+							editionLayout.connectOnce(editionLayout.ensureVisibleRequested, editionLayout.ensureVisible)
 						}
 					}
 				}

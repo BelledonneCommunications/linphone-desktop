@@ -14,7 +14,7 @@ FocusScope {
 	property string text: textField.searchText
 	property bool magnifierVisible: true
 	property var validator: RegularExpressionValidator{}
-	property Control.Popup numericPadPopup
+	property var numericPadPopup
 	property alias numericPadButton: dialerButton
 	readonly property bool hasActiveFocus: textField.activeFocus
 	property alias color: backgroundItem.color

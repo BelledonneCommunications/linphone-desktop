@@ -409,12 +409,14 @@ void FriendCore::appendAddress(const QString &addr) {
 	if (addr.isEmpty()) return;
 	mCoreModelConnection->invokeToModel([this, addr]() {
 		auto linphoneAddr = ToolModel::interpretUrl(addr);
-		QString interpretedAddress = linphoneAddr ? Utils::coreStringToAppString(linphoneAddr->asString()) : "";
-		mCoreModelConnection->invokeToCore([this, interpretedAddress]() {
+		QString interpretedFullAddress = linphoneAddr ? Utils::coreStringToAppString(linphoneAddr->asString()) : "";
+		QString interpretedAddress = linphoneAddr ? Utils::coreStringToAppString(linphoneAddr->asStringUriOnly()) : "";
+		mCoreModelConnection->invokeToCore([this, interpretedAddress, interpretedFullAddress]() {
 			if (interpretedAddress.isEmpty()) Utils::showInformationPopup(tr("Erreur"), tr("Adresse invalide"), false);
 			else {
 				mAddressList.append(Utils::createFriendAddressVariant(_addressLabel, interpretedAddress));
-				if (mDefaultFullAddress.isEmpty()) mDefaultFullAddress = interpretedAddress;
+				if (mDefaultFullAddress.isEmpty()) mDefaultFullAddress = interpretedFullAddress;
+				if (mDefaultAddress.isEmpty()) mDefaultAddress = interpretedAddress;
 				emit addressChanged();
 				setIsSaved(false);
 			}
@@ -467,9 +469,6 @@ QString FriendCore::getDefaultFullAddress() const {
 }
 
 void FriendCore::setDefaultFullAddress(const QString &address) {
-	auto it = std::find_if(mAddressList.begin(), mAddressList.end(),
-	                       [address](const QVariant &a) { return a.toMap()["address"].toString() == address; });
-	if (it == mAddressList.end()) appendAddress(address);
 	if (mDefaultFullAddress != address) {
 		mDefaultFullAddress = address;
 		emit defaultFullAddressChanged();
@@ -596,6 +595,8 @@ void FriendCore::writeFromModel(const std::shared_ptr<FriendModel> &model) {
 		    Utils::createFriendAddressVariant(_addressLabel, Utils::coreStringToAppString(addr->asStringUriOnly())));
 	}
 	mAddressList = addresses;
+	mDefaultAddress = model->getDefaultAddress();
+	mDefaultFullAddress = model->getDefaultFullAddress();
 
 	QList<QVariant> phones;
 	for (auto &number : model->getPhoneNumbers()) {
@@ -637,8 +638,10 @@ void FriendCore::save() { // Save Values to model
 			thisCopy->writeIntoModel(mFriendModel);
 			thisCopy->deleteLater();
 			mVCardString = mFriendModel->getVCardAsString();
-			mFriendModelConnection->invokeToCore([this]() { emit saved(); });
-			setIsSaved(true);
+			mFriendModelConnection->invokeToCore([this]() {
+				setIsSaved(true);
+				emit saved();
+			});
 		});
 	} else {
 		mCoreModelConnection->invokeToModel([this, thisCopy]() {
@@ -660,8 +663,11 @@ void FriendCore::save() { // Save Values to model
 						thisCopy->writeIntoModel(mFriendModel);
 						thisCopy->deleteLater();
 						mVCardString = mFriendModel->getVCardAsString();
+						mCoreModelConnection->invokeToCore([this] {
+							setIsSaved(true);
+							emit saved();
+						});
 					});
-					emit saved();
 				});
 			} else {
 				auto contact = core->createFriend();
@@ -688,6 +694,7 @@ void FriendCore::save() { // Save Values to model
 						mCoreModelConnection->invokeToCore([this, created]() {
 							if (created) setSelf(mCoreModelConnection->mCore);
 							setIsSaved(created);
+							if (created) emit saved();
 						});
 					});
 				});

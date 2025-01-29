@@ -682,12 +682,8 @@ AbstractWindow {
 						rightPanel.visible = false
 						event.accepted = true
 					}
-					Item {
-						Layout.fillWidth: true
-						Layout.fillHeight: true 
-					}
+					Item{Layout.fillHeight: true}
 					SearchBar {
-						id: dialerTextInput
 						Layout.fillWidth: true
 						Layout.leftMargin: 10 * DefaultStyle.dp
 						Layout.rightMargin: 10 * DefaultStyle.dp
@@ -695,24 +691,17 @@ AbstractWindow {
 						color: DefaultStyle.grey_0
 						borderColor: DefaultStyle.grey_200
 						placeholderText: ""
-						numericPadPopup: numPadPopup
+						numericPadPopup: numPad
 						numericPadButton.visible: false
 						enabled: false
 					}
-					
-					NumericPadPopup {
-						id: numPadPopup
-						width: parent.width
-						parent: numericPadContainer
-						closeButtonVisible: false
-						roundedBottom: true
-						visible: dialerPanelContent.visible
+					NumericPad {
+						id: numPad
+						Layout.alignment: Qt.AlignHCenter
 						currentCall: callsModel.currentCall
 						lastRowVisible: false
-						leftPadding: 40 * DefaultStyle.dp
-						rightPadding: 40 * DefaultStyle.dp
-						topPadding: 41 * DefaultStyle.dp
-						bottomPadding: 18 * DefaultStyle.dp
+						Layout.topMargin: 41 * DefaultStyle.dp
+						Layout.bottomMargin: 18 * DefaultStyle.dp
 						onLaunchCall: {
 							UtilsCpp.createCall(dialerTextInput.text)
 						}

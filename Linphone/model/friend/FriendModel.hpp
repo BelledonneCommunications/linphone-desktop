@@ -51,6 +51,8 @@ public:
 	QString getFamilyName() const;
 	QString getOrganization() const;
 	QString getJob() const;
+	QString getDefaultAddress() const;
+	QString getDefaultFullAddress() const;
 	bool getStarred() const;
 	std::shared_ptr<linphone::Friend> getFriend() const;
 	QString getPictureUri() const;

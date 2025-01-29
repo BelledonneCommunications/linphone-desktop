@@ -169,6 +169,14 @@ void FriendModel::clearAddresses() {
 	emit addressesChanged();
 }
 
+QString FriendModel::getDefaultAddress() const {
+	return Utils::coreStringToAppString(mMonitor->getAddress()->asStringUriOnly());
+}
+
+QString FriendModel::getDefaultFullAddress() const {
+	return Utils::coreStringToAppString(mMonitor->getAddress()->asString());
+}
+
 QString FriendModel::getFullName() const {
 	if (mFullName.isEmpty()) return getGivenName() + " " + getFamilyName();
 	else return mFullName;
