@@ -364,7 +364,8 @@ VariantObject *Utils::findAvatarByAddress(const QString &address) {
 	});
 	// Rebuild avatar if needed
 	auto updateValue = [data, address](const std::shared_ptr<linphone::Friend> &f) -> void {
-		if (f && f->getAddress()->weakEqual(ToolModel::interpretUrl(address))) data->invokeRequestValue();
+		if (f && f->getAddress() && f->getAddress()->weakEqual(ToolModel::interpretUrl(address)))
+			data->invokeRequestValue();
 	};
 	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendCreated, updateValue);
 	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendRemoved, updateValue);

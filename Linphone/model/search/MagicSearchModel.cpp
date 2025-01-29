@@ -100,7 +100,7 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 
 		auto resultIt =
 		    std::find_if(finalResults.begin(), finalResults.end(), [result](std::shared_ptr<linphone::SearchResult> r) {
-			    return r->getAddress()->weakEqual(result->getAddress());
+			    return r->getAddress() && r->getAddress()->weakEqual(result->getAddress());
 		    });
 		if (resultIt == finalResults.end()) finalResults.push_back(result);
 		else if (fList && fList->getDisplayName() == "app_friends") *resultIt = result; // replace if local friend
@@ -142,5 +142,5 @@ void MagicSearchModel::updateFriendListWithFriend(const std::shared_ptr<linphone
 	}
 	qDebug() << log().arg("Adding Friend:") << linphoneFriend.get();
 	friendList->addFriend(linphoneFriend);
-	emit CoreModel::getInstance()->friendCreated(linphoneFriend);
+	emit CoreModel::getInstance() -> friendCreated(linphoneFriend);
 }
