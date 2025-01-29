@@ -60,8 +60,8 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mRegisterEnabled = params->registerEnabled();
 	mMwiServerAddress =
 	    params->getMwiServerAddress() ? Utils::coreStringToAppString(params->getMwiServerAddress()->asString()) : "";
-	mTransports << "TCP"
-	            << "UDP"
+	mTransports << "UDP"
+	            << "TCP"
 	            << "TLS"
 	            << "DTLS";
 	mTransport = LinphoneEnums::toString(LinphoneEnums::fromLinphone(params->getTransport()));
@@ -521,16 +521,24 @@ void AccountCore::setVoicemailAddress(QString value) {
 
 void AccountCore::setTransport(QString value) {
 	if (mTransport != value) {
-		mTransport = value;
-		emit transportChanged();
+		mAccountModelConnection->invokeToModel([this, value] {
+			mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
+			LinphoneEnums::TransportType transport;
+			LinphoneEnums::fromString(value, &transport);
+			mAccountModel->setTransport(LinphoneEnums::toLinphone(transport), false);
+		});
 		setIsSaved(false);
 	}
 }
 
 void AccountCore::setServerAddress(QString value) {
 	if (mServerAddress != value) {
-		mServerAddress = value;
-		emit serverAddressChanged();
+		mAccountModelConnection->invokeToModel([this, value, transportString = mTransport] {
+			LinphoneEnums::TransportType transport;
+			LinphoneEnums::fromString(transportString, &transport);
+			mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
+			mAccountModel->setServerAddress(value, LinphoneEnums::toLinphone(transport), false);
+		});
 		setIsSaved(false);
 	}
 }
@@ -720,8 +728,8 @@ void AccountCore::writeIntoModel(std::shared_ptr<AccountModel> model) const {
 	model->setMwiServerAddress(mMwiServerAddress);
 	LinphoneEnums::TransportType transport;
 	LinphoneEnums::fromString(mTransport, &transport);
-	model->setTransport(LinphoneEnums::toLinphone(transport));
-	model->setServerAddress(mServerAddress);
+	model->setTransport(LinphoneEnums::toLinphone(transport), true);
+	model->setServerAddress(mServerAddress, LinphoneEnums::toLinphone(transport), true);
 	model->setOutboundProxyEnabled(mOutboundProxyEnabled);
 	model->setStunServer(mStunServer);
 	model->setIceEnabled(mIceEnabled);

@@ -92,7 +92,7 @@ void AccountModel::setPictureUri(QString uri) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit pictureUriChanged(uri);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::onDefaultAccountChanged() {
@@ -150,7 +150,7 @@ void AccountModel::setDisplayName(QString displayName) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit displayNameChanged(displayName);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::setDialPlan(int index) {
@@ -222,26 +222,35 @@ linphone::TransportType AccountModel::getTransport() const {
 	return mMonitor->getParams()->getTransport();
 }
 
-void AccountModel::setTransport(linphone::TransportType value) {
+void AccountModel::setTransport(linphone::TransportType value, bool save) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
-	params->setTransport(value);
-	mMonitor->setParams(params);
-	emit transportChanged(value);
+	if (params->getServerAddress()) {
+		auto addressClone = params->getServerAddress()->clone();
+		addressClone->setTransport(value);
+		params->setServerAddress(addressClone);
+		if (save) mMonitor->setParams(params);
+		emit transportChanged(value);
+		emit serverAddressChanged(Utils::coreStringToAppString(addressClone->asString()));
+	}
 }
 
 QString AccountModel::getServerAddress() const {
-	return Utils::coreStringToAppString(mMonitor->getParams()->getServerAddress()->asString());
+	if (mMonitor->getParams()->getServerAddress())
+		return Utils::coreStringToAppString(mMonitor->getParams()->getServerAddress()->asString());
+	else return "";
 }
 
-void AccountModel::setServerAddress(QString value) {
+void AccountModel::setServerAddress(QString value, linphone::TransportType transport, bool save) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
 	auto address = CoreModel::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(value), false);
 	if (address) {
+		if (save) address->setTransport(transport);
 		params->setServerAddress(address);
-		mMonitor->setParams(params);
+		if (save) mMonitor->setParams(params);
 		emit serverAddressChanged(value);
+		emit transportChanged(address->getTransport());
 	} else qWarning() << "Unable to set ServerAddress, failed creating address from" << value;
 }
 

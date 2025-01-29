@@ -57,9 +57,9 @@ public:
 	QString getMwiServerAddress() const;
 	void setMwiServerAddress(QString value);
 	linphone::TransportType getTransport() const;
-	void setTransport(linphone::TransportType value);
+	void setTransport(linphone::TransportType value, bool save);
 	QString getServerAddress() const;
-	void setServerAddress(QString value);
+	void setServerAddress(QString value, linphone::TransportType transport, bool save);
 	bool getOutboundProxyEnabled() const;
 	void setOutboundProxyEnabled(bool value);
 	QString getStunServer() const;
