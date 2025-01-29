@@ -54,10 +54,6 @@ public:
 
 	void linkNewAccountUsingCode(const QString &code, RegisterType registerType, const QString &sipAddress);
 
-	void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
-	                                linphone::RegistrationState state,
-	                                const std::string &message);
-
 signals:
 	void registrationStateChanged(linphone::RegistrationState state);
 	void newAccountCreationSucceed(QString sipAddress, RegisterType registerType, const QString &registerAddress);

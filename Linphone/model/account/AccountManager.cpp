@@ -124,14 +124,21 @@ bool AccountManager::login(QString username,
 	mAccountModel = Utils::makeQObject_ptr<AccountModel>(account);
 	mAccountModel->setSelf(mAccountModel);
 	connect(mAccountModel.get(), &AccountModel::registrationStateChanged, this,
-	        [this, authInfo](const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state,
-	                         const std::string &message) {
-		        if (account == mAccountModel->getAccount() && state == linphone::RegistrationState::Failed) {
-			        auto core = CoreModel::getInstance()->getCore();
-			        core->removeAuthInfo(authInfo);
-			        core->removeAccount(account);
+	        [this, authInfo, core](const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state,
+	                               const std::string &message) {
+		        if (mAccountModel && account == mAccountModel->getAccount()) {
+			        if (state == linphone::RegistrationState::Failed) {
+				        core->removeAuthInfo(authInfo);
+				        core->removeAccount(account);
+				        emit mAccountModel->removeListener();
+				        mAccountModel = nullptr;
+			        } else if (state == linphone::RegistrationState::Ok) {
+				        core->setDefaultAccount(account);
+				        emit mAccountModel->removeListener();
+				        mAccountModel = nullptr;
+			        }
 		        }
-		        emit onRegistrationStateChanged(account, state, message);
+		        emit registrationStateChanged(state);
 	        });
 	auto status = core->addAccount(account);
 	if (status == -1) {
@@ -313,25 +320,4 @@ void AccountManager::linkNewAccountUsingCode(const QString &code,
 	else
 		mAccountManagerServicesModel->linkPhoneNumberToAccountUsingCode(sipIdentityAddress,
 		                                                                Utils::appStringToCoreString(code));
-}
-
-void AccountManager::onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
-                                                linphone::RegistrationState state,
-                                                const std::string &message) {
-	auto core = CoreModel::getInstance()->getCore();
-	switch (state) {
-		case linphone::RegistrationState::Failed:
-			core->removeAccount(account);
-			emit mAccountModel->removeListener();
-			mAccountModel = nullptr;
-			break;
-		case linphone::RegistrationState::Ok:
-			core->setDefaultAccount(account);
-			emit mAccountModel->removeListener();
-			mAccountModel = nullptr;
-			break;
-		default: {
-		}
-	}
-	emit registrationStateChanged(state);
 }
