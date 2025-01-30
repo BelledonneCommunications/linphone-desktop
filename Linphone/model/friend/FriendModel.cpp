@@ -373,6 +373,7 @@ void FriendModel::setPictureUri(const QString &uri) {
 
 bool FriendModel::isThisFriend(const std::shared_ptr<linphone::Friend> &data) {
 	if (!mMonitor) return false;
+	if (data == mMonitor) return true;
 	auto fAddress = mMonitor->getAddress();
 	if (!fAddress) return false;
 	bool isThisFriend = false;
