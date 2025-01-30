@@ -48,6 +48,8 @@ class QQuickWindow;
 class VariantObject;
 class CallGui;
 class ConferenceInfoGui;
+class ConferenceCore;
+class ParticipantDeviceCore;
 class DownloadablePayloadTypeCore;
 
 class Utils : public QObject, public AbstractObject {
@@ -62,6 +64,7 @@ public:
 	Q_INVOKABLE static QString getFamilyNameFromFullName(const QString &fullName);
 	Q_INVOKABLE static QString getInitials(const QString &username); // Support UTF32
 	Q_INVOKABLE static VariantObject *findLocalAccountByAddress(const QString &address);
+	Q_INVOKABLE static VariantObject *findParticipantFromDevice(QString conferenceAddress, QString deviceAddress);
 
 	Q_INVOKABLE static void
 	createCall(const QString &sipAddress,
@@ -69,9 +72,9 @@ public:
 	           LinphoneEnums::MediaEncryption mediaEncryption = LinphoneEnums::MediaEncryption::None,
 	           const QString &prepareTransfertAddress = "",
 	           const QHash<QString, QString> &headers = {});
-	Q_INVOKABLE static void openCallsWindow(CallGui *call);
 	Q_INVOKABLE static void setupConference(ConferenceInfoGui *confGui);
 	Q_INVOKABLE static QQuickWindow *getMainWindow();
+	Q_INVOKABLE static void openCallsWindow(CallGui *call);
 	Q_INVOKABLE static void showInformationPopup(const QString &title,
 	                                             const QString &description,
 	                                             bool isSuccess = true,

@@ -19,7 +19,7 @@ LoginLayout {
 		function onErrorInField(field, errorMessage) {
 			console.log("set error message", errorMessage)
 			if (field == "username") usernameItem.errorMessage = errorMessage
-			else if (field == "password") pwdItem.errorMessage = errorMessage
+			else if (field == "password") passwordItem.errorMessage = errorMessage
 			else if (field == "phone") phoneNumberInput.errorMessage = errorMessage
 			else if (field == "email") emailItem.errorMessage = errorMessage
 			else otherErrorText.setText(errorMessage)

@@ -22,6 +22,7 @@ Item {
 	property var callState: call && call.core.state || undefined
 	property AccountGui account: null
 	property ParticipantDeviceGui participantDevice: null
+	property ParticipantGui participant: null
 	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking || false
 	property alias displayPresence: avatar.displayPresence
 	property color color: DefaultStyle.grey_600
@@ -45,8 +46,8 @@ Item {
 	property string localName: localNameObj ? localNameObj.value : ""
 	property string displayName: account
 		? account.core.displayName
-		: participantDevice
-			? participantDevice.core.displayName
+		: participant
+			? participant.core.displayName
 			: call
 				? previewEnabled
 					? localName
@@ -161,7 +162,6 @@ Item {
 			ColumnLayout {
 				spacing: 0
 				visible: mainItem.displayAll && !mainItem.remoteIsPaused && !mainItem.conference
-				anchors.horizontalCenter: parent.horizontalCenter
 				anchors.top: centerItem.bottom
 				anchors.topMargin: 21 * DefaultStyle.dp
 				anchors.left: parent.left

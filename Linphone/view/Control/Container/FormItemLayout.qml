@@ -18,6 +18,21 @@ FocusScope{
 	function clearErrorText() {
 		errorText.clear()
 	}
+
+	onErrorMessageChanged: if (errorMessage.length > 0) {
+		var item = mainItem
+		do {
+			var parentItem = item.parent 
+			if (parentItem.contentItem) {
+				if (parentItem.contentY >= mainItem.y)
+					parentItem.contentY = mainItem.y;
+				else if (parentItem.contentY+height <= mainItem.y+mainItem.height)
+					parentItem.contentY = mainItem.y + mainItem.height - height;
+			}
+			item = parentItem
+		} while(item.parent != undefined && parentItem.contentItem === undefined)
+	}
+
 	ColumnLayout {
 		id: layout
 		spacing: 5 * DefaultStyle.dp

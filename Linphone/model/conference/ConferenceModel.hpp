@@ -120,7 +120,8 @@ private:
 	                                  const std::shared_ptr<const linphone::AudioDevice> &audioDevice) override;
 
 signals:
-	void activeSpeakerParticipantDevice(const std::shared_ptr<linphone::ParticipantDevice> &participantDevice);
+	void activeSpeakerParticipantDevice(const std::shared_ptr<linphone::Conference> &conference,
+	                                    const std::shared_ptr<linphone::ParticipantDevice> &participantDevice);
 	void participantAdded(const std::shared_ptr<linphone::Participant> &participant);
 	void participantRemoved(const std::shared_ptr<const linphone::Participant> &participant);
 	void participantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> &participant);

@@ -22,9 +22,11 @@
 
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
+#include "core/conference/ConferenceCore.hpp"
 #include "core/conference/ConferenceInfoCore.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
 #include "core/friend/FriendGui.hpp"
+#include "core/participant/ParticipantDeviceCore.hpp"
 #include "core/path/Paths.hpp"
 #include "core/payload-type/DownloadablePayloadTypeCore.hpp"
 #include "model/object/VariantObject.hpp"
@@ -123,6 +125,30 @@ VariantObject *Utils::findLocalAccountByAddress(const QString &address) {
 		if (linAccount) {
 			auto accountCore = AccountCore::create(linAccount);
 			return QVariant::fromValue(new AccountGui(accountCore));
+		}
+		return QVariant();
+	});
+	data->requestValue();
+	return data;
+}
+
+VariantObject *Utils::findParticipantFromDevice(QString conferenceAddress, QString deviceAddress) {
+	VariantObject *data = new VariantObject("findParticipantFromDevice");
+	if (!data) return nullptr;
+	data->makeRequest([conferenceAddress, deviceAddress]() {
+		auto linCall = ToolModel::getCallByRemoteAddress(conferenceAddress);
+		if (linCall) {
+			auto linConf = linCall->getConference();
+			if (linConf) {
+				auto linAddress = ToolModel::interpretUrl(deviceAddress);
+				if (linAddress) {
+					auto participant = linConf->findParticipant(linAddress);
+					if (participant) {
+						auto participantCore = ParticipantCore::create(participant);
+						return QVariant::fromValue(new ParticipantGui(participantCore));
+					}
+				}
+			}
 		}
 		return QVariant();
 	});

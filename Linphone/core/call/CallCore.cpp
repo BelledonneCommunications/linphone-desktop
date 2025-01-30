@@ -117,8 +117,10 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mRemoteVideoEnabled =
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
 	mState = LinphoneEnums::fromLinphone(call->getState());
-	mRemoteAddress = Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
-	mRemoteUsername = Utils::coreStringToAppString(call->getRemoteAddress()->getUsername());
+	auto remoteAddress = call->getRemoteAddress()->clone();
+	remoteAddress->clean();
+	mRemoteAddress = Utils::coreStringToAppString(remoteAddress->asStringUriOnly());
+	mRemoteUsername = Utils::coreStringToAppString(remoteAddress->getUsername());
 	auto linphoneFriend = ToolModel::findFriendByAddress(mRemoteAddress);
 	if (linphoneFriend)
 		mRemoteName = Utils::coreStringToAppString(
@@ -281,7 +283,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToCore(&CallCore::lTransferCallToAnother, [this](QString uri) {
 		mCallModelConnection->invokeToModel([this, uri]() {
-			auto linCall = ToolModel::interpretUri(uri);
+			auto linCall = ToolModel::getCallByRemoteAddress(uri);
 			if (linCall) mCallModel->transferToAnother(linCall);
 		});
 	});

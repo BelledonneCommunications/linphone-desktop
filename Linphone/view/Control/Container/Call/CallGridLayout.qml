@@ -3,12 +3,14 @@ import QtQuick.Layouts
 import QtQml.Models
 
 import Linphone
+import UtilsCpp
 
 // =============================================================================
 
 Mosaic {
 	id: grid
 	property alias call: allDevices.currentCall
+	property ConferenceGui conference: call && call.core.conference || null
 	property bool videoEnabled: true
 	property int participantCount: gridModel.count
 	
@@ -47,6 +49,8 @@ Mosaic {
 				displayAll: false
 				displayPresence: false
 				participantDevice: avatarCell.currentDevice
+				property var participantObj: (mainItem.call && avatarCell.currentDevice) ? UtilsCpp.findParticipantFromDevice(mainItem.call.core.remoteAddress, avatarCell.currentDevice.core.address) : null
+				participant: participantObj ? participantObj.value : null
 				Component.onCompleted: console.log(qmlName + " is " +(call ? call.core.remoteAddress : currentDevice ? currentDevice.core.address : 'addr_NotDefined'))
 			}
 		}

@@ -154,28 +154,30 @@ AbstractSettingsLayout {
 		id: videoCodecsComponent
 		ColumnLayout {
 			spacing: 20 * DefaultStyle.dp
-			Repeater {
-				Layout.preferredHeight: implicitHeight
+			ListView {
+				Layout.preferredHeight: contentHeight
+				Layout.fillWidth: true
 				model: PayloadTypeProxy {
 					id: videoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.NotDownloadable
 				}
-				SwitchSetting {
-					Layout.fillWidth: true
+				delegate: SwitchSetting {
+					width: parent.width
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
 					propertyName: "enabled"
 					propertyOwnerGui: modelData
 				}
 			}
-			Repeater {
-				Layout.preferredHeight: implicitHeight
+			ListView {
+				Layout.preferredHeight: contentHeight
+				Layout.fillWidth: true
 				model: PayloadTypeProxy {
 					id: downloadableVideoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.Downloadable
 				}
-				SwitchSetting {
-					Layout.fillWidth: true
+				delegate: SwitchSetting {
+					width: parent.width
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
 					onCheckedChanged: Utils.openCodecOnlineInstallerDialog(

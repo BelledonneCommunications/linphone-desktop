@@ -173,7 +173,7 @@ void ConferenceModel::onActiveSpeakerParticipantDevice(
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
 	lDebug() << "onActiveSpeakerParticipantDevice: " << participantDevice->getAddress()->asString().c_str();
 
-	emit activeSpeakerParticipantDevice(conference->getActiveSpeakerParticipantDevice());
+	emit activeSpeakerParticipantDevice(conference, conference->getActiveSpeakerParticipantDevice());
 }
 
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<linphone::Conference> &conference,

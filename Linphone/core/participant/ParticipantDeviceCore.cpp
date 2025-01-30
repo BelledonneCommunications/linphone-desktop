@@ -42,25 +42,27 @@ ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::Par
     : QObject(parent) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mustBeInLinphoneThread(getClassName());
-	mName = Utils::coreStringToAppString(device->getName());
-	auto deviceAddress = device->getAddress();
-	mUniqueAddress = Utils::coreStringToAppString(deviceAddress->asString());
-	mAddress = Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
-	mDisplayName = Utils::coreStringToAppString(deviceAddress->getDisplayName());
-	if (mDisplayName.isEmpty()) {
-		mDisplayName = ToolModel::getDisplayName(mAddress);
+	if (device) {
+		mName = Utils::coreStringToAppString(device->getName());
+		auto deviceAddress = device->getAddress();
+		mUniqueAddress = Utils::coreStringToAppString(deviceAddress->asString());
+		mAddress = Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
+		mDisplayName = Utils::coreStringToAppString(deviceAddress->getDisplayName());
+		if (mDisplayName.isEmpty()) {
+			mDisplayName = ToolModel::getDisplayName(mAddress);
+		}
+		mIsMuted = device->getIsMuted();
+		mIsSpeaking = device->getIsSpeaking();
+		mParticipantDeviceModel = Utils::makeQObject_ptr<ParticipantDeviceModel>(device);
+		mParticipantDeviceModel->setSelf(mParticipantDeviceModel);
+		mState = LinphoneEnums::fromLinphone(device->getState());
+		lDebug() << "Address = " << Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
+		mIsLocal = ToolModel::findAccount(deviceAddress) != nullptr; // TODO set local
+		mIsVideoEnabled = mParticipantDeviceModel->isVideoEnabled();
+		mIsPaused = device->getState() == linphone::ParticipantDevice::State::Left ||
+		            device->getState() == linphone::ParticipantDevice::State::OnHold;
 	}
-	mIsMuted = device->getIsMuted();
 	mIsMe = isMe;
-	mIsSpeaking = device->getIsSpeaking();
-	mParticipantDeviceModel = Utils::makeQObject_ptr<ParticipantDeviceModel>(device);
-	mParticipantDeviceModel->setSelf(mParticipantDeviceModel);
-	mState = LinphoneEnums::fromLinphone(device->getState());
-	lDebug() << "Address = " << Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
-	mIsLocal = ToolModel::findAccount(deviceAddress) != nullptr; // TODO set local
-	mIsVideoEnabled = mParticipantDeviceModel->isVideoEnabled();
-	mIsPaused = device->getState() == linphone::ParticipantDevice::State::Left ||
-	            device->getState() == linphone::ParticipantDevice::State::OnHold;
 }
 
 ParticipantDeviceCore::~ParticipantDeviceCore() {
@@ -68,34 +70,39 @@ ParticipantDeviceCore::~ParticipantDeviceCore() {
 }
 
 void ParticipantDeviceCore::setSelf(QSharedPointer<ParticipantDeviceCore> me) {
-	mParticipantDeviceModelConnection =
-	    SafeConnection<ParticipantDeviceCore, ParticipantDeviceModel>::create(me, mParticipantDeviceModel);
-	mParticipantDeviceModelConnection->makeConnectToModel(
-	    &ParticipantDeviceModel::isSpeakingChanged, [this](bool speaking) {
-		    mParticipantDeviceModelConnection->invokeToCore([this, speaking] { setIsSpeaking(speaking); });
-	    });
-	mParticipantDeviceModelConnection->makeConnectToModel(&ParticipantDeviceModel::isMutedChanged, [this](bool muted) {
-		mParticipantDeviceModelConnection->invokeToCore([this, muted] { setIsMuted(muted); });
-	});
-	mParticipantDeviceModelConnection->makeConnectToModel(
-	    &ParticipantDeviceModel::stateChanged, [this](LinphoneEnums::ParticipantDeviceState state) {
-		    onStateChanged(state);
-		    mParticipantDeviceModelConnection->invokeToCore(
-		        [this, state, isVideoEnabled = mParticipantDeviceModel->isVideoEnabled()] {
-			        setState(state);
-			        setIsVideoEnabled(isVideoEnabled);
-		        });
-	    });
-	mParticipantDeviceModelConnection->makeConnectToModel(
-	    &ParticipantDeviceModel::streamCapabilityChanged, [this](linphone::StreamType) {
-		    auto videoEnabled = mParticipantDeviceModel->isVideoEnabled();
-		    mParticipantDeviceModelConnection->invokeToCore([this, videoEnabled] { setIsVideoEnabled(videoEnabled); });
-	    });
-	mParticipantDeviceModelConnection->makeConnectToModel(
-	    &ParticipantDeviceModel::streamAvailabilityChanged, [this](linphone::StreamType) {
-		    auto videoEnabled = mParticipantDeviceModel->isVideoEnabled();
-		    mParticipantDeviceModelConnection->invokeToCore([this, videoEnabled] { setIsVideoEnabled(videoEnabled); });
-	    });
+	if (mParticipantDeviceModel) {
+		mParticipantDeviceModelConnection =
+		    SafeConnection<ParticipantDeviceCore, ParticipantDeviceModel>::create(me, mParticipantDeviceModel);
+		mParticipantDeviceModelConnection->makeConnectToModel(
+		    &ParticipantDeviceModel::isSpeakingChanged, [this](bool speaking) {
+			    mParticipantDeviceModelConnection->invokeToCore([this, speaking] { setIsSpeaking(speaking); });
+		    });
+		mParticipantDeviceModelConnection->makeConnectToModel(
+		    &ParticipantDeviceModel::isMutedChanged, [this](bool muted) {
+			    mParticipantDeviceModelConnection->invokeToCore([this, muted] { setIsMuted(muted); });
+		    });
+		mParticipantDeviceModelConnection->makeConnectToModel(
+		    &ParticipantDeviceModel::stateChanged, [this](LinphoneEnums::ParticipantDeviceState state) {
+			    onStateChanged(state);
+			    mParticipantDeviceModelConnection->invokeToCore(
+			        [this, state, isVideoEnabled = mParticipantDeviceModel->isVideoEnabled()] {
+				        setState(state);
+				        setIsVideoEnabled(isVideoEnabled);
+			        });
+		    });
+		mParticipantDeviceModelConnection->makeConnectToModel(
+		    &ParticipantDeviceModel::streamCapabilityChanged, [this](linphone::StreamType) {
+			    auto videoEnabled = mParticipantDeviceModel->isVideoEnabled();
+			    mParticipantDeviceModelConnection->invokeToCore(
+			        [this, videoEnabled] { setIsVideoEnabled(videoEnabled); });
+		    });
+		mParticipantDeviceModelConnection->makeConnectToModel(
+		    &ParticipantDeviceModel::streamAvailabilityChanged, [this](linphone::StreamType) {
+			    auto videoEnabled = mParticipantDeviceModel->isVideoEnabled();
+			    mParticipantDeviceModelConnection->invokeToCore(
+			        [this, videoEnabled] { setIsVideoEnabled(videoEnabled); });
+		    });
+	}
 }
 
 QString ParticipantDeviceCore::getName() const {

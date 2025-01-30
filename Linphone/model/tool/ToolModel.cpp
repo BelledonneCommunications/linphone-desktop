@@ -50,9 +50,9 @@ std::shared_ptr<linphone::Address> ToolModel::interpretUrl(const QString &addres
 	return interpretedAddress;
 }
 
-std::shared_ptr<linphone::Call> ToolModel::interpretUri(const QString &uri) {
-	auto remoteAddress = ToolModel::interpretUrl(uri);
-	if (remoteAddress) return CoreModel::getInstance()->getCore()->getCallByRemoteAddress2(remoteAddress);
+std::shared_ptr<linphone::Call> ToolModel::getCallByRemoteAddress(const QString &remoteAddress) {
+	auto linAddress = ToolModel::interpretUrl(remoteAddress);
+	if (linAddress) return CoreModel::getInstance()->getCore()->getCallByRemoteAddress2(linAddress);
 	else return nullptr;
 }
 
