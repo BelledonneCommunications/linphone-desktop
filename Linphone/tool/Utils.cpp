@@ -385,7 +385,8 @@ VariantObject *Utils::findFriendByAddress(const QString &address) {
 	});
 	// Rebuild friend if needed
 	auto updateValue = [data, address](const std::shared_ptr<linphone::Friend> &f) -> void {
-		if (f->getAddress()->weakEqual(ToolModel::interpretUrl(address))) data->invokeRequestValue();
+		if (f && f->getAddress() && f->getAddress()->weakEqual(ToolModel::interpretUrl(address)))
+			data->invokeRequestValue();
 	};
 	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendCreated, updateValue); // New Friend
 	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendRemoved, updateValue); // New Friend
