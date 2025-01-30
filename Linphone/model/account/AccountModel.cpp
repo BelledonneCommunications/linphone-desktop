@@ -55,6 +55,15 @@ AccountModel::~AccountModel() {
 void AccountModel::onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
                                               linphone::RegistrationState state,
                                               const std::string &message) {
+	if (state == linphone::RegistrationState::Cleared) {
+		qDebug() << log().arg("Account removed");
+		auto authInfo = mMonitor->findAuthInfo();
+		if (authInfo) {
+			CoreModel::getInstance()->getCore()->removeAuthInfo(authInfo);
+		}
+		removeUserData(mMonitor);
+		emit removed();
+	}
 	emit registrationStateChanged(account, state, message);
 }
 
@@ -92,7 +101,7 @@ void AccountModel::setPictureUri(QString uri) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit pictureUriChanged(uri);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::onDefaultAccountChanged() {
@@ -108,13 +117,10 @@ void AccountModel::setDefault() {
 
 void AccountModel::removeAccount() {
 	auto core = CoreModel::getInstance()->getCore();
-	auto authInfo = mMonitor->findAuthInfo();
-	if (authInfo) {
-		core->removeAuthInfo(authInfo);
-	}
+	qDebug() << log()
+	                .arg("Removing account [%1]")
+	                .arg(mMonitor ? Utils::coreStringToAppString(mMonitor->getContactAddress()->asString()) : "Null");
 	core->removeAccount(mMonitor);
-	removeUserData(mMonitor);
-	emit removed();
 }
 
 std::shared_ptr<linphone::Account> AccountModel::getAccount() const {
@@ -150,7 +156,7 @@ void AccountModel::setDisplayName(QString displayName) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit displayNameChanged(displayName);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::setDialPlan(int index) {

@@ -128,10 +128,14 @@ bool AccountManager::login(QString username,
 	                               const std::string &message) {
 		        if (mAccountModel && account == mAccountModel->getAccount()) {
 			        if (state == linphone::RegistrationState::Failed) {
-				        core->removeAuthInfo(authInfo);
-				        core->removeAccount(account);
-				        emit mAccountModel->removeListener();
-				        mAccountModel = nullptr;
+				        connect(
+				            mAccountModel.get(), &AccountModel::removed, this,
+				            [this]() {
+					            emit mAccountModel->removeListener();
+					            mAccountModel = nullptr;
+				            },
+				            Qt::SingleShotConnection);
+				        mAccountModel->removeAccount();
 			        } else if (state == linphone::RegistrationState::Ok) {
 				        core->setDefaultAccount(account);
 				        emit mAccountModel->removeListener();
