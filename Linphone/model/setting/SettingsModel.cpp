@@ -62,6 +62,13 @@ SettingsModel::SettingsModel() {
 			                 notifyConfigReady();
 		                 }
 	                 });
+	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo
+	// calibrations in call.
+	QObject::connect(CoreModel::getInstance().get(), &CoreModel::firstCallStarted, this,
+	                 [this]() { deleteCaptureGraph(); });
+	QObject::connect(CoreModel::getInstance().get(), &CoreModel::lastCallEnded, this, [this]() {
+		if (mCaptureGraphListenerCount > 0) createCaptureGraph(); // Repair the capture graph
+	});
 }
 
 SettingsModel::~SettingsModel() {
@@ -100,9 +107,12 @@ bool SettingsModel::getIsInCall() const {
 
 void SettingsModel::resetCaptureGraph() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	deleteCaptureGraph();
-	createCaptureGraph();
+	if (mSimpleCaptureGraph) {
+		deleteCaptureGraph();
+		createCaptureGraph();
+	}
 }
+
 void SettingsModel::createCaptureGraph() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mSimpleCaptureGraph =
@@ -110,32 +120,6 @@ void SettingsModel::createCaptureGraph() {
 	                                               Utils::appStringToCoreString(getPlaybackDevice()["id"].toString()));
 	mSimpleCaptureGraph->start();
 	emit captureGraphRunningChanged(getCaptureGraphRunning());
-}
-void SettingsModel::startCaptureGraph() {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	if (!getIsInCall()) {
-		if (!mSimpleCaptureGraph) {
-			qDebug() << "Starting capture graph [" << mCaptureGraphListenerCount << "]";
-			createCaptureGraph();
-		}
-		++mCaptureGraphListenerCount;
-	}
-}
-void SettingsModel::stopCaptureGraph() {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	if (mCaptureGraphListenerCount > 0) {
-		if (--mCaptureGraphListenerCount == 0) {
-			qDebug() << "Stopping capture graph [" << mCaptureGraphListenerCount << "]";
-			deleteCaptureGraph();
-		}
-	}
-}
-void SettingsModel::stopCaptureGraphs() {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	if (mCaptureGraphListenerCount > 0) {
-		mCaptureGraphListenerCount = 0;
-		deleteCaptureGraph();
-	}
 }
 void SettingsModel::deleteCaptureGraph() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
@@ -147,6 +131,34 @@ void SettingsModel::deleteCaptureGraph() {
 		mSimpleCaptureGraph = nullptr;
 	}
 }
+void SettingsModel::stopCaptureGraphs() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (mCaptureGraphListenerCount > 0) {
+		mCaptureGraphListenerCount = 0;
+		deleteCaptureGraph();
+	}
+}
+
+void SettingsModel::startCaptureGraph() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo
+	// calibrations in call.
+	if (!getIsInCall() && !mSimpleCaptureGraph) {
+		qDebug() << log().arg("Starting capture graph [%1]").arg(mCaptureGraphListenerCount);
+		createCaptureGraph();
+	} else qDebug() << log().arg("Adding capture graph reference [%1]").arg(mCaptureGraphListenerCount);
+	++mCaptureGraphListenerCount;
+}
+void SettingsModel::stopCaptureGraph() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (--mCaptureGraphListenerCount == 0) {
+		qDebug() << log().arg("Stopping capture graph [%1]").arg(mCaptureGraphListenerCount);
+		deleteCaptureGraph();
+	} else if (mCaptureGraphListenerCount > 0)
+		qDebug() << log().arg("Removing capture graph reference [%1]").arg(mCaptureGraphListenerCount);
+	else qCritical() << log().arg("Removing too much capture graph reference [%1]").arg(mCaptureGraphListenerCount);
+}
+
 // Force a call on the 'detect' method of all audio filters, updating new or removed devices
 void SettingsModel::accessCallSettings() {
 	// Audio
@@ -161,12 +173,7 @@ void SettingsModel::accessCallSettings() {
 	emit playbackGainChanged(getPlaybackGain());
 	emit captureGainChanged(getCaptureGain());
 
-	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo
-	// calibrations in call.
-	if (!getIsInCall()) {
-		qDebug() << "Starting capture graph from accessing audio panel";
-		startCaptureGraph();
-	}
+	startCaptureGraph();
 	// Video
 	CoreModel::getInstance()->getCore()->reloadVideoDevices();
 	emit videoDevicesChanged(getVideoDevices());
@@ -189,7 +196,13 @@ float SettingsModel::getMicVolume() {
 
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		v = mSimpleCaptureGraph->getCaptureVolume();
+	} else {
+		auto call = CoreModel::getInstance()->getCore()->getCurrentCall();
+		if (call) {
+			v = MediastreamerUtils::computeVu(call->getRecordVolume());
+		}
 	}
+
 	emit micVolumeChanged(v);
 	return v;
 }
