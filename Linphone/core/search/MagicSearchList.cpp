@@ -57,7 +57,8 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 		    auto haveContact =
 		        std::find_if(mList.begin(), mList.end(), [friendCore](const QSharedPointer<QObject> &item) {
 			        auto itemCore = item.objectCast<FriendCore>();
-			        return itemCore->getDefaultAddress() == friendCore->getDefaultAddress() ||
+			        return itemCore->getDefaultAddress().length() > 0 &&
+			                   itemCore->getDefaultAddress() == friendCore->getDefaultAddress() ||
 			               itemCore->getFriendModel()->getFriend() == friendCore->getFriendModel()->getFriend();
 		        });
 		    if (haveContact == mList.end()) {
