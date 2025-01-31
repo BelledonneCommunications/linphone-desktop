@@ -151,8 +151,8 @@ macosx-deploy:
    - rsync -rlv --ignore-existing build/OUTPUT/macos/Packages/Linphone*.dmg $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER
    - |-
      if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
-       rsync -rlv build/OUTPUT/macos/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
-       rsync -rlv build/OUTPUT/macos/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
+       rsync -rlv build/OUTPUT/macos/Packages/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
+       rsync -rlv build/OUTPUT/macos/Packages/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
      fi
 
 
