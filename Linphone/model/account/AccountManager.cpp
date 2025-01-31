@@ -129,9 +129,13 @@ bool AccountManager::login(QString username,
 		        if (mAccountModel && account == mAccountModel->getAccount()) {
 			        if (state == linphone::RegistrationState::Failed) {
 				        connect(
-				            mAccountModel.get(), &AccountModel::removed, this,
+				            mAccountModel.get(), &AccountModel::removedFromCore, this,
 				            [this]() {
-					            emit mAccountModel->removeListener();
+					            auto authInfo = mAccountModel->getMonitor()->findAuthInfo();
+					            if (authInfo) {
+						            qDebug() << log().arg("Removing auth info after failing to connect on login");
+						            CoreModel::getInstance()->getCore()->removeAuthInfo(authInfo);
+					            }
 					            mAccountModel = nullptr;
 				            },
 				            Qt::SingleShotConnection);

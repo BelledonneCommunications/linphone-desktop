@@ -109,6 +109,7 @@ signals:
 	void audioVideoConferenceFactoryAddressChanged(QString value);
 	void limeServerUrlChanged(QString value);
 	void removed();
+	void removedFromCore();
 	void voicemailCountChanged(int count);
 	void showMwiChanged(bool show);
 	void voicemailAddressChanged(QString value);

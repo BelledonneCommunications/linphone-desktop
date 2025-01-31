@@ -248,7 +248,7 @@ ParticipantGui *ConferenceCore::getMeGui() const {
 void ConferenceCore::setActiveSpeakerDevice(const QSharedPointer<ParticipantDeviceCore> &device) {
 	if (mActiveSpeakerDevice != device) {
 		mActiveSpeakerDevice = device;
-		log().arg("Changing active speaker device to ").arg(device ? device->getAddress() : "None");
+		qDebug() << log().arg("Changing active speaker device to %1").arg(device ? device->getAddress() : "None");
 		emit activeSpeakerDeviceChanged();
 	}
 }
@@ -256,7 +256,7 @@ void ConferenceCore::setActiveSpeakerDevice(const QSharedPointer<ParticipantDevi
 void ConferenceCore::setActiveSpeaker(const QSharedPointer<ParticipantCore> &participant) {
 	if (mActiveSpeaker != participant) {
 		mActiveSpeaker = participant;
-		log().arg("Changing active speaker to ").arg(participant ? participant->getSipAddress() : "None");
+		qDebug() << log().arg("Changing active speaker to %1").arg(participant ? participant->getSipAddress() : "None");
 		emit activeSpeakerChanged();
 	}
 }

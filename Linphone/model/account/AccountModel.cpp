@@ -46,6 +46,10 @@ AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QO
 		emit unreadNotificationsChanged(0 /*mMonitor->getUnreadChatMessageCount()*/,
 		                                mMonitor->getMissedCallsCount()); // TODO
 	});
+	connect(CoreModel::getInstance().get(), &CoreModel::accountRemoved, this,
+	        [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
+		        if (account == mMonitor) emit removedFromCore();
+	        });
 }
 
 AccountModel::~AccountModel() {
@@ -117,10 +121,11 @@ void AccountModel::setDefault() {
 
 void AccountModel::removeAccount() {
 	auto core = CoreModel::getInstance()->getCore();
+	auto params = mMonitor ? mMonitor->getParams() : nullptr;
 	qDebug() << log()
 	                .arg("Removing account [%1]")
-	                .arg(mMonitor ? Utils::coreStringToAppString(mMonitor->getContactAddress()->asString()) : "Null");
-	core->removeAccount(mMonitor);
+	                .arg(params ? Utils::coreStringToAppString(params->getIdentityAddress()->asString()) : "Null");
+	if (mMonitor) core->removeAccount(mMonitor);
 }
 
 std::shared_ptr<linphone::Account> AccountModel::getAccount() const {
