@@ -132,12 +132,14 @@ AbstractSettingsLayout {
 		id: audioCodecsComponent
 		ColumnLayout {
 			spacing: 20 * DefaultStyle.dp
-			Repeater {
+			ListView {
+				Layout.preferredHeight: contentHeight
+				Layout.fillWidth: true
 				model: PayloadTypeProxy {
 					filterType: PayloadTypeProxy.Audio | PayloadTypeProxy.NotDownloadable
 				}
-				SwitchSetting {
-					Layout.fillWidth: true
+				delegate: SwitchSetting {
+					width: parent.width
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.clockRate + " Hz"
 					propertyName: "enabled"
