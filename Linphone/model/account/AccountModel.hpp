@@ -109,7 +109,6 @@ signals:
 	void audioVideoConferenceFactoryAddressChanged(QString value);
 	void limeServerUrlChanged(QString value);
 	void removed();
-	void removedFromCore();
 	void voicemailCountChanged(int count);
 	void showMwiChanged(bool show);
 	void voicemailAddressChanged(QString value);
@@ -127,6 +126,8 @@ private:
 	static void setUserData(const std::shared_ptr<linphone::Account> &account, std::shared_ptr<AccountUserData> &data);
 	static std::shared_ptr<AccountUserData> getUserData(const std::shared_ptr<linphone::Account> &account);
 	static void removeUserData(const std::shared_ptr<linphone::Account> &account);
+
+	bool mToRemove = false;
 
 	DECLARE_ABSTRACT_OBJECT
 };

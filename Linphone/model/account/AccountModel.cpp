@@ -48,7 +48,18 @@ AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QO
 	});
 	connect(CoreModel::getInstance().get(), &CoreModel::accountRemoved, this,
 	        [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
-		        if (account == mMonitor) emit removedFromCore();
+		        if (account == mMonitor) {
+			        if (mToRemove && account->getState() == linphone::RegistrationState::None) {
+				        lInfo() << log().arg("Disabled account removed");
+				        auto authInfo = mMonitor->findAuthInfo();
+				        if (authInfo) {
+					        lInfo() << log().arg("Removing authinfo for disabled account");
+					        CoreModel::getInstance()->getCore()->removeAuthInfo(authInfo);
+				        }
+				        removeUserData(mMonitor);
+				        emit removed();
+			        }
+		        }
 	        });
 }
 
@@ -59,10 +70,13 @@ AccountModel::~AccountModel() {
 void AccountModel::onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
                                               linphone::RegistrationState state,
                                               const std::string &message) {
-	if (state == linphone::RegistrationState::Cleared) {
-		qDebug() << log().arg("Account removed");
+	// Cleared and None are the last state on processes after being change. Check for accountRemoved for account that
+	// was not registered.
+	if (mToRemove && (state == linphone::RegistrationState::Cleared || state == linphone::RegistrationState::None)) {
+		lInfo() << log().arg("Account removed on state [%1]").arg((int)state);
 		auto authInfo = mMonitor->findAuthInfo();
 		if (authInfo) {
+			lInfo() << log().arg("Removing authinfo");
 			CoreModel::getInstance()->getCore()->removeAuthInfo(authInfo);
 		}
 		removeUserData(mMonitor);
@@ -122,11 +136,13 @@ void AccountModel::setDefault() {
 void AccountModel::removeAccount() {
 	auto core = CoreModel::getInstance()->getCore();
 	auto params = mMonitor ? mMonitor->getParams() : nullptr;
-	qDebug() << log()
-	                .arg("Removing account [%1]")
-	                .arg(params && params->getIdentityAddress()
-	                         ? Utils::coreStringToAppString(params->getIdentityAddress()->asString())
-	                         : "Null");
+	lInfo() << log()
+	               .arg("Removing account [%1]")
+	               .arg(params && params->getIdentityAddress()
+	                        ? Utils::coreStringToAppString(params->getIdentityAddress()->asString())
+	                        : "Null");
+	mToRemove = true;
+	if (mMonitor) core->removeAccount(mMonitor);
 }
 
 std::shared_ptr<linphone::Account> AccountModel::getAccount() const {
