@@ -131,15 +131,16 @@ AbstractSettingsLayout {
 	Component {
 		id: audioCodecsComponent
 		ColumnLayout {
-			spacing: 20 * DefaultStyle.dp
 			ListView {
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
+				spacing: 20 * DefaultStyle.dp
 				model: PayloadTypeProxy {
 					filterType: PayloadTypeProxy.Audio | PayloadTypeProxy.NotDownloadable
 				}
 				delegate: SwitchSetting {
 					width: parent.width
+					height: 32 * DefaultStyle.dp
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.clockRate + " Hz"
 					propertyName: "enabled"
@@ -155,16 +156,17 @@ AbstractSettingsLayout {
 	Component {
 		id: videoCodecsComponent
 		ColumnLayout {
-			spacing: 20 * DefaultStyle.dp
 			ListView {
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
+				spacing: 20 * DefaultStyle.dp
 				model: PayloadTypeProxy {
 					id: videoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.NotDownloadable
 				}
 				delegate: SwitchSetting {
 					width: parent.width
+					height: 32 * DefaultStyle.dp
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
 					propertyName: "enabled"
@@ -174,12 +176,14 @@ AbstractSettingsLayout {
 			ListView {
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
+				spacing: 20 * DefaultStyle.dp
 				model: PayloadTypeProxy {
 					id: downloadableVideoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.Downloadable
 				}
 				delegate: SwitchSetting {
 					width: parent.width
+					height: 32 * DefaultStyle.dp
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
 					onCheckedChanged: Utils.openCodecOnlineInstallerDialog(
