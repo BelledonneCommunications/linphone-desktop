@@ -866,6 +866,15 @@ void App::setMainWindow(QQuickWindow *data) {
 	}
 }
 
+QQuickWindow *App::getLastActiveWindow() const {
+	return mLastActiveWindow;
+}
+void App::setLastActiveWindow(QQuickWindow *data) {
+	if (mLastActiveWindow != data) {
+		mLastActiveWindow = data;
+	}
+}
+
 QSharedPointer<AccountList> App::getAccountList() const {
 	return mAccountList;
 }
@@ -1059,7 +1068,7 @@ bool App::event(QEvent *event) {
 		receivedMessage(0, url.toLocal8Bit());
 	} else if (event->type() == QEvent::ApplicationStateChange) {
 		auto state = static_cast<QApplicationStateChangeEvent *>(event);
-		if (state->applicationState() == Qt::ApplicationActive) Utils::smartShowWindow(getMainWindow());
+		if (state->applicationState() == Qt::ApplicationActive) Utils::smartShowWindow(getLastActiveWindow());
 	}
 
 	return SingleApplication::event(event);

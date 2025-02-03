@@ -75,6 +75,8 @@ public:
 	Q_INVOKABLE static void setupConference(ConferenceInfoGui *confGui);
 	Q_INVOKABLE static QQuickWindow *getMainWindow();
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
+	Q_INVOKABLE static QQuickWindow *getLastActiveWindow();
+	Q_INVOKABLE static void setLastActiveWindow(QQuickWindow *data);
 	Q_INVOKABLE static void showInformationPopup(const QString &title,
 	                                             const QString &description,
 	                                             bool isSuccess = true,

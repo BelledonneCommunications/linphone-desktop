@@ -212,6 +212,13 @@ QQuickWindow *Utils::getMainWindow() {
 	return win;
 }
 
+QQuickWindow *Utils::getLastActiveWindow() {
+	return App::getInstance()->getLastActiveWindow();
+}
+void Utils::setLastActiveWindow(QQuickWindow *data) {
+	App::getInstance()->setLastActiveWindow(data);
+}
+
 void Utils::showInformationPopup(const QString &title,
                                  const QString &description,
                                  bool isSuccess,
@@ -239,6 +246,7 @@ void Utils::smartShowWindow(QQuickWindow *window) {
 	if (window->visibility() == QWindow::Maximized) // Avoid to change visibility mode
 		window->showNormal();
 	else window->show();
+	App::getInstance()->setLastActiveWindow(window);
 	window->raise(); // Raise ensure to get focus on Mac
 	window->requestActivate();
 }

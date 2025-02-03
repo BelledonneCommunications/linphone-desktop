@@ -131,6 +131,9 @@ public:
 
 	QQuickWindow *getMainWindow() const;
 	void setMainWindow(QQuickWindow *data);
+	QQuickWindow *getLastActiveWindow() const;
+	void setLastActiveWindow(QQuickWindow *data);
+
 	QSharedPointer<AccountList> getAccountList() const;
 	void setAccountList(QSharedPointer<AccountList> data);
 	Q_INVOKABLE AccountList *getAccounts() const;
@@ -182,6 +185,7 @@ private:
 	QSystemTrayIcon *mSystemTrayIcon = nullptr;
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;
+	QQuickWindow *mLastActiveWindow = nullptr;
 	QSharedPointer<SettingsCore> mSettings;
 	QSharedPointer<AccountList> mAccountList;
 	QSharedPointer<CallList> mCallList;
