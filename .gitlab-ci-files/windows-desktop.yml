@@ -51,6 +51,8 @@
     - Write-Output $SET_EXIT_CODE_BASED_ON_SEARCH_STATUS
     - Write-Output $SHOW_SEARCH_STATUS_SCRIPT
     - Write-Output $LAUNCH_SEARCH_STATUS_SCRIPT
+    - Write-Output $MAKE_RELEASE_FILE_URL
+    - Write-Output $RELEASE_FILE
     #We are forced to use Invoke-Expression to explain to powershell that we don't want it to touch to spaces in arguments
     #If we don't use it, '-A Win32' will be interpreted as "-A ' Win32'" thus making the build fail
     - echo $LastExitCode
