@@ -47,7 +47,9 @@ ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::Par
 		auto deviceAddress = device->getAddress();
 		mUniqueAddress = Utils::coreStringToAppString(deviceAddress->asString());
 		mAddress = Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
-		mDisplayName = Utils::coreStringToAppString(deviceAddress->getDisplayName());
+		// the display name of the device himself may be the uncleaned sip uri
+		// Use the participant name instead
+		mDisplayName = Utils::coreStringToAppString(device->getParticipant()->getAddress()->getDisplayName());
 		if (mDisplayName.isEmpty()) {
 			mDisplayName = ToolModel::getDisplayName(mAddress);
 		}

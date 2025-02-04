@@ -48,7 +48,6 @@ public:
 	Q_PROPERTY(bool isScreenSharingEnabled MEMBER mIsScreenSharingEnabled WRITE setIsScreenSharingEnabled NOTIFY
 	               isScreenSharingEnabledChanged)
 	Q_PROPERTY(int participantDeviceCount READ getParticipantDeviceCount NOTIFY participantDeviceCountChanged)
-	Q_PROPERTY(ParticipantGui *activeSpeaker READ getActiveSpeakerGui NOTIFY activeSpeakerChanged)
 	Q_PROPERTY(
 	    ParticipantDeviceGui *activeSpeakerDevice READ getActiveSpeakerDeviceGui NOTIFY activeSpeakerDeviceChanged)
 	Q_PROPERTY(ParticipantGui *me READ getMeGui)
@@ -73,9 +72,7 @@ public:
 
 	ParticipantDeviceCore *getActiveSpeakerDevice() const;
 	ParticipantDeviceGui *getActiveSpeakerDeviceGui() const;
-	ParticipantGui *getActiveSpeakerGui() const;
 	void setActiveSpeakerDevice(const QSharedPointer<ParticipantDeviceCore> &device);
-	void setActiveSpeaker(const QSharedPointer<ParticipantCore> &participant);
 	ParticipantGui *getMeGui() const;
 
 	void setIsReady(bool state);
@@ -92,7 +89,6 @@ signals:
 	void isLocalScreenSharingChanged();
 	void isScreenSharingEnabledChanged();
 	void participantDeviceCountChanged();
-	void activeSpeakerChanged();
 	void activeSpeakerDeviceChanged();
 	void subjectChanged();
 	void isRecordingChanged();
@@ -102,7 +98,6 @@ signals:
 private:
 	QSharedPointer<SafeConnection<ConferenceCore, ConferenceModel>> mConferenceModelConnection;
 	std::shared_ptr<ConferenceModel> mConferenceModel;
-	QSharedPointer<ParticipantCore> mActiveSpeaker;
 	QSharedPointer<ParticipantDeviceCore> mActiveSpeakerDevice;
 	QSharedPointer<ParticipantCore> mMe;
 	int mParticipantDeviceCount = 0;

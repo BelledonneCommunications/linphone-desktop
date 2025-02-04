@@ -132,30 +132,6 @@ VariantObject *Utils::findLocalAccountByAddress(const QString &address) {
 	return data;
 }
 
-VariantObject *Utils::findParticipantFromDevice(QString conferenceAddress, QString deviceAddress) {
-	VariantObject *data = new VariantObject("findParticipantFromDevice");
-	if (!data) return nullptr;
-	data->makeRequest([conferenceAddress, deviceAddress]() {
-		auto linCall = ToolModel::getCallByRemoteAddress(conferenceAddress);
-		if (linCall) {
-			auto linConf = linCall->getConference();
-			if (linConf) {
-				auto linAddress = ToolModel::interpretUrl(deviceAddress);
-				if (linAddress) {
-					auto participant = linConf->findParticipant(linAddress);
-					if (participant) {
-						auto participantCore = ParticipantCore::create(participant);
-						return QVariant::fromValue(new ParticipantGui(participantCore));
-					}
-				}
-			}
-		}
-		return QVariant();
-	});
-	data->requestValue();
-	return data;
-}
-
 void Utils::createCall(const QString &sipAddress,
                        QVariantMap options,
                        LinphoneEnums::MediaEncryption mediaEncryption,

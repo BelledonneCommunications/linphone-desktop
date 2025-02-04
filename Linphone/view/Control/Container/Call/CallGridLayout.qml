@@ -45,12 +45,11 @@ Mosaic {
 				anchors.fill: parent
 				qmlName: 'G_'+index
 				call: grid.call && !grid.call.core.isConference ? grid.call : null
-				account: index == 0 ? accountProxy.findAccountByAddress(mainItem.localAddress) : null
+				property var accountObj: UtilsCpp.findLocalAccountByAddress(mainItem.localAddress)
+				account: (index == 0 && accountObj) ? accountObj.value : null
 				displayAll: false
 				displayPresence: false
 				participantDevice: avatarCell.currentDevice
-				property var participantObj: (mainItem.call && avatarCell.currentDevice) ? UtilsCpp.findParticipantFromDevice(mainItem.call.core.remoteAddress, avatarCell.currentDevice.core.address) : null
-				participant: participantObj ? participantObj.value : null
 				Component.onCompleted: console.log(qmlName + " is " +(call ? call.core.remoteAddress : currentDevice ? currentDevice.core.address : 'addr_NotDefined'))
 			}
 		}

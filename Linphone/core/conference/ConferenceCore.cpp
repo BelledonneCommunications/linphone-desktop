@@ -43,8 +43,6 @@ ConferenceCore::ConferenceCore(const std::shared_ptr<linphone::Conference> &conf
 	auto activeSpeaker = conference->getActiveSpeakerParticipantDevice();
 	if (activeSpeaker) {
 		mActiveSpeakerDevice = ParticipantDeviceCore::create(activeSpeaker);
-		auto participant = conference->findParticipant(activeSpeaker->getAddress());
-		if (participant) mActiveSpeaker = ParticipantCore::create(participant);
 	}
 	mIsLocalScreenSharing = mConferenceModel->isLocalScreenSharing();
 	mIsScreenSharingEnabled = mConferenceModel->isScreenSharingEnabled();
@@ -66,15 +64,7 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 	    [this](const std::shared_ptr<linphone::Conference> &conference,
 	           const std::shared_ptr<linphone::ParticipantDevice> &participantDevice) {
 		    auto device = ParticipantDeviceCore::create(participantDevice);
-		    QSharedPointer<ParticipantCore> participantCore;
-		    if (participantDevice) {
-			    auto participant = conference->findParticipant(participantDevice->getAddress());
-			    if (participant) participantCore = ParticipantCore::create(participant);
-		    }
-		    mConferenceModelConnection->invokeToCore([this, device, participantCore]() {
-			    setActiveSpeaker(participantCore);
-			    setActiveSpeakerDevice(device);
-		    });
+		    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeakerDevice(device); });
 	    });
 
 	mConferenceModelConnection->makeConnectToModel(
@@ -82,27 +72,17 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 	    [this](const std::shared_ptr<linphone::Conference> &conference, linphone::Conference::State newState) {
 		    int count = mConferenceModel->getParticipantDeviceCount();
 		    mConferenceModelConnection->invokeToCore([this, count]() { setParticipantDeviceCount(count); });
-		    if (newState == linphone::Conference::State::Created && !mActiveSpeaker) {
+		    if (newState == linphone::Conference::State::Created) {
 			    if (auto participantDevice = conference->getActiveSpeakerParticipantDevice()) {
 				    auto device = ParticipantDeviceCore::create(participantDevice);
-				    QSharedPointer<ParticipantCore> participantCore;
-				    auto participant = conference->findParticipant(participantDevice->getAddress());
-				    if (participant) participantCore = ParticipantCore::create(participant);
-				    mConferenceModelConnection->invokeToCore([this, device, participantCore]() {
-					    setActiveSpeaker(participantCore);
-					    setActiveSpeakerDevice(device);
-				    });
+				    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeakerDevice(device); });
 			    } else if (conference->getParticipantDeviceList().size() > 1) {
 				    for (auto &device : conference->getParticipantDeviceList()) {
 					    if (!ToolModel::isMe(device->getAddress())) {
 						    auto activeSpeakerDevice = ParticipantDeviceCore::create(device);
-						    QSharedPointer<ParticipantCore> participantCore;
 						    auto participant = conference->findParticipant(device->getAddress());
-						    if (participant) participantCore = ParticipantCore::create(participant);
-						    mConferenceModelConnection->invokeToCore([this, activeSpeakerDevice, participantCore]() {
-							    setActiveSpeaker(participantCore);
-							    setActiveSpeakerDevice(activeSpeakerDevice);
-						    });
+						    mConferenceModelConnection->invokeToCore(
+						        [this, activeSpeakerDevice]() { setActiveSpeakerDevice(activeSpeakerDevice); });
 						    break;
 					    }
 				    }
@@ -115,25 +95,14 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 	    [this](const std::shared_ptr<linphone::Conference> &conference, int count) {
 		    if (auto participantDevice = conference->getActiveSpeakerParticipantDevice()) {
 			    auto device = ParticipantDeviceCore::create(participantDevice);
-			    QSharedPointer<ParticipantCore> participantCore;
-			    auto participant = conference->findParticipant(participantDevice->getAddress());
-			    if (participant) participantCore = ParticipantCore::create(participant);
 			    setActiveSpeakerDevice(device);
-			    mConferenceModelConnection->invokeToCore([this, device, participantCore]() {
-				    setActiveSpeaker(participantCore);
-				    setActiveSpeakerDevice(device);
-			    });
+			    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeakerDevice(device); });
 		    } else if (conference->getParticipantDeviceList().size() > 1) {
 			    for (auto &device : conference->getParticipantDeviceList()) {
 				    if (!ToolModel::isMe(device->getAddress())) {
 					    auto activeSpeaker = ParticipantDeviceCore::create(device);
-					    QSharedPointer<ParticipantCore> participantCore;
-					    auto participant = conference->findParticipant(device->getAddress());
-					    if (participant) participantCore = ParticipantCore::create(participant);
-					    mConferenceModelConnection->invokeToCore([this, activeSpeaker, participantCore]() {
-						    setActiveSpeaker(participantCore);
-						    setActiveSpeakerDevice(activeSpeaker);
-					    });
+					    mConferenceModelConnection->invokeToCore(
+					        [this, activeSpeaker]() { setActiveSpeakerDevice(activeSpeaker); });
 					    break;
 				    }
 			    }
@@ -233,10 +202,6 @@ ParticipantDeviceCore *ConferenceCore::getActiveSpeakerDevice() const {
 	return mActiveSpeakerDevice.get();
 }
 
-ParticipantGui *ConferenceCore::getActiveSpeakerGui() const {
-	return mActiveSpeaker ? new ParticipantGui(mActiveSpeaker) : nullptr;
-}
-
 ParticipantDeviceGui *ConferenceCore::getActiveSpeakerDeviceGui() const {
 	return mActiveSpeakerDevice ? new ParticipantDeviceGui(mActiveSpeakerDevice) : nullptr;
 }
@@ -250,13 +215,5 @@ void ConferenceCore::setActiveSpeakerDevice(const QSharedPointer<ParticipantDevi
 		mActiveSpeakerDevice = device;
 		qDebug() << log().arg("Changing active speaker device to %1").arg(device ? device->getAddress() : "None");
 		emit activeSpeakerDeviceChanged();
-	}
-}
-
-void ConferenceCore::setActiveSpeaker(const QSharedPointer<ParticipantCore> &participant) {
-	if (mActiveSpeaker != participant) {
-		mActiveSpeaker = participant;
-		qDebug() << log().arg("Changing active speaker to %1").arg(participant ? participant->getSipAddress() : "None");
-		emit activeSpeakerChanged();
 	}
 }

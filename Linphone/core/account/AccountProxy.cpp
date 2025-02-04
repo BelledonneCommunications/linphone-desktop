@@ -45,12 +45,6 @@ void AccountProxy::resetDefaultAccount() {
 	emit this->defaultAccountChanged(); // Warn the UI
 }
 
-AccountGui *AccountProxy::findAccountByAddress(const QString &address) {
-	auto model = getListModel<AccountList>();
-	if (model) return new AccountGui(model->findAccountByAddress(address));
-	else return nullptr;
-}
-
 AccountGui *AccountProxy::firstAccount() {
 	auto model = getListModel<AccountList>();
 	if (model) return model->firstAccount();

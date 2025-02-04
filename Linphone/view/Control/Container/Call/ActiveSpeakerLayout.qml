@@ -43,7 +43,6 @@ Item {
 			call: mainItem.call
 			displayAll: !mainItem.conference
 			participantDevice: mainItem.conference && mainItem.conference.core.activeSpeakerDevice
-			participant: mainItem.conference && mainItem.conference.core.activeSpeaker
 			property var address: participantDevice && participantDevice.core.address
 			videoEnabled: (participantDevice && participantDevice.core.videoEnabled) || (!participantDevice && call && call.core.remoteVideoEnabled)
 			qmlName: 'AS'
@@ -78,8 +77,6 @@ Item {
 					anchors.bottomMargin: 15 * DefaultStyle.dp// Spacing
 					qmlName: 'S_'+index
 					visible: parent.visible
-					property var participantObj: mainItem.call && $modelData ? UtilsCpp.findParticipantFromDevice(mainItem.call.core.remoteAddress, $modelData.core.address) : null
-					participant: participantObj ? participantObj.value : null
 					participantDevice: $modelData
 					displayAll: false
 					displayPresence: false
