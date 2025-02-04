@@ -674,19 +674,20 @@ AbstractWindow {
 			}
 			Component {
 				id: dialerPanel
-				ColumnLayout {
+				Item {
 					id: dialerPanelContent
 					Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Dialer")
-					spacing: 0
+					anchors.top: parent.top
+					anchors.bottom: parent.bottom
 					Keys.onEscapePressed: (event) => {
 						rightPanel.visible = false
 						event.accepted = true
 					}
-					Item{Layout.fillHeight: true}
 					SearchBar {
-						Layout.fillWidth: true
-						Layout.leftMargin: 10 * DefaultStyle.dp
-						Layout.rightMargin: 10 * DefaultStyle.dp
+						anchors.leftMargin: 10 * DefaultStyle.dp
+						anchors.rightMargin: 10 * DefaultStyle.dp
+						anchors.bottom: numPad.top
+						anchors.bottomMargin: 41 * DefaultStyle.dp
 						magnifierVisible: false
 						color: DefaultStyle.grey_0
 						borderColor: DefaultStyle.grey_200
@@ -697,11 +698,11 @@ AbstractWindow {
 					}
 					NumericPad {
 						id: numPad
-						Layout.alignment: Qt.AlignHCenter
+						anchors.horizontalCenter: parent.horizontalCenter
+						anchors.bottom: parent.bottom
 						currentCall: callsModel.currentCall
 						lastRowVisible: false
-						Layout.topMargin: 41 * DefaultStyle.dp
-						Layout.bottomMargin: 18 * DefaultStyle.dp
+						anchors.bottomMargin: 18 * DefaultStyle.dp
 						onLaunchCall: {
 							UtilsCpp.createCall(dialerTextInput.text)
 						}
