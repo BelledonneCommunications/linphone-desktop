@@ -204,6 +204,7 @@ void AccountModel::setRegisterEnabled(bool enabled) {
 	auto params = mMonitor->getParams()->clone();
 	params->enableRegister(enabled);
 	mMonitor->setParams(params);
+	if (enabled) mMonitor->refreshRegister();
 	emit registerEnabledChanged(enabled);
 }
 
