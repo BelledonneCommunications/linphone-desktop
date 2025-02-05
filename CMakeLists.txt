@@ -114,7 +114,7 @@ endif ()
 
 #------------------------------------------------------------------------------
 # Prepare gobal CMAKE configuration specific to the current project
-
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)#Needed for Qt
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/OUTPUT" CACHE PATH "Default linphone-app installation prefix" FORCE)
 	set(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT FALSE)

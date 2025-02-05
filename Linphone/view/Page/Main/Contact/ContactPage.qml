@@ -441,7 +441,7 @@ AbstractMainPage {
 									clip: true
 									spacing: 9 * DefaultStyle.dp
 									model: VariantList {
-										model:  mainItem.selectedContact ? mainItem.selectedContact.core.allAddresses : []
+										model:  (mainItem.selectedContact ? UtilsCpp.append(mainItem.selectedContact.core.addresses, mainItem.selectedContact.core.phoneNumbers): [])
 									}
 									delegate: Item {
 										property var listViewModelData: modelData

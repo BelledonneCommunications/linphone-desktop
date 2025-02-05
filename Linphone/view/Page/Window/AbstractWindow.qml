@@ -74,7 +74,7 @@ ApplicationWindow {
                 spacing: 5 * DefaultStyle.dp
                 width: startCallPopup.width
                 Text {
-                    text: qsTr("Quelle addresse souhaitez-vous appeler ?")
+                    text: qsTr("Quelle adresse souhaitez-vous appeler ?")
                     wrapMode: Text.Wrap
                     Layout.fillWidth: true
                     font {

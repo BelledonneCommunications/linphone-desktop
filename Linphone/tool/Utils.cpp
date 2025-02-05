@@ -1412,6 +1412,10 @@ QString Utils::getFileChecksum(const QString &filePath) {
 	return QString();
 }
 
+QList<QVariant> Utils::append(const QList<QVariant> a, const QList<QVariant> b) {
+	return a + b;
+}
+
 // Codecs download
 
 QList<QSharedPointer<DownloadablePayloadTypeCore>> Utils::getDownloadableVideoPayloadTypes() {

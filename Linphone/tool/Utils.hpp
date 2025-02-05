@@ -135,6 +135,7 @@ public:
 	Q_INVOKABLE bool isInteger(const QString &text);
 	Q_INVOKABLE QString boldTextPart(const QString &text, const QString &regex);
 	Q_INVOKABLE static QString getFileChecksum(const QString &filePath);
+	Q_INVOKABLE QList<QVariant> append(const QList<QVariant> a, const QList<QVariant> b);
 
 	static QString getApplicationProduct();
 	static QString getOsProduct();

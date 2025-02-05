@@ -69,9 +69,10 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		// lDebug() << mDefaultAddress << " / " << mDefaultFullAddress;
 		auto phoneNumbers = contact->getPhoneNumbersWithLabel();
 		for (auto &phoneNumber : phoneNumbers) {
+			auto label = Utils::coreStringToAppString(phoneNumber->getLabel());
+			if (label.isEmpty()) label = _phoneLabel;
 			mPhoneNumberList.append(
-			    Utils::createFriendAddressVariant(Utils::coreStringToAppString(phoneNumber->getLabel()),
-			                                      Utils::coreStringToAppString(phoneNumber->getPhoneNumber())));
+			    Utils::createFriendAddressVariant(label, Utils::coreStringToAppString(phoneNumber->getPhoneNumber())));
 		}
 
 		auto devices = contact->getDevices();
@@ -429,8 +430,19 @@ void FriendCore::resetAddresses(QList<QVariant> newList) {
 	emit addressChanged();
 }
 
+// Display all sip addresses and remove phone numbers duplicates (priority on sip)
 QList<QVariant> FriendCore::getAllAddresses() const {
-	return mAddressList + mPhoneNumberList;
+	QList<QVariant> addresses;
+	auto addressIt = mAddressList.begin();
+	auto phoneNumbers = mPhoneNumberList;
+	while (addressIt != mAddressList.end()) {
+		auto username = Utils::getUsername(addressIt->toMap()["address"].toString());
+		std::remove_if(phoneNumbers.begin(), phoneNumbers.end(),
+		               [username](const QVariant &data) { return data.toMap()["address"].toString() == username; });
+		++addressIt;
+	}
+	addresses << phoneNumbers;
+	return addresses;
 }
 
 QList<QVariant> FriendCore::getDevices() const {
