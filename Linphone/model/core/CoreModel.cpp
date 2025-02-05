@@ -104,11 +104,6 @@ void CoreModel::start() {
 		if (ldapFriendList) mCore->removeFriendList(ldapFriendList);
 	}
 	mCore->enableFriendListSubscription(true);
-	// TODO : get this from settings
-	auto videoPolicy = mCore->getVideoActivationPolicy()->clone();
-	videoPolicy->setAutomaticallyAccept(true);
-	videoPolicy->setAutomaticallyInitiate(false);
-	mCore->setVideoActivationPolicy(videoPolicy);
 	if (mCore->getLogCollectionUploadServerUrl().empty())
 		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
 	mIterateTimer->start();
@@ -242,25 +237,98 @@ void CoreModel::migrate() {
 	int rcVersion = config->getInt(SettingsModel::UiSection, Constants::RcVersionName, 0);
 	if (rcVersion == Constants::RcVersionCurrent) return;
 	if (rcVersion > Constants::RcVersionCurrent) {
-		qWarning() << QStringLiteral("RC file version (%1) is more recent than app rc file version (%2)!!!")
+		lWarning() << log()
+		                  .arg("RC file version (%1) is more recent than app rc file version (%2)!!!")
 		                  .arg(rcVersion)
 		                  .arg(Constants::RcVersionCurrent);
 		return;
 	}
 
-	qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).").arg(rcVersion).arg(Constants::RcVersionCurrent);
+	lInfo() << log().arg("Migrate from old rc file (%1 to %2).").arg(rcVersion).arg(Constants::RcVersionCurrent);
+	bool setLimeServerUrl = false;
 	for (const auto &account : mCore->getAccountList()) {
 		auto params = account->getParams();
+		auto newParams = params->clone();
+		QString accountIdentity =
+		    (newParams->getIdentityAddress() ? newParams->getIdentityAddress()->asString().c_str() : "no-identity");
 		if (params->getDomain() == Constants::LinphoneDomain) {
-			auto newParams = params->clone();
-			QString accountIdentity =
-			    (newParams->getIdentityAddress() ? newParams->getIdentityAddress()->asString().c_str() : "no-identity");
 			if (rcVersion < 1) {
-				newParams->setLimeAlgo("c25519");
-				qInfo() << "Migrating" << accountIdentity << "for version 1. lime algo = c25519";
+				newParams->setContactParameters(Constants::DefaultContactParameters);
+				newParams->setExpires(Constants::DefaultExpires);
+				lInfo() << log().arg("Migrating") << accountIdentity
+				        << "for version 1. contact parameters =" << Constants::DefaultContactParameters
+				        << ", expires =" << Constants::DefaultExpires;
 			}
-			account->setParams(newParams);
+			if (rcVersion < 2) {
+				bool exists = newParams->getConferenceFactoryUri() != "";
+				setLimeServerUrl = true;
+				if (!exists) {
+					newParams->setConferenceFactoryAddress(ToolModel::interpretUrl(Constants::DefaultConferenceURI));
+				}
+				lInfo() << log().arg("Migrating") << accountIdentity << "for version 2. Conference factory URI"
+				        << (exists ? std::string("unchanged") : std::string("= ") + Constants::DefaultConferenceURI)
+				               .c_str();
+				// note: using std::string.c_str() to avoid having double quotes in qInfo()
+			}
+			if (rcVersion < 3) {
+				newParams->enableCpimInBasicChatRoom(true);
+				lInfo() << log().arg("Migrating") << accountIdentity
+				        << "for version 3. Enable Cpim in basic chat rooms";
+			}
+			if (rcVersion < 4) {
+				newParams->enableRtpBundle(true);
+				lInfo() << log().arg("Migrating") << accountIdentity << "for version 4. Enable RTP bundle mode";
+			}
+			if (rcVersion < 5) {
+				bool exists = !!newParams->getAudioVideoConferenceFactoryAddress();
+				setLimeServerUrl = true;
+				if (!exists)
+					newParams->setAudioVideoConferenceFactoryAddress(
+					    ToolModel::interpretUrl(Constants::DefaultVideoConferenceURI));
+				lInfo() << log().arg("Migrating") << accountIdentity << "for version 5. Video conference factory URI"
+				        << (exists ? std::string("unchanged")
+				                   : std::string("= ") + Constants::DefaultVideoConferenceURI)
+				               .c_str();
+				// note: using std::string.c_str() to avoid having double quotes in qInfo()
+			}
+			if (rcVersion < 6) { // Last 5.2 (5.2.6)
+				newParams->setPublishExpires(Constants::DefaultPublishExpires);
+				lInfo() << log().arg("Migrating") << accountIdentity
+				        << "for version 6. publish expires =" << Constants::DefaultPublishExpires;
+			}
+			if (rcVersion < 7) { // First 6.x
+				                 // 6.x reg_route added to use/create-app-sip-account.rc files on 6.x
+				if (newParams->getRoutesAddresses().empty()) {
+					std::list<std::shared_ptr<linphone::Address>> routes;
+					routes.push_back(ToolModel::interpretUrl(Constants::DefaultRouteAddress));
+					newParams->setRoutesAddresses(routes);
+					lInfo() << log().arg("Migrating") << accountIdentity
+					        << "for version 7. Setting route to: " << Constants::DefaultRouteAddress;
+				}
+				// File transfer server URL modified to use/create-app-sip-account.rc files on 6.x
+				if (mCore->getLogCollectionUploadServerUrl() == Constants::RetiredUploadLogsServer) {
+					mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
+					lInfo() << log().arg("Migrating") << accountIdentity
+					        << "for version 7. Setting Log collection upload server rul to: "
+					        << Constants::DefaultUploadLogsServer;
+				}
+			}
 		}
+		if (rcVersion < 7) { // 6.x lime algo c25519 added to all 6.x rc files
+			newParams->setLimeAlgo("c25519");
+			lInfo() << log().arg("Migrating") << accountIdentity << "for version 7. lime algo = c25519";
+		}
+		account->setParams(newParams);
+	}
+
+	if (rcVersion < 7) { // 6.x
+		                 // Video policy added to all 6.x rc files - done via config as API calls only saves config for
+		                 // these when core is ready.
+		if (!config->hasEntry("video", "automatically_accept")) config->setInt("video", "automatically_accept", 1);
+		if (!config->hasEntry("video", "automatically_initiate")) config->setInt("video", "automatically_initiate", 0);
+		if (!config->hasEntry("video", "automatically_accept_direction"))
+			config->setInt("video", "automatically_accept_direction", 2);
+		lInfo() << log().arg("Migrating) Video Policy for version 7.");
 	}
 
 	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);

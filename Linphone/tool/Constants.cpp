@@ -89,6 +89,7 @@ constexpr qint64 Constants::FileSizeLimit;
 
 constexpr char Constants::DefaultXmlrpcUri[];
 constexpr char Constants::DefaultUploadLogsServer[];
+constexpr char Constants::RetiredUploadLogsServer[];
 constexpr char Constants::DefaultConferenceURI[];
 constexpr char Constants::DefaultVideoConferenceURI[];
 constexpr char Constants::DefaultLimeServerURL[];
@@ -97,6 +98,7 @@ constexpr char Constants::RemoteProvisioningURL[];
 constexpr char Constants::DefaultAssistantRegistrationUrl[];
 constexpr char Constants::DefaultAssistantLoginUrl[];
 constexpr char Constants::DefaultAssistantLogoutUrl[];
+constexpr char Constants::DefaultRouteAddress[];
 
 constexpr char Constants::RemoteProvisioningBasicAuth[];
 constexpr char Constants::OAuth2AuthorizationUrl[];

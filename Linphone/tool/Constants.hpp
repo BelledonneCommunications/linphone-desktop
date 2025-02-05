@@ -58,6 +58,7 @@ public:
 	static constexpr char DefaultXmlrpcUri[] = "https://subscribe.linphone.org:444/wizard.php";
 	static constexpr char DefaultUploadLogsServer[] =
 	    "https://files.linphone.org:443/http-file-transfer-server/hft.php";
+	static constexpr char RetiredUploadLogsServer[] = "https://www.linphone.org:444/lft.php";
 	static constexpr char DefaultContactParameters[] = "message-expires=2419200";
 	static constexpr char DefaultContactParametersOnRemove[] = "message-expires=0";
 	static constexpr int DefaultExpires = 600;
@@ -104,6 +105,8 @@ public:
 	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
 	static constexpr char DefaultAssistantLoginUrl[] = "https://subscribe.linphone.org/login";
 	static constexpr char DefaultAssistantLogoutUrl[] = "https://subscribe.linphone.org/logout";
+	static constexpr char DefaultRouteAddress[] = "sip:sip.linphone.org;transport=tls";
+
 	//--------------
 
 	// Max image size in bytes. (1Mb)
@@ -172,7 +175,12 @@ public:
 	static constexpr char VcardScheme[] = EXECUTABLE_NAME "-desktop:/";
 	static constexpr int CbsCallInterval = 20;
 	static constexpr char RcVersionName[] = "rc_version";
-	static constexpr int RcVersionCurrent = 1; // 1 = Lime algo
+	static constexpr int RcVersionCurrent = 7; // 2 = Conference URI
+	                                           // 3 = CPIM on basic chat rooms
+	                                           // 4 = RTP bundle mode
+	                                           // 5 = Video Conference URI
+	                                           // 6 = 5.2.6 Publish expires
+	                                           // 7 = 6.0.0 Lime algo + Video Policy + Routes + Log upload URL
 	static constexpr char DownloadDefaultFileName[] = "download";
 
 //--------------------------------------------------------------------------------
