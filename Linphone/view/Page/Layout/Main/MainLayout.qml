@@ -233,26 +233,26 @@ Item {
 								}
 							}
 							contentItem: AllContactListView {
-									id: contactList
-									visible: !loading && magicSearchBar.text.length != 0
-									Layout.preferredHeight: visible ? contentHeight : 0
-									Layout.fillWidth: true
-									itemsRightMargin: 5 * DefaultStyle.dp	//(Actions have already 10 of margin)
-									showInitials: false
-									showContactMenu: false
-									showActions: true
-									showFavorites: false
-									selectionEnabled: false
-									showDefaultAddress: true
-									searchOnEmpty: false
-									
-									sectionsPixelSize: 13 * DefaultStyle.dp
-									sectionsWeight: 700 * DefaultStyle.dp
-									sectionsSpacing: 5 * DefaultStyle.dp
-									
-									Control.ScrollBar.vertical: scrollbar
-									searchBarText: magicSearchBar.text
-								}
+								id: contactList
+								visible: !loading && magicSearchBar.text.length != 0
+								Layout.preferredHeight: visible ? contentHeight : 0
+								Layout.fillWidth: true
+								itemsRightMargin: 5 * DefaultStyle.dp	//(Actions have already 10 of margin)
+								showInitials: false
+								showContactMenu: false
+								showActions: true
+								showFavorites: false
+								selectionEnabled: false
+								showDefaultAddress: true
+								searchOnEmpty: false
+								
+								sectionsPixelSize: 13 * DefaultStyle.dp
+								sectionsWeight: 700 * DefaultStyle.dp
+								sectionsSpacing: 5 * DefaultStyle.dp
+								
+								Control.ScrollBar.vertical: scrollbar
+								searchBarText: magicSearchBar.text
+							}
 						}
 					}
 					RowLayout {

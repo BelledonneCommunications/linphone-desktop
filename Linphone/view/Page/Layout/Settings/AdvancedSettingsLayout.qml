@@ -156,6 +156,7 @@ AbstractSettingsLayout {
 	Component {
 		id: videoCodecsComponent
 		ColumnLayout {
+			spacing: 20 * DefaultStyle.dp
 			ListView {
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true

@@ -32,7 +32,7 @@ LoginLayout {
 			}
 			EffectImage {
 				fillMode: Image.PreserveAspectFit
-				source: AppIcons.profile
+				imageSource: AppIcons.profile
 				Layout.preferredHeight: 34 * DefaultStyle.dp
 				Layout.preferredWidth: 34 * DefaultStyle.dp
 				colorizationColor: DefaultStyle.main2_600

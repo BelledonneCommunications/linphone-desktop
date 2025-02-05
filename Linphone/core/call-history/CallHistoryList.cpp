@@ -22,6 +22,7 @@
 #include "CallHistoryGui.hpp"
 #include "core/App.hpp"
 #include "model/object/VariantObject.hpp"
+#include "model/tool/ToolModel.hpp"
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
 
@@ -97,6 +98,28 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 			    delete[] callLogs;
 		    });
 	    });
+	mModelConnection->makeConnectToCore(&CallHistoryList::lRemoveEntriesForAddress, [this](QString address) {
+		mModelConnection->invokeToModel([this, address]() {
+			if (auto account = CoreModel::getInstance()->getCore()->getDefaultAccount()) {
+				auto linAddress = ToolModel::interpretUrl(address);
+				if (linAddress) {
+					auto core = CoreModel::getInstance()->getCore();
+					auto accountAddress = account->getParams() ? account->getParams()->getIdentityAddress() : nullptr;
+					if (accountAddress)
+						for (auto &callLog : core->getCallHistory(linAddress, accountAddress)) {
+							core->removeCallLog(callLog);
+						}
+				}
+			}
+		});
+	});
+	mModelConnection->makeConnectToCore(&CallHistoryList::lRemoveAllEntries, [this]() {
+		mModelConnection->invokeToModel([this]() {
+			if (auto account = CoreModel::getInstance()->getCore()->getDefaultAccount()) {
+				account->clearCallLogs();
+			}
+		});
+	});
 	emit lUpdate();
 }
 
@@ -112,6 +135,17 @@ void CallHistoryList::removeAllEntries() {
 	}
 	mList.clear();
 	endResetModel();
+	emit lRemoveAllEntries();
+}
+
+void CallHistoryList::removeEntriesWithFilter(QString filter) {
+	for (auto it = mList.rbegin(); it != mList.rend(); ++it) {
+		auto callHistory = it->objectCast<CallHistoryCore>();
+		if (callHistory->mDisplayName.contains(filter) || callHistory->mRemoteAddress.contains(filter)) {
+			callHistory->remove();
+		}
+	}
+	emit lRemoveEntriesForAddress(filter);
 }
 
 void CallHistoryList::remove(const int &row) {

@@ -38,15 +38,8 @@ void CallHistoryProxy::removeAllEntries() {
 	mHistoryList->removeAllEntries();
 }
 
-void CallHistoryProxy::removeEntriesWithFilter() {
-	QList<QSharedPointer<CallHistoryCore>> itemList(rowCount());
-	for (auto i = rowCount() - 1; i >= 0; --i) {
-		auto item = getItemAt<SortFilterList, CallHistoryList, CallHistoryCore>(i);
-		itemList[i] = item;
-	}
-	for (auto item : itemList) {
-		item->remove();
-	}
+void CallHistoryProxy::removeEntriesWithFilter(QString filter) {
+	mHistoryList->removeEntriesWithFilter(filter);
 }
 
 void CallHistoryProxy::reload() {

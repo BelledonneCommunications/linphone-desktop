@@ -44,6 +44,7 @@ public:
 	void toConnect(CallHistoryCore *data);
 
 	void removeAllEntries();
+	void removeEntriesWithFilter(QString filter);
 	void remove(const int &row);
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -59,6 +60,8 @@ public:
 
 signals:
 	void lUpdate();
+	void lRemoveEntriesForAddress(QString address);
+	void lRemoveAllEntries();
 
 private:
 	// Check the state from CallHistoryCore: sender() must be a CallHistoryCore.
