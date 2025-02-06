@@ -155,6 +155,7 @@ AbstractWindow {
 			onGoBack: openMainPage()
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
 			onGoToRegister: mainWindowStackView.replace(registerPage)
+            Component.onCompleted: if (accountProxy?.haveAccount) showBackButton = true
 			StackView.onActivated:{
 				if (accountProxy?.haveAccount) showBackButton = true
 			}
