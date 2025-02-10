@@ -16,6 +16,7 @@ Loader{
 	property FriendGui contact: null
 	property CallGui call: null
 	property bool isConference: false
+	property bool shadowEnabled: true
 	property string _address: account
 		? account.core?.identityAddress || ""
 		: call
@@ -65,9 +66,11 @@ Loader{
 			anchors.fill: parent
 			
 			MultiEffect {
-				source: stackView
+				visible: mainItem.shadowEnabled
+				enabled: mainItem.shadowEnabled
+				shadowEnabled: mainItem.shadowEnabled
 				anchors.fill: stackView
-				shadowEnabled: true
+				source: stackView
 				shadowBlur: 0.1
 				shadowColor: DefaultStyle.grey_1000
 				shadowOpacity: 0.1

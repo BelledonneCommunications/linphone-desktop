@@ -765,6 +765,7 @@ AbstractMainPage {
 									Layout.preferredWidth: 45 * DefaultStyle.dp
 									Layout.preferredHeight: 45 * DefaultStyle.dp
 									_address: modelData.address
+									shadowEnabled: false
 								}
 								Text {
 									property var displayNameObj: UtilsCpp.getDisplayName(modelData.address)

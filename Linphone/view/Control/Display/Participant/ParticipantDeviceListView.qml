@@ -47,6 +47,7 @@ ListView {
 				Layout.preferredWidth: 45 * DefaultStyle.dp
 				Layout.preferredHeight: 45 * DefaultStyle.dp
 				_address: modelData.core.address
+				shadowEnabled: false
 			}
 			Text {
 				text: modelData.core.displayName

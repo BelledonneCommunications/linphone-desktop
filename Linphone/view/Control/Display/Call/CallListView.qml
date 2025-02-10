@@ -33,6 +33,7 @@ ListView {
 			Layout.preferredHeight: 45 * DefaultStyle.dp
 			_address: modelData.core.remoteAddress
 			isConference: modelData.core.isConference
+			shadowEnabled: false
 		}
 		ColumnLayout {
 			spacing: 0

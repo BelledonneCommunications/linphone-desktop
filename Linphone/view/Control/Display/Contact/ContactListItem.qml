@@ -67,6 +67,7 @@ FocusScope {
 			Layout.preferredHeight: 45 * DefaultStyle.dp
 			Layout.leftMargin: 5 * DefaultStyle.dp
 			contact: searchResultItem
+			shadowEnabled: false
 		}
 		ColumnLayout {
 			spacing: 0

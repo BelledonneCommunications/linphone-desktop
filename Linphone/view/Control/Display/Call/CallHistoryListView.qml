@@ -122,6 +122,7 @@ ListView {
                 width: 45 * DefaultStyle.dp
                 height: 45 * DefaultStyle.dp
                 isConference: modelData.core.isConference
+                shadowEnabled: false
             }
             ColumnLayout {
                 Layout.fillHeight: true

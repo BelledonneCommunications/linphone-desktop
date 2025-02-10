@@ -197,7 +197,7 @@ MainRightPanel {
 						id: givenNameEdit
 						Layout.preferredHeight: 49 * DefaultStyle.dp
 						initialText: contact.core.givenName
-						onTextChanged: {
+						onTextEdited: {
 							contact.core.givenName = givenNameEdit.text
 						}
 						backgroundColor: DefaultStyle.grey_0
@@ -212,7 +212,7 @@ MainRightPanel {
 					contentItem: TextField {
 						id: nameTextField
 						initialText: contact.core.familyName
-						onEditingFinished: contact.core.familyName = text
+						onTextEdited: contact.core.familyName = text
 						backgroundColor: DefaultStyle.grey_0
 						KeyNavigation.up: givenNameEdit
 						KeyNavigation.down: companyTextField
@@ -224,7 +224,7 @@ MainRightPanel {
 					contentItem: TextField {
 						id: companyTextField
 						initialText: contact.core.organization
-						onEditingFinished: contact.core.organization = text
+						onTextEdited: contact.core.organization = text
 						backgroundColor: DefaultStyle.grey_0
 						KeyNavigation.up: nameTextField
 						KeyNavigation.down: jobTextField
@@ -236,7 +236,7 @@ MainRightPanel {
 					contentItem: TextField {
 						id: jobTextField
 						initialText: contact.core.job
-						onEditingFinished: contact.core.job = text
+						onTextEdited: contact.core.job = text
 						backgroundColor: DefaultStyle.grey_0
 						KeyNavigation.up: companyTextField
 						Keys.onPressed: (event) => {
