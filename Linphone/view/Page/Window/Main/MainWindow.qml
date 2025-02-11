@@ -112,9 +112,12 @@ AbstractWindow {
 		active: AppCpp.coreStarted
 		sourceComponent: AccountProxy {
 			sourceModel: AppCpp.accounts
-			onInitializedChanged: {
+			onInitializedChanged: if (isInitialized) {
 				mainWindow.accountProxy = this
 				mainWindow.initStackViewItem()
+			}
+			onHaveAccountChanged: {
+				if (isInitialized) mainWindow.initStackViewItem()
 			}
 		}
 	}
@@ -123,6 +126,10 @@ AbstractWindow {
 		id: mainWindowStackView
 		anchors.fill: parent
 		initialItem: splashScreen
+		Component.onCompleted: {
+			clear()
+			push(splashScreen)
+		}
 	}
 	Component {
 		id: splashScreen
@@ -151,14 +158,10 @@ AbstractWindow {
 		id: loginPage
 		LoginPage {
 			objectName: "loginPage"
-			showBackButton: false
 			onGoBack: openMainPage()
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
 			onGoToRegister: mainWindowStackView.replace(registerPage)
-            Component.onCompleted: if (accountProxy?.haveAccount) showBackButton = true
-			StackView.onActivated:{
-				if (accountProxy?.haveAccount) showBackButton = true
-			}
+			showBackButton: accountProxy?.haveAccount
 		}
 	}
 	Component {
@@ -172,9 +175,7 @@ AbstractWindow {
 					mainWindowStackView.pop()
 			}
 			onGoToRegister: mainWindowStackView.replace(registerPage)
-			StackView.onActivated:{
-				if (!SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin || accountProxy?.haveAccount) showBackButton = true
-			}
+			showBackButton: !SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin || accountProxy?.haveAccount
 		}
 	}
 	Component {
