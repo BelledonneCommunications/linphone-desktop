@@ -444,7 +444,6 @@ AbstractMainPage {
 	Component {
 		id: contactDetailComp
 		FocusScope{
-			objectName: "contactDetailComp"
 			width: parent?.width
 			height: parent?.height
 			CallHistoryLayout {
@@ -453,12 +452,12 @@ AbstractMainPage {
 				anchors.topMargin: 45 * DefaultStyle.dp
 				anchors.bottomMargin: 45 * DefaultStyle.dp
 				visible: mainItem.selectedRowHistoryGui != undefined
+				callHistoryGui: selectedRowHistoryGui
 
 				property var contactObj: UtilsCpp.findFriendByAddress(specificAddress)
 
 				contact: contactObj && contactObj.value || null
-				conferenceInfo: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.conferenceInfo || null
-				specificAddress: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
+				specificAddress: callHistoryGui && callHistoryGui.core.remoteAddress || ""
 
 				buttonContent: PopupButton {
 					id: detailOptions

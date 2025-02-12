@@ -48,7 +48,6 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 
 	auto addr = callLog->getRemoteAddress()->clone();
 	addr->clean();
-	// mRemoteAddress->clean();
 	mStatus = LinphoneEnums::fromLinphone(callLog->getStatus());
 	mDate = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
 	mIsOutgoing = callLog->getDir() == linphone::Call::Dir::Outgoing;
@@ -66,7 +65,9 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 		if (linphoneFriend) {
 			mFriendModel = Utils::makeQObject_ptr<FriendModel>(linphoneFriend);
 			mDisplayName = mFriendModel->getFullName();
-		} else mDisplayName = ToolModel::getDisplayName(Utils::coreStringToAppString(addr->asStringUriOnly()));
+		} else {
+			mDisplayName = ToolModel::getDisplayName(addr);
+		}
 	}
 }
 
@@ -165,7 +166,7 @@ void CallHistoryCore::onRemoved(const std::shared_ptr<linphone::Friend> &updated
 	if (isThisFriend) {
 		mFriendModel = nullptr;
 		mFriendModelConnection = nullptr;
-		mDisplayName = ToolModel::getDisplayName(mRemoteAddress);
+		mDisplayName = ToolModel::getDisplayName(fAddress);
 		emit displayNameChanged();
 		emit friendUpdated();
 	}

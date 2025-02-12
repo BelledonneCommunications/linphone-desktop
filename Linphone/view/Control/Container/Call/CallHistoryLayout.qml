@@ -11,16 +11,18 @@ ColumnLayout {
 	id: mainItem
 	spacing: 30 * DefaultStyle.dp
 
+	property var callHistoryGui
+
 	property FriendGui contact
-	property ConferenceInfoGui conferenceInfo
+	property var conferenceInfo: callHistoryGui?.core.conferenceInfo
 	property bool isConference: conferenceInfo != undefined && conferenceInfo != null
 	property string contactAddress: specificAddress != "" ? specificAddress : contact && contact.core.defaultAddress || ""
 	property var computedContactNameObj: UtilsCpp.getDisplayName(contactAddress)
 	property string computedContactName: computedContactNameObj ? computedContactNameObj.value: ""
 	property string contactName: contact
 		? contact.core.fullName 
-		: conferenceInfo
-			? conferenceInfo.core.subject
+		: callHistoryGui
+			? callHistoryGui.core.displayName
 			: computedContactName
 
 	// Set this property to get the security informations 
@@ -72,9 +74,7 @@ ColumnLayout {
 				height: 100 * DefaultStyle.dp
 				contact: mainItem.contact || null
 				isConference: !!mainItem.conferenceInfo
-				_address: mainItem.conferenceInfo
-					? mainItem.conferenceInfo.core.subject
-					: mainItem.contactAddress || mainItem.contactName
+				displayNameVal: mainItem.contactName
 				secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 			}
 			Item {

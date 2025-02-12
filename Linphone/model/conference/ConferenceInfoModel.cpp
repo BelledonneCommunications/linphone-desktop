@@ -106,7 +106,7 @@ QString ConferenceInfoModel::getOrganizerName() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto organizer = mConferenceInfo->getOrganizer();
 	auto name = Utils::coreStringToAppString(organizer->getDisplayName());
-	if (name.isEmpty()) name = ToolModel::getDisplayName(Utils::coreStringToAppString(organizer->asStringUriOnly()));
+	if (name.isEmpty()) name = ToolModel::getDisplayName(organizer);
 	return name;
 }
 

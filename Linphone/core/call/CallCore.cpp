@@ -125,7 +125,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	if (linphoneFriend)
 		mRemoteName = Utils::coreStringToAppString(
 		    linphoneFriend->getVcard() ? linphoneFriend->getVcard()->getFullName() : linphoneFriend->getName());
-	if (mRemoteName.isEmpty()) mRemoteName = ToolModel::getDisplayName(mRemoteAddress);
+	if (mRemoteName.isEmpty()) mRemoteName = ToolModel::getDisplayName(remoteAddress);
 	mShouldFindRemoteFriend = !linphoneFriend;
 	if (mShouldFindRemoteFriend) {
 		mShouldFindRemoteFriend = CoreModel::getInstance()->getCore()->getRemoteContactDirectories().size() > 0;

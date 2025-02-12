@@ -51,7 +51,7 @@ ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::Par
 		// Use the participant name instead
 		mDisplayName = Utils::coreStringToAppString(device->getParticipant()->getAddress()->getDisplayName());
 		if (mDisplayName.isEmpty()) {
-			mDisplayName = ToolModel::getDisplayName(mAddress);
+			mDisplayName = ToolModel::getDisplayName(deviceAddress);
 		}
 		mIsMuted = device->getIsMuted();
 		mIsSpeaking = device->getIsSpeaking();

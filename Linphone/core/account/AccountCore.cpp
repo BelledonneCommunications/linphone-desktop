@@ -52,7 +52,7 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mUnreadNotifications = account->getMissedCallsCount();
 	mDisplayName = Utils::coreStringToAppString(identityAddress->getDisplayName());
 	if (mDisplayName.isEmpty()) {
-		mDisplayName = ToolModel::getDisplayName(mIdentityAddress);
+		mDisplayName = ToolModel::getDisplayName(identityAddress);
 		identityAddress->setDisplayName(Utils::appStringToCoreString(mDisplayName));
 		params->setIdentityAddress(identityAddress);
 		account->setParams(params);
