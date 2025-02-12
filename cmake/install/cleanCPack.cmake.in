@@ -50,8 +50,8 @@ if(APPLE)
 	
 	# Build dSYM files into package
 	# deploy qt dependencies
-	message(STATUS "Execute : @DEPLOYQT_PROGRAM@ ${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@APPLICATION_NAME@.app -qmldir=@LINPHONE_QML_DIR@ -no-strip -verbose=2 -always-overwrite")
-	execute_process(COMMAND @DEPLOYQT_PROGRAM@ "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@APPLICATION_NAME@.app" "-qmldir=@LINPHONE_QML_DIR@" "-no-strip" "-verbose=2" "-always-overwrite")
+	message(STATUS "Execute : @DEPLOYQT_PROGRAM@ ${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@APPLICATION_NAME@.app -qmldir=@LINPHONE_QML_DIR@ -no-strip -verbose=0 -always-overwrite")
+	execute_process(COMMAND @DEPLOYQT_PROGRAM@ "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@APPLICATION_NAME@.app" "-qmldir=@LINPHONE_QML_DIR@" "-no-strip" "-verbose=0" "-always-overwrite")
 	
 	#CPack doesn't sign all files.
 	if (DO_SIGNING)
@@ -61,8 +61,8 @@ if(APPLE)
 		execute_process(COMMAND codesign --force --deep --sign "-" "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@APPLICATION_NAME@.app" )#If not code signed, app can crash because of APPLE on "Code Signature Invalid" (spotted for ARM64)
 	endif()
 elseif(WIN32)
-	message(STATUS "Execute : @DEPLOYQT_PROGRAM@ ${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@CMAKE_INSTALL_BINDIR@/@EXECUTABLE_NAME@.exe --qmldir=@LINPHONE_QML_DIR@ --verbose=2 --no-compiler-runtime")
-	execute_process(COMMAND @DEPLOYQT_PROGRAM@ "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@CMAKE_INSTALL_BINDIR@/@EXECUTABLE_NAME@.exe" "--qmldir=@LINPHONE_QML_DIR@" "--verbose=2" "--no-compiler-runtime")
+	message(STATUS "Execute : @DEPLOYQT_PROGRAM@ ${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@CMAKE_INSTALL_BINDIR@/@EXECUTABLE_NAME@.exe --qmldir=@LINPHONE_QML_DIR@ --verbose=0 --no-compiler-runtime")
+	execute_process(COMMAND @DEPLOYQT_PROGRAM@ "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@CMAKE_INSTALL_BINDIR@/@EXECUTABLE_NAME@.exe" "--qmldir=@LINPHONE_QML_DIR@" "--verbose=0" "--no-compiler-runtime")
 	# --plugindir "${CMAKE_CURRENT_BINARY_DIR}/winqt/plugins"
 	# --dir "${CMAKE_CURRENT_BINARY_DIR}/winqt/"
 endif()
