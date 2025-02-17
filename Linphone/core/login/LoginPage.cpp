@@ -70,12 +70,15 @@ void LoginPage::login(const QString &username,
 		// Create on Model thread.
 		AccountManager *accountManager = new AccountManager();
 		connect(accountManager, &AccountManager::registrationStateChanged, this,
-		        [accountManager, this](linphone::RegistrationState state) mutable {
+				[accountManager, this](linphone::RegistrationState state, QString message) mutable {
 			        // View thread
 			        setRegistrationState(state);
 			        switch (state) {
 				        case linphone::RegistrationState::Failed: {
-					        setErrorMessage(QString(tr("Le couple identifiant mot de passe ne correspond pas")));
+							if (message.isEmpty())
+								setErrorMessage(QString(tr("Le couple identifiant mot de passe ne correspond pas")));
+							else
+								setErrorMessage(message);
 					        if (accountManager) {
 						        accountManager->deleteLater();
 						        accountManager = nullptr;

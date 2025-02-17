@@ -55,7 +55,7 @@ public:
 	void linkNewAccountUsingCode(const QString &code, RegisterType registerType, const QString &sipAddress);
 
 signals:
-	void registrationStateChanged(linphone::RegistrationState state);
+	void registrationStateChanged(linphone::RegistrationState state, QString message = QString());
 	void newAccountCreationSucceed(QString sipAddress, RegisterType registerType, const QString &registerAddress);
 	void registerNewAccountFailed(const QString &error);
 	void tokenConversionSucceed(QString convertedToken);

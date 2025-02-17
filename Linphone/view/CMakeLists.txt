@@ -6,8 +6,9 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Button/CheckBox.qml
 	view/Control/Button/ComboBox.qml
 	view/Control/Button/HelpIconLabelButton.qml
-	view/Control/Button/IconLabelButton.qml
-	view/Control/Button/BigButton.qml
+        view/Control/Button/IconButton.qml
+        view/Control/Button/IconLabelButton.qml
+        view/Control/Button/BigButton.qml
 	view/Control/Button/RoundButton.qml
 	view/Control/Button/MediumButton.qml
 	view/Control/Button/SmallButton.qml

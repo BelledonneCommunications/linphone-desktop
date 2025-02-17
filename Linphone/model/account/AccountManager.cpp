@@ -137,8 +137,8 @@ bool AccountManager::login(QString username,
 				        emit mAccountModel->removeListener();
 				        mAccountModel = nullptr;
 			        }
-		        }
-		        emit registrationStateChanged(state);
+				}
+				emit registrationStateChanged(state, QString::fromStdString(message));
 	        });
 	auto status = core->addAccount(account);
 	if (status == -1) {
