@@ -64,27 +64,8 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 			}
 			mModelConnection->invokeToCore([this, accounts, defaultAccountCore, isInitialization]() {
 				mustBeInMainThread(getClassName());
-				auto reallyHaveAccount = [this]() -> bool {
-					// When an account is trying to connect, we don't want to display the features
-					// provided for the accounts that really stays in the account list
-					// (for example the back button to return on the main page in the login page)
-					for (auto &account : getSharedList<AccountCore>()) {
-						if (account->getRegistrationState() != LinphoneEnums::RegistrationState::Progress &&
-						    account->getRegistrationState() != LinphoneEnums::RegistrationState::None) {
-							return true;
-						}
-					}
-					return false;
-				};
-				for (auto &account : getSharedList<AccountCore>()) {
-					disconnect(account.get(), &AccountCore::registrationStateChanged, this, nullptr);
-				}
 				resetData<AccountCore>(*accounts);
-				for (auto &account : getSharedList<AccountCore>()) {
-					connect(account.get(), &AccountCore::registrationStateChanged, this,
-					        [this, reallyHaveAccount] { setHaveAccount(reallyHaveAccount()); });
-				}
-				setHaveAccount(reallyHaveAccount());
+				setHaveAccount(accounts->size() > 0);
 				setDefaultAccount(defaultAccountCore);
 				if (isInitialization) setInitialized(true);
 				delete accounts;
@@ -102,7 +83,7 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 		    } else mModelConnection->invokeToCore([this]() { setDefaultAccount(nullptr); });
 	    });
 	mModelConnection->makeConnectToModel(&CoreModel::accountRemoved, [this] { emit lUpdate(); });
-	mModelConnection->makeConnectToModel(&CoreModel::accountAdded, [this] { emit lUpdate(); });
+	mModelConnection->makeConnectToModel(&CoreModel::accountAdded, [this] { emit lUpdate(true); });
 
 	mModelConnection->makeConnectToModel(
 	    &CoreModel::globalStateChanged,

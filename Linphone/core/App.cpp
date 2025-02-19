@@ -486,7 +486,10 @@ void App::initCore() {
 			    mEngine->setObjectOwnership(settings.get(), QQmlEngine::CppOwnership);
 			    mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 			    if (!mAccountList) setAccountList(AccountList::create());
-			    else mAccountList->lUpdate();
+				else {
+					mAccountList->setInitialized(false);
+					mAccountList->lUpdate(true);
+				}
 			    if (!mCallList) setCallList(CallList::create());
 			    else mCallList->lUpdate();
 			    if (!mSettings) {

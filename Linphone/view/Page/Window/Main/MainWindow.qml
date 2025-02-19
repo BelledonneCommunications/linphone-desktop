@@ -90,7 +90,7 @@ AbstractWindow {
 	Connections {
 		target: SettingsCpp
 		function onAssistantGoDirectlyToThirdPartySipAccountLoginChanged() {
-			initStackViewItem()
+            initStackViewItem()
 		}
 		function onIsSavedChanged() {
 			if (SettingsCpp.isSaved) UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("Les changements ont été sauvegardés"), true, mainWindow)
@@ -112,13 +112,10 @@ AbstractWindow {
 		active: AppCpp.coreStarted
 		sourceComponent: AccountProxy {
 			sourceModel: AppCpp.accounts
-			onInitializedChanged: if (isInitialized) {
+            onInitializedChanged: if (isInitialized) {
 				mainWindow.accountProxy = this
 				mainWindow.initStackViewItem()
-			}
-			onHaveAccountChanged: {
-				if (isInitialized) mainWindow.initStackViewItem()
-			}
+            }
 		}
 	}
 
@@ -126,10 +123,6 @@ AbstractWindow {
 		id: mainWindowStackView
 		anchors.fill: parent
 		initialItem: splashScreen
-		Component.onCompleted: {
-			clear()
-			push(splashScreen)
-		}
 	}
 	Component {
 		id: splashScreen
@@ -161,7 +154,8 @@ AbstractWindow {
 			onGoBack: openMainPage()
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
 			onGoToRegister: mainWindowStackView.replace(registerPage)
-			showBackButton: accountProxy?.haveAccount
+            showBackButton: false
+            StackView.onActivated: if (mainWindow.accountProxy?.haveAccount) showBackButton = true
 		}
 	}
 	Component {
@@ -175,7 +169,8 @@ AbstractWindow {
 					mainWindowStackView.pop()
 			}
 			onGoToRegister: mainWindowStackView.replace(registerPage)
-			showBackButton: !SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin || accountProxy?.haveAccount
+            showBackButton: false
+            StackView.onActivated: if (!SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin || mainWindow.accountProxy?.haveAccount) showBackButton = true
 		}
 	}
 	Component {

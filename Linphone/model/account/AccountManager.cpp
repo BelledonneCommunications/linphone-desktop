@@ -143,6 +143,7 @@ bool AccountManager::login(QString username,
 	auto status = core->addAccount(account);
 	if (status == -1) {
 		*errorMessage = tr("Impossible d'ajouter le compte.");
+		core->removeAuthInfo(authInfo);
 		return false;
 	}
 	return true;
