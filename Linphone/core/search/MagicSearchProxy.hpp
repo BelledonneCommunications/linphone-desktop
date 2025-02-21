@@ -82,6 +82,7 @@ signals:
 	void parentProxyChanged();
 	void hideListProxyChanged();
 	void initialized();
+	void resultsProcessed();
 
 protected:
 	MagicSearchProxy *mParentProxy = nullptr;

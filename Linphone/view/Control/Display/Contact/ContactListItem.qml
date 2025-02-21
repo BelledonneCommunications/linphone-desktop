@@ -114,7 +114,7 @@ FocusScope {
 				id: actionButtons
 				visible: mainItem.showActions
 				spacing: visible ? 10 * DefaultStyle.dp : 0
-				Button {
+                IconButton {
 					id: callButton
 					Layout.preferredWidth: 45 * DefaultStyle.dp
 					Layout.preferredHeight: 45 * DefaultStyle.dp
@@ -128,7 +128,7 @@ FocusScope {
 					KeyNavigation.left: chatButton
 					KeyNavigation.right: videoCallButton
 				}
-				Button {
+                IconButton {
 					id: videoCallButton
 					Layout.preferredWidth: 45 * DefaultStyle.dp
 					Layout.preferredHeight: 45 * DefaultStyle.dp
@@ -142,7 +142,7 @@ FocusScope {
 					KeyNavigation.left: callButton
 					KeyNavigation.right: chatButton
 				}
-				Button {
+                IconButton {
 					id: chatButton
 					visible: actionButtons.visible && !SettingsCpp.disableChatFeature
 					Layout.preferredWidth: 45 * DefaultStyle.dp

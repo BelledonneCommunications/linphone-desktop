@@ -59,7 +59,8 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 			        auto itemCore = item.objectCast<FriendCore>();
 			        return itemCore->getDefaultAddress().length() > 0 &&
 			                   itemCore->getDefaultAddress() == friendCore->getDefaultAddress() ||
-			               itemCore->getFriendModel()->getFriend() == friendCore->getFriendModel()->getFriend();
+			               itemCore->getFriendModel() && friendCore->getFriendModel() &&
+			                   itemCore->getFriendModel()->getFriend() == friendCore->getFriendModel()->getFriend();
 		        });
 		    if (haveContact == mList.end()) {
 			    connect(friendCore.get(), &FriendCore::removed, this, qOverload<QObject *>(&MagicSearchList::remove));
@@ -117,8 +118,9 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 						        address->asString())); // linphone Friend object remove specific address.
 						    contacts->append(contact);
 					    } else if (!it->getPhoneNumber().empty()) {
+							auto phoneNumber = it->getPhoneNumber();
 						    linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
-						    linphoneFriend->setAddress(address);
+							linphoneFriend->addPhoneNumber(phoneNumber);
 						    contact = FriendCore::create(linphoneFriend, isStored, it->getSourceFlags());
 						    contact->setGivenName(Utils::coreStringToAppString(it->getPhoneNumber()));
 						    contact->appendPhoneNumber(tr("Phone"), Utils::coreStringToAppString(it->getPhoneNumber()));
@@ -128,6 +130,7 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 				    mModelConnection->invokeToCore([this, contacts]() {
 					    setResults(*contacts);
 					    delete contacts;
+						emit resultsProcessed();
 				    });
 			    });
 			qDebug() << log().arg("Initialized");

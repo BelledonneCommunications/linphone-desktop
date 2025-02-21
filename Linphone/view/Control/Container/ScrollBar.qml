@@ -7,9 +7,10 @@ import Linphone
 Control.ScrollBar {
 	id: mainItem
 	padding: 0
+    property color color: DefaultStyle.grey_850
 	contentItem: Rectangle {
 		implicitWidth: 6 * DefaultStyle.dp
 		radius: 32 * DefaultStyle.dp
-		color: DefaultStyle.grey_850
+        color: mainItem.color
 	}
 }

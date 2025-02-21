@@ -296,13 +296,12 @@ std::shared_ptr<linphone::FriendList> ToolModel::getLdapFriendList() {
 }
 
 bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList> &friendList,
-                                     const std::shared_ptr<linphone::Friend> &f) {
-	for (auto contact : friendList->getFriends()) {
-		if (f == contact) {
-			return true;
-		}
-	}
-	return false;
+									 const std::shared_ptr<linphone::Friend> &f) {
+	auto friends = friendList->getFriends();
+	auto it = std::find_if(friends.begin(), friends.end(), [f] (std::shared_ptr<linphone::Friend> linFriend) {
+		return linFriend == f;
+	});
+	return (it != friends.end());
 }
 
 // Load downloaded codecs like OpenH264 (needs to be after core is created and has loaded its plugins, as

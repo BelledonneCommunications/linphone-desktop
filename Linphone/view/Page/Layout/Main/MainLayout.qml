@@ -191,21 +191,22 @@ Item {
 							id: listPopup
 							width: magicSearchBar.width
 							property int maxHeight: 400 * DefaultStyle.dp
-							property bool displayScrollbar: contactList.contentHeight + topPadding + bottomPadding> maxHeight
-							height: contactList.haveContacts ? Math.min(contactList.contentHeight + topPadding + bottomPadding, maxHeight) : 0
+                            property bool displayScrollbar: contactList.height > maxHeight
+                            height: Math.min(contactList.contentHeight, maxHeight) + topPadding + bottomPadding
 							y: magicSearchBar.height
-							// closePolicy: Popup.NoAutoClose
-							topPadding: contactList.haveContacts ? 20 * DefaultStyle.dp : 0
-							bottomPadding: contactList.haveContacts ? 20 * DefaultStyle.dp : 0
-							rightPadding: 10 * DefaultStyle.dp
+                            closePolicy: Popup.CloseOnEscape
+                            topPadding: 20 * DefaultStyle.dp
+                            bottomPadding: contactList.haveContacts ? 20 * DefaultStyle.dp : 10 * DefaultStyle.dp
+                            rightPadding: 8 * DefaultStyle.dp
 							leftPadding: 20 * DefaultStyle.dp
-							
+                            visible: magicSearchBar.text.length != 0
+
 							background: Item {
 								anchors.fill: parent
 								Rectangle {
 									id: popupBg
 									radius: 16 * DefaultStyle.dp
-									color: DefaultStyle.grey_0
+                                    color: DefaultStyle.grey_0
 									anchors.fill: parent
 									border.color: DefaultStyle.main1_500_main
 									border.width: contactList.activeFocus ? 2 : 0
@@ -218,25 +219,12 @@ Item {
 									shadowBlur: 0.1
 									shadowColor: DefaultStyle.grey_1000
 									shadowOpacity: 0.1
-								}
-								ScrollBar {
-									id: scrollbar
-									Component.onCompleted: x = -10 * DefaultStyle.dp
-									policy: Control.ScrollBar.AsNeeded// Don't work as expected
-									visible: listPopup.displayScrollbar
-									interactive: true
-									anchors.top: parent.top
-									anchors.bottom: parent.bottom
-									anchors.right: parent.right
-									anchors.margins: 10 * DefaultStyle.dp
-									
-								}
+                                }
 							}
-							contentItem: AllContactListView {
-								id: contactList
-								visible: !loading && magicSearchBar.text.length != 0
-								Layout.preferredHeight: visible ? contentHeight : 0
-								Layout.fillWidth: true
+
+                            contentItem: AllContactListView {
+                                id: contactList
+                                width: listPopup.width - listPopup.leftPadding - listPopup.rightPadding
 								itemsRightMargin: 5 * DefaultStyle.dp	//(Actions have already 10 of margin)
 								showInitials: false
 								showContactMenu: false
@@ -250,8 +238,7 @@ Item {
 								sectionsWeight: 700 * DefaultStyle.dp
 								sectionsSpacing: 5 * DefaultStyle.dp
 								
-								Control.ScrollBar.vertical: scrollbar
-								searchBarText: magicSearchBar.text
+                                searchBarText: magicSearchBar.text
 							}
 						}
 					}

@@ -25,11 +25,13 @@
 #include "core/friend/FriendCore.hpp"
 
 MagicSearchProxy::MagicSearchProxy(QObject *parent) : LimitProxy(parent) {
-	setList(MagicSearchList::create());
+	auto magicSearchList = MagicSearchList::create();
+	setList(magicSearchList);
 	connect(this, &MagicSearchProxy::forceUpdate, [this] {
 		if (mList) emit mList->lSearch(mSearchText, getSourceFlags(), getAggregationFlag(), getMaxResults());
 	});
 	connect(App::getInstance(), &App::currentDateChanged, this, &MagicSearchProxy::forceUpdate);
+	connect(magicSearchList.get(), &MagicSearchList::resultsProcessed, this, &MagicSearchProxy::resultsProcessed);
 }
 
 MagicSearchProxy::~MagicSearchProxy() {

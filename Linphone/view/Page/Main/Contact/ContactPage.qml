@@ -227,6 +227,7 @@ AbstractMainPage {
 			ColumnLayout {
 				id: content
 				spacing: 15 * DefaultStyle.dp
+                Layout.leftMargin: 45 * DefaultStyle.dp
 				Text {
 					visible: !contactList.loading && !contactList.haveContacts
 					Layout.alignment: Qt.AlignHCenter
@@ -241,7 +242,7 @@ AbstractMainPage {
 					id: contactList
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					Layout.leftMargin: 45 * DefaultStyle.dp
+                    Layout.rightMargin: 8 * DefaultStyle.dp
 					searchBarText: searchBar.text
 					hideSuggestions: true
 					showDefaultAddress: false

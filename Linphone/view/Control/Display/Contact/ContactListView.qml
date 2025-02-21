@@ -45,7 +45,6 @@ ListView {
 	property bool expanded: true
 	property int headerHeight: headerItem?.height
 	
-	signal resultsReceived()
 	signal contactDeletionRequested(FriendGui contact)
 	signal contactSelected(FriendGui contact)	// Click/Space/Enter
 	signal addContactToSelection(var address)

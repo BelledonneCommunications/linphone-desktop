@@ -45,6 +45,7 @@ Loader {
 
 		MultiEffect {
 			id: effect2
+            enabled: effectEnabled
 			visible: mainItem.useColor
 			property bool effectEnabled: mainItem.useColor
 			anchors.fill: effect

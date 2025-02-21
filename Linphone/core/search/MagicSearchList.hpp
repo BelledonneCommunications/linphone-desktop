@@ -72,6 +72,8 @@ signals:
 	void friendCreated(int index, FriendGui *data);
 	void friendStarredChanged();
 
+	void resultsProcessed();
+
 	void initialized();
 
 private:
