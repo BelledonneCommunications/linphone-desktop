@@ -51,6 +51,8 @@ public:
 	static QString getDisplayName(QString address);
 
 	static std::shared_ptr<linphone::Friend> findFriendByAddress(const QString &address);
+	static std::shared_ptr<linphone::Friend> findFriendByAddress(std::shared_ptr<linphone::Address> linphoneAddr);
+
 
 	static bool createCall(const QString &sipAddress,
 	                       const QVariantMap &options = {},

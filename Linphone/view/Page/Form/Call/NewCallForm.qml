@@ -38,7 +38,6 @@ FocusScope {
 				Layout.fillWidth: true
 				Layout.preferredHeight: callList.height
 				Layout.maximumHeight: mainItem.height/2
-				// Layout.fillHeight: true
 				contentHeight: callList.height
 				contentWidth: width
 				RoundedPane {

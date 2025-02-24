@@ -195,39 +195,43 @@ AbstractMainPage {
 					}
 				}
                 Item {
-                    Layout.topMargin: 38 * DefaultStyle.dp
 					Layout.fillWidth: true
 					Layout.fillHeight: true
                     Control.Control {
                         id: listLayout
                         anchors.fill: parent
                         anchors.rightMargin: 39 * DefaultStyle.dp
-	
+                        padding: 0
                         background: Item{}
                         contentItem: ColumnLayout {
 							Text {
 								visible: historyListView.count === 0
-								Layout.alignment: Qt.AlignHCenter
+                                Layout.alignment: Qt.AlignHCenter
+                                Layout.topMargin: 137 * DefaultStyle.dp
 								text: qsTr("Aucun appel%1").arg(searchBar.text.length != 0 ? " correspondant" : "")
 								font {
 									pixelSize: 16 * DefaultStyle.dp
 									weight: 800 * DefaultStyle.dp
 								}
 							}
-							BusyIndicator {
-								Layout.alignment: Qt.AlignCenter
-								Layout.preferredHeight: visible ? 60 * DefaultStyle.dp : 0
-								Layout.preferredWidth: 60 * DefaultStyle.dp
-								indicatorHeight: 60 * DefaultStyle.dp
-								indicatorWidth: 60 * DefaultStyle.dp
-								visible: historyListView.loading
-								indicatorColor: DefaultStyle.main1_500_main
-							}
 							CallHistoryListView {
 								id: historyListView
 								Layout.fillWidth: true
-    							Layout.fillHeight: true
+                                Layout.fillHeight: true
+                                Layout.topMargin: 38 * DefaultStyle.dp
 								searchBar: searchBar
+                                Control.ScrollBar.vertical: scrollbar
+
+                                BusyIndicator {
+                                    anchors.horizontalCenter: historyListView.horizontalCenter
+                                    visible: historyListView.loading && historyListView.count === 0 && searchBar.text.length === 0
+                                    height: visible ? historyListView.busyIndicatorSize : 0
+                                    width: historyListView.busyIndicatorSize
+                                    indicatorHeight: historyListView.busyIndicatorSize
+                                    indicatorWidth: historyListView.busyIndicatorSize
+                                    indicatorColor: DefaultStyle.main1_500_main
+                                }
+
 								Connections{
 									target: mainItem
 									function onListViewUpdated(){
@@ -245,11 +249,12 @@ AbstractMainPage {
                     }
                     ScrollBar {
                         id: scrollbar
+                        visible: historyListView.contentHeight > parent.height
+                        active: visible
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.right: parent.right
                         anchors.rightMargin: 8 * DefaultStyle.dp
-                        active: true
                         policy: Control.ScrollBar.AsNeeded
                     }
                 }
@@ -544,7 +549,9 @@ AbstractMainPage {
 				detailContent: RoundedPane {
 					id: detailControl
 					Layout.preferredWidth: 360 * DefaultStyle.dp
-	
+                    Layout.fillHeight: true
+//                    height: Math.min(430 * DefaultStyle.dp, detailListView.contentHeight) + topPadding + bottomPadding
+
 					background: Rectangle {
 						id: detailListBackground
 						anchors.fill: parent
@@ -552,104 +559,103 @@ AbstractMainPage {
 						radius: 15 * DefaultStyle.dp
 					}
 					
-					contentItem: StackLayout {
-						currentIndex: detailListView.loading ? 0 : 1
-						height: Math.min(430 * DefaultStyle.dp, detailListView.contentHeight)
-						BusyIndicator {
-							Layout.alignment: Qt.AlignCenter
-							Layout.preferredHeight: visible ? 60 * DefaultStyle.dp : 0
-							Layout.preferredWidth: 60 * DefaultStyle.dp
-							indicatorHeight: 60 * DefaultStyle.dp
-							indicatorWidth: 60 * DefaultStyle.dp
-							indicatorColor: DefaultStyle.main1_500_main
-						}
-						CallHistoryListView {
-							id: detailListView
-							Layout.fillWidth: true
-							Layout.preferredHeight: Math.min(detailControl.implicitHeight, contentHeight)
-							spacing: 14 * DefaultStyle.dp
-							clip: true
-							searchText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
-							
-							delegate: Item {
-								width:detailListView.width
-								height: 56 * DefaultStyle.dp
-								RowLayout {
-									anchors.fill: parent
-									anchors.leftMargin: 20 * DefaultStyle.dp
-									anchors.rightMargin: 20 * DefaultStyle.dp
-									anchors.verticalCenter: parent.verticalCenter
-									ColumnLayout {
-										Layout.alignment: Qt.AlignVCenter
-										RowLayout {
-											EffectImage {
-												id: statusIcon
-												imageSource: modelData.core.status === LinphoneEnums.CallStatus.Declined
-												|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-												|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-												|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-													? AppIcons.arrowElbow
-													: modelData.core.isOutgoing
-														? AppIcons.arrowUpRight
-														: AppIcons.arrowDownLeft
-												colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined
-												|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-												|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-												|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-												|| modelData.core.status === LinphoneEnums.CallStatus.Missed
-													? DefaultStyle.danger_500main
-													: modelData.core.isOutgoing
-														? DefaultStyle.info_500_main
-														: DefaultStyle.success_500main
-												Layout.preferredWidth: 16 * DefaultStyle.dp
-												Layout.preferredHeight: 16 * DefaultStyle.dp
-												transform: Rotation {
-													angle: modelData.core.isOutgoing && (modelData.core.status === LinphoneEnums.CallStatus.Declined
-														|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-														|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-														|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
-													origin {
-														x: statusIcon.width/2
-														y: statusIcon.height/2
-													}
-												}
-											}
-											Text {
-												text: modelData.core.status === LinphoneEnums.CallStatus.Missed
-													? qsTr("Appel manqué")
-													: modelData.core.isOutgoing
-														? qsTr("Appel sortant")
-														: qsTr("Appel entrant")
-												font {
-													pixelSize: 14 * DefaultStyle.dp
-													weight: 400 * DefaultStyle.dp
-												}
-											}
-										}
-										Text {
-											text: UtilsCpp.formatDate(modelData.core.date)
-											color: modelData.core.status === LinphoneEnums.CallStatus.Missed? DefaultStyle.danger_500main : DefaultStyle.main2_500main
-											font {
-												pixelSize: 12 * DefaultStyle.dp
-												weight: 300 * DefaultStyle.dp
-											}
-										}
-									}
-									Item {
-										Layout.fillHeight: true
-										Layout.fillWidth: true
-									}
-									Text {
-										text: UtilsCpp.formatElapsedTime(modelData.core.duration, false)
-										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 300 * DefaultStyle.dp
-										}
-									}
-								}
-							}
-						}
-					}
+                    contentItem: CallHistoryListView {
+                        id: detailListView
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        spacing: 14 * DefaultStyle.dp
+                        clip: true
+                        searchText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
+                        busyIndicatorSize: 40 * DefaultStyle.dp
+
+                        BusyIndicator {
+                            anchors.horizontalCenter: detailListView.horizontalCenter
+                            visible: detailListView.loading && detailListView.count === 0
+                            height: visible ? detailListView.busyIndicatorSize : 0
+                            width: detailListView.busyIndicatorSize
+                            indicatorHeight: detailListView.busyIndicatorSize
+                            indicatorWidth: detailListView.busyIndicatorSize
+                            indicatorColor: DefaultStyle.main1_500_main
+                        }
+
+                        delegate: Item {
+                            width:detailListView.width
+                            height: 56 * DefaultStyle.dp
+                            RowLayout {
+                                anchors.fill: parent
+                                anchors.leftMargin: 20 * DefaultStyle.dp
+                                anchors.rightMargin: 20 * DefaultStyle.dp
+                                anchors.verticalCenter: parent.verticalCenter
+                                ColumnLayout {
+                                    Layout.alignment: Qt.AlignVCenter
+                                    RowLayout {
+                                        EffectImage {
+                                            id: statusIcon
+                                            imageSource: modelData.core.status === LinphoneEnums.CallStatus.Declined
+                                            || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+                                            || modelData.core.status === LinphoneEnums.CallStatus.Aborted
+                                            || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
+                                                ? AppIcons.arrowElbow
+                                                : modelData.core.isOutgoing
+                                                    ? AppIcons.arrowUpRight
+                                                    : AppIcons.arrowDownLeft
+                                            colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined
+                                            || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+                                            || modelData.core.status === LinphoneEnums.CallStatus.Aborted
+                                            || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
+                                            || modelData.core.status === LinphoneEnums.CallStatus.Missed
+                                                ? DefaultStyle.danger_500main
+                                                : modelData.core.isOutgoing
+                                                    ? DefaultStyle.info_500_main
+                                                    : DefaultStyle.success_500main
+                                            Layout.preferredWidth: 16 * DefaultStyle.dp
+                                            Layout.preferredHeight: 16 * DefaultStyle.dp
+                                            transform: Rotation {
+                                                angle: modelData.core.isOutgoing && (modelData.core.status === LinphoneEnums.CallStatus.Declined
+                                                    || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+                                                    || modelData.core.status === LinphoneEnums.CallStatus.Aborted
+                                                    || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
+                                                origin {
+                                                    x: statusIcon.width/2
+                                                    y: statusIcon.height/2
+                                                }
+                                            }
+                                        }
+                                        Text {
+                                            text: modelData.core.status === LinphoneEnums.CallStatus.Missed
+                                                ? qsTr("Appel manqué")
+                                                : modelData.core.isOutgoing
+                                                    ? qsTr("Appel sortant")
+                                                    : qsTr("Appel entrant")
+                                            font {
+                                                pixelSize: 14 * DefaultStyle.dp
+                                                weight: 400 * DefaultStyle.dp
+                                            }
+                                        }
+                                    }
+                                    Text {
+                                        text: UtilsCpp.formatDate(modelData.core.date)
+                                        color: modelData.core.status === LinphoneEnums.CallStatus.Missed? DefaultStyle.danger_500main : DefaultStyle.main2_500main
+                                        font {
+                                            pixelSize: 12 * DefaultStyle.dp
+                                            weight: 300 * DefaultStyle.dp
+                                        }
+                                    }
+                                }
+                                Item {
+                                    Layout.fillHeight: true
+                                    Layout.fillWidth: true
+                                }
+                                Text {
+                                    text: UtilsCpp.formatElapsedTime(modelData.core.duration, false)
+                                    font {
+                                        pixelSize: 12 * DefaultStyle.dp
+                                        weight: 300 * DefaultStyle.dp
+                                    }
+                                }
+                            }
+                        }
+                    }
 				}
 				Item{
 					Layout.fillHeight: true

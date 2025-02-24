@@ -15,6 +15,7 @@ ListView {
     property SearchBar searchBar
     property bool loading: false
     property string searchText: searchBar?.text
+    property double busyIndicatorSize: 60 * DefaultStyle.dp
 
     signal resultsReceived()
 
@@ -98,6 +99,7 @@ ListView {
     onVisibleChanged: {
         if (!visible) currentIndex = -1
     }
+
     // Qt bug: sometimes, containsMouse may not be send and update on each MouseArea.
     // So we need to use this variable to switch off all hovered items.
     property int lastMouseContainsIndex: -1
@@ -221,6 +223,4 @@ ListView {
             }
         }
     }
-
-    Control.ScrollBar.vertical: scrollbar
 }

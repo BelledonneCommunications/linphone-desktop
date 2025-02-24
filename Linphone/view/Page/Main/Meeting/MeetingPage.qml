@@ -162,6 +162,7 @@ AbstractMainPage {
 					placeholderText: qsTr("Rechercher une réunion")
 					KeyNavigation.up: conferenceList
 					KeyNavigation.down: conferenceList
+                    visible: conferenceList.count !== 0 || text.length !== 0
 					Binding {
 						target: mainItem
 						property: "showDefaultItem"

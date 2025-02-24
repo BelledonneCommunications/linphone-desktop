@@ -210,14 +210,15 @@ AbstractMainPage {
 		ColumnLayout {
 			anchors.top: title.bottom
 			anchors.right: leftPanel.right
-			anchors.left: leftPanel.left
+            anchors.left: leftPanel.left
+            anchors.leftMargin: leftPanel.leftMargin
 			anchors.bottom: leftPanel.bottom
 			enabled: mainItem.leftPanelEnabled
-			spacing: 38 * DefaultStyle.dp
+            spacing: 38 * DefaultStyle.dp
 			SearchBar {
 				id: searchBar
-				Layout.leftMargin: leftPanel.leftMargin
-				Layout.rightMargin: leftPanel.rightMargin
+                visible: contactList.haveContacts || text.length !== 0
+                Layout.rightMargin: leftPanel.rightMargin
 				Layout.topMargin: 18 * DefaultStyle.dp
 				Layout.fillWidth: true
 				placeholderText: qsTr("Rechercher un contact")
@@ -226,11 +227,10 @@ AbstractMainPage {
 			}
 			ColumnLayout {
 				id: content
-				spacing: 15 * DefaultStyle.dp
-                Layout.leftMargin: 45 * DefaultStyle.dp
+                spacing: 15 * DefaultStyle.dp
 				Text {
 					visible: !contactList.loading && !contactList.haveContacts
-					Layout.alignment: Qt.AlignHCenter
+                    Layout.alignment: Qt.AlignHCenter
 					Layout.topMargin: 137 * DefaultStyle.dp
 					text: qsTr("Aucun contact%1").arg(searchBar.text.length !== 0 ? " correspondant" : "")
 					font {

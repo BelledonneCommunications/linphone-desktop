@@ -122,6 +122,10 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &
 	return CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
 }
 
+std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr<linphone::Address> linphoneAddr) {
+	return CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+}
+
 bool ToolModel::createCall(const QString &sipAddress,
                            const QVariantMap &options,
                            const QString &prepareTransfertAddress,
