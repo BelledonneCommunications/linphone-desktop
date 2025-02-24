@@ -84,6 +84,11 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 	    });
 	mModelConnection->makeConnectToModel(&CoreModel::accountRemoved, [this] { emit lUpdate(); });
 	mModelConnection->makeConnectToModel(&CoreModel::accountAdded, [this] { emit lUpdate(true); });
+	// force initialization on bearer account added to automatically go on the main page
+	// with the open id account
+	mModelConnection->makeConnectToModel(&CoreModel::bearerAccountAdded, [this] {
+		setInitialized(false);
+		emit lUpdate(true); });
 
 	mModelConnection->makeConnectToModel(
 	    &CoreModel::globalStateChanged,

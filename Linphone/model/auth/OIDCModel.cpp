@@ -198,5 +198,6 @@ void OIDCModel::setBearers() {
 	mAuthInfo->setRefreshToken(refreshBearer);
 	mAuthInfo->setAccessToken(accessBearer);
 	CoreModel::getInstance()->getCore()->addAuthInfo(mAuthInfo);
+	emit CoreModel::getInstance()->bearerAccountAdded();
 	emit finished();
 }

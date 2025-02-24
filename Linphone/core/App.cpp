@@ -1110,7 +1110,7 @@ void App::setSysTrayIcon() {
 		});
 	}
 
-	QAction *quitAction = new QAction(tr("Quit"), root);
+	QAction *quitAction = new QAction(tr("Quitter"), root);
 	root->connect(quitAction, &QAction::triggered, this, &App::quit);
 
 	// trayIcon: Left click actions.
