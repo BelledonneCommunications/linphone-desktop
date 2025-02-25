@@ -61,7 +61,7 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 		mDisplayName = Utils::coreStringToAppString(confinfo->getSubject());
 	} else {
 		mRemoteAddress = Utils::coreStringToAppString(addr->asStringUriOnly());
-		auto linphoneFriend = ToolModel::findFriendByAddress(mRemoteAddress);
+		auto linphoneFriend = ToolModel::findFriendByAddress(addr);
 		if (linphoneFriend) {
 			mFriendModel = Utils::makeQObject_ptr<FriendModel>(linphoneFriend);
 			mDisplayName = mFriendModel->getFullName();
