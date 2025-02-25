@@ -138,8 +138,7 @@ AbstractSettingsLayout {
 				title: qsTr("URI de l’usine à réunions")
 				propertyName: "audioVideoConferenceFactoryAddress"
 				propertyOwnerGui: account
-				visible: !SettingsCpp.disableMeetingsFeature
-				toValidate: true
+                toValidate: true
 			}
 			DecoratedTextField {
 				Layout.fillWidth: true

@@ -184,7 +184,6 @@ Flickable {
 
         }
         onResultsProcessed: {
-            console.log("result processed list view")
             mainItem.loading = false
             mainItem.contentY = 0
         }

@@ -4,6 +4,7 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 
 import Linphone
+import SettingsCpp
 
 Control.TabBar {
 	id: mainItem
@@ -23,6 +24,16 @@ Control.TabBar {
 	onDefaultAccountChanged: {
 		if (defaultAccount) defaultAccount.core?.lRefreshNotifications()
 	}
+
+    Connections {
+        target: SettingsCpp
+        function onDisableMeetingsFeatureChanged() {
+            initButtons()
+        }
+        function onDisableChatFeatureChanged() {
+            initButtons()
+        }
+    }
 
 	component UnreadNotification: Rectangle {
 		id: unreadNotifications
@@ -44,21 +55,21 @@ Control.TabBar {
 		}
 	}
 	
-	contentItem: ListView {
-		model: mainItem.contentModel
-		currentIndex: mainItem.currentIndex
+    contentItem: ListView {
+        model: mainItem.contentModel
+        currentIndex: mainItem.currentIndex
 
-		spacing: mainItem.spacing
-		orientation: ListView.Vertical
-		// boundsBehavior: Flickable.StopAtBounds
-		flickableDirection: Flickable.AutoFlickIfNeeded
-		// snapMode: ListView.SnapToItem
+        spacing: mainItem.spacing
+        orientation: ListView.Vertical
+        // boundsBehavior: Flickable.StopAtBounds
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        // snapMode: ListView.SnapToItem
 
-		// highlightMoveDuration: 0
-		// highlightRangeMode: ListView.ApplyRange
-		// preferredHighlightBegin: 40
-		// preferredHighlightEnd: width - 40
-	}
+        // highlightMoveDuration: 0
+        // highlightRangeMode: ListView.ApplyRange
+        // preferredHighlightBegin: 40
+        // preferredHighlightEnd: width - 40
+    }
 
 	background: Item {
 		id: background
@@ -84,7 +95,7 @@ Control.TabBar {
 		}
 	}
 	
-	Repeater {
+    Repeater {
 		id: actionsRepeater
 		Control.TabButton {
 			id: tabButton
