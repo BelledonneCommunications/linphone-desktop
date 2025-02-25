@@ -6,27 +6,28 @@ import Linphone
 import UtilsCpp 1.0
 import ConstantsCpp 1.0
 import SettingsCpp
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Flickable {
     id: mainItem
 
     flickableDirection: Flickable.VerticalFlick
 
-    property bool showInitials: true	// Display Initials of Display name.
-    property bool showDefaultAddress: true	// Display address below display name.
-    property bool showActions: false	// Display actions layout (call buttons)
-    property bool showContactMenu: true	// Display the dot menu for contacts.
-    property bool showFavorites: true	// Display the favorites in the header
-    property bool hideSuggestions: false	// Hide not stored contacts (not suggestions)
-    property string highlightText: searchText	// Bold characters in Display name.
+    property bool showInitials: true // Display Initials of Display name.
+    property bool showDefaultAddress: true // Display address below display name.
+    property bool showActions: false // Display actions layout (call buttons)
+    property bool showContactMenu: true // Display the dot menu for contacts.
+    property bool showFavorites: true // Display the favorites in the header
+    property bool hideSuggestions: false // Hide not stored contacts (not suggestions)
+    property string highlightText: searchText // Bold characters in Display name.
     property var sourceFlags: LinphoneEnums.MagicSearchSource.All
 
-    property bool displayNameCapitalization: true	// Capitalize display name.
+    property bool displayNameCapitalization: true // Capitalize display name.
 
-    property bool selectionEnabled: true		// Contact can be selected
-    property bool multiSelectionEnabled: false	//Multiple items can be selected.
-    property list<string> selectedContacts		// List of default address on selected contacts.
+    property bool selectionEnabled: true // Contact can be selected
+    property bool multiSelectionEnabled: false //Multiple items can be selected.
+    property list<string> selectedContacts
+    // List of default address on selected contacts.
     //property FriendGui selectedContact//: model.getAt(currentIndex) || null
     property FriendGui highlightedContact
 
@@ -38,7 +39,8 @@ Flickable {
     // set searchBarText without specifying a model to bold
     // matching names
     property string searchBarText
-    property string searchText// Binding is done on searchBarTextChanged
+    property string searchText
+    // Binding is done on searchBarTextChanged
     property ConferenceInfoGui confInfoGui
 
     property bool haveFavorites: false
@@ -54,19 +56,19 @@ Flickable {
     contentHeight: contentsLayout.height
     rightMargin: itemsRightMargin
 
-    signal contactStarredChanged()
+    signal contactStarredChanged
     signal contactDeletionRequested(FriendGui contact)
     signal contactAddedToSelection(string address)
     signal contactRemovedFromSelection(string address)
     signal contactSelected(FriendGui contact)
 
     function selectContact(address) {
-        var index = contactsProxy.loadUntil(address)// Be sure to have this address in proxy if it exists
+        var index = contactsProxy.loadUntil(
+                    address) // Be sure to have this address in proxy if it exists
         if (index != -1) {
             contactsList.selectIndex(index)
         }
         return index
-
     }
     function addContactToSelection(address) {
         if (multiSelectionEnabled) {
@@ -91,49 +93,59 @@ Flickable {
             contactRemovedFromSelection(address)
         }
     }
-    function haveAddress(address){
+    function haveAddress(address) {
         var index = magicSearchProxy.findFriendIndexByAddress(address)
-        return  index != -1
+        return index != -1
     }
 
-    function resetSelections(){
+    function resetSelections() {
         mainItem.highlightedContact = null
         favoritesList.currentIndex = -1
         contactsList.currentIndex = -1
         suggestionsList.currentIndex = -1
     }
 
-    function findNextList(item, count, direction){
-        if(count == 3) return null
+    function findNextList(item, count, direction) {
+        if (count == 3)
+            return null
         var nextItem
-        switch(item){
-        case suggestionsList:nextItem=(direction > 0 ? favoritesList : contactsList);break;
-        case contactsList:nextItem=(direction > 0 ? suggestionsList : favoritesList);break;
-        case favoritesList:nextItem=(direction > 0 ? contactsList : suggestionsList);break;
-        default: return null
+        switch (item) {
+        case suggestionsList:
+            nextItem = (direction > 0 ? favoritesList : contactsList)
+            break
+        case contactsList:
+            nextItem = (direction > 0 ? suggestionsList : favoritesList)
+            break
+        case favoritesList:
+            nextItem = (direction > 0 ? contactsList : suggestionsList)
+            break
+        default:
+            return null
         }
-        if( nextItem.model.count > 0) return nextItem
-        else return findNextList(nextItem, count+1, direction)
+        if (nextItem.model.count > 0)
+            return nextItem
+        else
+            return findNextList(nextItem, count + 1, direction)
     }
 
-    function updatePosition(list){
+    function updatePosition(list) {
         Utils.updatePosition(mainItem, list)
     }
 
-    onHighlightedContactChanged:{
+    onHighlightedContactChanged: {
         favoritesList.highlightedContact = highlightedContact
         contactsList.highlightedContact = highlightedContact
         suggestionsList.highlightedContact = highlightedContact
     }
 
     onSearchBarTextChanged: {
-        if(!pauseSearch && (mainItem.searchOnEmpty || searchBarText != '')) {
+        if (!pauseSearch && (mainItem.searchOnEmpty || searchBarText != '')) {
             console.log("change search text")
             searchText = searchBarText.length === 0 ? "*" : searchBarText
         }
     }
     onPauseSearchChanged: {
-        if(!pauseSearch && (mainItem.searchOnEmpty || searchBarText != '')){
+        if (!pauseSearch && (mainItem.searchOnEmpty || searchBarText != '')) {
             searchText = searchBarText.length === 0 ? "*" : searchBarText
         }
     }
@@ -142,26 +154,37 @@ Flickable {
         loading = true
     }
 
-    Keys.onPressed: (event)=> {
-        if(!event.accepted){
-            if(event.key == Qt.Key_Up || event.key == Qt.Key_Down){
-                var newItem
-                var direction = (event.key == Qt.Key_Up ? -1 : 1)
-                if(suggestionsList.activeFocus) newItem = findNextList(suggestionsList, 0, direction)
-                else if(contactsList.activeFocus) newItem = findNextList(contactsList, 0, direction)
-                else if(favoritesList.activeFocus) newItem = findNextList(favoritesList, 0, direction)
-                else newItem = findNextList(suggestionsList, 0, direction)
-                if(newItem){
-                    newItem.selectIndex(direction > 0 ? -1 : newItem.model.count - 1)
-                    event.accepted = true
-                }
-            }
-        }
-    }
+    Keys.onPressed: event => {
+                        if (!event.accepted) {
+                            if (event.key == Qt.Key_Up
+                                || event.key == Qt.Key_Down) {
+                                var newItem
+                                var direction = (event.key == Qt.Key_Up ? -1 : 1)
+                                if (suggestionsList.activeFocus)
+                                newItem = findNextList(suggestionsList, 0,
+                                                       direction)
+                                else if (contactsList.activeFocus)
+                                newItem = findNextList(contactsList, 0,
+                                                       direction)
+                                else if (favoritesList.activeFocus)
+                                newItem = findNextList(favoritesList, 0,
+                                                       direction)
+                                else
+                                newItem = findNextList(suggestionsList, 0,
+                                                       direction)
+                                if (newItem) {
+                                    newItem.selectIndex(
+                                        direction > 0 ? -1 : newItem.model.count - 1)
+                                    event.accepted = true
+                                }
+                            }
+                        }
+                    }
     Component.onCompleted: {
         if (confInfoGui) {
-            for(var i = 0; i < confInfoGui.core.participants.length; ++i) {
-                selectedContacts.push(confInfoGui.core.getParticipantAddressAt(i));
+            for (var i = 0; i < confInfoGui.core.participants.length; ++i) {
+                selectedContacts.push(
+                            confInfoGui.core.getParticipantAddressAt(i))
             }
         }
     }
@@ -181,7 +204,6 @@ Flickable {
         sourceFlags: mainItem.sourceFlags
         onModelReset: {
             mainItem.resetSelections()
-
         }
         onResultsProcessed: {
             mainItem.loading = false
@@ -189,18 +211,21 @@ Flickable {
         }
 
         onInitialized: {
-            if(mainItem.searchOnEmpty || searchText != '' ) {
+            if (mainItem.searchOnEmpty || searchText != '') {
                 mainItem.loading = true
                 forceUpdate()
             }
         }
     }
 
-    onAtYEndChanged: if(atYEnd) {
-        if( (contactsProxy.haveMore && contactList.expanded ) || mainItem.hideSuggestions) contactsProxy.displayMore()
-        else suggestionsProxy.displayMore()
-    }
-    Behavior on contentY{
+    onAtYEndChanged: if (atYEnd) {
+                         if ((contactsProxy.haveMore && contactList.expanded)
+                                 || mainItem.hideSuggestions)
+                             contactsProxy.displayMore()
+                         else
+                             suggestionsProxy.displayMore()
+                     }
+    Behavior on contentY {
         NumberAnimation {
             duration: 500
             easing.type: Easing.OutExpo
@@ -210,7 +235,7 @@ Flickable {
     Control.ScrollBar.vertical: ScrollBar {
         id: scrollbar
         z: 1
-        topPadding: 24 * DefaultStyle.dp	// Avoid to be on top of collapse button
+        topPadding: 24 * DefaultStyle.dp // Avoid to be on top of collapse button
         active: true
         interactive: true
         visible: mainItem.contentHeight > mainItem.height
@@ -220,7 +245,7 @@ Flickable {
     ColumnLayout {
         id: contentsLayout
         width: mainItem.width
-        spacing: 0//20 * DefaultStyle.dp
+        spacing: 0 //20 * DefaultStyle.dp
 
         BusyIndicator {
             id: busyIndicator
@@ -232,7 +257,7 @@ Flickable {
             Layout.alignment: Qt.AlignCenter | Qt.AlignVCenter
         }
 
-        ContactListView{
+        ContactListView {
             id: favoritesList
             visible: contentHeight > 0
             Layout.fillWidth: true
@@ -252,22 +277,32 @@ Flickable {
             itemsRightMargin: mainItem.itemsRightMargin
 
             onHighlightedContactChanged: mainItem.highlightedContact = highlightedContact
-            onContactSelected: (contactGui) => {
-                mainItem.contactSelected(contactGui)
-            }
+            onContactSelected: contactGui => {
+                                   mainItem.contactSelected(contactGui)
+                               }
             onUpdatePosition: mainItem.updatePosition(favoritesList)
-            onContactDeletionRequested: (contact) => {mainItem.contactDeletionRequested(contact)}
-            onAddContactToSelection: (address) => {mainItem.addContactToSelection(address)}
-            onRemoveContactFromSelection: (index) => {mainItem.removeContactFromSelection(index)}
+            onContactDeletionRequested: contact => {
+                                            mainItem.contactDeletionRequested(
+                                                contact)
+                                        }
+            onAddContactToSelection: address => {
+                                         mainItem.addContactToSelection(address)
+                                     }
+            onRemoveContactFromSelection: index => {
+                                              mainItem.removeContactFromSelection(
+                                                  index)
+                                          }
 
             property MagicSearchProxy proxy: MagicSearchProxy {
                 parentProxy: mainItem.mainModel
                 filterType: MagicSearchProxy.FilteringTypes.Favorites
             }
-            model : mainItem.showFavorites && (mainItem.searchBarText == ''|| mainItem.searchBarText == '*')? proxy : []
+            model: mainItem.showFavorites
+                   && (mainItem.searchBarText == ''
+                       || mainItem.searchBarText == '*') ? proxy : []
         }
 
-        ContactListView{
+        ContactListView {
             id: contactsList
             visible: contentHeight > 0
             Layout.fillWidth: true
@@ -286,32 +321,45 @@ Flickable {
             title: qsTr('Contacts')
 
             onHighlightedContactChanged: mainItem.highlightedContact = highlightedContact
-            onContactSelected: (contactGui) => {
-                mainItem.contactSelected(contactGui)
-            }
+            onContactSelected: contactGui => {
+                                   mainItem.contactSelected(contactGui)
+                               }
             onUpdatePosition: mainItem.updatePosition(contactsList)
-            onContactDeletionRequested: (contact) => {mainItem.contactDeletionRequested(contact)}
-            onAddContactToSelection: (address) => {mainItem.addContactToSelection(address)}
-            onRemoveContactFromSelection: (index) => {mainItem.removeContactFromSelection(index)}
+            onContactDeletionRequested: contact => {
+                                            mainItem.contactDeletionRequested(
+                                                contact)
+                                        }
+            onAddContactToSelection: address => {
+                                         mainItem.addContactToSelection(address)
+                                     }
+            onRemoveContactFromSelection: index => {
+                                              mainItem.removeContactFromSelection(
+                                                  index)
+                                          }
 
-            model:MagicSearchProxy {
+            model: MagicSearchProxy {
                 id: contactsProxy
                 parentProxy: mainItem.mainModel
                 filterType: MagicSearchProxy.FilteringTypes.App
-                            | (mainItem.searchText != '*' && mainItem.searchText != '' || SettingsCpp.syncLdapContacts ? MagicSearchProxy.FilteringTypes.Ldap | MagicSearchProxy.FilteringTypes.CardDAV: 0)
-                initialDisplayItems: Math.max(20, 2 * mainItem.height / (63 * DefaultStyle.dp))
+                            | (mainItem.searchText != '*'
+                               && mainItem.searchText != ''
+                               || SettingsCpp.syncLdapContacts ? MagicSearchProxy.FilteringTypes.Ldap | MagicSearchProxy.FilteringTypes.CardDAV : 0)
+                initialDisplayItems: Math.max(
+                                         20,
+                                         2 * mainItem.height / (63 * DefaultStyle.dp))
                 displayItemsStep: 3 * initialDisplayItems / 2
-                onLocalFriendCreated: (index) => {
-                    contactsList.selectIndex(index)
-                }
+                onLocalFriendCreated: index => {
+                                          contactsList.selectIndex(index)
+                                      }
             }
         }
-        ContactListView{
+        ContactListView {
             id: suggestionsList
             visible: contentHeight > 0
             Layout.fillWidth: true
             Layout.preferredHeight: implicitHeight
-            Layout.topMargin: contactsList.height + favoritesList.height > 0 ? 4 * DefaultStyle.dp : 0
+            Layout.topMargin: contactsList.height + favoritesList.height
+                              > 0 ? 4 * DefaultStyle.dp : 0
             interactive: false
             showInitials: false
             highlightText: mainItem.highlightText
@@ -325,18 +373,30 @@ Flickable {
             itemsRightMargin: mainItem.itemsRightMargin
 
             onHighlightedContactChanged: mainItem.highlightedContact = highlightedContact
-            onContactSelected: (contactGui) => {
-                mainItem.contactSelected(contactGui)
-            }
+            onContactSelected: contactGui => {
+                                   mainItem.contactSelected(contactGui)
+                               }
             onUpdatePosition: mainItem.updatePosition(suggestionsList)
-            onContactDeletionRequested: (contact) => {mainItem.contactDeletionRequested(contact)}
-            onAddContactToSelection: (address) => {mainItem.addContactToSelection(address)}
-            onRemoveContactFromSelection: (index) => {mainItem.removeContactFromSelection(index)}
-            model:MagicSearchProxy {
+            onContactDeletionRequested: contact => {
+                                            mainItem.contactDeletionRequested(
+                                                contact)
+                                        }
+            onAddContactToSelection: address => {
+                                         mainItem.addContactToSelection(address)
+                                     }
+            onRemoveContactFromSelection: index => {
+                                              mainItem.removeContactFromSelection(
+                                                  index)
+                                          }
+            model: MagicSearchProxy {
                 id: suggestionsProxy
                 parentProxy: mainItem.mainModel
                 filterType: mainItem.hideSuggestions ? MagicSearchProxy.FilteringTypes.None : MagicSearchProxy.FilteringTypes.Other
-                initialDisplayItems: contactsProxy.haveMore && contactsList.expanded ? 0 : Math.max(20, 2 * mainItem.height / (63 * DefaultStyle.dp))
+                initialDisplayItems: contactsProxy.haveMore
+                                     && contactsList.expanded ? 0 : Math.max(
+                                                                    20,
+                                                                    2 * mainItem.height
+                                                                    / (63 * DefaultStyle.dp))
                 onInitialDisplayItemsChanged: maxDisplayItems = initialDisplayItems
                 displayItemsStep: 3 * initialDisplayItems / 2
                 onModelReset: maxDisplayItems = initialDisplayItems
