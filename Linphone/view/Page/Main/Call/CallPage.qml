@@ -486,8 +486,8 @@ ConferenceInfoGui{
     Component {
         id: contactDetailComp
         FocusScope {
-            width: parent?.width
-            height: parent?.height
+            //            width: parent?.width
+            //            height: parent?.height
             CallHistoryLayout {
                 id: contactDetail
                 anchors.fill: parent
@@ -605,100 +605,100 @@ ConferenceInfoGui{
                         }
                     }
                 }
-                detailContent: RoundedPane {
-                    id: detailControl
+                detailContent: Item {
                     Layout.preferredWidth: 360 * DefaultStyle.dp
                     Layout.fillHeight: true
-
-                    //                    height: Math.min(430 * DefaultStyle.dp, detailListView.contentHeight) + topPadding + bottomPadding
-                    background: Rectangle {
-                        id: detailListBackground
-                        anchors.fill: parent
-                        color: DefaultStyle.grey_0
-                        radius: 15 * DefaultStyle.dp
-                    }
-
-                    contentItem: CallHistoryListView {
-                        id: detailListView
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        spacing: 14 * DefaultStyle.dp
-                        clip: true
-                        searchText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
-                        busyIndicatorSize: 40 * DefaultStyle.dp
-
-                        BusyIndicator {
-                            anchors.horizontalCenter: detailListView.horizontalCenter
-                            visible: detailListView.loading
-                                     && detailListView.count === 0
-                            height: visible ? detailListView.busyIndicatorSize : 0
-                            width: detailListView.busyIndicatorSize
-                            indicatorHeight: detailListView.busyIndicatorSize
-                            indicatorWidth: detailListView.busyIndicatorSize
-                            indicatorColor: DefaultStyle.main1_500_main
+                    RoundedPane {
+                        id: detailControl
+                        width: parent.width
+                        height: Math.min(
+                                    parent.height,
+                                    detailListView.contentHeight) + topPadding + bottomPadding
+                        background: Rectangle {
+                            id: detailListBackground
+                            anchors.fill: parent
+                            color: DefaultStyle.grey_0
+                            radius: 15 * DefaultStyle.dp
                         }
 
-                        delegate: Item {
-                            width: detailListView.width
-                            height: 56 * DefaultStyle.dp
-                            RowLayout {
-                                anchors.fill: parent
-                                anchors.leftMargin: 20 * DefaultStyle.dp
-                                anchors.rightMargin: 20 * DefaultStyle.dp
-                                anchors.verticalCenter: parent.verticalCenter
-                                ColumnLayout {
-                                    Layout.alignment: Qt.AlignVCenter
-                                    RowLayout {
-                                        EffectImage {
-                                            id: statusIcon
-                                            imageSource: modelData.core.status
-                                                         === LinphoneEnums.CallStatus.Declined
-                                                         || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-                                                         || modelData.core.status
-                                                         === LinphoneEnums.CallStatus.Aborted
-                                                         || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted ? AppIcons.arrowElbow : modelData.core.isOutgoing ? AppIcons.arrowUpRight : AppIcons.arrowDownLeft
-                                            colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted || modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500main : modelData.core.isOutgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500main
-                                            Layout.preferredWidth: 16 * DefaultStyle.dp
-                                            Layout.preferredHeight: 16 * DefaultStyle.dp
-                                            transform: Rotation {
-                                                angle: modelData.core.isOutgoing
-                                                       && (modelData.core.status
-                                                           === LinphoneEnums.CallStatus.Declined
-                                                           || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
-                                                origin {
-                                                    x: statusIcon.width / 2
-                                                    y: statusIcon.height / 2
+                        contentItem: CallHistoryListView {
+                            id: detailListView
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            spacing: 14 * DefaultStyle.dp
+                            clip: true
+                            searchText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
+                            busyIndicatorSize: 40 * DefaultStyle.dp
+
+                            BusyIndicator {
+                                anchors.horizontalCenter: detailListView.horizontalCenter
+                                visible: detailListView.loading
+                                         && detailListView.count === 0
+                                height: visible ? detailListView.busyIndicatorSize : 0
+                                width: detailListView.busyIndicatorSize
+                                indicatorHeight: detailListView.busyIndicatorSize
+                                indicatorWidth: detailListView.busyIndicatorSize
+                                indicatorColor: DefaultStyle.main1_500_main
+                            }
+
+                            delegate: Item {
+                                width: detailListView.width
+                                height: 56 * DefaultStyle.dp
+                                RowLayout {
+                                    anchors.fill: parent
+                                    anchors.leftMargin: 20 * DefaultStyle.dp
+                                    anchors.rightMargin: 20 * DefaultStyle.dp
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    ColumnLayout {
+                                        Layout.alignment: Qt.AlignVCenter
+                                        RowLayout {
+                                            EffectImage {
+                                                id: statusIcon
+                                                imageSource: modelData.core.status
+                                                             === LinphoneEnums.CallStatus.Declined
+                                                             || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted ? AppIcons.arrowElbow : modelData.core.isOutgoing ? AppIcons.arrowUpRight : AppIcons.arrowDownLeft
+                                                colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted || modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500main : modelData.core.isOutgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500main
+                                                Layout.preferredWidth: 16 * DefaultStyle.dp
+                                                Layout.preferredHeight: 16 * DefaultStyle.dp
+                                                transform: Rotation {
+                                                    angle: modelData.core.isOutgoing
+                                                           && (modelData.core.status === LinphoneEnums.CallStatus.Declined || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
+                                                    origin {
+                                                        x: statusIcon.width / 2
+                                                        y: statusIcon.height / 2
+                                                    }
+                                                }
+                                            }
+                                            Text {
+                                                text: modelData.core.status === LinphoneEnums.CallStatus.Missed ? qsTr("Appel manqué") : modelData.core.isOutgoing ? qsTr("Appel sortant") : qsTr("Appel entrant")
+                                                font {
+                                                    pixelSize: 14 * DefaultStyle.dp
+                                                    weight: 400 * DefaultStyle.dp
                                                 }
                                             }
                                         }
                                         Text {
-                                            text: modelData.core.status === LinphoneEnums.CallStatus.Missed ? qsTr("Appel manqué") : modelData.core.isOutgoing ? qsTr("Appel sortant") : qsTr("Appel entrant")
+                                            text: UtilsCpp.formatDate(
+                                                      modelData.core.date)
+                                            color: modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
                                             font {
-                                                pixelSize: 14 * DefaultStyle.dp
-                                                weight: 400 * DefaultStyle.dp
+                                                pixelSize: 12 * DefaultStyle.dp
+                                                weight: 300 * DefaultStyle.dp
                                             }
                                         }
                                     }
+                                    Item {
+                                        Layout.fillHeight: true
+                                        Layout.fillWidth: true
+                                    }
                                     Text {
-                                        text: UtilsCpp.formatDate(
-                                                  modelData.core.date)
-                                        color: modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
+                                        text: UtilsCpp.formatElapsedTime(
+                                                  modelData.core.duration,
+                                                  false)
                                         font {
                                             pixelSize: 12 * DefaultStyle.dp
                                             weight: 300 * DefaultStyle.dp
                                         }
-                                    }
-                                }
-                                Item {
-                                    Layout.fillHeight: true
-                                    Layout.fillWidth: true
-                                }
-                                Text {
-                                    text: UtilsCpp.formatElapsedTime(
-                                              modelData.core.duration, false)
-                                    font {
-                                        pixelSize: 12 * DefaultStyle.dp
-                                        weight: 300 * DefaultStyle.dp
                                     }
                                 }
                             }

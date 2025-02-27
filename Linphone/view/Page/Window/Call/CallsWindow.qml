@@ -104,7 +104,7 @@ AbstractWindow {
         // mainWin.goToCallHistory()
     }
     function callEnded(call) {
-        if (call.core.state === LinphoneEnums.CallState.Error) {
+        if (call && call.core.state === LinphoneEnums.CallState.Error) {
             middleItemStackView.replace(inCallItem)
         }
         if (!callsModel.haveCall) {

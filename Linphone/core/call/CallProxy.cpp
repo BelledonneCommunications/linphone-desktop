@@ -26,8 +26,6 @@
 DEFINE_ABSTRACT_OBJECT(CallProxy)
 
 CallProxy::CallProxy(QObject *parent) : LimitProxy(parent) {
-	connect(this, &CallProxy::sourceModelChanged, this, &CallProxy::resetCurrentCall);
-	connect(this, &CallProxy::sourceModelChanged, this, &CallProxy::haveCallChanged);
 }
 
 CallProxy::~CallProxy() {
