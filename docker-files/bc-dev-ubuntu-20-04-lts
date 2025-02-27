@@ -6,11 +6,11 @@ FROM ubuntu:20.04
 
 # Qt on Ubuntu 20.04 is too old. Use a downloader.
 ARG QT_VERSION=5.15.2
-ARG QT6_VERSION=6.5.3
+ARG QT6_VERSION=6.8.0
 #Do not use it. It seems that it cannot be used from python command.
 #ARG QT_MODULES=qtnetworkauth qtquick3d qtmultimedia
 
-MAINTAINER Julien Wadel <julien.wadel@belledonne-communications.com>
+MAINTAINER Gaelle Braud <gaelle.braud@belledonne-communications.com>
 
 # Use a Swiss mirror
 RUN sed -i -E 's/(archive|security)\.ubuntu\.com/ch.archive.ubuntu.com/' /etc/apt/sources.list
@@ -78,8 +78,8 @@ RUN wget https://github.com/Kitware/CMake/releases/download/v3.25.3/cmake-3.25.3
 	cd .. && sudo rm -rf cmake-3.25.3 && rm -rf cmake-3.25.3.tar.gz
 
 # Install nasm from source as we need a newer version than the one being packaged
-RUN curl --fail --silent --show-error --location https://www.nasm.us/pub/nasm/releasebuilds/2.16.01/nasm-2.16.01.tar.gz | \
-    tar --extract --gzip --file - && cd nasm-2.16.01 && \
+RUN wget https://www.nasm.us/pub/nasm/releasebuilds/2.16.01/nasm-2.16.01.tar.gz && \
+    tar -zvxf nasm-2.16.01.tar.gz && cd nasm-2.16.01 && \
     ./configure --prefix=/usr/local && make && make install && \
     cd .. && rm -rf nasm-2.16.01
 
@@ -91,12 +91,15 @@ RUN sudo apt-get update && sudo apt-get install -y libxcb-keysyms1-dev libxcb-im
 USER bc
 WORKDIR /home/bc
 
+RUN sudo pip3 install --upgrade pip
+RUN sudo pip3 install --upgrade importlib-metadata
 RUN sudo pip3 install --upgrade setuptools
 RUN sudo pip3 install ez_setup
 
 ## Install Qt download tool
 # installation is split because there is a way where some modules are not downloaded in the first attempt.
-RUN sudo pip3 install py7zr aqtinstall
+RUN sudo pip3 install py7zr
+RUN sudo pip3 install --upgrade aqtinstall
 RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt
 RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d
 RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt
