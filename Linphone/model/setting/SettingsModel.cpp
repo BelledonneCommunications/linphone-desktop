@@ -67,6 +67,8 @@ SettingsModel::SettingsModel() {
 						 mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 						 setDisableMeetingsFeature(!account->getParams()->getAudioVideoConferenceFactoryAddress());
 					 });
+	auto defaultAccount = core->getDefaultAccount();
+	setDisableMeetingsFeature(defaultAccount && !defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress());
 	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo
 	// calibrations in call.
 	QObject::connect(CoreModel::getInstance().get(), &CoreModel::firstCallStarted, this,
