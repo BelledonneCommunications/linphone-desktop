@@ -409,6 +409,7 @@ FriendGui{
                                               "[ContactLayout.qml] TODO : open conversation")
                     }
                     LabelButton {
+                        visible: SettingsCpp.videoEnabled
                         button.icon.source: AppIcons.videoCamera
                         label: qsTr("Appel vidéo")
                         width: 56 * DefaultStyle.dp

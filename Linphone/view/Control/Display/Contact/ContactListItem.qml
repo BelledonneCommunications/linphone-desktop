@@ -149,6 +149,7 @@ FocusScope {
                     }
                     IconButton {
                         id: videoCallButton
+                        visible: SettingsCpp.videoEnabled
                         Layout.preferredWidth: 45 * DefaultStyle.dp
                         Layout.preferredHeight: 45 * DefaultStyle.dp
                         icon.width: 24 * DefaultStyle.dp

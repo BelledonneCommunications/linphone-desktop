@@ -1200,6 +1200,7 @@ AbstractWindow {
                     spacing: 10 * DefaultStyle.dp
                     CheckableButton {
                         id: videoCameraButton
+                        visible: SettingsCpp.videoEnabled
                         enabled: mainWindow.conferenceInfo
                                  || (mainWindow.callState === LinphoneEnums.CallState.Connected
                                      || mainWindow.callState

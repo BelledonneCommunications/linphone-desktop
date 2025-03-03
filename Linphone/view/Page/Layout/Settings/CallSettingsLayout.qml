@@ -32,30 +32,36 @@ AbstractSettingsLayout {
 	// Generic call parameters
 	//////////////////////////
 
-	Component {
-		id: genericParametersComponent
-		ColumnLayout {
-			spacing: 20 * DefaultStyle.dp
-			SwitchSetting {
-				titleText: qsTr("Annulateur d'écho")
-				subTitleText: qsTr("Évite que de l'écho soit entendu par votre correspondant")
-				propertyName: "echoCancellationEnabled"
-				propertyOwner: SettingsCpp
-			}
-			SwitchSetting {
-				Layout.fillWidth: true
-				titleText: qsTr("Activer l’enregistrement automatique des appels")
-				subTitleText: qsTr("Enregistrer tous les appels par défaut")
-				propertyName: "automaticallyRecordCallsEnabled"
-				propertyOwner: SettingsCpp
-				visible: !SettingsCpp.disableCallRecordings
-			}
-			SwitchSetting {
-				titleText: qsTr("Tonalités")
-				subTitleText: qsTr("Activer les tonalités")
-				propertyName: "callToneIndicationsEnabled"
-				propertyOwner: SettingsCpp
-			}
+    Component {
+        id: genericParametersComponent
+        ColumnLayout {
+            spacing: 20 * DefaultStyle.dp
+            SwitchSetting {
+                titleText: qsTr("Annulateur d'écho")
+                subTitleText: qsTr("Évite que de l'écho soit entendu par votre correspondant")
+                propertyName: "echoCancellationEnabled"
+                propertyOwner: SettingsCpp
+            }
+            SwitchSetting {
+                Layout.fillWidth: true
+                titleText: qsTr("Activer l’enregistrement automatique des appels")
+                subTitleText: qsTr("Enregistrer tous les appels par défaut")
+                propertyName: "automaticallyRecordCallsEnabled"
+                propertyOwner: SettingsCpp
+                visible: !SettingsCpp.disableCallRecordings
+            }
+            SwitchSetting {
+                titleText: qsTr("Tonalités")
+                subTitleText: qsTr("Activer les tonalités")
+                propertyName: "callToneIndicationsEnabled"
+                propertyOwner: SettingsCpp
+            }
+            SwitchSetting {
+                titleText: qsTr("Vidéo")
+                subTitleText: qsTr("Autoriser la vidéo")
+                propertyName: "videoEnabled"
+                propertyOwner: SettingsCpp
+            }
 		}
 	}
 

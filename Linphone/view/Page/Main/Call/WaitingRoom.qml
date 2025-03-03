@@ -37,51 +37,52 @@ RowLayout {
 				}
 				account: accounts.defaultAccount
 			}
-			RowLayout {
-				Layout.alignment: Qt.AlignHCenter
-				spacing: 16 * DefaultStyle.dp
-				CheckableButton {
-					id: videoButton
-					iconUrl: AppIcons.videoCamera
-					checkedIconUrl: AppIcons.videoCameraSlash
-					checked: !mainItem.localVideoEnabled
-					Layout.preferredWidth: 55 * DefaultStyle.dp
-					Layout.preferredHeight: 55 * DefaultStyle.dp
-					icon.width: 32 * DefaultStyle.dp
-					icon.height: 32 * DefaultStyle.dp
-					onClicked: mainItem.localVideoEnabled = !mainItem.localVideoEnabled
-				}
-				CheckableButton {
-					id: microButton
-					iconUrl: AppIcons.microphone
-					checkedIconUrl: AppIcons.microphoneSlash
-					Layout.preferredWidth: 55 * DefaultStyle.dp
-					Layout.preferredHeight: 55 * DefaultStyle.dp
-					icon.width: 32 * DefaultStyle.dp
-					icon.height: 32 * DefaultStyle.dp
-					onCheckedChanged: mainItem.microEnabled = !mainItem.microEnabled
-				}
-				CheckableButton {
-					id: settingsButton
-					visible: stackLayout.currentIndex === 0
-					icon.source: AppIcons.verticalDots
-					Layout.preferredWidth: 55 * DefaultStyle.dp
-					Layout.preferredHeight: 55 * DefaultStyle.dp
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
-				}
-				CheckableButton {
-					id: speakerButton
-					visible: stackLayout.currentIndex === 1
-					iconUrl: AppIcons.speaker
-					checkedIconUrl: AppIcons.speakerSlash
-					Layout.preferredWidth: 55 * DefaultStyle.dp
-					Layout.preferredHeight: 55 * DefaultStyle.dp
-					icon.width: 32 * DefaultStyle.dp
-					icon.height: 32 * DefaultStyle.dp
-				}
-			}
-		}
+            RowLayout {
+                Layout.alignment: Qt.AlignHCenter
+                spacing: 16 * DefaultStyle.dp
+                CheckableButton {
+                    id: videoButton
+                    visible: SettingsCpp.videoEnabled
+                    iconUrl: AppIcons.videoCamera
+                    checkedIconUrl: AppIcons.videoCameraSlash
+                    checked: !mainItem.localVideoEnabled
+                    Layout.preferredWidth: 55 * DefaultStyle.dp
+                    Layout.preferredHeight: 55 * DefaultStyle.dp
+                    icon.width: 32 * DefaultStyle.dp
+                    icon.height: 32 * DefaultStyle.dp
+                    onClicked: mainItem.localVideoEnabled = !mainItem.localVideoEnabled
+                }
+                CheckableButton {
+                    id: microButton
+                    iconUrl: AppIcons.microphone
+                    checkedIconUrl: AppIcons.microphoneSlash
+                    Layout.preferredWidth: 55 * DefaultStyle.dp
+                    Layout.preferredHeight: 55 * DefaultStyle.dp
+                    icon.width: 32 * DefaultStyle.dp
+                    icon.height: 32 * DefaultStyle.dp
+                    onCheckedChanged: mainItem.microEnabled = !mainItem.microEnabled
+                }
+                CheckableButton {
+                    id: settingsButton
+                    visible: stackLayout.currentIndex === 0
+                    icon.source: AppIcons.verticalDots
+                    Layout.preferredWidth: 55 * DefaultStyle.dp
+                    Layout.preferredHeight: 55 * DefaultStyle.dp
+                    icon.width: 24 * DefaultStyle.dp
+                    icon.height: 24 * DefaultStyle.dp
+                }
+                CheckableButton {
+                    id: speakerButton
+                    visible: stackLayout.currentIndex === 1
+                    iconUrl: AppIcons.speaker
+                    checkedIconUrl: AppIcons.speakerSlash
+                    Layout.preferredWidth: 55 * DefaultStyle.dp
+                    Layout.preferredHeight: 55 * DefaultStyle.dp
+                    icon.width: 32 * DefaultStyle.dp
+                    icon.height: 32 * DefaultStyle.dp
+                }
+            }
+        }
 		StackLayout {
 			id: stackLayout
 			currentIndex: 0

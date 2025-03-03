@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import Linphone
-import SettingsCpp 1.0
+import SettingsCpp
 
 ColumnLayout {
 	id: mainItem
@@ -191,24 +191,25 @@ ColumnLayout {
 					handle: Item {visible: false}
 				}
 			}
-			ColumnLayout {
-				spacing: 12 * DefaultStyle.dp
-				RowLayout {
-					spacing: 8 * DefaultStyle.dp
-					EffectImage {
-						imageSource: AppIcons.videoCamera
-						colorizationColor: DefaultStyle.main1_500_main
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
-						imageWidth: 24 * DefaultStyle.dp
-						imageHeight: 24 * DefaultStyle.dp
-					}
-					Text {
-						text: qsTr("Caméra")
-						font: Typography.p2l
-						Layout.fillWidth: true
-					}
-				}
+            ColumnLayout {
+                spacing: 12 * DefaultStyle.dp
+                visible: SettingsCpp.videoEnabled
+                RowLayout {
+                    spacing: 8 * DefaultStyle.dp
+                    EffectImage {
+                        imageSource: AppIcons.videoCamera
+                        colorizationColor: DefaultStyle.main1_500_main
+                        Layout.preferredWidth: 24 * DefaultStyle.dp
+                        Layout.preferredHeight: 24 * DefaultStyle.dp
+                        imageWidth: 24 * DefaultStyle.dp
+                        imageHeight: 24 * DefaultStyle.dp
+                    }
+                    Text {
+                        text: qsTr("Caméra")
+                        font: Typography.p2l
+                        Layout.fillWidth: true
+                    }
+                }
 				ComboSetting {
 					id: videoDevicesCbox
 					Layout.fillWidth: true

@@ -187,20 +187,20 @@ ColumnLayout {
 			button.icon.source: AppIcons.chatTeardropText
 			label: qsTr("Message")
 			button.onClicked: console.debug("[ContactLayout.qml] TODO : open conversation")
-		}
-		LabelButton {
-			visible: !mainItem.isConference
-			width: 56 * DefaultStyle.dp
-			height: 56 * DefaultStyle.dp
-			button.icon.width: 24 * DefaultStyle.dp
-			button.icon.height: 24 * DefaultStyle.dp
-			button.icon.source: AppIcons.videoCamera
-			label: qsTr("Appel Video")
-			button.onClicked: {
-				if (mainItem.specificAddress === "") mainWindow.startCallWithContact(mainItem.contact, true, mainItem)
-				else UtilsCpp.createCall(mainItem.specificAddress, {'localVideoEnabled': true})
-			}
-		}
+        }
+        LabelButton {
+            visible: !mainItem.isConference && SettingsCpp.videoEnabled
+            width: 56 * DefaultStyle.dp
+            height: 56 * DefaultStyle.dp
+            button.icon.width: 24 * DefaultStyle.dp
+            button.icon.height: 24 * DefaultStyle.dp
+            button.icon.source: AppIcons.videoCamera
+            label: qsTr("Appel Video")
+            button.onClicked: {
+                if (mainItem.specificAddress === "") mainWindow.startCallWithContact(mainItem.contact, true, mainItem)
+                else UtilsCpp.createCall(mainItem.specificAddress, {'localVideoEnabled': true})
+            }
+        }
 	}
 	ColumnLayout {
 		id: detailControl
