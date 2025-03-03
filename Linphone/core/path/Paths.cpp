@@ -162,6 +162,10 @@ static inline QString getAppRootCaFilePath() {
 	QString rootca = getAppPackageDataDirPath() + Constants::PathRootCa;
 	if (Paths::filePathExists(rootca)) { // Packaged
 		return rootca;
+	} else {
+		QFile rootCaFile(rootca);
+		if (rootCaFile.open(QIODevice::ReadWrite))
+			return rootca;
 	}
 	return "";
 }

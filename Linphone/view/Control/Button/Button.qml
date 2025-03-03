@@ -116,6 +116,7 @@ Control.Button {
 	}
 	
 	component ButtonImage: EffectImage {
+        asynchronous: mainItem.asynchronous
 		imageSource: mainItem.icon.source
 		imageWidth: mainItem.icon.width
 		imageHeight: mainItem.icon.height

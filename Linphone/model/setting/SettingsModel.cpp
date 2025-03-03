@@ -65,7 +65,7 @@ SettingsModel::SettingsModel() {
 	QObject::connect(CoreModel::getInstance().get(), &CoreModel::defaultAccountChanged, this,
 					 [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> account) {
 						 mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-						 setDisableMeetingsFeature(!account->getParams()->getAudioVideoConferenceFactoryAddress());
+						 setDisableMeetingsFeature(account && !account->getParams()->getAudioVideoConferenceFactoryAddress());
 					 });
 	auto defaultAccount = core->getDefaultAccount();
 	setDisableMeetingsFeature(defaultAccount && !defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress());

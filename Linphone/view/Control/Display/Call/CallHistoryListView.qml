@@ -23,10 +23,12 @@ ListView {
         loading = false
         // contentY = 0
     }
-    onSearchTextChanged: loading = true
 
     model: CallHistoryProxy {
         id: callHistoryProxy
+        Component.onCompleted: {
+            loading = true
+        }
         filterText: mainItem.searchText
         onFilterTextChanged: maxDisplayItems = initialDisplayItems
         initialDisplayItems: Math.max(
@@ -106,14 +108,22 @@ ListView {
             currentIndex = -1
     }
 
+    BusyIndicator {
+        anchors.horizontalCenter: mainItem.horizontalCenter
+        visible: mainItem.loading
+        height: visible ? mainItem.busyIndicatorSize : 0
+        width: mainItem.busyIndicatorSize
+        indicatorHeight: mainItem.busyIndicatorSize
+        indicatorWidth: mainItem.busyIndicatorSize
+        indicatorColor: DefaultStyle.main1_500_main
+    }
+
     // Qt bug: sometimes, containsMouse may not be send and update on each MouseArea.
     // So we need to use this variable to switch off all hovered items.
     property int lastMouseContainsIndex: -1
     delegate: FocusScope {
         width: mainItem.width
         height: 56 * DefaultStyle.dp
-        visible: !!modelData
-
         RowLayout {
             z: 1
             anchors.fill: parent
@@ -130,6 +140,7 @@ ListView {
                 height: 45 * DefaultStyle.dp
                 isConference: modelData.core.isConference
                 shadowEnabled: false
+                asynchronous: false
             }
             ColumnLayout {
                 Layout.fillHeight: true
@@ -195,6 +206,7 @@ ListView {
                 icon.source: AppIcons.phone
                 focus: true
                 activeFocusOnTab: false
+                asynchronous: false
                 onClicked: {
                     if (modelData.core.isConference) {
                         var callsWindow = UtilsCpp.getCallsWindow()

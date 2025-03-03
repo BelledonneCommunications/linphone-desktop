@@ -90,6 +90,17 @@ void CoreModel::start() {
 		config->setInt("video", "capture", 1);
 		config->setInt("video", "display", 1);
 	}
+
+	// TODO : set the real transport type when sdk will be updated
+	// for now, we need to let the OS choose the port to listen on
+	// so that the user can be connected to linphone and another softphone
+	// at the same time (otherwise it tries to listen on the same port as
+	// the other software)
+	auto transports = mCore->getTransports();
+	transports->setTcpPort(-2);
+	transports->setUdpPort(-2);
+	transports->setTlsPort(-2);
+	mCore->setTransports(transports);
 	mCore->enableVideoPreview(false);         // SDK doesn't write the state in configuration if not ready.
 	config->setInt("video", "show_local", 0); // So : write ourself to turn off camera before starting the core.
 	QString userAgent = ToolModel::computeUserAgent(config);

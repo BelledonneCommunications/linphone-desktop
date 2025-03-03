@@ -236,18 +236,6 @@ AbstractMainPage {
                                 searchBar: searchBar
                                 Control.ScrollBar.vertical: scrollbar
 
-                                BusyIndicator {
-                                    anchors.horizontalCenter: historyListView.horizontalCenter
-                                    visible: historyListView.loading
-                                             && historyListView.count === 0
-                                             && searchBar.text.length === 0
-                                    height: visible ? historyListView.busyIndicatorSize : 0
-                                    width: historyListView.busyIndicatorSize
-                                    indicatorHeight: historyListView.busyIndicatorSize
-                                    indicatorWidth: historyListView.busyIndicatorSize
-                                    indicatorColor: DefaultStyle.main1_500_main
-                                }
-
                                 Connections {
                                     target: mainItem
                                     function onListViewUpdated() {
@@ -629,17 +617,6 @@ ConferenceInfoGui{
                             clip: true
                             searchText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
                             busyIndicatorSize: 40 * DefaultStyle.dp
-
-                            BusyIndicator {
-                                anchors.horizontalCenter: detailListView.horizontalCenter
-                                visible: detailListView.loading
-                                         && detailListView.count === 0
-                                height: visible ? detailListView.busyIndicatorSize : 0
-                                width: detailListView.busyIndicatorSize
-                                indicatorHeight: detailListView.busyIndicatorSize
-                                indicatorWidth: detailListView.busyIndicatorSize
-                                indicatorColor: DefaultStyle.main1_500_main
-                            }
 
                             delegate: Item {
                                 width: detailListView.width
