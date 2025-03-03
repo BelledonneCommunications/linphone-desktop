@@ -34,8 +34,7 @@ ubuntu2004-makefile-gcc:
 ubuntu2004-ninja-clang:
   rules:
     - !reference [.rules-merge-request-manual, rules]
-    - if: $NIGHTLY_MASTER
-    - if: $LINUX_NINJA
+    - if: $NIGHTLY_MASTER && $LINUX_NINJA
   variables:
     CMAKE_OPTIONS: -DENABLE_DOC=ON -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     CMAKE_GENERATOR: Ninja
@@ -47,8 +46,7 @@ ubuntu2004-ninja-clang:
 ubuntu2004-ninja-clang-small:
   rules:
     - !reference [.rules-merge-request-manual, rules]
-    - if: $NIGHTLY_MASTER
-    - if: $LINUX_NINJA
+    - if: $NIGHTLY_MASTER && $LINUX_NINJA
   variables:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_ADVANCED_IM=NO -DENABLE_DB_STORAGE=NO -DENABLE_PQCRYPTO=OFF
   extends: ubuntu2004-ninja-clang
