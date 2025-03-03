@@ -55,6 +55,7 @@ public:
 
 signals:
 	void componentReady();
+	void devicesSet();
 
 private:
 	QSharedPointer<AccountCore> mAccountCore;

@@ -101,6 +101,7 @@ void AccountDeviceList::setDevices(QList<QSharedPointer<AccountDeviceCore>> devi
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	add(devices);
 	lDebug() << log().arg("Add %1 devices").arg(devices.size());
+	emit devicesSet();
 }
 
 void AccountDeviceList::deleteDevice(AccountDeviceGui *deviceGui) {

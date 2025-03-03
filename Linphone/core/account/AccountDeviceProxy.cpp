@@ -32,6 +32,12 @@ DEFINE_GUI_OBJECT(AccountDeviceProxy)
 
 AccountDeviceProxy::AccountDeviceProxy(QObject *parent) : LimitProxy(parent) {
 	mAccountDeviceList = AccountDeviceList::create();
+	connect(this, &AccountDeviceProxy::sourceModelChanged, this, [this] {
+		auto model = getListModel<AccountDeviceList>();
+		if (model) {
+			connect(model, &AccountDeviceList::devicesSet, this, &AccountDeviceProxy::devicesSet);
+		}
+	});
 	setSourceModels(new SortFilterList(mAccountDeviceList.get(), Qt::DescendingOrder));
 }
 

@@ -229,13 +229,24 @@ AbstractSettingsLayout {
 			}
 			contentItem: ColumnLayout {
 				spacing: 15 * DefaultStyle.dp
+                BusyIndicator {
+                    Layout.preferredWidth: 60 * DefaultStyle.dp
+                    Layout.preferredHeight: 60 * DefaultStyle.dp
+                    Layout.alignment: Qt.AlignHCenter
+                    visible: devices.loading
+                }
+
 				Repeater {
 					id: devices
+                    visible: !loading
+                    property bool loading
+                    Component.onCompleted: loading = true
 					model: AccountDeviceProxy {
 						id: accountDeviceProxy
 						account: model
+                        onDevicesSet: devices.loading = false;
 					}
-					Control.Control{
+                    Control.Control {
 						Layout.fillWidth: true
 						height: 133 * DefaultStyle.dp
 						topPadding: 26 * DefaultStyle.dp

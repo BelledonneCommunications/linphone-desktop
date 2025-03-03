@@ -48,6 +48,7 @@ protected:
 signals:
 	void lUpdate();
 	void accountChanged();
+	void devicesSet();
 
 private:
 	QString mSearchText;
