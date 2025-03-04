@@ -76,7 +76,7 @@ void LoginPage::login(const QString &username,
 			        switch (state) {
 				        case linphone::RegistrationState::Failed: {
 							if (message.isEmpty())
-								setErrorMessage(QString(tr("Le couple identifiant mot de passe ne correspond pas")));
+								setErrorMessage(QString(tr("Erreur durant la connexion")));
 							else
 								setErrorMessage(message);
 					        if (accountManager) {

@@ -105,7 +105,7 @@ bool AccountManager::login(QString username,
 		                  .arg(QStringLiteral("Unable to set identity address: `%1`."))
 		                  .arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
 		*errorMessage =
-		    tr("Unable to set identity address: `%1`.").arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
+			tr("Impossible de configurer l'adresse : `%1`.").arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
 		return false;
 	}
 
@@ -125,20 +125,23 @@ bool AccountManager::login(QString username,
 	mAccountModel->setSelf(mAccountModel);
 	connect(mAccountModel.get(), &AccountModel::registrationStateChanged, this,
 	        [this, authInfo, core](const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state,
-	                               const std::string &message) {
+								   const std::string &message) {
+				QString errorMessage = QString::fromStdString(message);
 		        if (mAccountModel && account == mAccountModel->getAccount()) {
 			        if (state == linphone::RegistrationState::Failed) {
 				        connect(
 				            mAccountModel.get(), &AccountModel::removed, this, [this]() { mAccountModel = nullptr; },
 				            Qt::SingleShotConnection);
-				        mAccountModel->removeAccount();
+						if (account->getError() == linphone::Reason::Forbidden) errorMessage = tr("Le couple identifiant mot de passe ne correspond pas");
+						else errorMessage = tr("Erreur durant la connexion");
+						mAccountModel->removeAccount();
 			        } else if (state == linphone::RegistrationState::Ok) {
 				        core->setDefaultAccount(account);
 				        emit mAccountModel->removeListener();
 				        mAccountModel = nullptr;
 			        }
 				}
-				emit registrationStateChanged(state, QString::fromStdString(message));
+				emit registrationStateChanged(state, errorMessage);
 	        });
 	auto status = core->addAccount(account);
 	if (status == -1) {
