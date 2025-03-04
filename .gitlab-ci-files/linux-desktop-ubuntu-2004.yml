@@ -4,7 +4,7 @@
 
 ubuntu2004-ninja-gcc:
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $DOCKER_UPDATE == null
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $DOCKER_UPDATE == null  && $SKIP_LINUX == null
   variables:
     CMAKE_GENERATOR: Ninja
     CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
@@ -18,18 +18,18 @@ ubuntu2004-ninja-gcc:
 #               Nightly
 #################################################
 
-# ubuntu2004-makefile-gcc:
-#   rules:
-#     - !reference [.rules-merge-request-manual, rules]
-#     - if: $NIGHTLY_MASTER
-#   variables:
-#     CMAKE_GENERATOR: Unix Makefiles
-#     CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
-#     CC: gcc
-#     CXX: g++
-#     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
-#   extends: .linux-desktop
-#   <<: *docker_image_platform_and_runner_tag
+ubuntu2004-makefile-gcc:
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    CC: gcc
+    CXX: g++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .linux-desktop
+  <<: *docker_image_platform_and_runner_tag
 
 ubuntu2004-ninja-clang:
   rules:
