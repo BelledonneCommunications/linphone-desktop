@@ -245,6 +245,10 @@ AbstractSettingsLayout {
 						id: accountDeviceProxy
 						account: model
                         onDevicesSet: devices.loading = false;
+                        onRequestError: (errorMessage) => {
+                            devices.loading = false;
+                            mainWindow.showInformationPopup(qsTr("Erreur"), errorMessage, false)
+                        }
 					}
                     Control.Control {
 						Layout.fillWidth: true

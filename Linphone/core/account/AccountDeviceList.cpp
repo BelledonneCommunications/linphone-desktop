@@ -150,10 +150,13 @@ void AccountDeviceList::setSelf(QSharedPointer<AccountDeviceList> me) {
 			    &AccountManagerServicesModel::requestError,
 			    [this](const std::shared_ptr<const linphone::AccountManagerServicesRequest> &request, int statusCode,
 			           const std::string &errorMessage,
-			           const std::shared_ptr<const linphone::Dictionary> &parameterErrors) {
-				    lDebug() << "REQUEST ERROR" << errorMessage;
-				    if (request->getType() == linphone::AccountManagerServicesRequest::Type::GetDevicesList) {
-				    }
+					   const std::shared_ptr<const linphone::Dictionary> &parameterErrors) {
+					lDebug() << "REQUEST ERROR" << errorMessage << "/" << int(request->getType());
+					QString message = QString::fromStdString(errorMessage);
+					if (request->getType() == linphone::AccountManagerServicesRequest::Type::GetDevicesList) {
+						message = tr("Erreur lors de la récupération des appareils");
+					}
+					emit requestError(message);
 			    });
 			mAccountManagerServicesModelConnection->makeConnectToModel(
 			    &AccountManagerServicesModel::devicesListFetched,

@@ -49,6 +49,7 @@ signals:
 	void lUpdate();
 	void accountChanged();
 	void devicesSet();
+	void requestError(QString message = QString());
 
 private:
 	QString mSearchText;

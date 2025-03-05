@@ -56,6 +56,7 @@ public:
 signals:
 	void componentReady();
 	void devicesSet();
+	void requestError(QString errorMessage = QString());
 
 private:
 	QSharedPointer<AccountCore> mAccountCore;

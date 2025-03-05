@@ -36,6 +36,7 @@ AccountDeviceProxy::AccountDeviceProxy(QObject *parent) : LimitProxy(parent) {
 		auto model = getListModel<AccountDeviceList>();
 		if (model) {
 			connect(model, &AccountDeviceList::devicesSet, this, &AccountDeviceProxy::devicesSet);
+			connect(model, &AccountDeviceList::requestError, this, &AccountDeviceProxy::requestError);
 		}
 	});
 	setSourceModels(new SortFilterList(mAccountDeviceList.get(), Qt::DescendingOrder));
