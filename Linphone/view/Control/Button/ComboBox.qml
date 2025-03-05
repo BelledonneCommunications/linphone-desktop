@@ -6,7 +6,7 @@ import Linphone
   
 Control.ComboBox {
 	id: mainItem
-	// Usage : each item of the model list must be {text: ..., img: ...}
+	// Usage : each item of the model list must be {text: …, img: …}
 	// If string list, only text part of the delegate will be filled
 	// readonly property string currentText: selectedItemText.text
 	property alias listView: listView

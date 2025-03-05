@@ -89,7 +89,8 @@ RowLayout {
 				Connections {
 					target: modelData.core
 					function onSavedChanged() {
-						if (modelData.core.saved) UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("Les changements ont été sauvegardés"), true, mainWindow)
+                        //: "Les changements ont été sauvegardés"
+                        if (modelData.core.saved) UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"), qsTr("information_popup_changes_saved"), true, mainWindow)
 					}
 				} 
 
@@ -110,7 +111,8 @@ RowLayout {
 			}
 			MediumButton {
 				Layout.alignment: Qt.AlignRight | Qt.AlignHCenter
-				text: qsTr("Ajouter")
+                //: "Ajouter"
+                text: qsTr("add")
 				style: ButtonStyle.main
 				visible: mainItem.showAddButton
 				onClicked: {

@@ -17,21 +17,16 @@ FocusScope {
         anchors.leftMargin: Math.round(17 * DefaultStyle.dp)
         anchors.rightMargin: Math.round(17 * DefaultStyle.dp)
         spacing: Math.round(12 * DefaultStyle.dp)
-		// Text {
-		// 	Layout.fillWidth: true
-		// 	text: qsTr("La disposition choisie sera enregistrée pour vos prochaines réunions")
-        // 	font.pixelSize: Math.round(14 * DefaultStyle.dp)
-		// 	color: DefaultStyle.main2_500main
-		// }
+
 		RoundedPane {
 			Layout.fillWidth: true
 			contentItem: ColumnLayout {
 				spacing: 0
 				Repeater {
 					model: [
-						{text: qsTr("Mosaïque"), imgUrl: AppIcons.squaresFour},
-						{text: qsTr("Intervenant actif"), imgUrl: AppIcons.pip},
-						{text: qsTr("Audio seulement"), imgUrl: AppIcons.waveform}
+                        {text: qsTr("conference_layout_grid"), imgUrl: AppIcons.squaresFour},
+                        {text: qsTr("conference_layout_active_speaker"), imgUrl: AppIcons.pip},
+                        {text: qsTr("conference_layout_audio_only"), imgUrl: AppIcons.waveform}
 					]
 					RadioButton {
 						id: radiobutton

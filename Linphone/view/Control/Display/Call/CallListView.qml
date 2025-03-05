@@ -49,12 +49,16 @@ ListView {
 			}
 			Text {
 				id: callStateText
-				property string type: modelData.core.isConference ? qsTr('Réunion') : qsTr('Appel')
+                //: "Réunion
+                //: "Appel"
+                property string type: modelData.core.isConference ? qsTr("meeting") : qsTr("call")
                 Layout.rightMargin: Math.round(2 * DefaultStyle.dp)
 				text: modelData.core.state === LinphoneEnums.CallState.Paused
 				|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
-					? type + qsTr(" en pause")
-					: type + qsTr(" en cours")
+                //: "%1 en pause"
+                    ? qsTr("paused_call_or_meeting").arg(type)
+                      //: "%1 en cours"
+                    : qsTr("ongoing_call_or_meeting").arg(type)
 				font {
                     pixelSize: Math.round(12 * DefaultStyle.dp)
                     weight: Math.round(300 * DefaultStyle.dp)

@@ -13,8 +13,10 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-			title: qsTr("Carnet  d'adresse CardDAV"),
-			subTitle: qsTr("Ajouter un carnet d’adresse CardDAV pour synchroniser vos contacts Linphone avec un carnet d’adresse tiers."),
+            //: Carnet  d'adresse CardDAV
+            title: qsTr("settings_contacts_carddav_title"),
+            //: "Ajouter un carnet d’adresse CardDAV pour synchroniser vos contacts Linphone avec un carnet d’adresse tiers."
+            subTitle: qsTr("settings_contacts_carddav_subtitle"),
 			contentComponent: cardDavParametersComponent
 		}
 	]
@@ -25,16 +27,19 @@ AbstractSettingsLayout {
 		if (carddavGui.core.isValid()) {
 			carddavGui.core.save()
 		} else {
-			UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Vérifiez que toutes les informations ont été saisies."), false, mainWindow)
+            //: "Vérifiez que toutes les informations ont été saisies."
+            UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("settings_contacts_carddav_popup_invalid_error"), false, mainWindow)
 		}
 	}
 	Connections {
 		target: carddavGui.core
 		function onSaved(success) {
 			if (success)
-				UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("Le carnet d'adresse CardDAV est synchronisé."), true, mainWindow)
+                //: "Le carnet d'adresse CardDAV est synchronisé."
+                UtilsCpp.showInformationPopup(qsTr("information_popup_synchronization_success_title"), qsTr("settings_contacts_carddav_synchronization_success_message"), true, mainWindow)
 			else
-				UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Erreur de synchronisation!"), false, mainWindow)
+                //: "Erreur de synchronisation!"
+                UtilsCpp.showInformationPopup(qsTr("settings_contacts_carddav_popup_synchronization_error_title"), qsTr("settings_contacts_carddav_popup_synchronization_error_message"), false, mainWindow)
 		}
 	}
 	Component {
@@ -50,7 +55,8 @@ AbstractSettingsLayout {
 				onClicked: {
 					var mainWin = UtilsCpp.getMainWindow()
 					mainWin.showConfirmationLambdaPopup("",
-						qsTr("Supprimer le carnet d'adresse CardDAV ?"),
+                        //: "Supprimer le carnet d'adresse CardDAV ?"
+                        qsTr("settings_contacts_delete_carddav_server_title"),
 						"",
 						function (confirmed) {
 							if (confirmed) {
@@ -75,7 +81,8 @@ AbstractSettingsLayout {
 			DecoratedTextField {
 				propertyName: "displayName"
 				propertyOwnerGui: carddavGui
-				title: qsTr("Nom d’affichage")
+                //: Nom d'affichage
+                title: qsTr("sip_address_display_name")
 				canBeEmpty: false
 				toValidate: true
 				Layout.fillWidth: true
@@ -83,7 +90,8 @@ AbstractSettingsLayout {
 			DecoratedTextField {
 				propertyName: "uri"
 				propertyOwnerGui: carddavGui
-				title: qsTr("URL du serveur")
+                //: "URL du serveur"
+                title: qsTr("settings_contacts_carddav_server_url_title")
 				canBeEmpty: false
 				toValidate: true
 				Layout.fillWidth: true
@@ -91,7 +99,7 @@ AbstractSettingsLayout {
 			DecoratedTextField {
 				propertyName: "username"
 				propertyOwnerGui: carddavGui
-				title: qsTr("Nom d’utilisateur")
+                title: qsTr("username")
 				toValidate: true
 				Layout.fillWidth: true
 			}
@@ -99,19 +107,21 @@ AbstractSettingsLayout {
 				propertyName: "password"
 				hidden: true
 				propertyOwnerGui: carddavGui
-				title: qsTr("Mot de passe")
+                title: qsTr("password")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "realm"
 				propertyOwnerGui: carddavGui
-				title: qsTr("Domaine d’authentification")
+                //: Domaine d’authentification
+                title: qsTr("settings_contacts_carddav_realm_title")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			SwitchSetting {
-				titleText: qsTr("Stocker ici les contacts nouvellement crées")
+                //: "Stocker ici les contacts nouvellement crées"
+                titleText: qsTr("settings_contacts_carddav_use_as_default_title")
 				propertyName: "storeNewFriendsInIt"
 				propertyOwnerGui: carddavGui
 			}

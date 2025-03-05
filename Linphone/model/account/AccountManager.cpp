@@ -80,7 +80,8 @@ bool AccountManager::login(QString username,
 		auto otherParams = otherAccount->getParams();
 		if (otherParams->getIdentityAddress()->getUsername() == Utils::appStringToCoreString(username) &&
 		    otherParams->getDomain() == Utils::appStringToCoreString(domain)) {
-			*errorMessage = tr("Le compte est déjà connecté");
+			//: "Le compte est déjà connecté"
+			*errorMessage = tr("assistant_account_login_already_connected_error");
 			return false;
 		}
 	}
@@ -93,7 +94,8 @@ bool AccountManager::login(QString username,
 			auto serverAddress =
 			    factory->createAddress(Utils::appStringToCoreString(QStringLiteral("sip:%1").arg(domain)));
 			if (!serverAddress) {
-				*errorMessage = tr("Impossible de créer l'adresse proxy. Merci de vérifier le nom de domaine.");
+				//: "Impossible de créer l'adresse proxy. Merci de vérifier le nom de domaine."
+				*errorMessage = tr("assistant_account_login_proxy_address_error");
 				return false;
 			}
 			serverAddress->setTransport(transportType);
@@ -104,13 +106,17 @@ bool AccountManager::login(QString username,
 		qWarning() << log()
 		                  .arg(QStringLiteral("Unable to set identity address: `%1`."))
 		                  .arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
+
+
+		//: "Impossible de configurer l'adresse : `%1`."
 		*errorMessage =
-			tr("Impossible de configurer l'adresse : `%1`.").arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
+			tr("assistant_account_login_address_configuration_error").arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
 		return false;
 	}
 
 	if (account->setParams(params)) {
-		*errorMessage = tr("Impossible de configurer les paramètres du compte.");
+		//: "Impossible de configurer les paramètres du compte."
+		*errorMessage = tr("assistant_account_login_params_configuration_error");
 		return false;
 	}
 	auto authInfo = factory->createAuthInfo(Utils::appStringToCoreString(username), // Username.
@@ -132,8 +138,10 @@ bool AccountManager::login(QString username,
 				        connect(
 				            mAccountModel.get(), &AccountModel::removed, this, [this]() { mAccountModel = nullptr; },
 				            Qt::SingleShotConnection);
-						if (account->getError() == linphone::Reason::Forbidden) errorMessage = tr("Le couple identifiant mot de passe ne correspond pas");
-						else errorMessage = tr("Erreur durant la connexion");
+						//: "Le couple identifiant mot de passe ne correspond pas"
+						if (account->getError() == linphone::Reason::Forbidden) errorMessage = tr("assistant_account_login_forbidden_error");
+						//: "Erreur durant la connexion"
+						else errorMessage = tr("assistant_account_login_error");
 						mAccountModel->removeAccount();
 			        } else if (state == linphone::RegistrationState::Ok) {
 				        core->setDefaultAccount(account);
@@ -145,7 +153,8 @@ bool AccountManager::login(QString username,
 	        });
 	auto status = core->addAccount(account);
 	if (status == -1) {
-		*errorMessage = tr("Impossible d'ajouter le compte.");
+		//: "Impossible d'ajouter le compte."
+		*errorMessage = tr("assistant_account_add_error");
 		core->removeAuthInfo(authInfo);
 		return false;
 	}

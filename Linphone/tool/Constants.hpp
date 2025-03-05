@@ -156,7 +156,7 @@ public:
 	static constexpr char PathMessageHistoryList[] = "/message-history.db";
 	static constexpr char PathZrtpSecrets[] = "/zidcache";
 
-	static constexpr char LanguagePath[] = ":/languages/";
+	static constexpr char LanguagePath[] = ":/data/languages/";
 
 	// The main windows of Linphone desktop.
 	static constexpr char QmlViewMainWindow[] = "qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml";

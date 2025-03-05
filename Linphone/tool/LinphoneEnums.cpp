@@ -63,7 +63,8 @@ QString LinphoneEnums::toString(LinphoneEnums::MediaEncryption encryption) {
 		case LinphoneEnums::MediaEncryption::Srtp:
 			return QObject::tr("SRTP");
 		case LinphoneEnums::MediaEncryption::Zrtp:
-			return QObject::tr("ZRTP - Post quantique");
+			//: "ZRTP - Post quantique"
+			return QObject::tr("media_encryption_post_quantum");
 		default:
 			return QString();
 	}
@@ -177,9 +178,11 @@ linphone::Call::Dir LinphoneEnums::toLinphone(const LinphoneEnums::CallDir &data
 QString LinphoneEnums::toString(const LinphoneEnums::CallDir &data) {
 	switch (data) {
 		case LinphoneEnums::CallDir::Incoming:
-			return QObject::tr("Entrant");
+			//: "Entrant"
+			return QObject::tr("incoming");
 		case LinphoneEnums::CallDir::Outgoing:
-			return QObject::tr("Sortant");
+			//: "Sortant"
+			return QObject::tr("outgoing");
 		default:
 			return QString();
 	}
@@ -203,9 +206,12 @@ LinphoneEnums::ConferenceLayout LinphoneEnums::fromLinphone(const linphone::Conf
 }
 
 QString LinphoneEnums::toString(LinphoneEnums::ConferenceLayout layout) {
-	if (layout == LinphoneEnums::ConferenceLayout::ActiveSpeaker) return QObject::tr("Participant actif");
-	else if (layout == LinphoneEnums::ConferenceLayout::Grid) return QObject::tr("Grille");
-	else return QObject::tr("Audio seulement");
+	//: "Participant actif"
+	if (layout == LinphoneEnums::ConferenceLayout::ActiveSpeaker) return QObject::tr("conference_layout_active_speaker");
+	//: "Mosaïque"
+	else if (layout == LinphoneEnums::ConferenceLayout::Grid) return QObject::tr("conference_layout_grid");
+	//: "Audio uniquement"
+	else return QObject::tr("conference_layout_audio_only");
 }
 
 QVariantList LinphoneEnums::conferenceLayoutsToVariant(QList<LinphoneEnums::ConferenceLayout> list) {

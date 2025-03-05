@@ -53,11 +53,14 @@ Item {
 		z: 1
 		visible: mainItem.callState === LinphoneEnums.CallState.End || mainItem.callState === LinphoneEnums.CallState.Error || mainItem.callState === LinphoneEnums.CallState.Released
 		text: mainItem.conference
-				? qsTr("Vous avez quitté la conférence")
-				: mainItem.callTerminatedByUser
-					? qsTr("Vous avez terminé l'appel") 
-					: mainItem.callStarted 
-						? qsTr("Votre correspondant a terminé l'appel")
+                //: "Vous avez quitté la conférence"
+                ? qsTr("meeting_event_conference_destroyed")
+                : mainItem.callTerminatedByUser
+                    //: "Vous avez terminé l'appel"
+                    ? qsTr("call_ended_by_user")
+                    : mainItem.callStarted
+                        //: "Votre correspondant a terminé l'appel"
+                        ? qsTr("call_ended_by_remote")
 						: call && call.core.lastErrorMessage || ""
 		color: DefaultStyle.grey_0
 		font {
@@ -85,7 +88,8 @@ Item {
 				width: waitText.implicitWidth
 				Text {
 					id: waitText
-					text: qsTr("Waiting for other participants...")
+                    //: "En attente d'autres participants…"
+                    text: qsTr("conference_call_empty")
                     Layout.preferredHeight: Math.round(67 * DefaultStyle.dp)
 					Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
@@ -102,13 +106,15 @@ Item {
 						borderColor: DefaultStyle.main2_400
 						icon.source: AppIcons.shareNetwork
 						contentImageColor: DefaultStyle.main2_400
-						text: qsTr("Share invitation")
+                        //: "Partager le lien"
+                        text: qsTr("conference_share_link_title")
 						anchors.centerIn: parent
 						textColor: DefaultStyle.main2_400
 						onClicked: {
 							if (mainItem.conference) {
 								UtilsCpp.copyToClipboard(mainItem.call.core.remoteAddress)
-								showInformationPopup(qsTr("Copié"), qsTr("Le lien de la réunion a été copié dans le presse-papier"), true)
+                                //: Le lien de la réunion a été copié dans le presse-papier
+                                showInformationPopup(qsTr("copied"), qsTr("information_popup_meeting_address_copied_to_clipboard"), true)
 							}
 						}
 					}
@@ -134,23 +140,3 @@ Item {
 		}
 	}
 }
-// TODO : waitingForParticipant
-		// ColumnLayout {
-		// 	id: waitingForParticipant
-		// 	Text {
-		// 		text: qsTr("Waiting for other participants...")
-		// 		color: DefaultStyle.frey_0
-		// 		font {
-        // 			pixelSize: Math.round(30 * DefaultStyle.dp)
-        // 			weight: Math.round(300 * DefaultStyle.dp)
-		// 		}
-		// 	}
-		// 	Button {
-		// 		text: qsTr("Share invitation")
-		// 		icon.source: AppIcons.shareNetwork
-		// 		color: DefaultStyle.main2_400
-        // 		Layout.preferredWidth: Math.round(206 * DefaultStyle.dp)
-        // 		Layout.preferredHeight: Math.round(47 * DefaultStyle.dp)
-		// 	}
-		// }
-

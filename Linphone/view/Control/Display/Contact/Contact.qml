@@ -13,7 +13,9 @@ Control.Control{
 	id: mainItem
     padding: Math.round(10 * DefaultStyle.dp)
 	property AccountGui account
-	property color backgroundColor: DefaultStyle.grey_0
+    property color backgroundColor: DefaultStyle.grey_0
+    leftPadding: Math.round(8 * DefaultStyle.dp)
+    rightPadding: Math.round(8 * DefaultStyle.dp)
 
 	signal avatarClicked()
 	signal backgroundClicked()
@@ -56,6 +58,7 @@ Control.Control{
 		Control.Control {
 			id: registrationStatusItem
             Layout.minimumWidth: Math.round(49 * DefaultStyle.dp)
+            Layout.maximumWidth: 150
             Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
             topPadding: Math.round(4 * DefaultStyle.dp)
             bottomPadding: Math.round(4 * DefaultStyle.dp)
@@ -70,8 +73,10 @@ Control.Control{
 			}
 			contentItem: Text {
 				id: text
-				anchors.fill: parent
-				verticalAlignment: Text.AlignVCenter	
+                anchors.fill: parent
+                anchors.leftMargin: registrationStatusItem.leftPadding
+                anchors.rightMargin: registrationStatusItem.rightPadding
+                verticalAlignment: Text.AlignVCenter
 				horizontalAlignment: Text.AlignHCenter
 				visible: mainItem.account
 				property int mode : !mainItem.account || mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Ok
@@ -98,12 +103,16 @@ Control.Control{
 								? DefaultStyle.main2_500main
 								: DefaultStyle.danger_500main
 				text: mode == 0
-						? qsTr("Connecté")
+                        //: "Connecté"
+                        ? qsTr("drawer_menu_account_connection_status_connected")
 						: mode == 1
-							? qsTr("Désactivé")
+                            //: "Désactivé"
+                            ? qsTr("drawer_menu_account_connection_status_cleared")
 							: mode == 2
-								? qsTr("Connexion...")
-								: qsTr("Erreur")
+                                //: "Connexion…"
+                                ? qsTr("drawer_menu_account_connection_status_refreshing")
+                                //: "Erreur"
+                                : qsTr("drawer_menu_account_connection_status_failed")
 			}
 		}
 		Item{
@@ -156,7 +165,10 @@ Control.Control{
 				if (mainItem.account.core.voicemailAddress.length > 0)
 					UtilsCpp.createCall(mainItem.account.core.voicemailAddress)
 				else
-					UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("L'URI de messagerie vocale n'est pas définie."), false)
+                    //: Erreur
+                    UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                    //: L'URI de messagerie vocale n'est pas définie.
+                    qsTr("information_popup_voicemail_address_undefined_message"), false)
 			}
 		}
 		Item{Layout.fillWidth: true}

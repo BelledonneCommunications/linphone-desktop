@@ -35,6 +35,7 @@
 #include <QQmlContext>
 #include <QQmlFileSelector>
 #include <QQuickWindow>
+#include <QStandardPaths>
 #include <QSystemTrayIcon>
 #include <QTimer>
 #include <QTranslator>
@@ -76,6 +77,7 @@
 #include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "core/timezone/TimeZoneProxy.hpp"
+#include "core/translator/DefaultTranslatorCore.hpp"
 #include "core/variant/VariantList.hpp"
 #include "core/videoSource/VideoSourceDescriptorGui.hpp"
 #include "model/object/VariantObject.hpp"
@@ -257,7 +259,7 @@ void App::setAutoStart(bool enabled) {
 // -----------------------------------------------------------------------------
 
 App::App(int &argc, char *argv[])
-    : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
+: SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
 	// Do not use APPLICATION_NAME here.
 	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
 	QThread::currentThread()->setPriority(QThread::HighPriority);
@@ -319,8 +321,8 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	mCoreModelConnection->makeConnectToModel(&CoreModel::requestFetchConfig, [this](QString path) {
 		mCoreModelConnection->invokeToCore([this, path]() {
 			auto callback = [this, path]() {
-				RequestDialog *obj = new RequestDialog(
-				    tr("Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?"), path);
+				//: Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?
+				RequestDialog *obj = new RequestDialog(tr("remote_provisioning_dialog"), path);
 				connect(obj, &RequestDialog::result, this, [this, obj, path](int result) {
 					if (result == 1) {
 						mCoreModelConnection->invokeToModel(
@@ -486,10 +488,10 @@ void App::initCore() {
 			    mEngine->setObjectOwnership(settings.get(), QQmlEngine::CppOwnership);
 			    mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 			    if (!mAccountList) setAccountList(AccountList::create());
-				else {
-					mAccountList->setInitialized(false);
-					mAccountList->lUpdate(true);
-				}
+			    else {
+				    mAccountList->setInitialized(false);
+				    mAccountList->lUpdate(true);
+			    }
 			    if (!mCallList) setCallList(CallList::create());
 			    else mCallList->lUpdate();
 			    if (!mSettings) {
@@ -515,7 +517,11 @@ void App::initCore() {
 				    setLocale(settings->getConfigLocale());
 				    setAutoStart(settings->getAutoStart());
 				    setQuitOnLastWindowClosed(settings->getExitOnClose());
-			    }
+				}
+				// Init locale.
+				mTranslatorCore = new DefaultTranslatorCore(this);
+				mDefaultTranslatorCore = new DefaultTranslatorCore(this);
+				initLocale();
 			    const QUrl url("qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml");
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,
@@ -547,6 +553,52 @@ void App::initCore() {
 		    });
 	    },
 	    Qt::BlockingQueuedConnection);
+}
+
+static inline bool installLocale(App &app, QTranslator &translator, const QLocale &locale) {
+	auto appPath = QStandardPaths::ApplicationsLocation;
+	bool ok = translator.load(locale.name(), Constants::LanguagePath);
+	ok = ok && app.installTranslator(&translator);
+	if (ok) QLocale::setDefault(locale);
+	return ok;
+}
+
+void App::initLocale() {
+
+	// Try to use preferred locale.
+	QString locale;
+
+	// Use english. This default translator is used if there are no found translations in others loads
+	mLocale = QLocale(QLocale::French);
+	if (!installLocale(*this, *mDefaultTranslatorCore, mLocale)) qFatal("Unable to install default translator.");
+
+
+	if (installLocale(*this, *mTranslatorCore, getLocale())) {
+		qDebug() << "installed locale" << getLocale().name();
+		return;
+	}
+
+		   // Try to use system locale.
+		   // #ifdef Q_OS_MACOS
+		   // Use this workaround if there is still an issue about detecting wrong language from system on Mac. Qt doesn't use
+		   // the current system language on QLocale::system(). So we need to get it from user settings and overwrite its
+		   // Locale.
+		   //	QSettings settings;
+		   //	QString preferredLanguage = settings.value("AppleLanguages").toStringList().first();
+		   //	QStringList qtLocale = QLocale::system().name().split('_');
+		   //	if(qtLocale[0] != preferredLanguage){
+		   //		qInfo() << "Override Qt language from " << qtLocale[0] << " to the preferred language : " <<
+		   // preferredLanguage; 		qtLocale[0] = preferredLanguage;
+		   //	}
+		   //	QLocale sysLocale = QLocale(qtLocale.join('_'));
+		   // #else
+	QLocale sysLocale(QLocale::system().name()); // Use Locale from name because Qt has a bug where it didn't use the
+												 // QLocale::language (aka : translator.language != locale.language) on
+												 // Mac. #endif
+	if (installLocale(*this, *mTranslatorCore, sysLocale)) {
+		qDebug() << "installed sys locale" << sysLocale.name();
+		setLocale(sysLocale.name());
+	}
 }
 
 void App::initCppInterfaces() {
@@ -720,24 +772,35 @@ void App::createCommandParser() {
 	if (!mParser) delete mParser;
 
 	mParser = new QCommandLineParser();
-	mParser->setApplicationDescription(tr("A free (libre) SIP video-phone."));
-	mParser->addPositionalArgument(
-	    "command", tr("Send an order to the application towards a command line").replace("%1", APPLICATION_NAME),
-	    "[command]");
+	//: "A free and open source SIP video-phone."
+	mParser->setApplicationDescription(tr("application_description"));
+	//: "Send an order to the application towards a command line"
+	mParser->addPositionalArgument("command", tr("command_line_arg_order").replace("%1", APPLICATION_NAME), "[command]");
 	mParser->addOptions({
-	    {{"h", "help"}, tr("Show this help")},
+		//: "Show this help"
+		{{"h", "help"}, tr("command_line_option_show_help")},
+
 	    //{"cli-help", tr("commandLineOptionCliHelp").replace("%1", APPLICATION_NAME)},
-	    {{"v", "version"}, tr("Show app version")},
-	    //{"config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg")},
+
+		//:"Show app version"
+		{{"v", "version"}, tr("command_line_option_show_app_version")},
+
+		//{"config", tr("command_line_option_config").replace("%1", EXECUTABLE_NAME), tr("command_line_option_config_arg")},
+
 	    {"fetch-config",
-	     tr("Specify the linphone configuration file to be fetched. It will be merged with the current "
-	        "configuration.")
+		 //: "Specify the linphone configuration file to be fetched. It will be merged with the current configuration."
+		 tr("command_line_option_config_to_fetch")
 	         .replace("%1", EXECUTABLE_NAME),
-	     tr("URL, path or file")},
-	    //{{"c", "call"}, tr("commandLineOptionCall").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionCallArg")},
-	    {"minimized", tr("commandLineOptionMinimized")},
-	    {{"V", "verbose"}, tr("Log to stdout some debug information while running")},
-	    {"qt-logs-only", tr("Print only logs from the application")},
+		 //: "URL, path or file"
+		 tr("command_line_option_config_to_fetch_arg")},
+
+		//{{"c", "call"}, tr("command_line_option_call").replace("%1", EXECUTABLE_NAME), tr("command_line_option_call_arg")}, {"minimized", tr("command_line_option_minimized")},
+
+		//: "Log to stdout some debug information while running"
+		{{"V", "verbose"}, tr("command_line_option_log_to_stdout")},
+
+		//: "Print only logs from the application"
+		{"qt-logs-only", tr("command_line_option_print_app_logs_only")},
 	});
 }
 // Should be call only at first start
@@ -1003,7 +1066,7 @@ void App::exportDesktopFile() {
 }
 
 bool App::generateDesktopFile(const QString &confPath, bool remove, bool openInBackground) {
-	qInfo() << QStringLiteral("Updating `%1`...").arg(confPath);
+	qInfo() << QStringLiteral("Updating `%1`…").arg(confPath);
 	QFile file(confPath);
 
 	if (remove) {
@@ -1095,7 +1158,9 @@ void App::setSysTrayIcon() {
 	if (mSettings && !mSettings->getExitOnClose()) {
 		restoreAction = new QAction(root);
 		auto setRestoreActionText = [restoreAction](bool visible) {
-			restoreAction->setText(visible ? tr("Cacher") : tr("Afficher"));
+			//: "Cacher"
+			//: "Afficher"
+			restoreAction->setText(visible ? tr("hide_action") : tr("show_action"));
 		};
 		setRestoreActionText(root->isVisible());
 		connect(root, &QWindow::visibleChanged, restoreAction, setRestoreActionText);
@@ -1109,8 +1174,8 @@ void App::setSysTrayIcon() {
 			}
 		});
 	}
-
-	QAction *quitAction = new QAction(tr("Quitter"), root);
+	//: "Quitter"
+	QAction *quitAction = new QAction(tr("quit_action"), root);
 	root->connect(quitAction, &QAction::triggered, this, &App::quit);
 
 	// trayIcon: Left click actions.
@@ -1146,7 +1211,8 @@ void App::setSysTrayIcon() {
 //-----------------------------------------------------------
 
 void App::setLocale(QString configLocale) {
-	mLocale = QLocale(QLocale::French);
+	if (configLocale.isEmpty()) mLocale = QLocale(configLocale);
+	else mLocale = QLocale(QLocale::system().name());
 }
 
 QLocale App::getLocale() {
@@ -1157,11 +1223,12 @@ QLocale App::getLocale() {
 //		Version infos.
 //-----------------------------------------------------------
 
+//: "Inconnue"
 QString App::getShortApplicationVersion() {
 #ifdef LINPHONEAPP_SHORT_VERSION
 	return QStringLiteral(LINPHONEAPP_SHORT_VERSION);
 #else
-	return tr("inconnue");
+	return tr('unknown');
 #endif
 }
 
@@ -1169,7 +1236,7 @@ QString App::getGitBranchName() {
 #ifdef GIT_BRANCH_NAME
 	return QStringLiteral(GIT_BRANCH_NAME);
 #else
-	return tr("inconnue");
+	return tr('unknown');
 #endif
 }
 
@@ -1177,6 +1244,6 @@ QString App::getSdkVersion() {
 #ifdef LINPHONESDK_VERSION
 	return QStringLiteral(LINPHONESDK_VERSION);
 #else
-	return tr("inconnue");
+	return tr('unknown');
 #endif
 }

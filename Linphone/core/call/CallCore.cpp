@@ -207,9 +207,10 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		    mCallModelConnection->invokeToCore([this, recording]() {
 			    setRecording(recording);
 			    if (recording == false) {
-				    Utils::showInformationPopup(tr("Enregistrement terminé"),
-				                                tr("L'appel a été enregistré dans le fichier : %1")
-				                                    .arg(QString::fromStdString(mCallModel->getRecordFile())),
+					//: "Enregistrement terminé"
+					Utils::showInformationPopup(tr("call_record_end_message"),
+												//: "L'appel a été enregistré dans le fichier : %1"
+												tr("call_record_saved_in_file_message").arg(QString::fromStdString(mCallModel->getRecordFile())),
 				                                true, App::getInstance()->getCallsWindow());
 			    }
 		    });
@@ -385,19 +386,23 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    auto codecType = playloadType ? playloadType->getMimeType() : "";
 			    auto codecRate = playloadType ? playloadType->getClockRate() / 1000 : 0;
 			    audioStats.mCodec =
-			        tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
+					//: "Codec: %1 / %2 kHz"
+					tr("call_stats_codec_label").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
 			    auto linAudioStats = call->getAudioStats();
 			    if (linAudioStats) {
-				    audioStats.mBandwidth = tr("Bande passante : %1 %2 kbits/s %3 %4 kbits/s")
+					//: "Bande passante : %1 %2 kbits/s %3 %4 kbits/s"
+					audioStats.mBandwidth = tr("call_stats_bandwidth_label")
 				                                .arg("↑")
 				                                .arg(round(linAudioStats->getUploadBandwidth()))
 				                                .arg("↓")
 				                                .arg(round(linAudioStats->getDownloadBandwidth()));
-				    audioStats.mLossRate = tr("Taux de perte: %1% %2%")
+					//: "Taux de perte: %1% %2%"
+					audioStats.mLossRate = tr("call_stats_loss_rate_label")
 				                               .arg(linAudioStats->getSenderLossRate())
 				                               .arg(linAudioStats->getReceiverLossRate());
-				    audioStats.mJitterBufferSize =
-				        tr("Tampon de gigue: %1 ms").arg(linAudioStats->getJitterBufferSizeMs());
+					//: "Tampon de gigue: %1 ms"
+					audioStats.mJitterBufferSize =
+						tr("call_stats_jitter_buffer_label").arg(linAudioStats->getJitterBufferSizeMs());
 			    }
 			    setAudioStats(audioStats);
 		    } else if (stats->getType() == linphone::StreamType::Video) {
@@ -407,15 +412,15 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    auto codecType = playloadType ? playloadType->getMimeType() : "";
 			    auto codecRate = playloadType ? playloadType->getClockRate() / 1000 : 0;
 			    videoStats.mCodec =
-			        tr("Codec: %1 / %2 kHz").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
+					tr("call_stats_codec_label").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
 			    auto linVideoStats = call->getVideoStats();
 			    if (stats) {
-				    videoStats.mBandwidth = tr("Bande passante : %1 %2 kbits/s %3 %4 kbits/s")
+					videoStats.mBandwidth = tr("call_stats_bandwidth_label")
 				                                .arg("↑")
 				                                .arg(round(linVideoStats->getUploadBandwidth()))
 				                                .arg("↓")
 				                                .arg(round(linVideoStats->getDownloadBandwidth()));
-				    videoStats.mLossRate = tr("Taux de perte: %1% %2%")
+					videoStats.mLossRate = tr("call_stats_loss_rate_label")
 				                               .arg(linVideoStats->getSenderLossRate())
 				                               .arg(linVideoStats->getReceiverLossRate());
 			    }
@@ -423,12 +428,14 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			        params->getSentVideoDefinition() ? params->getSentVideoDefinition()->getName() : "";
 			    auto receivedResolution =
 			        params->getReceivedVideoDefinition() ? params->getReceivedVideoDefinition()->getName() : "";
-			    videoStats.mResolution = tr("Définition vidéo : %1 %2 %3 %4")
+				//: "Définition vidéo : %1 %2 %3 %4"
+				videoStats.mResolution = tr("call_stats_resolution_label")
 			                                 .arg("↑", Utils::coreStringToAppString(sentResolution), "↓",
 			                                      Utils::coreStringToAppString(receivedResolution));
 			    auto sentFps = params->getSentFramerate();
 			    auto receivedFps = params->getReceivedFramerate();
-			    videoStats.mFps = tr("FPS : %1 %2 %3 %4").arg("↑").arg(sentFps).arg("↓").arg(receivedFps);
+				//: "FPS : %1 %2 %3 %4"
+				videoStats.mFps = tr("call_stats_fps_label").arg("↑").arg(sentFps).arg("↓").arg(receivedFps);
 			    setVideoStats(videoStats);
 		    }
 	    });

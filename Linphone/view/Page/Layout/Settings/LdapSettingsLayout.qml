@@ -13,8 +13,8 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-			title: qsTr("Annuaires LDAP"),
-			subTitle: qsTr("Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la magic search bar."),
+            title: qsTr("settings_contacts_ldap_title"),
+            subTitle: qsTr("settings_contacts_ldap_subtitle"),
 			contentComponent: ldapParametersComponent
 		}
 	]
@@ -26,9 +26,11 @@ AbstractSettingsLayout {
 	onSave: {
 		if (ldapGui.core.isValid()) {
 			ldapGui.core.save()
-			UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("L'annuaire LDAP a été sauvegardé"), true, mainWindow)
+            //: "L'annuaire LDAP a été sauvegardé"
+            UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"), qsTr("settings_contacts_ldap_success_toast"), true, mainWindow)
 		} else {
-			UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Une erreur s'est produite, la configuration LDAP n'a pas été sauvegardée !"), false, mainWindow)
+            //: "Une erreur s'est produite, la configuration LDAP n'a pas été sauvegardée !"
+            UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("settings_contacts_ldap_error_toast"), false, mainWindow)
 		}
 	}
 
@@ -45,7 +47,8 @@ AbstractSettingsLayout {
 				onClicked: {
 					var mainWin = UtilsCpp.getMainWindow()
 					mainWin.showConfirmationLambdaPopup("",
-						qsTr("Supprimer l'annuaire LDAP ?"),
+                        //: "Supprimer l'annuaire LDAP ?"
+                        qsTr("settings_contacts_ldap_delete_confirmation_message"),
 						"",
 						function (confirmed) {
 							if (confirmed) {
@@ -71,14 +74,16 @@ AbstractSettingsLayout {
 				id: server
 				propertyName: "serverUrl"
 				propertyOwnerGui: ldapGui
-				title: qsTr("URL du serveur (ne peut être vide)")
+                //: "URL du serveur (ne peut être vide)"
+                title: qsTr("settings_contacts_ldap_server_url_title")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "bindDn"
 				propertyOwnerGui: ldapGui
-				title: qsTr("Bind DN")
+                //: "Bind DN"
+                title: qsTr("settings_contacts_ldap_bind_dn_title")
 				toValidate: true
 				Layout.fillWidth: true
 			}
@@ -86,26 +91,30 @@ AbstractSettingsLayout {
 				propertyName: "password"
 				hidden: true
 				propertyOwnerGui: ldapGui
-				title: qsTr("Mot de passe")
+                //: "Mot de passe"
+                title: qsTr("settings_contacts_ldap_password_title")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			SwitchSetting {
-				titleText: qsTr("Utiliser TLS")
+                //: "Utiliser TLS"
+                titleText: qsTr("settings_contacts_ldap_use_tls_title")
 				propertyName: "tls"
 				propertyOwnerGui: ldapGui
 			}
 			DecoratedTextField {
 				propertyName: "baseObject"
 				propertyOwnerGui: ldapGui
-				title: qsTr("Base de recherche (ne peut être vide)")
+                //: "Base de recherche (ne peut être vide)"
+                title: qsTr("settings_contacts_ldap_search_base_title")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "filter"
 				propertyOwnerGui: ldapGui
-				title: qsTr("Filtre")
+                //: "Filtre"
+                title: qsTr("settings_contacts_ldap_search_filter_title")
 				toValidate: true
 				Layout.fillWidth: true
 			}
@@ -113,7 +122,8 @@ AbstractSettingsLayout {
 				propertyName: "limit"
 				propertyOwnerGui: ldapGui
 				validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
-				title: qsTr("Nombre maximum de résultats")
+                //: "Nombre maximum de résultats"
+                title: qsTr("settings_contacts_ldap_max_results_title")
 				toValidate: true
 				Layout.fillWidth: true
 			}
@@ -121,14 +131,16 @@ AbstractSettingsLayout {
 				propertyName: "delay"
 				propertyOwnerGui: ldapGui
 				validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
-				title: qsTr("Délai entre 2 requêtes (en millisecondes)")
+                //: "Délai entre 2 requêtes (en millisecondes)"
+                title: qsTr("settings_contacts_ldap_request_delay_title")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "timeout"
 				propertyOwnerGui: ldapGui
-				title: qsTr("Durée maximun (en secondes)")
+                //: "Durée maximun (en secondes)"
+                title: qsTr("settings_contacts_ldap_request_timeout_title")
 				validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 				toValidate: true
 				Layout.fillWidth: true
@@ -136,7 +148,8 @@ AbstractSettingsLayout {
 			DecoratedTextField {
 				propertyName: "minCharacters"
 				propertyOwnerGui: ldapGui
-				title: qsTr("Nombre minimum de caractères pour la requête")
+                //: "Nombre minimum de caractères pour la requête"
+                title: qsTr("settings_contacts_ldap_min_characters_title")
 				validator: RegularExpressionValidator { regularExpression: /[0-9]+/ }
 				toValidate: true
 				Layout.fillWidth: true
@@ -144,26 +157,30 @@ AbstractSettingsLayout {
 			DecoratedTextField {
 				propertyName: "nameAttribute"
 				propertyOwnerGui: ldapGui
-				title: qsTr("Attributs de nom")
+                //: "Attributs de nom"
+                title: qsTr("settings_contacts_ldap_name_attributes_title")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "sipAttribute"
 				propertyOwnerGui: ldapGui
-				title: qsTr("Attributs SIP")
+                //: "Attributs SIP"
+                title: qsTr("settings_contacts_ldap_sip_attributes_title")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			DecoratedTextField {
 				propertyName: "sipDomain"
 				propertyOwnerGui: ldapGui
-				title: qsTr("Domaine SIP")
+                //: "Domaine SIP"
+                title: qsTr("settings_contacts_ldap_sip_domain_title")
 				toValidate: true
 				Layout.fillWidth: true
 			}
 			SwitchSetting {
-				titleText: qsTr("Débogage")
+                //: "Débogage"
+                titleText: qsTr("settings_contacts_ldap_debug_title")
 				propertyName: "debug"
 				propertyOwnerGui: ldapGui
 			}

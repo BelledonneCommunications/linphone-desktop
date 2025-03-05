@@ -28,6 +28,7 @@ if (UNIX AND NOT APPLE)
 endif()
 find_package(Qt6 REQUIRED COMPONENTS Core)	
 find_package(Qt6 REQUIRED COMPONENTS ${QT_PACKAGES})
+find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 if(NOT WIN32)
 	find_package(X11)
@@ -124,6 +125,25 @@ add_subdirectory(model)
 add_subdirectory(view)
 add_subdirectory(core)
 
+set(LANGUAGES_DIRECTORY "data/languages")
+set(I18N_FILENAME i18n.qrc)
+set(LANGUAGES en fr_FR)
+
+# Add languages support.
+add_subdirectory("${LANGUAGES_DIRECTORY}" "data/languages")
+
+set(LANGUAGES en fr_FR)
+qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES ${LANGUAGES})
+
+set(TS_FILES)
+foreach (lang ${LANGUAGES})
+  list(APPEND TS_FILES "${CMAKE_CURRENT_SOURCE_DIR}/${LANGUAGES_DIRECTORY}/${lang}.ts")
+endforeach()
+
+qt_add_translations(${TARGET_NAME}
+TS_FILES ${TS_FILES}
+RESOURCE_PREFIX ${LANGUAGES_DIRECTORY})
+
 # set application details
 if(WIN32)
 	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/windows/appDetailsWindows.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/appDetailsWindows.rc")
@@ -135,7 +155,7 @@ endif()
 set(_LINPHONEAPP_FONTS_FILES)
 qt6_add_big_resources(_LINPHONEAPP_FONTS_FILES data/fonts.qrc)
 
- # Have big_resource.qrc treated as a source file by Qt Creator
+# Have big_resource.qrc treated as a source file by Qt Creator
 list(APPEND _LINPHONEAPP_FONTS_FILES data/fonts.qrc)
 set_property(SOURCE data/fonts.qrc PROPERTY SKIP_AUTORCC ON)
 

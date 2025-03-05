@@ -150,7 +150,7 @@ Flickable {
         }
     }
     onSearchTextChanged: {
-        console.log("search texte changed, loading...")
+        console.log("search texte changed, loading…")
         loading = true
     }
 
@@ -273,7 +273,8 @@ Flickable {
             selectionEnabled: mainItem.selectionEnabled
             multiSelectionEnabled: mainItem.multiSelectionEnabled
             selectedContacts: mainItem.selectedContacts
-            title: qsTr('Favoris')
+            //: "Favoris"
+            title: qsTr("car_favorites_contacts_title")
             itemsRightMargin: mainItem.itemsRightMargin
 
             onHighlightedContactChanged: mainItem.highlightedContact = highlightedContact
@@ -318,7 +319,8 @@ Flickable {
             multiSelectionEnabled: mainItem.multiSelectionEnabled
             selectedContacts: mainItem.selectedContacts
             itemsRightMargin: mainItem.itemsRightMargin
-            title: qsTr('Contacts')
+            //: 'Contacts'
+            title: qsTr("generic_address_picker_contacts_list_title")
 
             onHighlightedContactChanged: mainItem.highlightedContact = highlightedContact
             onContactSelected: contactGui => {
@@ -369,7 +371,8 @@ Flickable {
             selectionEnabled: mainItem.selectionEnabled
             multiSelectionEnabled: mainItem.multiSelectionEnabled
             selectedContacts: mainItem.selectedContacts
-            title: qsTr('Suggestions')
+            //: "Suggestions"
+            title: qsTr("generic_address_picker_suggestions_list_title")
             itemsRightMargin: mainItem.itemsRightMargin
 
             onHighlightedContactChanged: mainItem.highlightedContact = highlightedContact

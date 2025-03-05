@@ -64,7 +64,8 @@ ListView {
 			Text {
 				Layout.alignment: Qt.AlignRight
 				visible: modelData.core.isAdmin
-				text: qsTr("Admin")
+                //: "Admin"
+                text: qsTr("meeting_participant_is_admin_label")
 				color: DefaultStyle.main2_400
 				font {
                     pixelSize: Math.round(12 * DefaultStyle.dp)
@@ -106,7 +107,8 @@ ListView {
 			icon.source: AppIcons.plusCircle
             icon.width: Math.round(16 * DefaultStyle.dp)
             icon.height: Math.round(16 * DefaultStyle.dp)
-			text: qsTr("Ajouter des participants")
+            //: "Ajouter des participants"
+            text: qsTr("meeting_add_participants_title")
 			style: ButtonStyle.secondary
 			onClicked: mainItem.addParticipantRequested()
 		}

@@ -35,7 +35,8 @@ FocusScope {
                 icon.width: Math.round(24 * DefaultStyle.dp)
                 icon.height: Math.round(24 * DefaultStyle.dp)
 				enabled: false
-				text: qsTr("Réunion")
+                //: "Réunion"
+                text: qsTr("meeting_schedule_meeting_label")
 				checked: true
 				autoExclusive: true
 				style: ButtonStyle.secondary
@@ -46,7 +47,8 @@ FocusScope {
 				icon.source: AppIcons.slide
                 icon.width: Math.round(24 * DefaultStyle.dp)
                 icon.height: Math.round(24 * DefaultStyle.dp)
-				text: qsTr("Broadcast")
+                //: "Webinar"
+                text: qsTr("meeting_schedule_broadcast_label")
 				autoExclusive: true
 				style: ButtonStyle.secondary
 			}
@@ -65,7 +67,8 @@ FocusScope {
 				TextInput {
 					id: confTitle
 					Layout.fillWidth: true
-					property string defaultText: qsTr("Ajouter un titre")
+                    //: "Ajouter un titre"
+                    property string defaultText: qsTr("meeting_schedule_subject_hint")
 					text: defaultText
 					color: DefaultStyle.main2_600
 					font {
@@ -210,7 +213,8 @@ FocusScope {
                     leftPadding: Math.round(8 * DefaultStyle.dp)
                     rightPadding: Math.round(8 * DefaultStyle.dp)
 					hoverEnabled: true
-					placeholderText: qsTr("Ajouter une description")
+                    //: "Ajouter une description"
+                    placeholderText: qsTr("meeting_schedule_description_hint")
 					placeholderTextColor: DefaultStyle.main2_600
                     placeholderWeight: Typography.p2l.weight
 					color: DefaultStyle.main2_600
@@ -257,7 +261,8 @@ FocusScope {
 						}
 						Text {
 							Layout.fillWidth: true
-							text: qsTr("Ajouter des participants")
+                            //: "Ajouter des participants"
+                            text: qsTr("meeting_schedule_add_participants_title")
 							font {
                                 pixelSize: Typography.p2l.pixelSize
                                 weight: Typography.p2l.weight
@@ -310,7 +315,8 @@ FocusScope {
 			]
 		}
 		Switch {
-			text: qsTr("Envoyer une invitation aux participants")
+            //: "Envoyer une invitation aux participants"
+            text: qsTr("meeting_schedule_send_invitations_title")
 			checked: mainItem.conferenceInfoGui.core.inviteEnabled
 			onToggled: mainItem.conferenceInfoGui.core.inviteEnabled = checked
 		}

@@ -12,28 +12,33 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-			title: qsTr("Système"),
+            //: "Système"
+            title: qsTr("settings_system_title"),
 			subTitle: "",
 			contentComponent: systemComponent
 		},
 		{
-			title: qsTr("Configuration distante"),
+            //: "Configuration distante"
+            title: qsTr("settings_remote_provisioning_title"),
 			subTitle: "",
 			contentComponent: remoteProvisioningComponent,
 			hideTopSeparator: true
 		},
 		{
-			title: qsTr("Sécurité / Chiffrement"),
+            //: "Sécurité / Chiffrement"
+            title: qsTr("settings_security_title"),
 			subTitle: "",
 			contentComponent: securityComponent,
 		},
 		{
-			title: qsTr("Codecs audio"),
+            //: "Codecs audio"
+            title: qsTr("settings_advanced_audio_codecs_title"),
 			subTitle: "",
 			contentComponent: audioCodecsComponent,
 		},
 		{
-			title: qsTr("Codecs vidéo"),
+            //: "Codecs vidéo"
+            title: qsTr("settings_advanced_video_codecs_title"),
 			subTitle: "",
 			contentComponent: videoCodecsComponent
 		},
@@ -58,7 +63,8 @@ AbstractSettingsLayout {
             spacing: Math.round(40 * DefaultStyle.dp)
 			SwitchSetting {
 				Layout.fillWidth: true
-				titleText: qsTr("Démarrer automatiquement Linphone")
+                //: "Démarrer automatiquement Linphone"
+                titleText: qsTr("settings_advanced_auto_start_title")
 				propertyName: "autoStart"
 				propertyOwner: SettingsCpp
 			}
@@ -75,20 +81,23 @@ AbstractSettingsLayout {
 			DecoratedTextField {
 				Layout.fillWidth: true
 				id: configUri
-				title: qsTr("URL de configuration distante")
+                //: "URL de configuration distante"
+                title: qsTr("settings_advanced_remote_provisioning_url")
 				toValidate: true
 			}
 			SmallButton {
                 Layout.topMargin: -Math.round(20 * DefaultStyle.dp)
 				Layout.alignment: Qt.AlignRight
-				text: qsTr("Télécharger et appliquer")
+                //: "Télécharger et appliquer"
+                text: qsTr("settings_advanced_download_apply_remote_provisioning")
 				style: ButtonStyle.tertiary
 				onClicked: {
 					var url = configUri.value()
 					if (UtilsCpp.isValidURL(url))
 						UtilsCpp.useFetchConfig(configUri.value())
 					else
-						UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Format d'url invalide"), false, UtilsCpp.getMainWindow())
+                        //: "Format d'url invalide"
+                        UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("settings_advanced_invalid_url_message"), false, UtilsCpp.getMainWindow())
 				}
 			}
 		}
@@ -101,7 +110,8 @@ AbstractSettingsLayout {
 			ColumnLayout {
                 spacing: Math.round(5 * DefaultStyle.dp)
 				Text {
-					text: qsTr("Chiffrement du média")
+                    //: "Chiffrement du média"
+                    text: qsTr("settings_advanced_media_encryption_title")
 					font {
                         pixelSize: Typography.p2l.pixelSize
                         weight: Typography.p2l.weight
@@ -118,7 +128,8 @@ AbstractSettingsLayout {
 			}
 			SwitchSetting {
 				Layout.fillWidth: true
-				titleText: qsTr("Chiffrement du média obligatoire")
+                //: "Chiffrement du média obligatoire"
+                titleText: qsTr("settings_advanced_media_encryption_mandatory_title")
 				propertyName: "mediaEncryptionMandatory"
 				propertyOwner: SettingsCpp
 			}
@@ -213,7 +224,8 @@ AbstractSettingsLayout {
 		ColumnLayout {
             spacing: Math.round(40 * DefaultStyle.dp)
 			SwitchSetting {
-				titleText:qsTr("Cacher les FPS")
+                //:"Cacher les FPS"
+                titleText:qsTr("settings_advanced_hide_fps_title")
 				propertyName: "hideFps"
 				propertyOwner: SettingsCpp
 			}

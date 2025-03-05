@@ -26,8 +26,10 @@
 
 DEFINE_ABSTRACT_OBJECT(FriendCore)
 
-const QString _addressLabel = FriendCore::tr("Adresse SIP");
-const QString _phoneLabel = FriendCore::tr("Téléphone");
+//: "Adresse SIP"
+const QString _addressLabel = FriendCore::tr("sip_address");
+//: "Téléphone"
+const QString _phoneLabel = FriendCore::tr("device_id");
 
 QSharedPointer<FriendCore>
 FriendCore::create(const std::shared_ptr<linphone::Friend> &contact, bool isStored, int sourceFlags) {
@@ -413,7 +415,8 @@ void FriendCore::appendAddress(const QString &addr) {
 		QString interpretedFullAddress = linphoneAddr ? Utils::coreStringToAppString(linphoneAddr->asString()) : "";
 		QString interpretedAddress = linphoneAddr ? Utils::coreStringToAppString(linphoneAddr->asStringUriOnly()) : "";
 		mCoreModelConnection->invokeToCore([this, interpretedAddress, interpretedFullAddress]() {
-			if (interpretedAddress.isEmpty()) Utils::showInformationPopup(tr("Erreur"), tr("Adresse invalide"), false);
+			//: "Adresse invalide"
+			if (interpretedAddress.isEmpty()) Utils::showInformationPopup(tr("information_popup_error_title"), tr("information_popup_invalid_address_message"), false);
 			else {
 				mAddressList.append(Utils::createFriendAddressVariant(_addressLabel, interpretedAddress));
 				if (mDefaultFullAddress.isEmpty()) mDefaultFullAddress = interpretedFullAddress;

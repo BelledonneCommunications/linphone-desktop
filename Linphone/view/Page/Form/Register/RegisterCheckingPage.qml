@@ -39,8 +39,12 @@ LoginLayout {
 			Text {
 				wrapMode: Text.NoWrap
 				text: {
-					var completeString =  mainItem.registerWithEmail ? qsTr("email") : qsTr("numéro")
-					text = qsTr("Inscription | Confirmer votre ") + completeString
+                    //: "email"
+                    var completeString =  mainItem.registerWithEmail ? qsTr("email")
+                                                                       //: "numéro de téléphone"
+                                                                     : qsTr("phone_number")
+                    //: "Inscription | Confirmer votre %1"
+                    text = qsTr("confirm_register_title").arg(completeString)
 				}
 				font {
                     pixelSize: Typography.h1.pixelSize
@@ -68,9 +72,10 @@ LoginLayout {
                     weight: Typography.h3.weight
 				}
 				color: DefaultStyle.main2_700
-				text: {
-					var completeString = mainItem.registerWithEmail ? ("email \"") : ("phone number \"") + address + "\""
-					text = "We have sent a verification code on your " + completeString + " <br>Please enter the verification code below:"
+                text: {
+                    var completeString = mainItem.registerWithEmail ? ("email") : ("phone_number")
+                    //: Nous vous avons envoyé un code de vérification sur votre %1 %2<br> Merci de le saisir ci-dessous
+                    text = qsTr("assistant_account_creation_confirmation_explanation").arg(completeString).arg(address)
 				}
 			}
 			RowLayout {
@@ -141,14 +146,16 @@ LoginLayout {
 			RowLayout {
                 spacing: Math.round(20 * DefaultStyle.dp)
 				Text {
-					text: "Didn't receive the code ?"
+                    //: "Vous n'avez pas reçu le code ?"
+                    text: qsTr("assistant_account_creation_confirmation_did_not_receive_code")
 					color: DefaultStyle.main2_700
                     font.pixelSize: Typography.p1.pixelSize
                     font.weight: Typography.p1.weight
 				}
 				BigButton {
 					style: ButtonStyle.secondary
-					text: "Resend a code"
+                    //: "Renvoyer un code"
+                    text: qsTr("assistant_account_creation_confirmation_resend_code")
 					onClicked: {
 						console.debug("[RegisterCheckingPage] User: Resend code")
 					}

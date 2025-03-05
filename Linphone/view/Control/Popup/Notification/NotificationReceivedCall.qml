@@ -85,7 +85,8 @@ Notification {
 							}
 						}
 						Text {
-							text: qsTr("Appel audio")
+                            //: "Appel entrant"
+                            text: qsTr("call_audio_incoming")
 							Layout.alignment: Qt.AlignHCenter
 							color: DefaultStyle.grey_0
 							font {
@@ -107,7 +108,8 @@ Notification {
 						asynchronous: false
                         icon.width: Math.round(19 * DefaultStyle.dp)
                         icon.height: Math.round(19 * DefaultStyle.dp)
-						text: qsTr("Répondre")
+                        //: "Accepter"
+                        text: qsTr("dialog_accept")
                         textSize: Math.round(14 * DefaultStyle.dp)
                         textWeight: Math.round(500 * DefaultStyle.dp)
 						onClicked: {
@@ -124,7 +126,8 @@ Notification {
 						asynchronous: false
                         icon.width: Math.round(19 * DefaultStyle.dp)
                         icon.height: Math.round(19 * DefaultStyle.dp)
-						text: qsTr("Refuser")
+                        //: "Refuser
+                        text: qsTr("dialog_deny")
                         textSize: Math.round(14 * DefaultStyle.dp)
                         textWeight: Math.round(500 * DefaultStyle.dp)
 						onClicked: {

@@ -92,7 +92,7 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 			    toConnect(callLogs->get());
 			    if (oldLog == mList.end()) { // New
 				    prepend(*callLogs);
-			    } else { // Update (status, duration, etc ...)
+			    } else { // Update (status, duration, etc …)
 				    replace(oldLog->objectCast<CallHistoryCore>(), *callLogs);
 			    }
 			    delete[] callLogs;

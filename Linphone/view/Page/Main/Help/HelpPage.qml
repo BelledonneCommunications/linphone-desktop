@@ -35,7 +35,8 @@ AbstractMainPage {
 				}
 			}
 			Text {
-				text: qsTr("Aide")
+                //: "Aide"
+                text: qsTr("help_title")
 				color: DefaultStyle.main2_700
 				font: Typography.h2
 			}
@@ -48,7 +49,8 @@ AbstractMainPage {
 			Layout.rightMargin: leftPanel.sideMargin
             Layout.topMargin: Math.round(41 * DefaultStyle.dp)
 			Layout.fillWidth: true
-			text: qsTr("À propos de Linphone")
+            //: "À propos de %1"
+            text: qsTr("help_about_title").arg(applicationName)
 			color: DefaultStyle.main2_600
 			font: Typography.h4
 		}
@@ -61,8 +63,10 @@ AbstractMainPage {
 			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.detective
-				title: qsTr("Règles de confidentialité")
-				subTitle: qsTr("Comment Linphone récolte et utilise les informations")
+                //: "Règles de confidentialité"
+                title: qsTr("help_about_privacy_policy_title")
+                //: Quelles informations %1 collecte et utilise
+                subTitle: qsTr("help_about_privacy_policy_subtitle").arg(applicationName)
 				onClicked: {
 					rightPanelStackView.clear()
 					Qt.openUrlExternally(ConstantsCpp.PrivatePolicyUrl)
@@ -71,14 +75,16 @@ AbstractMainPage {
 			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.info
-				title: qsTr("Version")
+                //: "Version"
+                title: qsTr("help_about_version_title")
 				subTitle: AppCpp.shortApplicationVersion
 				onClicked: {}
 			}
 			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.license
-				title: qsTr("Licences GPLv3")
+                //: "Licences GPLv3"
+                title: qsTr("help_about_gpl_licence_title")
 				subTitle: (copyrightRangeDate || applicationVendor ? '\u00A9 ': '') + (copyrightRangeDate ? copyrightRangeDate : '')+ (applicationVendor ? ' ' + applicationVendor : '')
 				onClicked: {
 					rightPanelStackView.clear()
@@ -88,7 +94,8 @@ AbstractMainPage {
 			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.world
-				title: qsTr("Contribuer à la traduction de Linphone")
+                //: "Contribuer à la traduction de %1"
+                title: qsTr("help_about_contribute_translations_title").arg(applicationName)
 				onClicked: {
 					rightPanelStackView.clear()
 					Qt.openUrlExternally(ConstantsCpp.TranslationUrl)
@@ -100,7 +107,8 @@ AbstractMainPage {
 			Layout.rightMargin: leftPanel.sideMargin
             Layout.topMargin: Math.round(32 * DefaultStyle.dp)
 			Layout.fillWidth: true
-			text: qsTr("À propos de Linphone")
+            //: "À propos de %1"
+            text: qsTr("help_about_title").arg(applicationName)
 			color: DefaultStyle.main2_600
 			font: Typography.h4
 		}
@@ -111,7 +119,8 @@ AbstractMainPage {
 			Layout.rightMargin: leftPanel.sideMargin
             Layout.topMargin: Math.round(24 * DefaultStyle.dp)
 			iconSource: AppIcons.debug
-			title: qsTr("Dépannage")
+            //: "Dépannage"
+            title: qsTr("help_troubleshooting_title")
 			onClicked: {
 				rightPanelStackView.clear()
 				rightPanelStackView.push("qrc:/qt/qml/Linphone/view/Page/Layout/Settings/DebugSettingsLayout.qml", { titleText: troubleShooting.title, container: rightPanelStackView })

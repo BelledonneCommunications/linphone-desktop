@@ -20,8 +20,10 @@ Popup {
 	property var titleColor: DefaultStyle.main1_500_main
 	property string text
 	property string details
-	property string firstButtonText: firstButtonAccept ? qsTr("Oui") : qsTr("Annuler")
-	property string secondButtonText: secondButtonAccept ? qsTr("Confirmer") : qsTr("Non")
+    //: "Confirmer"
+    //: "Annuler"
+    property string firstButtonText: firstButtonAccept ? qsTr("dialog_confirm") : qsTr("dialog_cancel")
+    property string secondButtonText: secondButtonAccept ? qsTr("dialog_confirm") : qsTr("dialog_cancel")
   	property alias content: contentLayout.data
   	property alias buttons: buttonsLayout.data
 	property alias firstButton: firstButtonId

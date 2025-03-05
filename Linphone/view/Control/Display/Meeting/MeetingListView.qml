@@ -243,7 +243,8 @@ ListView {
 							}
 						}
 						Text {
-							text: itemDelegate.isCanceled ? qsTr("Réunion annulée") : UtilsCpp.toDateHourString(dateTime) + " - " + UtilsCpp.toDateHourString(endDateTime)
+                            //: "Réunion annulée"
+                            text: itemDelegate.isCanceled ? qsTr("meeting_info_cancelled") : UtilsCpp.toDateHourString(dateTime) + " - " + UtilsCpp.toDateHourString(endDateTime)
 							color: itemDelegate.isCanceled ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
 							font {
                                 pixelSize: Typography.p1.pixelSize
@@ -266,7 +267,8 @@ ListView {
                     anchors.leftMargin: Math.round(16 * DefaultStyle.dp)
 					verticalAlignment: Text.AlignVCenter
 					visible: !itemDelegate.haveModel
-					text: qsTr("Aucune réunion aujourd'hui")
+                    //: "Aucune réunion aujourd'hui"
+                    text: qsTr("meetings_list_no_meeting_for_today")
 					lineHeightMode: Text.FixedHeight
                     lineHeight: Math.round(18 * DefaultStyle.dp)
 					font {

@@ -45,9 +45,11 @@ FormItemLayout {
 		onValidationChecked: (isValid) => {
 			if (isValid) return
 			if (!canBeEmpty && empty) {
-				mainItem.errorMessage = qsTr("ne peut être vide")
+                                     //: "ne peut être vide"
+                mainItem.errorMessage = qsTr("textfield_error_message_cannot_be_empty")
 			} else {
-				mainItem.errorMessage = qsTr("Format non reconnu")
+                                     //: "Format non reconnu"
+                mainItem.errorMessage = qsTr("textfield_error_message_unknown_format")
 			}
 		}
 		onTextChanged: mainItem.clearErrorText()

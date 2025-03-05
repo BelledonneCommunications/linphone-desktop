@@ -7,7 +7,7 @@ Window {
 	width: 960
 	height: 600
 	visible: true
-	title: qsTr("Test")
+    title: ("Test")
 	ColumnLayout {
 		RowLayout {
 			ColumnLayout {
@@ -134,7 +134,7 @@ Window {
 		TabBar {
 			spacing: 10
 			contentWidth: 400
-			model: [qsTr("A"), qsTr("Lot"), qsTr("Of"), qsTr("Tab"), qsTr("Buttons (which one has a very long label)"), qsTr("For"), qsTr("The"), qsTr("Tab"), qsTr("Bar"), qsTr("To"), qsTr("Not"), qsTr("Have"), qsTr("Enough"), qsTr("Space"), qsTr("To"), qsTr("Display"), qsTr("Them"), qsTr("All")]
+            model: [("A"), ("Lot"), ("Of"), ("Tab"), ("Buttons (which one has a very long label)"), ("For"), ("The"), ("Tab"), ("Bar"), ("To"), ("Not"), ("Have"), ("Enough"), ("Space"), ("To"), ("Display"), ("Them"), ("All")]
 		}
 		
 	}

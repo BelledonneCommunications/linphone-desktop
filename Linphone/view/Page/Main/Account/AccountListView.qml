@@ -11,27 +11,24 @@ import SettingsCpp
 Item {
 	id: mainItem
     width: Math.round(517 * DefaultStyle.dp)
-    readonly property real topPadding: Math.round(23 * DefaultStyle.dp)
-    readonly property real bottomPadding: Math.round(13 * DefaultStyle.dp)
-    readonly property real leftPadding: Math.round(24 * DefaultStyle.dp)
-    readonly property real rightPadding: Math.round(24 * DefaultStyle.dp)
+
     readonly property real spacing: Math.round(16 * DefaultStyle.dp)
 	property AccountProxy  accountProxy
 	
 	signal addAccountRequest()
-	signal editAccount(AccountGui account)
+    signal editAccount(AccountGui account)
 
-    implicitHeight: list.contentHeight + topPadding + bottomPadding + Math.round(32 * DefaultStyle.dp) + 1 + addAccountButton.height
+    implicitHeight: list.contentHeight + Math.round(32 * DefaultStyle.dp) + 1 + addAccountButton.height
 	ColumnLayout{
 		id: childLayout
 		anchors.top: parent.top
-		anchors.topMargin: mainItem.topPadding
+        anchors.topMargin: mainItem.topPadding
 		anchors.left: parent.left
-		anchors.leftMargin: mainItem.leftPadding
+        anchors.leftMargin: mainItem.leftPadding
 		anchors.right: parent.right
-		anchors.rightMargin: mainItem.rightPadding
+        anchors.rightMargin: mainItem.rightPadding
 		anchors.bottom: parent.bottom
-		anchors.bottomMargin: mainItem.bottomPadding
+        anchors.bottomMargin: mainItem.bottomPadding
 		ListView{
 			id: list
 			Layout.preferredHeight: contentHeight

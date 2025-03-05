@@ -51,8 +51,8 @@ AbstractWindow {
             var callsWin = UtilsCpp.getCallsWindow()
             if (!callsWin)
                 return
-            callsWin.showLoadingPopup(
-                        qsTr("Transfert en cours, veuillez patienter"))
+            //: "Transfert en cours, veuillez patienter"
+            callsWin.showLoadingPopup(qsTr("call_transfer_in_progress_toast"))
         } else if (mainWindow.transferState === LinphoneEnums.CallState.Error
                    || mainWindow.transferState === LinphoneEnums.CallState.End
                    || mainWindow.transferState === LinphoneEnums.CallState.Released
@@ -61,8 +61,9 @@ AbstractWindow {
             callsWin.closeLoadingPopup()
             if (transferState === LinphoneEnums.CallState.Error)
                 UtilsCpp.showInformationPopup(
-                            qsTr("Erreur"),
-                            qsTr("Le transfert d'appel a échoué"), false,
+                            qsTr("information_popup_error_title"),
+                            //: "Le transfert d'appel a échoué"
+                            qsTr("call_transfer_failed_toast"), false,
                             mainWindow)
             else if (transferState === LinphoneEnums.CallState.Connected) {
                 var mainWin = UtilsCpp.getMainWindow()
@@ -130,10 +131,8 @@ AbstractWindow {
 
     function joinConference(uri, options) {
         if (uri.length === 0)
-            UtilsCpp.showInformationPopup(
-                        qsTr("Erreur"), qsTr(
-                            "La conférence n'a pas pu démarrer en raison d'une erreur d'uri."),
-                        mainWindow)
+            //: "La conférence n'a pas pu démarrer en raison d'une erreur d'uri."
+            UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("conference_error_empty_uri"),mainWindow)
         else {
             UtilsCpp.createCall(uri, options)
         }
@@ -188,7 +187,10 @@ AbstractWindow {
             call.core.lTerminateAllCalls()
         }
         width: Math.round(278 * DefaultStyle.dp)
-        text: qsTr("La fenêtre est sur le point d'être fermée. Cela terminera tous les appels en cours. Souhaitez vous continuer ?")
+        //: "Terminer tous les appels en cours ?"
+        title: qsTr("call_close_window_dialog_title")
+        //: "La fenêtre est sur le point d'être fermée. Cela terminera tous les appels en cours."
+        text: qsTr("call_close_window_dialog_message")
     }
 
     CallProxy {
@@ -280,7 +282,8 @@ AbstractWindow {
             }
             Text {
                 color: DefaultStyle.info_500_main
-                text: qsTr("Appareil vérifié")
+                //: "Appareil authentifié"
+                text: qsTr("call_can_be_trusted_toast")
                 Layout.fillWidth: true
                 font {
                     pixelSize: Math.round(14 * DefaultStyle.dp)
@@ -344,8 +347,22 @@ AbstractWindow {
                                 spacing: Math.round(10 * DefaultStyle.dp)
                                 Text {
                                     id: callStatusText
-                                    property string remoteName: mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning ? mainWindow.call.core.remoteName : qsTr("Appel %1").arg(mainWindow.call ? EnumsToStringCpp.dirToString(mainWindow.call.core.dir) : "")
-                                    text: (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released) ? qsTr("Fin d'appel") : mainWindow.call && (mainWindow.call.core.paused || (mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote)) ? (mainWindow.conference ? qsTr('Réunion mise ') : qsTr('Appel mis')) + qsTr(" en pause") : mainWindow.conference ? mainWindow.conference.core.subject : remoteName
+                                    property string remoteName: mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
+                                        ? mainWindow.call.core.remoteName
+                                        //: "Appel %1"
+                                        : mainWindow.call ? qsTr("call_dir").arg(EnumsToStringCpp.dirToString(mainWindow.call.core.dir)) : ""
+                                    //: "Appel terminé"
+                                    text: (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released)
+                                        ? qsTr("call_ended")
+                                        : mainWindow.call && (mainWindow.call.core.paused || (mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote))
+                                            ? (mainWindow.conference
+                                               //: "Réunion mise en pause"
+                                                ? qsTr("conference_paused")
+                                                  //: "Appel mis en pause"
+                                                : qsTr("call_paused"))
+                                            : mainWindow.conference
+                                                ? mainWindow.conference.core.subject
+                                                : remoteName
                                     color: DefaultStyle.grey_0
                                     font {
                                         pixelSize: Typography.h3.pixelSize
@@ -426,17 +443,40 @@ AbstractWindow {
                                              === LinphoneEnums.CallState.Connected
                                              || mainWindow.callState
                                              === LinphoneEnums.CallState.StreamsRunning
-                                    imageSource: mainWindow.call ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp ? AppIcons.lockSimple : mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified ? AppIcons.warningCircle : AppIcons.lockKey : AppIcons.lockSimpleOpen : ""
+                                    imageSource: mainWindow.call
+                                        ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+                                            ? AppIcons.lockSimple
+                                            : mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+                                                ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+                                                    ? AppIcons.warningCircle
+                                                    : AppIcons.lockKey
+                                                : AppIcons.lockSimpleOpen
+                                        : ""
                                 }
                                 Text {
-                                    text: mainWindow.call
-                                          && mainWindow.callState
-                                          === LinphoneEnums.CallState.Connected
-                                          || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp ? qsTr("Appel chiffré de point à point") : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified ? qsTr("Vérification nécessaire") : qsTr("Appel chiffré de bout en bout") : qsTr("Appel non chiffré") : qsTr("En attente de chiffrement")
-                                    color: mainWindow.call
-                                           && mainWindow.callState
-                                           === LinphoneEnums.CallState.Connected
-                                           || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp ? DefaultStyle.info_500_main : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified ? DefaultStyle.warning_600 : DefaultStyle.info_500_main : DefaultStyle.grey_0 : DefaultStyle.grey_0
+                                    text: mainWindow.call && mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
+                                        ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+                                          //: "Appel chiffré de point à point"
+                                            ? qsTr("call_srtp_point_to_point_encrypted")
+                                            : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+                                                ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+                                                  //: "Vérification nécessaire"
+                                                    ? qsTr("call_zrtp_sas_validation_required")
+                                                      //: "Appel chiffré de bout en bout"
+                                                    : qsTr("call_zrtp_end_to_end_encrypted")
+                                                //: "Appel non chiffré"
+                                                : qsTr("call_not_encrypted")
+                                        //: "En attente de chiffrement"
+                                        : qsTr("call_waiting_for_encryption_info")
+                                    color: mainWindow.call && mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
+                                        ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+                                            ? DefaultStyle.info_500_main
+                                            : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+                                                ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+                                                    ? DefaultStyle.warning_600
+                                                    : DefaultStyle.info_500_main
+                                                : DefaultStyle.grey_0
+                                        : DefaultStyle.grey_0
                                     font {
                                         pixelSize: Math.round(12 * DefaultStyle.dp)
                                         weight: Math.round(400 * DefaultStyle.dp)
@@ -510,13 +550,26 @@ AbstractWindow {
                             Text {
                                 color: DefaultStyle.danger_500main
                                 font.pixelSize: Math.round(14 * DefaultStyle.dp)
-                                text: mainWindow.call ? mainWindow.call.core.recording ? mainWindow.conference ? qsTr("Vous enregistrez la réunion") : qsTr("Vous enregistrez l'appel") : mainWindow.conference ? qsTr("Un participant enregistre la réunion") : qsTr("Votre correspondant enregistre l'appel") : ""
+                                text: mainWindow.call
+                                    ? mainWindow.call.core.recording
+                                        ? mainWindow.conference
+                                          //: "Vous enregistrez la réunion"
+                                            ? qsTr("conference_user_is_recording")
+                                              //: "Vous enregistrez l'appel"
+                                            : qsTr("call_user_is_recording")
+                                        : mainWindow.conference
+                                            //: "Un participant enregistre la réunion"
+                                            ? qsTr("conference_remote_is_recording")
+                                            //: "Votre correspondant enregistre l'appel"
+                                            : qsTr("call_remote_recording")
+                                    : ""
                             }
                         }
                         BigButton {
                             visible: mainWindow.call
                                      && mainWindow.call.core.recording
-                            text: qsTr("Arrêter l'enregistrement")
+                            //: "Arrêter l'enregistrement"
+                            text: qsTr("call_stop_recording")
                             style: ButtonStyle.main
                             onPressed: mainWindow.call.core.lStopRecording()
                         }
@@ -549,7 +602,7 @@ AbstractWindow {
                     }
                     headerStack.currentIndex: 0
                     contentStackView.initialItem: callListPanel
-                    headerValidateButtonText: qsTr("Ajouter")
+                    headerValidateButtonText: qsTr("add")
 
                     Item {
                         id: numericPadContainer
@@ -565,9 +618,8 @@ AbstractWindow {
                 id: callTransferPanel
                 NewCallForm {
                     id: newCallForm
-                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr(
-                                                       "Transférer %1 à :").arg(
-                                                       mainWindow.call.core.remoteName)
+                    //: "Transférer %1 à…"
+                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("call_transfer_current_call_title").arg(mainWindow.call.core.remoteName)
                     Keys.onEscapePressed: event => {
                                               rightPanel.visible = false
                                               event.accepted = true
@@ -579,35 +631,26 @@ AbstractWindow {
                     onContactClicked: contact => {
                                           var callsWin = UtilsCpp.getCallsWindow()
                                           if (contact)
-                                          callsWin.showConfirmationLambdaPopup(
-                                              qsTr("Confirmer le transfert ?"),
-                                              qsTr("Vous allez transférer %1 à %2.").arg(
-                                                  mainWindow.call.core.remoteName).arg(
-                                                  contact.core.fullName), "",
+                                          //: "Confirmer le transfert"
+                                          callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
+                                                                               //: "Vous allez transférer %1 à %2."
+                                                                               qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(contact.core.fullName), "",
                                               function (confirmed) {
                                                   if (confirmed) {
-                                                      mainWindow.transferCallToContact(
-                                                                  mainWindow.call,
-                                                                  contact,
-                                                                  newCallForm)
+                                                      mainWindow.transferCallToContact(mainWindow.call,contact,newCallForm)
                                                   }
                                               })
                                       }
                     onTransferCallToAnotherRequested: dest => {
                                                           var callsWin = UtilsCpp.getCallsWindow()
-                                                          console.log(
-                                                              "transfer to",
-                                                              dest)
-                                                          callsWin.showConfirmationLambdaPopup(
-                                                              qsTr("Confirmer le transfert ?"),
-                                                              qsTr("Vous allez transférer %1 à %2.").arg(mainWindow.call.core.remoteName).arg(
-                                                                  dest.core.remoteName),
-                                                              "",
-                                                              function (confirmed) {
+                                                          console.log("transfer to",dest)
+                                                          callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
+                                                                                               qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(dest.core.remoteName),"",
+                                                                function (confirmed) {
                                                                   if (confirmed) {
                                                                       mainWindow.call.core.lTransferCallToAnother(dest.core.remoteAddress)
                                                                   }
-                                                              })
+                                                          })
                                                       }
                     numPadPopup: numPadPopup
 
@@ -631,8 +674,8 @@ AbstractWindow {
                 NewCallForm {
                     id: newCallForm
                     objectName: "newCallPanel"
-                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr(
-                                                       "Nouvel appel")
+                    //: "Nouvel appel"
+                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("call_action_start_new_call")
                     groupCallVisible: false
                     searchBarColor: DefaultStyle.grey_0
                     searchBarBorderColor: DefaultStyle.grey_200
@@ -671,8 +714,8 @@ AbstractWindow {
                 id: dialerPanel
                 Item {
                     id: dialerPanelContent
-                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr(
-                                                       "Dialer")
+                    //: "Pavé numérique"
+                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("call_action_show_dialer")
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                     Keys.onEscapePressed: event => {
@@ -709,8 +752,8 @@ AbstractWindow {
             Component {
                 id: changeLayoutPanel
                 ChangeLayoutForm {
-                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr(
-                                                       "Modifier la disposition")
+                    //: "Modifier la disposition"
+                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("call_action_change_layout")
                     Keys.onEscapePressed: event => {
                                               rightPanel.visible = false
                                               event.accepted = true
@@ -725,7 +768,8 @@ AbstractWindow {
                 id: callListPanel
                 ColumnLayout {
                     Control.StackView.onActivated: {
-                        rightPanel.headerTitleText = qsTr("Liste d'appel")
+                        //: "Liste d'appel"
+                        rightPanel.headerTitleText = qsTr("call_action_go_to_calls_list")
                         rightPanel.customHeaderButtons = mergeCallPopupButton.createObject(
                                     rightPanel)
                     }
@@ -743,6 +787,7 @@ AbstractWindow {
                                 icon.source: AppIcons.arrowsMerge
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
+                                //: call_action_merge_calls
                                 text: qsTr("Merger tous les appels")
                                 textSize: Math.round(14 * DefaultStyle.dp)
                                 onClicked: {
@@ -779,7 +824,8 @@ AbstractWindow {
                 id: settingsPanel
                 Item {
                     Control.StackView.onActivated: {
-                        rightPanel.headerTitleText = qsTr("Paramètres")
+                        //: "Paramètres"
+                        rightPanel.headerTitleText = qsTr("call_action_go_to_settings")
                     }
                     Keys.onEscapePressed: event => {
                                               rightPanel.visible = false
@@ -799,8 +845,8 @@ AbstractWindow {
             Component {
                 id: screencastPanel
                 Item {
-                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr(
-                                                       "Partage de votre écran")
+                    //: "Partage de votre écran"
+                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("conference_action_screen_sharing")
                     Keys.onEscapePressed: event => {
                                               rightPanel.visible = false
                                               event.accepted = true
@@ -850,38 +896,33 @@ AbstractWindow {
                                     PopupButton {
                                         popup.contentItem: IconLabelButton {
                                             icon.source: AppIcons.shareNetwork
-                                            text: qsTr("Partager le lien de la réunion")
+                                            //: Partager le lien de la réunion
+                                            text: qsTr("conference_share_link_title")
                                             onClicked: {
-                                                UtilsCpp.copyToClipboard(
-                                                            mainWindow.call.core.remoteAddress)
-                                                showInformationPopup(
-                                                            qsTr("Copié"), qsTr(
-                                                                "Le lien de la réunion a été copié dans le presse-papier"),
-                                                            true)
+                                                UtilsCpp.copyToClipboard(mainWindow.call.core.remoteAddress)
+                                                //: Copié
+                                                showInformationPopup(qsTr("copied"),
+                                                //: Le lien de la réunion a été copié dans le presse-papier
+                                                qsTr("information_popup_meeting_address_copied_to_clipboard"),true)
                                             }
                                         }
                                     }
                                 }
                                 Control.StackView.onActivated: {
-                                    rightPanel.customHeaderButtons = headerbutton.createObject(
-                                                rightPanel)
-                                    rightPanel.headerTitleText = qsTr(
-                                                "Participants (%1)").arg(count)
+                                    rightPanel.customHeaderButtons = headerbutton.createObject(rightPanel)
+                                    //: "Participants (%1)"
+                                    rightPanel.headerTitleText = qsTr("conference_participants_list_title").arg(count)
                                 }
                                 call: mainWindow.call
-                                onAddParticipantRequested: participantsStack.push(
-                                                               addParticipantComp)
+                                onAddParticipantRequested: participantsStack.push(addParticipantComp)
                                 onCountChanged: {
-                                    rightPanel.headerTitleText = qsTr(
-                                                "Participants (%1)").arg(count)
+                                    rightPanel.headerTitleText = qsTr("conference_participants_list_title").arg(count)
                                 }
                                 Connections {
                                     target: participantsStack
                                     function onCurrentItemChanged() {
                                         if (participantsStack.currentItem == participantList)
-                                            rightPanel.headerTitleText = qsTr(
-                                                        "Participants (%1)").arg(
-                                                        participantList.count)
+                                            rightPanel.headerTitleText = qsTr("conference_participants_list_title").arg(participantList.count)
                                     }
                                 }
                                 Connections {
@@ -901,21 +942,15 @@ AbstractWindow {
                                 searchBarColor: DefaultStyle.grey_0
                                 searchBarBorderColor: DefaultStyle.grey_200
                                 onSelectedParticipantsCountChanged: {
-                                    rightPanel.headerSubtitleText = qsTr(
-                                                "%1 participant%2 sélectionné%2").arg(
-                                                selectedParticipantsCount).arg(
-                                                selectedParticipantsCount > 1 ? "s" : "")
+                                    rightPanel.headerSubtitleText = qsTr("group_call_participant_selected").arg(selectedParticipantsCount)
                                     participantsStack.selectedParticipants = selectedParticipants
                                 }
                                 Connections {
                                     target: participantsStack
                                     function onCurrentItemChanged() {
                                         if (participantsStack.currentItem == addParticipantLayout) {
-                                            rightPanel.headerTitleText = qsTr(
-                                                        "Ajouter des participants")
-                                            rightPanel.headerSubtitleText = qsTr(
-                                                        "%1 participant%2 sélectionné%2").arg(
-                                                        addParticipantLayout.selectedParticipants.length).arg(addParticipantLayout.selectedParticipants.length > 1 ? "s" : "")
+                                            rightPanel.headerTitleText = qsTr("meeting_schedule_add_participants_title")
+                                            rightPanel.headerSubtitleText = qsTr("group_call_participant_selected").arg(addParticipantLayout.selectedParticipants.length)
                                         }
                                     }
                                 }
@@ -929,7 +964,8 @@ AbstractWindow {
                 EncryptionSettings {
                     call: mainWindow.call
                     Control.StackView.onActivated: {
-                        rightPanel.headerTitleText = qsTr("Chiffrement")
+                        //: Chiffrement
+                        rightPanel.headerTitleText = qsTr("call_encryption_title")
                     }
                     onEncryptionValidationRequested: zrtpValidation.open()
                 }
@@ -938,7 +974,8 @@ AbstractWindow {
                 id: statsPanel
                 CallStatistics {
                     Control.StackView.onActivated: {
-                        rightPanel.headerTitleText = qsTr("Statistiques")
+                        //: Statistiques
+                        rightPanel.headerTitleText = qsTr("call_stats_title")
                     }
                     call: mainWindow.call
                 }
@@ -1055,7 +1092,8 @@ AbstractWindow {
                     Layout.row: 0
                     icon.width: Math.round(32 * DefaultStyle.dp)
                     icon.height: Math.round(32 * DefaultStyle.dp)
-                    ToolTip.text: qsTr("Terminer l'appel")
+                    //: "Terminer l'appel"
+                    ToolTip.text: qsTr("call_action_end_call")
                     Layout.preferredWidth: Math.round(75 * DefaultStyle.dp)
                     Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                     radius: Math.round(71 * DefaultStyle.dp)
@@ -1085,9 +1123,10 @@ AbstractWindow {
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
                         icon.height: Math.round(32 * DefaultStyle.dp)
-                        ToolTip.text: checked ? qsTr(
-                                                    "Reprendre l'appel") : qsTr(
-                                                    "Mettre l'appel en pause")
+                        //: "Reprendre l'appel"
+                        ToolTip.text: checked ? qsTr("call_action_resume_call")
+                                                //: "Mettre l'appel en pause"
+                                              : qsTr("call_action_pause_call")
                         background: Rectangle {
                             anchors.fill: parent
                             radius: Math.round(71 * DefaultStyle.dp)
@@ -1117,7 +1156,8 @@ AbstractWindow {
                         icon.width: Math.round(32 * DefaultStyle.dp)
                         icon.height: Math.round(32 * DefaultStyle.dp)
                         contentImageColor: DefaultStyle.grey_0
-                        ToolTip.text: qsTr("Transférer l'appel")
+                        //: "Transférer l'appel"
+                        ToolTip.text: qsTr("call_action_transfer_call")
                         onCheckedChanged: {
                             console.log("checked transfer changed", checked)
                             if (checked) {
@@ -1143,7 +1183,8 @@ AbstractWindow {
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
                         icon.height: Math.round(32 * DefaultStyle.dp)
-                        ToolTip.text: qsTr("Initier un nouvel appel")
+                        //: "Initier un nouvel appel"
+                        ToolTip.text: qsTr("call_action_start_new_call_hint")
                         onCheckedChanged: {
                             console.log("checked newcall changed", checked)
                             if (checked) {
@@ -1169,7 +1210,8 @@ AbstractWindow {
                         icon.source: AppIcons.callList
                         icon.width: Math.round(32 * DefaultStyle.dp)
                         icon.height: Math.round(32 * DefaultStyle.dp)
-                        ToolTip.text: qsTr("Afficher la liste d'appels")
+                        //: "Afficher la liste d'appels"
+                        ToolTip.text: qsTr("call_display_call_list_hint")
                         onCheckedChanged: {
                             if (checked) {
                                 rightPanel.visible = true
@@ -1207,8 +1249,9 @@ AbstractWindow {
                                      === LinphoneEnums.CallState.StreamsRunning)
                         iconUrl: AppIcons.videoCamera
                         checkedIconUrl: AppIcons.videoCameraSlash
-                        ToolTip.text: mainWindow.localVideoEnabled ? qsTr("Désactiver la vidéo") : qsTr(
-                                                                         "Activer la vidéo")
+                        //: "Désactiver la vidéo"
+                        //: "Activer la vidéo"
+                        ToolTip.text: mainWindow.localVideoEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
                         checked: !mainWindow.localVideoEnabled
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
@@ -1219,8 +1262,11 @@ AbstractWindow {
                     }
                     CheckableButton {
                         iconUrl: AppIcons.microphone
-                        ToolTip.text: mainWindow.call
-                                      && mainWindow.call.core.microphoneMuted ? qsTr("Activer le son") : qsTr("Désactiver le son")
+                        ToolTip.text: mainWindow.call && mainWindow.call.core.microphoneMuted
+                            //: "Activer le micro"
+                            ? qsTr("call_activate_microphone")
+                            //: "Désactiver le micro"
+                            : qsTr("call_deactivate_microphone")
                         checkedIconUrl: AppIcons.microphoneSlash
                         checked: mainWindow.call
                                  && mainWindow.call.core.microphoneMuted
@@ -1234,7 +1280,8 @@ AbstractWindow {
                     CheckableButton {
                         iconUrl: AppIcons.screencast
                         visible: !!mainWindow.conference
-                        ToolTip.text: qsTr("Partager l'écran...")
+                        //: Partager l'écran…
+                        ToolTip.text: qsTr("call_share_screen_hint")
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
@@ -1252,7 +1299,8 @@ AbstractWindow {
                         visible: false
                         checkable: false
                         iconUrl: AppIcons.handWaving
-                        ToolTip.text: qsTr("Lever la main")
+                        //: "Lever la main"
+                        ToolTip.text: qsTr("call_rise_hand_hint")
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
@@ -1261,7 +1309,8 @@ AbstractWindow {
                     CheckableButton {
                         visible: false
                         iconUrl: AppIcons.smiley
-                        ToolTip.text: qsTr("Envoyer une réaction")
+                        //: "Envoyer une réaction"
+                        ToolTip.text: qsTr("call_send_reaction_hint")
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
@@ -1269,7 +1318,8 @@ AbstractWindow {
                     }
                     CheckableButton {
                         id: participantListButton
-                        ToolTip.text: qsTr("Gérer les participants")
+                        //: "Gérer les participants"
+                        ToolTip.text: qsTr("call_manage_participants_hint")
                         visible: mainWindow.conference
                         iconUrl: AppIcons.usersTwo
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
@@ -1292,7 +1342,8 @@ AbstractWindow {
                     }
                     PopupButton {
                         id: moreOptionsButton
-                        ToolTip.text: qsTr("Plus d'options...")
+                        //: "Plus d'options…"
+                        ToolTip.text: qsTr("call_more_options_hint")
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         popup.topPadding: Math.round(20 * DefaultStyle.dp)
@@ -1320,7 +1371,8 @@ AbstractWindow {
                                 icon.source: AppIcons.squaresFour
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
-                                text: qsTr("Modifier la disposition")
+                                //: "Modifier la disposition"
+                                text: qsTr("call_action_change_conference_layout")
                                 style: ButtonStyle.noBackground
                                 onClicked: {
                                     rightPanel.visible = true
@@ -1331,7 +1383,8 @@ AbstractWindow {
                             IconLabelButton {
                                 Layout.fillWidth: true
                                 icon.source: AppIcons.fullscreen
-                                text: qsTr("Mode Plein écran")
+                                //: "Mode Plein écran"
+                                text: qsTr("call_action_full_screen")
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
                                 checkable: true
@@ -1351,7 +1404,7 @@ AbstractWindow {
                             IconLabelButton {
                                 Layout.fillWidth: true
                                 icon.source: AppIcons.dialer
-                                text: qsTr("Dialer")
+                                text: qsTr("call_action_show_dialer")
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
                                 style: ButtonStyle.noBackground
@@ -1378,8 +1431,11 @@ AbstractWindow {
                                 hoveredImageColor: contentImageColor
                                 contentImageColor: mainWindow.call
                                                    && mainWindow.call.core.recording ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
-                                text: mainWindow.call
-                                      && mainWindow.call.core.recording ? qsTr("Terminer l'enregistrement") : qsTr("Enregistrer l'appel")
+                                text: mainWindow.call && mainWindow.call.core.recording
+                                    //: "Terminer l'enregistrement"
+                                    ? qsTr("call_action_stop_recording")
+                                    //: "Enregistrer l'appel"
+                                    : qsTr("call_action_record")
                                 textColor: mainWindow.call
                                            && mainWindow.call.core.recording ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
                                 hoveredTextColor: textColor
@@ -1403,8 +1459,11 @@ AbstractWindow {
                                 contentImageColor: mainWindow.call
                                                    && mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
                                 hoveredImageColor: contentImageColor
-                                text: mainWindow.call
-                                      && mainWindow.call.core.speakerMuted ? qsTr("Activer le son") : qsTr("Désactiver le son")
+                                text: mainWindow.call && mainWindow.call.core.speakerMuted
+                                    //: "Activer le son"
+                                    ? qsTr("call_activate_speaker_hint")
+                                    //: "Désactiver le son"
+                                    : qsTr("call_deactivate_speaker_hint")
                                 textColor: mainWindow.call
                                            && mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
                                 hoveredTextColor: textColor
@@ -1419,7 +1478,8 @@ AbstractWindow {
                                 icon.source: AppIcons.settings
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
-                                text: qsTr("Paramètres")
+                                //: "Paramètres"
+                                text: qsTr("call_action_go_to_settings")
                                 style: ButtonStyle.noBackground
                                 onClicked: {
                                     rightPanel.visible = true

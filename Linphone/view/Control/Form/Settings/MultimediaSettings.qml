@@ -40,7 +40,8 @@ ColumnLayout {
                         imageHeight: Math.round(24 * DefaultStyle.dp)
 					}
 					Text {
-						text: qsTr("Sonnerie - Appels entrants")
+                        //: "Sonnerie - Appels entrants"
+                        text: qsTr("multimedia_settings_ringer_title")
 						font: Typography.p2l
 						color: DefaultStyle.main2_600
 						Layout.fillWidth: true
@@ -72,7 +73,8 @@ ColumnLayout {
                         imageHeight: Math.round(24 * DefaultStyle.dp)
 					}
 					Text {
-						text: qsTr("Haut-parleurs")
+                        //: "Haut-parleurs"
+                        text: qsTr("multimedia_settings_speaker_title")
 						font: Typography.p2l
 						Layout.fillWidth: true
 					}
@@ -119,7 +121,8 @@ ColumnLayout {
                         imageHeight: Math.round(24 * DefaultStyle.dp)
 					}
 					Text {
-						text: qsTr("Microphone")
+                        //: "Microphone"
+                        text: qsTr("multimedia_settings_microphone_title")
 						font: Typography.p2l
 						Layout.fillWidth: true
 					}
@@ -205,7 +208,8 @@ ColumnLayout {
                         imageHeight: Math.round(24 * DefaultStyle.dp)
                     }
                     Text {
-                        text: qsTr("Caméra")
+                        //: "Caméra"
+                        text: qsTr("multimedia_settings_camera_title")
                         font: Typography.p2l
                         Layout.fillWidth: true
                     }

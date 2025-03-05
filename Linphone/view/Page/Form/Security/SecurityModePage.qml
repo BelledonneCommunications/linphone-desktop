@@ -18,14 +18,16 @@ LoginLayout {
 		}
 		ColumnLayout {
 			Text {
-				text: qsTr("Choisir votre mode")
+                //: "Choisir votre mode"
+                text: qsTr("manage_account_choose_mode_title")
 				font {
                     pixelSize: Typography.h1.pixelSize
                     weight: Typography.h1.weight
 				}
 			}
 			Text {
-				text: qsTr("Vous pourrez changer de mode plus tard.")
+                //: "Vous pourrez changer de mode plus tard."
+                text: qsTr("manage_account_choose_mode_message")
 				font.bold: true
 				font {
                     pixelSize: Typography.p1.pixelSize
@@ -44,8 +46,14 @@ LoginLayout {
             spacing: Math.round(70 * DefaultStyle.dp)
 			Repeater {
 				model: [
-					{checked: true, title: qsTr("Chiffrement de bout en bout"), text: qsTr("Ce mode vous garanti la confidentialité de tous vos échanges. Notre technologie de chiffrement de bout en bout assure un niveau de sécurité maximal pour tous vos échanges."), imgUrl: AppIcons.chiffrement, color: DefaultStyle.info_500_main},
-					{checked: false, title: qsTr("Interoperable"), text: qsTr("Ce mode vous permet de profiter de toute les fonctionnalités de Linphone, toute en restant interopérable avec n’importe qu’elle autre service SIP."), imgUrl: AppIcons.interoperable, color: DefaultStyle.main1_500_main}
+                    //: "Chiffrement de bout en bout"
+                    {checked: true, title: qsTr("manage_account_e2e_encrypted_mode_default_title"),
+                        //: "Ce mode vous garanti la confidentialité de tous vos échanges. Notre technologie de chiffrement de bout en bout assure un niveau de sécurité maximal pour tous vos échanges."
+                        text: qsTr("manage_account_e2e_encrypted_mode_default_summary"), imgUrl: AppIcons.chiffrement, color: DefaultStyle.info_500_main},
+                    //: "Interoperable"
+                    {checked: false, title: qsTr("manage_account_e2e_encrypted_mode_interoperable_title"),
+                        //: "Ce mode vous permet de profiter de toute les fonctionnalités de Linphone, toute en restant interopérable avec n’importe qu’elle autre service SIP."
+                        text: qsTr("manage_account_e2e_encrypted_mode_interoperable_summary"), imgUrl: AppIcons.interoperable, color: DefaultStyle.main1_500_main}
 				]
 				SecurityRadioButton {
 					title: modelData.title
@@ -64,7 +72,8 @@ LoginLayout {
 			property int selectedIndex: 0
 			Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
-			text: qsTr("Continuer")
+            //: "Continuer"
+            text: qsTr("dialog_continue")
 			style: ButtonStyle.main
 			onClicked: mainItem.modeSelected(selectedIndex)
 		}

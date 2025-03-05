@@ -25,8 +25,10 @@ AbstractSettingsLayout {
 		ColumnLayout {
             spacing: Math.round(40 * DefaultStyle.dp)
 			SwitchSetting {
-				titleText: qsTr("Chiffrer tous les fichiers")
-				subTitleText: qsTr("Attention, vous ne pourrez pas revenir en arrière !")
+                //: "Chiffrer tous les fichiers"
+                titleText: qsTr("settings_security_enable_vfs_title")
+                //: "Attention, vous ne pourrez pas revenir en arrière !"
+                subTitleText: qsTr("settings_security_enable_vfs_subtitle")
 				propertyName: "vfsEnabled"
 				propertyOwner: SettingsCpp
 			}

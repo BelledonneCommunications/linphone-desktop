@@ -154,7 +154,8 @@ void AccountDeviceList::setSelf(QSharedPointer<AccountDeviceList> me) {
 					lDebug() << "REQUEST ERROR" << errorMessage << "/" << int(request->getType());
 					QString message = QString::fromStdString(errorMessage);
 					if (request->getType() == linphone::AccountManagerServicesRequest::Type::GetDevicesList) {
-						message = tr("Erreur lors de la récupération des appareils");
+						//: "Erreur lors de la récupération des appareils"
+						message = tr("manage_account_no_device_found_error_message");
 					}
 					emit requestError(message);
 			    });

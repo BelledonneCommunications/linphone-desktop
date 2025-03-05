@@ -137,6 +137,8 @@ public:
 	Q_INVOKABLE static QString getFileChecksum(const QString &filePath);
 	Q_INVOKABLE QList<QVariant> append(const QList<QVariant> a, const QList<QVariant> b);
 
+//	QDir findDirectoryByName(QString startPath, QString name);
+
 	static QString getApplicationProduct();
 	static QString getOsProduct();
 

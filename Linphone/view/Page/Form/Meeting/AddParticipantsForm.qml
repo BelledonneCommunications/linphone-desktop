@@ -9,8 +9,8 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 FocusScope{
 	id: mainItem
-	
-	property string placeHolderText: qsTr("Rechercher des contacts")
+    //: "Rechercher des contacts"
+    property string placeHolderText: qsTr("search_bar_search_contacts_placeholder")
 	property list<string> selectedParticipants
 	property int selectedParticipantsCount: selectedParticipants.length
 	property ConferenceInfoGui conferenceInfoGui
@@ -107,7 +107,8 @@ FocusScope{
 				visible: !contactList.loading && contactList.count === 0
 				Layout.alignment: Qt.AlignHCenter
                 Layout.topMargin: Math.round(137 * DefaultStyle.dp)
-				text: qsTr("Aucun contact%1").arg(searchBar.text.length !== 0 ? " correspondant" : "")
+                //: "Aucun contact"
+                text: searchBar.text.length !== 0 ? qsTr("list_filter_no_result_found") : qsTr("contact_list_empty")
 				font {
                     pixelSize: Typography.h4.pixelSize
                     weight: Typography.h4.weight

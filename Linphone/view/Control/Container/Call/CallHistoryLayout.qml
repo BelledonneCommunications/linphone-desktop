@@ -127,12 +127,16 @@ ColumnLayout {
 				Layout.fillWidth: true
 				visible: mainItem.contact
 				text: mode === LinphoneEnums.ConsolidatedPresence.Online
-					? qsTr("En ligne")
+                //: "En ligne"
+                    ? qsTr("contact_presence_status_online")
 					: mode === LinphoneEnums.ConsolidatedPresence.Busy
-						? qsTr("Occupé")
+                        //: "Occupé"
+                        ? qsTr("contact_presence_status_busy")
 						: mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
-							? qsTr("Ne pas déranger")
-							: qsTr("Hors ligne")
+                            //: "Ne pas déranger"
+                            ? qsTr("contact_presence_status_do_not_disturb")
+                            //: "Hors ligne"
+                            : qsTr("contact_presence_status_offline")
 				color: mode === LinphoneEnums.ConsolidatedPresence.Online
 					? DefaultStyle.success_500main
 					: mode === LinphoneEnums.ConsolidatedPresence.Busy
@@ -155,7 +159,8 @@ ColumnLayout {
 		MediumButton {
 			visible: mainItem.isConference && !SettingsCpp.disableMeetingsFeature
 			Layout.alignment: Qt.AlignHCenter
-			text: qsTr("Rejoindre la réunion")
+            //: "Rejoindre la réunion"
+            text: qsTr("meeting_info_join_title")
 			style: ButtonStyle.grey
 			onClicked: {
 				if (mainItem.conferenceInfo) {
@@ -172,7 +177,8 @@ ColumnLayout {
             button.icon.width: Math.round(24 * DefaultStyle.dp)
             button.icon.height: Math.round(24 * DefaultStyle.dp)
 			button.icon.source: AppIcons.phone
-			label: qsTr("Appel")
+            //: "Appel"
+            label: qsTr("contact_call_action")
 			button.onClicked: {
 				if (mainItem.specificAddress === "") mainWindow.startCallWithContact(mainItem.contact, false, mainItem)
 				else UtilsCpp.createCall(mainItem.specificAddress)
@@ -184,8 +190,9 @@ ColumnLayout {
             height: Math.round(56 * DefaultStyle.dp)
             button.icon.width: Math.round(24 * DefaultStyle.dp)
             button.icon.height: Math.round(24 * DefaultStyle.dp)
-			button.icon.source: AppIcons.chatTeardropText
-			label: qsTr("Message")
+            button.icon.source: AppIcons.chatTeardropText
+            //: "Message"
+            label: qsTr("contact_message_action")
 			button.onClicked: console.debug("[ContactLayout.qml] TODO : open conversation")
         }
         LabelButton {
@@ -195,7 +202,8 @@ ColumnLayout {
             button.icon.width: Math.round(24 * DefaultStyle.dp)
             button.icon.height: Math.round(24 * DefaultStyle.dp)
             button.icon.source: AppIcons.videoCamera
-            label: qsTr("Appel Video")
+            //: "Appel Video"
+            label: qsTr("contact_video_call_action")
             button.onClicked: {
                 if (mainItem.specificAddress === "") mainWindow.startCallWithContact(mainItem.contact, true, mainItem)
                 else UtilsCpp.createCall(mainItem.specificAddress, {'localVideoEnabled': true})

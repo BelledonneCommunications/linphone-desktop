@@ -51,7 +51,8 @@ LoginLayout {
 			}
 			Text {
 				Layout.preferredWidth: width
-				text: qsTr("Inscription")
+                //: "Inscription
+                text: qsTr("assistant_account_register")
 				font {
                     pixelSize: Typography.h1.pixelSize
                     weight: Typography.h1.weight
@@ -69,7 +70,8 @@ LoginLayout {
 			Text {
                 Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
 				color: DefaultStyle.main2_700
-				text: qsTr("Déjà un compte ?")
+                // "Déjà un compte ?"
+                text: qsTr("assistant_already_have_an_account")
 				font {
                     pixelSize: Typography.p1.pixelSize
                     weight: Typography.p1.weight
@@ -77,7 +79,7 @@ LoginLayout {
 			}
 			BigButton {
 				style: ButtonStyle.main
-				text: qsTr("Connexion")
+                text: qsTr("assistant_account_login")
 				onClicked: {
 					console.debug("[RegisterPage] User: return")
 					returnToLogin()
@@ -96,7 +98,10 @@ LoginLayout {
 			TabBar {
 				Layout.fillWidth: true
 				id: bar
-				model: [qsTr("Register with phone number"), qsTr("Register with email")]
+                // "S'inscrire avec un numéro de téléphone"
+                model: [qsTr("assistant_account_register_with_phone_number"),
+                    // "S'inscrire avec un email"
+                    qsTr("assistant_account_register_with_email")]
 			}
 			Flickable {
 				Layout.fillWidth: true
@@ -112,7 +117,7 @@ LoginLayout {
                             spacing: Math.round(16 * DefaultStyle.dp)
 							FormItemLayout {
 								id: usernameItem
-								label: qsTr("Username")
+                                label: qsTr("username")
 								mandatory: true
 								enableErrorText: true
                                 Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
@@ -143,17 +148,18 @@ LoginLayout {
 								id: phoneNumberInput
                                 Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
 								property string completePhoneNumber: countryCode + phoneNumber
-								label: qsTr("Numéro de téléphone")
+                                //: "Numéro de téléphone"
+                                label: qsTr("phone_number")
 								enableErrorText: true
 								mandatory: true
-								placeholderText: "Phone number"
+                                placeholderText: qsTr("phone_number")
 								defaultCallingCode: "33"
 							}
 							FormItemLayout {
 								id: emailItem
 								Layout.fillWidth: false
                                 Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
-								label: qsTr("Email")
+                                label: qsTr("email")
 								mandatory: true
 								enableErrorText: true
 								contentItem: TextField {
@@ -172,7 +178,7 @@ LoginLayout {
 								FormItemLayout {
 									id: passwordItem
                                     Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
-									label: qsTr("Mot de passe")
+                                    label: qsTr("password")
 									mandatory: true
 									enableErrorText: true
 									contentItem: TextField {
@@ -184,7 +190,8 @@ LoginLayout {
 								}
 								FormItemLayout {
                                     Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
-									label: qsTr("Confirmation mot de passe")
+                                    //: "Confirmation mot de passe"
+                                    label: qsTr("assistant_account_register_password_confirmation")
 									mandatory: true
 									enableErrorText: true
 									contentItem: TextField {
@@ -199,7 +206,6 @@ LoginLayout {
 								id: otherErrorText
 								Layout.fillWidth: true
                                 Layout.topMargin: Math.round(5 * DefaultStyle.dp)
-								onTextChanged: console.log("set error", text) 
 							}
 						}
 					}
@@ -227,97 +233,54 @@ LoginLayout {
                         spacing: Math.round(10 * DefaultStyle.dp)
 						CheckBox {
 							id: termsCheckBox
-						}
-						RowLayout {
-							spacing: 0
-							Layout.fillWidth: true
-							Text {
-								text: qsTr("J'accepte les ")
-								font {
-                                    pixelSize: Typography.p1.pixelSize
-                                    weight: Typography.p1.weight
-								}
-								MouseArea {
-									anchors.fill: parent
-									onClicked: termsCheckBox.toggle()
-								}
-							}
-							Text {
-								activeFocusOnTab: true
-								font {
-									underline: true
-                                    pixelSize: Typography.p1.pixelSize
-                                    weight: Typography.p1.weight
-									bold: activeFocus
-								}
-								text: qsTr("conditions d’utilisation")
-								Keys.onPressed: (event)=> {
-									if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-										cguMouseArea.clicked(undefined)
-										event.accepted = true;
-									}
-								}
-								MouseArea {
-									id: cguMouseArea
-									anchors.fill: parent
-									hoverEnabled: true
-									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-									onClicked: Qt.openUrlExternally(ConstantsCpp.CguUrl)
-								}
-							}
-							Text {
-								text: qsTr(" et la ")
-								font {
-                                    pixelSize: Typography.p1.pixelSize
-                                    weight: Typography.p1.weight
-								}
-							}
-							Text {
-								activeFocusOnTab: true
-								font {
-									underline: true
-                                    pixelSize: Typography.p1.pixelSize
-                                    weight: Typography.p1.weight
-									bold: activeFocus
-								}
-								text: qsTr("politique de confidentialité.")
-								Keys.onPressed: (event)=> {
-									if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-										privateMouseArea.clicked(undefined)
-										event.accepted = true;
-									}
-								}
-								MouseArea {
-									id: privateMouseArea
-									anchors.fill: parent
-									hoverEnabled: true
-									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-									onClicked: Qt.openUrlExternally(ConstantsCpp.PrivatePolicyUrl)
-								}
-							}
-						}
-					}
-					// }
+                        }
+                        Text {
+                            //: "J'accepte les %1 et la %2"
+                            text: qsTr("assistant_dialog_cgu_and_privacy_policy_message")
+                            //: "conditions d'utilisation"
+                            .arg(("<a href='%1'><font color='DefaultStyle.main2_600'>%2</font></a>").arg(ConstantsCpp.CguUrl).arg(qsTr("assistant_dialog_general_terms_label")))
+                            //: "politique de confidentialité"
+                            .arg(("<a href='%1'><font color='DefaultStyle.main2_600'>%2</font></a>").arg(ConstantsCpp.PrivatePolicyUrl).arg(qsTr("assistant_dialog_privacy_policy_label")))
+                            onLinkActivated: (link) => Qt.openUrlExternally(link)
+                            font {
+                                pixelSize: Typography.p1.pixelSize
+                                weight: Typography.p1.weight
+                            }
+                            MouseArea {
+                                anchors.fill: parent
+                                acceptedButtons: Qt.NoButton
+                                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                onClicked: termsCheckBox.toggle()
+                            }
+                        }
+                    }
+                    // }
 					Button {
 						enabled: termsCheckBox.checked
 						style: ButtonStyle.main
-						text: qsTr("Créer")
+                        //: "Créer"
+                        text: qsTr("assistant_account_create")
 						onClicked:{
 							if (usernameInput.text.length === 0) {
 								console.log("ERROR username")
-								usernameItem.errorMessage = qsTr("Veuillez entrer un nom d'utilisateur")
+                                //: "Veuillez entrer un nom d'utilisateur"
+                                usernameItem.errorMessage = qsTr("assistant_account_create_missing_username_error")
 							} else if (pwdInput.text.length === 0) {
 								console.log("ERROR password")
-								passwordItem.errorMessage = qsTr("Veuillez entrer un mot de passe")
+                                //: "Veuillez entrer un mot de passe"
+                                passwordItem.errorMessage = qsTr("assistant_account_create_missing_password_error")
 							} else if (pwdInput.text != confirmPwdInput.text) {
 								console.log("ERROR confirm pwd")
-								passwordItem.errorMessage = qsTr("Les mots de passe sont différents")
+                                //: "Les mots de passe sont différents"
+                                passwordItem.errorMessage = qsTr("assistant_account_create_confirm_password_error")
 							} else if (bar.currentIndex === 0 && phoneNumberInput.phoneNumber.length === 0) {
 								console.log("ERROR phone number")
-								phoneNumberInput.errorMessage = qsTr("Veuillez entrer un numéro de téléphone")
+                                //: "Veuillez entrer un numéro de téléphone"
+                                phoneNumberInput.errorMessage = qsTr("assistant_account_create_missing_number_error")
 							} else if (bar.currentIndex === 1 && emailInput.text.length === 0) {
 								console.log("ERROR email")
-								emailItem.errorMessage = qsTr("Veuillez entrer un email")
+                                //: "Veuillez entrer un email"
+                                emailItem.errorMessage = qsTr("assistant_account_create_missing_email_error")
 							} else {
 								console.log("[RegisterPage] User: Call register")
 								mainItem.browserValidationRequested()

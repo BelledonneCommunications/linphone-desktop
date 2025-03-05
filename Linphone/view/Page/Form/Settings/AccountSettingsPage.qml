@@ -9,20 +9,25 @@ import SettingsCpp
 AbstractSettingsMenu {
 	id: mainItem
 	layoutsPath: "qrc:/qt/qml/Linphone/view/Page/Layout/Settings"
-	titleText: qsTr("Mon compte")
+    //: "Mon compte"
+    titleText: qsTr("drawer_menu_manage_account")
 	property AccountGui account
 	signal accountRemoved()
 	families: [
-		{title: qsTr("Général"), layout: "AccountSettingsGeneralLayout", model: account},
-		{title: qsTr("Paramètres de compte"), layout: "AccountSettingsParametersLayout", model: account}
+        //: "Général"
+        {title: qsTr("settings_general_title"), layout: "AccountSettingsGeneralLayout", model: account},
+        //: "Paramètres de compte"
+        {title: qsTr("settings_account_title"), layout: "AccountSettingsParametersLayout", model: account}
 	]
 	Connections {
 		target: account.core
 		function onRemoved() { accountRemoved() }
 	}
 	onGoBackRequested: if (!account.core.isSaved) {
-		UtilsCpp.getMainWindow().showConfirmationLambdaPopup(qsTr("Modifications non enregistrées"),
-			qsTr("Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?"),
+                           //: "Modifications non enregistrées"
+        UtilsCpp.getMainWindow().showConfirmationLambdaPopup(qsTr("contact_editor_popup_abort_confirmation_title"),
+                                                             //: "Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?"
+            qsTr("contact_editor_popup_abort_confirmation_message"),
 			"",
 			function (confirmed) {
 				if (confirmed) {
@@ -31,7 +36,9 @@ AbstractSettingsMenu {
 					account.core.undo()
 				}
 				mainItem.goBack()
-			}, qsTr("Ne pas enregistrer"), qsTr("Enregistrer")
+                //: "Ne pas enregistrer"
+                //: "Enregistrer"
+            }, qsTr("contact_editor_dialog_abort_confirmation_do_not_save"), qsTr("contact_editor_dialog_abort_confirmation_save")
 		)
 	} else {mainItem.goBack()}
 }

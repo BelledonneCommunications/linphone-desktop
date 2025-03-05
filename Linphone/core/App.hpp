@@ -35,6 +35,7 @@ class Thread;
 class Notifier;
 class QQuickWindow;
 class QSystemTrayIcon;
+class DefaultTranslatorCore;
 
 class App : public SingleApplication, public AbstractObject {
 	Q_OBJECT
@@ -112,6 +113,7 @@ public:
 	void clean();
 	void init();
 	void initCore();
+	void initLocale();
 	void initCppInterfaces();
 	void initFonts();
 	void restart();
@@ -194,6 +196,8 @@ private:
 	bool mAutoStart = false;
 	bool mCoreStarted = false;
 	QLocale mLocale = QLocale::system();
+	DefaultTranslatorCore *mTranslatorCore = nullptr;
+	DefaultTranslatorCore *mDefaultTranslatorCore = nullptr;
 	QTimer mDateUpdateTimer;
 	QDate mCurrentDate;
 

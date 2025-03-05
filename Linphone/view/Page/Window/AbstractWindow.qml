@@ -74,7 +74,8 @@ ApplicationWindow {
                 spacing: Math.round(5 * DefaultStyle.dp)
                 width: startCallPopup.width
                 Text {
-                    text: qsTr("Quelle adresse souhaitez-vous appeler ?")
+                    //: "Choisissez un numéro ou adresse SIP"
+                    text: qsTr("contact_dialog_pick_phone_number_or_sip_address_title")
                     wrapMode: Text.Wrap
                     Layout.fillWidth: true
                     font {
@@ -272,7 +273,8 @@ ApplicationWindow {
             font.bold: true
             font.italic: true
             font.pixelSize: Math.round(14 * DefaultStyle.dp)
-            text: parent.fps + " FPS"
+            // "%1 FPS"
+            text: qsTr("fps_counter").arg(parent.fps)
             color: parent.fps < 30 ? DefaultStyle.danger_500main : DefaultStyle.main2_900
         }
     }

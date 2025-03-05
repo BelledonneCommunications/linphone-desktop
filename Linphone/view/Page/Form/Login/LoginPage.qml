@@ -38,7 +38,8 @@ LoginLayout {
                 Layout.preferredWidth: Math.round(34 * DefaultStyle.dp)
 			}
 			Text {
-				text: qsTr("Connexion")
+                //: Connexion
+                text: qsTr("assistant_account_login")
 				font {
                     pixelSize: Typography.h1.pixelSize
                     weight: Typography.h1.weight
@@ -54,14 +55,16 @@ LoginLayout {
             Layout.rightMargin: Math.round(51 * DefaultStyle.dp)
 			Text {
                 Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
-				text: qsTr("Pas encore de compte ?")
+                //: "Pas encore de compte ?"
+                text: qsTr("assistant_no_account_yet")
                 font.pixelSize: Typography.p1.pixelSize
                 font.weight: Typography.p1.weight
 			}
 			BigButton {
 				Layout.alignment: Qt.AlignRight
 				style: ButtonStyle.main
-				text: qsTr("S'inscrire")
+                //: "S'inscrire"
+                text: qsTr("assistant_account_register")
 				onClicked: {
 					console.debug("[LoginPage] User: go to register")
 					mainItem.goToRegister()
@@ -87,7 +90,8 @@ LoginLayout {
                     Layout.preferredHeight: Math.round(47 * DefaultStyle.dp)
                     Layout.topMargin: Math.round(39 * DefaultStyle.dp)
 					visible: !SettingsCpp.assistantHideThirdPartyAccount
-					text: qsTr("Compte SIP tiers")
+                    //: "Compte SIP tiers"
+                    text: qsTr("assistant_login_third_party_sip_account_title")
 					style: ButtonStyle.secondary
 					onClicked: {mainItem.useSIPButtonClicked()}
 				}
@@ -95,7 +99,8 @@ LoginLayout {
 					Layout.preferredWidth: loginForm.width
                     Layout.preferredHeight: Math.round(47 * DefaultStyle.dp)
                     Layout.topMargin: Math.round(25 * DefaultStyle.dp)
-					text: qsTr("Configuration distante")
+                    //: "Configuration distante"
+                    text: qsTr("assistant_login_remote_provisioning")
 					style: ButtonStyle.secondary
 					onClicked: {fetchConfigDialog.open()}
 				}
@@ -122,14 +127,17 @@ LoginLayout {
         topPadding: Math.round(41 * DefaultStyle.dp)
         bottomPadding: Math.round(29 * DefaultStyle.dp)
 		radius: 0
-		title: qsTr('Télécharger une configuration distante')
-		text: qsTr('Veuillez entrer le lien de configuration qui vous a été fourni :')
+        //: "Télécharger une configuration distante"
+        title: qsTr('assistant_login_download_remote_config')
+        //: 'Veuillez entrer le lien de configuration qui vous a été fourni :'
+        text: qsTr('assistant_login_remote_provisioning_url')
 
-		firstButton.text: 'Annuler'
+        firstButton.text: qsTr("cancel")
 		firstButtonAccept: false
 		firstButton.style: ButtonStyle.secondary
 
-		secondButton.text: 'Valider'
+        //: "Valider"
+        secondButton.text: qsTr("validate")
 		secondButtonAccept: true
 		secondButton.style: ButtonStyle.main
 		onAccepted:{
@@ -140,7 +148,8 @@ LoginLayout {
 				id: configUrl
 				Layout.fillWidth: true
                 Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
-				placeholderText: qsTr('Lien de configuration distante')
+                //: 'Lien de configuration distante'
+                placeholderText: qsTr("settings_advanced_remote_provisioning_url")
 			}
 		]
 	}

@@ -686,35 +686,48 @@ function computeAvatarSize (container, maxSize, ratio) {
 
 function openCodecOnlineInstallerDialog (mainWindow, coreObject, cancelCallBack, successCallBack, errorCallBack) {
 	mainWindow.showConfirmationLambdaPopup("",
-		qsTr("Installation de codec"),
-		qsTr("Télécharger le codec ") + capitalizeFirstLetter(coreObject.mimeType) + " ("+coreObject.encoderDescription+")"+" ?",
+        //: "Installation de codec"
+        qsTr("codec_install"),
+        //: "Télécharger le codec %1 (%2) ?"
+        qsTr("download_codec").arg(capitalizeFirstLetter(coreObject.mimeType)).arg(coreObject.encoderDescription),
 		function (confirmed) {
 			if (confirmed) {
 				coreObject.loaded.connect(function(success) {
 					mainWindow.closeLoadingPopup()
 					if (success) {
-						mainWindow.showInformationPopup(qsTr("Succès"), qsTr("Le codec a été installé avec succès."), true)
+                        //: "Succès"
+                        mainWindow.showInformationPopup(qsTr("information_popup_success_title"),
+                                                        //: "Le codec a été installé avec succès."
+                                                        qsTr("information_popup_codec_install_success_text"), true)
 						if (successCallBack)
 							successCallBack()
 					} else {
-						mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être installé."), false)
+                        mainWindow.showInformationPopup(qsTr("information_popup_error_title"),
+                                                        //: "Le codec n'a pas pu être installé."
+                                                        qsTr("information_popup_codec_install_error_text"), false)
 						if (errorCallBack)
 							errorCallBack()
 					}
 				})
 				coreObject.extractError.connect(function() {
 					mainWindow.closeLoadingPopup()
-					mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être sauvegardé."), false)
+                    mainWindow.showInformationPopup(qsTr("information_popup_error_title"),
+                                                    //: "Le codec n'a pas pu être sauvegardé."
+                                                    qsTr("information_popup_codec_save_error_text"), false)
 					if (errorCallBack)
 						errorCallBack()
 				})
 				coreObject.downloadError.connect(function() {
 					mainWindow.closeLoadingPopup()
-					mainWindow.showInformationPopup(qsTr("Erreur"), qsTr("Le codec n'a pas pu être téléchargé."), false)
+                    mainWindow.showInformationPopup(qsTr("information_popup_error_title"),
+                                                    //: "Le codec n'a pas pu être téléchargé."
+                                                    qsTr("information_popup_codec_download_error_text"), false)
 					if (errorCallBack)
 						errorCallBack()
 				})
-				mainWindow.showLoadingPopup(qsTr("Téléchargement en cours ..."))
+
+                //: "Téléchargement en cours …"
+                mainWindow.showLoadingPopup(qsTr("loading_popup_codec_install_progress"))
 				coreObject.downloadAndExtract()
 			} else
 				if (cancelCallBack)

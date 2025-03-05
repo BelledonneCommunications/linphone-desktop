@@ -147,8 +147,9 @@ void Utils::createCall(const QString &sipAddress,
 		bool success = ToolModel::createCall(sipAddress, options, prepareTransfertAddress, headers,
 		                                     LinphoneEnums::toLinphone(mediaEncryption), &errorMessage);
 		if (!success) {
-			if (errorMessage.isEmpty()) errorMessage = tr("L'appel n'a pas pu être créé");
-			showInformationPopup("Erreur", errorMessage, false);
+			//: "L'appel n'a pas pu être créé"
+			if (errorMessage.isEmpty()) errorMessage = tr("information_popup_call_not_created_message");
+			showInformationPopup("information_popup_error_title", errorMessage, false);
 		}
 	});
 }
@@ -265,13 +266,17 @@ QString Utils::formatElapsedTime(int seconds, bool dotsSeparator) {
 	// s,	m,	h,		d,		W,		M,			Y
 	// 1,	60,	3600,	86400,	604800,	2592000,	31104000
 	auto y = floor(seconds / 31104000);
-	if (y > 0) return tr("%n year(s)", "", y);
+	//: %n an(s)
+	if (y > 0) return tr("number_of_years", "", y);
 	auto M = floor(seconds / 2592000);
-	if (M > 0) return tr("%n month(s)", "", M);
+	//: "%n mois"
+	if (M > 0) return tr("number_of_month", "", M);
 	auto w = floor(seconds / 604800);
-	if (w > 0) return tr("%n week(s)", "", w);
+	//: %n semaine(s)
+	if (w > 0) return tr("number_of_weeks", "", w);
 	auto d = floor(seconds / 86400);
-	if (d > 0) return tr("%n day(s)", "", d);
+	//: %n jour(s)
+	if (d > 0) return tr("number_of_days", "", d);
 
 	auto h = floor(seconds / 3600);
 	auto m = floor((seconds - h * 3600) / 60);
@@ -294,8 +299,10 @@ QString Utils::formatElapsedTime(int seconds, bool dotsSeparator) {
 
 QString Utils::formatDate(const QDateTime &date, bool includeTime) {
 	QString dateDay;
-	if (date.date() == QDate::currentDate()) dateDay = tr("Aujourd'hui");
-	else if (date.date() == QDate::currentDate().addDays(-1)) dateDay = tr("Hier");
+	//: "Aujourd'hui"
+	if (date.date() == QDate::currentDate()) dateDay = tr("today");
+	//: "Hier
+	else if (date.date() == QDate::currentDate().addDays(-1)) dateDay = tr("yesterday");
 	else {
 		QString format = date.date().year() == QDateTime::currentDateTime(date.timeZone()).date().year()
 		                     ? "dd MMMM"
@@ -436,7 +443,8 @@ QString Utils::generateSavedFilename(const QString &from, const QString &to) {
 
 QStringList Utils::generateSecurityLettersArray(int arraySize, int correctIndex, QString correctCode) {
 	QStringList vec;
-	const QString possibleCharacters(tr("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"));
+	//: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	const QString possibleCharacters(tr("call_zrtp_token_verification_possible_characters"));
 	const int n = 2;
 	for (int i = 0; i < arraySize; ++i) {
 		QString randomString;

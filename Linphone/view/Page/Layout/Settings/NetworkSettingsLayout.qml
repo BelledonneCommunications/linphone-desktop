@@ -10,7 +10,8 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-			title: qsTr("Réseau"),
+            //: "Réseau"
+            title: qsTr("settings_network_title"),
 			subTitle: "",
 			contentComponent: content
 		}
@@ -26,7 +27,8 @@ AbstractSettingsLayout {
             spacing: Math.round(40 * DefaultStyle.dp)
 			SwitchSetting {
 				Layout.fillWidth: true
-				titleText: qsTr("Autoriser l'IPv6")
+                //: "Autoriser l'IPv6"
+                titleText: qsTr("settings_network_allow_ipv6")
 				propertyName: "ipv6Enabled"
 				propertyOwner: SettingsCpp
 			}

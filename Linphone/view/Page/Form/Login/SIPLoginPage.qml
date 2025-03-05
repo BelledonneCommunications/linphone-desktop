@@ -38,7 +38,8 @@ LoginLayout {
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
-				text: qsTr("Compte SIP tiers")
+                //: Compte SIP tiers
+                text: qsTr("assistant_login_third_party_sip_account_title")
 				font {
                     pixelSize: Typography.h1.pixelSize
                     weight: Typography.h1.weight
@@ -55,7 +56,8 @@ LoginLayout {
             spacing: Math.round(20 * DefaultStyle.dp)
 			Text {
                 Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
-				text: qsTr("Pas encore de compte ?")
+                //: Pas encore de compte ?
+                text: qsTr("assistant_no_account_yet")
 				font {
                     pixelSize: Typography.p1.pixelSize
                     weight: Typography.p1.weight
@@ -63,7 +65,8 @@ LoginLayout {
 			}
 			BigButton {
 				Layout.alignment: Qt.AlignRight
-				text: qsTr("S'inscrire")
+                //: S'inscrire
+                text: qsTr("assistant_account_register")
 				style: ButtonStyle.main
 				onClicked: {
 					console.debug("[SIPLoginPage] User: go to register page")
@@ -97,30 +100,30 @@ LoginLayout {
                                 pixelSize: Typography.p1.pixelSize
                                 weight: Typography.p1.weight
 							}
-							text: "Certaines fonctionnalités nécessitent un compte Linphone, comme la messagerie de groupe, les vidéoconférences..."
+                            text: qsTr("Certaines fonctionnalités telles que les conversations de groupe, les vidéo-conférences, etc… nécessitent un compte %1.\n\nCes fonctionnalités seront masquées si vous utilisez un compte SIP tiers.\n\nPour les activer dans un projet commercial, merci de nous contacter.").arg(applicationName)
 						}
-						Text {
-							Layout.fillWidth: true
-							Layout.preferredWidth: rootStackView.width
-							wrapMode: Text.WordWrap
-							color: DefaultStyle.main2_900
-							font {
-                                pixelSize: Typography.p1.pixelSize
-                                weight: Typography.p1.weight
-							}
-							text:"Ces fonctionnalités sont cachées lorsque vous vous enregistrez avec un compte SIP tiers."
-						}
-						Text {
-							Layout.fillWidth: true
-							Layout.preferredWidth: rootStackView.width
-							wrapMode: Text.WordWrap
-							color: DefaultStyle.main2_900
-							font {
-                                pixelSize: Typography.p1.pixelSize
-                                weight: Typography.p1.weight
-							}
-							text: "Pour les activer dans un projet commercial, veuillez nous contacter. "
-						}
+//						Text {
+//							Layout.fillWidth: true
+//							Layout.preferredWidth: rootStackView.width
+//							wrapMode: Text.WordWrap
+//							color: DefaultStyle.main2_900
+//							font {
+//                                pixelSize: Typography.p1.pixelSize
+//                                weight: Typography.p1.weight
+//							}
+//							text:"Ces fonctionnalités sont cachées lorsque vous vous enregistrez avec un compte SIP tiers."
+//						}
+//						Text {
+//							Layout.fillWidth: true
+//							Layout.preferredWidth: rootStackView.width
+//							wrapMode: Text.WordWrap
+//							color: DefaultStyle.main2_900
+//							font {
+//                                pixelSize: Typography.p1.pixelSize
+//                                weight: Typography.p1.weight
+//							}
+//							text: "Pour les activer dans un projet commercial, veuillez nous contacter. "
+//						}
 					}
 					SmallButton {
 						id: openLinkButton
@@ -141,7 +144,8 @@ LoginLayout {
 						id: createAccountButton
 						style: ButtonStyle.secondary
 						Layout.fillWidth: true
-						text: qsTr("Créer un compte linphone")
+                        //: "Créer un compte linphone"
+                        text: qsTr("assistant_third_party_sip_account_create_linphone_account")
 						onClicked: {
 							console.debug("[SIPLoginPage] User: click register")
 							mainItem.goToRegister()
@@ -152,7 +156,8 @@ LoginLayout {
 					BigButton {
 						id: continueButton
 						Layout.fillWidth: true
-						text: qsTr("Je comprends")
+                        //: "Je comprends"
+                        text: qsTr("assistant_third_party_sip_account_warning_ok")
 						style: ButtonStyle.main
 						onClicked: {
 							rootStackView.replace(secondItem)
@@ -183,7 +188,8 @@ LoginLayout {
                     spacing: Math.round(16 * DefaultStyle.dp)
 					FormItemLayout {
 						id: username
-						label: qsTr("Nom d'utilisateur")
+                        //: "Nom d'utilisateur"
+                        label: qsTr("username")
 						mandatory: true
 						enableErrorText: true
 						Layout.fillWidth: true
@@ -196,7 +202,7 @@ LoginLayout {
 					}
 					FormItemLayout {
 						id: password
-						label: qsTr("Mot de passe")
+                        label: qsTr("password")
 						mandatory: true
 						enableErrorText: true
 						Layout.fillWidth: true
@@ -211,7 +217,8 @@ LoginLayout {
 					}
 					FormItemLayout {
 						id: domain
-						label: qsTr("Domaine")
+                        //: "Domaine"
+                        label: qsTr("sip_address_domain")
 						mandatory: true
 						enableErrorText: true
 						Layout.fillWidth: true
@@ -231,7 +238,8 @@ LoginLayout {
 						}
 					}
 					FormItemLayout {
-						label: qsTr("Nom d'affichage")
+                        //: Nom d'affichage
+                        label: qsTr("sip_address_display_name")
 						Layout.fillWidth: true
 						contentItem: TextField {
 							id: displayName
@@ -242,7 +250,8 @@ LoginLayout {
 					}
 				}
 				FormItemLayout {
-					label: qsTr("Transport")
+                    //: "Transport"
+                    label: qsTr("transport")
 					Layout.fillWidth: true
 					contentItem: ComboBox {
 						id: transportCbox
@@ -281,7 +290,7 @@ LoginLayout {
 						id: connectionButtonContent
 						currentIndex: 0
 						Text {
-							text: qsTr("Connexion")
+                            text: qsTr("assistant_account_login")
 							horizontalAlignment: Text.AlignHCenter
 							verticalAlignment: Text.AlignVCenter
 
@@ -330,11 +339,12 @@ LoginLayout {
 						onTriggered: {
 							if (usernameEdit.text.length == 0 || passwordEdit.text.length == 0 || domainEdit.text.length == 0) {
 								if (usernameEdit.text.length == 0)
-									username.errorMessage = qsTr("Veuillez saisir un nom d'utilisateur")
+                                    username.errorMessage = qsTr("assistant_account_login_missing_username")
 								if (passwordEdit.text.length == 0)
-									password.errorMessage = qsTr("Veuillez saisir un mot de passe")
+                                    password.errorMessage = qsTr("assistant_account_login_missing_password")
 								if (domainEdit.text.length == 0)
-									domain.errorMessage = qsTr("Veuillez saisir un nom de domaine")
+                                    //: "Veuillez saisir un nom de domaine
+                                    domain.errorMessage = qsTr("assistant_account_login_missing_domain")
 								return
 							}
 							console.debug("[SIPLoginPage] User: Log in")

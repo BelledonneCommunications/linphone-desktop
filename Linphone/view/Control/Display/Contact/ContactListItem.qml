@@ -195,9 +195,9 @@ FocusScope {
                         IconLabelButton {
                             visible: searchResultItem.core.isStored
                                      && !searchResultItem.core.readOnly
-                            text: searchResultItem.core.starred ? qsTr(
-                                                                      "Enlever des favoris") : qsTr(
-                                                                      "Mettre en favori")
+                            //: "Enlever des favoris"
+                            //: "Ajouter aux favoris"
+                            text: searchResultItem.core.starred ? qsTr("contact_details_remove_from_favourites") : qsTr("contact_details_add_to_favourites")
                             icon.source: searchResultItem.core.starred ? AppIcons.heartFill : AppIcons.heart
                             spacing: Math.round(10 * DefaultStyle.dp)
                             textColor: DefaultStyle.main2_500main
@@ -222,23 +222,22 @@ FocusScope {
                                 var filepath = UtilsCpp.createVCardFile(
                                             username, vcard)
                                 if (filepath == "")
+                                    //: "La création du fichier vcard a échoué"
                                     UtilsCpp.showInformationPopup(
-                                                qsTr("Erreur"), qsTr(
-                                                    "La création du fichier vcard a échoué"),
+                                                qsTr("information_popup_error_title"), qsTr("information_popup_vcard_creation_error"),
                                                 false)
                                 else
-                                    mainWindow.showInformationPopup(
-                                                qsTr("VCard créée"), qsTr(
-                                                    "VCard du contact enregistrée dans %1").arg(
-                                                    filepath))
-                                UtilsCpp.shareByEmail(
-                                            qsTr("Partage de contact"),
-                                            vcard, filepath)
+                                    //: "VCard créée"
+                                    //: "VCard du contact enregistrée dans %1"
+                                    mainWindow.showInformationPopup(qsTr("information_popup_vcard_creation_title"), qsTr("information_popup_vcard_creation_success").arg(filepath))
+                                //: "Partage de contact"
+                                UtilsCpp.shareByEmail(qsTr("contact_sharing_email_title"),vcard, filepath)
                             }
                             style: ButtonStyle.noBackground
                         }
                         IconLabelButton {
-                            text: qsTr("Supprimer")
+                            //: "Supprimer"
+                            text: qsTr("contact_details_delete")
                             icon.source: AppIcons.trashCan
                             spacing: Math.round(10 * DefaultStyle.dp)
                             visible: !searchResultItem.core.readOnly

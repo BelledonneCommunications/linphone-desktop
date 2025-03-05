@@ -320,14 +320,14 @@ void Notifier::notifyReceivedMessages(const list<shared_ptr<linphone::ChatMessag
                 }
             } else if (fileContent->isVoiceRecording())
                 //: 'Voice message received!' : message to warn the user in a notofication for voice messages.
-                txt = tr("newVoiceMessage");
-            else txt = tr("newFileMessage");
+                txt = tr("new_voice_message");
+            else txt = tr("new_file_message");
             if (txt.isEmpty() && message->hasConferenceInvitationContent())
                 //: 'Conference invitation received!' : Notification about receiving an invitation to a conference.
-                txt = tr("newConferenceInvitation");
+                txt = tr("new_conference_invitation");
         } else
             //: 'New messages received!' Notification that warn the user of new messages.
-            txt = tr("newChatRoomMessages");
+            txt = tr("new_chat_room_messages");
         map["message"] = txt;
         shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
         map["timelineModel"].setValue(
@@ -366,21 +366,21 @@ void Notifier::notifyReceivedReactions(
                 }
             } else if (fileContent->isVoiceRecording())
                 //: 'Voice message' : Voice message type that has been reacted.
-                messageTxt += tr("voiceMessageReact");
+                messageTxt += tr("voice_message_react");
             else {
                 QFileInfo file(Utils::coreStringToAppString(fileContent->getFilePath()));
                 messageTxt += file.fileName();
             }
             if (messageTxt.isEmpty() && message->hasConferenceInvitationContent())
                 //: 'Conference invitation' : Conference invitation message type that has been reacted.
-                messageTxt += tr("conferenceInvitationReact");
+                messageTxt += tr("conference_invitation_react");
             //: ''Has reacted by %1 to: %2' : Reaction message. %1=Reaction(emoji), %2=type of message(Voice
             //: Message/Conference invitation/ Message text)
-            txt = tr("reactionMessage").arg(Utils::coreStringToAppString(reaction.second->getBody())).arg(messageTxt);
+            txt = tr("reaction_message").arg(Utils::coreStringToAppString(reaction.second->getBody())).arg(messageTxt);
 
         } else
             //: 'New reactions received!' : Notification that warn the user of new reactions.
-            txt = tr("newReactionsMessages");
+            txt = tr("new_reactions_messages");
         map["message"] = txt;
 
         map["timelineModel"].setValue(timelineModel.get());
@@ -412,7 +412,7 @@ void Notifier::notifyReceivedFileMessage(const shared_ptr<linphone::ChatMessage>
 
 void Notifier::notifyNewVersionAvailable(const QString &version, const QString &url) {
     QVariantMap map;
-    map["message"] = tr("newVersionAvailable").arg(version);
+    map["message"] = tr("new_version_available").arg(version);
     map["url"] = url;
     CREATE_NOTIFICATION(Notifier::NewVersionAvailable, map)
 }

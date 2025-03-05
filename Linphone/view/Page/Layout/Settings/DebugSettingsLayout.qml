@@ -28,7 +28,8 @@ AbstractSettingsLayout {
 
 	Dialog {
 		id: deleteLogs
-		text: qsTr("Les traces de débogage seront supprimées. Souhaitez-vous continuer ?")
+        //: "Les traces de débogage seront supprimées. Souhaitez-vous continuer ?"
+        text: qsTr("settings_debug_clean_logs_message")
 		onAccepted: SettingsCpp.cleanLogs()
 	}
 	
@@ -38,10 +39,12 @@ AbstractSettingsLayout {
 	
 	Dialog {
 		id: shareLogs
-		text: qsTr("Les traces de débogage ont été téléversées. Comment souhaitez-vous partager le lien ? ")
+        //: "Les traces de débogage ont été téléversées. Comment souhaitez-vous partager le lien ? "
+        text: qsTr("settings_debug_share_logs_message")
 		buttons: [
 			BigButton {
-				text: qsTr("Presse-papier")
+                //: "Presse-papier"
+                text: qsTr("settings_debug_clipboard")
 				style: ButtonStyle.main
 				onClicked: {
 					shareLogs.close()
@@ -49,16 +52,20 @@ AbstractSettingsLayout {
 				}
 			},
 			BigButton {
-				text: qsTr("E-Mail")
+                //: "E-Mail"
+                text: qsTr("settings_debug_email")
 				style: ButtonStyle.main
 				onClicked: {
 					shareLogs.close()
-					if(!Qt.openUrlExternally(
-          				'mailto:' + encodeURIComponent(SettingsCpp.logsEmail) +
-          				'?subject=' + encodeURIComponent(qsTr('Traces Linphone')) +
-          				'&body=' + encodeURIComponent(mainItem.logsUrl)
+                    //: "Traces %1"
+                    if(!Qt.openUrlExternally("mailto:%1%2%3%4%5".arg(encodeURIComponent(SettingsCpp.logsEmail))
+                        .arg('?subject=').arg(encodeURIComponent(qsTr("debug_settings_trace").arg(applicationName)))
+                        .arg('&body=').arg(encodeURIComponent(mainItem.logsUrl))
 					))
-					UtilsCpp.showInformationPopup(qsTr("Une erreur est survenue."), qsTr("Le partage par mail a échoué. Veuillez envoyer le lien %1 directement à l'adresse %2.").replace("%1",mainItem.logsUrl).replace("%2",SettingsCpp.logsEmail), false)
+                    //: Une erreur est survenue.
+                    UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                    //: "Le partage par mail a échoué. Veuillez envoyer le lien %1 directement à l'adresse %2."
+                    qsTr("information_popup_email_sharing_failed").arg(mainItem.logsUrl).arg(SettingsCpp.logsEmail), false)
 				}
 			}
 		]
@@ -69,12 +76,14 @@ AbstractSettingsLayout {
 		ColumnLayout {
             spacing: Math.round(20 * DefaultStyle.dp)
 			SwitchSetting {
-				titleText: qsTr("Activer les traces de débogage")
+                //: "Activer les traces de débogage"
+                titleText: qsTr("settings_debug_enable_logs_title")
 				propertyName: "logsEnabled"
 				propertyOwner: SettingsCpp
 			}
 			SwitchSetting {
-				titleText: qsTr("Activer les traces de débogage intégrales")
+                //: "Activer les traces de débogage intégrales"
+                titleText: qsTr("settings_debug_enable_full_logs_title")
 				propertyName: "fullLogsEnabled"
 				propertyOwner: SettingsCpp
 			}
@@ -83,17 +92,20 @@ AbstractSettingsLayout {
 				Layout.alignment: Qt.AlignRight
 				MediumButton {
 					style: ButtonStyle.tertiary
-					text: qsTr("Supprimer les traces")
+                    //: "Supprimer les traces"
+                    text: qsTr("settings_debug_delete_logs_title")
 					onClicked: {
 						deleteLogs.open()
 					}
 				}
 				MediumButton {
 					style: ButtonStyle.tertiary
-					text: qsTr("Partager les traces")
+                    //: "Partager les traces"
+                    text: qsTr("settings_debug_share_logs_title")
 					enabled: SettingsCpp.logsEnabled || SettingsCpp.fullLogsEnabled
 					onClicked: {
-						UtilsCpp.getMainWindow().showLoadingPopup(qsTr("Téléversement des traces en cours ..."))
+                        //: "Téléversement des traces en cours …"
+                        UtilsCpp.getMainWindow().showLoadingPopup(qsTr("settings_debug_share_logs_loading_message"))
 						SettingsCpp.sendLogs()
 					}
 				}
@@ -117,7 +129,8 @@ AbstractSettingsLayout {
 				}
 				ColumnLayout {
 					Text {
-						text: qsTr("Version de l'application")
+                        //: "Version de l'application"
+                        text: qsTr("settings_debug_app_version_title")
 						font: Typography.p2l
 						wrapMode: Text.WordWrap
 						color: DefaultStyle.main2_600
@@ -145,7 +158,8 @@ AbstractSettingsLayout {
 				}
 				ColumnLayout {
 					Text {
-						text: qsTr("Version du SDK")
+                        //: "Version du SDK"
+                        text: qsTr("settings_debug_sdk_version_title")
 						font: Typography.p2l
 						wrapMode: Text.WordWrap
 						color: DefaultStyle.main2_600
@@ -172,7 +186,9 @@ AbstractSettingsLayout {
 				mainItem.logsUrl = url
 				shareLogs.open()
 			} else {
-				UtilsCpp.showInformationPopup(qsTr("Une erreur est survenue."), qsTr("Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant :") + SettingsCpp.logsFolder, false)
+                UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                //: "Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1"
+                qsTr("settings_debug_share_logs_error").arg(SettingsCpp.logsFolder), false)
 			}
 		}
 	}

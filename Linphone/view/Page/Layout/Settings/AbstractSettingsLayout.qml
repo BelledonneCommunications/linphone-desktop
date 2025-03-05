@@ -80,7 +80,8 @@ Rectangle {
 				MediumButton {
 					id: saveButton
 					style: ButtonStyle.main
-					text: qsTr("Enregistrer")
+                    //: "Enregistrer"
+                    text: qsTr("save")
                     Layout.rightMargin: Math.round(6 * DefaultStyle.dp)
 					visible: mainItem.saveButtonVisible
 					onClicked: {

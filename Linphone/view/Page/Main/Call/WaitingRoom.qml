@@ -93,7 +93,8 @@ RowLayout {
 					spacing: 0
 					Text {
 						Layout.fillWidth: true
-						text: qsTr("Participer à :")
+                        //: Participer à :
+                        text: qsTr("meeting_waiting_room_title")
 						color: DefaultStyle.grey_0
 						font {
                             pixelSize: Math.round(30 * DefaultStyle.dp)
@@ -114,7 +115,8 @@ RowLayout {
                     spacing: Math.round(5 * DefaultStyle.dp)
 					BigButton {
                         Layout.preferredWidth: Math.round(292 * DefaultStyle.dp)
-						text: qsTr("Rejoindre")
+                        //: "Rejoindre"
+                        text: qsTr("meeting_waiting_room_join")
 						style: ButtonStyle.main
 						onClicked: {
 							settingsButton.checked = false
@@ -125,7 +127,7 @@ RowLayout {
 					BigButton {
                         Layout.preferredWidth: Math.round(292 * DefaultStyle.dp)
 						style: ButtonStyle.secondary
-						text: qsTr("Annuler")
+                        text: qsTr("cancel")
 						onClicked: {
 							mainItem.cancelJoiningRequested()
 						}
@@ -138,7 +140,8 @@ RowLayout {
                     spacing: Math.round(13 * DefaultStyle.dp)
 					Text {
 						Layout.fillWidth: true
-						text: qsTr("Connexion à la réunion")
+                        //: "Connexion à la réunion"
+                        text: qsTr("meeting_waiting_room_joining_title")
 						color: DefaultStyle.grey_0
 						font {
                             pixelSize: Math.round(30 * DefaultStyle.dp)
@@ -147,7 +150,8 @@ RowLayout {
 					}
 					Text {
 						Layout.fillWidth: true
-						text: qsTr("Vous allez rejoindre la réunion dans quelques instants...")
+                        //: "Vous allez rejoindre la réunion dans quelques instants…"
+                        text: qsTr("meeting_waiting_room_joining_subtitle")
 						color: DefaultStyle.grey_0
 						font {
                             pixelSize: Typography.p1.pixelSize
@@ -165,7 +169,7 @@ RowLayout {
                     Layout.preferredWidth: Math.round(292 * DefaultStyle.dp)
 					Layout.alignment: Qt.AlignHCenter
 					style: ButtonStyle.main
-					text: qsTr("Annuler")
+                    text: qsTr("cancel")
 					onClicked: {
 						settingsButton.checked = false
 						stackLayout.currentIndex = 1

@@ -76,7 +76,8 @@ void LoginPage::login(const QString &username,
 			        switch (state) {
 				        case linphone::RegistrationState::Failed: {
 							if (message.isEmpty())
-								setErrorMessage(QString(tr("Erreur durant la connexion")));
+								//: Erreur durant la connexion
+								setErrorMessage(tr("default_account_connection_state_error_toast"));
 							else
 								setErrorMessage(message);
 					        if (accountManager) {

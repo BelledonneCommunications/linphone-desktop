@@ -36,7 +36,7 @@ Popup {
 		MediumButton {
 			visible: mainItem.cancelButtonVisible
 			Layout.alignment: Qt.AlignHCenter
-			text: qsTr("Annuler")
+            text: qsTr("cancel")
 			style: ButtonStyle.main
 			onClicked: {
 				if (callback) mainItem.callback()

@@ -28,7 +28,8 @@ FocusScope {
             spacing: Math.round(18 * DefaultStyle.dp)
 			visible: mainItem.displayCurrentCalls
 			Text {
-				text: qsTr("Appels en cours")
+                //: "Appels en cours"
+                text: qsTr("call_transfer_active_calls_label")
 				font {
                     pixelSize: Typography.h4.pixelSize
                     weight: Typography.h4.weight
@@ -72,7 +73,8 @@ FocusScope {
 					focus: true
 					color: mainItem.searchBarColor
 					borderColor: mainItem.searchBarBorderColor
-					placeholderText: qsTr("Rechercher un contact")
+                    //: "Rechercher un contact"
+                    placeholderText: qsTr("search_bar_look_for_contact_text")
 					numericPadPopup: mainItem.numPadPopup
 					KeyNavigation.down: grouCallButton
 				}

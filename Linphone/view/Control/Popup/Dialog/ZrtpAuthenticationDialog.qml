@@ -66,7 +66,8 @@ Dialog {
 					}
 				}
 				Text {
-					text: qsTr("Vérification de sécurité")
+                    //: Vérification de sécurité
+                    text: qsTr("call_dialog_zrtp_validate_trust_title")
 					color: DefaultStyle.grey_0
 					Layout.Layout.alignment: Qt.AlignHCenter
 					font {
@@ -83,7 +84,8 @@ Dialog {
                 anchors.topMargin: Math.round(10 * DefaultStyle.dp)
                 anchors.rightMargin: Math.round(17 * DefaultStyle.dp)
 				style: ButtonStyle.noBackground
-				text: qsTr("Passer")
+                //: "Passer"
+                text: qsTr("call_zrtp_sas_validation_skip")
 				textColor: DefaultStyle.grey_0
 				hoveredTextColor: DefaultStyle.grey_100
 				pressedTextColor: DefaultStyle.grey_200
@@ -127,8 +129,10 @@ Dialog {
 					Layout.Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
 					text: !mainItem.isTokenVerified && mainItem.isCaseMismatch
-					? qsTr("Pour garantir le chiffrement, nous avons besoin de réauthentifier  l’appareil de votre correspondant. Echangez vos codes :")
-					: qsTr("Pour garantir le chiffrement, nous avons besoin d’authentifier l’appareil de votre correspondant. Veuillez échanger vos codes : ")
+                    //: "Pour garantir le chiffrement, nous avons besoin de réauthentifier  l’appareil de votre correspondant. Echangez vos codes :"
+                    ? qsTr("call_dialog_zrtp_validate_trust_warning_message")
+                    //: "Pour garantir le chiffrement, nous avons besoin d’authentifier l’appareil de votre correspondant. Veuillez échanger vos codes : "
+                    : qsTr("call_dialog_zrtp_validate_trust_message")
 					wrapMode: Text.WordWrap
                     font.pixelSize: Math.round(14 * DefaultStyle.dp)
 				}
@@ -136,7 +140,8 @@ Dialog {
 					spacing: 0
 					Layout.Layout.alignment: Qt.AlignHCenter
 					Text {
-						text: qsTr("Votre code :")
+                        //: "Votre code :"
+                        text: qsTr("call_dialog_zrtp_validate_trust_local_code_label")
 						horizontalAlignment: Text.AlignHCenter
 						Layout.Layout.alignment: Qt.AlignHCenter
                         font.pixelSize: Math.round(14 * DefaultStyle.dp)
@@ -164,7 +169,8 @@ Dialog {
 					anchors.fill: parent
                     anchors.topMargin: Math.round(10 * DefaultStyle.dp)
 					Text {
-						text: qsTr("Code correspondant :")
+                        //: "Code correspondant :"
+                        text: qsTr("call_dialog_zrtp_validate_trust_remote_code_label")
                         font.pixelSize: Math.round(14 * DefaultStyle.dp)
 						Layout.Layout.alignment: Qt.AlignHCenter
 					}
@@ -210,7 +216,8 @@ Dialog {
 				Layout.Layout.alignment: Qt.AlignHCenter
 				Layout.Layout.fillWidth: true
 				horizontalAlignment: Text.AlignHCenter
-				text: qsTr("Le code fourni ne correspond pas.")
+                //: "Le code fourni ne correspond pas."
+                text: qsTr("call_dialog_zrtp_validate_trust_letters_do_not_match_text")
 				wrapMode: Text.WordWrap
                 font.pixelSize: Math.round(14 * DefaultStyle.dp)
 			}
@@ -220,7 +227,8 @@ Dialog {
 				Layout.Layout.alignment: Qt.AlignHCenter
 				Layout.Layout.fillWidth: true
 				horizontalAlignment: Text.AlignHCenter
-				text: qsTr("La confidentialité de votre appel peut être compromise !")
+                //: "La confidentialité de votre appel peut être compromise !"
+                text: qsTr("call_dialog_zrtp_security_alert_message")
 				wrapMode: Text.WordWrap
                 font.pixelSize: Math.round(14 * DefaultStyle.dp)
 			}
@@ -232,7 +240,8 @@ Dialog {
 		MediumButton {
 			Layout.Layout.alignment: Qt.AlignHCenter
             Layout.Layout.preferredWidth: Math.round(247 * DefaultStyle.dp)
-			text: qsTr("Aucune correspondance")
+            //: "Aucune correspondance"
+            text: qsTr("call_dialog_zrtp_validate_trust_letters_do_not_match")
 			color: DefaultStyle.grey_0
 			borderColor: DefaultStyle.danger_500main
 			textColor: DefaultStyle.danger_500main
@@ -248,7 +257,8 @@ Dialog {
 			style: ButtonStyle.phoneRed
 			onClicked: mainItem.call.core.lTerminate()
             spacing: Math.round(15 * DefaultStyle.dp)
-			text: qsTr("Raccrocher")
+            //: "Raccrocher"
+            text: qsTr("call_action_hang_up")
 		}
 	}
 }

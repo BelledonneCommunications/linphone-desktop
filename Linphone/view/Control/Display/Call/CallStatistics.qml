@@ -25,7 +25,8 @@ ColumnLayout {
             spacing: Math.round(12 * DefaultStyle.dp)
 			Layout.alignment: Qt.AlignHCenter
 			Text {
-				text: qsTr("Audio")
+                //: "Audio"
+                text: qsTr("call_stats_audio_title")
 				Layout.alignment: Qt.AlignHCenter
 				font {
                     pixelSize: Math.round(12 * DefaultStyle.dp)
@@ -86,7 +87,8 @@ ColumnLayout {
             spacing: Math.round(12 * DefaultStyle.dp)
 			Layout.alignment: Qt.AlignHCenter
 			Text {
-				text: qsTr("Vidéo")
+                //: "Vidéo"
+                text: qsTr("call_stats_video_title")
 				Layout.alignment: Qt.AlignHCenter
 				font {
                     pixelSize: Math.round(12 * DefaultStyle.dp)

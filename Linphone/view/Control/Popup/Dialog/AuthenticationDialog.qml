@@ -35,63 +35,55 @@ Dialog {
 	content: ColumnLayout {
         spacing:Math.round( 20 * DefaultStyle.dp)
 		id: contentLayout
+        Text {
+            Layout.fillWidth: true
+            Layout.preferredWidth:Math.round( 250 * DefaultStyle.dp)
+            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.Wrap
+            font {
+                pixelSize: Typography.h3.pixelSize
+                weight: Typography.h3.weight
+            }
+            //: "Authentification requise"
+            text: qsTr("account_settings_dialog_invalid_password_title")
+        }
 		Text {
 			Layout.fillWidth: true
             Layout.preferredWidth:Math.round( 250 * DefaultStyle.dp)
 			Layout.alignment: Qt.AlignHCenter
 			horizontalAlignment: Text.AlignHCenter
 			wrapMode: Text.Wrap
-			text: qsTr("Impossible de vous authentifier. Merci de vérifier votre mot de passe.")
+            //: La connexion a échoué pour le compte %1. Vous pouvez renseigner votre mot de passe à nouveau ou bien vérifier les options de configuration de votre compte.
+            text: qsTr("account_settings_dialog_invalid_password_message").arg(mainItem.identity)
             font.pixelSize:Math.round( 16 * DefaultStyle.dp)
+            font {
+                pixelSize: Typography.h4.pixelSize
+                weight: Typography.h4.weight
+            }
 		}
-		ColumnLayout {
-            spacing:Math.round( 10 * DefaultStyle.dp)
-			FormItemLayout {
-				Layout.fillWidth: true
-				label: qsTr("Identité")
-				contentItem: TextField {
-					enabled: false
-					initialText: mainItem.identity
-				}
-			}
-			FormItemLayout {
-				Layout.fillWidth: true
-				label: qsTr("Domaine")
-				contentItem: TextField {
-					enabled: false
-					initialText: mainItem.domain
-				}
-			}
-			FormItemLayout {
-				Layout.fillWidth: true
-				label: qsTr("Nom d'utilisateur (optionnel)")
-				contentItem: TextField {
-					id: usernameEdit
-					KeyNavigation.down: passwordEdit
-				}
-			}
-			FormItemLayout {
-				id: passwordItem
-				Layout.fillWidth: true
-				label: qsTr("Mot de passe")
-				enableErrorText: true
-				mandatory: true
-				contentItem: TextField {
-					id: passwordEdit
-					hidden: true
-					isError: passwordItem.errorTextVisible
-					KeyNavigation.up: usernameEdit
-					KeyNavigation.down: cancelButton
-				}
-			}
-		}
+        FormItemLayout {
+            id: passwordItem
+            Layout.fillWidth: true
+            label: qsTr("password")
+            enableErrorText: true
+            mandatory: true
+            contentItem: TextField {
+                id: passwordEdit
+                hidden: true
+                isError: passwordItem.errorTextVisible
+                KeyNavigation.up: usernameEdit
+                KeyNavigation.down: cancelButton
+            }
+        }
 	}
 
 	buttons: [
 		MediumButton {
 			id: cancelButton
             Layout.topMargin: Math.round( 10 * DefaultStyle.dp)
-			text: qsTr("Annuler")
+            //: "Annuler
+            text: qsTr("cancel")
 			style: ButtonStyle.secondary
 			onClicked: mainItem.rejected()
 			KeyNavigation.up: passwordEdit
@@ -100,14 +92,16 @@ Dialog {
 		MediumButton {
 			id: connectButton
             Layout.topMargin:Math.round( 10 * DefaultStyle.dp)
-			text: qsTr("Se connecter")
+            //: Connexion
+            text: qsTr("assistant_account_login")
 			style: ButtonStyle.main
 			KeyNavigation.up: passwordEdit
 			KeyNavigation.right: cancelButton
 			onClicked: {
 				passwordItem.errorMessage = ""
-				if (passwordEdit.text.length == 0) {
-					passwordItem.errorMessage = qsTr("Veuillez saisir un mot de passe")
+                if (passwordEdit.text.length == 0) {
+                    //: Veuillez saisir un mot de passe
+                    passwordItem.errorMessage = qsTr("assistant_account_login_missing_password")
 					return
 				}
 				mainItem.accepted()

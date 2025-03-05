@@ -10,7 +10,7 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 AbstractWindow {
 	id: mainWindow
     // height: Math.round(982 * DefaultStyle.dp)
-	title: qsTr("Linphone")
+    title: applicationName
 	// TODO : handle this bool when security mode is implemented
 	property bool firstConnection: true
 
@@ -31,7 +31,12 @@ AbstractWindow {
 
 	function openMainPage(connectionSucceed){
 		if (mainWindowStackView.currentItem.objectName !== "mainPage") mainWindowStackView.replace(mainPage, StackView.Immediate)
-		if (connectionSucceed) mainWindow.showInformationPopup(qsTr("Connexion réussie"), qsTr("Vous êtes connecté en mode %1").arg("interopérable"))
+        //: "Connexion réussie"
+        if (connectionSucceed) mainWindow.showInformationPopup(qsTr("information_popup_connexion_succeed_title"),
+                                                               //: "Vous êtes connecté en mode %1"
+                                                               qsTr("information_popup_connexion_succeed_message").arg(
+                                                               //: interopérable
+                                                               qsTr("interoperable")))
 	}
 	function goToCallHistory() {
 		openMainPage()
@@ -47,16 +52,19 @@ AbstractWindow {
 	}
 	function transferCallSucceed() {
 		openMainPage()
-		mainWindow.showInformationPopup(qsTr("Appel transféré"), qsTr("Votre correspondant a été transféré au contact sélectionné"))
+        //: "Appel transféré"
+        mainWindow.showInformationPopup(qsTr("call_transfer_successful_toast_title"),
+                                        //: "Votre correspondant a été transféré au contact sélectionné"
+                                        qsTr("call_transfer_successful_toast_message"))
 	}
 	function initStackViewItem() {
-		if(accountProxy && accountProxy.isInitialized) {
-			if (accountProxy.haveAccount) openMainPage()
-			else if (SettingsCpp.getFirstLaunch()) mainWindowStackView.replace(welcomePage, StackView.Immediate)
-			else if (SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin) mainWindowStackView.replace(sipLoginPage, StackView.Immediate)
-			else mainWindowStackView.replace(loginPage, StackView.Immediate)
-		}
-	}
+        if(accountProxy && accountProxy.isInitialized) {
+            if (accountProxy.haveAccount) openMainPage()
+            else if (SettingsCpp.getFirstLaunch()) mainWindowStackView.replace(welcomePage, StackView.Immediate)
+            else if (SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin) mainWindowStackView.replace(sipLoginPage, StackView.Immediate)
+            else mainWindowStackView.replace(loginPage, StackView.Immediate)
+        }
+    }
 	
 	function goToLogin() {
 		if (SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin)
@@ -93,7 +101,8 @@ AbstractWindow {
             initStackViewItem()
 		}
 		function onIsSavedChanged() {
-			if (SettingsCpp.isSaved) UtilsCpp.showInformationPopup(qsTr("Succès"), qsTr("Les changements ont été sauvegardés"), true, mainWindow)
+            //: "Les changements ont été sauvegardés"
+            if (SettingsCpp.isSaved) UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"), qsTr("information_popup_changes_saved"), true, mainWindow)
 		}
 	}
 
@@ -122,7 +131,7 @@ AbstractWindow {
 	StackView {
 		id: mainWindowStackView
 		anchors.fill: parent
-		initialItem: splashScreen
+        initialItem: splashScreen
 	}
 	Component {
 		id: splashScreen
@@ -177,14 +186,16 @@ AbstractWindow {
 		id: registerPage
 		RegisterPage {
 			onReturnToLogin: goToLogin()
-			onBrowserValidationRequested: mainWindow.showLoadingPopup(qsTr("Veuillez valider le captcha sur la page web"), true)
+            //: "Veuillez valider le captcha sur la page web"
+            onBrowserValidationRequested: mainWindow.showLoadingPopup(qsTr("captcha_validation_loading_message"), true)
 			Connections {
 				target: RegisterPageCpp
 				function onNewAccountCreationSucceed(withEmail, address, sipIdentityAddress) {
 					mainWindowStackView.push(checkingPage, {"registerWithEmail": withEmail, "address": address, "sipIdentityAddress": sipIdentityAddress})
 				}
 				function onRegisterNewAccountFailed(errorMessage) {
-					mainWindow.showInformationPopup(qsTr("Erreur lors de la création"), errorMessage, false)
+                    //: "Erreur lors de la création"
+                    mainWindow.showInformationPopup(qsTr("assistant_register_error_title"), errorMessage, false)
 					mainWindow.closeLoadingPopup()
 				}
 				function onTokenConversionSucceed(){ mainWindow.closeLoadingPopup()}
@@ -202,11 +213,15 @@ AbstractWindow {
 				target: RegisterPageCpp
 				function onLinkingNewAccountWithCodeSucceed() {
 					goToLogin()
-					mainWindow.showInformationPopup(qsTr("Compte créé"), qsTr("Le compte a été créé avec succès. Vous pouvez maintenant vous connecter"), true)
+                    //: "Compte créé"
+                    mainWindow.showInformationPopup(qsTr("assistant_register_success_title"),
+                                                    //: "Le compte a été créé. Vous pouvez maintenant vous connecter"
+                                                    qsTr("assistant_register_success_message"), true)
 				}
 				function onLinkingNewAccountWithCodeFailed(errorMessage) {
-					if (errorMessage.length === 0) errorMessage = qsTr("Erreur dans le code de validation")
-					mainWindow.showInformationPopup(qsTr("Erreur"), errorMessage, false)
+                    //: "Erreur dans le code de validation"
+                    if (errorMessage.length === 0) errorMessage = qsTr("assistant_register_error_code")
+                    mainWindow.showInformationPopup(qsTr("information_popup_error_title"), errorMessage, false)
 				}
 			}
 		}

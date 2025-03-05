@@ -126,7 +126,8 @@ Item {
 					Text {
                         Layout.preferredHeight: Math.round(27 * DefaultStyle.dp)
                         Layout.topMargin: Math.round(15 * DefaultStyle.dp) // (84-27)-42
-						text: qsTr('rejoint...')
+                        //: "rejoint…"
+                        text: qsTr("conference_participant_joining_text")
 						color: DefaultStyle.grey_0
 						Layout.alignment: Qt.AlignHCenter
 						horizontalAlignment: Text.AlignHCenter
@@ -151,7 +152,8 @@ Item {
 				Text {
 					color: DefaultStyle.grey_0
 					Layout.alignment: Qt.AlignHCenter
-					text: qsTr("En pause")
+                    //: "En pause"
+                    text: qsTr("conference_participant_paused_text")
 					font {
                         pixelSize: Math.round(20 * DefaultStyle.dp)
                         weight: Math.round(500 * DefaultStyle.dp)

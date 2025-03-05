@@ -10,8 +10,10 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 AbstractMainPage {
     id: mainItem
-    noItemButtonText: qsTr("Nouvel appel")
-    emptyListText: qsTr("Historique d'appel vide")
+    //: "Nouvel appel"
+    noItemButtonText: qsTr("history_call_start_title")
+    //: "Historique d'appel vide"
+    emptyListText: qsTr("call_history_empty_title")
     newItemIconSource: AppIcons.newCall
 
     property var selectedRowHistoryGui
@@ -79,14 +81,19 @@ AbstractMainPage {
 
     Dialog {
         id: deleteHistoryPopup
-        width: Math.round(278 * DefaultStyle.dp)
-        text: qsTr("L'historique d'appel sera supprimé. Souhaitez-vous continuer ?")
+        width: Math.round(637 * DefaultStyle.dp)
+        //: Supprimer l\'historique d\'appels ?
+        title: qsTr("history_dialog_delete_all_call_logs_title")
+        //: "L'ensemble de votre historique d'appels sera définitivement supprimé."
+        text: qsTr("history_dialog_delete_all_call_logs_message")
     }
     Dialog {
         id: deleteForUserPopup
-        width: Math.round(278 * DefaultStyle.dp)
-        text: qsTr(
-                  "L'historique d'appel de l'utilisateur sera supprimé. Souhaitez-vous continuer ?")
+        width: Math.round(637 * DefaultStyle.dp)
+        //: Supprimer l'historique d\'appels ?
+        title: qsTr("history_dialog_delete_call_logs_title")
+        //: "L\'ensemble de votre historique d\'appels avec ce correspondant sera définitivement supprimé."
+        text: qsTr("history_dialog_delete_call_logs_message")
     }
 
     leftPanelContent: Item {
@@ -118,7 +125,6 @@ AbstractMainPage {
                 visible: false
                 onLaunchCall: {
                     mainItem.createCallFromSearchBarRequested()
-                    // TODO : auto completion instead of sip linphone
                 }
             }
         }
@@ -136,7 +142,9 @@ AbstractMainPage {
                     id: titleCallLayout
                     spacing: Math.round(16 * DefaultStyle.dp)
                     Text {
-                        text: qsTr("Appels")
+                        Layout.fillWidth: true
+                        //: "Appels"
+                        text: qsTr("call_history_call_list_title")
                         color: DefaultStyle.main2_700
                         font.pixelSize: Typography.h2.pixelSize
                         font.weight: Typography.h2.weight
@@ -156,7 +164,8 @@ AbstractMainPage {
                             IconLabelButton {
                                 Layout.fillWidth: true
                                 focus: visible
-                                text: qsTr("Supprimer l'historique")
+                                //: "Supprimer l'historique"
+                                text: qsTr("menu_delete_history")
                                 icon.source: AppIcons.trashCan
                                 style: ButtonStyle.hoveredBackgroundRed
                                 onClicked: {
@@ -195,7 +204,8 @@ AbstractMainPage {
                     Layout.fillWidth: true
                     Layout.topMargin: Math.round(18 * DefaultStyle.dp)
                     Layout.rightMargin: Math.round(39 * DefaultStyle.dp)
-                    placeholderText: qsTr("Rechercher un appel")
+                    //: "Rechercher un appel"
+                    placeholderText: qsTr("call_search_in_history")
                     visible: historyListView.count !== 0 || text.length !== 0
                     focus: true
                     KeyNavigation.up: newCallButton
@@ -221,8 +231,9 @@ AbstractMainPage {
                                 visible: historyListView.count === 0
                                 Layout.alignment: Qt.AlignHCenter
                                 Layout.topMargin: Math.round(137 * DefaultStyle.dp)
-                                text: qsTr("Aucun appel%1").arg(
-                                          searchBar.text.length != 0 ? " correspondant" : "")
+                                //: "Aucun appel dans votre historique"
+                                //: "Aucun résultat…"
+                                text: searchBar.text.length != 0 ? qsTr("list_filter_no_result_found") : qsTr("history_list_empty_history")
                                 font {
                                     pixelSize: Typography.h4.pixelSize
                                     weight: Typography.h4.weight
@@ -297,7 +308,9 @@ AbstractMainPage {
                         }
                     }
                     Text {
-                        text: qsTr("Nouvel appel")
+                        Layout.fillWidth: true
+                        //: "Nouvel appel"
+                        text: qsTr("call_action_start_new_call")
                         color: DefaultStyle.main2_700
                         font.pixelSize: Typography.h2.pixelSize
                         font.weight: Typography.h2.weight
@@ -364,7 +377,8 @@ AbstractMainPage {
                     ColumnLayout {
                         spacing: Math.round(3 * DefaultStyle.dp)
                         Text {
-                            text: qsTr("Appel de groupe")
+                            //: "Appel de groupe"
+                            text: qsTr("call_start_group_call_title")
                             color: DefaultStyle.main1_500_main
                             maximumLineCount: 1
                             font {
@@ -374,9 +388,8 @@ AbstractMainPage {
                             Layout.fillWidth: true
                         }
                         Text {
-                            text: qsTr("%1 participant%2 sélectionné").arg(
-                                      mainItem.selectedParticipantsCount).arg(
-                                      mainItem.selectedParticipantsCount > 1 ? "s" : "")
+                            //: "%n participant(s) sélectionné(s)"
+                            text: qsTr("group_call_participant_selected").arg(mainItem.selectedParticipantsCount)
                             color: DefaultStyle.main2_500main
                             maximumLineCount: 1
                             font {
@@ -390,7 +403,8 @@ AbstractMainPage {
                         id: groupCallButton
                         enabled: mainItem.selectedParticipantsCount.length != 0
                         Layout.rightMargin: Math.round(21 * DefaultStyle.dp)
-                        text: qsTr("Lancer")
+                        //: "Lancer"
+                        text: qsTr("call_action_start_group_call")
                         style: ButtonStyle.main
                         KeyNavigation.down: listStackView
                         KeyNavigation.left: backGroupCallButton
@@ -407,7 +421,8 @@ AbstractMainPage {
                     Text {
                         font.pixelSize: Typography.p2.pixelSize
                         font.weight: Typography.p2.weight
-                        text: qsTr("Nom du groupe")
+                        //: "Nom du groupe"
+                        text: qsTr("history_group_call_start_dialog_subject_hint")
                     }
                     Item {
                         Layout.fillWidth: true
@@ -415,7 +430,8 @@ AbstractMainPage {
                     Text {
                         font.pixelSize: Math.round(12 * DefaultStyle.dp)
                         font.weight: Math.round(300 * DefaultStyle.dp)
-                        text: qsTr("Requis")
+                        //: "Requis"
+                        text: qsTr("required")
                     }
                 }
                 TextField {
@@ -438,14 +454,15 @@ AbstractMainPage {
                         target: mainItem
                         function onStartGroupCallRequested() {
                             if (groupCallName.text.length === 0) {
-                                UtilsCpp.showInformationPopup(
-                                            qsTr("Erreur"), qsTr(
-                                                "Un nom doit être donné à l'appel de groupe"),
-                                            false)
+                                UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                                                              //: "Un nom doit être donné à l'appel de groupe
+                                                              qsTr("group_call_error_must_have_name"),
+                                                              false)
                             } else if (!mainItem.isRegistered) {
                                 UtilsCpp.showInformationPopup(
-                                            qsTr("Erreur"),
-                                            qsTr("Vous n'etes pas connecté"),
+                                            qsTr("information_popup_error_title"),
+                                            //: "Vous n'etes pas connecté"
+                                            qsTr("group_call_error_not_connected"),
                                             false)
                             } else {
                                 mainItem.confInfoGui = Qt.createQmlObject(
@@ -515,8 +532,10 @@ ConferenceInfoGui{
                                                       || false
                                 property bool isCardDAV: contactDetail.contact?.core?.isCardDAV
                                                          || false
-                                text: contactDetail.contact ? qsTr("Voir le contact") : qsTr(
-                                                                  "Ajouter aux contacts")
+                                //: "Voir le contact"
+                                text: contactDetail.contact ? qsTr("menu_see_existing_contact") :
+                                                              //: "Ajouter aux contacts"
+                                                              qsTr("menu_add_address_to_contacts")
                                 icon.source: AppIcons.plusCircle
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
@@ -534,7 +553,8 @@ ConferenceInfoGui{
                             }
                             IconLabelButton {
                                 Layout.fillWidth: true
-                                text: qsTr("Copier l'adresse SIP")
+                                //: "Copier l'adresse SIP"
+                                text: qsTr("menu_copy_sip_address")
                                 icon.source: AppIcons.copy
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
@@ -545,13 +565,16 @@ ConferenceInfoGui{
                                                 && mainItem.selectedRowHistoryGui.core.remoteAddress)
                                     if (success)
                                         UtilsCpp.showInformationPopup(
-                                                    qsTr("Copié"), qsTr(
-                                                        "L'adresse a été copiée dans le presse-papier"),
+                                                    //: Adresse copiée
+                                                    qsTr("sip_address_copied_to_clipboard_toast"),
+                                                    //: L'adresse a été copié dans le presse_papiers
+                                                    qsTr("sip_address_copied_to_clipboard_message"),
                                                     true)
                                     else
                                         UtilsCpp.showInformationPopup(
-                                                    qsTr("Erreur"), qsTr(
-                                                        "Erreur lors de la copie de l'adresse"),
+                                                    qsTr("information_popup_error_title"),
+                                                    //: "Erreur lors de la copie de l'adresse"
+                                                    qsTr("sip_address_copy_to_clipboard_error"),
                                                     false)
                                 }
                             }
@@ -572,7 +595,8 @@ ConferenceInfoGui{
 
                             IconLabelButton {
                                 Layout.fillWidth: true
-                                text: qsTr("Supprimer l'historique")
+                                //: "Supprimer l'historique"
+                                text: qsTr("menu_delete_history")
                                 icon.source: AppIcons.trashCan
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
@@ -647,7 +671,13 @@ ConferenceInfoGui{
                                                 }
                                             }
                                             Text {
-                                                text: modelData.core.status === LinphoneEnums.CallStatus.Missed ? qsTr("Appel manqué") : modelData.core.isOutgoing ? qsTr("Appel sortant") : qsTr("Appel entrant")
+                                                //: "Appel manqué"
+                                                text: modelData.core.status === LinphoneEnums.CallStatus.Missed ? qsTr("notification_missed_call_title")
+                                                                                                                : modelData.core.isOutgoing
+                                                                                                                    //: "Appel sortant"
+                                                                                                                    ? qsTr("call_outgoing")
+                                                                                                                    //: "Appel entrant"
+                                                                                                                    : qsTr("call_audio_incoming")
                                                 font {
                                                     pixelSize: Typography.p1.pixelSize
                                                     weight: Typography.p1.weight

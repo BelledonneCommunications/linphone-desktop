@@ -158,7 +158,8 @@ bool ToolModel::createCall(const QString &sipAddress,
 		lCritical() << "[" + QString(gClassName) + "] The calling address is not an interpretable SIP address: "
 		            << sipAddress;
 		if (errorMessage) {
-			*errorMessage = tr("The calling address is not an interpretable SIP address : %1").arg(sipAddress);
+			//: "The calling address is not an interpretable SIP address : %1
+			*errorMessage = tr("call_error_uninterpretable_sip_address").arg(sipAddress);
 		}
 		return false;
 	}
@@ -166,7 +167,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 	if (isConference) mediaEncryption = linphone::MediaEncryption::ZRTP;
 
 	if (SettingsModel::dndEnabled(
-	        core->getConfig())) { // Force tones for outgoing calls when in DND mode (ringback, dtmf, etc ... ) disabled
+	        core->getConfig())) { // Force tones for outgoing calls when in DND mode (ringback, dtmf, etc … ) disabled
 		                          // again when no more calls are running.
 		SettingsModel::getInstance()->setCallToneIndicationsEnabled(true);
 	}
@@ -313,17 +314,17 @@ bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList>
 void ToolModel::loadDownloadedCodecs() {
 	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-	qInfo() << QStringLiteral("Loading downloaded codecs in folder %1...").arg(Paths::getCodecsDirPath());
+	qInfo() << QStringLiteral("Loading downloaded codecs in folder %1…").arg(Paths::getCodecsDirPath());
 	QDirIterator it(Paths::getCodecsDirPath());
 	while (it.hasNext()) {
 		QFileInfo info(it.next());
 		const QString filename(info.fileName());
 		if (QLibrary::isLibrary(filename)) {
-			qInfo() << QStringLiteral("Loading `%1` symbols...").arg(filename);
+			qInfo() << QStringLiteral("Loading `%1` symbols…").arg(filename);
 			auto library = QLibrary(info.filePath());
 			if (!library.load()) // lib.load())
 				qWarning() << QStringLiteral("Failed to load `%1` symbols.").arg(filename) << library.errorString();
-			else qInfo() << QStringLiteral("Loaded `%1` symbols...").arg(filename);
+			else qInfo() << QStringLiteral("Loaded `%1` symbols…").arg(filename);
 		} else qWarning() << QStringLiteral("Found codec file `%1` that is not a library").arg(filename);
 	}
 	CoreModel::getInstance()->getCore()->reloadMsPlugins("");
@@ -360,7 +361,8 @@ QVariantMap ToolModel::createVariant(const std::shared_ptr<const linphone::Audio
 	map.insert("id", device ? Utils::coreStringToAppString(device->getId()) : "");
 	map.insert("display_name",
 	           device ? Utils::coreStringToAppString(device->getDriverName() + ": " + device->getDeviceName())
-	                  : tr("Unknown device"));
+					  //: "Unknown device"
+					  : tr("unknown_audio_device_name"));
 	return map;
 }
 

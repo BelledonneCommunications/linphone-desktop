@@ -11,7 +11,8 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-			title: qsTr("Affichage"),
+            //: "Affichage"
+            title: qsTr("settings_meetings_display_title"),
 			subTitle: "",
 			contentComponent: confDisplayParametersComponent,
 			hideTopMargin: true
@@ -28,14 +29,16 @@ AbstractSettingsLayout {
 		ColumnLayout {
             spacing: Math.round(5 * DefaultStyle.dp)
 			Text {
-				text: qsTr("Mode d’affichage par défaut")
+                //: "Mode d’affichage par défaut"
+                text: qsTr("settings_meetings_default_layout_title")
 				font {
                     pixelSize: Typography.p2l.pixelSize
                     weight: Typography.p2l.weight
 				}
 			}
 			Text {
-				text: qsTr("Le mode d’affichage des participants en réunions")
+                //: "Le mode d’affichage des participants en réunions"
+                text: qsTr("settings_meetings_default_layout_subtitle")
 				font {
                     pixelSize: Typography.p1.pixelSize
                     weight: Typography.p1.weight

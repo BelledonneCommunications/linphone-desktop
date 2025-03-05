@@ -72,7 +72,8 @@ Rectangle {
 		id: aboutPopup
 		anchors.centerIn: parent
         width: Math.round(637 * DefaultStyle.dp)
-		title: qsTr("À propos de Linphone")
+        //: À propos de %1
+        title: qsTr("help_about_title").arg(applicationName)
         bottomPadding: Math.round(10 * DefaultStyle.dp)
 		buttons: []
 		content: RowLayout {
@@ -81,24 +82,29 @@ Rectangle {
 				Layout.alignment: Qt.AlignTop | Qt.AlignLeft
 				AboutLine {
 					imageSource: AppIcons.detective
-					title: qsTr("Politique de confidentialité")
-					text: qsTr("Visiter notre potilique de confidentialité")
+                    //: "Politique de confidentialité"
+                    title: qsTr("help_about_privacy_policy_title")
+                    //: "Visiter notre potilique de confidentialité"
+                    text: qsTr("help_about_privacy_policy_link")
 					enableMouseArea: true
 					onContentClicked: Qt.openUrlExternally(ConstantsCpp.PrivatePolicyUrl)
 				}
 				AboutLine {
 					imageSource: AppIcons.info
-					title: qsTr("Version")
+                    //: "Version"
+                    title: qsTr("help_about_version_title")
 					text: Qt.application.version
 				}
 				AboutLine {
 					imageSource: AppIcons.checkSquareOffset
-					title: qsTr("Licence")
+                    //: "Licence"
+                    title: qsTr("help_about_licence_title")
 					text: applicationLicence
 				}
 				AboutLine {
 					imageSource: AppIcons.copyright
-					title: qsTr("Copyright")
+                    //: "Copyright
+                    title: qsTr("help_about_copyright_title")
 					text: applicationVendor
 				}
 				Item {
@@ -108,7 +114,8 @@ Rectangle {
 			}
 			MediumButton {
 				Layout.alignment: Qt.AlignRight | Qt.AlignBottom
-				text: qsTr("Fermer")
+                //: "Fermer"
+                text: qsTr("close")
 				style: ButtonStyle.main
 				onClicked: aboutPopup.close()
 			}
@@ -131,7 +138,7 @@ Rectangle {
 				id: aboutButton
 				Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 				icon.source: AppIcons.info
-				text: qsTr("À propos")
+                text: qsTr("help_about_title").arg(applicationName)
 				textSize: Typography.p1.pixelSize
 				textWeight: Typography.p1.weight
 				textColor: DefaultStyle.main2_500main

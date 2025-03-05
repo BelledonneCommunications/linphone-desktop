@@ -10,8 +10,10 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 AbstractMainPage {
     id: mainItem
-    noItemButtonText: qsTr("Ajouter un contact")
-    emptyListText: qsTr("Aucun contact pour le moment")
+    //: "Ajouter un contact"
+    noItemButtonText: qsTr("contacts_add")
+    //: "Aucun contact pour le moment"
+    emptyListText: qsTr("contacts_list_empty")
     newItemIconSource: AppIcons.plusCircle
 
     // disable left panel contact list interaction while a contact is being edited
@@ -69,16 +71,19 @@ FriendGui{
                 || rightPanelStackView.currentItem.objectName != "contactEdition")
             rightPanelStackView.push(contactEdition, {
                                          "contact": friendGui,
-                                         "title": qsTr("Nouveau contact"),
-                                         "saveButtonText": qsTr("Créer")
+                                         //: "Nouveau contact"
+                                         "title": qsTr("contact_new_title"),
+                                         // "Créer"
+                                         "saveButtonText": qsTr("create")
                                      })
     }
 
     function editContact(friendGui) {
         rightPanelStackView.push(contactEdition, {
                                      "contact": friendGui,
-                                     "title": qsTr("Modifier contact"),
-                                     "saveButtonText": qsTr("Enregistrer")
+                                     //: "Modifier contact"
+                                     "title": qsTr("contact_edit_title"),
+                                     "saveButtonText": qsTr("save")
                                  })
     }
 
@@ -91,18 +96,21 @@ FriendGui{
             return
         var mainWin = UtilsCpp.getMainWindow()
         mainWin.showConfirmationLambdaPopup(
-                    "", qsTr(
-                        "%1 sera supprimé des contacts. Voulez-vous continuer ?").arg(
-                        contact.core.fullName), "", function (confirmed) {
-                            if (confirmed) {
-                                var name = contact.core.fullName
-                                contact.core.remove()
-                                contactList.resetSelections()
-                                UtilsCpp.showInformationPopup(
-                                            qsTr("Supprimé"),
-                                            qsTr("%1 a été supprimé").arg(name))
-                            }
-                        })
+                    //: Supprimer %1 ?"
+                    qsTr("contact_dialog_delete_title").arg(contact.core.fullName),
+                    //: Ce contact sera définitivement supprimé.
+                    qsTr("contact_dialog_delete_message"), "", function (confirmed) {
+                        if (confirmed) {
+                            var name = contact.core.fullName
+                            contact.core.remove()
+                            contactList.resetSelections()
+                            UtilsCpp.showInformationPopup(
+                                        //: "Contact supprimé"
+                                        qsTr("contact_deleted_toast"),
+                                        //: "%1 a été supprimé"
+                                        qsTr("contact_deleted_message").arg(name))
+                        }
+                    })
     }
 
     Dialog {
@@ -115,9 +123,10 @@ FriendGui{
         closePolicy: Control.Popup.CloseOnEscape
         modal: true
         onAboutToHide: neverDisplayAgainCheckbox.checked = false
-        title: qsTr("Augmenter la confiance")
-        text: qsTr("Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.<br><br>Vous êtes sur le point d’appeler “%1” voulez vous continuer ?").arg(
-                  verifyDevicePopup.deviceName)
+        //: "Augmenter la confiance"
+        title: qsTr("contact_dialog_devices_trust_popup_title")
+        //: "Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.<br><br>Vous êtes sur le point d’appeler “%1” voulez vous continuer ?"
+        text: qsTr("contact_dialog_devices_trust_popup_message").arg(verifyDevicePopup.deviceName)
         buttons: RowLayout {
             RowLayout {
                 spacing: Math.round(7 * DefaultStyle.dp)
@@ -125,7 +134,8 @@ FriendGui{
                     id: neverDisplayAgainCheckbox
                 }
                 Text {
-                    text: qsTr("Ne plus afficher")
+                    //: Ne plus afficher
+                    text: qsTr("popup_do_not_show_again")
                     font.pixelSize: Math.round(14 * DefaultStyle.dp)
                     MouseArea {
                         anchors.fill: parent
@@ -140,12 +150,13 @@ FriendGui{
                 spacing: Math.round(15 * DefaultStyle.dp)
                 BigButton {
                     style: ButtonStyle.secondary
-                    text: qsTr("Annuler")
+                    text: qsTr("cancel")
                     onClicked: verifyDevicePopup.close()
                 }
                 BigButton {
                     style: ButtonStyle.main
-                    text: qsTr("Appeler")
+                    //: "Appeler"
+                    text: qsTr("dialog_call")
                     onClicked: {
                         SettingsCpp.setDisplayDeviceCheckConfirmation(
                                     !neverDisplayAgainCheckbox.checked)
@@ -161,8 +172,10 @@ FriendGui{
     Dialog {
         id: trustInfoDialog
         width: Math.round(637 * DefaultStyle.dp)
-        title: qsTr("Niveau de confiance")
-        text: qsTr("Vérifiez les appareils de votre contact pour confirmer que vos communications seront sécurisées et sans compromission. <br>Quand tous seront vérifiés, vous atteindrez le niveau de confiance maximal.")
+        //: "Niveau de confiance"
+        title: qsTr("contact_dialog_devices_trust_help_title")
+        //: "Vérifiez les appareils de votre contact pour confirmer que vos communications seront sécurisées et sans compromission. <br>Quand tous seront vérifiés, vous atteindrez le niveau de confiance maximal."
+        text: qsTr("contact_dialog_devices_trust_help_message")
         content: RowLayout {
             spacing: Math.round(50 * DefaultStyle.dp)
             Avatar {
@@ -184,7 +197,8 @@ FriendGui{
             }
         }
         buttons: Button {
-            text: qsTr("Ok")
+            //: "Ok"
+            text: qsTr("dialog_ok")
             style: ButtonStyle.main
             leftPadding: Math.round(30 * DefaultStyle.dp)
             rightPadding: Math.round(30 * DefaultStyle.dp)
@@ -209,7 +223,8 @@ FriendGui{
             anchors.rightMargin: leftPanel.rightMargin
 
             Text {
-                text: qsTr("Contacts")
+                //: "Contacts"
+                text: qsTr("bottom_navigation_contacts_label")
                 color: DefaultStyle.main2_700
                 font.pixelSize: Typography.h2.pixelSize
                 font.weight: Typography.h2.weight
@@ -248,7 +263,8 @@ FriendGui{
                 Layout.rightMargin: leftPanel.rightMargin
                 Layout.topMargin: Math.round(18 * DefaultStyle.dp)
                 Layout.fillWidth: true
-                placeholderText: qsTr("Rechercher un contact")
+                //: Rechercher un contact
+                placeholderText: qsTr("search_bar_look_for_contact_text")
                 KeyNavigation.up: createContactButton
                 KeyNavigation.down: contactList
             }
@@ -259,8 +275,10 @@ FriendGui{
                     visible: !contactList.loading && !contactList.haveContacts
                     Layout.alignment: Qt.AlignHCenter
                     Layout.topMargin: Math.round(137 * DefaultStyle.dp)
-                    text: qsTr("Aucun contact%1").arg(
-                              searchBar.text.length !== 0 ? " correspondant" : "")
+                    //: Aucun résultat…
+                    text: searchBar.text.length !== 0 ? qsTr("list_filter_no_result_found")
+                                                      //: Aucun contact pour le moment
+                                                      : qsTr("contact_list_empty")
                     font {
                         pixelSize: Typography.h4.pixelSize
                         weight: Typography.h4.weight
@@ -352,7 +370,7 @@ FriendGui{
                 anchors.fill: parent
                 contact: mainItem.selectedContact
                 button.color: DefaultStyle.main1_100
-                button.text: qsTr("Modifier")
+                button.text: qsTr("contact_details_edit")
                 button.style: ButtonStyle.tertiary
                 button.icon.source: AppIcons.pencil
                 button.onClicked: mainItem.editContact(mainItem.selectedContact)
@@ -388,7 +406,8 @@ FriendGui{
                     spacing: Math.round(58 * DefaultStyle.dp)
                     LabelButton {
                         button.icon.source: AppIcons.phone
-                        label: qsTr("Appel")
+                        //: "Appel"
+                        label: qsTr("contact_call_action")
                         width: Math.round(56 * DefaultStyle.dp)
                         height: Math.round(56 * DefaultStyle.dp)
                         button.icon.width: Math.round(24 * DefaultStyle.dp)
@@ -400,7 +419,8 @@ FriendGui{
                     LabelButton {
                         button.icon.source: AppIcons.chatTeardropText
                         visible: !SettingsCpp.disableChatFeature
-                        label: qsTr("Message")
+                        //: "Message"
+                        label: qsTr("contact_message_action")
                         width: Math.round(56 * DefaultStyle.dp)
                         height: Math.round(56 * DefaultStyle.dp)
                         button.icon.width: Math.round(24 * DefaultStyle.dp)
@@ -411,7 +431,8 @@ FriendGui{
                     LabelButton {
                         visible: SettingsCpp.videoEnabled
                         button.icon.source: AppIcons.videoCamera
-                        label: qsTr("Appel vidéo")
+                        //: "Appel vidéo"
+                        label: qsTr("contact_video_call_action")
                         width: Math.round(56 * DefaultStyle.dp)
                         height: Math.round(56 * DefaultStyle.dp)
                         button.icon.width: Math.round(24 * DefaultStyle.dp)
@@ -439,8 +460,24 @@ FriendGui{
                             property var mode: contactDetail.contact ? contactDetail.contact.core.consolidatedPresence : -1
                             horizontalAlignment: Text.AlignLeft
                             Layout.fillWidth: true
-                            text: mode === LinphoneEnums.ConsolidatedPresence.Online ? qsTr("En ligne") : mode === LinphoneEnums.ConsolidatedPresence.Busy ? qsTr("Occupé") : mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb ? qsTr("Ne pas déranger") : qsTr("Hors ligne")
-                            color: mode === LinphoneEnums.ConsolidatedPresence.Online ? DefaultStyle.success_500main : mode === LinphoneEnums.ConsolidatedPresence.Busy ? DefaultStyle.warning_600 : mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
+                            text: mode === LinphoneEnums.ConsolidatedPresence.Online
+                                //: "En ligne"
+                                ? qsTr("contact_presence_status_online")
+                                : mode === LinphoneEnums.ConsolidatedPresence.Busy
+                                    //: "Occupé"
+                                    ? qsTr("contact_presence_status_busy")
+                                    : mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
+                                        //: "Ne pas déranger"
+                                        ? qsTr("contact_presence_status_do_not_disturb")
+                                          //: "Hors ligne"
+                                        : qsTr("contact_presence_status_offline")
+                            color: mode === LinphoneEnums.ConsolidatedPresence.Online
+                                ? DefaultStyle.success_500main
+                                : mode === LinphoneEnums.ConsolidatedPresence.Busy
+                                    ? DefaultStyle.warning_600
+                                    : mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
+                                        ? DefaultStyle.danger_500main
+                                        : DefaultStyle.main2_500main
                             font.pixelSize: Math.round(14 * DefaultStyle.dp)
                         }
                     },
@@ -461,7 +498,8 @@ FriendGui{
                             ContactDetailLayout {
                                 id: infoLayout
                                 Layout.fillWidth: true
-                                label: qsTr("Informations")
+                                //: "Coordonnées"
+                                label: qsTr("contact_details_numbers_and_addresses_title")
                                 content: ListView {
                                     id: addrList
                                     height: contentHeight
@@ -547,7 +585,8 @@ FriendGui{
                                         height: Math.round(50 * DefaultStyle.dp)
                                         visible: companyText.text.length != 0
                                         Text {
-                                            text: qsTr("Société :")
+                                            //: "Société :"
+                                            text: qsTr("contact_details_company_name")
                                             font {
                                                 pixelSize: Typography.p2.pixelSize
                                                 weight: Typography.p2.weight
@@ -567,7 +606,8 @@ FriendGui{
                                         height: Math.round(50 * DefaultStyle.dp)
                                         visible: jobText.text.length != 0
                                         Text {
-                                            text: qsTr("Poste :")
+                                            //: "Poste :"
+                                            text: qsTr("contact_details_job_title")
                                             font {
                                                 pixelSize: Typography.p2.pixelSize
                                                 weight: Typography.p2.weight
@@ -588,7 +628,8 @@ FriendGui{
                         }
                         ContactDetailLayout {
                             visible: !SettingsCpp.disableChatFeature
-                            label: qsTr("Medias")
+                            //: "Medias"
+                            label: qsTr("contact_details_medias_title")
                             Layout.fillWidth: true
                             content: Button {
                                 style: ButtonStyle.noBackground
@@ -600,7 +641,8 @@ FriendGui{
                                         colorizationColor: DefaultStyle.main2_600
                                     }
                                     Text {
-                                        text: qsTr("Afficher les medias partagés")
+                                        //: "Afficher les medias partagés"
+                                        text: qsTr("contact_details_medias_subtitle")
                                         font {
                                             pixelSize: Typography.p1.pixelSize
                                             weight: Typography.p1.weight
@@ -622,13 +664,15 @@ FriendGui{
                         }
                         ContactDetailLayout {
                             Layout.fillWidth: true
-                            label: qsTr("Confiance")
+                            //: "Confiance"
+                            label: qsTr("contact_details_trust_title")
                             icon: AppIcons.question
                             onTitleIconClicked: trustInfoDialog.open()
                             content: ColumnLayout {
                                 spacing: Math.round(13 * DefaultStyle.dp)
                                 Text {
-                                    text: qsTr("Niveau de confiance - Appareils vérifiés")
+                                    //: "Niveau de confiance - Appareils vérifiés"
+                                    text: qsTr("contact_dialog_devices_trust_title")
                                     font {
                                         pixelSize: Typography.p2.pixelSize
                                         weight: Typography.p2.weight
@@ -636,7 +680,8 @@ FriendGui{
                                 }
                                 Text {
                                     visible: deviceList.count === 0
-                                    text: qsTr("Aucun appareil")
+                                    //: "Aucun appareil"
+                                    text: qsTr("contact_details_no_device_found")
                                 }
                                 ProgressBar {
                                     visible: deviceList.count > 0
@@ -660,7 +705,8 @@ FriendGui{
                                         property var listViewModelData: modelData
                                         property var callObj
                                         property CallGui deviceCall: callObj ? callObj.value : null
-                                        property string deviceName: listViewModelData.name.length != 0 ? listViewModelData.name : qsTr("Appareil sans nom")
+                                        //: "Appareil sans nom"
+                                        property string deviceName: listViewModelData.name.length != 0 ? listViewModelData.name : qsTr("contact_device_without_name")
                                         Text {
                                             text: deviceDelegate.deviceName
                                             font.pixelSize: Math.round(14 * DefaultStyle.dp)
@@ -680,7 +726,8 @@ FriendGui{
                                             visible: listViewModelData.securityLevel != LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
                                             icon.source: AppIcons.warningCircle
                                             style: ButtonStyle.tertiary
-                                            text: qsTr("Vérifier")
+                                            //: "Vérifier"
+                                            text: qsTr("contact_make_call_check_device_trust")
                                             onClicked: {
                                                 if (SettingsCpp.getDisplayDeviceCheckConfirmation(
                                                             )) {
@@ -705,14 +752,16 @@ FriendGui{
                         }
                         ContactDetailLayout {
                             Layout.fillWidth: true
-                            label: qsTr("Autres actions")
+                            //: "Autres actions"
+                            label: qsTr("contact_details_actions_title")
                             content: ColumnLayout {
                                 width: parent.width
                                 IconLabelButton {
                                     Layout.fillWidth: true
                                     Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
                                     icon.source: AppIcons.pencil
-                                    text: qsTr("Éditer")
+                                    //: "Éditer"
+                                    text: qsTr("contact_details_edit")
                                     onClicked: mainItem.editContact(
                                                    mainItem.selectedContact)
                                     visible: !mainItem.selectedContact?.core.readOnly
@@ -729,7 +778,11 @@ FriendGui{
                                     icon.source: mainItem.selectedContact
                                                  && mainItem.selectedContact.core.starred ? AppIcons.heartFill : AppIcons.heart
                                     text: mainItem.selectedContact
-                                          && mainItem.selectedContact.core.starred ? qsTr("Retirer des favoris") : qsTr("Ajouter aux favoris")
+                                          && mainItem.selectedContact.core.starred
+                                          //: "Retirer des favoris"
+                                          ? qsTr("contact_details_remove_from_favourites")
+                                          //: "Ajouter aux favoris"
+                                          : qsTr("contact_details_add_to_favourites")
                                     style: ButtonStyle.noBackground
                                     onClicked: if (mainItem.selectedContact)
                                                    mainItem.selectedContact.core.lSetStarred(
@@ -744,7 +797,8 @@ FriendGui{
                                     Layout.fillWidth: true
                                     Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
                                     icon.source: AppIcons.shareNetwork
-                                    text: qsTr("Partager")
+                                    //: "Partager"
+                                    text: qsTr("contact_details_share")
                                     style: ButtonStyle.noBackground
                                     onClicked: {
                                         if (mainItem.selectedContact) {
@@ -755,17 +809,19 @@ FriendGui{
                                                         username, vcard)
                                             if (filepath == "")
                                                 UtilsCpp.showInformationPopup(
-                                                            qsTr("Erreur"),
-                                                            qsTr("La création du fichier vcard a échoué"),
+                                                            qsTr("information_popup_error_title"),
+                                                            //: "La création du fichier vcard a échoué"
+                                                            qsTr("contact_details_share_error_mesage"),
                                                             false)
                                             else
                                                 mainWindow.showInformationPopup(
-                                                            qsTr(
-                                                                "VCard créée"),
-                                                            qsTr("VCard du contact enregistrée dans %1").arg(
-                                                                filepath))
+                                                            //: "VCard créée"
+                                                            qsTr("contact_details_share_success_title"),
+                                                            //: "VCard du contact enregistrée dans %1"
+                                                            qsTr("contact_details_share_success_mesage").arg(filepath))
                                             UtilsCpp.shareByEmail(
-                                                        qsTr("Partage de contact"),
+                                                        //: "Partage de contact"
+                                                        qsTr("contact_details_share_email_title"),
                                                         vcard, filepath)
                                         }
                                     }
@@ -803,7 +859,8 @@ FriendGui{
                                     Layout.fillWidth: true
                                     Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
                                     icon.source: AppIcons.trashCan
-                                    text: qsTr("Supprimer ce contact")
+                                    //: "Supprimer ce contact"
+                                    text: qsTr("contact_details_delete")
                                     visible: !mainItem.selectedContact?.core.readOnly
                                     onClicked: {
                                         mainItem.deleteContact(

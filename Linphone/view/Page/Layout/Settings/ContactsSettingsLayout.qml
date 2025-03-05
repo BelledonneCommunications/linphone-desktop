@@ -10,14 +10,16 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-			title: qsTr("Annuaires LDAP"),
-			subTitle: qsTr("Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la magic search bar."),
+            //: Annuaires LDAP
+            title: qsTr("settings_contacts_ldap_title"),
+            //: "Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la magic search bar."
+            subTitle: qsTr("settings_contacts_ldap_subtitle"),
 			contentComponent: ldapParametersComponent,
 			hideTopMargin: true
 		},
 		{
-			title: qsTr("Carnet d'adresse CardDAV"),
-			subTitle: qsTr("Ajouter un carnet d’adresse CardDAV pour synchroniser vos contacts Linphone avec un carnet d’adresse tiers."),
+            title: qsTr("settings_contacts_carddav_title"),
+            subTitle: qsTr("settings_contacts_carddav_subtitle"),
 			contentComponent: cardDavParametersComponent,
 			hideTopMargin: true
 		}
@@ -36,8 +38,10 @@ AbstractSettingsLayout {
 	Component {
 		id: ldapParametersComponent
 		ContactsSettingsProviderLayout {
-			addText: qsTr("Ajouter un annuaire LDAP")
-			editText: qsTr("Modifier un annuaire LDAP")
+            //: "Ajouter un annuaire LDAP"
+            addText: qsTr("settings_contacts_add_ldap_server_title")
+            //: "Modifier un annuaire LDAP"
+            editText: qsTr("settings_contacts_edit_ldap_server_title")
 			proxyModel: LdapProxy {}
 			newItemGui: createGuiObject('Ldap')
 			settingsLayout: layoutUrl("LdapSettingsLayout")
@@ -61,8 +65,10 @@ AbstractSettingsLayout {
 		id: cardDavParametersComponent
 		ContactsSettingsProviderLayout {
 			id: carddavProvider
-			addText: qsTr("Ajouter un carnet d'adresse CardDAV")
-			editText: qsTr("Modifier un carnet d'adresse CardDAV")
+            //: "Ajouter un carnet d'adresse CardDAV"
+            addText: qsTr("settings_contacts_add_carddav_server_title")
+            //: "Modifier un carnet d'adresse CardDAV"
+            editText: qsTr("settings_contacts_edit_carddav_server_title")
 			proxyModel: CarddavProxy {
 				onModelReset:  {
 					carddavProvider.showAddButton = carddavProvider.proxyModel.count == 0

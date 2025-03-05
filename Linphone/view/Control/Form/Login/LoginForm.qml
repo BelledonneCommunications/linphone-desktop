@@ -12,7 +12,8 @@ ColumnLayout {
 	FormItemLayout {
 		id: username
         Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
-		label: qsTr("Nom d'utilisateur")
+        //: "Nom d'utilisateur" : username
+        label: qsTr("username")
 		mandatory: true
 		enableErrorText: true
 		contentItem: TextField {
@@ -27,7 +28,8 @@ ColumnLayout {
 		FormItemLayout {
 			id: password
             width: Math.round(346 * DefaultStyle.dp)
-			label: qsTr("Mot de passe")
+            //: "Mot de passe"
+            label: qsTr("password")
 			mandatory: true
 			enableErrorText: true
 			contentItem: TextField {
@@ -62,7 +64,8 @@ ColumnLayout {
 				id: connectionButtonContent
 				currentIndex: 0
 				Text {
-					text: qsTr("Connexion")
+                    //: "Connexion"
+                    text: qsTr("assistant_account_login")
 					horizontalAlignment: Text.AlignHCenter
 					verticalAlignment: Text.AlignVCenter
 
@@ -100,9 +103,11 @@ ColumnLayout {
 
 				if (usernameEdit.text.length == 0 || passwordEdit.text.length == 0) {
 					if (usernameEdit.text.length == 0)
-						username.errorMessage = qsTr("Veuillez saisir un nom d'utilisateur")
+                        //: "Veuillez saisir un nom d'utilisateur"
+                        username.errorMessage = qsTr("assistant_account_login_missing_username")
 					if (passwordEdit.text.length == 0)
-						password.errorMessage = qsTr("Veuillez saisir un mot de passe")
+                        //: "Veuillez saisir un mot de passe"
+                        password.errorMessage = qsTr("assistant_account_login_missing_password")
 					return
 				}
 				LoginPageCpp.login(usernameEdit.text, passwordEdit.text)
@@ -120,7 +125,8 @@ ColumnLayout {
 		SmallButton {
 			id: forgottenButton
 			style: ButtonStyle.noBackground
-			text: qsTr("Mot de passe oublié ?")
+            //: "Mot de passe oublié ?"
+            text: qsTr("assistant_forgotten_password")
 			underline: true
 			onClicked: Qt.openUrlExternally(ConstantsCpp.PasswordRecoveryUrl)
 		}

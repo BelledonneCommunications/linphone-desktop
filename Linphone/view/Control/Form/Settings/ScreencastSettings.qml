@@ -19,7 +19,8 @@ ColumnLayout {
 	onIsLocalScreenSharingChanged:  {if(isLocalScreenSharing) mainItem.call.core.videoSourceDescriptor = mainItem.desc }
 	Text {
 		Layout.fillWidth: true
-		text: qsTr("Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants")
+        //: "Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants"
+        text: qsTr("screencast_settings_choose_window_text")
         font.pixelSize: Math.round(14 * DefaultStyle.dp)
 		color: DefaultStyle.main2_500main
 	}
@@ -27,7 +28,10 @@ ColumnLayout {
 		Layout.fillWidth: true
 		id: bar
         pixelSize: Math.round(16 * DefaultStyle.dp)
-		model: [qsTr("Ecran entier"), qsTr("Fenêtre")]
+        //: "Ecran entier"
+        model: [qsTr("screencast_settings_all_screen_label"),
+            //: "Fenêtre"
+            qsTr("screencast_settings_one_window_label")]
 	}
 	component ScreenPreviewLayout: Control.Control {
 		id: screenPreview
@@ -84,7 +88,8 @@ ColumnLayout {
 				}
 				Text {
 					Layout.fillWidth: true
-					text: !!$modelData?.windowId ? $modelData.name : qsTr("Ecran %1").arg(screenIndex+1)
+                    //: "Ecran %1"
+                    text: !!$modelData?.windowId ? $modelData.name : qsTr("screencast_settings_screen").arg(screenIndex+1)
 					horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: Math.round((displayScreen ? 14 : 10) * DefaultStyle.dp)
 					elide: Text.ElideRight
@@ -156,11 +161,13 @@ ColumnLayout {
 		}
 	}
 	Button {
-		visible: mainItem.screenSharingAvailable
+        visible: mainItem.screenSharingAvailable$
 		enabled: windowsLayout.currentIndex !== -1 || screensLayout.currentIndex !== -1
 		text:  mainItem.conference && mainItem.conference.core.isLocalScreenSharing
-					? qsTr("Stop")
-					: qsTr("Partager")
+        //: "Stop
+            ? qsTr("stop")
+        //: "Partager"
+            : qsTr("share")
 		onClicked: mainItem.conference.core.lToggleScreenSharing()
 		style: ButtonStyle.main
 	}

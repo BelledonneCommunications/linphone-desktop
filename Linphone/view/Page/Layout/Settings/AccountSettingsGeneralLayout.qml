@@ -15,13 +15,17 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-			title: qsTr("Détails"),
-			subTitle: qsTr("Editer les informations de votre compte."),
+            //: "Détails"
+            title: qsTr("manage_account_details_title"),
+            //: Éditer les informations de votre compte.
+            subTitle: qsTr("manage_account_details_subtitle"),
 			contentComponent: accountParametersComponent
 		},
 		{
-			title: qsTr("Vos appareils"),
-			subTitle: qsTr("La liste des appareils connectés à votre compte. Vous pouvez retirer les appareils que vous n’utilisez plus."),
+            //: "Vos appareils"
+            title: qsTr("manage_account_devices_title"),
+            //: "La liste des appareils connectés à votre compte. Vous pouvez retirer les appareils que vous n’utilisez plus."
+            subTitle: qsTr("manage_account_devices_subtitle"),
 			contentComponent: accountDevicesComponent
 		}
 	]
@@ -50,7 +54,8 @@ AbstractSettingsLayout {
 				icon.source: AppIcons.camera
                 icon.width: Math.round(17 * DefaultStyle.dp)
                 icon.height: Math.round(17 * DefaultStyle.dp)
-				text: qsTr("Ajouter une image")
+                //: "Ajouter une image"
+                text: qsTr("manage_account_add_picture")
 				style: ButtonStyle.noBackground
 				onClicked: fileDialog.open()
 				Layout.alignment: Qt.AlignHCenter
@@ -64,7 +69,8 @@ AbstractSettingsLayout {
 					icon.source: AppIcons.pencil
                     icon.width: Math.round(17 * DefaultStyle.dp)
                     icon.height: Math.round(17 * DefaultStyle.dp)
-					text: qsTr("Modifier l'image")
+                    //: "Modifier l'image"
+                    text: qsTr("manage_account_edit_picture")
 					style: ButtonStyle.noBackground
 					onClicked: fileDialog.open()
 				}
@@ -73,7 +79,8 @@ AbstractSettingsLayout {
 					icon.source: AppIcons.trashCan
                     icon.width: Math.round(17 * DefaultStyle.dp)
                     icon.height: Math.round(17 * DefaultStyle.dp)
-					text: qsTr("Supprimer l'image")
+                    //: "Supprimer l'image"
+                    text: qsTr("manage_account_remove_picture")
 					style: ButtonStyle.noBackground
 					onClicked: model.core.pictureUri = ""
 				}
@@ -94,7 +101,7 @@ AbstractSettingsLayout {
                 spacing: Math.round(5 * DefaultStyle.dp)
 				Text {
 					Layout.alignment: Qt.AlignLeft
-					text: qsTr("Adresse SIP :")
+                    text: "%1 :".arg(qsTr("sip_address"))
 					color: DefaultStyle.main2_600
 					font: Typography.p2l
 				}
@@ -118,12 +125,14 @@ AbstractSettingsLayout {
                 spacing: Math.round(5 * DefaultStyle.dp)
 				Layout.alignment: Qt.AlignLeft
 				Text {
-					text: qsTr("Nom d’affichage")
+                    //: "Nom d'affichage
+                    text: qsTr("sip_address_display_name")
 					color: DefaultStyle.main2_600
 					font: Typography.p2l
 				}
 				Text {
-					text: qsTr("Le nom qui sera affiché à vos correspondants lors de vos échanges.")
+                    //: "Le nom qui sera affiché à vos correspondants lors de vos échanges."
+                    text: qsTr("sip_address_display_name_explaination")
 					color: DefaultStyle.main2_600
 					font: Typography.p1
 				}
@@ -140,7 +149,8 @@ AbstractSettingsLayout {
 				toValidate: true
 			}
 			Text {
-				text: qsTr("Indicatif international*")
+                //: "Indicatif international*"
+                text: qsTr("manage_account_international_prefix")
 				color: DefaultStyle.main2_600
 				font: Typography.p2l
 			}
@@ -165,14 +175,16 @@ AbstractSettingsLayout {
 				ColumnLayout {
                     spacing : Math.round(5 * DefaultStyle.dp)
 					Text {
-						text: qsTr("Supprimer mon compte")
+                        //: "Déconnecter mon compte"
+                        text: qsTr("manage_account_delete")
 						font: Typography.p2l
 						wrapMode: Text.WordWrap
 						color: DefaultStyle.danger_500main
 						Layout.fillWidth: true
 					}
 					Text {
-						text: qsTr("Votre compte sera retiré de ce client linphone, mais vous restez connecté sur vos autres clients")
+                        // "Votre compte sera retiré de ce client linphone, mais vous restez connecté sur vos autres clients
+                        text: qsTr("manage_account_delete_message")
 						font: Typography.p1
 						wrapMode: Text.WordWrap
 						color: DefaultStyle.main2_500main
@@ -190,8 +202,10 @@ AbstractSettingsLayout {
 					onClicked: {
 						var mainWin = UtilsCpp.getMainWindow()
 						mainWin.showConfirmationLambdaPopup("",
-							qsTr("Supprimer ") + (model.core.displayName.length > 0 ? model.core.displayName : qsTr("le compte")) + " ?",
-							qsTr("Vous pouvez vous reconnecter à tout moment en cliquant sur \"Ajouter un compte\".\nCependant toutes les informations stockées sur ce périphérique seront supprimées."),
+                            //: "Se déconnecter du compte ?"
+                            qsTr("manage_account_dialog_remove_account_title"),
+                            //: Si vous souhaitez supprimer définitivement votre compte rendez-vous sur : https://sip.linphone.org
+                            qsTr("manage_account_dialog_remove_account_message"),
 							function (confirmed) {
 								if (confirmed) {
 									account.core.removeAccount()
@@ -247,7 +261,8 @@ AbstractSettingsLayout {
                         onDevicesSet: devices.loading = false;
                         onRequestError: (errorMessage) => {
                             devices.loading = false;
-                            mainWindow.showInformationPopup(qsTr("Erreur"), errorMessage, false)
+                            //: Erreur
+                            mainWindow.showInformationPopup(qsTr("error"), errorMessage, false)
                         }
 					}
                     Control.Control {
@@ -284,7 +299,8 @@ AbstractSettingsLayout {
 								}
 								MediumButton {
 									Layout.alignment: Qt.AlignRight
-									text: qsTr("Supprimer")
+                                    //: "Supprimer"
+                                    text: qsTr("manage_account_device_remove")
 									icon.source: AppIcons.trashCan
                                     icon.width: Math.round(16 * DefaultStyle.dp)
                                     icon.height: Math.round(16 * DefaultStyle.dp)
@@ -292,7 +308,8 @@ AbstractSettingsLayout {
 									onClicked: {
 										var mainWin = UtilsCpp.getMainWindow()
 										mainWin.showConfirmationLambdaPopup("",
-											qsTr("Supprimer ") + modelData.core.deviceName + " ?", "",
+                                            //:"Supprimer %1 ?"
+                                            qsTr("manage_account_device_remove_confirm_dialog").arg(modelData.core.deviceName), "",
 											function (confirmed) {
 												if (confirmed) {
 													accountDeviceProxy.deleteDevice(modelData)
@@ -305,7 +322,8 @@ AbstractSettingsLayout {
 							RowLayout {
                                 spacing: Math.round(5 * DefaultStyle.dp)
 								Text {
-									text: qsTr("Dernière connexion:")
+                                    //: "Dernière connexion:"
+                                    text: qsTr("manage_account_device_last_connection")
 									color: DefaultStyle.main2_600
 									font: Typography.p2
 								}

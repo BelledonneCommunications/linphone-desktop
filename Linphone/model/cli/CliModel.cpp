@@ -36,12 +36,12 @@ DEFINE_ABSTRACT_OBJECT(CliModel)
 
 std::shared_ptr<CliModel> CliModel::gCliModel;
 QMap<QString, CliModel::Command> CliModel::mCommands{
-    createCommand("show", QT_TR_NOOP("showFunctionDescription"), &CliModel::cliShow, {}, true),
-    createCommand("fetch-config", QT_TR_NOOP("fetchConfigFunctionDescription"), &CliModel::cliFetchConfig, {}, true),
-    createCommand("call", QT_TR_NOOP("callFunctionDescription"), &CliModel::cliCall, {{"sip-address", {}}}, true),
-    createCommand("bye", QT_TR_NOOP("byeFunctionDescription"), &CliModel::cliBye, {}, true),
-    createCommand("accept", QT_TR_NOOP("acceptFunctionDescription"), &CliModel::cliAccept, {}, true),
-    createCommand("decline", QT_TR_NOOP("declineFunctionDescription"), &CliModel::cliDecline, {}, true),
+    createCommand("show", QT_TR_NOOP("show_function_description"), &CliModel::cliShow, {}, true),
+    createCommand("fetch-config", QT_TR_NOOP("fetch_config_function_description"), &CliModel::cliFetchConfig, {}, true),
+    createCommand("call", QT_TR_NOOP("call_function_description"), &CliModel::cliCall, {{"sip-address", {}}}, true),
+    createCommand("bye", QT_TR_NOOP("bye_function_description"), &CliModel::cliBye, {}, true),
+    createCommand("accept", QT_TR_NOOP("accept_function_description"), &CliModel::cliAccept, {}, true),
+    createCommand("decline", QT_TR_NOOP("decline_function_description"), &CliModel::cliDecline, {}, true),
     /*
     createCommand("initiate-conference", QT_TR_NOOP("initiateConferenceFunctionDescription"), cliInitiateConference, {
         { "sip-address", {} }, { "conference-id", {} }
@@ -344,7 +344,7 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 	const QString &functionName = parseFunctionName(command, false);
 	const QString configURI = QString(EXECUTABLE_NAME).toLower() + "-config";
 	if (!functionName.isEmpty()) { // It is a CLI
-		qInfo() << QStringLiteral("Detecting cli command: `%1`...").arg(command);
+		qInfo() << QStringLiteral("Detecting cli command: `%1`…").arg(command);
 		QHash<QString, QString> args = parseArgs(command);
 		QHash<QString, QString> argsToProcess;
 		for (auto it = args.begin(); it != args.end(); ++it) {
@@ -410,7 +410,7 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 				address = linphone::Factory::get()->createAddress(
 				    Utils::appStringToCoreString(transformedCommand)); // Test if command is an address
 			// if (format) *format = UriFormat;
-			qInfo() << QStringLiteral("Detecting URI command: `%1`...").arg(command);
+			qInfo() << QStringLiteral("Detecting URI command: `%1`…").arg(command);
 			QString functionName;
 			if (address) {
 				functionName = Utils::coreStringToAppString(address->getHeader("method")).isEmpty()

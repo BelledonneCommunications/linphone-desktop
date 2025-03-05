@@ -21,8 +21,10 @@ MainRightPanel {
 			}
 		}
 	}
-	property string title: qsTr("Modifier contact")
-	property string saveButtonText: qsTr("Enregistrer")
+    //: "Modifier contact"
+    property string title: qsTr("contact_editor_title")
+    //: "Enregistrer
+    property string saveButtonText: qsTr("save")
 	property string oldPictureUri
     property int addressCount: 0
 	
@@ -35,7 +37,8 @@ MainRightPanel {
 			mainItem.closeEdition('')
 		}
         width: Math.round(278 * DefaultStyle.dp)
-		text: qsTr("Les changements seront annulés. Souhaitez-vous continuer ?")
+        //: "Les changements seront annulés. Souhaitez-vous continuer ?"
+        text: qsTr("contact_editor_dialog_cancel_change_message")
 	}
 
 	headerContent: [
@@ -61,7 +64,7 @@ MainRightPanel {
                 icon.height: Math.round(24 * DefaultStyle.dp)
 				onClicked: {
 					if (contact.core.isSaved) mainItem.closeEdition('')
-					else showConfirmationLambdaPopup("", qsTr("Les changements seront annulés. Souhaitez-vous continuer ?"), "", function(confirmed) {
+                    else showConfirmationLambdaPopup("", qsTr("contact_editor_dialog_cancel_change_message"), "", function(confirmed) {
 						if (confirmed) {
 							mainItem.contact.core.undo()
 							mainItem.closeEdition('')
@@ -81,11 +84,13 @@ MainRightPanel {
 			id: saveDelay
 			interval: 200
 			onTriggered:{
+                //: "Veuillez saisir un prénom"
 				if (mainItem.contact.core.givenName.length === 0) {
-					givenName.errorMessage = qsTr("Veuillez saisir un prénom")
+                    givenName.errorMessage = qsTr("contact_editor_mandatory_first_name_not_filled")
 					return
 				} else if (addressesList.count === 0 && phoneNumberList.count === 0) {
-					addressesErrorText.setText(qsTr("Veuillez saisir une adresse ou un numéro de téléphone"))
+                    //: "Veuillez saisir une adresse ou un numéro de téléphone"
+                    addressesErrorText.setText(qsTr("contact_editor_mandatory_address_or_number_not_filled"))
 					return
 				}
 				mainItem.contact.core.save()
@@ -101,7 +106,8 @@ MainRightPanel {
 				Layout.preferredWidth: width
 				visible: !mainItem.contact || mainItem.contact.core.pictureUri.length === 0
 				icon.source: AppIcons.camera
-				text: qsTr("Ajouter une image")
+                //: "Ajouter une image"
+                text: qsTr("contact_editor_add_image_label")
                 textSize: Typography.h4.pixelSize
                 textWeight: Typography.h4.weight
 				textColor: DefaultStyle.main2_700
@@ -118,7 +124,8 @@ MainRightPanel {
 					id: editButton
 					Layout.preferredWidth: width
 					icon.source: AppIcons.pencil
-					text: qsTr("Modifier")
+                    //: "Modifier"
+                    text: qsTr("contact_details_edit")
 					textColor: DefaultStyle.main2_700
 					hoveredTextColor: DefaultStyle.main2_800
 					pressedTextColor: DefaultStyle.main2_900
@@ -142,7 +149,8 @@ MainRightPanel {
 					id: removeButton
 					Layout.preferredWidth: width
 					icon.source: AppIcons.trashCan
-					text: qsTr("Supprimer")
+                    //: "Supprimer"
+                    text: qsTr("contact_details_delete")
 					textColor: DefaultStyle.main2_700
 					hoveredTextColor: DefaultStyle.main2_800
 					pressedTextColor: DefaultStyle.main2_900
@@ -192,7 +200,8 @@ MainRightPanel {
 					id: givenName
 					Layout.fillWidth: true
 					enableErrorText: true
-					label: qsTr("Prénom")
+                    //: "Prénom"
+                    label: qsTr("contact_editor_first_name")
 					contentItem: TextField {
 						id: givenNameEdit
                         Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
@@ -206,8 +215,9 @@ MainRightPanel {
 						KeyNavigation.down: nameTextField
 					}
 				}
-				FormItemLayout {
-					label: qsTr("Nom")
+                FormItemLayout {
+                    //: "Nom"
+                    label: qsTr("contact_editor_last_name")
 					Layout.fillWidth: true
 					contentItem: TextField {
 						id: nameTextField
@@ -219,7 +229,8 @@ MainRightPanel {
 					}
 				}
 				FormItemLayout {
-					label: qsTr("Entreprise")
+                    //: "Entreprise"
+                    label: qsTr("contact_editor_company")
 					Layout.fillWidth: true
 					contentItem: TextField {
 						id: companyTextField
@@ -231,7 +242,8 @@ MainRightPanel {
 					}
 				}
 				FormItemLayout {
-					label: qsTr("Fonction")
+                    //: "Fonction"
+                    label: qsTr("contact_editor_job_title")
 					Layout.fillWidth: true
 					contentItem: TextField {
 						id: jobTextField
@@ -281,7 +293,7 @@ MainRightPanel {
                                 Layout.preferredWidth: Math.round(421 * DefaultStyle.dp)
 								Layout.preferredHeight: height
 								onEditingFinished: {
-									if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Adresse SIP"), text)
+                                    if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("sip_address"), text)
 								}
 								property string _initialText: modelData.address
 								initialText: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_initialText) : _initialText
@@ -308,7 +320,7 @@ MainRightPanel {
 				}
 				FormItemLayout {
 					id: newAddressSipTextField
-					label: qsTr("Adresse SIP")
+                    label: qsTr("sip_address")
 					Layout.fillWidth: true
 					onYChanged: {
 						editionLayout.ensureVisibleRequested(newAddressSipTextField)
@@ -373,7 +385,8 @@ MainRightPanel {
 								KeyNavigation.right: removePhoneButton
 								Keys.onPressed: (event) => phoneNumberLayout.updateFocus(event)
 								onEditingFinished: {
-									if (text.length != 0) mainItem.contact.core.setPhoneNumberAt(index, qsTr("Téléphone"), text)
+                                    //: "Téléphone"
+                                    if (text.length != 0) mainItem.contact.core.setPhoneNumberAt(index, qsTr("phone"), text)
 								}
 							}
 							Button {
@@ -395,7 +408,7 @@ MainRightPanel {
 				FormItemLayout {
 					id: phoneNumberInput
 					Layout.fillWidth: true
-					label: qsTr("Phone")
+                    label: qsTr("phone")
 					onYChanged: {
 						editionLayout.ensureVisibleRequested(phoneNumberInput)
 					}

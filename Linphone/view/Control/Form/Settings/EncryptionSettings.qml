@@ -18,7 +18,8 @@ ColumnLayout {
 		contentItem: ColumnLayout {
             spacing: Math.round(12 * DefaultStyle.dp)
 			Text {
-				text: qsTr("Chiffrement :")
+                //: "Chiffrement :"
+                text: qsTr("call_stats_media_encryption_title")
 				Layout.alignment: Qt.AlignHCenter
 				font {
                     pixelSize: Math.round(12 * DefaultStyle.dp)
@@ -30,7 +31,9 @@ ColumnLayout {
                 spacing: Math.round(7 * DefaultStyle.dp)
 				Text {
 					property bool isPostQuantum: mainItem.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && mainItem.call.core.zrtpStats.isPostQuantum
-					text: qsTr("Chiffrement du média : %1%2").arg(isPostQuantum ? "post Quantum " : "").arg(mainItem.call.core.encryptionString)
+                    //: "Chiffrement du média : %1%2"
+                    //: "ZRTP Post Quantique"
+                    text: qsTr("call_stats_media_encryption").arg(isPostQuantum ? tr("call_stats_media_encryption_zrtp_post_quantum") : mainItem.call.core.encryptionString)
 					Layout.alignment: Qt.AlignHCenter
 					font {
                         pixelSize: Math.round(12 * DefaultStyle.dp)
@@ -40,7 +43,8 @@ ColumnLayout {
 				ColumnLayout {
 					visible: mainItem.call && mainItem.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
 					Text {
-						text: qsTr("Cipher algorithm : %1").arg(mainItem.call && mainItem.call.core.zrtpStats.cipherAlgo)
+                        //: "Algorithme de chiffrement : %1"
+                        text: qsTr("call_stats_zrtp_cipher_algo").arg(mainItem.call && mainItem.call.core.zrtpStats.cipherAlgo)
 						Layout.alignment: Qt.AlignHCenter
 						font {
                             pixelSize: Math.round(12 * DefaultStyle.dp)
@@ -48,7 +52,8 @@ ColumnLayout {
 						}
 					}
 					Text {
-						text: qsTr("Key agreement algorithm : %1").arg(mainItem.call && mainItem.call.core.zrtpStats.keyAgreementAlgo)
+                        //: "Algorithme d'accord de clé : %1"
+                        text: qsTr("call_stats_zrtp_key_agreement_algo").arg(mainItem.call && mainItem.call.core.zrtpStats.keyAgreementAlgo)
 						Layout.alignment: Qt.AlignHCenter
 						font {
                             pixelSize: Math.round(12 * DefaultStyle.dp)
@@ -56,7 +61,8 @@ ColumnLayout {
 						}
 					}
 					Text {
-						text: qsTr("Hash algorithm : %1").arg(mainItem.call && mainItem.call.core.zrtpStats.hashAlgo)
+                        //: "Algorithme de hachage : %1"
+                        text: qsTr("call_stats_zrtp_hash_algo").arg(mainItem.call && mainItem.call.core.zrtpStats.hashAlgo)
 						Layout.alignment: Qt.AlignHCenter
 						font {
                             pixelSize: Math.round(12 * DefaultStyle.dp)
@@ -64,7 +70,8 @@ ColumnLayout {
 						}
 					}
 					Text {
-						text: qsTr("Authentication algorithm : %1").arg(mainItem.call && mainItem.call.core.zrtpStats.authenticationAlgo)
+                        //: "Algorithme d'authentification : %1"
+                        text: qsTr("call_stats_zrtp_auth_tag_algo").arg(mainItem.call && mainItem.call.core.zrtpStats.authenticationAlgo)
 						Layout.alignment: Qt.AlignHCenter
 						font {
                             pixelSize: Math.round(12 * DefaultStyle.dp)
@@ -72,7 +79,8 @@ ColumnLayout {
 						}
 					}
 					Text {
-						text: qsTr("SAS algorithm : %1").arg(mainItem.call && mainItem.call.core.zrtpStats.sasAlgo)
+                        //: "Algorithme SAS : %1"
+                        text: qsTr("call_stats_zrtp_sas_algo").arg(mainItem.call && mainItem.call.core.zrtpStats.sasAlgo)
 						Layout.alignment: Qt.AlignHCenter
 						font {
                             pixelSize: Math.round(12 * DefaultStyle.dp)
@@ -87,7 +95,8 @@ ColumnLayout {
 	Button {
 		visible: mainItem.call && !mainItem.call.core.conference && mainItem.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
 		Layout.fillWidth: true
-		text: qsTr("Validation chiffrement")
+        //: "Validation chiffrement"
+        text: qsTr("call_zrtp_validation_button_label")
 		onClicked: mainItem.encryptionValidationRequested()
         Layout.bottomMargin: Math.round(13 * DefaultStyle.dp)
         Layout.leftMargin: Math.round(16 * DefaultStyle.dp)

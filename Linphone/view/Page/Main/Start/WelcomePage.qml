@@ -12,7 +12,8 @@ LoginLayout {
 	titleContent: [
 		Text {
 			id: welcome
-			text: qsTr("Bienvenue")
+            //: "Bienvenue"
+            text: qsTr("welcome_page_title")
 			Layout.alignment: Qt.AlignVCenter
             Layout.leftMargin: Math.round(132 * DefaultStyle.dp)
 			color: DefaultStyle.main2_800
@@ -27,7 +28,8 @@ LoginLayout {
             Layout.leftMargin: Math.round(29 * DefaultStyle.dp)
             Layout.bottomMargin: Math.round(19 * DefaultStyle.dp)
 			color: DefaultStyle.main2_800
-			text: qsTr("sur Linphone")
+            //: "sur %1"
+            text: qsTr("welcome_page_subtitle").arg(applicationName)
 			font {
                 pixelSize: Typography.h1.pixelSize
                 weight: Typography.h1.weight
@@ -43,7 +45,8 @@ LoginLayout {
             Layout.rightMargin: Math.round(50 * DefaultStyle.dp)
 			Layout.alignment: Qt.AlignVCenter | Layout.AlignRight
 			style: ButtonStyle.noBackground
-			text: qsTr("Passer")
+            //: "Passer"
+            text: qsTr("welcome_carousel_skip")
 			underline: true
 			onClicked: {
 				console.debug("[WelcomePage] User: Click skip")
@@ -76,9 +79,16 @@ LoginLayout {
 				itemsList: Repeater {
 					id: slideRepeater
 					model: [
-					{title: qsTr("Linphone"), text: qsTr("Une application de communication <b>sécurisée</b>,<br> <b>open source</b> et <b>française</b>.")},
-					{title: qsTr("Sécurisé"), text: qsTr("Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>.")},
-					{title: qsTr("Open Source"), text: qsTr("Une application open source et un <b>service gratuit</b> <br>depuis <b>2001</b>")}
+                        //: "Une application de communication <b>sécurisée</b>,<br> <b>open source</b> et <b>française</b>."
+                    {title: applicationName, text: qsTr("welcome_page_1_message")},
+                        //: "Sécurisé"
+                    {title: qsTr("welcome_page_2_title"),
+                            //: "Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>."
+                            text: qsTr("welcome_page_2_message")},
+                        //: "Open Source"
+                    {title: qsTr("welcome_page_3_title"),
+                            //: "Une application open source et un <b>service gratuit</b> <br>depuis <b>2001</b>"
+                            text: qsTr("welcome_page_3_message")}
 					]
 					ColumnLayout {
                         spacing: Math.round(10 * DefaultStyle.dp)
@@ -107,8 +117,11 @@ LoginLayout {
 
 		BigButton {
             Layout.leftMargin: Math.round(509 * DefaultStyle.dp)
-			style: ButtonStyle.main
-			text: carousel.currentIndex < (carousel.itemsCount - 1) ? qsTr("Suivant") : qsTr("Commencer")
+            style: ButtonStyle.main
+            //: "Suivant"
+            text: carousel.currentIndex < (carousel.itemsCount - 1) ? qsTr("next")
+                                                                      //: "Commencer"
+                                                                    : qsTr("start")
 			onClicked: {
 				if (carousel.currentIndex < carousel.itemsCount - 1) carousel.goToSlide(carousel.currentIndex + 1);
 				else mainItem.startButtonPressed();

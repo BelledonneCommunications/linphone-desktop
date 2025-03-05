@@ -54,6 +54,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/timezone/TimeZoneProxy.cpp
 	core/timezone/TimeZone.cpp
 
+	core/translator/DefaultTranslatorCore.cpp
+
 	core/participant/ParticipantCore.cpp
 	core/participant/ParticipantGui.cpp
 	core/participant/ParticipantDeviceCore.cpp

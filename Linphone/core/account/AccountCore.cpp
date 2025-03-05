@@ -403,16 +403,21 @@ int AccountCore::getDialPlanIndex(QVariantMap dialPlanString) {
 QString AccountCore::getHumanReadableRegistrationState() const {
 	switch (mRegistrationState) {
 		case LinphoneEnums::RegistrationState::Ok:
-			return tr("Connecté");
+			//: "Connecté"
+			return tr("drawer_menu_account_connection_status_connected");
 		case LinphoneEnums::RegistrationState::Refreshing:
-			return tr("En cours de rafraîchissement…");
+			// "En cours de rafraîchissement…"
+			return tr("drawer_menu_account_connection_status_refreshing");
 		case LinphoneEnums::RegistrationState::Progress:
-			return tr("En cours de connexion…");
+			// "Connexion…"
+			return tr("drawer_menu_account_connection_status_progress");
 		case LinphoneEnums::RegistrationState::Failed:
-			return tr("Erreur");
+			// "Erreur"
+			return tr("drawer_menu_account_connection_status_failed");
 		case LinphoneEnums::RegistrationState::None:
 		case LinphoneEnums::RegistrationState::Cleared:
-			return tr("Désactivé");
+			// "Désactivé"
+			return tr("drawer_menu_account_connection_status_cleared");
 		default:
 			return " ";
 	}
@@ -421,12 +426,15 @@ QString AccountCore::getHumanReadableRegistrationState() const {
 QString AccountCore::getHumanReadableRegistrationStateExplained() const {
 	switch (mRegistrationState) {
 		case LinphoneEnums::RegistrationState::Ok:
-			return tr("Vous êtes en ligne et joignable.");
+			//: "Vous êtes en ligne et joignable."
+			return tr("manage_account_status_connected_summary");
 		case LinphoneEnums::RegistrationState::Failed:
-			return tr("Erreur de connexion, vérifiez vos paramètres.");
+			//: "Erreur de connexion, vérifiez vos paramètres."
+			return tr("manage_account_status_failed_summary");
 		case LinphoneEnums::RegistrationState::None:
 		case LinphoneEnums::RegistrationState::Cleared:
-			return tr("Compte désactivé, vous ne recevrez ni appel ni message.");
+			//: "Compte désactivé, vous ne recevrez ni appel ni message."
+			return tr("manage_account_status_cleared_summary");
 		default:
 			return " ";
 	}

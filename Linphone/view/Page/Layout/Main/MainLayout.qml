@@ -129,20 +129,24 @@ Item {
                 model: [{
                         "icon": AppIcons.phone,
                         "selectedIcon": AppIcons.phoneSelected,
-                        "label": qsTr("Appels")
+                        //: "Appels"
+                        "label": qsTr("bottom_navigation_calls_label")
                     }, {
                         "icon": AppIcons.adressBook,
                         "selectedIcon": AppIcons.adressBookSelected,
-                        "label": qsTr("Contacts")
+                        //: "Contacts"
+                        "label": qsTr("bottom_navigation_contacts_label")
                     }, {
                         "icon": AppIcons.chatTeardropText,
                         "selectedIcon": AppIcons.chatTeardropTextSelected,
-                        "label": qsTr("Conversations"),
+                        //: "Conversations"
+                        "label": qsTr("bottom_navigation_conversations_label"),
                         "visible": !SettingsCpp.disableChatFeature
                     }, {
                         "icon": AppIcons.videoconference,
                         "selectedIcon": AppIcons.videoconferenceSelected,
-                        "label": qsTr("Réunions"),
+                        //: "Réunions"
+                        "label": qsTr("bottom_navigation_meetings_label"),
                         "visible": !SettingsCpp.disableMeetingsFeature
                     }]
                 onCurrentIndexChanged: {
@@ -188,7 +192,9 @@ Item {
                     SearchBar {
                         id: magicSearchBar
                         Layout.fillWidth: true
-                        placeholderText: SettingsCpp.disableChatFeature ? qsTr("Rechercher un contact, appeler...") : qsTr("Rechercher un contact, appeler ou envoyer un message...")
+                        //: "Rechercher un contact, appeler %1"
+                        //: "ou envoyer un message …"
+                        placeholderText: qsTr("searchbar_placeholder_text").arg(SettingsCpp.disableChatFeature ? "…" : qsTr("searchbar_placeholder_text_chat_feature_enabled"))
                         focusedBorderColor: DefaultStyle.main1_500_main
                         numericPadButton.visible: text.length === 0
                         numericPadButton.checkable: false
@@ -293,7 +299,8 @@ Item {
                                     focus: visible
                                     icon.width: Math.round(32 * DefaultStyle.dp)
                                     icon.height: Math.round(32 * DefaultStyle.dp)
-                                    text: qsTr("Désactiver ne pas déranger")
+                                    //: "Désactiver ne pas déranger"
+                                    text: qsTr("contact_presence_status_disable_do_not_disturb")
                                     icon.source: AppIcons.bellDnd
                                     onClicked: {
                                         deactivateDndButton.popup.close()
@@ -349,10 +356,9 @@ Item {
                                         UtilsCpp.createCall(
                                                     accountProxy.defaultAccount.core.voicemailAddress)
                                     else
-                                        UtilsCpp.showInformationPopup(
-                                                    qsTr("Erreur"), qsTr(
-                                                        "L'URI de messagerie vocale n'est pas définie."),
-                                                    false)
+                                        UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                                                                      //: "L'URI de messagerie vocale n'est pas définie."
+                                                                      qsTr("no_voicemail_uri_error_message"), false)
                                 }
                             }
                         }
@@ -360,7 +366,10 @@ Item {
                             id: avatarButton
                             Layout.preferredWidth: Math.round(54 * DefaultStyle.dp)
                             Layout.preferredHeight: width
-                            popup.padding: Math.round(14 * DefaultStyle.dp)
+                            popup.topPadding: Math.round(23 * DefaultStyle.dp)
+                            popup.bottomPadding: Math.round(23 * DefaultStyle.dp)
+                            popup.leftPadding: Math.round(24 * DefaultStyle.dp)
+                            popup.rightPadding: Math.round(24 * DefaultStyle.dp)
                             contentItem: Avatar {
                                 id: avatar
                                 height: avatarButton.height
@@ -407,7 +416,9 @@ Item {
                                         visible: !SettingsCpp.hideAccountSettings
                                         icon.width: Math.round(32 * DefaultStyle.dp)
                                         icon.height: Math.round(32 * DefaultStyle.dp)
-                                        text: qsTr("Mon compte")
+
+                                        //: Mon compte
+                                        text: qsTr("drawer_menu_manage_account")
                                         icon.source: AppIcons.manageProfile
                                         onClicked: openAccountSettings(
                                                        accountProxy.defaultAccount ? accountProxy.defaultAccount : accountProxy.firstAccount())
@@ -423,8 +434,9 @@ Item {
                                         Layout.fillWidth: true
                                         icon.width: Math.round(32 * DefaultStyle.dp)
                                         icon.height: Math.round(32 * DefaultStyle.dp)
-                                        text: SettingsCpp.dnd ? qsTr("Désactiver ne pas déranger") : qsTr(
-                                                                    "Activer ne pas déranger")
+                                        text: SettingsCpp.dnd ? qsTr("contact_presence_status_disable_do_not_disturb")
+                                                                //: "Activer ne pas déranger"
+                                                              : qsTr("contact_presence_status_enable_do_not_disturb")
                                         icon.source: AppIcons.bellDnd
                                         onClicked: {
                                             settingsMenuButton.popup.close()
@@ -443,7 +455,7 @@ Item {
                                         visible: !SettingsCpp.hideSettings
                                         icon.width: Math.round(32 * DefaultStyle.dp)
                                         icon.height: Math.round(32 * DefaultStyle.dp)
-                                        text: qsTr("Paramètres")
+                                        text: qsTr("settings_title")
                                         icon.source: AppIcons.settings
                                         onClicked: openContextualMenuComponent(
                                                        settingsPageComponent)
@@ -460,7 +472,8 @@ Item {
                                         visible: !SettingsCpp.disableCallRecordings
                                         icon.width: Math.round(32 * DefaultStyle.dp)
                                         icon.height: Math.round(32 * DefaultStyle.dp)
-                                        text: qsTr("Enregistrements")
+                                        //: "Enregistrements"
+                                        text: qsTr("recordings_title")
                                         icon.source: AppIcons.micro
                                         KeyNavigation.up: visibleChildren.length
                                                           != 0 ? settingsMenuButton.getPreviousItem(
@@ -474,7 +487,8 @@ Item {
                                         Layout.fillWidth: true
                                         icon.width: Math.round(32 * DefaultStyle.dp)
                                         icon.height: Math.round(32 * DefaultStyle.dp)
-                                        text: qsTr("Aide")
+                                        //: "Aide"
+                                        text: qsTr("help_title")
                                         icon.source: AppIcons.question
                                         onClicked: openContextualMenuComponent(
                                                        helpPageComponent)
@@ -490,15 +504,13 @@ Item {
                                         Layout.fillWidth: true
                                         icon.width: Math.round(32 * DefaultStyle.dp)
                                         icon.height: Math.round(32 * DefaultStyle.dp)
-                                        text: qsTr("Quitter Linphone")
+                                        //: "Quitter l'application"
+                                        text: qsTr("help_quit_title")
                                         icon.source: AppIcons.power
                                         onClicked: {
                                             settingsMenuButton.popup.close()
-                                            UtilsCpp.getMainWindow(
-                                                        ).showConfirmationLambdaPopup(
-                                                        "", qsTr(
-                                                            "Quitter Linphone ?"),
-                                                        "",
+                                            //: "Quitter %1 ?"
+                                            UtilsCpp.getMainWindow().showConfirmationLambdaPopup("", qsTr("quit_app_question").arg(applicationName),"",
                                                         function (confirmed) {
                                                             if (confirmed) {
                                                                 console.info("Exiting App from Top Menu")
@@ -526,7 +538,8 @@ Item {
                                                  || SettingsCpp.maxAccount > accountProxy.count
                                         icon.width: Math.round(32 * DefaultStyle.dp)
                                         icon.height: Math.round(32 * DefaultStyle.dp)
-                                        text: qsTr("Ajouter un compte")
+                                        //: "Ajouter un compte"
+                                        text: qsTr("drawer_menu_add_account")
                                         icon.source: AppIcons.plusCircle
                                         onClicked: mainItem.addAccountRequest()
                                         KeyNavigation.up: visibleChildren.length

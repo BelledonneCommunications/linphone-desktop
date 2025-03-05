@@ -123,7 +123,7 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 							linphoneFriend->addPhoneNumber(phoneNumber);
 						    contact = FriendCore::create(linphoneFriend, isStored, it->getSourceFlags());
 						    contact->setGivenName(Utils::coreStringToAppString(it->getPhoneNumber()));
-						    contact->appendPhoneNumber(tr("Phone"), Utils::coreStringToAppString(it->getPhoneNumber()));
+							contact->appendPhoneNumber(tr("device_id"), Utils::coreStringToAppString(it->getPhoneNumber()));
 						    contacts->append(contact);
 					    }
 				    }
