@@ -14,24 +14,24 @@ ComboBox {
 		id: contentText
 		text: Qt.formatDate(calendar.selectedDate, "ddd d, MMMM")
 		anchors.fill: parent
-		anchors.leftMargin: 15 * DefaultStyle.dp
+        anchors.leftMargin: Math.round(15 * DefaultStyle.dp)
 		anchors.verticalCenter: parent.verticalCenter
 		verticalAlignment: Text.AlignVCenter
 		font {
-			pixelSize: 14 * DefaultStyle.dp
-			weight: 700 * DefaultStyle.dp
+            pixelSize: Math.round(14 * DefaultStyle.dp)
+            weight: Math.min(Math.round(700 * DefaultStyle.dp), 1000)
 		}
 	}
 	popup: Control.Popup {
 		id: popupItem
 		y: mainItem.height
-		width: 321 * DefaultStyle.dp
-		height: 270 * DefaultStyle.dp
+        width: Math.round(321 * DefaultStyle.dp)
+        height: Math.round(270 * DefaultStyle.dp)
 		closePolicy: Popup.NoAutoClose
-		topPadding: 25 * DefaultStyle.dp
-		bottomPadding: 24 * DefaultStyle.dp
-		leftPadding: 21 * DefaultStyle.dp
-		rightPadding: 19 * DefaultStyle.dp
+        topPadding: Math.round(25 * DefaultStyle.dp)
+        bottomPadding: Math.round(24 * DefaultStyle.dp)
+        leftPadding: Math.round(21 * DefaultStyle.dp)
+        rightPadding: Math.round(19 * DefaultStyle.dp)
 		onOpened: calendar.forceActiveFocus()
 		background: Item {
 			anchors.fill: parent
@@ -39,7 +39,7 @@ ComboBox {
 				id: calendarBg
 				anchors.fill: parent
 				color: DefaultStyle.grey_0
-				radius: 16 * DefaultStyle.dp
+                radius: Math.round(16 * DefaultStyle.dp)
 				border.color: DefaultStyle.main1_500_main
 				border.width: calendar.activeFocus? 1 : 0
 			}

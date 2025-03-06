@@ -114,12 +114,12 @@ Item {
         RowLayout {
             anchors.fill: parent
             spacing: 0
-            anchors.topMargin: 25 * DefaultStyle.dp
+            anchors.topMargin: Math.round(25 * DefaultStyle.dp)
 
             VerticalTabBar {
                 id: tabbar
                 Layout.fillHeight: true
-                Layout.preferredWidth: 82 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(82 * DefaultStyle.dp)
                 defaultAccount: accountProxy.defaultAccount
                 currentIndex: 0
                 Binding on currentIndex {
@@ -181,10 +181,10 @@ Item {
 
                 RowLayout {
                     id: topRow
-                    Layout.preferredHeight: 50 * DefaultStyle.dp
-                    Layout.leftMargin: 45 * DefaultStyle.dp
-                    Layout.rightMargin: 41 * DefaultStyle.dp
-                    spacing: 25 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
+                    Layout.leftMargin: Math.round(45 * DefaultStyle.dp)
+                    Layout.rightMargin: Math.round(41 * DefaultStyle.dp)
+                    spacing: Math.round(25 * DefaultStyle.dp)
                     SearchBar {
                         id: magicSearchBar
                         Layout.fillWidth: true
@@ -216,25 +216,24 @@ Item {
                         Popup {
                             id: listPopup
                             width: magicSearchBar.width
-                            property int maxHeight: 400 * DefaultStyle.dp
+                            property real maxHeight: Math.round(400 * DefaultStyle.dp)
                             property bool displayScrollbar: contactList.height > maxHeight
                             height: Math.min(
                                         contactList.contentHeight,
                                         maxHeight) + topPadding + bottomPadding
                             y: magicSearchBar.height
                             //                            closePolicy: Popup.CloseOnEscape
-                            topPadding: 20 * DefaultStyle.dp
-                            bottomPadding: contactList.haveContacts ? 20 * DefaultStyle.dp : 10
-                                                                      * DefaultStyle.dp
-                            rightPadding: 8 * DefaultStyle.dp
-                            leftPadding: 20 * DefaultStyle.dp
+                            topPadding: Math.round(20 * DefaultStyle.dp)
+                            bottomPadding:  Math.round((contactList.haveContacts ? 20 : 10) * DefaultStyle.dp)
+                            rightPadding: Math.round(8 * DefaultStyle.dp)
+                            leftPadding: Math.round(20 * DefaultStyle.dp)
                             visible: magicSearchBar.text.length != 0
 
                             background: Item {
                                 anchors.fill: parent
                                 Rectangle {
                                     id: popupBg
-                                    radius: 16 * DefaultStyle.dp
+                                    radius: Math.round(16 * DefaultStyle.dp)
                                     color: DefaultStyle.grey_0
                                     anchors.fill: parent
                                     border.color: DefaultStyle.main1_500_main
@@ -254,7 +253,7 @@ Item {
                                 id: contactList
                                 width: listPopup.width - listPopup.leftPadding
                                        - listPopup.rightPadding
-                                itemsRightMargin: 5 * DefaultStyle.dp //(Actions have already 10 of margin)
+                                itemsRightMargin: Math.round(5 * DefaultStyle.dp) //(Actions have already 10 of margin)
                                 showInitials: false
                                 showContactMenu: false
                                 showActions: true
@@ -263,28 +262,28 @@ Item {
                                 showDefaultAddress: true
                                 searchOnEmpty: false
 
-                                sectionsPixelSize: 13 * DefaultStyle.dp
-                                sectionsWeight: 700 * DefaultStyle.dp
-                                sectionsSpacing: 5 * DefaultStyle.dp
+                                sectionsPixelSize: Typography.p2.pixelSize
+                                sectionsWeight: Typography.p2.weight
+                                sectionsSpacing: Math.round(5 * DefaultStyle.dp)
 
                                 searchBarText: magicSearchBar.text
                             }
                         }
                     }
                     RowLayout {
-                        spacing: 10 * DefaultStyle.dp
+                        spacing: Math.round(10 * DefaultStyle.dp)
                         PopupButton {
                             id: deactivateDndButton
-                            Layout.preferredWidth: 32 * DefaultStyle.dp
-                            Layout.preferredHeight: 32 * DefaultStyle.dp
-                            popup.padding: 14 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
+                            popup.padding: Math.round(14 * DefaultStyle.dp)
                             visible: SettingsCpp.dnd
                             contentItem: EffectImage {
                                 imageSource: AppIcons.bellDnd
-                                width: 32 * DefaultStyle.dp
-                                height: 32 * DefaultStyle.dp
-                                Layout.preferredWidth: 32 * DefaultStyle.dp
-                                Layout.preferredHeight: 32 * DefaultStyle.dp
+                                width: Math.round(32 * DefaultStyle.dp)
+                                height: Math.round(32 * DefaultStyle.dp)
+                                Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
                                 fillMode: Image.PreserveAspectFit
                                 colorizationColor: DefaultStyle.main1_500_main
                             }
@@ -292,8 +291,8 @@ Item {
                                 IconLabelButton {
                                     Layout.fillWidth: true
                                     focus: visible
-                                    icon.width: 32 * DefaultStyle.dp
-                                    icon.height: 32 * DefaultStyle.dp
+                                    icon.width: Math.round(32 * DefaultStyle.dp)
+                                    icon.height: Math.round(32 * DefaultStyle.dp)
                                     text: qsTr("Désactiver ne pas déranger")
                                     icon.source: AppIcons.bellDnd
                                     onClicked: {
@@ -305,8 +304,8 @@ Item {
                         }
                         Voicemail {
                             id: voicemail
-                            Layout.preferredWidth: 42 * DefaultStyle.dp
-                            Layout.preferredHeight: 36 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(42 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(36 * DefaultStyle.dp)
                             Repeater {
                                 model: accountProxy
                                 delegate: Item {
@@ -359,9 +358,9 @@ Item {
                         }
                         PopupButton {
                             id: avatarButton
-                            Layout.preferredWidth: 54 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(54 * DefaultStyle.dp)
                             Layout.preferredHeight: width
-                            popup.padding: 14 * DefaultStyle.dp
+                            popup.padding: Math.round(14 * DefaultStyle.dp)
                             contentItem: Avatar {
                                 id: avatar
                                 height: avatarButton.height
@@ -381,10 +380,10 @@ Item {
                         }
                         PopupButton {
                             id: settingsMenuButton
-                            Layout.preferredWidth: 24 * DefaultStyle.dp
-                            Layout.preferredHeight: 24 * DefaultStyle.dp
-                            popup.width: 271 * DefaultStyle.dp
-                            popup.padding: 14 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                            popup.width: Math.round(271 * DefaultStyle.dp)
+                            popup.padding: Math.round(14 * DefaultStyle.dp)
                             popup.contentItem: FocusScope {
                                 id: popupFocus
                                 implicitHeight: settingsButtons.implicitHeight
@@ -399,15 +398,15 @@ Item {
 
                                 ColumnLayout {
                                     id: settingsButtons
-                                    spacing: 16 * DefaultStyle.dp
+                                    spacing: Math.round(16 * DefaultStyle.dp)
                                     anchors.fill: parent
 
                                     IconLabelButton {
                                         id: accountButton
                                         Layout.fillWidth: true
                                         visible: !SettingsCpp.hideAccountSettings
-                                        icon.width: 32 * DefaultStyle.dp
-                                        icon.height: 32 * DefaultStyle.dp
+                                        icon.width: Math.round(32 * DefaultStyle.dp)
+                                        icon.height: Math.round(32 * DefaultStyle.dp)
                                         text: qsTr("Mon compte")
                                         icon.source: AppIcons.manageProfile
                                         onClicked: openAccountSettings(
@@ -422,8 +421,8 @@ Item {
                                     IconLabelButton {
                                         id: dndButton
                                         Layout.fillWidth: true
-                                        icon.width: 32 * DefaultStyle.dp
-                                        icon.height: 32 * DefaultStyle.dp
+                                        icon.width: Math.round(32 * DefaultStyle.dp)
+                                        icon.height: Math.round(32 * DefaultStyle.dp)
                                         text: SettingsCpp.dnd ? qsTr("Désactiver ne pas déranger") : qsTr(
                                                                     "Activer ne pas déranger")
                                         icon.source: AppIcons.bellDnd
@@ -442,8 +441,8 @@ Item {
                                         id: settingsButton
                                         Layout.fillWidth: true
                                         visible: !SettingsCpp.hideSettings
-                                        icon.width: 32 * DefaultStyle.dp
-                                        icon.height: 32 * DefaultStyle.dp
+                                        icon.width: Math.round(32 * DefaultStyle.dp)
+                                        icon.height: Math.round(32 * DefaultStyle.dp)
                                         text: qsTr("Paramètres")
                                         icon.source: AppIcons.settings
                                         onClicked: openContextualMenuComponent(
@@ -459,8 +458,8 @@ Item {
                                         id: recordsButton
                                         Layout.fillWidth: true
                                         visible: !SettingsCpp.disableCallRecordings
-                                        icon.width: 32 * DefaultStyle.dp
-                                        icon.height: 32 * DefaultStyle.dp
+                                        icon.width: Math.round(32 * DefaultStyle.dp)
+                                        icon.height: Math.round(32 * DefaultStyle.dp)
                                         text: qsTr("Enregistrements")
                                         icon.source: AppIcons.micro
                                         KeyNavigation.up: visibleChildren.length
@@ -473,8 +472,8 @@ Item {
                                     IconLabelButton {
                                         id: helpButton
                                         Layout.fillWidth: true
-                                        icon.width: 32 * DefaultStyle.dp
-                                        icon.height: 32 * DefaultStyle.dp
+                                        icon.width: Math.round(32 * DefaultStyle.dp)
+                                        icon.height: Math.round(32 * DefaultStyle.dp)
                                         text: qsTr("Aide")
                                         icon.source: AppIcons.question
                                         onClicked: openContextualMenuComponent(
@@ -489,8 +488,8 @@ Item {
                                     IconLabelButton {
                                         id: quitButton
                                         Layout.fillWidth: true
-                                        icon.width: 32 * DefaultStyle.dp
-                                        icon.height: 32 * DefaultStyle.dp
+                                        icon.width: Math.round(32 * DefaultStyle.dp)
+                                        icon.height: Math.round(32 * DefaultStyle.dp)
                                         text: qsTr("Quitter Linphone")
                                         icon.source: AppIcons.power
                                         onClicked: {
@@ -516,7 +515,7 @@ Item {
                                     }
                                     Rectangle {
                                         Layout.fillWidth: true
-                                        Layout.preferredHeight: 1 * DefaultStyle.dp
+                                        Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
                                         visible: addAccountButton.visible
                                         color: DefaultStyle.main2_400
                                     }
@@ -525,8 +524,8 @@ Item {
                                         Layout.fillWidth: true
                                         visible: SettingsCpp.maxAccount == 0
                                                  || SettingsCpp.maxAccount > accountProxy.count
-                                        icon.width: 32 * DefaultStyle.dp
-                                        icon.height: 32 * DefaultStyle.dp
+                                        icon.width: Math.round(32 * DefaultStyle.dp)
+                                        icon.height: Math.round(32 * DefaultStyle.dp)
                                         text: qsTr("Ajouter un compte")
                                         icon.source: AppIcons.plusCircle
                                         onClicked: mainItem.addAccountRequest()
@@ -643,7 +642,7 @@ Item {
                     pushExit: noTransition
                     popEnter: noTransition
                     popExit: noTransition
-                    Layout.topMargin: 24 * DefaultStyle.dp
+                    Layout.topMargin: Math.round(24 * DefaultStyle.dp)
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     initialItem: mainStackLayoutComponent

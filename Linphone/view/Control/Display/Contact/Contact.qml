@@ -11,7 +11,7 @@ import SettingsCpp
 
 Control.Control{
 	id: mainItem
-	padding: 10 * DefaultStyle.dp
+    padding: Math.round(10 * DefaultStyle.dp)
 	property AccountGui account
 	property color backgroundColor: DefaultStyle.grey_0
 
@@ -20,7 +20,7 @@ Control.Control{
 	signal edit()
 
 	background: Rectangle {
-		radius: 10 * DefaultStyle.dp
+        radius: Math.round(10 * DefaultStyle.dp)
 		color: mainItem.backgroundColor
 		MouseArea{
 			id: mouseArea
@@ -31,11 +31,11 @@ Control.Control{
 	contentItem: RowLayout{
 		spacing: 0
 		RowLayout {
-			spacing: 10 * DefaultStyle.dp
+            spacing: Math.round(10 * DefaultStyle.dp)
 			Avatar{
 				id: avatar
-				Layout.preferredWidth: 45 * DefaultStyle.dp
-				Layout.preferredHeight: 45 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 				account: mainItem.account
 				MouseArea{
 					anchors.fill: parent
@@ -43,9 +43,9 @@ Control.Control{
 				}
 			}
 			Item {
-				Layout.preferredWidth: 200 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(200 * DefaultStyle.dp)
 				Layout.fillHeight: true
-				Layout.rightMargin: 10 * DefaultStyle.dp
+                Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
 				ContactDescription{
 					id: description
 					anchors.fill: parent
@@ -55,18 +55,18 @@ Control.Control{
 		}
 		Control.Control {
 			id: registrationStatusItem
-			Layout.minimumWidth: 49 * DefaultStyle.dp
-			Layout.preferredHeight: 24 * DefaultStyle.dp
-			topPadding: 4 * DefaultStyle.dp
-			bottomPadding: 4 * DefaultStyle.dp
-			leftPadding: 8 * DefaultStyle.dp
-			rightPadding: 8 * DefaultStyle.dp
-			Layout.preferredWidth: text.implicitWidth + (2 * 8 * DefaultStyle.dp)
+            Layout.minimumWidth: Math.round(49 * DefaultStyle.dp)
+            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+            topPadding: Math.round(4 * DefaultStyle.dp)
+            bottomPadding: Math.round(4 * DefaultStyle.dp)
+            leftPadding: Math.round(8 * DefaultStyle.dp)
+            rightPadding: Math.round(8 * DefaultStyle.dp)
+            Layout.preferredWidth: text.implicitWidth + (2 * Math.round(8 * DefaultStyle.dp))
 			background: Rectangle{
 				id: registrationStatus
 				anchors.fill: parent
 				color: DefaultStyle.main2_200
-				radius: 90 * DefaultStyle.dp
+                radius: Math.round(90 * DefaultStyle.dp)
 			}
 			contentItem: Text {
 				id: text
@@ -88,8 +88,8 @@ Control.Control{
 				// 	repeat: true
 				// 	onTriggered: text.mode = (++text.mode) % 4
 				// }
-				font.weight: 300 * DefaultStyle.dp
-				font.pixelSize: 12 * DefaultStyle.dp
+                font.weight: Math.round(300 * DefaultStyle.dp)
+                font.pixelSize: Math.round(12 * DefaultStyle.dp)
 				color: mode == 0 
 						? DefaultStyle.success_500main
 						: mode == 1
@@ -107,31 +107,31 @@ Control.Control{
 			}
 		}
 		Item{
-			Layout.preferredWidth: 26 * DefaultStyle.dp
-			Layout.preferredHeight: 26 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(26 * DefaultStyle.dp)
+            Layout.preferredHeight: Math.round(26 * DefaultStyle.dp)
 			Layout.fillHeight: true
-			Layout.leftMargin: 40 * DefaultStyle.dp
+            Layout.leftMargin: Math.round(40 * DefaultStyle.dp)
 			visible: mainItem.account.core.unreadCallNotifications > 0
 			Rectangle{
 				id: unreadNotifications
 				anchors.verticalCenter: parent.verticalCenter
-				width: 26 * DefaultStyle.dp
-				height: 26 * DefaultStyle.dp
+                width: Math.round(26 * DefaultStyle.dp)
+                height: Math.round(26 * DefaultStyle.dp)
 				radius: width/2
 				color: DefaultStyle.danger_500main
 				border.color: DefaultStyle.grey_0
-				border.width: 2 * DefaultStyle.dp
+                border.width: Math.round(2 * DefaultStyle.dp)
 				Text{
 					id: unreadCount
 					anchors.fill: parent
-					anchors.margins: 2 * DefaultStyle.dp
+                    anchors.margins: Math.round(2 * DefaultStyle.dp)
 					verticalAlignment: Text.AlignVCenter
 					horizontalAlignment: Text.AlignHCenter
 					color: DefaultStyle.grey_0
 					minimumPixelSize: 5
 					fontSizeMode: Text.Fit
-					font.pixelSize: 11 *  DefaultStyle.dp
-					font.weight: 700 *  DefaultStyle.dp
+                    font.pixelSize: Math.round(11 *  DefaultStyle.dp)
+                    font.weight: Math.round(700 *  DefaultStyle.dp)
 					text: mainItem.account.core.unreadCallNotifications >= 100 ? '99+' : mainItem.account.core.unreadCallNotifications
 				}
 			}
@@ -144,10 +144,10 @@ Control.Control{
 			}
 		}
 		Voicemail {
-			Layout.leftMargin: 18 * DefaultStyle.dp
-			Layout.rightMargin: 20 * DefaultStyle.dp
-			Layout.preferredWidth: 30 * DefaultStyle.dp
-			Layout.preferredHeight: 26 * DefaultStyle.dp
+            Layout.leftMargin: Math.round(18 * DefaultStyle.dp)
+            Layout.rightMargin: Math.round(20 * DefaultStyle.dp)
+            Layout.preferredWidth: Math.round(30 * DefaultStyle.dp)
+            Layout.preferredHeight: Math.round(26 * DefaultStyle.dp)
 			scaleFactor: 0.7
 			showMwi: mainItem.account.core.showMwi
 			visible: mainItem.account.core.voicemailAddress.length > 0 || mainItem.account.core.showMwi
@@ -163,11 +163,11 @@ Control.Control{
 		EffectImage {
 			id: manageAccount
 			imageSource: AppIcons.manageProfile
-			Layout.preferredWidth: 24 * DefaultStyle.dp
-			Layout.preferredHeight: 24 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 			Layout.alignment: Qt.AlignHCenter
 			visible: !SettingsCpp.hideAccountSettings
-			width: 24 * DefaultStyle.dp
+            width: Math.round(24 * DefaultStyle.dp)
 			fillMode: Image.PreserveAspectFit
 			colorizationColor: DefaultStyle.main2_500main
 			MouseArea{

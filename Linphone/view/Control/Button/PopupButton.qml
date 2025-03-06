@@ -12,17 +12,17 @@ Button {
     property color backgroundColor: checked ? pressedColor : hovered ? hoveredColor : color
     style: ButtonStyle.popupButton
     checked: popup.visible
-    implicitWidth: 24 * DefaultStyle.dp
-    implicitHeight: 24 * DefaultStyle.dp
-    width: 24 * DefaultStyle.dp
-    height: 24 * DefaultStyle.dp
+    implicitWidth: Math.round(24 * DefaultStyle.dp)
+    implicitHeight: Math.round(24 * DefaultStyle.dp)
+    width: Math.round(24 * DefaultStyle.dp)
+    height: Math.round(24 * DefaultStyle.dp)
     leftPadding: 0
     rightPadding: 0
     topPadding: 0
     bottomPadding: 0
     icon.source: AppIcons.verticalDots
-    icon.width: 24 * DefaultStyle.dp
-    icon.height: 24 * DefaultStyle.dp
+    icon.width: Math.round(24 * DefaultStyle.dp)
+    icon.height: Math.round(24 * DefaultStyle.dp)
     function close() {
         popup.close()
     }
@@ -97,7 +97,7 @@ Button {
             id: buttonBackground
             anchors.fill: parent
             color: mainItem.backgroundColor
-            radius: 40 * DefaultStyle.dp
+            radius: Math.round(40 * DefaultStyle.dp)
         }
         MultiEffect {
             enabled: mainItem.shadowEnabled
@@ -130,7 +130,7 @@ Button {
         visible: false
         closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside
                      | Popup.CloseOnEscape
-        padding: 10 * DefaultStyle.dp
+        padding: Math.round(10 * DefaultStyle.dp)
         parent: mainItem // Explicit define for coordinates references.
         function updatePosition() {
             if (!visible)
@@ -177,7 +177,7 @@ Button {
                 id: popupBackground
                 anchors.fill: parent
                 color: DefaultStyle.grey_0
-                radius: 16 * DefaultStyle.dp
+                radius: Math.round(16 * DefaultStyle.dp)
             }
             MultiEffect {
                 source: popupBackground

@@ -109,8 +109,8 @@ FriendGui{
         id: verifyDevicePopup
         property string deviceName
         property string deviceAddress
-        padding: 30 * DefaultStyle.dp
-        width: 637 * DefaultStyle.dp
+        padding: Math.round(30 * DefaultStyle.dp)
+        width: Math.round(637 * DefaultStyle.dp)
         anchors.centerIn: parent
         closePolicy: Control.Popup.CloseOnEscape
         modal: true
@@ -120,13 +120,13 @@ FriendGui{
                   verifyDevicePopup.deviceName)
         buttons: RowLayout {
             RowLayout {
-                spacing: 7 * DefaultStyle.dp
+                spacing: Math.round(7 * DefaultStyle.dp)
                 CheckBox {
                     id: neverDisplayAgainCheckbox
                 }
                 Text {
                     text: qsTr("Ne plus afficher")
-                    font.pixelSize: 14 * DefaultStyle.dp
+                    font.pixelSize: Math.round(14 * DefaultStyle.dp)
                     MouseArea {
                         anchors.fill: parent
                         onClicked: neverDisplayAgainCheckbox.toggle()
@@ -137,7 +137,7 @@ FriendGui{
                 Layout.fillWidth: true
             }
             RowLayout {
-                spacing: 15 * DefaultStyle.dp
+                spacing: Math.round(15 * DefaultStyle.dp)
                 BigButton {
                     style: ButtonStyle.secondary
                     text: qsTr("Annuler")
@@ -160,42 +160,42 @@ FriendGui{
     }
     Dialog {
         id: trustInfoDialog
-        width: 637 * DefaultStyle.dp
+        width: Math.round(637 * DefaultStyle.dp)
         title: qsTr("Niveau de confiance")
         text: qsTr("Vérifiez les appareils de votre contact pour confirmer que vos communications seront sécurisées et sans compromission. <br>Quand tous seront vérifiés, vous atteindrez le niveau de confiance maximal.")
         content: RowLayout {
-            spacing: 50 * DefaultStyle.dp
+            spacing: Math.round(50 * DefaultStyle.dp)
             Avatar {
                 _address: "sip:a.c@sip.linphone.org"
-                Layout.preferredWidth: 45 * DefaultStyle.dp
-                Layout.preferredHeight: 45 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
             }
             EffectImage {
                 imageSource: AppIcons.arrowRight
                 colorizationColor: DefaultStyle.main2_600
-                Layout.preferredWidth: 45 * DefaultStyle.dp
-                Layout.preferredHeight: 45 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
             }
             Avatar {
                 _address: "sip:a.c@sip.linphone.org"
                 secured: true
-                Layout.preferredWidth: 45 * DefaultStyle.dp
-                Layout.preferredHeight: 45 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
             }
         }
         buttons: Button {
             text: qsTr("Ok")
             style: ButtonStyle.main
-            leftPadding: 30 * DefaultStyle.dp
-            rightPadding: 30 * DefaultStyle.dp
+            leftPadding: Math.round(30 * DefaultStyle.dp)
+            rightPadding: Math.round(30 * DefaultStyle.dp)
             onClicked: trustInfoDialog.close()
         }
     }
 
     leftPanelContent: FocusScope {
         id: leftPanel
-        property int leftMargin: 45 * DefaultStyle.dp
-        property int rightMargin: 39 * DefaultStyle.dp
+        property real leftMargin: Math.round(45 * DefaultStyle.dp)
+        property real rightMargin: Math.round(39 * DefaultStyle.dp)
         Layout.fillHeight: true
         Layout.fillWidth: true
 
@@ -211,8 +211,8 @@ FriendGui{
             Text {
                 text: qsTr("Contacts")
                 color: DefaultStyle.main2_700
-                font.pixelSize: 29 * DefaultStyle.dp
-                font.weight: 800 * DefaultStyle.dp
+                font.pixelSize: Typography.h2.pixelSize
+                font.weight: Typography.h2.weight
             }
             Item {
                 Layout.fillWidth: true
@@ -223,10 +223,10 @@ FriendGui{
                          || rightPanelStackView.currentItem.objectName !== "contactEdition"
                 style: ButtonStyle.noBackground
                 icon.source: AppIcons.plusCircle
-                Layout.preferredWidth: 28 * DefaultStyle.dp
-                Layout.preferredHeight: 28 * DefaultStyle.dp
-                icon.width: 28 * DefaultStyle.dp
-                icon.height: 28 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(28 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(28 * DefaultStyle.dp)
+                icon.width: Math.round(28 * DefaultStyle.dp)
+                icon.height: Math.round(28 * DefaultStyle.dp)
                 onClicked: {
                     mainItem.createContact("", "")
                 }
@@ -241,12 +241,12 @@ FriendGui{
             anchors.leftMargin: leftPanel.leftMargin
             anchors.bottom: leftPanel.bottom
             enabled: mainItem.leftPanelEnabled
-            spacing: 38 * DefaultStyle.dp
+            spacing: Math.round(38 * DefaultStyle.dp)
             SearchBar {
                 id: searchBar
                 visible: contactList.haveContacts || text.length !== 0
                 Layout.rightMargin: leftPanel.rightMargin
-                Layout.topMargin: 18 * DefaultStyle.dp
+                Layout.topMargin: Math.round(18 * DefaultStyle.dp)
                 Layout.fillWidth: true
                 placeholderText: qsTr("Rechercher un contact")
                 KeyNavigation.up: createContactButton
@@ -254,23 +254,23 @@ FriendGui{
             }
             ColumnLayout {
                 id: content
-                spacing: 15 * DefaultStyle.dp
+                spacing: Math.round(15 * DefaultStyle.dp)
                 Text {
                     visible: !contactList.loading && !contactList.haveContacts
                     Layout.alignment: Qt.AlignHCenter
-                    Layout.topMargin: 137 * DefaultStyle.dp
+                    Layout.topMargin: Math.round(137 * DefaultStyle.dp)
                     text: qsTr("Aucun contact%1").arg(
                               searchBar.text.length !== 0 ? " correspondant" : "")
                     font {
-                        pixelSize: 16 * DefaultStyle.dp
-                        weight: 800 * DefaultStyle.dp
+                        pixelSize: Typography.h4.pixelSize
+                        weight: Typography.h4.weight
                     }
                 }
                 AllContactListView {
                     id: contactList
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    Layout.rightMargin: 8 * DefaultStyle.dp
+                    Layout.rightMargin: Math.round(8 * DefaultStyle.dp)
                     searchBarText: searchBar.text
                     hideSuggestions: true
                     showDefaultAddress: false
@@ -304,19 +304,19 @@ FriendGui{
             property string objectName: "contactDetail"
             component ContactDetailLayout: ColumnLayout {
                 id: contactDetailLayout
-                spacing: 15 * DefaultStyle.dp
+                spacing: Math.round(15 * DefaultStyle.dp)
                 property string label
                 property var icon
                 property alias content: contentControl.contentItem
                 signal titleIconClicked
                 RowLayout {
-                    spacing: 10 * DefaultStyle.dp
+                    spacing: Math.round(10 * DefaultStyle.dp)
                     Text {
                         text: contactDetailLayout.label
                         color: DefaultStyle.main1_500_main
                         font {
-                            pixelSize: 16 * DefaultStyle.dp
-                            weight: 800 * DefaultStyle.dp
+                            pixelSize: Typography.h4.pixelSize
+                            weight: Typography.h4.weight
                         }
                     }
                     RoundButton {
@@ -341,10 +341,10 @@ FriendGui{
                     id: contentControl
                     visible: expandButton.checked
                     Layout.fillWidth: true
-                    leftPadding: 20 * DefaultStyle.dp
-                    rightPadding: 20 * DefaultStyle.dp
-                    topPadding: 17 * DefaultStyle.dp
-                    bottomPadding: 17 * DefaultStyle.dp
+                    leftPadding: Math.round(20 * DefaultStyle.dp)
+                    rightPadding: Math.round(20 * DefaultStyle.dp)
+                    topPadding: Math.round(17 * DefaultStyle.dp)
+                    bottomPadding: Math.round(17 * DefaultStyle.dp)
                 }
             }
             ContactLayout {
@@ -367,32 +367,32 @@ FriendGui{
                     // property alias image: buttonImg
                     property alias button: button
                     property string label
-                    spacing: 8 * DefaultStyle.dp
+                    spacing: Math.round(8 * DefaultStyle.dp)
                     RoundButton {
                         id: button
                         Layout.alignment: Qt.AlignHCenter
-                        Layout.preferredWidth: 56 * DefaultStyle.dp
-                        Layout.preferredHeight: 56 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(56 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(56 * DefaultStyle.dp)
                         style: ButtonStyle.grey
                     }
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: labelButton.label
                         font {
-                            pixelSize: 14 * DefaultStyle.dp
-                            weight: 400 * DefaultStyle.dp
+                            pixelSize: Typography.p1.pixelSize
+                            weight: Typography.p1.weight
                         }
                     }
                 }
                 component ActionsButtons: RowLayout {
-                    spacing: 58 * DefaultStyle.dp
+                    spacing: Math.round(58 * DefaultStyle.dp)
                     LabelButton {
                         button.icon.source: AppIcons.phone
                         label: qsTr("Appel")
-                        width: 56 * DefaultStyle.dp
-                        height: 56 * DefaultStyle.dp
-                        button.icon.width: 24 * DefaultStyle.dp
-                        button.icon.height: 24 * DefaultStyle.dp
+                        width: Math.round(56 * DefaultStyle.dp)
+                        height: Math.round(56 * DefaultStyle.dp)
+                        button.icon.width: Math.round(24 * DefaultStyle.dp)
+                        button.icon.height: Math.round(24 * DefaultStyle.dp)
                         button.onClicked: mainWindow.startCallWithContact(
                                               contactDetail.contact,
                                               false, mainItem)
@@ -401,10 +401,10 @@ FriendGui{
                         button.icon.source: AppIcons.chatTeardropText
                         visible: !SettingsCpp.disableChatFeature
                         label: qsTr("Message")
-                        width: 56 * DefaultStyle.dp
-                        height: 56 * DefaultStyle.dp
-                        button.icon.width: 24 * DefaultStyle.dp
-                        button.icon.height: 24 * DefaultStyle.dp
+                        width: Math.round(56 * DefaultStyle.dp)
+                        height: Math.round(56 * DefaultStyle.dp)
+                        button.icon.width: Math.round(24 * DefaultStyle.dp)
+                        button.icon.height: Math.round(24 * DefaultStyle.dp)
                         button.onClicked: console.debug(
                                               "[ContactLayout.qml] TODO : open conversation")
                     }
@@ -412,10 +412,10 @@ FriendGui{
                         visible: SettingsCpp.videoEnabled
                         button.icon.source: AppIcons.videoCamera
                         label: qsTr("Appel vidéo")
-                        width: 56 * DefaultStyle.dp
-                        height: 56 * DefaultStyle.dp
-                        button.icon.width: 24 * DefaultStyle.dp
-                        button.icon.height: 24 * DefaultStyle.dp
+                        width: Math.round(56 * DefaultStyle.dp)
+                        height: Math.round(56 * DefaultStyle.dp)
+                        button.icon.width: Math.round(24 * DefaultStyle.dp)
+                        button.icon.height: Math.round(24 * DefaultStyle.dp)
                         button.onClicked: mainWindow.startCallWithContact(
                                               contactDetail.contact,
                                               true, mainItem)
@@ -429,8 +429,8 @@ FriendGui{
                             Layout.fillWidth: true
                             maximumLineCount: 1
                             font {
-                                pixelSize: 29 * DefaultStyle.dp
-                                weight: 800 * DefaultStyle.dp
+                                pixelSize: Typography.h2.pixelSize
+                                weight: Typography.h2.weight
                                 capitalization: Font.Capitalize
                             }
                         }
@@ -441,7 +441,7 @@ FriendGui{
                             Layout.fillWidth: true
                             text: mode === LinphoneEnums.ConsolidatedPresence.Online ? qsTr("En ligne") : mode === LinphoneEnums.ConsolidatedPresence.Busy ? qsTr("Occupé") : mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb ? qsTr("Ne pas déranger") : qsTr("Hors ligne")
                             color: mode === LinphoneEnums.ConsolidatedPresence.Online ? DefaultStyle.success_500main : mode === LinphoneEnums.ConsolidatedPresence.Busy ? DefaultStyle.warning_600 : mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
-                            font.pixelSize: 14 * DefaultStyle.dp
+                            font.pixelSize: Math.round(14 * DefaultStyle.dp)
                         }
                     },
                     ActionsButtons {
@@ -452,11 +452,11 @@ FriendGui{
                 content: Flickable {
                     contentWidth: parent.width
                     ColumnLayout {
-                        spacing: 32 * DefaultStyle.dp
+                        spacing: Math.round(32 * DefaultStyle.dp)
                         anchors.left: parent.left
                         anchors.right: parent.right
                         ColumnLayout {
-                            spacing: 15 * DefaultStyle.dp
+                            spacing: Math.round(15 * DefaultStyle.dp)
                             Layout.fillWidth: true
                             ContactDetailLayout {
                                 id: infoLayout
@@ -468,32 +468,32 @@ FriendGui{
                                     implicitHeight: contentHeight
                                     width: parent.width
                                     clip: true
-                                    spacing: 9 * DefaultStyle.dp
+                                    spacing: Math.round(9 * DefaultStyle.dp)
                                     model: VariantList {
                                         model: (mainItem.selectedContact ? UtilsCpp.append(mainItem.selectedContact.core.addresses, mainItem.selectedContact.core.phoneNumbers) : [])
                                     }
                                     delegate: Item {
                                         property var listViewModelData: modelData
                                         width: addrList.width
-                                        height: 46 * DefaultStyle.dp
+                                        height: Math.round(46 * DefaultStyle.dp)
 
                                         ColumnLayout {
                                             anchors.fill: parent
-                                            // anchors.topMargin: 5 * DefaultStyle.dp
+                                            // anchors.topMargin: Math.round(5 * DefaultStyle.dp)
                                             RowLayout {
                                                 Layout.fillWidth: true
                                                 // Layout.fillHeight: true
                                                 // Layout.alignment: Qt.AlignVCenter
-                                                // Layout.topMargin: 10 * DefaultStyle.dp
-                                                // Layout.bottomMargin: 10 * DefaultStyle.dp
+                                                // Layout.topMargin: Math.round(10 * DefaultStyle.dp)
+                                                // Layout.bottomMargin: Math.round(10 * DefaultStyle.dp)
                                                 ColumnLayout {
                                                     Layout.fillWidth: true
                                                     Text {
                                                         Layout.fillWidth: true
                                                         text: listViewModelData.label
                                                         font {
-                                                            pixelSize: 13 * DefaultStyle.dp
-                                                            weight: 700 * DefaultStyle.dp
+                                                            pixelSize: Typography.p2.pixelSize
+                                                            weight: Typography.p2.weight
                                                         }
                                                     }
                                                     Text {
@@ -501,8 +501,8 @@ FriendGui{
                                                         property string _text: listViewModelData.address
                                                         text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
                                                         font {
-                                                            pixelSize: 14 * DefaultStyle.dp
-                                                            weight: 400 * DefaultStyle.dp
+                                                            pixelSize: Typography.p1.pixelSize
+                                                            weight: Typography.p1.weight
                                                         }
                                                     }
                                                 }
@@ -522,9 +522,9 @@ FriendGui{
                                             Rectangle {
                                                 visible: index != addrList.model.count - 1
                                                 Layout.fillWidth: true
-                                                Layout.preferredHeight: 1 * DefaultStyle.dp
-                                                Layout.rightMargin: 3 * DefaultStyle.dp
-                                                Layout.leftMargin: 3 * DefaultStyle.dp
+                                                Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+                                                Layout.rightMargin: Math.round(3 * DefaultStyle.dp)
+                                                Layout.leftMargin: Math.round(3 * DefaultStyle.dp)
                                                 color: DefaultStyle.main2_200
                                                 clip: true
                                             }
@@ -537,20 +537,20 @@ FriendGui{
                                          && companyText.text.length != 0
                                          || jobText.text.length != 0
                                 Layout.fillWidth: true
-                                topPadding: 17 * DefaultStyle.dp
-                                bottomPadding: 17 * DefaultStyle.dp
-                                leftPadding: 20 * DefaultStyle.dp
-                                rightPadding: 20 * DefaultStyle.dp
+                                topPadding: Math.round(17 * DefaultStyle.dp)
+                                bottomPadding: Math.round(17 * DefaultStyle.dp)
+                                leftPadding: Math.round(20 * DefaultStyle.dp)
+                                rightPadding: Math.round(20 * DefaultStyle.dp)
 
                                 contentItem: ColumnLayout {
                                     RowLayout {
-                                        height: 50 * DefaultStyle.dp
+                                        height: Math.round(50 * DefaultStyle.dp)
                                         visible: companyText.text.length != 0
                                         Text {
                                             text: qsTr("Société :")
                                             font {
-                                                pixelSize: 13 * DefaultStyle.dp
-                                                weight: 700 * DefaultStyle.dp
+                                                pixelSize: Typography.p2.pixelSize
+                                                weight: Typography.p2.weight
                                             }
                                         }
                                         Text {
@@ -558,19 +558,19 @@ FriendGui{
                                             text: mainItem.selectedContact
                                                   && mainItem.selectedContact.core.organization
                                             font {
-                                                pixelSize: 14 * DefaultStyle.dp
-                                                weight: 400 * DefaultStyle.dp
+                                                pixelSize: Typography.p1.pixelSize
+                                                weight: Typography.p1.weight
                                             }
                                         }
                                     }
                                     RowLayout {
-                                        height: 50 * DefaultStyle.dp
+                                        height: Math.round(50 * DefaultStyle.dp)
                                         visible: jobText.text.length != 0
                                         Text {
                                             text: qsTr("Poste :")
                                             font {
-                                                pixelSize: 13 * DefaultStyle.dp
-                                                weight: 700 * DefaultStyle.dp
+                                                pixelSize: Typography.p2.pixelSize
+                                                weight: Typography.p2.weight
                                             }
                                         }
                                         Text {
@@ -578,8 +578,8 @@ FriendGui{
                                             text: mainItem.selectedContact
                                                   && mainItem.selectedContact.core.job
                                             font {
-                                                pixelSize: 14 * DefaultStyle.dp
-                                                weight: 400 * DefaultStyle.dp
+                                                pixelSize: Typography.p1.pixelSize
+                                                weight: Typography.p1.weight
                                             }
                                         }
                                     }
@@ -594,8 +594,8 @@ FriendGui{
                                 style: ButtonStyle.noBackground
                                 contentItem: RowLayout {
                                     EffectImage {
-                                        Layout.preferredWidth: 24 * DefaultStyle.dp
-                                        Layout.preferredHeight: 24 * DefaultStyle.dp
+                                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
                                         source: AppIcons.shareNetwork
                                         colorizationColor: DefaultStyle.main2_600
                                     }
@@ -610,8 +610,8 @@ FriendGui{
                                         Layout.fillWidth: true
                                     }
                                     EffectImage {
-                                        Layout.preferredWidth: 24 * DefaultStyle.dp
-                                        Layout.preferredHeight: 24 * DefaultStyle.dp
+                                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
                                         imageSource: AppIcons.rightArrow
                                         colorizationColor: DefaultStyle.main2_600
                                     }
@@ -626,12 +626,12 @@ FriendGui{
                             icon: AppIcons.question
                             onTitleIconClicked: trustInfoDialog.open()
                             content: ColumnLayout {
-                                spacing: 13 * DefaultStyle.dp
+                                spacing: Math.round(13 * DefaultStyle.dp)
                                 Text {
                                     text: qsTr("Niveau de confiance - Appareils vérifiés")
                                     font {
-                                        pixelSize: 13 * DefaultStyle.dp
-                                        weight: 700 * DefaultStyle.dp
+                                        pixelSize: Typography.p2.pixelSize
+                                        weight: Typography.p2.weight
                                     }
                                 }
                                 Text {
@@ -641,29 +641,29 @@ FriendGui{
                                 ProgressBar {
                                     visible: deviceList.count > 0
                                     Layout.fillWidth: true
-                                    Layout.preferredHeight: 28 * DefaultStyle.dp
+                                    Layout.preferredHeight: Math.round(28 * DefaultStyle.dp)
                                     value: mainItem.selectedContact ? mainItem.selectedContact.core.verifiedDeviceCount / deviceList.count : 0
                                 }
                                 ListView {
                                     id: deviceList
                                     Layout.fillWidth: true
                                     Layout.preferredHeight: Math.min(
-                                                                200 * DefaultStyle.dp,
+                                                                Math.round(200 * DefaultStyle.dp),
                                                                 contentHeight)
                                     clip: true
                                     model: mainItem.selectedContact ? mainItem.selectedContact.core.devices : []
-                                    spacing: 16 * DefaultStyle.dp
+                                    spacing: Math.round(16 * DefaultStyle.dp)
                                     delegate: RowLayout {
                                         id: deviceDelegate
                                         width: deviceList.width
-                                        height: 30 * DefaultStyle.dp
+                                        height: Math.round(30 * DefaultStyle.dp)
                                         property var listViewModelData: modelData
                                         property var callObj
                                         property CallGui deviceCall: callObj ? callObj.value : null
                                         property string deviceName: listViewModelData.name.length != 0 ? listViewModelData.name : qsTr("Appareil sans nom")
                                         Text {
                                             text: deviceDelegate.deviceName
-                                            font.pixelSize: 14 * DefaultStyle.dp
+                                            font.pixelSize: Math.round(14 * DefaultStyle.dp)
                                         }
                                         Item {
                                             Layout.fillWidth: true
@@ -671,12 +671,12 @@ FriendGui{
                                         EffectImage {
                                             visible: listViewModelData.securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
                                             imageSource: AppIcons.trusted
-                                            Layout.preferredWidth: 22 * DefaultStyle.dp
-                                            Layout.preferredHeight: 22 * DefaultStyle.dp
+                                            Layout.preferredWidth: Math.round(22 * DefaultStyle.dp)
+                                            Layout.preferredHeight: Math.round(22 * DefaultStyle.dp)
                                         }
 
                                         SmallButton {
-                                            // Layout.preferredHeight: 30 * DefaultStyle.dp
+                                            // Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
                                             visible: listViewModelData.securityLevel != LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
                                             icon.source: AppIcons.warningCircle
                                             style: ButtonStyle.tertiary
@@ -710,7 +710,7 @@ FriendGui{
                                 width: parent.width
                                 IconLabelButton {
                                     Layout.fillWidth: true
-                                    Layout.preferredHeight: 50 * DefaultStyle.dp
+                                    Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
                                     icon.source: AppIcons.pencil
                                     text: qsTr("Éditer")
                                     onClicked: mainItem.editContact(
@@ -720,12 +720,12 @@ FriendGui{
                                 }
                                 Rectangle {
                                     Layout.fillWidth: true
-                                    Layout.preferredHeight: 1 * DefaultStyle.dp
+                                    Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
                                     color: DefaultStyle.main2_200
                                 }
                                 IconLabelButton {
                                     Layout.fillWidth: true
-                                    Layout.preferredHeight: 50 * DefaultStyle.dp
+                                    Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
                                     icon.source: mainItem.selectedContact
                                                  && mainItem.selectedContact.core.starred ? AppIcons.heartFill : AppIcons.heart
                                     text: mainItem.selectedContact
@@ -737,12 +737,12 @@ FriendGui{
                                 }
                                 Rectangle {
                                     Layout.fillWidth: true
-                                    Layout.preferredHeight: 1 * DefaultStyle.dp
+                                    Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
                                     color: DefaultStyle.main2_200
                                 }
                                 IconLabelButton {
                                     Layout.fillWidth: true
-                                    Layout.preferredHeight: 50 * DefaultStyle.dp
+                                    Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
                                     icon.source: AppIcons.shareNetwork
                                     text: qsTr("Partager")
                                     style: ButtonStyle.noBackground
@@ -772,36 +772,36 @@ FriendGui{
                                 }
                                 Rectangle {
                                     Layout.fillWidth: true
-                                    Layout.preferredHeight: 1 * DefaultStyle.dp
+                                    Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
                                     color: DefaultStyle.main2_200
                                 }
                                 // IconLabelButton {
                                 // 	Layout.fillWidth: true
-                                // 	Layout.preferredHeight: 50 * DefaultStyle.dp
+                                // 	Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
                                 // 	icon.source: AppIcons.bellSlash
                                 // 	text: qsTr("Mettre en sourdine")
                                 // 	onClicked: console.log("TODO : mute contact")
                                 // }
                                 // Rectangle {
                                 // 	Layout.fillWidth: true
-                                // 	Layout.preferredHeight: 1 * DefaultStyle.dp
+                                // 	Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
                                 // 	color: DefaultStyle.main2_200
                                 // }
                                 // IconLabelButton {
                                 // 	Layout.fillWidth: true
-                                // 	Layout.preferredHeight: 50 * DefaultStyle.dp
+                                // 	Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
                                 // 	icon.source: AppIcons.empty
                                 // 	text: qsTr("Bloquer")
                                 // 	onClicked: console.log("TODO : block contact")
                                 // }
                                 // Rectangle {
                                 // 	Layout.fillWidth: true
-                                // 	Layout.preferredHeight: 1 * DefaultStyle.dp
+                                // 	Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
                                 // 	color: DefaultStyle.main2_200
                                 // }
                                 IconLabelButton {
                                     Layout.fillWidth: true
-                                    Layout.preferredHeight: 50 * DefaultStyle.dp
+                                    Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
                                     icon.source: AppIcons.trashCan
                                     text: qsTr("Supprimer ce contact")
                                     visible: !mainItem.selectedContact?.core.readOnly

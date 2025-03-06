@@ -21,7 +21,7 @@ ListView {
 	clip: true
 	cacheBuffer: height/2
 	
-	spacing: 8 * DefaultStyle.dp
+    spacing: Math.round(8 * DefaultStyle.dp)
 	highlightFollowsCurrentItem: false
 	
 	function selectIndex(index){
@@ -86,7 +86,7 @@ ListView {
 		id: confInfoProxy
 		filterText: searchBarText
 		filterType: ConferenceInfoProxy.None
-		initialDisplayItems: Math.max(20, 2 * mainItem.height / (63 * DefaultStyle.dp))
+        initialDisplayItems: Math.max(20, 2 * mainItem.height / (Math.round(63 * DefaultStyle.dp)))
 		displayItemsStep: initialDisplayItems/2
 		function selectData(confInfoGui){
 			mainItem.currentIndex = loadUntil(confInfoGui)
@@ -105,7 +105,7 @@ ListView {
 	
 	ScrollBar.vertical: ScrollBar {
 		id: scrollbar
-		rightPadding: 8 * DefaultStyle.dp
+        rightPadding: Math.round(8 * DefaultStyle.dp)
 		
 		active: true
 		interactive: true
@@ -115,14 +115,14 @@ ListView {
 	section {
 		criteria: ViewSection.FullString
 		delegate: Text {
-			topPadding: 24 * DefaultStyle.dp
-			bottomPadding: 16 * DefaultStyle.dp
+            topPadding: Math.round(24 * DefaultStyle.dp)
+            bottomPadding: Math.round(16 * DefaultStyle.dp)
 			text: section
-			height: 29 * DefaultStyle.dp + topPadding + bottomPadding
+            height: Math.round(29 * DefaultStyle.dp) + topPadding + bottomPadding
 			wrapMode: Text.NoWrap
 			font {
-				pixelSize: 20 * DefaultStyle.dp
-				weight: 800 * DefaultStyle.dp
+                pixelSize: Math.round(20 * DefaultStyle.dp)
+                weight: Math.round(800 * DefaultStyle.dp)
 				capitalization: Font.Capitalize
 			}
 		}
@@ -131,7 +131,7 @@ ListView {
 	
 	delegate: FocusScope {
 		id: itemDelegate
-		height: 63 * DefaultStyle.dp + (!isFirst && dateDay.visible ? topOffset : 0)
+        height: Math.round(63 * DefaultStyle.dp) + (!isFirst && dateDay.visible ? topOffset : 0)
 		width: mainItem.width
 		enabled: !isCanceled && haveModel
 		
@@ -143,7 +143,7 @@ ListView {
 		property string dateString:  UtilsCpp.toDateString(dateTime)
 		property string previousDateString: previousConfInfoGui ? UtilsCpp.toDateString(previousConfInfoGui.core ? previousConfInfoGui.core.dateTime : UtilsCpp.getCurrentDateTime()) : ''
 		property bool isFirst : ListView.previousSection !== ListView.section
-		property int topOffset: (dateDay.visible && !isFirst? 8 * DefaultStyle.dp : 0)
+        property real topOffset: (dateDay.visible && !isFirst? Math.round(8 * DefaultStyle.dp) : 0)
 		property var endDateTime: itemGui.core ? itemGui.core.endDateTime : UtilsCpp.getCurrentDateTime()
 		property bool haveModel: itemGui.core ? itemGui.core.haveModel : false
 		property bool isCanceled: itemGui.core ? itemGui.core.state === LinphoneEnums.ConferenceInfoState.Cancelled : false
@@ -155,34 +155,34 @@ ListView {
 			anchors.topMargin: !itemDelegate.isFirst && dateDay.visible ? itemDelegate.topOffset : 0
 			spacing: 0
 			Item{
-				Layout.preferredWidth: 32 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
 				visible: !dateDay.visible
 			}
 			ColumnLayout {
 				id: dateDay
 				Layout.fillWidth: false
-				Layout.preferredWidth: 32 * DefaultStyle.dp
-				Layout.minimumWidth: 32 * DefaultStyle.dp
-				Layout.preferredHeight: 51 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
+                Layout.minimumWidth: Math.round(32 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(51 * DefaultStyle.dp)
 				visible: previousDateString.length == 0 || previousDateString != dateString
 				spacing: 0
 				Text {
-					Layout.preferredHeight: 19 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(19 * DefaultStyle.dp)
 					Layout.alignment: Qt.AlignCenter
 					text: day.substring(0,3) + '.'
 					color: DefaultStyle.main2_500main
 					wrapMode: Text.NoWrap
 					elide: Text.ElideNone
 					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 400 * DefaultStyle.dp
+                        pixelSize: Typography.p1.pixelSize
+                        weight: Typography.p1.weight
 						capitalization: Font.Capitalize
 					}
 				}
 				Rectangle {
 					id: dayNum
-					Layout.preferredWidth: 32 * DefaultStyle.dp
-					Layout.preferredHeight: 32 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
 					Layout.alignment: Qt.AlignCenter
 					radius: height/2
 					property var isCurrentDay: UtilsCpp.isCurrentDay(dateTime)
@@ -197,48 +197,48 @@ ListView {
 						color: dayNum.isCurrentDay ? DefaultStyle.grey_0 : DefaultStyle.main2_500main
 						wrapMode: Text.NoWrap
 						font {
-							pixelSize: 20 * DefaultStyle.dp
-							weight: 800 * DefaultStyle.dp
+                            pixelSize: Math.round(20 * DefaultStyle.dp)
+                            weight: Math.round(800 * DefaultStyle.dp)
 						}
 					}
 				}
 				Item{Layout.fillHeight:true;Layout.fillWidth: true}
 			}
 			Item {
-				Layout.preferredWidth: 265 * DefaultStyle.dp
-				Layout.preferredHeight: 63 * DefaultStyle.dp
-				Layout.leftMargin: 23 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(265 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(63 * DefaultStyle.dp)
+                Layout.leftMargin: Math.round(23 * DefaultStyle.dp)
 				Rectangle {
 					id: conferenceInfoDelegate
 					anchors.fill: parent
 					anchors.rightMargin: 5	// margin to avoid clipping shadows at right
-					radius: 10 * DefaultStyle.dp
+                    radius: Math.round(10 * DefaultStyle.dp)
 					visible: itemDelegate.haveModel || itemDelegate.activeFocus
 					color: itemDelegate.isSelected ? DefaultStyle.main2_200 : DefaultStyle.grey_0 // mainItem.currentIndex === index
 					ColumnLayout {
 						anchors.fill: parent
 						anchors.left: parent.left
-						anchors.leftMargin: 16 * DefaultStyle.dp
-						anchors.rightMargin: 16 * DefaultStyle.dp
-						anchors.topMargin: 10 * DefaultStyle.dp
-						anchors.bottomMargin: 10 * DefaultStyle.dp
-						spacing: 2 * DefaultStyle.dp
+                        anchors.leftMargin: Math.round(16 * DefaultStyle.dp)
+                        anchors.rightMargin: Math.round(16 * DefaultStyle.dp)
+                        anchors.topMargin: Math.round(10 * DefaultStyle.dp)
+                        anchors.bottomMargin: Math.round(10 * DefaultStyle.dp)
+                        spacing: Math.round(2 * DefaultStyle.dp)
 						visible: itemDelegate.haveModel
 						RowLayout {
-							spacing: 8 * DefaultStyle.dp
+                            spacing: Math.round(8 * DefaultStyle.dp)
 							EffectImage {
 								imageSource: AppIcons.usersThree
 								colorizationColor: DefaultStyle.main2_600
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 							}
 							Text {
 								text: itemGui.core? itemGui.core.subject : ""
 								Layout.fillWidth: true
 								maximumLineCount: 1
 								font {
-									pixelSize: 13 * DefaultStyle.dp
-									weight: 700 * DefaultStyle.dp
+                                    pixelSize: Typography.p2.pixelSize
+                                    weight: Typography.p2.weight
 								}
 							}
 						}
@@ -246,8 +246,8 @@ ListView {
 							text: itemDelegate.isCanceled ? qsTr("Réunion annulée") : UtilsCpp.toDateHourString(dateTime) + " - " + UtilsCpp.toDateHourString(endDateTime)
 							color: itemDelegate.isCanceled ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
 							font {
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
+                                pixelSize: Typography.p1.pixelSize
+                                weight: Typography.p1.weight
 							}
 						}
 					}
@@ -262,16 +262,16 @@ ListView {
 				}
 				Text {
 					anchors.fill: parent
-					anchors.rightMargin: 5 * DefaultStyle.dp // margin to avoid clipping shadows at right
-					anchors.leftMargin: 16 * DefaultStyle.dp
+                    anchors.rightMargin: Math.round(5 * DefaultStyle.dp) // margin to avoid clipping shadows at right
+                    anchors.leftMargin: Math.round(16 * DefaultStyle.dp)
 					verticalAlignment: Text.AlignVCenter
 					visible: !itemDelegate.haveModel
 					text: qsTr("Aucune réunion aujourd'hui")
 					lineHeightMode: Text.FixedHeight
-					lineHeight: 17.71 * DefaultStyle.dp
+                    lineHeight: Math.round(18 * DefaultStyle.dp)
 					font {
-						pixelSize: 13 * DefaultStyle.dp
-						weight: 700
+                        pixelSize: Typography.p2.pixelSize
+                        weight: Typography.p2.weight
 					}
 				}
 				MouseArea {

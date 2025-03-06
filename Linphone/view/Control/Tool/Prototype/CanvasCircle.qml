@@ -2,7 +2,7 @@ import QtQuick
 
 Item {
     id: root
-    property int size: 150
+    property real size: 150
     property color borderColor
     property color innerColor
     width: size
@@ -22,7 +22,7 @@ Item {
     Canvas {
         id: c
 		property bool animated: false
-		property int offset: 0
+        property real offset: 0
         anchors.fill: parent
         antialiasing: true
         onOffsetChanged: requestPaint()

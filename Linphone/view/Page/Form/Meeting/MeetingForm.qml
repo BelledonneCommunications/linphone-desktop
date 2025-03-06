@@ -15,7 +15,7 @@ FocusScope {
 
 	ColumnLayout {
 		id: formLayout
-		spacing: 16 * DefaultStyle.dp
+        spacing: Math.round(16 * DefaultStyle.dp)
 		anchors.fill: parent
 
 		Component.onCompleted: {
@@ -26,14 +26,14 @@ FocusScope {
 
 		RowLayout {
 			visible: mainItem.isCreation && !SettingsCpp.disableBroadcastFeature
-			Layout.topMargin: 20 * DefaultStyle.dp
-			Layout.bottomMargin: 20 * DefaultStyle.dp
-			spacing: 18 * DefaultStyle.dp
+            Layout.topMargin: Math.round(20 * DefaultStyle.dp)
+            Layout.bottomMargin: Math.round(20 * DefaultStyle.dp)
+            spacing: Math.round(18 * DefaultStyle.dp)
 			CheckableButton {
-				Layout.preferredWidth: 151 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(151 * DefaultStyle.dp)
 				icon.source: AppIcons.usersThree
-				icon.width: 24 * DefaultStyle.dp
-				icon.height: 24 * DefaultStyle.dp
+                icon.width: Math.round(24 * DefaultStyle.dp)
+                icon.height: Math.round(24 * DefaultStyle.dp)
 				enabled: false
 				text: qsTr("Réunion")
 				checked: true
@@ -41,11 +41,11 @@ FocusScope {
 				style: ButtonStyle.secondary
 			}
 			CheckableButton {
-				Layout.preferredWidth: 151 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(151 * DefaultStyle.dp)
 				enabled: false
 				icon.source: AppIcons.slide
-				icon.width: 24 * DefaultStyle.dp
-				icon.height: 24 * DefaultStyle.dp
+                icon.width: Math.round(24 * DefaultStyle.dp)
+                icon.height: Math.round(24 * DefaultStyle.dp)
 				text: qsTr("Broadcast")
 				autoExclusive: true
 				style: ButtonStyle.secondary
@@ -55,12 +55,12 @@ FocusScope {
 			visible: mainItem.isCreation
 			spacing: formLayout.spacing
 			content: RowLayout {
-				spacing: 8 * DefaultStyle.dp
+                spacing: Math.round(8 * DefaultStyle.dp)
 				EffectImage {
 					imageSource: AppIcons.usersThree
 					colorizationColor: DefaultStyle.main2_600
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 				}
 				TextInput {
 					id: confTitle
@@ -69,8 +69,8 @@ FocusScope {
 					text: defaultText
 					color: DefaultStyle.main2_600
 					font {
-						pixelSize: 20 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
+                        pixelSize: Math.round(20 * DefaultStyle.dp)
+                        weight: Typography.h3.weight
 					}
 					focus: true
 					onActiveFocusChanged: if(activeFocus) {
@@ -90,16 +90,16 @@ FocusScope {
 					EffectImage {
 						imageSource: AppIcons.clock
 						colorizationColor: DefaultStyle.main2_600
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 					}
 					CalendarComboBox {
 						id: startDate
 						background.visible: mainItem.isCreation
 						indicator.visible: mainItem.isCreation
-						contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
+                        contentText.font.weight: Math.min(Math.round((isCreation ? 700 : 400) * DefaultStyle.dp), 1000)
 						Layout.fillWidth: true
-						Layout.preferredHeight: 30 * DefaultStyle.dp
+                        Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
 						KeyNavigation.up: confTitle
 						KeyNavigation.down: startHour
 						onSelectedDateChanged: {
@@ -113,17 +113,17 @@ FocusScope {
 				},
 				RowLayout {
 					Item {
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 					}
 					RowLayout {
 						TimeComboBox {
 							id: startHour
 							// indicator.visible: mainItem.isCreation
-							Layout.preferredWidth: 94 * DefaultStyle.dp
-							Layout.preferredHeight: 30 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(94 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
 							background.visible: mainItem.isCreation
-							contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
+                            contentText.font.weight: Math.min(Math.round((isCreation ? 700 : 400) * DefaultStyle.dp), 1000)
 							KeyNavigation.up: startDate
 							KeyNavigation.down: timeZoneCbox
 							KeyNavigation.left: endHour
@@ -140,10 +140,10 @@ FocusScope {
 						TimeComboBox {
 							id: endHour
 							// indicator.visible: mainItem.isCreation
-							Layout.preferredWidth: 94 * DefaultStyle.dp
-							Layout.preferredHeight: 30 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(94 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
 							background.visible: mainItem.isCreation
-							contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
+                            contentText.font.weight: Math.min(Math.round((isCreation ? 700 : 400) * DefaultStyle.dp), 1000)
 							onSelectedDateTimeChanged: mainItem.conferenceInfoGui.core.endDateTime = selectedDateTime
 							KeyNavigation.up: startDate
 							KeyNavigation.down: timeZoneCbox
@@ -159,8 +159,8 @@ FocusScope {
 							property int min: (durationSec - hour*3600)/60
 							text: (hour > 0 ? hour + "h" : "") + (min > 0 ? min + "mn" : "")
 							font {
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 700 * DefaultStyle.dp
+                                pixelSize: Typography.p2l.pixelSize
+                                weight: Typography.p2l.weight
 							}
 						}
 					}
@@ -169,12 +169,12 @@ FocusScope {
 				ComboBox {
 					id: timeZoneCbox
 					Layout.fillWidth: true
-					Layout.preferredHeight: 30 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
 					hoverEnabled: true
 					oneLine: true
-					listView.implicitHeight: 250 * DefaultStyle.dp
+                    listView.implicitHeight: Math.round(250 * DefaultStyle.dp)
 					constantImageSource: AppIcons.globe
-					weight: 700 * DefaultStyle.dp
+                    weight: Typography.p2l.weight
 					leftMargin: 0
 					currentIndex: mainItem.conferenceInfoGui && model.count > 0 ? model.getIndex(mainItem.conferenceInfoGui.core.timeZoneModel) : -1
 					background: Rectangle {
@@ -196,28 +196,28 @@ FocusScope {
 		Section {
 			spacing: formLayout.spacing
 			content: RowLayout {
-				spacing: 8 * DefaultStyle.dp
+                spacing: Math.round(8 * DefaultStyle.dp)
 				EffectImage {
 					imageSource: AppIcons.note
 					colorizationColor: DefaultStyle.main2_600
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 				}
 				TextArea {
 					id: descriptionEdit
 					Layout.fillWidth: true
-					Layout.preferredWidth: 275 * DefaultStyle.dp
-					leftPadding: 8 * DefaultStyle.dp
-					rightPadding: 8 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(275 * DefaultStyle.dp)
+                    leftPadding: Math.round(8 * DefaultStyle.dp)
+                    rightPadding: Math.round(8 * DefaultStyle.dp)
 					hoverEnabled: true
 					placeholderText: qsTr("Ajouter une description")
 					placeholderTextColor: DefaultStyle.main2_600
-					placeholderWeight: 700 * DefaultStyle.dp
+                    placeholderWeight: Typography.p2l.weight
 					color: DefaultStyle.main2_600
 					Component.onCompleted: text = conferenceInfoGui.core.description
 					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 400 * DefaultStyle.dp
+                        pixelSize: Typography.p1.pixelSize
+                        weight: Typography.p1.weight
 					}
 					onEditingFinished: mainItem.conferenceInfoGui.core.description = text
 					Keys.onPressed: (event)=> {
@@ -230,7 +230,7 @@ FocusScope {
 					background: Rectangle {
 						anchors.fill: parent
 						color: descriptionEdit.hovered || descriptionEdit.activeFocus ? DefaultStyle.grey_100 : "transparent"
-						radius: 4 * DefaultStyle.dp
+                        radius: Math.round(4 * DefaultStyle.dp)
 					}
 				}
 			}
@@ -241,26 +241,26 @@ FocusScope {
 				Button {
 					id: addParticipantsButton
 					Layout.fillWidth: true
-					Layout.preferredHeight: 30 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
 					background: Rectangle {
 						anchors.fill: parent
 						color: addParticipantsButton.hovered || addParticipantsButton.activeFocus ? DefaultStyle.grey_100 : "transparent"
-						radius: 4 * DefaultStyle.dp
+                        radius: Math.round(4 * DefaultStyle.dp)
 					}
 					contentItem: RowLayout {
-						spacing: 8 * DefaultStyle.dp
+                        spacing: Math.round(8 * DefaultStyle.dp)
 						EffectImage {
 							imageSource: AppIcons.usersThree
 							colorizationColor: DefaultStyle.main2_600
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 						}
 						Text {
 							Layout.fillWidth: true
 							text: qsTr("Ajouter des participants")
 							font {
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 700 * DefaultStyle.dp
+                                pixelSize: Typography.p2l.pixelSize
+                                weight: Typography.p2l.weight
 							}
 						}
 					}
@@ -270,36 +270,36 @@ FocusScope {
 					id: participantList
 					Layout.fillWidth: true
 					Layout.preferredHeight: contentHeight
-					Layout.maximumHeight: 250 * DefaultStyle.dp
+                    Layout.maximumHeight: Math.round(250 * DefaultStyle.dp)
 					clip: true
 					model: mainItem.conferenceInfoGui.core.participants
 					delegate: Item {
-						height: 56 * DefaultStyle.dp
+                        height: Math.round(56 * DefaultStyle.dp)
 						width: participantList.width
 						RowLayout {
 							anchors.fill: parent
-							spacing: 16 * DefaultStyle.dp
+                            spacing: Math.round(16 * DefaultStyle.dp)
 							Avatar {
-								Layout.preferredWidth: 45 * DefaultStyle.dp
-								Layout.preferredHeight: 45 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 								_address: modelData.address
 								shadowEnabled: false
 							}
 							Text {
 								property var displayNameObj: UtilsCpp.getDisplayName(modelData.address)
 								text: displayNameObj?.value || ""
-								font.pixelSize: 14 * DefaultStyle.dp
+                                font.pixelSize: Math.round(14 * DefaultStyle.dp)
 								font.capitalization: Font.Capitalize
 							}
 							Item {
 								Layout.fillWidth: true
 							}
 							Button {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
-								Layout.rightMargin: 10 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                                icon.width: Math.round(24 * DefaultStyle.dp)
+                                icon.height: Math.round(24 * DefaultStyle.dp)
+                                Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
 								icon.source: AppIcons.closeX
 								style: ButtonStyle.noBackgroundOrange
 								onClicked: mainItem.conferenceInfoGui.core.removeParticipant(index)
@@ -316,7 +316,7 @@ FocusScope {
 		}
 		Item {
 			Layout.fillHeight: true
-			Layout.minimumHeight: 1 * DefaultStyle.dp
+            Layout.minimumHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
 		}
 	}
 }

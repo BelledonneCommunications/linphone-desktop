@@ -25,7 +25,7 @@ Item {
 	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking || false
 	property alias displayPresence: avatar.displayPresence
 	property color color: DefaultStyle.grey_600
-	property int radius: 15 * DefaultStyle.dp
+    property real radius: Math.round(15 * DefaultStyle.dp)
 	property bool remoteIsPaused: participantDevice
 		? participantDevice.core.isPaused
 		: previewEnabled
@@ -70,15 +70,15 @@ Item {
 		radius: mainItem.radius
 		anchors.fill: parent
 		border.color: DefaultStyle.main2_200
-		border.width: mainItem.displayBorder ? 3 * DefaultStyle.dp : 0
-		property int minSize: Math.min(height, width)
+        border.width: mainItem.displayBorder ? Math.round(3 * DefaultStyle.dp) : 0
+        property real minSize: Math.min(height, width)
 		Item {
 			id: noCameraLayout
 			anchors.fill: parent
 			visible: !cameraLoader.active || cameraLoader.status != Loader.Ready || !cameraLoader.item.isReady
 			ColumnLayout {
 				anchors.top: parent.top
-				anchors.topMargin: 81 * DefaultStyle.dp
+                anchors.topMargin: Math.round(81 * DefaultStyle.dp)
 				anchors.horizontalCenter: parent.horizontalCenter
 				// Layout.alignment: Qt.AlignHCenter |Qt.AlignTop
 				spacing: 0
@@ -90,8 +90,8 @@ Item {
 				BusyIndicator {
 					indicatorColor: DefaultStyle.main2_100
 					Layout.alignment: Qt.AlignHCenter
-					indicatorHeight: 42 * DefaultStyle.dp
-					indicatorWidth: 42 * DefaultStyle.dp
+                    indicatorHeight: Math.round(42 * DefaultStyle.dp)
+                    indicatorWidth: Math.round(42 * DefaultStyle.dp)
 				}
 			}
 			Item{
@@ -100,7 +100,7 @@ Item {
 				anchors.centerIn: parent
 				height: mainItem.conference 
 					? background.minSize * 142 / 372
-					: 120 * DefaultStyle.dp
+                    : Math.round(120 * DefaultStyle.dp)
 				width: height
 				Avatar{
 					id: avatar
@@ -117,29 +117,29 @@ Item {
 					spacing: 0
 					visible: mainItem.participantDevice && (mainItem.participantDevice.core.state == LinphoneEnums.ParticipantDeviceState.Joining || mainItem.participantDevice.core.state == LinphoneEnums.ParticipantDeviceState.Alerting) || false
 					BusyIndicator {
-						Layout.preferredHeight: 42 * DefaultStyle.dp
+                        Layout.preferredHeight: Math.round(42 * DefaultStyle.dp)
 						indicatorColor: DefaultStyle.main2_100
 						Layout.alignment: Qt.AlignHCenter
-						indicatorHeight: 42 * DefaultStyle.dp
-						indicatorWidth: 42 * DefaultStyle.dp
+                        indicatorHeight: Math.round(42 * DefaultStyle.dp)
+                        indicatorWidth: Math.round(42 * DefaultStyle.dp)
 					}
 					Text {
-						Layout.preferredHeight: 27 * DefaultStyle.dp
-						Layout.topMargin: 15 * DefaultStyle.dp // (84-27)-42
+                        Layout.preferredHeight: Math.round(27 * DefaultStyle.dp)
+                        Layout.topMargin: Math.round(15 * DefaultStyle.dp) // (84-27)-42
 						text: qsTr('rejoint...')
 						color: DefaultStyle.grey_0
 						Layout.alignment: Qt.AlignHCenter
 						horizontalAlignment: Text.AlignHCenter
 						font {
-							pixelSize: 20 * DefaultStyle.dp
-							weight: 500 * DefaultStyle.dp
+                            pixelSize: Math.round(20 * DefaultStyle.dp)
+                            weight: Math.round(500 * DefaultStyle.dp)
 						}
 					}
 				}
 			}
 			ColumnLayout {
 				anchors.centerIn: parent
-				spacing: 12 * DefaultStyle.dp
+                spacing: Math.round(12 * DefaultStyle.dp)
 				visible: mainItem.remoteIsPaused
 				EffectImage {
 					imageSource: AppIcons.pause
@@ -153,8 +153,8 @@ Item {
 					Layout.alignment: Qt.AlignHCenter
 					text: qsTr("En pause")
 					font {
-						pixelSize: 20 * DefaultStyle.dp
-						weight: 500 * DefaultStyle.dp
+                        pixelSize: Math.round(20 * DefaultStyle.dp)
+                        weight: Math.round(500 * DefaultStyle.dp)
 					}
 				}
 			}
@@ -162,7 +162,7 @@ Item {
 				spacing: 0
 				visible: mainItem.displayAll && !mainItem.remoteIsPaused && !mainItem.conference
 				anchors.top: centerItem.bottom
-				anchors.topMargin: 21 * DefaultStyle.dp
+                anchors.topMargin: Math.round(21 * DefaultStyle.dp)
 				anchors.left: parent.left
 				anchors.right: parent.right
 				Text {
@@ -171,8 +171,8 @@ Item {
 					text: mainItem.displayName
 					color: DefaultStyle.grey_0
 					font {
-						pixelSize: 22 * DefaultStyle.dp
-						weight: 300 * DefaultStyle.dp
+                        pixelSize: Math.round(22 * DefaultStyle.dp)
+                        weight: Math.round(300 * DefaultStyle.dp)
 						capitalization: Font.Capitalize
 					}
 				}
@@ -183,8 +183,8 @@ Item {
 					text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
 					color: DefaultStyle.grey_0
 					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 300 * DefaultStyle.dp
+                        pixelSize: Math.round(14 * DefaultStyle.dp)
+                        weight: Math.round(300 * DefaultStyle.dp)
 					}
 				}
 			}
@@ -248,9 +248,9 @@ Item {
 			anchors.left: parent.left
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
-			anchors.leftMargin: 10 * DefaultStyle.dp
-			anchors.rightMargin: 10 * DefaultStyle.dp
-			anchors.bottomMargin: 10 * DefaultStyle.dp
+            anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
+            anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
+            anchors.bottomMargin: Math.round(10 * DefaultStyle.dp)
 			width: implicitWidth
 			maximumLineCount: 1
 			property string _text: mainItem.displayName != ''
@@ -261,8 +261,8 @@ Item {
 			text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
 			color: DefaultStyle.grey_0
 			font {
-				pixelSize: 14 * DefaultStyle.dp
-				weight: 500 * DefaultStyle.dp
+                pixelSize: Math.round(14 * DefaultStyle.dp)
+                weight: Math.round(500 * DefaultStyle.dp)
 			}
 		}
 	}
@@ -279,22 +279,22 @@ Item {
 	RowLayout{
 		anchors.right: parent.right
 		anchors.top: parent.top
-		anchors.rightMargin: 8 * DefaultStyle.dp
-		anchors.topMargin: 8 * DefaultStyle.dp
+        anchors.rightMargin: Math.round(8 * DefaultStyle.dp)
+        anchors.topMargin: Math.round(8 * DefaultStyle.dp)
 		
-		height: 18 * DefaultStyle.dp
+        height: Math.round(18 * DefaultStyle.dp)
 		spacing: 0
 		Rectangle {
 			id: muteIcon
-			Layout.preferredWidth: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
-			Layout.preferredHeight: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
+            Layout.preferredWidth: Math.min(mainItem.width / 16, Math.round(20 * DefaultStyle.dp))
+            Layout.preferredHeight: Math.min(mainItem.width / 16, Math.round(20 * DefaultStyle.dp))
 			visible: mainItem.mutedStatus
 			color: DefaultStyle.grey_0
 			radius: width /2
 			EffectImage {
 				anchors.centerIn: parent
-				imageWidth: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
-				imageHeight: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
+                imageWidth: Math.min(mainItem.width / 16, Math.round(20 * DefaultStyle.dp))
+                imageHeight: Math.min(mainItem.width / 16, Math.round(20 * DefaultStyle.dp))
 				imageSource: AppIcons.microphoneSlash
 				colorizationColor: DefaultStyle.main2_500main
 			}

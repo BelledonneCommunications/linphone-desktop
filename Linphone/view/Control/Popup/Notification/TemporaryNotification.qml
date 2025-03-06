@@ -4,13 +4,13 @@ import Linphone
 
 Control.Control {
 	id: mainItem
-	// width: 269 * DefaultStyle.dp
+    // width: Math.round(269 * DefaultStyle.dp)
 	y: -height
 	z: 1
-	topPadding: 8 * DefaultStyle.dp
-	bottomPadding: 8 * DefaultStyle.dp
-	leftPadding: 37 * DefaultStyle.dp
-	rightPadding: 37 * DefaultStyle.dp
+    topPadding: Math.round(8 * DefaultStyle.dp)
+    bottomPadding: Math.round(8 * DefaultStyle.dp)
+    leftPadding: Math.round(37 * DefaultStyle.dp)
+    rightPadding: Math.round(37 * DefaultStyle.dp)
 	anchors.horizontalCenter: parent.horizontalCenter
 	clip: true
 
@@ -41,15 +41,15 @@ Control.Control {
 		anchors.fill: parent
 		color: DefaultStyle.grey_0
 		border.color: mainItem.contentColor
-		border.width:  1 * DefaultStyle.dp
-		radius: 50 * DefaultStyle.dp
+        border.width:  Math.max(Math.round(1 * DefaultStyle.dp), 1)
+        radius: Math.round(50 * DefaultStyle.dp)
 	}
 	contentItem: RowLayout {
 		Image {
 			visible: mainItem.imageSource != undefined
 			source: mainItem.imageSource
-			Layout.preferredWidth: 24 * DefaultStyle.dp
-			Layout.preferredHeight: 24 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 			fillMode: Image.PreserveAspectFit
 			Layout.fillWidth: true
 		}
@@ -58,7 +58,7 @@ Control.Control {
 			text: mainItem.text
 			Layout.fillWidth: true
 			font {
-				pixelSize: 14 * DefaultStyle.dp
+                pixelSize: Math.round(14 * DefaultStyle.dp)
 			}
 		}
 	}

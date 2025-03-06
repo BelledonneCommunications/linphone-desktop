@@ -13,7 +13,7 @@ MouseArea{
 			yClicked = mouseY
 		}
 	}
-	property int margin: 0
+    property real margin: 0
 // Position buffer
 	property int xClicked : 0
 	property int yClicked : 0

@@ -9,11 +9,11 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 // =============================================================================
 Dialog {
 	id: mainItem
-	width: 436 * DefaultStyle.dp
-	rightPadding: 0 * DefaultStyle.dp
-	leftPadding: 0 * DefaultStyle.dp
-	topPadding: 85 * DefaultStyle.dp + 24 * DefaultStyle.dp
-	bottomPadding: 24 * DefaultStyle.dp
+    width: Math.round(436 * DefaultStyle.dp)
+    rightPadding: Math.round(0 * DefaultStyle.dp)
+    leftPadding: Math.round(0 * DefaultStyle.dp)
+    topPadding: Math.round(85 * DefaultStyle.dp) + Math.round(24 * DefaultStyle.dp)
+    bottomPadding: Math.round(24 * DefaultStyle.dp)
 	modal: true
 	closePolicy: Popup.NoAutoClose
 
@@ -39,10 +39,10 @@ Dialog {
 			radius: mainItem.radius
 			Layout.ColumnLayout {
 				anchors.top: parent.top
-				anchors.topMargin: 18 * DefaultStyle.dp
+                anchors.topMargin: Math.round(18 * DefaultStyle.dp)
 				anchors.horizontalCenter: parent.horizontalCenter
 				Item {
-					// spacing: 14 * DefaultStyle.dp
+                    // spacing: Math.round(14 * DefaultStyle.dp)
 					Layout.Layout.preferredWidth: childrenRect.width
 					Layout.Layout.preferredHeight: childrenRect.height
 					Layout.Layout.fillWidth: true
@@ -50,19 +50,19 @@ Dialog {
 						id: trustShield
 						anchors.centerIn: parent
 						source: AppIcons.trustedWhite
-						sourceSize.width: 24 * DefaultStyle.dp
-						sourceSize.height: 24 * DefaultStyle.dp
-						width: 24 * DefaultStyle.dp
-						height: 24 * DefaultStyle.dp
+                        sourceSize.width: Math.round(24 * DefaultStyle.dp)
+                        sourceSize.height: Math.round(24 * DefaultStyle.dp)
+                        width: Math.round(24 * DefaultStyle.dp)
+                        height: Math.round(24 * DefaultStyle.dp)
 					}
 					EffectImage {
 						anchors.left: trustShield.right
-						anchors.leftMargin: 14 * DefaultStyle.dp
+                        anchors.leftMargin: Math.round(14 * DefaultStyle.dp)
 						visible: mainItem.securityError
 						imageSource: AppIcons.shieldWarning
 						colorizationColor: DefaultStyle.main2_700
-						width: 24 * DefaultStyle.dp
-						height: 24 * DefaultStyle.dp
+                        width: Math.round(24 * DefaultStyle.dp)
+                        height: Math.round(24 * DefaultStyle.dp)
 					}
 				}
 				Text {
@@ -70,8 +70,8 @@ Dialog {
 					color: DefaultStyle.grey_0
 					Layout.Layout.alignment: Qt.AlignHCenter
 					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 700 * DefaultStyle.dp
+                        pixelSize: Typography.p2l.pixelSize
+                        weight: Typography.p2l.weight
 					}
 				}
 				Item{Layout.Layout.fillHeight: true}
@@ -80,8 +80,8 @@ Dialog {
 				visible: !mainItem.securityError
 				anchors.top: parent.top
 				anchors.right: parent.right
-				anchors.topMargin: 10 * DefaultStyle.dp
-				anchors.rightMargin: 17 * DefaultStyle.dp
+                anchors.topMargin: Math.round(10 * DefaultStyle.dp)
+                anchors.rightMargin: Math.round(17 * DefaultStyle.dp)
 				style: ButtonStyle.noBackground
 				text: qsTr("Passer")
 				textColor: DefaultStyle.grey_0
@@ -97,9 +97,9 @@ Dialog {
 		Rectangle {
 			z: 1
 			width: mainItem.width
-			height: parent.height - 85 * DefaultStyle.dp
+            height: parent.height - Math.round(85 * DefaultStyle.dp)
 			x: parent.x
-			y: parent.y + 85 * DefaultStyle.dp
+            y: parent.y + Math.round(85 * DefaultStyle.dp)
 			color: DefaultStyle.grey_0
 			radius: mainItem.radius
 		}
@@ -116,21 +116,21 @@ Dialog {
 	content: [
 		Layout.ColumnLayout {
 			visible: !mainItem.securityError
-			spacing: 20 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
 			Layout.Layout.alignment: Qt.AlignHCenter
 			Layout.Layout.fillWidth: true
 			Layout.ColumnLayout {
-				spacing: 10 * DefaultStyle.dp
+                spacing: Math.round(10 * DefaultStyle.dp)
 				Layout.Layout.alignment: Qt.AlignHCenter
 				Text {
-					Layout.Layout.preferredWidth: 343 * DefaultStyle.dp
+                    Layout.Layout.preferredWidth: Math.round(343 * DefaultStyle.dp)
 					Layout.Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
 					text: !mainItem.isTokenVerified && mainItem.isCaseMismatch
 					? qsTr("Pour garantir le chiffrement, nous avons besoin de réauthentifier  l’appareil de votre correspondant. Echangez vos codes :")
 					: qsTr("Pour garantir le chiffrement, nous avons besoin d’authentifier l’appareil de votre correspondant. Veuillez échanger vos codes : ")
 					wrapMode: Text.WordWrap
-					font.pixelSize: 14 * DefaultStyle.dp
+                    font.pixelSize: Math.round(14 * DefaultStyle.dp)
 				}
 				Layout.ColumnLayout {
 					spacing: 0
@@ -139,15 +139,15 @@ Dialog {
 						text: qsTr("Votre code :")
 						horizontalAlignment: Text.AlignHCenter
 						Layout.Layout.alignment: Qt.AlignHCenter
-						font.pixelSize: 14 * DefaultStyle.dp
+                        font.pixelSize: Math.round(14 * DefaultStyle.dp)
 					}
 					Text {
 						text: mainItem.call && mainItem.call.core.localToken || ""
 						horizontalAlignment: Text.AlignHCenter
 						Layout.Layout.alignment: Qt.AlignHCenter
 						font {
-							pixelSize: 18 * DefaultStyle.dp
-							weight: 700 * DefaultStyle.dp
+                            pixelSize: Typography.b1.pixelSize
+                            weight: Typography.b1.weight
 						}
 					}
 				}
@@ -155,17 +155,17 @@ Dialog {
 			Rectangle {
 				color: "transparent"
 				border.color: DefaultStyle.main2_200
-				border.width: Math.max(0.5, 1 * DefaultStyle.dp)
-				radius: 15 * DefaultStyle.dp
-				Layout.Layout.preferredWidth: 292 * DefaultStyle.dp
-				Layout.Layout.preferredHeight: 233 * DefaultStyle.dp
+                border.width: Math.max(1, Math.round(1 * DefaultStyle.dp))
+                radius: Math.round(15 * DefaultStyle.dp)
+                Layout.Layout.preferredWidth: Math.round(292 * DefaultStyle.dp)
+                Layout.Layout.preferredHeight: Math.round(233 * DefaultStyle.dp)
 				Layout.Layout.alignment: Qt.AlignHCenter
 				Layout.ColumnLayout {
 					anchors.fill: parent
-					anchors.topMargin: 10 * DefaultStyle.dp
+                    anchors.topMargin: Math.round(10 * DefaultStyle.dp)
 					Text {
 						text: qsTr("Code correspondant :")
-						font.pixelSize: 14 * DefaultStyle.dp
+                        font.pixelSize: Math.round(14 * DefaultStyle.dp)
 						Layout.Layout.alignment: Qt.AlignHCenter
 					}
 					Layout.GridLayout {
@@ -173,22 +173,22 @@ Dialog {
 						Layout.Layout.alignment: Qt.AlignHCenter
 						rows: 2
 						columns: 2
-						rowSpacing: 32 * DefaultStyle.dp
-						columnSpacing: 32 * DefaultStyle.dp
+                        rowSpacing: Math.round(32 * DefaultStyle.dp)
+                        columnSpacing: Math.round(32 * DefaultStyle.dp)
 						property var correctIndex
 						property var modelList
 						Repeater {
 							model: mainItem.call && mainItem.call.core.remoteTokens || ""
 							Button {
-								Layout.Layout.preferredWidth: 70 * DefaultStyle.dp
-								Layout.Layout.preferredHeight: 70 * DefaultStyle.dp
-								width: 70 * DefaultStyle.dp
-								height: 70 * DefaultStyle.dp
+                                Layout.Layout.preferredWidth: Math.round(70 * DefaultStyle.dp)
+                                Layout.Layout.preferredHeight: Math.round(70 * DefaultStyle.dp)
+                                width: Math.round(70 * DefaultStyle.dp)
+                                height: Math.round(70 * DefaultStyle.dp)
 								color: DefaultStyle.grey_0
-								textSize: 32 * DefaultStyle.dp
-								textWeight: 400 * DefaultStyle.dp
+                                textSize: Math.round(32 * DefaultStyle.dp)
+                                textWeight: Math.round(400 * DefaultStyle.dp)
 								text: modelData
-								radius: 71 * DefaultStyle.dp
+                                radius: Math.round(71 * DefaultStyle.dp)
 								textColor: DefaultStyle.main2_600
 								onClicked: {
 									console.log("CHECK TOKEN", modelData)
@@ -205,24 +205,24 @@ Dialog {
 			spacing: 0
 
 			Text {
-				width: 303 * DefaultStyle.dp
-				// Layout.Layout.preferredWidth: 343 * DefaultStyle.dp
+                width: Math.round(303 * DefaultStyle.dp)
+                // Layout.Layout.preferredWidth: Math.round(343 * DefaultStyle.dp)
 				Layout.Layout.alignment: Qt.AlignHCenter
 				Layout.Layout.fillWidth: true
 				horizontalAlignment: Text.AlignHCenter
 				text: qsTr("Le code fourni ne correspond pas.")
 				wrapMode: Text.WordWrap
-				font.pixelSize: 14 * DefaultStyle.dp
+                font.pixelSize: Math.round(14 * DefaultStyle.dp)
 			}
 			Text {
-				width: 303 * DefaultStyle.dp
-				// Layout.Layout.preferredWidth: 343 * DefaultStyle.dp
+                width: Math.round(303 * DefaultStyle.dp)
+                // Layout.Layout.preferredWidth: Math.round(343 * DefaultStyle.dp)
 				Layout.Layout.alignment: Qt.AlignHCenter
 				Layout.Layout.fillWidth: true
 				horizontalAlignment: Text.AlignHCenter
 				text: qsTr("La confidentialité de votre appel peut être compromise !")
 				wrapMode: Text.WordWrap
-				font.pixelSize: 14 * DefaultStyle.dp
+                font.pixelSize: Math.round(14 * DefaultStyle.dp)
 			}
 		}
 	]
@@ -231,7 +231,7 @@ Dialog {
 		Layout.Layout.alignment: Qt.AlignHCenter
 		MediumButton {
 			Layout.Layout.alignment: Qt.AlignHCenter
-			Layout.Layout.preferredWidth: 247 * DefaultStyle.dp
+            Layout.Layout.preferredWidth: Math.round(247 * DefaultStyle.dp)
 			text: qsTr("Aucune correspondance")
 			color: DefaultStyle.grey_0
 			borderColor: DefaultStyle.danger_500main
@@ -242,12 +242,12 @@ Dialog {
 			}
 		}
 		MediumButton {
-			Layout.Layout.preferredWidth: 247 * DefaultStyle.dp
+            Layout.Layout.preferredWidth: Math.round(247 * DefaultStyle.dp)
 			Layout.Layout.alignment: Qt.AlignHCenter
 			visible: mainItem.securityError
 			style: ButtonStyle.phoneRed
 			onClicked: mainItem.call.core.lTerminate()
-			spacing: 15 * DefaultStyle.dp
+            spacing: Math.round(15 * DefaultStyle.dp)
 			text: qsTr("Raccrocher")
 		}
 	}

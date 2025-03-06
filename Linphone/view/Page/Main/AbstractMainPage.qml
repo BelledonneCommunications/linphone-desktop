@@ -25,16 +25,16 @@ FocusScope {
 	// Control.SplitView {
 	// 	id: splitView
 	// 	anchors.fill: parent
-	// 	anchors.topMargin: 10 * DefaultStyle.dp
+    // 	anchors.topMargin: Math.round(10 * DefaultStyle.dp)
 
 	// 	handle: Rectangle {
-	// 		implicitWidth: 8 * DefaultStyle.dp
+    // 		implicitWidth: Math.round(8 * DefaultStyle.dp)
 	// 		color: Control.SplitHandle.hovered ? DefaultStyle.grey_200 : DefaultStyle.grey_100
 	// 	}
 	// 	ColumnLayout {
 	// 		id: leftPanel
-	// 		Control.SplitView.preferredWidth: 350 * DefaultStyle.dp
-	// 		Control.SplitView.minimumWidth: 350 * DefaultStyle.dp
+    // 		Control.SplitView.preferredWidth: Math.round(350 * DefaultStyle.dp)
+    // 		Control.SplitView.minimumWidth: Math.round(350 * DefaultStyle.dp)
 	// 	}
 	// 	Rectangle {
 	// 		id: rightPanel
@@ -56,23 +56,23 @@ FocusScope {
 	// 						Layout.fillWidth: true
 	// 					}
 	// 					ColumnLayout {
-	// 						spacing: 30 * DefaultStyle.dp
+    // 						spacing: Math.round(30 * DefaultStyle.dp)
 	// 						Item {
 	// 							Layout.fillHeight: true
 	// 						}
 	// 						Image {
 	// 							Layout.alignment: Qt.AlignHCenter
 	// 							source: AppIcons.noItemImage
-	// 							Layout.preferredWidth: 359 * DefaultStyle.dp
-	// 							Layout.preferredHeight: 314 * DefaultStyle.dp
+    // 							Layout.preferredWidth: Math.round(359 * DefaultStyle.dp)
+    // 							Layout.preferredHeight: Math.round(314 * DefaultStyle.dp)
 	// 							fillMode: Image.PreserveAspectFit
 	// 						}
 	// 						Text {
 	// 							text: mainItem.emptyListText
 	// 							Layout.alignment: Qt.AlignHCenter
 	// 							font {
-	// 								pixelSize: 22 * DefaultStyle.dp
-	// 								weight: 800 * DefaultStyle.dp
+    // 								pixelSize: Math.round(22 * DefaultStyle.dp)
+    // 								weight: Math.round(800 * DefaultStyle.dp)
 	// 							}
 	// 						}
 	// 						Button {
@@ -82,8 +82,8 @@ FocusScope {
 	// 								EffectImage {
 	// 									colorizationColor: DefaultStyle.grey_0
 	// 									source: mainItem.newItemIconSource
-	// 									width: 24 * DefaultStyle.dp
-	// 									height: 24 * DefaultStyle.dp
+    // 									width: Math.round(24 * DefaultStyle.dp)
+    // 									height: Math.round(24 * DefaultStyle.dp)
 	// 									fillMode: Image.PreserveAspectFit
 	// 								}
 	// 								Text {
@@ -91,8 +91,8 @@ FocusScope {
 	// 									wrapMode: Text.WordWrap
 	// 									color: DefaultStyle.grey_0
 	// 									font {
-	// 										weight: 600 * DefaultStyle.dp
-	// 										pixelSize: 18 * DefaultStyle.dp
+    // 										weight: Math.round(600 * DefaultStyle.dp)
+    // 										pixelSize: Math.round(18 * DefaultStyle.dp)
 	// 										family: DefaultStyle.defaultFont
 	// 									}
 	// 								}
@@ -123,13 +123,13 @@ FocusScope {
 		spacing: 0
 		ColumnLayout {
 			id: leftPanel
-			Layout.preferredWidth: 404 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(404 * DefaultStyle.dp)
 			Layout.fillWidth:false
 			spacing:0
 		}
 		Rectangle {
 			Layout.fillHeight: true
-			Layout.preferredWidth: 1 * DefaultStyle.dp
+            Layout.preferredWidth: Math.max(Math.round(1 * DefaultStyle.dp), 1)
 			color: DefaultStyle.main2_200
 		}
 		Rectangle {
@@ -151,23 +151,23 @@ FocusScope {
 							Layout.fillWidth: true
 						}
 						ColumnLayout {
-							spacing: 30 * DefaultStyle.dp
+                            spacing: Math.round(30 * DefaultStyle.dp)
 							Item {
 								Layout.fillHeight: true
 							}
 							Image {
 								Layout.alignment: Qt.AlignHCenter
 								source: AppIcons.noItemImage
-								Layout.preferredWidth: 359 * DefaultStyle.dp
-								Layout.preferredHeight: 314 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(359 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(314 * DefaultStyle.dp)
 								fillMode: Image.PreserveAspectFit
 							}
 							Text {
 								text: mainItem.emptyListText
 								Layout.alignment: Qt.AlignHCenter
 								font {
-									pixelSize: 22 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+                                    pixelSize: Typography.h3.pixelSize
+                                    weight: Typography.h3.weight
 								}
 							}
 							BigButton {
@@ -175,7 +175,7 @@ FocusScope {
 								icon.source: mainItem.newItemIconSource
 								style: ButtonStyle.main
 								text: mainItem.noItemButtonText
-								spacing: 8 * DefaultStyle.dp
+                                spacing: Math.round(8 * DefaultStyle.dp)
 								onPressed: mainItem.noItemButtonPressed()
 							}
 							Item {

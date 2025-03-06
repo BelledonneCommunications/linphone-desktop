@@ -36,8 +36,8 @@ Mosaic {
 				if(index < 0) cameraView.enabled = false	// this is a delegate destruction. We need to stop camera before Qt change its currentDevice (and then, let CameraView to delete wrong renderer)
 			}
 			
-			height: grid.cellHeight - 10 * DefaultStyle.dp
-			width: grid.cellWidth - 10 * DefaultStyle.dp
+            height: grid.cellHeight - Math.round(10 * DefaultStyle.dp)
+            width: grid.cellWidth - Math.round(10 * DefaultStyle.dp)
 			Sticker {
 				id: cameraView
 				previewEnabled: index == 0

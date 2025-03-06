@@ -24,7 +24,7 @@ MainRightPanel {
 	property string title: qsTr("Modifier contact")
 	property string saveButtonText: qsTr("Enregistrer")
 	property string oldPictureUri
-	property int addressCount: 0
+    property int addressCount: 0
 	
 	signal closeEdition(var redirectAddress)	
 
@@ -34,31 +34,31 @@ MainRightPanel {
 			mainItem.contact.core.undo()
 			mainItem.closeEdition('')
 		}
-		width: 278 * DefaultStyle.dp
+        width: Math.round(278 * DefaultStyle.dp)
 		text: qsTr("Les changements seront annulés. Souhaitez-vous continuer ?")
 	}
 
 	headerContent: [
 			Text {
 				anchors.left: parent.left
-				anchors.leftMargin: 31 * DefaultStyle.dp
+                anchors.leftMargin: Math.round(31 * DefaultStyle.dp)
 				anchors.verticalCenter: parent.verticalCenter
 				text: mainItem.title
 				font {
-					pixelSize: 20 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+                    pixelSize: Math.round(20 * DefaultStyle.dp)
+                    weight: Typography.h4.weight
 				}
 			},
 			Button {
 				style: ButtonStyle.noBackground
 				anchors.right: parent.right
-				anchors.rightMargin: 41 * DefaultStyle.dp
+                anchors.rightMargin: Math.round(41 * DefaultStyle.dp)
 				anchors.verticalCenter: parent.verticalCenter
-				width: 24 * DefaultStyle.dp
-				height: 24 * DefaultStyle.dp
+                width: Math.round(24 * DefaultStyle.dp)
+                height: Math.round(24 * DefaultStyle.dp)
 				icon.source: AppIcons.closeX
-				icon.width: 24 * DefaultStyle.dp
-				icon.height: 24 * DefaultStyle.dp
+                icon.width: Math.round(24 * DefaultStyle.dp)
+                icon.height: Math.round(24 * DefaultStyle.dp)
 				onClicked: {
 					if (contact.core.isSaved) mainItem.closeEdition('')
 					else showConfirmationLambdaPopup("", qsTr("Les changements seront annulés. Souhaitez-vous continuer ?"), "", function(confirmed) {
@@ -102,8 +102,8 @@ MainRightPanel {
 				visible: !mainItem.contact || mainItem.contact.core.pictureUri.length === 0
 				icon.source: AppIcons.camera
 				text: qsTr("Ajouter une image")
-				textSize: 16 * DefaultStyle.dp
-				textWeight: 800 * DefaultStyle.dp
+                textSize: Typography.h4.pixelSize
+                textWeight: Typography.h4.weight
 				textColor: DefaultStyle.main2_700
 				hoveredTextColor: DefaultStyle.main2_800
 				pressedTextColor: DefaultStyle.main2_900
@@ -113,7 +113,7 @@ MainRightPanel {
 			RowLayout {
 				visible: mainItem.contact && mainItem.contact.core.pictureUri.length != 0
 				Layout.alignment: Qt.AlignHCenter
-				spacing: 32 * DefaultStyle.dp
+                spacing: Math.round(32 * DefaultStyle.dp)
 				IconLabelButton {
 					id: editButton
 					Layout.preferredWidth: width
@@ -122,8 +122,8 @@ MainRightPanel {
 					textColor: DefaultStyle.main2_700
 					hoveredTextColor: DefaultStyle.main2_800
 					pressedTextColor: DefaultStyle.main2_900
-					textSize: 16 * DefaultStyle.dp
-					textWeight: 800 * DefaultStyle.dp
+                    textSize: Typography.h4.pixelSize
+                    textWeight: Typography.h4.weight
 					KeyNavigation.right: removeButton
 					onClicked: fileDialog.open()
 				}
@@ -146,8 +146,8 @@ MainRightPanel {
 					textColor: DefaultStyle.main2_700
 					hoveredTextColor: DefaultStyle.main2_800
 					pressedTextColor: DefaultStyle.main2_900
-					textSize: 16 * DefaultStyle.dp
-					textWeight: 800 * DefaultStyle.dp
+                    textSize: Typography.h4.pixelSize
+                    textWeight: Typography.h4.weight
 					KeyNavigation.left: editButton
 					onClicked: mainItem.contact.core.pictureUri = ""
 				}
@@ -156,7 +156,7 @@ MainRightPanel {
 		]
 		content: Flickable {
 			id: editionLayout
-			contentWidth: 421 * DefaultStyle.dp
+            contentWidth: Math.round(421 * DefaultStyle.dp)
 			contentY: 0
 
 			signal ensureVisibleRequested(Item item)
@@ -184,7 +184,7 @@ MainRightPanel {
 			ScrollBar.horizontal: Control.ScrollBar {
 			}
 			ColumnLayout {
-				spacing: 20 * DefaultStyle.dp
+                spacing: Math.round(20 * DefaultStyle.dp)
 				anchors.left: parent.left
 				anchors.right: parent.right
 
@@ -195,7 +195,7 @@ MainRightPanel {
 					label: qsTr("Prénom")
 					contentItem: TextField {
 						id: givenNameEdit
-						Layout.preferredHeight: 49 * DefaultStyle.dp
+                        Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
 						initialText: contact.core.givenName
 						onTextEdited: {
 							contact.core.givenName = givenNameEdit.text
@@ -260,7 +260,7 @@ MainRightPanel {
 						label: modelData.label
 						contentItem: RowLayout {
 							id: addressLayout
-							spacing: 10 * DefaultStyle.dp
+                            spacing: Math.round(10 * DefaultStyle.dp)
 							function updateFocus(event){
 								if(event.key == Qt.Key_Up){
 									if(index - 1 >=0 )
@@ -278,7 +278,7 @@ MainRightPanel {
 							}
 							TextField {
 								id: addressTextField
-								Layout.preferredWidth: 421 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(421 * DefaultStyle.dp)
 								Layout.preferredHeight: height
 								onEditingFinished: {
 									if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Adresse SIP"), text)
@@ -292,12 +292,12 @@ MainRightPanel {
 							}
 							Button {
 								id: removeAddressButton
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 								Layout.alignment: Qt.AlignVCenter
 								icon.source: AppIcons.closeX
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
+                                icon.width: Math.round(24 * DefaultStyle.dp)
+                                icon.height: Math.round(24 * DefaultStyle.dp)
 								style: ButtonStyle.noBackground
 								KeyNavigation.left: addressTextField
 								Keys.onPressed: (event) => addressLayout.updateFocus(event)
@@ -347,7 +347,7 @@ MainRightPanel {
 						label: modelData.label
 						contentItem: RowLayout {
 							id: phoneNumberLayout
-							spacing: 10 * DefaultStyle.dp
+                            spacing: Math.round(10 * DefaultStyle.dp)
 							function updateFocus(event){
 								if(event.key == Qt.Key_Up){
 									if(index - 1 >=0 )
@@ -365,7 +365,7 @@ MainRightPanel {
 							}
 							TextField {
 								id: phoneTextField
-								Layout.preferredWidth: 421 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(421 * DefaultStyle.dp)
 								Layout.preferredHeight: height
 								initialText: modelData.address
 								backgroundColor: DefaultStyle.grey_0
@@ -378,13 +378,13 @@ MainRightPanel {
 							}
 							Button {
 								id: removePhoneButton
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 								Layout.alignment: Qt.AlignVCenter
 								style: ButtonStyle.noBackground
 								icon.source: AppIcons.closeX
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
+                                icon.width: Math.round(24 * DefaultStyle.dp)
+                                icon.height: Math.round(24 * DefaultStyle.dp)
 								KeyNavigation.left: phoneTextField
 								Keys.onPressed: (event) => phoneNumberLayout.updateFocus(event)
 								onClicked: mainItem.contact.core.removePhoneNumber(index)

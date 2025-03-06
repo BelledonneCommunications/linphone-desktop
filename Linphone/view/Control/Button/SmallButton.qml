@@ -8,10 +8,10 @@ Button {
 	id: mainItem
 	textSize: Typography.b3.pixelSize
 	textWeight: Typography.b3.weight
-	leftPadding: 12 * DefaultStyle.dp
-	rightPadding: 12 * DefaultStyle.dp
-	topPadding: 6 * DefaultStyle.dp
-	bottomPadding: 6 * DefaultStyle.dp
-	icon.height: 14 * DefaultStyle.dp
-	icon.width: 14 * DefaultStyle.dp
+    leftPadding: Math.round(12 * DefaultStyle.dp)
+    rightPadding: Math.round(12 * DefaultStyle.dp)
+    topPadding: Math.round(6 * DefaultStyle.dp)
+    bottomPadding: Math.round(6 * DefaultStyle.dp)
+    icon.height: Math.round(14 * DefaultStyle.dp)
+    icon.width: Math.round(14 * DefaultStyle.dp)
 }

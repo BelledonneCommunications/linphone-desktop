@@ -12,15 +12,15 @@ FocusScope {
 
 	ColumnLayout {
 		anchors.fill: parent
-		anchors.topMargin: 16 * DefaultStyle.dp
-		anchors.bottomMargin: 16 * DefaultStyle.dp
-		anchors.leftMargin: 17 * DefaultStyle.dp
-		anchors.rightMargin: 17 * DefaultStyle.dp
-		spacing: 12 * DefaultStyle.dp
+        anchors.topMargin: Math.round(16 * DefaultStyle.dp)
+        anchors.bottomMargin: Math.round(16 * DefaultStyle.dp)
+        anchors.leftMargin: Math.round(17 * DefaultStyle.dp)
+        anchors.rightMargin: Math.round(17 * DefaultStyle.dp)
+        spacing: Math.round(12 * DefaultStyle.dp)
 		// Text {
 		// 	Layout.fillWidth: true
 		// 	text: qsTr("La disposition choisie sera enregistrée pour vos prochaines réunions")
-		// 	font.pixelSize: 14 * DefaultStyle.dp
+        // 	font.pixelSize: Math.round(14 * DefaultStyle.dp)
 		// 	color: DefaultStyle.main2_500main
 		// }
 		RoundedPane {
@@ -37,9 +37,9 @@ FocusScope {
 						id: radiobutton
 						checkOnClick: false
 						color: DefaultStyle.main1_500_main
-						indicatorSize: 20 * DefaultStyle.dp
+                        indicatorSize: Math.round(20 * DefaultStyle.dp)
 						leftPadding: indicator.width + spacing
-						spacing: 8 * DefaultStyle.dp
+                        spacing: Math.round(8 * DefaultStyle.dp)
 						checkable: false	// Qt Documentation is wrong: It is true by default. We don't want to change the checked state if the layout change is not effective.
 						checked: index == 0
 									? mainItem.conferenceLayout === LinphoneEnums.ConferenceLayout.Grid
@@ -49,11 +49,11 @@ FocusScope {
 						onClicked: mainItem.changeLayoutRequested(index)
 
 						contentItem: RowLayout {
-							spacing: 5 * DefaultStyle.dp
+                            spacing: Math.round(5 * DefaultStyle.dp)
 							EffectImage {
 								id: radioButtonImg
-								Layout.preferredWidth: 32 * DefaultStyle.dp
-								Layout.preferredHeight: 32 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
 								imageSource: modelData.imgUrl
 								colorizationColor: DefaultStyle.main2_500main
 							}
@@ -61,7 +61,7 @@ FocusScope {
 								text: modelData.text
 								color: DefaultStyle.main2_500main
 								verticalAlignment: Text.AlignVCenter
-								font.pixelSize: 14 * DefaultStyle.dp
+                                font.pixelSize: Math.round(14 * DefaultStyle.dp)
 								Layout.fillWidth: true
 							}
 						}

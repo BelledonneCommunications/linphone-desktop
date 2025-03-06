@@ -16,14 +16,14 @@ Rectangle {
 	property var model
 	color: DefaultStyle.grey_0
 	property var container
-	// property int contentHeight: contentListView.contentHeight
-	property int minimumWidthForSwitchintToRowLayout: 981 * DefaultStyle.dp
+    // property real contentHeight: contentListView.contentHeight
+    property real minimumWidthForSwitchintToRowLayout: Math.round(981 * DefaultStyle.dp)
 	property var useVerticalLayout
 	property bool saveButtonVisible: true
 	signal save()
 	signal undo()
 	function setResponsivityFlags() {
-		var newValue = width < minimumWidthForSwitchintToRowLayout * DefaultStyle.dp
+        var newValue = width < minimumWidthForSwitchintToRowLayout
 		if (useVerticalLayout != newValue) {
 			useVerticalLayout = newValue
 		}
@@ -38,8 +38,8 @@ Rectangle {
 		id: header
 		anchors.left: parent.left
 		anchors.right: parent.right
-		leftPadding: 45 * DefaultStyle.dp
-		rightPadding: 45 * DefaultStyle.dp
+        leftPadding: Math.round(45 * DefaultStyle.dp)
+        rightPadding: Math.round(45 * DefaultStyle.dp)
 		z: 1
 		background: Rectangle {
 			anchors.fill: parent
@@ -48,17 +48,17 @@ Rectangle {
 		contentItem: ColumnLayout {
 			RowLayout {
 				Layout.fillWidth: true
-				Layout.topMargin: 20 * DefaultStyle.dp
-				spacing: 5 * DefaultStyle.dp
-				Layout.bottomMargin: 10 * DefaultStyle.dp
+                Layout.topMargin: Math.round(20 * DefaultStyle.dp)
+                spacing: Math.round(5 * DefaultStyle.dp)
+                Layout.bottomMargin: Math.round(10 * DefaultStyle.dp)
 				Button {
 					id: backButton
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					Layout.preferredWidth: 24 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
 					icon.source: AppIcons.leftArrow
 					focus: true
 					visible: mainItem.container.depth > 1
-					Layout.rightMargin: 41 * DefaultStyle.dp
+                    Layout.rightMargin: Math.round(41 * DefaultStyle.dp)
 					style: ButtonStyle.noBackground
 					onClicked: {
 						mainItem.container.pop()
@@ -75,13 +75,13 @@ Rectangle {
 				Loader {
 					Layout.alignment: Qt.AlignRight
 					sourceComponent: mainItem.topbarOptionalComponent
-					Layout.rightMargin: 34 * DefaultStyle.dp
+                    Layout.rightMargin: Math.round(34 * DefaultStyle.dp)
 				}
 				MediumButton {
 					id: saveButton
 					style: ButtonStyle.main
 					text: qsTr("Enregistrer")
-					Layout.rightMargin: 6 * DefaultStyle.dp
+                    Layout.rightMargin: Math.round(6 * DefaultStyle.dp)
 					visible: mainItem.saveButtonVisible
 					onClicked: {
 						mainItem.save()
@@ -90,7 +90,7 @@ Rectangle {
 			}
 			Rectangle {
 				Layout.fillWidth: true
-				height: 1 * DefaultStyle.dp
+                height: Math.max(Math.round(1 * DefaultStyle.dp), 1)
 				color: DefaultStyle.main2_500main
 			}
 		}
@@ -101,7 +101,7 @@ Rectangle {
 		anchors.right: parent.right
 		anchors.bottom: parent.bottom
 		anchors.top: header.bottom
-		anchors.topMargin: 16 * DefaultStyle.dp
+        anchors.topMargin: Math.round(16 * DefaultStyle.dp)
 		// Workaround while the CI is made with Qt6.5.3
 		// When updated to 6.8, remove this Item and
 		// change the ScrollView with a Flickable
@@ -115,7 +115,7 @@ Rectangle {
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
-			anchors.rightMargin: 15 * DefaultStyle.dp
+            anchors.rightMargin: Math.round(15 * DefaultStyle.dp)
 		}
 		Control.ScrollBar.horizontal: ScrollBar {
 			active: false
@@ -125,19 +125,19 @@ Rectangle {
 			model: mainItem.contentModel
 			anchors.left: parent.left
 			anchors.right: parent.right
-			anchors.leftMargin: 45 * DefaultStyle.dp
-			anchors.rightMargin: 45 * DefaultStyle.dp
+            anchors.leftMargin: Math.round(45 * DefaultStyle.dp)
+            anchors.rightMargin: Math.round(45 * DefaultStyle.dp)
 			height: contentHeight
-			spacing: 10 * DefaultStyle.dp
+            spacing: Math.round(10 * DefaultStyle.dp)
 			delegate: ColumnLayout {
-				spacing: 16 * DefaultStyle.dp
+                spacing: Math.round(16 * DefaultStyle.dp)
 				width: contentListView.width
 				Rectangle {
 					visible: index !== 0
-					Layout.topMargin: (modelData.hideTopSeparator ? 0 : 16) * DefaultStyle.dp
-					Layout.bottomMargin: 16 * DefaultStyle.dp
+                    Layout.topMargin: Math.round((modelData.hideTopSeparator ? 0 : 16) * DefaultStyle.dp)
+                    Layout.bottomMargin: Math.round(16 * DefaultStyle.dp)
 					Layout.fillWidth: true
-					height: 1 * DefaultStyle.dp
+                    height: Math.max(Math.round(1 * DefaultStyle.dp), 1)
 					color: modelData.hideTopSeparator ? 'transparent' : DefaultStyle.main2_500main
 				}
 				GridLayout {
@@ -145,12 +145,12 @@ Rectangle {
 					columns: mainItem.useVerticalLayout ? 1 : 2
 					Layout.fillWidth: true
 					// Layout.preferredWidth: parent.width
-					rowSpacing: (modelData.title.length > 0 || modelData.subTitle.length > 0 ? 20 : 0) * DefaultStyle.dp
-					columnSpacing: 47 * DefaultStyle.dp
+                    rowSpacing: Math.round((modelData.title.length > 0 || modelData.subTitle.length > 0 ? 20 : 0) * DefaultStyle.dp)
+                    columnSpacing: Math.round(47 * DefaultStyle.dp)
 					ColumnLayout {
-						Layout.preferredWidth: 341 * DefaultStyle.dp
-						Layout.maximumWidth: 341 * DefaultStyle.dp
-						spacing: 3 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(341 * DefaultStyle.dp)
+                        Layout.maximumWidth: Math.round(341 * DefaultStyle.dp)
+                        spacing: Math.round(3 * DefaultStyle.dp)
 						Text {
 							text: modelData.title
 							visible: modelData.title.length > 0
@@ -172,10 +172,10 @@ Rectangle {
 						}
 					}
 					RowLayout {
-						Layout.topMargin: (modelData.hideTopMargin ? 0 : (mainItem.useVerticalLayout ? 10 : 21)) * DefaultStyle.dp
-						Layout.bottomMargin: 21 * DefaultStyle.dp
-						Layout.leftMargin: (mainItem.useVerticalLayout ? 0 : 17) * DefaultStyle.dp
-						Layout.preferredWidth: (modelData.customWidth > 0 ? modelData.customWidth : 545) * DefaultStyle.dp
+                        Layout.topMargin: Math.round((modelData.hideTopMargin ? 0 : (mainItem.useVerticalLayout ? 10 : 21)) * DefaultStyle.dp)
+                        Layout.bottomMargin: Math.round(21 * DefaultStyle.dp)
+                        Layout.leftMargin: mainItem.useVerticalLayout ? 0 : Math.round(17 * DefaultStyle.dp)
+                        Layout.preferredWidth: Math.round((modelData.customWidth > 0 ? modelData.customWidth : 545) * DefaultStyle.dp)
 						Layout.alignment: Qt.AlignRight
 						Loader {
 							id: contentLoader
@@ -183,7 +183,7 @@ Rectangle {
 							sourceComponent: modelData.contentComponent
 						}
 						Item {
-							Layout.preferredWidth: (modelData.customRightMargin > 0 ? modelData.customRightMargin : 17) * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round((modelData.customRightMargin > 0 ? modelData.customRightMargin : 17) * DefaultStyle.dp)
 						}
 					}
 				}

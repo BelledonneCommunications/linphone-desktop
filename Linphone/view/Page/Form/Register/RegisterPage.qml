@@ -32,8 +32,8 @@ LoginLayout {
 
 	titleContent: [
 		RowLayout {
-			spacing: 21 * DefaultStyle.dp
-			Layout.leftMargin: 79 * DefaultStyle.dp
+            spacing: Math.round(21 * DefaultStyle.dp)
+            Layout.leftMargin: Math.round(79 * DefaultStyle.dp)
 			BigButton {
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.leftArrow
@@ -45,16 +45,16 @@ LoginLayout {
 			EffectImage {
 				fillMode: Image.PreserveAspectFit
 				imageSource: AppIcons.profile
-				Layout.preferredHeight: 34 * DefaultStyle.dp
-				Layout.preferredWidth: 34 * DefaultStyle.dp
+                Layout.preferredHeight: Math.round(34 * DefaultStyle.dp)
+                Layout.preferredWidth: Math.round(34 * DefaultStyle.dp)
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
 				Layout.preferredWidth: width
 				text: qsTr("Inscription")
 				font {
-					pixelSize: 36 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+                    pixelSize: Typography.h1.pixelSize
+                    weight: Typography.h1.weight
 				}
 				wrapMode: Text.NoWrap
 				scaleLettersFactor: 1.1
@@ -64,15 +64,15 @@ LoginLayout {
 			Layout.fillWidth: true
 		},
 		RowLayout {
-			spacing: 20 * DefaultStyle.dp
-			Layout.rightMargin: 51 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
+            Layout.rightMargin: Math.round(51 * DefaultStyle.dp)
 			Text {
-				Layout.rightMargin: 15 * DefaultStyle.dp
+                Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
 				color: DefaultStyle.main2_700
 				text: qsTr("Déjà un compte ?")
 				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 400 * DefaultStyle.dp
+                    pixelSize: Typography.p1.pixelSize
+                    weight: Typography.p1.weight
 				}
 			}
 			BigButton {
@@ -89,10 +89,10 @@ LoginLayout {
 	centerContent: [
 		ColumnLayout {
 			anchors.fill: parent
-			anchors.topMargin: 51 * DefaultStyle.dp
-			anchors.leftMargin: 127 * DefaultStyle.dp
-			anchors.rightMargin: 127 * DefaultStyle.dp
-			spacing: 50 * DefaultStyle.dp
+            anchors.topMargin: Math.round(51 * DefaultStyle.dp)
+            anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
+            anchors.rightMargin: Math.round(127 * DefaultStyle.dp)
+            spacing: Math.round(50 * DefaultStyle.dp)
 			TabBar {
 				Layout.fillWidth: true
 				id: bar
@@ -104,34 +104,34 @@ LoginLayout {
 				ColumnLayout {
 					anchors.left: parent.left
 					anchors.right: parent.right
-					spacing: 22 * DefaultStyle.dp
+                    spacing: Math.round(22 * DefaultStyle.dp)
 					ColumnLayout {
-						spacing: 24 * DefaultStyle.dp
+                        spacing: Math.round(24 * DefaultStyle.dp)
 						RowLayout {
 							Layout.preferredHeight: usernameItem.height
-							spacing: 16 * DefaultStyle.dp
+                            spacing: Math.round(16 * DefaultStyle.dp)
 							FormItemLayout {
 								id: usernameItem
 								label: qsTr("Username")
 								mandatory: true
 								enableErrorText: true
-								Layout.preferredWidth: 346 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
 								contentItem: TextField {
 									id: usernameInput
 									backgroundBorderColor: usernameItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 								}
 							}
 							RowLayout {
-								spacing: 10 * DefaultStyle.dp
+                                spacing: Math.round(10 * DefaultStyle.dp)
 								ComboBox {
-									Layout.preferredWidth: 210 * DefaultStyle.dp
-									Layout.preferredHeight: 49 * DefaultStyle.dp
+                                    Layout.preferredWidth: Math.round(210 * DefaultStyle.dp)
+                                    Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
 									enabled: false
 									model: [{text:"@sip.linphone.org"}]
 								}
 								EffectImage {
-									Layout.preferredWidth: 16 * DefaultStyle.dp
-									Layout.preferredHeight: 16 * DefaultStyle.dp
+                                    Layout.preferredWidth: Math.round(16 * DefaultStyle.dp)
+                                    Layout.preferredHeight: Math.round(16 * DefaultStyle.dp)
 									imageSource: AppIcons.lock
 									colorizationColor: DefaultStyle.main2_600
 								}
@@ -141,7 +141,7 @@ LoginLayout {
 							currentIndex: bar.currentIndex
 							PhoneNumberInput {
 								id: phoneNumberInput
-								Layout.preferredWidth: 346 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
 								property string completePhoneNumber: countryCode + phoneNumber
 								label: qsTr("Numéro de téléphone")
 								enableErrorText: true
@@ -152,7 +152,7 @@ LoginLayout {
 							FormItemLayout {
 								id: emailItem
 								Layout.fillWidth: false
-								Layout.preferredWidth: 346 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
 								label: qsTr("Email")
 								mandatory: true
 								enableErrorText: true
@@ -168,29 +168,29 @@ LoginLayout {
 							clip: false
 							RowLayout {
 								id: rowlayout
-								spacing: 16 * DefaultStyle.dp
+                                spacing: Math.round(16 * DefaultStyle.dp)
 								FormItemLayout {
 									id: passwordItem
-									Layout.preferredWidth: 346 * DefaultStyle.dp
+                                    Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
 									label: qsTr("Mot de passe")
 									mandatory: true
 									enableErrorText: true
 									contentItem: TextField {
 										id: pwdInput
 										hidden: true
-										Layout.preferredWidth: 346 * DefaultStyle.dp
+                                        Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
 										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 									}
 								}
 								FormItemLayout {
-									Layout.preferredWidth: 346 * DefaultStyle.dp
+                                    Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
 									label: qsTr("Confirmation mot de passe")
 									mandatory: true
 									enableErrorText: true
 									contentItem: TextField {
 										id: confirmPwdInput
 										hidden: true
-										Layout.preferredWidth: 346 * DefaultStyle.dp
+                                        Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
 										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
 									}
 								}
@@ -198,23 +198,23 @@ LoginLayout {
 							TemporaryText {
 								id: otherErrorText
 								Layout.fillWidth: true
-								Layout.topMargin: 5 * DefaultStyle.dp
+                                Layout.topMargin: Math.round(5 * DefaultStyle.dp)
 								onTextChanged: console.log("set error", text) 
 							}
 						}
 					}
 					// ColumnLayout {
-					// 	spacing: 18 * DefaultStyle.dp
+                    // 	spacing: Math.round(18 * DefaultStyle.dp)
 					// 	RowLayout {
-					// 		spacing: 10 * DefaultStyle.dp
+                    // 		spacing: Math.round(10 * DefaultStyle.dp)
 					// 		CheckBox {
 					// 			id: subscribeToNewsletterCheckBox
 					// 		}
 					// 		Text {
 					// 			text: qsTr("Je souhaite souscrire à la newletter Linphone.")
 					// 			font {
-					// 				pixelSize: 14 * DefaultStyle.dp
-					// 				weight: 400 * DefaultStyle.dp
+                    // 				pixelSize: Typography.p1.pixelSize
+                    // 				weight: Typography.p1.weight
 					// 			}
 					// 			MouseArea {
 					// 				anchors.fill: parent
@@ -224,7 +224,7 @@ LoginLayout {
 					// 	}
 
 					RowLayout {
-						spacing: 10 * DefaultStyle.dp
+                        spacing: Math.round(10 * DefaultStyle.dp)
 						CheckBox {
 							id: termsCheckBox
 						}
@@ -234,8 +234,8 @@ LoginLayout {
 							Text {
 								text: qsTr("J'accepte les ")
 								font {
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
+                                    pixelSize: Typography.p1.pixelSize
+                                    weight: Typography.p1.weight
 								}
 								MouseArea {
 									anchors.fill: parent
@@ -246,8 +246,8 @@ LoginLayout {
 								activeFocusOnTab: true
 								font {
 									underline: true
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
+                                    pixelSize: Typography.p1.pixelSize
+                                    weight: Typography.p1.weight
 									bold: activeFocus
 								}
 								text: qsTr("conditions d’utilisation")
@@ -268,16 +268,16 @@ LoginLayout {
 							Text {
 								text: qsTr(" et la ")
 								font {
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
+                                    pixelSize: Typography.p1.pixelSize
+                                    weight: Typography.p1.weight
 								}
 							}
 							Text {
 								activeFocusOnTab: true
 								font {
 									underline: true
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
+                                    pixelSize: Typography.p1.pixelSize
+                                    weight: Typography.p1.weight
 									bold: activeFocus
 								}
 								text: qsTr("politique de confidentialité.")
@@ -335,10 +335,10 @@ LoginLayout {
 			z: -1
 			anchors.top: parent.top
 			anchors.right: parent.right
-			anchors.topMargin: 129 * DefaultStyle.dp
-			anchors.rightMargin: 127 * DefaultStyle.dp
-			width: 395 * DefaultStyle.dp
-			height: 350 * DefaultStyle.dp
+            anchors.topMargin: Math.round(129 * DefaultStyle.dp)
+            anchors.rightMargin: Math.round(127 * DefaultStyle.dp)
+            width: Math.round(395 * DefaultStyle.dp)
+            height: Math.round(350 * DefaultStyle.dp)
 			fillMode: Image.PreserveAspectFit
 			source: AppIcons.loginImage
 		}

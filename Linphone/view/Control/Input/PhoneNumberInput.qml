@@ -11,7 +11,7 @@ ColumnLayout {
 	property string placeholderText : ""
 	property bool mandatory: false
 	property bool enableErrorText: true
-	property int textInputWidth: width
+    property real textInputWidth: width
 	property string initialPhoneNumber
 	readonly property string phoneNumber: textField.text
 	readonly property string countryCode: combobox.currentText
@@ -23,8 +23,8 @@ ColumnLayout {
 		text: mainItem.label + (mainItem.mandatory ? "*" : "")
 		color: (combobox.hasActiveFocus || textField.hasActiveFocus) ? DefaultStyle.main1_500_main : DefaultStyle.main2_600
 		font {
-			pixelSize: 13 * DefaultStyle.dp
-			weight: 700 * DefaultStyle.dp
+            pixelSize: Typography.p2.pixelSize
+            weight: Typography.p2.weight
 		}
 	}
 
@@ -34,8 +34,8 @@ ColumnLayout {
 		Rectangle {
 			id: contentBackground
 			width: mainItem.textInputWidth
-			height: 49 * DefaultStyle.dp
-			radius: 63 * DefaultStyle.dp
+            height: Math.round(49 * DefaultStyle.dp)
+            radius: Math.round(63 * DefaultStyle.dp)
 			color: DefaultStyle.grey_100
 			border.color: mainItem.errorMessage.length > 0 
 							? DefaultStyle.danger_500main 
@@ -46,14 +46,14 @@ ColumnLayout {
 				anchors.fill: parent
 				CountryIndicatorCombobox {
 					id: combobox
-					implicitWidth: 110 * DefaultStyle.dp
+                    implicitWidth: Math.round(110 * DefaultStyle.dp)
 					defaultCallingCode: mainItem.defaultCallingCode
 				}
 				Rectangle {
-					Layout.preferredWidth: 1 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.max(Math.round(1 * DefaultStyle.dp), 1)
 					Layout.fillHeight: true
-					Layout.topMargin: 10 * DefaultStyle.dp
-					Layout.bottomMargin: 10 * DefaultStyle.dp
+                    Layout.topMargin: Math.round(10 * DefaultStyle.dp)
+                    Layout.bottomMargin: Math.round(10 * DefaultStyle.dp)
 					color: DefaultStyle.main2_600
 				}
 				TextField {
@@ -76,7 +76,7 @@ ColumnLayout {
 			elide: Text.ElideRight
 			wrapMode: Text.Wrap
 			font {
-				pixelSize: 13 * DefaultStyle.dp
+                pixelSize: Math.round(13 * DefaultStyle.dp)
 				family: DefaultStyle.defaultFont
 				bold: true
 			}

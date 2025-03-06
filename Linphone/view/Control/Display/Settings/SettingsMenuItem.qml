@@ -7,7 +7,7 @@ import Linphone
 Item {
 	id: mainItem
 	
-	height: visible ? 50 * DefaultStyle.dp : 0
+    height: visible ? Math.round(50 * DefaultStyle.dp) : 0
 	anchors.right: parent.right
 	anchors.left: parent.left
 
@@ -30,15 +30,15 @@ Item {
 			id: background
 			anchors.fill: parent
 			color: DefaultStyle.main2_200
-			radius: 35 * DefaultStyle.dp
+            radius: Math.round(35 * DefaultStyle.dp)
 			visible: parent.containsMouse || isSelected || mainItem.shadowEnabled
 		}
 		Rectangle {
 			id: backgroundRightFiller
 			anchors.right: parent.right
 			color: DefaultStyle.main2_200
-			width: 35 * DefaultStyle.dp
-			height: 50 * DefaultStyle.dp
+            width: Math.round(35 * DefaultStyle.dp)
+            height: Math.round(50 * DefaultStyle.dp)
 			visible: parent.containsMouse || isSelected
 		}
 		// MultiEffect {

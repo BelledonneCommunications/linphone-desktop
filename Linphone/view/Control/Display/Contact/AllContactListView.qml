@@ -45,12 +45,12 @@ Flickable {
 
     property bool haveFavorites: false
     property bool haveContacts: count > 0
-    property int sectionsPixelSize: 16 * DefaultStyle.dp
-    property int sectionsWeight: 800 * DefaultStyle.dp
-    property int sectionsSpacing: 18 * DefaultStyle.dp
-    property int busyIndicatorSize: 40 * DefaultStyle.dp
+    property real sectionsPixelSize: Typography.h4.pixelSize
+    property real sectionsWeight: Typography.h4.weight
+    property real sectionsSpacing: Math.round(18 * DefaultStyle.dp)
+    property real busyIndicatorSize: Math.round(40 * DefaultStyle.dp)
 
-    property int itemsRightMargin: 39 * DefaultStyle.dp
+    property real itemsRightMargin: Math.round(39 * DefaultStyle.dp)
     property int count: contactsList.count + suggestionsList.count + favoritesList.count
 
     contentHeight: contentsLayout.height
@@ -235,7 +235,7 @@ Flickable {
     Control.ScrollBar.vertical: ScrollBar {
         id: scrollbar
         z: 1
-        topPadding: 24 * DefaultStyle.dp // Avoid to be on top of collapse button
+        topPadding: Math.round(24 * DefaultStyle.dp) // Avoid to be on top of collapse button
         active: true
         interactive: true
         visible: mainItem.contentHeight > mainItem.height
@@ -245,7 +245,7 @@ Flickable {
     ColumnLayout {
         id: contentsLayout
         width: mainItem.width
-        spacing: 0 //20 * DefaultStyle.dp
+        spacing: 0 //Math.round(20 * DefaultStyle.dp)
 
         BusyIndicator {
             id: busyIndicator
@@ -307,7 +307,7 @@ Flickable {
             visible: contentHeight > 0
             Layout.fillWidth: true
             Layout.preferredHeight: implicitHeight
-            Layout.topMargin: favoritesList.height > 0 ? 4 * DefaultStyle.dp : 0
+            Layout.topMargin: favoritesList.height > 0 ? Math.round(4 * DefaultStyle.dp) : 0
             interactive: false
             highlightText: mainItem.highlightText
             showActions: mainItem.showActions
@@ -346,7 +346,7 @@ Flickable {
                                || SettingsCpp.syncLdapContacts ? MagicSearchProxy.FilteringTypes.Ldap | MagicSearchProxy.FilteringTypes.CardDAV : 0)
                 initialDisplayItems: Math.max(
                                          20,
-                                         2 * mainItem.height / (63 * DefaultStyle.dp))
+                                         2 * mainItem.height / (Math.round(63 * DefaultStyle.dp)))
                 displayItemsStep: 3 * initialDisplayItems / 2
                 onLocalFriendCreated: index => {
                                           contactsList.selectIndex(index)
@@ -359,7 +359,7 @@ Flickable {
             Layout.fillWidth: true
             Layout.preferredHeight: implicitHeight
             Layout.topMargin: contactsList.height + favoritesList.height
-                              > 0 ? 4 * DefaultStyle.dp : 0
+                              > 0 ? Math.round(4 * DefaultStyle.dp) : 0
             interactive: false
             showInitials: false
             highlightText: mainItem.highlightText
@@ -396,7 +396,7 @@ Flickable {
                                      && contactsList.expanded ? 0 : Math.max(
                                                                     20,
                                                                     2 * mainItem.height
-                                                                    / (63 * DefaultStyle.dp))
+                                                                    / (Math.round(63 * DefaultStyle.dp)))
                 onInitialDisplayItemsChanged: maxDisplayItems = initialDisplayItems
                 displayItemsStep: 3 * initialDisplayItems / 2
                 onModelReset: maxDisplayItems = initialDisplayItems

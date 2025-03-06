@@ -7,12 +7,12 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 Control.TextField {
     id: mainItem
     property var customWidth
-    width: (customWidth ? customWidth - 1 : 360) * DefaultStyle.dp
-    height: 49 * DefaultStyle.dp
-    leftPadding: 15 * DefaultStyle.dp
+    width: Math.round((customWidth ? customWidth - 1 : 360) * DefaultStyle.dp)
+    height: Math.round(49 * DefaultStyle.dp)
+    leftPadding: Math.round(15 * DefaultStyle.dp)
     rightPadding: eyeButton.visible
-        ? 5 * DefaultStyle.dp + eyeButton.width + eyeButton.rightMargin
-        : 15 * DefaultStyle.dp
+        ? Math.round(5 * DefaultStyle.dp) + eyeButton.width + eyeButton.rightMargin
+        : Math.round(15 * DefaultStyle.dp)
     echoMode: (hidden && !eyeButton.checked) ? TextInput.Password : TextInput.Normal
 
     // Workaround for Windows slowness when first typing a password
@@ -27,8 +27,8 @@ Control.TextField {
     placeholderTextColor: DefaultStyle.placeholders
     font {
         family: DefaultStyle.defaultFont
-        pixelSize: 14 * DefaultStyle.dp
-        weight: 400 * DefaultStyle.dp
+        pixelSize: Typography.p1.pixelSize
+        weight: Typography.p1.weight
     }
     selectByMouse: true
     activeFocusOnTab: true
@@ -43,8 +43,8 @@ Control.TextField {
     property color disabledBackgroundColor: DefaultStyle.grey_200
     property color backgroundBorderColor: DefaultStyle.grey_200
     property string initialText
-    property int pixelSize: 14 * DefaultStyle.dp
-    property int weight: 400 * DefaultStyle.dp
+    property real pixelSize: Typography.p1.pixelSize
+    property real weight: Typography.p1.weight
 
     // fill propertyName and propertyOwner to check text validity
     property string propertyName
@@ -115,7 +115,7 @@ Control.TextField {
         id: inputBackground
         visible: mainItem.backgroundVisible
         anchors.fill: parent
-        radius: 79 * DefaultStyle.dp
+        radius: Math.round(79 * DefaultStyle.dp)
         color: mainItem.enabled ? mainItem.backgroundColor : mainItem.disabledBackgroundColor
         border.color: mainItem.isError ? DefaultStyle.danger_500main : mainItem.activeFocus ? DefaultStyle.main1_500_main : mainItem.backgroundBorderColor
     }
@@ -123,7 +123,7 @@ Control.TextField {
     cursorDelegate: Rectangle {
         id: cursor
         color: DefaultStyle.main1_500_main
-        width: 1 * DefaultStyle.dp
+        width: Math.max(Math.round(1 * DefaultStyle.dp), 1)
         anchors.verticalCenter: mainItem.verticalCenter
 
         SequentialAnimation {
@@ -174,14 +174,14 @@ Control.TextField {
     Button {
         id: eyeButton
         KeyNavigation.left: mainItem
-        property int rightMargin: 15 * DefaultStyle.dp
+        property real rightMargin: Math.round(15 * DefaultStyle.dp)
         z: 1
         visible: mainItem.hidden
         checkable: true
         style: ButtonStyle.noBackground
         icon.source: eyeButton.checked ? AppIcons.eyeShow : AppIcons.eyeHide
-        width: 20 * DefaultStyle.dp
-        height: 20 * DefaultStyle.dp
+        width: Math.round(20 * DefaultStyle.dp)
+        height: Math.round(20 * DefaultStyle.dp)
         icon.width: width
         icon.height: height
         anchors.verticalCenter: parent.verticalCenter

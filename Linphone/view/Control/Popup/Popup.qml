@@ -7,14 +7,14 @@ Control.Popup{
 	id: mainItem
 	padding: 0
 	property color underlineColor : DefaultStyle.main1_500_main
-	property int radius: 16 * DefaultStyle.dp
+    property real radius: Math.round(16 * DefaultStyle.dp)
 	property bool hovered: mouseArea.containsMouse
 
 	background: Item{
 		Rectangle {
 			visible: mainItem.underlineColor != undefined
 			width: mainItem.width
-			height: mainItem.height + 2 * DefaultStyle.dp
+            height: mainItem.height + Math.round(2 * DefaultStyle.dp)
 			color: mainItem.underlineColor
 			radius: mainItem.radius
 		}

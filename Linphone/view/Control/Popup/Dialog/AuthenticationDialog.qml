@@ -17,11 +17,11 @@ Dialog {
 	readonly property string password: passwordEdit.text
 	property var callback// Define cb(var) function
 		
-	topPadding: 20 * DefaultStyle.dp
-	bottomPadding: 20 * DefaultStyle.dp
-	leftPadding: 20 * DefaultStyle.dp
-	rightPadding: 20 * DefaultStyle.dp
-	width: 637 * DefaultStyle.dp
+    topPadding:Math.round( 20 * DefaultStyle.dp)
+    bottomPadding:Math.round( 20 * DefaultStyle.dp)
+    leftPadding:Math.round( 20 * DefaultStyle.dp)
+    rightPadding:Math.round( 20 * DefaultStyle.dp)
+    width:Math.round( 637 * DefaultStyle.dp)
 	modal: true
 	closePolicy: Popup.NoAutoClose
 	
@@ -33,19 +33,19 @@ Dialog {
 	Component.onDestruction: if(callback) callback.destroy()
 	
 	content: ColumnLayout {
-		spacing: 20 * DefaultStyle.dp
+        spacing:Math.round( 20 * DefaultStyle.dp)
 		id: contentLayout
 		Text {
 			Layout.fillWidth: true
-			Layout.preferredWidth: 250 * DefaultStyle.dp
+            Layout.preferredWidth:Math.round( 250 * DefaultStyle.dp)
 			Layout.alignment: Qt.AlignHCenter
 			horizontalAlignment: Text.AlignHCenter
 			wrapMode: Text.Wrap
 			text: qsTr("Impossible de vous authentifier. Merci de vérifier votre mot de passe.")
-			font.pixelSize: 16 * DefaultStyle.dp
+            font.pixelSize:Math.round( 16 * DefaultStyle.dp)
 		}
 		ColumnLayout {
-			spacing: 10 * DefaultStyle.dp
+            spacing:Math.round( 10 * DefaultStyle.dp)
 			FormItemLayout {
 				Layout.fillWidth: true
 				label: qsTr("Identité")
@@ -90,7 +90,7 @@ Dialog {
 	buttons: [
 		MediumButton {
 			id: cancelButton
-			Layout.topMargin: 10 * DefaultStyle.dp
+            Layout.topMargin: Math.round( 10 * DefaultStyle.dp)
 			text: qsTr("Annuler")
 			style: ButtonStyle.secondary
 			onClicked: mainItem.rejected()
@@ -99,7 +99,7 @@ Dialog {
 		},
 		MediumButton {
 			id: connectButton
-			Layout.topMargin: 10 * DefaultStyle.dp
+            Layout.topMargin:Math.round( 10 * DefaultStyle.dp)
 			text: qsTr("Se connecter")
 			style: ButtonStyle.main
 			KeyNavigation.up: passwordEdit

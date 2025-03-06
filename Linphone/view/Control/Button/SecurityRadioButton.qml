@@ -21,18 +21,18 @@ Control.RadioButton {
 	background: Rectangle {
 		color: DefaultStyle.grey_100
 		border.color: mainItem.checked ? mainItem.color : "transparent"
-		radius: 20 * DefaultStyle.dp
+        radius: Math.round(20 * DefaultStyle.dp)
 	}
 
 	indicator: RowLayout {
 		anchors.left: parent.left
-		anchors.leftMargin: 13 * DefaultStyle.dp
+        anchors.leftMargin: Math.round(13 * DefaultStyle.dp)
 		anchors.top: parent.top
-		anchors.topMargin: 8 * DefaultStyle.dp
-		spacing: 4 * DefaultStyle.dp
+        anchors.topMargin: Math.round(8 * DefaultStyle.dp)
+        spacing: Math.round(4 * DefaultStyle.dp)
 		Rectangle {
-			implicitWidth: 16 * DefaultStyle.dp
-			implicitHeight: 16 * DefaultStyle.dp
+            implicitWidth: Math.round(16 * DefaultStyle.dp)
+            implicitHeight: Math.round(16 * DefaultStyle.dp)
 			radius: implicitWidth/2
 			border.color: mainItem.color
 
@@ -51,7 +51,7 @@ Control.RadioButton {
 			text: mainItem.title
 			font.bold: true
 			color: DefaultStyle.grey_900
-			font.pixelSize: 16 * DefaultStyle.dp
+            font.pixelSize: Math.round(16 * DefaultStyle.dp)
 		}
 		Button {
 			padding: 0
@@ -59,12 +59,12 @@ Control.RadioButton {
 				visible: false
 			}
 			icon.source: AppIcons.info
-			Layout.preferredWidth: 2 * DefaultStyle.dp
-			Layout.preferredHeight: 2 * DefaultStyle.dp
-			width: 2 * DefaultStyle.dp
-			height: 2 * DefaultStyle.dp
-			icon.width: 2 * DefaultStyle.dp
-			icon.height: 2 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(2 * DefaultStyle.dp)
+            Layout.preferredHeight: Math.round(2 * DefaultStyle.dp)
+            width: Math.round(2 * DefaultStyle.dp)
+            height: Math.round(2 * DefaultStyle.dp)
+            icon.width: Math.round(2 * DefaultStyle.dp)
+            icon.height: Math.round(2 * DefaultStyle.dp)
 		}
 	}
 	
@@ -73,27 +73,27 @@ Control.RadioButton {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-		anchors.leftMargin: 13 * DefaultStyle.dp
+        anchors.leftMargin: Math.round(13 * DefaultStyle.dp)
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			Layout.bottomMargin: 10 * DefaultStyle.dp
-			Layout.rightMargin: 10 * DefaultStyle.dp
+            Layout.bottomMargin: Math.round(10 * DefaultStyle.dp)
+            Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
 			Layout.alignment: Qt.AlignVCenter
 			Text {
 				id: innerText
 				verticalAlignment: Text.AlignVCenter
-				Layout.preferredWidth: 220 * DefaultStyle.dp
-				Layout.preferredHeight: 100 * DefaultStyle.dp
-				font.pixelSize: 14 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(220 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
+                font.pixelSize: Math.round(14 * DefaultStyle.dp)
 				text: mainItem.contentText
 				Layout.fillHeight: true
 			}
 			Image {
 				id: image
 				Layout.fillHeight: true
-				Layout.preferredWidth: 100 * DefaultStyle.dp
-				Layout.preferredHeight: 100 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(100 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
 				fillMode: Image.PreserveAspectFit
 				source: mainItem.imgUrl
 			}

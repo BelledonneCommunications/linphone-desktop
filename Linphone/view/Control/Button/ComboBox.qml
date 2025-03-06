@@ -11,9 +11,9 @@ Control.ComboBox {
 	// readonly property string currentText: selectedItemText.text
 	property alias listView: listView
 	property string constantImageSource
-	property int pixelSize: 14 * DefaultStyle.dp
-	property int weight: 400 * DefaultStyle.dp
-	property int leftMargin: 10 * DefaultStyle.dp
+    property real pixelSize: Typography.p1.pixelSize
+    property real weight: Typography.p1.weight
+    property real leftMargin: Math.round(10 * DefaultStyle.dp)
 	property bool oneLine: false
 	property bool shadowEnabled: mainItem.activeFocus || mainItem.hovered
 	property string flagRole// Specific case if flag is shown (special font)
@@ -49,7 +49,7 @@ Control.ComboBox {
 		Rectangle {
 			id: buttonBackground
 			anchors.fill: parent
-			radius: 63 * DefaultStyle.dp
+            radius: Math.round(63 * DefaultStyle.dp)
 			color: mainItem.enabled ? DefaultStyle.grey_100 : DefaultStyle.grey_200
 			border.color: mainItem.enabled
 				? mainItem.activeFocus
@@ -71,13 +71,13 @@ Control.ComboBox {
 	}
 	contentItem: RowLayout {
 		anchors.fill: parent
-		anchors.leftMargin: 10 * DefaultStyle.dp
-		anchors.rightMargin: indicImage.width + 10 * DefaultStyle.dp
-		spacing: 5 * DefaultStyle.dp
+        anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
+        anchors.rightMargin: indicImage.width + Math.round(10 * DefaultStyle.dp)
+        spacing: Math.round(5 * DefaultStyle.dp)
 		EffectImage {
 			id: selectedItemImg
-			Layout.preferredWidth: visible ? 24 * DefaultStyle.dp : 0
-			Layout.preferredHeight: visible ? 24 * DefaultStyle.dp : 0
+            Layout.preferredWidth: visible ? Math.round(24 * DefaultStyle.dp) : 0
+            Layout.preferredHeight: visible ? Math.round(24 * DefaultStyle.dp) : 0
 			Layout.leftMargin: mainItem.leftMargin
 			imageSource: mainItem.constantImageSource ? mainItem.constantImageSource : ""
 			colorizationColor: DefaultStyle.main2_600
@@ -87,7 +87,7 @@ Control.ComboBox {
 		Text {
 			id: selectedItemFlag
 			Layout.preferredWidth: implicitWidth
-			Layout.leftMargin: selectedItemImg.visible ? 0 : 5 * DefaultStyle.dp
+            Layout.leftMargin: selectedItemImg.visible ? 0 : Math.round(5 * DefaultStyle.dp)
 			Layout.alignment: Qt.AlignCenter
 			color: mainItem.enabled ? DefaultStyle.main2_600 : DefaultStyle.grey_400
 			font {
@@ -99,8 +99,8 @@ Control.ComboBox {
 		Text {
 			id: selectedItemText
 			Layout.fillWidth: true
-			Layout.leftMargin: selectedItemImg.visible ? 0 : 5 * DefaultStyle.dp
-			Layout.rightMargin: 20 * DefaultStyle.dp
+            Layout.leftMargin: selectedItemImg.visible ? 0 : Math.round(5 * DefaultStyle.dp)
+            Layout.rightMargin: Math.round(20 * DefaultStyle.dp)
 			Layout.alignment: Qt.AlignCenter
 			color: mainItem.enabled ? DefaultStyle.main2_600 : DefaultStyle.grey_400
 			elide: Text.ElideRight
@@ -119,10 +119,10 @@ Control.ComboBox {
 		id: indicImage
 		z: 1
 		anchors.right: parent.right
-		anchors.rightMargin: 10 * DefaultStyle.dp
+        anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
 		anchors.verticalCenter: parent.verticalCenter
 		imageSource: AppIcons.downArrow
-		width: 14 * DefaultStyle.dp
+        width: Math.round(14 * DefaultStyle.dp)
 		fillMode: Image.PreserveAspectFit
 	}
 
@@ -131,7 +131,7 @@ Control.ComboBox {
 		y: mainItem.height - 1
 		width: mainItem.width
 		implicitHeight: Math.min(contentItem.implicitHeight, mainWindow.height)
-		padding: 1 * DefaultStyle.dp
+        padding: Math.max(Math.round(1 * DefaultStyle.dp), 1)
 		//height: Math.min(implicitHeight, 300)
 
 		onOpened: {
@@ -151,7 +151,7 @@ Control.ComboBox {
 			highlight: Rectangle {
 				width: listView.width
 				color: DefaultStyle.main2_200
-				radius: 15 * DefaultStyle.dp
+                radius: Math.round(15 * DefaultStyle.dp)
 				y: listView.currentItem? listView.currentItem.y : 0
 			}
 			
@@ -172,17 +172,17 @@ Control.ComboBox {
 					anchors.fill: parent
 					EffectImage {
 						id: delegateImg
-						Layout.preferredWidth: visible ? 20 * DefaultStyle.dp : 0
-						Layout.leftMargin: 10 * DefaultStyle.dp
+                        Layout.preferredWidth: visible ? Math.round(20 * DefaultStyle.dp) : 0
+                        Layout.leftMargin: Math.round(10 * DefaultStyle.dp)
 						visible: imageSource != ""
-						imageWidth: 20 * DefaultStyle.dp
+                        imageWidth: Math.round(20 * DefaultStyle.dp)
 						imageSource: typeof(modelData) != "undefined" && modelData.img ? modelData.img : ""
 						fillMode: Image.PreserveAspectFit
 					}
 					
 					Text {
 						Layout.preferredWidth: implicitWidth
-						Layout.leftMargin: delegateImg.visible ? 0 : 5 * DefaultStyle.dp
+                        Layout.leftMargin: delegateImg.visible ? 0 : Math.round(5 * DefaultStyle.dp)
 						Layout.alignment: Qt.AlignCenter
 						visible: mainItem.flagRole
 						font {
@@ -198,8 +198,8 @@ Control.ComboBox {
 					}
 					Text {
 						Layout.fillWidth: true
-						Layout.leftMargin: delegateImg.visible ? 0 : 5 * DefaultStyle.dp
-						Layout.rightMargin: 20 * DefaultStyle.dp
+                        Layout.leftMargin: delegateImg.visible ? 0 : Math.round(5 * DefaultStyle.dp)
+                        Layout.rightMargin: Math.round(20 * DefaultStyle.dp)
 						Layout.alignment: Qt.AlignCenter
 						text: typeof(modelData) != "undefined"
 								? mainItem.textRole
@@ -217,8 +217,8 @@ Control.ComboBox {
 						wrapMode: Text.WrapAnywhere
 						font {
 							family: DefaultStyle.defaultFont
-							pixelSize: 14 * DefaultStyle.dp
-							weight: 400 * DefaultStyle.dp
+                            pixelSize: Math.round(14 * DefaultStyle.dp)
+                            weight: Math.min(Math.round(400 * DefaultStyle.dp), 1000)
 						}
 					}
 				}
@@ -230,7 +230,7 @@ Control.ComboBox {
 					Rectangle {
 						anchors.fill: parent
 						opacity: 0.1
-						radius: 15 * DefaultStyle.dp
+                        radius: Math.round(15 * DefaultStyle.dp)
 						color: DefaultStyle.main2_500main
 						visible: parent.containsMouse
 					}
@@ -248,11 +248,11 @@ Control.ComboBox {
 
 		background: Item {
 			implicitWidth: mainItem.width
-			implicitHeight: 30 * DefaultStyle.dp
+            implicitHeight: Math.round(30 * DefaultStyle.dp)
 			Rectangle {
 				id: cboxBg
 				anchors.fill: parent
-				radius: 15 * DefaultStyle.dp
+                radius: Math.round(15 * DefaultStyle.dp)
 			}
 			MultiEffect {
 				anchors.fill: cboxBg

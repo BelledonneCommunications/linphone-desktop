@@ -44,7 +44,7 @@ AbstractSettingsLayout {
         ColumnLayout {
             id: column
             Layout.fillWidth: true
-            spacing: 20 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
             DecoratedTextField {
                 propertyName: "mwiServerAddress"
                 propertyOwnerGui: account
@@ -71,7 +71,7 @@ AbstractSettingsLayout {
         id: advancedParametersComponent
         ColumnLayout {
             Layout.fillWidth: true
-            spacing: 20 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
             Text {
                 text: qsTr("Transport")
                 color: DefaultStyle.main2_600
@@ -79,7 +79,7 @@ AbstractSettingsLayout {
             }
             ComboSetting {
                 Layout.fillWidth: true
-                Layout.topMargin: -15 * DefaultStyle.dp
+                Layout.topMargin: Math.round(-15 * DefaultStyle.dp)
                 entries: account.core.transports
                 propertyName: "transport"
                 propertyOwnerGui: account

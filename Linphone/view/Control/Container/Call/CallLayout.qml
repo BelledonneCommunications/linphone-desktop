@@ -49,7 +49,7 @@ Item {
 		id: callTerminatedText
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.top: parent.top
-		anchors.topMargin: 25 * DefaultStyle.dp
+        anchors.topMargin: Math.round(25 * DefaultStyle.dp)
 		z: 1
 		visible: mainItem.callState === LinphoneEnums.CallState.End || mainItem.callState === LinphoneEnums.CallState.Error || mainItem.callState === LinphoneEnums.CallState.Released
 		text: mainItem.conference
@@ -61,8 +61,8 @@ Item {
 						: call && call.core.lastErrorMessage || ""
 		color: DefaultStyle.grey_0
 		font {
-			pixelSize: 22 * DefaultStyle.dp
-			weight: 300 * DefaultStyle.dp
+            pixelSize: Math.round(22 * DefaultStyle.dp)
+            weight: Math.round(300 * DefaultStyle.dp)
 		}
 	}
 	
@@ -78,21 +78,21 @@ Item {
 		id: waitingForOthersComponent
 		Rectangle {
 			color: DefaultStyle.grey_600
-			radius: 15 * DefaultStyle.dp
+            radius: Math.round(15 * DefaultStyle.dp)
 			ColumnLayout {
 				anchors.centerIn: parent
-				spacing: 22 * DefaultStyle.dp
+                spacing: Math.round(22 * DefaultStyle.dp)
 				width: waitText.implicitWidth
 				Text {
 					id: waitText
 					text: qsTr("Waiting for other participants...")
-					Layout.preferredHeight: 67 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(67 * DefaultStyle.dp)
 					Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
 					color: DefaultStyle.grey_0
 					font {
-						pixelSize: 30 * DefaultStyle.dp
-						weight: 300 * DefaultStyle.dp
+                        pixelSize: Math.round(30 * DefaultStyle.dp)
+                        weight: Math.round(300 * DefaultStyle.dp)
 					}
 				}
 				Item {
@@ -141,16 +141,16 @@ Item {
 		// 		text: qsTr("Waiting for other participants...")
 		// 		color: DefaultStyle.frey_0
 		// 		font {
-		// 			pixelSize: 30 * DefaultStyle.dp
-		// 			weight: 300 * DefaultStyle.dp
+        // 			pixelSize: Math.round(30 * DefaultStyle.dp)
+        // 			weight: Math.round(300 * DefaultStyle.dp)
 		// 		}
 		// 	}
 		// 	Button {
 		// 		text: qsTr("Share invitation")
 		// 		icon.source: AppIcons.shareNetwork
 		// 		color: DefaultStyle.main2_400
-		// 		Layout.preferredWidth: 206 * DefaultStyle.dp
-		// 		Layout.preferredHeight: 47 * DefaultStyle.dp
+        // 		Layout.preferredWidth: Math.round(206 * DefaultStyle.dp)
+        // 		Layout.preferredHeight: Math.round(47 * DefaultStyle.dp)
 		// 	}
 		// }
 

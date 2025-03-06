@@ -18,15 +18,15 @@ Rectangle {
 
 	component AboutLine: RowLayout {
 		id: line
-		spacing: 20 * DefaultStyle.dp
+        spacing: Math.round(20 * DefaultStyle.dp)
 		property var imageSource
 		property string title
 		property string text
 		property bool enableMouseArea: false
 		signal contentClicked()
 		EffectImage {
-			Layout.preferredWidth: 32 * DefaultStyle.dp
-			Layout.preferredHeight: 32 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
+            Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
 			imageSource: parent.imageSource
 			colorizationColor: DefaultStyle.main1_500_main
 		}
@@ -37,8 +37,8 @@ Rectangle {
 				text: line.title
 				color: DefaultStyle.main2_600
 				font {
-					pixelSize: 15 * DefaultStyle.dp
-					weight: 600 * DefaultStyle.dp
+                    pixelSize: Typography.b2.pixelSize
+                    weight: Typography.b2.weight
 				}
 				horizontalAlignment: Layout.AlignLeft
 			}
@@ -47,7 +47,7 @@ Rectangle {
 				Layout.fillWidth: true
 				text: line.text
 				color: DefaultStyle.main2_500main
-				font.pixelSize: 14 * DefaultStyle.dp
+                font.pixelSize: Math.round(14 * DefaultStyle.dp)
 				horizontalAlignment: Layout.AlignLeft
 				Keys.onPressed: (event)=> {
 					if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
@@ -71,13 +71,13 @@ Rectangle {
 	Dialog {
 		id: aboutPopup
 		anchors.centerIn: parent
-		width: 637 * DefaultStyle.dp
+        width: Math.round(637 * DefaultStyle.dp)
 		title: qsTr("À propos de Linphone")
-		bottomPadding: 10 * DefaultStyle.dp
+        bottomPadding: Math.round(10 * DefaultStyle.dp)
 		buttons: []
 		content: RowLayout {
 			ColumnLayout {
-				spacing: 17 * DefaultStyle.dp
+                spacing: Math.round(17 * DefaultStyle.dp)
 				Layout.alignment: Qt.AlignTop | Qt.AlignLeft
 				AboutLine {
 					imageSource: AppIcons.detective
@@ -103,7 +103,7 @@ Rectangle {
 				}
 				Item {
 					// Item to shift close button
-					Layout.preferredHeight: 10 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(10 * DefaultStyle.dp)
 				}
 			}
 			MediumButton {
@@ -121,8 +121,8 @@ Rectangle {
 		spacing: 0
 		RowLayout {
 			Layout.fillWidth: true
-			Layout.preferredHeight: 102 * DefaultStyle.dp
-			Layout.rightMargin: 42 * DefaultStyle.dp
+            Layout.preferredHeight: Math.round(102 * DefaultStyle.dp)
+            Layout.rightMargin: Math.round(42 * DefaultStyle.dp)
 			spacing: 0
 			Item {
 				Layout.fillWidth: true
@@ -142,7 +142,7 @@ Rectangle {
 
 		RowLayout {
 			id: titleLayout
-			Layout.preferredHeight: 131 * DefaultStyle.dp
+            Layout.preferredHeight: Math.round(131 * DefaultStyle.dp)
 			Layout.fillWidth: true
 			spacing: 0
 		}
@@ -156,7 +156,7 @@ Rectangle {
 			source: AppIcons.belledonne
 			fillMode: Image.Stretch
 			Layout.fillWidth: true
-			Layout.preferredHeight: 108 * DefaultStyle.dp
+            Layout.preferredHeight: Math.round(108 * DefaultStyle.dp)
 		}
 	}
 

@@ -13,8 +13,8 @@ Loader {
 	property var imageSource
 	property var fillMode: Image.PreserveAspectFit
 	property var colorizationColor
-	property int imageWidth: width
-	property int imageHeight: height
+    property real imageWidth: width
+    property real imageHeight: height
 	property bool useColor: colorizationColor != undefined
 	property bool shadowEnabled: false
 	property bool isImageReady: false

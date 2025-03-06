@@ -63,7 +63,7 @@ AbstractMainPage {
 		id: leftPanelStackView
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		Layout.leftMargin: 45 * DefaultStyle.dp
+        Layout.leftMargin: Math.round(45 * DefaultStyle.dp)
 		initialItem: listLayout
 		clip: true
 	}
@@ -72,7 +72,7 @@ AbstractMainPage {
 		id: cancelAndDeleteConfDialog
 		property bool cancel: false
 		signal cancelRequested()
-		// width: 278 * DefaultStyle.dp
+        // width: Math.round(278 * DefaultStyle.dp)
 		text: cancel ? qsTr("Souhaitez-vous annuler et supprimer cette réunion ?") : qsTr("Souhaitez-vous supprimer cette réunion ?")
 		buttons: [
 			BigButton {
@@ -108,7 +108,7 @@ AbstractMainPage {
 		id: overridenRightPanel
 		Control.StackView {
 			id: overridenRightPanelStackView
-			width: 393 * DefaultStyle.dp
+            width: Math.round(393 * DefaultStyle.dp)
 			height: parent.height
 			anchors.top: parent.top
 			anchors.centerIn: parent
@@ -132,23 +132,23 @@ AbstractMainPage {
 				anchors.fill: parent
 				spacing: 0 
 				RowLayout {
-					Layout.rightMargin: 38 * DefaultStyle.dp
+                    Layout.rightMargin: Math.round(38 * DefaultStyle.dp)
 					spacing: 0					
 					Text {
 						Layout.fillWidth: true
 						text: qsTr("Réunions")
 						color: DefaultStyle.main2_700
-						font.pixelSize: 29 * DefaultStyle.dp
-						font.weight: 800 * DefaultStyle.dp
+                        font.pixelSize: Typography.h2.pixelSize
+                        font.weight: Typography.h2.weight
 					}
 					Item{Layout.fillWidth: true}
 					Button {
 						style: ButtonStyle.noBackground
 						icon.source: AppIcons.plusCircle
-						Layout.preferredWidth: 28 * DefaultStyle.dp
-						Layout.preferredHeight: 28 * DefaultStyle.dp
-						icon.width: 28 * DefaultStyle.dp
-						icon.height: 28 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(28 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(28 * DefaultStyle.dp)
+                        icon.width: Math.round(28 * DefaultStyle.dp)
+                        icon.height: Math.round(28 * DefaultStyle.dp)
 						onClicked: {
 							mainItem.editConference()
 						}
@@ -157,8 +157,8 @@ AbstractMainPage {
 				SearchBar {
 					id: searchBar
 					Layout.fillWidth: true
-                    Layout.topMargin: 18 * DefaultStyle.dp
-                    Layout.rightMargin: 38 * DefaultStyle.dp
+                    Layout.topMargin: Math.round(18 * DefaultStyle.dp)
+                    Layout.rightMargin: Math.round(38 * DefaultStyle.dp)
 					placeholderText: qsTr("Rechercher une réunion")
 					KeyNavigation.up: conferenceList
 					KeyNavigation.down: conferenceList
@@ -172,19 +172,19 @@ AbstractMainPage {
 				}
 				Text {
 					visible: conferenceList.count === 0
-					Layout.topMargin: 137 * DefaultStyle.dp
+                    Layout.topMargin: Math.round(137 * DefaultStyle.dp)
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignHCenter
 					text: qsTr("Aucune réunion%1").arg(searchBar.text.length !== 0 ? " correspondante" : "")
 					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
+                        pixelSize: Typography.h4.pixelSize
+                        weight: Typography.h4.weight
 					}
 				}
 				MeetingListView {
 					id: conferenceList
 					// Remove 24 from first section padding because we cannot know that it is the first section. 24 is the margins between sections.
-					Layout.topMargin: 38 * DefaultStyle.dp - 24 * DefaultStyle.dp
+                    Layout.topMargin: Math.round(38 * DefaultStyle.dp) - Math.round(24 * DefaultStyle.dp)
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					
@@ -217,18 +217,18 @@ AbstractMainPage {
 			property ConferenceInfoGui conferenceInfoGui
 			property bool isCreation
 			ColumnLayout {
-				spacing: 33 * DefaultStyle.dp
+                spacing: Math.round(33 * DefaultStyle.dp)
 				anchors.fill: parent
 				RowLayout {
-					Layout.rightMargin: 35 * DefaultStyle.dp
-					spacing: 5 * DefaultStyle.dp
+                    Layout.rightMargin: Math.round(35 * DefaultStyle.dp)
+                    spacing: Math.round(5 * DefaultStyle.dp)
 					Button {
 						id: backButton
 						style: ButtonStyle.noBackground
 						icon.source: AppIcons.leftArrow
 						focus: true
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
+                        icon.width: Math.round(24 * DefaultStyle.dp)
+                        icon.height: Math.round(24 * DefaultStyle.dp)
 						KeyNavigation.right: createButton
 						KeyNavigation.down: meetingSetup
 						onClicked: {
@@ -240,8 +240,8 @@ AbstractMainPage {
 						text: qsTr("Nouvelle réunion")
 						color: DefaultStyle.main2_700
 						font {
-							pixelSize: 22 * DefaultStyle.dp
-							weight: 800 * DefaultStyle.dp
+                            pixelSize: Typography.h3.pixelSize
+                            weight: Typography.h3.weight
 						}
 						Layout.fillWidth: true
 					}
@@ -275,7 +275,7 @@ AbstractMainPage {
 					isCreation: createConfLayout.isCreation
 					Layout.fillHeight: true
 					Layout.fillWidth: true
-					Layout.rightMargin: 35 * DefaultStyle.dp
+                    Layout.rightMargin: Math.round(35 * DefaultStyle.dp)
 					Connections {
 						target: meetingSetup.conferenceInfoGui ? meetingSetup.conferenceInfoGui.core : null
 						function onConferenceSchedulerStateChanged() {
@@ -332,18 +332,18 @@ AbstractMainPage {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.top: parent.top
-				anchors.topMargin: 58 * DefaultStyle.dp
+                anchors.topMargin: Math.round(58 * DefaultStyle.dp)
 				spacing: 0
 				Section {
-					Layout.preferredWidth: 393 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(393 * DefaultStyle.dp)
 					content: RowLayout {
-						spacing: 16 * DefaultStyle.dp
+                        spacing: Math.round(16 * DefaultStyle.dp)
 						Layout.preferredWidth: overridenRightPanelStackView.width
 						Button {
 							id: backButton
 							icon.source: AppIcons.leftArrow
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
+                            icon.width: Math.round(24 * DefaultStyle.dp)
+                            icon.height: Math.round(24 * DefaultStyle.dp)
 							style: ButtonStyle.noBackground
 							KeyNavigation.left: saveButton
 							KeyNavigation.right: titleText
@@ -355,12 +355,12 @@ AbstractMainPage {
 							}
 						}
 						RowLayout {
-							spacing: 8 * DefaultStyle.dp
+                            spacing: Math.round(8 * DefaultStyle.dp)
 							EffectImage{
 								imageSource: AppIcons.usersThree
 								colorizationColor: DefaultStyle.main2_600
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 							}
 							TextInput {
 								id: titleText
@@ -368,8 +368,8 @@ AbstractMainPage {
 								color: DefaultStyle.main2_600
 								clip: true
 								font {
-									pixelSize: 20 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+                                    pixelSize: Math.round(20 * DefaultStyle.dp)
+                                    weight: Typography.h4.weight
 								}
 								KeyNavigation.left: backButton
 								KeyNavigation.right: saveButton
@@ -455,22 +455,22 @@ AbstractMainPage {
 		ColumnLayout {
 			property Control.StackView container
 			property ConferenceInfoGui conferenceInfoGui
-			spacing: 18 * DefaultStyle.dp
+            spacing: Math.round(18 * DefaultStyle.dp)
 			FocusScope{
 				Layout.fillWidth: true
 				Layout.preferredHeight: childrenRect.height
 				ColumnLayout {
-					spacing: 4 * DefaultStyle.dp
+                    spacing: Math.round(4 * DefaultStyle.dp)
 					Layout.fillWidth: true
 					RowLayout {
 						id: addParticipantsButtons
-						spacing: 10 * DefaultStyle.dp
+                        spacing: Math.round(10 * DefaultStyle.dp)
 						Button {
 							id: addParticipantsBackButton
 							style: ButtonStyle.noBackgroundOrange
 							icon.source: AppIcons.leftArrow
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
+                            icon.width: Math.round(24 * DefaultStyle.dp)
+                            icon.height: Math.round(24 * DefaultStyle.dp)
 							KeyNavigation.right: addButton
 							KeyNavigation.down: addParticipantLayout
 							onClicked: container.pop()
@@ -480,15 +480,15 @@ AbstractMainPage {
 							color: DefaultStyle.main1_500_main
 							maximumLineCount: 1
 							font {
-								pixelSize: 18 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
+                                pixelSize: Math.round(18 * DefaultStyle.dp)
+                                weight: Typography.h4.weight
 							}
 							Layout.fillWidth: true
 						}
 						SmallButton {
 							id: addButton
 							enabled: addParticipantLayout.selectedParticipantsCount.length != 0
-							Layout.leftMargin: 11 * DefaultStyle.dp
+                            Layout.leftMargin: Math.round(11 * DefaultStyle.dp)
 							focus: enabled
 							style: ButtonStyle.main
 							text: qsTr("Ajouter")
@@ -505,8 +505,8 @@ AbstractMainPage {
 						Layout.leftMargin: addParticipantsBackButton.width + addParticipantsButtons.spacing
 						maximumLineCount: 1
 						font {
-							pixelSize: 12 * DefaultStyle.dp
-							weight: 300 * DefaultStyle.dp
+                            pixelSize: Math.round(12 * DefaultStyle.dp)
+                            weight: Math.round(300 * DefaultStyle.dp)
 						}
 						Layout.fillWidth: true
 					}
@@ -531,27 +531,27 @@ AbstractMainPage {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.top: parent.top
-				anchors.topMargin: 58 * DefaultStyle.dp
+                anchors.topMargin: Math.round(58 * DefaultStyle.dp)
 				visible: mainItem.selectedConference
-				spacing: 25 * DefaultStyle.dp
+                spacing: Math.round(25 * DefaultStyle.dp)
 				Section {
 					visible: mainItem.selectedConference
 					Layout.fillWidth: true
 					content: RowLayout {
-						spacing: 8 * DefaultStyle.dp
+                        spacing: Math.round(8 * DefaultStyle.dp)
 						EffectImage {
 							imageSource: AppIcons.usersThree
 							colorizationColor: DefaultStyle.main2_600
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 						}
 						Text {
 							Layout.fillWidth: true
 							text: mainItem.selectedConference && mainItem.selectedConference.core? mainItem.selectedConference.core.subject : ""
 							maximumLineCount: 1
 							font {
-								pixelSize: 20 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
+                                pixelSize: Math.round(20 * DefaultStyle.dp)
+                                weight: Typography.h4.weight
 							}
 						}
 						Item {
@@ -571,8 +571,8 @@ AbstractMainPage {
 						}
 						PopupButton {
 							id: deletePopup
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 							contentImageColor: DefaultStyle.main1_500_main
 							KeyNavigation.left: editButton.visible ? editButton : leftPanelStackView.currentItem
 							KeyNavigation.right: leftPanelStackView.currentItem
@@ -609,14 +609,14 @@ AbstractMainPage {
 				}
 				Section {
 					content: ColumnLayout {
-						spacing: 15 * DefaultStyle.dp
+                        spacing: Math.round(15 * DefaultStyle.dp)
 						width: parent.width
 						RowLayout {
-							spacing: 8 * DefaultStyle.dp
+                            spacing: Math.round(8 * DefaultStyle.dp)
 							Layout.fillWidth: true
 							EffectImage {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 								colorizationColor: DefaultStyle.main2_600
 								imageSource: AppIcons.videoCamera
 							}
@@ -658,10 +658,10 @@ AbstractMainPage {
 							}
 						}
 						RowLayout {
-							spacing: 8 * DefaultStyle.dp
+                            spacing: Math.round(8 * DefaultStyle.dp)
 							EffectImage {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 								imageSource: AppIcons.clock
 								colorizationColor: DefaultStyle.main2_600
 							}
@@ -673,23 +673,23 @@ AbstractMainPage {
 										+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
 										: ''
 								font {
-									pixelSize: 14 * DefaultStyle.dp
+                                    pixelSize: Math.round(14 * DefaultStyle.dp)
 									capitalization: Font.Capitalize
 								}
 							}
 						}
 						RowLayout {
-							spacing: 8 * DefaultStyle.dp
+                            spacing: Math.round(8 * DefaultStyle.dp)
 							EffectImage {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 								imageSource: AppIcons.globe
 								colorizationColor: DefaultStyle.main2_600
 							}
 							Text {
 								text: qsTr("Time zone: ") + (mainItem.selectedConference && mainItem.selectedConference.core ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
 								font {
-									pixelSize: 14 * DefaultStyle.dp
+                                    pixelSize: Math.round(14 * DefaultStyle.dp)
 									capitalization: Font.Capitalize
 								}
 							}
@@ -699,10 +699,10 @@ AbstractMainPage {
 				Section {
 					visible: mainItem.selectedConference && mainItem.selectedConference.core?.description.length != 0
 					content: RowLayout {
-						spacing: 8 * DefaultStyle.dp
+                        spacing: Math.round(8 * DefaultStyle.dp)
 						EffectImage {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 							imageSource: AppIcons.note
 							colorizationColor: DefaultStyle.main2_600
 						}
@@ -710,7 +710,7 @@ AbstractMainPage {
 							text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.description : ""
 							Layout.fillWidth: true
 							font {
-								pixelSize: 14 * DefaultStyle.dp
+                                pixelSize: Math.round(14 * DefaultStyle.dp)
 								capitalization: Font.Capitalize
 							}
 						}
@@ -718,22 +718,22 @@ AbstractMainPage {
 				}
 				Section {
 					content: RowLayout {
-						spacing: 8 * DefaultStyle.dp
+                        spacing: Math.round(8 * DefaultStyle.dp)
 						EffectImage {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 							imageSource: AppIcons.userRectangle
 							colorizationColor: DefaultStyle.main2_600
 						}
 						Avatar {
-							Layout.preferredWidth: 45 * DefaultStyle.dp
-							Layout.preferredHeight: 45 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 							_address: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerAddress : ""
 						}
 						Text {
 							text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerName : ""
 							font {
-								pixelSize: 14 * DefaultStyle.dp
+                                pixelSize: Math.round(14 * DefaultStyle.dp)
 								capitalization: Font.Capitalize
 							}
 						}
@@ -743,28 +743,28 @@ AbstractMainPage {
 					visible: participantList.count > 0
 					content: RowLayout {
 						Layout.preferredHeight: participantList.height
-						width: 393 * DefaultStyle.dp
-						spacing: 8 * DefaultStyle.dp
+                        width: Math.round(393 * DefaultStyle.dp)
+                        spacing: Math.round(8 * DefaultStyle.dp)
 						EffectImage {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 							Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-							Layout.topMargin: 20 * DefaultStyle.dp
+                            Layout.topMargin: Math.round(20 * DefaultStyle.dp)
 							imageSource: AppIcons.usersTwo
 							colorizationColor: DefaultStyle.main2_600
 						}
 						ListView {
 							id: participantList
-							Layout.preferredHeight: Math.min(184 * DefaultStyle.dp, contentHeight)
+                            Layout.preferredHeight: Math.min(Math.round(184 * DefaultStyle.dp), contentHeight)
 							Layout.fillWidth: true
 							model: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.participants : []
 							clip: true
 							delegate: RowLayout {
-								height: 56 * DefaultStyle.dp
+                                height: Math.round(56 * DefaultStyle.dp)
 								width: participantList.width
 								Avatar {
-									Layout.preferredWidth: 45 * DefaultStyle.dp
-									Layout.preferredHeight: 45 * DefaultStyle.dp
+                                    Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                                    Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 									_address: modelData.address
 									shadowEnabled: false
 								}
@@ -774,7 +774,7 @@ AbstractMainPage {
 									maximumLineCount: 1
 									Layout.fillWidth: true
 									font {
-										pixelSize: 14 * DefaultStyle.dp
+                                        pixelSize: Math.round(14 * DefaultStyle.dp)
 										capitalization: Font.Capitalize
 									}
 								}
@@ -783,8 +783,8 @@ AbstractMainPage {
 									visible: mainItem.selectedConference && mainItem.selectedConference.core?.organizerAddress === modelData.address
 									color: DefaultStyle.main2_400
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 300 * DefaultStyle.dp
+                                        pixelSize: Math.round(12 * DefaultStyle.dp)
+                                        weight: Math.round(300 * DefaultStyle.dp)
 									}
 								}
 							}

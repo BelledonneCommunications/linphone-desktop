@@ -8,8 +8,8 @@ import SettingsCpp
 
 Control.TabBar {
 	id: mainItem
-	//spacing: 32 * DefaultStyle.dp
-	topPadding: 36 * DefaultStyle.dp
+    //spacing: Math.round(32 * DefaultStyle.dp)
+    topPadding: Math.round(36 * DefaultStyle.dp)
 
 	property var model
 	readonly property alias cornerRadius: bottomLeftCorner.radius
@@ -39,8 +39,8 @@ Control.TabBar {
 		id: unreadNotifications
 		property int unread: 0
 		visible: unread > 0
-		width: 15 * DefaultStyle.dp
-		height: 15 * DefaultStyle.dp
+        width: Math.round(15 * DefaultStyle.dp)
+        height: Math.round(15 * DefaultStyle.dp)
 		radius: width/2
 		color: DefaultStyle.danger_500main
 		Text{
@@ -50,7 +50,7 @@ Control.TabBar {
 			horizontalAlignment: Text.AlignHCenter
 			color: DefaultStyle.grey_0
 			fontSizeMode: Text.Fit
-			font.pixelSize: 15 *  DefaultStyle.dp
+            font.pixelSize: Math.round(15 *  DefaultStyle.dp)
 			text: parent.unread > 100 ? '99+' : parent.unread
 		}
 	}
@@ -78,7 +78,7 @@ Control.TabBar {
 			id: bottomLeftCorner
 			anchors.fill: parent
 			color: DefaultStyle.main1_500_main
-			radius: 25 * DefaultStyle.dp
+            radius: Math.round(25 * DefaultStyle.dp)
 		}
 		Rectangle {
 			color: DefaultStyle.main1_500_main
@@ -101,8 +101,8 @@ Control.TabBar {
 			id: tabButton
 			width: mainItem.width
 			height: visible && buttonIcon.isImageReady ? undefined : 0
-			bottomInset:  32 * DefaultStyle.dp
-			topInset:  32 * DefaultStyle.dp
+            bottomInset:  Math.round(32 * DefaultStyle.dp)
+            topInset:  Math.round(32 * DefaultStyle.dp)
 			hoverEnabled: true
 			visible: modelData?.visible != undefined ? modelData?.visible : true
 			UnreadNotification {
@@ -114,7 +114,7 @@ Control.TabBar {
 						? defaultAccount.core?.unreadMessageNotifications || -1
 						: 0
 				anchors.right: parent.right
-				anchors.rightMargin: 15 * DefaultStyle.dp
+                anchors.rightMargin: Math.round(15 * DefaultStyle.dp)
 				anchors.top: parent.top
 			}
 			MouseArea {
@@ -125,7 +125,7 @@ Control.TabBar {
 			contentItem: ColumnLayout {
 				EffectImage {
 					id: buttonIcon
-					property int buttonSize: mainItem.currentIndex !== index && tabButton.hovered ? 26 * DefaultStyle.dp : 24 * DefaultStyle.dp
+                    property real buttonSize: mainItem.currentIndex !== index && tabButton.hovered ? Math.round(26 * DefaultStyle.dp) : Math.round(24 * DefaultStyle.dp)
 					imageSource: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
 					Layout.preferredWidth: buttonSize
 					Layout.preferredHeight: buttonSize
@@ -140,19 +140,19 @@ Control.TabBar {
 					text: modelData.label
 					font {
 						weight: mainItem.currentIndex === index 
-							? 800 * DefaultStyle.dp 
+                            ? Math.round(800 * DefaultStyle.dp)
 							: tabButton.hovered 
-								? 600 * DefaultStyle.dp 
-								: 400 * DefaultStyle.dp
-						pixelSize: 11 * DefaultStyle.dp
+                                ? Math.round(600 * DefaultStyle.dp)
+                                : Math.round(400 * DefaultStyle.dp)
+                        pixelSize: Math.round(11 * DefaultStyle.dp)
 					}
 					color: DefaultStyle.grey_0
 					Layout.fillWidth: true
 					Layout.preferredHeight: txtMeter.height
 					Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
-					leftPadding: 3 * DefaultStyle.dp
-					rightPadding: 3 * DefaultStyle.dp
+                    leftPadding: Math.round(3 * DefaultStyle.dp)
+                    rightPadding: Math.round(3 * DefaultStyle.dp)
 				}
 			}
 			TextMetrics {
@@ -160,7 +160,7 @@ Control.TabBar {
 				text: modelData.label
 				font: buttonText.font
 				Component.onCompleted: {
-					font.weight = 800 * DefaultStyle.dp
+                    font.weight = Math.round(800 * DefaultStyle.dp)
 					mainItem.implicitWidth = Math.max(mainItem.implicitWidth, advanceWidth + buttonIcon.buttonSize)
 				}
 			}

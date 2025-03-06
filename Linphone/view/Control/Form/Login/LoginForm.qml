@@ -7,18 +7,18 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ColumnLayout {
 	id: mainItem
-	spacing: 10 * DefaultStyle.dp
+    spacing: Math.round(10 * DefaultStyle.dp)
 
 	FormItemLayout {
 		id: username
-		Layout.preferredWidth: 346 * DefaultStyle.dp
+        Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
 		label: qsTr("Nom d'utilisateur")
 		mandatory: true
 		enableErrorText: true
 		contentItem: TextField {
 			id: usernameEdit
-			Layout.preferredWidth: 360 * DefaultStyle.dp
-			Layout.preferredHeight: 49 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+            Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
 			isError: username.errorTextVisible || (errorText.isVisible && text.length > 0)
 		}
 	}
@@ -26,14 +26,14 @@ ColumnLayout {
 		Layout.preferredHeight: password.implicitHeight
 		FormItemLayout {
 			id: password
-			width: 346 * DefaultStyle.dp
+            width: Math.round(346 * DefaultStyle.dp)
 			label: qsTr("Mot de passe")
 			mandatory: true
 			enableErrorText: true
 			contentItem: TextField {
 				id: passwordEdit
-				Layout.preferredWidth: 360 * DefaultStyle.dp
-				Layout.preferredHeight: 49 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
 				isError: password.errorTextVisible || (errorText.isVisible && text.length > 0)
 				hidden: true
 			}
@@ -53,8 +53,8 @@ ColumnLayout {
 	}
 
 	RowLayout {
-		Layout.topMargin: 7 * DefaultStyle.dp
-		spacing: 29 * DefaultStyle.dp
+        Layout.topMargin: Math.round(7 * DefaultStyle.dp)
+        spacing: Math.round(29 * DefaultStyle.dp)
 		BigButton {
 			id: connectionButton
 			style: ButtonStyle.main
@@ -67,8 +67,8 @@ ColumnLayout {
 					verticalAlignment: Text.AlignVCenter
 
 					font {
-						pixelSize: 18 * DefaultStyle.dp
-						weight: 600 * DefaultStyle.dp
+                        pixelSize: Typography.b1.pixelSize
+                        weight: Typography.b1.weight
 					}
 					color: DefaultStyle.grey_0
 				}

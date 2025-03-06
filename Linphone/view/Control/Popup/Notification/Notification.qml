@@ -11,8 +11,8 @@ DesktopPopup {
 	property var notificationData: ({
 										timelineModel : null
 									})
-	property int overriddenHeight: 120 * DefaultStyle.dp
-	property int overriddenWidth: 300 * DefaultStyle.dp
+    property real overriddenHeight: Math.round(120 * DefaultStyle.dp)
+    property real overriddenWidth: Math.round(300 * DefaultStyle.dp)
 	property double radius: 0
 	property color backgroundColor: DefaultStyle.grey_0
 	property double backgroundOpacity: 1
@@ -56,7 +56,7 @@ DesktopPopup {
 				opacity: mainItem.backgroundOpacity
 				// border {
 				// 	color: DefaultStyle.grey_400
-				// 	width: 1 * DefaultStyle.dp
+                // 	width: Math.round(1 * DefaultStyle.dp)
 				// }
 			}
 			MultiEffect {

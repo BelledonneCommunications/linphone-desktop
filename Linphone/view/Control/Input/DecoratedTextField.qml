@@ -32,7 +32,7 @@ FormItemLayout {
 	
 	contentItem: TextField {
 		id: textField
-		Layout.preferredWidth: 360 * DefaultStyle.dp
+        Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
 		placeholderText: useTitleAsPlaceHolder ? mainItem.title : mainItem.placeHolder
 		initialText: (mainItem.propertyOwnerGui ? mainItem.propertyOwnerGui.core[mainItem.propertyName] : mainItem.propertyOwner[mainItem.propertyName]) || ''
 		customWidth: mainItem.parent.width

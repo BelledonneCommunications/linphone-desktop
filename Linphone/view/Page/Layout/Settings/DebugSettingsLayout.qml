@@ -67,7 +67,7 @@ AbstractSettingsLayout {
 	Component {
 		id: logContent
 		ColumnLayout {
-			spacing: 20 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
 			SwitchSetting {
 				titleText: qsTr("Activer les traces de débogage")
 				propertyName: "logsEnabled"
@@ -79,7 +79,7 @@ AbstractSettingsLayout {
 				propertyOwner: SettingsCpp
 			}
 			RowLayout {
-				spacing: 20 * DefaultStyle.dp
+                spacing: Math.round(20 * DefaultStyle.dp)
 				Layout.alignment: Qt.AlignRight
 				MediumButton {
 					style: ButtonStyle.tertiary
@@ -104,15 +104,15 @@ AbstractSettingsLayout {
 	Component {
 	id: versionContent
 		ColumnLayout {
-			spacing: 20 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
 			RowLayout {
 				EffectImage {
 					imageSource: AppIcons.appWindow
 					colorizationColor: DefaultStyle.main1_500_main
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					imageWidth: 24 * DefaultStyle.dp
-					imageHeight: 24 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                    imageWidth: Math.round(24 * DefaultStyle.dp)
+                    imageHeight: Math.round(24 * DefaultStyle.dp)
 					Layout.alignment: Qt.AlignTop
 				}
 				ColumnLayout {
@@ -137,10 +137,10 @@ AbstractSettingsLayout {
 				EffectImage {
 					imageSource: AppIcons.resourcePackage
 					colorizationColor: DefaultStyle.main1_500_main
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					imageWidth: 24 * DefaultStyle.dp
-					imageHeight: 24 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                    imageWidth: Math.round(24 * DefaultStyle.dp)
+                    imageHeight: Math.round(24 * DefaultStyle.dp)
 					Layout.alignment: Qt.AlignTop
 				}
 				ColumnLayout {

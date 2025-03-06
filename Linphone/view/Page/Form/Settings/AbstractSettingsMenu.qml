@@ -27,17 +27,17 @@ AbstractMainPage {
 		id: leftPanel
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		property int sideMargin: 45 * DefaultStyle.dp
-		spacing: 5 * DefaultStyle.dp
+        property real sideMargin: Math.round(45 * DefaultStyle.dp)
+        spacing: Math.round(5 * DefaultStyle.dp)
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			spacing: 5 * DefaultStyle.dp
+            spacing: Math.round(5 * DefaultStyle.dp)
 			Button {
 				id: backButton
-				Layout.preferredHeight: 24 * DefaultStyle.dp
-				Layout.preferredWidth: 24 * DefaultStyle.dp
+                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
 				focus: true
@@ -60,7 +60,7 @@ AbstractMainPage {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			model: mainItem.families
-			Layout.topMargin: 41 * DefaultStyle.dp
+            Layout.topMargin: Math.round(41 * DefaultStyle.dp)
 			Layout.leftMargin: leftPanel.sideMargin
 			property int selectedIndex: 0
 			activeFocusOnTab: true

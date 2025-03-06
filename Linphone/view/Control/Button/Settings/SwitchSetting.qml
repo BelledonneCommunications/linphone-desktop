@@ -11,7 +11,7 @@ RowLayout {
 	property var propertyOwner
 	property var propertyOwnerGui
 	property bool enabled: true
-	spacing : 20 * DefaultStyle.dp
+    spacing : Math.round(20 * DefaultStyle.dp)
 	signal checkedChanged(bool checked)
 
 	function setChecked(value) {
@@ -19,8 +19,8 @@ RowLayout {
 	}
 
 	ColumnLayout {
-		Layout.minimumHeight: 32 * DefaultStyle.dp
-		spacing: 4 * DefaultStyle.dp
+        Layout.minimumHeight: Math.round(32 * DefaultStyle.dp)
+        spacing: Math.round(4 * DefaultStyle.dp)
 		Text {
 			text: titleText
 			font: Typography.p2l

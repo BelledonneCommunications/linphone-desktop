@@ -10,7 +10,7 @@ Control.ToolTip {
 		id: tooltipBackground
 		opacity: 0.7
 		color: DefaultStyle.main2_200
-		radius: 15 * DefaultStyle.dp
+        radius: Math.round(15 * DefaultStyle.dp)
 	}
 	contentItem: Text {
 		text: mainItem.text

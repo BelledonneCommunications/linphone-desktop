@@ -9,27 +9,27 @@ Control.Switch {
     property bool shadowEnabled: mainItem.hovered || mainItem.activeFocus
     hoverEnabled: true
 	font {
-		pixelSize: 14 * DefaultStyle.dp
-		weight: 400 * DefaultStyle.dp
+        pixelSize: Typography.p1.pixelSize
+        weight: Typography.p1.weight
 	}
     indicator: Item{
-		implicitWidth: 32 * DefaultStyle.dp
-		implicitHeight: 20 * DefaultStyle.dp
+        implicitWidth: Math.round(32 * DefaultStyle.dp)
+        implicitHeight: Math.round(20 * DefaultStyle.dp)
 		x: mainItem.leftPadding
 		y: parent.height / 2 - height / 2
 		Rectangle {
 			id: indicatorBackground
 			anchors.fill: parent			
-			radius: 10 * DefaultStyle.dp
+            radius: Math.round(10 * DefaultStyle.dp)
 			color: mainItem.checked? DefaultStyle.success_500main : DefaultStyle.main2_400
 	
 			Rectangle {
 				anchors.verticalCenter: parent.verticalCenter
-				property int margin: 4 * DefaultStyle.dp
+                property real margin: Math.round(4 * DefaultStyle.dp)
 				x: mainItem.checked ? parent.width - width - margin : margin
-				width: 12 * DefaultStyle.dp
-				height: 12 * DefaultStyle.dp
-				radius: 10 * DefaultStyle.dp
+                width: Math.round(12 * DefaultStyle.dp)
+                height: Math.round(12 * DefaultStyle.dp)
+                radius: Math.round(10 * DefaultStyle.dp)
 				color: DefaultStyle.grey_0
 				Behavior on x {
 					NumberAnimation{duration: 100}

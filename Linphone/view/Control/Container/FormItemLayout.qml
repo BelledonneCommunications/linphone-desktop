@@ -35,7 +35,7 @@ FocusScope{
 
 	ColumnLayout {
 		id: layout
-		spacing: 5 * DefaultStyle.dp
+        spacing: Math.round(5 * DefaultStyle.dp)
 		anchors.left: parent.left
 		anchors.right: parent.right
 	
@@ -50,8 +50,8 @@ FocusScope{
 			textFormat: Text.RichText
 	
 			font {
-				pixelSize: 13 * DefaultStyle.dp
-				weight: 700 * DefaultStyle.dp
+                pixelSize: Typography.p2.pixelSize
+                weight: Typography.p2.weight
 			}
 		}
 	

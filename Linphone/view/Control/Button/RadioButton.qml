@@ -11,7 +11,7 @@ Control.RadioButton {
 	property string imgUrl
 	property bool checkOnClick: true
 	property color color
-	property int indicatorSize: 16 * DefaultStyle.dp
+    property real indicatorSize: Math.round(16 * DefaultStyle.dp)
 	property bool shadowEnabled: mainItem.activeFocus || mainItem.hovered
 	//onClicked: if (checkOnClick && !mainItem.checked) mainItem.toggle()
 
@@ -33,7 +33,7 @@ Control.RadioButton {
 			radius: mainItem.indicatorSize/2
 			color: "transparent"
 			border.color: mainItem.color
-			border.width: 2 * DefaultStyle.dp
+            border.width: Math.round(2 * DefaultStyle.dp)
 			Rectangle {
 				width: parent.width/2
 				height: parent.height/2

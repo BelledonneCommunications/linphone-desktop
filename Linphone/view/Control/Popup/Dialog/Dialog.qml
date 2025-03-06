@@ -10,12 +10,12 @@ Popup {
 	modal: true
 	anchors.centerIn: parent
 	closePolicy: Control.Popup.NoAutoClose
-	leftPadding: title.length === 0 ? 10 * DefaultStyle.dp : 33 * DefaultStyle.dp 
-	rightPadding: title.length === 0 ? 10 * DefaultStyle.dp : 33 * DefaultStyle.dp 
-	topPadding: title.length === 0 ? 10 * DefaultStyle.dp : 37 * DefaultStyle.dp
-	bottomPadding: title.length === 0 ? 10 * DefaultStyle.dp : 37 * DefaultStyle.dp
+    leftPadding: title.length === 0 ? Math.round(10 * DefaultStyle.dp) : Math.round(33 * DefaultStyle.dp)
+    rightPadding: title.length === 0 ? Math.round(10 * DefaultStyle.dp) : Math.round(33 * DefaultStyle.dp)
+    topPadding: title.length === 0 ? Math.round(10 * DefaultStyle.dp) : Math.round(37 * DefaultStyle.dp)
+    bottomPadding: title.length === 0 ? Math.round(10 * DefaultStyle.dp) : Math.round(37 * DefaultStyle.dp)
 	underlineColor: DefaultStyle.main1_500_main
-	radius: title.length === 0 ? 16 * DefaultStyle.dp : 0
+    radius: title.length === 0 ? Math.round(16 * DefaultStyle.dp) : 0
 	property string title
 	property var titleColor: DefaultStyle.main1_500_main
 	property string text
@@ -47,7 +47,7 @@ Popup {
 		ColumnLayout {
 			id: child
 			anchors.fill: parent
-			spacing: 15 * DefaultStyle.dp
+            spacing: Math.round(15 * DefaultStyle.dp)
 			
 			Text{
 				id: titleText
@@ -56,8 +56,8 @@ Popup {
 				text: mainItem.title
 				color: mainItem.titleColor
 				font {
-					pixelSize: 22 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+                    pixelSize: Typography.h3.pixelSize
+                    weight: Typography.h3.weight
 				}
 				wrapMode: Text.Wrap
 				horizontalAlignment: Text.AlignLeft
@@ -76,8 +76,8 @@ Popup {
 				Layout.alignment: Qt.AlignCenter
 				text: mainItem.text
 				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 400 * DefaultStyle.dp
+                    pixelSize: Typography.p1.pixelSize
+                    weight: Typography.p1.weight
 				}
 				wrapMode: Text.Wrap
 				horizontalAlignment: titleText.visible ?  Text.AlignLeft : Text.AlignHCenter
@@ -86,12 +86,12 @@ Popup {
 				id: detailsText
 				visible: text.length != 0
 				Layout.fillWidth: true
-				//Layout.preferredWidth: 278 * DefaultStyle.dp
+                //Layout.preferredWidth: Math.round(278 * DefaultStyle.dp)
 				Layout.alignment: Qt.AlignCenter
 				text: mainItem.details
 				font {
-					pixelSize: 13 * DefaultStyle.dp
-					weight: 400 * DefaultStyle.dp
+                    pixelSize: Typography.p1.pixelSize
+                    weight: Typography.p1.weight
 					italic: true
 				}
 				wrapMode: Text.Wrap
@@ -107,7 +107,7 @@ Popup {
 			RowLayout {
 				id: buttonsLayout
 				Layout.alignment: Qt.AlignBottom | ( titleText.visible ? Qt.AlignRight : Qt.AlignHCenter)
-				spacing: titleText.visible ? 20 * DefaultStyle.dp : 10 * DefaultStyle.dp
+                spacing: titleText.visible ? Math.round(20 * DefaultStyle.dp) : Math.round(10 * DefaultStyle.dp)
 	
 				// Default buttons only visible if no other children
 				// have been set

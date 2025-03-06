@@ -35,7 +35,7 @@ AbstractSettingsLayout {
     Component {
         id: genericParametersComponent
         ColumnLayout {
-            spacing: 20 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
             SwitchSetting {
                 titleText: qsTr("Annulateur d'écho")
                 subTitleText: qsTr("Évite que de l'écho soit entendu par votre correspondant")
@@ -73,7 +73,7 @@ AbstractSettingsLayout {
 		MultimediaSettings {
 			ringerDevicesVisible: true
 			backgroundVisible: false
-			spacing: 20 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
 		}
 	}
 }

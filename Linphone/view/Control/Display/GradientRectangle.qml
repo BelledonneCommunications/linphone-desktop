@@ -3,11 +3,11 @@ import Linphone
 
 Item {
 	id: mainItem
-	property int borderWidth: 1 * DefaultStyle.dp
+    property real borderWidth: Math.max(Math.round(1 * DefaultStyle.dp), 1)
 	property alias borderGradient: border.gradient
 	property alias gradient: fill.gradient
 	property alias color: fill.color
-	property int radius
+    property real radius
 	Rectangle {
 		id: border
 		radius: mainItem.radius

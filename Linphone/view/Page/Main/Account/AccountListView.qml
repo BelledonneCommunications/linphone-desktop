@@ -10,18 +10,18 @@ import SettingsCpp
 
 Item {
 	id: mainItem
-	width: 517 * DefaultStyle.dp
-	readonly property int topPadding: 23 * DefaultStyle.dp
-	readonly property int bottomPadding: 13 * DefaultStyle.dp
-	readonly property int leftPadding: 24 * DefaultStyle.dp
-	readonly property int rightPadding: 24 * DefaultStyle.dp
-	readonly property int spacing: 16 * DefaultStyle.dp
+    width: Math.round(517 * DefaultStyle.dp)
+    readonly property real topPadding: Math.round(23 * DefaultStyle.dp)
+    readonly property real bottomPadding: Math.round(13 * DefaultStyle.dp)
+    readonly property real leftPadding: Math.round(24 * DefaultStyle.dp)
+    readonly property real rightPadding: Math.round(24 * DefaultStyle.dp)
+    readonly property real spacing: Math.round(16 * DefaultStyle.dp)
 	property AccountProxy  accountProxy
 	
 	signal addAccountRequest()
 	signal editAccount(AccountGui account)
 
-	implicitHeight: list.contentHeight + topPadding + bottomPadding + 32 * DefaultStyle.dp + 1 + addAccountButton.height
+    implicitHeight: list.contentHeight + topPadding + bottomPadding + Math.round(32 * DefaultStyle.dp) + 1 + addAccountButton.height
 	ColumnLayout{
 		id: childLayout
 		anchors.top: parent.top
@@ -75,7 +75,7 @@ Item {
 			Layout.topMargin: mainItem.spacing
 			Layout.bottomMargin: mainItem.spacing
 			visible: addAccountButton.visible
-			height: 1 * DefaultStyle.dp
+            height: Math.max(Math.round(1 * DefaultStyle.dp), 1)
 			color: DefaultStyle.main2_300
 		}
 		IconLabelButton{
@@ -84,8 +84,8 @@ Item {
 			visible: SettingsCpp.maxAccount == 0 || SettingsCpp.maxAccount > accountProxy.count
 			onClicked: mainItem.addAccountRequest()
 			icon.source: AppIcons.plusCircle
-			icon.width: 32 * DefaultStyle.dp
-			icon.height: 32 * DefaultStyle.dp
+            icon.width: Math.round(32 * DefaultStyle.dp)
+            icon.height: Math.round(32 * DefaultStyle.dp)
 			text: 'Ajouter un compte'
 		}
 	}

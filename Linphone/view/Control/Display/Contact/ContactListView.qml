@@ -37,13 +37,13 @@ ListView {
 	
 	property bool haveFavorites: false
 	property bool haveContacts: count > 0
-	property int sectionsPixelSize: 16 * DefaultStyle.dp
-	property int sectionsWeight: 800 * DefaultStyle.dp
-	property int sectionsSpacing: 18 * DefaultStyle.dp
+    property real sectionsPixelSize: Typography.h4.pixelSize
+    property real sectionsWeight: Typography.h4.weight
+    property real sectionsSpacing: Math.round(18 * DefaultStyle.dp)
 	
-	property int itemsRightMargin: 39 * DefaultStyle.dp
+    property real itemsRightMargin: Math.round(39 * DefaultStyle.dp)
 	property bool expanded: true
-	property int headerHeight: headerItem?.height
+    property real headerHeight: headerItem?.height
 	
 	signal contactDeletionRequested(FriendGui contact)
 	signal contactSelected(FriendGui contact)	// Click/Space/Enter
@@ -55,7 +55,7 @@ ListView {
 	highlightFollowsCurrentItem: false
 	cacheBuffer: 400
 	implicitHeight: contentHeight
-	spacing: expanded ? 4 * DefaultStyle.dp : 0
+    spacing: expanded ? Math.round(4 * DefaultStyle.dp) : 0
 	
 	property var _currentItemY: currentItem?.y
 	on_CurrentItemYChanged: if(_currentItemY){
@@ -151,7 +151,7 @@ ListView {
 			Item{// Do not use directly RowLayout : there is an issue where the layout doesn't update on visible
 				Layout.fillWidth: true
 				Layout.preferredHeight: mainItem.count > 0 ? headerTitleLayout.implicitHeight : 0
-				Layout.bottomMargin: 4 * DefaultStyle.dp
+                Layout.bottomMargin: Math.round(4 * DefaultStyle.dp)
 				RowLayout {
 					id: headerTitleLayout
 					anchors.fill: parent
@@ -174,9 +174,9 @@ ListView {
 						icon.source: mainItem.expanded ? AppIcons.upArrow : AppIcons.downArrow
 						Layout.fillHeight: true
 						Layout.preferredWidth: height
-						Layout.rightMargin: 23 * DefaultStyle.dp 
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
+                        Layout.rightMargin: Math.round(23 * DefaultStyle.dp)
+                        icon.width: Math.round(24 * DefaultStyle.dp)
+                        icon.height: Math.round(24 * DefaultStyle.dp)
 						focus: true
 						onClicked: mainItem.expanded = !mainItem.expanded
 					}

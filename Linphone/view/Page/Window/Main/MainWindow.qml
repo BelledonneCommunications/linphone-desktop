@@ -9,14 +9,14 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 AbstractWindow {
 	id: mainWindow
-    // height: 982 * DefaultStyle.dp
+    // height: Math.round(982 * DefaultStyle.dp)
 	title: qsTr("Linphone")
 	// TODO : handle this bool when security mode is implemented
 	property bool firstConnection: true
 
 	color: DefaultStyle.grey_0
-	minimumWidth: 1020
-	minimumHeight: 700
+    // minimumWidth: 1020
+    // minimumHeight: 700
 
 	signal callCreated()
 	property var accountProxy
@@ -25,7 +25,7 @@ AbstractWindow {
 	// flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint
 	// menuBar: Rectangle {
 	// 	width: parent.width
-	// 	height: 40 * DefaultStyle.dp
+    // 	height: Math.round(40 * DefaultStyle.dp)
 	// 	color: DefaultStyle.grey_100
 	// }
 
@@ -131,10 +131,10 @@ AbstractWindow {
 			Image {
 				anchors.centerIn: parent
 				source: AppIcons.splashscreenLogo
-				sourceSize.width: 395 * DefaultStyle.dp
-				sourceSize.height: 395 * DefaultStyle.dp
-				width: 395 * DefaultStyle.dp
-				height: 395 * DefaultStyle.dp
+                sourceSize.width: Math.round(395 * DefaultStyle.dp)
+                sourceSize.height: Math.round(395 * DefaultStyle.dp)
+                width: Math.round(395 * DefaultStyle.dp)
+                height: Math.round(395 * DefaultStyle.dp)
 			}
 		}
 	}

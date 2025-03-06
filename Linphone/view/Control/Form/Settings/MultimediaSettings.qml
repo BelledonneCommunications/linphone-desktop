@@ -13,31 +13,31 @@ ColumnLayout {
 	property string microDevice: inputAudioDeviceCBox.currentText
 	property bool ringerDevicesVisible: false
 	property bool backgroundVisible: true
-	spacing: 40 * DefaultStyle.dp
+    spacing: Math.round(40 * DefaultStyle.dp)
 
 	RoundedPane {
 		background.visible: mainItem.backgroundVisible
 		Layout.alignment: Qt.AlignHCenter
 		height: contentItem.implicitHeight + topPadding + bottomPadding
 		Layout.fillWidth: true
-		topPadding: background.visible ? 25 * DefaultStyle.dp : 0
-		bottomPadding: background.visible ? 25 * DefaultStyle.dp : 0
-		leftPadding: background.visible ? 25 * DefaultStyle.dp : 0
-		rightPadding: background.visible ? 25 * DefaultStyle.dp : 0
+        topPadding: background.visible ? Math.round(25 * DefaultStyle.dp) : 0
+        bottomPadding: background.visible ? Math.round(25 * DefaultStyle.dp) : 0
+        leftPadding: background.visible ? Math.round(25 * DefaultStyle.dp) : 0
+        rightPadding: background.visible ? Math.round(25 * DefaultStyle.dp) : 0
 		contentItem: ColumnLayout {
 			spacing: mainItem.spacing
 			ColumnLayout {
-				spacing: 12 * DefaultStyle.dp
+                spacing: Math.round(12 * DefaultStyle.dp)
 				visible: mainItem.ringerDevicesVisible
 				RowLayout {
-					spacing: 8 * DefaultStyle.dp
+                    spacing: Math.round(8 * DefaultStyle.dp)
 					EffectImage {
 						imageSource: AppIcons.bellRinger
 						colorizationColor: DefaultStyle.main1_500_main
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
-						imageWidth: 24 * DefaultStyle.dp
-						imageHeight: 24 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                        imageWidth: Math.round(24 * DefaultStyle.dp)
+                        imageHeight: Math.round(24 * DefaultStyle.dp)
 					}
 					Text {
 						text: qsTr("Sonnerie - Appels entrants")
@@ -48,7 +48,7 @@ ColumnLayout {
 				}
 				ComboSetting {
 					Layout.fillWidth: true
-					Layout.topMargin: 12 * DefaultStyle.dp
+                    Layout.topMargin: Math.round(12 * DefaultStyle.dp)
 					Layout.preferredWidth: parent.width
 					entries: SettingsCpp.ringerDevices
 					propertyName: "ringerDevice"
@@ -60,16 +60,16 @@ ColumnLayout {
 				}
 			}
 			ColumnLayout {
-				spacing: 12 * DefaultStyle.dp
+                spacing: Math.round(12 * DefaultStyle.dp)
 				RowLayout {
-					spacing: 8 * DefaultStyle.dp
+                    spacing: Math.round(8 * DefaultStyle.dp)
 					EffectImage {
 						imageSource: AppIcons.speaker
 						colorizationColor: DefaultStyle.main1_500_main
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
-						imageWidth: 24 * DefaultStyle.dp
-						imageHeight: 24 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                        imageWidth: Math.round(24 * DefaultStyle.dp)
+                        imageHeight: Math.round(24 * DefaultStyle.dp)
 					}
 					Text {
 						text: qsTr("Haut-parleurs")
@@ -81,7 +81,7 @@ ColumnLayout {
 					id: outputAudioDeviceCBox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
-					Layout.preferredHeight: 49 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
 					entries: SettingsCpp.playbackDevices
 					propertyName: "playbackDevice"
 					propertyOwner: SettingsCpp
@@ -107,16 +107,16 @@ ColumnLayout {
 				}
 			}
 			ColumnLayout {
-				spacing: 12 * DefaultStyle.dp
+                spacing: Math.round(12 * DefaultStyle.dp)
 				RowLayout {
-					spacing: 8 * DefaultStyle.dp
+                    spacing: Math.round(8 * DefaultStyle.dp)
 					EffectImage {
 						imageSource: AppIcons.microphone
 						colorizationColor: DefaultStyle.main1_500_main
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
-						imageWidth: 24 * DefaultStyle.dp
-						imageHeight: 24 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                        imageWidth: Math.round(24 * DefaultStyle.dp)
+                        imageHeight: Math.round(24 * DefaultStyle.dp)
 					}
 					Text {
 						text: qsTr("Microphone")
@@ -128,7 +128,7 @@ ColumnLayout {
 					id: inputAudioDeviceCBox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
-					Layout.preferredHeight: 49 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
 					entries: SettingsCpp.captureDevices
 					propertyName: "captureDevice"
 					propertyOwner: SettingsCpp
@@ -165,16 +165,16 @@ ColumnLayout {
 					id: audioTestSlider
 					Layout.fillWidth: true
 					enabled: false
-					Layout.preferredHeight: 10 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(10 * DefaultStyle.dp)
 
 					background: Rectangle {
 						x: audioTestSlider.leftPadding
 						y: audioTestSlider.topPadding + audioTestSlider.availableHeight / 2 - height / 2
-						implicitWidth: 200 * DefaultStyle.dp
-						implicitHeight: 10 * DefaultStyle.dp
+                        implicitWidth: Math.round(200 * DefaultStyle.dp)
+                        implicitHeight: Math.round(10 * DefaultStyle.dp)
 						width: audioTestSlider.availableWidth
 						height: implicitHeight
-						radius: 2 * DefaultStyle.dp
+                        radius: Math.round(2 * DefaultStyle.dp)
 						color: DefaultStyle.grey_850
 
 						Rectangle {
@@ -185,24 +185,24 @@ ColumnLayout {
 								GradientStop { position: 0.0; color: DefaultStyle.vue_meter_light_green }
 								GradientStop { position: 1.0; color: DefaultStyle.vue_meter_dark_green}
 							}
-							radius: 2 * DefaultStyle.dp
+                            radius: Math.round(2 * DefaultStyle.dp)
 						}
 					}
 					handle: Item {visible: false}
 				}
 			}
             ColumnLayout {
-                spacing: 12 * DefaultStyle.dp
+                spacing: Math.round(12 * DefaultStyle.dp)
                 visible: SettingsCpp.videoEnabled
                 RowLayout {
-                    spacing: 8 * DefaultStyle.dp
+                    spacing: Math.round(8 * DefaultStyle.dp)
                     EffectImage {
                         imageSource: AppIcons.videoCamera
                         colorizationColor: DefaultStyle.main1_500_main
-                        Layout.preferredWidth: 24 * DefaultStyle.dp
-                        Layout.preferredHeight: 24 * DefaultStyle.dp
-                        imageWidth: 24 * DefaultStyle.dp
-                        imageHeight: 24 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                        imageWidth: Math.round(24 * DefaultStyle.dp)
+                        imageHeight: Math.round(24 * DefaultStyle.dp)
                     }
                     Text {
                         text: qsTr("Caméra")
@@ -214,7 +214,7 @@ ColumnLayout {
 					id: videoDevicesCbox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
-					Layout.preferredHeight: 49 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
 					entries: SettingsCpp.videoDevices
 					propertyName: "videoDevice"
 					propertyOwner: SettingsCpp

@@ -18,29 +18,29 @@ Control.Page {
 	signal returnRequested()
 	signal validateRequested()
 
-	topPadding: 20 * DefaultStyle.dp
-	leftPadding: 17 * DefaultStyle.dp
-	rightPadding: 17 * DefaultStyle.dp
+    topPadding: Math.round(20 * DefaultStyle.dp)
+    leftPadding: Math.round(17 * DefaultStyle.dp)
+    rightPadding: Math.round(17 * DefaultStyle.dp)
 
 	background: Rectangle {
 		width: mainItem.width
 		height: mainItem.height
 		color: DefaultStyle.grey_100
-		radius: 15 * DefaultStyle.dp
+        radius: Math.round(15 * DefaultStyle.dp)
 	}
 	
 	header: Control.Control {
 		id: pageHeader
 		width: mainItem.width
-		height: 56 * DefaultStyle.dp
-		leftPadding: 10 * DefaultStyle.dp
-		rightPadding: 10 * DefaultStyle.dp
+        height: Math.round(56 * DefaultStyle.dp)
+        leftPadding: Math.round(10 * DefaultStyle.dp)
+        rightPadding: Math.round(10 * DefaultStyle.dp)
 		background: Rectangle {
 			id: headerBackground
 			width: pageHeader.width
 			height: pageHeader.height
 			color: DefaultStyle.grey_0
-			radius: 15 * DefaultStyle.dp
+            radius: Math.round(15 * DefaultStyle.dp)
 			Rectangle {
 				y: pageHeader.height/2
 				height: pageHeader.height/2
@@ -51,7 +51,7 @@ Control.Page {
 			id: headerStack
 			RowLayout {
 				Layout.alignment: Qt.AlignVCenter
-				spacing: 10 * DefaultStyle.dp
+                spacing: Math.round(10 * DefaultStyle.dp)
 				Text {
 					text: mainItem.headerTitleText
 					Layout.fillWidth: true
@@ -62,8 +62,8 @@ Control.Page {
 					verticalAlignment: Text.AlignVCenter
 					color: DefaultStyle.main1_500_main
 					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
+                        pixelSize: Typography.h4.pixelSize
+                        weight: Typography.h4.weight
 					}
 				}
 				RowLayout {
@@ -79,12 +79,12 @@ Control.Page {
 			}
 			RowLayout {
 				Layout.alignment: Qt.AlignVCenter
-				spacing: 10 * DefaultStyle.dp
+                spacing: Math.round(10 * DefaultStyle.dp)
 				Button {
 					style: ButtonStyle.noBackgroundOrange
 					icon.source: AppIcons.leftArrow
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
+                    icon.width: Math.round(24 * DefaultStyle.dp)
+                    icon.height: Math.round(24 * DefaultStyle.dp)
 					onClicked: mainItem.returnRequested()
 				}
 				ColumnLayout {
@@ -95,8 +95,8 @@ Control.Page {
 						text: mainItem.headerTitleText
 						color: DefaultStyle.main1_500_main
 						font {
-							pixelSize: 16 * DefaultStyle.dp
-							weight: 800 * DefaultStyle.dp
+                            pixelSize: Typography.h4.pixelSize
+                            weight: Typography.h4.weight
 						}
 					}
 					Text {
@@ -106,8 +106,8 @@ Control.Page {
 						text: mainItem.headerSubtitleText
 						color: DefaultStyle.main2_500main
 						font {
-							pixelSize: 12 * DefaultStyle.dp
-							weight: 300 * DefaultStyle.dp
+                            pixelSize: Math.round(12 * DefaultStyle.dp)
+                            weight: Math.round(300 * DefaultStyle.dp)
 						}
 					}
 				}

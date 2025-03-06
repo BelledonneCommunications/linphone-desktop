@@ -35,12 +35,12 @@ AbstractSettingsLayout {
 	Component {
 		id: topBar
 		RowLayout {
-			spacing: 20 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
 			Button {
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.trashCan
-				icon.width: 32 * DefaultStyle.dp
-				icon.height: 32 * DefaultStyle.dp
+                icon.width: Math.round(32 * DefaultStyle.dp)
+                icon.height: Math.round(32 * DefaultStyle.dp)
 				visible: !isNew
 				onClicked: {
 					var mainWin = UtilsCpp.getMainWindow()
@@ -63,10 +63,10 @@ AbstractSettingsLayout {
 		id: ldapParametersComponent
 		ColumnLayout {
 			Layout.fillWidth: true
-			spacing: 20 * DefaultStyle.dp
-			Layout.rightMargin: 44 * DefaultStyle.dp
-			Layout.topMargin: 20 * DefaultStyle.dp
-			Layout.leftMargin: 64 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
+            Layout.rightMargin: Math.round(44 * DefaultStyle.dp)
+            Layout.topMargin: Math.round(20 * DefaultStyle.dp)
+            Layout.leftMargin: Math.round(64 * DefaultStyle.dp)
 			DecoratedTextField {
 				id: server
 				propertyName: "serverUrl"

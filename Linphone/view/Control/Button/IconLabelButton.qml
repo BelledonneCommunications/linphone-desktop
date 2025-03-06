@@ -6,16 +6,16 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Button {
 	id: mainItem
-	icon.width: 24 * DefaultStyle.dp
-	icon.height: 24 * DefaultStyle.dp
-	textSize: 14 * DefaultStyle.dp
-	textWeight: 400 * DefaultStyle.dp
-	radius: 5 * DefaultStyle.dp
+    icon.width: Math.round(24 * DefaultStyle.dp)
+    icon.height: Math.round(24 * DefaultStyle.dp)
+    textSize: Typography.p1.pixelSize
+    textWeight: Typography.p1.weight
+    radius: Math.round(5 * DefaultStyle.dp)
 	shadowEnabled: mainItem.activeFocus || hovered
 	style: ButtonStyle.hoveredBackground
 	
 	contentItem: RowLayout {
-        spacing: 5 * DefaultStyle.dp
+        spacing: Math.round(5 * DefaultStyle.dp)
 		EffectImage {
 			imageSource: mainItem.icon.source
 			imageWidth: mainItem.icon.width

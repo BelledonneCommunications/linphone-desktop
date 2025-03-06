@@ -9,8 +9,8 @@ Control.ScrollBar {
 	padding: 0
     property color color: DefaultStyle.grey_850
 	contentItem: Rectangle {
-		implicitWidth: 6 * DefaultStyle.dp
-		radius: 32 * DefaultStyle.dp
+        implicitWidth: Math.round(6 * DefaultStyle.dp)
+        radius: Math.round(32 * DefaultStyle.dp)
         color: mainItem.color
 	}
 }

@@ -129,7 +129,7 @@ Window {
 				TextField {
 					id: usernameToCall
 					label: "Username to call"
-					Layout.preferredWidth: 250 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(250 * DefaultStyle.dp)
 				}
 				Button{
 					text: 'Call'

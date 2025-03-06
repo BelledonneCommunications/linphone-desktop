@@ -55,7 +55,7 @@ AbstractSettingsLayout {
 	Component {
 		id: systemComponent
 		ColumnLayout {
-			spacing: 40 * DefaultStyle.dp
+            spacing: Math.round(40 * DefaultStyle.dp)
 			SwitchSetting {
 				Layout.fillWidth: true
 				titleText: qsTr("Démarrer automatiquement Linphone")
@@ -71,7 +71,7 @@ AbstractSettingsLayout {
 	Component {
 		id: remoteProvisioningComponent
 		ColumnLayout {
-			spacing: 6 * DefaultStyle.dp
+            spacing: Math.round(6 * DefaultStyle.dp)
 			DecoratedTextField {
 				Layout.fillWidth: true
 				id: configUri
@@ -79,7 +79,7 @@ AbstractSettingsLayout {
 				toValidate: true
 			}
 			SmallButton {
-				Layout.topMargin: -20 * DefaultStyle.dp
+                Layout.topMargin: -Math.round(20 * DefaultStyle.dp)
 				Layout.alignment: Qt.AlignRight
 				text: qsTr("Télécharger et appliquer")
 				style: ButtonStyle.tertiary
@@ -97,14 +97,14 @@ AbstractSettingsLayout {
 	Component {
 		id: securityComponent
 		ColumnLayout {
-			spacing: 20 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
 			ColumnLayout {
-				spacing: 5 * DefaultStyle.dp
+                spacing: Math.round(5 * DefaultStyle.dp)
 				Text {
 					text: qsTr("Chiffrement du média")
 					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 700 * DefaultStyle.dp
+                        pixelSize: Typography.p2l.pixelSize
+                        weight: Typography.p2l.weight
 					}
 				}
 				ComboSetting {
@@ -134,13 +134,13 @@ AbstractSettingsLayout {
 			ListView {
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
-				spacing: 20 * DefaultStyle.dp
+                spacing: Math.round(20 * DefaultStyle.dp)
 				model: PayloadTypeProxy {
 					filterType: PayloadTypeProxy.Audio | PayloadTypeProxy.NotDownloadable
 				}
 				delegate: SwitchSetting {
 					width: parent.width
-					height: 32 * DefaultStyle.dp
+                    height: Math.round(32 * DefaultStyle.dp)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.clockRate + " Hz"
 					propertyName: "enabled"
@@ -156,18 +156,18 @@ AbstractSettingsLayout {
 	Component {
 		id: videoCodecsComponent
 		ColumnLayout {
-			spacing: 20 * DefaultStyle.dp
+            spacing: Math.round(20 * DefaultStyle.dp)
 			ListView {
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
-				spacing: 20 * DefaultStyle.dp
+                spacing: Math.round(20 * DefaultStyle.dp)
 				model: PayloadTypeProxy {
 					id: videoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.NotDownloadable
 				}
 				delegate: SwitchSetting {
 					width: parent.width
-					height: 32 * DefaultStyle.dp
+                    height: Math.round(32 * DefaultStyle.dp)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
 					propertyName: "enabled"
@@ -177,14 +177,14 @@ AbstractSettingsLayout {
 			ListView {
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
-				spacing: 20 * DefaultStyle.dp
+                spacing: Math.round(20 * DefaultStyle.dp)
 				model: PayloadTypeProxy {
 					id: downloadableVideoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.Downloadable
 				}
 				delegate: SwitchSetting {
 					width: parent.width
-					height: 32 * DefaultStyle.dp
+                    height: Math.round(32 * DefaultStyle.dp)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
 					onCheckedChanged: Utils.openCodecOnlineInstallerDialog(
@@ -211,7 +211,7 @@ AbstractSettingsLayout {
 	Component {
 		id: hideFpsComponent
 		ColumnLayout {
-			spacing: 40 * DefaultStyle.dp
+            spacing: Math.round(40 * DefaultStyle.dp)
 			SwitchSetting {
 				titleText:qsTr("Cacher les FPS")
 				propertyName: "hideFps"

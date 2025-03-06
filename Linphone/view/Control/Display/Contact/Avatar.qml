@@ -95,7 +95,7 @@ Loader{
 					z: 1
 					color: "transparent"
 					border {
-						width: 2 * DefaultStyle.dp
+                        width: Math.round(2 * DefaultStyle.dp)
 						color: mainItem.secured ? DefaultStyle.info_500_main : DefaultStyle.danger_500main
 					}
 					EffectImage {
@@ -136,7 +136,7 @@ Loader{
 						: DefaultStyle.main2_500main
 					: "transparent"
 					border {
-						width: 2 * DefaultStyle.dp
+                        width: Math.round(2 * DefaultStyle.dp)
 						color: DefaultStyle.grey_0
 					}
 				}
@@ -162,7 +162,7 @@ Loader{
 								text: initialItem.initials
 								font {
 									pixelSize: initialItem.height * 36 / 120
-									weight: 800 * DefaultStyle.dp
+                                    weight: Typography.h4.weight
 									capitalization: Font.AllUppercase
 								}
 							}

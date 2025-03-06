@@ -14,19 +14,19 @@ ColumnLayout {
 	property bool isLocalScreenSharing : conference?.core.isLocalScreenSharing || false
 	property bool screenSharingAvailable: !!conference && (!conference.core.isScreenSharingEnabled || isLocalScreenSharing)
 
-	spacing: 12 * DefaultStyle.dp
+    spacing: Math.round(12 * DefaultStyle.dp)
 
 	onIsLocalScreenSharingChanged:  {if(isLocalScreenSharing) mainItem.call.core.videoSourceDescriptor = mainItem.desc }
 	Text {
 		Layout.fillWidth: true
 		text: qsTr("Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants")
-		font.pixelSize: 14 * DefaultStyle.dp
+        font.pixelSize: Math.round(14 * DefaultStyle.dp)
 		color: DefaultStyle.main2_500main
 	}
 	TabBar {
 		Layout.fillWidth: true
 		id: bar
-		pixelSize: 16 * DefaultStyle.dp
+        pixelSize: Math.round(16 * DefaultStyle.dp)
 		model: [qsTr("Ecran entier"), qsTr("Fenêtre")]
 	}
 	component ScreenPreviewLayout: Control.Control {
@@ -36,19 +36,19 @@ ColumnLayout {
 		property int screenIndex
 		property bool selected: false
 		property bool displayScreen:  true
-		property int horizontalMargin: 0
-		leftPadding: 18 * DefaultStyle.dp
-		rightPadding: 18 * DefaultStyle.dp
-		topPadding: 13 * DefaultStyle.dp
-		bottomPadding: 13 * DefaultStyle.dp
+        property real horizontalMargin: 0
+        leftPadding: Math.round(18 * DefaultStyle.dp)
+        rightPadding: Math.round(18 * DefaultStyle.dp)
+        topPadding: Math.round(13 * DefaultStyle.dp)
+        bottomPadding: Math.round(13 * DefaultStyle.dp)
 		background: Rectangle {
 			anchors.fill: parent
 			anchors.leftMargin: screenPreview.horizontalMargin
 			anchors.rightMargin: screenPreview.horizontalMargin
 			color: screenPreview.selected ? DefaultStyle.main2_100 : DefaultStyle.grey_0
-			border.width: 2 * DefaultStyle.dp
+            border.width: Math.round(2 * DefaultStyle.dp)
 			border.color: screenPreview.selected ? DefaultStyle.main2_400 : DefaultStyle.main2_200
-			radius: 10 * DefaultStyle.dp
+            radius: Math.round(10 * DefaultStyle.dp)
 			MouseArea {
 				anchors.fill: parent
 				onClicked: {
@@ -63,7 +63,7 @@ ColumnLayout {
 				Layout.fillHeight: true
 				Image {
 					anchors.centerIn: parent
-					//Layout.preferredHeight: 170 * DefaultStyle.dp
+                    //Layout.preferredHeight: Math.round(170 * DefaultStyle.dp)
 					source: $modelData?.windowId ? "image://window/"+ $modelData.windowId :  "image://screen/"+ $modelData.screenIndex
 					sourceSize.width: parent.width
 					sourceSize.height: parent.height
@@ -71,11 +71,11 @@ ColumnLayout {
 				}
 			}
 			RowLayout{
-				Layout.topMargin: 6 * DefaultStyle.dp
-				spacing: 5 * DefaultStyle.dp
+                Layout.topMargin: Math.round(6 * DefaultStyle.dp)
+                spacing: Math.round(5 * DefaultStyle.dp)
 				Image{
-					Layout.preferredHeight: 15 * DefaultStyle.dp
-					Layout.preferredWidth: 15 * DefaultStyle.dp
+                    Layout.preferredHeight: Math.round(15 * DefaultStyle.dp)
+                    Layout.preferredWidth: Math.round(15 * DefaultStyle.dp)
 					visible: !!$modelData?.windowId
 					source: visible ? "image://window_icon/"+ $modelData.windowId : ''
 					sourceSize.width: width
@@ -86,7 +86,7 @@ ColumnLayout {
 					Layout.fillWidth: true
 					text: !!$modelData?.windowId ? $modelData.name : qsTr("Ecran %1").arg(screenIndex+1)
 					horizontalAlignment: Text.AlignHCenter
-					font.pixelSize: (displayScreen ? 14 : 10)* DefaultStyle.dp
+                    font.pixelSize: Math.round((displayScreen ? 14 : 10) * DefaultStyle.dp)
 					elide: Text.ElideRight
 					maximumLineCount: 1
 				}
@@ -97,7 +97,7 @@ ColumnLayout {
 		currentIndex: bar.currentIndex
 		ListView{
 			id: screensLayout
-			spacing: 16 * DefaultStyle.dp
+            spacing: Math.round(16 * DefaultStyle.dp)
 			clip: true
 			//property int selectedIndex
 			model: ScreenProxy{
@@ -106,9 +106,9 @@ ColumnLayout {
 			}
 			onVisibleChanged: if(visible) screensList.update()
 			delegate: ScreenPreviewLayout {
-					horizontalMargin: (28 - 20 ) * DefaultStyle.dp // 20 coming from CallsWindow panel
+                    horizontalMargin: Math.round((28 - 20 ) * DefaultStyle.dp) // 20 coming from CallsWindow panel
 					width: screensLayout.width
-					height: 219 * DefaultStyle.dp
+                    height: Math.round(219 * DefaultStyle.dp)
 					screenIndex: index
 					onClicked: {//screensLayout.selectedIndex = index
 						screensLayout.currentIndex = index
@@ -131,14 +131,14 @@ ColumnLayout {
 			currentIndex: -1
 			onVisibleChanged: if(visible) windowsList.update()
 			cellWidth: width / 2
-			cellHeight: (112 + 15) * DefaultStyle.dp
+            cellHeight: Math.round((112 + 15) * DefaultStyle.dp)
 			clip: true
 			delegate: Item{
 					width: windowsLayout.cellWidth
 					height: windowsLayout.cellHeight
 					ScreenPreviewLayout {
 						anchors.fill: parent
-						anchors.margins:  7 * DefaultStyle.dp
+                        anchors.margins:  Math.round(7 * DefaultStyle.dp)
 						displayScreen: false
 						screenIndex: index
 						onClicked: {

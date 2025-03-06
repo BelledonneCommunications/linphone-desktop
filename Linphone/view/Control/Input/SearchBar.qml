@@ -8,7 +8,7 @@ FocusScope {
 	id: mainItem
 	property string placeholderText: ""
 	property color placeholderTextColor: DefaultStyle.main2_400
-	property int textInputWidth: 350 * DefaultStyle.dp
+    property real textInputWidth: Math.round(350 * DefaultStyle.dp)
 	property color borderColor: "transparent"
 	property color focusedBorderColor: DefaultStyle.main2_500main
 	property string text: textField.searchText
@@ -38,12 +38,12 @@ FocusScope {
 
 
 	implicitWidth: mainItem.textInputWidth
-	implicitHeight: 50 * DefaultStyle.dp
+    implicitHeight: Math.round(50 * DefaultStyle.dp)
 	
 	Rectangle{
 		id: backgroundItem
 		anchors.fill: parent
-		radius: 28 * DefaultStyle.dp
+        radius: Math.round(28 * DefaultStyle.dp)
 		color: DefaultStyle.grey_100
 		border.color: textField.activeFocus ? mainItem.focusedBorderColor : mainItem.borderColor
 	}
@@ -53,15 +53,15 @@ FocusScope {
 		colorizationColor: DefaultStyle.main2_500main
 		anchors.left: parent.left
 		anchors.verticalCenter: parent.verticalCenter
-		anchors.leftMargin: 10 * DefaultStyle.dp
+        anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
 		imageSource: AppIcons.magnifier
-		width: 20 * DefaultStyle.dp
-		height: 20 * DefaultStyle.dp
+        width: Math.round(20 * DefaultStyle.dp)
+        height: Math.round(20 * DefaultStyle.dp)
 	}
 	Control.TextField {
 		id: textField
 		anchors.left: magnifier.visible ? magnifier.right : parent.left
-		anchors.leftMargin: magnifier.visible ? 0 : 10 * DefaultStyle.dp
+        anchors.leftMargin: magnifier.visible ? 0 : Math.round(10 * DefaultStyle.dp)
 		anchors.right: clearTextButton.left
 		anchors.verticalCenter: parent.verticalCenter
 		
@@ -73,8 +73,8 @@ FocusScope {
 		width: mainItem.width - dialerButton.width
 		echoMode: (mainItem.hidden && !dialerButton.checked) ? TextInput.Password : TextInput.Normal
 		font {
-			pixelSize: 14 * DefaultStyle.dp
-			weight: 400 * DefaultStyle.dp
+            pixelSize: Typography.p1.pixelSize
+            weight: Typography.p1.weight
 			family: DefaultStyle.defaultFont
 		}
 		color: DefaultStyle.main2_600
@@ -87,7 +87,7 @@ FocusScope {
 		cursorDelegate: Rectangle {
 			visible: textField.cursorVisible
 			color: DefaultStyle.main2_500main
-			width: 1 * DefaultStyle.dp
+            width: Math.max(Math.round(1 * DefaultStyle.dp), 1)
 		}
 		Timer{
 			id: delayTimer
@@ -104,11 +104,11 @@ FocusScope {
 		icon.source: AppIcons.dialer
 		contentImageColor: dialerButton.checked ? DefaultStyle.main1_500_main : DefaultStyle.main2_600 
 		hoveredImageColor: contentImageColor
-		width: 24 * DefaultStyle.dp
-		height: 24 * DefaultStyle.dp
+        width: Math.round(24 * DefaultStyle.dp)
+        height: Math.round(24 * DefaultStyle.dp)
 		anchors.verticalCenter: parent.verticalCenter 
 		anchors.right: parent.right
-		anchors.rightMargin: 20 * DefaultStyle.dp
+        anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
 		onClicked: {
 			if(!checked){
 				mainItem.openNumericPadRequested()
@@ -119,14 +119,14 @@ FocusScope {
 	Button {
 		id: clearTextButton
 		visible: textField.text.length > 0 && mainItem.enabled
-		width: 24 * DefaultStyle.dp
-		height: 24 * DefaultStyle.dp
+        width: Math.round(24 * DefaultStyle.dp)
+        height: Math.round(24 * DefaultStyle.dp)
 		style: ButtonStyle.noBackground
 		icon.source: AppIcons.closeX
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
-		anchors.rightMargin: 20 * DefaultStyle.dp
+        anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
 		onClicked: {
 			textField.clear()
 		}

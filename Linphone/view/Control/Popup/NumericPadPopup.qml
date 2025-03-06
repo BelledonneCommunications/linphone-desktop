@@ -9,10 +9,10 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 Control.Popup {
 	id: mainItem
 	closePolicy: Control.Popup.CloseOnEscape
-	leftPadding: 72 * DefaultStyle.dp
-	rightPadding: 72 * DefaultStyle.dp
-	topPadding: 41 * DefaultStyle.dp
-	bottomPadding: 18 * DefaultStyle.dp
+    leftPadding: Math.round(72 * DefaultStyle.dp)
+    rightPadding: Math.round(72 * DefaultStyle.dp)
+    topPadding: Math.round(41 * DefaultStyle.dp)
+    bottomPadding: Math.round(18 * DefaultStyle.dp)
 	property bool closeButtonVisible: true
 	property bool roundedBottom: false
 	property bool lastRowVisible: true
@@ -29,7 +29,7 @@ Control.Popup {
 			width: parent.width
 			height: parent.height
 			color: DefaultStyle.grey_100
-			radius: 20 * DefaultStyle.dp
+            radius: Math.round(20 * DefaultStyle.dp)
 		}
 		MultiEffect {
 			id: effect
@@ -57,11 +57,11 @@ Control.Popup {
 			visible: mainItem.closeButtonVisible
 			anchors.top: parent.top
 			anchors.right: parent.right
-			anchors.topMargin: 10 * DefaultStyle.dp
-			anchors.rightMargin: 10 * DefaultStyle.dp
+            anchors.topMargin: Math.round(10 * DefaultStyle.dp)
+            anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
 			icon.source: AppIcons.closeX
-			icon.width: 24 * DefaultStyle.dp
-			icon.height: 24 * DefaultStyle.dp
+            icon.width: Math.round(24 * DefaultStyle.dp)
+            icon.height: Math.round(24 * DefaultStyle.dp)
 			style: ButtonStyle.noBackground
 			onClicked: mainItem.close()
 		}

@@ -26,24 +26,24 @@ AbstractSettingsLayout {
 	Component {
 		id: confDisplayParametersComponent
 		ColumnLayout {
-			spacing: 5 * DefaultStyle.dp
+            spacing: Math.round(5 * DefaultStyle.dp)
 			Text {
 				text: qsTr("Mode d’affichage par défaut")
 				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 700 * DefaultStyle.dp
+                    pixelSize: Typography.p2l.pixelSize
+                    weight: Typography.p2l.weight
 				}
 			}
 			Text {
 				text: qsTr("Le mode d’affichage des participants en réunions")
 				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 400 * DefaultStyle.dp
+                    pixelSize: Typography.p1.pixelSize
+                    weight: Typography.p1.weight
 				}
 			}
 			ComboSetting {
 				Layout.fillWidth: true
-				Layout.topMargin: 12 * DefaultStyle.dp
+                Layout.topMargin: Math.round(12 * DefaultStyle.dp)
 				Layout.preferredWidth: parent.width
 				entries: SettingsCpp.conferenceLayouts
 				propertyName: "conferenceLayout"

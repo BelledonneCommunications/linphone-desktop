@@ -9,7 +9,7 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ColumnLayout {
 	id: mainItem
-	spacing: 30 * DefaultStyle.dp
+    spacing: Math.round(30 * DefaultStyle.dp)
 
 	property var callHistoryGui
 
@@ -37,41 +37,41 @@ ColumnLayout {
 		// property alias image: buttonImg
 		property alias button: button
 		property string label
-		spacing: 8 * DefaultStyle.dp
+        spacing: Math.round(8 * DefaultStyle.dp)
 		Button {
 			id: button
 			Layout.alignment: Qt.AlignHCenter
-			Layout.preferredWidth: 56 * DefaultStyle.dp
-			Layout.preferredHeight: 56 * DefaultStyle.dp
-			topPadding: 16 * DefaultStyle.dp
-			bottomPadding: 16 * DefaultStyle.dp
-			leftPadding: 16 * DefaultStyle.dp
-			rightPadding: 16 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(56 * DefaultStyle.dp)
+            Layout.preferredHeight: Math.round(56 * DefaultStyle.dp)
+            topPadding: Math.round(16 * DefaultStyle.dp)
+            bottomPadding: Math.round(16 * DefaultStyle.dp)
+            leftPadding: Math.round(16 * DefaultStyle.dp)
+            rightPadding: Math.round(16 * DefaultStyle.dp)
 			contentImageColor: DefaultStyle.main2_600
-			radius: 40 * DefaultStyle.dp
+            radius: Math.round(40 * DefaultStyle.dp)
 			style: ButtonStyle.grey
 		}
 		Text {
 			Layout.alignment: Qt.AlignHCenter
 			text: labelButton.label
 			font {
-				pixelSize: 14 * DefaultStyle.dp
-				weight: 400 * DefaultStyle.dp
+                pixelSize: Typography.p1.pixelSize
+                weight: Typography.p1.weight
 			}
 		}
 	}
 
 	ColumnLayout {
-		spacing: 13 * DefaultStyle.dp
+        spacing: Math.round(13 * DefaultStyle.dp)
 		Item {
-			Layout.preferredWidth: 360 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
 			Layout.preferredHeight: detailAvatar.height
 			Layout.alignment: Qt.AlignHCenter
 			Avatar {
 				id: detailAvatar
 				anchors.horizontalCenter: parent.horizontalCenter
-				width: 100 * DefaultStyle.dp
-				height: 100 * DefaultStyle.dp
+                width: Math.round(100 * DefaultStyle.dp)
+                height: Math.round(100 * DefaultStyle.dp)
 				contact: mainItem.contact || null
 				isConference: !!mainItem.conferenceInfo
 				displayNameVal: mainItem.contactName
@@ -81,18 +81,18 @@ ColumnLayout {
 				id: rightButton
 				anchors.right: parent.right
 				anchors.verticalCenter: detailAvatar.verticalCenter
-				anchors.rightMargin: 20 * DefaultStyle.dp
-				width: 30 * DefaultStyle.dp
-				height: 30 * DefaultStyle.dp
+                anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
+                width: Math.round(30 * DefaultStyle.dp)
+                height: Math.round(30 * DefaultStyle.dp)
 			}
 		}
 		ColumnLayout {
 			Layout.alignment: Qt.AlignHCenter
-			Layout.preferredWidth: 360 * DefaultStyle.dp
-			spacing: 5 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+            spacing: Math.round(5 * DefaultStyle.dp)
 
 			ColumnLayout {
-				spacing: 2 * DefaultStyle.dp
+                spacing: Math.round(2 * DefaultStyle.dp)
 				Text {
 					Layout.preferredWidth: implicitWidth
 					Layout.alignment: Qt.AlignHCenter
@@ -101,8 +101,8 @@ ColumnLayout {
 					text: detailAvatar.displayNameVal
 					maximumLineCount: 1
 					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 400 * DefaultStyle.dp
+                        pixelSize: Typography.p1.pixelSize
+                        weight: Typography.p1.weight
 						capitalization: Font.Capitalize
 					}
 				}
@@ -115,8 +115,8 @@ ColumnLayout {
 					elide: Text.ElideMiddle
 					maximumLineCount: 1
 					font {
-						pixelSize: 12 * DefaultStyle.dp
-						weight: 300 * DefaultStyle.dp
+                        pixelSize: Math.round(12 * DefaultStyle.dp)
+                        weight: Math.round(300 * DefaultStyle.dp)
 					}
 				}
 			}
@@ -141,15 +141,15 @@ ColumnLayout {
 							? DefaultStyle.danger_500main
 							: DefaultStyle.main2_500main
 				font {
-					pixelSize: 12 * DefaultStyle.dp
-					weight: 300 * DefaultStyle.dp
+                    pixelSize: Math.round(12 * DefaultStyle.dp)
+                    weight: Math.round(300 * DefaultStyle.dp)
 				}
 			}
 		}
 	}
 	RowLayout {
 		Layout.alignment: Qt.AlignHCenter
-		spacing: 72 * DefaultStyle.dp
+        spacing: Math.round(72 * DefaultStyle.dp)
 		Layout.fillWidth: true
 		Layout.preferredHeight: childrenRect.height
 		MediumButton {
@@ -167,10 +167,10 @@ ColumnLayout {
 		}
 		LabelButton {
 			visible: !mainItem.isConference
-			width: 56 * DefaultStyle.dp
-			height: 56 * DefaultStyle.dp
-			button.icon.width: 24 * DefaultStyle.dp
-			button.icon.height: 24 * DefaultStyle.dp
+            width: Math.round(56 * DefaultStyle.dp)
+            height: Math.round(56 * DefaultStyle.dp)
+            button.icon.width: Math.round(24 * DefaultStyle.dp)
+            button.icon.height: Math.round(24 * DefaultStyle.dp)
 			button.icon.source: AppIcons.phone
 			label: qsTr("Appel")
 			button.onClicked: {
@@ -180,20 +180,20 @@ ColumnLayout {
 		}
 		LabelButton {
 			visible: !mainItem.isConference && !SettingsCpp.disableChatFeature
-			width: 56 * DefaultStyle.dp
-			height: 56 * DefaultStyle.dp
-			button.icon.width: 24 * DefaultStyle.dp
-			button.icon.height: 24 * DefaultStyle.dp
+            width: Math.round(56 * DefaultStyle.dp)
+            height: Math.round(56 * DefaultStyle.dp)
+            button.icon.width: Math.round(24 * DefaultStyle.dp)
+            button.icon.height: Math.round(24 * DefaultStyle.dp)
 			button.icon.source: AppIcons.chatTeardropText
 			label: qsTr("Message")
 			button.onClicked: console.debug("[ContactLayout.qml] TODO : open conversation")
         }
         LabelButton {
             visible: !mainItem.isConference && SettingsCpp.videoEnabled
-            width: 56 * DefaultStyle.dp
-            height: 56 * DefaultStyle.dp
-            button.icon.width: 24 * DefaultStyle.dp
-            button.icon.height: 24 * DefaultStyle.dp
+            width: Math.round(56 * DefaultStyle.dp)
+            height: Math.round(56 * DefaultStyle.dp)
+            button.icon.width: Math.round(24 * DefaultStyle.dp)
+            button.icon.height: Math.round(24 * DefaultStyle.dp)
             button.icon.source: AppIcons.videoCamera
             label: qsTr("Appel Video")
             button.onClicked: {
@@ -208,6 +208,6 @@ ColumnLayout {
 		Layout.fillHeight: true
 
 		Layout.alignment: Qt.AlignHCenter
-		Layout.topMargin: 30 * DefaultStyle.dp
+        Layout.topMargin: Math.round(30 * DefaultStyle.dp)
 	}
 }

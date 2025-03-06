@@ -57,7 +57,7 @@ ColumnLayout{
 	
 	GridView{
 		id: grid
-		property int margin: 10 * DefaultStyle.dp
+        property real margin: Math.round(10 * DefaultStyle.dp)
 		property int itemCount: model.count ? model.count :( model.length ? model.length : 0)
 		property int columns: 1
 		property int rows: 1
@@ -95,8 +95,8 @@ ColumnLayout{
 			cellHeight = Math.min(computedWidth, computedHeight)
 		}
 		onItemCountChanged: updateLayout()
-		property int computedWidth: (mainLayout.width - grid.margin ) / columns
-		property int computedHeight: (mainLayout.height - grid.margin ) / rows 
+        property real computedWidth: (mainLayout.width - grid.margin ) / columns
+        property real computedHeight: (mainLayout.height - grid.margin ) / rows
 		onComputedHeightChanged: Qt.callLater(updateCells)
 		onComputedWidthChanged: Qt.callLater(updateCells)
 		cellWidth: Math.min(computedWidth, computedHeight)

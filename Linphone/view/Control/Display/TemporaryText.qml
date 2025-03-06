@@ -20,8 +20,8 @@ Text {
 		}
 	}
 	font {
-		pixelSize: 13 * DefaultStyle.dp
-		weight: 600 * DefaultStyle.dp
+        pixelSize: Typography.b3.pixelSize
+        weight: Typography.b3.weight
 	}
 	Timer {
 		id: autoHideErrorMessage

@@ -23,15 +23,15 @@ FocusScope {
 
 	ColumnLayout {
 		anchors.fill: parent
-		spacing: 22 * DefaultStyle.dp
+        spacing: Math.round(22 * DefaultStyle.dp)
 		ColumnLayout {
-			spacing: 18 * DefaultStyle.dp
+            spacing: Math.round(18 * DefaultStyle.dp)
 			visible: mainItem.displayCurrentCalls
 			Text {
 				text: qsTr("Appels en cours")
 				font {
-					pixelSize: 16 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+                    pixelSize: Typography.h4.pixelSize
+                    weight: Typography.h4.weight
 				}
 			}
 			Flickable {
@@ -63,12 +63,12 @@ FocusScope {
 			}
 			onVisibleChanged: if (!visible) mainItem.numPadPopup.close()
 			contentItem: ColumnLayout {
-				spacing: 38 * DefaultStyle.dp
+                spacing: Math.round(38 * DefaultStyle.dp)
 				SearchBar {
 					id: searchBar
 					Layout.alignment: Qt.AlignTop
 					Layout.fillWidth: true
-					Layout.rightMargin: 39 * DefaultStyle.dp
+                    Layout.rightMargin: Math.round(39 * DefaultStyle.dp)
 					focus: true
 					color: mainItem.searchBarColor
 					borderColor: mainItem.searchBarBorderColor
@@ -78,19 +78,19 @@ FocusScope {
 				}
 				ColumnLayout {
 					id: content
-					spacing: 32 * DefaultStyle.dp
+                    spacing: Math.round(32 * DefaultStyle.dp)
 					Button {
 						id: grouCallButton
 						visible: mainItem.groupCallVisible && !SettingsCpp.disableMeetingsFeature
-						Layout.preferredWidth: 320 * DefaultStyle.dp
-						Layout.preferredHeight: 44 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(320 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(44 * DefaultStyle.dp)
 						padding: 0
 						KeyNavigation.up: searchBar
 						KeyNavigation.down: contactList
 						onClicked: mainItem.groupCallCreationRequested()
 						background: Rectangle {
 							anchors.fill: parent
-							radius: 50 * DefaultStyle.dp
+                            radius: Math.round(50 * DefaultStyle.dp)
 							gradient: Gradient {
 								orientation: Gradient.Horizontal
 								GradientStop { position: 0.0; color: DefaultStyle.main2_100}
@@ -98,20 +98,20 @@ FocusScope {
 							}
 						}
 						contentItem: RowLayout {
-							spacing: 16 * DefaultStyle.dp
+                            spacing: Math.round(16 * DefaultStyle.dp)
 							anchors.verticalCenter: parent.verticalCenter
 							Image {
 								source: AppIcons.groupCall
-								Layout.preferredWidth: 44 * DefaultStyle.dp
-								sourceSize.width: 44 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(44 * DefaultStyle.dp)
+                                sourceSize.width: Math.round(44 * DefaultStyle.dp)
 								fillMode: Image.PreserveAspectFit
 							}
 							Text {
 								text: "Appel de groupe"
 								color: DefaultStyle.grey_1000
 								font {
-									pixelSize: 16 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+                                    pixelSize: Typography.h4.pixelSize
+                                    weight: Typography.h4.weight
 								}
 							}
 							Item {
@@ -119,8 +119,8 @@ FocusScope {
 							}
 							EffectImage {
 								imageSource: AppIcons.rightArrow
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 								colorizationColor: DefaultStyle.main2_500main
 							}
 						}

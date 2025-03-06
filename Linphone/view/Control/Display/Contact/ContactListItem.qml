@@ -10,7 +10,7 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 FocusScope {
     id: mainItem
-    implicitHeight: visible ? 56 * DefaultStyle.dp : 0
+    implicitHeight: visible ? Math.round(56 * DefaultStyle.dp) : 0
     property var searchResultItem
     property bool showInitials: true // Display Initials of Display name.
     property bool showDefaultAddress: true // Display address below display name.
@@ -30,7 +30,7 @@ FocusScope {
 
     property var previousInitial
     // Use directly previous initial
-    property int itemsRightMargin: 39 * DefaultStyle.dp
+    property real itemsRightMargin: Math.round(39 * DefaultStyle.dp)
 
     property var displayName: searchResultItem.core.fullName
     property string initial: displayName ? displayName[0].toLocaleLowerCase(
@@ -45,15 +45,15 @@ FocusScope {
         anchors.left: parent.left
         visible: mainItem.showInitials
         anchors.verticalCenter: parent.verticalCenter
-        anchors.rightMargin: 15 * DefaultStyle.dp
+        anchors.rightMargin: Math.round(15 * DefaultStyle.dp)
         verticalAlignment: Text.AlignVCenter
-        width: 20 * DefaultStyle.dp
+        width: Math.round(20 * DefaultStyle.dp)
         opacity: previousInitial != mainItem.initial ? 1 : 0
         text: mainItem.initial
         color: DefaultStyle.main2_400
         font {
-            pixelSize: 20 * DefaultStyle.dp
-            weight: 500 * DefaultStyle.dp
+            pixelSize: Math.round(20 * DefaultStyle.dp)
+            weight: Math.round(500 * DefaultStyle.dp)
             capitalization: Font.AllUppercase
         }
     }
@@ -64,12 +64,12 @@ FocusScope {
         anchors.rightMargin: mainItem.itemsRightMargin
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        spacing: 16 * DefaultStyle.dp
+        spacing: Math.round(16 * DefaultStyle.dp)
         z: 1
         Avatar {
-            Layout.preferredWidth: 45 * DefaultStyle.dp
-            Layout.preferredHeight: 45 * DefaultStyle.dp
-            Layout.leftMargin: 5 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+            Layout.leftMargin: Math.round(5 * DefaultStyle.dp)
             contact: searchResultItem
             shadowEnabled: false
         }
@@ -79,17 +79,15 @@ FocusScope {
                 text: UtilsCpp.boldTextPart(mainItem.displayName,
                                             mainItem.highlightText)
                 font {
-                    pixelSize: mainItem.showDefaultAddress ? 16 * DefaultStyle.dp : 14
-                                                             * DefaultStyle.dp
+                    pixelSize: mainItem.showDefaultAddress ? Typography.h4.pixelSize : Typography.p1.pixelSize
                     capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
-                    weight: mainItem.showDefaultAddress ? 800 * DefaultStyle.dp : 400
-                                                          * DefaultStyle.dp
+                    weight: mainItem.showDefaultAddress ? Typography.h4.weight : Typography.p1.weight
                 }
                 maximumLineCount: 1
                 Layout.fillWidth: true
             }
             Text {
-                Layout.topMargin: 2 * DefaultStyle.dp
+                Layout.topMargin: Math.round(2 * DefaultStyle.dp)
                 Layout.fillWidth: true
                 visible: mainItem.showDefaultAddress
                 property string address: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(searchResultItem.core.defaultAddress) : searchResultItem.core.defaultAddress
@@ -97,8 +95,8 @@ FocusScope {
                 maximumLineCount: 1
                 elide: Text.ElideRight
                 font {
-                    weight: 300 * DefaultStyle.dp
-                    pixelSize: 12 * DefaultStyle.dp
+                    weight: Math.round(300 * DefaultStyle.dp)
+                    pixelSize: Math.round(12 * DefaultStyle.dp)
                 }
             }
         }
@@ -110,37 +108,37 @@ FocusScope {
             asynchronous: true
             active: mainItem.showActions || mainItem.showContactMenu
                     || mainItem.multiSelectionEnabled
-            Layout.rightMargin: active ? 10 * DefaultStyle.dp : 0
+            Layout.rightMargin: active ? Math.round(10 * DefaultStyle.dp) : 0
             sourceComponent: RowLayout {
                 id: actionsRow
                 z: 1
                 visible: actionButtons.visible || friendPopup.visible
                          || mainItem.multiSelectionEnabled
-                spacing: visible ? 16 * DefaultStyle.dp : 0
+                spacing: visible ? Math.round(16 * DefaultStyle.dp) : 0
                 enabled: visible
                 EffectImage {
                     id: isSelectedCheck
                     visible: mainItem.multiSelectionEnabled
                              && (mainItem.selectedContacts.indexOf(
                                      searchResultItem.core.defaultAddress) != -1)
-                    Layout.preferredWidth: 24 * DefaultStyle.dp
-                    Layout.preferredHeight: 24 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
                     imageSource: AppIcons.check
                     colorizationColor: DefaultStyle.main1_500_main
                 }
                 RowLayout {
                     id: actionButtons
                     visible: mainItem.showActions
-                    spacing: visible ? 10 * DefaultStyle.dp : 0
+                    spacing: visible ? Math.round(10 * DefaultStyle.dp) : 0
                     IconButton {
                         id: callButton
-                        Layout.preferredWidth: 45 * DefaultStyle.dp
-                        Layout.preferredHeight: 45 * DefaultStyle.dp
-                        icon.width: 24 * DefaultStyle.dp
-                        icon.height: 24 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                        icon.width: Math.round(24 * DefaultStyle.dp)
+                        icon.height: Math.round(24 * DefaultStyle.dp)
                         icon.source: AppIcons.phone
                         focus: visible
-                        radius: 40 * DefaultStyle.dp
+                        radius: Math.round(40 * DefaultStyle.dp)
                         style: ButtonStyle.grey
                         onClicked: UtilsCpp.createCall(
                                        searchResultItem.core.defaultFullAddress)
@@ -150,13 +148,13 @@ FocusScope {
                     IconButton {
                         id: videoCallButton
                         visible: SettingsCpp.videoEnabled
-                        Layout.preferredWidth: 45 * DefaultStyle.dp
-                        Layout.preferredHeight: 45 * DefaultStyle.dp
-                        icon.width: 24 * DefaultStyle.dp
-                        icon.height: 24 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                        icon.width: Math.round(24 * DefaultStyle.dp)
+                        icon.height: Math.round(24 * DefaultStyle.dp)
                         icon.source: AppIcons.videoCamera
                         focus: visible && !callButton.visible
-                        radius: 40 * DefaultStyle.dp
+                        radius: Math.round(40 * DefaultStyle.dp)
                         style: ButtonStyle.grey
                         onClicked: UtilsCpp.createCall(
                                        searchResultItem.core.defaultFullAddress,
@@ -170,14 +168,14 @@ FocusScope {
                         id: chatButton
                         visible: actionButtons.visible
                                  && !SettingsCpp.disableChatFeature
-                        Layout.preferredWidth: 45 * DefaultStyle.dp
-                        Layout.preferredHeight: 45 * DefaultStyle.dp
-                        icon.width: 24 * DefaultStyle.dp
-                        icon.height: 24 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                        icon.width: Math.round(24 * DefaultStyle.dp)
+                        icon.height: Math.round(24 * DefaultStyle.dp)
                         icon.source: AppIcons.chatTeardropText
                         focus: visible && !callButton.visible
                                && !videoCallButton.visible
-                        radius: 40 * DefaultStyle.dp
+                        radius: Math.round(40 * DefaultStyle.dp)
                         style: ButtonStyle.grey
                         KeyNavigation.left: videoCallButton
                         KeyNavigation.right: callButton
@@ -187,7 +185,7 @@ FocusScope {
                     id: friendPopup
                     z: 1
                     popup.x: 0
-                    popup.padding: 10 * DefaultStyle.dp
+                    popup.padding: Math.round(10 * DefaultStyle.dp)
                     visible: mainItem.showContactMenu
                              && (contactArea.containsMouse || hovered
                                  || popup.opened)
@@ -201,7 +199,7 @@ FocusScope {
                                                                       "Enlever des favoris") : qsTr(
                                                                       "Mettre en favori")
                             icon.source: searchResultItem.core.starred ? AppIcons.heartFill : AppIcons.heart
-                            spacing: 10 * DefaultStyle.dp
+                            spacing: Math.round(10 * DefaultStyle.dp)
                             textColor: DefaultStyle.main2_500main
                             hoveredImageColor: searchResultItem.core.starred ? DefaultStyle.main1_700 : DefaultStyle.danger_700
                             contentImageColor: searchResultItem.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
@@ -215,7 +213,7 @@ FocusScope {
                         IconLabelButton {
                             text: qsTr("Partager")
                             icon.source: AppIcons.shareNetwork
-                            spacing: 10 * DefaultStyle.dp
+                            spacing: Math.round(10 * DefaultStyle.dp)
                             textColor: DefaultStyle.main2_500main
                             onClicked: {
                                 var vcard = searchResultItem.core.getVCard()
@@ -242,7 +240,7 @@ FocusScope {
                         IconLabelButton {
                             text: qsTr("Supprimer")
                             icon.source: AppIcons.trashCan
-                            spacing: 10 * DefaultStyle.dp
+                            spacing: Math.round(10 * DefaultStyle.dp)
                             visible: !searchResultItem.core.readOnly
                             onClicked: {
                                 mainItem.contactDeletionRequested(
@@ -271,7 +269,7 @@ FocusScope {
         }
         Rectangle {
             anchors.fill: contactArea
-            radius: 8 * DefaultStyle.dp
+            radius: Math.round(8 * DefaultStyle.dp)
             opacity: 0.7
             color: mainItem.isSelected ? DefaultStyle.main2_200 : DefaultStyle.main2_100
             visible: mainItem.isLastHovered || mainItem.isSelected

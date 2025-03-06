@@ -18,18 +18,18 @@ AbstractMainPage {
 		id: leftPanel
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		property int sideMargin: 45 * DefaultStyle.dp
-		spacing: 5 * DefaultStyle.dp
+        property real sideMargin: Math.round(45 * DefaultStyle.dp)
+        spacing: Math.round(5 * DefaultStyle.dp)
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			spacing: 5 * DefaultStyle.dp
+            spacing: Math.round(5 * DefaultStyle.dp)
 			Button {
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
-				icon.width: 24 * DefaultStyle.dp
-				icon.height: 24 * DefaultStyle.dp
+                icon.width: Math.round(24 * DefaultStyle.dp)
+                icon.height: Math.round(24 * DefaultStyle.dp)
 				onClicked: {
 					mainItem.goBack()
 				}
@@ -46,7 +46,7 @@ AbstractMainPage {
 		Text {
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			Layout.topMargin: 41 * DefaultStyle.dp
+            Layout.topMargin: Math.round(41 * DefaultStyle.dp)
 			Layout.fillWidth: true
 			text: qsTr("À propos de Linphone")
 			color: DefaultStyle.main2_600
@@ -56,8 +56,8 @@ AbstractMainPage {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			Layout.topMargin: 24 * DefaultStyle.dp
-			spacing: 32 * DefaultStyle.dp
+            Layout.topMargin: Math.round(24 * DefaultStyle.dp)
+            spacing: Math.round(32 * DefaultStyle.dp)
 			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.detective
@@ -98,7 +98,7 @@ AbstractMainPage {
 		Text {
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			Layout.topMargin: 32 * DefaultStyle.dp
+            Layout.topMargin: Math.round(32 * DefaultStyle.dp)
 			Layout.fillWidth: true
 			text: qsTr("À propos de Linphone")
 			color: DefaultStyle.main2_600
@@ -109,7 +109,7 @@ AbstractMainPage {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			Layout.topMargin: 24 * DefaultStyle.dp
+            Layout.topMargin: Math.round(24 * DefaultStyle.dp)
 			iconSource: AppIcons.debug
 			title: qsTr("Dépannage")
 			onClicked: {

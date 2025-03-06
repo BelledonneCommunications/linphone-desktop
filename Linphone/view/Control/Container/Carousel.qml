@@ -12,7 +12,7 @@ ColumnLayout {
 	required property int itemsCount
 	property int currentIndex: carouselStackLayout.currentIndex
 	property var currentItem: carouselButton.itemAt(currentIndex)
-	spacing: 61 * DefaultStyle.dp
+    spacing: Math.round(61 * DefaultStyle.dp)
 
 	function goToSlide(index) {
 		carouselStackLayout.goToSlideAtIndex(index)
@@ -67,9 +67,9 @@ ColumnLayout {
 	Item {
 		Rectangle {
 			id: currentIndicator
-			width: 13 * DefaultStyle.dp
-			height: 8 * DefaultStyle.dp
-			radius: 30 * DefaultStyle.dp
+            width: Math.round(13 * DefaultStyle.dp)
+            height: Math.round(8 * DefaultStyle.dp)
+            radius: Math.round(30 * DefaultStyle.dp)
 			color: DefaultStyle.main1_500_main
 			z: 1
 			x: mainItem.currentIndex >= 0 && mainItem.currentItem ? mainItem.currentItem.x - width/2 + mainItem.currentItem.width/2 : 0
@@ -77,21 +77,21 @@ ColumnLayout {
 		}
 		RowLayout {
 			id: carouselButtonsLayout
-			spacing: 7.5 * DefaultStyle.dp
-			anchors.leftMargin: 2.5 * DefaultStyle.dp
+            spacing: Math.round(7.5 * DefaultStyle.dp)
+            anchors.leftMargin: Math.round(2.5 * DefaultStyle.dp)
 			Repeater {
 				id: carouselButton
 				model: mainItem.itemsCount
 				delegate: Button {
-					Layout.preferredWidth: 8 * DefaultStyle.dp
-					Layout.preferredHeight: 8 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(8 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(8 * DefaultStyle.dp)
 					topPadding: 0
 					bottomPadding: 0
 					leftPadding: 0
 					rightPadding: 0
 					background: Rectangle {
 						color: DefaultStyle.main2_200
-						radius: 30 * DefaultStyle.dp
+                        radius: Math.round(30 * DefaultStyle.dp)
 						anchors.fill: parent
 					}
 					onClicked: {

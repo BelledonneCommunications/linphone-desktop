@@ -22,10 +22,10 @@ Control.Button {
 	property color disabledFilterColor: color.hslLightness > 0.5
 		? DefaultStyle.grey_0
 		: DefaultStyle.grey_400
-	property int textSize: 18 * DefaultStyle.dp
-	property int textWeight: 600 * DefaultStyle.dp
+    property real textSize: Math.round(18 * DefaultStyle.dp)
+    property real textWeight: Typography.b1.weight
 	property var textHAlignment: Text.AlignHCenter
-	property int radius: 48 * DefaultStyle.dp
+    property real radius: Math.round(48 * DefaultStyle.dp)
 	property bool underline: false
 	property bool hasNavigationFocus: enabled && (activeFocus  || hovered)
 	property bool shadowEnabled: false
@@ -33,7 +33,7 @@ Control.Button {
 	property var hoveredImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.05)
 	property var pressedImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.1)
 	property bool asynchronous: true
-	spacing: 5 * DefaultStyle.dp
+    spacing: Math.round(5 * DefaultStyle.dp)
 	hoverEnabled: enabled
 	activeFocusOnTab: true
 	icon.source: style?.iconSource || ""

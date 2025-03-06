@@ -15,7 +15,7 @@ ListView {
     property SearchBar searchBar
     property bool loading: false
     property string searchText: searchBar?.text
-    property double busyIndicatorSize: 60 * DefaultStyle.dp
+    property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
 
     signal resultsReceived
 
@@ -33,14 +33,14 @@ ListView {
         onFilterTextChanged: maxDisplayItems = initialDisplayItems
         initialDisplayItems: Math.max(
                                  20,
-                                 2 * mainItem.height / (56 * DefaultStyle.dp))
+                                 2 * mainItem.height / (Math.round(56 * DefaultStyle.dp)))
         displayItemsStep: 3 * initialDisplayItems / 2
         onModelReset: {
             mainItem.resultsReceived()
         }
     }
     flickDeceleration: 10000
-    spacing: 10 * DefaultStyle.dp
+    spacing: Math.round(10 * DefaultStyle.dp)
 
     Keys.onPressed: event => {
                         if (event.key == Qt.Key_Escape) {
@@ -123,12 +123,12 @@ ListView {
     property int lastMouseContainsIndex: -1
     delegate: FocusScope {
         width: mainItem.width
-        height: 56 * DefaultStyle.dp
+        height: Math.round(56 * DefaultStyle.dp)
         RowLayout {
             z: 1
             anchors.fill: parent
-            anchors.leftMargin: 10 * DefaultStyle.dp
-            spacing: 10 * DefaultStyle.dp
+            anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
+            spacing: Math.round(10 * DefaultStyle.dp)
             Avatar {
                 id: historyAvatar
                 property var contactObj: UtilsCpp.findFriendByAddress(
@@ -136,8 +136,8 @@ ListView {
                 contact: contactObj?.value || null
                 displayNameVal: modelData.core.displayName
                 secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
-                width: 45 * DefaultStyle.dp
-                height: 45 * DefaultStyle.dp
+                width: Math.round(45 * DefaultStyle.dp)
+                height: Math.round(45 * DefaultStyle.dp)
                 isConference: modelData.core.isConference
                 shadowEnabled: false
                 asynchronous: false
@@ -145,20 +145,20 @@ ListView {
             ColumnLayout {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
-                spacing: 5 * DefaultStyle.dp
+                spacing: Math.round(5 * DefaultStyle.dp)
                 Text {
                     id: friendAddress
                     Layout.fillWidth: true
                     maximumLineCount: 1
                     text: historyAvatar.displayNameVal
                     font {
-                        pixelSize: 14 * DefaultStyle.dp
-                        weight: 400 * DefaultStyle.dp
+                        pixelSize: Typography.p1.pixelSize
+                        weight: Typography.p1.weight
                         capitalization: Font.Capitalize
                     }
                 }
                 RowLayout {
-                    spacing: 6 * DefaultStyle.dp
+                    spacing: Math.round(6 * DefaultStyle.dp)
                     EffectImage {
                         id: statusIcon
                         imageSource: modelData.core.status === LinphoneEnums.CallStatus.Declined
@@ -175,8 +175,8 @@ ListView {
                                            || modelData.core.status
                                            === LinphoneEnums.CallStatus.EarlyAborted
                                            || modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500main : modelData.core.isOutgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500main
-                        Layout.preferredWidth: 12 * DefaultStyle.dp
-                        Layout.preferredHeight: 12 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(12 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(12 * DefaultStyle.dp)
                         transform: Rotation {
                             angle: modelData.core.isOutgoing
                                    && (modelData.core.status === LinphoneEnums.CallStatus.Declined
@@ -195,8 +195,8 @@ ListView {
                         // text: modelData.core.date
                         text: UtilsCpp.formatDate(modelData.core.date)
                         font {
-                            pixelSize: 12 * DefaultStyle.dp
-                            weight: 300 * DefaultStyle.dp
+                            pixelSize: Math.round(12 * DefaultStyle.dp)
+                            weight: Math.round(300 * DefaultStyle.dp)
                         }
                     }
                 }
@@ -232,7 +232,7 @@ ListView {
             Rectangle {
                 anchors.fill: parent
                 opacity: 0.7
-                radius: 8 * DefaultStyle.dp
+                radius: Math.round(8 * DefaultStyle.dp)
                 color: mainItem.currentIndex
                        === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
                 visible: mainItem.lastMouseContainsIndex === index

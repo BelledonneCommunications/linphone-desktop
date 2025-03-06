@@ -12,8 +12,8 @@ ApplicationWindow {
     id: mainWindow
     x: 0
     y: 0
-    width: Math.min(1512 * DefaultStyle.dp, Screen.desktopAvailableWidth)
-    height: Math.min(982 * DefaultStyle.dp, Screen.desktopAvailableHeight)
+    width: Math.min(Math.round(1512 * DefaultStyle.dp), Screen.desktopAvailableWidth)
+    height: Math.min(Math.round(982 * DefaultStyle.dp), Screen.desktopAvailableHeight)
 
     onActiveChanged: UtilsCpp.setLastActiveWindow(this)
 
@@ -47,7 +47,7 @@ ApplicationWindow {
             // For C++, requestDialog need to be call directly
             onAccepted: requestDialog ? requestDialog.result(1) : callback(1)
             onRejected: requestDialog ? requestDialog.result(0) : callback(0)
-            width: title.length === 0 ? 278 * DefaultStyle.dp : 637 * DefaultStyle.dp
+            width: title.length === 0 ? Math.round(278 * DefaultStyle.dp) : Math.round(637 * DefaultStyle.dp)
         }
     }
 
@@ -62,31 +62,31 @@ ApplicationWindow {
         }
         underlineColor: DefaultStyle.main1_500_main
         anchors.centerIn: parent
-        width: 370 * DefaultStyle.dp
+        width: Math.round(370 * DefaultStyle.dp)
         modal: true
-        leftPadding: 15 * DefaultStyle.dp
-        rightPadding: 15 * DefaultStyle.dp
-        topPadding: 20 * DefaultStyle.dp
-        bottomPadding: 25 * DefaultStyle.dp
+        leftPadding: Math.round(15 * DefaultStyle.dp)
+        rightPadding: Math.round(15 * DefaultStyle.dp)
+        topPadding: Math.round(20 * DefaultStyle.dp)
+        bottomPadding: Math.round(25 * DefaultStyle.dp)
         contentItem: ColumnLayout {
-            spacing: 16 * DefaultStyle.dp
+            spacing: Math.round(16 * DefaultStyle.dp)
             RowLayout {
-                spacing: 5 * DefaultStyle.dp
+                spacing: Math.round(5 * DefaultStyle.dp)
                 width: startCallPopup.width
                 Text {
                     text: qsTr("Quelle adresse souhaitez-vous appeler ?")
                     wrapMode: Text.Wrap
                     Layout.fillWidth: true
                     font {
-                        pixelSize: 16 * DefaultStyle.dp
-                        weight: 800 * DefaultStyle.dp
+                        pixelSize: Typography.h4.pixelSize
+                        weight: Typography.h4.weight
                     }
                 }
                 RoundButton {
                     Layout.alignment: Qt.AlignVCenter
                     style: ButtonStyle.noBackground
-                    Layout.preferredWidth: 24 * DefaultStyle.dp
-                    Layout.preferredHeight: 24 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
                     icon.source:AppIcons.closeX
                     onClicked: startCallPopup.close()
                 }
@@ -98,37 +98,37 @@ ApplicationWindow {
                 }
                 Layout.fillWidth: true
                 Layout.preferredHeight: contentHeight
-                spacing: 10 * DefaultStyle.dp
+                spacing: Math.round(10 * DefaultStyle.dp)
                 delegate: Item {
                     width: popuplist.width
-                    height: 56 * DefaultStyle.dp
+                    height: Math.round(56 * DefaultStyle.dp)
                     ColumnLayout {
                         width: popuplist.width
                         anchors.verticalCenter: parent.verticalCenter
-                        spacing: 10 * DefaultStyle.dp
+                        spacing: Math.round(10 * DefaultStyle.dp)
                         ColumnLayout {
-                            spacing: 7 * DefaultStyle.dp
+                            spacing: Math.round(7 * DefaultStyle.dp)
                             Text {
-                                Layout.leftMargin: 5 * DefaultStyle.dp
+                                Layout.leftMargin: Math.round(5 * DefaultStyle.dp)
                                 text: modelData.label + " :"
                                 font {
-                                    pixelSize: 13 * DefaultStyle.dp
-                                    weight: 700 * DefaultStyle.dp
+                                    pixelSize: Typography.p2.pixelSize
+                                    weight: Typography.p2.weight
                                 }
                             }
                             Text {
-                                Layout.leftMargin: 5 * DefaultStyle.dp
+                                Layout.leftMargin: Math.round(5 * DefaultStyle.dp)
                                 text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(modelData.address) : modelData.address
                                 font {
-                                    pixelSize: 14 * DefaultStyle.dp
-                                    weight: 400 * DefaultStyle.dp
+                                    pixelSize: Typography.p1.pixelSize
+                                    weight: Typography.p1.weight
                                 }
                             }
                         }
                         Rectangle {
                             visible: index != popuplist.model.count - 1
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 1 * DefaultStyle.dp
+                            Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
                             color: DefaultStyle.main2_200
                         }
                     }
@@ -234,10 +234,10 @@ ApplicationWindow {
         id: popupLayout
         anchors.fill: parent
         Layout.alignment: Qt.AlignBottom
-        property int nextY: mainWindow.height
+        property real nextY: mainWindow.height
         property list<InformationPopup> popupList
         property int popupCount: popupList.length
-        spacing: 15 * DefaultStyle.dp
+        spacing: Math.round(15 * DefaultStyle.dp)
         onPopupCountChanged: {
             nextY = mainWindow.height
             for(var i = 0; i < popupCount; ++i) {
@@ -256,9 +256,9 @@ ApplicationWindow {
         modal: true
         closePolicy: Popup.NoAutoClose
         anchors.centerIn: parent
-        padding: 20 * DefaultStyle.dp
+        padding: Math.round(20 * DefaultStyle.dp)
         underlineColor: DefaultStyle.main1_500_main
-        radius: 15 * DefaultStyle.dp
+        radius: Math.round(15 * DefaultStyle.dp)
     }
     FPSCounter{
         anchors.top: parent.top
@@ -271,7 +271,7 @@ ApplicationWindow {
             id: fpsText
             font.bold: true
             font.italic: true
-            font.pixelSize: 14 * DefaultStyle.dp
+            font.pixelSize: Math.round(14 * DefaultStyle.dp)
             text: parent.fps + " FPS"
             color: parent.fps < 30 ? DefaultStyle.danger_500main : DefaultStyle.main2_900
         }

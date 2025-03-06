@@ -24,7 +24,7 @@ FocusScope{
 
 	ColumnLayout {
 		anchors.fill: parent
-		spacing: 15 * DefaultStyle.dp
+        spacing: Math.round(15 * DefaultStyle.dp)
 		ListView {
 			id: participantList
 			Layout.fillWidth: true
@@ -40,14 +40,14 @@ FocusScope{
 				}
 			}
 			delegate: FocusScope {
-				height: 56 * DefaultStyle.dp
-				width: participantList.width - scrollbar.implicitWidth - 28 * DefaultStyle.dp
+                height: Math.round(56 * DefaultStyle.dp)
+                width: participantList.width - scrollbar.implicitWidth - Math.round(28 * DefaultStyle.dp)
 				RowLayout {
 					anchors.fill: parent
-					spacing: 10 * DefaultStyle.dp
+                    spacing: Math.round(10 * DefaultStyle.dp)
 					Avatar {
-						Layout.preferredWidth: 45 * DefaultStyle.dp
-						Layout.preferredHeight: 45 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 						_address: modelData
 						shadowEnabled: false
 					}
@@ -56,19 +56,19 @@ FocusScope{
 						maximumLineCount: 1
 						property var nameObj: UtilsCpp.getDisplayName(modelData)
 						text: nameObj ? nameObj.value : ""
-						font.pixelSize: 14 * DefaultStyle.dp
+                        font.pixelSize: Math.round(14 * DefaultStyle.dp)
 						font.capitalization: Font.Capitalize
 					}
 					Item {
 						Layout.fillWidth: true
 					}
 					Button {
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 						style: ButtonStyle.noBackgroundOrange
 						icon.source: AppIcons.closeX
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
+                        icon.width: Math.round(24 * DefaultStyle.dp)
+                        icon.height: Math.round(24 * DefaultStyle.dp)
 						focus: true
 						onClicked: contactList.removeSelectedContactByAddress(modelData)
 					}
@@ -82,15 +82,15 @@ FocusScope{
 				anchors.top: parent.top
 				anchors.bottom: parent.bottom
 				anchors.right: parent.right
-				anchors.rightMargin: 8 * DefaultStyle.dp
+                anchors.rightMargin: Math.round(8 * DefaultStyle.dp)
 			}
 		}
 		SearchBar {
 			id: searchBar
 			Layout.fillWidth: true
-			Layout.topMargin: 6 * DefaultStyle.dp
-			Layout.rightMargin: 28 * DefaultStyle.dp
-			Layout.preferredHeight: 45 * DefaultStyle.dp
+            Layout.topMargin: Math.round(6 * DefaultStyle.dp)
+            Layout.rightMargin: Math.round(28 * DefaultStyle.dp)
+            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 			placeholderText: mainItem.placeHolderText
 			focus: participantList.count == 0
 			color: mainItem.searchBarColor
@@ -102,22 +102,22 @@ FocusScope{
 		}
 		ColumnLayout {
 			id: content
-			spacing: 15 * DefaultStyle.dp
+            spacing: Math.round(15 * DefaultStyle.dp)
 			Text {
 				visible: !contactList.loading && contactList.count === 0
 				Layout.alignment: Qt.AlignHCenter
-				Layout.topMargin: 137 * DefaultStyle.dp
+                Layout.topMargin: Math.round(137 * DefaultStyle.dp)
 				text: qsTr("Aucun contact%1").arg(searchBar.text.length !== 0 ? " correspondant" : "")
 				font {
-					pixelSize: 16 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+                    pixelSize: Typography.h4.pixelSize
+                    weight: Typography.h4.weight
 				}
 			}
 			AllContactListView{
 				id: contactList
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				itemsRightMargin: 28 * DefaultStyle.dp
+                itemsRightMargin: Math.round(28 * DefaultStyle.dp)
 				multiSelectionEnabled: true
 				showContactMenu: false
 				confInfoGui: mainItem.conferenceInfoGui

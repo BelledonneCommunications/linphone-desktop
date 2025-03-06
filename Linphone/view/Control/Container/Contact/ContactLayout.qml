@@ -9,7 +9,7 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ColumnLayout {
 	id: mainItem
-	spacing: 30 * DefaultStyle.dp
+    spacing: Math.round(30 * DefaultStyle.dp)
 
 	property FriendGui contact
 
@@ -17,31 +17,31 @@ ColumnLayout {
 	property alias content: detailLayout.data
 	property alias bannerContent: bannerLayout.data
 	property alias secondLineContent: verticalLayoutSecondLine.data
-	property int minimumWidthForSwitchintToRowLayout: 756 * DefaultStyle.dp
-	property var useVerticalLayout: width < minimumWidthForSwitchintToRowLayout * DefaultStyle.dp
+    property real minimumWidthForSwitchintToRowLayout: Math.round(756 * DefaultStyle.dp)
+    property var useVerticalLayout: width < minimumWidthForSwitchintToRowMath.round(Layout * DefaultStyle.dp)
 
 	GridLayout {
-		Layout.leftMargin: 64 * DefaultStyle.dp
-		Layout.rightMargin: 64 * DefaultStyle.dp
-		Layout.topMargin: 56 * DefaultStyle.dp
+        Layout.leftMargin: Math.round(64 * DefaultStyle.dp)
+        Layout.rightMargin: Math.round(64 * DefaultStyle.dp)
+        Layout.topMargin: Math.round(56 * DefaultStyle.dp)
 		Layout.fillWidth: true
 		columns: mainItem.useVerticalLayout ? 1 : children.length
 		rows: 1
-		columnSpacing: 49 * DefaultStyle.dp
-		rowSpacing: 27 * DefaultStyle.dp
+        columnSpacing: Math.round(49 * DefaultStyle.dp)
+        rowSpacing: Math.round(27 * DefaultStyle.dp)
 
 		RowLayout {
-			Layout.preferredWidth: 341 * DefaultStyle.dp
+            Layout.preferredWidth: Math.round(341 * DefaultStyle.dp)
 			Control.Control {
-				// Layout.preferredWidth: 734 * DefaultStyle.dp
+                // Layout.preferredWidth: Math.round(734 * DefaultStyle.dp)
 				Layout.fillWidth: true
-				width: 734 * DefaultStyle.dp
-				height: 100 * DefaultStyle.dp
-				rightPadding: 21 * DefaultStyle.dp
+                width: Math.round(734 * DefaultStyle.dp)
+                height: Math.round(100 * DefaultStyle.dp)
+                rightPadding: Math.round(21 * DefaultStyle.dp)
 				background: GradientRectangle {
 					anchors.fill: parent
 					anchors.leftMargin: avatar.width / 2
-					radius: 15 * DefaultStyle.dp
+                    radius: Math.round(15 * DefaultStyle.dp)
 					borderGradient: Gradient {
 						orientation: Gradient.Horizontal
 						GradientStop { position: 0.0; color: DefaultStyle.grey_100 }
@@ -55,12 +55,12 @@ ColumnLayout {
 				}
 				contentItem: RowLayout {
 					id: bannerLayout
-					spacing: 32 * DefaultStyle.dp
+                    spacing: Math.round(32 * DefaultStyle.dp)
 					Avatar {
 						id: avatar
 						contact: mainItem.contact
-						Layout.preferredWidth: 100 * DefaultStyle.dp
-						Layout.preferredHeight: 100 * DefaultStyle.dp
+                        Layout.preferredWidth: Math.round(100 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
 					}
 				}
 			}
@@ -81,10 +81,10 @@ ColumnLayout {
 	StackLayout {
 		id: detailLayout
 		Layout.alignment: Qt.AlignCenter
-		Layout.topMargin: mainItem.useVerticalLayout ? 0 : 30 * DefaultStyle.dp
-		Layout.leftMargin: 64 * DefaultStyle.dp
-		Layout.rightMargin: 64 * DefaultStyle.dp
-		Layout.bottomMargin: 53 * DefaultStyle.dp
+        Layout.topMargin: mainItem.useVerticalLayout ? 0 : Math.round(30 * DefaultStyle.dp)
+        Layout.leftMargin: Math.round(64 * DefaultStyle.dp)
+        Layout.rightMargin: Math.round(64 * DefaultStyle.dp)
+        Layout.bottomMargin: Math.round(53 * DefaultStyle.dp)
 		Layout.fillWidth: true
 		Layout.fillHeight: true
 	}

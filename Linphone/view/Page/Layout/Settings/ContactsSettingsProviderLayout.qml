@@ -25,18 +25,18 @@ RowLayout {
 	signal save()
 	signal undo()
 
-	spacing: 5 * DefaultStyle.dp
+    spacing: Math.round(5 * DefaultStyle.dp)
 	ColumnLayout {
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		spacing: 16 * DefaultStyle.dp
+        spacing: Math.round(16 * DefaultStyle.dp)
 		Repeater {
 			model: mainItem.proxyModel
 			RowLayout {
 				Layout.fillWidth: true
 				Layout.alignment: Qt.AlignLeft|Qt.AlignHCenter
-				Layout.preferredHeight: 74 * DefaultStyle.dp
-				spacing: 20 * DefaultStyle.dp
+                Layout.preferredHeight: Math.round(74 * DefaultStyle.dp)
+                spacing: Math.round(20 * DefaultStyle.dp)
 				Text {
 					text: modelData.core[titleProperty]
 					font: Typography.p2l
@@ -51,8 +51,8 @@ RowLayout {
 				Button {
 					style: ButtonStyle.noBackground
 					icon.source: AppIcons.pencil
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
+                    icon.width: Math.round(24 * DefaultStyle.dp)
+                    icon.height: Math.round(24 * DefaultStyle.dp)
 					onClicked: {
 						mainItem.owner.container.push(mainItem.settingsLayout, {
 							titleText: mainItem.editText,
@@ -104,7 +104,7 @@ RowLayout {
 		}
 		RowLayout {
 			Layout.fillWidth: true
-			spacing: 5 * DefaultStyle.dp
+            spacing: Math.round(5 * DefaultStyle.dp)
 			Item {
 				Layout.fillWidth: true
 			}

@@ -17,11 +17,11 @@ LoginLayout {
 	onCtrlIsPressedChanged: console.log("ctrl is pressed", ctrlIsPressed)
 	titleContent: [
 		RowLayout {
-			spacing: 21 * DefaultStyle.dp
-			Layout.leftMargin: 119 * DefaultStyle.dp
+            spacing: Math.round(21 * DefaultStyle.dp)
+            Layout.leftMargin: Math.round(119 * DefaultStyle.dp)
 			Button {
-				Layout.preferredHeight: 24 * DefaultStyle.dp
-				Layout.preferredWidth: 24 * DefaultStyle.dp
+                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
 				onClicked: {
@@ -32,8 +32,8 @@ LoginLayout {
 			EffectImage {
 				fillMode: Image.PreserveAspectFit
 				imageSource: AppIcons.profile
-				Layout.preferredHeight: 34 * DefaultStyle.dp
-				Layout.preferredWidth: 34 * DefaultStyle.dp
+                Layout.preferredHeight: Math.round(34 * DefaultStyle.dp)
+                Layout.preferredWidth: Math.round(34 * DefaultStyle.dp)
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
@@ -43,8 +43,8 @@ LoginLayout {
 					text = qsTr("Inscription | Confirmer votre ") + completeString
 				}
 				font {
-					pixelSize: 36 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+                    pixelSize: Typography.h1.pixelSize
+                    weight: Typography.h1.weight
 				}
 				scaleLettersFactor: 1.1
 			}
@@ -58,14 +58,14 @@ LoginLayout {
 		ColumnLayout {
 			anchors.left: parent.left
 			anchors.top: parent.top
-			anchors.topMargin: 51 * DefaultStyle.dp
-			anchors.leftMargin: 127 * DefaultStyle.dp
-			spacing: 104 * DefaultStyle.dp
+            anchors.topMargin: Math.round(51 * DefaultStyle.dp)
+            anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
+            spacing: Math.round(104 * DefaultStyle.dp)
 			Text {
 				font {
 					bold: true
-					pixelSize: 22 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+                    pixelSize: Typography.h3.pixelSize
+                    weight: Typography.h3.weight
 				}
 				color: DefaultStyle.main2_700
 				text: {
@@ -74,7 +74,7 @@ LoginLayout {
 				}
 			}
 			RowLayout {
-				spacing: 45 * DefaultStyle.dp
+                spacing: Math.round(45 * DefaultStyle.dp)
 				Repeater {
 					model: 4
 					id: repeater
@@ -139,12 +139,12 @@ LoginLayout {
 				}
 			}
 			RowLayout {
-				spacing: 20 * DefaultStyle.dp
+                spacing: Math.round(20 * DefaultStyle.dp)
 				Text {
 					text: "Didn't receive the code ?"
 					color: DefaultStyle.main2_700
-					font.pixelSize: 14 * DefaultStyle.dp
-					font.weight: 400 * DefaultStyle.dp
+                    font.pixelSize: Typography.p1.pixelSize
+                    font.weight: Typography.p1.weight
 				}
 				BigButton {
 					style: ButtonStyle.secondary
@@ -158,10 +158,10 @@ LoginLayout {
 		Image {
 			anchors.top: parent.top
 			anchors.right: parent.right
-			anchors.topMargin: 140 * DefaultStyle.dp
-			anchors.rightMargin: 97 * DefaultStyle.dp
-			width: 477 * DefaultStyle.dp
-			height: 345 * DefaultStyle.dp
+            anchors.topMargin: Math.round(140 * DefaultStyle.dp)
+            anchors.rightMargin: Math.round(97 * DefaultStyle.dp)
+            width: Math.round(477 * DefaultStyle.dp)
+            height: Math.round(345 * DefaultStyle.dp)
 			fillMode: Image.PreserveAspectFit
 			source: AppIcons.verif_page_image
 		}

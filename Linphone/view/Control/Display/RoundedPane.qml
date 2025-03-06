@@ -4,12 +4,12 @@ import Linphone
 
 Control.Control {
 	id: mainItem
-	// width: 360 * DefaultStyle.dp
+    // width: Math.round(360 * DefaultStyle.dp)
 	property color backgroundColor: DefaultStyle.grey_0
-	padding: 10 * DefaultStyle.dp
+    padding: Math.round(10 * DefaultStyle.dp)
 	background: Rectangle {
 		anchors.fill: parent
-		radius: 15 * DefaultStyle.dp
+        radius: Math.round(15 * DefaultStyle.dp)
 		color: mainItem.backgroundColor
 	}
 }

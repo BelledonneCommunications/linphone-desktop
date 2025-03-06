@@ -11,8 +11,8 @@ ListView {
 	height: contentHeight
 	visible: contentHeight > 0
 	clip: true
-	rightMargin: 5 * DefaultStyle.dp
-	spacing: 5 * DefaultStyle.dp
+    rightMargin: Math.round(5 * DefaultStyle.dp)
+    spacing: Math.round(5 * DefaultStyle.dp)
 
 	property string searchBarText
 
@@ -36,27 +36,27 @@ ListView {
 	}
 
 	delegate: Item {
-		height: 56 * DefaultStyle.dp
+        height: Math.round(56 * DefaultStyle.dp)
 		width: mainItem.width
 		
 		RowLayout {
 			id: participantDelegate
 			anchors.left: parent.left
-			anchors.leftMargin: 10 * DefaultStyle.dp
+            anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
 			anchors.right: parent.right
-			anchors.rightMargin: 10 * DefaultStyle.dp
+            anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
 			anchors.verticalCenter: parent.verticalCenter
-			spacing: 10 * DefaultStyle.dp
+            spacing: Math.round(10 * DefaultStyle.dp)
 			z: 1
 			Avatar {
-				Layout.preferredWidth: 45 * DefaultStyle.dp
-				Layout.preferredHeight: 45 * DefaultStyle.dp
+                Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 				_address: modelData.core.sipAddress
 				shadowEnabled: false
 			}
 			Text {
 				text: modelData.core.displayName
-				font.pixelSize: 14 * DefaultStyle.dp
+                font.pixelSize: Math.round(14 * DefaultStyle.dp)
 				font.capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
 				maximumLineCount: 1
 				Layout.fillWidth: true
@@ -67,8 +67,8 @@ ListView {
 				text: qsTr("Admin")
 				color: DefaultStyle.main2_400
 				font {
-					pixelSize: 12 * DefaultStyle.dp
-					weight: 300 * DefaultStyle.dp
+                    pixelSize: Math.round(12 * DefaultStyle.dp)
+                    weight: Math.round(300 * DefaultStyle.dp)
 				}
 			}
 			RowLayout {
@@ -77,15 +77,15 @@ ListView {
 				onIsMeChanged: if (isMe) mainItem.me = modelData
 				enabled: mainItem.isMeAdmin && !modelData.core.isMe
 				opacity: enabled ? 1.0 : 0
-				spacing: 26 * DefaultStyle.dp
+                spacing: Math.round(26 * DefaultStyle.dp)
 				Switch {
 					Component.onCompleted: if (modelData.core.isAdmin) toggle()
 					//TODO : Utilser checked et onToggled (pas compris)
 					onToggled: participantModel.setParticipantAdminStatus(modelData.core, position === 1)
 				}
 				SmallButton {
-					Layout.preferredWidth: 20 * DefaultStyle.dp
-					Layout.preferredHeight: 20 * DefaultStyle.dp
+                    Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
 					color: DefaultStyle.main2_100
 					style: ButtonStyle.hoveredBackground
 					icon.source: AppIcons.closeX
@@ -98,14 +98,14 @@ ListView {
 	footer: Rectangle {
 		color: DefaultStyle.grey_100
 		visible: mainItem.isMeAdmin
-		height: 74 * DefaultStyle.dp
+        height: Math.round(74 * DefaultStyle.dp)
 		width: mainItem.width
 		MediumButton {
 			anchors.centerIn: parent
-			height: 40 * DefaultStyle.dp
+            height: Math.round(40 * DefaultStyle.dp)
 			icon.source: AppIcons.plusCircle
-			icon.width: 16 * DefaultStyle.dp
-			icon.height: 16 * DefaultStyle.dp
+            icon.width: Math.round(16 * DefaultStyle.dp)
+            icon.height: Math.round(16 * DefaultStyle.dp)
 			text: qsTr("Ajouter des participants")
 			style: ButtonStyle.secondary
 			onClicked: mainItem.addParticipantRequested()
