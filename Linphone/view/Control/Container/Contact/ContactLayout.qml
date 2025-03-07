@@ -18,7 +18,7 @@ ColumnLayout {
 	property alias bannerContent: bannerLayout.data
 	property alias secondLineContent: verticalLayoutSecondLine.data
     property real minimumWidthForSwitchintToRowLayout: Math.round(756 * DefaultStyle.dp)
-    property var useVerticalLayout: width < minimumWidthForSwitchintToRowMath.round(Layout * DefaultStyle.dp)
+    property var useVerticalLayout: width < minimumWidthForSwitchintToRowLayout
 
 	GridLayout {
         Layout.leftMargin: Math.round(64 * DefaultStyle.dp)
