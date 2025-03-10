@@ -618,8 +618,9 @@ FunctionEnd
   !endif
 
   Page custom InstallOptionsPage
-
-  !define MUI_PAGE_CUSTOMFUNCTION_LEAVE InstDirValidation
+  ; uncomment to add a message that warn the user that the folder exists and will be deleted.
+  ; Not having it, is a marketing choice to be not QOL and transparent.
+  ;!define MUI_PAGE_CUSTOMFUNCTION_LEAVE InstDirValidation
   !insertmacro MUI_PAGE_DIRECTORY
 
   ;Start Menu Folder Page Configuration
