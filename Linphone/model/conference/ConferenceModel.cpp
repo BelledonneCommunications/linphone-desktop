@@ -171,7 +171,7 @@ bool ConferenceModel::isScreenSharingEnabled() const {
 void ConferenceModel::onActiveSpeakerParticipantDevice(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-	lDebug() << "onActiveSpeakerParticipantDevice: " << participantDevice->getAddress()->asString().c_str();
+    lDebug() << "onActiveSpeakerParticipantDevice: " << (participantDevice ? participantDevice->getAddress()->asString().c_str() : "NULL");
 
 	emit activeSpeakerParticipantDevice(conference, conference->getActiveSpeakerParticipantDevice());
 }

@@ -68,7 +68,7 @@ ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::Par
 }
 
 ParticipantDeviceCore::~ParticipantDeviceCore() {
-	mParticipantDeviceModel->removeListener();
+	if (mParticipantDeviceModel) mParticipantDeviceModel->removeListener();
 }
 
 void ParticipantDeviceCore::setSelf(QSharedPointer<ParticipantDeviceCore> me) {
