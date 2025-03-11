@@ -24,6 +24,7 @@
 
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "tool/Utils.hpp"
 
 DEFINE_ABSTRACT_OBJECT(CallModel)
@@ -129,7 +130,7 @@ void CallModel::activateLocalVideo(std::shared_ptr<linphone::CallParams> &params
 	lInfo() << sLog()
 	               .arg("Updating call with video enabled and media direction set to %1")
 	               .arg((int)params->getVideoDirection());
-	params->enableVideo(true);
+	params->enableVideo(SettingsModel::getInstance()->getVideoEnabled() && enable);
 	auto videoDirection = enable ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly;
 	params->setVideoDirection(videoDirection);
 }
@@ -280,7 +281,7 @@ void CallModel::updateConferenceVideoLayout() {
 	auto callParams = mMonitor->getParams();
 	//	auto settings = CoreManager::getInstance()->getSettingsModel();
 	auto newLayout = LinphoneEnums::fromLinphone(callParams->getConferenceVideoLayout());
-	if (!callParams->videoEnabled()) newLayout = LinphoneEnums::ConferenceLayout::AudioOnly;
+	if (!SettingsModel::getInstance()->getVideoEnabled()) newLayout = LinphoneEnums::ConferenceLayout::AudioOnly;
 	if (!mConference) newLayout = LinphoneEnums::ConferenceLayout::ActiveSpeaker;
 	if (mConferenceVideoLayout != newLayout) { // && !getPausedByUser()) { // Only update if not in pause.
 		                                       //		if (mMonitor->getConference()) {
@@ -389,11 +390,12 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		setConference(call->getConference());
 		mDurationTimer.start();
 		// After UpdatedByRemote, video direction could be changed.
-		auto videoDirection = call->getCurrentParams()->getVideoDirection();
+		auto videoDirection = call->getParams()->getVideoDirection();
+		auto remoteVideoDirection = call->getRemoteParams()->getVideoDirection();
 		emit localVideoEnabledChanged(videoDirection == linphone::MediaDirection::SendOnly ||
 		                              videoDirection == linphone::MediaDirection::SendRecv);
-		emit remoteVideoEnabledChanged(videoDirection == linphone::MediaDirection::RecvOnly ||
-		                               videoDirection == linphone::MediaDirection::SendRecv);
+		emit remoteVideoEnabledChanged(remoteVideoDirection == linphone::MediaDirection::RecvOnly ||
+									   remoteVideoDirection == linphone::MediaDirection::SendRecv);
 		updateConferenceVideoLayout();
 	} else if (state == linphone::Call::State::End || state == linphone::Call::State::Error) {
 		mDurationTimer.stop();
