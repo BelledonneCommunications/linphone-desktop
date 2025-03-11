@@ -64,10 +64,16 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 				        if (mConferenceSchedulerModel->getConferenceInfo())
 					        mConferenceInfo = mConferenceSchedulerModel->getConferenceInfo()->clone();
 				        if (state == linphone::ConferenceScheduler::State::Ready && mInviteEnabled) {
-					        auto params = CoreModel::getInstance()->getCore()->createDefaultChatRoomParams();
-					        // TODO : wait for new sdk api to send the invitations again
-					        // mConferenceSchedulerModel->getMonitor()->sendInvitations(params);
-				        }
+							auto params = CoreModel::getInstance()->getCore()->createConferenceParams(nullptr);
+							params->enableChat(true);
+							params->enableGroup(false);
+							params->setAccount(mConferenceSchedulerModel->getMonitor()->getAccount());
+							// set to basic cause FlexisipChat force to set a subject
+							params->getChatParams()->setBackend(linphone::ChatRoom::Backend::Basic);
+							// Lime si chiffré, si non None
+							params->getChatParams()->setEncryptionBackend(linphone::ChatRoom::EncryptionBackend::None);
+							mConferenceSchedulerModel->getMonitor()->sendInvitations(params);
+						}
 				        emit schedulerStateChanged(state);
 			        });
 			connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::invitationsSent, this,
