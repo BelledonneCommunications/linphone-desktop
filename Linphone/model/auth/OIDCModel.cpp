@@ -27,7 +27,7 @@
 #include "tool/Utils.hpp"
 
 // =============================================================================
-static constexpr char OIDCClientId[] = "linphone";
+
 static constexpr char OIDCScope[] = "offline_access";
 static constexpr char OIDCWellKnown[] = "/.well-known/openid-configuration";
 
@@ -48,21 +48,55 @@ QString OAuthHttpServerReplyHandler::callback() const {
 }
 
 OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObject *parent) {
-	auto replyHandler = new OAuthHttpServerReplyHandler(0, this);
+	auto port = CoreModel::getInstance()->getCore()->getConfig()->getInt("app", "oidc_redirect_uri_port", 0);
+	qDebug() << "OIDC Redirect URI Port set to [" << port << "]";
+	auto replyHandler = new OAuthHttpServerReplyHandler(port, this);
+	if (!replyHandler->isListening()) {
+		qWarning() << "OAuthHttpServerReplyHandler is not listening on port" << port;
+		emit requestFailed(tr("OAuthHttpServerReplyHandler is not listening"));
+		emit finished();
+		return;
+	}
 	mAuthInfo = authInfo;
 	mOidc.setReplyHandler(replyHandler);
-	mOidc.setAuthorizationUrl(QUrl(Utils::coreStringToAppString(authInfo->getAuthorizationServer())));
+	auto autorizationUrl = QUrl(Utils::coreStringToAppString(authInfo->getAuthorizationServer()));
+	mOidc.setAuthorizationUrl(autorizationUrl);
 	mOidc.setNetworkAccessManager(new QNetworkAccessManager(&mOidc));
-	mOidc.setClientIdentifier(OIDCClientId);
-	mAuthInfo->setClientId(OIDCClientId);
-	mOidc.setScope(OIDCScope);
+	QString clientid = QString::fromStdString(CoreModel::getInstance()->getCore()->getConfig()->getString(
+	    "app", "oidc_client_id", QCoreApplication::applicationName().toStdString()));
+	if (autorizationUrl.hasQuery()) {
+		QUrlQuery query(autorizationUrl);
+		if (query.hasQueryItem("client_id")) {
+			clientid = query.queryItemValue("client_id");
+		}
+	}
+	mOidc.setClientIdentifier(clientid);
+	mAuthInfo->setClientId(clientid.toStdString());
+	qDebug() << "OIDC Client ID set to [" << clientid << "]";
+
+	// find an auth info from LinphoneCore where username = clientid
+	auto clientSecret = CoreModel::getInstance()->getCore()->findAuthInfo("", clientid.toStdString(), "");
+	if (clientSecret != nullptr) {
+		qDebug() << "client secret found for client id [" << clientid << "]";
+		mOidc.setClientIdentifierSharedKey(clientSecret->getPassword().c_str());
+	}
+
+	QString scope = OIDCScope;
+	;
+	if (autorizationUrl.hasQuery()) {
+		QUrlQuery query(autorizationUrl);
+		if (query.hasQueryItem("scope")) {
+			scope = query.queryItemValue("scope");
+		}
+	}
+	mOidc.setScope(scope);
 	mTimeout.setInterval(1000 * 60 * 2); // 2minutes
 
 	connect(&mTimeout, &QTimer::timeout, [this]() {
 		qWarning() << log().arg("Timeout reached for OpenID connection.");
 		dynamic_cast<OAuthHttpServerReplyHandler *>(mOidc.replyHandler())->close();
 		CoreModel::getInstance()->getCore()->abortAuthentication(mAuthInfo);
-		emit statusChanged("Timeout: Not authenticated");
+		emit statusChanged(tr("Timeout: Not authenticated"));
 		emit finished();
 	});
 	connect(mOidc.networkAccessManager(), &QNetworkAccessManager::authenticationRequired,
@@ -74,22 +108,22 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 		switch (status) {
 			case QAbstractOAuth::Status::Granted: {
 				mTimeout.stop();
-				emit statusChanged("Authentication granted");
+				emit statusChanged(tr("Authentication granted"));
 				emit authenticated();
 				break;
 			}
 			case QAbstractOAuth::Status::NotAuthenticated: {
 				mTimeout.stop();
-				emit statusChanged("Not authenticated");
+				emit statusChanged(tr("Not authenticated"));
 				emit finished();
 				break;
 			}
 			case QAbstractOAuth::Status::RefreshingToken: {
-				emit statusChanged("Refreshing token");
+				emit statusChanged(tr("Refreshing token"));
 				break;
 			}
 			case QAbstractOAuth::Status::TemporaryCredentialsReceived: {
-				emit statusChanged("Temporary credentials received");
+				emit statusChanged(tr("Temporary credentials received"));
 				break;
 			}
 			default: {
@@ -99,22 +133,26 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 
 	connect(&mOidc, &QOAuth2AuthorizationCodeFlow::requestFailed, [=](QAbstractOAuth::Error error) {
 		mTimeout.stop();
-		qWarning() << "RequestFailed:" << (int)error;
+
+		const QMetaObject metaObject = QAbstractOAuth::staticMetaObject;
+		int index = metaObject.indexOfEnumerator("Error");
+		QMetaEnum metaEnum = metaObject.enumerator(index);
+		qWarning() << "RequestFailed:" << metaEnum.valueToKey(static_cast<int>(error));
 		switch (error) {
 			case QAbstractOAuth::Error::NetworkError:
-				emit requestFailed("Network error");
+				emit requestFailed(tr("Network error"));
 				break;
 			case QAbstractOAuth::Error::ServerError:
-				emit requestFailed("Server error");
+				emit requestFailed(tr("Server error"));
 				break;
 			case QAbstractOAuth::Error::OAuthTokenNotFoundError:
-				emit requestFailed("OAuth token not found");
+				emit requestFailed(tr("OAuth token not found"));
 				break;
 			case QAbstractOAuth::Error::OAuthTokenSecretNotFoundError:
-				emit requestFailed("OAuth token secret not found");
+				emit requestFailed(tr("OAuth token secret not found"));
 				break;
 			case QAbstractOAuth::Error::OAuthCallbackNotVerified:
-				emit requestFailed("OAuth callback not verified");
+				emit requestFailed(tr("OAuth callback not verified"));
 				break;
 			default: {
 			}
@@ -124,7 +162,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 
 	connect(&mOidc, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, [this](const QUrl &url) {
 		qDebug() << "Browser authentication url : " << url;
-		emit statusChanged("Requesting authorization from browser");
+		emit statusChanged(tr("Requesting authorization from browser"));
 		mTimeout.start();
 		QDesktopServices::openUrl(url);
 	});
@@ -141,21 +179,26 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	                                      QAbstractOAuth::Stage stage, QMultiMap<QString, QVariant> *parameters) {
 		parameters->insert("login_hint", username);
 		parameters->replace("application_type", "native");
+		if (stage == QAbstractOAuth::Stage::RequestingAuthorization) {
+			QUrl redirectUri = parameters->value("redirect_uri").toUrl();
+			redirectUri.setHost("localhost");
+			parameters->replace("redirect_uri", redirectUri);
+		}
 		switch (stage) {
 			case QAbstractOAuth::Stage::RequestingAccessToken: {
-				emit statusChanged("Requesting access token");
+				emit statusChanged(tr("Requesting access token"));
 				break;
 			}
 			case QAbstractOAuth::Stage::RefreshingAccessToken: {
-				emit statusChanged("Refreshing access token");
+				emit statusChanged(tr("Refreshing access token"));
 				break;
 			}
 			case QAbstractOAuth::Stage::RequestingAuthorization: {
-				emit statusChanged("Requesting authorization");
+				emit statusChanged(tr("Requesting authorization"));
 				break;
 			}
 			case QAbstractOAuth::Stage::RequestingTemporaryCredentials: {
-				emit statusChanged("Requesting temporary credentials");
+				emit statusChanged(tr("Requesting temporary credentials"));
 				break;
 			}
 			default: {
@@ -165,7 +208,9 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 
 	connect(this, &OIDCModel::finished, this, &OIDCModel::deleteLater);
 
-	QNetworkRequest request(QUrl(Utils::coreStringToAppString(authInfo->getAuthorizationServer()) + OIDCWellKnown));
+	auto url = QUrl(Utils::coreStringToAppString(authInfo->getAuthorizationServer()));
+	url.setPath(url.path() + OIDCWellKnown);
+	QNetworkRequest request(url);
 	auto reply = mOidc.networkAccessManager()->get(request);
 	connect(reply, &QNetworkReply::finished, this, &OIDCModel::openIdConfigReceived);
 }
@@ -177,11 +222,21 @@ void OIDCModel::openIdConfigReceived() {
 	auto rootArray = document.toVariant().toMap();
 	if (rootArray.contains("authorization_endpoint")) {
 		mOidc.setAuthorizationUrl(QUrl(rootArray["authorization_endpoint"].toString()));
+	} else {
+		qWarning() << "No authorization endpoint found in OpenID configuration";
+		emit requestFailed(tr("No authorization endpoint found in OpenID configuration"));
+		emit finished();
+		return;
 	}
 	if (rootArray.contains("token_endpoint")) {
 		mOidc.setAccessTokenUrl(QUrl(rootArray["token_endpoint"].toString()));
 		mAuthInfo->setTokenEndpointUri(
 		    Utils::appStringToCoreString(QUrl(rootArray["token_endpoint"].toString()).toString()));
+	} else {
+		qWarning() << "No token endpoint found in OpenID configuration";
+		emit requestFailed(tr("No token endpoint found in OpenID configuration"));
+		emit finished();
+		return;
 	}
 	mOidc.grant();
 	reply->deleteLater();
