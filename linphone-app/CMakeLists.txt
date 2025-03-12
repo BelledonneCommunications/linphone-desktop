@@ -121,10 +121,7 @@ set(APP_TARGETS ${LinphoneCxx_TARGET}
 ####################################
 
 if(ENABLE_QT_KEYCHAIN)
-	find_package(QtKeychain)
-	if(NOT QtKeychain_FOUND)
-		find_package(${QTKEYCHAIN_TARGET_NAME} CONFIG REQUIRED)
-	endif()
+	find_package(Qt5Keychain)
 	
 	add_compile_definitions("ENABLE_QT_KEYCHAIN")
 	if(QtKeychain_USE_BUILD_INTERFACE)
@@ -200,7 +197,7 @@ if(ENABLE_VIDEO)
 endif()
 if( ENABLE_QT_KEYCHAIN)
 	if(NOT QTKEYCHAIN_TARGET_NAME)
-		set(QTKEYCHAIN_TARGET_NAME "Qt5Keychain")
+		set(QTKEYCHAIN_TARGET_NAME "qt5keychain")
 	endif()
 	list(APPEND APP_TARGETS ${QTKEYCHAIN_TARGET_NAME})
 endif()
