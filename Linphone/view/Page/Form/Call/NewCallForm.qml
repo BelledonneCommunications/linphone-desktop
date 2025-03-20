@@ -109,7 +109,7 @@ FocusScope {
 								fillMode: Image.PreserveAspectFit
 							}
 							Text {
-								text: "Appel de groupe"
+                                text: qsTr("call_start_group_call_title")
 								color: DefaultStyle.grey_1000
 								font {
                                     pixelSize: Typography.h4.pixelSize

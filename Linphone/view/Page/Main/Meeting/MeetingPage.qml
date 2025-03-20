@@ -308,8 +308,7 @@ AbstractMainPage {
 							}
 							else if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
 								|| meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
-                                //: Création de la réunion en cours…
-                                mainWin.showLoadingPopup(qsTr("meeting_schedule_creation_processing"), true, function () {
+                                mainWin.showLoadingPopup(qsTr("meeting_schedule_creation_in_progress"), true, function () {
 									leftPanelStackView.pop()
 								})
 							} else {
@@ -532,8 +531,8 @@ AbstractMainPage {
 					}
 					Text {
                         //: "%n participant(s) sélectionné(s)"
-                        text: qsTr("group_call_participant_selected").arg(addParticipantLayout.selectedParticipantsCount)
-						color: DefaultStyle.main2_500main
+                        text: qsTr("group_call_participant_selected", '', addParticipantLayout.selectedParticipantsCount).arg(addParticipantLayout.selectedParticipantsCount)
+                        color: DefaultStyle.main2_500main
 						Layout.leftMargin: addParticipantsBackButton.width + addParticipantsButtons.spacing
 						maximumLineCount: 1
 						font {

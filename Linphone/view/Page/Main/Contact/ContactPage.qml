@@ -705,7 +705,7 @@ FriendGui{
                                         property var listViewModelData: modelData
                                         property var callObj
                                         property CallGui deviceCall: callObj ? callObj.value : null
-                                        //: "Appareil sans nom"
+                                        //: "Appareil inconnu"
                                         property string deviceName: listViewModelData.name.length != 0 ? listViewModelData.name : qsTr("contact_device_without_name")
                                         Text {
                                             text: deviceDelegate.deviceName

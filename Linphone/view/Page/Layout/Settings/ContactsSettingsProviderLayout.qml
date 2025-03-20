@@ -89,8 +89,9 @@ RowLayout {
 				Connections {
 					target: modelData.core
 					function onSavedChanged() {
-                        //: "Les changements ont été sauvegardés"
-                        if (modelData.core.saved) UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"), qsTr("information_popup_changes_saved"), true, mainWindow)
+                        if (modelData.core.saved) UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"),
+                                                                                //: "Les changements ont été sauvegardés"
+                                                                                qsTr("information_popup_changes_saved"), true, mainWindow)
 					}
 				} 
 

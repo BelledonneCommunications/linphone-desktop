@@ -55,8 +55,10 @@ AbstractSettingsLayout {
                 visible: !SettingsCpp.disableCallRecordings
             }
             SwitchSetting {
-                titleText: qsTr("Tonalités")
-                subTitleText: qsTr("Activer les tonalités")
+                //: Tonalités
+                titleText: qsTr("settings_call_enable_tones_title")
+                //: Activer les tonalités
+                subTitleText: qsTr("settings_call_enable_tones_subtitle")
                 propertyName: "callToneIndicationsEnabled"
                 propertyOwner: SettingsCpp
             }

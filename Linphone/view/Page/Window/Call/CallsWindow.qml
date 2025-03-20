@@ -131,8 +131,9 @@ AbstractWindow {
 
     function joinConference(uri, options) {
         if (uri.length === 0)
-            //: "La conférence n'a pas pu démarrer en raison d'une erreur d'uri."
-            UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("conference_error_empty_uri"),mainWindow)
+            UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                                          //: "La conférence n'a pas pu démarrer en raison d'une erreur d'uri."
+                                          qsTr("conference_error_empty_uri"),mainWindow)
         else {
             UtilsCpp.createCall(uri, options)
         }
@@ -560,8 +561,8 @@ AbstractWindow {
                                         : mainWindow.conference
                                             //: "Un participant enregistre la réunion"
                                             ? qsTr("conference_remote_is_recording")
-                                            //: "Votre correspondant enregistre l'appel"
-                                            : qsTr("call_remote_recording")
+                                            //: "%1 enregistre l'appel"
+                                            : qsTr("call_remote_recording").arg(mainWindow.call.core.remoteName)
                                     : ""
                             }
                         }
@@ -942,7 +943,7 @@ AbstractWindow {
                                 searchBarColor: DefaultStyle.grey_0
                                 searchBarBorderColor: DefaultStyle.grey_200
                                 onSelectedParticipantsCountChanged: {
-                                    rightPanel.headerSubtitleText = qsTr("group_call_participant_selected").arg(selectedParticipantsCount)
+                                    rightPanel.headerSubtitleText = qsTr("group_call_participant_selected", '', selectedParticipantsCount).arg(selectedParticipantsCount)
                                     participantsStack.selectedParticipants = selectedParticipants
                                 }
                                 Connections {
@@ -950,7 +951,7 @@ AbstractWindow {
                                     function onCurrentItemChanged() {
                                         if (participantsStack.currentItem == addParticipantLayout) {
                                             rightPanel.headerTitleText = qsTr("meeting_schedule_add_participants_title")
-                                            rightPanel.headerSubtitleText = qsTr("group_call_participant_selected").arg(addParticipantLayout.selectedParticipants.length)
+                                            rightPanel.headerSubtitleText = qsTr("group_call_participant_selected", '', addParticipantLayout.selectedParticipants.length).arg(addParticipantLayout.selectedParticipants.length)
                                         }
                                     }
                                 }

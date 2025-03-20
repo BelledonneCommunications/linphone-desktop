@@ -26,11 +26,13 @@ AbstractSettingsLayout {
 	onSave: {
 		if (ldapGui.core.isValid()) {
 			ldapGui.core.save()
-            //: "L'annuaire LDAP a été sauvegardé"
-            UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"), qsTr("settings_contacts_ldap_success_toast"), true, mainWindow)
+            UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"),
+                                          //: "L'annuaire LDAP a été sauvegardé"
+                                          qsTr("settings_contacts_ldap_success_toast"), true, mainWindow)
 		} else {
-            //: "Une erreur s'est produite, la configuration LDAP n'a pas été sauvegardée !"
-            UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("settings_contacts_ldap_error_toast"), false, mainWindow)
+            UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                                          //: "Une erreur s'est produite, la configuration LDAP n'a pas été sauvegardée !"
+                                          qsTr("settings_contacts_ldap_error_toast"), false, mainWindow)
 		}
 	}
 

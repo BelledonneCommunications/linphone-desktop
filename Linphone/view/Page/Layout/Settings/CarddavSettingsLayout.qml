@@ -27,19 +27,22 @@ AbstractSettingsLayout {
 		if (carddavGui.core.isValid()) {
 			carddavGui.core.save()
 		} else {
-            //: "Vérifiez que toutes les informations ont été saisies."
-            UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("settings_contacts_carddav_popup_invalid_error"), false, mainWindow)
+            UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                                          //: "Vérifiez que toutes les informations ont été saisies."
+                                          qsTr("settings_contacts_carddav_popup_invalid_error"), false, mainWindow)
 		}
 	}
 	Connections {
 		target: carddavGui.core
 		function onSaved(success) {
 			if (success)
-                //: "Le carnet d'adresse CardDAV est synchronisé."
-                UtilsCpp.showInformationPopup(qsTr("information_popup_synchronization_success_title"), qsTr("settings_contacts_carddav_synchronization_success_message"), true, mainWindow)
+                UtilsCpp.showInformationPopup(qsTr("information_popup_synchronization_success_title"),
+                                              //: "Le carnet d'adresse CardDAV est synchronisé."
+                                              qsTr("settings_contacts_carddav_synchronization_success_message"), true, mainWindow)
 			else
-                //: "Erreur de synchronisation!"
-                UtilsCpp.showInformationPopup(qsTr("settings_contacts_carddav_popup_synchronization_error_title"), qsTr("settings_contacts_carddav_popup_synchronization_error_message"), false, mainWindow)
+                UtilsCpp.showInformationPopup(qsTr("settings_contacts_carddav_popup_synchronization_error_title"),
+                                              //: "Erreur de synchronisation!"
+                                              qsTr("settings_contacts_carddav_popup_synchronization_error_message"), false, mainWindow)
 		}
 	}
 	Component {

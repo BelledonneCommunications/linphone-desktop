@@ -293,7 +293,8 @@ MainRightPanel {
                                 Layout.preferredWidth: Math.round(421 * DefaultStyle.dp)
 								Layout.preferredHeight: height
 								onEditingFinished: {
-                                    if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("sip_address"), text)
+                                    var label = qsTr("sip_address")
+                                    if (text.length != 0) mainItem.contact.core.setAddressAt(index, label, text)
 								}
 								property string _initialText: modelData.address
 								initialText: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_initialText) : _initialText

@@ -196,8 +196,9 @@ FocusScope {
                             visible: searchResultItem.core.isStored
                                      && !searchResultItem.core.readOnly
                             //: "Enlever des favoris"
-                            //: "Ajouter aux favoris"
-                            text: searchResultItem.core.starred ? qsTr("contact_details_remove_from_favourites") : qsTr("contact_details_add_to_favourites")
+                            text: searchResultItem.core.starred ? qsTr("contact_details_remove_from_favourites")
+                                                                  //: "Ajouter aux favoris"
+                                                                : qsTr("contact_details_add_to_favourites")
                             icon.source: searchResultItem.core.starred ? AppIcons.heartFill : AppIcons.heart
                             spacing: Math.round(10 * DefaultStyle.dp)
                             textColor: DefaultStyle.main2_500main
@@ -222,15 +223,17 @@ FocusScope {
                                 var filepath = UtilsCpp.createVCardFile(
                                             username, vcard)
                                 if (filepath == "")
-                                    //: "La création du fichier vcard a échoué"
                                     UtilsCpp.showInformationPopup(
-                                                qsTr("information_popup_error_title"), qsTr("information_popup_vcard_creation_error"),
+                                                qsTr("information_popup_error_title"),
+                                                //: La création du fichier vcard a échoué
+                                                qsTr("information_popup_vcard_creation_error"),
                                                 false)
                                 else
-                                    //: "VCard créée"
-                                    //: "VCard du contact enregistrée dans %1"
-                                    mainWindow.showInformationPopup(qsTr("information_popup_vcard_creation_title"), qsTr("information_popup_vcard_creation_success").arg(filepath))
-                                //: "Partage de contact"
+                                    //: VCard créée
+                                    mainWindow.showInformationPopup(qsTr("information_popup_vcard_creation_title"),
+                                                                    //: "VCard du contact enregistrée dans %1"
+                                                                    qsTr("information_popup_vcard_creation_success").arg(filepath))
+                                //: Partage de contact
                                 UtilsCpp.shareByEmail(qsTr("contact_sharing_email_title"),vcard, filepath)
                             }
                             style: ButtonStyle.noBackground

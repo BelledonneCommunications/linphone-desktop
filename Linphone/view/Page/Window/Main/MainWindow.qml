@@ -101,9 +101,10 @@ AbstractWindow {
             initStackViewItem()
 		}
 		function onIsSavedChanged() {
-            //: "Les changements ont été sauvegardés"
-            if (SettingsCpp.isSaved) UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"), qsTr("information_popup_changes_saved"), true, mainWindow)
-		}
+            if (SettingsCpp.isSaved) UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"),
+                                                                   //: "Les changements ont été sauvegardés"
+                                                                   qsTr("information_popup_changes_saved"), true, mainWindow)
+        }
 	}
 
 	Connections {

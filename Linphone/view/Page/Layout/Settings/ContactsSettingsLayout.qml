@@ -12,7 +12,7 @@ AbstractSettingsLayout {
 		{
             //: Annuaires LDAP
             title: qsTr("settings_contacts_ldap_title"),
-            //: "Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la magic search bar."
+            //: "Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la barre de recherche."
             subTitle: qsTr("settings_contacts_ldap_subtitle"),
 			contentComponent: ldapParametersComponent,
 			hideTopMargin: true

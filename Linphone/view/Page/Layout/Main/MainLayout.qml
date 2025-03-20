@@ -193,8 +193,10 @@ Item {
                         id: magicSearchBar
                         Layout.fillWidth: true
                         //: "Rechercher un contact, appeler %1"
-                        //: "ou envoyer un message …"
-                        placeholderText: qsTr("searchbar_placeholder_text").arg(SettingsCpp.disableChatFeature ? "…" : qsTr("searchbar_placeholder_text_chat_feature_enabled"))
+                        placeholderText: qsTr("searchbar_placeholder_text").arg(SettingsCpp.disableChatFeature
+                                                                                ? "…"
+                                                                                //: "ou envoyer un message …"
+                                                                                : qsTr("searchbar_placeholder_text_chat_feature_enabled"))
                         focusedBorderColor: DefaultStyle.main1_500_main
                         numericPadButton.visible: text.length === 0
                         numericPadButton.checkable: false

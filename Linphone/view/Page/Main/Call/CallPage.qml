@@ -231,9 +231,10 @@ AbstractMainPage {
                                 visible: historyListView.count === 0
                                 Layout.alignment: Qt.AlignHCenter
                                 Layout.topMargin: Math.round(137 * DefaultStyle.dp)
-                                //: "Aucun appel dans votre historique"
                                 //: "Aucun résultat…"
-                                text: searchBar.text.length != 0 ? qsTr("list_filter_no_result_found") : qsTr("history_list_empty_history")
+                                text: searchBar.text.length != 0 ? qsTr("list_filter_no_result_found")
+                                                                   //: "Aucun appel dans votre historique"
+                                                                 : qsTr("history_list_empty_history")
                                 font {
                                     pixelSize: Typography.h4.pixelSize
                                     weight: Typography.h4.weight
@@ -389,7 +390,7 @@ AbstractMainPage {
                         }
                         Text {
                             //: "%n participant(s) sélectionné(s)"
-                            text: qsTr("group_call_participant_selected").arg(mainItem.selectedParticipantsCount)
+                            text: qsTr("group_call_participant_selected", '', mainItem.selectedParticipantsCount).arg(mainItem.selectedParticipantsCount)
                             color: DefaultStyle.main2_500main
                             maximumLineCount: 1
                             font {

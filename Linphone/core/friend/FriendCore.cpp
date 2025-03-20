@@ -26,6 +26,7 @@
 
 DEFINE_ABSTRACT_OBJECT(FriendCore)
 
+// Translation does not work if not in class directly
 //: "Adresse SIP"
 const QString _addressLabel = FriendCore::tr("sip_address");
 //: "Téléphone"
@@ -64,7 +65,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		auto addresses = contact->getAddresses();
 		for (auto &address : addresses) {
 			mAddressList.append(Utils::createFriendAddressVariant(
-			    _addressLabel, Utils::coreStringToAppString(address->asStringUriOnly())));
+				tr("sip_address"), Utils::coreStringToAppString(address->asStringUriOnly())));
 		}
 		mDefaultAddress = defaultAddress ? Utils::coreStringToAppString(defaultAddress->asStringUriOnly()) : QString();
 		mDefaultFullAddress = defaultAddress ? Utils::coreStringToAppString(defaultAddress->asString()) : QString();
@@ -72,7 +73,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		auto phoneNumbers = contact->getPhoneNumbersWithLabel();
 		for (auto &phoneNumber : phoneNumbers) {
 			auto label = Utils::coreStringToAppString(phoneNumber->getLabel());
-			if (label.isEmpty()) label = _phoneLabel;
+			if (label.isEmpty()) label = tr("device_id");
 			mPhoneNumberList.append(
 			    Utils::createFriendAddressVariant(label, Utils::coreStringToAppString(phoneNumber->getPhoneNumber())));
 		}
@@ -185,7 +186,7 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 				QList<QVariant> addr;
 				for (auto &num : numbers) {
 					addr.append(Utils::createFriendAddressVariant(
-					    _addressLabel, Utils::coreStringToAppString(num->asStringUriOnly())));
+						tr("sip_address"), Utils::coreStringToAppString(num->asStringUriOnly())));
 				}
 				mFriendModelConnection->invokeToCore([this, addr]() { resetPhoneNumbers(addr); });
 			});
@@ -193,7 +194,7 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 				auto numbers = mFriendModel->getPhoneNumbers();
 				QList<QVariant> addr;
 				for (auto &num : numbers) {
-					addr.append(Utils::createFriendAddressVariant(_phoneLabel,
+					addr.append(Utils::createFriendAddressVariant(tr("device_id"),
 					                                              Utils::coreStringToAppString(num->getPhoneNumber())));
 				}
 				mFriendModelConnection->invokeToCore([this, addr]() { resetPhoneNumbers(addr); });
@@ -415,10 +416,11 @@ void FriendCore::appendAddress(const QString &addr) {
 		QString interpretedFullAddress = linphoneAddr ? Utils::coreStringToAppString(linphoneAddr->asString()) : "";
 		QString interpretedAddress = linphoneAddr ? Utils::coreStringToAppString(linphoneAddr->asStringUriOnly()) : "";
 		mCoreModelConnection->invokeToCore([this, interpretedAddress, interpretedFullAddress]() {
-			//: "Adresse invalide"
-			if (interpretedAddress.isEmpty()) Utils::showInformationPopup(tr("information_popup_error_title"), tr("information_popup_invalid_address_message"), false);
+			if (interpretedAddress.isEmpty()) Utils::showInformationPopup(tr("information_popup_error_title"),
+																		  //: "Adresse invalide"
+																		  tr("information_popup_invalid_address_message"), false);
 			else {
-				mAddressList.append(Utils::createFriendAddressVariant(_addressLabel, interpretedAddress));
+				mAddressList.append(Utils::createFriendAddressVariant(tr("sip_address"), interpretedAddress));
 				if (mDefaultFullAddress.isEmpty()) mDefaultFullAddress = interpretedFullAddress;
 				if (mDefaultAddress.isEmpty()) mDefaultAddress = interpretedAddress;
 				emit addressChanged();
@@ -607,7 +609,7 @@ void FriendCore::writeFromModel(const std::shared_ptr<FriendModel> &model) {
 	QList<QVariant> addresses;
 	for (auto &addr : model->getAddresses()) {
 		addresses.append(
-		    Utils::createFriendAddressVariant(_addressLabel, Utils::coreStringToAppString(addr->asStringUriOnly())));
+			Utils::createFriendAddressVariant(tr("sip_address"), Utils::coreStringToAppString(addr->asStringUriOnly())));
 	}
 	mAddressList = addresses;
 	mDefaultAddress = model->getDefaultAddress();

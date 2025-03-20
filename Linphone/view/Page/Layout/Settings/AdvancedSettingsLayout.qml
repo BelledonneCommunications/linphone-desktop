@@ -63,8 +63,8 @@ AbstractSettingsLayout {
             spacing: Math.round(40 * DefaultStyle.dp)
 			SwitchSetting {
 				Layout.fillWidth: true
-                //: "Démarrer automatiquement Linphone"
-                titleText: qsTr("settings_advanced_auto_start_title")
+                //: "Démarrer automatiquement %1"
+                titleText: qsTr("settings_advanced_auto_start_title").arg(applicationName)
 				propertyName: "autoStart"
 				propertyOwner: SettingsCpp
 			}

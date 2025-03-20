@@ -574,8 +574,9 @@ void ConferenceInfoCore::save() {
 			if (CoreModel::getInstance()->getCore()->getDefaultAccount()->getState() !=
 			    linphone::RegistrationState::Ok) {
 				//: "Erreur"
-				//: "Votre compte est déconnecté"
-				Utils::showInformationPopup(tr("information_popup_error_title"), tr("information_popup_disconnected_account_message"), false);
+				Utils::showInformationPopup(tr("information_popup_error_title"),
+											//: "Votre compte est déconnecté"
+											tr("information_popup_disconnected_account_message"), false);
 				emit saveFailed();
 				return;
 			}

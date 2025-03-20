@@ -113,8 +113,9 @@ Item {
 						onClicked: {
 							if (mainItem.conference) {
 								UtilsCpp.copyToClipboard(mainItem.call.core.remoteAddress)
-                                //: Le lien de la réunion a été copié dans le presse-papier
-                                showInformationPopup(qsTr("copied"), qsTr("information_popup_meeting_address_copied_to_clipboard"), true)
+                                showInformationPopup(qsTr("copied"),
+                                                     //: Le lien de la réunion a été copié dans le presse-papier
+                                                     qsTr("information_popup_meeting_address_copied_to_clipboard"), true)
 							}
 						}
 					}

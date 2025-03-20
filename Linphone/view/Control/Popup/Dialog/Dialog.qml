@@ -21,9 +21,11 @@ Popup {
 	property string text
 	property string details
     //: "Confirmer"
-    //: "Annuler"
-    property string firstButtonText: firstButtonAccept ? qsTr("dialog_confirm") : qsTr("dialog_cancel")
-    property string secondButtonText: secondButtonAccept ? qsTr("dialog_confirm") : qsTr("dialog_cancel")
+    property string firstButtonText: firstButtonAccept ? qsTr("dialog_confirm")
+                                                         //: "Annuler"
+                                                       : qsTr("dialog_cancel")
+    property string secondButtonText: secondButtonAccept ? qsTr("dialog_confirm")
+                                                         : qsTr("dialog_cancel")
   	property alias content: contentLayout.data
   	property alias buttons: buttonsLayout.data
 	property alias firstButton: firstButtonId
