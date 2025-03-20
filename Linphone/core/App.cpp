@@ -569,14 +569,13 @@ void App::initLocale() {
 	QString locale;
 
 	// Use english. This default translator is used if there are no found translations in others loads
-	mLocale = QLocale(QLocale::French);
+	mLocale = QLocale(QLocale::English);
 	if (!installLocale(*this, *mDefaultTranslatorCore, mLocale)) qFatal("Unable to install default translator.");
 
-
-	if (installLocale(*this, *mTranslatorCore, getLocale())) {
-		qDebug() << "installed locale" << getLocale().name();
-		return;
-	}
+//	if (installLocale(*this, *mTranslatorCore, getLocale())) {
+//		qDebug() << "installed locale" << getLocale().name();
+//		return;
+//	}
 
 		   // Try to use system locale.
 		   // #ifdef Q_OS_MACOS
@@ -1211,7 +1210,7 @@ void App::setSysTrayIcon() {
 //-----------------------------------------------------------
 
 void App::setLocale(QString configLocale) {
-	if (configLocale.isEmpty()) mLocale = QLocale(configLocale);
+	if (!configLocale.isEmpty()) mLocale = QLocale(configLocale);
 	else mLocale = QLocale(QLocale::system().name());
 }
 
