@@ -62,7 +62,6 @@ LoginLayout {
 		ColumnLayout {
 			anchors.left: parent.left
 			anchors.top: parent.top
-            anchors.topMargin: Math.round(51 * DefaultStyle.dp)
             anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
             spacing: Math.round(104 * DefaultStyle.dp)
 			Text {

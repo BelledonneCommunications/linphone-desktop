@@ -185,7 +185,7 @@ LoginLayout {
                 width: Math.round(361 * DefaultStyle.dp)
 				
 				ColumnLayout {
-                    spacing: Math.round(16 * DefaultStyle.dp)
+                    spacing: Math.round(8 * DefaultStyle.dp)
 					FormItemLayout {
 						id: username
                         //: "Nom d'utilisateur"
@@ -284,7 +284,7 @@ LoginLayout {
 
 				BigButton {
 					id: connectionButton
-                    Layout.topMargin: Math.round(32 * DefaultStyle.dp)
+                    Layout.topMargin: Math.round(15 * DefaultStyle.dp)
 					style: ButtonStyle.main
 					contentItem: StackLayout {
 						id: connectionButtonContent
@@ -368,7 +368,6 @@ LoginLayout {
 			anchors.top: parent.top
 			anchors.left: parent.left
 			anchors.bottom: parent.bottom
-            anchors.topMargin: Math.round(70 * DefaultStyle.dp)
             anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
             width: Math.round(361 * DefaultStyle.dp)
 		},

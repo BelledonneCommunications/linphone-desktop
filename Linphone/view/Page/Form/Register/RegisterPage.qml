@@ -66,7 +66,7 @@ LoginLayout {
 		},
 		RowLayout {
             spacing: Math.round(20 * DefaultStyle.dp)
-            Layout.rightMargin: Math.round(51 * DefaultStyle.dp)
+			Layout.rightMargin: Math.round((51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp)
 			Text {
                 Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
 				color: DefaultStyle.main2_700
@@ -90,14 +90,15 @@ LoginLayout {
 
 	centerContent: [
 		ColumnLayout {
+            id: registerForm
 			anchors.fill: parent
-            anchors.topMargin: Math.round(51 * DefaultStyle.dp)
             anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
-            anchors.rightMargin: Math.round(127 * DefaultStyle.dp)
             spacing: Math.round(50 * DefaultStyle.dp)
+
 			TabBar {
 				Layout.fillWidth: true
 				id: bar
+                Layout.rightMargin: Math.round((127 - ((127/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp)
                 // "S'inscrire avec un numéro de téléphone"
                 model: [qsTr("assistant_account_register_with_phone_number"),
                     // "S'inscrire avec un email"
@@ -106,11 +107,27 @@ LoginLayout {
 			Flickable {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
+
+				contentHeight: contentLayout.height
+
+				Control.ScrollBar.vertical: ScrollBar {
+					id: scrollbar
+					z: 1
+					active: true
+					interactive: true
+					visible: parent.contentHeight > parent.height
+					policy: Control.ScrollBar.AsNeeded
+					anchors.rightMargin: 8 * DefaultStyle.dp
+					anchors.right: parent.right
+				}
+
 				ColumnLayout {
+					id: contentLayout
 					anchors.left: parent.left
 					anchors.right: parent.right
-                    spacing: Math.round(22 * DefaultStyle.dp)
+                    spacing: Math.round(8 * DefaultStyle.dp)
 					ColumnLayout {
+						id: formLayout
                         spacing: Math.round(24 * DefaultStyle.dp)
 						RowLayout {
 							Layout.preferredHeight: usernameItem.height
@@ -296,6 +313,7 @@ LoginLayout {
 		},
 		Image {
 			z: -1
+//            visible: registerForm.x+registerForm.width < x
 			anchors.top: parent.top
 			anchors.right: parent.right
             anchors.topMargin: Math.round(129 * DefaultStyle.dp)

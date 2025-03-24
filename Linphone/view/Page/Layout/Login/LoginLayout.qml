@@ -125,11 +125,11 @@ Rectangle {
 	ColumnLayout {
 		id: contentLayout
 		anchors.fill: parent
-		spacing: 0
-		RowLayout {
+        spacing: 0
+        RowLayout {
 			Layout.fillWidth: true
-            Layout.preferredHeight: Math.round(102 * DefaultStyle.dp)
-            Layout.rightMargin: Math.round(42 * DefaultStyle.dp)
+            Layout.topMargin: Math.round((25 - ((25/(DefaultStyle.defaultHeight - mainWindow.minimumHeight))*(DefaultStyle.defaultHeight-mainWindow.height))) * DefaultStyle.dp)
+			Layout.rightMargin: Math.round((42 - ((42/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp)
 			spacing: 0
 			Item {
 				Layout.fillWidth: true
@@ -149,14 +149,17 @@ Rectangle {
 
 		RowLayout {
 			id: titleLayout
-            Layout.preferredHeight: Math.round(131 * DefaultStyle.dp)
 			Layout.fillWidth: true
+            Layout.topMargin: Math.round((40 - ((40/(DefaultStyle.defaultHeight - mainWindow.minimumHeight))*(DefaultStyle.defaultHeight-mainWindow.height))) * DefaultStyle.dp)
 			spacing: 0
 		}
 		Item {
 			id: centerLayout
 			Layout.fillHeight: true
 			Layout.fillWidth: true
+            Layout.topMargin: Math.round((70 - ((70/(DefaultStyle.defaultHeight - mainWindow.minimumHeight))*(DefaultStyle.defaultHeight-mainWindow.height))) * DefaultStyle.dp)
+            Layout.alignment: Qt.AlignBottom
+
 		}
 		Image {
 			id: bottomMountains

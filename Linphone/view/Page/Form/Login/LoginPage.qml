@@ -52,7 +52,8 @@ LoginLayout {
 		RowLayout {
 			visible: !SettingsCpp.assistantHideCreateAccount
             spacing: Math.round(20 * DefaultStyle.dp)
-            Layout.rightMargin: Math.round(51 * DefaultStyle.dp)
+			Layout.rightMargin: Math.round((51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp)
+
 			Text {
                 Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
                 //: "Pas encore de compte ?"
@@ -77,7 +78,6 @@ LoginLayout {
 			anchors.left: parent.left
 			anchors.top: parent.top
             anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
-            anchors.topMargin: Math.round(70 * DefaultStyle.dp)
 			anchors.bottom: parent.bottom
 			ColumnLayout {
 				id: content

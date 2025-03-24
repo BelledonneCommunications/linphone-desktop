@@ -13,10 +13,16 @@ AbstractWindow {
     title: applicationName
 	// TODO : handle this bool when security mode is implemented
 	property bool firstConnection: true
+    property int initialWidth
+    property int initialHeight
+    Component.onCompleted: {
+        initialWidth = width
+        initialHeight = height
+    }
 
 	color: DefaultStyle.grey_0
-    // minimumWidth: 1020
-    // minimumHeight: 700
+    minimumWidth: Math.round(1020 * DefaultStyle.dp)
+    minimumHeight: Math.round(735 * DefaultStyle.dp)
 
 	signal callCreated()
 	property var accountProxy

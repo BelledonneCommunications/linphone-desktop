@@ -7,12 +7,12 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ColumnLayout {
 	id: mainItem
-    spacing: Math.round(10 * DefaultStyle.dp)
+    spacing: Math.round(8 * DefaultStyle.dp)
 
 	FormItemLayout {
 		id: username
         Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
-        //: "Nom d'utilisateur" : username
+        //: Nom d'utilisateur : username
         label: qsTr("username")
 		mandatory: true
 		enableErrorText: true
@@ -28,7 +28,7 @@ ColumnLayout {
 		FormItemLayout {
 			id: password
             width: Math.round(346 * DefaultStyle.dp)
-            //: "Mot de passe"
+            //: Mot de passe
             label: qsTr("password")
 			mandatory: true
 			enableErrorText: true
