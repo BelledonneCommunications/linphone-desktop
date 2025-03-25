@@ -84,8 +84,13 @@ LoginLayout {
 			contentHeight: content.implicitHeight
 			clip: true
 			flickableDirection: Flickable.VerticalFlick
+
+            Control.ScrollBar.vertical: scrollbar
+
 			ColumnLayout {
-				id: content
+                id: content
+                // rightMargin is negative margin
+                width: parent.width - scrollbar.width*2
                 spacing: Math.round(85 * DefaultStyle.dp)
 				ColumnLayout {
 					spacing: 0
@@ -174,15 +179,19 @@ LoginLayout {
 	Component {
 		id: secondItem
 		Flickable {
+            id: formFlickable
 			width: parent.width
 			contentWidth: content.implicitWidth
 			contentHeight: content.implicitHeight
 			clip: true
 			flickableDirection: Flickable.VerticalFlick
+
+            Control.ScrollBar.vertical: scrollbar
+
 			ColumnLayout {
 				id: content
                 spacing: Math.round(2 * DefaultStyle.dp)
-                width: Math.round(361 * DefaultStyle.dp)
+                width: formFlickable.width - scrollbar.width*2
 				
 				ColumnLayout {
                     spacing: Math.round(8 * DefaultStyle.dp)
@@ -248,27 +257,27 @@ LoginLayout {
 							KeyNavigation.down: transportCbox
 						}
 					}
-				}
-				FormItemLayout {
-                    //: "Transport"
-                    label: qsTr("transport")
-					Layout.fillWidth: true
-					contentItem: ComboBox {
-						id: transportCbox
-                        height: Math.round(49 * DefaultStyle.dp)
-                        width: Math.round(360 * DefaultStyle.dp)
-						textRole: "text"
-						valueRole: "value"
-						model: [
-							{text: "TCP", value: LinphoneEnums.TransportType.Tcp},
-							{text: "UDP", value: LinphoneEnums.TransportType.Udp},
-							{text: "TLS", value: LinphoneEnums.TransportType.Tls},
-							{text: "DTLS", value: LinphoneEnums.TransportType.Dtls}
-						]
-                        currentIndex: Utils.findIndex(model, function (entry) {
-                            return entry.text === SettingsCpp.assistantThirdPartySipAccountTransport.toUpperCase()
-                        })
-					}
+                    FormItemLayout {
+                        //: "Transport"
+                        label: qsTr("transport")
+                        Layout.fillWidth: true
+                        contentItem: ComboBox {
+                            id: transportCbox
+                            height: Math.round(49 * DefaultStyle.dp)
+                            width: Math.round(360 * DefaultStyle.dp)
+                            textRole: "text"
+                            valueRole: "value"
+                            model: [
+                                {text: "TCP", value: LinphoneEnums.TransportType.Tcp},
+                                {text: "UDP", value: LinphoneEnums.TransportType.Udp},
+                                {text: "TLS", value: LinphoneEnums.TransportType.Tls},
+                                {text: "DTLS", value: LinphoneEnums.TransportType.Dtls}
+                            ]
+                            currentIndex: Utils.findIndex(model, function (entry) {
+                                return entry.text === SettingsCpp.assistantThirdPartySipAccountTransport.toUpperCase()
+                            })
+                        }
+                    }
 				}
 
 				TemporaryText {
@@ -362,15 +371,28 @@ LoginLayout {
 	}
 
 	centerContent: [
-		Control.StackView {
-			id: rootStackView
-			initialItem: SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin ? secondItem : firstItem
-			anchors.top: parent.top
-			anchors.left: parent.left
-			anchors.bottom: parent.bottom
-            anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
-            width: Math.round(361 * DefaultStyle.dp)
-		},
+        Item {
+            anchors.fill: parent
+            Control.StackView {
+                id: rootStackView
+                initialItem: SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin ? secondItem : firstItem
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
+                width: Math.round(361 * DefaultStyle.dp)
+            }
+            ScrollBar {
+                id: scrollbar
+                z: 1
+                active: true
+                interactive: true
+                parent: rootStackView.currentItem
+                visible: parent.contentHeight > parent.height
+                policy: Control.ScrollBar.AsNeeded
+                anchors.rightMargin: -8 * DefaultStyle.dp
+            }
+        },
 		Image {
 			z: -1
 			anchors.top: parent.top

@@ -66,7 +66,7 @@ LoginLayout {
 		},
 		RowLayout {
             spacing: Math.round(20 * DefaultStyle.dp)
-			Layout.rightMargin: Math.round((51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp)
+            Layout.rightMargin: Math.round(Math.max(10 * DefaultStyle.dp,(51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp))
 			Text {
                 Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
 				color: DefaultStyle.main2_700
@@ -98,7 +98,7 @@ LoginLayout {
 			TabBar {
 				Layout.fillWidth: true
 				id: bar
-                Layout.rightMargin: Math.round((127 - ((127/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp)
+                Layout.rightMargin: Math.round(Math.max(5 * DefaultStyle.dp,(127 - ((127/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp))
                 // "S'inscrire avec un numéro de téléphone"
                 model: [qsTr("assistant_account_register_with_phone_number"),
                     // "S'inscrire avec un email"

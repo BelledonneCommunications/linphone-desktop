@@ -22,7 +22,7 @@ AbstractWindow {
 
 	color: DefaultStyle.grey_0
     minimumWidth: Math.round(1020 * DefaultStyle.dp)
-    minimumHeight: Math.round(735 * DefaultStyle.dp)
+    minimumHeight: Math.round(700 * DefaultStyle.dp)
 
 	signal callCreated()
 	property var accountProxy

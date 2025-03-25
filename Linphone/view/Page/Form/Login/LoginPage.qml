@@ -52,7 +52,7 @@ LoginLayout {
 		RowLayout {
 			visible: !SettingsCpp.assistantHideCreateAccount
             spacing: Math.round(20 * DefaultStyle.dp)
-			Layout.rightMargin: Math.round((51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp)
+            Layout.rightMargin: Math.round(Math.max(10 * DefaultStyle.dp, (51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp))
 
 			Text {
                 Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
