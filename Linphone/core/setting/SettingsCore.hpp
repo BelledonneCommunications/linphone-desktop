@@ -80,6 +80,8 @@ public:
 	Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
 	Q_PROPERTY(bool isSaved READ isSaved WRITE setIsSaved NOTIFY isSavedChanged)
 
+	Q_PROPERTY(bool showAccountDevices READ showAccountDevices WRITE setShowAccountDevices NOTIFY showAccountDevicesChanged)
+
 	static QSharedPointer<SettingsCore> create();
 	SettingsCore(QObject *parent = Q_NULLPTR);
 	SettingsCore(const SettingsCore &settingsCore);
@@ -187,6 +189,9 @@ public:
 	bool dndEnabled() const;
 	void setDndEnabled(bool enabled);
 
+	bool showAccountDevices() const;
+	void setShowAccountDevices(bool show);
+
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
 
@@ -285,6 +290,8 @@ signals:
 
 	void lEnableDnd(bool value);
 
+	void showAccountDevicesChanged(bool show);
+
 protected:
 	void writeIntoModel(std::shared_ptr<SettingsModel> model) const;
 	void writeFromModel(const std::shared_ptr<SettingsModel> &model);
@@ -337,6 +344,10 @@ private:
 	bool mAutoSaved = false;
 	QSettings mAppSettings;
 	QSharedPointer<SafeConnection<SettingsCore, SettingsModel>> mSettingsModelConnection;
+
+	//Account
+	QString mDefaultDomain;
+	bool mShowAccountDevices = false;
 
 	DECLARE_ABSTRACT_OBJECT
 };

@@ -131,8 +131,10 @@ Rectangle {
 			height: contentHeight
             spacing: Math.round(10 * DefaultStyle.dp)
 			delegate: ColumnLayout {
+                visible: modelData.visible
                 spacing: Math.round(16 * DefaultStyle.dp)
 				width: contentListView.width
+                height: visible ? childrenRect.height: 0
 				Rectangle {
 					visible: index !== 0
                     Layout.topMargin: Math.round((modelData.hideTopSeparator ? 0 : 16) * DefaultStyle.dp)

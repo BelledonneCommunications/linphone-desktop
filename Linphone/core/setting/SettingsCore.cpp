@@ -85,6 +85,13 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	// DND
 	mDndEnabled = settingsModel->dndEnabled();
 
+	mDefaultDomain = settingsModel->getDefaultDomain();
+	auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+	if (currentAccount) {
+		auto accountDomain = Utils::coreStringToAppString(currentAccount->getParams()->getDomain());
+		mShowAccountDevices = (accountDomain == mDefaultDomain);
+	}
+
 	// Ui
 	INIT_CORE_MEMBER(DisableChatFeature, settingsModel)
 	INIT_CORE_MEMBER(DisableMeetingsFeature, settingsModel)
@@ -185,6 +192,9 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mShortcutCount = settingsCore.mShortcutCount;
 	mShortcuts = settingsCore.mShortcuts;
 	mCallToneIndicationsEnabled = settingsCore.mCallToneIndicationsEnabled;
+
+	mDefaultDomain = settingsCore.mDefaultDomain;
+	mShowAccountDevices = settingsCore.mShowAccountDevices;
 }
 
 SettingsCore::~SettingsCore() {
@@ -403,6 +413,16 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 			    }
 		    });
 	    });
+	coreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, [this] (const std::shared_ptr<linphone::Core> &core,
+																					  const std::shared_ptr<linphone::Account> &account) {
+		QString accountDomain;
+		if (account) {
+			accountDomain = Utils::coreStringToAppString(account->getParams()->getDomain());
+		}
+		mSettingsModelConnection->invokeToCore([this, accountDomain]() {
+			setShowAccountDevices(accountDomain == mDefaultDomain);
+		});
+	});
 }
 
 void SettingsCore::reset(const SettingsCore &settingsCore) {
@@ -834,6 +854,16 @@ void SettingsCore::setDndEnabled(bool enabled) {
 	if (mDndEnabled != enabled) {
 		mDndEnabled = enabled;
 		emit dndChanged();
+	}
+}
+
+bool SettingsCore::showAccountDevices() const {
+	return mShowAccountDevices;
+}
+void SettingsCore::setShowAccountDevices(bool show) {
+	if (mShowAccountDevices != show) {
+		mShowAccountDevices = show;
+		emit showAccountDevicesChanged(mShowAccountDevices);
 	}
 }
 

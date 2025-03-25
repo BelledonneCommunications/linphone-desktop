@@ -4,7 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import QtQuick.Dialogs
 import Linphone
-import SettingsCpp 1.0
+import SettingsCpp
 import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
@@ -22,6 +22,7 @@ AbstractSettingsLayout {
 			contentComponent: accountParametersComponent
 		},
 		{
+            visible: SettingsCpp.showAccountDevices,
             //: "Vos appareils"
             title: qsTr("manage_account_devices_title"),
             //: "La liste des appareils connectés à votre compte. Vous pouvez retirer les appareils que vous n’utilisez plus."

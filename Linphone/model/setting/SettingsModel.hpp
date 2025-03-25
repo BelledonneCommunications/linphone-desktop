@@ -45,6 +45,7 @@ public:
 	                 const std::string &name) const; // Return the full name of the entry : 'name/readonly' or 'name'
 
 	static const std::string UiSection;
+	static const std::string AppSection;
 	std::shared_ptr<linphone::Config> mConfig;
 
 	bool getVfsEnabled() const;
@@ -107,6 +108,8 @@ public:
 
 	QString getVideoDevice() const;
 	void setVideoDevice(QString device);
+
+	QString getDefaultDomain() const;
 
 	//------------------------------------------------------------------------------------------------------------
 

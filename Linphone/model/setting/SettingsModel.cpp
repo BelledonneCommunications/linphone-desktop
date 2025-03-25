@@ -31,6 +31,7 @@ DEFINE_ABSTRACT_OBJECT(SettingsModel)
 using namespace std;
 
 const std::string SettingsModel::UiSection("ui");
+const std::string SettingsModel::AppSection("app");
 std::shared_ptr<SettingsModel> SettingsModel::gSettingsModel;
 
 SettingsModel::SettingsModel() {
@@ -686,6 +687,10 @@ void SettingsModel::setShortcuts(QVariantList data) {
 
 		emit shortcutsChanged(data);
 	}
+}
+
+QString SettingsModel::getDefaultDomain() const {
+	return Utils::coreStringToAppString(mConfig->getString(SettingsModel::AppSection, "default_domain", "sip.linphone.org"));
 }
 
 // clang-format off
