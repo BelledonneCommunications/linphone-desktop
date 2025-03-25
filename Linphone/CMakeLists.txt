@@ -127,12 +127,11 @@ add_subdirectory(core)
 
 set(LANGUAGES_DIRECTORY "data/languages")
 set(I18N_FILENAME i18n.qrc)
-set(LANGUAGES en fr_FR)
+set(LANGUAGES en fr_FR de)
 
 # Add languages support.
 add_subdirectory("${LANGUAGES_DIRECTORY}" "data/languages")
 
-set(LANGUAGES en fr_FR)
 qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES ${LANGUAGES})
 
 set(TS_FILES)
