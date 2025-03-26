@@ -260,7 +260,7 @@ QString FriendCore::getFullName() const {
 
 void FriendCore::setFullName(const QString &name) {
 	if (mFullName != name) {
-		mFullName = name;
+		mFullName = name.simplified();
 		emit fullNameChanged(name);
 		setIsSaved(false);
 	}
@@ -272,7 +272,7 @@ QString FriendCore::getGivenName() const {
 
 void FriendCore::setGivenName(const QString &name) {
 	if (mGivenName != name) {
-		mGivenName = name;
+		mGivenName = name.simplified();
 		emit givenNameChanged(name);
 		setIsSaved(false);
 	}
@@ -308,7 +308,7 @@ QString FriendCore::getFamilyName() const {
 
 void FriendCore::setFamilyName(const QString &name) {
 	if (mFamilyName != name) {
-		mFamilyName = name;
+		mFamilyName = name.simplified();
 		emit familyNameChanged(name);
 		setIsSaved(false);
 	}
