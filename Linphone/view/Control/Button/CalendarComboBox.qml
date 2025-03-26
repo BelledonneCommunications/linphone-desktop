@@ -3,6 +3,7 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
+import UtilsCpp
 
 ComboBox {
 	id: mainItem
@@ -12,7 +13,7 @@ ComboBox {
 	property alias contentText: contentText
 	contentItem: Text {
 		id: contentText
-		text: Qt.formatDate(calendar.selectedDate, "ddd d, MMMM")
+        text: UtilsCpp.formatDate(calendar.selectedDate, false, "ddd d, MMMM")
 		anchors.fill: parent
         anchors.leftMargin: Math.round(15 * DefaultStyle.dp)
 		anchors.verticalCenter: parent.verticalCenter

@@ -150,7 +150,7 @@ AbstractSettingsLayout {
 				toValidate: true
 			}
 			Text {
-                //: "Indicatif international*"
+                //: Indicatif international*
                 text: qsTr("manage_account_international_prefix")
 				color: DefaultStyle.main2_600
 				font: Typography.p2l

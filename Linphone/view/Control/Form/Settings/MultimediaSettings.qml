@@ -40,7 +40,7 @@ ColumnLayout {
                         imageHeight: Math.round(24 * DefaultStyle.dp)
 					}
 					Text {
-                        //: "Sonnerie - Appels entrants"
+                        //: Ringtone - Incoming calls
                         text: qsTr("multimedia_settings_ringer_title")
 						font: Typography.p2l
 						color: DefaultStyle.main2_600

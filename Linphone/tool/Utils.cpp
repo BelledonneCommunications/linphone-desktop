@@ -297,14 +297,14 @@ QString Utils::formatElapsedTime(int seconds, bool dotsSeparator) {
 	else return (h == 0 ? "" : hours + "h ") + (m == 0 ? "" : min + "min ") + sec + "s";
 }
 
-QString Utils::formatDate(const QDateTime &date, bool includeTime) {
+QString Utils::formatDate(const QDateTime &date, bool includeTime, QString format) {
 	QString dateDay;
 	//: "Aujourd'hui"
 	if (date.date() == QDate::currentDate()) dateDay = tr("today");
 	//: "Hier
 	else if (date.date() == QDate::currentDate().addDays(-1)) dateDay = tr("yesterday");
 	else {
-		QString format = date.date().year() == QDateTime::currentDateTime(date.timeZone()).date().year()
+		if(format.isEmpty()) format = date.date().year() == QDateTime::currentDateTime(date.timeZone()).date().year()
 		                     ? "dd MMMM"
 		                     : "dd MMMM yyyy";
 		dateDay = App::getInstance()->getLocale().toString(date.date(), format);

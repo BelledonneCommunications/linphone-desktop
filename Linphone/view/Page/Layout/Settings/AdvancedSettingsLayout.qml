@@ -12,32 +12,32 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-            //: "Système"
+            //: System
             title: qsTr("settings_system_title"),
 			subTitle: "",
 			contentComponent: systemComponent
 		},
 		{
-            //: "Configuration distante"
+            //: Remote provisioning
             title: qsTr("settings_remote_provisioning_title"),
 			subTitle: "",
 			contentComponent: remoteProvisioningComponent,
 			hideTopSeparator: true
 		},
 		{
-            //: "Sécurité / Chiffrement"
+            //: Security / Encryption
             title: qsTr("settings_security_title"),
 			subTitle: "",
 			contentComponent: securityComponent,
 		},
 		{
-            //: "Codecs audio"
+            //: Audio codecs
             title: qsTr("settings_advanced_audio_codecs_title"),
 			subTitle: "",
 			contentComponent: audioCodecsComponent,
 		},
 		{
-            //: "Codecs vidéo"
+            //: Video codecs
             title: qsTr("settings_advanced_video_codecs_title"),
 			subTitle: "",
 			contentComponent: videoCodecsComponent
@@ -63,7 +63,7 @@ AbstractSettingsLayout {
             spacing: Math.round(40 * DefaultStyle.dp)
 			SwitchSetting {
 				Layout.fillWidth: true
-                //: "Démarrer automatiquement %1"
+                //: Auto start %1
                 titleText: qsTr("settings_advanced_auto_start_title").arg(applicationName)
 				propertyName: "autoStart"
 				propertyOwner: SettingsCpp
@@ -81,14 +81,14 @@ AbstractSettingsLayout {
 			DecoratedTextField {
 				Layout.fillWidth: true
 				id: configUri
-                //: "URL de configuration distante"
+                //: Remote provisioning URL
                 title: qsTr("settings_advanced_remote_provisioning_url")
 				toValidate: true
 			}
 			SmallButton {
                 Layout.topMargin: -Math.round(20 * DefaultStyle.dp)
 				Layout.alignment: Qt.AlignRight
-                //: "Télécharger et appliquer"
+                //: Download and apply
                 text: qsTr("settings_advanced_download_apply_remote_provisioning")
 				style: ButtonStyle.tertiary
 				onClicked: {
@@ -96,7 +96,7 @@ AbstractSettingsLayout {
 					if (UtilsCpp.isValidURL(url))
 						UtilsCpp.useFetchConfig(configUri.value())
 					else
-                        //: "Format d'url invalide"
+                        //: Invalid URL format
                         UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("settings_advanced_invalid_url_message"), false, UtilsCpp.getMainWindow())
 				}
 			}
@@ -110,7 +110,7 @@ AbstractSettingsLayout {
 			ColumnLayout {
                 spacing: Math.round(5 * DefaultStyle.dp)
 				Text {
-                    //: "Chiffrement du média"
+                    //: Media encryption
                     text: qsTr("settings_advanced_media_encryption_title")
 					font {
                         pixelSize: Typography.p2l.pixelSize
@@ -123,12 +123,12 @@ AbstractSettingsLayout {
 					entries: SettingsCpp.mediaEncryptions
 					propertyName: "mediaEncryption"
 					textRole: 'display_name'
-					propertyOwner: SettingsCpp
+                    propertyOwner: SettingsCpp
 				}
 			}
 			SwitchSetting {
 				Layout.fillWidth: true
-                //: "Chiffrement du média obligatoire"
+                //: Media encryption mandatory
                 titleText: qsTr("settings_advanced_media_encryption_mandatory_title")
 				propertyName: "mediaEncryptionMandatory"
 				propertyOwner: SettingsCpp

@@ -32,7 +32,7 @@ Control.Button {
 	property var contentImageColor: style?.image?.normal || DefaultStyle.main2_600
 	property var hoveredImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.05)
 	property var pressedImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.1)
-	property bool asynchronous: true
+    property bool asynchronous: false
     spacing: Math.round(5 * DefaultStyle.dp)
 	hoverEnabled: enabled
 	activeFocusOnTab: true
