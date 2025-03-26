@@ -150,6 +150,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 			mZrtpStats.mHashAlgorithm = Utils::coreStringToAppString(stats->getZrtpHashAlgo());
 			mZrtpStats.mAuthenticationAlgorithm = Utils::coreStringToAppString(stats->getZrtpAuthTagAlgo());
 			mZrtpStats.mSasAlgorithm = Utils::coreStringToAppString(stats->getZrtpSasAlgo());
+			mZrtpStats.mIsPostQuantum = stats->isZrtpKeyAgreementAlgoPostQuantum();
 		}
 	}
 	auto conference = call->getConference();
@@ -307,9 +308,9 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		        [this, call, encryption, tokenVerified, localToken, remoteTokens, isCaseMismatch]() {
 			        setLocalToken(localToken);
 			        setRemoteTokens(remoteTokens);
+					setIsMismatch(isCaseMismatch);
+					setTokenVerified(tokenVerified);
 			        setEncryption(encryption);
-			        setIsMismatch(isCaseMismatch);
-			        setTokenVerified(tokenVerified);
 		        });
 		    auto mediaEncryption = call->getParams()->getMediaEncryption();
 		    if (mediaEncryption == linphone::MediaEncryption::ZRTP) {
@@ -320,6 +321,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    zrtpStats.mHashAlgorithm = Utils::coreStringToAppString(stats->getZrtpHashAlgo());
 			    zrtpStats.mAuthenticationAlgorithm = Utils::coreStringToAppString(stats->getZrtpAuthTagAlgo());
 			    zrtpStats.mSasAlgorithm = Utils::coreStringToAppString(stats->getZrtpSasAlgo());
+				zrtpStats.mIsPostQuantum = stats->isZrtpKeyAgreementAlgoPostQuantum();
 			    mCallModelConnection->invokeToCore([this, zrtpStats]() { setZrtpStats(zrtpStats); });
 		    }
 	    });
@@ -645,7 +647,22 @@ LinphoneEnums::MediaEncryption CallCore::getEncryption() const {
 }
 
 QString CallCore::getEncryptionString() const {
-	return LinphoneEnums::toString(mEncryption);
+	switch (mEncryption) {
+		case LinphoneEnums::MediaEncryption::Dtls:
+			//: DTLS
+			return tr("media_encryption_dtls");
+		case LinphoneEnums::MediaEncryption::None:
+			//: None
+			return tr("media_encryption_none");
+		case LinphoneEnums::MediaEncryption::Srtp:
+			//: SRTP
+			return tr("media_encryption_srtp");
+		case LinphoneEnums::MediaEncryption::Zrtp:
+			//: "ZRTP - Post quantique"
+			return tr("media_encryption_post_quantum");
+		default:
+			return QString();
+	}
 }
 
 void CallCore::setEncryption(LinphoneEnums::MediaEncryption encryption) {

@@ -149,7 +149,7 @@ void Utils::createCall(const QString &sipAddress,
 		if (!success) {
 			//: "L'appel n'a pas pu être créé"
 			if (errorMessage.isEmpty()) errorMessage = tr("information_popup_call_not_created_message");
-			showInformationPopup("information_popup_error_title", errorMessage, false);
+			showInformationPopup(tr("information_popup_error_title"), errorMessage, false);
 		}
 	});
 }

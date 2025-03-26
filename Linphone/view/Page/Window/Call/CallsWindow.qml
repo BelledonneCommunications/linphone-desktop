@@ -348,12 +348,17 @@ AbstractWindow {
                                 spacing: Math.round(10 * DefaultStyle.dp)
                                 Text {
                                     id: callStatusText
-                                    property string remoteName: mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
-                                        ? mainWindow.call.core.remoteName
-                                        //: "Appel %1"
-                                        : mainWindow.call ? qsTr("call_dir").arg(EnumsToStringCpp.dirToString(mainWindow.call.core.dir)) : ""
-                                    //: "Appel terminé"
+                                    property string remoteName: mainWindow.call ? qsTr("call_dir").arg(EnumsToStringCpp.dirToString(mainWindow.call.core.dir)) : ""
+                                    Connections {
+                                        target: mainWindow
+                                        onCallStateChanged: {
+                                            if (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning)
+                                               callStatusText.remoteName = mainWindow.call.core.remoteName
+                                        }
+                                    }
+
                                     text: (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released)
+                                        //: "Appel terminé"
                                         ? qsTr("call_ended")
                                         : mainWindow.call && (mainWindow.call.core.paused || (mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote))
                                             ? (mainWindow.conference
@@ -426,11 +431,7 @@ AbstractWindow {
                                     }
                                 }
                                 BusyIndicator {
-                                    visible: mainWindow.call
-                                             && mainWindow.callState
-                                             != LinphoneEnums.CallState.Connected
-                                             && mainWindow.callState
-                                             != LinphoneEnums.CallState.StreamsRunning
+                                    visible: encryptionStatusText.text === qsTr("call_waiting_for_encryption_info")
                                     Layout.preferredWidth: Math.round(15 * DefaultStyle.dp)
                                     Layout.preferredHeight: Math.round(15 * DefaultStyle.dp)
                                     indicatorColor: DefaultStyle.grey_0
@@ -440,10 +441,6 @@ AbstractWindow {
                                     Layout.preferredHeight: Math.round(15 * DefaultStyle.dp)
                                     colorizationColor: mainWindow.call ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp ? DefaultStyle.info_500_main : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified ? DefaultStyle.warning_600 : DefaultStyle.info_500_main : DefaultStyle.grey_0 : "transparent"
                                     visible: mainWindow.call
-                                             && mainWindow.callState
-                                             === LinphoneEnums.CallState.Connected
-                                             || mainWindow.callState
-                                             === LinphoneEnums.CallState.StreamsRunning
                                     imageSource: mainWindow.call
                                         ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
                                             ? AppIcons.lockSimple
@@ -455,29 +452,30 @@ AbstractWindow {
                                         : ""
                                 }
                                 Text {
-                                    text: mainWindow.call && mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
-                                        ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
-                                          //: "Appel chiffré de point à point"
+                                    id: encryptionStatusText
+                                    text: mainWindow.conference
+                                        //: Appel chiffré de bout en bout
+                                        ? qsTr("call_zrtp_end_to_end_encrypted")
+                                        :mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+                                          //: Appel chiffré de point à point
                                             ? qsTr("call_srtp_point_to_point_encrypted")
                                             : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
                                                 ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
-                                                  //: "Vérification nécessaire"
+                                                  //: Vérification nécessaire
                                                     ? qsTr("call_zrtp_sas_validation_required")
-                                                      //: "Appel chiffré de bout en bout"
                                                     : qsTr("call_zrtp_end_to_end_encrypted")
-                                                //: "Appel non chiffré"
-                                                : qsTr("call_not_encrypted")
-                                        //: "En attente de chiffrement"
-                                        : qsTr("call_waiting_for_encryption_info")
-                                    color: mainWindow.call && mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
-                                        ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
-                                            ? DefaultStyle.info_500_main
-                                            : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-                                                ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
-                                                    ? DefaultStyle.warning_600
-                                                    : DefaultStyle.info_500_main
-                                                : DefaultStyle.grey_0
-                                        : DefaultStyle.grey_0
+                                                : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.None
+                                                    //: "Appel non chiffré"
+                                                    ? qsTr("call_not_encrypted")
+                                                    //: "En attente de chiffrement"
+                                                    : qsTr("call_waiting_for_encryption_info")
+                                    color: mainWindow.conference || mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+                                        ? DefaultStyle.info_500_main
+                                        : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+                                            ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+                                                ? DefaultStyle.warning_600
+                                                : DefaultStyle.info_500_main
+                                            : DefaultStyle.grey_0
                                     font {
                                         pixelSize: Math.round(12 * DefaultStyle.dp)
                                         weight: Math.round(400 * DefaultStyle.dp)
