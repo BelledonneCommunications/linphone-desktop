@@ -131,7 +131,7 @@ Rectangle {
 			height: contentHeight
             spacing: Math.round(10 * DefaultStyle.dp)
 			delegate: ColumnLayout {
-                visible: modelData.visible
+                visible: modelData?.visible
                 spacing: Math.round(16 * DefaultStyle.dp)
 				width: contentListView.width
                 height: visible ? childrenRect.height: 0
