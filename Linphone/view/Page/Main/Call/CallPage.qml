@@ -533,17 +533,17 @@ ConferenceInfoGui{
                                                       || false
                                 property bool isCardDAV: contactDetail.contact?.core?.isCardDAV
                                                          || false
+                                property bool isLocalFriend: contactDetail.contact && !isLdap && !isCardDAV
                                 //: "Voir le contact"
-                                text: contactDetail.contact ? qsTr("menu_see_existing_contact") :
+                                text: isLocalFriend ? qsTr("menu_see_existing_contact") :
                                                               //: "Ajouter aux contacts"
                                                               qsTr("menu_add_address_to_contacts")
                                 icon.source: AppIcons.plusCircle
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
-                                visible: !isLdap && !isCardDAV
                                 onClicked: {
                                     detailOptions.close()
-                                    if (contactDetail.contact)
+                                    if (isLocalFriend)
                                         mainWindow.displayContactPage(
                                                     contactDetail.contactAddress)
                                     else

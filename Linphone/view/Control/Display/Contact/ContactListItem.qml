@@ -103,154 +103,145 @@ FocusScope {
         Item {
             Layout.fillWidth: true
         }
-        Loader {
-            id: buttonsLayoutLoader
-            asynchronous: true
-            active: mainItem.showActions || mainItem.showContactMenu
-                    || mainItem.multiSelectionEnabled
-            Layout.rightMargin: active ? Math.round(10 * DefaultStyle.dp) : 0
-            sourceComponent: RowLayout {
-                id: actionsRow
+        RowLayout {
+            id: actionsRow
+            z: 1
+            visible: mainItem.showActions || actionButtons.visible || mainItem.showContactMenu || mainItem.multiSelectionEnabled
+            spacing: visible ? Math.round(16 * DefaultStyle.dp) : 0
+            enabled: visible
+            Layout.rightMargin: Math.round(5 * DefaultStyle.dp)
+            EffectImage {
+                id: isSelectedCheck
+                visible: mainItem.multiSelectionEnabled
+                            && (mainItem.selectedContacts.indexOf(
+                                    searchResultItem.core.defaultAddress) != -1)
+                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                imageSource: AppIcons.check
+                colorizationColor: DefaultStyle.main1_500_main
+            }
+            RowLayout {
+                id: actionButtons
+                visible: mainItem.showActions
+                spacing: visible ? Math.round(10 * DefaultStyle.dp) : 0
+                IconButton {
+                    id: callButton
+                    Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                    icon.width: Math.round(24 * DefaultStyle.dp)
+                    icon.height: Math.round(24 * DefaultStyle.dp)
+                    icon.source: AppIcons.phone
+                    focus: visible
+                    radius: Math.round(40 * DefaultStyle.dp)
+                    style: ButtonStyle.grey
+                    onClicked: UtilsCpp.createCall(
+                                    searchResultItem.core.defaultFullAddress)
+                    KeyNavigation.left: chatButton
+                    KeyNavigation.right: videoCallButton
+                }
+                IconButton {
+                    id: videoCallButton
+                    visible: SettingsCpp.videoEnabled
+                    Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                    icon.width: Math.round(24 * DefaultStyle.dp)
+                    icon.height: Math.round(24 * DefaultStyle.dp)
+                    icon.source: AppIcons.videoCamera
+                    focus: visible && !callButton.visible
+                    radius: Math.round(40 * DefaultStyle.dp)
+                    style: ButtonStyle.grey
+                    onClicked: UtilsCpp.createCall(
+                                    searchResultItem.core.defaultFullAddress,
+                                    {
+                                        "localVideoEnabled": true
+                                    })
+                    KeyNavigation.left: callButton
+                    KeyNavigation.right: chatButton
+                }
+                IconButton {
+                    id: chatButton
+                    visible: actionButtons.visible
+                                && !SettingsCpp.disableChatFeature
+                    Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                    icon.width: Math.round(24 * DefaultStyle.dp)
+                    icon.height: Math.round(24 * DefaultStyle.dp)
+                    icon.source: AppIcons.chatTeardropText
+                    focus: visible && !callButton.visible
+                            && !videoCallButton.visible
+                    radius: Math.round(40 * DefaultStyle.dp)
+                    style: ButtonStyle.grey
+                    KeyNavigation.left: videoCallButton
+                    KeyNavigation.right: callButton
+                }
+            }
+            PopupButton {
+                id: friendPopup
                 z: 1
-                visible: actionButtons.visible || friendPopup.visible
-                         || mainItem.multiSelectionEnabled
-                spacing: visible ? Math.round(16 * DefaultStyle.dp) : 0
+                popup.x: 0
+                popup.padding: Math.round(10 * DefaultStyle.dp)
+                visible: mainItem.showContactMenu && (contactArea.containsMouse || mainItem.isLastHovered || hovered || popup.opened)
                 enabled: visible
-                EffectImage {
-                    id: isSelectedCheck
-                    visible: mainItem.multiSelectionEnabled
-                             && (mainItem.selectedContacts.indexOf(
-                                     searchResultItem.core.defaultAddress) != -1)
-                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                    imageSource: AppIcons.check
-                    colorizationColor: DefaultStyle.main1_500_main
-                }
-                RowLayout {
-                    id: actionButtons
-                    visible: mainItem.showActions
-                    spacing: visible ? Math.round(10 * DefaultStyle.dp) : 0
-                    IconButton {
-                        id: callButton
-                        Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
-                        icon.width: Math.round(24 * DefaultStyle.dp)
-                        icon.height: Math.round(24 * DefaultStyle.dp)
-                        icon.source: AppIcons.phone
-                        focus: visible
-                        radius: Math.round(40 * DefaultStyle.dp)
-                        style: ButtonStyle.grey
-                        onClicked: UtilsCpp.createCall(
-                                       searchResultItem.core.defaultFullAddress)
-                        KeyNavigation.left: chatButton
-                        KeyNavigation.right: videoCallButton
-                    }
-                    IconButton {
-                        id: videoCallButton
-                        visible: SettingsCpp.videoEnabled
-                        Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
-                        icon.width: Math.round(24 * DefaultStyle.dp)
-                        icon.height: Math.round(24 * DefaultStyle.dp)
-                        icon.source: AppIcons.videoCamera
-                        focus: visible && !callButton.visible
-                        radius: Math.round(40 * DefaultStyle.dp)
-                        style: ButtonStyle.grey
-                        onClicked: UtilsCpp.createCall(
-                                       searchResultItem.core.defaultFullAddress,
-                                       {
-                                           "localVideoEnabled": true
-                                       })
-                        KeyNavigation.left: callButton
-                        KeyNavigation.right: chatButton
-                    }
-                    IconButton {
-                        id: chatButton
-                        visible: actionButtons.visible
-                                 && !SettingsCpp.disableChatFeature
-                        Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
-                        icon.width: Math.round(24 * DefaultStyle.dp)
-                        icon.height: Math.round(24 * DefaultStyle.dp)
-                        icon.source: AppIcons.chatTeardropText
-                        focus: visible && !callButton.visible
-                               && !videoCallButton.visible
-                        radius: Math.round(40 * DefaultStyle.dp)
-                        style: ButtonStyle.grey
-                        KeyNavigation.left: videoCallButton
-                        KeyNavigation.right: callButton
-                    }
-                }
-                PopupButton {
-                    id: friendPopup
-                    z: 1
-                    popup.x: 0
-                    popup.padding: Math.round(10 * DefaultStyle.dp)
-                    visible: mainItem.showContactMenu
-                             && (contactArea.containsMouse || hovered
-                                 || popup.opened)
-                    enabled: visible
 
-                    popup.contentItem: ColumnLayout {
-                        IconLabelButton {
-                            visible: searchResultItem.core.isStored
-                                     && !searchResultItem.core.readOnly
-                            //: "Enlever des favoris"
-                            text: searchResultItem.core.starred ? qsTr("contact_details_remove_from_favourites")
-                                                                  //: "Ajouter aux favoris"
-                                                                : qsTr("contact_details_add_to_favourites")
-                            icon.source: searchResultItem.core.starred ? AppIcons.heartFill : AppIcons.heart
-                            spacing: Math.round(10 * DefaultStyle.dp)
-                            textColor: DefaultStyle.main2_500main
-                            hoveredImageColor: searchResultItem.core.starred ? DefaultStyle.main1_700 : DefaultStyle.danger_700
-                            contentImageColor: searchResultItem.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
-                            onClicked: {
-                                searchResultItem.core.lSetStarred(
-                                            !searchResultItem.core.starred)
-                                friendPopup.close()
-                            }
-                            style: ButtonStyle.noBackground
+                popup.contentItem: ColumnLayout {
+                    IconLabelButton {
+                        visible: searchResultItem.core.isStored
+                                    && !searchResultItem.core.readOnly
+                        //: "Enlever des favoris"
+                        text: searchResultItem.core.starred ? qsTr("contact_details_remove_from_favourites")
+                                                                //: "Ajouter aux favoris"
+                                                            : qsTr("contact_details_add_to_favourites")
+                        icon.source: searchResultItem.core.starred ? AppIcons.heartFill : AppIcons.heart
+                        spacing: Math.round(10 * DefaultStyle.dp)
+                        textColor: DefaultStyle.main2_500main
+                        hoveredImageColor: searchResultItem.core.starred ? DefaultStyle.main1_700 : DefaultStyle.danger_700
+                        contentImageColor: searchResultItem.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
+                        onClicked: {
+                            searchResultItem.core.lSetStarred(
+                                        !searchResultItem.core.starred)
+                            friendPopup.close()
                         }
-                        IconLabelButton {
-                            text: qsTr("Partager")
-                            icon.source: AppIcons.shareNetwork
-                            spacing: Math.round(10 * DefaultStyle.dp)
-                            textColor: DefaultStyle.main2_500main
-                            onClicked: {
-                                var vcard = searchResultItem.core.getVCard()
-                                var username = searchResultItem.core.givenName
-                                        + searchResultItem.core.familyName
-                                var filepath = UtilsCpp.createVCardFile(
-                                            username, vcard)
-                                if (filepath == "")
-                                    UtilsCpp.showInformationPopup(
-                                                qsTr("information_popup_error_title"),
-                                                //: La création du fichier vcard a échoué
-                                                qsTr("information_popup_vcard_creation_error"),
-                                                false)
-                                else
-                                    //: VCard créée
-                                    mainWindow.showInformationPopup(qsTr("information_popup_vcard_creation_title"),
-                                                                    //: "VCard du contact enregistrée dans %1"
-                                                                    qsTr("information_popup_vcard_creation_success").arg(filepath))
-                                //: Partage de contact
-                                UtilsCpp.shareByEmail(qsTr("contact_sharing_email_title"),vcard, filepath)
-                            }
-                            style: ButtonStyle.noBackground
+                        style: ButtonStyle.noBackground
+                    }
+                    IconLabelButton {
+                        text: qsTr("Partager")
+                        icon.source: AppIcons.shareNetwork
+                        spacing: Math.round(10 * DefaultStyle.dp)
+                        textColor: DefaultStyle.main2_500main
+                        onClicked: {
+                            var vcard = searchResultItem.core.getVCard()
+                            var username = searchResultItem.core.givenName
+                                    + searchResultItem.core.familyName
+                            var filepath = UtilsCpp.createVCardFile(
+                                        username, vcard)
+                            if (filepath == "")
+                                UtilsCpp.showInformationPopup(
+                                            qsTr("information_popup_error_title"),
+                                            //: La création du fichier vcard a échoué
+                                            qsTr("information_popup_vcard_creation_error"),
+                                            false)
+                            else
+                                //: VCard créée
+                                mainWindow.showInformationPopup(qsTr("information_popup_vcard_creation_title"),
+                                                                //: "VCard du contact enregistrée dans %1"
+                                                                qsTr("information_popup_vcard_creation_success").arg(filepath))
+                            //: Partage de contact
+                            UtilsCpp.shareByEmail(qsTr("contact_sharing_email_title"),vcard, filepath)
                         }
-                        IconLabelButton {
-                            //: "Supprimer"
-                            text: qsTr("contact_details_delete")
-                            icon.source: AppIcons.trashCan
-                            spacing: Math.round(10 * DefaultStyle.dp)
-                            visible: !searchResultItem.core.readOnly
-                            onClicked: {
-                                mainItem.contactDeletionRequested(
-                                            searchResultItem)
-                                friendPopup.close()
-                            }
-                            style: ButtonStyle.noBackgroundRed
+                        style: ButtonStyle.noBackground
+                    }
+                    IconLabelButton {
+                        //: "Supprimer"
+                        text: qsTr("contact_details_delete")
+                        icon.source: AppIcons.trashCan
+                        spacing: Math.round(10 * DefaultStyle.dp)
+                        visible: !searchResultItem.core.readOnly
+                        onClicked: {
+                            mainItem.contactDeletionRequested(
+                                        searchResultItem)
+                            friendPopup.close()
                         }
+                        style: ButtonStyle.noBackgroundRed
                     }
                 }
             }
@@ -265,7 +256,7 @@ FocusScope {
         hoverEnabled: true
         acceptedButtons: Qt.AllButtons
         z: -1
-        focus: !buttonsLayoutLoader.active
+        focus: !actionButtons.visible
         onContainsMouseChanged: {
             mainItem.containsMouseChanged(containsMouse)
         }
@@ -274,7 +265,7 @@ FocusScope {
             radius: Math.round(8 * DefaultStyle.dp)
             opacity: 0.7
             color: mainItem.isSelected ? DefaultStyle.main2_200 : DefaultStyle.main2_100
-            visible: mainItem.isLastHovered || mainItem.isSelected
+            visible: mainItem.isLastHovered || mainItem.isSelected || friendPopup.hovered
         }
         Keys.onPressed: event => {
                             if (event.key == Qt.Key_Space
@@ -288,7 +279,7 @@ FocusScope {
                        forceActiveFocus()
                        if (mouse && mouse.button == Qt.RightButton
                            && mainItem.showContactMenu) {
-                           friendPopup.open()
+                           if (friendPopup) friendPopup.open()
                        } else {
                            mainItem.clicked(mouse)
                        }
