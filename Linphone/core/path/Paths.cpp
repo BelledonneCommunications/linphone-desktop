@@ -26,6 +26,7 @@
 #include "config.h"
 
 #include "tool/Constants.hpp"
+#include "tool/Utils.hpp"
 
 #include "Paths.hpp"
 
@@ -163,9 +164,21 @@ static inline QString getAppRootCaFilePath() {
 	if (Paths::filePathExists(rootca)) { // Packaged
 		return rootca;
 	} else {
+		qDebug() << "Root ca path does not exist. Create it";
+		QFileInfo rootcaInfo(rootca);
+		if (!rootcaInfo.absoluteDir().exists()) {
+			QDir dataDir(getAppPackageDataDirPath());
+			if (!dataDir.mkpath(Constants::PathRootCa)) {
+				lCritical() << "ERROR : COULD NOT CREATE DIRECTORY WITH PATH" << Constants::PathRootCa;
+				return "";
+			}
+		}
 		QFile rootCaFile(rootca);
 		if (rootCaFile.open(QIODevice::ReadWrite))
 			return rootca;
+		else {
+			lCritical() << "ERROR : COULD NOT CREATE ROOTCA WITH PATH" << rootca;
+		}
 	}
 	return "";
 }
