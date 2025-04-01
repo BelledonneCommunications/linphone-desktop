@@ -705,30 +705,6 @@
 <context>
     <name>CallHistoryLayout</name>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="131"/>
-        <source>contact_presence_status_online</source>
-        <extracomment>&quot;En ligne&quot;</extracomment>
-        <translation>En ligne</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="134"/>
-        <source>contact_presence_status_busy</source>
-        <extracomment>&quot;Occupé&quot;</extracomment>
-        <translation>Occupé</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="137"/>
-        <source>contact_presence_status_do_not_disturb</source>
-        <extracomment>&quot;Ne pas déranger&quot;</extracomment>
-        <translation>Ne pas déranger</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="139"/>
-        <source>contact_presence_status_offline</source>
-        <extracomment>&quot;Hors ligne&quot;</extracomment>
-        <translation>Hors ligne</translation>
-    </message>
-    <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="163"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
@@ -4041,6 +4017,36 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 </context>
 <context>
     <name>Utils</name>
+	<message>
+		<location filename="../../tool/Utils.cpp" line="1519"/>
+		<source>contact_presence_status_available</source>
+		<extracomment>&quot;En ligne&quot;</extracomment>
+		<translation>Disponible</translation>
+	</message>
+	<message>
+		<location filename="../../tool/Utils.cpp" line="1525"/>
+		<source>contact_presence_status_busy</source>
+		<extracomment>&quot;Occupé&quot;</extracomment>
+		<translation>Occupé</translation>
+	</message>
+	<message>
+		<location filename="../../tool/Utils.cpp" line="1528"/>
+		<source>contact_presence_status_do_not_disturb</source>
+		<extracomment>&quot;Ne pas déranger&quot;</extracomment>
+		<translation>Ne pas déranger</translation>
+	</message>
+	<message>
+		<location filename="../../tool/Utils.cpp" line="1531"/>
+		<source>contact_presence_status_offline</source>
+		<extracomment>&quot;Hors ligne&quot;</extracomment>
+		<translation>Hors ligne</translation>
+	</message>
+	<message>
+		<location filename="../../tool/Utils.cpp" line="1522"/>
+		<source>contact_presence_status_away</source>
+		<extracomment>&quot;Absent&quot;</extracomment>
+		<translation>Inactif/Absent</translation>
+	</message>
     <message>
         <location filename="../../tool/Utils.cpp" line="151"/>
         <source>information_popup_call_not_created_message</source>
@@ -5519,5 +5525,47 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <source>okButton</source>
         <translation>Ok</translation>
     </message>
+</context>
+<context>
+	<name>Presence</name>
+	<message>
+		<location filename="../../view/Control/Display/Contact/Presence.qml" line="12"/>
+		<source>contact_presence_status_available</source>
+		<extracomment>&quot;En ligne&quot;</extracomment>
+		<translation>Disponible</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Contact/Presence.qml" line="14"/>
+		<source>contact_presence_status_busy</source>
+		<extracomment>&quot;Occupé&quot;</extracomment>
+		<translation>Occupé</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Contact/Presence.qml" line="15"/>
+		<source>contact_presence_status_do_not_disturb</source>
+		<extracomment>&quot;Ne pas déranger&quot;</extracomment>
+		<translation>Ne pas déranger</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Contact/Presence.qml" line="16"/>
+		<source>contact_presence_status_offline</source>
+		<extracomment>&quot;Hors ligne&quot;</extracomment>
+		<translation>Hors ligne</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Contact/Presence.qml" line="13"/>
+		<source>contact_presence_status_away</source>
+		<extracomment>&quot;Absent&quot;</extracomment>
+		<translation>Inactif/Absent</translation>
+	</message>
+</context>
+<context>
+	<name>PresenceNoteLayout</name>
+	<message>
+		<location filename="../../view/Control/Container/Contact/PresenceNoteLayout.qml"/>
+		<source>contact_presence_note_title</source>
+		<extracomment>&quot;Message personnalisé&quot;</extracomment>
+		<translation>Message personnalisé</translation>
+	</message>
 </context>
 </TS>

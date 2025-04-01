@@ -310,7 +310,7 @@ void OIDCModel::setBearers() {
 		qWarning() << "No refresh token found";
 	}
 	CoreModel::getInstance()->getCore()->addAuthInfo(mAuthInfo);
-	emit CoreModel::getInstance() -> bearerAccountAdded();
+	emit CoreModel::getInstance()->bearerAccountAdded();
 	emit finished();
 }
 QString OIDCModel::idToken() const {

@@ -30,39 +30,49 @@ ColumnLayout {
         columnSpacing: Math.round(49 * DefaultStyle.dp)
         rowSpacing: Math.round(27 * DefaultStyle.dp)
 
-		RowLayout {
-            Layout.preferredWidth: Math.round(341 * DefaultStyle.dp)
-			Control.Control {
-                // Layout.preferredWidth: Math.round(734 * DefaultStyle.dp)
-				Layout.fillWidth: true
-                width: Math.round(734 * DefaultStyle.dp)
-                height: Math.round(100 * DefaultStyle.dp)
-                rightPadding: Math.round(21 * DefaultStyle.dp)
-				background: GradientRectangle {
-					anchors.fill: parent
-					anchors.leftMargin: avatar.width / 2
-                    radius: Math.round(15 * DefaultStyle.dp)
-					borderGradient: Gradient {
-						orientation: Gradient.Horizontal
-						GradientStop { position: 0.0; color: DefaultStyle.grey_100 }
-						GradientStop { position: 1.0; color: DefaultStyle.main2_200 }
+		ColumnLayout {
+			spacing: Math.round(16 * DefaultStyle.dp)
+			Layout.preferredWidth: Math.round(341 * DefaultStyle.dp)
+			RowLayout {
+				Layout.preferredWidth: Math.round(341 * DefaultStyle.dp)
+				Control.Control {
+					// Layout.preferredWidth: Math.round(734 * DefaultStyle.dp)
+					Layout.fillWidth: true
+					width: Math.round(734 * DefaultStyle.dp)
+					height: Math.round(100 * DefaultStyle.dp)
+					rightPadding: Math.round(21 * DefaultStyle.dp)
+					background: GradientRectangle {
+						anchors.fill: parent
+						anchors.leftMargin: avatar.width / 2
+						radius: Math.round(15 * DefaultStyle.dp)
+						borderGradient: Gradient {
+							orientation: Gradient.Horizontal
+							GradientStop { position: 0.0; color: DefaultStyle.grey_100 }
+							GradientStop { position: 1.0; color: DefaultStyle.main2_200 }
+						}
+						gradient: Gradient {
+							orientation: Gradient.Horizontal
+							GradientStop { position: 0.0; color: DefaultStyle.grey_0 }
+							GradientStop { position: 1.0; color: DefaultStyle.grey_100 }
+						}
 					}
-					gradient: Gradient {
-						orientation: Gradient.Horizontal
-						GradientStop { position: 0.0; color: DefaultStyle.grey_0 }
-						GradientStop { position: 1.0; color: DefaultStyle.grey_100 }
+					contentItem: RowLayout {
+						id: bannerLayout
+						spacing: Math.round(32 * DefaultStyle.dp)
+						Avatar {
+							id: avatar
+							contact: mainItem.contact
+							Layout.preferredWidth: Math.round(100 * DefaultStyle.dp)
+							Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
+						}
 					}
 				}
-				contentItem: RowLayout {
-					id: bannerLayout
-                    spacing: Math.round(32 * DefaultStyle.dp)
-					Avatar {
-						id: avatar
-						contact: mainItem.contact
-                        Layout.preferredWidth: Math.round(100 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
-					}
-				}
+			}
+			PresenceNoteLayout {
+				visible: contact.core.presenceNote.length > 0 && mainItem.useVerticalLayout
+				friendCore: contact.core
+				Layout.preferredWidth: 412 * DefaultStyle.dp
+				Layout.preferredHeight: 85 * DefaultStyle.dp
 			}
 		}
 		Item {
@@ -76,6 +86,18 @@ ColumnLayout {
 			id: rightButton
 			Layout.alignment: Qt.AlignHCenter
 			style: ButtonStyle.main
+		}
+	}
+	Rectangle {
+		Layout.fillWidth:true
+		Layout.preferredHeight: 79 * DefaultStyle.dp
+		color: 'transparent'
+		visible: contact.core.presenceNote.length > 0 && !mainItem.useVerticalLayout
+		PresenceNoteLayout {
+			anchors.centerIn: parent
+			friendCore: contact.core
+			width: 412 * DefaultStyle.dp
+			height: 85 * DefaultStyle.dp
 		}
 	}
 	StackLayout {

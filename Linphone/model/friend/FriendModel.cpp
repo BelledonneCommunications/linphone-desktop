@@ -71,14 +71,6 @@ std::shared_ptr<linphone::Friend> FriendModel::getFriend() const {
 	return mMonitor;
 }
 
-QDateTime FriendModel::getPresenceTimestamp() const {
-	if (mMonitor && mMonitor->getPresenceModel()) {
-		time_t timestamp = mMonitor->getPresenceModel()->getLatestActivityTimestamp();
-		if (timestamp == -1) return QDateTime();
-		else return QDateTime::fromMSecsSinceEpoch(timestamp * 1000);
-	} else return QDateTime();
-}
-
 void FriendModel::setAddress(const std::shared_ptr<linphone::Address> &address) {
 	if (!mMonitor) return;
 	if (address) {
@@ -316,8 +308,22 @@ void FriendModel::setStarred(bool starred) {
 	mMonitor->setStarred(starred);
 	emit starredChanged(starred);
 }
+
 void FriendModel::onPresenceReceived(const std::shared_ptr<linphone::Friend> &contact) {
-	emit presenceReceived(LinphoneEnums::fromLinphone(contact->getConsolidatedPresence()), getPresenceTimestamp());
+	emit presenceReceived(getPresence(contact), getPresenceNote(contact));
+}
+
+LinphoneEnums::Presence FriendModel::getPresence(const std::shared_ptr<linphone::Friend> &contact) {
+	auto presenceModel = contact->getPresenceModel();
+	return ToolModel::corePresenceModelToAppPresence(presenceModel);
+}
+
+QString FriendModel::getPresenceNote(const std::shared_ptr<linphone::Friend> &contact) {
+	auto presenceModel = contact->getPresenceModel();
+	auto note = presenceModel && presenceModel->getNote(Utils::appStringToCoreString(QLocale().name().left(2)))
+	                ? presenceModel->getNote(Utils::appStringToCoreString(QLocale().name().left(2)))->getContent()
+	                : "";
+	return Utils::coreStringToAppString(note);
 }
 
 QString FriendModel::getPictureUri() const {

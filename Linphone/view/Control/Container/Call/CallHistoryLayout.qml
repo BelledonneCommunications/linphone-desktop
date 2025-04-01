@@ -122,29 +122,12 @@ ColumnLayout {
 				}
 			}
 			Text {
-				property var mode : contact ? contact.core.consolidatedPresence : -1
 				Layout.alignment: Qt.AlignHCenter
 				horizontalAlignment: Text.AlignHCenter
 				Layout.fillWidth: true
 				visible: mainItem.contact
-				text: mode === LinphoneEnums.ConsolidatedPresence.Online
-                //: "En ligne"
-                    ? qsTr("contact_presence_status_online")
-					: mode === LinphoneEnums.ConsolidatedPresence.Busy
-                        //: "Occupé"
-                        ? qsTr("contact_presence_status_busy")
-						: mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
-                            //: "Ne pas déranger"
-                            ? qsTr("contact_presence_status_do_not_disturb")
-                            //: "Hors ligne"
-                            : qsTr("contact_presence_status_offline")
-				color: mode === LinphoneEnums.ConsolidatedPresence.Online
-					? DefaultStyle.success_500main
-					: mode === LinphoneEnums.ConsolidatedPresence.Busy
-						? DefaultStyle.warning_600
-						: mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
-							? DefaultStyle.danger_500main
-							: DefaultStyle.main2_500main
+				text: contact ? contact.core.presenceStatus : ""
+				color: contact ? contact.core.presenceColor : 'transparent'
 				font {
                     pixelSize: Math.round(12 * DefaultStyle.dp)
                     weight: Math.round(300 * DefaultStyle.dp)

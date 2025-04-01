@@ -29,6 +29,7 @@
 #include "tool/thread/SafeSharedPointer.hpp"
 #include <linphone++/linphone.hh>
 
+#include <QColor>
 #include <QDateTime>
 #include <QMap>
 #include <QObject>
@@ -63,9 +64,11 @@ class FriendCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString defaultAddress READ getDefaultAddress WRITE setDefaultAddress NOTIFY defaultAddressChanged)
 	Q_PROPERTY(QString defaultFullAddress READ getDefaultFullAddress WRITE setDefaultFullAddress NOTIFY
 	               defaultFullAddressChanged)
-	Q_PROPERTY(QDateTime presenceTimestamp READ getPresenceTimestamp NOTIFY presenceTimestampChanged)
-	Q_PROPERTY(LinphoneEnums::ConsolidatedPresence consolidatedPresence READ getConsolidatedPresence NOTIFY
-	               consolidatedPresenceChanged)
+	Q_PROPERTY(LinphoneEnums::Presence presence MEMBER mPresence NOTIFY presenceChanged)
+	Q_PROPERTY(QUrl presenceIcon READ getPresenceIcon NOTIFY presenceChanged)
+	Q_PROPERTY(QColor presenceColor READ getPresenceColor NOTIFY presenceChanged)
+	Q_PROPERTY(QString presenceStatus READ getPresenceStatus NOTIFY presenceChanged)
+	Q_PROPERTY(QString presenceNote MEMBER mPresenceNote NOTIFY presenceChanged)
 	Q_PROPERTY(bool isSaved READ getIsSaved NOTIFY isSavedChanged)
 	Q_PROPERTY(bool isStored READ getIsStored NOTIFY isStoredChanged)
 	Q_PROPERTY(QString pictureUri READ getPictureUri WRITE setPictureUri NOTIFY pictureUriChanged)
@@ -130,12 +133,6 @@ public:
 	void setDevices(QVariantList devices);
 	Q_INVOKABLE LinphoneEnums::SecurityLevel getSecurityLevelForAddress(const QString &address) const;
 
-	LinphoneEnums::ConsolidatedPresence getConsolidatedPresence() const;
-	void setConsolidatedPresence(LinphoneEnums::ConsolidatedPresence presence);
-
-	QDateTime getPresenceTimestamp() const;
-	void setPresenceTimestamp(QDateTime presenceTimestamp);
-
 	bool getIsSaved() const;
 	void setIsSaved(bool isSaved);
 
@@ -145,8 +142,6 @@ public:
 	QString getPictureUri() const;
 	void setPictureUri(const QString &uri);
 	void onPictureUriChanged(QString uri);
-
-	void onPresenceReceived(LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp);
 
 	bool isLdap() const;
 	bool isAppFriend() const;
@@ -158,6 +153,10 @@ public:
 	Q_INVOKABLE void remove();
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
+
+	QColor getPresenceColor();
+	QString getPresenceStatus();
+	QUrl getPresenceIcon();
 
 protected:
 	void resetPhoneNumbers(QList<QVariant> newList);
@@ -173,8 +172,6 @@ signals:
 	void addressChanged();
 	void organizationChanged();
 	void jobChanged();
-	void consolidatedPresenceChanged(LinphoneEnums::ConsolidatedPresence level);
-	void presenceTimestampChanged(QDateTime presenceTimestamp);
 	void pictureUriChanged();
 	void saved();
 	void isSavedChanged(bool isSaved);
@@ -186,13 +183,16 @@ signals:
 	void devicesChanged();
 	void verifiedDevicesChanged();
 	void lSetStarred(bool starred);
+	void presenceChanged();
 
 protected:
 	void writeIntoModel(std::shared_ptr<FriendModel> model) const;
 	void writeFromModel(const std::shared_ptr<FriendModel> &model);
 
-	LinphoneEnums::ConsolidatedPresence mConsolidatedPresence = LinphoneEnums::ConsolidatedPresence::Offline;
-	QDateTime mPresenceTimestamp;
+	LinphoneEnums::Presence mPresence = LinphoneEnums::Presence::Undefined;
+	QColor mPresenceColor;
+	QString mPresenceStatus;
+	QString mPresenceNote = "";
 	QString mGivenName;
 	QString mFamilyName;
 	QString mFullName;
@@ -213,6 +213,9 @@ protected:
 	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<FriendCore, FriendModel>> mFriendModelConnection;
 	QSharedPointer<SafeConnection<FriendCore, CoreModel>> mCoreModelConnection;
+
+private:
+	void setPresence(LinphoneEnums::Presence presence, QString presenceNote);
 
 	DECLARE_ABSTRACT_OBJECT
 };

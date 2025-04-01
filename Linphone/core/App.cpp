@@ -1149,6 +1149,16 @@ bool App::event(QEvent *event) {
 	} else if (event->type() == QEvent::ApplicationStateChange) {
 		auto state = static_cast<QApplicationStateChangeEvent *>(event);
 		if (state->applicationState() == Qt::ApplicationActive) Utils::smartShowWindow(getLastActiveWindow());
+	} else if (event->type() == QEvent::ApplicationActivate) {
+		for (int i = 0; i < getAccountList()->rowCount(); ++i) {
+			auto accountCore = getAccountList()->getAt<AccountCore>(i);
+			emit accountCore->lSetPresence(LinphoneEnums::Presence::Online, false, false);
+		}
+	} else if (event->type() == QEvent::ApplicationDeactivate) {
+		for (int i = 0; i < getAccountList()->rowCount(); ++i) {
+			auto accountCore = getAccountList()->getAt<AccountCore>(i);
+			emit accountCore->lSetPresence(LinphoneEnums::Presence::Away, false, false);
+		}
 	}
 
 	return SingleApplication::event(event);

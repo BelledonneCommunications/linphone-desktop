@@ -290,6 +290,15 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 		if (!accountModel->getNotificationsAllowed()) {
 			qInfo()
 			    << "Notifications have been disabled for this account - not creating a notification for incoming call";
+			if (accountModel->forwardToVoiceMailInDndPresence()) {
+				lInfo() << log().arg("Transferring call to voicemail");
+				auto voicemailAddress = linphone::Factory::get()->createAddress(
+				    Utils::appStringToCoreString(accountModel->getVoicemailAddress()));
+				if (voicemailAddress) call->transferTo(voicemailAddress);
+			} else {
+				lInfo() << log().arg("Declining call.");
+				call->decline(linphone::Reason::Busy);
+			}
 			return;
 		}
 	}
@@ -337,7 +346,7 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 			remoteAddress = Utils::coreStringToAppString(remoteAddr->asStringUriOnly());
 			auto fileContent = message->getFileTransferInformation();
 			if (!fileContent) {
-				foreach (auto content, message->getContents()) {
+				for (auto content : message->getContents()) {
 					if (content->isText()) txt += content->getUtf8Text().c_str();
 				}
 			} else if (fileContent->isVoiceRecording())

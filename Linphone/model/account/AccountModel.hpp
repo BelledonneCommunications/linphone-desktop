@@ -24,6 +24,7 @@
 #include "model/listener/Listener.hpp"
 #include "tool/AbstractObject.hpp"
 
+#include "tool/LinphoneEnums.hpp"
 #include <QObject>
 #include <linphone++/linphone.hh>
 
@@ -83,6 +84,10 @@ public:
 	bool getShowMwi();
 	void setVoicemailAddress(QString value);
 	QString getVoicemailAddress() const;
+	LinphoneEnums::Presence getPresence();
+	void setPresence(LinphoneEnums::Presence presence, bool userInitiated, bool resetToAuto, QString presenceNote);
+	std::string configAccountSection();
+	bool forwardToVoiceMailInDndPresence();
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
@@ -112,6 +117,7 @@ signals:
 	void voicemailCountChanged(int count);
 	void showMwiChanged(bool show);
 	void voicemailAddressChanged(QString value);
+	void presenceChanged(LinphoneEnums::Presence presence, bool userInitiated);
 
 private:
 	/**Linphone **/

@@ -52,14 +52,8 @@ Loader{
 							 : false
 	
 	property bool securityBreach: securityLevel === LinphoneEnums.SecurityLevel.Unsafe
-	
-	property bool displayPresence: account 
-								   ? account.core?.registrationState != LinphoneEnums.RegistrationState.Progress && account.core?.registrationState != LinphoneEnums.RegistrationState.Refreshing || false
-								   : contact
-									 ? contact.core?.consolidatedPresence != LinphoneEnums.ConsolidatedPresence.Offline || false
-									 : false
-	
-	
+	property bool displayPresence: true
+
 	asynchronous: true
 	sourceComponent: Component{
 		Item {
@@ -108,38 +102,21 @@ Loader{
 						
 					}
 				}
-				Rectangle {
+				
+				Image {
 					visible: mainItem.displayPresence
 					width: stackView.width/4.5
 					height: width
-					radius: width / 2
+					sourceSize.width: width
+    				sourceSize.height: width
+					smooth: false
 					anchors.bottom: parent.bottom
 					anchors.right: parent.right
 					anchors.rightMargin: stackView.width / 15
 					z: 1
-					color: account
-						   ? account.core?.registrationState == LinphoneEnums.RegistrationState.Ok
-							 ? DefaultStyle.success_500main
-							 : account.core?.registrationState == LinphoneEnums.RegistrationState.Cleared || account.core?.registrationState == LinphoneEnums.RegistrationState.None
-							   ? DefaultStyle.warning_600
-							   : account.core?.registrationState == LinphoneEnums.RegistrationState.Progress || account.core?.registrationState == LinphoneEnums.RegistrationState.Refreshing
-								 ? DefaultStyle.main2_500main
-								 : DefaultStyle.danger_500main
-					: contact
-					? contact.core.consolidatedPresence === LinphoneEnums.ConsolidatedPresence.Online
-					? DefaultStyle.success_500main
-					: contact.core.consolidatedPresence === LinphoneEnums.ConsolidatedPresence.Busy
-					  ? DefaultStyle.warning_600
-					  : contact.core.consolidatedPresence === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
-						? DefaultStyle.danger_500main
-						: DefaultStyle.main2_500main
-					: "transparent"
-					border {
-                        width: Math.round(2 * DefaultStyle.dp)
-						color: DefaultStyle.grey_0
-					}
+					source: account ? (account.core?.registrationState != LinphoneEnums.RegistrationState.Ok ? account.core?.registrationStateIcon : account.core?.presenceIcon)
+									: (contact ? contact.core?.presenceIcon : "")
 				}
-				
 				
 			}
 			

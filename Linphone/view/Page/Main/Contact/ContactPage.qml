@@ -454,27 +454,10 @@ FriendGui{
                         }
                         Text {
                             visible: contactDetail.contact
-                            property var mode: contactDetail.contact ? contactDetail.contact.core.consolidatedPresence : -1
                             horizontalAlignment: Text.AlignLeft
                             Layout.fillWidth: true
-                            text: mode === LinphoneEnums.ConsolidatedPresence.Online
-                                //: "En ligne"
-                                ? qsTr("contact_presence_status_online")
-                                : mode === LinphoneEnums.ConsolidatedPresence.Busy
-                                    //: "Occupé"
-                                    ? qsTr("contact_presence_status_busy")
-                                    : mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
-                                        //: "Ne pas déranger"
-                                        ? qsTr("contact_presence_status_do_not_disturb")
-                                          //: "Hors ligne"
-                                        : qsTr("contact_presence_status_offline")
-                            color: mode === LinphoneEnums.ConsolidatedPresence.Online
-                                ? DefaultStyle.success_500main
-                                : mode === LinphoneEnums.ConsolidatedPresence.Busy
-                                    ? DefaultStyle.warning_600
-                                    : mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
-                                        ? DefaultStyle.danger_500main
-                                        : DefaultStyle.main2_500main
+                            text: contactDetail.contact ? contactDetail.contact.core.presenceStatus : ""
+                            color: contactDetail.contact ? contactDetail.contact.core.presenceColor : 'transparent'
                             font.pixelSize: Math.round(14 * DefaultStyle.dp)
                         }
                     },

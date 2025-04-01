@@ -85,6 +85,14 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	// Add listener
 	mAccountModel = Utils::makeQObject_ptr<AccountModel>(account); // OK
 	mAccountModel->setSelf(mAccountModel);
+	mExplicitPresence = LinphoneEnums::fromString(
+	    Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getConfig()->getString(
+	        ToolModel::configAccountSection(account), "explicit_presence", "")));
+	mPresenceNote = Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getConfig()->getString(
+	    ToolModel::configAccountSection(account), "presence_note", ""));
+	mMaxPresenceNoteSize = CoreModel::getInstance()->getCore()->getConfig()->getInt(
+	    ToolModel::configAccountSection(account), "max_presence_note_size", 140);
+	mPresence = mAccountModel->getPresence();
 	mNotificationsAllowed = mAccountModel->getNotificationsAllowed();
 	mDialPlan = Utils::createDialPlanVariant("", " ");
 	mDialPlans << mDialPlan;
@@ -222,6 +230,16 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToModel(
 	    &AccountModel::removed, [this]() { mAccountModelConnection->invokeToCore([this]() { emit removed(); }); });
 
+	mAccountModelConnection->makeConnectToModel(
+	    &AccountModel::presenceChanged, [this](LinphoneEnums::Presence presence, bool userInitiated) {
+		    mAccountModelConnection->invokeToCore([this, presence, userInitiated]() {
+			    if (userInitiated) mExplicitPresence = presence;
+			    else mExplicitPresence = LinphoneEnums::Presence::Undefined;
+			    mPresence = presence;
+			    emit presenceChanged();
+		    });
+	    });
+
 	// From GUI
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetPictureUri, [this](QString uri) {
 		mAccountModelConnection->invokeToModel([this, uri]() { mAccountModel->setPictureUri(uri); });
@@ -258,6 +276,13 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetNotificationsAllowed, [this](bool value) {
 		mAccountModelConnection->invokeToModel([this, value]() { mAccountModel->setNotificationsAllowed(value); });
 	});
+	mAccountModelConnection->makeConnectToCore(
+	    &AccountCore::lSetPresence, [this](LinphoneEnums::Presence presence, bool userInitiated, bool resetToAuto) {
+		    mAccountModelConnection->invokeToModel(
+		        [this, presence, userInitiated, resetToAuto, presenceNote = mPresenceNote]() {
+			        mAccountModel->setPresence(presence, userInitiated, resetToAuto, presenceNote);
+		        });
+	    });
 
 	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, int, voicemailCount,
 	                        VoicemailCount)
@@ -423,6 +448,30 @@ QString AccountCore::getHumanReadableRegistrationState() const {
 		default:
 			return " ";
 	}
+}
+
+QColor AccountCore::getRegistrationColor() const {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	switch (mRegistrationState) {
+		case LinphoneEnums::RegistrationState::Ok:
+			return Utils::getDefaultStyleColor("success_500main");
+		case LinphoneEnums::RegistrationState::Refreshing:
+			return Utils::getDefaultStyleColor("main2_500main");
+		case LinphoneEnums::RegistrationState::Progress:
+			return Utils::getDefaultStyleColor("main2_500main");
+		case LinphoneEnums::RegistrationState::Failed:
+			return Utils::getDefaultStyleColor("danger_500main");
+		case LinphoneEnums::RegistrationState::None:
+		case LinphoneEnums::RegistrationState::Cleared:
+			return Utils::getDefaultStyleColor("warning_600");
+		default:
+			return " ";
+	}
+}
+
+QUrl AccountCore::getRegistrationIcon() const {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	return Utils::getRegistrationStateIcon(mRegistrationState);
 }
 
 QString AccountCore::getHumanReadableRegistrationStateExplained() const {
@@ -803,4 +852,39 @@ void AccountCore::undo() {
 			});
 		});
 	}
+}
+
+LinphoneEnums::Presence AccountCore::getPresence() {
+	return mPresence;
+}
+
+QColor AccountCore::getPresenceColor() {
+	return Utils::getPresenceColor(mPresence);
+}
+
+QUrl AccountCore::getPresenceIcon() {
+	return Utils::getPresenceIcon(mPresence);
+}
+
+QString AccountCore::getPresenceStatus() {
+	return Utils::getPresenceStatus(mPresence);
+}
+
+void AccountCore::resetToAutomaticPresence() {
+	emit lSetPresence(LinphoneEnums::Presence::Online, false, true);
+}
+
+LinphoneEnums::Presence AccountCore::getExplicitPresence() {
+	return mExplicitPresence;
+}
+
+void AccountCore::setPresenceNote(QString presenceNote) {
+	if (presenceNote != mPresenceNote) {
+		mPresenceNote = presenceNote;
+		emit lSetPresence(mPresence, mExplicitPresence != LinphoneEnums::Presence::Undefined, false);
+	}
+}
+
+QString AccountCore::getPresenceNote() {
+	return mPresenceNote;
 }

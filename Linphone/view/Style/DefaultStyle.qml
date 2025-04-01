@@ -33,6 +33,7 @@ QtObject {
 
     property color warning_600: "#DBB820"
     property color danger_500main: "#DD5F5F"
+    property color warning_500_main: "#FFDC2E"
     property color danger_700: "#9E3548"
     property color danger_900: "#723333"
     property color success_500main: "#4FAE80"
@@ -62,5 +63,4 @@ QtObject {
 
     property color placeholders: '#CACACA'	// No name in design
     
-	property color warning_500_main: "#FFDC2E"
 }

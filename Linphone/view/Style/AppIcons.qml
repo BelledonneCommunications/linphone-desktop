@@ -128,4 +128,13 @@ QtObject {
 	property string appWindow: "image://internal/app-window.svg"
 	property string bellMwi: "image://internal/bell-simple.svg"
 	property string callForward: "image://internal/call-forward.svg"
+	property string regitrationDeactivated: "image://internal/regitration_deactivated.svg"
+	property string regitrationProgress: "image://internal/regitration_progress.svg"
+	property string regitrationError: "image://internal/regitration_error.svg"
+	property string presenceOnline: "image://internal/presence_online.svg"
+	property string presenceAway: "image://internal/presence_away.svg"
+	property string presenceBusy: "image://internal/presence_busy.svg"
+	property string presenceDoNotDisturb: "image://internal/presence_do_not_disturb.svg"
+	property string presenceOffline: "image://internal/presence_offline.svg"
+	property string presenceNote: "image://internal/presence-note.svg"
 }

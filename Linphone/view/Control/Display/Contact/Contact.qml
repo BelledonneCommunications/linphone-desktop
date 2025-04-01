@@ -8,6 +8,8 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Control.Control{
 	id: mainItem
@@ -55,66 +57,87 @@ Control.Control{
 				}
 			}
 		}
-		Control.Control {
-			id: registrationStatusItem
-            Layout.minimumWidth: Math.round(49 * DefaultStyle.dp)
-            Layout.maximumWidth: 150
-            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-            topPadding: Math.round(4 * DefaultStyle.dp)
-            bottomPadding: Math.round(4 * DefaultStyle.dp)
-            leftPadding: Math.round(8 * DefaultStyle.dp)
-            rightPadding: Math.round(8 * DefaultStyle.dp)
-            Layout.preferredWidth: text.implicitWidth + (2 * Math.round(8 * DefaultStyle.dp))
-			background: Rectangle{
-				id: registrationStatus
-				anchors.fill: parent
-				color: DefaultStyle.main2_200
-                radius: Math.round(90 * DefaultStyle.dp)
-			}
-			contentItem: Text {
-				id: text
-                anchors.fill: parent
-                anchors.leftMargin: registrationStatusItem.leftPadding
-                anchors.rightMargin: registrationStatusItem.rightPadding
-                verticalAlignment: Text.AlignVCenter
-				horizontalAlignment: Text.AlignHCenter
-				visible: mainItem.account
-				property int mode : !mainItem.account || mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Ok
-												? 0
-												: mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Cleared || mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.None
-													? 1
-													: mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Progress || mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Refreshing
-														? 2
-														: 3
-				// Test texts
-				// Timer{
-				// 	running: true
-				// 	interval: 1000
-				// 	repeat: true
-				// 	onTriggered: text.mode = (++text.mode) % 4
-				// }
-                font.weight: Math.round(300 * DefaultStyle.dp)
-                font.pixelSize: Math.round(12 * DefaultStyle.dp)
-				color: mode == 0 
-						? DefaultStyle.success_500main
-						: mode == 1
-							? DefaultStyle.warning_600
-							: mode == 2
-								? DefaultStyle.main2_500main
-								: DefaultStyle.danger_500main
-				text: mode == 0
-                        //: "Connecté"
-                        ? qsTr("drawer_menu_account_connection_status_connected")
-						: mode == 1
-                            //: "Désactivé"
-                            ? qsTr("drawer_menu_account_connection_status_cleared")
-							: mode == 2
-                                //: "Connexion…"
-                                ? qsTr("drawer_menu_account_connection_status_refreshing")
-                                //: "Erreur"
-                                : qsTr("drawer_menu_account_connection_status_failed")
+		PopupButton {
+			id: presenceAndRegistrationItem
+			Layout.minimumWidth: Math.round(86 * DefaultStyle.dp)
+			Layout.maximumWidth: Math.round(150 * DefaultStyle.dp)
+			Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+			Layout.preferredWidth: presenceOrRegistrationText.implicitWidth + Math.round(50 * DefaultStyle.dp)
+			contentItem:
+				Rectangle{
+					id: presenceBar
+					property bool isRegistered: mainItem.account?.core.registrationState == LinphoneEnums.RegistrationState.Ok
+					color: DefaultStyle.main2_200
+                	radius: Math.round(15 * DefaultStyle.dp)
+					RowLayout {
+						anchors.fill: parent
+						Image {
+							sourceSize.width: 11 * DefaultStyle.dp
+							sourceSize.height: 11 * DefaultStyle.dp
+							smooth: false
+							Layout.preferredWidth: 11 * DefaultStyle.dp
+							Layout.preferredHeight: 11 * DefaultStyle.dp
+							source: presenceBar.isRegistered ? mainItem.account.core.presenceIcon : mainItem.account?.core.registrationStateIcon
+							Layout.leftMargin: 8 * DefaultStyle.dp
+						}
+						Text {
+							id: presenceOrRegistrationText
+							verticalAlignment: Text.AlignVCenter
+							horizontalAlignment: Text.AlignHCenter
+							visible: mainItem.account
+							// Test texts
+							// Timer{
+							// 	running: true
+							// 	interval: 1000
+							// 	repeat: true
+							// 	onTriggered: text.mode = (++text.mode) % 4
+							// }
+							font.weight: Math.round(300 * DefaultStyle.dp)
+							font.pixelSize: Math.round(12 * DefaultStyle.dp)
+							color: presenceBar.isRegistered ? mainItem.account.core.presenceColor : mainItem.account?.core.registrationColor
+							text: presenceBar.isRegistered ? mainItem.account.core.presenceStatus : mainItem.account?.core.humaneReadableRegistrationState
+						}
+						EffectImage {
+							fillMode: Image.PreserveAspectFit
+							imageSource: AppIcons.downArrow
+							colorizationColor: DefaultStyle.main2_600
+							Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
+							Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+							Layout.rightMargin: 8 * DefaultStyle.dp
+						}
+					}
+				}
+			popup.contentItem: Rectangle {
+				implicitWidth: 280 * DefaultStyle.dp
+				implicitHeight: 20 * DefaultStyle.dp + (setCustomStatus.visible ? 240 * DefaultStyle.dp : setPresence.implicitHeight)
+				Presence {
+					id: setPresence
+					anchors.fill: parent
+					anchors.margins: 20 * DefaultStyle.dp
+					accountCore: mainItem.account.core
+					onSetCustomStatusClicked: {
+						setPresence.visible = false
+						setCustomStatus.visible = true
+					}
+					onIsSet: presenceAndRegistrationItem.popup.close()
+				}
+				PresenceSetCustomStatus {
+					id: setCustomStatus
+					visible: false
+					anchors.fill: parent
+					anchors.margins: 20 * DefaultStyle.dp
+					accountCore: mainItem.account.core
+					onVisibleChanged: {
+						if (!visible) {
+							setPresence.visible = true
+							setCustomStatus.visible = false
+						}
+					}
+					onIsSet: presenceAndRegistrationItem.popup.close()
+				}
 			}
 		}
+		
 		Item{
             Layout.preferredWidth: Math.round(26 * DefaultStyle.dp)
             Layout.preferredHeight: Math.round(26 * DefaultStyle.dp)

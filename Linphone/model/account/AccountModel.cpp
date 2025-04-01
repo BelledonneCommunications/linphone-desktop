@@ -22,6 +22,8 @@
 
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "model/setting/SettingsModel.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include <QDebug>
@@ -466,4 +468,95 @@ std::shared_ptr<AccountUserData> AccountModel::getUserData(const std::shared_ptr
 void AccountModel::removeUserData(const std::shared_ptr<linphone::Account> &account) {
 	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 	userDataMap.remove(account);
+}
+
+// Up to date there are api to get/set presence from/to a linphone account object
+// therefore retrieved/set from core
+
+LinphoneEnums::Presence AccountModel::getPresence() {
+	auto presenceModel = CoreModel::getInstance()->getCore()->getPresenceModel(); // No api (yet) at the account level
+	return ToolModel::corePresenceModelToAppPresence(presenceModel);
+}
+
+void AccountModel::setPresence(LinphoneEnums::Presence presence,
+                               bool userInitiated,
+                               bool resetToAuto,
+                               QString presenceNote) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+
+	lDebug() << log().arg("presence set request to: " + LinphoneEnums::toString(presence) + " user initiated? " +
+	                      (userInitiated ? "true" : "false") + " reset to auto? " + (resetToAuto ? "true" : "false"));
+
+	auto core = CoreModel::getInstance()->getCore();
+
+	if (core->getGlobalState() != linphone::GlobalState::On) {
+		lWarning() << log().arg("Unable to set presence this time as core state is not ON");
+		return;
+	}
+
+	if (presence == LinphoneEnums::Presence::Undefined) {
+		lWarning() << log().arg("Unable to set Undefined presence");
+		return;
+	}
+
+	auto accountSection = ToolModel::configAccountSection(mMonitor);
+
+	if (!resetToAuto && !userInitiated &&
+	    !core->getConfig()->getString(accountSection, "explicit_presence", "").empty()) {
+		lDebug() << log().arg("Ignoring automatic presence update, as user already set a presence explicitely : ")
+		         << Utils::coreStringToAppString(core->getConfig()->getString(accountSection, "explicit_presence", ""));
+		return;
+	}
+
+	if (userInitiated) {
+		core->getConfig()->setString(accountSection, "explicit_presence",
+		                             Utils::appStringToCoreString(LinphoneEnums::toString(presence)));
+		core->getConfig()->sync();
+	}
+
+	if (resetToAuto) {
+		core->getConfig()->cleanEntry(accountSection, "explicit_presence");
+		core->getConfig()->sync();
+	}
+
+	if (!presenceNote.isEmpty()) {
+		core->getConfig()->setString(accountSection, "presence_note", Utils::appStringToCoreString(presenceNote));
+		core->getConfig()->sync();
+	}
+
+	if (!mMonitor->getParams()->publishEnabled()) {
+		auto params = mMonitor->getParams()->clone();
+		params->enablePublish(true);
+		mMonitor->setParams(params);
+	}
+
+	auto presenceModel = ToolModel::appPresenceToCorePresenceModel(presence, presenceNote);
+	core->setPresenceModel(presenceModel); // No api (yet) at the account level
+
+	if (presence == LinphoneEnums::Presence::Offline) {
+		for (auto friendList : core->getFriendsLists())
+			friendList->enableSubscriptions(false);
+	} else {
+		for (auto friendList : core->getFriendsLists())
+			friendList->enableSubscriptions(true);
+	}
+
+	setNotificationsAllowed(
+	    presence != LinphoneEnums::Presence::DoNotDisturb &&
+	    (presence != LinphoneEnums::Presence::Away ||
+	     core->getConfig()->getBool(accountSection, "allow_notifications_in_presence_away", true)) &&
+	    (presence != LinphoneEnums::Presence::Busy ||
+	     core->getConfig()->getBool(accountSection, "allow_notifications_in_presence_busy", true)));
+
+	if (!SettingsModel::dndEnabled(core->getConfig())) {
+		SettingsModel::getInstance()->enableRinging(presence != LinphoneEnums::Presence::DoNotDisturb);
+	}
+
+	emit presenceChanged(presence, userInitiated);
+}
+
+bool AccountModel::forwardToVoiceMailInDndPresence() {
+	auto accountSection = ToolModel::configAccountSection(mMonitor);
+	auto core = CoreModel::getInstance()->getCore();
+	return core->getConfig()->getBool(accountSection, "forward_to_voicemail_in_dnd_presence", false);
 }

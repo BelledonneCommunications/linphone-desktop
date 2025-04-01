@@ -75,6 +75,15 @@ public:
 	Q_PROPERTY(bool isSaved READ isSaved WRITE setIsSaved NOTIFY isSavedChanged)
 	Q_PROPERTY(
 	    QString voicemailAddress READ getVoicemailAddress WRITE setVoicemailAddress NOTIFY voicemailAddressChanged)
+	Q_PROPERTY(LinphoneEnums::Presence presence READ getPresence WRITE lSetPresence NOTIFY presenceChanged)
+	Q_PROPERTY(QColor presenceColor READ getPresenceColor NOTIFY presenceChanged)
+	Q_PROPERTY(QUrl presenceIcon READ getPresenceIcon NOTIFY presenceChanged)
+	Q_PROPERTY(QString presenceStatus READ getPresenceStatus NOTIFY presenceChanged)
+	Q_PROPERTY(QColor registrationColor READ getRegistrationColor NOTIFY registrationStateChanged)
+	Q_PROPERTY(QUrl registrationIcon READ getRegistrationIcon NOTIFY registrationStateChanged)
+	Q_PROPERTY(LinphoneEnums::Presence explicitPresence MEMBER mExplicitPresence NOTIFY presenceChanged)
+	Q_PROPERTY(QString presenceNote READ getPresenceNote WRITE setPresenceNote NOTIFY presenceChanged)
+	Q_PROPERTY(int maxPresenceNoteSize MEMBER mMaxPresenceNoteSize CONSTANT)
 
 	DECLARE_CORE_GET(int, voicemailCount, VoicemailCount)
 	static QSharedPointer<AccountCore> create(const std::shared_ptr<linphone::Account> &account);
@@ -114,6 +123,8 @@ public:
 	void onDialPlanChanged(QVariantMap internationalPrefix);
 	QString getHumanReadableRegistrationState() const;
 	QString getHumanReadableRegistrationStateExplained() const;
+	QColor getRegistrationColor() const;
+	QUrl getRegistrationIcon() const;
 	bool getRegisterEnabled() const;
 	void onRegisterEnabledChanged(bool enabled);
 
@@ -170,6 +181,15 @@ public:
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
 
+	QColor getPresenceColor();
+	QUrl getPresenceIcon();
+	QString getPresenceStatus();
+	LinphoneEnums::Presence getPresence();
+	Q_INVOKABLE void resetToAutomaticPresence();
+	LinphoneEnums::Presence getExplicitPresence();
+	void setPresenceNote(QString presenceNote);
+	QString getPresenceNote();
+
 signals:
 	void pictureUriChanged();
 	void registrationStateChanged(const QString &message);
@@ -198,6 +218,7 @@ signals:
 	void removed();
 	void isSavedChanged();
 	void voicemailAddressChanged();
+	void presenceChanged();
 
 	// Account requests
 	void lSetPictureUri(QString pictureUri);
@@ -209,6 +230,7 @@ signals:
 	void lSetDialPlan(QVariantMap internationalPrefix);
 	void lSetRegisterEnabled(bool enabled);
 	void lSetNotificationsAllowed(bool value);
+	void lSetPresence(LinphoneEnums::Presence presence, bool userInitiated = true, bool resetToAuto = false);
 
 protected:
 	void writeIntoModel(std::shared_ptr<AccountModel> model) const;
@@ -243,6 +265,10 @@ private:
 	QString mAudioVideoConferenceFactoryAddress;
 	QString mLimeServerUrl;
 	QString mVoicemailAddress;
+	LinphoneEnums::Presence mPresence = LinphoneEnums::Presence::Undefined;
+	LinphoneEnums::Presence mExplicitPresence;
+	QString mPresenceNote;
+	int mMaxPresenceNoteSize;
 
 	bool mIsSaved = true;
 	std::shared_ptr<AccountModel> mAccountModel;

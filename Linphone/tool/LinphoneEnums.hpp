@@ -250,16 +250,12 @@ Q_ENUM_NS(ConferenceSchedulerState)
 linphone::ConferenceScheduler::State toLinphone(const LinphoneEnums::ConferenceSchedulerState &state);
 LinphoneEnums::ConferenceSchedulerState fromLinphone(const linphone::ConferenceScheduler::State &state);
 
-enum class ConsolidatedPresence {
-	Online = int(linphone::ConsolidatedPresence::Online),
-	Busy = int(linphone::ConsolidatedPresence::Busy),
-	DoNotDisturb = int(linphone::ConsolidatedPresence::DoNotDisturb),
-	Offline = int(linphone::ConsolidatedPresence::Offline)
-};
-Q_ENUM_NS(ConsolidatedPresence);
+// App Presence
+enum class Presence { Undefined, Online, Busy, DoNotDisturb, Offline, Away };
+Q_ENUM_NS(Presence);
 
-linphone::ConsolidatedPresence toLinphone(const LinphoneEnums::ConsolidatedPresence &state);
-LinphoneEnums::ConsolidatedPresence fromLinphone(const linphone::ConsolidatedPresence &state);
+QString toString(Presence presence);
+Presence fromString(const QString &key);
 
 enum class MagicSearchAggregation {
 	Friend = int(linphone::MagicSearch::Aggregation::Friend),

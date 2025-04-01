@@ -44,6 +44,7 @@ void LinphoneEnums::registerMetaTypes() {
 	qRegisterMetaType<LinphoneEnums::TunnelMode>();
 	qRegisterMetaType<LinphoneEnums::TransportType>();
 	qRegisterMetaType<LinphoneEnums::VideoSourceScreenSharingType>();
+	qRegisterMetaType<LinphoneEnums::Presence>();
 	qmlRegisterUncreatableMetaObject(LinphoneEnums::staticMetaObject, Constants::MainQmlUri, 1, 0, "LinphoneEnums",
 	                                 "Only enums");
 }
@@ -207,7 +208,8 @@ LinphoneEnums::ConferenceLayout LinphoneEnums::fromLinphone(const linphone::Conf
 
 QString LinphoneEnums::toString(LinphoneEnums::ConferenceLayout layout) {
 	//: "Participant actif"
-	if (layout == LinphoneEnums::ConferenceLayout::ActiveSpeaker) return QObject::tr("conference_layout_active_speaker");
+	if (layout == LinphoneEnums::ConferenceLayout::ActiveSpeaker)
+		return QObject::tr("conference_layout_active_speaker");
 	//: "Mosaïque"
 	else if (layout == LinphoneEnums::ConferenceLayout::Grid) return QObject::tr("conference_layout_grid");
 	//: "Audio uniquement"
@@ -249,11 +251,22 @@ LinphoneEnums::ConferenceSchedulerState LinphoneEnums::fromLinphone(const linpho
 	return static_cast<LinphoneEnums::ConferenceSchedulerState>(state);
 }
 
-linphone::ConsolidatedPresence LinphoneEnums::toLinphone(const LinphoneEnums::ConsolidatedPresence &data) {
-	return static_cast<linphone::ConsolidatedPresence>(data);
+QString LinphoneEnums::toString(Presence presence) {
+	const QMetaObject &metaObj = LinphoneEnums::staticMetaObject;
+	int index = metaObj.indexOfEnumerator("Presence");
+	QMetaEnum metaEnum = metaObj.enumerator(index);
+	return metaEnum.valueToKey(static_cast<int>(presence));
 }
-LinphoneEnums::ConsolidatedPresence LinphoneEnums::fromLinphone(const linphone::ConsolidatedPresence &data) {
-	return static_cast<LinphoneEnums::ConsolidatedPresence>(data);
+
+LinphoneEnums::Presence LinphoneEnums::fromString(const QString &key) {
+	const QMetaObject &metaObj = LinphoneEnums::staticMetaObject;
+	int index = metaObj.indexOfEnumerator("Presence");
+	QMetaEnum metaEnum = metaObj.enumerator(index);
+	int value = metaEnum.keyToValue(key.toUtf8().constData());
+	if (value == -1) {
+		return LinphoneEnums::Presence::Undefined;
+	}
+	return static_cast<LinphoneEnums::Presence>(value);
 }
 
 linphone::MagicSearch::Aggregation LinphoneEnums::toLinphone(const LinphoneEnums::MagicSearchAggregation &data) {

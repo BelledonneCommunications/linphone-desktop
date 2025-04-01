@@ -51,7 +51,7 @@ QtObject {
         pixelSize: Math.round(13 * DefaultStyle.dp),
         weight: Math.min(Math.round(700 * DefaultStyle.dp), 1000)
 	})
-	
+
 	// Text/P2 - Large Bold, reduced paragraph text
 	property font p2l: Qt.font( {
 		family: DefaultStyle.defaultFont,

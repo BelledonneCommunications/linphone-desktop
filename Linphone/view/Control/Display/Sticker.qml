@@ -53,6 +53,9 @@ Item {
 					: call.core.remoteName
 				: ""
 
+	property var contactObj: UtilsCpp.findFriendByAddress(call.core.remoteAddress)
+	property var contact: contactObj && contactObj.value || null
+	
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null
     property bool videoEnabled: (previewEnabled && call && call.core.localVideoEnabled)
         || (!previewEnabled && call && call.core.remoteVideoEnabled)
@@ -168,6 +171,7 @@ Item {
                 anchors.topMargin: Math.round(21 * DefaultStyle.dp)
 				anchors.left: parent.left
 				anchors.right: parent.right
+
 				Text {
 					Layout.fillWidth: true
 					horizontalAlignment: Text.AlignHCenter

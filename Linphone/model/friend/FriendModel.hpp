@@ -91,6 +91,8 @@ public:
 	void onUpdated(const std::shared_ptr<linphone::Friend> &data);
 	void onRemoved(const std::shared_ptr<linphone::Friend> &data);
 
+	LinphoneEnums::Presence getPresence(const std::shared_ptr<linphone::Friend> &contact);
+
 	QString mFullName;
 
 signals:
@@ -105,12 +107,13 @@ signals:
 	void familyNameChanged(const QString &name);
 	void organizationChanged(const QString &orga);
 	void jobChanged(const QString &job);
-	void presenceReceived(LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp);
+	void presenceReceived(LinphoneEnums::Presence presence, QString presenceNote);
 	void updated();
 	void removed();
 
 private:
 	DECLARE_ABSTRACT_OBJECT
+	QString getPresenceNote(const std::shared_ptr<linphone::Friend> &contact);
 
 	//--------------------------------------------------------------------------------
 	// LINPHONE

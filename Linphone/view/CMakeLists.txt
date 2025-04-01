@@ -34,6 +34,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Container/Call/CallGridLayout.qml
 	view/Control/Container/Call/Mosaic.qml
 	view/Control/Container/Contact/ContactLayout.qml
+	view/Control/Container/Contact/PresenceNoteLayout.qml
 	view/Control/Container/Main/MainRightPanel.qml
 
 	view/Control/Display/BusyIndicator.qml
@@ -54,6 +55,9 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Chat/ChatMessagesListView.qml
 	view/Control/Display/Contact/Avatar.qml
 	view/Control/Display/Contact/Contact.qml
+	view/Control/Display/Contact/Presence.qml
+	view/Control/Display/Contact/PresenceStatusItem.qml
+	view/Control/Display/Contact/PresenceSetCustomStatus.qml
 	view/Control/Display/Contact/ContactListItem.qml
 	view/Control/Display/Contact/ContactListView.qml
 	view/Control/Display/Contact/AllContactListView.qml

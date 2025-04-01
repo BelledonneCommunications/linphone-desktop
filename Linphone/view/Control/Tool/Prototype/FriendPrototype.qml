@@ -52,7 +52,8 @@ Window{
 				RowLayout{
 					anchors.fill: parent
 					Text{
-						text: modelData.core.presenceTimestamp + " == " +modelData.core.consolidatedPresence + " / "
+						text: modelData.core.presenceStatus
+						color: modelData.core.presenceColor
 					}
 					Button {
 						text: 'X'

@@ -43,6 +43,8 @@
 #include <QHostAddress>
 #include <QImageReader>
 #include <QProcess>
+#include <QQmlComponent>
+#include <QQmlProperty>
 #include <QQuickWindow>
 #include <QRandomGenerator>
 #include <QRegularExpression>
@@ -1619,4 +1621,127 @@ void Utils::runCommandLine(const QString command) {
 #else
 	lWarning() << "Unsupported OS!";
 #endif
+}
+
+// Presence
+
+QColor Utils::getDefaultStyleColor(const QString &colorName) {
+	static QObject *defaultStyleSingleton = nullptr;
+	if (!defaultStyleSingleton) {
+		QQmlComponent component(App::getInstance()->mEngine, QUrl("qrc:/qt/qml/Linphone/view/Style/DefaultStyle.qml"));
+		defaultStyleSingleton = component.create();
+	}
+	return QQmlProperty::read(defaultStyleSingleton, colorName).value<QColor>();
+}
+
+QUrl Utils::getAppIcon(const QString &iconName) {
+	static QObject *appIconsSingleton = nullptr;
+	if (!appIconsSingleton) {
+		QQmlComponent component(App::getInstance()->mEngine, QUrl("qrc:/qt/qml/Linphone/view/Style/AppIcons.qml"));
+		appIconsSingleton = component.create();
+	}
+	return QQmlProperty::read(appIconsSingleton, iconName).value<QUrl>();
+}
+
+QColor Utils::getPresenceColor(LinphoneEnums::Presence presence) {
+	mustBeInMainThread(sLog().arg(Q_FUNC_INFO));
+	QColor presenceColor = QColorConstants::Transparent;
+	switch (presence) {
+		case LinphoneEnums::Presence::Online:
+			presenceColor = Utils::getDefaultStyleColor("success_500main");
+			break;
+		case LinphoneEnums::Presence::Away:
+			presenceColor = Utils::getDefaultStyleColor("warning_500_main");
+			break;
+		case LinphoneEnums::Presence::Busy:
+			presenceColor = Utils::getDefaultStyleColor("danger_500main");
+			break;
+		case LinphoneEnums::Presence::DoNotDisturb:
+			presenceColor = Utils::getDefaultStyleColor("danger_500main");
+			break;
+		case LinphoneEnums::Presence::Offline:
+			presenceColor = Utils::getDefaultStyleColor("main2_600");
+			break;
+		case LinphoneEnums::Presence::Undefined:
+			presenceColor = Utils::getDefaultStyleColor("transparent");
+			break;
+	}
+	return presenceColor;
+}
+
+QUrl Utils::getPresenceIcon(LinphoneEnums::Presence presence) {
+	mustBeInMainThread(sLog().arg(Q_FUNC_INFO));
+	QUrl presenceIcon;
+	switch (presence) {
+		case LinphoneEnums::Presence::Online:
+			presenceIcon = Utils::getAppIcon("presenceOnline");
+			break;
+		case LinphoneEnums::Presence::Away:
+			presenceIcon = Utils::getAppIcon("presenceAway");
+			break;
+		case LinphoneEnums::Presence::Busy:
+			presenceIcon = Utils::getAppIcon("presenceBusy");
+			break;
+		case LinphoneEnums::Presence::DoNotDisturb:
+			presenceIcon = Utils::getAppIcon("presenceDoNotDisturb");
+			break;
+		case LinphoneEnums::Presence::Offline:
+			presenceIcon = Utils::getAppIcon("presenceOffline");
+			break;
+		case LinphoneEnums::Presence::Undefined:
+			presenceIcon = QUrl("");
+			break;
+	}
+	return presenceIcon;
+}
+
+QUrl Utils::getRegistrationStateIcon(LinphoneEnums::RegistrationState state) {
+	mustBeInMainThread(sLog().arg(Q_FUNC_INFO));
+	QUrl registrationStateIcon;
+	switch (state) {
+		case LinphoneEnums::RegistrationState::Refreshing:
+			registrationStateIcon = Utils::getAppIcon("regitrationProgress");
+			break;
+		case LinphoneEnums::RegistrationState::Progress:
+			registrationStateIcon = Utils::getAppIcon("regitrationProgress");
+			break;
+		case LinphoneEnums::RegistrationState::Failed:
+			registrationStateIcon = Utils::getAppIcon("regitrationError");
+			break;
+		case LinphoneEnums::RegistrationState::Cleared:
+			registrationStateIcon = Utils::getAppIcon("regitrationDeactivated");
+			break;
+		case LinphoneEnums::RegistrationState::None:
+			registrationStateIcon = Utils::getAppIcon("regitrationDeactivated");
+			break;
+		default:
+			registrationStateIcon = QUrl();
+	}
+	return registrationStateIcon;
+}
+
+QString Utils::getPresenceStatus(LinphoneEnums::Presence presence) {
+	mustBeInMainThread(sLog().arg(Q_FUNC_INFO));
+	QString presenceStatus = "";
+	switch (presence) {
+		case LinphoneEnums::Presence::Online:
+			presenceStatus = tr("contact_presence_status_available");
+			break;
+		case LinphoneEnums::Presence::Away:
+			presenceStatus = tr("contact_presence_status_away");
+			break;
+		case LinphoneEnums::Presence::Busy:
+			presenceStatus = tr("contact_presence_status_busy");
+			break;
+		case LinphoneEnums::Presence::DoNotDisturb:
+			presenceStatus = tr("contact_presence_status_do_not_disturb");
+			break;
+		case LinphoneEnums::Presence::Offline:
+			presenceStatus = tr("contact_presence_status_offline");
+			break;
+		case LinphoneEnums::Presence::Undefined:
+			presenceStatus = "";
+			break;
+	}
+	return presenceStatus;
 }

@@ -68,6 +68,10 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 				setHaveAccount(accounts->size() > 0);
 				setDefaultAccount(defaultAccountCore);
 				if (isInitialization) setInitialized(true);
+				for (const QSharedPointer<AccountCore> &accountCore : *accounts) {
+					if (accountCore->getExplicitPresence() != LinphoneEnums::Presence::Undefined)
+						emit accountCore->lSetPresence(accountCore->getExplicitPresence(), true, false);
+				}
 				delete accounts;
 			});
 		});
@@ -88,7 +92,8 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 	// with the open id account
 	mModelConnection->makeConnectToModel(&CoreModel::bearerAccountAdded, [this] {
 		setInitialized(false);
-		emit lUpdate(true); });
+		emit lUpdate(true);
+	});
 
 	mModelConnection->makeConnectToModel(
 	    &CoreModel::globalStateChanged,

@@ -48,8 +48,9 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		mustBeInLinphoneThread(getClassName());
 		mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
 		mFriendModel->setSelf(mFriendModel);
-		mConsolidatedPresence = LinphoneEnums::fromLinphone(contact->getConsolidatedPresence());
-		mPresenceTimestamp = mFriendModel->getPresenceTimestamp();
+		auto presence = mFriendModel->getPresence(contact);
+		auto note = mFriendModel->getPresenceNote(contact);
+		App::postCoreAsync([this, presence, note]() { setPresence(presence, note); });
 		mPictureUri = Utils::coreStringToAppString(contact->getPhoto());
 		mFullName = mFriendModel->getFullName();
 		auto defaultAddress = contact->getAddress();
@@ -65,7 +66,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		auto addresses = contact->getAddresses();
 		for (auto &address : addresses) {
 			mAddressList.append(Utils::createFriendAddressVariant(
-				tr("sip_address"), Utils::coreStringToAppString(address->asStringUriOnly())));
+			    tr("sip_address"), Utils::coreStringToAppString(address->asStringUriOnly())));
 		}
 		mDefaultAddress = defaultAddress ? Utils::coreStringToAppString(defaultAddress->asStringUriOnly()) : QString();
 		mDefaultFullAddress = defaultAddress ? Utils::coreStringToAppString(defaultAddress->asString()) : QString();
@@ -142,8 +143,7 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 			mFriendModelConnection->makeConnectToModel(
 			    &FriendModel::removed, [this]() { mFriendModelConnection->invokeToCore([this]() { removed(this); }); });
 			mFriendModelConnection->makeConnectToModel(
-			    &FriendModel::presenceReceived,
-			    [this](LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp) {
+			    &FriendModel::presenceReceived, [this](LinphoneEnums::Presence presence, QString presenceNote) {
 				    auto devices = mFriendModel->getDevices();
 				    QVariantList devicesList;
 				    for (auto &device : devices) {
@@ -153,14 +153,11 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 					        Utils::coreStringToAppString(device->getAddress()->asString()),
 					        LinphoneEnums::fromLinphone(device->getSecurityLevel())));
 				    }
-				    mFriendModelConnection->invokeToCore(
-				        [this, consolidatedPresence, presenceTimestamp, devicesList]() {
-					        setConsolidatedPresence(consolidatedPresence);
-					        setPresenceTimestamp(presenceTimestamp);
-
-					        setDevices(devicesList);
-					        updateVerifiedDevicesCount();
-				        });
+				    mFriendModelConnection->invokeToCore([this, presence, devicesList, presenceNote]() {
+					    setPresence(presence, presenceNote);
+					    setDevices(devicesList);
+					    updateVerifiedDevicesCount();
+				    });
 			    });
 			mFriendModelConnection->makeConnectToModel(&FriendModel::pictureUriChanged, [this](const QString &uri) {
 				mFriendModelConnection->invokeToCore([this, uri]() { this->onPictureUriChanged(uri); });
@@ -188,7 +185,7 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 				QList<QVariant> addr;
 				for (auto &num : numbers) {
 					addr.append(Utils::createFriendAddressVariant(
-						tr("sip_address"), Utils::coreStringToAppString(num->asStringUriOnly())));
+					    tr("sip_address"), Utils::coreStringToAppString(num->asStringUriOnly())));
 				}
 				mFriendModelConnection->invokeToCore([this, addr]() { resetPhoneNumbers(addr); });
 			});
@@ -419,9 +416,10 @@ void FriendCore::appendAddress(const QString &addr) {
 		QString interpretedFullAddress = linphoneAddr ? Utils::coreStringToAppString(linphoneAddr->asString()) : "";
 		QString interpretedAddress = linphoneAddr ? Utils::coreStringToAppString(linphoneAddr->asStringUriOnly()) : "";
 		mCoreModelConnection->invokeToCore([this, interpretedAddress, interpretedFullAddress]() {
-			if (interpretedAddress.isEmpty()) Utils::showInformationPopup(tr("information_popup_error_title"),
-																		  //: "Adresse invalide"
-																		  tr("information_popup_invalid_address_message"), false);
+			if (interpretedAddress.isEmpty())
+				Utils::showInformationPopup(tr("information_popup_error_title"),
+				                            //: "Adresse invalide"
+				                            tr("information_popup_invalid_address_message"), false);
 			else {
 				mAddressList.append(Utils::createFriendAddressVariant(tr("sip_address"), interpretedAddress));
 				if (mDefaultFullAddress.isEmpty()) mDefaultFullAddress = interpretedFullAddress;
@@ -507,30 +505,6 @@ void FriendCore::setDefaultAddress(const QString &address) {
 	}
 }
 
-LinphoneEnums::ConsolidatedPresence FriendCore::getConsolidatedPresence() const {
-	return mConsolidatedPresence;
-}
-
-void FriendCore::setConsolidatedPresence(LinphoneEnums::ConsolidatedPresence presence) {
-	mustBeInMainThread(log().arg(Q_FUNC_INFO));
-	if (mConsolidatedPresence != presence) {
-		mConsolidatedPresence = presence;
-		emit consolidatedPresenceChanged(mConsolidatedPresence);
-	}
-}
-
-QDateTime FriendCore::getPresenceTimestamp() const {
-	return mPresenceTimestamp;
-}
-
-void FriendCore::setPresenceTimestamp(QDateTime presenceTimestamp) {
-	mustBeInMainThread(log().arg(Q_FUNC_INFO));
-	if (mPresenceTimestamp != presenceTimestamp) {
-		mPresenceTimestamp = presenceTimestamp;
-		emit presenceTimestampChanged(mPresenceTimestamp);
-	}
-}
-
 QString FriendCore::getPictureUri() const {
 	return mPictureUri;
 }
@@ -612,8 +586,8 @@ void FriendCore::writeFromModel(const std::shared_ptr<FriendModel> &model) {
 
 	QList<QVariant> addresses;
 	for (auto &addr : model->getAddresses()) {
-		addresses.append(
-			Utils::createFriendAddressVariant(tr("sip_address"), Utils::coreStringToAppString(addr->asStringUriOnly())));
+		addresses.append(Utils::createFriendAddressVariant(tr("sip_address"),
+		                                                   Utils::coreStringToAppString(addr->asStringUriOnly())));
 	}
 	mAddressList = addresses;
 	mDefaultAddress = model->getDefaultAddress();
@@ -758,4 +732,30 @@ bool FriendCore::getReadOnly() const {
 
 std::shared_ptr<FriendModel> FriendCore::getFriendModel() {
 	return mFriendModel;
+}
+
+void FriendCore::setPresence(LinphoneEnums::Presence presence, QString presenceNote) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	bool notify = false;
+	if (presence != mPresence) {
+		mPresence = presence;
+		notify = true;
+	}
+	if (presenceNote != mPresenceNote) {
+		mPresenceNote = presenceNote;
+		notify = true;
+	}
+	if (notify) emit presenceChanged();
+}
+
+QUrl FriendCore::getPresenceIcon() {
+	return Utils::getPresenceIcon(mPresence);
+}
+
+QColor FriendCore::getPresenceColor() {
+	return Utils::getPresenceColor(mPresence);
+}
+
+QString FriendCore::getPresenceStatus() {
+	return Utils::getPresenceStatus(mPresence);
 }

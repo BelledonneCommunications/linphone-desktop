@@ -88,6 +88,12 @@ public:
 	static std::shared_ptr<linphone::ChatRoom> lookupChatForAddress(std::shared_ptr<linphone::Address> remoteAddress);
 	static std::shared_ptr<linphone::ChatRoom> createChatForAddress(std::shared_ptr<linphone::Address> remoteAddress);
 
+	static LinphoneEnums::Presence
+	corePresenceModelToAppPresence(std::shared_ptr<const linphone::PresenceModel> presenceModel);
+	static std::shared_ptr<linphone::PresenceModel> appPresenceToCorePresenceModel(LinphoneEnums::Presence presence,
+	                                                                               QString presenceNote);
+	static std::string configAccountSection(const std::shared_ptr<linphone::Account> &account);
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 };
