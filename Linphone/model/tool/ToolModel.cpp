@@ -166,9 +166,8 @@ bool ToolModel::createCall(const QString &sipAddress,
 	bool isConference = !!core->findConferenceInformationFromUri(address);
 	if (isConference) mediaEncryption = linphone::MediaEncryption::ZRTP;
 
-	if (SettingsModel::dndEnabled(
-	        core->getConfig())) { // Force tones for outgoing calls when in DND mode (ringback, dtmf, etc … ) disabled
-		                          // again when no more calls are running.
+	if (SettingsModel::dndEnabled(core->getConfig())) { // Force tones for outgoing calls when in DND mode (ringback,
+		                                                // dtmf, etc … ) disabled again when no more calls are running.
 		SettingsModel::getInstance()->setCallToneIndicationsEnabled(true);
 	}
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
@@ -223,6 +222,47 @@ bool ToolModel::createCall(const QString &sipAddress,
 	} else qWarning() << "prepareTransfert not impolemented";
 	// CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 	*/
+}
+
+bool ToolModel::createGroupCall(QString subject, const std::list<QString> &participantAddresses, QString *message) {
+	auto core = CoreModel::getInstance()->getCore();
+	auto conferenceParams = core->createConferenceParams(nullptr);
+	conferenceParams->enableVideo(true);
+	auto account = core->getDefaultAccount();
+	if (!account) {
+		qWarning() << "No default account found, can't create group call";
+		*message = tr("group_call_error_no_account");
+		return false;
+	}
+	conferenceParams->setAccount(account);
+	conferenceParams->setSubject(Utils::appStringToCoreString(subject));
+
+	auto createEndToEnd = SettingsModel::getInstance()->getCreateEndToEndEncryptedMeetingsAndGroupCalls();
+	conferenceParams->setSecurityLevel(createEndToEnd ? linphone::Conference::SecurityLevel::EndToEnd
+	                                                  : linphone::Conference::SecurityLevel::PointToPoint);
+
+	conferenceParams->enableChat(true);
+
+	auto conference = core->createConferenceWithParams(conferenceParams);
+	if (conference) {
+		auto callParams = core->createCallParams(nullptr);
+		callParams->enableVideo(true);
+		callParams->setVideoDirection(linphone::MediaDirection::RecvOnly);
+		std::list<std::shared_ptr<linphone::Address>> participants;
+		for (auto &address : participantAddresses) {
+			auto linAddr = ToolModel::interpretUrl(address);
+			participants.push_back(linAddr);
+		}
+		auto status = conference->inviteParticipants(participants, callParams);
+		if (status != 0) {
+			qWarning() << "Failed to invite participants into group call";
+			*message = tr("group_call_error_participants_invite");
+		}
+	} else {
+		qWarning() << "Could not create group call";
+		*message = tr("group_call_error_creation");
+	}
+	return conference != nullptr;
 }
 
 std::shared_ptr<linphone::Account> ToolModel::findAccount(const std::shared_ptr<const linphone::Address> &address) {
@@ -301,11 +341,10 @@ std::shared_ptr<linphone::FriendList> ToolModel::getLdapFriendList() {
 }
 
 bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList> &friendList,
-									 const std::shared_ptr<linphone::Friend> &f) {
+                                     const std::shared_ptr<linphone::Friend> &f) {
 	auto friends = friendList->getFriends();
-	auto it = std::find_if(friends.begin(), friends.end(), [f] (std::shared_ptr<linphone::Friend> linFriend) {
-		return linFriend == f;
-	});
+	auto it = std::find_if(friends.begin(), friends.end(),
+	                       [f](std::shared_ptr<linphone::Friend> linFriend) { return linFriend == f; });
 	return (it != friends.end());
 }
 
@@ -361,8 +400,8 @@ QVariantMap ToolModel::createVariant(const std::shared_ptr<const linphone::Audio
 	map.insert("id", device ? Utils::coreStringToAppString(device->getId()) : "");
 	map.insert("display_name",
 	           device ? Utils::coreStringToAppString(device->getDriverName() + ": " + device->getDeviceName())
-					  //: "Unknown device"
-					  : tr("unknown_audio_device_name"));
+	                  //: "Unknown device"
+	                  : tr("unknown_audio_device_name"));
 	return map;
 }
 

@@ -448,8 +448,7 @@ AbstractMainPage {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     Layout.topMargin: Math.round(15 * DefaultStyle.dp)
-                    onSelectedParticipantsCountChanged: mainItem.selectedParticipantsCount
-                                                        = selectedParticipantsCount
+                    onSelectedParticipantsCountChanged: mainItem.selectedParticipantsCount = selectedParticipantsCount
                     focus: true
                     Connections {
                         target: mainItem
@@ -457,24 +456,20 @@ AbstractMainPage {
                             if (groupCallName.text.length === 0) {
                                 UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
                                                               //: "Un nom doit être donné à l'appel de groupe
-                                                              qsTr("group_call_error_must_have_name"),
-                                                              false)
+                                                              qsTr("group_call_error_must_have_name"), false)
                             } else if (!mainItem.isRegistered) {
-                                UtilsCpp.showInformationPopup(
-                                            qsTr("information_popup_error_title"),
+                                UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
                                             //: "Vous n'etes pas connecté"
-                                            qsTr("group_call_error_not_connected"),
-                                            false)
+                                            qsTr("group_call_error_not_connected"), false)
                             } else {
-                                mainItem.confInfoGui = Qt.createQmlObject(
-                                            'import Linphone
-ConferenceInfoGui{
-}', mainItem)
-                                mainItem.confInfoGui.core.subject = groupCallName.text
-                                mainItem.confInfoGui.core.isScheduled = false
-                                mainItem.confInfoGui.core.addParticipants(
-                                            addParticipantsLayout.selectedParticipants)
-                                mainItem.confInfoGui.core.save()
+                                // mainItem.confInfoGui = Qt.createQmlObject(
+                                //     "import Linphone
+                                //     ConferenceInfoGui{}", mainItem)
+                                // mainItem.confInfoGui.core.subject = groupCallName.text
+                                // mainItem.confInfoGui.core.isScheduled = false
+                                // mainItem.confInfoGui.core.addParticipants(addParticipantsLayout.selectedParticipants)
+                                // mainItem.confInfoGui.core.save()
+                                UtilsCpp.createGroupCall(groupCallName.text, addParticipantsLayout.selectedParticipants)
                             }
                         }
                     }

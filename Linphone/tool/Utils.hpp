@@ -71,6 +71,7 @@ public:
 	           LinphoneEnums::MediaEncryption mediaEncryption = LinphoneEnums::MediaEncryption::None,
 	           const QString &prepareTransfertAddress = "",
 	           const QHash<QString, QString> &headers = {});
+	Q_INVOKABLE static void createGroupCall(QString subject, const std::list<QString> &participantAddresses);
 	Q_INVOKABLE static void setupConference(ConferenceInfoGui *confGui);
 	Q_INVOKABLE static QQuickWindow *getMainWindow();
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
@@ -87,7 +88,8 @@ public:
 	Q_INVOKABLE static QString createAvatar(const QUrl &fileUrl); // Return the avatar path
 	Q_INVOKABLE static QString formatElapsedTime(int seconds,
 	                                             bool dotsSeparator = true); // Return the elapsed time formated
-	Q_INVOKABLE static QString formatDate(const QDateTime &date, bool includeTime = true, QString format = ""); // Return the date formated
+	Q_INVOKABLE static QString
+	formatDate(const QDateTime &date, bool includeTime = true, QString format = ""); // Return the date formated
 	Q_INVOKABLE static QString formatDateElapsedTime(const QDateTime &date);
 	Q_INVOKABLE static QString formatTime(const QDateTime &date); // Return the time formated
 	Q_INVOKABLE static QStringList generateSecurityLettersArray(int arraySize, int correctIndex, QString correctCode);
@@ -137,7 +139,7 @@ public:
 	Q_INVOKABLE static QString getFileChecksum(const QString &filePath);
 	Q_INVOKABLE QList<QVariant> append(const QList<QVariant> a, const QList<QVariant> b);
 
-//	QDir findDirectoryByName(QString startPath, QString name);
+	//	QDir findDirectoryByName(QString startPath, QString name);
 
 	static QString getApplicationProduct();
 	static QString getOsProduct();

@@ -154,6 +154,17 @@ void Utils::createCall(const QString &sipAddress,
 	});
 }
 
+void Utils::createGroupCall(QString subject, const std::list<QString> &participantAddresses) {
+	App::postModelAsync([subject, participantAddresses]() {
+		QString errorMessage;
+		bool success = ToolModel::createGroupCall(subject, participantAddresses, &errorMessage);
+		if (!success) {
+			if (errorMessage.isEmpty()) errorMessage = tr("information_popup_group_call_not_created_message");
+			showInformationPopup(tr("information_popup_error_title"), errorMessage, false);
+		}
+	});
+}
+
 // TODO : change conf info only from qml
 //  (bug si on est déjà en appel et qu'on lance une conf)
 // demander à jonhatan pour le design : quand on est déjà en appel
@@ -304,9 +315,9 @@ QString Utils::formatDate(const QDateTime &date, bool includeTime, QString forma
 	//: "Hier
 	else if (date.date() == QDate::currentDate().addDays(-1)) dateDay = tr("yesterday");
 	else {
-		if(format.isEmpty()) format = date.date().year() == QDateTime::currentDateTime(date.timeZone()).date().year()
-		                     ? "dd MMMM"
-		                     : "dd MMMM yyyy";
+		if (format.isEmpty())
+			format = date.date().year() == QDateTime::currentDateTime(date.timeZone()).date().year() ? "dd MMMM"
+			                                                                                         : "dd MMMM yyyy";
 		dateDay = App::getInstance()->getLocale().toString(date.date(), format);
 	}
 	if (!includeTime) return dateDay;

@@ -439,7 +439,15 @@ AbstractWindow {
                                 EffectImage {
                                     Layout.preferredWidth: Math.round(15 * DefaultStyle.dp)
                                     Layout.preferredHeight: Math.round(15 * DefaultStyle.dp)
-                                    colorizationColor: mainWindow.call ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp ? DefaultStyle.info_500_main : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified ? DefaultStyle.warning_600 : DefaultStyle.info_500_main : DefaultStyle.grey_0 : "transparent"
+                                    colorizationColor: mainWindow.call 
+                                        ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp 
+                                            ? DefaultStyle.info_500_main 
+                                            : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
+                                                ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified 
+                                                    ? DefaultStyle.warning_600 
+                                                    : DefaultStyle.info_500_main 
+                                                : DefaultStyle.grey_0 
+                                        : "transparent"
                                     visible: mainWindow.call
                                     imageSource: mainWindow.call
                                         ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp

@@ -53,13 +53,15 @@ public:
 	static std::shared_ptr<linphone::Friend> findFriendByAddress(const QString &address);
 	static std::shared_ptr<linphone::Friend> findFriendByAddress(std::shared_ptr<linphone::Address> linphoneAddr);
 
-
 	static bool createCall(const QString &sipAddress,
 	                       const QVariantMap &options = {},
 	                       const QString &prepareTransfertAddress = "",
 	                       const QHash<QString, QString> &headers = {},
 	                       linphone::MediaEncryption = linphone::MediaEncryption::None,
 	                       QString *errorMessage = nullptr);
+
+	static bool
+	createGroupCall(QString subject, const std::list<QString> &participantAddresses, QString *message = nullptr);
 
 	static std::shared_ptr<linphone::FriendList> getFriendList(const std::string &listName);
 	static std::shared_ptr<linphone::FriendList> getAppFriendList();
