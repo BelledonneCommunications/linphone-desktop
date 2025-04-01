@@ -57,10 +57,13 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 		    auto haveContact =
 		        std::find_if(mList.begin(), mList.end(), [friendCore](const QSharedPointer<QObject> &item) {
 			        auto itemCore = item.objectCast<FriendCore>();
+			        auto itemModel = itemCore->getFriendModel();
+			        auto friendModel = friendCore->getFriendModel();
 			        return itemCore->getDefaultAddress().length() > 0 &&
 			                   itemCore->getDefaultAddress() == friendCore->getDefaultAddress() ||
-			               itemCore->getFriendModel() && friendCore->getFriendModel() &&
-			                   itemCore->getFriendModel()->getFriend() == friendCore->getFriendModel()->getFriend();
+			               itemModel && friendModel && itemModel->getFriend() == friendModel->getFriend() &&
+			                   itemModel->getFriend()->getFriendList()->getDisplayName() ==
+			                       friendModel->getFriend()->getFriendList()->getDisplayName();
 		        });
 		    if (haveContact == mList.end()) {
 			    connect(friendCore.get(), &FriendCore::removed, this, qOverload<QObject *>(&MagicSearchList::remove));
@@ -118,19 +121,20 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 						        address->asString())); // linphone Friend object remove specific address.
 						    contacts->append(contact);
 					    } else if (!it->getPhoneNumber().empty()) {
-							auto phoneNumber = it->getPhoneNumber();
+						    auto phoneNumber = it->getPhoneNumber();
 						    linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
-							linphoneFriend->addPhoneNumber(phoneNumber);
+						    linphoneFriend->addPhoneNumber(phoneNumber);
 						    contact = FriendCore::create(linphoneFriend, isStored, it->getSourceFlags());
 						    contact->setGivenName(Utils::coreStringToAppString(it->getPhoneNumber()));
-							contact->appendPhoneNumber(tr("device_id"), Utils::coreStringToAppString(it->getPhoneNumber()));
+						    contact->appendPhoneNumber(tr("device_id"),
+						                               Utils::coreStringToAppString(it->getPhoneNumber()));
 						    contacts->append(contact);
 					    }
 				    }
 				    mModelConnection->invokeToCore([this, contacts]() {
 					    setResults(*contacts);
 					    delete contacts;
-						emit resultsProcessed();
+					    emit resultsProcessed();
 				    });
 			    });
 			qDebug() << log().arg("Initialized");

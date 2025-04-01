@@ -63,8 +63,7 @@ Flickable {
     signal contactSelected(FriendGui contact)
 
     function selectContact(address) {
-        var index = contactsProxy.loadUntil(
-                    address) // Be sure to have this address in proxy if it exists
+        var index = contactsProxy.loadUntil(address) // Be sure to have this address in proxy if it exists
         if (index != -1) {
             contactsList.selectIndex(index)
         }

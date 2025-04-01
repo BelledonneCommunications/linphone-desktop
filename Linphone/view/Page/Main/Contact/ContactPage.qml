@@ -23,8 +23,7 @@ AbstractMainPage {
     property FriendGui selectedContact
     property string initialFriendToDisplay
     onInitialFriendToDisplayChanged: {
-        if (initialFriendToDisplay != '' && contactList.selectContact(
-                    initialFriendToDisplay) != -1)
+        if (initialFriendToDisplay != '' && contactList.selectContact(initialFriendToDisplay) != -1)
             initialFriendToDisplay = ""
         else if (initialFriendToDisplay != '')
             console.warn("Abstract not selected yet: ", initialFriendToDisplay)

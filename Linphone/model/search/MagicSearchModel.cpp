@@ -75,26 +75,43 @@ void MagicSearchModel::setMaxResults(int maxResults) {
 	}
 }
 
+bool isContactTemporary(std::shared_ptr<linphone::Friend> f, bool allowNullFriendList = false) {
+	auto friendList = f ? f->getFriendList() : nullptr;
+	if (friendList == nullptr && !allowNullFriendList) return true;
+	return friendList && (friendList == ToolModel::getLdapFriendList());
+}
+
 void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> &magicSearch) {
 	auto results = magicSearch->getLastSearch();
 	qDebug() << log().arg("SDK send callback: onSearchResultsReceived : %1 results.").arg(results.size());
 	auto appFriends = ToolModel::getAppFriendList();
 	auto ldapFriends = ToolModel::getLdapFriendList();
 	std::list<std::shared_ptr<linphone::SearchResult>> finalResults;
-	emit searchResultsReceived(results);
+	for (auto result : results) {
+		auto f = result->getFriend();
+		bool isFromRemoteDirectory = result->hasSourceFlag(linphone::MagicSearch::Source::LdapServers) ||
+		                             result->hasSourceFlag(linphone::MagicSearch::Source::RemoteCardDAV);
+		if (!isFromRemoteDirectory && isContactTemporary(f, true)) {
+			qDebug() << "Do not show friend " << f->getName() << "which is in a temporary friend list";
+			continue;
+		}
+		finalResults.push_back(result);
+	}
+	emit searchResultsReceived(finalResults);
 	for (auto result : results) {
 		auto f = result->getFriend();
 		auto fList = f ? f->getFriendList() : nullptr;
 
 		//		qDebug() << log().arg("") << (f ? f->getName().c_str() : "NoFriend") << ", "
 		//		         << (result->getAddress() ? result->getAddress()->asString().c_str() : "NoAddr") << " / "
-		//		         << (fList ? fList->getDisplayName().c_str() : "NoList") << result->getSourceFlags() << " / "
+		//		         << (fList ? fList->getDisplayName().c_str() : "NoList") << result->getSourceFlags() << " /
+		//"
 		//		         << (f ? f.get() : nullptr);
-
 		bool isLdap = (result->getSourceFlags() & (int)linphone::MagicSearch::Source::LdapServers) != 0;
 		// Do not add it into ldap_friends if it already exists in app_friends.
-		if (isLdap && f && (!fList || fList->getDisplayName() != "app_friends")) { // Double check because of SDK merging that lead to
-															   // use a ldap result as of app_friends/ldap_friends.
+		if (isLdap && f &&
+		    (!fList || fList->getDisplayName() != "app_friends")) { // Double check because of SDK merging that lead to
+			// use a ldap result as of app_friends/ldap_friends.
 			updateFriendListWithFriend(f, ldapFriends);
 		}
 	}
@@ -134,5 +151,5 @@ void MagicSearchModel::updateFriendListWithFriend(const std::shared_ptr<linphone
 	}
 	qDebug() << log().arg("Adding Friend:") << linphoneFriend.get();
 	friendList->addFriend(linphoneFriend);
-	emit CoreModel::getInstance() -> friendCreated(linphoneFriend);
+	emit CoreModel::getInstance()->friendCreated(linphoneFriend);
 }
