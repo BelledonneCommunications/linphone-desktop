@@ -66,6 +66,9 @@ public:
 	    QVariantMap mediaEncryption READ getMediaEncryption WRITE setMediaEncryption NOTIFY mediaEncryptionChanged)
 	Q_PROPERTY(bool mediaEncryptionMandatory READ isMediaEncryptionMandatory WRITE setMediaEncryptionMandatory NOTIFY
 	               mediaEncryptionMandatoryChanged)
+	Q_PROPERTY(
+	    bool createEndToEndEncryptedMeetingsAndGroupCalls READ getCreateEndToEndEncryptedMeetingsAndGroupCalls WRITE
+	        setCreateEndToEndEncryptedMeetingsAndGroupCalls NOTIFY createEndToEndEncryptedMeetingsAndGroupCallsChanged)
 
 	Q_PROPERTY(QStringList videoDevices READ getVideoDevices NOTIFY videoDevicesChanged)
 	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE setVideoDevice NOTIFY videoDeviceChanged)
@@ -80,7 +83,8 @@ public:
 	Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
 	Q_PROPERTY(bool isSaved READ isSaved WRITE setIsSaved NOTIFY isSavedChanged)
 
-	Q_PROPERTY(bool showAccountDevices READ showAccountDevices WRITE setShowAccountDevices NOTIFY showAccountDevicesChanged)
+	Q_PROPERTY(
+	    bool showAccountDevices READ showAccountDevices WRITE setShowAccountDevices NOTIFY showAccountDevicesChanged)
 
 	static QSharedPointer<SettingsCore> create();
 	SettingsCore(QObject *parent = Q_NULLPTR);
@@ -154,6 +158,8 @@ public:
 	void setMediaEncryption(QVariantMap encryption);
 	bool isMediaEncryptionMandatory() const;
 	void setMediaEncryptionMandatory(bool mandatory);
+	bool getCreateEndToEndEncryptedMeetingsAndGroupCalls() const;
+	void setCreateEndToEndEncryptedMeetingsAndGroupCalls(bool endtoend);
 	bool isSaved() const;
 	void setIsSaved(bool saved);
 
@@ -259,6 +265,8 @@ signals:
 
 	void mediaEncryptionMandatoryChanged(bool mandatory);
 
+	void createEndToEndEncryptedMeetingsAndGroupCallsChanged(bool endtoend);
+
 	void isSavedChanged();
 
 	void lSetPlaybackDevice(QVariantMap device);
@@ -305,6 +313,7 @@ private:
 	QVariantList mMediaEncryptions;
 	QVariantMap mMediaEncryption;
 	bool mMediaEncryptionMandatory;
+	bool mCreateEndToEndEncryptedMeetingsAndGroupCalls;
 
 	// Call
 	bool mVideoEnabled;
@@ -345,7 +354,7 @@ private:
 	QSettings mAppSettings;
 	QSharedPointer<SafeConnection<SettingsCore, SettingsModel>> mSettingsModelConnection;
 
-	//Account
+	// Account
 	QString mDefaultDomain;
 	bool mShowAccountDevices = false;
 

@@ -63,11 +63,12 @@ SettingsModel::SettingsModel() {
 			                 notifyConfigReady();
 		                 }
 	                 });
-	QObject::connect(CoreModel::getInstance().get(), &CoreModel::defaultAccountChanged, this,
-					 [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> account) {
-						 mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-						 setDisableMeetingsFeature(account && !account->getParams()->getAudioVideoConferenceFactoryAddress());
-					 });
+	QObject::connect(
+	    CoreModel::getInstance().get(), &CoreModel::defaultAccountChanged, this,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> account) {
+		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		    setDisableMeetingsFeature(account && !account->getParams()->getAudioVideoConferenceFactoryAddress());
+	    });
 	auto defaultAccount = core->getDefaultAccount();
 	setDisableMeetingsFeature(defaultAccount && !defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress());
 	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo
@@ -348,6 +349,17 @@ void SettingsModel::setMediaEncryptionMandatory(bool mandatory) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	CoreModel::getInstance()->getCore()->setMediaEncryptionMandatory(mandatory);
 	emit mediaEncryptionMandatoryChanged();
+}
+
+bool SettingsModel::getCreateEndToEndEncryptedMeetingsAndGroupCalls() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return !!mConfig->getBool(SettingsModel::AppSection, "create_e2e_encrypted_conferences", false);
+}
+
+void SettingsModel::setCreateEndToEndEncryptedMeetingsAndGroupCalls(bool endtoend) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mConfig->setBool(SettingsModel::AppSection, "create_e2e_encrypted_conferences", endtoend);
+	emit createEndToEndEncryptedMeetingsAndGroupCallsChanged(endtoend);
 }
 
 // -----------------------------------------------------------------------------
@@ -690,7 +702,8 @@ void SettingsModel::setShortcuts(QVariantList data) {
 }
 
 QString SettingsModel::getDefaultDomain() const {
-	return Utils::coreStringToAppString(mConfig->getString(SettingsModel::AppSection, "default_domain", "sip.linphone.org"));
+	return Utils::coreStringToAppString(
+	    mConfig->getString(SettingsModel::AppSection, "default_domain", "sip.linphone.org"));
 }
 
 // clang-format off

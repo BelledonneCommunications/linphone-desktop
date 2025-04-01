@@ -103,6 +103,9 @@ public:
 	bool getMediaEncryptionMandatory() const;
 	void setMediaEncryptionMandatory(bool mandatory);
 
+	bool getCreateEndToEndEncryptedMeetingsAndGroupCalls() const;
+	void setCreateEndToEndEncryptedMeetingsAndGroupCalls(bool endtoend);
+
 	QVariantMap getRingerDevice() const;
 	void setRingerDevice(QVariantMap device);
 
@@ -209,6 +212,7 @@ signals:
 	void conferenceLayoutChanged();
 	void mediaEncryptionChanged();
 	void mediaEncryptionMandatoryChanged();
+	void createEndToEndEncryptedMeetingsAndGroupCallsChanged(bool endtoend);
 
 	void echoCancellationEnabledChanged(bool enabled);
 	void automaticallyRecordCallsEnabledChanged(bool enabled);

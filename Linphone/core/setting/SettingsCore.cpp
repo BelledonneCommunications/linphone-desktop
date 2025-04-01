@@ -68,6 +68,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	    LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(settingsModel->getDefaultMediaEncryption()));
 
 	mMediaEncryptionMandatory = settingsModel->getMediaEncryptionMandatory();
+	mCreateEndToEndEncryptedMeetingsAndGroupCalls = settingsModel->getCreateEndToEndEncryptedMeetingsAndGroupCalls();
 
 	mCaptureGain = settingsModel->getCaptureGain();
 	mPlaybackGain = settingsModel->getPlaybackGain();
@@ -129,6 +130,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mMediaEncryptions = settingsCore.mMediaEncryptions;
 	mMediaEncryption = settingsCore.mMediaEncryption;
 	mMediaEncryptionMandatory = settingsCore.mMediaEncryptionMandatory;
+	mCreateEndToEndEncryptedMeetingsAndGroupCalls = settingsCore.mCreateEndToEndEncryptedMeetingsAndGroupCalls;
 
 	// Call
 	mVideoEnabled = settingsCore.mVideoEnabled;
@@ -323,6 +325,13 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		mSettingsModelConnection->invokeToCore([this, mandatory]() { setMediaEncryptionMandatory(mandatory); });
 	});
 
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::createEndToEndEncryptedMeetingsAndGroupCallsChanged,
+	                                             [this](bool endtoend) {
+		                                             mSettingsModelConnection->invokeToCore([this, endtoend]() {
+			                                             setCreateEndToEndEncryptedMeetingsAndGroupCalls(endtoend);
+		                                             });
+	                                             });
+
 	mSettingsModelConnection->makeConnectToModel(
 	    &SettingsModel::videoDevicesChanged, [this](const QStringList devices) {
 		    mSettingsModelConnection->invokeToCore([this, devices]() { setVideoDevices(devices); });
@@ -413,16 +422,16 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 			    }
 		    });
 	    });
-	coreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, [this] (const std::shared_ptr<linphone::Core> &core,
-																					  const std::shared_ptr<linphone::Account> &account) {
-		QString accountDomain;
-		if (account) {
-			accountDomain = Utils::coreStringToAppString(account->getParams()->getDomain());
-		}
-		mSettingsModelConnection->invokeToCore([this, accountDomain]() {
-			setShowAccountDevices(accountDomain == mDefaultDomain);
-		});
-	});
+	coreModelConnection->makeConnectToModel(
+	    &CoreModel::defaultAccountChanged,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
+		    QString accountDomain;
+		    if (account) {
+			    accountDomain = Utils::coreStringToAppString(account->getParams()->getDomain());
+		    }
+		    mSettingsModelConnection->invokeToCore(
+		        [this, accountDomain]() { setShowAccountDevices(accountDomain == mDefaultDomain); });
+	    });
 }
 
 void SettingsCore::reset(const SettingsCore &settingsCore) {
@@ -448,6 +457,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setMediaEncryption(settingsCore.mMediaEncryption);
 
 	setMediaEncryptionMandatory(settingsCore.mMediaEncryptionMandatory);
+	setCreateEndToEndEncryptedMeetingsAndGroupCalls(settingsCore.mCreateEndToEndEncryptedMeetingsAndGroupCalls);
 
 	setCaptureGain(settingsCore.mCaptureGain);
 	setPlaybackGain(settingsCore.mPlaybackGain);
@@ -588,6 +598,18 @@ void SettingsCore::setMediaEncryptionMandatory(bool mandatory) {
 	if (mMediaEncryptionMandatory != mandatory) {
 		mMediaEncryptionMandatory = mandatory;
 		emit mediaEncryptionMandatoryChanged(mandatory);
+		setIsSaved(false);
+	}
+}
+
+bool SettingsCore::getCreateEndToEndEncryptedMeetingsAndGroupCalls() const {
+	return mCreateEndToEndEncryptedMeetingsAndGroupCalls;
+}
+
+void SettingsCore::setCreateEndToEndEncryptedMeetingsAndGroupCalls(bool endtoend) {
+	if (mCreateEndToEndEncryptedMeetingsAndGroupCalls != endtoend) {
+		mCreateEndToEndEncryptedMeetingsAndGroupCalls = endtoend;
+		emit createEndToEndEncryptedMeetingsAndGroupCallsChanged(endtoend);
 		setIsSaved(false);
 	}
 }
@@ -911,6 +933,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	    LinphoneEnums::toLinphone(LinphoneEnums::MediaEncryption(mMediaEncryption["id"].toInt())));
 
 	model->setMediaEncryptionMandatory(mMediaEncryptionMandatory);
+	model->setCreateEndToEndEncryptedMeetingsAndGroupCalls(mCreateEndToEndEncryptedMeetingsAndGroupCalls);
 
 	model->setCaptureGain(mCaptureGain);
 	model->setPlaybackGain(mPlaybackGain);
@@ -973,6 +996,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mMediaEncryption = LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(model->getDefaultMediaEncryption()));
 
 	mMediaEncryptionMandatory = model->getMediaEncryptionMandatory();
+	mCreateEndToEndEncryptedMeetingsAndGroupCalls = model->getCreateEndToEndEncryptedMeetingsAndGroupCalls();
 
 	mCaptureGain = model->getCaptureGain();
 	mPlaybackGain = model->getPlaybackGain();
