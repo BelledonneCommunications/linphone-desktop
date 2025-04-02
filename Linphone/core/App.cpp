@@ -793,7 +793,9 @@ void App::createCommandParser() {
 		 //: "URL, path or file"
 		 tr("command_line_option_config_to_fetch_arg")},
 
-		//{{"c", "call"}, tr("command_line_option_call").replace("%1", EXECUTABLE_NAME), tr("command_line_option_call_arg")}, {"minimized", tr("command_line_option_minimized")},
+		//{{"c", "call"}, tr("command_line_option_call").replace("%1", EXECUTABLE_NAME), tr("command_line_option_call_arg")},
+
+		{"minimized", tr("command_line_option_minimized")},
 
 		//: "Log to stdout some debug information while running"
 		{{"V", "verbose"}, tr("command_line_option_log_to_stdout")},

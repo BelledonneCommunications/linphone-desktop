@@ -139,7 +139,6 @@ Flickable {
 
     onSearchBarTextChanged: {
         if (!pauseSearch && (mainItem.searchOnEmpty || searchBarText != '')) {
-            console.log("change search text")
             searchText = searchBarText.length === 0 ? "*" : searchBarText
         }
     }
