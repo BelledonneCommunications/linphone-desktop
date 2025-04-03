@@ -83,16 +83,19 @@ bool isContactTemporary(std::shared_ptr<linphone::Friend> f, bool allowNullFrien
 
 void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> &magicSearch) {
 	auto results = magicSearch->getLastSearch();
-	qDebug() << log().arg("SDK send callback: onSearchResultsReceived : %1 results.").arg(results.size());
+	qInfo() << log().arg("SDK send callback: onSearchResultsReceived : %1 results.").arg(results.size());
 	auto appFriends = ToolModel::getAppFriendList();
 	auto ldapFriends = ToolModel::getLdapFriendList();
 	std::list<std::shared_ptr<linphone::SearchResult>> finalResults;
 	for (auto result : results) {
 		auto f = result->getFriend();
+		qInfo() << "result has flag friend" << result->hasSourceFlag(linphone::MagicSearch::Source::Friends);
+		qInfo() << "result has flag ldap" << result->hasSourceFlag(linphone::MagicSearch::Source::LdapServers);
+		qInfo() << "result has flag carddav" << result->hasSourceFlag(linphone::MagicSearch::Source::RemoteCardDAV);
 		bool isFromRemoteDirectory = result->hasSourceFlag(linphone::MagicSearch::Source::LdapServers) ||
 		                             result->hasSourceFlag(linphone::MagicSearch::Source::RemoteCardDAV);
 		if (!isFromRemoteDirectory && isContactTemporary(f, true)) {
-			qDebug() << "Do not show friend " << f->getName() << "which is in a temporary friend list";
+			qInfo() << "Do not show friend " << f->getName() << "which is not remote and is in a temporary friend list";
 			continue;
 		}
 		finalResults.push_back(result);
@@ -149,7 +152,7 @@ void MagicSearchModel::updateFriendListWithFriend(const std::shared_ptr<linphone
 			return;
 		}
 	}
-	qDebug() << log().arg("Adding Friend:") << linphoneFriend.get();
+	qInfo() << log().arg("Adding Friend:") << linphoneFriend.get();
 	friendList->addFriend(linphoneFriend);
 	emit CoreModel::getInstance()->friendCreated(linphoneFriend);
 }
