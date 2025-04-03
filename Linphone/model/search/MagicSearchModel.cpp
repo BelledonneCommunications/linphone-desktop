@@ -90,7 +90,7 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 	for (auto result : results) {
 		auto f = result->getFriend();
 		auto sourceFlags = result->getSourceFlags();
-		qInfo() << "result" << result->getAddress()->asStringUriOnly():
+		qInfo() << "result" << result->getAddress()->asStringUriOnly();
 		qInfo() << "result has flag friend" << result->hasSourceFlag(linphone::MagicSearch::Source::Friends) << ((sourceFlags & (int)linphone::MagicSearch::Source::Friends) != 0);
 		qInfo() << "result has flag ldap" << result->hasSourceFlag(linphone::MagicSearch::Source::LdapServers) << ((sourceFlags & (int)linphone::MagicSearch::Source::LdapServers) != 0);
 		qInfo() << "result has flag carddav" << result->hasSourceFlag(linphone::MagicSearch::Source::RemoteCardDAV) << ((sourceFlags & (int)linphone::MagicSearch::Source::RemoteCardDAV) != 0);
