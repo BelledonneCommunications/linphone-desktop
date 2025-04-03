@@ -89,11 +89,13 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 	std::list<std::shared_ptr<linphone::SearchResult>> finalResults;
 	for (auto result : results) {
 		auto f = result->getFriend();
-		qInfo() << "result has flag friend" << result->hasSourceFlag(linphone::MagicSearch::Source::Friends);
-		qInfo() << "result has flag ldap" << result->hasSourceFlag(linphone::MagicSearch::Source::LdapServers);
-		qInfo() << "result has flag carddav" << result->hasSourceFlag(linphone::MagicSearch::Source::RemoteCardDAV);
-		bool isFromRemoteDirectory = result->hasSourceFlag(linphone::MagicSearch::Source::LdapServers) ||
-		                             result->hasSourceFlag(linphone::MagicSearch::Source::RemoteCardDAV);
+		auto sourceFlags = result->getSourceFlags();
+		qInfo() << "result" << result->getAddress()->asStringUriOnly():
+		qInfo() << "result has flag friend" << result->hasSourceFlag(linphone::MagicSearch::Source::Friends) << ((sourceFlags & (int)linphone::MagicSearch::Source::Friends) != 0);
+		qInfo() << "result has flag ldap" << result->hasSourceFlag(linphone::MagicSearch::Source::LdapServers) << ((sourceFlags & (int)linphone::MagicSearch::Source::LdapServers) != 0);
+		qInfo() << "result has flag carddav" << result->hasSourceFlag(linphone::MagicSearch::Source::RemoteCardDAV) << ((sourceFlags & (int)linphone::MagicSearch::Source::RemoteCardDAV) != 0);
+		bool isFromRemoteDirectory = ((sourceFlags & (int)linphone::MagicSearch::Source::LdapServers) != 0) ||
+									 ((sourceFlags & (int)linphone::MagicSearch::Source::RemoteCardDAV) != 0);
 		if (!isFromRemoteDirectory && isContactTemporary(f, true)) {
 			qInfo() << "Do not show friend " << f->getName() << "which is not remote and is in a temporary friend list";
 			continue;
@@ -111,6 +113,7 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 		//"
 		//		         << (f ? f.get() : nullptr);
 		bool isLdap = (result->getSourceFlags() & (int)linphone::MagicSearch::Source::LdapServers) != 0;
+		qInfo() << "result is ldap" << isLdap;
 		// Do not add it into ldap_friends if it already exists in app_friends.
 		if (isLdap && f &&
 		    (!fList || fList->getDisplayName() != "app_friends")) { // Double check because of SDK merging that lead to
