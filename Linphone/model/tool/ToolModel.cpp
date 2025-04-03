@@ -327,6 +327,9 @@ std::shared_ptr<linphone::FriendList> ToolModel::getFriendList(const std::string
 	if (!friendList) {
 		friendList = core->createFriendList();
 		friendList->setDisplayName(listName);
+		if (listName == "ldap_friends") {
+			friendList->setType(linphone::FriendList::Type::ApplicationCache);
+		}
 		core->addFriendList(friendList);
 	}
 	return friendList;

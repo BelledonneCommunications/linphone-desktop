@@ -75,34 +75,12 @@ void MagicSearchModel::setMaxResults(int maxResults) {
 	}
 }
 
-bool isContactTemporary(std::shared_ptr<linphone::Friend> f, bool allowNullFriendList = false) {
-	auto friendList = f ? f->getFriendList() : nullptr;
-	if (friendList == nullptr && !allowNullFriendList) return true;
-	return friendList && (friendList == ToolModel::getLdapFriendList());
-}
-
 void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> &magicSearch) {
 	auto results = magicSearch->getLastSearch();
 	qInfo() << log().arg("SDK send callback: onSearchResultsReceived : %1 results.").arg(results.size());
 	auto appFriends = ToolModel::getAppFriendList();
 	auto ldapFriends = ToolModel::getLdapFriendList();
-	std::list<std::shared_ptr<linphone::SearchResult>> finalResults;
-	for (auto result : results) {
-		auto f = result->getFriend();
-		auto sourceFlags = result->getSourceFlags();
-		qInfo() << "result" << result->getAddress()->asStringUriOnly();
-		qInfo() << "result has flag friend" << result->hasSourceFlag(linphone::MagicSearch::Source::Friends) << ((sourceFlags & (int)linphone::MagicSearch::Source::Friends) != 0);
-		qInfo() << "result has flag ldap" << result->hasSourceFlag(linphone::MagicSearch::Source::LdapServers) << ((sourceFlags & (int)linphone::MagicSearch::Source::LdapServers) != 0);
-		qInfo() << "result has flag carddav" << result->hasSourceFlag(linphone::MagicSearch::Source::RemoteCardDAV) << ((sourceFlags & (int)linphone::MagicSearch::Source::RemoteCardDAV) != 0);
-		bool isFromRemoteDirectory = ((sourceFlags & (int)linphone::MagicSearch::Source::LdapServers) != 0) ||
-									 ((sourceFlags & (int)linphone::MagicSearch::Source::RemoteCardDAV) != 0);
-		if (!isFromRemoteDirectory && isContactTemporary(f, true)) {
-			qInfo() << "Do not show friend " << f->getName() << "which is not remote and is in a temporary friend list";
-			continue;
-		}
-		finalResults.push_back(result);
-	}
-	emit searchResultsReceived(finalResults);
+	emit searchResultsReceived(results);
 	for (auto result : results) {
 		auto f = result->getFriend();
 		auto fList = f ? f->getFriendList() : nullptr;
