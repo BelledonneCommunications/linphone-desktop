@@ -190,11 +190,6 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	                                      QAbstractOAuth::Stage stage, QMultiMap<QString, QVariant> *parameters) {
 		parameters->insert("login_hint", username);
 		parameters->replace("application_type", "native");
-		if (stage == QAbstractOAuth::Stage::RequestingAuthorization) {
-			QUrl redirectUri = parameters->value("redirect_uri").toUrl();
-			redirectUri.setHost("localhost");
-			parameters->replace("redirect_uri", redirectUri);
-		}
 		switch (stage) {
 			case QAbstractOAuth::Stage::RequestingAccessToken: {
 				//: Requesting access token
