@@ -35,6 +35,7 @@
 #include "model/listener/Listener.hpp"
 #include "model/logger/LoggerModel.hpp"
 #include "tool/AbstractObject.hpp"
+#include "model/search/MagicSearchModel.hpp"
 
 // =============================================================================
 
@@ -59,6 +60,11 @@ public:
 	bool setFetchConfig(QString filePath);
 	void migrate();
 
+	void searchInMagicSearch(QString filter,
+							 int sourceFlags,
+							 LinphoneEnums::MagicSearchAggregation aggregation,
+							 int maxResults);
+
 	bool mEnd = false;
 
 	std::shared_ptr<linphone::Core> mCore;
@@ -75,11 +81,13 @@ signals:
 	void requestFetchConfig(QString path);
 	void requestRestart();
 	void enabledLdapAddressBookSaved();
+	void magicSearchResultReceived(QString filter);
 
 private:
 	QString mConfigPath;
 	QTimer *mIterateTimer = nullptr;
 	QMap<QString, OIDCModel *> mOpenIdConnections;
+	std::shared_ptr<MagicSearchModel> mMagicSearch;
 
 	void setPathBeforeCreation();
 	void setPathsAfterCreation();

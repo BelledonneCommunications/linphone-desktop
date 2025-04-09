@@ -127,6 +127,16 @@ void CallHistoryCore::setSelf(QSharedPointer<CallHistoryCore> me) {
 		mCoreModelConnection->makeConnectToModel(&CoreModel::friendCreated, update);
 	mCoreModelConnection->makeConnectToModel(&CoreModel::friendUpdated, update);
 	mCoreModelConnection->makeConnectToModel(&CoreModel::friendRemoved, &CallHistoryCore::onRemoved);
+	// Update display name when display name has been requested from magic search cause not found in linphone friends
+	// (required to get the right display name if ldap friends cleared)
+	mCoreModelConnection->makeConnectToModel(&CoreModel::magicSearchResultReceived, [this, remoteAddress = mRemoteAddress] {
+		auto displayName = ToolModel::getDisplayName(remoteAddress);
+					mCoreModelConnection->invokeToCore([this, displayName]() {
+			mDisplayName = displayName;
+			emit displayNameChanged();
+		});
+	});
+
 }
 
 ConferenceInfoGui *CallHistoryCore::getConferenceInfoGui() const {

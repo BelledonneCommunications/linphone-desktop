@@ -118,6 +118,14 @@ void CoreModel::start() {
 	if (mCore->getLogCollectionUploadServerUrl().empty())
 		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
 	mIterateTimer->start();
+
+	auto linphoneSearch = mCore->createMagicSearch();
+	linphoneSearch->setLimitedSearch(true);
+	mMagicSearch = Utils::makeQObject_ptr<MagicSearchModel>(linphoneSearch);
+	mMagicSearch->setSelf(mMagicSearch);
+	connect(mMagicSearch.get(), &MagicSearchModel::searchResultsReceived, this, [this] {
+		emit magicSearchResultReceived(mMagicSearch->mLastSearch);
+	});
 }
 // -----------------------------------------------------------------------------
 
@@ -343,6 +351,12 @@ void CoreModel::migrate() {
 	}
 
 	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
+}
+
+void CoreModel::searchInMagicSearch(QString filter, int sourceFlags,
+                         LinphoneEnums::MagicSearchAggregation aggregation,
+                         int maxResults) {
+    mMagicSearch->search(filter, sourceFlags, aggregation, maxResults);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------

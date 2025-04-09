@@ -225,6 +225,8 @@ VariantObject *Utils::haveAccount() {
 		return CoreModel::getInstance()->getCore()->getAccountList().size() > 0;
 	});
 	result->makeUpdate(CoreModel::getInstance().get(), &CoreModel::accountAdded);
+	result->makeUpdate(CoreModel::getInstance().get(), &CoreModel::accountRemoved);
+
 	result->requestValue();
 	return result;
 }
@@ -418,6 +420,7 @@ VariantObject *Utils::findFriendByAddress(const QString &address) {
 	};
 	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendCreated, updateValue); // New Friend
 	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendRemoved, updateValue); // New Friend
+	data->makeUpdateCond(CoreModel::getInstance().get(), &CoreModel::friendUpdated, updateValue);
 	data->requestValue();
 	return data;
 }

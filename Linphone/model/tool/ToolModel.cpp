@@ -78,10 +78,10 @@ std::shared_ptr<linphone::AudioDevice> ToolModel::findAudioDevice(const QString 
 	return nullptr;
 }
 
-QString ToolModel::getDisplayName(const std::shared_ptr<const linphone::Address> &address) {
+QString ToolModel::getDisplayName(const std::shared_ptr<linphone::Address> &address) {
 	QString displayName;
 	if (address) {
-		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(address);
+		auto linFriend = ToolModel::findFriendByAddress(address);
 		if (linFriend) {
 			if (displayName.isEmpty()) displayName = Utils::coreStringToAppString(linFriend->getName());
 		}
@@ -119,11 +119,22 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &
 	auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
 	if (!defaultFriendList) return nullptr;
 	auto linphoneAddr = ToolModel::interpretUrl(address);
-	return CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+	if (linphoneAddr)
+		return ToolModel::findFriendByAddress(linphoneAddr);
+	else
+		return nullptr;
 }
 
 std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr<linphone::Address> linphoneAddr) {
-	return CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+	auto f = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+	if (!f) {
+		qDebug() << "Couldn't find friend" << linphoneAddr->asStringUriOnly() << "in core, use magic search";
+		CoreModel::getInstance()->searchInMagicSearch(Utils::coreStringToAppString(linphoneAddr->asStringUriOnly()),
+														(int)linphone::MagicSearch::Source::LdapServers
+														| (int)linphone::MagicSearch::Source::RemoteCardDAV
+														, LinphoneEnums::MagicSearchAggregation::Friend, 50);
+	}
+	return f;
 }
 
 bool ToolModel::createCall(const QString &sipAddress,

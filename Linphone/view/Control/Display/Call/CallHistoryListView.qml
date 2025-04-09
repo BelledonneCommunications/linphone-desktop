@@ -104,8 +104,8 @@ ListView {
 
     //----------------------------------------------------------------
     onVisibleChanged: {
-        if (!visible)
-            currentIndex = -1
+//        if (!visible)
+//            currentIndex = -1
     }
 
     BusyIndicator {

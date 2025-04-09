@@ -77,5 +77,5 @@ void VariantObject::setDefaultValue(QVariant value) {
 	mCoreObject->setDefaultValue(value);
 }
 void VariantObject::requestValue() {
-	emit mCoreObject->requestValue();
+	if (mCoreObject) emit mCoreObject->requestValue();
 }
