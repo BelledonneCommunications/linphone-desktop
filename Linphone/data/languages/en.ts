@@ -1101,6 +1101,18 @@
         <extracomment>&quot;Autoriser la vidéo&quot;</extracomment>
         <translation>Enable video</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="77"/>
+		<source>settings_calls_command_line_title</source>
+		<extracomment>&quot;Redirection vers outil externe lors d'un appel entrant&quot;</extracomment>
+		<translation>Command Line to run upon incoming call</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="78"/>
+		<source>settings_calls_command_line_title_place_holder</source>
+		<extracomment>&quot;commande "https://exemple.com/?numero=$1&amp;nom=$2"&quot;</extracomment>
+		<translation>command "https://example.com/?phone=$1&amp;displayName=$2"</translation>
+	</message>
 </context>
 <context>
     <name>CallStatistics</name>

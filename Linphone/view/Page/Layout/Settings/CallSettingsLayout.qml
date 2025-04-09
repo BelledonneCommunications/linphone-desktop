@@ -68,6 +68,17 @@ AbstractSettingsLayout {
                 propertyName: "videoEnabled"
                 propertyOwner: SettingsCpp
             }
+			DecoratedTextField {
+				visible: !SettingsCpp.disableCommandLine
+				Layout.fillWidth: true
+				propertyName: "commandLine"
+				propertyOwner: SettingsCpp
+				//: Command line
+				title: qsTr("settings_calls_command_line_title")
+				placeHolder: qsTr("settings_calls_command_line_title_place_holder")
+				useTitleAsPlaceHolder: false
+				toValidate: true
+			}
 		}
 	}
 

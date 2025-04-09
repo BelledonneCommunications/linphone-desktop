@@ -184,6 +184,8 @@ public:
 	DECLARE_GETSET(QVariantList, shortcuts, Shortcuts)
 	DECLARE_GETSET(bool, usernameOnlyForLdapLookupsInCalls, UsernameOnlyForLdapLookupsInCalls)
 	DECLARE_GETSET(bool, usernameOnlyForCardDAVLookupsInCalls, UsernameOnlyForCardDAVLookupsInCalls)
+	DECLARE_GETSET(QString, commandLine, CommandLine)
+	DECLARE_GETSET(bool, disableCommandLine, DisableCommandLine)
 
 signals:
 	void logsUploadUrlChanged();

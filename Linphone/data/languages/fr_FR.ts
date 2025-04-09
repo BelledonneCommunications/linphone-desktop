@@ -1101,6 +1101,18 @@
         <extracomment>&quot;Autoriser la vidéo&quot;</extracomment>
         <translation>Autoriser la vidéo</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="77"/>
+		<source>settings_calls_command_line_title</source>
+		<extracomment>&quot;Redirection vers outil externe lors d'un appel entrant&quot;</extracomment>
+		<translation>Redirection vers outil externe lors d'un appel entrant.</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="78"/>
+		<source>settings_calls_command_line_title_place_holder</source>
+		<extracomment>&quot;commande "https://exemple.com/?numero=$1&amp;nom=$2"&quot;</extracomment>
+		<translation>commande "https://exemple.com/?numero=$1&amp;nom=$2"</translation>
+	</message>
 </context>
 <context>
     <name>CallStatistics</name>

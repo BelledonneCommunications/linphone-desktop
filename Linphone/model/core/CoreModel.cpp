@@ -410,6 +410,16 @@ void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
                                    const std::string &message) {
 	if (state == linphone::Call::State::IncomingReceived) {
 		App::getInstance()->getNotifier()->notifyReceivedCall(call);
+		if (!core->getConfig()->getBool(SettingsModel::UiSection, "disable_command_line", false) &&
+		    !core->getConfig()->getString(SettingsModel::UiSection, "command_line", "").empty()) {
+			QString command = Utils::coreStringToAppString(
+			    core->getConfig()->getString(SettingsModel::UiSection, "command_line", ""));
+			QString userName = Utils::coreStringToAppString(call->getRemoteAddress()->getUsername());
+			QString displayName = Utils::coreStringToAppString(call->getRemoteAddress()->getDisplayName());
+			command = command.replace("$1", userName);
+			command = command.replace("$2", displayName);
+			Utils::runCommandLine(command);
+		}
 	}
 	if (state == linphone::Call::State::End && SettingsModel::dndEnabled(core->getConfig()) &&
 	    core->getCallsNb() == 0) { // Disable tones in DND mode if no more calls are running.

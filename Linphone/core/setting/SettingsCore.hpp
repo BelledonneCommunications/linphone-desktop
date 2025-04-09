@@ -229,6 +229,8 @@ public:
 	DECLARE_CORE_MEMBER(int, shortcutCount, ShortcutCount)
 	DECLARE_CORE_MEMBER(QVariantList, shortcuts, Shortcuts)
 	DECLARE_CORE_GETSET_MEMBER(bool, callToneIndicationsEnabled, CallToneIndicationsEnabled)
+	DECLARE_CORE_GETSET_MEMBER(bool, disableCommandLine, DisableCommandLine)
+	DECLARE_CORE_GETSET_MEMBER(QString, commandLine, CommandLine)
 
 signals:
 

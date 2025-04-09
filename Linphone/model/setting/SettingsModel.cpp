@@ -732,6 +732,8 @@ void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(shortcuts, Shortcuts)
 	DEFINE_NOTIFY_CONFIG_READY(usernameOnlyForLdapLookupsInCalls, UsernameOnlyForLdapLookupsInCalls)
 	DEFINE_NOTIFY_CONFIG_READY(usernameOnlyForCardDAVLookupsInCalls, UsernameOnlyForCardDAVLookupsInCalls)
+	DEFINE_NOTIFY_CONFIG_READY(commandLine, CommandLine)
+	DEFINE_NOTIFY_CONFIG_READY(disableCommandLine, DisableCommandLine)
 }
 
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", true)
@@ -860,4 +862,17 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 							UsernameOnlyForCardDAVLookupsInCalls,
 							"username_only_for_carddav_lookups_in_calls",
 							false)
+DEFINE_GETSET_CONFIG_STRING(SettingsModel,
+							commandLine,
+							CommandLine,
+							"command_line",
+							"")
+DEFINE_GETSET_CONFIG(SettingsModel,
+							bool,
+							Bool,
+							disableCommandLine,
+					 		DisableCommandLine,
+							"disable_command_line",
+							false)
+
     // clang-format on

@@ -40,9 +40,17 @@
 #include <QDesktopServices>
 #include <QHostAddress>
 #include <QImageReader>
+#include <QProcess>
 #include <QQuickWindow>
 #include <QRandomGenerator>
 #include <QRegularExpression>
+
+#ifdef Q_OS_WIN
+#ifndef NOMINMAX
+#define NOMINMAX 1
+#endif
+#include <windows.h>
+#endif
 
 DEFINE_ABSTRACT_OBJECT(Utils)
 
@@ -1440,7 +1448,7 @@ QList<QVariant> Utils::append(const QList<QVariant> a, const QList<QVariant> b) 
 
 QString Utils::getAddressToDisplay(QVariantList addressList, QString filter, QString defaultAddress) {
 	if (filter.isEmpty()) return defaultAddress;
-	for (auto& item: addressList) {
+	for (auto &item : addressList) {
 		QString address = item.toMap()["address"].toString();
 		if (address.contains(filter)) return address;
 	}
@@ -1496,4 +1504,45 @@ Utils::createFriendDeviceVariant(const QString &name, const QString &address, Li
 	map.insert("address", address);
 	map.insert("securityLevel", QVariant::fromValue(level));
 	return map;
+}
+
+// CLI
+
+void Utils::runCommandLine(const QString command) {
+	QStringList arguments;
+	QString program;
+
+#ifdef Q_OS_WIN
+	std::wstring fullCommand = std::wstring(L"cmd.exe /C ") + command.toStdWString();
+	STARTUPINFOW si;
+	PROCESS_INFORMATION pi;
+	ZeroMemory(&si, sizeof(si));
+	ZeroMemory(&pi, sizeof(pi));
+	si.cb = sizeof(si);
+	si.dwFlags = STARTF_USESHOWWINDOW;
+	si.wShowWindow = SW_HIDE;
+
+	BOOL success = CreateProcessW(nullptr,            // Application name
+	                              fullCommand.data(), // Command line (mutable)
+	                              nullptr,            // Process security attributes
+	                              nullptr,            // Primary thread security attributes
+	                              FALSE,              // Inherit handles
+	                              CREATE_NO_WINDOW,   // Creation flags (hide window)
+	                              nullptr,            // Environment
+	                              nullptr,            // Current directory
+	                              &si,                // STARTUPINFO
+	                              &pi                 // PROCESS_INFORMATION
+	);
+
+	if (success) {
+		CloseHandle(pi.hProcess);
+		CloseHandle(pi.hThread);
+	} else {
+		lWarning() << "Failed to start process. GetLastError() =" << (int)GetLastError();
+	}
+#elif defined(Q_OS_MACOS) || defined(Q_OS_LINUX)
+	QProcess::startDetached("/bin/sh", {"-c", command});
+#else
+	lWarning() << "Unsupported OS!";
+#endif
 }

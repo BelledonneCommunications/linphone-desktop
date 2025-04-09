@@ -186,6 +186,10 @@ public:
 	static QVariantMap
 	createFriendDeviceVariant(const QString &name, const QString &address, LinphoneEnums::SecurityLevel level);
 
+	// CLI
+
+	static void runCommandLine(QString command);
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 };

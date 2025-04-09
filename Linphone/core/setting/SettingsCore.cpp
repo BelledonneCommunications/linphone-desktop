@@ -122,6 +122,8 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(ShortcutCount, settingsModel)
 	INIT_CORE_MEMBER(Shortcuts, settingsModel)
 	INIT_CORE_MEMBER(CallToneIndicationsEnabled, settingsModel)
+	INIT_CORE_MEMBER(CommandLine, settingsModel)
+	INIT_CORE_MEMBER(DisableCommandLine, settingsModel)
 }
 
 SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
@@ -194,6 +196,8 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mShortcutCount = settingsCore.mShortcutCount;
 	mShortcuts = settingsCore.mShortcuts;
 	mCallToneIndicationsEnabled = settingsCore.mCallToneIndicationsEnabled;
+	mCommandLine = settingsCore.mCommandLine;
+	mDisableCommandLine = settingsCore.mDisableCommandLine;
 
 	mDefaultDomain = settingsCore.mDefaultDomain;
 	mShowAccountDevices = settingsCore.mShowAccountDevices;
@@ -409,6 +413,10 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                        shortcuts, Shortcuts)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
 	                           callToneIndicationsEnabled, CallToneIndicationsEnabled)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
+	                           commandLine, CommandLine)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
+	                           disableCommandLine, DisableCommandLine)
 
 	auto coreModelConnection = SafeConnection<SettingsCore, CoreModel>::create(me, CoreModel::getInstance());
 
