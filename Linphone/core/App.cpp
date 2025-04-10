@@ -413,6 +413,11 @@ void App::init() {
 			QThread::msleep(100);
 	}
 
+	// Init locale.
+	mTranslatorCore = new DefaultTranslatorCore(this);
+	mDefaultTranslatorCore = new DefaultTranslatorCore(this);
+	initLocale();
+
 	lInfo() << log().arg("Display server : %1").arg(platformName());
 }
 
@@ -518,10 +523,6 @@ void App::initCore() {
 				    setAutoStart(settings->getAutoStart());
 				    setQuitOnLastWindowClosed(settings->getExitOnClose());
 				}
-				// Init locale.
-				mTranslatorCore = new DefaultTranslatorCore(this);
-				mDefaultTranslatorCore = new DefaultTranslatorCore(this);
-				initLocale();
 			    const QUrl url("qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml");
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,

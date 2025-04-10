@@ -78,7 +78,6 @@ void CoreModel::start() {
 	    linphone::Factory::get()->createCore(Utils::appStringToCoreString(Paths::getConfigFilePath(mConfigPath)),
 	                                         Utils::appStringToCoreString(Paths::getFactoryConfigFilePath()), nullptr);
 	setMonitor(mCore);
-	setPathsAfterCreation();
 	mCore->enableRecordAware(true);
 	mCore->setVideoDisplayFilter("MSQOGL");
 	mCore->usePreviewWindow(true);
