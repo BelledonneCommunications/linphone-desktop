@@ -24,10 +24,13 @@ FocusScope{
 		do {
 			var parentItem = item.parent 
 			if (parentItem.contentItem) {
-				if (parentItem.contentY >= mainItem.y)
-					parentItem.contentY = mainItem.y;
-				else if (parentItem.contentY+height <= mainItem.y+mainItem.height)
-					parentItem.contentY = mainItem.y + mainItem.height - height;
+                var itemPosInParent = mainItem.mapToItem(parentItem.contentItem, mainItem.x, mainItem.y)
+                if (parentItem.contentY > itemPosInParent.y) {
+                    parentItem.contentY = itemPosInParent.y;
+                }
+                else if (parentItem.contentY+parentItem.height < itemPosInParent.y+mainItem.height) {
+                    parentItem.contentY = itemPosInParent.y + mainItem.height - height;
+                }
 			}
 			item = parentItem
 		} while(item.parent != undefined && parentItem.contentItem === undefined)
