@@ -91,7 +91,6 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 		//"
 		//		         << (f ? f.get() : nullptr);
 		bool isLdap = (result->getSourceFlags() & (int)linphone::MagicSearch::Source::LdapServers) != 0;
-		qInfo() << "result is ldap" << isLdap;
 		// Do not add it into ldap_friends if it already exists in app_friends.
 		if (isLdap && f &&
 		    (!fList || fList->getDisplayName() != "app_friends")) { // Double check because of SDK merging that lead to

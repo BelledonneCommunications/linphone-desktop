@@ -153,31 +153,31 @@ Flickable {
     }
 
     Keys.onPressed: event => {
-                        if (!event.accepted) {
-                            if (event.key == Qt.Key_Up
-                                || event.key == Qt.Key_Down) {
-                                var newItem
-                                var direction = (event.key == Qt.Key_Up ? -1 : 1)
-                                if (suggestionsList.activeFocus)
-                                newItem = findNextList(suggestionsList, 0,
-                                                       direction)
-                                else if (contactsList.activeFocus)
-                                newItem = findNextList(contactsList, 0,
-                                                       direction)
-                                else if (favoritesList.activeFocus)
-                                newItem = findNextList(favoritesList, 0,
-                                                       direction)
-                                else
-                                newItem = findNextList(suggestionsList, 0,
-                                                       direction)
-                                if (newItem) {
-                                    newItem.selectIndex(
-                                        direction > 0 ? -1 : newItem.model.count - 1)
-                                    event.accepted = true
-                                }
-                            }
-                        }
-                    }
+        if (!event.accepted) {
+            if (event.key == Qt.Key_Up
+                || event.key == Qt.Key_Down) {
+                var newItem
+                var direction = (event.key == Qt.Key_Up ? -1 : 1)
+                if (suggestionsList.activeFocus)
+                newItem = findNextList(suggestionsList, 0,
+                                       direction)
+                else if (contactsList.activeFocus)
+                newItem = findNextList(contactsList, 0,
+                                       direction)
+                else if (favoritesList.activeFocus)
+                newItem = findNextList(favoritesList, 0,
+                                       direction)
+                else
+                newItem = findNextList(suggestionsList, 0,
+                                       direction)
+                if (newItem) {
+                    newItem.selectIndex(
+                        direction > 0 ? -1 : newItem.model.count - 1)
+                    event.accepted = true
+                }
+            }
+        }
+    }
     Component.onCompleted: {
         if (confInfoGui) {
             for (var i = 0; i < confInfoGui.core.participants.length; ++i) {
@@ -217,12 +217,14 @@ Flickable {
     }
 
     onAtYEndChanged: if (atYEnd) {
-                         if ((contactsProxy.haveMore && contactList.expanded)
-                                 || mainItem.hideSuggestions)
-                             contactsProxy.displayMore()
-                         else
-                             suggestionsProxy.displayMore()
-                     }
+        if (favoritesProxy.haveMore && favoritesList.expanded && mainItem.showFavorites)
+            favoritesProxy.displayMore()
+        else if (contactsProxy.haveMore && contactsList.expanded) {
+            contactsProxy.displayMore()
+        }
+        else
+            suggestionsProxy.displayMore()
+    }
     Behavior on contentY {
         NumberAnimation {
             duration: 500
@@ -293,6 +295,7 @@ Flickable {
                                           }
 
             property MagicSearchProxy proxy: MagicSearchProxy {
+                id: favoritesProxy
                 parentProxy: mainItem.mainModel
                 filterType: MagicSearchProxy.FilteringTypes.Favorites
             }
