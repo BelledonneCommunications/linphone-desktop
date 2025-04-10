@@ -447,6 +447,7 @@ QList<QVariant> FriendCore::getAllAddresses() const {
 		++addressIt;
 	}
 	addresses << phoneNumbers;
+	addresses << mAddressList;
 	return addresses;
 }
 

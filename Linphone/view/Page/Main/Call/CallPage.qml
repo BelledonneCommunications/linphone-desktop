@@ -330,9 +330,8 @@ AbstractMainPage {
                     groupCallVisible: true
                     searchBarColor: DefaultStyle.grey_100
                     onContactClicked: contact => {
-                                          mainWindow.startCallWithContact(
-                                              contact, false, callContactsList)
-                                      }
+                        mainWindow.startCallWithContact(contact, false, callContactsList)
+                    }
                     onGroupCallCreationRequested: {
                         console.log("groupe call requetsed")
                         listStackView.push(groupCallItem)
