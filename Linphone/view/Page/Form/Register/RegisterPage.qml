@@ -210,7 +210,7 @@ LoginLayout {
                                     //: "Confirmation mot de passe"
                                     label: qsTr("assistant_account_register_password_confirmation")
 									mandatory: true
-									enableErrorText: true
+                                    enableErrorText: false
 									contentItem: TextField {
 										id: confirmPwdInput
 										hidden: true
