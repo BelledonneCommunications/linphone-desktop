@@ -131,6 +131,7 @@ FocusScope {
 						id: contactList
 						Layout.fillWidth: true
 						Layout.fillHeight: true
+                        showContactMenu: false
 						searchBarText: searchBar.text
 						onContactSelected: (contact) => {
 							mainItem.contactClicked(contact)
