@@ -109,7 +109,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mIsStarted = mDuration > 0;
 	mMicrophoneMuted = call->getMicrophoneMuted();
 	mSpeakerMuted = call->getSpeakerMuted();
-	auto videoDirection = call->getCurrentParams()->getVideoDirection();
+	auto videoDirection = call->getParams()->getVideoDirection();
 	mLocalVideoEnabled =
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
 	auto remoteParams = call->getRemoteParams();

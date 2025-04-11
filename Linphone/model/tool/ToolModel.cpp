@@ -182,7 +182,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 		SettingsModel::getInstance()->setCallToneIndicationsEnabled(true);
 	}
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
-	if (localVideoEnabled) CallModel::activateLocalVideo(params, localVideoEnabled);
+	CallModel::activateLocalVideo(params, localVideoEnabled);
 
 	bool micEnabled = options.contains("microEnabled") ? options["microEnabled"].toBool() : true;
 	params->enableMic(micEnabled);
