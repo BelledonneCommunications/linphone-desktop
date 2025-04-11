@@ -22,7 +22,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/core/CoreModel.cpp
 	
 	model/friend/FriendModel.cpp
-	
+	model/friend/FriendsManager.cpp
+
 	model/listener/Listener.hpp
 	
 	model/logger/LoggerModel.cpp

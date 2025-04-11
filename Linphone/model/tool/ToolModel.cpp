@@ -22,6 +22,7 @@
 #include "core/App.hpp"
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "model/friend/FriendsManager.hpp"
 #include "tool/Utils.hpp"
 #include <QDebug>
 #include <QDirIterator>
@@ -126,8 +127,29 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &
 }
 
 std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr<linphone::Address> linphoneAddr) {
+	auto friendsManager = FriendsManager::getInstance();
+	QString key = Utils::coreStringToAppString(linphoneAddr->asStringUriOnly());
+	if (friendsManager->isInKnownFriends(key)) {
+		qDebug() << "Friend have been found in known friend, return it";
+		return friendsManager->getKnownFriendAtKey(key);
+	} else 	if (friendsManager->isInUnknownFriends(key)) {
+		qDebug() << "Friend have been found in unknown friend, return it";
+		return friendsManager->getUnknownFriendAtKey(key);
+	}
 	auto f = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+	if (f) {
+		if (friendsManager->isInUnknownFriends(key)) {
+			friendsManager->removeUnknownFriend(key);
+		}
+		qDebug() << "found friend, add to known map";
+		friendsManager->appendKnownFriend(linphoneAddr, f);
+	}
 	if (!f) {
+		if (friendsManager->isInOtherAddresses(key)) {
+			qDebug() << "A magic search has already be done for this address and nothing was found, return";
+			return nullptr;
+		}
+		friendsManager->appendOtherAddress(key);
 		qDebug() << "Couldn't find friend" << linphoneAddr->asStringUriOnly() << "in core, use magic search";
 		CoreModel::getInstance()->searchInMagicSearch(Utils::coreStringToAppString(linphoneAddr->asStringUriOnly()),
 														(int)linphone::MagicSearch::Source::LdapServers

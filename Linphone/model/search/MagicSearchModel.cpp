@@ -23,6 +23,7 @@
 #include <QDebug>
 
 #include "model/core/CoreModel.hpp"
+#include "model/friend/FriendsManager.hpp"
 #include "model/setting/SettingsModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
@@ -83,6 +84,15 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 	emit searchResultsReceived(results);
 	for (auto result : results) {
 		auto f = result->getFriend();
+		auto friendsManager = FriendsManager::getInstance();
+		if (f) {
+			qDebug() << "friend exists, append to unknown map";
+			auto friendAddress = f->getAddress();
+			friendsManager->appendUnknownFriend(friendAddress->clone(), f);
+			if (friendsManager->isInOtherAddresses(Utils::coreStringToAppString(friendAddress->asStringUriOnly()))) {
+				friendsManager->removeOtherAddress(Utils::coreStringToAppString(friendAddress->asStringUriOnly()));
+			}
+		}
 		auto fList = f ? f->getFriendList() : nullptr;
 
 		//		qDebug() << log().arg("") << (f ? f->getName().c_str() : "NoFriend") << ", "
