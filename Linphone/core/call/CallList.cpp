@@ -72,7 +72,7 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 				mustBeInMainThread(getClassName());
 				resetData<CallCore>(*calls);
 				setHaveCall(calls->size() > 0);
-				setCurrentCall(currentCallCore);
+				setCurrentCallCore(currentCallCore);
 				delete calls;
 			});
 		});
@@ -141,7 +141,7 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 		mModelConnection->invokeToCore([this, model]() {
 			// We set the current here and not on firstCallStarted event because we don't want to add unicity check
 			// while keeping the same model between list and current call.
-			if (mList.size() == 0) setCurrentCall(model);
+			if (mList.size() == 0) setCurrentCallCore(model);
 			add(model);
 		});
 	});
@@ -158,7 +158,15 @@ CallGui *CallList::getCurrentCall() const {
 	else return nullptr;
 }
 
-void CallList::setCurrentCall(QSharedPointer<CallCore> call) {
+void CallList::setCurrentCall(CallGui* callGui) {
+	auto callCore = callGui ? callGui->mCore : nullptr;
+	if (mCurrentCall != callCore) {
+		mCurrentCall = callCore;
+		emit currentCallChanged();
+	}
+}
+
+void CallList::setCurrentCallCore(QSharedPointer<CallCore> call) {
 	if (mCurrentCall != call) {
 		mCurrentCall = call;
 		emit currentCallChanged();
@@ -194,7 +202,7 @@ void CallList::onStateChanged() {
 		case LinphoneEnums::CallState::StreamsRunning:
 		case LinphoneEnums::CallState::Resuming: {
 			auto sharedCall = get(call);
-			setCurrentCall(sharedCall.objectCast<CallCore>());
+			setCurrentCallCore(sharedCall.objectCast<CallCore>());
 			break;
 		}
 		case LinphoneEnums::CallState::Released: {

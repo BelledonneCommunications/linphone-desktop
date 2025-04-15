@@ -12,7 +12,7 @@ ListView {
 	model: CallProxy {
 		id: callProxy
 		sourceModel: AppCpp.calls
-	}
+    }
 	implicitHeight: contentHeight
     spacing: Math.round(15 * DefaultStyle.dp)
 	clip: true
@@ -21,7 +21,7 @@ ListView {
 	signal transferCallToAnotherRequested(CallGui dest)
 
 	property bool isTransferList: false
-	property string currentRemoteAddress: callProxy.currentCall ? callProxy.currentCall.core.remoteAddress : ""
+    property string currentRemoteAddress: AppCpp.calls.currentCall ? AppCpp.calls.currentCall.core.remoteAddress : ""
 
 	delegate: RowLayout {
         spacing: Math.round(8 * DefaultStyle.dp)
@@ -72,7 +72,7 @@ ListView {
             Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
             Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 			Layout.alignment: Qt.AlignVCenter
-			visible: mainItem.isTransferList && mainItem.currentRemoteAddress !== modelData.core.remoteAddress
+            visible: mainItem.isTransferList && (mainItem.currentRemoteAddress !== modelData.core.remoteAddress)
 			icon.source: AppIcons.transferCall
 			style: ButtonStyle.noBackground
 			onClicked: {

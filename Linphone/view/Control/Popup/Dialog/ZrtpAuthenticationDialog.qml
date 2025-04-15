@@ -194,6 +194,7 @@ Dialog {
                                 textSize: Math.round(32 * DefaultStyle.dp)
                                 textWeight: Math.round(400 * DefaultStyle.dp)
 								text: modelData
+                                shadowEnabled: true
                                 radius: Math.round(71 * DefaultStyle.dp)
 								textColor: DefaultStyle.main2_600
 								onClicked: {

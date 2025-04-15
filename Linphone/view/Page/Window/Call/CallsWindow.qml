@@ -358,14 +358,17 @@ AbstractWindow {
                                     }
 
                                     text: (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released)
-                                        //: "Appel terminé"
+                                        //: Appel terminé
                                         ? qsTr("call_ended")
-                                        : mainWindow.call && (mainWindow.call.core.paused || (mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote))
+                                        : mainWindow.call && (mainWindow.call.core.paused)
                                             ? (mainWindow.conference
-                                               //: "Réunion mise en pause"
+                                               //: Meeting paused
                                                 ? qsTr("conference_paused")
-                                                  //: "Appel mis en pause"
-                                                : qsTr("call_paused"))
+                                                : mainWindow.callState === LinphoneEnums.CallState.PausedByRemote
+                                                    //: Call paused by remote
+                                                    ? qsTr("call_paused_by_remote")
+                                                    //: Call paused
+                                                    : qsTr("call_paused"))
                                             : mainWindow.conference
                                                 ? mainWindow.conference.core.subject
                                                 : remoteName
@@ -493,8 +496,14 @@ AbstractWindow {
                                         hoverEnabled: true
                                         cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
                                         onClicked: {
-                                            rightPanel.visible = true
-                                            rightPanel.replace(encryptionPanel)
+                                            if (rightPanel.visible
+                                                    && rightPanel.contentStackView.currentItem.objectName
+                                                    === "encryptionPanel")
+                                                rightPanel.visible = false
+                                            else {
+                                                rightPanel.visible = true
+                                                rightPanel.replace(encryptionPanel)
+                                            }
                                         }
                                     }
                                 }
@@ -969,6 +978,7 @@ AbstractWindow {
             Component {
                 id: encryptionPanel
                 EncryptionSettings {
+                    objectName: "encryptionPanel"
                     call: mainWindow.call
                     Control.StackView.onActivated: {
                         //: Chiffrement
@@ -980,6 +990,7 @@ AbstractWindow {
             Component {
                 id: statsPanel
                 CallStatistics {
+                    objectName: "statsPanel"
                     Control.StackView.onActivated: {
                         //: Statistiques
                         rightPanel.headerTitleText = qsTr("call_stats_title")

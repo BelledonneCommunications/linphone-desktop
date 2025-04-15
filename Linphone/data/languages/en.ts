@@ -915,7 +915,7 @@
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="168"/>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="595"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="594"/>
         <source>menu_delete_history</source>
         <extracomment>&quot;Supprimer l&apos;historique&quot;</extracomment>
         <translation>Delete history</translation>
@@ -945,13 +945,13 @@
         <translation>New call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="382"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="381"/>
         <source>call_start_group_call_title</source>
         <extracomment>&quot;Appel de groupe&quot;</extracomment>
         <translation>Group call</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="393"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="392"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
         <translation>
@@ -960,92 +960,92 @@
         </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="408"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="407"/>
         <source>call_action_start_group_call</source>
         <extracomment>&quot;Lancer&quot;</extracomment>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="426"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="425"/>
         <source>history_group_call_start_dialog_subject_hint</source>
         <extracomment>&quot;Nom du groupe&quot;</extracomment>
         <translation>Group name</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="435"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="434"/>
         <source>required</source>
         <extracomment>&quot;Requis&quot;</extracomment>
         <translation>Required</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="457"/>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="461"/>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="571"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="456"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="460"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="570"/>
         <source>information_popup_error_title</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="459"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="458"/>
         <source>group_call_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné à l&apos;appel de groupe</extracomment>
         <translation>A name must be provided for the call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="463"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="462"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
         <translation>You are not connected</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="533"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="532"/>
         <source>menu_see_existing_contact</source>
         <extracomment>&quot;Voir le contact&quot;</extracomment>
         <translation>See contact</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="535"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="534"/>
         <source>menu_add_address_to_contacts</source>
         <extracomment>&quot;Ajouter aux contacts&quot;</extracomment>
         <translation>Add to contacts</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="553"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="552"/>
         <source>menu_copy_sip_address</source>
         <extracomment>&quot;Copier l&apos;adresse SIP&quot;</extracomment>
         <translation>Copy SIP address</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="565"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="564"/>
         <source>sip_address_copied_to_clipboard_toast</source>
         <extracomment>Adresse copiée</extracomment>
         <translation>SIP address copied</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="567"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="566"/>
         <source>sip_address_copied_to_clipboard_message</source>
         <extracomment>L&apos;adresse a été copié dans le presse_papiers</extracomment>
         <translation>The address has been copied to the clipboard</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="573"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="572"/>
         <source>sip_address_copy_to_clipboard_error</source>
         <extracomment>&quot;Erreur lors de la copie de l&apos;adresse&quot;</extracomment>
         <translation>Error copying address</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="671"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="670"/>
         <source>notification_missed_call_title</source>
         <extracomment>&quot;Appel manqué&quot;</extracomment>
         <translation>Missed call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="674"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="673"/>
         <source>call_outgoing</source>
         <extracomment>&quot;Appel sortant&quot;</extracomment>
         <translation>Outgoing call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="676"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="675"/>
         <source>call_audio_incoming</source>
         <extracomment>&quot;Appel entrant&quot;</extracomment>
         <translation>Incoming call</translation>
@@ -1169,181 +1169,187 @@
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="362"/>
         <source>call_ended</source>
-        <extracomment>&quot;Appel terminé&quot;</extracomment>
+        <extracomment>Appel terminé</extracomment>
         <translation>Call ended</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="366"/>
         <source>conference_paused</source>
-        <extracomment>&quot;Réunion mise en pause&quot;</extracomment>
+        <extracomment>Meeting paused</extracomment>
         <translation>Meeting paused</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="368"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="371"/>
         <source>call_paused</source>
-        <extracomment>&quot;Appel mis en pause&quot;</extracomment>
+        <extracomment>Call paused</extracomment>
         <translation>Call paused</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="469"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="472"/>
         <source>call_srtp_point_to_point_encrypted</source>
         <extracomment>Appel chiffré de point à point</extracomment>
         <translation>Point-to-point encrypted call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="473"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="476"/>
         <source>call_zrtp_sas_validation_required</source>
         <extracomment>Vérification nécessaire</extracomment>
         <translation>Validation required</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="466"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="474"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="469"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="477"/>
         <source>call_zrtp_end_to_end_encrypted</source>
         <extracomment>Appel chiffré de bout en bout</extracomment>
         <translation>End-to-end encrypted call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="477"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="480"/>
         <source>call_not_encrypted</source>
         <extracomment>&quot;Appel non chiffré&quot;</extracomment>
         <translation>Unencrypted call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="434"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="479"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="437"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="482"/>
         <source>call_waiting_for_encryption_info</source>
         <extracomment>&quot;En attente de chiffrement&quot;</extracomment>
         <translation>Waiting for encryption</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="564"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="369"/>
+        <source>call_paused_by_remote</source>
+        <extracomment>Call paused by remote</extracomment>
+        <translation type="unfinished">Call paused by remote</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="567"/>
         <source>conference_user_is_recording</source>
         <extracomment>&quot;Vous enregistrez la réunion&quot;</extracomment>
         <translation>You are recording the meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="566"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="569"/>
         <source>call_user_is_recording</source>
         <extracomment>&quot;Vous enregistrez l&apos;appel&quot;</extracomment>
         <translation>You are recording the call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="569"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="572"/>
         <source>conference_remote_is_recording</source>
         <extracomment>&quot;Un participant enregistre la réunion&quot;</extracomment>
         <translation>Someone is recording the meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="571"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="574"/>
         <source>call_remote_recording</source>
         <extracomment>&quot;%1 enregistre l&apos;appel&quot;</extracomment>
         <translation>%1 records the call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="579"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="582"/>
         <source>call_stop_recording</source>
         <extracomment>&quot;Arrêter l&apos;enregistrement&quot;</extracomment>
         <translation>Stop recording</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="612"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="615"/>
         <source>add</source>
         <translation>Add</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="629"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="632"/>
         <source>call_transfer_current_call_title</source>
         <extracomment>&quot;Transférer %1 à…&quot;</extracomment>
         <translation>Transfer %1 to…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="642"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="654"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="645"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="657"/>
         <source>call_transfer_confirm_dialog_tittle</source>
         <extracomment>&quot;Confirmer le transfert&quot;</extracomment>
         <translation>Confirm transfer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="644"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="655"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="647"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="658"/>
         <source>call_transfer_confirm_dialog_message</source>
         <extracomment>&quot;Vous allez transférer %1 à %2.&quot;</extracomment>
         <translation>You are going to transfer %1 to %2.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="685"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="688"/>
         <source>call_action_start_new_call</source>
         <extracomment>&quot;Nouvel appel&quot;</extracomment>
         <translation>New call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="725"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1414"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="728"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1417"/>
         <source>call_action_show_dialer</source>
         <extracomment>&quot;Pavé numérique&quot;</extracomment>
         <translation>Dialer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="763"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="766"/>
         <source>call_action_change_layout</source>
         <extracomment>&quot;Modifier la disposition&quot;</extracomment>
         <translation>Change layout</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="779"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="782"/>
         <source>call_action_go_to_calls_list</source>
         <extracomment>&quot;Liste d&apos;appel&quot;</extracomment>
         <translation>Call list</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="798"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="801"/>
         <source>Merger tous les appels</source>
         <extracomment>call_action_merge_calls</extracomment>
         <translation>Merge all calls</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="835"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1489"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="838"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1492"/>
         <source>call_action_go_to_settings</source>
         <extracomment>&quot;Paramètres&quot;</extracomment>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="856"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="859"/>
         <source>conference_action_screen_sharing</source>
         <extracomment>&quot;Partage de votre écran&quot;</extracomment>
         <translation>Share your screen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="907"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="910"/>
         <source>conference_share_link_title</source>
         <extracomment>Partager le lien de la réunion</extracomment>
         <translation>Share meeting link</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="911"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="914"/>
         <source>copied</source>
         <extracomment>Copié</extracomment>
         <translation>Copied</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="913"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="916"/>
         <source>information_popup_meeting_address_copied_to_clipboard</source>
         <extracomment>Le lien de la réunion a été copié dans le presse-papier</extracomment>
         <translation>Meeting link has been copied to the clipboard</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="921"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="926"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="932"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="924"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="929"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="935"/>
         <source>conference_participants_list_title</source>
         <extracomment>&quot;Participants (%1)&quot;</extracomment>
         <translation>Participants (%1)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="952"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="960"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="955"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="963"/>
         <source>group_call_participant_selected</source>
         <translation>
             <numerusform>1 selected participant</numerusform>
@@ -1351,143 +1357,143 @@
         </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="959"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="962"/>
         <source>meeting_schedule_add_participants_title</source>
         <translation>Add participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="975"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="978"/>
         <source>call_encryption_title</source>
         <extracomment>Chiffrement</extracomment>
         <translation>Encryption</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="985"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="988"/>
         <source>call_stats_title</source>
         <extracomment>Statistiques</extracomment>
         <translation>Statistics</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1103"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1106"/>
         <source>call_action_end_call</source>
         <extracomment>&quot;Terminer l&apos;appel&quot;</extracomment>
         <translation>End call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1134"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1137"/>
         <source>call_action_resume_call</source>
         <extracomment>&quot;Reprendre l&apos;appel&quot;</extracomment>
         <translation>Resume call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1136"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1139"/>
         <source>call_action_pause_call</source>
         <extracomment>&quot;Mettre l&apos;appel en pause&quot;</extracomment>
         <translation>Pause call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1167"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1170"/>
         <source>call_action_transfer_call</source>
         <extracomment>&quot;Transférer l&apos;appel&quot;</extracomment>
         <translation>Transfer call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1194"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1197"/>
         <source>call_action_start_new_call_hint</source>
         <extracomment>&quot;Initier un nouvel appel&quot;</extracomment>
         <translation>Start new call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1221"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1224"/>
         <source>call_display_call_list_hint</source>
         <extracomment>&quot;Afficher la liste d&apos;appels&quot;</extracomment>
         <translation>View call list</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1261"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1264"/>
         <source>call_deactivate_video_hint</source>
         <extracomment>&quot;Désactiver la vidéo&quot; &quot;Activer la vidéo&quot;</extracomment>
         <translation>Turn off video</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1261"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1264"/>
         <source>call_activate_video_hint</source>
         <translation>Enable video</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1274"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1277"/>
         <source>call_activate_microphone</source>
         <extracomment>&quot;Activer le micro&quot;</extracomment>
         <translation>Activate microphone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1276"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1279"/>
         <source>call_deactivate_microphone</source>
         <extracomment>&quot;Désactiver le micro&quot;</extracomment>
         <translation>Mute microphone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1291"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1294"/>
         <source>call_share_screen_hint</source>
         <extracomment>Partager l&apos;écran…</extracomment>
         <translation>Share screen…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1310"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1313"/>
         <source>call_rise_hand_hint</source>
         <extracomment>&quot;Lever la main&quot;</extracomment>
         <translation>Rise hand</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1320"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1323"/>
         <source>call_send_reaction_hint</source>
         <extracomment>&quot;Envoyer une réaction&quot;</extracomment>
         <translation>Send reaction</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1329"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1332"/>
         <source>call_manage_participants_hint</source>
         <extracomment>&quot;Gérer les participants&quot;</extracomment>
         <translation>Manage participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1353"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1356"/>
         <source>call_more_options_hint</source>
         <extracomment>&quot;Plus d&apos;options…&quot;</extracomment>
         <translation>More options…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1382"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1385"/>
         <source>call_action_change_conference_layout</source>
         <extracomment>&quot;Modifier la disposition&quot;</extracomment>
         <translation>Change layout</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1394"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1397"/>
         <source>call_action_full_screen</source>
         <extracomment>&quot;Mode Plein écran&quot;</extracomment>
         <translation>Full screen mode</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1443"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1446"/>
         <source>call_action_stop_recording</source>
         <extracomment>&quot;Terminer l&apos;enregistrement&quot;</extracomment>
         <translation>End recording</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1445"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1448"/>
         <source>call_action_record</source>
         <extracomment>&quot;Enregistrer l&apos;appel&quot;</extracomment>
         <translation>Record call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1471"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1474"/>
         <source>call_activate_speaker_hint</source>
         <extracomment>&quot;Activer le son&quot;</extracomment>
         <translation>Activate speaker</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1473"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1476"/>
         <source>call_deactivate_speaker_hint</source>
         <extracomment>&quot;Désactiver le son&quot;</extracomment>
         <translation>Mute speaker</translation>
@@ -2330,53 +2336,52 @@
     <message>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="22"/>
         <source>call_stats_media_encryption_title</source>
-        <extracomment>&quot;Chiffrement :&quot;</extracomment>
+        <extracomment>&quot;Encryption :&quot;</extracomment>
         <translation>Encryption :</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="35"/>
         <source>call_stats_media_encryption</source>
-        <extracomment>Chiffrement du média : %1</extracomment>
+        <extracomment>Media encryption : %1</extracomment>
         <translation>Media encryption : %1%2</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="37"/>
         <source>call_stats_media_encryption_zrtp_post_quantum</source>
         <extracomment>ZRTP Post Quantique</extracomment>
-        <translation>Post Quantum ZRTP</translation>
+        <translation type="vanished">Post Quantum ZRTP</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="49"/>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="46"/>
         <source>call_stats_zrtp_cipher_algo</source>
         <extracomment>&quot;Algorithme de chiffrement : %1&quot;</extracomment>
         <translation>Encryption algorithm : %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="58"/>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="55"/>
         <source>call_stats_zrtp_key_agreement_algo</source>
         <extracomment>&quot;Algorithme d&apos;accord de clé : %1&quot;</extracomment>
         <translation>Key agreement algorithm: %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="67"/>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="64"/>
         <source>call_stats_zrtp_hash_algo</source>
         <extracomment>&quot;Algorithme de hachage : %1&quot;</extracomment>
         <translation>Hash algorithm : %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="76"/>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="73"/>
         <source>call_stats_zrtp_auth_tag_algo</source>
         <extracomment>&quot;Algorithme d&apos;authentification : %1&quot;</extracomment>
         <translation>Authentication algorithm : %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="85"/>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="82"/>
         <source>call_stats_zrtp_sas_algo</source>
         <extracomment>&quot;Algorithme SAS : %1&quot;</extracomment>
         <translation>SAS algorithm : %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="101"/>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="98"/>
         <source>call_zrtp_validation_button_label</source>
         <extracomment>&quot;Validation chiffrement&quot;</extracomment>
         <translation>Encryption validation</translation>
@@ -2389,7 +2394,7 @@
         <location filename="../../core/friend/FriendCore.cpp" line="68"/>
         <location filename="../../core/friend/FriendCore.cpp" line="189"/>
         <location filename="../../core/friend/FriendCore.cpp" line="423"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="612"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="613"/>
         <source>sip_address</source>
         <extracomment>&quot;Adresse SIP&quot;</extracomment>
         <translation>SIP address</translation>
@@ -3286,13 +3291,13 @@
         <translation>Ongoing call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="77"/>
+        <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="70"/>
         <source>search_bar_look_for_contact_text</source>
         <extracomment>&quot;Rechercher un contact&quot;</extracomment>
         <translation>Find contact</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="112"/>
+        <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="105"/>
         <source>call_start_group_call_title</source>
         <translation>Group call</translation>
     </message>
@@ -3914,13 +3919,13 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>Sticker</name>
     <message>
-        <location filename="../../view/Control/Display/Sticker.qml" line="130"/>
+        <location filename="../../view/Control/Display/Sticker.qml" line="131"/>
         <source>conference_participant_joining_text</source>
         <extracomment>&quot;rejoint…&quot;</extracomment>
         <translation>joining…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Sticker.qml" line="156"/>
+        <location filename="../../view/Control/Display/Sticker.qml" line="157"/>
         <source>conference_participant_paused_text</source>
         <extracomment>&quot;En pause&quot;</extracomment>
         <translation>Paused</translation>
@@ -3929,28 +3934,28 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>ToolModel</name>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="173"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="195"/>
         <source>call_error_uninterpretable_sip_address</source>
         <extracomment>&quot;The calling address is not an interpretable SIP address : %1</extracomment>
         <translation>The calling address is not an interpretable SIP address : %1</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="245"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="267"/>
         <source>group_call_error_no_account</source>
         <translation>No default account found, can&apos;t create group call</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="270"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="292"/>
         <source>group_call_error_participants_invite</source>
         <translation>Couldn&apos;t invite participants to group call</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="274"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="296"/>
         <source>group_call_error_creation</source>
         <translation>Group call couldn&apos;t be created</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="418"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="440"/>
         <source>unknown_audio_device_name</source>
         <translation>Unknown device name</translation>
     </message>

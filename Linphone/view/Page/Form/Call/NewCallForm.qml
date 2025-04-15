@@ -26,7 +26,7 @@ FocusScope {
         spacing: Math.round(22 * DefaultStyle.dp)
 		ColumnLayout {
             spacing: Math.round(18 * DefaultStyle.dp)
-			visible: mainItem.displayCurrentCalls
+            visible: mainItem.displayCurrentCalls && callList.count > 0
 			Text {
                 //: "Appels en cours"
                 text: qsTr("call_transfer_active_calls_label")
@@ -37,15 +37,16 @@ FocusScope {
 			}
 			Flickable {
 				Layout.fillWidth: true
-				Layout.preferredHeight: callList.height
+                Layout.preferredHeight: callListBackground.height
 				Layout.maximumHeight: mainItem.height/2
-				contentHeight: callList.height
+                contentHeight: callListBackground.height
 				contentWidth: width
 				RoundedPane {
-					id: callList
+                    id: callListBackground
 					anchors.left: parent.left
 					anchors.right: parent.right
 					contentItem: CallListView {
+                        id: callList
 						isTransferList: true
 						onTransferCallToAnotherRequested: (dest) => {
 							mainItem.transferCallToAnotherRequested(dest)

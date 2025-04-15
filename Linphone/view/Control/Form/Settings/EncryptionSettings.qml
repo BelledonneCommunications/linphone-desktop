@@ -18,7 +18,7 @@ ColumnLayout {
 		contentItem: ColumnLayout {
             spacing: Math.round(12 * DefaultStyle.dp)
 			Text {
-                //: "Chiffrement :"
+                //: "Encryption  :"
                 text: qsTr("call_stats_media_encryption_title")
 				Layout.alignment: Qt.AlignHCenter
 				font {
@@ -31,11 +31,8 @@ ColumnLayout {
                 spacing: Math.round(7 * DefaultStyle.dp)
 				Text {
 					property bool isPostQuantum: mainItem.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && mainItem.call.core.zrtpStats.isPostQuantum
-                    //: Chiffrement du média : %1
-                    text: qsTr("call_stats_media_encryption").arg(isPostQuantum ?
-                                                                  //: ZRTP Post Quantique
-                                                                  qsTr("call_stats_media_encryption_zrtp_post_quantum")
-                                                                    : mainItem.call.core.encryptionString)
+                    //: Media encryption : %1
+                    text: qsTr("call_stats_media_encryption").arg(mainItem.call.core.encryptionString)
 					Layout.alignment: Qt.AlignHCenter
 					font {
                         pixelSize: Math.round(12 * DefaultStyle.dp)

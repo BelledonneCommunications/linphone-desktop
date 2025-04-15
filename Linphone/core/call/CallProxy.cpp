@@ -38,7 +38,7 @@ CallGui *CallProxy::getCurrentCall() {
 }
 
 void CallProxy::setCurrentCall(CallGui *call) {
-	getListModel<CallList>()->setCurrentCall(call->mCore);
+	getListModel<CallList>()->setCurrentCall(call);
 }
 
 // Reset the default account to let UI build its new object if needed.

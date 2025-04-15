@@ -33,6 +33,7 @@ class CoreModel;
 
 class CallList : public ListProxy, public AbstractObject {
 	Q_OBJECT
+	Q_PROPERTY(CallGui* currentCall READ getCurrentCall WRITE setCurrentCall NOTIFY currentCallChanged)
 public:
 	static QSharedPointer<CallList> create();
 	// Create a CallCore and make connections to List.
@@ -44,7 +45,8 @@ public:
 
 	CallGui *getCurrentCall() const; // Used for Ui
 	QSharedPointer<CallCore> getCurrentCallCore() const;
-	void setCurrentCall(QSharedPointer<CallCore> call);
+	void setCurrentCall(CallGui* callGui);
+	void setCurrentCallCore(QSharedPointer<CallCore> call);
 
 	bool getHaveCall() const;
 	void setHaveCall(bool haveCall);
