@@ -54,8 +54,9 @@ Item {
 				: ""
 
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null
-	property bool videoEnabled: (previewEnabled && call && call.core.localVideoEnabled)
-									|| (participantDevice && participantDevice.core.videoEnabled)
+    property bool videoEnabled: (previewEnabled && call && call.core.localVideoEnabled)
+        || (!previewEnabled && call && call.core.remoteVideoEnabled)
+        || (participantDevice && participantDevice.core.videoEnabled)
 	property string qmlName
 	property bool displayAll : !!mainItem.call
 	property bool mutedStatus: participantDevice 
