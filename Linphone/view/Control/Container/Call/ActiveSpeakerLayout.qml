@@ -89,7 +89,9 @@ Item {
 		id: preview
 		qmlName: 'P'
 		previewEnabled: true
-		visible: !sideStickers.visible
+        visible: !sideStickers.visible && mainItem.callState !== LinphoneEnums.CallState.OutgoingProgress
+        && mainItem.callState !== LinphoneEnums.CallState.OutgoingRinging
+        && mainItem.callState !== LinphoneEnums.CallState.OutgoingInit
 		onVisibleChanged: console.log(visible + " : " +allDevices.count)
         height: Math.round(180 * DefaultStyle.dp)
         width: Math.round(300 * DefaultStyle.dp)

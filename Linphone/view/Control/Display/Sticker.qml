@@ -202,13 +202,12 @@ Item {
 				triggeredOnStart: true
 				onTriggered: {cameraLoader.reset = !cameraLoader.reset}
 			}
-			active: mainItem.visible && !mainItem.remoteIsPaused 
-				&& mainItem.callState != LinphoneEnums.CallState.End 
-				&& mainItem.callState != LinphoneEnums.CallState.Released
-				&& mainItem.callState != LinphoneEnums.CallState.Paused 
-				&& mainItem.callState != LinphoneEnums.CallState.PausedByRemote
-				&& mainItem.videoEnabled && !cameraLoader.reset
-			onActiveChanged: console.log("("+mainItem.qmlName+") Camera active " + active +", visible="+mainItem.visible +", videoEnabled="+mainItem.videoEnabled +", reset="+cameraLoader.reset)
+            active: mainItem.visible && !mainItem.remoteIsPaused
+            && mainItem.videoEnabled
+            && mainItem.callState !== LinphoneEnums.CallState.End
+            && mainItem.callState !== LinphoneEnums.CallState.Released
+            && !cameraLoader.reset
+            onActiveChanged: console.log("("+mainItem.qmlName+") Camera active " + active +", visible="+mainItem.visible +", videoEnabled="+mainItem.videoEnabled +", reset="+cameraLoader.reset)
 			sourceComponent: cameraComponent
 		}
 		Component{

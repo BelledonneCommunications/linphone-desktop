@@ -129,7 +129,7 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 	});
 
 	mModelConnection->makeConnectToModel(&CoreModel::firstCallStarted,
-	                                     [this]() { mModelConnection->invokeToCore([this]() { setHaveCall(true); }); });
+										 [this]() { mModelConnection->invokeToCore([this]() { lUpdate(); }); });
 	mModelConnection->makeConnectToModel(&CoreModel::lastCallEnded, [this]() {
 		mModelConnection->invokeToCore([this]() {
 			setHaveCall(false);

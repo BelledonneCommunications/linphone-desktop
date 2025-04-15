@@ -56,6 +56,8 @@ ListView {
 	cacheBuffer: 400
 	implicitHeight: contentHeight
     spacing: expanded ? Math.round(4 * DefaultStyle.dp) : 0
+
+    onVisibleChanged: if (visible && !expanded) expanded = true
 	
 	property var _currentItemY: currentItem?.y
 	on_CurrentItemYChanged: if(_currentItemY){

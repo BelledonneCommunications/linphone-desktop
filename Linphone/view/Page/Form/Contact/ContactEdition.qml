@@ -164,8 +164,16 @@ MainRightPanel {
 		]
 		content: Flickable {
 			id: editionLayout
-            contentWidth: Math.round(421 * DefaultStyle.dp)
+            contentWidth: Math.round(Math.min(parent.width, 421 * DefaultStyle.dp))
+            width: parent.width
 			contentY: 0
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    editionLayout.forceActiveFocus()
+                }
+            }
 
 			signal ensureVisibleRequested(Item item)
 
