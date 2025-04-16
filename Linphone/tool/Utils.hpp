@@ -138,6 +138,7 @@ public:
 	Q_INVOKABLE QString boldTextPart(const QString &text, const QString &regex);
 	Q_INVOKABLE static QString getFileChecksum(const QString &filePath);
 	Q_INVOKABLE QList<QVariant> append(const QList<QVariant> a, const QList<QVariant> b);
+	Q_INVOKABLE QString getAddressToDisplay(QVariantList addressList, QString filter, QString defaultAddress);
 
 	//	QDir findDirectoryByName(QString startPath, QString name);
 

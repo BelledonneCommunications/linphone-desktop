@@ -17,6 +17,7 @@ FocusScope {
     property bool showActions: false // Display actions layout (call buttons)
     property bool showContactMenu: true // Display the dot menu for contacts.
     property string highlightText
+    property string addressFromFilter: UtilsCpp.getAddressToDisplay(searchResultItem.core.addresses, highlightText, searchResultItem.core.defaultAddress)
 
     // Bold characters in Display name.
     property bool displayNameCapitalization: true // Capitalize display name.
@@ -90,7 +91,9 @@ FocusScope {
                 Layout.topMargin: Math.round(2 * DefaultStyle.dp)
                 Layout.fillWidth: true
                 visible: mainItem.showDefaultAddress
-                property string address: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(searchResultItem.core.defaultAddress) : searchResultItem.core.defaultAddress
+                property string address: SettingsCpp.onlyDisplaySipUriUsername
+                    ? UtilsCpp.getUsername(mainItem.addressFromFilter)
+                    : mainItem.addressFromFilter
                 text: UtilsCpp.boldTextPart(address, mainItem.highlightText)
                 maximumLineCount: 1
                 elide: Text.ElideRight
@@ -113,8 +116,7 @@ FocusScope {
             EffectImage {
                 id: isSelectedCheck
                 visible: mainItem.multiSelectionEnabled
-                            && (mainItem.selectedContacts.indexOf(
-                                    searchResultItem.core.defaultAddress) != -1)
+                            && (mainItem.selectedContacts.indexOf(mainItem.addressFromFilter) != -1)
                 Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
                 imageSource: AppIcons.check
@@ -134,8 +136,7 @@ FocusScope {
                     focus: visible
                     radius: Math.round(40 * DefaultStyle.dp)
                     style: ButtonStyle.grey
-                    onClicked: UtilsCpp.createCall(
-                                    searchResultItem.core.defaultFullAddress)
+                    onClicked: UtilsCpp.createCall(mainItem.addressFromFilter)
                     KeyNavigation.left: chatButton
                     KeyNavigation.right: videoCallButton
                 }
@@ -150,11 +151,7 @@ FocusScope {
                     focus: visible && !callButton.visible
                     radius: Math.round(40 * DefaultStyle.dp)
                     style: ButtonStyle.grey
-                    onClicked: UtilsCpp.createCall(
-                                    searchResultItem.core.defaultFullAddress,
-                                    {
-                                        "localVideoEnabled": true
-                                    })
+                    onClicked: UtilsCpp.createCall(mainItem.addressFromFilter, {"localVideoEnabled": true})
                     KeyNavigation.left: callButton
                     KeyNavigation.right: chatButton
                 }

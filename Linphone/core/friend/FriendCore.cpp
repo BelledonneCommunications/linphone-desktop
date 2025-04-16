@@ -406,6 +406,7 @@ void FriendCore::removeAddress(int index) {
 	if (index < 0 && index >= mAddressList.size()) return;
 	auto map = mAddressList[index].toMap();
 	if (map["address"].toString() == mDefaultFullAddress) mDefaultFullAddress.clear();
+	if (map["address"].toString() == mDefaultAddress) mDefaultAddress.clear();
 	mAddressList.remove(index);
 	emit addressChanged();
 	setIsSaved(false);

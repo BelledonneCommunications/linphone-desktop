@@ -1438,6 +1438,15 @@ QList<QVariant> Utils::append(const QList<QVariant> a, const QList<QVariant> b) 
 	return a + b;
 }
 
+QString Utils::getAddressToDisplay(QVariantList addressList, QString filter, QString defaultAddress) {
+	if (filter.isEmpty()) return defaultAddress;
+	for (auto& item: addressList) {
+		QString address = item.toMap()["address"].toString();
+		if (address.contains(filter)) return address;
+	}
+	return defaultAddress;
+}
+
 // Codecs download
 
 QList<QSharedPointer<DownloadablePayloadTypeCore>> Utils::getDownloadableVideoPayloadTypes() {
