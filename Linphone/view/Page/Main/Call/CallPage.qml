@@ -496,12 +496,11 @@ AbstractMainPage {
                 visible: mainItem.selectedRowHistoryGui != undefined
                 callHistoryGui: selectedRowHistoryGui
 
-                property var contactObj: UtilsCpp.findFriendByAddress(
-                                             specificAddress)
-
+                property var contactObj: UtilsCpp.findFriendByAddress(specificAddress)
                 contact: contactObj && contactObj.value || null
                 specificAddress: callHistoryGui
                                  && callHistoryGui.core.remoteAddress || ""
+                property bool isLocalFriend: contact ? contact.core.isAppFriend : false
 
                 buttonContent: PopupButton {
                     id: detailOptions
@@ -523,21 +522,16 @@ AbstractMainPage {
                             anchors.fill: parent
                             IconLabelButton {
                                 Layout.fillWidth: true
-                                property bool isLdap: contactDetail.contact?.core?.isLdap
-                                                      || false
-                                property bool isCardDAV: contactDetail.contact?.core?.isCardDAV
-                                                         || false
-                                property bool isLocalFriend: contactDetail.contact && !isLdap && !isCardDAV
-                                //: "Voir le contact"
-                                text: isLocalFriend ? qsTr("menu_see_existing_contact") :
-                                                              //: "Ajouter aux contacts"
+                                //: "Show contact"
+                                text: contactDetail.isLocalFriend ? qsTr("menu_see_existing_contact") :
+                                                              //: "Add to contacts"
                                                               qsTr("menu_add_address_to_contacts")
                                 icon.source: AppIcons.plusCircle
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
                                 onClicked: {
                                     detailOptions.close()
-                                    if (isLocalFriend)
+                                    if (contactDetail.isLocalFriend)
                                         mainWindow.displayContactPage(
                                                     contactDetail.contactAddress)
                                     else

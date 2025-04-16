@@ -19,7 +19,6 @@
  */
 
 #include "FriendsManager.hpp"
-
 #include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
 #include <QDebug>

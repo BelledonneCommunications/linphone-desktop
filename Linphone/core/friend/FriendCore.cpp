@@ -92,6 +92,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		mIsStored = isStored;
 		mIsLdap = ToolModel::friendIsInFriendList(ToolModel::getLdapFriendList(), contact);
 		mIsCardDAV = (sourceFlags & (int)linphone::MagicSearch::Source::RemoteCardDAV) != 0;
+		mIsAppFriend = ToolModel::friendIsInFriendList(ToolModel::getAppFriendList(), contact);
 	} else {
 		mIsSaved = false;
 		mStarred = false;
@@ -119,6 +120,7 @@ FriendCore::FriendCore(const FriendCore &friendCore) {
 	mIsSaved = friendCore.mIsSaved;
 	mIsStored = friendCore.mIsStored;
 	mIsLdap = friendCore.mIsLdap;
+	mIsAppFriend = friendCore.mIsAppFriend;
 	mIsCardDAV = friendCore.mIsCardDAV;
 }
 
@@ -741,6 +743,10 @@ bool FriendCore::isLdap() const {
 
 bool FriendCore::isCardDAV() const {
 	return mIsCardDAV;
+}
+
+bool FriendCore::isAppFriend() const {
+	return mIsAppFriend;
 }
 
 bool FriendCore::getReadOnly() const {

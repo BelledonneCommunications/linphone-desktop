@@ -130,10 +130,10 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr
 	auto friendsManager = FriendsManager::getInstance();
 	QString key = Utils::coreStringToAppString(linphoneAddr->asStringUriOnly());
 	if (friendsManager->isInKnownFriends(key)) {
-//		qDebug() << "Friend have been found in known friend, return it";
+//		qDebug() << key << "have been found in known friend, return it";
 		return friendsManager->getKnownFriendAtKey(key);
 	} else 	if (friendsManager->isInUnknownFriends(key)) {
-//		qDebug() << "Friend have been found in unknown friend, return it";
+//		qDebug() << key << "have been found in unknown friend, return it";
 		return friendsManager->getUnknownFriendAtKey(key);
 	}
 	auto f = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);

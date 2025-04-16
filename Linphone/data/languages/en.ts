@@ -1000,7 +1000,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="532"/>
         <source>menu_see_existing_contact</source>
         <extracomment>&quot;Voir le contact&quot;</extracomment>
-        <translation>See contact</translation>
+        <translation>Show contact</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="534"/>

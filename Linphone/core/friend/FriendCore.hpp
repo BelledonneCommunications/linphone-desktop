@@ -72,6 +72,7 @@ class FriendCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool starred READ getStarred WRITE lSetStarred NOTIFY starredChanged)
 	Q_PROPERTY(bool readOnly READ getReadOnly CONSTANT)
 	Q_PROPERTY(bool isLdap READ isLdap CONSTANT)
+	Q_PROPERTY(bool isAppFriend READ isAppFriend CONSTANT)
 	Q_PROPERTY(bool isCardDAV READ isCardDAV CONSTANT)
 
 public:
@@ -148,6 +149,7 @@ public:
 	void onPresenceReceived(LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp);
 
 	bool isLdap() const;
+	bool isAppFriend() const;
 	bool isCardDAV() const;
 	bool getReadOnly() const;
 
@@ -207,7 +209,7 @@ protected:
 	bool mIsSaved;
 	bool mIsStored;
 	QString mVCardString;
-	bool mIsLdap, mIsCardDAV;
+	bool mIsLdap, mIsCardDAV, mIsAppFriend;
 	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<FriendCore, FriendModel>> mFriendModelConnection;
 	QSharedPointer<SafeConnection<FriendCore, CoreModel>> mCoreModelConnection;
