@@ -71,14 +71,14 @@ macosx-ninja-novideo:
     - !reference [.rules-merge-request-manual, rules]
     - if: $NIGHTLY_MASTER
   variables:
-    CMAKE_OPTIONS: -DENABLE_VIDEO=OFF -DENABLE_PQCRYPTO=OFF
+    CMAKE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DENABLE_VIDEO=OFF -DENABLE_PQCRYPTO=OFF
     CMAKE_GENERATOR: Ninja
   extends: .macosx-desktop
 
 #macosx-xcode:
 #  extends: .macosx-desktop
 #  variables:
-#    XCODE_OPTIONS: -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
+#    XCODE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
 #   CMAKE_GENERATOR: Xcode
 #    ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK
 # only:
