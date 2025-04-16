@@ -29,6 +29,39 @@ DEFINE_ABSTRACT_OBJECT(FriendsManager)
 std::shared_ptr<FriendsManager> FriendsManager::gFriendsManager;
 FriendsManager::FriendsManager(QObject *parent) : QObject(parent) {
 	moveToThread(CoreModel::getInstance()->thread());
+
+	connect(CoreModel::getInstance().get(), &CoreModel::friendRemoved, this, [this] (const std::shared_ptr<linphone::Friend> &f) {
+		auto key = mKnownFriends.key(QVariant::fromValue(f), nullptr);
+		if (key != nullptr) {
+			mKnownFriends.remove(key);
+		}
+		auto unknown = mUnknownFriends.key(QVariant::fromValue(f), nullptr);
+		if (unknown != nullptr) {
+			mUnknownFriends.remove(unknown);
+		}
+		auto address = QString::fromStdString(f->getAddress()->asStringUriOnly());
+		mOtherAddresses.removeAll(address);
+	});
+	connect(CoreModel::getInstance().get(), &CoreModel::friendCreated, this, [this] (const std::shared_ptr<linphone::Friend> &f) {
+		auto unknown = mUnknownFriends.key(QVariant::fromValue(f), nullptr);
+		if (unknown != nullptr) {
+			mUnknownFriends.remove(unknown);
+		}
+		auto address = QString::fromStdString(f->getAddress()->asStringUriOnly());
+		mOtherAddresses.removeAll(address);
+	});
+	connect(CoreModel::getInstance().get(), &CoreModel::friendUpdated, this, [this] (const std::shared_ptr<linphone::Friend> &f) {
+		auto key = mKnownFriends.key(QVariant::fromValue(f), nullptr);
+		if (key != nullptr) {
+			mKnownFriends.remove(key);
+		}
+		auto unknown = mUnknownFriends.key(QVariant::fromValue(f), nullptr);
+		if (unknown != nullptr) {
+			mUnknownFriends.remove(unknown);
+		}
+		auto address = QString::fromStdString(f->getAddress()->asStringUriOnly());
+		mOtherAddresses.removeAll(address);
+	});
 }
 
 FriendsManager::~FriendsManager() {

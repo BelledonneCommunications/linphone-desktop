@@ -678,12 +678,13 @@ void FriendCore::save() { // Save Values to model
 			if (contact != nullptr) {
 				auto friendModel = Utils::makeQObject_ptr<FriendModel>(contact);
 				friendModel->setSelf(friendModel);
-				mCoreModelConnection->invokeToCore([this, thisCopy, friendModel] {
+				mCoreModelConnection->invokeToCore([this, thisCopy, friendModel, contact] {
 					mFriendModel = friendModel;
-					mCoreModelConnection->invokeToModel([this, thisCopy] {
+					mCoreModelConnection->invokeToModel([this, thisCopy, contact] {
 						thisCopy->writeIntoModel(mFriendModel);
 						thisCopy->deleteLater();
 						mVCardString = mFriendModel->getVCardAsString();
+						emit CoreModel::getInstance()->friendUpdated(contact);
 						mCoreModelConnection->invokeToCore([this] {
 							setIsSaved(true);
 							emit saved();

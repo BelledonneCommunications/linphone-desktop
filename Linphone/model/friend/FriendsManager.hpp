@@ -60,7 +60,6 @@ private:
 	QVariantMap mKnownFriends;
 	QVariantMap mUnknownFriends;
 	QStringList mOtherAddresses;
-	//core model connection + reset unknown et other quand friend ajouté, supprimé, updated
 	DECLARE_ABSTRACT_OBJECT
 };
 
