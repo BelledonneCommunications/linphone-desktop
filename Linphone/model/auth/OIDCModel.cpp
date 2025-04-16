@@ -102,7 +102,11 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	});
 	connect(mOidc.networkAccessManager(), &QNetworkAccessManager::authenticationRequired,
 	        [=](QNetworkReply *reply, QAuthenticator *authenticator) {
-		        lWarning() << log().arg("authenticationRequired received but not implemented");
+		        lDebug() << "authenticationRequired  url [" << reply->url() << "]";
+		        if (mOidc.clientIdentifierSharedKey().isEmpty() == false) {
+			        authenticator->setUser(mOidc.clientIdentifier());
+			        authenticator->setPassword(mOidc.clientIdentifierSharedKey());
+		        } else lWarning() << "client secret not found for client id [" << mOidc.clientIdentifier() << "]";
 	        });
 
 	connect(&mOidc, &QOAuth2AuthorizationCodeFlow::statusChanged, [=](QAbstractOAuth::Status status) {
