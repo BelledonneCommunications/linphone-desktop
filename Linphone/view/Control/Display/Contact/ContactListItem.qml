@@ -182,6 +182,7 @@ FocusScope {
 
                 popup.contentItem: ColumnLayout {
                     IconLabelButton {
+                        Layout.fillWidth: true
                         visible: searchResultItem.core.isStored
                                     && !searchResultItem.core.readOnly
                         //: "Enlever des favoris"
@@ -202,6 +203,7 @@ FocusScope {
                     }
                     IconLabelButton {
                         text: qsTr("Partager")
+                        Layout.fillWidth: true
                         icon.source: AppIcons.shareNetwork
                         spacing: Math.round(10 * DefaultStyle.dp)
                         textColor: DefaultStyle.main2_500main
@@ -233,6 +235,7 @@ FocusScope {
                         icon.source: AppIcons.trashCan
                         spacing: Math.round(10 * DefaultStyle.dp)
                         visible: !searchResultItem.core.readOnly
+                        Layout.fillWidth: true
                         onClicked: {
                             mainItem.contactDeletionRequested(
                                         searchResultItem)

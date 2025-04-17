@@ -1024,7 +1024,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="566"/>
         <source>sip_address_copied_to_clipboard_message</source>
         <extracomment>L&apos;adresse a été copié dans le presse_papiers</extracomment>
-        <translation>L&apos;adresse a été copié dans le presse_papiers</translation>
+        <translation>L&apos;adresse a été copié dans le presse-papiers</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="572"/>
