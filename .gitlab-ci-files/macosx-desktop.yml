@@ -48,7 +48,7 @@ macosx-ninja:
     - if: ($CI_PIPELINE_SOURCE == "merge_request_event") && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
   variables:
     CMAKE_GENERATOR: Ninja
-    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=OFF
+    CMAKE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DENABLE_PQCRYPTO=OFF
   extends: .macosx-desktop
 
 #################################################
@@ -62,7 +62,7 @@ macosx-makefile:
     - if: $DEPLOY_PLUGINS
   variables:
     CMAKE_GENERATOR: Unix Makefiles
-    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=OFF
+    CMAKE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DENABLE_PQCRYPTO=OFF
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
   extends: .macosx-desktop
 
