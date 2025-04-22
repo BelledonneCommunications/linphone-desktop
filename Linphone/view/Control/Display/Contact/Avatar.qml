@@ -141,93 +141,94 @@ Loader{
 					}
 				}
 				
-				Component{
-					id: initials
-					Item {
-						id: avatarItem
-						height: stackView.height
-						width: height
-						Rectangle {
-							id: initialItem
-							property string initials: mainItem.isConference ? "" : UtilsCpp.getInitials(mainItem.displayNameVal)
-							radius: width / 2
-							color: DefaultStyle.main2_200
-							height: stackView.height
-							width: height
-							Text {
-								anchors.fill: parent
-								anchors.centerIn: parent
-								verticalAlignment: Text.AlignVCenter
-								horizontalAlignment: Text.AlignHCenter
-								text: initialItem.initials
-								font {
-									pixelSize: initialItem.height * 36 / 120
-                                    weight: Typography.h4.weight
-									capitalization: Font.AllUppercase
-								}
-							}
-							EffectImage {
-								id: initialImg
-								visible: initialItem.initials == ''
-								width: stackView.width/2
-								height: width
-								colorizationColor: DefaultStyle.main2_600
-								imageSource: mainItem.isConference ? AppIcons.usersThree : AppIcons.profile
-								anchors.centerIn: parent
-							}
-						}
-						MultiEffect {
-							source: initialItem
-							anchors.fill: initialItem
-							shadowEnabled: true
-							shadowBlur: 0.1
-							shadowColor: DefaultStyle.grey_1000
-							shadowOpacity: 0.1
-						}
-						Connections {
-							target: mainItem.call?.core ? mainItem.call.core : null
-							onRemoteNameChanged: initialItem.initials = UtilsCpp.getInitials(mainItem.call.core.remoteName)
-						}
-					}
-				}
-				Component{
-					id: avatar
-					Item {
-						id: avatarItem
-						height: stackView.height
-						width: height
-						Image {
-							id: image
-							z: 200
-							visible: false
-							width: parent.width
-							height: parent.height
-							sourceSize.width: avatarItem.width
-							sourceSize.height: avatarItem.height
-							fillMode: Image.PreserveAspectCrop
-							anchors.centerIn: parent
-							source: mainItem.account
-								? mainItem.account.core.pictureUri 
-								: mainItem.contact
-									? mainItem.contact.core.pictureUri
-									: computedAvatarUri
-							mipmap: true
-							layer.enabled: true
-						}
-						ShaderEffect {
-							id: roundEffect
-							property variant src: image
-							property real edge: 0.9
-							property real edgeSoftness: 0.9
-							property real radius: width / 2.0
-							property real shadowSoftness: 0.5
-							property real shadowOffset: 0.01
-							anchors.fill: parent
-							fragmentShader: 'qrc:/data/shaders/roundEffect.frag.qsb'
-						}
-					}
-				}
 				
+			}
+			
+			Component{
+				id: initials
+				Item {
+					id: avatarItem
+					height: stackView.height
+					width: height
+					Rectangle {
+						id: initialItem
+						property string initials: mainItem.isConference ? "" : UtilsCpp.getInitials(mainItem.displayNameVal)
+						radius: width / 2
+						color: DefaultStyle.main2_200
+						height: stackView.height
+						width: height
+						Text {
+							anchors.fill: parent
+							anchors.centerIn: parent
+							verticalAlignment: Text.AlignVCenter
+							horizontalAlignment: Text.AlignHCenter
+							text: initialItem.initials
+							font {
+								pixelSize: initialItem.height * 36 / 120
+								weight: Typography.h4.weight
+								capitalization: Font.AllUppercase
+							}
+						}
+						EffectImage {
+							id: initialImg
+							visible: initialItem.initials == ''
+							width: stackView.width/2
+							height: width
+							colorizationColor: DefaultStyle.main2_600
+							imageSource: mainItem.isConference ? AppIcons.usersThree : AppIcons.profile
+							anchors.centerIn: parent
+						}
+					}
+					MultiEffect {
+						source: initialItem
+						anchors.fill: initialItem
+						shadowEnabled: true
+						shadowBlur: 0.1
+						shadowColor: DefaultStyle.grey_1000
+						shadowOpacity: 0.1
+					}
+					Connections {
+						target: mainItem.call?.core ? mainItem.call.core : null
+						onRemoteNameChanged: initialItem.initials = UtilsCpp.getInitials(mainItem.call.core.remoteName)
+					}
+				}
+			}
+			Component{
+				id: avatar
+				Item {
+					id: avatarItem
+					height: stackView.height
+					width: height
+					Image {
+						id: image
+						z: 200
+						visible: false
+						width: parent.width
+						height: parent.height
+						sourceSize.width: avatarItem.width
+						sourceSize.height: avatarItem.height
+						fillMode: Image.PreserveAspectCrop
+						anchors.centerIn: parent
+						source: mainItem.account
+							? mainItem.account.core.pictureUri 
+							: mainItem.contact
+								? mainItem.contact.core.pictureUri
+								: computedAvatarUri
+						mipmap: true
+						layer.enabled: true
+					}
+					ShaderEffect {
+						id: roundEffect
+						property variant src: image
+						property real edge: 0.9
+						property real edgeSoftness: 0.9
+						property real radius: width / 2.0
+						property real shadowSoftness: 0.5
+						property real shadowOffset: 0.01
+						anchors.fill: parent
+						fragmentShader: 'qrc:/data/shaders/roundEffect.frag.qsb'
+					}
+				}
 			}
 		}
 	}

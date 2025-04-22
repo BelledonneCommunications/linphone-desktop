@@ -36,7 +36,6 @@ Control.TabBar {
     }
 
 	component UnreadNotification: Rectangle {
-		id: unreadNotifications
 		property int unread: 0
 		visible: unread > 0
         width: Math.round(15 * DefaultStyle.dp)

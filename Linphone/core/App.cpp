@@ -52,6 +52,10 @@
 #include "core/call/CallGui.hpp"
 #include "core/call/CallList.hpp"
 #include "core/call/CallProxy.hpp"
+#include "core/chat/ChatProxy.hpp"
+#include "core/chat/message/ChatMessageProxy.hpp"
+#include "core/chat/message/ChatMessageList.hpp"
+#include "core/chat/message/ChatMessageGui.hpp"
 #include "core/camera/CameraGui.hpp"
 #include "core/conference/ConferenceGui.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
@@ -652,6 +656,12 @@ void App::initCppInterfaces() {
 	qmlRegisterType<CallHistoryProxy>(Constants::MainQmlUri, 1, 0, "CallHistoryProxy");
 	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
 	qmlRegisterType<CallProxy>(Constants::MainQmlUri, 1, 0, "CallProxy");
+	qmlRegisterType<ChatList>(Constants::MainQmlUri, 1, 0, "ChatList");
+	qmlRegisterType<ChatProxy>(Constants::MainQmlUri, 1, 0, "ChatProxy");
+	qmlRegisterType<ChatGui>(Constants::MainQmlUri, 1, 0, "ChatGui");
+	qmlRegisterType<ChatMessageGui>(Constants::MainQmlUri, 1, 0, "ChatMessageGui");
+	qmlRegisterType<ChatMessageList>(Constants::MainQmlUri, 1, 0, "ChatMessageList");
+	qmlRegisterType<ChatMessageProxy>(Constants::MainQmlUri, 1, 0, "ChatMessageProxy");
 	qmlRegisterUncreatableType<ConferenceCore>(Constants::MainQmlUri, 1, 0, "ConferenceCore",
 	                                           QLatin1String("Uncreatable"));
 	qmlRegisterType<ConferenceGui>(Constants::MainQmlUri, 1, 0, "ConferenceGui");

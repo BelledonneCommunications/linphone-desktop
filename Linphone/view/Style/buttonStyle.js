@@ -130,17 +130,20 @@
 		color: {
 			normal: "#00000000",
 			hovered: "#00000000",
-			pressed: "#00000000"
+            pressed: "#00000000",
+            checked: Linphone.DefaultStyle.main1_500main
 		},
 		text: {
 			normal: Linphone.DefaultStyle.main2_600,
 			hovered: Linphone.DefaultStyle.main2_700,
-			pressed: Linphone.DefaultStyle.main2_800
+            pressed: Linphone.DefaultStyle.main2_800,
+            checked: Linphone.DefaultStyle.main1_500main
 		},
 		image: {
 			normal: Linphone.DefaultStyle.main2_600,
 			hovered: Linphone.DefaultStyle.main2_700,
-			pressed: Linphone.DefaultStyle.main2_800
+            pressed: Linphone.DefaultStyle.main2_800,
+            checked: Linphone.DefaultStyle.main1_500main
 		}
 	}
 

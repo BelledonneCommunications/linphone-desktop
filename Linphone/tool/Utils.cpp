@@ -318,7 +318,7 @@ QString Utils::formatElapsedTime(int seconds, bool dotsSeparator) {
 	else return (h == 0 ? "" : hours + "h ") + (m == 0 ? "" : min + "min ") + sec + "s";
 }
 
-QString Utils::formatDate(const QDateTime &date, bool includeTime, QString format) {
+QString Utils::formatDate(const QDateTime &date, bool includeTime, bool includeDateIfToday, QString format) {
 	QString dateDay;
 	//: "Aujourd'hui"
 	if (date.date() == QDate::currentDate()) dateDay = tr("today");
@@ -333,6 +333,8 @@ QString Utils::formatDate(const QDateTime &date, bool includeTime, QString forma
 	if (!includeTime) return dateDay;
 
 	auto time = date.time().toString("hh:mm");
+	if (!includeDateIfToday && date.date() == QDate::currentDate()) return time;
+
 	return dateDay + " | " + time;
 }
 

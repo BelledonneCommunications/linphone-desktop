@@ -12,8 +12,9 @@ Control.Button {
 	property var style
 	property color color: style?.color?.normal || DefaultStyle.main1_500_main
 	property color hoveredColor: style?.color?.hovered || Qt.darker(color, 1.05)
-	property color pressedColor: style?.color?.pressed || Qt.darker(color, 1.1)
-	property color textColor: style?.text?.normal || DefaultStyle.grey_0
+    property color pressedColor: style?.color?.pressed || Qt.darker(color, 1.1)
+    property color checkedColor: style?.color?.checked || style?.color?.pressed || Qt.darker(color, 1.1)
+    property color textColor: style?.text?.normal || DefaultStyle.grey_0
 	property color hoveredTextColor: style?.text?.hovered || Qt.darker(textColor, 1.05)
 	property color pressedTextColor: style?.text?.pressed || Qt.darker(textColor, 1.1)
 	property color borderColor: style?.borderColor || "transparent"
@@ -53,11 +54,13 @@ Control.Button {
 			Rectangle {
 				id: buttonBackground
 				anchors.fill: parent
-				color: mainItem.pressed
-					? mainItem.pressedColor
-					: mainItem.hovered || mainItem.hasNavigationFocus
-						? mainItem.hoveredColor
-						: mainItem.color
+                color: mainItem.checkable && mainItem.checked
+                    ? mainItem.checkedColor || mainItem.pressedColor
+                    : mainItem.pressed
+                        ? mainItem.pressedColor
+                        : mainItem.hovered || mainItem.hasNavigationFocus
+                            ? mainItem.hoveredColor
+                            : mainItem.color
 				radius: mainItem.radius
 				border.color: mainItem.borderColor
 			}
@@ -95,11 +98,13 @@ Control.Button {
 		wrapMode: Text.WrapAnywhere
 		text: mainItem.text
 		maximumLineCount: 1
-		color: pressed
-			? mainItem.pressedTextColor
-			: mainItem.hovered
-				? mainItem.hoveredTextColor
-				: mainItem.textColor
+        color: mainItem.checkable && mainItem.checked
+            ? mainItem.checkedColor || mainItem.pressedColor
+            : mainItem.pressed
+                ? mainItem.pressedTextColor
+                : mainItem.hovered
+                    ? mainItem.hoveredTextColor
+                    : mainItem.textColor
 		font {
 			pixelSize: mainItem.textSize
 			weight: mainItem.textWeight
@@ -120,11 +125,13 @@ Control.Button {
 		imageSource: mainItem.icon.source
 		imageWidth: mainItem.icon.width
 		imageHeight: mainItem.icon.height
-		colorizationColor: mainItem.pressed 
-			? mainItem.pressedImageColor 
-			: mainItem.hovered
-				? mainItem.hoveredImageColor
-				: mainItem.contentImageColor
+        colorizationColor: mainItem.checkable && mainItem.checked
+            ? mainItem.checkedColor || mainItem.pressedColor
+            : mainItem.pressed
+                ? mainItem.pressedImageColor
+                : mainItem.hovered
+                    ? mainItem.hoveredImageColor
+                    : mainItem.contentImageColor
 	}
 	
 	contentItem: Control.StackView{

@@ -8,10 +8,10 @@ Button {
 	id: mainItem
 	textSize: Typography.b1.pixelSize
 	textWeight: Typography.b1.weight
-    leftPadding: Math.round(20.04 * DefaultStyle.dp)
-    rightPadding: Math.round(20.04 * DefaultStyle.dp)
-    topPadding: Math.round(11.2 * DefaultStyle.dp)
-    bottomPadding: Math.round(11.2 * DefaultStyle.dp)
-    icon.width: Math.round(24.89 * DefaultStyle.dp)
-    icon.height: Math.round(24.89 * DefaultStyle.dp)
+    leftPadding: Math.round(20 * DefaultStyle.dp)
+    rightPadding: Math.round(20 * DefaultStyle.dp)
+    topPadding: Math.round(11 * DefaultStyle.dp)
+    bottomPadding: Math.round(11 * DefaultStyle.dp)
+    icon.width: Math.round(24 * DefaultStyle.dp)
+    icon.height: Math.round(24 * DefaultStyle.dp)
 }

@@ -30,6 +30,13 @@ QtObject {
         pixelSize: Math.round(36 * DefaultStyle.dp),
         weight: Math.min(Math.round(800 * DefaultStyle.dp), 1000)
 	})
+
+    // Text/P3 - Reduced paragraph text
+    property font p3: Qt.font( {
+        family: DefaultStyle.defaultFont,
+        pixelSize: Math.round(12 * DefaultStyle.dp),
+        weight: Math.min(Math.round(300 * DefaultStyle.dp), 1000)
+    })
 		
 	// Text/P2 - Bold, reduced paragraph text
 	property font p2: Qt.font( {

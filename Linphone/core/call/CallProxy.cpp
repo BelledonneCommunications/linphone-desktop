@@ -63,7 +63,7 @@ void CallProxy::setSourceModel(QAbstractItemModel *model) {
 		connect(newCallList, &CallList::haveCallChanged, this, &CallProxy::haveCallChanged, Qt::QueuedConnection);
 		connect(this, &CallProxy::lMergeAll, newCallList, &CallList::lMergeAll);
 	}
-	setSourceModels(new SortFilterList(model, Qt::AscendingOrder));
+	setSourceModels(new SortFilterList(model));
 }
 
 bool CallProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {

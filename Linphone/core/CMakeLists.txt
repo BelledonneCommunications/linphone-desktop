@@ -19,6 +19,14 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/camera/CameraGui.cpp
 	core/camera/CameraDummy.cpp
 	core/camera/PreviewManager.cpp
+	core/chat/ChatCore.cpp
+	core/chat/ChatGui.cpp
+	core/chat/ChatList.cpp
+	core/chat/ChatProxy.cpp
+	core/chat/message/ChatMessageCore.cpp
+	core/chat/message/ChatMessageGui.cpp
+	core/chat/message/ChatMessageList.cpp
+	core/chat/message/ChatMessageProxy.cpp
 	core/fps-counter/FPSCounter.cpp
 	core/friend/FriendCore.cpp
 	core/friend/FriendGui.cpp

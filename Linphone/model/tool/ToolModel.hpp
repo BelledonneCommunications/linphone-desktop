@@ -69,6 +69,9 @@ public:
 
 	static bool friendIsInFriendList(const std::shared_ptr<linphone::FriendList> &friendList,
 	                                 const std::shared_ptr<linphone::Friend> &f);
+
+	static QString getMessageFromContent(std::list<std::shared_ptr<linphone::Content>> contents);
+
 	static void loadDownloadedCodecs();
 	static void updateCodecs();
 

@@ -48,6 +48,9 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Call/CallListView.qml
 	view/Control/Display/Call/CallHistoryListView.qml
 	view/Control/Display/Call/CallStatistics.qml
+	view/Control/Display/Chat/ChatListView.qml
+	view/Control/Display/Chat/ChatMessage.qml
+	view/Control/Display/Chat/ChatMessagesListView.qml
 	view/Control/Display/Contact/Avatar.qml
 	view/Control/Display/Contact/Contact.qml
 	view/Control/Display/Contact/ContactListItem.qml
@@ -98,6 +101,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Tool/Prototype/PhoneNumberPrototype.qml
 
 	view/Page/Form/Call/NewCallForm.qml
+	view/Page/Form/Chat/SelectedChatView.qml
 	view/Page/Form/Contact/ContactDescription.qml
 	view/Page/Form/Contact/ContactEdition.qml
 	view/Page/Form/Login/LoginPage.qml
@@ -132,6 +136,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Main/Call/CallPage.qml
 	view/Page/Main/Call/CallSettingsPanel.qml
 	view/Page/Main/Call/WaitingRoom.qml
+	view/Page/Main/Chat/ChatPage.qml
 	view/Page/Main/Contact/ContactPage.qml
 	view/Page/Main/Help/HelpPage.qml
 	view/Page/Main/Meeting/MeetingPage.qml

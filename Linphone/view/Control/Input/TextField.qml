@@ -167,9 +167,9 @@ Control.TextField {
         }
     }
     Keys.onReleased: event => {
-         if (event.jey == Qt.Key_Control)
-         mainItem.controlIsDown = false
-     }
+        if (event.jey == Qt.Key_Control)
+        mainItem.controlIsDown = false
+    }
 
     Button {
         id: eyeButton

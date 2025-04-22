@@ -674,8 +674,7 @@ AbstractMainPage {
                                             }
                                         }
                                         Text {
-                                            text: UtilsCpp.formatDate(
-                                                      modelData.core.date)
+                                            text: UtilsCpp.formatDate(modelData.core.date)
                                             color: modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
                                             font {
                                                 pixelSize: Math.round(12 * DefaultStyle.dp)

@@ -129,7 +129,7 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 	});
 
 	mModelConnection->makeConnectToModel(&CoreModel::firstCallStarted,
-										 [this]() { mModelConnection->invokeToCore([this]() { lUpdate(); }); });
+	                                     [this]() { mModelConnection->invokeToCore([this]() { lUpdate(); }); });
 	mModelConnection->makeConnectToModel(&CoreModel::lastCallEnded, [this]() {
 		mModelConnection->invokeToCore([this]() {
 			setHaveCall(false);
@@ -158,7 +158,7 @@ CallGui *CallList::getCurrentCall() const {
 	else return nullptr;
 }
 
-void CallList::setCurrentCall(CallGui* callGui) {
+void CallList::setCurrentCall(CallGui *callGui) {
 	auto callCore = callGui ? callGui->mCore : nullptr;
 	if (mCurrentCall != callCore) {
 		mCurrentCall = callCore;

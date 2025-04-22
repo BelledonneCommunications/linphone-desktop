@@ -384,6 +384,22 @@ bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList>
 	return (it != friends.end());
 }
 
+
+QString ToolModel::getMessageFromContent(std::list<std::shared_ptr<linphone::Content>> contents) {
+	for (auto &content : contents) {
+		if (content->isText()) {
+			return Utils::coreStringToAppString(content->getUtf8Text());
+		} else if (content->isFile()) {
+			return Utils::coreStringToAppString(content->getName());
+		} else if (content->isIcalendar()) {
+			return QString("Invitation à une réunion");
+		} else if (content->isMultipart()) {
+			return getMessageFromContent(content->getParts());
+		}
+	}
+	return QString("");
+}
+
 // Load downloaded codecs like OpenH264 (needs to be after core is created and has loaded its plugins, as
 // reloadMsPlugins modifies plugin path for the factory)
 void ToolModel::loadDownloadedCodecs() {

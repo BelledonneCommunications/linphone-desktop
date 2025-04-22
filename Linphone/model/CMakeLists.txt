@@ -11,6 +11,9 @@ list(APPEND _LINPHONEAPP_SOURCES
 
 	model/call-history/CallHistoryModel.cpp
 	
+    model/chat/ChatModel.cpp
+    model/chat/message/ChatMessageModel.cpp
+
 	model/conference/ConferenceInfoModel.cpp
 	model/conference/ConferenceModel.cpp
 	model/conference/ConferenceSchedulerModel.cpp
