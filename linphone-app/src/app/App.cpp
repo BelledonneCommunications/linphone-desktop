@@ -273,10 +273,8 @@ App::App(int &argc, char *argv[])
 	auto ignoreVSync = QSurfaceFormat::defaultFormat();
 	ignoreVSync.setSwapInterval(0);
 	QSurfaceFormat::setDefaultFormat(ignoreVSync);
-	//-------------------
 	connect(this, SIGNAL(applicationStateChanged(Qt::ApplicationState)), this,
 	        SLOT(stateChanged(Qt::ApplicationState)));
-
 	setWindowIcon(QIcon(Constants::WindowIconPath));
 
 #ifdef Q_OS_WIN
