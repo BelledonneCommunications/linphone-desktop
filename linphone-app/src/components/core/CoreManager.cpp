@@ -336,9 +336,9 @@ void CoreManager::migrate () {
 	bool setLimeServerUrl = false;
 	for(const auto &account : getAccountList()){
 		auto params = account->getParams();
+		auto newParams = params->clone();
+		QString accountIdentity = (newParams->getIdentityAddress() ? newParams->getIdentityAddress()->asString().c_str() : "no-identity");
 		if( params->getDomain() == Constants::LinphoneDomain) {
-			auto newParams = params->clone();
-			QString accountIdentity = (newParams->getIdentityAddress() ? newParams->getIdentityAddress()->asString().c_str() : "no-identity");
 			if( rcVersion < 1) {
 				newParams->setContactParameters(Constants::DefaultContactParameters);
 				newParams->setExpires(Constants::DefaultExpires);
@@ -372,18 +372,50 @@ void CoreManager::migrate () {
 				newParams->setPublishExpires(Constants::DefaultPublishExpires);
 				qInfo() << "Migrating" << accountIdentity << "for version 6. publish expires =" << Constants::DefaultPublishExpires;
 			}
+			if (rcVersion < 7) { // First 6.x / 5.3.0
+				// 6.x reg_route added to use/create-app-sip-account.rc files on 6.x
+				if (newParams->getRoutesAddresses().empty()) {
+					std::list<std::shared_ptr<linphone::Address>> routes;
+					routes.push_back(Utils::interpretUrl(Constants::DefaultRouteAddress));
+					newParams->setRoutesAddresses(routes);
+					qInfo() << "Migrating" << accountIdentity
+							<< "for version 7. Setting route to: " << Constants::DefaultRouteAddress;
+				}
+				// File transfer server URL modified to use/create-app-sip-account.rc files on 6.x
+				auto logServer = mCore->getLogCollectionUploadServerUrl();
+				if (logServer.empty() || logServer == Constants::RetiredUploadLogsServer) {
+					mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
+					qInfo() << "Migrating" << accountIdentity
+							<< "for version 7. Setting Log collection upload server rul to: "
+							<< Constants::DefaultUploadLogsServer;
+				}
+			}
 			if(newParams->getLimeServerUrl().empty()){
 				if(!oldLimeServerUrl.empty())
 					newParams->setLimeServerUrl(oldLimeServerUrl);
 				else if( setLimeServerUrl)
 					newParams->setLimeServerUrl(Constants::DefaultLimeServerURL);
 			}
-			
-			account->setParams(newParams);
 		}
+		if (rcVersion < 7) { // 6.x lime algo c25519 added to all 6.x rc files
+			newParams->setLimeAlgo("c25519");
+			qInfo() << "Migrating" << accountIdentity << "for version 7. lime algo = c25519";
+		}
+		account->setParams(newParams);
 	}
 	if( oldLimeServerUrl.empty() && setLimeServerUrl) {
 		mCore->enableLimeX3Dh(true);
+	}
+	if (rcVersion < 7) { // 6.x / 5.3.0
+		// Video policy added to all 6.x rc files - done via config as API calls only saves config for
+		// these when core is ready.
+		if (!config->hasEntry("video", "automatically_accept")) config->setInt("video", "automatically_accept", 1);
+		if (!config->hasEntry("video", "automatically_initiate")) config->setInt("video", "automatically_initiate", 0);
+		if (!config->hasEntry("video", "automatically_accept_direction"))
+			config->setInt("video", "automatically_accept_direction", 2);
+		if (config->hasEntry("misc", "version_check_url_root"))
+			config->setString("misc", "version_check_url_root", Constants::VersionCheckReleaseUrl);
+		qInfo() << "Migrating Video Policy for version 7.";
 	}
 	
 	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);

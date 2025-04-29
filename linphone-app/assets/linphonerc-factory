@@ -1,6 +1,3 @@
-[misc]
-log_collection_upload_server_url=https://www.linphone.org:444/lft.php
-
 [sound]
 ec_filter=MSWebRTCAEC
 

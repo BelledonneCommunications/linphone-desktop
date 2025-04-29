@@ -55,25 +55,26 @@ public:
 #endif                                                          // ifdef ENABLE_UPDATE_CHECK
 
 	static constexpr char DefaultXmlrpcUri[] = "https://subscribe.linphone.org:444/wizard.php";
-	static constexpr char DefaultUploadLogsServer[] = "https://www.linphone.org:444/lft.php";
+	static constexpr char DefaultUploadLogsServer[] = "https://files.linphone.org/http-file-transfer-server/hft.php";
+	static constexpr char RetiredUploadLogsServer[] = "https://www.linphone.org:444/lft.php";
 	static constexpr char DefaultContactParameters[] = "message-expires=2419200";
 	static constexpr char DefaultContactParametersOnRemove[] = "message-expires=0";
 	static constexpr int DefaultExpires = 600;
 	static constexpr int DefaultPublishExpires = 120;
-	static constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
-	static constexpr char VersionCheckReleaseUrl[] = "https://linphone.org/releases";
-	static constexpr char VersionCheckNightlyUrl[] = "https://linphone.org/snapshots";
+	static constexpr char DownloadUrl[] = "https://www.linphone.org/en/technical-corner/linphone";
+	static constexpr char VersionCheckReleaseUrl[] = "https://download.linphone.org/releases";
+	static constexpr char VersionCheckNightlyUrl[] = "https://download.linphone.org/snapshots";
 	static constexpr char PasswordRecoveryUrl[] = "https://subscribe.linphone.org/login/email";
-	static constexpr char CguUrl[] = "https://www.linphone.org/general-terms";
-	static constexpr char PrivatePolicyUrl[] = "https://www.linphone.org/privacy-policy";
-	static constexpr char ContactUrl[] = "https://www.linphone.org/contact";
-	static constexpr char TranslationUrl[] = "https://weblate.linphone.org/projects/linphone-desktop/";
+	static constexpr char CguUrl[] = "https://www.linphone.org/en/terms-of-use";
+	static constexpr char PrivatePolicyUrl[] = "https://linphone.org/en/privacy-policy";
+	static constexpr char ContactUrl[] = "https://www.linphone.org/en/contact";
+	static constexpr char TranslationUrl[] = "https://weblate.linphone.org/projects/linphone/linphone-desktop-6-0/";
 
 	static constexpr int MaxMosaicParticipants =
 	    6; // From 7, the mosaic quality will be limited to avoid useless computations
 
-	static constexpr char LinphoneBZip2_exe[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
-	static constexpr char LinphoneBZip2_dll[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
+	static constexpr char LinphoneBZip2_exe[] = "https://download.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
+	static constexpr char LinphoneBZip2_dll[] = "https://download.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
 	static constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
 	static constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
 
@@ -101,6 +102,8 @@ public:
 	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
 	static constexpr char DefaultAssistantLoginUrl[] = "https://subscribe.linphone.org/login";
 	static constexpr char DefaultAssistantLogoutUrl[] = "https://subscribe.linphone.org/logout";
+	static constexpr char DefaultRouteAddress[] = "sip:sip.linphone.org;transport=tls";
+
 	//--------------
 
 	// Max image size in bytes. (1Mb)
@@ -172,11 +175,12 @@ public:
 	static constexpr char VcardScheme[] = EXECUTABLE_NAME "-desktop:/";
 	static constexpr int CbsCallInterval = 20;
 	static constexpr char RcVersionName[] = "rc_version";
-	static constexpr int RcVersionCurrent = 6; // 2 = Conference URI
+	static constexpr int RcVersionCurrent = 7; // 2 = Conference URI
 	                                           // 3 = CPIM on basic chat rooms
 	                                           // 4 = RTP bundle mode
 	                                           // 5 = Video Conference URI
 	                                           // 6 = Publish expires
+	                                           // 7 = Lime algo + Video Policy + Routes + Log upload URL
 //--------------------------------------------------------------------------------
 //								CISCO
 //--------------------------------------------------------------------------------
