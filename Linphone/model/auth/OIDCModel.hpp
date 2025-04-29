@@ -44,11 +44,26 @@ signals:
 	void finished();
 
 private:
+	/**
+	 * @brief Retrieves the ID token.
+	 *
+	 * This function returns the ID token as a QString. The ID token is typically
+	 * used for authentication and authorization purposes in OpenID Connect (OIDC)
+	 * workflows. Implementation is specific to QT version
+	 *
+	 * @return The ID token as a QString.
+	 */
+	QString idToken() const;
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
+	QString mIdToken;
+#endif
 	QOAuth2AuthorizationCodeFlow mOidc;
 	std::shared_ptr<linphone::AuthInfo> mAuthInfo;
 	QTimer mTimeout;
 
 	DECLARE_ABSTRACT_OBJECT
 };
+;
 
 #endif
