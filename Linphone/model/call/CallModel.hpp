@@ -72,6 +72,8 @@ public:
 	QStringList getRemoteAtuhenticationTokens() const;
 	bool getZrtpCaseMismatch() const;
 
+	std::shared_ptr<linphone::Conference> getConference() const;
+
 	LinphoneEnums::ConferenceLayout getConferenceVideoLayout() const;
 	void changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout); // Make a call request
 	void updateConferenceVideoLayout(); // Called from call state changed ater the new layout has been set.

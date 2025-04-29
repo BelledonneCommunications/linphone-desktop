@@ -33,6 +33,8 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(QDateTime timestamp READ getTimestamp WRITE setTimestamp NOTIFY timestampChanged)
 	Q_PROPERTY(QString text READ getText WRITE setText NOTIFY textChanged)
+	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
+	Q_PROPERTY(QString peerName READ getPeerName CONSTANT)
 	Q_PROPERTY(bool isRemoteMessage READ isRemoteMessage WRITE setIsRemoteMessage NOTIFY isRemoteMessageChanged)
 
 public:
@@ -47,6 +49,9 @@ public:
 	QString getText() const;
 	void setText(QString text);
 
+	QString getPeerAddress() const;
+	QString getPeerName() const;
+
 	bool isRemoteMessage() const;
 	void setIsRemoteMessage(bool isRemote);
 
@@ -58,6 +63,8 @@ signals:
 private:
 	DECLARE_ABSTRACT_OBJECT
 	QString mText;
+	QString mPeerAddress;
+	QString mPeerName;
 	QDateTime mTimestamp;
 	bool mIsRemoteMessage = false;
 	std::shared_ptr<ChatMessageModel> mChatMessageModel;

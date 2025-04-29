@@ -121,7 +121,8 @@
 		},
 		image: {
 			normal: Linphone.DefaultStyle.grey_0,
-			pressed: Linphone.DefaultStyle.grey_0
+			pressed: Linphone.DefaultStyle.grey_0,
+			checked: Linphone.DefaultStyle.grey_0
 		}
 	}
 

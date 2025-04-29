@@ -42,6 +42,11 @@ ListView {
     // flickDeceleration: 10000
     spacing: Math.round(10 * DefaultStyle.dp)
 
+    function selectChat(chatGui) {
+        var index = chatProxy.findChatIndex(chatGui)
+        mainItem.currentIndex = index
+    }
+
     Component.onCompleted: cacheBuffer = Math.max(contentHeight, 0) //contentHeight>0 ? contentHeight : 0// cache all items
     // remove binding loop
     onContentHeightChanged: Qt.callLater(function () {
@@ -59,12 +64,13 @@ ListView {
             positionViewAtBeginning() // Stay at beginning
     }
 
-     onAtYEndChanged: {
-         if (atYEnd && count > 0) {
-             chatProxy.displayMore()
-         }
-     }
-    //----------------------------------------------------------------
+    onAtYEndChanged: {
+        if (atYEnd && count > 0) {
+            chatProxy.displayMore()
+        }
+    }
+
+//----------------------------------------------------------------
     function moveToCurrentItem() {
         if (mainItem.currentIndex >= 0)
             Utils.updatePosition(mainItem, mainItem)
@@ -109,8 +115,8 @@ ListView {
     component UnreadNotification: Item {
         id: unreadNotif
         property int unread: 0
-        width: Math.round(22 * DefaultStyle.dp)
-        height: Math.round(22 * DefaultStyle.dp)
+        width: Math.round(14 * DefaultStyle.dp)
+        height: Math.round(14 * DefaultStyle.dp)
         visible: unread > 0
         Rectangle {
             id: background
@@ -123,7 +129,7 @@ ListView {
                 horizontalAlignment: Text.AlignHCenter
                 color: DefaultStyle.grey_0
                 fontSizeMode: Text.Fit
-                font.pixelSize: Typography.p3.pixelSize
+                font.pixelSize: Math.round(10 * DefaultStyle.dp)
                 text: parent.unreadNotif > 100 ? '99+' : unreadNotif.unread
             }
         }
@@ -155,11 +161,7 @@ ListView {
                 id: historyAvatar
                 property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.peerAddress)
                 contact: contactObj?.value || null
-                onContactChanged: {
-                    if (contact) console.log("found contact", contact.core.defaultAddress)
-                    else console.log("no contact for peer address", modelData.core.peerAddress, modelData.core.avatarUri)
-                }
-                displayNameVal: contact ? undefined : modelData.core.avatarUri
+                displayNameVal: contact ? "" : modelData.core.avatarUri
                 // secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
                 Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
@@ -208,6 +210,7 @@ ListView {
                 }
 
                 RowLayout {
+                    Item {Layout.fillWidth: true}
                     UnreadNotification {
                         id: unreadCount
                         unread: modelData.core.unreadMessagesCount
@@ -230,10 +233,8 @@ ListView {
                 anchors.fill: parent
                 opacity: 0.7
                 radius: Math.round(8 * DefaultStyle.dp)
-                color: mainItem.currentIndex
-                       === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
-                visible: mainItem.lastMouseContainsIndex === index
-                         || mainItem.currentIndex === index
+                color: mainItem.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
+                visible: mainItem.lastMouseContainsIndex === index || mainItem.currentIndex === index
             }
             onPressed: {
                 mainItem.currentIndex = model.index

@@ -411,9 +411,7 @@ FriendGui{
                         height: Math.round(56 * DefaultStyle.dp)
                         button.icon.width: Math.round(24 * DefaultStyle.dp)
                         button.icon.height: Math.round(24 * DefaultStyle.dp)
-                        button.onClicked: mainWindow.startCallWithContact(
-                                              contactDetail.contact,
-                                              false, mainItem)
+                        button.onClicked: mainWindow.startCallWithContact(contactDetail.contact, false, mainItem)
                     }
                     LabelButton {
                         button.icon.source: AppIcons.chatTeardropText
@@ -424,8 +422,10 @@ FriendGui{
                         height: Math.round(56 * DefaultStyle.dp)
                         button.icon.width: Math.round(24 * DefaultStyle.dp)
                         button.icon.height: Math.round(24 * DefaultStyle.dp)
-                        button.onClicked: console.debug(
-                                              "[ContactLayout.qml] TODO : open conversation")
+                        button.onClicked: {
+                            console.debug("[ContactLayout.qml] Open conversation")
+                            mainWindow.displayChatPage(contactDetail.contact.core.defaultAddress)
+                        }
                     }
                     LabelButton {
                         visible: SettingsCpp.videoEnabled
@@ -436,9 +436,7 @@ FriendGui{
                         height: Math.round(56 * DefaultStyle.dp)
                         button.icon.width: Math.round(24 * DefaultStyle.dp)
                         button.icon.height: Math.round(24 * DefaultStyle.dp)
-                        button.onClicked: mainWindow.startCallWithContact(
-                                              contactDetail.contact,
-                                              true, mainItem)
+                        button.onClicked: mainWindow.startCallWithContact(contactDetail.contact, true, mainItem)
                     }
                 }
                 bannerContent: [
@@ -636,7 +634,7 @@ FriendGui{
                                     EffectImage {
                                         Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
                                         Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                                        source: AppIcons.shareNetwork
+                                        imageSource: AppIcons.shareNetwork
                                         colorizationColor: DefaultStyle.main2_600
                                     }
                                     Text {

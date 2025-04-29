@@ -33,6 +33,7 @@
 
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
+#include "core/chat/ChatCore.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/LinphoneEnums.hpp"
 #include "tool/providers/AvatarProvider.hpp"
@@ -85,9 +86,9 @@ void setProperty(QObject &object, const char *property, const T &value) {
 // =============================================================================
 
 const QHash<int, Notifier::Notification> Notifier::Notifications = {
-    //{Notifier::ReceivedMessage, {Notifier::ReceivedMessage, "NotificationReceivedMessage.qml", 10}},
+    {Notifier::ReceivedMessage, {Notifier::ReceivedMessage, "NotificationReceivedMessage.qml", 10}},
     //{Notifier::ReceivedFileMessage, {Notifier::ReceivedFileMessage, "NotificationReceivedFileMessage.qml", 10}},
-    {Notifier::ReceivedCall, {Notifier::ReceivedCall, "NotificationReceivedCall.qml", 30}},
+    {Notifier::ReceivedCall, {Notifier::ReceivedCall, "NotificationReceivedCall.qml", 30}}
     //{Notifier::NewVersionAvailable, {Notifier::NewVersionAvailable, "NotificationNewVersionAvailable.qml", 30}},
     //{Notifier::SnapshotWasTaken, {Notifier::SnapshotWasTaken, "NotificationSnapshotWasTaken.qml", 10}},
     //{Notifier::RecordingCompleted, {Notifier::RecordingCompleted, "NotificationRecordingCompleted.qml", 10}}
@@ -127,7 +128,7 @@ Notifier::~Notifier() {
 
 bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap data) {
 	mMutex->lock();
-	Q_ASSERT(mInstancesNumber <= MaxNotificationsNumber);
+	// Q_ASSERT(mInstancesNumber <= MaxNotificationsNumber);
 	if (mInstancesNumber == MaxNotificationsNumber) { // Check existing instances.
 		qWarning() << QStringLiteral("Unable to create another notification.");
 		mMutex->unlock();
@@ -305,43 +306,68 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	});
 }
 
-/*
-void Notifier::notifyReceivedMessages(const list<shared_ptr<linphone::ChatMessage>> &messages) {
-    QVariantMap map;
-    QString txt;
-    if (messages.size() > 0) {
-        shared_ptr<linphone::ChatMessage> message = messages.front();
+void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> &room,
+                                      const list<shared_ptr<linphone::ChatMessage>> &messages) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 
-        if (messages.size() == 1) {
-            auto fileContent = message->getFileTransferInformation();
-            if (!fileContent) {
-                foreach (auto content, message->getContents()) {
-                    if (content->isText()) txt += content->getUtf8Text().c_str();
-                }
-            } else if (fileContent->isVoiceRecording())
-                //: 'Voice message received!' : message to warn the user in a notofication for voice messages.
-                txt = tr("new_voice_message");
-            else txt = tr("new_file_message");
-            if (txt.isEmpty() && message->hasConferenceInvitationContent())
-                //: 'Conference invitation received!' : Notification about receiving an invitation to a conference.
-                txt = tr("new_conference_invitation");
-        } else
-            //: 'New messages received!' Notification that warn the user of new messages.
-            txt = tr("new_chat_room_messages");
-        map["message"] = txt;
-        shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
-        map["timelineModel"].setValue(
-            CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
-        if (messages.size() == 1) { // Display only sender on mono message.
-            map["remoteAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
-            map["fullremoteAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asString());
-        }
-        map["localAddress"] = Utils::coreStringToAppString(message->getToAddress()->asStringUriOnly());
-        map["fullLocalAddress"] = Utils::coreStringToAppString(message->getToAddress()->asString());
-        map["window"].setValue(App::getInstance()->getMainWindow());
-        CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
-    }
+	QString txt;
+	QString remoteAddress;
+
+	if (messages.size() > 0) {
+		shared_ptr<linphone::ChatMessage> message = messages.front();
+
+		auto receiverAccount = ToolModel::findAccount(message->getToAddress());
+		if (receiverAccount) {
+			auto senderAccount = ToolModel::findAccount(message->getFromAddress());
+			if (senderAccount) {
+				return;
+			}
+			auto accountModel = Utils::makeQObject_ptr<AccountModel>(receiverAccount);
+			accountModel->setSelf(accountModel);
+			if (!accountModel->getNotificationsAllowed()) {
+				qInfo() << "Notifications have been disabled for this account - not creating a notification for "
+				           "incoming message";
+				return;
+			}
+		}
+
+		if (messages.size() == 1) { // Display only sender on mono message.
+			auto remoteAddr = message->getFromAddress()->clone();
+			remoteAddr->clean();
+			remoteAddress = Utils::coreStringToAppString(remoteAddr->asStringUriOnly());
+			auto fileContent = message->getFileTransferInformation();
+			if (!fileContent) {
+				foreach (auto content, message->getContents()) {
+					if (content->isText()) txt += content->getUtf8Text().c_str();
+				}
+			} else if (fileContent->isVoiceRecording())
+				//: 'Voice message received!' : message to warn the user in a notofication for voice messages.
+				txt = tr("new_voice_message");
+			else txt = tr("new_file_message");
+			if (txt.isEmpty() && message->hasConferenceInvitationContent())
+				//: 'Conference invitation received!' : Notification about receiving an invitation to a conference.
+				txt = tr("new_conference_invitation");
+		} else {
+			//: 'New messages received!' Notification that warn the user of new messages.
+			txt = tr("new_chat_room_messages");
+		}
+
+		auto chatCore = ChatCore::create(room);
+
+		App::postCoreAsync([this, txt, chatCore, remoteAddress]() {
+			mustBeInMainThread(getClassName());
+			QVariantMap map;
+			map["message"] = txt;
+			qDebug() << "create notif from address" << remoteAddress;
+			map["remoteAddress"] = remoteAddress;
+			map["chatRoomName"] = chatCore->getTitle();
+			map["chatRoomAddress"] = chatCore->getPeerAddress();
+			map["avatarUri"] = chatCore->getAvatarUri();
+			CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
+		});
+	}
 }
+/*
 
 void Notifier::notifyReceivedReactions(
     const QList<QPair<std::shared_ptr<linphone::ChatMessage>, std::shared_ptr<const linphone::ChatMessageReaction>>>

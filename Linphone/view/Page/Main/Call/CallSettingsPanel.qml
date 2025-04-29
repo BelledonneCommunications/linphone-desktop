@@ -32,7 +32,7 @@ Control.Page {
 	header: Control.Control {
 		id: pageHeader
 		width: mainItem.width
-        height: Math.round(56 * DefaultStyle.dp)
+        height: Math.round(67 * DefaultStyle.dp)
         leftPadding: Math.round(10 * DefaultStyle.dp)
         rightPadding: Math.round(10 * DefaultStyle.dp)
 		background: Rectangle {

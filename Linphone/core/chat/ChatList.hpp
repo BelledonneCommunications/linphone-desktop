@@ -38,9 +38,11 @@ public:
 	QSharedPointer<ChatCore> createChatCore(const std::shared_ptr<linphone::ChatRoom> &chatroom);
 	ChatList(QObject *parent = Q_NULLPTR);
 	~ChatList();
-
 	void setSelf(QSharedPointer<ChatList> me);
+
+	int findChatIndex(ChatGui *chat);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
 signals:
 	void lUpdate();
 	void filterChanged(QString filter);

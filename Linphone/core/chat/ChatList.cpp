@@ -61,8 +61,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			// Avoid copy to lambdas
 			QList<QSharedPointer<ChatCore>> *chats = new QList<QSharedPointer<ChatCore>>();
 			auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
-//			auto linphoneChatRooms = currentAccount->filterChatRooms(Utils::appStringToCoreString(mFilter));
-			auto linphoneChatRooms = currentAccount->getChatRooms();
+			auto linphoneChatRooms = currentAccount->filterChatRooms(Utils::appStringToCoreString(mFilter));
 			for (auto it : linphoneChatRooms) {
 				auto model = createChatCore(it);
 				chats->push_back(model);
@@ -75,31 +74,45 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 		});
 	});
 
-	mModelConnection->makeConnectToModel(&CoreModel::chatRoomStateChanged,
-	                                     [this](const std::shared_ptr<linphone::Core> &core,
-	                                            const std::shared_ptr<linphone::ChatRoom> &chatRoom,
-	                                            linphone::ChatRoom::State state) {
-		                                     // check account, filtre, puis ajout si c'est bon
-		                                     bool toCreate = false;
-		                                     if (toCreate) {
-			                                     auto model = createChatCore(chatRoom);
-			                                     mModelConnection->invokeToCore([this, model]() {
-				                                     // We set the current here and not on firstChatStarted event
-				                                     // because we don't want to add unicity check while keeping the
-				                                     // same model between list and current chat.
-				                                     add(model);
-			                                     });
-		                                     }
-	                                     });
-	mModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, [this] (std::shared_ptr<linphone::Core> core, std::shared_ptr<linphone::Account> account) {
-		lUpdate();
-	});
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::chatRoomStateChanged,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	           linphone::ChatRoom::State state) {
+		    // check account, filtre, puis ajout si c'est bon
+		    if (chatRoom->getAccount() == core->getDefaultAccount()) {
+			    if (state == linphone::ChatRoom::State::Created) {
+				    auto list = getSharedList<ChatCore>();
+				    auto found =
+				        std::find_if(list.begin(), list.end(), [chatRoom](const QSharedPointer<ChatCore> &item) {
+					        return (item && item->getModel()->getMonitor() == chatRoom);
+				        });
+				    if (found != list.end()) {
+					    qDebug() << "chat room created, add it to the list";
+					    auto model = createChatCore(chatRoom);
+					    mModelConnection->invokeToCore([this, model]() { add(model); });
+				    }
+			    }
+		    }
+	    });
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::defaultAccountChanged,
+	    [this](std::shared_ptr<linphone::Core> core, std::shared_ptr<linphone::Account> account) { lUpdate(); });
 
 	connect(this, &ChatList::filterChanged, [this](QString filter) {
 		mFilter = filter;
 		lUpdate();
 	});
 	lUpdate();
+}
+
+int ChatList::findChatIndex(ChatGui *chatGui) {
+	if (!chatGui) return -1;
+	auto core = chatGui->mCore;
+	auto chatList = getSharedList<ChatCore>();
+	auto it = std::find_if(chatList.begin(), chatList.end(), [core](const QSharedPointer<ChatCore> item) {
+		return item->getIdentifier() == core->getIdentifier();
+	});
+	return it == chatList.end() ? -1 : std::distance(chatList.begin(), it);
 }
 
 QVariant ChatList::data(const QModelIndex &index, int role) const {

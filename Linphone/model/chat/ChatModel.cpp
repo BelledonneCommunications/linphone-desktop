@@ -54,6 +54,10 @@ std::list<std::shared_ptr<linphone::ChatMessage>> ChatModel::getHistory() const 
 	return res;
 }
 
+QString ChatModel::getIdentifier() const {
+	return Utils::coreStringToAppString(mMonitor->getIdentifier());
+}
+
 QString ChatModel::getTitle() {
 	if (mMonitor->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)) {
 		return ToolModel::getDisplayName(mMonitor->getPeerAddress()->clone());
@@ -65,6 +69,7 @@ QString ChatModel::getTitle() {
 			return Utils::coreStringToAppString(mMonitor->getSubject());
 		}
 	}
+	return QString();
 }
 
 QString ChatModel::getPeerAddress() const {
@@ -101,15 +106,14 @@ void ChatModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> 
 	emit isComposingReceived(chatRoom, remoteAddress, isComposing);
 }
 
-// Do not use this api, only manipulate EventLogs
 void ChatModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> &chatRoom,
                                   const std::shared_ptr<linphone::ChatMessage> &message) {
-	// emit messageReceived(chatRoom, message);
+	emit messageReceived(chatRoom, message);
 }
 
 void ChatModel::onMessagesReceived(const std::shared_ptr<linphone::ChatRoom> &chatRoom,
                                    const std::list<std::shared_ptr<linphone::ChatMessage>> &chatMessages) {
-	// emit messagesReceived(chatRoom, chatMessages);
+	emit messagesReceived(chatRoom, chatMessages);
 }
 
 void ChatModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> &chatRoom,
@@ -258,5 +262,5 @@ void ChatModel::onChatRoomRead(const std::shared_ptr<linphone::ChatRoom> &chatRo
 void ChatModel::onNewMessageReaction(const std::shared_ptr<linphone::ChatRoom> &chatRoom,
                                      const std::shared_ptr<linphone::ChatMessage> &message,
                                      const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) {
-	emit onNewMessageReaction(chatRoom, message, reaction);
+	// emit onNewMessageReaction(chatRoom, message, reaction);
 }

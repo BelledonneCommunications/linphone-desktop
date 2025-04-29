@@ -620,6 +620,19 @@ AbstractWindow {
                     contentStackView.initialItem: callListPanel
                     headerValidateButtonText: qsTr("add")
 
+                    Binding on topPadding {
+                        when: rightPanel.contentStackView.currentItem.objectName === "chatPanel"
+                        value: 0
+                    }
+                    Binding on leftPadding {
+                        when: rightPanel.contentStackView.currentItem.objectName === "chatPanel"
+                        value: 0
+                    }
+                    Binding on rightPadding {
+                        when: rightPanel.contentStackView.currentItem.objectName == "chatPanel"
+                        value: 0
+                    }
+
                     Item {
                         id: numericPadContainer
                         anchors.bottom: parent.bottom
@@ -833,6 +846,28 @@ AbstractWindow {
                     }
                     Item {
                         Layout.fillHeight: true
+                    }
+                }
+            }
+            Component {
+                id: chatPanel
+                Item {
+                    id: chatPanelContent
+                    objectName: "chatPanel"
+                    Control.StackView.onActivated: {
+                        rightPanel.customHeaderButtons = chatView.callHeaderContent
+                        rightPanel.headerTitleText = ""
+                    }
+                    Keys.onEscapePressed: event => {
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
+                    SelectedChatView {
+                        id: chatView
+                        anchors.fill: parent
+                        call: mainWindow.call
+                        property var chatObj: UtilsCpp.getCurrentCallChat(mainWindow.call)
+                        chat: chatObj ? chatObj.value : null
                     }
                 }
             }
@@ -1308,6 +1343,23 @@ AbstractWindow {
                             if (checked) {
                                 rightPanel.visible = true
                                 rightPanel.replace(screencastPanel)
+                            } else {
+                                rightPanel.visible = false
+                            }
+                        }
+                    }
+                    CheckableButton {
+                        iconUrl: AppIcons.chatTeardropText
+                        //: Open chat…
+                        ToolTip.text: qsTr("call_open_chat_hint")
+                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
+                        icon.width: Math.round(32 * DefaultStyle.dp)
+                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        onCheckedChanged: {
+                            if (checked) {
+                                rightPanel.visible = true
+                                rightPanel.replace(chatPanel)
                             } else {
                                 rightPanel.visible = false
                             }

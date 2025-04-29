@@ -40,15 +40,30 @@ void ChatProxy::setSourceModel(QAbstractItemModel *model) {
 	}
 	auto newChatList = dynamic_cast<ChatList *>(model);
 	if (newChatList) {
-//		connect(this, &ChatProxy::filterTextChanged, newChatList, &ChatList::filterChanged);
+		connect(this, &ChatProxy::filterTextChanged, newChatList,
+		        [this, newChatList] { emit newChatList->filterChanged(getFilterText()); });
 	}
 	setSourceModels(new SortFilterList(model));
 	sort(0);
 }
 
+int ChatProxy::findChatIndex(ChatGui *chatGui) {
+	auto chatList = getListModel<ChatList>();
+	if (chatList) {
+		auto listIndex = chatList->findChatIndex(chatGui);
+		if (listIndex != -1) {
+			listIndex =
+			    dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(chatList->index(listIndex, 0)).row();
+			if (mMaxDisplayItems <= listIndex) setMaxDisplayItems(listIndex + mDisplayItemsStep);
+			return listIndex;
+		}
+	}
+	return -1;
+}
+
 bool ChatProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-//	auto l = getItemAtSource<ChatList, ChatCore>(sourceRow);
-//	return l != nullptr;
+	//	auto l = getItemAtSource<ChatList, ChatCore>(sourceRow);
+	//	return l != nullptr;
 	return true;
 }
 

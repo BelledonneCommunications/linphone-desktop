@@ -12,21 +12,26 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 RowLayout {
     id: mainItem
     property ChatGui chat
+    property CallGui call
+    property alias callHeaderContent: splitPanel.headerContent
     spacing: 0
     MainRightPanel {
+        id: splitPanel
         Layout.fillWidth: true
         Layout.fillHeight: true
         panelColor: DefaultStyle.grey_0
+        header.visible: !mainItem.call
         clip: true
         headerContent: [
             RowLayout {
-                anchors.left: parent.left
-                anchors.leftMargin: Math.round(31 * DefaultStyle.dp)
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent?.left
+                anchors.leftMargin: mainItem.call ? 0 : Math.round(31 * DefaultStyle.dp)
+                anchors.verticalCenter: parent?.verticalCenter
                 spacing: Math.round(12 * DefaultStyle.dp)
                 Avatar {
-                    property var contactObj: mainItem.chat ? UtilsCpp.findFriendByAddress(mainItem.chat.core.peerAddress) : null
+                    property var contactObj: mainItem.chat ? UtilsCpp.findFriendByAddress(mainItem.chat?.core.peerAddress) : null
                     contact: contactObj?.value || null
+                    displayNameVal: contact ? "" : mainItem.chat.core.avatarUri
                     Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                     Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
                 }
@@ -38,6 +43,7 @@ RowLayout {
                     font {
                         pixelSize: Typography.h4.pixelSize
                         weight: Math.round(400 * DefaultStyle.dp)
+                        capitalization: Font.Capitalize
                     }
                 }
             },
@@ -51,7 +57,7 @@ RowLayout {
                 }
                 BigButton {
                     style: ButtonStyle.noBackground
-                    icon.source: AppIcons.camera
+                    icon.source: AppIcons.videoCamera
                 }
                 BigButton {
                     style: ButtonStyle.noBackground

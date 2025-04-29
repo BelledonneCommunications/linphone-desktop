@@ -88,6 +88,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Popup/Loading/LoadingPopup.qml
 	view/Control/Popup/Notification/Notification.qml
 	view/Control/Popup/Notification/NotificationReceivedCall.qml
+	view/Control/Popup/Notification/NotificationReceivedMessage.qml
 
 	view/Control/Tool/MovableMouseArea.qml
 	view/Control/Tool/Helper/utils.js

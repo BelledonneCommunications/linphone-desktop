@@ -43,17 +43,17 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	mLastUpdatedTime = QDateTime::fromSecsSinceEpoch(chatRoom->getLastUpdateTime());
 	if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)) {
 		mTitle = ToolModel::getDisplayName(chatRoom->getPeerAddress()->clone());
-		mAvatarUri = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly());
+		mAvatarUri = ToolModel::getDisplayName(chatRoom->getPeerAddress()->clone());
 		auto peerAddress = chatRoom->getPeerAddress();
 		mPeerAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
 	} else {
 		if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
-			auto peer = chatRoom->getParticipants().front();
-			if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress()->clone());
-			mAvatarUri = Utils::coreStringToAppString(peer->getAddress()->asStringUriOnly());
 			auto participants = chatRoom->getParticipants();
+			auto peer = participants.front();
+			if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress()->clone());
+			mAvatarUri = ToolModel::getDisplayName(peer->getAddress()->clone());
 			if (participants.size() == 1) {
-				auto peerAddress = participants.front()->getAddress();
+				auto peerAddress = peer->getAddress();
 				if (peerAddress) mPeerAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
 			}
 		} else if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference)) {
@@ -75,6 +75,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 		auto chatMessage = ChatMessageCore::create(message);
 		mChatMessageList.append(chatMessage);
 	}
+	mIdentifier = Utils::coreStringToAppString(chatRoom->getIdentifier());
 }
 
 ChatCore::~ChatCore() {
@@ -119,6 +120,10 @@ void ChatCore::setTitle(QString title) {
 		mTitle = title;
 		emit titleChanged(title);
 	}
+}
+
+QString ChatCore::getIdentifier() const {
+	return mIdentifier;
 }
 
 QString ChatCore::getPeerAddress() const {
@@ -192,4 +197,8 @@ void ChatCore::removeMessagesFromMessageList(QList<QSharedPointer<ChatMessageCor
 		}
 	}
 	if (nbRemoved > 0) emit messageListChanged();
+}
+
+std::shared_ptr<ChatModel> ChatCore::getModel() const {
+	return mChatModel;
 }

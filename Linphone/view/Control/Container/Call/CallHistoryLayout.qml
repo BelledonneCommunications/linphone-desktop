@@ -193,7 +193,12 @@ ColumnLayout {
             button.icon.source: AppIcons.chatTeardropText
             //: "Message"
             label: qsTr("contact_message_action")
-			button.onClicked: console.debug("[ContactLayout.qml] TODO : open conversation")
+			button.onClicked: {
+				console.debug("[CallHistoryLayout.qml] Open conversation")
+				if (mainItem.specificAddress === "") {
+					mainWindow.displayChatPage(mainItem.contact.core.defaultAddress)
+				} else mainWindow.displayChatPage(mainItem.specificAddress)
+			}
         }
         LabelButton {
             visible: !mainItem.isConference && SettingsCpp.videoEnabled

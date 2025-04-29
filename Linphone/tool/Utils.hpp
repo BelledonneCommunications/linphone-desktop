@@ -51,6 +51,7 @@ class ConferenceInfoGui;
 class ConferenceCore;
 class ParticipantDeviceCore;
 class DownloadablePayloadTypeCore;
+class ChatGui;
 
 class Utils : public QObject, public AbstractObject {
 	Q_OBJECT
@@ -88,8 +89,10 @@ public:
 	Q_INVOKABLE static QString createAvatar(const QUrl &fileUrl); // Return the avatar path
 	Q_INVOKABLE static QString formatElapsedTime(int seconds,
 	                                             bool dotsSeparator = true); // Return the elapsed time formated
-	Q_INVOKABLE static QString
-	formatDate(const QDateTime &date, bool includeTime = true, bool includeDateIfToday = true, QString format = ""); // Return the date formated
+	Q_INVOKABLE static QString formatDate(const QDateTime &date,
+	                                      bool includeTime = true,
+	                                      bool includeDateIfToday = true,
+	                                      QString format = ""); // Return the date formated
 	Q_INVOKABLE static QString formatDateElapsedTime(const QDateTime &date);
 	Q_INVOKABLE static QString formatTime(const QDateTime &date); // Return the time formated
 	Q_INVOKABLE static QStringList generateSecurityLettersArray(int arraySize, int correctIndex, QString correctCode);
@@ -140,6 +143,8 @@ public:
 	Q_INVOKABLE QList<QVariant> append(const QList<QVariant> a, const QList<QVariant> b);
 	Q_INVOKABLE QString getAddressToDisplay(QVariantList addressList, QString filter, QString defaultAddress);
 
+	Q_INVOKABLE static VariantObject *getCurrentCallChat(CallGui *call);
+	Q_INVOKABLE static VariantObject *getChatForAddress(QString address);
 	//	QDir findDirectoryByName(QString startPath, QString name);
 
 	static QString getApplicationProduct();

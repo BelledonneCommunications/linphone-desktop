@@ -56,6 +56,10 @@ AbstractWindow {
 		openMainPage()
 		mainWindowStackView.currentItem.displayContactPage(contactAddress)
 	}
+	function displayChatPage(contactAddress) {
+		openMainPage()
+		mainWindowStackView.currentItem.displayChatPage(contactAddress)
+	}
 	function transferCallSucceed() {
 		openMainPage()
         //: "Appel transféré"

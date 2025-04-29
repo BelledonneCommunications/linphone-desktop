@@ -18,6 +18,12 @@ AbstractMainPage {
 
     property var selectedChatGui
 
+    property string remoteAddress
+    onRemoteAddressChanged: console.log("ChatPage : remote address changed :", remoteAddress)
+    property var remoteChatObj: UtilsCpp.getChatForAddress(remoteAddress)
+    property ChatGui remoteChat: remoteChatObj ? remoteChatObj.value : null
+    onRemoteChatChanged: if (remoteChat) selectedChatGui = remoteChat
+
     onSelectedChatGuiChanged: {
         if (selectedChatGui)
             rightPanelStackView.replace(currentChatComp,
@@ -150,6 +156,11 @@ AbstractMainPage {
                             }
                             onCountChanged: {
                                 mainItem.selectedChatGui = model.getAt(currentIndex)
+                            }
+
+                            Connections {
+                                target: mainItem
+                                onSelectedChatGuiChanged: chatListView.selectChat(mainItem.selectedChatGui)
                             }
                         }
                     }

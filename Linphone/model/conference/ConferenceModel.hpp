@@ -57,6 +57,8 @@ public:
 	void removeParticipant(const std::shared_ptr<linphone::Address> &address);
 	void addParticipant(const std::shared_ptr<linphone::Address> &address);
 
+	std::shared_ptr<linphone::ChatRoom> getChatRoom() const;
+
 	int getParticipantDeviceCount() const;
 
 	void onIsScreenSharingEnabledChanged();

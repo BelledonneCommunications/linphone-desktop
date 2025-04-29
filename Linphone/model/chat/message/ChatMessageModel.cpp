@@ -32,7 +32,7 @@ DEFINE_ABSTRACT_OBJECT(ChatMessageModel)
 
 ChatMessageModel::ChatMessageModel(const std::shared_ptr<linphone::ChatMessage> &chatMessage, QObject *parent)
     : ::Listener<linphone::ChatMessage, linphone::ChatMessageListener>(chatMessage, parent) {
-	lDebug() << "[ChatMessageModel] new" << this << " / SDKModel=" << chatMessage.get();
+	// lDebug() << "[ChatMessageModel] new" << this << " / SDKModel=" << chatMessage.get();
 	mustBeInLinphoneThread(getClassName());
 }
 
@@ -42,6 +42,10 @@ ChatMessageModel::~ChatMessageModel() {
 
 QString ChatMessageModel::getText() const {
 	return ToolModel::getMessageFromContent(mMonitor->getContents());
+}
+
+QString ChatMessageModel::getPeerAddress() const {
+	return Utils::coreStringToAppString(mMonitor->getPeerAddress()->asStringUriOnly());
 }
 
 QDateTime ChatMessageModel::getTimestamp() const {

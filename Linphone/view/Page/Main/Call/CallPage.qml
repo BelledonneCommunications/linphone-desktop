@@ -532,12 +532,9 @@ AbstractMainPage {
                                 onClicked: {
                                     detailOptions.close()
                                     if (contactDetail.isLocalFriend)
-                                        mainWindow.displayContactPage(
-                                                    contactDetail.contactAddress)
+                                        mainWindow.displayContactPage(contactDetail.contactAddress)
                                     else
-                                        mainItem.createContactRequested(
-                                                    contactDetail.contactName,
-                                                    contactDetail.contactAddress)
+                                        mainItem.createContactRequested(contactDetail.contactName, contactDetail.contactAddress)
                                 }
                             }
                             IconLabelButton {

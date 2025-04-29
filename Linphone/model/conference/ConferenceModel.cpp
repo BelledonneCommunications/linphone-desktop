@@ -76,6 +76,10 @@ int ConferenceModel::getParticipantDeviceCount() const {
 	return mMonitor->getParticipantDeviceList().size();
 }
 
+std::shared_ptr<linphone::ChatRoom> ConferenceModel::getChatRoom() const {
+	return mMonitor->getChatRoom();
+}
+
 void ConferenceModel::setMicrophoneMuted(bool isMuted) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setMicrophoneMuted(isMuted);
@@ -171,7 +175,8 @@ bool ConferenceModel::isScreenSharingEnabled() const {
 void ConferenceModel::onActiveSpeakerParticipantDevice(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-    lDebug() << "onActiveSpeakerParticipantDevice: " << (participantDevice ? participantDevice->getAddress()->asString().c_str() : "NULL");
+	lDebug() << "onActiveSpeakerParticipantDevice: "
+	         << (participantDevice ? participantDevice->getAddress()->asString().c_str() : "NULL");
 
 	emit activeSpeakerParticipantDevice(conference, conference->getActiveSpeakerParticipantDevice());
 }

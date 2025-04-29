@@ -34,8 +34,8 @@
 #include "model/cli/CliModel.hpp"
 #include "model/listener/Listener.hpp"
 #include "model/logger/LoggerModel.hpp"
-#include "tool/AbstractObject.hpp"
 #include "model/search/MagicSearchModel.hpp"
+#include "tool/AbstractObject.hpp"
 
 // =============================================================================
 
@@ -61,9 +61,9 @@ public:
 	void migrate();
 
 	void searchInMagicSearch(QString filter,
-							 int sourceFlags,
-							 LinphoneEnums::MagicSearchAggregation aggregation,
-							 int maxResults);
+	                         int sourceFlags,
+	                         LinphoneEnums::MagicSearchAggregation aggregation,
+	                         int maxResults);
 
 	bool mEnd = false;
 

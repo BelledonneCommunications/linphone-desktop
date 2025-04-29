@@ -19,6 +19,10 @@ ListView {
         chatGui: mainItem.chat
     }
 
+    header: Item {
+        height: Math.round(18 * DefaultStyle.dp)
+    }
+
     delegate: ChatMessage {
         id: chatMessage
         width: Math.min(implicitWidth, Math.round(mainItem.width * (3/4)))

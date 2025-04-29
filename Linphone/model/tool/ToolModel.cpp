@@ -120,20 +120,18 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &
 	auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
 	if (!defaultFriendList) return nullptr;
 	auto linphoneAddr = ToolModel::interpretUrl(address);
-	if (linphoneAddr)
-		return ToolModel::findFriendByAddress(linphoneAddr);
-	else
-		return nullptr;
+	if (linphoneAddr) return ToolModel::findFriendByAddress(linphoneAddr);
+	else return nullptr;
 }
 
 std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr<linphone::Address> linphoneAddr) {
 	auto friendsManager = FriendsManager::getInstance();
 	QString key = Utils::coreStringToAppString(linphoneAddr->asStringUriOnly());
 	if (friendsManager->isInKnownFriends(key)) {
-//		qDebug() << key << "have been found in known friend, return it";
+		//		qDebug() << key << "have been found in known friend, return it";
 		return friendsManager->getKnownFriendAtKey(key);
-	} else 	if (friendsManager->isInUnknownFriends(key)) {
-//		qDebug() << key << "have been found in unknown friend, return it";
+	} else if (friendsManager->isInUnknownFriends(key)) {
+		//		qDebug() << key << "have been found in unknown friend, return it";
 		return friendsManager->getUnknownFriendAtKey(key);
 	}
 	auto f = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
@@ -141,20 +139,21 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr
 		if (friendsManager->isInUnknownFriends(key)) {
 			friendsManager->removeUnknownFriend(key);
 		}
-//		qDebug() << "found friend, add to known map";
+		//		qDebug() << "found friend, add to known map";
 		friendsManager->appendKnownFriend(linphoneAddr, f);
 	}
 	if (!f) {
 		if (friendsManager->isInOtherAddresses(key)) {
-//			qDebug() << "A magic search has already be done for address" << key << "and nothing was found, return";
+			//			qDebug() << "A magic search has already be done for address" << key << "and nothing was found,
+			// return";
 			return nullptr;
 		}
 		friendsManager->appendOtherAddress(key);
-//		qDebug() << "Couldn't find friend" << linphoneAddr->asStringUriOnly() << "in core, use magic search";
+		//		qDebug() << "Couldn't find friend" << linphoneAddr->asStringUriOnly() << "in core, use magic search";
 		CoreModel::getInstance()->searchInMagicSearch(Utils::coreStringToAppString(linphoneAddr->asStringUriOnly()),
-														(int)linphone::MagicSearch::Source::LdapServers
-														| (int)linphone::MagicSearch::Source::RemoteCardDAV
-														, LinphoneEnums::MagicSearchAggregation::Friend, 50);
+		                                              (int)linphone::MagicSearch::Source::LdapServers |
+		                                                  (int)linphone::MagicSearch::Source::RemoteCardDAV,
+		                                              LinphoneEnums::MagicSearchAggregation::Friend, 50);
 	}
 	return f;
 }
@@ -384,7 +383,6 @@ bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList>
 	return (it != friends.end());
 }
 
-
 QString ToolModel::getMessageFromContent(std::list<std::shared_ptr<linphone::Content>> contents) {
 	for (auto &content : contents) {
 		if (content->isText()) {
@@ -466,4 +464,119 @@ QString ToolModel::computeUserAgent(const std::shared_ptr<linphone::Config> &con
 	    .arg(Utils::getOsProduct())
 	    .arg(qVersion())
 	    .remove("'");
+}
+
+std::shared_ptr<linphone::ConferenceParams>
+ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_ptr<linphone::Address> remoteAddress) {
+	auto core = call ? call->getCore() : CoreModel::getInstance()->getCore();
+	auto localAddress = call ? call->getCallLog()->getLocalAddress() : nullptr;
+	if (!remoteAddress && call) remoteAddress = call->getRemoteAddress()->clone();
+	auto account = findAccount(localAddress);
+	if (!account) account = core->getDefaultAccount();
+	if (!account) qWarning() << "failed to get account, return";
+	if (!account) return nullptr;
+
+	auto params = core->createConferenceParams(call ? call->getConference() : nullptr);
+	params->enableChat(true);
+	params->enableGroup(false);
+	//: Dummy subject
+	params->setSubject(Utils::appStringToCoreString(QObject::tr("chat_dummy_subject")));
+	params->setAccount(account);
+
+	auto chatParams = params->getChatParams();
+	if (!chatParams) {
+		qWarning() << "failed to get chat params from conference params, return";
+		return nullptr;
+	}
+	chatParams->setEphemeralLifetime(0);
+	auto accountParams = account->getParams();
+	auto sameDomain = remoteAddress && remoteAddress->getDomain() == SettingsModel::getInstance()->getDefaultDomain() &&
+	                  remoteAddress->getDomain() == accountParams->getDomain();
+	if (accountParams->getInstantMessagingEncryptionMandatory() && sameDomain) {
+		qDebug() << "Account is in secure mode & domain matches, requesting E2E encryption";
+		chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
+		params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
+	} else if (!accountParams->getInstantMessagingEncryptionMandatory()) {
+		if (SettingsModel::getInstance()->getCreateEndToEndEncryptedMeetingsAndGroupCalls()) {
+			qDebug() << "Account is in interop mode but LIME is available, requesting E2E encryption";
+			chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
+			params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
+		} else {
+			qDebug() << "Account is in interop mode and LIME is available, disabling E2E encryption";
+			chatParams->setBackend(linphone::ChatRoom::Backend::Basic);
+			params->setSecurityLevel(linphone::Conference::SecurityLevel::None);
+		}
+	} else {
+		qDebug() << "Account is in secure mode, can't chat with SIP address of different domain";
+		return nullptr;
+	}
+	return params;
+}
+
+std::shared_ptr<linphone::ChatRoom> ToolModel::lookupCurrentCallChat(std::shared_ptr<CallModel> callModel) {
+	auto call = callModel->getMonitor();
+	auto conference = callModel->getConference();
+	if (conference) {
+		return conference->getChatRoom();
+	} else {
+		auto core = CoreModel::getInstance()->getCore();
+		auto params = getChatRoomParams(call);
+		auto remoteaddress = call->getRemoteAddress();
+		auto localAddress = call->getCallLog()->getLocalAddress();
+		std::list<std::shared_ptr<linphone::Address>> participants;
+		participants.push_back(remoteaddress->clone());
+		qDebug() << "Looking for chat with local address" << localAddress->asStringUriOnly() << "and participant"
+		         << remoteaddress->asStringUriOnly();
+		auto existingChat = core->searchChatRoom(params, localAddress, nullptr, participants);
+		if (existingChat) qDebug() << "Found existing chat";
+		else qDebug() << "Did not find existing chat";
+		return existingChat;
+	}
+}
+
+std::shared_ptr<linphone::ChatRoom> ToolModel::createCurrentCallChat(std::shared_ptr<CallModel> callModel) {
+	auto call = callModel->getMonitor();
+	auto remoteAddress = call->getRemoteAddress();
+	std::list<std::shared_ptr<linphone::Address>> participants;
+	participants.push_back(remoteAddress->clone());
+	auto core = CoreModel::getInstance()->getCore();
+	auto params = getChatRoomParams(call);
+	if (!params) {
+		qWarning() << "failed to create chatroom params for call with" << remoteAddress->asStringUriOnly();
+		return nullptr;
+	}
+	auto chatRoom = core->createChatRoom(params, participants);
+	return chatRoom;
+}
+
+std::shared_ptr<linphone::ChatRoom> ToolModel::lookupChatForAddress(std::shared_ptr<linphone::Address> remoteAddress) {
+	auto core = CoreModel::getInstance()->getCore();
+	auto account = core->getDefaultAccount();
+	if (!account) return nullptr;
+	auto localAddress = account->getParams()->getIdentityAddress();
+	if (!localAddress || !remoteAddress) return nullptr;
+
+	auto params = getChatRoomParams(nullptr, remoteAddress);
+	std::list<std::shared_ptr<linphone::Address>> participants;
+	participants.push_back(remoteAddress->clone());
+
+	qDebug() << "Looking for chat with local address" << localAddress->asStringUriOnly() << "and participant"
+	         << remoteAddress->asStringUriOnly();
+	auto existingChat = core->searchChatRoom(params, localAddress, nullptr, participants);
+	if (existingChat) qDebug() << "Found existing chat";
+	else qDebug() << "Did not find existing chat";
+	return existingChat;
+}
+
+std::shared_ptr<linphone::ChatRoom> ToolModel::createChatForAddress(std::shared_ptr<linphone::Address> remoteAddress) {
+	std::list<std::shared_ptr<linphone::Address>> participants;
+	participants.push_back(remoteAddress->clone());
+	auto core = CoreModel::getInstance()->getCore();
+	auto params = getChatRoomParams(nullptr, remoteAddress);
+	if (!params) {
+		qWarning() << "failed to create chatroom params for address" << remoteAddress->asStringUriOnly();
+		return nullptr;
+	}
+	auto chatRoom = core->createChatRoom(params, participants);
+	return chatRoom;
 }

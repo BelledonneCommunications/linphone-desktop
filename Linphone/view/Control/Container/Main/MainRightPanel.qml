@@ -10,6 +10,7 @@ ColumnLayout {
 	property color panelColor: DefaultStyle.grey_100
 	property alias headerContent: rightPanelHeader.children
 	property alias content: rightPanelContent.children
+	property alias header: rightPanelHeader
 	spacing: 0
 
 	Rectangle {

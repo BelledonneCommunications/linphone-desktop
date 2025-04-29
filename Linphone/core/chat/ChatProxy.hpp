@@ -39,6 +39,8 @@ public:
 
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
+	Q_INVOKABLE int findChatIndex(ChatGui *chatGui);
+
 protected:
 	QSharedPointer<ChatList> mList;
 	DECLARE_ABSTRACT_OBJECT

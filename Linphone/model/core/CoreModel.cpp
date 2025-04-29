@@ -122,9 +122,8 @@ void CoreModel::start() {
 	linphoneSearch->setLimitedSearch(true);
 	mMagicSearch = Utils::makeQObject_ptr<MagicSearchModel>(linphoneSearch);
 	mMagicSearch->setSelf(mMagicSearch);
-	connect(mMagicSearch.get(), &MagicSearchModel::searchResultsReceived, this, [this] {
-		emit magicSearchResultReceived(mMagicSearch->mLastSearch);
-	});
+	connect(mMagicSearch.get(), &MagicSearchModel::searchResultsReceived, this,
+	        [this] { emit magicSearchResultReceived(mMagicSearch->mLastSearch); });
 }
 // -----------------------------------------------------------------------------
 
@@ -352,10 +351,11 @@ void CoreModel::migrate() {
 	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
 }
 
-void CoreModel::searchInMagicSearch(QString filter, int sourceFlags,
-                         LinphoneEnums::MagicSearchAggregation aggregation,
-                         int maxResults) {
-    mMagicSearch->search(filter, sourceFlags, aggregation, maxResults);
+void CoreModel::searchInMagicSearch(QString filter,
+                                    int sourceFlags,
+                                    LinphoneEnums::MagicSearchAggregation aggregation,
+                                    int maxResults) {
+	mMagicSearch->search(filter, sourceFlags, aggregation, maxResults);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------
@@ -503,12 +503,16 @@ void CoreModel::onMessageReceived(const std::shared_ptr<linphone::Core> &core,
                                   const std::shared_ptr<linphone::ChatRoom> &room,
                                   const std::shared_ptr<linphone::ChatMessage> &message) {
 	emit unreadNotificationsChanged();
+	std::list<std::shared_ptr<linphone::ChatMessage>> messages;
+	messages.push_back(message);
+	App::getInstance()->getNotifier()->notifyReceivedMessages(room, messages);
 	emit messageReceived(core, room, message);
 }
 void CoreModel::onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
                                    const std::shared_ptr<linphone::ChatRoom> &room,
                                    const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
 	emit unreadNotificationsChanged();
+	App::getInstance()->getNotifier()->notifyReceivedMessages(room, messages);
 	emit messagesReceived(core, room, messages);
 }
 

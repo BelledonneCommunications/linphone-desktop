@@ -20,6 +20,7 @@
 
 #include "ChatMessageCore.hpp"
 #include "core/App.hpp"
+#include "model/tool/ToolModel.hpp"
 
 DEFINE_ABSTRACT_OBJECT(ChatMessageCore)
 
@@ -31,7 +32,7 @@ QSharedPointer<ChatMessageCore> ChatMessageCore::create(const std::shared_ptr<li
 }
 
 ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &chatmessage) {
-	lDebug() << "[ChatMessageCore] new" << this;
+	// lDebug() << "[ChatMessageCore] new" << this;
 	mustBeInLinphoneThread(getClassName());
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mChatMessageModel = Utils::makeQObject_ptr<ChatMessageModel>(chatmessage);
@@ -41,6 +42,8 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	auto from = chatmessage->getFromAddress();
 	auto to = chatmessage->getLocalAddress();
 	mIsRemoteMessage = !from->weakEqual(to);
+	mPeerAddress = Utils::coreStringToAppString(chatmessage->getPeerAddress()->asStringUriOnly());
+	mPeerName = ToolModel::getDisplayName(chatmessage->getPeerAddress()->clone());
 }
 
 ChatMessageCore::~ChatMessageCore() {
@@ -70,6 +73,14 @@ void ChatMessageCore::setText(QString text) {
 		mText = text;
 		emit textChanged(text);
 	}
+}
+
+QString ChatMessageCore::getPeerAddress() const {
+	return mPeerAddress;
+}
+
+QString ChatMessageCore::getPeerName() const {
+	return mPeerName;
 }
 
 bool ChatMessageCore::isRemoteMessage() const {

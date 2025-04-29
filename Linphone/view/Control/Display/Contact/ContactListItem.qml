@@ -170,6 +170,10 @@ FocusScope {
                     style: ButtonStyle.grey
                     KeyNavigation.left: videoCallButton
                     KeyNavigation.right: callButton
+                    onClicked: {
+                        console.debug("[ContactListItem.qml] Open conversation")
+                        mainWindow.displayChatPage(mainItem.addressFromFilter)
+                    }
                 }
             }
             PopupButton {

@@ -41,9 +41,9 @@ public:
 	~Notifier();
 
 	enum NotificationType {
-		// ReceivedMessage,
+		ReceivedMessage,
 		// ReceivedFileMessage,
-		ReceivedCall,
+		ReceivedCall
 		// NewVersionAvailable,
 		// SnapshotWasTaken,
 		// RecordingCompleted
@@ -52,8 +52,9 @@ public:
 	// void notifyReceivedCall(Call *call);
 	void notifyReceivedCall(const std::shared_ptr<linphone::Call> &call); // Call from Linphone
 
+	void notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> &room,
+	                            const std::list<std::shared_ptr<linphone::ChatMessage>> &messages);
 	/*
-	    void notifyReceivedMessages(const std::list<std::shared_ptr<linphone::ChatMessage>> &messages);
 	    void notifyReceivedReactions(
 	        const QList<QPair<std::shared_ptr<linphone::ChatMessage>, std::shared_ptr<const
 	   linphone::ChatMessageReaction>>> &reactions); void notifyReceivedFileMessage(const

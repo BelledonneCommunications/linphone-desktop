@@ -81,6 +81,13 @@ public:
 	static QString getOsProduct();
 	static QString computeUserAgent(const std::shared_ptr<linphone::Config> &config);
 
+	static std::shared_ptr<linphone::ConferenceParams>
+	getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_ptr<linphone::Address> remoteAddress = nullptr);
+	static std::shared_ptr<linphone::ChatRoom> lookupCurrentCallChat(std::shared_ptr<CallModel> callModel);
+	static std::shared_ptr<linphone::ChatRoom> createCurrentCallChat(std::shared_ptr<CallModel> callModel);
+	static std::shared_ptr<linphone::ChatRoom> lookupChatForAddress(std::shared_ptr<linphone::Address> remoteAddress);
+	static std::shared_ptr<linphone::ChatRoom> createChatForAddress(std::shared_ptr<linphone::Address> remoteAddress);
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 };

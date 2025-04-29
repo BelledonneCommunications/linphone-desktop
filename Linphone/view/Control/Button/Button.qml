@@ -32,6 +32,7 @@ Control.Button {
 	property bool shadowEnabled: false
 	property var contentImageColor: style?.image?.normal || DefaultStyle.main2_600
 	property var hoveredImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.05)
+	property var checkedImageColor: style?.image?.checked || Qt.darker(contentImageColor, 1.1)
 	property var pressedImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.1)
     property bool asynchronous: false
     spacing: Math.round(5 * DefaultStyle.dp)
@@ -126,7 +127,7 @@ Control.Button {
 		imageWidth: mainItem.icon.width
 		imageHeight: mainItem.icon.height
         colorizationColor: mainItem.checkable && mainItem.checked
-            ? mainItem.checkedColor || mainItem.pressedColor
+            ? mainItem.checkedImageColor || mainItem.checkedColor || mainItem.pressedColor
             : mainItem.pressed
                 ? mainItem.pressedImageColor
                 : mainItem.hovered

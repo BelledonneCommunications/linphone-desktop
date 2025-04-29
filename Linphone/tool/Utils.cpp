@@ -22,6 +22,8 @@
 
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
+#include "core/chat/ChatCore.hpp"
+#include "core/chat/ChatGui.hpp"
 #include "core/conference/ConferenceCore.hpp"
 #include "core/conference/ConferenceInfoCore.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
@@ -1506,6 +1508,76 @@ Utils::createFriendDeviceVariant(const QString &name, const QString &address, Li
 	map.insert("address", address);
 	map.insert("securityLevel", QVariant::fromValue(level));
 	return map;
+}
+
+VariantObject *Utils::getCurrentCallChat(CallGui *call) {
+	VariantObject *data = new VariantObject("lookupCurrentCallChat");
+	if (!data) return nullptr;
+	if (!call || !call->mCore) return nullptr;
+	data->makeRequest([callModel = call->mCore->getModel(), data]() {
+		if (!callModel) return QVariant();
+		auto linphoneChatRoom = ToolModel::lookupCurrentCallChat(callModel);
+		if (linphoneChatRoom) {
+			auto chatCore = ChatCore::create(linphoneChatRoom);
+			return QVariant::fromValue(new ChatGui(chatCore));
+		} else {
+			qDebug() << "Did not find existing chat room, create one";
+			linphoneChatRoom = ToolModel::createCurrentCallChat(callModel);
+			if (linphoneChatRoom != nullptr) {
+				qDebug() << "Chatroom created with" << callModel->getRemoteAddress()->asStringUriOnly();
+				auto id = linphoneChatRoom->getIdentifier();
+				auto params = linphoneChatRoom->getCurrentParams();
+				auto chatCore = ChatCore::create(linphoneChatRoom);
+				return QVariant::fromValue(new ChatGui(chatCore));
+			} else {
+				qWarning() << "Failed to create 1-1 conversation with"
+				           << callModel->getRemoteAddress()->asStringUriOnly() << "!";
+				//: Failed to create 1-1 conversation with %1 !
+				data->mConnection->invokeToCore([] {
+					showInformationPopup(tr("information_popup_error_title"),
+					                     tr("information_popup_chatroom_creation_error_message"), false,
+					                     getCallsWindow());
+				});
+				return QVariant();
+			}
+		}
+	});
+	data->requestValue();
+	return data;
+}
+
+VariantObject *Utils::getChatForAddress(QString address) {
+	VariantObject *data = new VariantObject("lookupCurrentCallChat");
+	if (!data) return nullptr;
+	data->makeRequest([address, data]() {
+		auto linAddr = ToolModel::interpretUrl(address);
+		if (!linAddr) return QVariant();
+		auto linphoneChatRoom = ToolModel::lookupChatForAddress(linAddr);
+		if (linphoneChatRoom) {
+			auto chatCore = ChatCore::create(linphoneChatRoom);
+			return QVariant::fromValue(new ChatGui(chatCore));
+		} else {
+			qDebug() << "Did not find existing chat room, create one";
+			linphoneChatRoom = ToolModel::createChatForAddress(linAddr);
+			if (linphoneChatRoom != nullptr) {
+				qDebug() << "Chatroom created with" << linAddr->asStringUriOnly();
+				auto params = linphoneChatRoom->getCurrentParams();
+				auto chatCore = ChatCore::create(linphoneChatRoom);
+				return QVariant::fromValue(new ChatGui(chatCore));
+			} else {
+				qWarning() << "Failed to create 1-1 conversation with" << linAddr->asStringUriOnly() << "!";
+				//: Failed to create 1-1 conversation with %1 !
+				data->mConnection->invokeToCore([] {
+					showInformationPopup(tr("information_popup_error_title"),
+					                     tr("information_popup_chatroom_creation_error_message"), false,
+					                     getCallsWindow());
+				});
+				return QVariant();
+			}
+		}
+	});
+	data->requestValue();
+	return data;
 }
 
 // CLI

@@ -40,6 +40,8 @@ public:
 	QString getText() const;
 	QDateTime getTimestamp() const;
 
+	QString getPeerAddress() const;
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 	virtual std::shared_ptr<linphone::Buffer> onFileTransferSend(const std::shared_ptr<linphone::ChatMessage> &message,
