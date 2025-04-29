@@ -238,6 +238,7 @@ if(NOT APPLE OR MONO_ARCH)
 			endif()
 			if(NOT APPLE AND NOT WIN32)
 				function(add_linphone_ispell)
+					SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-error=incompatible-pointer-types") #Workaround for gcc15
 					add_subdirectory("external/ispell")
 				endfunction()
 				add_linphone_ispell()
