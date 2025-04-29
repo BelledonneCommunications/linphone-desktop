@@ -81,15 +81,21 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 		mOidc.setClientIdentifierSharedKey(clientSecret->getPassword().c_str());
 	}
 
-	QString scope = OIDCScope;
-	;
+	QSet<QByteArray> scopeTokens = {OIDCScope};
 	if (autorizationUrl.hasQuery()) {
 		QUrlQuery query(autorizationUrl);
 		if (query.hasQueryItem("scope")) {
-			scope = query.queryItemValue("scope");
+			auto scopeList = query.queryItemValue("scope").split(' ');
+			for (const auto &scopeItem : scopeList) {
+				scopeTokens.insert(scopeItem.toUtf8());
+			}
 		}
 	}
-	mOidc.setScope(scope);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+	mOidc.setRequestedScopeTokens(scopeTokens);
+#else
+	mOidc.setScope(QStringList(scopeTokens.begin(), scopeTokens.end()).join(' '));
+#endif
 	mTimeout.setInterval(1000 * 60 * 2); // 2minutes
 
 	connect(&mTimeout, &QTimer::timeout, [this]() {
@@ -189,6 +195,30 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 
 	connect(this, &OIDCModel::authenticated, this, &OIDCModel::setBearers);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
+	// Connect the signal to the tokensReceived handler to get id_token
+	connect(mOidc.replyHandler(), &QOAuthHttpServerReplyHandler::tokensReceived, this,
+	        [this](const QVariantMap &tokens) {
+		        //		for (auto it = tokens.cbegin(); it != tokens.cend(); ++it) {
+		        //			qDebug() << "Token key:" << it.key() << ", value:" << it.value().toString();
+		        //		}
+		        if (tokens.contains("id_token")) {
+			        auto idToken = tokens["id_token"].toString();
+			        qDebug() << "ID Token received:" << idToken.left(3) + "..." + idToken.right(3);
+			        mIdToken = idToken;
+		        } else if (tokens.contains("access_token")) {
+			        auto accessToken = tokens["access_token"].toString();
+			        qDebug() << "Access Token received:" << accessToken.left(3) + "..." + accessToken.right(3);
+			        mIdToken = accessToken;
+
+		        } else {
+			        mIdToken.clear();
+			        qWarning() << "No ID Token or Access Token found in the tokens.";
+			        emit requestFailed(tr("oidc_authentication_no_token_found_error"));
+			        emit finished();
+		        }
+	        });
+#endif
 	// in case we want to add parameters. Needed to override redirect_url
 	mOidc.setModifyParametersFunction([&, username = Utils::coreStringToAppString(authInfo->getUsername())](
 	                                      QAbstractOAuth::Stage stage, QMultiMap<QString, QVariant> *parameters) {
@@ -244,7 +274,11 @@ void OIDCModel::openIdConfigReceived() {
 		return;
 	}
 	if (rootArray.contains("token_endpoint")) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+		mOidc.setTokenUrl(QUrl(rootArray["token_endpoint"].toString()));
+#else
 		mOidc.setAccessTokenUrl(QUrl(rootArray["token_endpoint"].toString()));
+#endif
 		mAuthInfo->setTokenEndpointUri(
 		    Utils::appStringToCoreString(QUrl(rootArray["token_endpoint"].toString()).toString()));
 	} else {
@@ -262,13 +296,27 @@ void OIDCModel::setBearers() {
 	auto expiration = QDateTime::currentDateTime().secsTo(mOidc.expirationAt());
 	auto timeT = mOidc.expirationAt().toSecsSinceEpoch();
 	qDebug() << "Authenticated for " << expiration << "s";
-	auto refreshBearer =
-	    linphone::Factory::get()->createBearerToken(Utils::appStringToCoreString(mOidc.refreshToken()), timeT);
 
-	auto accessBearer = linphone::Factory::get()->createBearerToken(Utils::appStringToCoreString(mOidc.token()), timeT);
-	mAuthInfo->setRefreshToken(refreshBearer);
+	auto accessBearer = linphone::Factory::get()->createBearerToken(Utils::appStringToCoreString(idToken()), timeT);
 	mAuthInfo->setAccessToken(accessBearer);
+
+	if (mOidc.refreshToken() != nullptr) {
+
+		auto refreshBearer =
+		    linphone::Factory::get()->createBearerToken(Utils::appStringToCoreString(mOidc.refreshToken()), timeT);
+		mAuthInfo->setRefreshToken(refreshBearer);
+
+	} else {
+		qWarning() << "No refresh token found";
+	}
 	CoreModel::getInstance()->getCore()->addAuthInfo(mAuthInfo);
-	emit CoreModel::getInstance()->bearerAccountAdded();
+	emit CoreModel::getInstance() -> bearerAccountAdded();
 	emit finished();
+}
+QString OIDCModel::idToken() const {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+	return mOidc.idToken().isEmpty() ? mOidc.token() : mOidc.idToken();
+#else
+	return mIdToken;
+#endif
 }
