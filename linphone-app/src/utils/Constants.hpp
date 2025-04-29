@@ -21,21 +21,22 @@
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 
+#include <QDir>
 #include <QObject>
 #include <QString>
-#include <QDir>
 
 #include "config.h"
 
 // =============================================================================
 
-class Constants : public QObject{
+class Constants : public QObject {
 	Q_OBJECT
 public:
-	Constants(QObject * parent = nullptr) : QObject(parent){}
-	
-	//----------------------------------------------------------------------------------	
-	
+	Constants(QObject *parent = nullptr) : QObject(parent) {
+	}
+
+	//----------------------------------------------------------------------------------
+
 	static constexpr char DefaultLocale[] = "en";
 	static constexpr char DefaultFont[] = "Noto Sans";
 	static constexpr int DefaultFontPointSize = 10;
@@ -46,13 +47,13 @@ public:
 #endif
 	static constexpr int DefaultEmojiFontPointSize = 10;
 	static QStringList getReactionsList();
-	
-	static constexpr size_t MaxLogsCollectionSize = 10485760*5; // 50MB.
-	
+
+	static constexpr size_t MaxLogsCollectionSize = 10485760 * 5; // 50MB.
+
 #ifdef ENABLE_UPDATE_CHECK
 	static constexpr int VersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
-#endif // ifdef ENABLE_UPDATE_CHECK
-	
+#endif                                                          // ifdef ENABLE_UPDATE_CHECK
+
 	static constexpr char DefaultXmlrpcUri[] = "https://subscribe.linphone.org:444/wizard.php";
 	static constexpr char DefaultUploadLogsServer[] = "https://www.linphone.org:444/lft.php";
 	static constexpr char DefaultContactParameters[] = "message-expires=2419200";
@@ -67,18 +68,19 @@ public:
 	static constexpr char PrivatePolicyUrl[] = "https://www.linphone.org/privacy-policy";
 	static constexpr char ContactUrl[] = "https://www.linphone.org/contact";
 	static constexpr char TranslationUrl[] = "https://weblate.linphone.org/projects/linphone-desktop/";
-	
-	static constexpr int MaxMosaicParticipants = 6;// From 7, the mosaic quality will be limited to avoid useless computations
-	
+
+	static constexpr int MaxMosaicParticipants =
+	    6; // From 7, the mosaic quality will be limited to avoid useless computations
+
 	static constexpr char LinphoneBZip2_exe[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
 	static constexpr char LinphoneBZip2_dll[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
 	static constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
 	static constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
-	
-	static constexpr char DefaultFlexiAPIURL[] = "https://subscribe.linphone.org/api/";// Need "/" at the end
+
+	static constexpr char DefaultFlexiAPIURL[] = "https://subscribe.linphone.org/api/"; // Need "/" at the end
 	static constexpr char RemoteProvisioningURL[] = "https://subscribe.linphone.org/api/provisioning";
 	static constexpr char RemoteProvisioningBasicAuth[] = "";
-// OAuth2 settings
+	// OAuth2 settings
 	static constexpr char OAuth2AuthorizationUrl[] = "";
 	static constexpr char OAuth2AccessTokenUrl[] = "";
 	static constexpr char OAuth2RedirectUri[] = "";
@@ -86,8 +88,7 @@ public:
 	static constexpr char OAuth2Password[] = "";
 	static constexpr char OAuth2Scope[] = "";
 	static constexpr char DefaultOAuth2RemoteProvisioningHeader[] = "x-linphone-oauth2-token";
-	
-	
+
 	Q_PROPERTY(QString PasswordRecoveryUrl MEMBER PasswordRecoveryUrl CONSTANT)
 	Q_PROPERTY(QString CguUrl MEMBER CguUrl CONSTANT)
 	Q_PROPERTY(QString PrivatePolicyUrl MEMBER PrivatePolicyUrl CONSTANT)
@@ -96,35 +97,38 @@ public:
 	Q_PROPERTY(int maxMosaicParticipants MEMBER MaxMosaicParticipants CONSTANT)
 	Q_PROPERTY(QStringList reactionsList READ getReactionsList CONSTANT)
 
-// For Webviews
+	// For Webviews
 	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
 	static constexpr char DefaultAssistantLoginUrl[] = "https://subscribe.linphone.org/login";
 	static constexpr char DefaultAssistantLogoutUrl[] = "https://subscribe.linphone.org/logout";
-//--------------
+	//--------------
 
 	// Max image size in bytes. (1Mb)
-	static constexpr qint64 MaxImageSize = 1024000;// In Bytes.
-	static constexpr qint64 FileSizeLimit = 524288000;// In Bytes.
+	static constexpr qint64 MaxImageSize = 1024000;    // In Bytes.
+	static constexpr qint64 FileSizeLimit = 524288000; // In Bytes.
 	static constexpr int ThumbnailImageFileWidth = 100;
 	static constexpr int ThumbnailImageFileHeight = 100;
-	
-//--------------------------------------------------------------------------------
-//								LINPHONE
-//--------------------------------------------------------------------------------
 
-	static constexpr char LinphoneDomain[] = "sip.linphone.org";	// Use for checking if config are a Linphone
+	//--------------------------------------------------------------------------------
+	//								LINPHONE
+	//--------------------------------------------------------------------------------
+
+	static constexpr char LinphoneDomain[] = "sip.linphone.org"; // Use for checking if config are a Linphone
 	static constexpr char WindowIconPath[] = ":/assets/images/linphone_logo.svg";
 	static constexpr char ApplicationMinimalQtVersion[] = "5.10.0";
-	static constexpr char DefaultConferenceURI[] = "sip:conference-factory@sip.linphone.org";	// Default for a Linphone account
-	static constexpr char DefaultVideoConferenceURI[] = "sip:videoconference-factory@sip.linphone.org";	// Default for a Linphone account
-	static constexpr char DefaultLimeServerURL[] = "https://lime.linphone.org/lime-server/lime-server.php";	// Default for a Linphone account
-	
+	static constexpr char DefaultConferenceURI[] =
+	    "sip:conference-factory@sip.linphone.org"; // Default for a Linphone account
+	static constexpr char DefaultVideoConferenceURI[] =
+	    "sip:videoconference-factory@sip.linphone.org"; // Default for a Linphone account
+	static constexpr char DefaultLimeServerURL[] =
+	    "https://lime.linphone.org/lime-server/lime-server.php"; // Default for a Linphone account
+
 	static constexpr char PathAssistantConfig[] = "/" EXECUTABLE_NAME "/assistant/";
 	static constexpr char PathAvatars[] = "/avatars/";
 	static constexpr char PathCaptures[] = "/" EXECUTABLE_NAME "/captures/";
-	static constexpr char PathCodecs[] =  "/codecs/";
-	static constexpr char PathData[] =  "/" EXECUTABLE_NAME;
-	static constexpr char PathTools[] =  "/tools/";
+	static constexpr char PathCodecs[] = "/codecs/";
+	static constexpr char PathData[] = "/" EXECUTABLE_NAME;
+	static constexpr char PathTools[] = "/tools/";
 	static constexpr char PathLogs[] = "/logs/";
 	static constexpr char PathVfs[] = "/vfs/";
 #ifdef APPLE
@@ -135,7 +139,7 @@ public:
 	static constexpr char PathPluginsApp[] = "app/";
 	static constexpr char PathSounds[] = "/sounds/" EXECUTABLE_NAME;
 	static constexpr char PathUserCertificates[] = "/usr-crt/";
-	
+
 	static constexpr char PathCallHistoryList[] = "/call-history.db";
 	static constexpr char PathConfig[] = "/linphonerc";
 	static constexpr char PathDatabase[] = "/linphone.db";
@@ -147,45 +151,47 @@ public:
 	static constexpr char PathZrtpSecrets[] = "/zidcache";
 	static constexpr char PathISpellDicts[] = "/" EXECUTABLE_NAME "/ispell_dictionaries/";
 	static constexpr char PathISpellOwnDict[] = "/" EXECUTABLE_NAME "/ispell_own_dict";
-	
+
 	static constexpr char LanguagePath[] = ":/languages/";
-	
+
 	// The main windows of Linphone desktop.
 	static constexpr char QmlViewMainWindow[] = "qrc:/ui/views/App/Main/MainWindow.qml";
 	static constexpr char QmlViewCallsWindow[] = "qrc:/ui/views/App/Calls/CallsWindow.qml";
 	static constexpr char QmlViewSettingsWindow[] = "qrc:/ui/views/App/Settings/SettingsWindow.qml";
-	
+
 	static constexpr char MainQmlUri[] = "Linphone";
-	
+
 	static constexpr char AttachVirtualWindowMethodName[] = "attachVirtualWindow";
 	static constexpr char AboutPath[] = "qrc:/ui/views/App/Main/Dialogs/About.qml";
-	
+
 	static constexpr char AssistantViewName[] = "Assistant";
-	
+
 	static constexpr char QtDomain[] = "qt";
 	static constexpr char SrcPattern[] = "/src/";
-	static constexpr char LinphoneLocaleEncoding[] = "UTF-8";// Alternative is to use "locale"
+	static constexpr char LinphoneLocaleEncoding[] = "UTF-8"; // Alternative is to use "locale"
 	static constexpr char VcardScheme[] = EXECUTABLE_NAME "-desktop:/";
 	static constexpr int CbsCallInterval = 20;
 	static constexpr char RcVersionName[] = "rc_version";
-	static constexpr int RcVersionCurrent = 6;	// 2 = Conference URI
-												// 3 = CPIM on basic chat rooms
-												// 4 = RTP bundle mode
-												// 5 = Video Conference URI
-												// 6 = Publish expires
-//--------------------------------------------------------------------------------	
+	static constexpr int RcVersionCurrent = 6; // 2 = Conference URI
+	                                           // 3 = CPIM on basic chat rooms
+	                                           // 4 = RTP bundle mode
+	                                           // 5 = Video Conference URI
+	                                           // 6 = Publish expires
+//--------------------------------------------------------------------------------
 //								CISCO
 //--------------------------------------------------------------------------------
 #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 	static constexpr char H264Description[] = "Provided by CISCO SYSTEM,INC";
 #endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-	
+
 #ifdef Q_OS_LINUX
 	static constexpr char LibraryExtension[] = "so";
 	static constexpr char H264InstallName[] = "libopenh264.so";
 #ifdef Q_PROCESSOR_X86_64
-	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.2.0-linux64.6.so.bz2";
-	static constexpr char PluginH264Check[] = "45ba1aaeb6213c19cd9622b79788e16b05beabc4d16a3a74e57f046a0826fd77";
+	// static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.2.0-linux64.6.so.bz2";
+	// static constexpr char PluginH264Check[] = "45ba1aaeb6213c19cd9622b79788e16b05beabc4d16a3a74e57f046a0826fd77";
+	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.4.1-linux64.7.so.bz2";
+	static constexpr char PluginH264Check[] = "";
 #else
 	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.2.0-linux32.6.so.bz2";
 	static constexpr char PluginH264Check[] = "bf18e0e79c4a23018b0ea5ad6d7dd14fd1b6a6189d2f88fd56dece019fc415c8";
@@ -202,7 +208,7 @@ public:
 #endif // ifdef Q_OS_WIN64
 #endif // ifdef Q_OS_LINUX
 
-//--------------------------------------------------------------------------------	
+	//--------------------------------------------------------------------------------
 };
 
 #endif
