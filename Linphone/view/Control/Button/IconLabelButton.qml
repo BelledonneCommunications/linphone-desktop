@@ -47,12 +47,19 @@ Button {
 				family: DefaultStyle.defaultFont
 				capitalization: mainItem.capitalization
 				underline: mainItem.underline
-				bold: mainItem.style === ButtonStyle.noBackground && (mainItem.hovered || mainItem.pressed)
+				bold: (mainItem.style === ButtonStyle.noBackground || mainItem.style === ButtonStyle.noBackgroundRed) && (mainItem.hovered || mainItem.pressed)
 			}
-			TextMetrics {
-				id: textMetrics
-				text: mainItem.text
-				font: textItem.font
+		}
+		TextMetrics {
+			id: textMetrics
+			text: mainItem.text
+			font {
+				pixelSize: mainItem.textSize
+				weight: mainItem.textWeight * 2
+				family: DefaultStyle.defaultFont
+				capitalization: mainItem.capitalization
+				underline: mainItem.underline
+				bold: true
 			}
 		}
         Item {Layout.fillWidth: true}

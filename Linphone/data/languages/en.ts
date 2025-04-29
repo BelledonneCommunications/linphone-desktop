@@ -1232,7 +1232,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="369"/>
         <source>call_paused_by_remote</source>
         <extracomment>Call paused by remote</extracomment>
-        <translation type="unfinished">Call paused by remote</translation>
+        <translation>Call paused by remote</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="567"/>

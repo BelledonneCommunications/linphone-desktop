@@ -1024,7 +1024,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="566"/>
         <source>sip_address_copied_to_clipboard_message</source>
         <extracomment>L&apos;adresse a été copié dans le presse_papiers</extracomment>
-        <translation>L&apos;adresse a été copié dans le presse_papiers</translation>
+        <translation>L&apos;adresse a été copié dans le presse-papiers</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="572"/>
@@ -1232,7 +1232,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="369"/>
         <source>call_paused_by_remote</source>
         <extracomment>Call paused by remote</extracomment>
-        <translation type="unfinished">Appel mis en pause par votre correspondant</translation>
+        <translation>Appel mis en pause par votre correspondant</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="567"/>

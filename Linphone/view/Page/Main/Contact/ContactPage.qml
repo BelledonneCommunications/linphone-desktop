@@ -754,7 +754,6 @@ FriendGui{
                             //: "Autres actions"
                             label: qsTr("contact_details_actions_title")
                             content: ColumnLayout {
-                                width: parent.width
                                 IconLabelButton {
                                     Layout.fillWidth: true
                                     Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
