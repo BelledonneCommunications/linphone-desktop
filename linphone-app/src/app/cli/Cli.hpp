@@ -30,88 +30,83 @@
 // =============================================================================
 
 namespace linphone {
-  class Address;
+class Address;
 }
 
 class Cli : public QObject {
-  Q_OBJECT;
+	Q_OBJECT
 
-  typedef void (*Function)(QHash<QString, QString> &);
+	typedef void (*Function)(QHash<QString, QString> &);
 
-  enum ArgumentType {
-    String
-  };
+	enum ArgumentType { String };
 
-  struct Argument {
-    Argument (ArgumentType type = String, bool isOptional = false) {
-      this->type = type;
-      this->isOptional = isOptional;
-    }
+	struct Argument {
+		Argument(ArgumentType type = String, bool isOptional = false) {
+			this->type = type;
+			this->isOptional = isOptional;
+		}
 
-    ArgumentType type;
-    bool isOptional;
-  };
+		ArgumentType type;
+		bool isOptional;
+	};
 
-  class Command {
-  public:
-    Command () = default;
-    Command (
-      const QString &functionName,
-      const char *functionDescription,
-      Function function,
-      const QHash<QString, Argument> &argsScheme,
-      const bool &genericArguments=false
-    );
+	class Command {
+	public:
+		Command() = default;
+		Command(const QString &functionName,
+				const char *functionDescription,
+				Function function,
+				const QHash<QString, Argument> &argsScheme,
+				const bool &genericArguments = false);
 
-    void execute (QHash<QString, QString> &args) const;
-    void executeUri (QString address, QHash<QString, QString> args) const;
-    void executeUrl (const QString &url) const;
+		void execute(QHash<QString, QString> &args) const;
+		void executeUri(QString address, QHash<QString, QString> args) const;
+		void executeUrl(const QString &url) const;
 
-    const char *getFunctionDescription () const {
-      return mFunctionDescription;
-    }
+		const char *getFunctionDescription() const {
+			return mFunctionDescription;
+		}
 
-    QString getFunctionSyntax () const ;
+		QString getFunctionSyntax() const;
 
-    QHash<QString, Argument> mArgsScheme;
-    
-  private:
-    QString mFunctionName;
-    const char *mFunctionDescription;
-    Function mFunction = nullptr;
-    bool mGenericArguments=false;// Used to avoid check on arguments
-  };
+		QHash<QString, Argument> mArgsScheme;
+
+	private:
+		QString mFunctionName;
+		const char *mFunctionDescription;
+		Function mFunction = nullptr;
+		bool mGenericArguments = false; // Used to avoid check on arguments
+	};
 
 public:
-  enum CommandFormat {
-    UnknownFormat,
-    CliFormat,
-    UriFormat,    // Parameters are in base64
-    UrlFormat
-  };
+	enum CommandFormat {
+		UnknownFormat,
+		CliFormat,
+		UriFormat, // Parameters are in base64
+		UrlFormat
+	};
 
-  static void executeCommand (const QString &command, CommandFormat *format = nullptr);
+	static void executeCommand(const QString &command, CommandFormat *format = nullptr);
 
-  static void showHelp ();
+	static void showHelp();
 
 private:
-  Cli ();
+	Cli();
 
-  static std::pair<QString, Command> createCommand (
-    const QString &functionName,
-    const char *functionDescription,
-    Function function,
-    const QHash<QString, Argument> &argsScheme = QHash<QString, Argument>(),
-    const bool &genericArguments=false
-  );
+	static std::pair<QString, Command>
+	createCommand(const QString &functionName,
+				  const char *functionDescription,
+				  Function function,
+				  const QHash<QString, Argument> &argsScheme = QHash<QString, Argument>(),
+				  const bool &genericArguments = false);
 
-  static QString parseFunctionName (const QString &command);
-  static QHash<QString, QString> parseArgs (const QString &command);
+	static QString parseFunctionName(const QString &command);
+	static QHash<QString, QString> parseArgs(const QString &command);
 
-  static QMap<QString, Command> mCommands;
+	static QMap<QString, Command> mCommands;
 
-  static QRegExp mRegExpArgs;
-  static QRegExp mRegExpFunctionName;
+	static QRegExp mRegExpArgs;
+	static QRegExp mRegExpFunctionName;
 };
 
 #endif // CLI_H_
