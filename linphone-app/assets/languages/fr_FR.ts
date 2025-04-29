@@ -3116,6 +3116,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Enable screenshots&apos; : Label on switch to choose if we can take screenshots while being in call.</extracomment>
         <translation>Activer les captures d&apos;écran</translation>
     </message>
+    <message>
+        <source>chatReactionsNotificationsEnabledLabel</source>
+        <extracomment>&apos;Enable notifications on reactions&apos;: settings label for enabling notifications on chat reactions.</extracomment>
+        <translation>Activer les notifications sur les réactions.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsLdap</name>
