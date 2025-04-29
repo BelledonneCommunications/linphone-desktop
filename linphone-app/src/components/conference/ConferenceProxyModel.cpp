@@ -69,15 +69,25 @@ void ConferenceProxyModel::terminate () {
 void ConferenceProxyModel::startRecording () {
   if (mRecording)
     return;
-
+	CoreManager *coreManager = CoreManager::getInstance();
+	auto currentCall = coreManager->getCore()->getCurrentCall();
+	if (!currentCall) {
+		qWarning() << "Cannot start record: No call is running";
+		return;
+	}
+	auto conference = currentCall->getConference();
+	if (!conference) {
+		qWarning() << "Cannot start record: Current call is not a conference";
+		return;
+	}
   qInfo() << QStringLiteral("Start recording conference:") << this;
 
-  CoreManager *coreManager = CoreManager::getInstance();
+
   mLastRecordFile = 
       QStringLiteral("%1%2.mkv")
         .arg(coreManager->getSettingsModel()->getSavedCallsFolder())
         .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"));
-  coreManager->getCore()->startConferenceRecording(Utils::appStringToCoreString(mLastRecordFile) );
+  conference->startRecording(Utils::appStringToCoreString(mLastRecordFile) );
   mRecording = true;
 
   emit recordingChanged(true);
@@ -86,12 +96,22 @@ void ConferenceProxyModel::startRecording () {
 void ConferenceProxyModel::stopRecording () {
   if (!mRecording)
     return;
-
+  CoreManager *coreManager = CoreManager::getInstance();
+  auto currentCall = coreManager->getCore()->getCurrentCall();
+  if (!currentCall) {
+    qWarning() << "Cannot stop record: No call is running";
+    return;
+  }
+  auto conference = currentCall->getConference();
+  if (!conference) {
+    qWarning() << "Cannot stop record: Current call is not a conference";
+    return;
+  }
   qInfo() << QStringLiteral("Stop recording conference:") << this;
 
   mRecording = false;
   
-  CoreManager::getInstance()->getCore()->stopConferenceRecording();
+  conference->stopRecording();
   App::getInstance()->getNotifier()->notifyRecordingCompleted(mLastRecordFile);
 
   emit recordingChanged(false);

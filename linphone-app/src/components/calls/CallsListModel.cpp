@@ -39,8 +39,6 @@
 
 #include "CallsListModel.hpp"
 
-
-
 // =============================================================================
 
 using namespace std;
@@ -48,132 +46,143 @@ using namespace std;
 namespace {
 // Delay before removing call in ms.
 constexpr int DelayBeforeRemoveCall = 6000;
-}
+} // namespace
 
-static inline int findCallIndex (QList<QSharedPointer<QObject>> &list, const shared_ptr<linphone::Call> &call) {
+static inline int findCallIndex(QList<QSharedPointer<QObject>> &list, const shared_ptr<linphone::Call> &call) {
 	auto it = find_if(list.begin(), list.end(), [call](QSharedPointer<QObject> callModel) {
-			return call == callModel.objectCast<CallModel>()->getCall();
+		return call == callModel.objectCast<CallModel>()->getCall();
 	});
 	return it == list.end() ? -1 : int(distance(list.begin(), it));
 }
 
-static inline int findCallIndex (QList<QSharedPointer<QObject>> &list, const CallModel &callModel) {
+static inline int findCallIndex(QList<QSharedPointer<QObject>> &list, const CallModel &callModel) {
 	return ::findCallIndex(list, callModel.getCall());
 }
 
 // -----------------------------------------------------------------------------
 
-CallsListModel::CallsListModel (QObject *parent) : ProxyListModel(parent) {
+CallsListModel::CallsListModel(QObject *parent) : ProxyListModel(parent) {
 	mCoreHandlers = CoreManager::getInstance()->getHandlers();
-	QObject::connect(
-				mCoreHandlers.get(), &CoreHandlers::callStateChanged,
-				this, &CallsListModel::handleCallStateChanged
-				);
+	QObject::connect(mCoreHandlers.get(), &CoreHandlers::callStateChanged, this,
+	                 &CallsListModel::handleCallStateChanged);
 	connect(this, &CallsListModel::countChanged, this, &CallsListModel::canMergeCallsChanged);
 }
 
-CallModel *CallsListModel::findCallModelFromPeerAddress (const QString &peerAddress) const {
+CallModel *CallsListModel::findCallModelFromPeerAddress(const QString &peerAddress) const {
 	std::shared_ptr<linphone::Address> address = Utils::interpretUrl(peerAddress);
 	auto it = find_if(mList.begin(), mList.end(), [address](QSharedPointer<QObject> callModel) {
-			return callModel.objectCast<CallModel>()->getRemoteAddress()->weakEqual(address);
+		return callModel.objectCast<CallModel>()->getRemoteAddress()->weakEqual(address);
 	});
 	return it != mList.end() ? it->objectCast<CallModel>().get() : nullptr;
 }
 
 // -----------------------------------------------------------------------------
 
-void CallsListModel::askForTransfer (CallModel *callModel) {
+void CallsListModel::askForTransfer(CallModel *callModel) {
 	emit callTransferAsked(callModel);
 }
 
-void CallsListModel::askForAttendedTransfer (CallModel *callModel) {
+void CallsListModel::askForAttendedTransfer(CallModel *callModel) {
 	emit callAttendedTransferAsked(callModel);
 }
 
 // -----------------------------------------------------------------------------
 
-void CallsListModel::launchAudioCall (const QString &sipAddress, const QString& prepareTransfertAddress, const QHash<QString, QString> &headers) const {
+void CallsListModel::launchAudioCall(const QString &sipAddress,
+                                     const QString &prepareTransfertAddress,
+                                     const QHash<QString, QString> &headers) const {
 	CoreManager::getInstance()->getSettingsModel()->stopCaptureGraphs();
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	
+
 	shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
-	if (!address){
+	if (!address) {
 		qCritical() << "The calling address is not an interpretable SIP address: " << sipAddress;
 		return;
 	}
-	
+
 	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	params->enableVideo(false);
-	
+
 	QHashIterator<QString, QString> iterator(headers);
 	while (iterator.hasNext()) {
 		iterator.next();
-		params->addCustomHeader(Utils::appStringToCoreString(iterator.key()), Utils::appStringToCoreString(iterator.value()));
+		params->addCustomHeader(Utils::appStringToCoreString(iterator.key()),
+		                        Utils::appStringToCoreString(iterator.value()));
 	}
-	if(core->getDefaultAccount())
-		params->setAccount(core->getDefaultAccount());
+	if (core->getDefaultAccount()) params->setAccount(core->getDefaultAccount());
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	shared_ptr<linphone::Account> currentAccount = core->getDefaultAccount();
-	if(currentAccount){
-		if(!CoreManager::getInstance()->getSettingsModel()->getWaitRegistrationForCall() || currentAccount->getState() == linphone::RegistrationState::Ok)
+	if (currentAccount) {
+		if (!CoreManager::getInstance()->getSettingsModel()->getWaitRegistrationForCall() ||
+		    currentAccount->getState() == linphone::RegistrationState::Ok)
 			CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
-		else{
-			QObject * context = new QObject();
-			QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::registrationStateChanged,context,
-							 [address,core,params,currentAccount,prepareTransfertAddress, context](const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state) mutable {
-				if(context && account==currentAccount && state==linphone::RegistrationState::Ok){
-					CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
-					context->deleteLater();
-					context = nullptr;
-				}
-			});
+		else {
+			QObject *context = new QObject();
+			QObject::connect(
+			    CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::registrationStateChanged, context,
+			    [address, core, params, currentAccount, prepareTransfertAddress, context](
+			        const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state) mutable {
+				    if (context && account == currentAccount && state == linphone::RegistrationState::Ok) {
+					    CallModel::prepareTransfert(core->inviteAddressWithParams(address, params),
+					                                prepareTransfertAddress);
+					    context->deleteLater();
+					    context = nullptr;
+				    }
+			    });
 		}
-	}else
-		CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
+	} else CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 }
 
-void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneEnums::MediaEncryption encryption, const QHash<QString, QString> &headers, const QString& prepareTransfertAddress) const {
+void CallsListModel::launchSecureAudioCall(const QString &sipAddress,
+                                           LinphoneEnums::MediaEncryption encryption,
+                                           const QHash<QString, QString> &headers,
+                                           const QString &prepareTransfertAddress) const {
 	CoreManager::getInstance()->getSettingsModel()->stopCaptureGraphs();
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	
+
 	shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
-	if (!address)
-		return;
-	
+	if (!address) return;
+
 	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	params->enableVideo(false);
-	
+
 	QHashIterator<QString, QString> iterator(headers);
 	while (iterator.hasNext()) {
 		iterator.next();
-		params->addCustomHeader(Utils::appStringToCoreString(iterator.key()), Utils::appStringToCoreString(iterator.value()));
+		params->addCustomHeader(Utils::appStringToCoreString(iterator.key()),
+		                        Utils::appStringToCoreString(iterator.value()));
 	}
-	if(core->getDefaultAccount())
-		params->setAccount(core->getDefaultAccount());
+	if (core->getDefaultAccount()) params->setAccount(core->getDefaultAccount());
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	shared_ptr<linphone::Account> currentAccount = core->getDefaultAccount();
 	params->setMediaEncryption(LinphoneEnums::toLinphone(encryption));
-	if(currentAccount){
-		if(!CoreManager::getInstance()->getSettingsModel()->getWaitRegistrationForCall() || currentAccount->getState() == linphone::RegistrationState::Ok)
+	if (currentAccount) {
+		if (!CoreManager::getInstance()->getSettingsModel()->getWaitRegistrationForCall() ||
+		    currentAccount->getState() == linphone::RegistrationState::Ok)
 			CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
-		else{
-			QObject * context = new QObject();
-			QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::registrationStateChanged,context,
-							 [address,core,params,currentAccount,prepareTransfertAddress, context](const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state) mutable {
-				if(context && account==currentAccount && state==linphone::RegistrationState::Ok){
-					CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
-					context->deleteLater();
-					context = nullptr;
-				}
-			});
+		else {
+			QObject *context = new QObject();
+			QObject::connect(
+			    CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::registrationStateChanged, context,
+			    [address, core, params, currentAccount, prepareTransfertAddress, context](
+			        const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state) mutable {
+				    if (context && account == currentAccount && state == linphone::RegistrationState::Ok) {
+					    CallModel::prepareTransfert(core->inviteAddressWithParams(address, params),
+					                                prepareTransfertAddress);
+					    context->deleteLater();
+					    context = nullptr;
+				    }
+			    });
 		}
-	}else
-		CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
+	} else CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 }
 
-void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress, const bool& autoSelectAfterCreation, QVariantMap options) const {
+void CallsListModel::launchVideoCall(const QString &sipAddress,
+                                     const QString &prepareTransfertAddress,
+                                     const bool &autoSelectAfterCreation,
+                                     QVariantMap options) const {
 	CoreManager::getInstance()->getSettingsModel()->stopCaptureGraphs();
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = autoSelectAfterCreation;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
@@ -182,16 +191,18 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 		launchAudioCall(sipAddress, prepareTransfertAddress, {});
 		return;
 	}
-	
-	shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
-	if (!address)
-		return;
-	
-	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
-	
-	auto layout = options.contains("layout") ? LinphoneEnums::toLinphone((LinphoneEnums::ConferenceLayout)options["layout"].toInt()) : LinphoneEnums::toLinphone(CoreManager::getInstance()->getSettingsModel()->getVideoConferenceLayout());
 
-	bool enableMicro =options.contains("micro") ? options["micro"].toBool() : true;
+	shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
+	if (!address) return;
+
+	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
+
+	auto layout =
+	    options.contains("layout")
+	        ? LinphoneEnums::toLinphone((LinphoneEnums::ConferenceLayout)options["layout"].toInt())
+	        : LinphoneEnums::toLinphone(CoreManager::getInstance()->getSettingsModel()->getVideoConferenceLayout());
+
+	bool enableMicro = options.contains("micro") ? options["micro"].toBool() : true;
 	bool enableVideo = options.contains("video") ? options["video"].toBool() : true;
 	bool enableCamera = options.contains("camera") ? options["camera"].toBool() : true;
 	bool enableSpeaker = options.contains("audio") ? options["audio"].toBool() : true;
@@ -200,44 +211,42 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 	params->enableMic(enableMicro);
 	params->enableVideo(enableVideo);
 	params->setVideoDirection(enableCamera ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly);
-	if(core->getDefaultAccount())
-		params->setAccount(core->getDefaultAccount());
+	if (core->getDefaultAccount()) params->setAccount(core->getDefaultAccount());
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
-	
+
 	auto call = core->inviteAddressWithParams(address, params);
-	if(!call)
-		qWarning() << "Cannot initiate call. Maybe another one is currently done: delay the call.";
-	else{
+	if (!call) qWarning() << "Cannot initiate call. Maybe another one is currently done: delay the call.";
+	else {
 		call->setSpeakerMuted(!enableSpeaker);
-		qInfo() << "Launch " << (enableVideo ? "video" : "audio") << " call; camera: " << enableCamera<< " speaker:" << enableSpeaker << ", micro:" << params->micEnabled() << ", layout:" << (int)layout;
+		qInfo() << "Launch " << (enableVideo ? "video" : "audio") << " call; camera: " << enableCamera
+		        << " speaker:" << enableSpeaker << ", micro:" << params->micEnabled() << ", layout:" << (int)layout;
 		CallModel::prepareTransfert(call, prepareTransfertAddress);
 	}
 }
 
-QVariantMap CallsListModel::launchChat(const QString &sipAddress, const int& securityLevel) const{
+QVariantMap CallsListModel::launchChat(const QString &sipAddress, const int &securityLevel) const {
 	QVariantList participants;
 	participants << sipAddress;
 	return createChatRoom("", securityLevel, participants, true);
 }
 
-ChatRoomModel* CallsListModel::createChat (const QString &participantAddress) const{
+ChatRoomModel *CallsListModel::createChat(const QString &participantAddress) const {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	shared_ptr<linphone::Address> address = Utils::interpretUrl(participantAddress);
-	if (!address)
-		return nullptr;
-	
+	if (!address) return nullptr;
+
 	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
-	std::list <shared_ptr<linphone::Address> > participants;
+	std::list<shared_ptr<linphone::Address>> participants;
 	std::shared_ptr<const linphone::Address> localAddress;
 	participants.push_back(address);
-	
+
 	params->setBackend(linphone::ChatRoom::Backend::Basic);
-	
-	qInfo() << "Create ChatRoom with " <<participantAddress;
+
+	qInfo() << "Create ChatRoom with " << participantAddress;
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
-	
-	if( chatRoom != nullptr){
+
+	if (chatRoom != nullptr) {
 		auto timelineList = CoreManager::getInstance()->getTimelineListModel();
 		auto timeline = timelineList->getTimeline(chatRoom, true);
 		return timeline->getChatRoomModel();
@@ -245,312 +254,303 @@ ChatRoomModel* CallsListModel::createChat (const QString &participantAddress) co
 	return nullptr;
 }
 
-ChatRoomModel* CallsListModel::createChat (CallModel * model){
-	if(model){
+ChatRoomModel *CallsListModel::createChat(CallModel *model) {
+	if (model) {
 		return model->getChatRoomModel();
 	}
-	
+
 	return nullptr;
 }
 
-bool CallsListModel::createSecureChat (const QString& subject, const QString &participantAddress) const{
+bool CallsListModel::createSecureChat(const QString &subject, const QString &participantAddress) const {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	shared_ptr<linphone::Address> address = Utils::interpretUrl(participantAddress);
-	if (!address)
-		return false;
-	
+	if (!address) return false;
+
 	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
-	std::list <shared_ptr<linphone::Address> > participants;
+	std::list<shared_ptr<linphone::Address>> participants;
 	std::shared_ptr<const linphone::Address> localAddress;
 	participants.push_back(address);
 	params->enableEncryption(true);
 	params->setSubject(Utils::appStringToCoreString(subject));
 	params->enableEncryption(true);
 	params->enableGroup(true);
-	
-	qInfo() << "Create secure ChatRoom: " << subject << ", from " << QString::fromStdString(localAddress->asString()) << " and with " <<participantAddress;;
+
+	qInfo() << "Create secure ChatRoom: " << subject << ", from " << QString::fromStdString(localAddress->asString())
+	        << " and with " << participantAddress;
+	;
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
-// Still needed?
-//	if( chatRoom != nullptr){
-//		auto timelineList = CoreManager::getInstance()->getTimelineListModel();
-//		timelineList->update();
-//		auto timeline = timelineList->getTimeline(chatRoom, false);
-//		if(!timeline){
-//			timeline = timelineList->getTimeline(chatRoom, true);
-//			timelineList->add(timeline);
-//		}
-//		return timeline->getChatRoomModel();
-//	}
+	// Still needed?
+	//	if( chatRoom != nullptr){
+	//		auto timelineList = CoreManager::getInstance()->getTimelineListModel();
+	//		timelineList->update();
+	//		auto timeline = timelineList->getTimeline(chatRoom, false);
+	//		if(!timeline){
+	//			timeline = timelineList->getTimeline(chatRoom, true);
+	//			timelineList->add(timeline);
+	//		}
+	//		return timeline->getChatRoomModel();
+	//	}
 	return chatRoom != nullptr;
 }
 
 // Created, timeline that can be used
-QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& securityLevel, const QVariantList& participants, const bool& selectAfterCreation) const{
+QVariantMap CallsListModel::createChatRoom(const QString &subject,
+                                           const int &securityLevel,
+                                           const QVariantList &participants,
+                                           const bool &selectAfterCreation) const {
 	return createChatRoom(subject, securityLevel, nullptr, participants, selectAfterCreation);
 }
 
-QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& securityLevel, std::shared_ptr<linphone::Address> localAddress, const QVariantList& participants, const bool& selectAfterCreation) const{
+QVariantMap CallsListModel::createChatRoom(const QString &subject,
+                                           const int &securityLevel,
+                                           std::shared_ptr<linphone::Address> localAddress,
+                                           const QVariantList &participants,
+                                           const bool &selectAfterCreation) const {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = selectAfterCreation;
 	QVariantMap result;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	std::shared_ptr<linphone::ChatRoom> chatRoom;
-	QList< std::shared_ptr<linphone::Address>> admins;
+	QList<std::shared_ptr<linphone::Address>> admins;
 	QSharedPointer<TimelineModel> timeline;
 	auto timelineList = CoreManager::getInstance()->getTimelineListModel();
 	QString localAddressStr = (localAddress ? Utils::coreStringToAppString(localAddress->asStringUriOnly()) : "local");
-	qInfo() << "Create ChatRoom: " << subject << " at " << securityLevel << " security, from " << localAddressStr << " and with " << participants;
-	
+	qInfo() << "Create ChatRoom: " << subject << " at " << securityLevel << " security, from " << localAddressStr
+	        << " and with " << participants;
+
 	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
-	std::list <shared_ptr<linphone::Address> > chatRoomParticipants;
-	for(auto p : participants){
-		ParticipantModel* participant = p.value<ParticipantModel*>();
+	std::list<shared_ptr<linphone::Address>> chatRoomParticipants;
+	for (auto p : participants) {
+		ParticipantModel *participant = p.value<ParticipantModel *>();
 		std::shared_ptr<linphone::Address> address;
-		if(participant) {
+		if (participant) {
 			address = Utils::interpretUrl(participant->getSipAddress());
-			if(participant->getAdminStatus())
-				admins << address;
-		}else{
+			if (participant->getAdminStatus()) admins << address;
+		} else {
 			QString participant = p.toString();
-			if( participant != "")
-				address = Utils::interpretUrl(participant);
+			if (participant != "") address = Utils::interpretUrl(participant);
 		}
-		if( address)
-			chatRoomParticipants.push_back( address );
+		if (address) chatRoomParticipants.push_back(address);
 		else
-			qWarning() << "Failed to add participant to conference, bad address : " << (participant ? participant->getSipAddress() : p.toString());
+			qWarning() << "Failed to add participant to conference, bad address : "
+			           << (participant ? participant->getSipAddress() : p.toString());
 	}
-	params->enableEncryption(securityLevel>0);
-	
-	if( securityLevel<=0)
-		params->setBackend(linphone::ChatRoom::Backend::Basic);
-	params->enableGroup( subject!="" );
-	
-	
-	if(chatRoomParticipants.size() > 0) {
-		if(!params->groupEnabled()) {// Chat room is one-one : check if it is already exist with empty or dummy subject
-			chatRoom = core->searchChatRoom(params, localAddress
-											, nullptr
-											, chatRoomParticipants);
-			if(chatRoom && ChatRoomModel::isTerminated(chatRoom))
-				chatRoom = nullptr;
-			params->setSubject(subject != ""?Utils::appStringToCoreString(subject):"Dummy Subject");
-			
-			if(!chatRoom)
-				chatRoom = core->searchChatRoom(params, localAddress
-												, nullptr
-												, chatRoomParticipants);
-				if(chatRoom && ChatRoomModel::isTerminated(chatRoom))
-					chatRoom = nullptr;
-		}else
-			params->setSubject(subject != ""?Utils::appStringToCoreString(subject):"Dummy Subject");
-		if( !chatRoom) {
+	params->enableEncryption(securityLevel > 0);
+
+	if (securityLevel <= 0) params->setBackend(linphone::ChatRoom::Backend::Basic);
+	params->enableGroup(subject != "");
+
+	if (chatRoomParticipants.size() > 0) {
+		if (!params
+		         ->groupEnabled()) { // Chat room is one-one : check if it is already exist with empty or dummy subject
+			chatRoom = core->searchChatRoom(params, localAddress, nullptr, chatRoomParticipants);
+			if (chatRoom && ChatRoomModel::isTerminated(chatRoom)) chatRoom = nullptr;
+			params->setSubject(subject != "" ? Utils::appStringToCoreString(subject) : "Dummy Subject");
+
+			if (!chatRoom) chatRoom = core->searchChatRoom(params, localAddress, nullptr, chatRoomParticipants);
+			if (chatRoom && ChatRoomModel::isTerminated(chatRoom)) chatRoom = nullptr;
+		} else params->setSubject(subject != "" ? Utils::appStringToCoreString(subject) : "Dummy Subject");
+		if (!chatRoom) {
 			chatRoom = core->createChatRoom(params, localAddress, chatRoomParticipants);
-			if(chatRoom != nullptr && admins.size() > 0){
+			if (chatRoom != nullptr && admins.size() > 0) {
 				auto initializer = ChatRoomInitializer::create(chatRoom);
 				initializer->setAdminsData(admins);
 				ChatRoomInitializer::start(initializer);
 			}
 			timeline = timelineList->getTimeline(chatRoom, true);
-		}else{
-			if(admins.size() > 0){
+		} else {
+			if (admins.size() > 0) {
 				ChatRoomInitializer::create(chatRoom)->setAdmins(admins);
 			}
 			timeline = timelineList->getTimeline(chatRoom, true);
 		}
-		if(timeline){
+		if (timeline) {
 			CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 			result["chatRoomModel"] = QVariant::fromValue(timeline->getChatRoomModel());
-			if(selectAfterCreation) {// The timeline here will not receive the first creation event. Set Selected if needed
+			if (selectAfterCreation) { // The timeline here will not receive the first creation event. Set Selected if
+				                       // needed
 				timeline->delaySelected();
 			}
 		}
 	}
-	if( !chatRoom)
-		qWarning() << "Chat room cannot be created";
-	else if(securityLevel > 0) {
+	if (!chatRoom) qWarning() << "Chat room cannot be created";
+	else if (securityLevel > 0) {
 		int ephemeralTime = CoreManager::getInstance()->getSettingsModel()->getCreateEphemeralChatRooms();
-		if( ephemeralTime>0){
+		if (ephemeralTime > 0) {
 			chatRoom->setEphemeralLifetime(ephemeralTime);
 			chatRoom->enableEphemeral(true);
 		}
 	}
 	result["created"] = (chatRoom != nullptr);
-	
+
 	return result;
 }
 
-void CallsListModel::prepareConferenceCall(ConferenceInfoModel * model){
-	if(model->getConferenceInfoState() != LinphoneEnums::ConferenceInfoStateCancelled) {
+void CallsListModel::prepareConferenceCall(ConferenceInfoModel *model) {
+	if (model->getConferenceInfoState() != LinphoneEnums::ConferenceInfoStateCancelled) {
 		auto app = App::getInstance();
 		app->smartShowWindow(app->getCallsWindow());
 		emit callConferenceAsked(model);
 	}
 }
 
-int CallsListModel::addAllToConference(){
+int CallsListModel::addAllToConference() {
 	return CoreManager::getInstance()->getCore()->addAllToConference();
 }
 
-void CallsListModel::mergeAll(){
+void CallsListModel::mergeAll() {
 	auto core = CoreManager::getInstance()->getCore();
 	auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
-	shared_ptr<linphone::Conference> conference = core->getConference();
-	
+	shared_ptr<linphone::Conference> conference;
+
 	// Search a managable conference from calls
-	if(!conference){
-		for(auto call : currentCalls){
-			auto dbConference = call->getConference();
-			if(dbConference && dbConference->getMe()->isAdmin()){
-				conference = dbConference;
-				break;
-			}
+	for (auto call : currentCalls) {
+		auto dbConference = call->getConference();
+		if (dbConference && dbConference->getMe()->isAdmin()) {
+			conference = dbConference;
+			break;
 		}
 	}
-  
+
 	auto currentCall = CoreManager::getInstance()->getCore()->getCurrentCall();
 	bool enablingVideo = false;
-	if( currentCall )
-		enablingVideo = currentCall->getCurrentParams()->videoEnabled();
-	if(!conference){
+	if (currentCall) enablingVideo = currentCall->getCurrentParams()->videoEnabled();
+	if (!conference) {
 		auto parameters = core->createConferenceParams(conference);
-		
-		if(!CoreManager::getInstance()->getSettingsModel()->getVideoConferenceEnabled()) {
+
+		if (!CoreManager::getInstance()->getSettingsModel()->getVideoConferenceEnabled()) {
 			parameters->enableVideo(false);
-			parameters->setConferenceFactoryAddress(nullptr);// Do a local conference
+			parameters->setConferenceFactoryAddress(nullptr); // Do a local conference
 			parameters->setSubject("Local meeting");
-		}else{
+		} else {
 			parameters->enableVideo(enablingVideo);
 			parameters->setSubject("Meeting");
 		}
 		conference = core->createConferenceWithParams(parameters);
 	}
-	
+
 	list<shared_ptr<linphone::Address>> allLinphoneAddresses;
 	list<shared_ptr<linphone::Address>> newCalls;
 	list<shared_ptr<linphone::Call>> runningCallsToAdd;
-	
-	for(auto call : currentCalls){
-		if(!call->getConference()){
+
+	for (auto call : currentCalls) {
+		if (!call->getConference()) {
 			runningCallsToAdd.push_back(call);
 		}
 	}
- 
-// 1) Add running calls
-	if( runningCallsToAdd.size() > 0){
+
+	// 1) Add running calls
+	if (runningCallsToAdd.size() > 0) {
 		conference->addParticipants(runningCallsToAdd);
 	}
-  /*
-// 2) Put in pause and remove all calls that are not in the conference list
-	for(const auto &call : CoreManager::getInstance()->getCore()->getCalls()){
-      const std::string callAddress = call->getRemoteAddress()->asStringUriOnly();
-      auto address = allLinphoneAddresses.begin();
-      while(address != allLinphoneAddresses.end() && (*address)->asStringUriOnly() != callAddress)
-        ++address;
-      if(address == allLinphoneAddresses.end()){// Not in conference list :  put in pause and remove it from conference if it's the case
-        if( call->getParams()->getLocalConferenceMode() ){// Remove conference if it is not yet requested
-          CoreManager::getInstance()->getCore()->removeFromConference(call);
-        }else
-          call->pause();
-      }
-    }*/
+	/*
+  // 2) Put in pause and remove all calls that are not in the conference list
+	  for(const auto &call : CoreManager::getInstance()->getCore()->getCalls()){
+	    const std::string callAddress = call->getRemoteAddress()->asStringUriOnly();
+	    auto address = allLinphoneAddresses.begin();
+	    while(address != allLinphoneAddresses.end() && (*address)->asStringUriOnly() != callAddress)
+	      ++address;
+	    if(address == allLinphoneAddresses.end()){// Not in conference list :  put in pause and remove it from
+  conference if it's the case if( call->getParams()->getLocalConferenceMode() ){// Remove conference if it is not yet
+  requested CoreManager::getInstance()->getCore()->removeFromConference(call); }else call->pause();
+	    }
+	  }*/
 }
 // -----------------------------------------------------------------------------
 
-int CallsListModel::getRunningCallsNumber () const {
+int CallsListModel::getRunningCallsNumber() const {
 	return CoreManager::getInstance()->getCore()->getCallsNb();
 }
 
-bool CallsListModel::canMergeCalls()const{
+bool CallsListModel::canMergeCalls() const {
 	auto calls = CoreManager::getInstance()->getCore()->getCalls();
-	
+
 	bool mergableConference = false;
 	int mergableCalls = 0;
 	bool mergable = false;
-	for(auto itCall = calls.begin(); !mergable && itCall != calls.end() ; ++itCall ) {
+	for (auto itCall = calls.begin(); !mergable && itCall != calls.end(); ++itCall) {
 		auto conference = (*itCall)->getConference();
-		if(conference){
-			if( !mergableConference )
-				mergableConference = (conference  && conference->getMe()->isAdmin());
-		}else{
+		if (conference) {
+			if (!mergableConference) mergableConference = (conference && conference->getMe()->isAdmin());
+		} else {
 			++mergableCalls;
 		}
-		mergable = (mergableConference && mergableCalls>0)	// A call can be merged into the conference
-					 || mergableCalls>1;// 2 calls can be merged
+		mergable = (mergableConference && mergableCalls > 0) // A call can be merged into the conference
+		           || mergableCalls > 1;                     // 2 calls can be merged
 	}
 	return mergable;
 }
 
-void CallsListModel::terminateAllCalls () const {
+void CallsListModel::terminateAllCalls() const {
 	CoreManager::getInstance()->getCore()->terminateAllCalls();
 }
-void CallsListModel::terminateCall (const QString& sipAddress) const{
+void CallsListModel::terminateCall(const QString &sipAddress) const {
 	auto coreManager = CoreManager::getInstance();
 	shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
-	if (!address)
-		qWarning() << "Cannot terminate Call. The address cannot be parsed : " << sipAddress;
-	else{
+	if (!address) qWarning() << "Cannot terminate Call. The address cannot be parsed : " << sipAddress;
+	else {
 		std::shared_ptr<linphone::Call> call = coreManager->getCore()->getCallByRemoteAddress2(address);
-		if( call){
+		if (call) {
 			coreManager->lockVideoRender();
 			call->terminate();
 			coreManager->unlockVideoRender();
-		}else{
+		} else {
 			qWarning() << "Cannot terminate call as it doesn't exist : " << sipAddress;
 		}
 	}
 }
 
-QSharedPointer<CallModel> CallsListModel::getLastCall(bool incoming) const{
+QSharedPointer<CallModel> CallsListModel::getLastCall(bool incoming) const {
 	QSharedPointer<CallModel> lastCall = nullptr;
 	time_t lastTime = 0;
 	auto item = mList.rbegin();
-	while(item != mList.rend() && !lastCall) {
+	while (item != mList.rend() && !lastCall) {
 		auto call = item->objectCast<CallModel>();
-		if(!incoming || call->getStatus() == CallModel::CallStatusIncoming) {
+		if (!incoming || call->getStatus() == CallModel::CallStatusIncoming) {
 			lastCall = call;
 		}
 	}
 	return lastCall;
 }
 
-QSharedPointer<CallModel> CallsListModel::getCallModel(const std::shared_ptr<linphone::Call> &call) const{
+QSharedPointer<CallModel> CallsListModel::getCallModel(const std::shared_ptr<linphone::Call> &call) const {
 	QSharedPointer<CallModel> callModel;
-	if(call) {
-		auto itCall = std::find_if(mList.begin(), mList.end(), [call](const QSharedPointer<QObject> &item){
+	if (call) {
+		auto itCall = std::find_if(mList.begin(), mList.end(), [call](const QSharedPointer<QObject> &item) {
 			auto c = item.objectCast<CallModel>();
 			return c && c->getCall() == call;
 		});
-		if( itCall != mList.end())
-			callModel = itCall->objectCast<CallModel>();
+		if (itCall != mList.end()) callModel = itCall->objectCast<CallModel>();
 	}
 	return callModel;
 }
 
 void CallsListModel::acceptLastIncomingCall(bool video) {
 	auto call = getLastCall(true);
-	if(call) {
-		if(video) call->acceptWithVideo();
+	if (call) {
+		if (video) call->acceptWithVideo();
 		else call->accept();
 	}
 }
 
 void CallsListModel::terminateLastCall() {
-	auto call = getLastCall(false);	// Allow to terminate last outgoing call
-	if(call) call->terminate();
+	auto call = getLastCall(false); // Allow to terminate last outgoing call
+	if (call) call->terminate();
 }
 
 void CallsListModel::toggleMuteSpeaker() {
 	auto currentCall = getCallModel(CoreManager::getInstance()->getCore()->getCurrentCall());
-	if(currentCall) currentCall->setSpeakerMuted(!currentCall->getSpeakerMuted());
+	if (currentCall) currentCall->setSpeakerMuted(!currentCall->getSpeakerMuted());
 }
 
 void CallsListModel::toggleMuteMicrophone() {
 	auto currentCall = getCallModel(CoreManager::getInstance()->getCore()->getCurrentCall());
-	if(currentCall) currentCall->setMicroMuted(!currentCall->getMicroMuted());
+	if (currentCall) currentCall->setMicroMuted(!currentCall->getMicroMuted());
 }
 
-std::list<std::shared_ptr<linphone::CallLog>> CallsListModel::getCallHistory(const QString& peerAddress, const QString& localAddress){
+std::list<std::shared_ptr<linphone::CallLog>> CallsListModel::getCallHistory(const QString &peerAddress,
+                                                                             const QString &localAddress) {
 	std::shared_ptr<linphone::Address> cleanedPeerAddress = Utils::interpretUrl(Utils::cleanSipAddress(peerAddress));
 	std::shared_ptr<linphone::Address> cleanedLocalAddress = Utils::interpretUrl(Utils::cleanSipAddress(localAddress));
 	return CoreManager::getInstance()->getCore()->getCallHistory(cleanedPeerAddress, cleanedLocalAddress);
@@ -558,19 +558,30 @@ std::list<std::shared_ptr<linphone::CallLog>> CallsListModel::getCallHistory(con
 
 // -----------------------------------------------------------------------------
 
-static void joinConference (const shared_ptr<linphone::Call> &call) {
-	if (call->getToHeader("method") != "join-conference")
-		return;
-	
+static void joinConference(const shared_ptr<linphone::Call> &call) {
+	if (call->getToHeader("method") != "join-conference") return;
+
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	if (!core->getConference()) {
+	if (!core->isInConference()) {
 		qWarning() << QStringLiteral("Not in a conference. => Responding to `join-conference` as a simple call...");
 		return;
 	}
 
+	shared_ptr<linphone::Conference> conference =
+	    core->searchConferenceByIdentifier(call->getToHeader("conference-id"));
+	const QString conferenceId = Utils::coreStringToAppString(call->getToHeader("conference-id"));
+
+	if (!conference) {
+		qWarning()
+		    << QStringLiteral(
+		           "Trying to join conference with an invalid conference id: `%1`. Responding as a simple call...")
+		           .arg(conferenceId);
+		return;
+	}
+	qInfo() << QStringLiteral("Join conference: `%1`.").arg(conferenceId);
 	ConferenceHelperModel helperModel;
 	ConferenceHelperModel::ConferenceAddModel *addModel = helperModel.getConferenceAddModel();
-	if(call->dataExists("call-model")){
+	if (call->dataExists("call-model")) {
 		CallModel *callModel = &call->getData<CallModel>("call-model");
 		callModel->accept();
 		addModel->addToConference(call->getRemoteAddress());
@@ -579,13 +590,13 @@ static void joinConference (const shared_ptr<linphone::Call> &call) {
 }
 
 // Global handler on core (is call before call model receive it). Used for model creation.
-void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
+void CallsListModel::handleCallStateChanged(const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
 	switch (state) {
 		case linphone::Call::State::IncomingReceived:
 			addCall(call);
 			joinConference(call);
 			break;
-			
+
 		case linphone::Call::State::OutgoingInit:
 			addCall(call);
 			break;
@@ -595,27 +606,26 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
 }
 
 // Call handler
-void CallsListModel::handleCallStatusChanged () {
-	auto callModel = qobject_cast<CallModel*>(sender());
+void CallsListModel::handleCallStatusChanged() {
+	auto callModel = qobject_cast<CallModel *>(sender());
 	auto call = callModel->getCall();
-	if( call){
+	if (call) {
 		auto state = call->getState();
 		switch (state) {
 			case linphone::Call::State::End:
-			case linphone::Call::State::Error:{
+			case linphone::Call::State::Error: {
 				callModel->endCall();
-				if(callModel->getCallError() == "")
-					removeCall(call);
+				if (callModel->getCallError() == "") removeCall(call);
 			} break;
 			case linphone::Call::State::Released:
 				removeCall(call);
-			break;
-			
+				break;
+
 			case linphone::Call::State::StreamsRunning: {
 				int index = findCallIndex(mList, call);
 				emit callRunning(index, callModel);
 			} break;
-				
+
 			default:
 				break;
 		}
@@ -624,42 +634,39 @@ void CallsListModel::handleCallStatusChanged () {
 
 // -----------------------------------------------------------------------------
 
-void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
+void CallsListModel::addCall(const shared_ptr<linphone::Call> &call) {
 	int index = findCallIndex(mList, call);
-	if( index < 0){
+	if (index < 0) {
 		QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>(new CallModel(call), &QObject::deleteLater);
 		qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
 		App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
-		
+
 		connect(callModel.get(), &CallModel::meAdminChanged, this, &CallsListModel::canMergeCallsChanged);
 		connect(callModel.get(), &CallModel::statusChanged, this, &CallsListModel::handleCallStatusChanged);
-		
+
 		add(callModel);
-		
+
 		if (call->getDir() == linphone::Call::Dir::Outgoing) {
 			QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
 			if (callsWindow) {
 				if (CoreManager::getInstance()->getSettingsModel()->getKeepCallsWindowInBackground()) {
-					if (!callsWindow->isVisible())
-						callsWindow->showMinimized();
-				} else
-					App::smartShowWindow(callsWindow);
+					if (!callsWindow->isVisible()) callsWindow->showMinimized();
+				} else App::smartShowWindow(callsWindow);
 			}
 		}
 	}
 }
 
-
-void CallsListModel::addDummyCall () {
+void CallsListModel::addDummyCall() {
 	QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
 	if (callsWindow) {
-			App::smartShowWindow(callsWindow);
+		App::smartShowWindow(callsWindow);
 	}
-	
+
 	QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>(new CallModel(nullptr), &QObject::deleteLater);
 	qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
 	App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
-	
+
 	// This connection is (only) useful for `CallsListProxyModel`.
 	QObject::connect(callModel.get(), &CallModel::isInConferenceChanged, this, [this, callModel](bool) {
 		int id = findCallIndex(mList, *callModel);
@@ -667,26 +674,23 @@ void CallsListModel::addDummyCall () {
 	});
 	connect(callModel.get(), &CallModel::meAdminChanged, this, &CallsListModel::canMergeCallsChanged);
 	connect(callModel.get(), &CallModel::statusChanged, this, &CallsListModel::handleCallStatusChanged);
-	
+
 	add(callModel);
 }
 
-void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
+void CallsListModel::removeCall(const shared_ptr<linphone::Call> &call) {
 	CallModel *callModel = nullptr;
-	
-	if(!call->dataExists("call-model"))
-		return;
+
+	if (!call->dataExists("call-model")) return;
 	callModel = &call->getData<CallModel>("call-model");
-	if( callModel && callModel->getCallError() != ""){	// Wait some time to display an error on ending call.
-		QTimer::singleShot( DelayBeforeRemoveCall , this, [this, callModel] {
-				removeCallCb(callModel);
-		});
-	}else{
+	if (callModel && callModel->getCallError() != "") { // Wait some time to display an error on ending call.
+		QTimer::singleShot(DelayBeforeRemoveCall, this, [this, callModel] { removeCallCb(callModel); });
+	} else {
 		remove(callModel);
 	}
 }
 
-void CallsListModel::removeCallCb (CallModel *callModel) {
+void CallsListModel::removeCallCb(CallModel *callModel) {
 	callModel->removeCall();
 	remove(callModel);
 }

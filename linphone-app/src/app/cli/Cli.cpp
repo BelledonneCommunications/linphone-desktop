@@ -163,8 +163,8 @@ static void cliInitiateConference(QHash<QString, QString> &args) {
 	}
 	if (!account->getParams()->getIdentityAddress()->weakEqual(address)) {
 		qWarning() << QStringLiteral("Received different sip address from identity : `%1 != %2`.")
-		                  .arg(Utils::coreStringToAppString(account->getParams()->getIdentityAddress()->asString()))
-		                  .arg(Utils::coreStringToAppString(address->asString()));
+					  .arg(Utils::coreStringToAppString(account->getParams()->getIdentityAddress()->asString()))
+					  .arg(Utils::coreStringToAppString(address->asString()));
 		return;
 	}
 
@@ -173,24 +173,26 @@ static void cliInitiateConference(QHash<QString, QString> &args) {
 
 	auto updateCallsWindow = []() {
 		QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
-		if (!callsWindow) return;
+		if (!callsWindow)
+			return;
 
 		// TODO: Set the view to the "waiting call view".
 		if (CoreManager::getInstance()->getSettingsModel()->getKeepCallsWindowInBackground()) {
-			if (!callsWindow->isVisible()) callsWindow->showMinimized();
-		} else App::smartShowWindow(callsWindow);
+			if (!callsWindow->isVisible())
+				callsWindow->showMinimized();
+		} else
+			App::smartShowWindow(callsWindow);
 	};
 
 	if (conference) {
-		qInfo() << QStringLiteral("Conference `%1` already exists.")
-		               .arg(Utils::coreStringToAppString(conference->getConferenceAddress()->asString()));
+		qInfo() << QStringLiteral("Conference `%1` already exists.").arg(Utils::coreStringToAppString(conference->getConferenceAddress()->asString()));
 		updateCallsWindow();
 		return;
 	}
 
 	qInfo() << QStringLiteral("Create conference with id: `%1`.").arg(id);
 	auto confParameters = core->createConferenceParams(conference);
-	confParameters->enableVideo(false); // Video is not yet fully supported by the application in conference
+	confParameters->enableVideo(false);// Video is not yet fully supported by the application in conference
 	conference = core->createConferenceWithParams(confParameters);
 
 	if (conference->enter() == -1) {
