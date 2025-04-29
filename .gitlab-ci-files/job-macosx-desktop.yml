@@ -24,7 +24,7 @@
 
 .job-macosx-desktop:
   stage: build
-  tags: [ "macos-xcode13" ]
+  tags: [ "macos-min-xcode12.2" ]
   script:
     - *build_all_script
   variables:
@@ -46,7 +46,7 @@ job-macosx-ninja:
       - schedules
   variables:
     CMAKE_GENERATOR: Ninja
-    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    CMAKE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DENABLE_PQCRYPTO=ON
   extends: .job-macosx-desktop
 
 #################################################
@@ -59,7 +59,7 @@ job-macosx-makefile:
     - if: $DEPLOY_PLUGINS
   variables:
     CMAKE_GENERATOR: Unix Makefiles
-    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    CMAKE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DENABLE_PQCRYPTO=ON
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
   extends: .job-macosx-desktop
 
@@ -68,7 +68,7 @@ job-macosx-ninja-novideo:
     - !reference [.rules-merge-request-manual, rules]
     - if: $NIGHTLY_MASTER
   variables:
-    CMAKE_OPTIONS: -DENABLE_VIDEO=OFF -DENABLE_PQCRYPTO=ON
+    CMAKE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DENABLE_VIDEO=OFF -DENABLE_PQCRYPTO=ON
     CMAKE_GENERATOR: Ninja
   extends: .job-macosx-desktop
 
@@ -90,7 +90,7 @@ job-macosx-ninja-novideo:
 # WAIT for QT6 for arm64
 job-macosx-makefile-package:
   stage: package
-  tags: [ "macos-xcode13" ]
+  tags: [ "macos-min-xcode12.2" ]
   dependencies: []
   rules:
     - !reference [.rules-merge-request-manual, rules]
@@ -98,7 +98,7 @@ job-macosx-makefile-package:
     - if: $PACKAGE_MACOSX
     - if: $DEPLOY_MACOSX
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=ON -DENABLE_GPL_THIRD_PARTIES=ON -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
+    CMAKE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DENABLE_APP_PACKAGING=ON -DENABLE_GPL_THIRD_PARTIES=ON -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
     RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$MACOSX_PLATFORM/$APP_FOLDER
   extends: job-macosx-makefile
   script:
@@ -113,7 +113,7 @@ job-macosx-makefile-package:
 
 job-macosx-codesigning:
   stage: signing
-  tags: [ "macos-xcode13" ]
+  tags: [ "macos-min-xcode12.2" ]
   needs:
     - job-macosx-makefile-package
   rules:
@@ -165,7 +165,7 @@ job-macosx-makefile-deploy:
 
 job-macosx-makefile-plugins-deploy:
   stage: deploy
-  tags: [ "macos-xcode13" ]
+  tags: [ "macos-min-xcode12.2" ]
   needs:
     - job-macosx-makefile
   only:

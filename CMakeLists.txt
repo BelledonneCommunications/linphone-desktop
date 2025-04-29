@@ -200,6 +200,7 @@ endif()
 # Set some SDK variables to configure the APP build as we want it
 set(ENABLE_CXX_WRAPPER ON CACHE BOOL "Build the C++ wrapper for Liblinphone." FORCE)
 set(ENABLE_THEORA OFF)
+set(ENABLE_SCREENSHARING OFF)   ## Implemented on master_5 but only activated in 6.0
 set(ENABLE_QT_GL ${ENABLE_VIDEO})
 
 # Qt5.13 because of Spitview
