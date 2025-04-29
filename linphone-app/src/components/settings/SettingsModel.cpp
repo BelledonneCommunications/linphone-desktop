@@ -346,8 +346,10 @@ void SettingsModel::setDeviceName(const QString &deviceName) {
 // =============================================================================
 
 void SettingsModel::resetCaptureGraph() {
-	deleteCaptureGraph();
-	createCaptureGraph();
+	if (mSimpleCaptureGraph){
+		deleteCaptureGraph();
+		createCaptureGraph();
+	}
 }
 void SettingsModel::createCaptureGraph() {
 	mSimpleCaptureGraph = new MediastreamerUtils::SimpleCaptureGraph(Utils::appStringToCoreString(getCaptureDevice()),
