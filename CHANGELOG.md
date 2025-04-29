@@ -13,7 +13,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Screen Sharing
 
-## 5.2.4 - undefined
+## 5.2.6 - 2024-07-22
+
+### Fixed
+- Crash on Windows when using non-UTF8 characters in system username.
+- Update SDK to 5.3.72
+
+## 5.2.5 - 2024-07-10
+
+### Fixed
+- Case sensitive issue with sip attributes on LDAP search.
+- Update SDK to 5.3.68
+
+## 5.2.4 - 2024-04-11
 
 ### Fixed
 - File permission after auto downloading a file.

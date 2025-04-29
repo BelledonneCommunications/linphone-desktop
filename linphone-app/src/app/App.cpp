@@ -307,7 +307,8 @@ App::App(int &argc, char *argv[])
 
 	// Use UTF-8 for internals. Linphone uses UTF-8 so there will be no loss on
 	// data with less precise encodings. Qt will do the rest.
-	bctbx_set_default_encoding(Constants::LinphoneLocaleEncoding);
+	// bctbx_set_default_encoding(Constants::LinphoneLocaleEncoding);
+	setlocale(LC_CTYPE, ".UTF8");
 
 	createParser();
 	mParser->parse(this->arguments());
