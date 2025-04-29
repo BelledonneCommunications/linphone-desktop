@@ -188,10 +188,8 @@ public:
 	static constexpr char LibraryExtension[] = "so";
 	static constexpr char H264InstallName[] = "libopenh264.so";
 #ifdef Q_PROCESSOR_X86_64
-	// static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.2.0-linux64.6.so.bz2";
-	// static constexpr char PluginH264Check[] = "45ba1aaeb6213c19cd9622b79788e16b05beabc4d16a3a74e57f046a0826fd77";
-	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.4.1-linux64.7.so.bz2";
-	static constexpr char PluginH264Check[] = "";
+	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.2.0-linux64.6.so.bz2";
+	static constexpr char PluginH264Check[] = "45ba1aaeb6213c19cd9622b79788e16b05beabc4d16a3a74e57f046a0826fd77";
 #else
 	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.2.0-linux32.6.so.bz2";
 	static constexpr char PluginH264Check[] = "bf18e0e79c4a23018b0ea5ad6d7dd14fd1b6a6189d2f88fd56dece019fc415c8";
