@@ -80,7 +80,8 @@ void CallHistoryModel::update(const std::shared_ptr<linphone::CallLog> callLog){
 		callDate = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
 	}
 	if(callDate >= mLastCallDate){
-		setLastCallStatus(LinphoneEnums::fromLinphone(callLog->getStatus()));	
+		setLastCallStatus(LinphoneEnums::fromLinphone(callLog->getStatus()));
+		setLastCallIsOutgoing(callLog->getDir() == linphone::Call::Dir::Outgoing);
 		if(mShowEnd && mLastCallStatus == LinphoneEnums::CallStatusSuccess){
 			setLastCallDate(QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000));
 			setLastCallIsStart(false);

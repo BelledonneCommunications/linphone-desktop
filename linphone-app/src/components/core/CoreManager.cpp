@@ -79,6 +79,7 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 	QObject::connect(coreHandlers, &CoreHandlers::logsUploadStateChanged, this, &CoreManager::handleLogsUploadStateChanged);
 	QObject::connect(coreHandlers, &CoreHandlers::callLogUpdated, this, &CoreManager::callLogsCountChanged);
 	QObject::connect(coreHandlers, &CoreHandlers::eventCountChanged, this, &CoreManager::eventCountChanged);
+	connect(this, &CoreManager::coreManagerInitialized, this, &CoreManager::eventCountChanged);
 	
 	QTimer::singleShot(10, [this, configPath](){// Delay the creation in order to have the CoreManager instance set before
 		createLinphoneCore(configPath);
@@ -100,6 +101,7 @@ void CoreManager::initCoreManager(){
 	mAccountSettingsModel = new AccountSettingsModel(this);
 	connect(this, &CoreManager::eventCountChanged, mAccountSettingsModel, &AccountSettingsModel::missedCallsCountChanged);
 	connect(this, &CoreManager::eventCountChanged, mAccountSettingsModel, &AccountSettingsModel::unreadMessagesCountChanged);
+	
 	mSettingsModel = new SettingsModel(this);
 	mEmojisSettingsModel = new EmojisSettingsModel(this);
 	mCallsListModel = new CallsListModel(this);
@@ -114,7 +116,6 @@ void CoreManager::initCoreManager(){
 	
 	qInfo() << QStringLiteral("CoreManager initialized");
 	emit coreManagerInitialized();
-	emit eventCountChanged();
 }
 
 bool CoreManager::isInitialized() const{
@@ -422,9 +423,11 @@ void CoreManager::startIterate(){
 
 void CoreManager::stopIterate(){
 	qInfo() << QStringLiteral("Stop iterate");
-	mCbsTimer->stop();
-	mCbsTimer->deleteLater();// allow the timer to continue its stuff
-	mCbsTimer = nullptr;
+	if(mCbsTimer){
+        mCbsTimer->stop();
+        mCbsTimer->deleteLater();// allow the timer to continue its stuff
+        mCbsTimer = nullptr;
+    }
 }
 
 void CoreManager::iterate () {

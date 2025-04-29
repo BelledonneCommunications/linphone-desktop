@@ -68,7 +68,7 @@ public:
 
 	QString getFetchConfig(QString filePath, bool *error);
 	QString getFetchConfig(QCommandLineParser *parser); // Return file path of fetch-config
-	void useFetchConfig(const QString &filePath); // Check if the fetch is auto or not and make gui request if needed.
+	bool useFetchConfig(const QString &filePath); // Check if the fetch is auto or not and make gui request if needed.
 	Q_INVOKABLE bool setFetchConfig(QString filePath); // return true if filepath has been set.
 
 #ifdef Q_OS_MACOS
