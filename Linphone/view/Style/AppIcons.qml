@@ -126,4 +126,5 @@ QtObject {
 	property string resourcePackage: "image://internal/package.svg"
 	property string appWindow: "image://internal/app-window.svg"
 	property string bellMwi: "image://internal/bell-simple.svg"
+	property string callForward: "image://internal/call-forward.svg"
 }

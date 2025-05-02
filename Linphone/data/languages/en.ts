@@ -871,6 +871,18 @@
 </context>
 <context>
     <name>CallPage</name>
+	<message>
+		<location filename="../../view/Page/Main/Call/CallPage.qml"/>
+		<source>call_forward_to_address_info</source>
+		<extracomment>&quot;Forward calls to: &quot;</extracomment>
+		<translation>Forward calls to: </translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Main/Call/CallPage.qml"/>
+		<source>call_forward_to_address_info_voicemail</source>
+		<extracomment>&quot;Voicemail&quot;</extracomment>
+		<translation>Voicemail</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="14"/>
         <source>history_call_start_title</source>
@@ -3930,6 +3942,12 @@ To enable them in a commercial project, please contact us.</translation>
         <extracomment>&quot;Appels&quot;</extracomment>
         <translation>Calls</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Form/Settings/SettingsPage.qml"/>
+		<source>settings_call_forward</source>
+		<extracomment>&quot;Transfert d'appels&quot;</extracomment>
+		<translation>Call forward</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="17"/>
         <source>settings_conversations_title</source>
@@ -5505,5 +5523,86 @@ To enable them in a commercial project, please contact us.</translation>
         <source>okButton</source>
         <translation>Ok</translation>
     </message>
+</context>
+<context>
+	<name>CallForwardSettingsLayout</name>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_activate_title</source>
+		<extracomment>&quot;Forward calls&quot;</extracomment>
+		<translation>Forward calls</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_activate_subtitle</source>
+		<extracomment>&quot;Forward calls&quot;</extracomment>
+		<translation>Forward calls to voicemail or a Number / SIP Address / number</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_destination_choose</source>
+		<extracomment>&quot;Forward calls to&quot;</extracomment>
+		<translation>Forward calls to:</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_to_voicemail</source>
+		<extracomment>&quot;Voicemail&quot;</extracomment>
+		<translation>Voicemail</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_to_sipaddress</source>
+		<extracomment>&quot;Number / SIP address&quot;</extracomment>
+		<translation>Number / SIP Address</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_sipaddress_title</source>
+		<extracomment>&quot;Number / Sip address:&quot;</extracomment>
+		<translation>Number / SIP Address:</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_sipaddress_placeholder</source>
+		<extracomment>&quot;John.doe&quot;</extracomment>
+		<translation>John.doe</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_address_cannot_be_empty</source>
+		<extracomment>&quot;A number or SIP address is mandatory&quot;</extracomment>
+		<translation>A number or SIP address is mandatory</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_address_timeout</source>
+		<extracomment>&quot;Unable to set call forward, request timeout&quot;</extracomment>
+		<translation>Unable to set call forward, request timeout</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_address_progress_disabling</source>
+		<extracomment>&quot;Disabling call forward&quot;</extracomment>
+		<translation>Disabling call forward</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_address_progress_enabling</source>
+		<extracomment>&quot;Enabling call forward to:&quot;</extracomment>
+		<translation>Enabling call forward to:</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_activation_success</source>
+		<extracomment>&quot;Call forward activated to : &quot;</extracomment>
+		<translation>Call forward activated to : </translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
+		<source>settings_call_forward_deactivation_success</source>
+		<extracomment>&quot;Call forward deactivated&quot;</extracomment>
+		<translation>Call forward deactivated</translation>
+	</message>
 </context>
 </TS>

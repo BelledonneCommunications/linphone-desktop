@@ -231,6 +231,8 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(bool, callToneIndicationsEnabled, CallToneIndicationsEnabled)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableCommandLine, DisableCommandLine)
 	DECLARE_CORE_GETSET_MEMBER(QString, commandLine, CommandLine)
+	DECLARE_CORE_GETSET_MEMBER(bool, disableCallForward, DisableCallForward)
+	DECLARE_CORE_GETSET_MEMBER(QString, callForwardToAddress, CallForwardToAddress)
 
 signals:
 

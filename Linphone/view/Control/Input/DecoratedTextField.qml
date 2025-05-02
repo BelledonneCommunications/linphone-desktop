@@ -29,6 +29,10 @@ FormItemLayout {
 	property var isValid: function(text) {
         return true
     }
+    
+    function empty() {
+		textField.text = ""
+	}
 	
 	contentItem: TextField {
 		id: textField

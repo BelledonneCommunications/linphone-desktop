@@ -22,6 +22,7 @@ AbstractMainPage {
 	}
 	
 	property var families
+	property var defaultIndex: -1
 	
 	leftPanelContent: ColumnLayout {
 		id: leftPanel
@@ -62,7 +63,7 @@ AbstractMainPage {
 			model: mainItem.families
             Layout.topMargin: Math.round(41 * DefaultStyle.dp)
 			Layout.leftMargin: leftPanel.sideMargin
-			property int selectedIndex: 0
+			property int selectedIndex: mainItem.defaultIndex != -1 ? mainItem.defaultIndex : 0
 			activeFocusOnTab: true
 			
 			delegate: SettingsMenuItem {

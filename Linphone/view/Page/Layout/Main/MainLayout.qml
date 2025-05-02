@@ -608,6 +608,12 @@ Item {
                             Component.onCompleted: {
                                 magicSearchBar.numericPadPopup = callPage.numericPadPopup
                             }
+                            onGoToCallForwardSettings: {
+                            	var page = settingsPageComponent.createObject(parent, {
+									defaultIndex: 1
+								});
+								openContextualMenuComponent(page)
+							}
                         }
                         ContactPage {
                             id: contactPage

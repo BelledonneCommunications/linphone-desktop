@@ -186,6 +186,8 @@ public:
 	DECLARE_GETSET(bool, usernameOnlyForCardDAVLookupsInCalls, UsernameOnlyForCardDAVLookupsInCalls)
 	DECLARE_GETSET(QString, commandLine, CommandLine)
 	DECLARE_GETSET(bool, disableCommandLine, DisableCommandLine)
+	DECLARE_GETSET(bool, disableCallForward, DisableCallForward)
+	DECLARE_GETSET(QString, callForwardToAddress, CallForwardToAddress)
 
 signals:
 	void logsUploadUrlChanged();
@@ -234,6 +236,9 @@ private:
 	void notifyConfigReady();
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;
 	int mCaptureGraphListenerCount = 0;
+
+	void enableCallForward(QString destination);
+	void disableCallForward();
 
 	static std::shared_ptr<SettingsModel> gSettingsModel;
 

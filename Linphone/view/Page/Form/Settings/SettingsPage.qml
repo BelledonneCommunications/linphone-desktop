@@ -13,6 +13,8 @@ AbstractSettingsMenu {
 	families: [
         //: "Appels"
         {title: qsTr("settings_calls_title"), layout: "CallSettingsLayout"},
+		//: "Transfert d'appel"
+        {title: qsTr("settings_call_forward"), layout: "CallForwardSettingsLayout"},
         //: "Conversations"
         {title: qsTr("settings_conversations_title"), layout: "ChatSettingsLayout", visible: !SettingsCpp.disableChatFeature},
         //: "Contacts"

@@ -61,5 +61,6 @@ QtObject {
     property color groupCallButtonColor: "#EEF7F8"
 
     property color placeholders: '#CACACA'	// No name in design
-
+    
+	property color warning_500_main: "#FFDC2E"
 }
