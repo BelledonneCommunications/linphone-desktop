@@ -63,8 +63,13 @@ QString ChatModel::getTitle() {
 		return ToolModel::getDisplayName(mMonitor->getPeerAddress()->clone());
 	} else {
 		if (mMonitor->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
-			auto peer = mMonitor->getParticipants().front();
-			return peer ? ToolModel::getDisplayName(peer->getAddress()->clone()) : "Chat";
+			auto participants = mMonitor->getParticipants();
+			if (participants.size() > 0) {
+				auto peer = participants.front();
+				return peer ? ToolModel::getDisplayName(peer->getAddress()->clone()) : "";
+			} else {
+				return "";
+			}
 		} else if (mMonitor->hasCapability((int)linphone::ChatRoom::Capabilities::Conference)) {
 			return Utils::coreStringToAppString(mMonitor->getSubject());
 		}

@@ -49,12 +49,14 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	} else {
 		if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
 			auto participants = chatRoom->getParticipants();
-			auto peer = participants.front();
-			if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress()->clone());
-			mAvatarUri = ToolModel::getDisplayName(peer->getAddress()->clone());
-			if (participants.size() == 1) {
-				auto peerAddress = peer->getAddress();
-				if (peerAddress) mPeerAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
+			if (participants.size() > 0) {
+				auto peer = participants.front();
+				if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress()->clone());
+				mAvatarUri = ToolModel::getDisplayName(peer->getAddress()->clone());
+				if (participants.size() == 1) {
+					auto peerAddress = peer->getAddress();
+					if (peerAddress) mPeerAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
+				}
 			}
 		} else if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference)) {
 			mTitle = Utils::coreStringToAppString(chatRoom->getSubject());
