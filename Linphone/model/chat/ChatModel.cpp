@@ -103,6 +103,22 @@ QString ChatModel::getLastMessageInHistory(std::list<std::shared_ptr<linphone::C
 int ChatModel::getUnreadMessagesCount() const {
 	return mMonitor->getUnreadMessagesCount();
 }
+
+void ChatModel::markAsRead() {
+	mMonitor->markAsRead();
+	emit messagesRead();
+}
+
+void ChatModel::deleteHistory() {
+	mMonitor->deleteHistory();
+	emit historyDeleted();
+}
+
+void ChatModel::deleteChatRoom() {
+	CoreModel::getInstance()->getCore()->deleteChatRoom(mMonitor);
+	emit deleted();
+}
+
 //---------------------------------------------------------------//
 
 void ChatModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> &chatRoom,

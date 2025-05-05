@@ -12,6 +12,7 @@ ColumnLayout {
     spacing: Math.round(30 * DefaultStyle.dp)
 
 	property var callHistoryGui
+	property var chatGui
 
 	property FriendGui contact
 	property var conferenceInfo: callHistoryGui?.core.conferenceInfo

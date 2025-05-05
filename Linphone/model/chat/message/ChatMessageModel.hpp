@@ -42,6 +42,11 @@ public:
 
 	QString getPeerAddress() const;
 
+	void deleteMessageFromChatRoom();
+
+signals:
+	void messageDeleted();
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 	virtual std::shared_ptr<linphone::Buffer> onFileTransferSend(const std::shared_ptr<linphone::ChatMessage> &message,

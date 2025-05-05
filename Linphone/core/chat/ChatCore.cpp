@@ -88,18 +88,80 @@ ChatCore::~ChatCore() {
 
 void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	mChatModelConnection = SafeConnection<ChatCore, ChatModel>::create(me, mChatModel);
-	// mChatModelConnection->makeConnectToCore(&ChatCore::lSetMicrophoneMuted, [this](bool isMuted) {
-	// 	mChatModelConnection->invokeToModel(
-	// 	    [this, isMuted]() { mChatModel->setMicrophoneMuted(isMuted); });
-	// });
+	mChatModelConnection->makeConnectToCore(&ChatCore::lDeleteHistory, [this]() {
+		mChatModelConnection->invokeToModel([this]() { mChatModel->deleteHistory(); });
+	});
+	mChatModelConnection->makeConnectToModel(&ChatModel::historyDeleted, [this]() {
+		mChatModelConnection->invokeToCore([this]() {
+			qDebug() << log().arg("history deleted for chatRoom") << this;
+			clearMessagesList();
+			Utils::showInformationPopup(tr("Supprimé"), tr("L'historique des messages a été supprimé."), true);
+		});
+	});
+	mChatModelConnection->makeConnectToCore(&ChatCore::lUpdateUnreadCount, [this]() {
+		mChatModelConnection->invokeToModel([this]() {
+			auto count = mChatModel->getUnreadMessagesCount();
+			mChatModelConnection->invokeToCore([this, count] { setUnreadMessagesCount(count); });
+		});
+	});
+
+	mChatModelConnection->makeConnectToCore(&ChatCore::lDelete, [this]() {
+		mChatModelConnection->invokeToModel([this]() { mChatModel->deleteChatRoom(); });
+	});
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::deleted, [this]() { mChatModelConnection->invokeToCore([this]() { emit deleted(); }); });
+
 	mChatModelConnection->makeConnectToModel(&ChatModel::chatMessageReceived,
 	                                         [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                                const std::shared_ptr<const linphone::EventLog> &eventLog) {
 		                                         if (mChatModel->getMonitor() != chatRoom) return;
-		                                         qDebug() << "MESSAGE RECEIVED IN CHATROOM" << mChatModel->getTitle();
-		                                         //		mChatModelConnection->invokeToCore([this, isMuted]() {
-		                                         // setMicrophoneMuted(isMuted); });
+		                                         emit lUpdateLastMessage();
+		                                         emit lUpdateUnreadCount();
+		                                         auto message = eventLog->getChatMessage();
+		                                         qDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
+		                                         if (message) {
+			                                         auto newMessage = ChatMessageCore::create(message);
+			                                         mChatModelConnection->invokeToCore([this, newMessage]() {
+				                                         qDebug() << log().arg("append message to chatRoom") << this;
+				                                         appendMessageToMessageList(newMessage);
+			                                         });
+		                                         }
 	                                         });
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::chatMessagesReceived, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	                                             const std::list<std::shared_ptr<linphone::EventLog>> &chatMessages) {
+		    if (mChatModel->getMonitor() != chatRoom) return;
+		    emit lUpdateLastMessage();
+		    emit lUpdateUnreadCount();
+		    qDebug() << "EVENT LOGS RECEIVED IN CHATROOM" << mChatModel->getTitle();
+		    QList<QSharedPointer<ChatMessageCore>> list;
+		    for (auto &m : chatMessages) {
+			    auto message = m->getChatMessage();
+			    if (message) {
+				    auto newMessage = ChatMessageCore::create(message);
+				    list.push_back(newMessage);
+			    }
+		    }
+		    mChatModelConnection->invokeToCore([this, list]() {
+			    qDebug() << log().arg("append messages to chatRoom") << this;
+			    appendMessagesToMessageList(list);
+		    });
+	    });
+
+	mChatModelConnection->makeConnectToCore(&ChatCore::lMarkAsRead, [this]() {
+		mChatModelConnection->invokeToModel([this]() { mChatModel->markAsRead(); });
+	});
+	mChatModelConnection->makeConnectToModel(&ChatModel::messagesRead, [this]() {
+		auto unread = mChatModel->getUnreadMessagesCount();
+		mChatModelConnection->invokeToCore([this, unread]() { setUnreadMessagesCount(unread); });
+	});
+
+	mChatModelConnection->makeConnectToCore(&ChatCore::lUpdateLastMessage, [this]() {
+		mChatModelConnection->invokeToModel([this]() {
+			auto message = mChatModel->getLastMessageInHistory();
+			mChatModelConnection->invokeToCore([this, message]() { setLastMessageInHistory(message); });
+		});
+	});
 }
 
 QDateTime ChatCore::getLastUpdatedTime() const {
@@ -175,6 +237,7 @@ void ChatCore::setUnreadMessagesCount(int count) {
 QList<QSharedPointer<ChatMessageCore>> ChatCore::getChatMessageList() const {
 	return mChatMessageList;
 }
+
 void ChatCore::resetChatMessageList(QList<QSharedPointer<ChatMessageCore>> list) {
 	mChatMessageList = list;
 	emit messageListChanged();
@@ -190,6 +253,12 @@ void ChatCore::appendMessagesToMessageList(QList<QSharedPointer<ChatMessageCore>
 	if (nbAdded > 0) emit messageListChanged();
 }
 
+void ChatCore::appendMessageToMessageList(QSharedPointer<ChatMessageCore> message) {
+	if (mChatMessageList.contains(message)) return;
+	mChatMessageList.append(message);
+	emit messageListChanged();
+}
+
 void ChatCore::removeMessagesFromMessageList(QList<QSharedPointer<ChatMessageCore>> list) {
 	int nbRemoved = 0;
 	for (auto &message : list) {
@@ -199,6 +268,11 @@ void ChatCore::removeMessagesFromMessageList(QList<QSharedPointer<ChatMessageCor
 		}
 	}
 	if (nbRemoved > 0) emit messageListChanged();
+}
+
+void ChatCore::clearMessagesList() {
+	mChatMessageList.clear();
+	emit messageListChanged();
 }
 
 std::shared_ptr<ChatModel> ChatCore::getModel() const {

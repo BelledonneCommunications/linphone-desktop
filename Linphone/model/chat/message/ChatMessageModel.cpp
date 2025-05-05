@@ -59,3 +59,11 @@ ChatMessageModel::onFileTransferSend(const std::shared_ptr<linphone::ChatMessage
                                      size_t size) {
 	return nullptr;
 }
+
+void ChatMessageModel::deleteMessageFromChatRoom() {
+	auto chatRoom = mMonitor->getChatRoom();
+	if (chatRoom) {
+		chatRoom->deleteMessage(mMonitor);
+		emit messageDeleted();
+	}
+}

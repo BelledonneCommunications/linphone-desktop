@@ -41,6 +41,9 @@ public:
 
 	Q_INVOKABLE int findChatIndex(ChatGui *chatGui);
 
+signals:
+	void chatRemoved(ChatGui *chat);
+
 protected:
 	QSharedPointer<ChatList> mList;
 	DECLARE_ABSTRACT_OBJECT

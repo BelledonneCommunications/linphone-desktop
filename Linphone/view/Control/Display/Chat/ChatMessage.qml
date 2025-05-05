@@ -16,10 +16,59 @@ Control.Control {
 
     property string imgUrl
     property string contentText
+
     topPadding: Math.round(12 * DefaultStyle.dp)
     bottomPadding: Math.round(12 * DefaultStyle.dp)
     leftPadding: Math.round(18 * DefaultStyle.dp)
     rightPadding: Math.round(18 * DefaultStyle.dp)
+    
+    signal messageDeletionRequested()
+
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.RightButton
+        onClicked: (mouse) => {
+            console.log("message clicked")
+            if (mouse.button === Qt.RightButton) {
+                optionsMenu.x = mouse.x
+                optionsMenu.open()
+            }
+        }
+    }
+    Popup {
+        id: optionsMenu
+        background: Item {
+            anchors.fill: parent
+            Rectangle {
+                id: popupBackground
+                anchors.fill: parent
+                color: DefaultStyle.grey_0
+                radius: Math.round(16 * DefaultStyle.dp)
+            }
+            MultiEffect {
+                source: popupBackground
+                anchors.fill: popupBackground
+                shadowEnabled: true
+                shadowBlur: 0.1
+                shadowColor: DefaultStyle.grey_1000
+                shadowOpacity: 0.4
+            }
+        }
+        contentItem: ColumnLayout {
+            IconLabelButton {
+                //: "Supprimer"
+                text: qsTr("chat_message_delete")
+                icon.source: AppIcons.trashCan
+                spacing: Math.round(10 * DefaultStyle.dp)
+                Layout.fillWidth: true
+                onClicked: {
+                    mainItem.messageDeletionRequested()
+                    optionsMenu.close()
+                }
+                style: ButtonStyle.noBackgroundRed
+            }
+        }
+    }
 
     background: Item {
         anchors.fill: parent

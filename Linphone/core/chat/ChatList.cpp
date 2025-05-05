@@ -67,6 +67,17 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 				chats->push_back(model);
 			}
 			mModelConnection->invokeToCore([this, chats]() {
+				for (auto &chat : getSharedList<ChatCore>()) {
+					if (chat) disconnect(chat.get(), &ChatCore::deleted, this, nullptr);
+				}
+				for (auto &chat : *chats) {
+					connect(chat.get(), &ChatCore::deleted, this, [this, chat] {
+						remove(chat);
+						// We cannot use countChanged here because it is called before mList
+						// really has removed the item, then emit specific signal
+						emit chatRemoved(chat ? new ChatGui(chat) : nullptr);
+					});
+				}
 				mustBeInMainThread(getClassName());
 				resetData<ChatCore>(*chats);
 				delete chats;
@@ -78,7 +89,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	    &CoreModel::chatRoomStateChanged,
 	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	           linphone::ChatRoom::State state) {
-		    // check account, filtre, puis ajout si c'est bon
+		    // check account, filter, then add if ok
 		    if (chatRoom->getAccount() == core->getDefaultAccount()) {
 			    if (state == linphone::ChatRoom::State::Created) {
 				    auto list = getSharedList<ChatCore>();

@@ -21,9 +21,9 @@
 #include "ChatMessageList.hpp"
 #include "ChatMessageCore.hpp"
 #include "ChatMessageGui.hpp"
+#include "core/App.hpp"
 #include "core/chat/ChatCore.hpp"
 #include "core/chat/ChatGui.hpp"
-#include "core/App.hpp"
 
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
@@ -39,7 +39,8 @@ QSharedPointer<ChatMessageList> ChatMessageList::create() {
 	return model;
 }
 
-QSharedPointer<ChatMessageCore> ChatMessageList::createChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &chatMessage) {
+QSharedPointer<ChatMessageCore>
+ChatMessageList::createChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &chatMessage) {
 	auto chatMessageCore = ChatMessageCore::create(chatMessage);
 	return chatMessageCore;
 }
@@ -55,7 +56,7 @@ ChatMessageList::~ChatMessageList() {
 	mModelConnection = nullptr;
 }
 
-ChatGui* ChatMessageList::getChat() const {
+ChatGui *ChatMessageList::getChat() const {
 	if (mChatCore) return new ChatGui(mChatCore);
 	else return nullptr;
 }
@@ -66,12 +67,14 @@ QSharedPointer<ChatCore> ChatMessageList::getChatCore() const {
 
 void ChatMessageList::setChatCore(QSharedPointer<ChatCore> core) {
 	if (mChatCore != core) {
+		if (mChatCore) disconnect(mChatCore.get(), &ChatCore::messageListChanged, this, nullptr);
 		mChatCore = core;
+		if (mChatCore) connect(mChatCore.get(), &ChatCore::messageListChanged, this, &ChatMessageList::lUpdate);
 		emit chatChanged();
 	}
 }
 
-void ChatMessageList::setChatGui(ChatGui* chat) {
+void ChatMessageList::setChatGui(ChatGui *chat) {
 	auto chatCore = chat ? chat->mCore : nullptr;
 	setChatCore(chatCore);
 }
@@ -80,17 +83,17 @@ void ChatMessageList::setSelf(QSharedPointer<ChatMessageList> me) {
 	mModelConnection = SafeConnection<ChatMessageList, CoreModel>::create(me, CoreModel::getInstance());
 
 	mModelConnection->makeConnectToCore(&ChatMessageList::lUpdate, [this]() {
-//		mModelConnection->invokeToModel([this]() {
-//			// Avoid copy to lambdas
-//			QList<QSharedPointer<CallCore>> *calls = new QList<QSharedPointer<CallCore>>();
-//			mustBeInLinphoneThread(getClassName());
-//			mModelConnection->invokeToCore([this, calls, currentCallCore]() {
-//				mustBeInMainThread(getClassName());
-//				resetData<CallCore>(*calls);
-//			});
-//		});
+		for (auto &message : getSharedList<ChatMessageCore>()) {
+			if (message) disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);
+		}
 		if (!mChatCore) return;
 		auto messages = mChatCore->getChatMessageList();
+		for (auto &message : messages) {
+			connect(message.get(), &ChatMessageCore::deleted, this, [this, message] {
+				emit mChatCore->lUpdateLastMessage();
+				remove(message);
+			});
+		}
 		resetData<ChatMessageCore>(messages);
 	});
 
@@ -104,6 +107,7 @@ void ChatMessageList::setSelf(QSharedPointer<ChatMessageList> me) {
 QVariant ChatMessageList::data(const QModelIndex &index, int role) const {
 	int row = index.row();
 	if (!index.isValid() || row < 0 || row >= mList.count()) return QVariant();
-	if (role == Qt::DisplayRole) return QVariant::fromValue(new ChatMessageGui(mList[row].objectCast<ChatMessageCore>()));
+	if (role == Qt::DisplayRole)
+		return QVariant::fromValue(new ChatMessageGui(mList[row].objectCast<ChatMessageCore>()));
 	return QVariant();
 }

@@ -70,8 +70,10 @@ public:
 
 	QList<QSharedPointer<ChatMessageCore>> getChatMessageList() const;
 	void resetChatMessageList(QList<QSharedPointer<ChatMessageCore>> list);
+	void appendMessageToMessageList(QSharedPointer<ChatMessageCore> message);
 	void appendMessagesToMessageList(QList<QSharedPointer<ChatMessageCore>> list);
 	void removeMessagesFromMessageList(QList<QSharedPointer<ChatMessageCore>> list);
+	void clearMessagesList();
 
 	QString getAvatarUri() const;
 	void setAvatarUri(QString avatarUri);
@@ -86,6 +88,14 @@ signals:
 	void unreadMessagesCountChanged(int count);
 	void messageListChanged();
 	void avatarUriChanged();
+	void deleted();
+
+	void lDeleteMessage();
+	void lDelete();
+	void lDeleteHistory();
+	void lMarkAsRead();
+	void lUpdateLastMessage();
+	void lUpdateUnreadCount();
 
 private:
 	QString id;

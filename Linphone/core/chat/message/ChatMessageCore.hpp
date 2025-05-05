@@ -29,6 +29,8 @@
 
 #include <linphone++/linphone.hh>
 
+class ChatCore;
+
 class ChatMessageCore : public QObject, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(QDateTime timestamp READ getTimestamp WRITE setTimestamp NOTIFY timestampChanged)
@@ -55,14 +57,18 @@ public:
 	bool isRemoteMessage() const;
 	void setIsRemoteMessage(bool isRemote);
 
+	std::shared_ptr<ChatMessageModel> getModel() const;
+
 signals:
 	void timestampChanged(QDateTime timestamp);
 	void textChanged(QString text);
 	void isRemoteMessageChanged(bool isRemote);
 
+	void lDelete();
+	void deleted();
+
 private:
-	DECLARE_ABSTRACT_OBJECT
-	QString mText;
+	DECLARE_ABSTRACT_OBJECT QString mText;
 	QString mPeerAddress;
 	QString mPeerName;
 	QDateTime mTimestamp;

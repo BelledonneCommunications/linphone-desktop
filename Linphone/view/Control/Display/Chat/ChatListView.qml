@@ -31,13 +31,18 @@ ListView {
         }
         filterText: mainItem.searchText
         onFilterTextChanged: maxDisplayItems = initialDisplayItems
-         initialDisplayItems: Math.max(
-                                  20,
-                                  2 * mainItem.height / (Math.round(56 * DefaultStyle.dp)))
-         displayItemsStep: 3 * initialDisplayItems / 2
-         onModelReset: {
-             mainItem.resultsReceived()
-         }
+        initialDisplayItems: Math.max(
+                                20,
+                                2 * mainItem.height / (Math.round(56 * DefaultStyle.dp)))
+        displayItemsStep: 3 * initialDisplayItems / 2
+        onModelReset: {
+            mainItem.resultsReceived()
+        }
+        onChatRemoved: {
+            var indexToSelect = mainItem.currentIndex
+            mainItem.currentIndex = -1
+            mainItem.currentIndex = indexToSelect
+        }
     }
     // flickDeceleration: 10000
     spacing: Math.round(10 * DefaultStyle.dp)
@@ -56,18 +61,14 @@ ListView {
 
     onActiveFocusChanged: if (activeFocus && currentIndex < 0 && count > 0)
                               currentIndex = 0
-    onCountChanged: {
-        if (currentIndex < 0 && count > 0) {
-            mainItem.currentIndex = 0 // Select first item after loading model
-        }
-        if (atYBeginning)
-            positionViewAtBeginning() // Stay at beginning
-    }
 
     onAtYEndChanged: {
         if (atYEnd && count > 0) {
             chatProxy.displayMore()
         }
+    }
+    onCountChanged: {
+        if (count > 0 && currentIndex < 0) currentIndex = 0
     }
 
 //----------------------------------------------------------------
@@ -93,10 +94,6 @@ ListView {
     }
 
 //    //----------------------------------------------------------------
-    onVisibleChanged: {
-//        if (!visible)
-//            currentIndex = -1
-    }
 
     BusyIndicator {
         anchors.horizontalCenter: mainItem.horizontalCenter
@@ -218,8 +215,39 @@ ListView {
                     //sourdine, éphémère, IMDN
                 }
             }
+            PopupButton {
+                id: chatroomPopup
+                // z: 1
+                popup.x: 0
+                popup.padding: Math.round(10 * DefaultStyle.dp)
+                visible: mouseArea.containsMouse || hovered || popup.opened
+                enabled: visible
+                popup.contentItem: ColumnLayout {
+                    IconLabelButton {
+                        //: "Supprimer"
+                        text: qsTr("chat_room_delete")
+                        icon.source: AppIcons.trashCan
+                        spacing: Math.round(10 * DefaultStyle.dp)
+                        Layout.fillWidth: true
+                        onClicked: {
+                            mainWindow.showConfirmationLambdaPopup(qsTr("Supprimer le chat ?"),
+                                qsTr("Le chat ainsi que tous ses messages seront supprimés. Souhaitez-vous continuer ?"),
+                                "",
+                                function(confirmed) {
+                                    if (confirmed) {
+                                        modelData.core.lDelete()
+                                        chatroomPopup.close()
+                                    }
+                                })
+                        }
+                        style: ButtonStyle.noBackgroundRed
+                    }
+                }
+            }
+
         }
         MouseArea {
+            id: mouseArea
             hoverEnabled: true
             anchors.fill: parent
             focus: true

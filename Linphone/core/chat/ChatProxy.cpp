@@ -42,6 +42,7 @@ void ChatProxy::setSourceModel(QAbstractItemModel *model) {
 	if (newChatList) {
 		connect(this, &ChatProxy::filterTextChanged, newChatList,
 		        [this, newChatList] { emit newChatList->filterChanged(getFilterText()); });
+		connect(newChatList, &ChatList::chatRemoved, this, &ChatProxy::chatRemoved);
 	}
 	setSourceModels(new SortFilterList(model));
 	sort(0);

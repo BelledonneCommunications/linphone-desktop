@@ -42,8 +42,16 @@ public:
 	QString getPeerAddress() const;
 	QString getLastMessageInHistory(std::list<std::shared_ptr<linphone::Content>> startList = {}) const;
 	int getUnreadMessagesCount() const;
+	void markAsRead();
 	std::list<std::shared_ptr<linphone::ChatMessage>> getHistory() const;
 	QString getIdentifier() const;
+	void deleteHistory();
+	void deleteChatRoom();
+
+signals:
+	void historyDeleted();
+	void messagesRead();
+	void deleted();
 
 private:
 	DECLARE_ABSTRACT_OBJECT

@@ -22,6 +22,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Button/Settings/SwitchSetting.qml
 
 	view/Control/Container/Carousel.qml
+	view/Control/Container/DetailLayout.qml
 	view/Control/Container/FormItemLayout.qml
 	view/Control/Container/ScrollBar.qml
 	view/Control/Container/Section.qml

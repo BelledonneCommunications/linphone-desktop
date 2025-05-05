@@ -46,6 +46,7 @@ public:
 signals:
 	void lUpdate();
 	void filterChanged(QString filter);
+	void chatRemoved(ChatGui *chat);
 
 private:
 	QString mFilter;

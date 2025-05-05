@@ -154,9 +154,6 @@ AbstractMainPage {
                             onCurrentIndexChanged: {
                                 mainItem.selectedChatGui = model.getAt(currentIndex)
                             }
-                            onCountChanged: {
-                                mainItem.selectedChatGui = model.getAt(currentIndex)
-                            }
 
                             Connections {
                                 target: mainItem
@@ -185,9 +182,6 @@ AbstractMainPage {
             objectName: "newChatItem"
             width: parent?.width
             height: parent?.height
-            Control.StackView.onActivated: {
-                callContactsList.forceActiveFocus()
-            }
             ColumnLayout {
                 anchors.fill: parent
                 spacing: 0

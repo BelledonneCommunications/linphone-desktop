@@ -92,6 +92,7 @@ QtObject {
 	property string settings: "image://internal/gear.svg"
 	property string clock: "image://internal/clock.svg"
 	property string note: "image://internal/note.svg"
+	property string signOut: "image://internal/sign-out.svg"
 	property string userRectangle: "image://internal/user-rectangle.svg"
 	property string usersTwo: "image://internal/users.svg"
 	property string globe: "image://internal/globe-hemisphere-west.svg"

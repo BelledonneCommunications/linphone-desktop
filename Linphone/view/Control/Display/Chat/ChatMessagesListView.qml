@@ -15,6 +15,8 @@ ListView {
 
     Component.onCompleted: positionViewAtEnd()
 
+    onCountChanged: positionViewAtEnd();
+
     model: ChatMessageProxy {
         chatGui: mainItem.chat
     }
@@ -34,5 +36,7 @@ ListView {
         anchors.right: !isRemoteMessage && parent
             ? parent.right
             : undefined
+
+        onMessageDeletionRequested: modelData.core.lDelete()
     }
 }

@@ -15,6 +15,11 @@ RowLayout {
     property CallGui call
     property alias callHeaderContent: splitPanel.headerContent
     spacing: 0
+
+    onChatChanged: {
+        // TODO : call when all messages read after scroll to unread feature available
+        if (chat) chat.core.lMarkAsRead()
+    }
     MainRightPanel {
         id: splitPanel
         Layout.fillWidth: true
@@ -62,9 +67,10 @@ RowLayout {
                 BigButton {
                     style: ButtonStyle.noBackground
                     checkable: true
+                    checkedImageColor: DefaultStyle.main1_500_main
                     icon.source: AppIcons.info
                     onCheckedChanged: {
-
+                        detailsPanel.visible = !detailsPanel.visible
                     }
                 }
             }
@@ -184,8 +190,46 @@ RowLayout {
             color: DefaultStyle.grey_0
             anchors.fill: parent
         }
-        contentItem: ColumnLayout {
+        contentItem: CallHistoryLayout {
+            chatGui: mainItem.chat
+            detailContent: ColumnLayout {
+                DetailLayout {
+                    //: Other actions
+                    label: qsTr("Autres actions")
+                    content: ColumnLayout {
+                        // IconLabelButton {
+                        //     Layout.fillWidth: true
+                        //     Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
+                        //     icon.source: AppIcons.signOut
+                        //     //: "Quitter la conversation"
+                        //     text: qsTr("Quitter la conversation")
+                        //     onClicked: {
 
+                        //     }
+                        //     style: ButtonStyle.noBackground
+                        // }
+                        IconLabelButton {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
+                            icon.source: AppIcons.trashCan
+                            //: "Supprimer l'historique"
+                            text: qsTr("Supprimer l'historique")
+                            onClicked: {
+                                mainWindow.showConfirmationLambdaPopup(qsTr("Supprimer l'historique ?"),
+                                qsTr("Tous les messages seront supprimés de la chatroom.Souhaitez-vous continuer ?"),
+                                "",
+                                function(confirmed) {
+                                    if (confirmed) {
+                                        mainItem.chat.core.lDeleteHistory()
+                                    }
+                                })
+                            }
+                            style: ButtonStyle.noBackgroundRed
+                        }
+                    }
+                }
+                Item {Layout.fillHeight: true}
+            }
         }
     }
 }

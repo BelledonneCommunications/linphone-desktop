@@ -20,6 +20,7 @@
 
 #include "ChatMessageCore.hpp"
 #include "core/App.hpp"
+#include "core/chat/ChatCore.hpp"
 #include "model/tool/ToolModel.hpp"
 
 DEFINE_ABSTRACT_OBJECT(ChatMessageCore)
@@ -51,6 +52,13 @@ ChatMessageCore::~ChatMessageCore() {
 
 void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	mChatMessageModelConnection = SafeConnection<ChatMessageCore, ChatMessageModel>::create(me, mChatMessageModel);
+	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lDelete, [this] {
+		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->deleteMessageFromChatRoom(); });
+	});
+	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageDeleted, [this]() {
+		Utils::showInformationPopup(tr("Supprimé"), tr("Message supprimé"), true);
+		emit deleted();
+	});
 }
 
 QDateTime ChatMessageCore::getTimestamp() const {
@@ -92,4 +100,8 @@ void ChatMessageCore::setIsRemoteMessage(bool isRemote) {
 		mIsRemoteMessage = isRemote;
 		emit isRemoteMessageChanged(isRemote);
 	}
+}
+
+std::shared_ptr<ChatMessageModel> ChatMessageCore::getModel() const {
+	return mChatMessageModel;
 }

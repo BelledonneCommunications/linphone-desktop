@@ -132,7 +132,7 @@
 			normal: "#00000000",
 			hovered: "#00000000",
             pressed: "#00000000",
-            checked: Linphone.DefaultStyle.main1_500main
+			checked: "#00000000"
 		},
 		text: {
 			normal: Linphone.DefaultStyle.main2_600,
@@ -144,7 +144,7 @@
 			normal: Linphone.DefaultStyle.main2_600,
 			hovered: Linphone.DefaultStyle.main2_700,
             pressed: Linphone.DefaultStyle.main2_800,
-            checked: Linphone.DefaultStyle.main1_500main
+            checked: Linphone.DefaultStyle.main1_500main,
 		}
 	}
 
@@ -163,7 +163,8 @@
 		image: {
 			normal: Linphone.DefaultStyle.danger_500main,
 			hovered: Linphone.DefaultStyle.danger_700,
-			pressed: Linphone.DefaultStyle.danger_900
+			pressed: Linphone.DefaultStyle.danger_900,
+			checked: Linphone.DefaultStyle.danger_900
 		}
 	}
 
