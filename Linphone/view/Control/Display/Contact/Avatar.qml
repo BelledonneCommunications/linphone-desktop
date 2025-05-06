@@ -84,7 +84,6 @@ Loader{
 				Connections{
 					target: mainItem
 					onHaveAvatarChanged: {
-						console.log("have avatar changed", mainItem.haveAvatar, mainItem._address)
 						stackView.replace(mainItem.haveAvatar ? avatar : initials, StackView.Immediate)}
 				}
 				

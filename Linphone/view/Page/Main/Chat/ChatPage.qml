@@ -21,7 +21,7 @@ AbstractMainPage {
     property string remoteAddress
     onRemoteAddressChanged: console.log("ChatPage : remote address changed :", remoteAddress)
     property var remoteChatObj: UtilsCpp.getChatForAddress(remoteAddress)
-    property ChatGui remoteChat: remoteChatObj ? remoteChatObj.value : null
+    property ChatGui remoteChat: remoteChatObj && remoteChatObj.value ? remoteChatObj.value : null
     onRemoteChatChanged: if (remoteChat) selectedChatGui = remoteChat
 
     onSelectedChatGuiChanged: {

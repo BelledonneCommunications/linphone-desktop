@@ -119,6 +119,14 @@ void ChatModel::deleteChatRoom() {
 	emit deleted();
 }
 
+std::shared_ptr<linphone::ChatMessage> ChatModel::createTextMessageFromText(QString text) {
+	return mMonitor->createMessageFromUtf8(Utils::appStringToCoreString(text));
+}
+
+void ChatModel::compose() {
+	mMonitor->compose();
+}
+
 //---------------------------------------------------------------//
 
 void ChatModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> &chatRoom,

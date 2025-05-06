@@ -43,6 +43,8 @@ public:
 	               lastMessageInHistoryChanged)
 	Q_PROPERTY(int unreadMessagesCount READ getUnreadMessagesCount WRITE setUnreadMessagesCount NOTIFY
 	               unreadMessagesCountChanged)
+	Q_PROPERTY(QString composingName READ getComposingName WRITE setComposingName NOTIFY composingUserChanged)
+	Q_PROPERTY(QString composingAddress READ getComposingAddress WRITE setComposingAddress NOTIFY composingUserChanged)
 	// Q_PROPERTY(VideoStats videoStats READ getVideoStats WRITE setVideoStats NOTIFY videoStatsChanged)
 
 	// Should be call from model Thread. Will be automatically in App thread after initialization
@@ -78,6 +80,11 @@ public:
 	QString getAvatarUri() const;
 	void setAvatarUri(QString avatarUri);
 
+	QString getComposingName() const;
+	QString getComposingAddress() const;
+	void setComposingName(QString composingName);
+	void setComposingAddress(QString composingAddress);
+
 	std::shared_ptr<ChatModel> getModel() const;
 
 signals:
@@ -89,6 +96,7 @@ signals:
 	void messageListChanged();
 	void avatarUriChanged();
 	void deleted();
+	void composingUserChanged();
 
 	void lDeleteMessage();
 	void lDelete();
@@ -96,6 +104,8 @@ signals:
 	void lMarkAsRead();
 	void lUpdateLastMessage();
 	void lUpdateUnreadCount();
+	void lSendTextMessage(QString message);
+	void lCompose();
 
 private:
 	QString id;
@@ -106,6 +116,8 @@ private:
 	QString mIdentifier;
 	QString mAvatarUri;
 	int mUnreadMessagesCount;
+	QString mComposingName;
+	QString mComposingAddress;
 	std::shared_ptr<ChatModel> mChatModel;
 	QList<QSharedPointer<ChatMessageCore>> mChatMessageList;
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;

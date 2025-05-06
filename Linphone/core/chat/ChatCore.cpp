@@ -162,6 +162,37 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 			mChatModelConnection->invokeToCore([this, message]() { setLastMessageInHistory(message); });
 		});
 	});
+	mChatModelConnection->makeConnectToCore(&ChatCore::lSendTextMessage, [this](QString message) {
+		mChatModelConnection->invokeToModel([this, message]() {
+			auto linMessage = mChatModel->createTextMessageFromText(message);
+			linMessage->send();
+		});
+	});
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::chatMessageSending, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	                                           const std::shared_ptr<const linphone::EventLog> &eventLog) {
+		    auto message = eventLog->getChatMessage();
+		    if (message) {
+			    auto newMessage = ChatMessageCore::create(message);
+			    mChatModelConnection->invokeToCore([this, newMessage]() { appendMessageToMessageList(newMessage); });
+		    }
+	    });
+	mChatModelConnection->makeConnectToCore(
+	    &ChatCore::lCompose, [this]() { mChatModelConnection->invokeToModel([this]() { mChatModel->compose(); }); });
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::isComposingReceived,
+	    [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	           const std::shared_ptr<const linphone::Address> &remoteAddress, bool isComposing) {
+		    if (mChatModel->getMonitor() != chatRoom) return;
+		    QString name = isComposing ? ToolModel::getDisplayName(remoteAddress->clone()) : QString();
+		    auto remoteAddr = remoteAddress->clone();
+		    remoteAddr->clean();
+		    mChatModelConnection->invokeToCore(
+		        [this, name, address = Utils::coreStringToAppString(remoteAddr->asStringUriOnly())]() {
+			        setComposingName(name);
+			        setComposingAddress(address);
+		        });
+	    });
 }
 
 QDateTime ChatCore::getLastUpdatedTime() const {
@@ -273,6 +304,28 @@ void ChatCore::removeMessagesFromMessageList(QList<QSharedPointer<ChatMessageCor
 void ChatCore::clearMessagesList() {
 	mChatMessageList.clear();
 	emit messageListChanged();
+}
+
+QString ChatCore::getComposingName() const {
+	return mComposingName;
+}
+
+void ChatCore::setComposingName(QString composingName) {
+	if (mComposingAddress != composingName) {
+		mComposingName = composingName;
+		emit composingUserChanged();
+	}
+}
+
+void ChatCore::setComposingAddress(QString composingAddress) {
+	if (mComposingAddress != composingAddress) {
+		mComposingAddress = composingAddress;
+		emit composingUserChanged();
+	}
+}
+
+QString ChatCore::getComposingAddress() const {
+	return mComposingAddress;
 }
 
 std::shared_ptr<ChatModel> ChatCore::getModel() const {

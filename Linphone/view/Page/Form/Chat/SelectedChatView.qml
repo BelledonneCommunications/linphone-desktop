@@ -80,6 +80,7 @@ RowLayout {
             ChatMessagesListView {
                 id: chatMessagesListView
                 height: contentHeight
+                backgroundColor: panelColor
                 width: parent.width - anchors.leftMargin - anchors.rightMargin
                 chat: mainItem.chat
                 anchors.top: parent.top
@@ -88,7 +89,6 @@ RowLayout {
                 anchors.bottom: messageSender.top               
                 anchors.leftMargin: Math.round(18 * DefaultStyle.dp)
                 anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
-                anchors.bottomMargin: Math.round(18 * DefaultStyle.dp)
                 Control.ScrollBar.vertical: scrollbar
             },
             ScrollBar {
@@ -106,13 +106,22 @@ RowLayout {
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: 79 * DefaultStyle.dp
                 leftPadding: Math.round(15 * DefaultStyle.dp)
                 rightPadding: Math.round(15 * DefaultStyle.dp)
-                topPadding: Math.round(16 * DefaultStyle.dp)
+                topPadding: Math.round(24 * DefaultStyle.dp)
                 bottomPadding: Math.round(16 * DefaultStyle.dp)
                 background: Rectangle {
+                    anchors.fill: parent
                     color: DefaultStyle.grey_100
+                    MediumButton {
+                        id: expandButton
+                        anchors.top: parent.top
+                        anchors.topMargin: Math.round(4 * DefaultStyle.dp)
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        style: ButtonStyle.noBackgroundOrange
+                        icon.source: checked ? AppIcons.downArrow : AppIcons.upArrow
+                        checkable: true
+                    }
                 }
                 contentItem: RowLayout {
                     spacing: Math.round(20 * DefaultStyle.dp)
@@ -135,19 +144,62 @@ RowLayout {
                         }
                         Control.Control {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: Math.round(48 * DefaultStyle.dp)
+                            leftPadding: Math.round(15 * DefaultStyle.dp)
+                            rightPadding: Math.round(15 * DefaultStyle.dp)
+                            topPadding: Math.round(16 * DefaultStyle.dp)
+                            bottomPadding: Math.round(16 * DefaultStyle.dp)
                             background: Rectangle {
                                 id: inputBackground
                                 anchors.fill: parent
-                                radius: Math.round(30 * DefaultStyle.dp)
+                                radius: Math.round(35 * DefaultStyle.dp)
                                 color: DefaultStyle.grey_0
                             }
                             contentItem: RowLayout {
-                                TextArea {
-                                    id: sendingTextArea
+                                Flickable {
+                                    id: sendingAreaFlickable
                                     Layout.fillWidth: true
-                                    Layout.fillHeight: true
                                     Layout.preferredWidth: parent.width - stackButton.width
+                                    Layout.preferredHeight: Math.min(Math.round(60 * DefaultStyle.dp), contentHeight)
+                                    Binding {
+                                        target: sendingAreaFlickable
+                                        when: expandButton.checked
+                                        property: "Layout.preferredHeight"
+                                        value: Math.round(250 * DefaultStyle.dp)
+                                        restoreMode: Binding.RestoreBindingOrValue
+                                    }
+                                    Layout.fillHeight: true
+                                    contentHeight: sendingTextArea.contentHeight
+                                    contentWidth: width
+
+                                    function ensureVisible(r) {
+                                        if (contentX >= r.x)
+                                            contentX = r.x;
+                                        else if (contentX+width <= r.x+r.width)
+                                            contentX = r.x+r.width-width;
+                                        if (contentY >= r.y)
+                                            contentY = r.y;
+                                        else if (contentY+height <= r.y+r.height)
+                                            contentY = r.y+r.height-height;
+                                    }
+
+                                    TextArea {
+                                        id: sendingTextArea
+                                        width: parent.width
+                                        height: sendingAreaFlickable.height
+                                        anchors.left: parent.left
+                                        anchors.right: parent.right
+                                        //: Say something… : placeholder text for sending message text area
+                                        placeholderText: qsTr("Dites quelque chose…")
+                                        placeholderTextColor: DefaultStyle.main2_400
+                                        onCursorRectangleChanged: sendingAreaFlickable.ensureVisible(cursorRectangle)
+                                        property string previousText
+                                        Component.onCompleted: previousText = text
+                                        onTextChanged: {
+                                            if (previousText === "" && text !== "") {
+                                                mainItem.chat.core.lCompose()
+                                            }
+                                        }
+                                    }
                                 }
                                 StackLayout {
                                     id: stackButton
@@ -163,7 +215,8 @@ RowLayout {
                                         style: ButtonStyle.noBackgroundOrange
                                         icon.source: AppIcons.paperPlaneRight
                                         onClicked: {
-                                            console.log("TODO : send message")
+                                            mainItem.chat.core.lSendTextMessage(sendingTextArea.text)
+                                            sendingTextArea.clear()
                                         }
                                     }
                                 }

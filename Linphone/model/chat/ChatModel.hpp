@@ -47,6 +47,8 @@ public:
 	QString getIdentifier() const;
 	void deleteHistory();
 	void deleteChatRoom();
+	std::shared_ptr<linphone::ChatMessage> createTextMessageFromText(QString text);
+	void compose();
 
 signals:
 	void historyDeleted();

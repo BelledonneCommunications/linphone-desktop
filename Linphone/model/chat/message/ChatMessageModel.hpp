@@ -41,6 +41,8 @@ public:
 	QDateTime getTimestamp() const;
 
 	QString getPeerAddress() const;
+	QString getFromAddress() const;
+	QString getToAddress() const;
 
 	void deleteMessageFromChatRoom();
 

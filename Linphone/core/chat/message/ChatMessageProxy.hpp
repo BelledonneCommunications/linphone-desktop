@@ -21,8 +21,8 @@
 #ifndef CHAT_MESSAGE_PROXY_H_
 #define CHAT_MESSAGE_PROXY_H_
 
-#include "core/proxy/LimitProxy.hpp"
 #include "ChatMessageList.hpp"
+#include "core/proxy/LimitProxy.hpp"
 #include "tool/AbstractObject.hpp"
 
 // =============================================================================
@@ -31,7 +31,7 @@ class ChatGui;
 
 class ChatMessageProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
-	Q_PROPERTY(ChatGui* chatGui READ getChatGui WRITE setChatGui NOTIFY chatChanged)
+	Q_PROPERTY(ChatGui *chatGui READ getChatGui WRITE setChatGui NOTIFY chatChanged)
 
 public:
 	DECLARE_SORTFILTER_CLASS()
@@ -39,17 +39,19 @@ public:
 	ChatMessageProxy(QObject *parent = Q_NULLPTR);
 	~ChatMessageProxy();
 
-	ChatGui* getChatGui();
-	void setChatGui(ChatGui* chat);
+	ChatGui *getChatGui();
+	void setChatGui(ChatGui *chat);
 
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
+
+	Q_INVOKABLE ChatMessageGui *getChatMessageAtIndex(int index);
 
 signals:
 	void chatChanged();
 
 protected:
 	QSharedPointer<ChatMessageList> mList;
-	ChatGui* mChatGui = nullptr;
+	ChatGui *mChatGui = nullptr;
 	DECLARE_ABSTRACT_OBJECT
 };
 

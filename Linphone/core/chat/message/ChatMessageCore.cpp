@@ -45,6 +45,14 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	mIsRemoteMessage = !from->weakEqual(to);
 	mPeerAddress = Utils::coreStringToAppString(chatmessage->getPeerAddress()->asStringUriOnly());
 	mPeerName = ToolModel::getDisplayName(chatmessage->getPeerAddress()->clone());
+	auto fromAddress = chatmessage->getFromAddress()->clone();
+	fromAddress->clean();
+	mFromAddress = Utils::coreStringToAppString(fromAddress->asStringUriOnly());
+	mFromName = ToolModel::getDisplayName(chatmessage->getFromAddress()->clone());
+
+	auto chatroom = chatmessage->getChatRoom();
+	mIsFromChatGroup = chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference) &&
+	                   !chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne);
 }
 
 ChatMessageCore::~ChatMessageCore() {
@@ -91,15 +99,24 @@ QString ChatMessageCore::getPeerName() const {
 	return mPeerName;
 }
 
+QString ChatMessageCore::getFromAddress() const {
+	return mFromAddress;
+}
+
+QString ChatMessageCore::getFromName() const {
+	return mFromName;
+}
+
+QString ChatMessageCore::getToAddress() const {
+	return mToAddress;
+}
+
 bool ChatMessageCore::isRemoteMessage() const {
 	return mIsRemoteMessage;
 }
 
-void ChatMessageCore::setIsRemoteMessage(bool isRemote) {
-	if (mIsRemoteMessage != isRemote) {
-		mIsRemoteMessage = isRemote;
-		emit isRemoteMessageChanged(isRemote);
-	}
+bool ChatMessageCore::isFromChatGroup() const {
+	return mIsFromChatGroup;
 }
 
 std::shared_ptr<ChatMessageModel> ChatMessageCore::getModel() const {

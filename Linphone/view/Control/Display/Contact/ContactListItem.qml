@@ -34,8 +34,7 @@ FocusScope {
     property real itemsRightMargin: Math.round(39 * DefaultStyle.dp)
 
     property var displayName: searchResultItem.core.fullName
-    property string initial: displayName ? displayName[0].toLocaleLowerCase(
-                                               ConstantsCpp.DefaultLocale) : ''
+    property string initial: displayName ? displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale) : ''
 
     signal clicked(var mouse)
     signal contactDeletionRequested(FriendGui contact)

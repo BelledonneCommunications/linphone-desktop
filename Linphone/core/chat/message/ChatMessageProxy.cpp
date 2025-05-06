@@ -46,19 +46,30 @@ void ChatMessageProxy::setSourceModel(QAbstractItemModel *model) {
 	sort(0);
 }
 
-ChatGui* ChatMessageProxy::getChatGui() {
+ChatGui *ChatMessageProxy::getChatGui() {
 	auto model = getListModel<ChatMessageList>();
 	if (!mChatGui && model) mChatGui = model->getChat();
 	return mChatGui;
 }
 
-void ChatMessageProxy::setChatGui(ChatGui* chat) {
+void ChatMessageProxy::setChatGui(ChatGui *chat) {
 	getListModel<ChatMessageList>()->setChatGui(chat);
 }
 
+ChatMessageGui *ChatMessageProxy::getChatMessageAtIndex(int i) {
+	auto model = getListModel<ChatMessageList>();
+	auto sourceIndex = mapToSource(index(i, 0)).row();
+	if (model) {
+		auto chat = model->getAt<ChatMessageCore>(sourceIndex);
+		if (chat) return new ChatMessageGui(chat);
+		else return nullptr;
+	}
+	return nullptr;
+}
+
 bool ChatMessageProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-//	auto l = getItemAtSource<ChatMessageList, ChatMessageCore>(sourceRow);
-//	return l != nullptr;
+	//	auto l = getItemAtSource<ChatMessageList, ChatMessageCore>(sourceRow);
+	//	return l != nullptr;
 	return true;
 }
 

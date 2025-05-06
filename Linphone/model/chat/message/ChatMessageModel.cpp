@@ -48,6 +48,14 @@ QString ChatMessageModel::getPeerAddress() const {
 	return Utils::coreStringToAppString(mMonitor->getPeerAddress()->asStringUriOnly());
 }
 
+QString ChatMessageModel::getFromAddress() const {
+	return Utils::coreStringToAppString(mMonitor->getFromAddress()->asStringUriOnly());
+}
+
+QString ChatMessageModel::getToAddress() const {
+	return Utils::coreStringToAppString(mMonitor->getToAddress()->asStringUriOnly());
+}
+
 QDateTime ChatMessageModel::getTimestamp() const {
 	return QDateTime::fromSecsSinceEpoch(mMonitor->getTime());
 }

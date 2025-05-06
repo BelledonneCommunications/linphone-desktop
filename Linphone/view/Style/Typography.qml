@@ -31,6 +31,13 @@ QtObject {
         weight: Math.min(Math.round(800 * DefaultStyle.dp), 1000)
 	})
 
+	// Text/P4 - Xsmall paragraph text
+    property font p4: Qt.font( {
+        family: DefaultStyle.defaultFont,
+        pixelSize: Math.round(10 * DefaultStyle.dp),
+        weight: Math.min(Math.round(300 * DefaultStyle.dp), 1000)
+    })
+
     // Text/P3 - Reduced paragraph text
     property font p3: Qt.font( {
         family: DefaultStyle.defaultFont,
