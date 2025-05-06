@@ -320,6 +320,21 @@ void CoreManager::migrate () {
 	shared_ptr<linphone::Config> config = mCore->getConfig();
 	auto oldLimeServerUrl = mCore->getLimeX3DhServerUrl();// core url is deprecated : If core url exists, it must be copied to all linphone accounts.
 	int rcVersion = config->getInt(SettingsModel::UiSection, Constants::RcVersionName, 0);
+	if (rcVersion >= 7) {// Update old factories data
+		// From v7, RetiredUploadLogsServer should never be used. Replace it if found.
+		auto logServer = mCore->getLogCollectionUploadServerUrl();
+		if ( logServer == Constants::RetiredUploadLogsServer) {
+			mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
+			qInfo() << "Migrating overall from v7 :  replacing old Log URL" << Utils::coreStringToAppString(logServer);
+		}
+		auto fileServer = mCore->getFileTransferServer();
+		if (fileServer == Constants::RetiredUploadLogsServer){
+			mCore->setFileTransferServer(Constants::DefaultUploadLogsServer);
+			qInfo() << "Migrating overall from v7 :  replacing old File transfer URL" << Utils::coreStringToAppString(fileServer);
+		}
+	}
+
+
 	if( !oldLimeServerUrl.empty()) {
 		mCore->setLimeX3DhServerUrl("");
 		mCore->enableLimeX3Dh(true);
@@ -386,7 +401,14 @@ void CoreManager::migrate () {
 				if (logServer.empty() || logServer == Constants::RetiredUploadLogsServer) {
 					mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
 					qInfo() << "Migrating" << accountIdentity
-							<< "for version 7. Setting Log collection upload server rul to: "
+							<< "for version 7. Setting Log collection upload server url to: "
+							<< Constants::DefaultUploadLogsServer;
+				}
+				auto fileServer = mCore->getFileTransferServer();
+				if (fileServer.empty() || fileServer == Constants::RetiredUploadLogsServer) {
+					mCore->setFileTransferServer(Constants::DefaultUploadLogsServer);
+					qInfo() << "Migrating" << accountIdentity
+							<< "for version 7. Setting File transfer upload server url to: "
 							<< Constants::DefaultUploadLogsServer;
 				}
 			}
