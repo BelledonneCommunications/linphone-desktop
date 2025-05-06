@@ -204,6 +204,7 @@ win64-ninja-vs2022-package-windows:
 
 win64-codesigning:
   stage: signing
+  allow_failure: true
   extends:
     - .windows-codesigning
   needs:
@@ -218,6 +219,7 @@ win64-codesigning:
   script:
     - cd build-desktop/OUTPUT/Packages/
     - Invoke-Expression "& ${WINDOWS_SIGN_TOOL} sign /fd SHA256 /t ${WINDOWS_SIGN_TIMESTAMP_URL} /sha1 ${WINDOWS_SIGN_HASH} *.exe"
+    - 'if (-not ($LastExitCode -eq 0)) {throw "Error: Signature failed"}'
   artifacts:
     paths:
       - build-desktop\OUTPUT\Packages\*
