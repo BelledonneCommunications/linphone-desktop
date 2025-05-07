@@ -70,15 +70,16 @@ TabContainer {
 						id: playbackSlider
 						width: parent.width
 						enabled: !SettingsModel.isInCall
-						
-						value: SettingsModel.playbackGain
+
 						onPositionChanged: SettingsModel.playbackGain = position
+						onVisibleChanged: value =  SettingsModel.playbackGain
 						
 						ToolTip {
 							parent: playbackSlider.handle
 							visible: playbackSlider.pressed
 							text: (playbackSlider.value * 100).toFixed(0) + " %"
 						}
+						Component.onCompleted: value =  SettingsModel.playbackGain
 					}
 				}
 			}
@@ -106,15 +107,16 @@ TabContainer {
 						id: captureSlider
 						width: parent.width
 						enabled: !SettingsModel.isInCall
-						
-						value: SettingsModel.captureGain
+
 						onPositionChanged: SettingsModel.captureGain = position
+						onVisibleChanged: value =  SettingsModel.captureGain
 						
 						ToolTip {
 							parent: captureSlider.handle
 							visible: captureSlider.pressed
 							text: (captureSlider.value * 100).toFixed(0) + " %"
 						}
+						Component.onCompleted: value =  SettingsModel.captureGain
 					}
 				}
 			}

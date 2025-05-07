@@ -382,7 +382,7 @@ public:
 	void accessAudioSettings();
 	void closeAudioSettings();
 
-	Q_INVOKABLE float getMicVolume();
+	Q_INVOKABLE float getMicVolume() const; // Get realtime microphone volume
 
 	float getPlaybackGain() const;
 	void setPlaybackGain(float gain);
