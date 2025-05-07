@@ -297,6 +297,10 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 	}
 	if( mCore->getAccountList().size() == 0)
 		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
+	// These 2 API should not be used because they are only software and manage internal gains.
+	// Functions from 'Call' object or from the CaptureGraph must be used in order to impact the system volume.
+	mCore->setMicGainDb(0.0);
+	mCore->setPlaybackGainDb(0.0);
 }
 
 void CoreManager::updateUserAgent(){

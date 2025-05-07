@@ -410,37 +410,50 @@ bool SettingsModel::getCaptureGraphRunning() {
 	return mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning() && !getIsInCall();
 }
 
-float SettingsModel::getMicVolume() {
+float SettingsModel::getPlaybackGain() const {
 	float v = 0.0;
-
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
-		v = mSimpleCaptureGraph->getCaptureVolume();
+		v = mSimpleCaptureGraph->getPlaybackGain();
+	}else{
+		auto call = CoreManager::getInstance()->getCore()->getCurrentCall();
+		if (call) v = call->getSpeakerVolumeGain();
 	}
 	return v;
 }
 
-float SettingsModel::getPlaybackGain() const {
-	float dbGain = CoreManager::getInstance()->getCore()->getPlaybackGainDb();
-	return MediastreamerUtils::dbToLinear(dbGain);
-}
-
 void SettingsModel::setPlaybackGain(float gain) {
 	float oldGain = getPlaybackGain();
-	CoreManager::getInstance()->getCore()->setPlaybackGainDb(MediastreamerUtils::linearToDb(gain));
+	auto call = CoreManager::getInstance()->getCore()->getCurrentCall();
+	if (call) call->setSpeakerVolumeGain(gain);
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setPlaybackGain(gain);
 	}
 	if ((int)(oldGain * 1000) != (int)(gain * 1000)) emit playbackGainChanged(gain);
 }
 
+float SettingsModel::getMicVolume() const {
+	float v = 0.0;
+	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning())
+		v = mSimpleCaptureGraph->getCaptureVolume();
+	return v;
+}
+
 float SettingsModel::getCaptureGain() const {
-	float dbGain = CoreManager::getInstance()->getCore()->getMicGainDb();
-	return MediastreamerUtils::dbToLinear(dbGain);
+	float v = 0.0;
+	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
+		v = mSimpleCaptureGraph->getCaptureGain();
+	}else{
+		auto call = CoreManager::getInstance()->getCore()->getCurrentCall();
+		if (call) v = call->getMicrophoneVolumeGain();
+	}
+	return v;
+
 }
 
 void SettingsModel::setCaptureGain(float gain) {
 	float oldGain = getCaptureGain();
-	CoreManager::getInstance()->getCore()->setMicGainDb(MediastreamerUtils::linearToDb(gain));
+	auto call = CoreManager::getInstance()->getCore()->getCurrentCall();
+	if (call) call->setMicrophoneVolumeGain(gain);
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setCaptureGain(gain);
 	}

@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Timezones and Windows fix.
 - Download the correct version of openH264 (2.2.0)
 - Avoid to register the account while activating it.
-- Update SDK to 5.3.80
+- Volumes settings based on hardware volumes. Remove software gains.
 
 ### Added
 - Screen Sharing
