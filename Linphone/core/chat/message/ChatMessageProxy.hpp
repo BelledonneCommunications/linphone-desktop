@@ -45,6 +45,7 @@ public:
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
 	Q_INVOKABLE ChatMessageGui *getChatMessageAtIndex(int index);
+	Q_INVOKABLE int findFirstUnreadIndex();
 
 signals:
 	void chatChanged();

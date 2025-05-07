@@ -70,6 +70,13 @@ void ChatMessageList::setChatCore(QSharedPointer<ChatCore> core) {
 		if (mChatCore) disconnect(mChatCore.get(), &ChatCore::messageListChanged, this, nullptr);
 		mChatCore = core;
 		if (mChatCore) connect(mChatCore.get(), &ChatCore::messageListChanged, this, &ChatMessageList::lUpdate);
+		if (mChatCore)
+			connect(mChatCore.get(), &ChatCore::messagesInserted, this,
+			        [this](QList<QSharedPointer<ChatMessageCore>> list) {
+				        for (auto &message : list) {
+					        add(message);
+				        }
+			        });
 		emit chatChanged();
 	}
 }

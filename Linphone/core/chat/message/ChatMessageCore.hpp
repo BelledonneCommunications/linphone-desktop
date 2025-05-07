@@ -42,6 +42,7 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString fromName READ getFromName CONSTANT)
 	Q_PROPERTY(bool isRemoteMessage READ isRemoteMessage CONSTANT)
 	Q_PROPERTY(bool isFromChatGroup READ isFromChatGroup CONSTANT)
+	Q_PROPERTY(bool isRead READ isRead WRITE setIsRead NOTIFY isReadChanged)
 
 public:
 	static QSharedPointer<ChatMessageCore> create(const std::shared_ptr<linphone::ChatMessage> &chatmessage);
@@ -64,15 +65,21 @@ public:
 	bool isRemoteMessage() const;
 	bool isFromChatGroup() const;
 
+	bool isRead() const;
+	void setIsRead(bool read);
+
 	std::shared_ptr<ChatMessageModel> getModel() const;
 
 signals:
 	void timestampChanged(QDateTime timestamp);
 	void textChanged(QString text);
+	void isReadChanged(bool read);
 	void isRemoteMessageChanged(bool isRemote);
 
 	void lDelete();
 	void deleted();
+	void lMarkAsRead();
+	void readChanged();
 
 private:
 	DECLARE_ABSTRACT_OBJECT QString mText;
@@ -84,6 +91,7 @@ private:
 	QDateTime mTimestamp;
 	bool mIsRemoteMessage = false;
 	bool mIsFromChatGroup = false;
+	bool mIsRead = false;
 	std::shared_ptr<ChatMessageModel> mChatMessageModel;
 	QSharedPointer<SafeConnection<ChatMessageCore, ChatMessageModel>> mChatMessageModelConnection;
 };

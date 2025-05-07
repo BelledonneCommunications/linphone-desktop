@@ -64,6 +64,9 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 		}
 	}
 	mUnreadMessagesCount = chatRoom->getUnreadMessagesCount();
+	connect(this, &ChatCore::unreadMessagesCountChanged, this, [this] {
+		if (mUnreadMessagesCount == 0) emit lMarkAsRead();
+	});
 	mChatModel = Utils::makeQObject_ptr<ChatModel>(chatRoom);
 	mChatModel->setSelf(mChatModel);
 	mLastMessageInHistory = mChatModel->getLastMessageInHistory();
@@ -93,7 +96,6 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	});
 	mChatModelConnection->makeConnectToModel(&ChatModel::historyDeleted, [this]() {
 		mChatModelConnection->invokeToCore([this]() {
-			qDebug() << log().arg("history deleted for chatRoom") << this;
 			clearMessagesList();
 			Utils::showInformationPopup(tr("Supprimé"), tr("L'historique des messages a été supprimé."), true);
 		});
@@ -102,6 +104,12 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		mChatModelConnection->invokeToModel([this]() {
 			auto count = mChatModel->getUnreadMessagesCount();
 			mChatModelConnection->invokeToCore([this, count] { setUnreadMessagesCount(count); });
+		});
+	});
+	mChatModelConnection->makeConnectToCore(&ChatCore::lUpdateLastUpdatedTime, [this]() {
+		mChatModelConnection->invokeToModel([this]() {
+			auto time = mChatModel->getLastUpdateTime();
+			mChatModelConnection->invokeToCore([this, time]() { setLastUpdatedTime(time); });
 		});
 	});
 
@@ -117,6 +125,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		                                         if (mChatModel->getMonitor() != chatRoom) return;
 		                                         emit lUpdateLastMessage();
 		                                         emit lUpdateUnreadCount();
+		                                         emit lUpdateLastUpdatedTime();
 		                                         auto message = eventLog->getChatMessage();
 		                                         qDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
 		                                         if (message) {
@@ -133,6 +142,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		    if (mChatModel->getMonitor() != chatRoom) return;
 		    emit lUpdateLastMessage();
 		    emit lUpdateUnreadCount();
+		    emit lUpdateLastUpdatedTime();
 		    qDebug() << "EVENT LOGS RECEIVED IN CHATROOM" << mChatModel->getTitle();
 		    QList<QSharedPointer<ChatMessageCore>> list;
 		    for (auto &m : chatMessages) {
@@ -281,13 +291,13 @@ void ChatCore::appendMessagesToMessageList(QList<QSharedPointer<ChatMessageCore>
 		mChatMessageList.append(message);
 		++nbAdded;
 	}
-	if (nbAdded > 0) emit messageListChanged();
+	if (nbAdded > 0) emit messagesInserted(list);
 }
 
 void ChatCore::appendMessageToMessageList(QSharedPointer<ChatMessageCore> message) {
 	if (mChatMessageList.contains(message)) return;
 	mChatMessageList.append(message);
-	emit messageListChanged();
+	emit messagesInserted({message});
 }
 
 void ChatCore::removeMessagesFromMessageList(QList<QSharedPointer<ChatMessageCore>> list) {
@@ -298,7 +308,7 @@ void ChatCore::removeMessagesFromMessageList(QList<QSharedPointer<ChatMessageCor
 			++nbRemoved;
 		}
 	}
-	if (nbRemoved > 0) emit messageListChanged();
+	if (nbRemoved > 0) emit messageRemoved();
 }
 
 void ChatCore::clearMessagesList() {

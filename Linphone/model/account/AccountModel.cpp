@@ -151,13 +151,11 @@ std::shared_ptr<linphone::Account> AccountModel::getAccount() const {
 
 void AccountModel::resetMissedCallsCount() {
 	mMonitor->resetMissedCallsCount();
-	emit unreadNotificationsChanged(0 /*mMonitor->getUnreadChatMessageCount()*/,
-	                                mMonitor->getMissedCallsCount()); // TODO
+	emit unreadNotificationsChanged(mMonitor->getUnreadChatMessageCount(), mMonitor->getMissedCallsCount());
 }
 
 void AccountModel::refreshUnreadNotifications() {
-	emit unreadNotificationsChanged(0 /*mMonitor->getUnreadChatMessageCount()*/,
-	                                mMonitor->getMissedCallsCount()); // TODO
+	emit unreadNotificationsChanged(mMonitor->getUnreadChatMessageCount(), mMonitor->getMissedCallsCount());
 }
 
 int AccountModel::getMissedCallsCount() const {

@@ -203,6 +203,7 @@ signals:
 	void lSetPictureUri(QString pictureUri);
 	void lSetDefaultAccount();
 	void lResetMissedCalls();
+	void lResetUnreadMessages();
 	void lRefreshNotifications();
 	void lSetDisplayName(QString displayName);
 	void lSetDialPlan(QVariantMap internationalPrefix);

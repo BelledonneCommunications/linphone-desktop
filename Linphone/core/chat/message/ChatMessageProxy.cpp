@@ -67,6 +67,17 @@ ChatMessageGui *ChatMessageProxy::getChatMessageAtIndex(int i) {
 	return nullptr;
 }
 
+int ChatMessageProxy::findFirstUnreadIndex() {
+	int n = getCount();
+	for (int i = 0; i < n; ++i) {
+		auto chat = getItemAt<SortFilterList, ChatMessageList, ChatMessageCore>(i);
+		if (chat && !chat->isRead()) {
+			return i;
+		}
+	}
+	return std::max(0, n - 1);
+}
+
 bool ChatMessageProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	//	auto l = getItemAtSource<ChatMessageList, ChatMessageCore>(sourceRow);
 	//	return l != nullptr;

@@ -82,6 +82,7 @@ signals:
 	void requestRestart();
 	void enabledLdapAddressBookSaved();
 	void magicSearchResultReceived(QString filter);
+	void messageReadInChatRoom(std::shared_ptr<linphone::ChatRoom> chatRoom);
 
 private:
 	QString mConfigPath;

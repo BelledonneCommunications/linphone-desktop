@@ -94,6 +94,8 @@ signals:
 	void peerAddressChanged(QString address);
 	void unreadMessagesCountChanged(int count);
 	void messageListChanged();
+	void messagesInserted(QList<QSharedPointer<ChatMessageCore>> list);
+	void messageRemoved();
 	void avatarUriChanged();
 	void deleted();
 	void composingUserChanged();
@@ -104,6 +106,7 @@ signals:
 	void lMarkAsRead();
 	void lUpdateLastMessage();
 	void lUpdateUnreadCount();
+	void lUpdateLastUpdatedTime();
 	void lSendTextMessage(QString message);
 	void lCompose();
 

@@ -33,8 +33,8 @@ FocusScope {
     // Use directly previous initial
     property real itemsRightMargin: Math.round(39 * DefaultStyle.dp)
 
-    property var displayName: searchResultItem.core.fullName
-    property string initial: displayName ? displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale) : ''
+    property string displayName: searchResultItem? searchResultItem.core.fullName : ""
+    property string initial: displayName != "" ? displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale) : ''
 
     signal clicked(var mouse)
     signal contactDeletionRequested(FriendGui contact)
@@ -49,7 +49,7 @@ FocusScope {
         verticalAlignment: Text.AlignVCenter
         width: Math.round(20 * DefaultStyle.dp)
         opacity: previousInitial != mainItem.initial ? 1 : 0
-        text: mainItem.initial
+        text: mainItem.initial || ""
         color: DefaultStyle.main2_400
         font {
             pixelSize: Math.round(20 * DefaultStyle.dp)

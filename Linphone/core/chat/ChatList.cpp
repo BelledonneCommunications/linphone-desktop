@@ -68,7 +68,9 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			}
 			mModelConnection->invokeToCore([this, chats]() {
 				for (auto &chat : getSharedList<ChatCore>()) {
-					if (chat) disconnect(chat.get(), &ChatCore::deleted, this, nullptr);
+					if (chat) {
+						disconnect(chat.get(), &ChatCore::deleted, this, nullptr);
+					}
 				}
 				for (auto &chat : *chats) {
 					connect(chat.get(), &ChatCore::deleted, this, [this, chat] {
@@ -77,6 +79,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 						// really has removed the item, then emit specific signal
 						emit chatRemoved(chat ? new ChatGui(chat) : nullptr);
 					});
+					connect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, [this] { emit chatUpdated(); });
 				}
 				mustBeInMainThread(getClassName());
 				resetData<ChatCore>(*chats);

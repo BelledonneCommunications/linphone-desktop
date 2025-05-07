@@ -34,10 +34,17 @@ ChatModel::ChatModel(const std::shared_ptr<linphone::ChatRoom> &chatroom, QObjec
     : ::Listener<linphone::ChatRoom, linphone::ChatRoomListener>(chatroom, parent) {
 	lDebug() << "[ChatModel] new" << this << " / SDKModel=" << chatroom.get();
 	mustBeInLinphoneThread(getClassName());
+	auto coreModel = CoreModel::getInstance();
+	if (coreModel)
+		connect(coreModel.get(), &CoreModel::messageReadInChatRoom, this,
+		        [this](std::shared_ptr<linphone::ChatRoom> chatroom) {
+			        if (chatroom == mMonitor) emit messagesRead();
+		        });
 }
 
 ChatModel::~ChatModel() {
 	mustBeInLinphoneThread("~" + getClassName());
+	disconnect(CoreModel::getInstance().get(), &CoreModel::messageReadInChatRoom, this, nullptr);
 }
 
 QDateTime ChatModel::getLastUpdateTime() {
@@ -106,6 +113,9 @@ int ChatModel::getUnreadMessagesCount() const {
 
 void ChatModel::markAsRead() {
 	mMonitor->markAsRead();
+	for (auto &message : getHistory()) {
+		message->markAsRead();
+	}
 	emit messagesRead();
 }
 

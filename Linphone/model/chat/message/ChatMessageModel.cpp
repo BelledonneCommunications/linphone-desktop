@@ -68,6 +68,16 @@ ChatMessageModel::onFileTransferSend(const std::shared_ptr<linphone::ChatMessage
 	return nullptr;
 }
 
+bool ChatMessageModel::isRead() const {
+	return mMonitor->isRead();
+}
+
+void ChatMessageModel::markAsRead() {
+	mMonitor->markAsRead();
+	emit messageRead();
+	emit CoreModel::getInstance()->messageReadInChatRoom(mMonitor->getChatRoom());
+}
+
 void ChatMessageModel::deleteMessageFromChatRoom() {
 	auto chatRoom = mMonitor->getChatRoom();
 	if (chatRoom) {

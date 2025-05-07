@@ -48,8 +48,7 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mPictureUri = Utils::coreStringToAppString(params->getPictureUri());
 	mRegistrationState = LinphoneEnums::fromLinphone(account->getState());
 	mIsDefaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount() == account;
-	// mUnreadNotifications = account->getUnreadChatMessageCount() + account->getMissedCallsCount();	// TODO
-	mUnreadNotifications = account->getMissedCallsCount();
+	mUnreadNotifications = account->getMissedCallsCount() + account->getUnreadChatMessageCount();
 	mDisplayName = Utils::coreStringToAppString(identityAddress->getDisplayName());
 	if (mDisplayName.isEmpty()) {
 		mDisplayName = ToolModel::getDisplayName(identityAddress);
@@ -236,7 +235,6 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lRefreshNotifications, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { mAccountModel->refreshUnreadNotifications(); });
 	});
-	mCoreModelConnection = SafeConnection<AccountCore, CoreModel>::create(me, CoreModel::getInstance());
 	mAccountModelConnection->makeConnectToCore(&AccountCore::unreadCallNotificationsChanged, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { CoreModel::getInstance()->unreadNotificationsChanged(); });
 	});
@@ -269,6 +267,10 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToModel(&AccountModel::voicemailAddressChanged, [this](QString value) {
 		mAccountModelConnection->invokeToCore([this, value]() { setVoicemailAddress(value); });
 	});
+
+	mCoreModelConnection = SafeConnection<AccountCore, CoreModel>::create(me, CoreModel::getInstance());
+	mCoreModelConnection->makeConnectToModel(&CoreModel::messageReadInChatRoom,
+	                                         [this] { mAccountModel->refreshUnreadNotifications(); });
 }
 
 void AccountCore::reset(const AccountCore &accountCore) {

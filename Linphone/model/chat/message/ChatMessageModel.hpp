@@ -44,10 +44,14 @@ public:
 	QString getFromAddress() const;
 	QString getToAddress() const;
 
+	bool isRead() const;
+	void markAsRead();
+
 	void deleteMessageFromChatRoom();
 
 signals:
 	void messageDeleted();
+	void messageRead();
 
 private:
 	DECLARE_ABSTRACT_OBJECT

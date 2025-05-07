@@ -14,41 +14,35 @@ ListView {
     property color backgroundColor
     spacing: Math.round(4 * DefaultStyle.dp)
 
-    // Component.onCompleted: positionViewAtIndex(chatMessageProxy.findFirstUnreadIndex(), ListView.Visible)
-
-    onAtYEndChanged: if (atYEnd) chat.core.lMarkAsRead();
-
-    onChatChanged: if (visible) {
+    Component.onCompleted: {
         var index = chatMessageProxy.findFirstUnreadIndex()
-        console.log("visible, first unread at index", index)
-        mainItem.positionViewAtIndex(index, ListView.Visible)
+        positionViewAtIndex(index, ListView.End)
+        var chatMessage = chatMessageProxy.getChatMessageAtIndex(index)
+        if (chatMessage && !chatMessage.core.isRead) chatMessage.core.lMarkAsRead()
     }
-
-    RoundButton {
+    
+    Button {
+        visible: !mainItem.atYEnd
         icon.source: AppIcons.downArrow
-        // Layout.preferredWidth: 40 * DefaultStyle.dp
-        // Layout.preferredHeight: 40 * DefaultStyle.dp
+        leftPadding: Math.round(16 * DefaultStyle.dp)
+        rightPadding: Math.round(16 * DefaultStyle.dp)
+        topPadding: Math.round(16 * DefaultStyle.dp)
+        bottomPadding: Math.round(16 * DefaultStyle.dp)
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         anchors.bottomMargin: Math.round(18 * DefaultStyle.dp)
         anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
         onClicked: {
             var index = chatMessageProxy.findFirstUnreadIndex()
-            console.log("clicked, first unread at index", index)
-            mainItem.positionViewAtIndex(index, ListView.Visible)
-            // var chatMessage = chatMessageProxy.getChatMessageAtIndex(index)
-            // if (chatMessage && !chatMessage.core.isRead) chatMessage.core.lMarkAsRead()
+            mainItem.positionViewAtIndex(index, ListView.End)
+            var chatMessage = chatMessageProxy.getChatMessageAtIndex(index)
+            if (chatMessage && !chatMessage.core.isRead) chatMessage.core.lMarkAsRead()
         }
     }
 
     model: ChatMessageProxy {
         id: chatMessageProxy
         chatGui: mainItem.chat
-        onCountChanged: {
-            var indexToSelect = mainItem.currentIndex
-            mainItem.currentIndex = -1
-            mainItem.currentIndex = indexToSelect
-        }
     }
 
     header: Item {

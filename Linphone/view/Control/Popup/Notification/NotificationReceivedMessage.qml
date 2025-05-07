@@ -15,10 +15,10 @@ Notification {
     overriddenWidth: Math.round(400 * DefaultStyle.dp)
 	overriddenHeight: content.height
 	
-	property string avatarUri: notificationData && notificationData.avatarUri
-	property string chatRoomName: notificationData && notificationData.chatRoomName
-	property string remoteAddress: notificationData && notificationData.remoteAddress
-	property string message: notificationData && notificationData.message
+	property string avatarUri: notificationData ? notificationData.avatarUri : ""
+	property string chatRoomName: notificationData ? notificationData.chatRoomName : ""
+	property string remoteAddress: notificationData ? notificationData.remoteAddress : ""
+	property string message: notificationData ? notificationData.message : ""
 	
 	Popup {
 		id: content

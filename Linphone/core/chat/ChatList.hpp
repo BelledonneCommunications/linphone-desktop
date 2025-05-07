@@ -48,6 +48,7 @@ signals:
 	void filterChanged(QString filter);
 	void chatRemoved(ChatGui *chat);
 	void chatAdded();
+	void chatUpdated();
 
 private:
 	QString mFilter;

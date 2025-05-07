@@ -53,6 +53,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	auto chatroom = chatmessage->getChatRoom();
 	mIsFromChatGroup = chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference) &&
 	                   !chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne);
+	mIsRead = chatmessage->isRead();
 }
 
 ChatMessageCore::~ChatMessageCore() {
@@ -67,6 +68,10 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 		Utils::showInformationPopup(tr("Supprimé"), tr("Message supprimé"), true);
 		emit deleted();
 	});
+	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lMarkAsRead, [this] {
+		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->markAsRead(); });
+	});
+	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageRead, [this]() { setIsRead(true); });
 }
 
 QDateTime ChatMessageCore::getTimestamp() const {
@@ -117,6 +122,17 @@ bool ChatMessageCore::isRemoteMessage() const {
 
 bool ChatMessageCore::isFromChatGroup() const {
 	return mIsFromChatGroup;
+}
+
+bool ChatMessageCore::isRead() const {
+	return mIsRead;
+}
+
+void ChatMessageCore::setIsRead(bool read) {
+	if (mIsRead != read) {
+		mIsRead = read;
+		emit isReadChanged(read);
+	}
 }
 
 std::shared_ptr<ChatMessageModel> ChatMessageCore::getModel() const {
