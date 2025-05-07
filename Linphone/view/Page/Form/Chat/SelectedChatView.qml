@@ -80,7 +80,7 @@ RowLayout {
             ChatMessagesListView {
                 id: chatMessagesListView
                 height: contentHeight
-                backgroundColor: panelColor
+                backgroundColor: splitPanel.panelColor
                 width: parent.width - anchors.leftMargin - anchors.rightMargin
                 chat: mainItem.chat
                 anchors.top: parent.top
@@ -146,8 +146,8 @@ RowLayout {
                             Layout.fillWidth: true
                             leftPadding: Math.round(15 * DefaultStyle.dp)
                             rightPadding: Math.round(15 * DefaultStyle.dp)
-                            topPadding: Math.round(16 * DefaultStyle.dp)
-                            bottomPadding: Math.round(16 * DefaultStyle.dp)
+                            topPadding: Math.round(15 * DefaultStyle.dp)
+                            bottomPadding: Math.round(15 * DefaultStyle.dp)
                             background: Rectangle {
                                 id: inputBackground
                                 anchors.fill: parent
@@ -188,9 +188,15 @@ RowLayout {
                                         height: sendingAreaFlickable.height
                                         anchors.left: parent.left
                                         anchors.right: parent.right
+                                        wrapMode: TextEdit.WordWrap
                                         //: Say something… : placeholder text for sending message text area
                                         placeholderText: qsTr("Dites quelque chose…")
                                         placeholderTextColor: DefaultStyle.main2_400
+                                        color: DefaultStyle.main2_700
+                                        font {
+                                            pixelSize: Typography.p1.pixelSize
+                                            weight: Typography.p1.weight
+                                        }
                                         onCursorRectangleChanged: sendingAreaFlickable.ensureVisible(cursorRectangle)
                                         property string previousText
                                         Component.onCompleted: previousText = text

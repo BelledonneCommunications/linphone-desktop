@@ -684,8 +684,8 @@ AbstractMainPage {
 								KeyNavigation.up: deletePopup
 								KeyNavigation.down: joinButton
 								onClicked: {
-									UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri)
-                                    UtilsCpp.showInformationPopup(qsTr("saved"),
+									var success = UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri)
+                                    if (success) UtilsCpp.showInformationPopup(qsTr("saved"),
                                                                   //: "Adresse de la réunion copiée"
                                                                   qsTr("meeting_address_copied_to_clipboard_toast"))
 								}

@@ -13,9 +13,11 @@ Button {
     radius: Math.round(5 * DefaultStyle.dp)
 	shadowEnabled: mainItem.activeFocus || hovered
 	style: ButtonStyle.hoveredBackground
+	property bool inverseLayout: false
 	
 	contentItem: RowLayout {
         spacing: Math.round(5 * DefaultStyle.dp)
+		layoutDirection: mainItem.inverseLayout ? Qt.RightToLeft: Qt.LeftToRight
 		EffectImage {
 			imageSource: mainItem.icon.source
 			imageWidth: mainItem.icon.width
@@ -33,6 +35,7 @@ Button {
 			horizontalAlignment: Text.AlignLeft
 			verticalAlignment: Text.AlignVCenter
 			Layout.preferredWidth: textMetrics.advanceWidth
+			Layout.fillWidth: true
 			wrapMode: Text.WrapAnywhere
 			text: mainItem.text
 			maximumLineCount: 1

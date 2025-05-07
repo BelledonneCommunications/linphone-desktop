@@ -14,13 +14,41 @@ ListView {
     property color backgroundColor
     spacing: Math.round(4 * DefaultStyle.dp)
 
-    Component.onCompleted: positionViewAtEnd()
+    // Component.onCompleted: positionViewAtIndex(chatMessageProxy.findFirstUnreadIndex(), ListView.Visible)
 
-    onCountChanged: positionViewAtEnd()
+    onAtYEndChanged: if (atYEnd) chat.core.lMarkAsRead();
+
+    onChatChanged: if (visible) {
+        var index = chatMessageProxy.findFirstUnreadIndex()
+        console.log("visible, first unread at index", index)
+        mainItem.positionViewAtIndex(index, ListView.Visible)
+    }
+
+    RoundButton {
+        icon.source: AppIcons.downArrow
+        // Layout.preferredWidth: 40 * DefaultStyle.dp
+        // Layout.preferredHeight: 40 * DefaultStyle.dp
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.bottomMargin: Math.round(18 * DefaultStyle.dp)
+        anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
+        onClicked: {
+            var index = chatMessageProxy.findFirstUnreadIndex()
+            console.log("clicked, first unread at index", index)
+            mainItem.positionViewAtIndex(index, ListView.Visible)
+            // var chatMessage = chatMessageProxy.getChatMessageAtIndex(index)
+            // if (chatMessage && !chatMessage.core.isRead) chatMessage.core.lMarkAsRead()
+        }
+    }
 
     model: ChatMessageProxy {
         id: chatMessageProxy
         chatGui: mainItem.chat
+        onCountChanged: {
+            var indexToSelect = mainItem.currentIndex
+            mainItem.currentIndex = -1
+            mainItem.currentIndex = indexToSelect
+        }
     }
 
     header: Item {
@@ -31,7 +59,7 @@ ListView {
         chatMessage: modelData
         property real maxWidth: Math.round(mainItem.width * (3/4))
         // height: childrenRect.height
-        // width: childrenRect.width
+        width: mainItem.width
         property var previousIndex: index - 1
         property var previousFromAddress: chatMessageProxy.getChatMessageAtIndex(index-1)?.core.fromAddress
         backgroundColor: isRemoteMessage ? DefaultStyle.main2_100 : DefaultStyle.main1_100
@@ -52,7 +80,7 @@ ListView {
         bottomPadding: Math.round(5 * DefaultStyle.dp)
         background: Rectangle {
             anchors.fill: parent
-            color: mainItem.panelColor
+            color: mainItem.backgroundColor
         }
         contentItem: RowLayout {
             id: composeLayout

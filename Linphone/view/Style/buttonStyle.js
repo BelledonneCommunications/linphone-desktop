@@ -113,7 +113,8 @@
 		color: {
 			normal: Linphone.DefaultStyle.grey_500,
 			hovered: Linphone.DefaultStyle.grey_600,
-			pressed: Linphone.DefaultStyle.main2_400
+			pressed: Linphone.DefaultStyle.main2_400,
+			hovered: Linphone.DefaultStyle.main2_400
 		},
 		text: {
 			normal: Linphone.DefaultStyle.grey_0,

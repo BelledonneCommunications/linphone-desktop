@@ -97,10 +97,12 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 				        std::find_if(list.begin(), list.end(), [chatRoom](const QSharedPointer<ChatCore> &item) {
 					        return (item && item->getModel()->getMonitor() == chatRoom);
 				        });
-				    if (found != list.end()) {
-					    qDebug() << "chat room created, add it to the list";
+				    if (found == list.end()) {
 					    auto model = createChatCore(chatRoom);
-					    mModelConnection->invokeToCore([this, model]() { add(model); });
+					    mModelConnection->invokeToCore([this, model]() {
+						    add(model);
+						    emit chatAdded();
+					    });
 				    }
 			    }
 		    }
