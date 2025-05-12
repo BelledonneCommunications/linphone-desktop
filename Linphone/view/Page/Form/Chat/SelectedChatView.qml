@@ -153,6 +153,10 @@ RowLayout {
                                 anchors.fill: parent
                                 radius: Math.round(35 * DefaultStyle.dp)
                                 color: DefaultStyle.grey_0
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onPressed: sendingTextArea.forceActiveFocus()
+                                }
                             }
                             contentItem: RowLayout {
                                 Flickable {
@@ -203,6 +207,16 @@ RowLayout {
                                         onTextChanged: {
                                             if (previousText === "" && text !== "") {
                                                 mainItem.chat.core.lCompose()
+                                            }
+                                            previousText = text
+                                        }
+                                        Keys.onPressed: (event) => {
+                                            event.accepted = false
+                                            if (UtilsCpp.isEmptyMessage(sendingTextArea.text)) return
+                                            if (!(event.modifiers & Qt.ControlModifier) && (event.key == Qt.Key_Return || event.key == Qt.Key_Enter)) {
+                                                mainItem.chat.core.lSendTextMessage(sendingTextArea.text)
+                                                sendingTextArea.clear()
+                                                event.accepted = true
                                             }
                                         }
                                     }

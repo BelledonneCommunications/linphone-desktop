@@ -148,6 +148,7 @@ public:
 
 	Q_INVOKABLE static VariantObject *getCurrentCallChat(CallGui *call);
 	Q_INVOKABLE static VariantObject *getChatForAddress(QString address);
+	Q_INVOKABLE static bool isEmptyMessage(QString message);
 	//	QDir findDirectoryByName(QString startPath, QString name);
 
 	static QString getApplicationProduct();

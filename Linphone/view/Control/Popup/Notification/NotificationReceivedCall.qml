@@ -8,7 +8,7 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Notification {
 	id: mainItem
-    radius: Math.round(20 * DefaultStyle.dp)
+    radius: Math.round(10 * DefaultStyle.dp)
 	backgroundColor: DefaultStyle.grey_600
 	backgroundOpacity: 0.8
     overriddenWidth: Math.round(400 * DefaultStyle.dp)

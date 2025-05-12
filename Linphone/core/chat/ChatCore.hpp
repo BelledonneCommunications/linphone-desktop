@@ -21,7 +21,7 @@
 #ifndef CHAT_CORE_H_
 #define CHAT_CORE_H_
 
-#include "core/chat/message/ChatMessageCore.hpp"
+#include "core/chat/message/ChatMessageGui.hpp"
 #include "model/chat/ChatModel.hpp"
 #include "model/search/MagicSearchModel.hpp"
 #include "tool/LinphoneEnums.hpp"
@@ -39,8 +39,9 @@ public:
 	Q_PROPERTY(QString peerAddress READ getPeerAddress WRITE setPeerAddress NOTIFY peerAddressChanged)
 	Q_PROPERTY(QString avatarUri READ getAvatarUri WRITE setAvatarUri NOTIFY avatarUriChanged)
 	Q_PROPERTY(QDateTime lastUpdatedTime READ getLastUpdatedTime WRITE setLastUpdatedTime NOTIFY lastUpdatedTimeChanged)
-	Q_PROPERTY(QString lastMessageInHistory READ getLastMessageInHistory WRITE setLastMessageInHistory NOTIFY
-	               lastMessageInHistoryChanged)
+	Q_PROPERTY(QString lastMessageText READ getLastMessageText NOTIFY lastMessageChanged)
+	Q_PROPERTY(ChatMessageGui *lastMessage READ getLastMessage NOTIFY lastMessageChanged)
+	Q_PROPERTY(LinphoneEnums::ChatMessageState lastMessageState READ getLastMessageState NOTIFY lastMessageChanged)
 	Q_PROPERTY(int unreadMessagesCount READ getUnreadMessagesCount WRITE setUnreadMessagesCount NOTIFY
 	               unreadMessagesCountChanged)
 	Q_PROPERTY(QString composingName READ getComposingName WRITE setComposingName NOTIFY composingUserChanged)
@@ -61,8 +62,13 @@ public:
 
 	QString getIdentifier() const;
 
-	QString getLastMessageInHistory() const;
-	void setLastMessageInHistory(QString message);
+	ChatMessageGui *getLastMessage() const;
+	QString getLastMessageText() const;
+
+	LinphoneEnums::ChatMessageState getLastMessageState() const;
+
+	QSharedPointer<ChatMessageCore> getLastMessageCore() const;
+	void setLastMessage(QSharedPointer<ChatMessageCore> lastMessage);
 
 	int getUnreadMessagesCount() const;
 	void setUnreadMessagesCount(int count);
@@ -89,7 +95,7 @@ public:
 
 signals:
 	void lastUpdatedTimeChanged(QDateTime time);
-	void lastMessageInHistoryChanged(QString time);
+	void lastMessageChanged();
 	void titleChanged(QString title);
 	void peerAddressChanged(QString address);
 	void unreadMessagesCountChanged(int count);
@@ -113,7 +119,6 @@ signals:
 private:
 	QString id;
 	QDateTime mLastUpdatedTime;
-	QString mLastMessageInHistory;
 	QString mPeerAddress;
 	QString mTitle;
 	QString mIdentifier;
@@ -122,6 +127,7 @@ private:
 	QString mComposingName;
 	QString mComposingAddress;
 	std::shared_ptr<ChatModel> mChatModel;
+	QSharedPointer<ChatMessageCore> mLastMessage;
 	QList<QSharedPointer<ChatMessageCore>> mChatMessageList;
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
 

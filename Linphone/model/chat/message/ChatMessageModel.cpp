@@ -60,14 +60,6 @@ QDateTime ChatMessageModel::getTimestamp() const {
 	return QDateTime::fromSecsSinceEpoch(mMonitor->getTime());
 }
 
-std::shared_ptr<linphone::Buffer>
-ChatMessageModel::onFileTransferSend(const std::shared_ptr<linphone::ChatMessage> &message,
-                                     const std::shared_ptr<linphone::Content> &content,
-                                     size_t offset,
-                                     size_t size) {
-	return nullptr;
-}
-
 bool ChatMessageModel::isRead() const {
 	return mMonitor->isRead();
 }
@@ -84,4 +76,89 @@ void ChatMessageModel::deleteMessageFromChatRoom() {
 		chatRoom->deleteMessage(mMonitor);
 		emit messageDeleted();
 	}
+}
+
+linphone::ChatMessage::State ChatMessageModel::getState() const {
+	return mMonitor->getState();
+}
+
+void ChatMessageModel::computeDeliveryStatus() {
+	// Read
+	for (auto &participant : mMonitor->getParticipantsByImdnState(linphone::ChatMessage::State::Displayed)) {
+	}
+	// Received
+	for (auto &participant : mMonitor->getParticipantsByImdnState(linphone::ChatMessage::State::DeliveredToUser)) {
+	}
+	// Sent
+	for (auto &participant : mMonitor->getParticipantsByImdnState(linphone::ChatMessage::State::Delivered)) {
+	}
+	// Error
+	for (auto &participant : mMonitor->getParticipantsByImdnState(linphone::ChatMessage::State::NotDelivered)) {
+	}
+}
+
+void ChatMessageModel::onMsgStateChanged(const std::shared_ptr<linphone::ChatMessage> &message,
+                                         linphone::ChatMessage::State state) {
+	computeDeliveryStatus();
+	emit msgStateChanged(message, state);
+}
+
+void ChatMessageModel::onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> &message,
+                                            const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) {
+	emit newMessageReaction(message, reaction);
+}
+
+void ChatMessageModel::onReactionRemoved(const std::shared_ptr<linphone::ChatMessage> &message,
+                                         const std::shared_ptr<const linphone::Address> &address) {
+	emit reactionRemoved(message, address);
+}
+
+void ChatMessageModel::onFileTransferTerminated(const std::shared_ptr<linphone::ChatMessage> &message,
+                                                const std::shared_ptr<linphone::Content> &content) {
+	emit fileTransferTerminated(message, content);
+}
+
+void ChatMessageModel::onFileTransferRecv(const std::shared_ptr<linphone::ChatMessage> &message,
+                                          const std::shared_ptr<linphone::Content> &content,
+                                          const std::shared_ptr<const linphone::Buffer> &buffer) {
+	emit fileTransferRecv(message, content, buffer);
+}
+
+std::shared_ptr<linphone::Buffer>
+ChatMessageModel::onFileTransferSend(const std::shared_ptr<linphone::ChatMessage> &message,
+                                     const std::shared_ptr<linphone::Content> &content,
+                                     size_t offset,
+                                     size_t size) {
+	emit fileTransferSend(message, content, offset, size);
+	return nullptr;
+}
+
+void ChatMessageModel::onFileTransferSendChunk(const std::shared_ptr<linphone::ChatMessage> &message,
+                                               const std::shared_ptr<linphone::Content> &content,
+                                               size_t offset,
+                                               size_t size,
+                                               const std::shared_ptr<linphone::Buffer> &buffer) {
+	emit fileTransferSendChunk(message, content, offset, size, buffer);
+}
+
+void ChatMessageModel::onFileTransferProgressIndication(const std::shared_ptr<linphone::ChatMessage> &message,
+                                                        const std::shared_ptr<linphone::Content> &content,
+                                                        size_t offset,
+                                                        size_t total) {
+	emit fileTransferProgressIndication(message, content, offset, total);
+}
+
+void ChatMessageModel::onParticipantImdnStateChanged(
+    const std::shared_ptr<linphone::ChatMessage> &message,
+    const std::shared_ptr<const linphone::ParticipantImdnState> &state) {
+	computeDeliveryStatus();
+	emit participantImdnStateChanged(message, state);
+}
+
+void ChatMessageModel::onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> &message) {
+	emit ephemeralMessageTimerStarted(message);
+}
+
+void ChatMessageModel::onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> &message) {
+	emit ephemeralMessageDeleted(message);
 }

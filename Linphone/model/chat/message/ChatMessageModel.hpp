@@ -49,16 +49,74 @@ public:
 
 	void deleteMessageFromChatRoom();
 
+	void computeDeliveryStatus();
+
+	linphone::ChatMessage::State getState() const;
+
 signals:
 	void messageDeleted();
 	void messageRead();
 
+	void msgStateChanged(const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state);
+	void newMessageReaction(const std::shared_ptr<linphone::ChatMessage> &message,
+	                        const std::shared_ptr<const linphone::ChatMessageReaction> &reaction);
+	void reactionRemoved(const std::shared_ptr<linphone::ChatMessage> &message,
+	                     const std::shared_ptr<const linphone::Address> &address);
+	void fileTransferTerminated(const std::shared_ptr<linphone::ChatMessage> &message,
+	                            const std::shared_ptr<linphone::Content> &content);
+	void fileTransferRecv(const std::shared_ptr<linphone::ChatMessage> &message,
+	                      const std::shared_ptr<linphone::Content> &content,
+	                      const std::shared_ptr<const linphone::Buffer> &buffer);
+	void fileTransferSend(const std::shared_ptr<linphone::ChatMessage> &message,
+	                      const std::shared_ptr<linphone::Content> &content,
+	                      size_t offset,
+	                      size_t size);
+	void fileTransferSendChunk(const std::shared_ptr<linphone::ChatMessage> &message,
+	                           const std::shared_ptr<linphone::Content> &content,
+	                           size_t offset,
+	                           size_t size,
+	                           const std::shared_ptr<linphone::Buffer> &buffer);
+	void fileTransferProgressIndication(const std::shared_ptr<linphone::ChatMessage> &message,
+	                                    const std::shared_ptr<linphone::Content> &content,
+	                                    size_t offset,
+	                                    size_t total);
+	void participantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> &message,
+	                                 const std::shared_ptr<const linphone::ParticipantImdnState> &state);
+	void ephemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> &message);
+	void ephemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> &message);
+
 private:
+	linphone::ChatMessage::State mMessageState;
+
 	DECLARE_ABSTRACT_OBJECT
-	virtual std::shared_ptr<linphone::Buffer> onFileTransferSend(const std::shared_ptr<linphone::ChatMessage> &message,
-	                                                             const std::shared_ptr<linphone::Content> &content,
-	                                                             size_t offset,
-	                                                             size_t size) override;
+
+	void onMsgStateChanged(const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state);
+	void onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> &message,
+	                          const std::shared_ptr<const linphone::ChatMessageReaction> &reaction);
+	void onReactionRemoved(const std::shared_ptr<linphone::ChatMessage> &message,
+	                       const std::shared_ptr<const linphone::Address> &address);
+	void onFileTransferTerminated(const std::shared_ptr<linphone::ChatMessage> &message,
+	                              const std::shared_ptr<linphone::Content> &content);
+	void onFileTransferRecv(const std::shared_ptr<linphone::ChatMessage> &message,
+	                        const std::shared_ptr<linphone::Content> &content,
+	                        const std::shared_ptr<const linphone::Buffer> &buffer);
+	std::shared_ptr<linphone::Buffer> onFileTransferSend(const std::shared_ptr<linphone::ChatMessage> &message,
+	                                                     const std::shared_ptr<linphone::Content> &content,
+	                                                     size_t offset,
+	                                                     size_t size);
+	void onFileTransferSendChunk(const std::shared_ptr<linphone::ChatMessage> &message,
+	                             const std::shared_ptr<linphone::Content> &content,
+	                             size_t offset,
+	                             size_t size,
+	                             const std::shared_ptr<linphone::Buffer> &buffer);
+	void onFileTransferProgressIndication(const std::shared_ptr<linphone::ChatMessage> &message,
+	                                      const std::shared_ptr<linphone::Content> &content,
+	                                      size_t offset,
+	                                      size_t total);
+	void onParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> &message,
+	                                   const std::shared_ptr<const linphone::ParticipantImdnState> &state);
+	void onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> &message);
+	void onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> &message);
 };
 
 #endif

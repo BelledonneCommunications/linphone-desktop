@@ -40,6 +40,8 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString toAddress READ getToAddress CONSTANT)
 	Q_PROPERTY(QString peerName READ getPeerName CONSTANT)
 	Q_PROPERTY(QString fromName READ getFromName CONSTANT)
+	Q_PROPERTY(LinphoneEnums::ChatMessageState messageState READ getMessageState WRITE setMessageState NOTIFY
+	               messageStateChanged)
 	Q_PROPERTY(bool isRemoteMessage READ isRemoteMessage CONSTANT)
 	Q_PROPERTY(bool isFromChatGroup READ isFromChatGroup CONSTANT)
 	Q_PROPERTY(bool isRead READ isRead WRITE setIsRead NOTIFY isReadChanged)
@@ -68,6 +70,9 @@ public:
 	bool isRead() const;
 	void setIsRead(bool read);
 
+	LinphoneEnums::ChatMessageState getMessageState() const;
+	void setMessageState(LinphoneEnums::ChatMessageState state);
+
 	std::shared_ptr<ChatMessageModel> getModel() const;
 
 signals:
@@ -75,6 +80,7 @@ signals:
 	void textChanged(QString text);
 	void isReadChanged(bool read);
 	void isRemoteMessageChanged(bool isRemote);
+	void messageStateChanged();
 
 	void lDelete();
 	void deleted();
@@ -92,6 +98,8 @@ private:
 	bool mIsRemoteMessage = false;
 	bool mIsFromChatGroup = false;
 	bool mIsRead = false;
+	LinphoneEnums::ChatMessageState mMessageState;
+
 	std::shared_ptr<ChatMessageModel> mChatMessageModel;
 	QSharedPointer<SafeConnection<ChatMessageCore, ChatMessageModel>> mChatMessageModelConnection;
 };

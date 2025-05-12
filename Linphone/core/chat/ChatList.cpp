@@ -52,6 +52,25 @@ ChatList::~ChatList() {
 	mModelConnection = nullptr;
 }
 
+void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
+	connect(chat.get(), &ChatCore::deleted, this, [this, chat] {
+		remove(chat);
+		// We cannot use countChanged here because it is called before mList
+		// really has removed the item, then emit specific signal
+		emit chatRemoved(chat ? new ChatGui(chat) : nullptr);
+	});
+	auto dataChange = [this, chat] {
+		int i = -1;
+		get(chat.get(), &i);
+		if (i != -1) {
+			auto modelIndex = index(i);
+			emit dataChanged(modelIndex, modelIndex);
+		}
+	};
+	connect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, dataChange);
+	connect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, dataChange);
+}
+
 void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	mModelConnection = SafeConnection<ChatList, CoreModel>::create(me, CoreModel::getInstance());
 
@@ -70,16 +89,12 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 				for (auto &chat : getSharedList<ChatCore>()) {
 					if (chat) {
 						disconnect(chat.get(), &ChatCore::deleted, this, nullptr);
+						disconnect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, nullptr);
+						disconnect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, nullptr);
 					}
 				}
 				for (auto &chat : *chats) {
-					connect(chat.get(), &ChatCore::deleted, this, [this, chat] {
-						remove(chat);
-						// We cannot use countChanged here because it is called before mList
-						// really has removed the item, then emit specific signal
-						emit chatRemoved(chat ? new ChatGui(chat) : nullptr);
-					});
-					connect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, [this] { emit chatUpdated(); });
+					connectItem(chat);
 				}
 				mustBeInMainThread(getClassName());
 				resetData<ChatCore>(*chats);

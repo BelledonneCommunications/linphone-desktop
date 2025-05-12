@@ -54,6 +54,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	mIsFromChatGroup = chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference) &&
 	                   !chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne);
 	mIsRead = chatmessage->isRead();
+	mMessageState = LinphoneEnums::fromLinphone(chatmessage->getState());
 }
 
 ChatMessageCore::~ChatMessageCore() {
@@ -72,6 +73,14 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->markAsRead(); });
 	});
 	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageRead, [this]() { setIsRead(true); });
+
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::msgStateChanged,
+	    [this](const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state) {
+		    if (mChatMessageModel->getMonitor() != message) return;
+		    auto msgState = LinphoneEnums::fromLinphone(state);
+		    mChatMessageModelConnection->invokeToCore([this, msgState] { setMessageState(msgState); });
+	    });
 }
 
 QDateTime ChatMessageCore::getTimestamp() const {
@@ -132,6 +141,17 @@ void ChatMessageCore::setIsRead(bool read) {
 	if (mIsRead != read) {
 		mIsRead = read;
 		emit isReadChanged(read);
+	}
+}
+
+LinphoneEnums::ChatMessageState ChatMessageCore::getMessageState() const {
+	return mMessageState;
+}
+
+void ChatMessageCore::setMessageState(LinphoneEnums::ChatMessageState state) {
+	if (mMessageState != state) {
+		mMessageState = state;
+		emit messageStateChanged();
 	}
 }
 

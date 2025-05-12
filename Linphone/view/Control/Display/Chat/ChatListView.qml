@@ -185,7 +185,7 @@ ListView {
                 Text {
                     Layout.fillWidth: true
                     maximumLineCount: 1
-                    text: modelData.core.lastMessageInHistory
+                    text: modelData.core.lastMessageText
                     color: DefaultStyle.main2_400
                     font {
                         pixelSize: Typography.p1.pixelSize
@@ -194,25 +194,45 @@ ListView {
                 }
                 
             }
-
             ColumnLayout {
-                Text {
-                    color: DefaultStyle.main2_500main
-                    text: UtilsCpp.formatDate(modelData.core.lastUpdatedTime, true, false)
-                    font {
-                        pixelSize: Typography.p3.pixelSize
-                        weight: Typography.p3.weight
-                        capitalization: Font.Capitalize
+                Layout.alignment: Qt.AlignRight
+                RowLayout {
+                    Item{Layout.fillWidth: true}
+                    Text {
+                        color: DefaultStyle.main2_500main
+                        text: UtilsCpp.formatDate(modelData.core.lastUpdatedTime, true, false)
+                        font {
+                            pixelSize: Typography.p3.pixelSize
+                            weight: Typography.p3.weight
+                            capitalization: Font.Capitalize
+                        }
                     }
                 }
 
                 RowLayout {
+                    spacing: Math.round(10 * DefaultStyle.dp)
                     Item {Layout.fillWidth: true}
+                    //sourdine, éphémère
                     UnreadNotification {
                         id: unreadCount
                         unread: modelData.core.unreadMessagesCount
                     }
-                    //sourdine, éphémère, IMDN
+                    EffectImage {
+                        visible: modelData?.core.lastMessage && modelData?.core.lastMessageState !== LinphoneEnums.ChatMessageState.StateIdle
+                        && !modelData.core.lastMessage.core.isRemoteMessage
+                        Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
+                        Layout.preferredHeight: 14 * DefaultStyle.dp
+                        colorizationColor: DefaultStyle.main1_500_main
+                        imageSource: modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateDelivered
+                            ? AppIcons.envelope
+                            : modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateDeliveredToUser
+                                ? AppIcons.check
+                                : modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateNotDelivered
+                                    ? AppIcons.warningCircle
+                                    : modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateDisplayed
+                                        ? AppIcons.checks
+                                        : ""
+                    }
                 }
             }
             PopupButton {
@@ -251,6 +271,7 @@ ListView {
             hoverEnabled: true
             anchors.fill: parent
             focus: true
+            acceptedButtons: Qt.RightButton | Qt.LeftButton
             onContainsMouseChanged: {
                 if (containsMouse)
                     mainItem.lastMouseContainsIndex = index
@@ -265,8 +286,12 @@ ListView {
                 visible: mainItem.lastMouseContainsIndex === index || mainItem.currentIndex === index
             }
             onPressed: {
-                mainItem.currentIndex = model.index
-                mainItem.forceActiveFocus()
+                if (pressedButtons & Qt.RightButton) {
+                    chatroomPopup.open()
+                } else {
+                    mainItem.currentIndex = model.index
+                    mainItem.forceActiveFocus()
+                }
             }
         }
     }

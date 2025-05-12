@@ -88,23 +88,8 @@ QString ChatModel::getPeerAddress() const {
 	return Utils::coreStringToAppString(mMonitor->getPeerAddress()->asStringUriOnly());
 }
 
-QString ChatModel::getLastMessageInHistory(std::list<std::shared_ptr<linphone::Content>> startList) const {
-	if (startList.empty()) {
-		auto lastMessage = mMonitor->getLastMessageInHistory();
-		if (lastMessage) startList = lastMessage->getContents();
-	}
-	for (auto &content : startList) {
-		if (content->isText()) {
-			return Utils::coreStringToAppString(content->getUtf8Text());
-		} else if (content->isFile()) {
-			return Utils::coreStringToAppString(content->getName());
-		} else if (content->isIcalendar()) {
-			return QString("Invitation à une réunion");
-		} else if (content->isMultipart()) {
-			return getLastMessageInHistory(content->getParts());
-		}
-	}
-	return QString("");
+std::shared_ptr<linphone::ChatMessage> ChatModel::getLastChatMessage() {
+	return mMonitor->getLastMessageInHistory();
 }
 
 int ChatModel::getUnreadMessagesCount() const {
@@ -135,6 +120,10 @@ std::shared_ptr<linphone::ChatMessage> ChatModel::createTextMessageFromText(QStr
 
 void ChatModel::compose() {
 	mMonitor->compose();
+}
+
+linphone::ChatRoom::State ChatModel::getState() const {
+	return mMonitor->getState();
 }
 
 //---------------------------------------------------------------//

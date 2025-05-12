@@ -39,6 +39,7 @@ public:
 	ChatList(QObject *parent = Q_NULLPTR);
 	~ChatList();
 	void setSelf(QSharedPointer<ChatList> me);
+	void connectItem(QSharedPointer<ChatCore> chat);
 
 	int findChatIndex(ChatGui *chat);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

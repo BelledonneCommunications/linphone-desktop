@@ -19,6 +19,8 @@ Control.Control {
     property string fromAddress: chatMessage? chatMessage.core.fromAddress : ""
     property bool isRemoteMessage: chatMessage? chatMessage.core.isRemoteMessage : false
     property bool isFromChatGroup: chatMessage? chatMessage.core.isFromChatGroup : false
+    property var msgState: chatMessage ? chatMessage.core.messageState : LinphoneEnums.ChatMessageState.StateIdle
+    onMsgStateChanged: console.log("message state", msgState, chatMessage.core.text)
     hoverEnabled: true
 
     signal messageDeletionRequested()
@@ -62,9 +64,9 @@ Control.Control {
             Layout.preferredWidth: Math.min(implicitWidth, mainItem.maxWidth - avatar.implicitWidth)
             spacing: Math.round(2 * DefaultStyle.dp)
             topPadding: Math.round(12 * DefaultStyle.dp)
-            bottomPadding: Math.round(12 * DefaultStyle.dp)
-            leftPadding: Math.round(18 * DefaultStyle.dp)
-            rightPadding: Math.round(18 * DefaultStyle.dp)
+            bottomPadding: Math.round(6 * DefaultStyle.dp)
+            leftPadding: Math.round(12 * DefaultStyle.dp)
+            rightPadding: Math.round(12 * DefaultStyle.dp)
 
             MouseArea {
                 anchors.fill: parent
@@ -110,19 +112,38 @@ Control.Control {
                     visible: modelData.core.text != undefined
                     text: modelData.core.text
                     Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    horizontalAlignment: modelData.core.isRemoteMessage ? Text.AlignLeft : Text.AlignRight
                     color: DefaultStyle.main2_700
                     font {
                         pixelSize: Typography.p1.pixelSize
                         weight: Typography.p1.weight
                     }
                 }
-                Text {
+                RowLayout {
                     Layout.alignment: Qt.AlignRight
-                    text: UtilsCpp.formatDate(modelData.core.timestamp, true, false)
-                    color: DefaultStyle.main2_500main
-                    font {
-                        pixelSize: Typography.p3.pixelSize
-                        weight: Typography.p3.weight
+                    Text {
+                        text: UtilsCpp.formatDate(modelData.core.timestamp, true, false)
+                        color: DefaultStyle.main2_500main
+                        font {
+                            pixelSize: Typography.p3.pixelSize
+                            weight: Typography.p3.weight
+                        }
+                    }
+                    EffectImage {
+                        visible: !mainItem.isRemoteMessage
+                        Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
+                        Layout.preferredHeight: 14 * DefaultStyle.dp
+                        colorizationColor: DefaultStyle.main1_500_main
+                        imageSource: mainItem.msgState === LinphoneEnums.ChatMessageState.StateDelivered
+                            ? AppIcons.envelope
+                            : mainItem.msgState === LinphoneEnums.ChatMessageState.StateDeliveredToUser
+                                ? AppIcons.check
+                                : mainItem.msgState === LinphoneEnums.ChatMessageState.StateNotDelivered
+                                    ? AppIcons.warningCircle
+                                    : mainItem.msgState === LinphoneEnums.ChatMessageState.StateDisplayed
+                                        ? AppIcons.checks
+                                        : ""
                     }
                 }
             }

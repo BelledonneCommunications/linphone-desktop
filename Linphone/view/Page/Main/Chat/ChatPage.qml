@@ -131,7 +131,7 @@ AbstractMainPage {
                         anchors.fill: parent
                         anchors.rightMargin: Math.round(39 * DefaultStyle.dp)
                         Text {
-                            visible: chatListView.count === 0
+                            visible: chatListView.count === 0 && chatListView.loading === false
                             Layout.alignment: Qt.AlignHCenter
                             Layout.topMargin: Math.round(137 * DefaultStyle.dp)
                             //: "Aucun résultat…"

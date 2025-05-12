@@ -69,18 +69,22 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	});
 	mChatModel = Utils::makeQObject_ptr<ChatModel>(chatRoom);
 	mChatModel->setSelf(mChatModel);
-	mLastMessageInHistory = mChatModel->getLastMessageInHistory();
+	auto lastMessage = chatRoom->getLastMessageInHistory();
+	mLastMessage = lastMessage ? ChatMessageCore::create(lastMessage) : nullptr;
 	auto history = chatRoom->getHistory(0, (int)linphone::ChatRoom::HistoryFilter::ChatMessage);
-	std::list<std::shared_ptr<linphone::ChatMessage>> linHistory;
+	std::list<std::shared_ptr<linphone::ChatMessage>> lHistory;
 	for (auto &eventLog : history) {
-		if (eventLog->getChatMessage()) linHistory.push_back(eventLog->getChatMessage());
+		if (eventLog->getChatMessage()) lHistory.push_back(eventLog->getChatMessage());
 	}
-	for (auto &message : linHistory) {
+	for (auto &message : lHistory) {
 		if (!message) continue;
 		auto chatMessage = ChatMessageCore::create(message);
 		mChatMessageList.append(chatMessage);
 	}
 	mIdentifier = Utils::coreStringToAppString(chatRoom->getIdentifier());
+	connect(this, &ChatCore::messageListChanged, this, &ChatCore::lUpdateLastMessage);
+	connect(this, &ChatCore::messagesInserted, this, &ChatCore::lUpdateLastMessage);
+	connect(this, &ChatCore::messageRemoved, this, &ChatCore::lUpdateLastMessage);
 }
 
 ChatCore::~ChatCore() {
@@ -123,16 +127,14 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	                                         [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                                const std::shared_ptr<const linphone::EventLog> &eventLog) {
 		                                         if (mChatModel->getMonitor() != chatRoom) return;
-		                                         emit lUpdateLastMessage();
-		                                         emit lUpdateUnreadCount();
-		                                         emit lUpdateLastUpdatedTime();
 		                                         auto message = eventLog->getChatMessage();
 		                                         qDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
 		                                         if (message) {
 			                                         auto newMessage = ChatMessageCore::create(message);
 			                                         mChatModelConnection->invokeToCore([this, newMessage]() {
-				                                         qDebug() << log().arg("append message to chatRoom") << this;
 				                                         appendMessageToMessageList(newMessage);
+				                                         emit lUpdateUnreadCount();
+				                                         emit lUpdateLastUpdatedTime();
 			                                         });
 		                                         }
 	                                         });
@@ -140,9 +142,6 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatModel::chatMessagesReceived, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                             const std::list<std::shared_ptr<linphone::EventLog>> &chatMessages) {
 		    if (mChatModel->getMonitor() != chatRoom) return;
-		    emit lUpdateLastMessage();
-		    emit lUpdateUnreadCount();
-		    emit lUpdateLastUpdatedTime();
 		    qDebug() << "EVENT LOGS RECEIVED IN CHATROOM" << mChatModel->getTitle();
 		    QList<QSharedPointer<ChatMessageCore>> list;
 		    for (auto &m : chatMessages) {
@@ -153,8 +152,9 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 			    }
 		    }
 		    mChatModelConnection->invokeToCore([this, list]() {
-			    qDebug() << log().arg("append messages to chatRoom") << this;
 			    appendMessagesToMessageList(list);
+			    emit lUpdateUnreadCount();
+			    emit lUpdateLastUpdatedTime();
 		    });
 	    });
 
@@ -167,12 +167,17 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	});
 
 	mChatModelConnection->makeConnectToCore(&ChatCore::lUpdateLastMessage, [this]() {
-		mChatModelConnection->invokeToModel([this]() {
-			auto message = mChatModel->getLastMessageInHistory();
-			mChatModelConnection->invokeToCore([this, message]() { setLastMessageInHistory(message); });
+		auto lastMessageModel = mLastMessage ? mLastMessage->getModel() : nullptr;
+		mChatModelConnection->invokeToModel([this, lastMessageModel]() {
+			auto linphoneMessage = mChatModel->getLastChatMessage();
+			if (lastMessageModel && lastMessageModel->getMonitor() != linphoneMessage) {
+				auto chatMessageCore = ChatMessageCore::create(linphoneMessage);
+				mChatModelConnection->invokeToCore([this, chatMessageCore]() { setLastMessage(chatMessageCore); });
+			}
 		});
 	});
 	mChatModelConnection->makeConnectToCore(&ChatCore::lSendTextMessage, [this](QString message) {
+		if (Utils::isEmptyMessage(message)) return;
 		mChatModelConnection->invokeToModel([this, message]() {
 			auto linMessage = mChatModel->createTextMessageFromText(message);
 			linMessage->send();
@@ -253,14 +258,28 @@ void ChatCore::setAvatarUri(QString avatarUri) {
 	}
 }
 
-QString ChatCore::getLastMessageInHistory() const {
-	return mLastMessageInHistory;
+QString ChatCore::getLastMessageText() const {
+	return mLastMessage ? mLastMessage->getText() : QString();
 }
 
-void ChatCore::setLastMessageInHistory(QString lastMessageInHistory) {
-	if (mLastMessageInHistory != lastMessageInHistory) {
-		mLastMessageInHistory = lastMessageInHistory;
-		emit lastMessageInHistoryChanged(lastMessageInHistory);
+LinphoneEnums::ChatMessageState ChatCore::getLastMessageState() const {
+	return mLastMessage ? mLastMessage->getMessageState() : LinphoneEnums::ChatMessageState::StateIdle;
+}
+
+ChatMessageGui *ChatCore::getLastMessage() const {
+	return mLastMessage ? new ChatMessageGui(mLastMessage) : nullptr;
+}
+
+QSharedPointer<ChatMessageCore> ChatCore::getLastMessageCore() const {
+	return mLastMessage;
+}
+
+void ChatCore::setLastMessage(QSharedPointer<ChatMessageCore> lastMessage) {
+	if (mLastMessage != lastMessage) {
+		disconnect(mLastMessage.get());
+		mLastMessage = lastMessage;
+		connect(mLastMessage.get(), &ChatMessageCore::messageStateChanged, this, &ChatCore::lastMessageChanged);
+		emit lastMessageChanged();
 	}
 }
 

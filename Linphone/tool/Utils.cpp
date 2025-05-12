@@ -1582,6 +1582,10 @@ VariantObject *Utils::getChatForAddress(QString address) {
 	return data;
 }
 
+bool Utils::isEmptyMessage(QString message) {
+	return message.trimmed().isEmpty();
+}
+
 // CLI
 
 void Utils::runCommandLine(const QString command) {

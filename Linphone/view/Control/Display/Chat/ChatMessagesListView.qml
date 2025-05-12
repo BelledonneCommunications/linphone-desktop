@@ -20,6 +20,13 @@ ListView {
         var chatMessage = chatMessageProxy.getChatMessageAtIndex(index)
         if (chatMessage && !chatMessage.core.isRead) chatMessage.core.lMarkAsRead()
     }
+
+    onCountChanged: if (atYEnd) {
+        var index = chatMessageProxy.findFirstUnreadIndex()
+        mainItem.positionViewAtIndex(index, ListView.End)
+        var chatMessage = chatMessageProxy.getChatMessageAtIndex(index)
+        if (chatMessage && !chatMessage.core.isRead) chatMessage.core.lMarkAsRead()
+    }
     
     Button {
         visible: !mainItem.atYEnd

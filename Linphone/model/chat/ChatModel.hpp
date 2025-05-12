@@ -40,7 +40,7 @@ public:
 	QDateTime getLastUpdateTime();
 	QString getTitle();
 	QString getPeerAddress() const;
-	QString getLastMessageInHistory(std::list<std::shared_ptr<linphone::Content>> startList = {}) const;
+	std::shared_ptr<linphone::ChatMessage> getLastChatMessage();
 	int getUnreadMessagesCount() const;
 	void markAsRead();
 	std::list<std::shared_ptr<linphone::ChatMessage>> getHistory() const;
@@ -49,6 +49,7 @@ public:
 	void deleteChatRoom();
 	std::shared_ptr<linphone::ChatMessage> createTextMessageFromText(QString text);
 	void compose();
+	linphone::ChatRoom::State getState() const;
 
 signals:
 	void historyDeleted();
