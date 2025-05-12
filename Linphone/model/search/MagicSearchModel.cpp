@@ -87,8 +87,9 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 		auto friendsManager = FriendsManager::getInstance();
 		if (f) {
 			qDebug() << "friend exists, append to unknown map";
-			auto friendAddress = f->getAddress();
-			friendsManager->appendUnknownFriend(friendAddress->clone(), f);
+			auto friendAddress = f->getAddress()->clone();
+			friendAddress->clean();
+			friendsManager->appendUnknownFriend(friendAddress, f);
 			if (friendsManager->isInOtherAddresses(Utils::coreStringToAppString(friendAddress->asStringUriOnly()))) {
 				friendsManager->removeOtherAddress(Utils::coreStringToAppString(friendAddress->asStringUriOnly()));
 			}

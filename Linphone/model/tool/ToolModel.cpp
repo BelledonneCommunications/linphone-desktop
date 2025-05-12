@@ -126,12 +126,13 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &
 
 std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr<linphone::Address> linphoneAddr) {
 	auto friendsManager = FriendsManager::getInstance();
+	linphoneAddr->clean();
 	QString key = Utils::coreStringToAppString(linphoneAddr->asStringUriOnly());
 	if (friendsManager->isInKnownFriends(key)) {
-		//		qDebug() << key << "have been found in known friend, return it";
+		// qDebug() << key << "have been found in known friend, return it";
 		return friendsManager->getKnownFriendAtKey(key);
 	} else if (friendsManager->isInUnknownFriends(key)) {
-		//		qDebug() << key << "have been found in unknown friend, return it";
+		// qDebug() << key << "have been found in unknown friend, return it";
 		return friendsManager->getUnknownFriendAtKey(key);
 	}
 	auto f = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
@@ -139,17 +140,17 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr
 		if (friendsManager->isInUnknownFriends(key)) {
 			friendsManager->removeUnknownFriend(key);
 		}
-		//		qDebug() << "found friend, add to known map";
+		// qDebug() << "found friend, add to known map";
 		friendsManager->appendKnownFriend(linphoneAddr, f);
 	}
 	if (!f) {
 		if (friendsManager->isInOtherAddresses(key)) {
-			//			qDebug() << "A magic search has already be done for address" << key << "and nothing was found,
-			// return";
+			// qDebug() << "A magic search has already be done for address" << key << "and nothing was found,return ";
 			return nullptr;
 		}
 		friendsManager->appendOtherAddress(key);
-		//		qDebug() << "Couldn't find friend" << linphoneAddr->asStringUriOnly() << "in core, use magic search";
+		if (CoreModel::getInstance()->getCore()->getRemoteContactDirectories().empty()) return nullptr;
+		qDebug() << "Couldn't find friend" << linphoneAddr->asStringUriOnly() << "in core or in maps, use magic search";
 		CoreModel::getInstance()->searchInMagicSearch(Utils::coreStringToAppString(linphoneAddr->asStringUriOnly()),
 		                                              (int)linphone::MagicSearch::Source::LdapServers |
 		                                                  (int)linphone::MagicSearch::Source::RemoteCardDAV,
