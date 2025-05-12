@@ -51,7 +51,8 @@ include:
   - '.gitlab-ci-files/rules.yml'
   - '.gitlab-ci-files/linux-prepare.yml'
   - '.gitlab-ci-files/linux-desktop.yml'
-  - '.gitlab-ci-files/linux-desktop-ubuntu-2004.yml'
+  # - '.gitlab-ci-files/linux-desktop-ubuntu-2004.yml'
+  - '.gitlab-ci-files/linux-desktop-ubuntu-2204.yml'
   - '.gitlab-ci-files/windows-desktop.yml'
   - '.gitlab-ci-files/macosx-desktop.yml'
 
