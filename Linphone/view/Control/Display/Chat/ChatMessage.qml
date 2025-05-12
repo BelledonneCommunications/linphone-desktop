@@ -20,7 +20,6 @@ Control.Control {
     property bool isRemoteMessage: chatMessage? chatMessage.core.isRemoteMessage : false
     property bool isFromChatGroup: chatMessage? chatMessage.core.isFromChatGroup : false
     property var msgState: chatMessage ? chatMessage.core.messageState : LinphoneEnums.ChatMessageState.StateIdle
-    onMsgStateChanged: console.log("message state", msgState, chatMessage.core.text)
     hoverEnabled: true
 
     signal messageDeletionRequested()
