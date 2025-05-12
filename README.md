@@ -4,7 +4,7 @@ Linphone is an open source softphone for voice and video over IP calling and ins
 
 It is fully SIP-based, for all calling, presence and IM features.
 
-General description is available from [Linphone web site](https://www.linphone.org/technical-corner/linphone)
+General description is available from [Linphone web site](https://www.linphone.org/linphone-softphone/)
 
 ### License
 
@@ -18,7 +18,7 @@ Linphone is dual licensed, and is available either :
 
 ### Documentation
 
-- [Supported features and RFCs](https://www.linphone.org/technical-corner/linphone/features)
+- [Supported features and RFCs](https://www.linphone.org/liblinphone-sdk-voip/#liblinphone-fonctionnalites)
 
 - [Linphone public wiki](https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/)
 
@@ -38,7 +38,7 @@ You will need the tools :
 - `six` : use 'pip install six --user'
 - `git`
 
-For Desktop : you will need [Qt6](https://www.qt.io/download-thank-you) (_6.2 or newer_). `C++17` support is required!
+For Desktop : you will need [Qt6](https://www.qt.io/download-thank-you) (_6.5.3 or newer_). `C++17` support is required!
 
 ### Set your environment
 
@@ -208,6 +208,16 @@ In case of 'module "QtQuick.\*" is not installed' error, you may install these p
   - qml6-module-qtquick-controls
   - qml6-module-qtquick-templates
 
+For Fedora (42), the required packages are:
+  - qt6-qtbase-devel
+  - qt6-qttools-devel
+  - qt6-qtsvg-devel
+  - qt6-qtmultimedia-devel
+  - qt6-qtnetworkauth-devel
+  - qt6-qtquick3d-devel
+  - qt6-qtlanguageserver-devel
+  - qt6-linguist
+
 ## Installing dependencies
 
 There are [docker files](docker-files) configurations where dependencies can be retrieved.
@@ -234,6 +244,7 @@ Also, more configurations are available in the docker-files folder of linphone-s
 | ENABLE_TESTS_COMPONENTS | Build libbctoolbox-tester | NO |
 | ENABLE_TOOLS | Enable tools of SDK | NO |
 | ENABLE_UNIT_TESTS | Enable unit test of SDK. | NO |
+| ENABLE_OPENLDAP | Build openLDAP external library. | YES |
 | ENABLE_UPDATE_CHECK | Enable update check. | YES |
 | LINPHONE_SDK_MAKE_RELEASE_FILE_URL | Make a RELEASE file that work along check_version and use this URL | "" |
 
@@ -261,10 +272,6 @@ In order to submit a patch for inclusion in Linphone's source code:
 
 Please note that we don't offer free support and these contributions will be addressed on our free-time.
 
-<a href="https://weblate.linphone.org/engage/linphone-desktop/?utm_source=widget">
-<img src="https://weblate.linphone.org/widgets/linphone-desktop/-/multi-auto.svg" alt="Translation status" align="right"/>
-</a>
-
 #### Files tree
 
 - Linphone : Application code.
@@ -291,19 +298,11 @@ Please note that we don't offer free support and these contributions will be add
 
 ### Languages
 
+<a href="https://weblate.linphone.org/engage/linphone/">
+<img src="https://weblate.linphone.org/widget/linphone/linphone-desktop-6-0/multi-auto.svg" alt="État de la traduction" />
+</a>
 
-<br />
-Linphone is getting a full internationalization support.<br />
-<br />
-We no longer use transifex for the translation process, instead we have deployed our own instance of [Weblate](https://weblate.linphone.org).<br />
-<br />
-<br />
-If you would like to contribute, you could do it at : https://weblate.linphone.org/projects/linphone-desktop/
-
-<br />
-<br />
-<br />
-<br />
+You can contribute (either complete existing languages or add a new one) on our [Weblate instance](https://weblate.linphone.org/projects/linphone/).
 
 ### Feedback or bug reporting
 
