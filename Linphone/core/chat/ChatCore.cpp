@@ -41,11 +41,14 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	mustBeInLinphoneThread(getClassName());
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mLastUpdatedTime = QDateTime::fromSecsSinceEpoch(chatRoom->getLastUpdateTime());
+	auto chatRoomAddress = chatRoom->getPeerAddress()->clone();
+	chatRoomAddress->clean();
+	mChatRoomAddress = Utils::coreStringToAppString(chatRoomAddress->asStringUriOnly());
 	if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)) {
-		mTitle = ToolModel::getDisplayName(chatRoom->getPeerAddress()->clone());
-		mAvatarUri = ToolModel::getDisplayName(chatRoom->getPeerAddress()->clone());
-		auto peerAddress = chatRoom->getPeerAddress();
-		mPeerAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
+		mTitle = ToolModel::getDisplayName(chatRoomAddress);
+		mAvatarUri = ToolModel::getDisplayName(chatRoomAddress);
+		mPeerAddress = Utils::coreStringToAppString(chatRoomAddress->asStringUriOnly());
+		mIsGroupChat = false;
 	} else {
 		if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
 			auto participants = chatRoom->getParticipants();
@@ -58,9 +61,11 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 					if (peerAddress) mPeerAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
 				}
 			}
+			mIsGroupChat = false;
 		} else if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference)) {
 			mTitle = Utils::coreStringToAppString(chatRoom->getSubject());
 			mAvatarUri = Utils::coreStringToAppString(chatRoom->getSubject());
+			mIsGroupChat = true;
 		}
 	}
 	mUnreadMessagesCount = chatRoom->getUnreadMessagesCount();
@@ -101,7 +106,10 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	mChatModelConnection->makeConnectToModel(&ChatModel::historyDeleted, [this]() {
 		mChatModelConnection->invokeToCore([this]() {
 			clearMessagesList();
-			Utils::showInformationPopup(tr("Supprimé"), tr("L'historique des messages a été supprimé."), true);
+			//: Deleted
+			Utils::showInformationPopup(tr("info_toast_deleted_title"),
+			                            //: Message history has been deleted
+			                            tr("info_toast_deleted_message_history"), true);
 		});
 	});
 	mChatModelConnection->makeConnectToCore(&ChatCore::lUpdateUnreadCount, [this]() {
@@ -170,7 +178,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		auto lastMessageModel = mLastMessage ? mLastMessage->getModel() : nullptr;
 		mChatModelConnection->invokeToModel([this, lastMessageModel]() {
 			auto linphoneMessage = mChatModel->getLastChatMessage();
-			if (lastMessageModel && lastMessageModel->getMonitor() != linphoneMessage) {
+			if (!lastMessageModel || lastMessageModel->getMonitor() != linphoneMessage) {
 				auto chatMessageCore = ChatMessageCore::create(linphoneMessage);
 				mChatModelConnection->invokeToCore([this, chatMessageCore]() { setLastMessage(chatMessageCore); });
 			}
@@ -232,6 +240,10 @@ void ChatCore::setTitle(QString title) {
 	}
 }
 
+bool ChatCore::isGroupChat() const {
+	return mIsGroupChat;
+}
+
 QString ChatCore::getIdentifier() const {
 	return mIdentifier;
 }
@@ -240,11 +252,8 @@ QString ChatCore::getPeerAddress() const {
 	return mPeerAddress;
 }
 
-void ChatCore::setPeerAddress(QString peerAddress) {
-	if (mPeerAddress != peerAddress) {
-		mPeerAddress = peerAddress;
-		emit peerAddressChanged(peerAddress);
-	}
+QString ChatCore::getChatRoomAddress() const {
+	return mChatRoomAddress;
 }
 
 QString ChatCore::getAvatarUri() const {

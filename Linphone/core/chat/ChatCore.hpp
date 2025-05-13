@@ -36,7 +36,8 @@ class ChatCore : public QObject, public AbstractObject {
 public:
 	Q_PROPERTY(QString title READ getTitle WRITE setTitle NOTIFY titleChanged)
 	Q_PROPERTY(QString identifier READ getIdentifier CONSTANT)
-	Q_PROPERTY(QString peerAddress READ getPeerAddress WRITE setPeerAddress NOTIFY peerAddressChanged)
+	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
+	Q_PROPERTY(QString chatRoomAddress READ getChatRoomAddress CONSTANT)
 	Q_PROPERTY(QString avatarUri READ getAvatarUri WRITE setAvatarUri NOTIFY avatarUriChanged)
 	Q_PROPERTY(QDateTime lastUpdatedTime READ getLastUpdatedTime WRITE setLastUpdatedTime NOTIFY lastUpdatedTimeChanged)
 	Q_PROPERTY(QString lastMessageText READ getLastMessageText NOTIFY lastMessageChanged)
@@ -46,7 +47,7 @@ public:
 	               unreadMessagesCountChanged)
 	Q_PROPERTY(QString composingName READ getComposingName WRITE setComposingName NOTIFY composingUserChanged)
 	Q_PROPERTY(QString composingAddress READ getComposingAddress WRITE setComposingAddress NOTIFY composingUserChanged)
-	// Q_PROPERTY(VideoStats videoStats READ getVideoStats WRITE setVideoStats NOTIFY videoStatsChanged)
+	Q_PROPERTY(bool isGroupChat READ isGroupChat CONSTANT)
 
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	static QSharedPointer<ChatCore> create(const std::shared_ptr<linphone::ChatRoom> &chatRoom);
@@ -59,6 +60,8 @@ public:
 
 	QString getTitle() const;
 	void setTitle(QString title);
+
+	bool isGroupChat() const;
 
 	QString getIdentifier() const;
 
@@ -73,8 +76,8 @@ public:
 	int getUnreadMessagesCount() const;
 	void setUnreadMessagesCount(int count);
 
+	QString getChatRoomAddress() const;
 	QString getPeerAddress() const;
-	void setPeerAddress(QString peerAddress);
 
 	QList<QSharedPointer<ChatMessageCore>> getChatMessageList() const;
 	void resetChatMessageList(QList<QSharedPointer<ChatMessageCore>> list);
@@ -93,11 +96,14 @@ public:
 
 	std::shared_ptr<ChatModel> getModel() const;
 
+Q_SIGNALS:
+	// used to close all the notifications when one is clicked
+	void messageOpen();
+
 signals:
 	void lastUpdatedTimeChanged(QDateTime time);
 	void lastMessageChanged();
 	void titleChanged(QString title);
-	void peerAddressChanged(QString address);
 	void unreadMessagesCountChanged(int count);
 	void messageListChanged();
 	void messagesInserted(QList<QSharedPointer<ChatMessageCore>> list);
@@ -120,12 +126,14 @@ private:
 	QString id;
 	QDateTime mLastUpdatedTime;
 	QString mPeerAddress;
+	QString mChatRoomAddress;
 	QString mTitle;
 	QString mIdentifier;
 	QString mAvatarUri;
 	int mUnreadMessagesCount;
 	QString mComposingName;
 	QString mComposingAddress;
+	bool mIsGroupChat = false;
 	std::shared_ptr<ChatModel> mChatModel;
 	QSharedPointer<ChatMessageCore> mLastMessage;
 	QList<QSharedPointer<ChatMessageCore>> mChatMessageList;

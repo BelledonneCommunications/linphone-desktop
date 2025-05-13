@@ -33,7 +33,7 @@
 
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
-#include "core/chat/ChatCore.hpp"
+#include "core/chat/ChatGui.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/LinphoneEnums.hpp"
 #include "tool/providers/AvatarProvider.hpp"
@@ -367,11 +367,12 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 			mustBeInMainThread(getClassName());
 			QVariantMap map;
 			map["message"] = txt;
-			qDebug() << "create notif from address" << remoteAddress;
 			map["remoteAddress"] = remoteAddress;
 			map["chatRoomName"] = chatCore->getTitle();
-			map["chatRoomAddress"] = chatCore->getPeerAddress();
+			map["chatRoomAddress"] = chatCore->getChatRoomAddress();
 			map["avatarUri"] = chatCore->getAvatarUri();
+			map["isGroupChat"] = chatCore->isGroupChat();
+			map["chat"] = QVariant::fromValue(chatCore ? new ChatGui(chatCore) : nullptr);
 			CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
 		});
 	}

@@ -79,6 +79,7 @@ RowLayout {
         content: [
             ChatMessagesListView {
                 id: chatMessagesListView
+                clip: true
                 height: contentHeight
                 backgroundColor: splitPanel.panelColor
                 width: parent.width - anchors.leftMargin - anchors.rightMargin
@@ -86,7 +87,7 @@ RowLayout {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.bottom: messageSender.top               
+                anchors.bottom: messageSender.top      
                 anchors.leftMargin: Math.round(18 * DefaultStyle.dp)
                 anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
                 Control.ScrollBar.vertical: scrollbar
@@ -95,7 +96,7 @@ RowLayout {
                 id: scrollbar
                 visible: chatMessagesListView.contentHeight > parent.height
                 active: visible
-                anchors.top: parent.top
+                anchors.top: chatMessagesListView.top
                 anchors.bottom: chatMessagesListView.bottom
                 anchors.right: parent.right
                 anchors.rightMargin: Math.round(5 * DefaultStyle.dp)
@@ -214,7 +215,7 @@ RowLayout {
                                         Keys.onPressed: (event) => {
                                             event.accepted = false
                                             if (UtilsCpp.isEmptyMessage(sendingTextArea.text)) return
-                                            if (!(event.modifiers & Qt.ControlModifier) && (event.key == Qt.Key_Return || event.key == Qt.Key_Enter)) {
+                                            if (!(event.modifiers & Qt.ShiftModifier) && (event.key == Qt.Key_Return || event.key == Qt.Key_Enter)) {
                                                 mainItem.chat.core.lSendTextMessage(sendingTextArea.text)
                                                 sendingTextArea.clear()
                                                 event.accepted = true

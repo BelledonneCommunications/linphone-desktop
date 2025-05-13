@@ -14,11 +14,22 @@ Notification {
 	backgroundOpacity: 0.8
     overriddenWidth: Math.round(400 * DefaultStyle.dp)
 	overriddenHeight: content.height
+
+	property var chat: notificationData ? notificationData.chat : null
 	
 	property string avatarUri: notificationData ? notificationData.avatarUri : ""
 	property string chatRoomName: notificationData ? notificationData.chatRoomName : ""
 	property string remoteAddress: notificationData ? notificationData.remoteAddress : ""
+	property string chatRoomAddress: notificationData ? notificationData.chatRoomAddress : ""
+	property bool isGroupChat: notificationData ? notificationData.isGroupChat : false
 	property string message: notificationData ? notificationData.message : ""
+	Connections {
+		enabled: chat
+		target: chat.core
+		function onMessageOpen() {
+			close()
+		}
+	}
 	
 	Popup {
 		id: content
@@ -65,14 +76,15 @@ Notification {
 				icon.height: Math.round(14 * DefaultStyle.dp)
 				contentImageColor: DefaultStyle.grey_0
 				onPressed: {
-					mainItem._close()
+					mainItem.close()
 				}
 			}
 			MouseArea {
 				id: mousearea
 				anchors.fill: parent
 				onClicked: {
-					console.log("notif clicked, open chat")
+					UtilsCpp.openChat(mainItem.chat)
+					mainItem.close()
 				}
 			}
 		}
@@ -102,6 +114,7 @@ Notification {
 						}
 					}
 					Text {
+						visible: mainItem.isGroupChat
 						text: mainItem.remoteAddress
 						color: DefaultStyle.main2_100
 						Layout.fillWidth: true

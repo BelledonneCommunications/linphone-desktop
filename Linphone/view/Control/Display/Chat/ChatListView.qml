@@ -82,8 +82,8 @@ ListView {
     // Update position only if we are moving to current item and its position is changing.
     property var _currentItemY: currentItem?.y
     on_CurrentItemYChanged: if (_currentItemY && moveAnimation.running) {
-                                moveToCurrentItem()
-                            }
+        moveToCurrentItem()
+    }
     Behavior on contentY {
         NumberAnimation {
             id: moveAnimation

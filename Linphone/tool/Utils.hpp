@@ -148,6 +148,7 @@ public:
 
 	Q_INVOKABLE static VariantObject *getCurrentCallChat(CallGui *call);
 	Q_INVOKABLE static VariantObject *getChatForAddress(QString address);
+	Q_INVOKABLE static void openChat(ChatGui *chat);
 	Q_INVOKABLE static bool isEmptyMessage(QString message);
 	Q_INVOKABLE static QString encodeTextToQmlRichFormat(const QString &text,
 	                                                     const QVariantMap &options = QVariantMap());

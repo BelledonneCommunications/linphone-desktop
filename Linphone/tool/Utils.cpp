@@ -1538,6 +1538,7 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 				//: Failed to create 1-1 conversation with %1 !
 				data->mConnection->invokeToCore([] {
 					showInformationPopup(tr("information_popup_error_title"),
+					                     //: Failed to create 1-1 conversation with %1 !
 					                     tr("information_popup_chatroom_creation_error_message"), false,
 					                     getCallsWindow());
 				});
@@ -1581,6 +1582,15 @@ VariantObject *Utils::getChatForAddress(QString address) {
 	});
 	data->requestValue();
 	return data;
+}
+
+void Utils::openChat(ChatGui *chat) {
+	auto mainWindow = getMainWindow();
+	smartShowWindow(mainWindow);
+	if (mainWindow && chat) {
+		emit chat->mCore->messageOpen();
+		QMetaObject::invokeMethod(mainWindow, "openChat", Q_ARG(QVariant, QVariant::fromValue(chat)));
+	}
 }
 
 bool Utils::isEmptyMessage(QString message) {

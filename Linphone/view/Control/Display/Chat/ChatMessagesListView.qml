@@ -14,6 +14,12 @@ ListView {
     property color backgroundColor
     spacing: Math.round(4 * DefaultStyle.dp)
 
+    onChatChanged: {
+        var index = chatMessageProxy.findFirstUnreadIndex()
+        positionViewAtIndex(index, ListView.End)
+    }
+
+
     Component.onCompleted: {
         var index = chatMessageProxy.findFirstUnreadIndex()
         positionViewAtIndex(index, ListView.End)
@@ -60,6 +66,7 @@ ListView {
         chatMessage: modelData
         property real maxWidth: Math.round(mainItem.width * (3/4))
         // height: childrenRect.height
+        onVisibleChanged: if (!modelData.core.isRead) modelData.core.lMarkAsRead()
         width: mainItem.width
         property var previousIndex: index - 1
         property var previousFromAddress: chatMessageProxy.getChatMessageAtIndex(index-1)?.core.fromAddress

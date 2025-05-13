@@ -27,6 +27,7 @@ Item {
     signal openNumPadRequest
     signal displayContactRequested(string contactAddress)
     signal displayChatRequested(string contactAddress)
+    signal openChatRequested(ChatGui chat)
     signal createContactRequested(string name, string address)
     signal accountRemoved
 
@@ -45,6 +46,10 @@ Item {
     function displayChatPage(contactAddress) {
         tabbar.currentIndex = 2
         mainItem.displayChatRequested(contactAddress)
+    }
+    function openChat(chat) {
+        tabbar.currentIndex = 2
+        mainItem.openChatRequested(chat)
     }
 
     function createContact(name, address) {
@@ -635,6 +640,10 @@ Item {
                                     console.log("display chat requested, open with address", contactAddress)
                                     chatPage.remoteAddress = ""
                                     chatPage.remoteAddress = contactAddress
+                                }
+                                function onOpenChatRequested(chat) {
+                                    console.log("open chat requested, open", chat.core.title)
+                                    chatPage.selectedChatGui = chat
                                 }
                             }
                         }
