@@ -1535,10 +1535,10 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 			} else {
 				qWarning() << "Failed to create 1-1 conversation with"
 				           << callModel->getRemoteAddress()->asStringUriOnly() << "!";
-				//: Failed to create 1-1 conversation with %1 !
 				data->mConnection->invokeToCore([] {
+					//: Error
 					showInformationPopup(tr("information_popup_error_title"),
-					                     //: Failed to create 1-1 conversation with %1 !
+										 //: Failed to create 1-1 conversation with %1 !
 					                     tr("information_popup_chatroom_creation_error_message"), false,
 					                     getCallsWindow());
 				});

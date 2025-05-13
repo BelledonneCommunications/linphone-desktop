@@ -66,7 +66,10 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->deleteMessageFromChatRoom(); });
 	});
 	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageDeleted, [this]() {
-		Utils::showInformationPopup(tr("Supprimé"), tr("Message supprimé"), true);
+		//: Deleted
+		Utils::showInformationPopup(tr("info_toast_deleted_title"),
+									//: The message has been deleted
+									tr("info_toast_deleted_message"), true);
 		emit deleted();
 	});
 	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lMarkAsRead, [this] {

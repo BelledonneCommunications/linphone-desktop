@@ -195,7 +195,7 @@ RowLayout {
                                         anchors.right: parent.right
                                         wrapMode: TextEdit.WordWrap
                                         //: Say something… : placeholder text for sending message text area
-                                        placeholderText: qsTr("Dites quelque chose…")
+                                        placeholderText: qsTr("chat_view_send_area_placeholder_text")
                                         placeholderTextColor: DefaultStyle.main2_400
                                         color: DefaultStyle.main2_700
                                         font {
@@ -270,14 +270,14 @@ RowLayout {
             detailContent: ColumnLayout {
                 DetailLayout {
                     //: Other actions
-                    label: qsTr("Autres actions")
+                    label: qsTr("chat_view_detail_other_actions_title")
                     content: ColumnLayout {
                         // IconLabelButton {
                         //     Layout.fillWidth: true
                         //     Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
                         //     icon.source: AppIcons.signOut
                         //     //: "Quitter la conversation"
-                        //     text: qsTr("Quitter la conversation")
+                        //     text: qsTr("chat_view_detail_quit_chat_title")
                         //     onClicked: {
 
                         //     }
@@ -287,11 +287,13 @@ RowLayout {
                             Layout.fillWidth: true
                             Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
                             icon.source: AppIcons.trashCan
-                            //: "Supprimer l'historique"
-                            text: qsTr("Supprimer l'historique")
+                            //: "Delete history"
+                            text: qsTr("chat_view_detail_delete_history_button")
                             onClicked: {
-                                mainWindow.showConfirmationLambdaPopup(qsTr("Supprimer l'historique ?"),
-                                qsTr("Tous les messages seront supprimés de la chatroom.Souhaitez-vous continuer ?"),
+                                //: Delete history ?
+                                mainWindow.showConfirmationLambdaPopup(qsTr("chat_view_detail_delete_history_toast_title"),
+                                //: All the messages will be removed from the chat room. Do you want to continue ?
+                                qsTr("chat_view_detail_delete_history_toast_message"),
                                 "",
                                 function(confirmed) {
                                     if (confirmed) {

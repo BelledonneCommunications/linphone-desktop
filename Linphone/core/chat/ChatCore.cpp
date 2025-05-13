@@ -108,8 +108,8 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 			clearMessagesList();
 			//: Deleted
 			Utils::showInformationPopup(tr("info_toast_deleted_title"),
-			                            //: Message history has been deleted
-			                            tr("info_toast_deleted_message_history"), true);
+										//: Message history has been deleted
+										tr("info_toast_deleted_message_history"), true);
 		});
 	});
 	mChatModelConnection->makeConnectToCore(&ChatCore::lUpdateUnreadCount, [this]() {

@@ -27,45 +27,45 @@
 <context>
     <name>AccountCore</name>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="407"/>
+        <location filename="../../core/account/AccountCore.cpp" line="434"/>
         <source>drawer_menu_account_connection_status_connected</source>
         <extracomment>&quot;Connecté&quot;</extracomment>
         <translation>Connected</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="410"/>
+        <location filename="../../core/account/AccountCore.cpp" line="437"/>
         <source>drawer_menu_account_connection_status_refreshing</source>
         <translation>Refreshing…</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="413"/>
+        <location filename="../../core/account/AccountCore.cpp" line="440"/>
         <source>drawer_menu_account_connection_status_progress</source>
         <translation>Connecting…</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="416"/>
+        <location filename="../../core/account/AccountCore.cpp" line="443"/>
         <source>drawer_menu_account_connection_status_failed</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="420"/>
+        <location filename="../../core/account/AccountCore.cpp" line="447"/>
         <source>drawer_menu_account_connection_status_cleared</source>
         <translation>Disabled</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="430"/>
+        <location filename="../../core/account/AccountCore.cpp" line="481"/>
         <source>manage_account_status_connected_summary</source>
         <extracomment>&quot;Vous êtes en ligne et joignable.&quot;</extracomment>
         <translation>You are online and reachable.</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="433"/>
+        <location filename="../../core/account/AccountCore.cpp" line="484"/>
         <source>manage_account_status_failed_summary</source>
         <extracomment>&quot;Erreur de connexion, vérifiez vos paramètres.&quot;</extracomment>
         <translation>Connection error, check your settings.</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="437"/>
+        <location filename="../../core/account/AccountCore.cpp" line="488"/>
         <source>manage_account_status_cleared_summary</source>
         <extracomment>&quot;Compte désactivé, vous ne recevrez ni appel ni message.&quot;</extracomment>
         <translation>Account disabled, you will not receive calls or messages.</translation>
@@ -513,74 +513,74 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../../core/App.cpp" line="326"/>
+        <location filename="../../core/App.cpp" line="329"/>
         <source>remote_provisioning_dialog</source>
         <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
         <translation>Do you want to download and apply remote provisioning from this address ?</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="780"/>
+        <location filename="../../core/App.cpp" line="786"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>A free and open source SIP video-phone.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="782"/>
+        <location filename="../../core/App.cpp" line="788"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Send an order to the application towards a command line</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="785"/>
+        <location filename="../../core/App.cpp" line="792"/>
         <source>command_line_option_show_help</source>
         <translation>Show this help</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="790"/>
+        <location filename="../../core/App.cpp" line="797"/>
         <source>command_line_option_show_app_version</source>
         <translation>Show app version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="796"/>
+        <location filename="../../core/App.cpp" line="804"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="799"/>
+        <location filename="../../core/App.cpp" line="806"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, path or file</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="803"/>
+        <location filename="../../core/App.cpp" line="811"/>
         <source>command_line_option_minimized</source>
         <translation>Minimize</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="806"/>
+        <location filename="../../core/App.cpp" line="814"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Log to stdout some debug information while running</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="809"/>
+        <location filename="../../core/App.cpp" line="817"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1169"/>
+        <location filename="../../core/App.cpp" line="1187"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1169"/>
+        <location filename="../../core/App.cpp" line="1187"/>
         <source>show_action</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1184"/>
+        <location filename="../../core/App.cpp" line="1202"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quit</translation>
@@ -703,27 +703,101 @@
     </message>
 </context>
 <context>
+    <name>CallForwardSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="73"/>
+        <source>settings_call_forward_activate_title</source>
+        <extracomment>&quot;Forward calls&quot;</extracomment>
+        <translation>Forward calls</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="75"/>
+        <source>settings_call_forward_activate_subtitle</source>
+        <extracomment>&quot;Enable call forwarding to voicemail or sip address&quot;</extracomment>
+        <translation>Forward calls to voicemail or a Number / SIP Address / number</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="82"/>
+        <source>settings_call_forward_destination_choose</source>
+        <extracomment>Forward to destination</extracomment>
+        <translation>Forward calls to:</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="94"/>
+        <source>settings_call_forward_to_voicemail</source>
+        <translation>Voicemail</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="95"/>
+        <source>settings_call_forward_to_sipaddress</source>
+        <translation>Number / SIP Address</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="132"/>
+        <source>settings_call_forward_sipaddress_title</source>
+        <extracomment>SIP Address</extracomment>
+        <translation>Number / SIP Address:</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="133"/>
+        <source>settings_call_forward_sipaddress_placeholder</source>
+        <translation>John.doe</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="51"/>
+        <source>settings_call_forward_address_cannot_be_empty</source>
+        <translation>A number or SIP address is mandatory</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="45"/>
+        <source>settings_call_forward_address_timeout</source>
+        <translation>Unable to set call forward, request timeout</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
+        <source>settings_call_forward_address_progress_disabling</source>
+        <translation>Disabling call forward</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
+        <source>settings_call_forward_address_progress_enabling</source>
+        <translation>Enabling call forward to:</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
+        <source>settings_call_forward_activation_success</source>
+        <translation>Call forward activated to : </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
+        <source>settings_call_forward_deactivation_success</source>
+        <translation>Call forward deactivated</translation>
+    </message>
+</context>
+<context>
     <name>CallHistoryLayout</name>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="163"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="147"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
         <translation>Join meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="181"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="165"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Call</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="195"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="179"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
         <translation>Message</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="206"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="195"/>
         <source>contact_video_call_action</source>
         <extracomment>&quot;Appel Video&quot;</extracomment>
         <translation>Video call</translation>
@@ -803,43 +877,43 @@
 <context>
     <name>CallModel</name>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="338"/>
+        <location filename="../../model/call/CallModel.cpp" line="342"/>
         <source>call_error_user_declined_toast</source>
         <extracomment>&quot;Le correspondant a décliné l&apos;appel&quot;</extracomment>
         <translation>User declined the call</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="342"/>
+        <location filename="../../model/call/CallModel.cpp" line="346"/>
         <source>call_error_user_not_found_toast</source>
         <extracomment>&quot;Le correspondant n&apos;a pas été trouvé&quot;</extracomment>
         <translation>User was not found</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="346"/>
+        <location filename="../../model/call/CallModel.cpp" line="350"/>
         <source>call_error_user_busy_toast</source>
         <extracomment>&quot;Le correspondant est occupé&quot;</extracomment>
         <translation>User is busy</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="350"/>
+        <location filename="../../model/call/CallModel.cpp" line="354"/>
         <source>call_error_incompatible_media_params_toast</source>
         <extracomment>&quot;Le correspondant ne peut accepter votre appel.&quot;</extracomment>
         <translation>User can&apos;t accept your call</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="354"/>
+        <location filename="../../model/call/CallModel.cpp" line="358"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Service indisponible ou erreur réseau&quot;</extracomment>
         <translation>Unavailable service or network error</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="358"/>
+        <location filename="../../model/call/CallModel.cpp" line="362"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporairement indisponible&quot;</extracomment>
         <translation>temporarily unavailable</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="362"/>
+        <location filename="../../model/call/CallModel.cpp" line="366"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Délai d&apos;attente du serveur dépassé&quot;</extracomment>
         <translation>Server tiemout</translation>
@@ -847,18 +921,16 @@
 </context>
 <context>
     <name>CallPage</name>
-	<message>
-		<location filename="../../view/Page/Main/Call/CallPage.qml"/>
-		<source>call_forward_to_address_info</source>
-		<extracomment>&quot;Forward calls to: &quot;</extracomment>
-		<translation>Forward calls to: </translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Main/Call/CallPage.qml"/>
-		<source>call_forward_to_address_info_voicemail</source>
-		<extracomment>&quot;Voicemail&quot;</extracomment>
-		<translation>Voicemail</translation>
-	</message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="243"/>
+        <source>call_forward_to_address_info</source>
+        <translation>Forward calls to: </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="243"/>
+        <source>call_forward_to_address_info_voicemail</source>
+        <translation>Voicemail</translation>
+    </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="14"/>
         <source>history_call_start_title</source>
@@ -872,74 +944,74 @@
         <translation>Empty call history</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="86"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="87"/>
         <source>history_dialog_delete_all_call_logs_title</source>
         <extracomment>Supprimer l&apos;historique d&apos;appels ?</extracomment>
         <translation>Delete call history ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="88"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="89"/>
         <source>history_dialog_delete_all_call_logs_message</source>
         <extracomment>&quot;L&apos;ensemble de votre historique d&apos;appels sera définitivement supprimé.&quot;</extracomment>
         <translation>Call history will be permanently deleted.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="94"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="95"/>
         <source>history_dialog_delete_call_logs_title</source>
         <extracomment>Supprimer l&apos;historique d&apos;appels ?</extracomment>
         <translation>Delete call history ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="96"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="97"/>
         <source>history_dialog_delete_call_logs_message</source>
         <extracomment>&quot;L&apos;ensemble de votre historique d&apos;appels avec ce correspondant sera définitivement supprimé.&quot;</extracomment>
         <translation>Call history with this user will be permanently deleted.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="147"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="148"/>
         <source>call_history_call_list_title</source>
         <extracomment>&quot;Appels&quot;</extracomment>
         <translation>Calls</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="168"/>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="588"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="169"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="623"/>
         <source>menu_delete_history</source>
         <extracomment>&quot;Supprimer l&apos;historique&quot;</extracomment>
         <translation>Delete history</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="208"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="209"/>
         <source>call_search_in_history</source>
         <extracomment>&quot;Rechercher un appel&quot;</extracomment>
         <translation>Find call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="235"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="272"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
         <translation>No result found…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="237"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="274"/>
         <source>history_list_empty_history</source>
         <extracomment>&quot;Aucun appel dans votre historique&quot;</extracomment>
         <translation>No call in history</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="314"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="352"/>
         <source>call_action_start_new_call</source>
         <extracomment>&quot;Nouvel appel&quot;</extracomment>
         <translation>New call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="381"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="419"/>
         <source>call_start_group_call_title</source>
         <extracomment>&quot;Appel de groupe&quot;</extracomment>
         <translation>Group call</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="392"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="430"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
         <translation>
@@ -948,92 +1020,92 @@
         </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="407"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="445"/>
         <source>call_action_start_group_call</source>
         <extracomment>&quot;Lancer&quot;</extracomment>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="425"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="463"/>
         <source>history_group_call_start_dialog_subject_hint</source>
         <extracomment>&quot;Nom du groupe&quot;</extracomment>
         <translation>Group name</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="434"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="472"/>
         <source>required</source>
         <extracomment>&quot;Requis&quot;</extracomment>
         <translation>Required</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="456"/>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="460"/>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="564"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="494"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="498"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="599"/>
         <source>information_popup_error_title</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="458"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="496"/>
         <source>group_call_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné à l&apos;appel de groupe</extracomment>
         <translation>A name must be provided for the call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="462"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="500"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
         <translation>You are not connected</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="526"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="564"/>
         <source>menu_see_existing_contact</source>
         <extracomment>&quot;Show contact&quot;</extracomment>
         <translation>Show contact</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="528"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="566"/>
         <source>menu_add_address_to_contacts</source>
         <extracomment>&quot;Add to contacts&quot;</extracomment>
         <translation>Add to contacts</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="546"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="581"/>
         <source>menu_copy_sip_address</source>
         <extracomment>&quot;Copier l&apos;adresse SIP&quot;</extracomment>
         <translation>Copy SIP address</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="558"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="593"/>
         <source>sip_address_copied_to_clipboard_toast</source>
         <extracomment>Adresse copiée</extracomment>
         <translation>SIP address copied</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="560"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="595"/>
         <source>sip_address_copied_to_clipboard_message</source>
         <extracomment>L&apos;adresse a été copié dans le presse_papiers</extracomment>
         <translation>The address has been copied to the clipboard</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="566"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="601"/>
         <source>sip_address_copy_to_clipboard_error</source>
         <extracomment>&quot;Erreur lors de la copie de l&apos;adresse&quot;</extracomment>
         <translation>Error copying address</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="664"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="699"/>
         <source>notification_missed_call_title</source>
         <extracomment>&quot;Appel manqué&quot;</extracomment>
         <translation>Missed call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="667"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="702"/>
         <source>call_outgoing</source>
         <extracomment>&quot;Appel sortant&quot;</extracomment>
         <translation>Outgoing call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="669"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="704"/>
         <source>call_audio_incoming</source>
         <extracomment>&quot;Appel entrant&quot;</extracomment>
         <translation>Incoming call</translation>
@@ -1089,18 +1161,17 @@
         <extracomment>&quot;Autoriser la vidéo&quot;</extracomment>
         <translation>Enable video</translation>
     </message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="77"/>
-		<source>settings_calls_command_line_title</source>
-		<extracomment>&quot;Redirection vers outil externe lors d'un appel entrant&quot;</extracomment>
-		<translation>Command Line to run upon incoming call</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="78"/>
-		<source>settings_calls_command_line_title_place_holder</source>
-		<extracomment>&quot;commande "https://exemple.com/?numero=$1&amp;nom=$2"&quot;</extracomment>
-		<translation>command "https://example.com/?phone=$1&amp;displayName=$2"</translation>
-	</message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="77"/>
+        <source>settings_calls_command_line_title</source>
+        <extracomment>Command line</extracomment>
+        <translation>Command Line to run upon incoming call</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="78"/>
+        <source>settings_calls_command_line_title_place_holder</source>
+        <translation>command &quot;https://example.com/?phone=$1&amp;displayName=$2&quot;</translation>
+    </message>
 </context>
 <context>
     <name>CallStatistics</name>
@@ -1258,98 +1329,98 @@
         <translation>Add</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="638"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="651"/>
         <source>call_transfer_current_call_title</source>
         <extracomment>&quot;Transférer %1 à…&quot;</extracomment>
         <translation>Transfer %1 to…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="651"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="663"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="664"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="676"/>
         <source>call_transfer_confirm_dialog_tittle</source>
         <extracomment>&quot;Confirmer le transfert&quot;</extracomment>
         <translation>Confirm transfer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="653"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="664"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="666"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="677"/>
         <source>call_transfer_confirm_dialog_message</source>
         <extracomment>&quot;Vous allez transférer %1 à %2.&quot;</extracomment>
         <translation>You are going to transfer %1 to %2.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="694"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="707"/>
         <source>call_action_start_new_call</source>
         <extracomment>&quot;Nouvel appel&quot;</extracomment>
         <translation>New call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="734"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1425"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="747"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1477"/>
         <source>call_action_show_dialer</source>
         <extracomment>&quot;Pavé numérique&quot;</extracomment>
         <translation>Dialer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="772"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="785"/>
         <source>call_action_change_layout</source>
         <extracomment>&quot;Modifier la disposition&quot;</extracomment>
         <translation>Change layout</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="788"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="801"/>
         <source>call_action_go_to_calls_list</source>
         <extracomment>&quot;Liste d&apos;appel&quot;</extracomment>
         <translation>Call list</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="807"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="820"/>
         <source>Merger tous les appels</source>
         <extracomment>call_action_merge_calls</extracomment>
         <translation>Merge all calls</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="844"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1500"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="879"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1552"/>
         <source>call_action_go_to_settings</source>
         <extracomment>&quot;Paramètres&quot;</extracomment>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="865"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="900"/>
         <source>conference_action_screen_sharing</source>
         <extracomment>&quot;Partage de votre écran&quot;</extracomment>
         <translation>Share your screen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="916"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="951"/>
         <source>conference_share_link_title</source>
         <extracomment>Partager le lien de la réunion</extracomment>
         <translation>Share meeting link</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="920"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="955"/>
         <source>copied</source>
         <extracomment>Copié</extracomment>
         <translation>Copied</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="922"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="957"/>
         <source>information_popup_meeting_address_copied_to_clipboard</source>
         <extracomment>Le lien de la réunion a été copié dans le presse-papier</extracomment>
         <translation>Meeting link has been copied to the clipboard</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="930"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="935"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="941"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="965"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="970"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="976"/>
         <source>conference_participants_list_title</source>
         <extracomment>&quot;Participants (%1)&quot;</extracomment>
         <translation>Participants (%1)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="961"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="969"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="996"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1004"/>
         <source>group_call_participant_selected</source>
         <translation>
             <numerusform>1 selected participant</numerusform>
@@ -1357,143 +1428,149 @@
         </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="968"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1003"/>
         <source>meeting_schedule_add_participants_title</source>
         <translation>Add participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="985"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1020"/>
         <source>call_encryption_title</source>
         <extracomment>Chiffrement</extracomment>
         <translation>Encryption</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="996"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1031"/>
         <source>call_stats_title</source>
         <extracomment>Statistiques</extracomment>
         <translation>Statistics</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1114"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1149"/>
         <source>call_action_end_call</source>
         <extracomment>&quot;Terminer l&apos;appel&quot;</extracomment>
         <translation>End call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1145"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1180"/>
         <source>call_action_resume_call</source>
         <extracomment>&quot;Reprendre l&apos;appel&quot;</extracomment>
         <translation>Resume call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1147"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1182"/>
         <source>call_action_pause_call</source>
         <extracomment>&quot;Mettre l&apos;appel en pause&quot;</extracomment>
         <translation>Pause call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1178"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1213"/>
         <source>call_action_transfer_call</source>
         <extracomment>&quot;Transférer l&apos;appel&quot;</extracomment>
         <translation>Transfer call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1205"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1240"/>
         <source>call_action_start_new_call_hint</source>
         <extracomment>&quot;Initier un nouvel appel&quot;</extracomment>
         <translation>Start new call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1232"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1267"/>
         <source>call_display_call_list_hint</source>
         <extracomment>&quot;Afficher la liste d&apos;appels&quot;</extracomment>
         <translation>View call list</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1272"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1307"/>
         <source>call_deactivate_video_hint</source>
         <extracomment>&quot;Désactiver la vidéo&quot; &quot;Activer la vidéo&quot;</extracomment>
         <translation>Turn off video</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1272"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1307"/>
         <source>call_activate_video_hint</source>
         <translation>Enable video</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1285"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1320"/>
         <source>call_activate_microphone</source>
         <extracomment>&quot;Activer le micro&quot;</extracomment>
         <translation>Activate microphone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1287"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1322"/>
         <source>call_deactivate_microphone</source>
         <extracomment>&quot;Désactiver le micro&quot;</extracomment>
         <translation>Mute microphone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1302"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1337"/>
         <source>call_share_screen_hint</source>
         <extracomment>Partager l&apos;écran…</extracomment>
         <translation>Share screen…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1321"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1354"/>
+        <source>call_open_chat_hint</source>
+        <extracomment>Open chat…</extracomment>
+        <translation>Open chat…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1373"/>
         <source>call_rise_hand_hint</source>
         <extracomment>&quot;Lever la main&quot;</extracomment>
         <translation>Rise hand</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1331"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1383"/>
         <source>call_send_reaction_hint</source>
         <extracomment>&quot;Envoyer une réaction&quot;</extracomment>
         <translation>Send reaction</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1340"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1392"/>
         <source>call_manage_participants_hint</source>
         <extracomment>&quot;Gérer les participants&quot;</extracomment>
         <translation>Manage participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1364"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1416"/>
         <source>call_more_options_hint</source>
         <extracomment>&quot;Plus d&apos;options…&quot;</extracomment>
         <translation>More options…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1393"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1445"/>
         <source>call_action_change_conference_layout</source>
         <extracomment>&quot;Modifier la disposition&quot;</extracomment>
         <translation>Change layout</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1405"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1457"/>
         <source>call_action_full_screen</source>
         <extracomment>&quot;Mode Plein écran&quot;</extracomment>
         <translation>Full screen mode</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1454"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1506"/>
         <source>call_action_stop_recording</source>
         <extracomment>&quot;Terminer l&apos;enregistrement&quot;</extracomment>
         <translation>End recording</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1456"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1508"/>
         <source>call_action_record</source>
         <extracomment>&quot;Enregistrer l&apos;appel&quot;</extracomment>
         <translation>Record call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1482"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1534"/>
         <source>call_activate_speaker_hint</source>
         <extracomment>&quot;Activer le son&quot;</extracomment>
         <translation>Activate speaker</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1484"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1536"/>
         <source>call_deactivate_speaker_hint</source>
         <extracomment>&quot;Désactiver le son&quot;</extracomment>
         <translation>Mute speaker</translation>
@@ -1606,6 +1683,93 @@
     </message>
 </context>
 <context>
+    <name>ChatCore</name>
+    <message>
+        <location filename="../../core/chat/ChatCore.cpp" line="110"/>
+        <source>info_toast_deleted_title</source>
+        <extracomment>Deleted</extracomment>
+        <translation>Deleted</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/ChatCore.cpp" line="112"/>
+        <source>info_toast_deleted_message_history</source>
+        <extracomment>Message history has been deleted</extracomment>
+        <translation>Message history has been deleted</translation>
+    </message>
+</context>
+<context>
+    <name>ChatListView</name>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="248"/>
+        <source>chat_room_delete</source>
+        <extracomment>&quot;Supprimer&quot;</extracomment>
+        <translation>Delete</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="254"/>
+        <source>chat_list_delete_chat_popup_title</source>
+        <extracomment>Delete the chat ?</extracomment>
+        <translation>Delete the chat ?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="256"/>
+        <source>chat_list_delete_chat_popup_message</source>
+        <extracomment>This chat and all its messages will be deleted. Do You want to continue ?</extracomment>
+        <translation>This chat and all its messages will be deleted. Do You want to continue ?</translation>
+    </message>
+</context>
+<context>
+    <name>ChatMessage</name>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="167"/>
+        <source>chat_message_copy</source>
+        <extracomment>&quot;Copy&quot;</extracomment>
+        <translation>Copy</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="175"/>
+        <source>chat_message_copied_to_clipboard_title</source>
+        <extracomment>Copied</extracomment>
+        <translation>Copied</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="177"/>
+        <source>chat_message_copied_to_clipboard_toast</source>
+        <extracomment>&quot;to clipboard&quot;</extracomment>
+        <translation>in clipboard</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="183"/>
+        <source>chat_message_delete</source>
+        <extracomment>&quot;Delete&quot;</extracomment>
+        <translation>Delete</translation>
+    </message>
+</context>
+<context>
+    <name>ChatMessageCore</name>
+    <message>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="70"/>
+        <source>info_toast_deleted_title</source>
+        <extracomment>Deleted</extracomment>
+        <translation>Deleted</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="72"/>
+        <source>info_toast_deleted_message</source>
+        <extracomment>The message has been deleted</extracomment>
+        <translation>The message has been deleted</translation>
+    </message>
+</context>
+<context>
+    <name>ChatMessagesListView</name>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="101"/>
+        <source>chat_message_is_writing_info</source>
+        <extracomment>%1 is writing…</extracomment>
+        <translation>%1 is writing…</translation>
+    </message>
+</context>
+<context>
     <name>ChatPage</name>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="14"/>
@@ -1620,43 +1784,43 @@
         <translation>No conversation</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="49"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="54"/>
         <source>chat_dialog_delete_chat_title</source>
         <extracomment>Supprimer la conversation ?</extracomment>
         <translation>Delete chat ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="51"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="56"/>
         <source>chat_dialog_delete_chat_message</source>
         <extracomment>&quot;La conversation et tous ses messages seront supprimés.&quot;</extracomment>
         <translation>This chat and all its messages will be deleted.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="80"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="85"/>
         <source>chat_list_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
         <translation>Chat</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="110"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="115"/>
         <source>chat_search_in_history</source>
         <extracomment>&quot;Rechercher une conversation&quot;</extracomment>
         <translation>Search for a chat</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="133"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="138"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
         <translation>No result…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="135"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="140"/>
         <source>chat_list_empty_history</source>
         <extracomment>&quot;Aucune conversation dans votre historique&quot;</extracomment>
         <translation>No chat in history</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="203"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="207"/>
         <source>chat_action_start_new_chat</source>
         <extracomment>&quot;New chat&quot;</extracomment>
         <translation>New chat</translation>
@@ -1713,37 +1877,13 @@
 <context>
     <name>Contact</name>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="107"/>
-        <source>drawer_menu_account_connection_status_connected</source>
-        <extracomment>&quot;Connecté&quot;</extracomment>
-        <translation>Connected</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="110"/>
-        <source>drawer_menu_account_connection_status_cleared</source>
-        <extracomment>&quot;Désactivé&quot;</extracomment>
-        <translation>Disabled</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="113"/>
-        <source>drawer_menu_account_connection_status_refreshing</source>
-        <extracomment>&quot;Connexion…&quot;</extracomment>
-        <translation>Connecting…</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="115"/>
-        <source>drawer_menu_account_connection_status_failed</source>
-        <extracomment>&quot;Erreur&quot;</extracomment>
-        <translation>Error</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="169"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="192"/>
         <source>information_popup_error_title</source>
         <extracomment>Erreur</extracomment>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="171"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="194"/>
         <source>information_popup_voicemail_address_undefined_message</source>
         <extracomment>L&apos;URI de messagerie vocale n&apos;est pas définie.</extracomment>
         <translation>The voicemail URI is not defined.</translation>
@@ -1841,53 +1981,53 @@
 <context>
     <name>ContactListItem</name>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="188"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="192"/>
         <source>contact_details_remove_from_favourites</source>
         <extracomment>&quot;Enlever des favoris&quot;</extracomment>
         <translation>Remove from favorites</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="190"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="194"/>
         <source>contact_details_add_to_favourites</source>
         <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
         <translation>Add to favorites</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="204"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="208"/>
         <source>Partager</source>
         <translation>Share</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="216"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="221"/>
         <source>information_popup_error_title</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="218"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="223"/>
         <source>information_popup_vcard_creation_error</source>
         <extracomment>La création du fichier vcard a échoué</extracomment>
         <translation>VCard creation failed</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="222"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="227"/>
         <source>information_popup_vcard_creation_title</source>
         <extracomment>VCard créée</extracomment>
         <translation>VCard created</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="224"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="229"/>
         <source>information_popup_vcard_creation_success</source>
         <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
         <translation>VCard has been saved in %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="226"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="231"/>
         <source>contact_sharing_email_title</source>
         <extracomment>Partage de contact</extracomment>
         <translation>Share contact</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="232"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="237"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Delete</translation>
@@ -2026,7 +2166,7 @@
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="372"/>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="763"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="743"/>
         <source>contact_details_edit</source>
         <extracomment>&quot;Éditer&quot;</extracomment>
         <translation>Edit</translation>
@@ -2038,7 +2178,7 @@
         <translation>Call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="422"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="420"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
         <translation>Message</translation>
@@ -2050,144 +2190,120 @@
         <translation>Video call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="464"/>
-        <source>contact_presence_status_online</source>
-        <extracomment>&quot;En ligne&quot;</extracomment>
-        <translation>Online</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="467"/>
-        <source>contact_presence_status_busy</source>
-        <extracomment>&quot;Occupé&quot;</extracomment>
-        <translation>Busy</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="470"/>
-        <source>contact_presence_status_do_not_disturb</source>
-        <extracomment>&quot;Ne pas déranger&quot;</extracomment>
-        <translation>Do not disturb</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="472"/>
-        <source>contact_presence_status_offline</source>
-        <extracomment>&quot;Hors ligne&quot;</extracomment>
-        <translation>Offline</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="501"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="482"/>
         <source>contact_details_numbers_and_addresses_title</source>
         <extracomment>&quot;Coordonnées&quot;</extracomment>
         <translation>Contact details</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="588"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="569"/>
         <source>contact_details_company_name</source>
         <extracomment>&quot;Société :&quot;</extracomment>
         <translation>Company :</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="609"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="590"/>
         <source>contact_details_job_title</source>
         <extracomment>&quot;Poste :&quot;</extracomment>
         <translation>Job :</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="631"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="612"/>
         <source>contact_details_medias_title</source>
         <extracomment>&quot;Medias&quot;</extracomment>
         <translation>Medias</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="644"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="625"/>
         <source>contact_details_medias_subtitle</source>
         <extracomment>&quot;Afficher les medias partagés&quot;</extracomment>
         <translation>Show shared media</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="667"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="648"/>
         <source>contact_details_trust_title</source>
         <extracomment>&quot;Confiance&quot;</extracomment>
         <translation>Trust</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="674"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="655"/>
         <source>contact_dialog_devices_trust_title</source>
         <extracomment>&quot;Niveau de confiance - Appareils vérifiés&quot;</extracomment>
         <translation>Trust Level - Verified Devices</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="683"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="664"/>
         <source>contact_details_no_device_found</source>
         <extracomment>&quot;Aucun appareil&quot;</extracomment>
         <translation>No device</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="708"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="689"/>
         <source>contact_device_without_name</source>
         <extracomment>&quot;Appareil inconnu&quot;</extracomment>
         <translation>Unknown device</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="729"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="710"/>
         <source>contact_make_call_check_device_trust</source>
         <extracomment>&quot;Vérifier&quot;</extracomment>
         <translation>Verify</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="755"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="736"/>
         <source>contact_details_actions_title</source>
         <extracomment>&quot;Autres actions&quot;</extracomment>
         <translation>Other actions</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="782"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="762"/>
         <source>contact_details_remove_from_favourites</source>
         <extracomment>&quot;Retirer des favoris&quot;</extracomment>
         <translation>Remove from favorites</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="784"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="764"/>
         <source>contact_details_add_to_favourites</source>
         <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
         <translation>Add to favorites</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="800"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="780"/>
         <source>contact_details_share</source>
         <extracomment>&quot;Partager&quot;</extracomment>
         <translation>Share</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="811"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="791"/>
         <source>information_popup_error_title</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="813"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="793"/>
         <source>contact_details_share_error_mesage</source>
         <extracomment>&quot;La création du fichier vcard a échoué&quot;</extracomment>
         <translation>VCard creation failed</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="818"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="798"/>
         <source>contact_details_share_success_title</source>
         <extracomment>&quot;VCard créée&quot;</extracomment>
         <translation>VCard created</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="820"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="800"/>
         <source>contact_details_share_success_mesage</source>
         <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
         <translation>VCard has been saved in %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="823"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="803"/>
         <source>contact_details_share_email_title</source>
         <extracomment>&quot;Partage de contact&quot;</extracomment>
         <translation>Share contact</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="862"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="842"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer ce contact&quot;</extracomment>
         <translation>Delete contact</translation>
@@ -2359,13 +2475,13 @@
 <context>
     <name>DecoratedTextField</name>
     <message>
-        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="49"/>
+        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="53"/>
         <source>textfield_error_message_cannot_be_empty</source>
         <extracomment>&quot;ne peut être vide&quot;</extracomment>
         <translation>can not be empty</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="52"/>
+        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="56"/>
         <source>textfield_error_message_unknown_format</source>
         <extracomment>&quot;Format non reconnu&quot;</extracomment>
         <translation>Unknown format</translation>
@@ -2401,11 +2517,6 @@
         <source>call_stats_media_encryption</source>
         <extracomment>Media encryption : %1</extracomment>
         <translation>Media encryption : %1%2</translation>
-    </message>
-    <message>
-        <source>call_stats_media_encryption_zrtp_post_quantum</source>
-        <extracomment>ZRTP Post Quantique</extracomment>
-        <translation type="vanished">Post Quantum ZRTP</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="46"/>
@@ -2448,29 +2559,29 @@
     <name>FriendCore</name>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="31"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="68"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="191"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="426"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="616"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="69"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="188"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="424"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="589"/>
         <source>sip_address</source>
         <extracomment>&quot;Adresse SIP&quot;</extracomment>
         <translation>SIP address</translation>
     </message>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="33"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="76"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="199"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="77"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="196"/>
         <source>device_id</source>
         <extracomment>&quot;Téléphone&quot;</extracomment>
         <translation>Phone</translation>
     </message>
     <message>
-        <location filename="../../core/friend/FriendCore.cpp" line="422"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="420"/>
         <source>information_popup_error_title</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../core/friend/FriendCore.cpp" line="424"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="422"/>
         <source>information_popup_invalid_address_message</source>
         <extracomment>&quot;Adresse invalide&quot;</extracomment>
         <translation>Invalid address</translation>
@@ -2832,102 +2943,102 @@
 <context>
     <name>MainLayout</name>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="133"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="143"/>
         <source>bottom_navigation_calls_label</source>
         <extracomment>&quot;Appels&quot;</extracomment>
         <translation>Calls</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="138"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="148"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
         <translation>Contacts</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="143"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="153"/>
         <source>bottom_navigation_conversations_label</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
         <translation>Conversations</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="149"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="159"/>
         <source>bottom_navigation_meetings_label</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
         <translation>Meetings</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="196"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="206"/>
         <source>searchbar_placeholder_text</source>
         <extracomment>&quot;Rechercher un contact, appeler %1&quot;</extracomment>
         <translation>Find contact, call %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="199"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="209"/>
         <source>searchbar_placeholder_text_chat_feature_enabled</source>
         <extracomment>&quot;ou envoyer un message …&quot;</extracomment>
         <translation>or send message …</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="305"/>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="439"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="315"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="449"/>
         <source>contact_presence_status_disable_do_not_disturb</source>
         <extracomment>&quot;Désactiver ne pas déranger&quot;</extracomment>
         <translation>Disable do not disturb</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="361"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="371"/>
         <source>information_popup_error_title</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="363"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="373"/>
         <source>no_voicemail_uri_error_message</source>
         <extracomment>&quot;L&apos;URI de messagerie vocale n&apos;est pas définie.&quot;</extracomment>
         <translation>The voicemail URI is not defined.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="423"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="433"/>
         <source>drawer_menu_manage_account</source>
         <extracomment>Mon compte</extracomment>
         <translation>My account</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="441"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="451"/>
         <source>contact_presence_status_enable_do_not_disturb</source>
         <extracomment>&quot;Activer ne pas déranger&quot;</extracomment>
         <translation>Enable do not disturb</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="460"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="470"/>
         <source>settings_title</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="478"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="488"/>
         <source>recordings_title</source>
         <extracomment>&quot;Enregistrements&quot;</extracomment>
         <translation>Records</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="493"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="503"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="510"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="520"/>
         <source>help_quit_title</source>
         <extracomment>&quot;Quitter l&apos;application&quot;</extracomment>
         <translation>Quit the app</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="515"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="525"/>
         <source>quit_app_question</source>
         <extracomment>&quot;Quitter %1 ?&quot;</extracomment>
         <translation>Quit %1 ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="544"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="554"/>
         <source>drawer_menu_add_account</source>
         <extracomment>&quot;Ajouter un compte&quot;</extracomment>
         <translation>Add an account</translation>
@@ -2954,60 +3065,60 @@
         <translation>interoperable</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="62"/>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="70"/>
         <source>call_transfer_successful_toast_title</source>
         <extracomment>&quot;Appel transféré&quot;</extracomment>
         <translation>Call forwarded</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="64"/>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="72"/>
         <source>call_transfer_successful_toast_message</source>
         <extracomment>&quot;Votre correspondant a été transféré au contact sélectionné&quot;</extracomment>
         <translation>Your correspondent has been transferred to the selected contact</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="110"/>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="118"/>
         <source>information_popup_success_title</source>
         <translation>Saved</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="112"/>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="120"/>
         <source>information_popup_changes_saved</source>
         <extracomment>&quot;Les changements ont été sauvegardés&quot;</extracomment>
         <translation>Changes have been saved</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="197"/>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="205"/>
         <source>captcha_validation_loading_message</source>
         <extracomment>&quot;Veuillez valider le captcha sur la page web&quot;</extracomment>
         <translation>Please validate the captcha on the web page</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="205"/>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="213"/>
         <source>assistant_register_error_title</source>
         <extracomment>&quot;Erreur lors de la création&quot;</extracomment>
         <translation>Error while creating</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="224"/>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="232"/>
         <source>assistant_register_success_title</source>
         <extracomment>&quot;Compte créé&quot;</extracomment>
         <translation>Account created</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="226"/>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="234"/>
         <source>assistant_register_success_message</source>
         <extracomment>&quot;Le compte a été créé. Vous pouvez maintenant vous connecter&quot;</extracomment>
         <translation>The account has been created. You can now log in.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="230"/>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="238"/>
         <source>assistant_register_error_code</source>
         <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
         <translation>Error in validation code</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="231"/>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="239"/>
         <source>information_popup_error_title</source>
         <translation>Error</translation>
     </message>
@@ -3381,6 +3492,32 @@
     </message>
 </context>
 <context>
+    <name>Notifier</name>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="354"/>
+        <source>new_voice_message</source>
+        <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
+        <translation>Voice message received!</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="355"/>
+        <source>new_file_message</source>
+        <translation>File received!</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="358"/>
+        <source>new_conference_invitation</source>
+        <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
+        <translation>Conference invitation received !</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="361"/>
+        <source>new_chat_room_messages</source>
+        <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
+        <translation>New messages received !</translation>
+    </message>
+</context>
+<context>
     <name>OIDCModel</name>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="56"/>
@@ -3388,103 +3525,108 @@
         <translation>OAuthHttpServerReplyHandler is not listening</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="100"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="106"/>
         <source>oidc_authentication_timeout_message</source>
         <extracomment>Timeout: Not authenticated</extracomment>
         <translation>Timeout: Not authenticated</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="117"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="123"/>
         <source>oidc_authentication_granted_message</source>
         <extracomment>Authentication granted</extracomment>
         <translation>Authentication granted</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="124"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="130"/>
         <source>oidc_authentication_not_authenticated_message</source>
         <extracomment>Not authenticated</extracomment>
         <translation>Not authenticated</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="130"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="136"/>
         <source>oidc_authentication_refresh_message</source>
         <extracomment>Refreshing token</extracomment>
         <translation>Refreshing token</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="135"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="141"/>
         <source>oidc_authentication_temporary_credentials_message</source>
         <extracomment>Temporary credentials received</extracomment>
         <translation>Temporary credentials received</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="153"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="159"/>
         <source>oidc_authentication_network_error</source>
         <extracomment>Network error</extracomment>
         <translation>Network error</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="157"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="163"/>
         <source>oidc_authentication_server_error</source>
         <extracomment>Server error</extracomment>
         <translation>Server error</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="161"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="167"/>
         <source>oidc_authentication_token_not_found_error</source>
         <extracomment>OAuth token not found</extracomment>
         <translation>OAuth token not found</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="165"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="171"/>
         <source>oidc_authentication_token_secret_not_found_error</source>
         <extracomment>OAuth token secret not found</extracomment>
         <translation>OAuth token secret not found</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="169"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="175"/>
         <source>oidc_authentication_callback_not_verified_error</source>
         <extracomment>OAuth callback not verified</extracomment>
         <translation>OAuth callback not verified</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="180"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="186"/>
         <source>oidc_authentication_request_auth_message</source>
         <extracomment>Requesting authorization from browser</extracomment>
         <translation>Requesting authorization from browser</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="200"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="217"/>
+        <source>oidc_authentication_no_token_found_error</source>
+        <translation>No token found</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="230"/>
         <source>oidc_authentication_request_token_message</source>
         <extracomment>Requesting access token</extracomment>
         <translation>Requesting access token</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="205"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="235"/>
         <source>oidc_authentication_refresh_token_message</source>
         <extracomment>Refreshing access token</extracomment>
         <translation>Refreshing access token</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="210"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="240"/>
         <source>oidc_authentication_request_authorization_message</source>
         <extracomment>Requesting authorization</extracomment>
         <translation>Requesting authorization</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="215"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="245"/>
         <source>oidc_authentication_request_temporary_credentials_message</source>
         <extracomment>Requesting temporary credentials</extracomment>
         <translation>Requesting temporary credentials</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="242"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="272"/>
         <source>oidc_authentication_no_auth_found_in_config_error</source>
         <extracomment>No authorization endpoint found in OpenID configuration</extracomment>
         <translation>No authorization endpoint found in OpenID configuration</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="253"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="287"/>
         <source>oidc_authentication_no_token_found_in_config_error</source>
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
         <translation>No token endpoint found in OpenID configuration</translation>
@@ -3506,57 +3648,112 @@
     </message>
 </context>
 <context>
+    <name>Presence</name>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Presence.qml" line="29"/>
+        <source>contact_presence_reset_status</source>
+        <translation>Reset status</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Presence.qml" line="82"/>
+        <source>contact_presence_button_set_custom_status</source>
+        <translation>Set</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Presence.qml" line="96"/>
+        <source>contact_presence_button_edit_custom_status</source>
+        <translation>Edit</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Presence.qml" line="104"/>
+        <source>contact_presence_button_delete_custom_status</source>
+        <translation>Delete</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Presence.qml" line="71"/>
+        <source>contact_presence_custom_status</source>
+        <translation>Custom status</translation>
+    </message>
+</context>
+<context>
+    <name>PresenceNoteLayout</name>
+    <message>
+        <location filename="../../view/Control/Container/Contact/PresenceNoteLayout.qml" line="40"/>
+        <source>contact_presence_note_title</source>
+        <translation>Custom message</translation>
+    </message>
+</context>
+<context>
+    <name>PresenceSetCustomStatus</name>
+    <message>
+        <location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml" line="16"/>
+        <source>contact_presence_button_set_custom_status_title</source>
+        <translation>Set a custom status message</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml" line="70"/>
+        <source>contact_presence_button_save_custom_status</source>
+        <translation>Save</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="../../tool/LinphoneEnums.cpp" line="60"/>
-        <source>DTLS</source>
+        <location filename="../../tool/LinphoneEnums.cpp" line="61"/>
+        <source>media_encryption_dtls</source>
         <translation>DTLS</translation>
     </message>
     <message>
-        <location filename="../../tool/LinphoneEnums.cpp" line="62"/>
-        <source>None</source>
+        <location filename="../../tool/LinphoneEnums.cpp" line="63"/>
+        <source>media_encryption_none</source>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../../tool/LinphoneEnums.cpp" line="64"/>
-        <source>SRTP</source>
+        <location filename="../../tool/LinphoneEnums.cpp" line="65"/>
+        <source>media_encryption_srtp</source>
         <translation>SRTP</translation>
     </message>
     <message>
-        <location filename="../../tool/LinphoneEnums.cpp" line="67"/>
+        <location filename="../../tool/LinphoneEnums.cpp" line="68"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
         <translation>Post quantum ZRTP</translation>
     </message>
     <message>
-        <location filename="../../tool/LinphoneEnums.cpp" line="182"/>
+        <location filename="../../tool/LinphoneEnums.cpp" line="183"/>
         <source>incoming</source>
         <extracomment>&quot;Entrant&quot;</extracomment>
         <translation>Incoming</translation>
     </message>
     <message>
-        <location filename="../../tool/LinphoneEnums.cpp" line="185"/>
+        <location filename="../../tool/LinphoneEnums.cpp" line="186"/>
         <source>outgoing</source>
         <extracomment>&quot;Sortant&quot;</extracomment>
         <translation>Outgoing</translation>
     </message>
     <message>
-        <location filename="../../tool/LinphoneEnums.cpp" line="210"/>
+        <location filename="../../tool/LinphoneEnums.cpp" line="212"/>
         <source>conference_layout_active_speaker</source>
         <extracomment>&quot;Participant actif&quot;</extracomment>
         <translation>Active speaker</translation>
     </message>
     <message>
-        <location filename="../../tool/LinphoneEnums.cpp" line="212"/>
+        <location filename="../../tool/LinphoneEnums.cpp" line="214"/>
         <source>conference_layout_grid</source>
         <extracomment>&quot;Mosaïque&quot;</extracomment>
         <translation>Grid</translation>
     </message>
     <message>
-        <location filename="../../tool/LinphoneEnums.cpp" line="214"/>
+        <location filename="../../tool/LinphoneEnums.cpp" line="216"/>
         <source>conference_layout_audio_only</source>
         <extracomment>&quot;Audio uniquement&quot;</extracomment>
         <translation>Audio only</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="484"/>
+        <source>chat_dummy_subject</source>
+        <extracomment>Dummy subject</extracomment>
+        <translation>Dummy subject</translation>
     </message>
 </context>
 <context>
@@ -3905,6 +4102,49 @@ To enable them in a commercial project, please contact us.</translation>
     </message>
 </context>
 <context>
+    <name>SelectedChatView</name>
+    <message>
+        <source>Dites quelque chose…</source>
+        <extracomment>Say something… : placeholder text for sending message text area</extracomment>
+        <translation type="obsolete">Say something…</translation>
+    </message>
+    <message>
+        <source>Autres actions</source>
+        <extracomment>Other actions</extracomment>
+        <translation type="obsolete">Other actions</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="197"/>
+        <source>chat_view_send_area_placeholder_text</source>
+        <extracomment>Say something… : placeholder text for sending message text area</extracomment>
+        <translation>Say something…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="271"/>
+        <source>chat_view_detail_other_actions_title</source>
+        <extracomment>Other actions</extracomment>
+        <translation>Other actions</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="289"/>
+        <source>chat_view_detail_delete_history_button</source>
+        <extracomment>&quot;Delete history&quot;</extracomment>
+        <translation>Delete history</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="292"/>
+        <source>chat_view_detail_delete_history_toast_title</source>
+        <extracomment>Delete history ?</extracomment>
+        <translation>Delete history ?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="294"/>
+        <source>chat_view_detail_delete_history_toast_message</source>
+        <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+        <translation>All the messages will be removed from the chat room. Do you want to continue ?</translation>
+    </message>
+</context>
+<context>
     <name>SettingsPage</name>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="12"/>
@@ -3918,62 +4158,62 @@ To enable them in a commercial project, please contact us.</translation>
         <extracomment>&quot;Appels&quot;</extracomment>
         <translation>Calls</translation>
     </message>
-	<message>
-		<location filename="../../view/Page/Form/Settings/SettingsPage.qml"/>
-		<source>settings_call_forward</source>
-		<extracomment>&quot;Transfert d'appels&quot;</extracomment>
-		<translation>Call forward</translation>
-	</message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="17"/>
+        <source>settings_call_forward</source>
+        <extracomment>&quot;Transfert d&apos;appel&quot;</extracomment>
+        <translation>Call forward</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="19"/>
         <source>settings_conversations_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
         <translation>Conversations</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="19"/>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="21"/>
         <source>settings_contacts_title</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
         <translation>Contacts</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="21"/>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="23"/>
         <source>settings_meetings_title</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
         <translation>Meetings</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="25"/>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="27"/>
         <source>settings_network_title</source>
         <extracomment>&quot;Affichage&quot; &quot;Réseau&quot;</extracomment>
         <translation>Network</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="27"/>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="29"/>
         <source>settings_advanced_title</source>
         <extracomment>&quot;Paramètres avancés&quot;</extracomment>
         <translation>Advanced parameters</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="32"/>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="34"/>
         <source>contact_editor_popup_abort_confirmation_title</source>
         <extracomment>Modifications non enregistrées</extracomment>
         <translation>Unsaved changes</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="34"/>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="36"/>
         <source>contact_editor_popup_abort_confirmation_message</source>
         <extracomment>Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</extracomment>
         <translation>You have unsaved changes. If you leave this page, your changes will be lost. Do you want to save your changes before continuing?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="44"/>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="46"/>
         <source>contact_editor_dialog_abort_confirmation_do_not_save</source>
         <extracomment>&quot;Ne pas enregistrer&quot;</extracomment>
         <translation>Do not save</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="46"/>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="48"/>
         <source>contact_editor_dialog_abort_confirmation_save</source>
         <extracomment>&quot;Enregistrer&quot;</extracomment>
         <translation>Save</translation>
@@ -3982,13 +4222,13 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>Sticker</name>
     <message>
-        <location filename="../../view/Control/Display/Sticker.qml" line="131"/>
+        <location filename="../../view/Control/Display/Sticker.qml" line="134"/>
         <source>conference_participant_joining_text</source>
         <extracomment>&quot;rejoint…&quot;</extracomment>
         <translation>joining…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Sticker.qml" line="157"/>
+        <location filename="../../view/Control/Display/Sticker.qml" line="160"/>
         <source>conference_participant_paused_text</source>
         <extracomment>&quot;En pause&quot;</extracomment>
         <translation>Paused</translation>
@@ -4018,62 +4258,62 @@ To enable them in a commercial project, please contact us.</translation>
         <translation>Group call couldn&apos;t be created</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="440"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="455"/>
         <source>unknown_audio_device_name</source>
         <translation>Unknown device name</translation>
     </message>
 </context>
 <context>
     <name>Utils</name>
-	<message>
-		<location filename="../../tool/Utils.cpp" line="1519"/>
-		<source>contact_presence_status_available</source>
-		<extracomment>&quot;En ligne&quot;</extracomment>
-		<translation>Available</translation>
-	</message>
-	<message>
-		<location filename="../../tool/Utils.cpp" line="1525"/>
-		<source>contact_presence_status_busy</source>
-		<extracomment>&quot;Occupé&quot;</extracomment>
-		<translation>Busy</translation>
-	</message>
-	<message>
-		<location filename="../../tool/Utils.cpp" line="1528"/>
-		<source>contact_presence_status_do_not_disturb</source>
-		<extracomment>&quot;Ne pas déranger&quot;</extracomment>
-		<translation>Do not disturb</translation>
-	</message>
-	<message>
-		<location filename="../../tool/Utils.cpp" line="1531"/>
-		<source>contact_presence_status_offline</source>
-		<extracomment>&quot;Hors ligne&quot;</extracomment>
-		<translation>Offline</translation>
-	</message>
-	<message>
-		<location filename="../../tool/Utils.cpp" line="1522"/>
-		<source>contact_presence_status_away</source>
-		<extracomment>&quot;Absent&quot;</extracomment>
-		<translation>Idle/Away</translation>
-	</message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="151"/>
+        <location filename="../../tool/Utils.cpp" line="1741"/>
+        <source>contact_presence_status_available</source>
+        <translation>Available</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1747"/>
+        <source>contact_presence_status_busy</source>
+        <translation>Busy</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1750"/>
+        <source>contact_presence_status_do_not_disturb</source>
+        <translation>Do not disturb</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1753"/>
+        <source>contact_presence_status_offline</source>
+        <translation>Offline</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1744"/>
+        <source>contact_presence_status_away</source>
+        <translation>Idle/Away</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="163"/>
         <source>information_popup_call_not_created_message</source>
         <extracomment>&quot;L&apos;appel n&apos;a pas pu être créé&quot;</extracomment>
         <translation>Call could not be created</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="152"/>
-        <location filename="../../tool/Utils.cpp" line="163"/>
+        <location filename="../../tool/Utils.cpp" line="164"/>
+        <location filename="../../tool/Utils.cpp" line="175"/>
+        <location filename="../../tool/Utils.cpp" line="1539"/>
+        <location filename="../../tool/Utils.cpp" line="1574"/>
         <source>information_popup_error_title</source>
+        <extracomment>Error
+----------
+Failed to create 1-1 conversation with %1 !</extracomment>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="162"/>
+        <location filename="../../tool/Utils.cpp" line="174"/>
         <source>information_popup_group_call_not_created_message</source>
         <translation>Group call couldn&apos;t be created</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="283"/>
+        <location filename="../../tool/Utils.cpp" line="295"/>
         <source>number_of_years</source>
         <extracomment>%n an(s)</extracomment>
         <translation>
@@ -4082,7 +4322,7 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="286"/>
+        <location filename="../../tool/Utils.cpp" line="298"/>
         <source>number_of_month</source>
         <extracomment>&quot;%n mois&quot;</extracomment>
         <translation>
@@ -4091,7 +4331,7 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="289"/>
+        <location filename="../../tool/Utils.cpp" line="301"/>
         <source>number_of_weeks</source>
         <extracomment>%n semaine(s)</extracomment>
         <translation>
@@ -4100,7 +4340,7 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="292"/>
+        <location filename="../../tool/Utils.cpp" line="304"/>
         <source>number_of_days</source>
         <extracomment>%n jour(s)</extracomment>
         <translation>
@@ -4109,22 +4349,29 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="316"/>
+        <location filename="../../tool/Utils.cpp" line="328"/>
         <source>today</source>
         <extracomment>&quot;Aujourd&apos;hui&quot;</extracomment>
         <translation>Today</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="318"/>
+        <location filename="../../tool/Utils.cpp" line="330"/>
         <source>yesterday</source>
         <extracomment>&quot;Hier</extracomment>
         <translation>Yesterday</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="461"/>
+        <location filename="../../tool/Utils.cpp" line="475"/>
         <source>call_zrtp_token_verification_possible_characters</source>
         <extracomment>&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&quot;</extracomment>
         <translation>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1541"/>
+        <location filename="../../tool/Utils.cpp" line="1575"/>
+        <source>information_popup_chatroom_creation_error_message</source>
+        <extracomment>Failed to create 1-1 conversation with %1 !</extracomment>
+        <translation>Failed to create 1-1 conversation with %1 !</translation>
     </message>
 </context>
 <context>
@@ -4289,1117 +4536,1117 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>country</name>
     <message>
-        <location filename="../../tool/Utils.cpp" line="539"/>
+        <location filename="../../tool/Utils.cpp" line="553"/>
         <source>Afghanistan</source>
         <translation>Afghanistan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="543"/>
+        <location filename="../../tool/Utils.cpp" line="557"/>
         <source>Albania</source>
         <translation>Albania</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="546"/>
+        <location filename="../../tool/Utils.cpp" line="560"/>
         <source>Algeria</source>
         <translation>Algeria</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="549"/>
+        <location filename="../../tool/Utils.cpp" line="563"/>
         <source>AmericanSamoa</source>
         <translation>American Samoa</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="553"/>
+        <location filename="../../tool/Utils.cpp" line="567"/>
         <source>Andorra</source>
         <translation>Andorra</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="556"/>
+        <location filename="../../tool/Utils.cpp" line="570"/>
         <source>Angola</source>
         <translation>Angola</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="559"/>
+        <location filename="../../tool/Utils.cpp" line="573"/>
         <source>Anguilla</source>
         <translation>Anguilla</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="562"/>
+        <location filename="../../tool/Utils.cpp" line="576"/>
         <source>AntiguaAndBarbuda</source>
         <translation>Antigua-et-Barbuda</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="566"/>
+        <location filename="../../tool/Utils.cpp" line="580"/>
         <source>Argentina</source>
         <translation>Argentina</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="569"/>
+        <location filename="../../tool/Utils.cpp" line="583"/>
         <source>Armenia</source>
         <translation>Armenia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="572"/>
+        <location filename="../../tool/Utils.cpp" line="586"/>
         <source>Aruba</source>
         <translation>Aruba</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="575"/>
+        <location filename="../../tool/Utils.cpp" line="589"/>
         <source>Australia</source>
         <translation>Australia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="578"/>
+        <location filename="../../tool/Utils.cpp" line="592"/>
         <source>Austria</source>
         <translation>Austria</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="581"/>
+        <location filename="../../tool/Utils.cpp" line="595"/>
         <source>Azerbaijan</source>
         <translation>Azerbaijan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="584"/>
+        <location filename="../../tool/Utils.cpp" line="598"/>
         <source>Bahamas</source>
         <translation>Bahamas</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="587"/>
+        <location filename="../../tool/Utils.cpp" line="601"/>
         <source>Bahrain</source>
         <translation>Bahrain</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="590"/>
+        <location filename="../../tool/Utils.cpp" line="604"/>
         <source>Bangladesh</source>
         <translation>Bangladesh</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="593"/>
+        <location filename="../../tool/Utils.cpp" line="607"/>
         <source>Barbados</source>
         <translation>Barbados</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="596"/>
+        <location filename="../../tool/Utils.cpp" line="610"/>
         <source>Belarus</source>
         <translation>Belarus</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="599"/>
+        <location filename="../../tool/Utils.cpp" line="613"/>
         <source>Belgium</source>
         <translation>Belgium</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="602"/>
+        <location filename="../../tool/Utils.cpp" line="616"/>
         <source>Belize</source>
         <translation>Belize</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="605"/>
+        <location filename="../../tool/Utils.cpp" line="619"/>
         <source>Benin</source>
         <translation>Benin</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="608"/>
+        <location filename="../../tool/Utils.cpp" line="622"/>
         <source>Bermuda</source>
         <translation>Bermuda</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="611"/>
+        <location filename="../../tool/Utils.cpp" line="625"/>
         <source>Bhutan</source>
         <translation>Bhutan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="614"/>
+        <location filename="../../tool/Utils.cpp" line="628"/>
         <source>Bolivia</source>
         <translation>Bolivia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="617"/>
+        <location filename="../../tool/Utils.cpp" line="631"/>
         <source>BosniaAndHerzegowina</source>
         <translation>Bosnia And Herzegowina</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="622"/>
+        <location filename="../../tool/Utils.cpp" line="636"/>
         <source>Botswana</source>
         <translation>Botswana</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="625"/>
+        <location filename="../../tool/Utils.cpp" line="639"/>
         <source>Brazil</source>
         <translation>Brazil</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="628"/>
+        <location filename="../../tool/Utils.cpp" line="642"/>
         <source>Brunei</source>
         <translation>Brunei</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="631"/>
+        <location filename="../../tool/Utils.cpp" line="645"/>
         <source>Bulgaria</source>
         <translation>Bulgaria</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="634"/>
+        <location filename="../../tool/Utils.cpp" line="648"/>
         <source>BurkinaFaso</source>
         <translation>Burkina Faso</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="638"/>
+        <location filename="../../tool/Utils.cpp" line="652"/>
         <source>Burundi</source>
         <translation>Burundi</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="641"/>
+        <location filename="../../tool/Utils.cpp" line="655"/>
         <source>Cambodia</source>
         <translation>Cambodia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="644"/>
+        <location filename="../../tool/Utils.cpp" line="658"/>
         <source>Cameroon</source>
         <translation>Cameroon</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="647"/>
+        <location filename="../../tool/Utils.cpp" line="661"/>
         <source>Canada</source>
         <translation>Canada</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="650"/>
+        <location filename="../../tool/Utils.cpp" line="664"/>
         <source>CapeVerde</source>
         <translation>Cape Verde</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="653"/>
+        <location filename="../../tool/Utils.cpp" line="667"/>
         <source>CaymanIslands</source>
         <translation>Cayman Islands</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="657"/>
+        <location filename="../../tool/Utils.cpp" line="671"/>
         <source>CentralAfricanRepublic</source>
         <translation>Central African Republic</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="662"/>
+        <location filename="../../tool/Utils.cpp" line="676"/>
         <source>Chad</source>
         <translation>Chad</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="665"/>
+        <location filename="../../tool/Utils.cpp" line="679"/>
         <source>Chile</source>
         <translation>Chile</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="668"/>
+        <location filename="../../tool/Utils.cpp" line="682"/>
         <source>China</source>
         <translation>China</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="671"/>
+        <location filename="../../tool/Utils.cpp" line="685"/>
         <source>Colombia</source>
         <translation>Colombia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="674"/>
+        <location filename="../../tool/Utils.cpp" line="688"/>
         <source>Comoros</source>
         <translation>Comoros</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="677"/>
+        <location filename="../../tool/Utils.cpp" line="691"/>
         <source>PeoplesRepublicOfCongo</source>
         <translation>Peoples Republic Of Congo</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="687"/>
+        <location filename="../../tool/Utils.cpp" line="701"/>
         <source>CookIslands</source>
         <translation>Cook Islands</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="691"/>
+        <location filename="../../tool/Utils.cpp" line="705"/>
         <source>CostaRica</source>
         <translation>Costa Rica</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="694"/>
+        <location filename="../../tool/Utils.cpp" line="708"/>
         <source>IvoryCoast</source>
         <translation>Ivory Coast</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="697"/>
+        <location filename="../../tool/Utils.cpp" line="711"/>
         <source>Croatia</source>
         <translation>Croatia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="700"/>
+        <location filename="../../tool/Utils.cpp" line="714"/>
         <source>Cuba</source>
         <translation>Cuba</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="703"/>
+        <location filename="../../tool/Utils.cpp" line="717"/>
         <source>Cyprus</source>
         <translation>Cyprus</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="706"/>
+        <location filename="../../tool/Utils.cpp" line="720"/>
         <source>CzechRepublic</source>
         <translation>Czech Republic</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="710"/>
+        <location filename="../../tool/Utils.cpp" line="724"/>
         <source>Denmark</source>
         <translation>Denmark</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="713"/>
+        <location filename="../../tool/Utils.cpp" line="727"/>
         <source>Djibouti</source>
         <translation>Djibouti</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="716"/>
+        <location filename="../../tool/Utils.cpp" line="730"/>
         <source>Dominica</source>
         <translation>Dominica</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="719"/>
+        <location filename="../../tool/Utils.cpp" line="733"/>
         <source>DominicanRepublic</source>
         <translation>Dominican Republic</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="723"/>
+        <location filename="../../tool/Utils.cpp" line="737"/>
         <source>Ecuador</source>
         <translation>Ecuador</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="726"/>
+        <location filename="../../tool/Utils.cpp" line="740"/>
         <source>Egypt</source>
         <translation>Egypt</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="729"/>
+        <location filename="../../tool/Utils.cpp" line="743"/>
         <source>ElSalvador</source>
         <translation>El Salvador</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="732"/>
+        <location filename="../../tool/Utils.cpp" line="746"/>
         <source>EquatorialGuinea</source>
         <translation>Equatorial Guinea</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="736"/>
+        <location filename="../../tool/Utils.cpp" line="750"/>
         <source>Eritrea</source>
         <translation>Eritrea</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="739"/>
+        <location filename="../../tool/Utils.cpp" line="753"/>
         <source>Estonia</source>
         <translation>Estonia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="742"/>
+        <location filename="../../tool/Utils.cpp" line="756"/>
         <source>Ethiopia</source>
         <translation>Ethiopia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="745"/>
+        <location filename="../../tool/Utils.cpp" line="759"/>
         <source>FalklandIslands</source>
         <translation>Falkland Islands</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="749"/>
+        <location filename="../../tool/Utils.cpp" line="763"/>
         <source>FaroeIslands</source>
         <translation>Faroe Islands</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="753"/>
+        <location filename="../../tool/Utils.cpp" line="767"/>
         <source>Fiji</source>
         <translation>Fiji</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="756"/>
+        <location filename="../../tool/Utils.cpp" line="770"/>
         <source>Finland</source>
         <translation>Finland</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="759"/>
+        <location filename="../../tool/Utils.cpp" line="773"/>
         <source>France</source>
         <translation>France</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="762"/>
+        <location filename="../../tool/Utils.cpp" line="776"/>
         <source>FrenchGuiana</source>
         <translation>French Guiana</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="766"/>
+        <location filename="../../tool/Utils.cpp" line="780"/>
         <source>FrenchPolynesia</source>
         <translation>French Polynesia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="770"/>
+        <location filename="../../tool/Utils.cpp" line="784"/>
         <source>Gabon</source>
         <translation>Gabon</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="773"/>
+        <location filename="../../tool/Utils.cpp" line="787"/>
         <source>Gambia</source>
         <translation>Gambia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="776"/>
+        <location filename="../../tool/Utils.cpp" line="790"/>
         <source>Georgia</source>
         <translation>Georgia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="779"/>
+        <location filename="../../tool/Utils.cpp" line="793"/>
         <source>Germany</source>
         <translation>Germany</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="782"/>
+        <location filename="../../tool/Utils.cpp" line="796"/>
         <source>Ghana</source>
         <translation>Ghana</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="785"/>
+        <location filename="../../tool/Utils.cpp" line="799"/>
         <source>Gibraltar</source>
         <translation>Gibraltar</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="788"/>
+        <location filename="../../tool/Utils.cpp" line="802"/>
         <source>Greece</source>
         <translation>Greece</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="791"/>
+        <location filename="../../tool/Utils.cpp" line="805"/>
         <source>Greenland</source>
         <translation>Greenland</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="794"/>
+        <location filename="../../tool/Utils.cpp" line="808"/>
         <source>Grenada</source>
         <translation>Grenada</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="797"/>
+        <location filename="../../tool/Utils.cpp" line="811"/>
         <source>Guadeloupe</source>
         <translation>Guadeloupe</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="800"/>
+        <location filename="../../tool/Utils.cpp" line="814"/>
         <source>Guam</source>
         <translation>Guam</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="803"/>
+        <location filename="../../tool/Utils.cpp" line="817"/>
         <source>Guatemala</source>
         <translation>Guatemala</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="806"/>
+        <location filename="../../tool/Utils.cpp" line="820"/>
         <source>Guinea</source>
         <translation>Guinea</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="809"/>
+        <location filename="../../tool/Utils.cpp" line="823"/>
         <source>GuineaBissau</source>
         <translation>Guinea-Bissau</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="813"/>
+        <location filename="../../tool/Utils.cpp" line="827"/>
         <source>Guyana</source>
         <translation>Guyana</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="816"/>
+        <location filename="../../tool/Utils.cpp" line="830"/>
         <source>Haiti</source>
         <translation>Haiti</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="819"/>
+        <location filename="../../tool/Utils.cpp" line="833"/>
         <source>Honduras</source>
         <translation>Honduras</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="682"/>
+        <location filename="../../tool/Utils.cpp" line="696"/>
         <source>DemocraticRepublicOfCongo</source>
         <translation>Democratic Republic Of Congo</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="822"/>
+        <location filename="../../tool/Utils.cpp" line="836"/>
         <source>HongKong</source>
         <translation>Hong Kong</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="825"/>
+        <location filename="../../tool/Utils.cpp" line="839"/>
         <source>Hungary</source>
         <translation>Hungary</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="828"/>
+        <location filename="../../tool/Utils.cpp" line="842"/>
         <source>Iceland</source>
         <translation>Iceland</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="831"/>
+        <location filename="../../tool/Utils.cpp" line="845"/>
         <source>India</source>
         <translation>India</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="834"/>
+        <location filename="../../tool/Utils.cpp" line="848"/>
         <source>Indonesia</source>
         <translation>Indonesia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="837"/>
+        <location filename="../../tool/Utils.cpp" line="851"/>
         <source>Iran</source>
         <translation>Iran</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="840"/>
+        <location filename="../../tool/Utils.cpp" line="854"/>
         <source>Iraq</source>
         <translation>Iraq</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="843"/>
+        <location filename="../../tool/Utils.cpp" line="857"/>
         <source>Ireland</source>
         <translation>Ireland</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="846"/>
+        <location filename="../../tool/Utils.cpp" line="860"/>
         <source>Israel</source>
         <translation>Israel</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="849"/>
+        <location filename="../../tool/Utils.cpp" line="863"/>
         <source>Italy</source>
         <translation>Italie</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="852"/>
+        <location filename="../../tool/Utils.cpp" line="866"/>
         <source>Jamaica</source>
         <translation>Jamaica</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="855"/>
+        <location filename="../../tool/Utils.cpp" line="869"/>
         <source>Japan</source>
         <translation>Japan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="858"/>
+        <location filename="../../tool/Utils.cpp" line="872"/>
         <source>Jordan</source>
         <translation>Jordan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="861"/>
+        <location filename="../../tool/Utils.cpp" line="875"/>
         <source>Kazakhstan</source>
         <translation>Kazakhstan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="864"/>
+        <location filename="../../tool/Utils.cpp" line="878"/>
         <source>Kenya</source>
         <translation>Kenya</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="867"/>
+        <location filename="../../tool/Utils.cpp" line="881"/>
         <source>Kiribati</source>
         <translation>Kiribati</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="870"/>
+        <location filename="../../tool/Utils.cpp" line="884"/>
         <source>DemocraticRepublicOfKorea</source>
         <translation>Democratic Republic Of Korea</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="875"/>
+        <location filename="../../tool/Utils.cpp" line="889"/>
         <source>RepublicOfKorea</source>
         <translation>Republic Of Korea</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="879"/>
+        <location filename="../../tool/Utils.cpp" line="893"/>
         <source>Kuwait</source>
         <translation>Kuwait</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="882"/>
+        <location filename="../../tool/Utils.cpp" line="896"/>
         <source>Kyrgyzstan</source>
         <translation>Kyrgyzstan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="885"/>
+        <location filename="../../tool/Utils.cpp" line="899"/>
         <source>Laos</source>
         <translation>Laos</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="888"/>
+        <location filename="../../tool/Utils.cpp" line="902"/>
         <source>Latvia</source>
         <translation>Latvia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="891"/>
+        <location filename="../../tool/Utils.cpp" line="905"/>
         <source>Lebanon</source>
         <translation>Lebanon</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="894"/>
+        <location filename="../../tool/Utils.cpp" line="908"/>
         <source>Lesotho</source>
         <translation>Lesotho</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="897"/>
+        <location filename="../../tool/Utils.cpp" line="911"/>
         <source>Liberia</source>
         <translation>Liberia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="900"/>
+        <location filename="../../tool/Utils.cpp" line="914"/>
         <source>Libya</source>
         <translation>Libya</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="903"/>
+        <location filename="../../tool/Utils.cpp" line="917"/>
         <source>Liechtenstein</source>
         <translation>Liechtenstein</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="907"/>
+        <location filename="../../tool/Utils.cpp" line="921"/>
         <source>Lithuania</source>
         <translation>Lithuania</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="910"/>
+        <location filename="../../tool/Utils.cpp" line="924"/>
         <source>Luxembourg</source>
         <translation>Luxembourg</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="913"/>
+        <location filename="../../tool/Utils.cpp" line="927"/>
         <source>Macau</source>
         <translation>Macau</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="916"/>
+        <location filename="../../tool/Utils.cpp" line="930"/>
         <source>Macedonia</source>
         <translation>Macedonia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="919"/>
+        <location filename="../../tool/Utils.cpp" line="933"/>
         <source>Madagascar</source>
         <translation>Madagascar</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="922"/>
+        <location filename="../../tool/Utils.cpp" line="936"/>
         <source>Malawi</source>
         <translation>Malawi</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="925"/>
+        <location filename="../../tool/Utils.cpp" line="939"/>
         <source>Malaysia</source>
         <translation>Malaysia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="928"/>
+        <location filename="../../tool/Utils.cpp" line="942"/>
         <source>Maldives</source>
         <translation>Maldives</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="931"/>
+        <location filename="../../tool/Utils.cpp" line="945"/>
         <source>Mali</source>
         <translation>Mali</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="934"/>
+        <location filename="../../tool/Utils.cpp" line="948"/>
         <source>Malta</source>
         <translation>Malta</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="937"/>
+        <location filename="../../tool/Utils.cpp" line="951"/>
         <source>MarshallIslands</source>
         <translation>Marshall Islands</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="941"/>
+        <location filename="../../tool/Utils.cpp" line="955"/>
         <source>Martinique</source>
         <translation>Martinique</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="944"/>
+        <location filename="../../tool/Utils.cpp" line="958"/>
         <source>Mauritania</source>
         <translation>Mauritania</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="947"/>
+        <location filename="../../tool/Utils.cpp" line="961"/>
         <source>Mauritius</source>
         <translation>Mauritius</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="950"/>
+        <location filename="../../tool/Utils.cpp" line="964"/>
         <source>Mayotte</source>
         <translation>Mayotte</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="953"/>
+        <location filename="../../tool/Utils.cpp" line="967"/>
         <source>Mexico</source>
         <translation>Mexico</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="956"/>
+        <location filename="../../tool/Utils.cpp" line="970"/>
         <source>Micronesia</source>
         <translation>Micronesia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="959"/>
+        <location filename="../../tool/Utils.cpp" line="973"/>
         <source>Moldova</source>
         <translation>Moldova</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="962"/>
+        <location filename="../../tool/Utils.cpp" line="976"/>
         <source>Monaco</source>
         <translation>Monaco</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="965"/>
+        <location filename="../../tool/Utils.cpp" line="979"/>
         <source>Mongolia</source>
         <translation>Mongolia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="968"/>
+        <location filename="../../tool/Utils.cpp" line="982"/>
         <source>Montenegro</source>
         <translation>Montenegro</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="971"/>
+        <location filename="../../tool/Utils.cpp" line="985"/>
         <source>Montserrat</source>
         <translation>Montserrat</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="974"/>
+        <location filename="../../tool/Utils.cpp" line="988"/>
         <source>Morocco</source>
         <translation>Morocco</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="977"/>
+        <location filename="../../tool/Utils.cpp" line="991"/>
         <source>Mozambique</source>
         <translation>Mozambique</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="980"/>
+        <location filename="../../tool/Utils.cpp" line="994"/>
         <source>Myanmar</source>
         <translation>Myanmar</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="983"/>
+        <location filename="../../tool/Utils.cpp" line="997"/>
         <source>Namibia</source>
         <translation>Namibia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="986"/>
+        <location filename="../../tool/Utils.cpp" line="1000"/>
         <source>NauruCountry</source>
         <translation>Nauru Country</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="990"/>
+        <location filename="../../tool/Utils.cpp" line="1004"/>
         <source>Nepal</source>
         <translation>Nepal</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="993"/>
+        <location filename="../../tool/Utils.cpp" line="1007"/>
         <source>Netherlands</source>
         <translation>Netherlands</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="997"/>
+        <location filename="../../tool/Utils.cpp" line="1011"/>
         <source>NewCaledonia</source>
         <translation>New-Caledonia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1001"/>
+        <location filename="../../tool/Utils.cpp" line="1015"/>
         <source>NewZealand</source>
         <translation>New-Zealand</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1004"/>
+        <location filename="../../tool/Utils.cpp" line="1018"/>
         <source>Nicaragua</source>
         <translation>Nicaragua</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1007"/>
+        <location filename="../../tool/Utils.cpp" line="1021"/>
         <source>Niger</source>
         <translation>Niger</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1010"/>
+        <location filename="../../tool/Utils.cpp" line="1024"/>
         <source>Nigeria</source>
         <translation>Nigeria</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1013"/>
+        <location filename="../../tool/Utils.cpp" line="1027"/>
         <source>Niue</source>
         <translation>Niue</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1016"/>
+        <location filename="../../tool/Utils.cpp" line="1030"/>
         <source>NorfolkIsland</source>
         <translation>Norfolk Island</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1020"/>
+        <location filename="../../tool/Utils.cpp" line="1034"/>
         <source>NorthernMarianaIslands</source>
         <translation>Northern Mariana Islands</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1025"/>
+        <location filename="../../tool/Utils.cpp" line="1039"/>
         <source>Norway</source>
         <translation>Norway</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1028"/>
+        <location filename="../../tool/Utils.cpp" line="1042"/>
         <source>Oman</source>
         <translation>Oman</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1031"/>
+        <location filename="../../tool/Utils.cpp" line="1045"/>
         <source>Pakistan</source>
         <translation>Pakistan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1034"/>
+        <location filename="../../tool/Utils.cpp" line="1048"/>
         <source>Palau</source>
         <translation>Palau</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1037"/>
+        <location filename="../../tool/Utils.cpp" line="1051"/>
         <source>PalestinianTerritories</source>
         <translation>Palestinian Territories</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1042"/>
+        <location filename="../../tool/Utils.cpp" line="1056"/>
         <source>Panama</source>
         <translation>Panama</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1045"/>
+        <location filename="../../tool/Utils.cpp" line="1059"/>
         <source>PapuaNewGuinea</source>
         <translation>Papua-New-Guinea</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1049"/>
+        <location filename="../../tool/Utils.cpp" line="1063"/>
         <source>Paraguay</source>
         <translation>Paraguay</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1052"/>
+        <location filename="../../tool/Utils.cpp" line="1066"/>
         <source>Peru</source>
         <translation>Peru</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1055"/>
+        <location filename="../../tool/Utils.cpp" line="1069"/>
         <source>Philippines</source>
         <translation>Philippines</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1059"/>
+        <location filename="../../tool/Utils.cpp" line="1073"/>
         <source>Poland</source>
         <translation>Poland</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1062"/>
+        <location filename="../../tool/Utils.cpp" line="1076"/>
         <source>Portugal</source>
         <translation>Portugal</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1065"/>
+        <location filename="../../tool/Utils.cpp" line="1079"/>
         <source>PuertoRico</source>
         <translation>Puerto Rico</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1068"/>
+        <location filename="../../tool/Utils.cpp" line="1082"/>
         <source>Qatar</source>
         <translation>Qatar</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1071"/>
+        <location filename="../../tool/Utils.cpp" line="1085"/>
         <source>Reunion</source>
         <translation>Reunion</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1074"/>
+        <location filename="../../tool/Utils.cpp" line="1088"/>
         <source>Romania</source>
         <translation>Romania</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1077"/>
+        <location filename="../../tool/Utils.cpp" line="1091"/>
         <source>RussianFederation</source>
         <translation>Russian Federation</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1081"/>
+        <location filename="../../tool/Utils.cpp" line="1095"/>
         <source>Rwanda</source>
         <translation>Rwanda</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1084"/>
+        <location filename="../../tool/Utils.cpp" line="1098"/>
         <source>SaintHelena</source>
         <translation>Saint-Helena</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1088"/>
+        <location filename="../../tool/Utils.cpp" line="1102"/>
         <source>SaintKittsAndNevis</source>
         <translation>Saint-Kitts-And-Nevis</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1092"/>
+        <location filename="../../tool/Utils.cpp" line="1106"/>
         <source>SaintLucia</source>
         <translation>Saint-Lucia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1095"/>
+        <location filename="../../tool/Utils.cpp" line="1109"/>
         <source>SaintPierreAndMiquelon</source>
         <translation>Saint-Pierre-And-Miquelon</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1100"/>
+        <location filename="../../tool/Utils.cpp" line="1114"/>
         <source>SaintVincentAndTheGrenadines</source>
         <translation>Saint-Vincent And The Grenadines</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1105"/>
+        <location filename="../../tool/Utils.cpp" line="1119"/>
         <source>Samoa</source>
         <translation>Samoa</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1108"/>
+        <location filename="../../tool/Utils.cpp" line="1122"/>
         <source>SanMarino</source>
         <translation>San-Marino</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1111"/>
+        <location filename="../../tool/Utils.cpp" line="1125"/>
         <source>SaoTomeAndPrincipe</source>
         <translation>Sao Tome-And-Principe</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1115"/>
+        <location filename="../../tool/Utils.cpp" line="1129"/>
         <source>SaudiArabia</source>
         <translation>Saudi Arabia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1119"/>
+        <location filename="../../tool/Utils.cpp" line="1133"/>
         <source>Senegal</source>
         <translation>Senegal</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1122"/>
+        <location filename="../../tool/Utils.cpp" line="1136"/>
         <source>Serbia</source>
         <translation>Serbia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1125"/>
+        <location filename="../../tool/Utils.cpp" line="1139"/>
         <source>Seychelles</source>
         <translation>Seychelles</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1128"/>
+        <location filename="../../tool/Utils.cpp" line="1142"/>
         <source>SierraLeone</source>
         <translation>Sierra Leone</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1132"/>
+        <location filename="../../tool/Utils.cpp" line="1146"/>
         <source>Singapore</source>
         <translation>Singapore</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1135"/>
+        <location filename="../../tool/Utils.cpp" line="1149"/>
         <source>Slovakia</source>
         <translation>Slovakia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1138"/>
+        <location filename="../../tool/Utils.cpp" line="1152"/>
         <source>Slovenia</source>
         <translation>Slovenia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1141"/>
+        <location filename="../../tool/Utils.cpp" line="1155"/>
         <source>SolomonIslands</source>
         <translation>Solomon Islands</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1145"/>
+        <location filename="../../tool/Utils.cpp" line="1159"/>
         <source>Somalia</source>
         <translation>Somalia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1148"/>
+        <location filename="../../tool/Utils.cpp" line="1162"/>
         <source>SouthAfrica</source>
         <translation>South Africa</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1152"/>
+        <location filename="../../tool/Utils.cpp" line="1166"/>
         <source>Spain</source>
         <translation>Spain</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1155"/>
+        <location filename="../../tool/Utils.cpp" line="1169"/>
         <source>SriLanka</source>
         <translation>Sri Lanka</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1158"/>
+        <location filename="../../tool/Utils.cpp" line="1172"/>
         <source>Sudan</source>
         <translation>Sudan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1161"/>
+        <location filename="../../tool/Utils.cpp" line="1175"/>
         <source>Suriname</source>
         <translation>Suriname</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1164"/>
+        <location filename="../../tool/Utils.cpp" line="1178"/>
         <source>Swaziland</source>
         <translation>Swaziland</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1167"/>
+        <location filename="../../tool/Utils.cpp" line="1181"/>
         <source>Sweden</source>
         <translation>Sweden</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1170"/>
+        <location filename="../../tool/Utils.cpp" line="1184"/>
         <source>Switzerland</source>
         <translation>Switzerland</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1174"/>
+        <location filename="../../tool/Utils.cpp" line="1188"/>
         <source>Syria</source>
         <translation>Syria</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1177"/>
+        <location filename="../../tool/Utils.cpp" line="1191"/>
         <source>Taiwan</source>
         <translation>Taiwan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1180"/>
+        <location filename="../../tool/Utils.cpp" line="1194"/>
         <source>Tajikistan</source>
         <translation>Tajikistan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1183"/>
+        <location filename="../../tool/Utils.cpp" line="1197"/>
         <source>Tanzania</source>
         <translation>Tanzania</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1186"/>
+        <location filename="../../tool/Utils.cpp" line="1200"/>
         <source>Thailand</source>
         <translation>Thailand</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1189"/>
+        <location filename="../../tool/Utils.cpp" line="1203"/>
         <source>Togo</source>
         <translation>Togo</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1192"/>
+        <location filename="../../tool/Utils.cpp" line="1206"/>
         <source>Tokelau</source>
         <translation>Tokelau</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1195"/>
+        <location filename="../../tool/Utils.cpp" line="1209"/>
         <source>Tonga</source>
         <translation>Tonga</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1198"/>
+        <location filename="../../tool/Utils.cpp" line="1212"/>
         <source>TrinidadAndTobago</source>
         <translation>Trinidad-And-Tobago</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1202"/>
+        <location filename="../../tool/Utils.cpp" line="1216"/>
         <source>Tunisia</source>
         <translation>Tunisia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1205"/>
+        <location filename="../../tool/Utils.cpp" line="1219"/>
         <source>Turkey</source>
         <translation>Turkey</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1208"/>
+        <location filename="../../tool/Utils.cpp" line="1222"/>
         <source>Turkmenistan</source>
         <translation>Turkmenistan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1212"/>
+        <location filename="../../tool/Utils.cpp" line="1226"/>
         <source>TurksAndCaicosIslands</source>
         <translation>Turks And Caicos Islands</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1217"/>
+        <location filename="../../tool/Utils.cpp" line="1231"/>
         <source>Tuvalu</source>
         <translation>Tuvalu</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1220"/>
+        <location filename="../../tool/Utils.cpp" line="1234"/>
         <source>Uganda</source>
         <translation>Uganda</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1223"/>
+        <location filename="../../tool/Utils.cpp" line="1237"/>
         <source>Ukraine</source>
         <translation>Ukraine</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1226"/>
+        <location filename="../../tool/Utils.cpp" line="1240"/>
         <source>UnitedArabEmirates</source>
         <translation>United Arab Emirates</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1230"/>
+        <location filename="../../tool/Utils.cpp" line="1244"/>
         <source>UnitedKingdom</source>
         <translation>United-Kingdom</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1234"/>
+        <location filename="../../tool/Utils.cpp" line="1248"/>
         <source>UnitedStates</source>
         <translation>United-States</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1238"/>
+        <location filename="../../tool/Utils.cpp" line="1252"/>
         <source>Uruguay</source>
         <translation>Uruguay</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1241"/>
+        <location filename="../../tool/Utils.cpp" line="1255"/>
         <source>Uzbekistan</source>
         <translation>Uzbekistan</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1244"/>
+        <location filename="../../tool/Utils.cpp" line="1258"/>
         <source>Vanuatu</source>
         <translation>Vanuatu</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1247"/>
+        <location filename="../../tool/Utils.cpp" line="1261"/>
         <source>Venezuela</source>
         <translation>Venezuela</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1250"/>
+        <location filename="../../tool/Utils.cpp" line="1264"/>
         <source>Vietnam</source>
         <translation>Vietnam</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1253"/>
+        <location filename="../../tool/Utils.cpp" line="1267"/>
         <source>WallisAndFutunaIslands</source>
         <translation>Wallis And Futuna Islands</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1258"/>
+        <location filename="../../tool/Utils.cpp" line="1272"/>
         <source>Yemen</source>
         <translation>Yemen</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1261"/>
+        <location filename="../../tool/Utils.cpp" line="1275"/>
         <source>Zambia</source>
         <translation>Zambia</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1264"/>
+        <location filename="../../tool/Utils.cpp" line="1278"/>
         <source>Zimbabwe</source>
         <translation>Zimbabwe</translation>
     </message>
@@ -5530,212 +5777,4 @@ To enable them in a commercial project, please contact us.</translation>
         <translation>Ok</translation>
     </message>
 </context>
-<context>
-	<name>CallForwardSettingsLayout</name>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_activate_title</source>
-		<extracomment>&quot;Forward calls&quot;</extracomment>
-		<translation>Forward calls</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_activate_subtitle</source>
-		<extracomment>&quot;Forward calls&quot;</extracomment>
-		<translation>Forward calls to voicemail or a Number / SIP Address / number</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_destination_choose</source>
-		<extracomment>&quot;Forward calls to&quot;</extracomment>
-		<translation>Forward calls to:</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_to_voicemail</source>
-		<extracomment>&quot;Voicemail&quot;</extracomment>
-		<translation>Voicemail</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_to_sipaddress</source>
-		<extracomment>&quot;Number / SIP address&quot;</extracomment>
-		<translation>Number / SIP Address</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_sipaddress_title</source>
-		<extracomment>&quot;Number / Sip address:&quot;</extracomment>
-		<translation>Number / SIP Address:</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_sipaddress_placeholder</source>
-		<extracomment>&quot;John.doe&quot;</extracomment>
-		<translation>John.doe</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_address_cannot_be_empty</source>
-		<extracomment>&quot;A number or SIP address is mandatory&quot;</extracomment>
-		<translation>A number or SIP address is mandatory</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_address_timeout</source>
-		<extracomment>&quot;Unable to set call forward, request timeout&quot;</extracomment>
-		<translation>Unable to set call forward, request timeout</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_address_progress_disabling</source>
-		<extracomment>&quot;Disabling call forward&quot;</extracomment>
-		<translation>Disabling call forward</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_address_progress_enabling</source>
-		<extracomment>&quot;Enabling call forward to:&quot;</extracomment>
-		<translation>Enabling call forward to:</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_activation_success</source>
-		<extracomment>&quot;Call forward activated to : &quot;</extracomment>
-		<translation>Call forward activated to : </translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml"/>
-		<source>settings_call_forward_deactivation_success</source>
-		<extracomment>&quot;Call forward deactivated&quot;</extracomment>
-		<translation>Call forward deactivated</translation>
-	</message>
-</context>
-<context>
-	<name>Presence</name>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml" line="12"/>
-		<source>contact_presence_status_available</source>
-		<extracomment>&quot;En ligne&quot;</extracomment>
-		<translation>Available</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml" line="14"/>
-		<source>contact_presence_status_busy</source>
-		<extracomment>&quot;Occupé&quot;</extracomment>
-		<translation>Busy</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml" line="15"/>
-		<source>contact_presence_status_do_not_disturb</source>
-		<extracomment>&quot;Ne pas déranger&quot;</extracomment>
-		<translation>Do not disturb</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml" line="16"/>
-		<source>contact_presence_status_offline</source>
-		<extracomment>&quot;Hors ligne&quot;</extracomment>
-		<translation>Offline</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml" line="13"/>
-		<source>contact_presence_status_away</source>
-		<extracomment>&quot;Absent&quot;</extracomment>
-		<translation>Idle/Away</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml" line="13"/>
-		<source>contact_presence_reset_status</source>
-		<extracomment>&quot;Reset status&quot;</extracomment>
-		<translation>Reset status</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml"/>
-		<source>contact_presence_save_status</source>
-		<extracomment>&quot;Save&quot;</extracomment>
-		<translation>Save</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml"/>
-		<source>contact_presence_edit_status</source>
-		<extracomment>&quot;Edit&quot;</extracomment>
-		<translation>Edit</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml"/>
-		<source>contact_presence_delete_status</source>
-		<extracomment>&quot;Delete&quot;</extracomment>
-		<translation>Delete</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml"/>
-		<source>contact_presence_delete_status</source>
-		<extracomment>&quot;Delete&quot;</extracomment>
-		<translation>Delete</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml"/>
-		<source>contact_presence_button_set_custom_status</source>
-		<extracomment>&quot;Set&quot;</extracomment>
-		<translation>Set</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml"/>
-		<source>contact_presence_button_edit_custom_status</source>
-		<extracomment>&quot;Edit&quot;</extracomment>
-		<translation>Edit</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml"/>
-		<source>contact_presence_button_delete_custom_status</source>
-		<extracomment>&quot;Delete&quot;</extracomment>
-		<translation>Delete</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml"/>
-		<source>contact_presence_button_set_custom_status_title</source>
-		<extracomment>&quot;Set a custom status message&quot;</extracomment>
-		<translation>Set a custom status message</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml"/>
-		<source>contact_presence_custom_status</source>
-		<extracomment>&quot;Custom status&quot;</extracomment>
-		<translation>Custom status</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/Presence.qml"/>
-		<source>contact_presence_custom_status</source>
-		<extracomment>&quot;Custom status&quot;</extracomment>
-		<translation>Custom status</translation>
-	</message>
-</context>
-<context>
-	<name>PresenceSetCustomStatus</name>
-	<message>
-		<location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml"/>
-		<source>contact_presence_button_set_custom_status_title</source>
-		<extracomment>&quot;Set a custom status message&quot;</extracomment>
-		<translation>Set a custom status message</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml"/>
-		<source>contact_presence_button_save_custom_status</source>
-		<extracomment>&quot;Save&quot;</extracomment>
-		<translation>Save</translation>
-	</message>
-</context>
-<context>
-	<name>PresenceNoteLayout</name>
-	<message>
-		<location filename="../../view/Control/Container/Contact/PresenceNoteLayout.qml"/>
-		<source>contact_presence_note_title</source>
-		<extracomment>&quot;Message personnalisé&quot;</extracomment>
-		<translation>Custom message</translation>
-	</message>
-</context>
 </TS>
-
-
-
-

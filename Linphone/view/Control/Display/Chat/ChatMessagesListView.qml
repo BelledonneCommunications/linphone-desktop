@@ -105,7 +105,7 @@ ListView {
                     weight: Typography.p3.weight
                 }
                 //: %1 is writing…
-                text: qsTr("%1 est en train d'écrire…").arg(composeLayout.composingName)
+                text: qsTr("chat_message_is_writing_info").arg(composeLayout.composingName)
             }
         }
     }

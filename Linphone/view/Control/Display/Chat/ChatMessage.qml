@@ -188,7 +188,7 @@ Control.Control {
                             var success = UtilsCpp.copyToClipboard(modelData.core.text)
                             //: Copied
                             if (success) UtilsCpp.showInformationPopup(qsTr("chat_message_copied_to_clipboard_title"),
-                                            //: "in clipboard"
+                                            //: "to clipboard"
                                             qsTr("chat_message_copied_to_clipboard_toast"))
                             }
                     }

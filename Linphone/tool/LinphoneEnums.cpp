@@ -58,11 +58,11 @@ LinphoneEnums::MediaEncryption LinphoneEnums::fromLinphone(const linphone::Media
 QString LinphoneEnums::toString(LinphoneEnums::MediaEncryption encryption) {
 	switch (encryption) {
 		case LinphoneEnums::MediaEncryption::Dtls:
-			return QObject::tr("DTLS");
+			return QObject::tr("media_encryption_dtls");
 		case LinphoneEnums::MediaEncryption::None:
-			return QObject::tr("None");
+			return QObject::tr("media_encryption_none");
 		case LinphoneEnums::MediaEncryption::Srtp:
-			return QObject::tr("SRTP");
+			return QObject::tr("media_encryption_srtp");
 		case LinphoneEnums::MediaEncryption::Zrtp:
 			//: "ZRTP - Post quantique"
 			return QObject::tr("media_encryption_post_quantum");
