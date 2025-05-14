@@ -729,6 +729,17 @@ void SettingsModel::setCallForwardToAddress(QString data) {
 	emit(callForwardToAddressChanged(data));
 }
 
+QFont SettingsModel::getEmojiFont() const {
+	QString family = Utils::coreStringToAppString(mConfig->getString(
+	    UiSection, "emoji_font", Utils::appStringToCoreString(QFont(Constants::DefaultEmojiFont).family())));
+	int pointSize = getEmojiFontSize();
+	return QFont(family, pointSize);
+}
+
+int SettingsModel::getEmojiFontSize() const {
+	return mConfig->getInt(UiSection, "emoji_font_size", Constants::DefaultEmojiFontPointSize);
+}
+
 // clang-format off
 void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(disableChatFeature, DisableChatFeature)

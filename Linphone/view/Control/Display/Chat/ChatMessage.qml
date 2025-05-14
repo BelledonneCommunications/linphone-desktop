@@ -20,7 +20,9 @@ Control.Control {
     property bool isRemoteMessage: chatMessage? chatMessage.core.isRemoteMessage : false
     property bool isFromChatGroup: chatMessage? chatMessage.core.isFromChatGroup : false
     property var msgState: chatMessage ? chatMessage.core.messageState : LinphoneEnums.ChatMessageState.StateIdle
+	property string processedText: UtilsCpp.encodeTextToQmlRichFormat(modelData.core.text)
     hoverEnabled: true
+    property bool linkHovered: false
 
     signal messageDeletionRequested()
 
@@ -75,6 +77,7 @@ Control.Control {
                         optionsMenu.open()
                     }
                 }
+                cursorShape: mainItem.linkHovered ? Qt.PointingHandCursor : Qt.IBeamCursor
             }
             
             background: Item {
@@ -107,18 +110,30 @@ Control.Control {
                     visible: mainItem.imgUrl != undefined
                     id: contentimage
                 }
-                Text {
-                    visible: modelData.core.text != undefined
-                    text: modelData.core.text
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    horizontalAlignment: modelData.core.isRemoteMessage ? Text.AlignLeft : Text.AlignRight
-                    color: DefaultStyle.main2_700
-                    font {
-                        pixelSize: Typography.p1.pixelSize
-                        weight: Typography.p1.weight
-                    }
-                }
+				Text {
+					id: textElement
+					visible: mainItem.processedText !== ""
+					text: mainItem.processedText
+					textFormat: Text.RichText
+					wrapMode: Text.Wrap
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					horizontalAlignment: modelData.core.isRemoteMessage ? Text.AlignLeft : Text.AlignRight
+					color: DefaultStyle.main2_700
+					font {
+						pixelSize: Typography.p1.pixelSize
+						weight: Typography.p1.weight
+					}
+					onLinkActivated: {
+						if (link.startsWith('sip'))
+							UtilsCpp.createCall(link)
+						else
+							Qt.openUrlExternally(link)
+					}
+					onHoveredLinkChanged: {
+						mainItem.linkHovered = hoveredLink !== ""
+					}
+				}
                 RowLayout {
                     Layout.alignment: Qt.AlignRight
                     Text {

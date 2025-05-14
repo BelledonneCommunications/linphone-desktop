@@ -233,6 +233,7 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(QString, commandLine, CommandLine)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableCallForward, DisableCallForward)
 	DECLARE_CORE_GETSET_MEMBER(QString, callForwardToAddress, CallForwardToAddress)
+	DECLARE_CORE_GET_CONSTANT(QFont, emojiFont, EmojiFont)
 
 signals:
 

@@ -91,6 +91,11 @@ public:                                                                         
 	Q_SIGNAL void x##Changed();                                                                                        \
 	type m##X;
 
+#define DECLARE_CORE_GET_CONSTANT(type, x, X)                                                                          \
+	Q_PROPERTY(type x MEMBER m##X CONSTANT)                                                                            \
+	type m##X;                                                                                                         \
+	type get##X() const { return m##X;}
+
 #define DECLARE_GETSET(type, x, X)                                                                                     \
 	type get##X() const;                                                                                               \
 	void set##X(type data);                                                                                            \

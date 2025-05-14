@@ -149,6 +149,11 @@ public:
 	Q_INVOKABLE static VariantObject *getCurrentCallChat(CallGui *call);
 	Q_INVOKABLE static VariantObject *getChatForAddress(QString address);
 	Q_INVOKABLE static bool isEmptyMessage(QString message);
+	Q_INVOKABLE static QString encodeTextToQmlRichFormat(const QString &text,
+	                                                     const QVariantMap &options = QVariantMap());
+	Q_INVOKABLE static QString encodeEmojiToQmlRichFormat(const QString &body);
+	static bool codepointIsEmoji(uint code);
+
 	//	QDir findDirectoryByName(QString startPath, QString name);
 
 	static QString getApplicationProduct();

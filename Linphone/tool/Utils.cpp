@@ -20,6 +20,7 @@
 
 #include "Utils.hpp"
 
+#include "UriTools.hpp"
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
 #include "core/chat/ChatCore.hpp"
@@ -1748,4 +1749,95 @@ QString Utils::getPresenceStatus(LinphoneEnums::Presence presence) {
 			break;
 	}
 	return presenceStatus;
+}
+
+QString Utils::encodeTextToQmlRichFormat(const QString &text, const QVariantMap &options) {
+	/*QString images;
+	QStringList imageFormat;
+	for(auto format : QImageReader::supportedImageFormats())
+	    imageFormat.append(QString::fromLatin1(format).toUpper());
+	*/
+	QStringList formattedText;
+	bool lastWasUrl = false;
+
+	if (options.contains("noLink") && options["noLink"].toBool()) {
+		formattedText.append(encodeEmojiToQmlRichFormat(text));
+	} else {
+		auto primaryColor = getDefaultStyleColor("info_500_main");
+		auto iriParsed = UriTools::parseIri(text);
+
+		for (int i = 0; i < iriParsed.size(); ++i) {
+			QString iri = iriParsed[i]
+			                  .second.replace('&', "&amp;")
+			                  .replace('<', "\u2063&lt;")
+			                  .replace('>', "\u2063&gt;")
+			                  .replace('"', "&quot;")
+			                  .replace('\'', "&#039;");
+			if (!iriParsed[i].first) {
+				if (lastWasUrl) {
+					lastWasUrl = false;
+					if (iri.front() != ' ') iri.push_front(' ');
+				}
+				formattedText.append(encodeEmojiToQmlRichFormat(iri));
+			} else {
+				QString uri =
+				    iriParsed[i].second.left(3) == "www" ? "http://" + iriParsed[i].second : iriParsed[i].second;
+				/* TODO : preview from link
+				int extIndex = iriParsed[i].second.lastIndexOf('.');
+				QString ext;
+				if( extIndex >= 0)
+				    ext = iriParsed[i].second.mid(extIndex+1).toUpper();
+				if(imageFormat.contains(ext.toLatin1())){// imagesHeight is not used because of bugs on display (blank
+				image if set without width) images += "<a href=\"" + uri + "\"><img" + ( options.contains("imagesWidth")
+				                ? QString(" width='") + options["imagesWidth"].toString() + "'"
+				                : ""
+				        ) + (
+				            options.contains("imagesWidth")
+				            ? QString(" height='auto'")
+				            : ""
+				        ) + " src=\"" + iriParsed[i].second + "\" />"+uri+"</a>";
+				}else{
+				*/
+				formattedText.append("<a style=\"color:" + primaryColor.name() + ";\" href=\"" + uri + "\">" + iri +
+				                     "</a>");
+				lastWasUrl = true;
+				/*}*/
+			}
+		}
+	}
+	if (lastWasUrl && formattedText.last().back() != ' ') {
+		formattedText.push_back(" ");
+	}
+	return "<p style=\"white-space:pre-wrap;\">" + formattedText.join("") + "</p>";
+}
+
+QString Utils::encodeEmojiToQmlRichFormat(const QString &body) {
+	QString fmtBody = "";
+	QVector<uint> utf32_string = body.toUcs4();
+
+	bool insideFontBlock = false;
+	for (auto &code : utf32_string) {
+		if (Utils::codepointIsEmoji(code)) {
+			if (!insideFontBlock) {
+				auto font = App::getInstance()->getSettings()->getEmojiFont().family();
+				fmtBody += QString("<font face=\"" + font + "\">");
+				insideFontBlock = true;
+			}
+		} else {
+			if (insideFontBlock) {
+				fmtBody += "</font>";
+				insideFontBlock = false;
+			}
+		}
+		fmtBody += QString::fromUcs4(reinterpret_cast<const char32_t *>(&code), 1);
+	}
+	if (insideFontBlock) {
+		fmtBody += "</font>";
+	}
+	return fmtBody;
+}
+
+bool Utils::codepointIsEmoji(uint code) {
+	return (code >= 0x2600 && code <= 0x27bf) || (code >= 0x2b00 && code <= 0x2bff) ||
+	       (code >= 0x1f000 && code <= 0x1faff) || code == 0x200d || code == 0xfe0f;
 }

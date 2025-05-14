@@ -157,6 +157,9 @@ public:
 
 	static bool clearLocalLdapFriendsUponStartup(const std::shared_ptr<linphone::Config> &config);
 
+	QFont getEmojiFont() const;
+	int getEmojiFontSize() const;
+
 	// UI
 	DECLARE_GETSET(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_GETSET(bool, disableMeetingsFeature, DisableMeetingsFeature)

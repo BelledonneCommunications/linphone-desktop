@@ -2,6 +2,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	tool/Constants.cpp
 	tool/EnumsToString.cpp
 	tool/Utils.cpp
+	tool/UriTools.cpp
 
 	tool/LinphoneEnums.cpp
 	tool/thread/SafeSharedPointer.hpp

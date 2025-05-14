@@ -93,6 +93,9 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 		mShowAccountDevices = (accountDomain == mDefaultDomain);
 	}
 
+	// Chat
+	mEmojiFont = settingsModel->getEmojiFont();
+
 	// Ui
 	INIT_CORE_MEMBER(DisableChatFeature, settingsModel)
 	INIT_CORE_MEMBER(DisableMeetingsFeature, settingsModel)
