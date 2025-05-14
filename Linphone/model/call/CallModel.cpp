@@ -411,7 +411,7 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		emit localVideoEnabledChanged(videoDirection == linphone::MediaDirection::SendOnly ||
 		                              videoDirection == linphone::MediaDirection::SendRecv);
 		emit remoteVideoEnabledChanged(remoteVideoDirection == linphone::MediaDirection::SendOnly ||
-									   remoteVideoDirection == linphone::MediaDirection::SendRecv);
+		                               remoteVideoDirection == linphone::MediaDirection::SendRecv);
 		updateConferenceVideoLayout();
 	} else if (state == linphone::Call::State::End || state == linphone::Call::State::Error) {
 		mDurationTimer.stop();

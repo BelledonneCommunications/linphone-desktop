@@ -116,15 +116,19 @@ void CoreModel::start() {
 	mCore->enableFriendListSubscription(true);
 	if (mCore->getLogCollectionUploadServerUrl().empty())
 		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
+
+	/// These 2 API should not be used as they manage internal gains insterad of those of the soundcard.
+	// Use playback/capture gain from capture graph and call only
+	mCore->setMicGainDb(0.0);
+	mCore->setPlaybackGainDb(0.0);
 	mIterateTimer->start();
 
 	auto linphoneSearch = mCore->createMagicSearch();
 	linphoneSearch->setLimitedSearch(true);
 	mMagicSearch = Utils::makeQObject_ptr<MagicSearchModel>(linphoneSearch);
 	mMagicSearch->setSelf(mMagicSearch);
-	connect(mMagicSearch.get(), &MagicSearchModel::searchResultsReceived, this, [this] {
-		emit magicSearchResultReceived(mMagicSearch->mLastSearch);
-	});
+	connect(mMagicSearch.get(), &MagicSearchModel::searchResultsReceived, this,
+	        [this] { emit magicSearchResultReceived(mMagicSearch->mLastSearch); });
 }
 // -----------------------------------------------------------------------------
 
@@ -352,10 +356,11 @@ void CoreModel::migrate() {
 	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
 }
 
-void CoreModel::searchInMagicSearch(QString filter, int sourceFlags,
-                         LinphoneEnums::MagicSearchAggregation aggregation,
-                         int maxResults) {
-    mMagicSearch->search(filter, sourceFlags, aggregation, maxResults);
+void CoreModel::searchInMagicSearch(QString filter,
+                                    int sourceFlags,
+                                    LinphoneEnums::MagicSearchAggregation aggregation,
+                                    int maxResults) {
+	mMagicSearch->search(filter, sourceFlags, aggregation, maxResults);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------
