@@ -237,6 +237,13 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	mustBeInLinphoneThread(getClassName());
 	mSettingsModelConnection = SafeConnection<SettingsCore, SettingsModel>::create(me, SettingsModel::getInstance());
 
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureGraphRunningChanged, [this](bool running) {
+		mSettingsModelConnection->invokeToCore([this, running] {
+			mCaptureGraphRunning = running;
+			emit captureGraphRunningChanged(running);
+		});
+	});
+
 	// VFS
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::vfsEnabledChanged, [this](const bool enabled) {
 		mSettingsModelConnection->invokeToCore([this, enabled]() { setVfsEnabled(enabled); });

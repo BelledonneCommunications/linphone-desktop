@@ -175,6 +175,7 @@ void SettingsModel::stopCaptureGraph() {
 void SettingsModel::accessCallSettings() {
 	// Audio
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	startCaptureGraph();
 	CoreModel::getInstance()->getCore()->reloadSoundDevices();
 	emit captureDevicesChanged(getCaptureDevices());
 	emit playbackDevicesChanged(getPlaybackDevices());
@@ -185,7 +186,6 @@ void SettingsModel::accessCallSettings() {
 	emit playbackGainChanged(getPlaybackGain());
 	emit captureGainChanged(getCaptureGain());
 
-	startCaptureGraph();
 	// Video
 	CoreModel::getInstance()->getCore()->reloadVideoDevices();
 	emit videoDevicesChanged(getVideoDevices());
@@ -205,13 +205,12 @@ bool SettingsModel::getCaptureGraphRunning() {
 float SettingsModel::getMicVolume() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	float v = 0.0;
-
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		v = mSimpleCaptureGraph->getCaptureVolume();
 	} else {
 		auto call = CoreModel::getInstance()->getCore()->getCurrentCall();
 		if (call) {
-			v = MediastreamerUtils::computeVu(call->getRecordVolume());
+			v = call->getRecordVolume();
 		}
 	}
 
@@ -221,32 +220,48 @@ float SettingsModel::getMicVolume() {
 
 float SettingsModel::getPlaybackGain() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	float dbGain = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
-	return MediastreamerUtils::dbToLinear(dbGain);
+	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
+		return mSimpleCaptureGraph->getPlaybackGain();
+	} else {
+		auto call = CoreModel::getInstance()->getCore()->getCurrentCall();
+		if (call) return call->getSpeakerVolumeGain();
+		else return 0.0;
+	}
 }
 
 void SettingsModel::setPlaybackGain(float gain) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	float oldGain = getPlaybackGain();
-	CoreModel::getInstance()->getCore()->setPlaybackGainDb(MediastreamerUtils::linearToDb(gain));
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setPlaybackGain(gain);
+	}
+	auto currentCall = CoreModel::getInstance()->getCore()->getCurrentCall();
+	if (currentCall) {
+		currentCall->setSpeakerVolumeGain(gain);
 	}
 	if ((int)(oldGain * 1000) != (int)(gain * 1000)) emit playbackGainChanged(gain);
 }
 
 float SettingsModel::getCaptureGain() const {
 	mustBeInLinphoneThread(getClassName());
-	float dbGain = CoreModel::getInstance()->getCore()->getMicGainDb();
-	return MediastreamerUtils::dbToLinear(dbGain);
+	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
+		return mSimpleCaptureGraph->getCaptureGain();
+	} else {
+		auto call = CoreModel::getInstance()->getCore()->getCurrentCall();
+		if (call) return call->getMicrophoneVolumeGain();
+		else return 0.0;
+	}
 }
 
 void SettingsModel::setCaptureGain(float gain) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	float oldGain = getCaptureGain();
-	CoreModel::getInstance()->getCore()->setMicGainDb(MediastreamerUtils::linearToDb(gain));
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setCaptureGain(gain);
+	}
+	auto currentCall = CoreModel::getInstance()->getCore()->getCurrentCall();
+	if (currentCall) {
+		currentCall->setMicrophoneVolumeGain(gain);
 	}
 	if ((int)(oldGain * 1000) != (int)(gain * 1000)) emit captureGainChanged(gain);
 }

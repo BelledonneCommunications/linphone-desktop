@@ -114,6 +114,10 @@ void CoreModel::start() {
 	if (mCore->getLogCollectionUploadServerUrl().empty())
 		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
 
+	/// These 2 API should not be used as they manage internal gains insterad of those of the soundcard.
+	// Use playback/capture gain from capture graph and call only
+	mCore->setMicGainDb(0.0);
+	mCore->setPlaybackGainDb(0.0);
 	mIterateTimer = new QTimer(this);
 	mIterateTimer->setInterval(20);
 	connect(mIterateTimer, &QTimer::timeout, [this]() { mCore->iterate(); });
