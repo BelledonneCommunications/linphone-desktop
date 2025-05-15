@@ -157,6 +157,7 @@ RowLayout {
                                 MouseArea {
                                     anchors.fill: parent
                                     onPressed: sendingTextArea.forceActiveFocus()
+                                    cursorShape: Qt.IBeamCursor
                                 }
                             }
                             contentItem: RowLayout {

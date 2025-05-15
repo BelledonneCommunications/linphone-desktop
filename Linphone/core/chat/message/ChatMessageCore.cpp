@@ -55,6 +55,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	                   !chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne);
 	mIsRead = chatmessage->isRead();
 	mMessageState = LinphoneEnums::fromLinphone(chatmessage->getState());
+	mMessageId = Utils::coreStringToAppString(chatmessage->getMessageId());
 }
 
 ChatMessageCore::~ChatMessageCore() {
@@ -68,8 +69,8 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageDeleted, [this]() {
 		//: Deleted
 		Utils::showInformationPopup(tr("info_toast_deleted_title"),
-									//: The message has been deleted
-									tr("info_toast_deleted_message"), true);
+		                            //: The message has been deleted
+		                            tr("info_toast_deleted_message"), true);
 		emit deleted();
 	});
 	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lMarkAsRead, [this] {
@@ -128,6 +129,9 @@ QString ChatMessageCore::getToAddress() const {
 	return mToAddress;
 }
 
+QString ChatMessageCore::getMessageId() const {
+	return mMessageId;
+}
 bool ChatMessageCore::isRemoteMessage() const {
 	return mIsRemoteMessage;
 }

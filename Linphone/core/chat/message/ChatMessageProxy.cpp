@@ -41,6 +41,16 @@ void ChatMessageProxy::setSourceModel(QAbstractItemModel *model) {
 	auto newChatMessageList = dynamic_cast<ChatMessageList *>(model);
 	if (newChatMessageList) {
 		connect(newChatMessageList, &ChatMessageList::chatChanged, this, &ChatMessageProxy::chatChanged);
+		connect(newChatMessageList, &ChatMessageList::messageInserted, this,
+		        [this, newChatMessageList](int index, ChatMessageGui *message) {
+			        if (index != -1) {
+				        index = dynamic_cast<SortFilterList *>(sourceModel())
+				                    ->mapFromSource(newChatMessageList->index(index, 0))
+				                    .row();
+				        if (mMaxDisplayItems <= index) setMaxDisplayItems(index + mDisplayItemsStep);
+			        }
+			        emit messageInserted(index, message);
+		        });
 	}
 	setSourceModels(new SortFilterList(model));
 	sort(0);
@@ -68,14 +78,20 @@ ChatMessageGui *ChatMessageProxy::getChatMessageAtIndex(int i) {
 }
 
 int ChatMessageProxy::findFirstUnreadIndex() {
-	int n = getCount();
-	for (int i = 0; i < n; ++i) {
-		auto chat = getItemAt<SortFilterList, ChatMessageList, ChatMessageCore>(i);
-		if (chat && !chat->isRead()) {
-			return i;
+	auto chatMessageList = getListModel<ChatMessageList>();
+	if (chatMessageList) {
+		auto listIndex = chatMessageList->findFirstUnreadIndex();
+		if (listIndex != -1) {
+			listIndex = dynamic_cast<SortFilterList *>(sourceModel())
+			                ->mapFromSource(chatMessageList->index(listIndex, 0))
+			                .row();
+			if (mMaxDisplayItems <= listIndex) setMaxDisplayItems(listIndex + mDisplayItemsStep);
+			return listIndex;
+		} else {
+			return std::max(0, getCount() - 1);
 		}
 	}
-	return std::max(0, n - 1);
+	return std::max(0, getCount() - 1);
 }
 
 bool ChatMessageProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {

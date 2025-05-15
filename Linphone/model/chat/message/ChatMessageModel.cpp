@@ -56,6 +56,10 @@ QString ChatMessageModel::getToAddress() const {
 	return Utils::coreStringToAppString(mMonitor->getToAddress()->asStringUriOnly());
 }
 
+QString ChatMessageModel::getMessageId() const {
+	return Utils::coreStringToAppString(mMonitor->getMessageId());
+}
+
 QDateTime ChatMessageModel::getTimestamp() const {
 	return QDateTime::fromSecsSinceEpoch(mMonitor->getTime());
 }

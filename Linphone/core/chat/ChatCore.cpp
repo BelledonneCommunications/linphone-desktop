@@ -81,11 +81,13 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	for (auto &eventLog : history) {
 		if (eventLog->getChatMessage()) lHistory.push_back(eventLog->getChatMessage());
 	}
+	QList<QSharedPointer<ChatMessageCore>> messageList;
 	for (auto &message : lHistory) {
 		if (!message) continue;
 		auto chatMessage = ChatMessageCore::create(message);
-		mChatMessageList.append(chatMessage);
+		messageList.append(chatMessage);
 	}
+	resetChatMessageList(messageList);
 	mIdentifier = Utils::coreStringToAppString(chatRoom->getIdentifier());
 	connect(this, &ChatCore::messageListChanged, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::messagesInserted, this, &ChatCore::lUpdateLastMessage);
@@ -108,8 +110,8 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 			clearMessagesList();
 			//: Deleted
 			Utils::showInformationPopup(tr("info_toast_deleted_title"),
-										//: Message history has been deleted
-										tr("info_toast_deleted_message_history"), true);
+			                            //: Message history has been deleted
+			                            tr("info_toast_deleted_message_history"), true);
 		});
 	});
 	mChatModelConnection->makeConnectToCore(&ChatCore::lUpdateUnreadCount, [this]() {

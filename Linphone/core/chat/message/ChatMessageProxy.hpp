@@ -49,6 +49,7 @@ public:
 
 signals:
 	void chatChanged();
+	void messageInserted(int index, ChatMessageGui *message);
 
 protected:
 	QSharedPointer<ChatMessageList> mList;

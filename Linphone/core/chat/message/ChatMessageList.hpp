@@ -42,9 +42,11 @@ public:
 	~ChatMessageList();
 
 	QSharedPointer<ChatCore> getChatCore() const;
-	ChatGui* getChat() const;
+	ChatGui *getChat() const;
 	void setChatCore(QSharedPointer<ChatCore> core);
-	void setChatGui(ChatGui* chat);
+	void setChatGui(ChatGui *chat);
+
+	int findFirstUnreadIndex();
 
 	void setSelf(QSharedPointer<ChatMessageList> me);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -52,6 +54,7 @@ signals:
 	void lUpdate();
 	void filterChanged(QString filter);
 	void chatChanged();
+	void messageInserted(int index, ChatMessageGui *message);
 
 private:
 	QString mFilter;

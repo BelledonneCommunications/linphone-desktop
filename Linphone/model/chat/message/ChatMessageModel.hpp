@@ -43,6 +43,7 @@ public:
 	QString getPeerAddress() const;
 	QString getFromAddress() const;
 	QString getToAddress() const;
+	QString getMessageId() const;
 
 	bool isRead() const;
 	void markAsRead();

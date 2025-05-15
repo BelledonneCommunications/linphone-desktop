@@ -63,6 +63,7 @@ public:
 	QString getFromAddress() const;
 	QString getFromName() const;
 	QString getToAddress() const;
+	QString getMessageId() const;
 
 	bool isRemoteMessage() const;
 	bool isFromChatGroup() const;
@@ -94,6 +95,7 @@ private:
 	QString mToAddress;
 	QString mFromName;
 	QString mPeerName;
+	QString mMessageId;
 	QDateTime mTimestamp;
 	bool mIsRemoteMessage = false;
 	bool mIsFromChatGroup = false;

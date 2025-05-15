@@ -48,7 +48,6 @@ ChatMessageList::createChatMessageCore(const std::shared_ptr<linphone::ChatMessa
 ChatMessageList::ChatMessageList(QObject *parent) : ListProxy(parent) {
 	mustBeInMainThread(getClassName());
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
-	connect(this, &ChatMessageList::chatChanged, this, &ChatMessageList::lUpdate);
 }
 
 ChatMessageList::~ChatMessageList() {
@@ -73,17 +72,35 @@ void ChatMessageList::setChatCore(QSharedPointer<ChatCore> core) {
 		if (mChatCore)
 			connect(mChatCore.get(), &ChatCore::messagesInserted, this,
 			        [this](QList<QSharedPointer<ChatMessageCore>> list) {
+				        auto chatList = getSharedList<ChatMessageCore>();
 				        for (auto &message : list) {
-					        add(message);
+					        auto it = std::find_if(chatList.begin(), chatList.end(),
+					                               [message](const QSharedPointer<ChatMessageCore> item) {
+						                               return item->getMessageId() == message->getMessageId();
+					                               });
+					        if (it == chatList.end()) {
+						        add(message);
+						        int index;
+						        get(message.get(), &index);
+						        emit messageInserted(index, new ChatMessageGui(message));
+					        }
 				        }
 			        });
 		emit chatChanged();
+		lUpdate();
 	}
 }
 
 void ChatMessageList::setChatGui(ChatGui *chat) {
 	auto chatCore = chat ? chat->mCore : nullptr;
 	setChatCore(chatCore);
+}
+
+int ChatMessageList::findFirstUnreadIndex() {
+	auto chatList = getSharedList<ChatMessageCore>();
+	auto it = std::find_if(chatList.begin(), chatList.end(),
+	                       [](const QSharedPointer<ChatMessageCore> item) { return !item->isRead(); });
+	return it == chatList.end() ? -1 : std::distance(chatList.begin(), it);
 }
 
 void ChatMessageList::setSelf(QSharedPointer<ChatMessageList> me) {
