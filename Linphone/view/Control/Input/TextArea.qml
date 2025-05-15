@@ -2,7 +2,8 @@ import QtQuick
 import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import Linphone
-  
+import UtilsCpp
+
 TextEdit {
 	id: mainItem
 	
@@ -16,6 +17,21 @@ TextEdit {
     topPadding: Math.round(5 * DefaultStyle.dp)
     bottomPadding: Math.round(5 * DefaultStyle.dp)
 	activeFocusOnTab: true
+
+	property bool displayAsRichText: false
+	property string richFormatText: UtilsCpp.encodeTextToQmlRichFormat(text)
+	property color textAreaColor
+
+	
+	Component.onCompleted: {
+		mainItem.textAreaColor = mainItem.color // backup original color
+		if (displayAsRichText)
+			mainItem.color = 'transparent'
+	}
+
+	onTextChanged: {
+		richFormatText = UtilsCpp.encodeTextToQmlRichFormat(text)
+	}
 
 	MouseArea {
 		id: mouseArea
@@ -43,5 +59,24 @@ TextEdit {
 			weight: mainItem.placeholderWeight
 		}
 	}
+ 	Text {
+		id: formattedText
+		visible: mainItem.displayAsRichText && mainItem.richFormatText !== ""
+		text: mainItem.richFormatText
+		textFormat: Text.RichText
+		wrapMode: mainItem.wrapMode
+		font: mainItem.font
+		color: mainItem.textAreaColor
+		anchors.fill: parent
+		focus: false
+		onHoveredLinkChanged: {
+			mainItem.hovered = mainItem.displayAsRichText && hoveredLink !== ""
+		}
+		onLinkActivated: {
+			if (link.startsWith('sip'))
+				UtilsCpp.createCall(link)
+			else
+				Qt.openUrlExternally(link)
+		}
+    }
 }
-

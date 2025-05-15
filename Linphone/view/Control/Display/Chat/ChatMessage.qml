@@ -20,7 +20,7 @@ Control.Control {
     property bool isRemoteMessage: chatMessage? chatMessage.core.isRemoteMessage : false
     property bool isFromChatGroup: chatMessage? chatMessage.core.isFromChatGroup : false
     property var msgState: chatMessage ? chatMessage.core.messageState : LinphoneEnums.ChatMessageState.StateIdle
-	property string processedText: UtilsCpp.encodeTextToQmlRichFormat(modelData.core.text)
+	property string richFormatText: UtilsCpp.encodeTextToQmlRichFormat(modelData.core.text)
     hoverEnabled: true
     property bool linkHovered: false
 
@@ -112,8 +112,8 @@ Control.Control {
                 }
 				Text {
 					id: textElement
-					visible: mainItem.processedText !== ""
-					text: mainItem.processedText
+					visible: mainItem.richFormatText !== ""
+					text: mainItem.richFormatText
 					textFormat: Text.RichText
 					wrapMode: Text.Wrap
 					Layout.fillWidth: true

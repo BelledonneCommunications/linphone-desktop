@@ -204,6 +204,7 @@ RowLayout {
                                         onCursorRectangleChanged: sendingAreaFlickable.ensureVisible(cursorRectangle)
                                         property string previousText
                                         Component.onCompleted: previousText = text
+										displayAsRichText: true
                                         onTextChanged: {
                                             if (previousText === "" && text !== "") {
                                                 mainItem.chat.core.lCompose()
