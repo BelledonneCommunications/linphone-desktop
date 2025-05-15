@@ -40,6 +40,7 @@ public:
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
 	Q_INVOKABLE int findChatIndex(ChatGui *chatGui);
+	Q_INVOKABLE void addChatInList(ChatGui *chatGui);
 
 signals:
 	void chatRemoved(ChatGui *chat);

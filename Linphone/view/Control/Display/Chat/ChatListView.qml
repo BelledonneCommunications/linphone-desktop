@@ -17,6 +17,9 @@ ListView {
     property string searchText: searchBar?.text
     property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
 
+    property ChatGui currentChatGui
+    onCurrentIndexChanged: currentChatGui = model.getAt(currentIndex) || null
+
     signal resultsReceived
 
     onResultsReceived: {
@@ -43,6 +46,10 @@ ListView {
             mainItem.currentIndex = -1
             mainItem.currentIndex = indexToSelect
         }
+        onLayoutChanged: {
+            var chatToSelect = getAt(mainItem.currentIndex)
+            selectChat(mainItem.currentChatGui)
+        }
     }
     // flickDeceleration: 10000
     spacing: Math.round(10 * DefaultStyle.dp)
@@ -50,6 +57,14 @@ ListView {
     function selectChat(chatGui) {
         var index = chatProxy.findChatIndex(chatGui)
         mainItem.currentIndex = index
+        // if the chat exists, it may not be displayed
+        // in list if hide_empty_chatrooms is set. Thus, we need
+        // to force adding it in the list so it is displayed
+        if (index === -1 && chatGui) {
+            chatProxy.addChatInList(chatGui)
+            var index = chatProxy.findChatIndex(chatGui)
+            mainItem.currentIndex = index
+        }
     }
 
     Component.onCompleted: cacheBuffer = Math.max(contentHeight, 0) //contentHeight>0 ? contentHeight : 0// cache all items
@@ -66,9 +81,6 @@ ListView {
         if (atYEnd && count > 0) {
             chatProxy.displayMore()
         }
-    }
-    onCountChanged: {
-        if (count > 0 && currentIndex < 0) currentIndex = 0
     }
 
 //----------------------------------------------------------------

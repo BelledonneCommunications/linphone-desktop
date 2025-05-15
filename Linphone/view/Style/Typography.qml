@@ -16,6 +16,13 @@ QtObject {
         pixelSize: Math.round(22 * DefaultStyle.dp),
         weight: Math.min(Math.round(800 * DefaultStyle.dp), 1000)
 	})
+
+	// Title/H2M -  Large bloc title
+	property font h2m: Qt.font( {
+		family: DefaultStyle.defaultFont,
+        pixelSize: Math.round(20 * DefaultStyle.dp),
+        weight: Math.min(Math.round(800 * DefaultStyle.dp), 1000)
+	})
 	
 	// Title/H2 -  Large bloc title
 	property font h2: Qt.font( {

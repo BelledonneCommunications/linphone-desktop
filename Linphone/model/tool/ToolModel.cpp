@@ -467,11 +467,19 @@ QString ToolModel::computeUserAgent(const std::shared_ptr<linphone::Config> &con
 	    .remove("'");
 }
 
+bool ToolModel::isEndToEndEncryptedChatAvailable() {
+	auto core = CoreModel::getInstance()->getCore();
+	auto defaultAccount = core->getDefaultAccount();
+	return core->limeX3DhEnabled() && defaultAccount && !defaultAccount->getParams()->getLimeServerUrl().empty() &&
+	       !defaultAccount->getParams()->getConferenceFactoryUri().empty();
+}
+
 std::shared_ptr<linphone::ConferenceParams>
 ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_ptr<linphone::Address> remoteAddress) {
 	auto core = call ? call->getCore() : CoreModel::getInstance()->getCore();
 	auto localAddress = call ? call->getCallLog()->getLocalAddress() : nullptr;
 	if (!remoteAddress && call) remoteAddress = call->getRemoteAddress()->clone();
+	remoteAddress->clean();
 	auto account = findAccount(localAddress);
 	if (!account) account = core->getDefaultAccount();
 	if (!account) qWarning() << "failed to get account, return";
@@ -481,7 +489,7 @@ ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_p
 	params->enableChat(true);
 	params->enableGroup(false);
 	//: Dummy subject
-	params->setSubject(Utils::appStringToCoreString(QObject::tr("chat_dummy_subject")));
+	params->setSubject("Dummy subject");
 	params->setAccount(account);
 
 	auto chatParams = params->getChatParams();
@@ -498,12 +506,12 @@ ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_p
 		chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
 		params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
 	} else if (!accountParams->getInstantMessagingEncryptionMandatory()) {
-		if (SettingsModel::getInstance()->getCreateEndToEndEncryptedMeetingsAndGroupCalls()) {
+		if (isEndToEndEncryptedChatAvailable()) {
 			qDebug() << "Account is in interop mode but LIME is available, requesting E2E encryption";
 			chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
 			params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
 		} else {
-			qDebug() << "Account is in interop mode and LIME is available, disabling E2E encryption";
+			qDebug() << "Account is in interop mode and LIME is not available, disabling E2E encryption";
 			chatParams->setBackend(linphone::ChatRoom::Backend::Basic);
 			params->setSecurityLevel(linphone::Conference::SecurityLevel::None);
 		}
@@ -554,12 +562,14 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::lookupChatForAddress(std::shared_
 	auto core = CoreModel::getInstance()->getCore();
 	auto account = core->getDefaultAccount();
 	if (!account) return nullptr;
-	auto localAddress = account->getParams()->getIdentityAddress();
+	auto localAddress = account->getParams()->getIdentityAddress()->clone();
+	localAddress->clean();
 	if (!localAddress || !remoteAddress) return nullptr;
 
 	auto params = getChatRoomParams(nullptr, remoteAddress);
 	std::list<std::shared_ptr<linphone::Address>> participants;
-	participants.push_back(remoteAddress->clone());
+	remoteAddress->clean();
+	participants.push_back(remoteAddress);
 
 	qDebug() << "Looking for chat with local address" << localAddress->asStringUriOnly() << "and participant"
 	         << remoteAddress->asStringUriOnly();
@@ -581,6 +591,33 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::createChatForAddress(std::shared_
 	auto chatRoom = core->createChatRoom(params, participants);
 	return chatRoom;
 }
+
+std::shared_ptr<linphone::ChatRoom>
+ToolModel::createGroupChatRoom(QString subject, std::list<std::shared_ptr<linphone::Address>> participantsAddresses) {
+	auto core = CoreModel::getInstance()->getCore();
+	auto account = core->getDefaultAccount();
+
+	auto params = core->createConferenceParams(nullptr);
+	params->enableChat(true);
+	params->enableGroup(true);
+	params->setSubject(Utils::appStringToCoreString(subject));
+	params->setAccount(account);
+	params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
+
+	auto chatParams = params->getChatParams();
+	if (!chatParams) {
+		qWarning() << "failed to get chat params from conference params, return";
+		return nullptr;
+	}
+	chatParams->setEphemeralLifetime(0);
+	chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
+
+	auto accountParams = account->getParams();
+
+	auto chatRoom = core->createChatRoom(params, participantsAddresses);
+	return chatRoom;
+}
+
 // Presence mapping from SDK PresenceModel/RFC 3863 <-> Linphone UI (5 statuses Online, Offline, Away, Busy, DND).
 // Online 	= Basic Status open with no activity
 // Busy 	= Basic Status open with activity Busy and description busy
@@ -589,11 +626,10 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::createChatForAddress(std::shared_
 // DND 		= Basic Status open with activity Other and description dnd
 // Note : close status on the last 2 items would be preferrable, but they currently trigger multiple tuple NOTIFY from
 // flexisip presence server Note 2 : close status with no activity triggers an unsubscribe.
-
 LinphoneEnums::Presence
 ToolModel::corePresenceModelToAppPresence(std::shared_ptr<const linphone::PresenceModel> presenceModel) {
 	if (!presenceModel) {
-		lWarning() << sLog().arg("presence model is null.");
+		// lWarning() << sLog().arg("presence model is null.");
 		return LinphoneEnums::Presence::Undefined;
 	}
 

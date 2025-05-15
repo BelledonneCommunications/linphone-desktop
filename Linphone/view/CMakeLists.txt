@@ -22,6 +22,8 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Button/Settings/SwitchSetting.qml
 
 	view/Control/Container/Carousel.qml
+	view/Control/Container/CreationFormLayout.qml
+	view/Control/Container/GroupCreationFormLayout.qml
 	view/Control/Container/DetailLayout.qml
 	view/Control/Container/FormItemLayout.qml
 	view/Control/Container/ScrollBar.qml
@@ -107,6 +109,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Tool/Prototype/PhoneNumberPrototype.qml
 
 	view/Page/Form/Call/NewCallForm.qml
+	view/Page/Form/Chat/NewChatForm.qml
 	view/Page/Form/Chat/SelectedChatView.qml
 	view/Page/Form/Contact/ContactDescription.qml
 	view/Page/Form/Contact/ContactEdition.qml

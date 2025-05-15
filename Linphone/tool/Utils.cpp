@@ -1538,7 +1538,7 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 				data->mConnection->invokeToCore([] {
 					//: Error
 					showInformationPopup(tr("information_popup_error_title"),
-										 //: Failed to create 1-1 conversation with %1 !
+					                     //: Failed to create 1-1 conversation with %1 !
 					                     tr("information_popup_chatroom_creation_error_message"), false,
 					                     getCallsWindow());
 				});
@@ -1556,6 +1556,7 @@ VariantObject *Utils::getChatForAddress(QString address) {
 	data->makeRequest([address, data]() {
 		auto linAddr = ToolModel::interpretUrl(address);
 		if (!linAddr) return QVariant();
+		linAddr->clean();
 		auto linphoneChatRoom = ToolModel::lookupChatForAddress(linAddr);
 		if (linphoneChatRoom) {
 			auto chatCore = ChatCore::create(linphoneChatRoom);
@@ -1578,6 +1579,28 @@ VariantObject *Utils::getChatForAddress(QString address) {
 				});
 				return QVariant();
 			}
+		}
+	});
+	data->requestValue();
+	return data;
+}
+
+VariantObject *Utils::createGroupChat(QString subject, QStringList participantAddresses) {
+	VariantObject *data = new VariantObject("lookupCurrentCallChat");
+	if (!data) return nullptr;
+	data->makeRequest([subject, participantAddresses, data]() {
+		std::list<std::shared_ptr<linphone::Address>> addresses;
+		for (auto &addr : participantAddresses) {
+			auto linAddr = ToolModel::interpretUrl(addr);
+			if (linAddr) addresses.push_back(linAddr);
+			else lWarning() << "Could not interpret address" << addr;
+		}
+		auto linphoneChatRoom = ToolModel::createGroupChatRoom(subject, addresses);
+		if (linphoneChatRoom) {
+			auto chatCore = ChatCore::create(linphoneChatRoom);
+			return QVariant::fromValue(new ChatGui(chatCore));
+		} else {
+			return QVariant();
 		}
 	});
 	data->requestValue();

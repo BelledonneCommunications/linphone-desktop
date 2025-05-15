@@ -98,6 +98,7 @@ public:
 	Q_PROPERTY(QString ContactUrl MEMBER ContactUrl CONSTANT)
 	Q_PROPERTY(QString TranslationUrl MEMBER TranslationUrl CONSTANT)
 	Q_PROPERTY(QString DefaultFont MEMBER DefaultFont CONSTANT)
+	Q_PROPERTY(QString DefaultLocale MEMBER DefaultLocale CONSTANT)
 	Q_PROPERTY(int maxMosaicParticipants MEMBER MaxMosaicParticipants CONSTANT)
 	Q_PROPERTY(QStringList reactionsList READ getReactionsList CONSTANT)
 

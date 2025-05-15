@@ -66,6 +66,13 @@ int ChatProxy::findChatIndex(ChatGui *chatGui) {
 	return -1;
 }
 
+void ChatProxy::addChatInList(ChatGui *chatGui) {
+	auto chatList = getListModel<ChatList>();
+	if (chatList) {
+		chatList->addChatInList(chatGui);
+	}
+}
+
 bool ChatProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	//	auto l = getItemAtSource<ChatList, ChatCore>(sourceRow);
 	//	return l != nullptr;

@@ -25,7 +25,7 @@ Notification {
 	property string message: notificationData ? notificationData.message : ""
 	Connections {
 		enabled: chat
-		target: chat.core
+		target: chat ? chat.core : null
 		function onMessageOpen() {
 			close()
 		}

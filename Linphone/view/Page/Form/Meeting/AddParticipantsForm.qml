@@ -25,52 +25,94 @@ FocusScope{
 	ColumnLayout {
 		anchors.fill: parent
         spacing: Math.round(15 * DefaultStyle.dp)
-		ListView {
+		GridView {
 			id: participantList
 			Layout.fillWidth: true
 			visible: contentHeight > 0
 			Layout.preferredHeight: contentHeight
 			Layout.maximumHeight: mainItem.height / 3
 			width: mainItem.width
+			cellWidth: Math.round((50 + 18) * DefaultStyle.dp)
+			cellHeight: Math.round(80 * DefaultStyle.dp)
+			// columnCount: Math.floor(width/cellWidth)
 			model: mainItem.selectedParticipants
 			clip: true
+        	// columnSpacing: Math.round(18 * DefaultStyle.dp)
+        	// rowSpacing: Math.round(9 * DefaultStyle.dp)
 			Keys.onPressed: (event) => {
 				if(currentIndex <=0 && event.key == Qt.Key_Up){
 					nextItemInFocusChain(false).forceActiveFocus()
 				}
 			}
+			header: Text {
+				Layout.fillWidth: true
+				horizontalAlignment: Text.AlignLeft
+				visible: count > 0
+				//: "%n participant(s) sélectionné(s)"
+				text: qsTr("add_participant_selected_count", '', count).arg(count)
+				maximumLineCount: 1
+				color: DefaultStyle.grey_1000
+				font {
+					pixelSize: Math.round(12 * DefaultStyle.dp)
+					weight: Math.round(300 * DefaultStyle.dp)
+				}
+			}
 			delegate: FocusScope {
-                height: Math.round(56 * DefaultStyle.dp)
-                width: participantList.width - scrollbar.implicitWidth - Math.round(28 * DefaultStyle.dp)
-				RowLayout {
+				ColumnLayout {
 					anchors.fill: parent
-                    spacing: Math.round(10 * DefaultStyle.dp)
-					Avatar {
-                        Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
-						_address: modelData
-						shadowEnabled: false
+                    spacing: Math.round(4 * DefaultStyle.dp)
+					width: Math.round(50 * DefaultStyle.dp)
+					Item {
+						Layout.alignment: Qt.AlignHCenter
+						Layout.preferredWidth: Math.round(50 * DefaultStyle.dp)
+						Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
+						Avatar {
+							anchors.fill: parent
+							_address: modelData
+							shadowEnabled: false
+						}
+						Button {
+							Layout.preferredWidth: Math.round(17 * DefaultStyle.dp)
+							Layout.preferredHeight: Math.round(17 * DefaultStyle.dp)
+							icon.width: Math.round(12 * DefaultStyle.dp)
+							icon.height: Math.round(12 * DefaultStyle.dp)
+							icon.source: AppIcons.closeX
+							anchors.top: parent.top
+							anchors.right: parent.right
+							background: Item {
+								Rectangle {
+									id: backgroundRect
+									color: DefaultStyle.grey_0
+									anchors.fill: parent
+									radius: Math.round(50 * DefaultStyle.dp)
+								}
+								MultiEffect {
+									anchors.fill: backgroundRect
+									source: backgroundRect
+									shadowEnabled: true
+									shadowColor: DefaultStyle.grey_1000
+									shadowBlur: 0.1
+									shadowOpacity: 0.5
+								}
+							}
+							onClicked: contactList.removeSelectedContactByAddress(modelData)
+						}
 					}
 					Text {
-						Layout.fillWidth: true
+						Layout.alignment: Qt.AlignHCenter
+						Layout.preferredWidth: width
+						width: Math.round(50 * DefaultStyle.dp)
 						maximumLineCount: 1
+						clip: true
 						property var nameObj: UtilsCpp.getDisplayName(modelData)
 						text: nameObj ? nameObj.value : ""
-                        font.pixelSize: Math.round(14 * DefaultStyle.dp)
-						font.capitalization: Font.Capitalize
-					}
-					Item {
-						Layout.fillWidth: true
-					}
-					Button {
-                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-						style: ButtonStyle.noBackgroundOrange
-						icon.source: AppIcons.closeX
-                        icon.width: Math.round(24 * DefaultStyle.dp)
-                        icon.height: Math.round(24 * DefaultStyle.dp)
-						focus: true
-						onClicked: contactList.removeSelectedContactByAddress(modelData)
+						color: DefaultStyle.main2_700
+						wrapMode: Text.WrapAnywhere
+                        font {
+							pixelSize: Typography.p3.pixelSize
+							weight: Typography.p3.weight
+							capitalization: Font.Capitalize
+						}
 					}
 				}
 			}

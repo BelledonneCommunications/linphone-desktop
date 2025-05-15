@@ -85,8 +85,11 @@ public:
 	getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_ptr<linphone::Address> remoteAddress = nullptr);
 	static std::shared_ptr<linphone::ChatRoom> lookupCurrentCallChat(std::shared_ptr<CallModel> callModel);
 	static std::shared_ptr<linphone::ChatRoom> createCurrentCallChat(std::shared_ptr<CallModel> callModel);
+	static bool isEndToEndEncryptedChatAvailable();
 	static std::shared_ptr<linphone::ChatRoom> lookupChatForAddress(std::shared_ptr<linphone::Address> remoteAddress);
 	static std::shared_ptr<linphone::ChatRoom> createChatForAddress(std::shared_ptr<linphone::Address> remoteAddress);
+	static std::shared_ptr<linphone::ChatRoom>
+	createGroupChatRoom(QString subject, std::list<std::shared_ptr<linphone::Address>> participantsAddresses);
 
 	static LinphoneEnums::Presence
 	corePresenceModelToAppPresence(std::shared_ptr<const linphone::PresenceModel> presenceModel);

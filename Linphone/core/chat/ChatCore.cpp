@@ -89,6 +89,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	}
 	resetChatMessageList(messageList);
 	mIdentifier = Utils::coreStringToAppString(chatRoom->getIdentifier());
+	mChatRoomState = LinphoneEnums::fromLinphone(chatRoom->getState());
 	connect(this, &ChatCore::messageListChanged, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::messagesInserted, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::messageRemoved, this, &ChatCore::lUpdateLastMessage);
@@ -132,6 +133,12 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	});
 	mChatModelConnection->makeConnectToModel(
 	    &ChatModel::deleted, [this]() { mChatModelConnection->invokeToCore([this]() { emit deleted(); }); });
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::stateChanged,
+	    [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom, linphone::ChatRoom::State newState) {
+		    auto state = LinphoneEnums::fromLinphone(newState);
+		    mChatModelConnection->invokeToCore([this, state]() { setChatRoomState(state); });
+	    });
 
 	mChatModelConnection->makeConnectToModel(&ChatModel::chatMessageReceived,
 	                                         [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
@@ -275,6 +282,17 @@ QString ChatCore::getLastMessageText() const {
 
 LinphoneEnums::ChatMessageState ChatCore::getLastMessageState() const {
 	return mLastMessage ? mLastMessage->getMessageState() : LinphoneEnums::ChatMessageState::StateIdle;
+}
+
+LinphoneEnums::ChatRoomState ChatCore::getChatRoomState() const {
+	return mChatRoomState;
+}
+
+void ChatCore::setChatRoomState(LinphoneEnums::ChatRoomState state) {
+	if (mChatRoomState != state) {
+		mChatRoomState = state;
+		emit chatRoomStateChanged();
+	}
 }
 
 ChatMessageGui *ChatCore::getLastMessage() const {

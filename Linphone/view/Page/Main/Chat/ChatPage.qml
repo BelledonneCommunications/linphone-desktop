@@ -16,24 +16,41 @@ AbstractMainPage {
     emptyListText: qsTr("chat_empty_title")
     newItemIconSource: AppIcons.plusCircle
 
-    property var selectedChatGui
+    property AccountProxy accounts: AccountProxy {
+        id: accountProxy
+        sourceModel: AppCpp.accounts
+    }
+    property AccountGui account: accountProxy.defaultAccount
+    property var state: account && account.core?.registrationState || 0
+    property bool isRegistered: account ? account.core?.registrationState
+                                          == LinphoneEnums.RegistrationState.Ok : false
 
+    property var selectedChatGui
     property string remoteAddress
     onRemoteAddressChanged: console.log("ChatPage : remote address changed :", remoteAddress)
     property var remoteChatObj: UtilsCpp.getChatForAddress(remoteAddress)
-    property ChatGui remoteChat: remoteChatObj && remoteChatObj.value ? remoteChatObj.value : null
-    onRemoteChatChanged: if (remoteChat) selectedChatGui = remoteChat
+    property var remoteChat: remoteChatObj ? remoteChatObj.value : null
+    onRemoteChatChanged: {
+        selectedChatGui = remoteChat
+    }
 
     onSelectedChatGuiChanged: {
-        if (selectedChatGui)
+        if (selectedChatGui) {
+            if (!listStackView.currentItem || listStackView.currentItem.objectName !== "chatListItem") {
+                listStackView.popToIndex(0)
+                if (listStackView.depth === 0 || listStackView.currentItem.objectName !== "chatListItem") listStackView.push(chatListItem)
+            }
             rightPanelStackView.replace(currentChatComp,
                                         Control.StackView.Immediate)
-        else
+        }
+        else {
             rightPanelStackView.replace(emptySelection,
                                         Control.StackView.Immediate)
+        }
     }
 
     rightPanelStackView.initialItem: emptySelection
+    rightPanelStackView.visible: listStackView.currentItem && listStackView.currentItem.objectName === "chatListItem"
 
     onNoItemButtonPressed: goToNewChat()
 
@@ -206,36 +223,79 @@ AbstractMainPage {
                         //: "New chat"
                         text: qsTr("chat_action_start_new_chat")
                         color: DefaultStyle.main2_700
-                        font.pixelSize: Typography.h2.pixelSize
-                        font.weight: Typography.h2.weight
+                        font.pixelSize: Typography.h2m.pixelSize
+                        font.weight: Typography.h2m.weight
                     }
                     Item {
                         Layout.fillWidth: true
                     }
                 }
-                // NewCallForm {
-                //     id: callContactsList
-                //     Layout.topMargin: Math.round(18 * DefaultStyle.dp)
-                //     Layout.fillWidth: true
-                //     Layout.fillHeight: true
-                //     focus: true
-                //     numPadPopup: numericPadPopupItem
-                //     groupCallVisible: true
-                //     searchBarColor: DefaultStyle.grey_100
-                //     onContactClicked: contact => {
-                //         mainWindow.startCallWithContact(contact, false, callContactsList)
-                //     }
-                //     onGroupCallCreationRequested: {
-                //         console.log("groupe call requetsed")
-                //         listStackView.push(groupCallItem)
-                //     }
-                //     Connections {
-                //         target: mainItem
-                //         function onCreateCallFromSearchBarRequested() {
-                //             UtilsCpp.createCall(callContactsList.searchBar.text)
-                //         }
-                //     }
-                // }
+                NewChatForm {
+                    id: newChatForm
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    Layout.topMargin: Math.round(18 * DefaultStyle.dp)
+                    onGroupCreationRequested: {
+                        console.log("groupe call requetsed")
+                        listStackView.push(groupChatItem)
+                    }
+                    onContactClicked: (contact) => {
+                        if (contact) {
+                            mainItem.remoteAddress = ""
+                            mainItem.remoteAddress = contact.core.defaultAddress
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: groupChatItem
+        GroupCreationFormLayout {
+            id: chatCreationLayout
+
+            objectName: "groupChatItem"
+            //: "Nouveau groupe"
+            formTitle: qsTr("chat_start_group_chat_title")
+            //: "Créer"
+            createGroupButtonText: qsTr("chat_action_start_group_chat")
+
+            property var groupChatObj
+            property var groupChat: groupChatObj ? groupChatObj.value : null
+            onGroupChatChanged: if (groupChat && groupChat.core.state === LinphoneEnums.ChatRoomState.Created) {
+                mainItem.selectedChatGui = groupChat
+            }
+            Connections {
+                enabled: groupChat || false
+                target: groupChat?.core || null
+                function onChatRoomStateChanged() {
+                    if (chatCreationLayout.groupChat.core.state === LinphoneEnums.ChatRoomState.Created) {
+                        mainItem.selectedChatGui = chatCreationLayout.groupChat
+                    }
+                }
+            }
+
+            Control.StackView.onActivated: {
+                addParticipantsLayout.forceActiveFocus()
+            }
+            onReturnRequested: {
+                listStackView.pop()
+                listStackView.currentItem?.forceActiveFocus()
+            }
+            onGroupCreationRequested: {
+                if (groupName.text.length === 0) {
+                    UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                                                    //: "Un nom doit être donné au groupe
+                                                    qsTr("group_chat_error_must_have_name"), false)
+                } else if (!mainItem.isRegistered) {
+                    UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                                //: "Vous n'etes pas connecté"
+                                qsTr("group_call_error_not_connected"), false)
+                } else {
+                    console.log("create group chat")
+                    chatCreationLayout.groupChatObj = UtilsCpp.createGroupChat(chatCreationLayout.groupName.text, addParticipantsLayout.selectedParticipants)
+                }
             }
         }
     }

@@ -104,28 +104,6 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	});
 
 	mModelConnection->makeConnectToModel(
-	    &CoreModel::chatRoomStateChanged,
-	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::ChatRoom> &chatRoom,
-	           linphone::ChatRoom::State state) {
-		    // check account, filter, then add if ok
-		    if (chatRoom->getAccount() == core->getDefaultAccount()) {
-			    if (state == linphone::ChatRoom::State::Created) {
-				    auto list = getSharedList<ChatCore>();
-				    auto found =
-				        std::find_if(list.begin(), list.end(), [chatRoom](const QSharedPointer<ChatCore> &item) {
-					        return (item && item->getModel()->getMonitor() == chatRoom);
-				        });
-				    if (found == list.end()) {
-					    auto model = createChatCore(chatRoom);
-					    mModelConnection->invokeToCore([this, model]() {
-						    add(model);
-						    emit chatAdded();
-					    });
-				    }
-			    }
-		    }
-	    });
-	mModelConnection->makeConnectToModel(
 	    &CoreModel::defaultAccountChanged,
 	    [this](std::shared_ptr<linphone::Core> core, std::shared_ptr<linphone::Account> account) { lUpdate(); });
 
@@ -144,6 +122,19 @@ int ChatList::findChatIndex(ChatGui *chatGui) {
 		return item->getIdentifier() == core->getIdentifier();
 	});
 	return it == chatList.end() ? -1 : std::distance(chatList.begin(), it);
+}
+
+void ChatList::addChatInList(ChatGui *chatGui) {
+	auto chatCore = chatGui->mCore;
+	auto chatList = getSharedList<ChatCore>();
+	auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
+		return item->getIdentifier() == chatCore->getIdentifier();
+	});
+	if (it == chatList.end()) {
+		connectItem(chatCore);
+		add(chatCore);
+		emit chatAdded();
+	}
 }
 
 QVariant ChatList::data(const QModelIndex &index, int role) const {

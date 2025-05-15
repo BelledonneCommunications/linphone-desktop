@@ -43,6 +43,7 @@ public:
 	Q_PROPERTY(QString lastMessageText READ getLastMessageText NOTIFY lastMessageChanged)
 	Q_PROPERTY(ChatMessageGui *lastMessage READ getLastMessage NOTIFY lastMessageChanged)
 	Q_PROPERTY(LinphoneEnums::ChatMessageState lastMessageState READ getLastMessageState NOTIFY lastMessageChanged)
+	Q_PROPERTY(LinphoneEnums::ChatRoomState state READ getChatRoomState NOTIFY chatRoomStateChanged)
 	Q_PROPERTY(int unreadMessagesCount READ getUnreadMessagesCount WRITE setUnreadMessagesCount NOTIFY
 	               unreadMessagesCountChanged)
 	Q_PROPERTY(QString composingName READ getComposingName WRITE setComposingName NOTIFY composingUserChanged)
@@ -70,6 +71,9 @@ public:
 
 	LinphoneEnums::ChatMessageState getLastMessageState() const;
 
+	LinphoneEnums::ChatRoomState getChatRoomState() const;
+	void setChatRoomState(LinphoneEnums::ChatRoomState state);
+
 	QSharedPointer<ChatMessageCore> getLastMessageCore() const;
 	void setLastMessage(QSharedPointer<ChatMessageCore> lastMessage);
 
@@ -96,11 +100,9 @@ public:
 
 	std::shared_ptr<ChatModel> getModel() const;
 
-Q_SIGNALS:
+signals:
 	// used to close all the notifications when one is clicked
 	void messageOpen();
-
-signals:
 	void lastUpdatedTimeChanged(QDateTime time);
 	void lastMessageChanged();
 	void titleChanged(QString title);
@@ -111,6 +113,7 @@ signals:
 	void avatarUriChanged();
 	void deleted();
 	void composingUserChanged();
+	void chatRoomStateChanged();
 
 	void lDeleteMessage();
 	void lDelete();
@@ -134,6 +137,7 @@ private:
 	QString mComposingName;
 	QString mComposingAddress;
 	bool mIsGroupChat = false;
+	LinphoneEnums::ChatRoomState mChatRoomState;
 	std::shared_ptr<ChatModel> mChatModel;
 	QSharedPointer<ChatMessageCore> mLastMessage;
 	QList<QSharedPointer<ChatMessageCore>> mChatMessageList;
