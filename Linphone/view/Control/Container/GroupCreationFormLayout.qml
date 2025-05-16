@@ -68,7 +68,7 @@ FocusScope {
                 font.pixelSize: Typography.p2.pixelSize
                 font.weight: Typography.p2.weight
                 //: "Nom du groupe"
-                text: qsTr("history_group_call_start_dialog_subject_hint")
+                text: qsTr("group_start_dialog_subject_hint")
             }
             Item {
                 Layout.fillWidth: true

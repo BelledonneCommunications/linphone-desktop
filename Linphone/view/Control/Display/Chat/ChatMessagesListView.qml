@@ -59,7 +59,52 @@ ListView {
     }
 
     header: Item {
-        height: Math.round(18 * DefaultStyle.dp)
+        height: headerMessage.height + Math.round(50 * DefaultStyle.dp)
+        width: headerMessage.width
+        anchors.horizontalCenter: parent.horizontalCenter
+        Control.Control {
+            id: headerMessage
+            anchors.topMargin: Math.round(30 * DefaultStyle.dp)
+            anchors.top: parent.top
+            padding: Math.round(10 * DefaultStyle.dp)
+            background: Rectangle {
+                color: "transparent"
+                border.color: DefaultStyle.main2_200
+                border.width: Math.round(2 * DefaultStyle.dp)
+                radius: Math.round(10 * DefaultStyle.dp)
+            }
+            contentItem: RowLayout {
+                EffectImage {
+                    Layout.preferredWidth: Math.round(23 * DefaultStyle.dp)
+                    Layout.preferredHeight: Math.round(23 * DefaultStyle.dp)
+                    imageSource: AppIcons.lockSimple
+                    colorizationColor: DefaultStyle.info_500_main
+                }
+                ColumnLayout {
+                    spacing: Math.round(2 * DefaultStyle.dp)
+                    Text {
+                        //: End to end encrypted chat
+                        text: qsTr("chat_message_list_encrypted_header_title")
+                        Layout.fillWidth: true
+                        color: DefaultStyle.info_500_main
+                        font {
+                            pixelSize: Typography.p2.pixelSize
+                            weight: Typography.p2.weight
+                        }
+                    }
+                    Text {
+                        //: Les messages de cette conversation sont chiffrés de bout \n en bout. Seul votre correspondant peut les déchiffrer.
+                        text: qsTr("chat_message_list_encrypted_header_message")
+                        Layout.fillWidth: true
+                        color: DefaultStyle.grey_400
+                        font {
+                            pixelSize: Typography.p3.pixelSize
+                            weight: Typography.p3.weight
+                        }
+                    }
+                }
+            }
+        }
     }
 
     delegate: ChatMessage {

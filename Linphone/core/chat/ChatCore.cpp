@@ -90,6 +90,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	resetChatMessageList(messageList);
 	mIdentifier = Utils::coreStringToAppString(chatRoom->getIdentifier());
 	mChatRoomState = LinphoneEnums::fromLinphone(chatRoom->getState());
+	mIsEncrypted = chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Encrypted);
 	connect(this, &ChatCore::messageListChanged, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::messagesInserted, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::messageRemoved, this, &ChatCore::lUpdateLastMessage);

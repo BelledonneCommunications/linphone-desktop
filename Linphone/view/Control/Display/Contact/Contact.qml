@@ -110,6 +110,7 @@ Control.Control{
 			popup.contentItem: Rectangle {
 				implicitWidth: 280 * DefaultStyle.dp
 				implicitHeight: 20 * DefaultStyle.dp + (setCustomStatus.visible ? 240 * DefaultStyle.dp : setPresence.implicitHeight)
+				MouseArea{anchors.fill: parent}
 				Presence {
 					id: setPresence
 					anchors.fill: parent
