@@ -174,8 +174,7 @@ static inline QString getAppRootCaFilePath() {
 			}
 		}
 		QFile rootCaFile(rootca);
-		if (rootCaFile.open(QIODevice::ReadWrite))
-			return rootca;
+		if (rootCaFile.open(QIODevice::ReadWrite)) return rootca;
 		else {
 			lCritical() << "ERROR : COULD NOT CREATE ROOTCA WITH PATH" << rootca;
 		}

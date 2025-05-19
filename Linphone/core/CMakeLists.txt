@@ -27,6 +27,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/chat/message/ChatMessageGui.cpp
 	core/chat/message/ChatMessageList.cpp
 	core/chat/message/ChatMessageProxy.cpp
+	core/emoji/EmojiModel.cpp
 	core/fps-counter/FPSCounter.cpp
 	core/friend/FriendCore.cpp
 	core/friend/FriendGui.cpp

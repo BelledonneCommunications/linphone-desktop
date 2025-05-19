@@ -60,6 +60,7 @@
 #include "core/conference/ConferenceGui.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
 #include "core/conference/ConferenceInfoProxy.hpp"
+#include "core/emoji/EmojiModel.hpp"
 #include "core/fps-counter/FPSCounter.hpp"
 #include "core/friend/FriendCore.hpp"
 #include "core/friend/FriendGui.hpp"
@@ -91,6 +92,7 @@
 #include "tool/Utils.hpp"
 #include "tool/native/DesktopTools.hpp"
 #include "tool/providers/AvatarProvider.hpp"
+#include "tool/providers/EmojiProvider.hpp"
 #include "tool/providers/ImageProvider.hpp"
 #include "tool/providers/ScreenProvider.hpp"
 #include "tool/request/CallbackHelper.hpp"
@@ -487,6 +489,7 @@ void App::initCore() {
 
 			    initCppInterfaces();
 			    mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
+			    mEngine->addImageProvider(EmojiProvider::ProviderId, new EmojiProvider());
 			    mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
 			    mEngine->addImageProvider(ScreenProvider::ProviderId, new ScreenProvider());
 			    mEngine->addImageProvider(WindowProvider::ProviderId, new WindowProvider());
@@ -561,7 +564,6 @@ void App::initCore() {
 }
 
 static inline bool installLocale(App &app, QTranslator &translator, const QLocale &locale) {
-	auto appPath = QStandardPaths::ApplicationsLocation;
 	bool ok = translator.load(locale.name(), Constants::LanguagePath);
 	ok = ok && app.installTranslator(&translator);
 	if (ok) QLocale::setDefault(locale);
@@ -671,6 +673,7 @@ void App::initCppInterfaces() {
 	qmlRegisterType<MagicSearchList>(Constants::MainQmlUri, 1, 0, "MagicSearchList");
 	qmlRegisterType<CameraGui>(Constants::MainQmlUri, 1, 0, "CameraGui");
 	qmlRegisterType<FPSCounter>(Constants::MainQmlUri, 1, 0, "FPSCounter");
+	qmlRegisterType<EmojiModel>(Constants::MainQmlUri, 1, 0, "EmojiModel");
 
 	qmlRegisterType<TimeZoneProxy>(Constants::MainQmlUri, 1, 0, "TimeZoneProxy");
 

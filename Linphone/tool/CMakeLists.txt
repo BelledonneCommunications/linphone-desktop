@@ -9,6 +9,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	tool/thread/SafeConnection.hpp
 	tool/thread/Thread.cpp
 	tool/providers/AvatarProvider.cpp
+	tool/providers/EmojiProvider.cpp
 	tool/providers/ImageProvider.cpp
 	tool/providers/ScreenProvider.cpp
 	

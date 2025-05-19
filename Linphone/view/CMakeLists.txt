@@ -65,6 +65,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Contact/ContactListView.qml
 	view/Control/Display/Contact/AllContactListView.qml
 	view/Control/Display/Contact/Voicemail.qml
+	view/Control/Display/Conversation/Emoji/EmojiPicker.qml
 	view/Control/Display/Meeting/MeetingListView.qml
 	view/Control/Display/Participant/ParticipantDeviceListView.qml
 	view/Control/Display/Participant/ParticipantListView.qml
