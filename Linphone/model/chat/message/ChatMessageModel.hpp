@@ -38,6 +38,9 @@ public:
 	~ChatMessageModel();
 
 	QString getText() const;
+	QString getUtf8Text() const;
+	bool getHasTextContent() const;
+
 	QDateTime getTimestamp() const;
 
 	QString getPeerAddress() const;

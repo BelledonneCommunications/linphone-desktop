@@ -39,6 +39,8 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	mChatMessageModel = Utils::makeQObject_ptr<ChatMessageModel>(chatmessage);
 	mChatMessageModel->setSelf(mChatMessageModel);
 	mText = mChatMessageModel->getText();
+	mUtf8Text = mChatMessageModel->getUtf8Text();
+	mHasTextContent = mChatMessageModel->getHasTextContent();
 	mTimestamp = QDateTime::fromSecsSinceEpoch(chatmessage->getTime());
 	auto from = chatmessage->getFromAddress();
 	auto to = chatmessage->getLocalAddress();
@@ -56,6 +58,12 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	mIsRead = chatmessage->isRead();
 	mMessageState = LinphoneEnums::fromLinphone(chatmessage->getState());
 	mMessageId = Utils::coreStringToAppString(chatmessage->getMessageId());
+	for (auto content : chatmessage->getContents()) {
+		if (content->isIcalendar()) {
+			auto conferenceInfo = linphone::Factory::get()->createConferenceInfoFromIcalendarContent(content);
+			mConferenceInfo = ConferenceInfoCore::create(conferenceInfo);
+		}
+	}
 }
 
 ChatMessageCore::~ChatMessageCore() {
@@ -164,4 +172,8 @@ void ChatMessageCore::setMessageState(LinphoneEnums::ChatMessageState state) {
 
 std::shared_ptr<ChatMessageModel> ChatMessageCore::getModel() const {
 	return mChatMessageModel;
+}
+
+ConferenceInfoGui *ChatMessageCore::getConferenceInfoGui() const {
+	return mConferenceInfo ? new ConferenceInfoGui(mConferenceInfo) : nullptr;
 }

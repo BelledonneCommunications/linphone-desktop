@@ -4331,6 +4331,24 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <source>unknown_audio_device_name</source>
         <translation>Appareil inconnu</translation>
     </message>
+	<message>
+		<location filename="../../model/chat/message/ChatMessageModel.cpp"/>
+		<source>conference_invitation</source>
+		<extracomment>&quot;Invitation à une réunion;&quot;</extracomment>
+		<translation>Invitation à une réunion</translation>
+	</message>
+	<message>
+		<location filename="../../model/chat/message/ChatMessageModel.cpp"/>
+		<source>conference_invitation_cancelled</source>
+		<extracomment>&quot;Annulation d'une réunion;&quot;</extracomment>
+		<translation>Annulation d'une réunion</translation>
+	</message>
+	<message>
+		<location filename="../../model/chat/message/ChatMessageModel.cpp"/>
+		<source>conference_invitation_updated</source>
+		<extracomment>&quot;Modification d'une réunion;&quot;</extracomment>
+		<translation>Modification d'une réunion</translation>
+	</message>
 </context>
 <context>
     <name>Utils</name>
@@ -5845,5 +5863,56 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>okButton</source>
         <translation>Ok</translation>
     </message>
+</context>
+<context>
+	<name>ChatMessageInvitationBubble</name>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml"/>
+		<source>ics_bubble_organiser_invites_you_to</source>
+		<extracomment>&quot; vous invite à :&quot;</extracomment>
+		<translation> vous invite à :</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml"/>
+		<source>ics_bubble_organiser_modified</source>
+		<extracomment>&quot; a modifié :;&quot;</extracomment>
+		<translation> a modifié :</translation>
+	</message>
+	<message>
+	<location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml"/>
+	  <source>ics_bubble_organiser_cancelled</source>
+	  <extracomment>&quot; a annulé :;&quot;</extracomment>
+	  <translation> a annulé :</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml"/>
+		<source>ics_bubble_meeting_from</source>
+		<extracomment>&quot;de ;&quot;</extracomment>
+		<translation>de </translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml"/>
+		<source>ics_bubble_meeting_to</source>
+		<extracomment>&quot; à ;&quot;</extracomment>
+		<translation> à </translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml"/>
+		<source>ics_bubble_description_title</source>
+		<extracomment>&quot;Description;&quot;</extracomment>
+		<translation>Description</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml"/>
+		<source>ics_bubble_join</source>
+		<extracomment>&quot;Rejoindre;&quot;</extracomment>
+		<translation>Rejoindre</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml"/>
+		<source>ics_bubble_participants</source>
+		<extracomment>&quot; participants;&quot;</extracomment>
+		<translation> participants</translation>
+	</message>
 </context>
 </TS>

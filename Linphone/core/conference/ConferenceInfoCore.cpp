@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2021 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -74,11 +74,7 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		mEndDateTime = mDateTime.addSecs(mDuration * 60);
 		mIsScheduled = mDateTime.isValid();
 		mOrganizerAddress = Utils::coreStringToAppString(conferenceInfo->getOrganizer()->asStringUriOnly());
-		mOrganizerName = Utils::coreStringToAppString(conferenceInfo->getOrganizer()->getDisplayName());
-		if (mOrganizerName.isEmpty()) {
-			mOrganizerName = Utils::coreStringToAppString(conferenceInfo->getOrganizer()->getUsername());
-			mOrganizerName.replace(".", " ");
-		}
+		mOrganizerName = mConferenceInfoModel->getOrganizerName();
 		mSubject = Utils::coreStringToAppString(conferenceInfo->getSubject());
 		mDescription = Utils::coreStringToAppString(conferenceInfo->getDescription());
 		mIsEnded = getDateTimeUtc().addSecs(mDuration * 60) < QDateTime::currentDateTimeUtc();

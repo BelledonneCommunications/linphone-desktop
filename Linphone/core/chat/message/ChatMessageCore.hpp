@@ -21,6 +21,8 @@
 #ifndef CHATMESSAGECORE_H_
 #define CHATMESSAGECORE_H_
 
+#include "core/conference/ConferenceInfoCore.hpp"
+#include "core/conference/ConferenceInfoGui.hpp"
 #include "model/chat/message/ChatMessageModel.hpp"
 #include "tool/AbstractObject.hpp"
 #include "tool/thread/SafeConnection.hpp"
@@ -35,6 +37,8 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(QDateTime timestamp READ getTimestamp WRITE setTimestamp NOTIFY timestampChanged)
 	Q_PROPERTY(QString text READ getText WRITE setText NOTIFY textChanged)
+	Q_PROPERTY(QString utf8Text MEMBER mUtf8Text CONSTANT)
+	Q_PROPERTY(bool hasTextContent MEMBER mHasTextContent CONSTANT)
 	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
 	Q_PROPERTY(QString fromAddress READ getFromAddress CONSTANT)
 	Q_PROPERTY(QString toAddress READ getToAddress CONSTANT)
@@ -45,6 +49,7 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool isRemoteMessage READ isRemoteMessage CONSTANT)
 	Q_PROPERTY(bool isFromChatGroup READ isFromChatGroup CONSTANT)
 	Q_PROPERTY(bool isRead READ isRead WRITE setIsRead NOTIFY isReadChanged)
+	Q_PROPERTY(ConferenceInfoGui *conferenceInfo READ getConferenceInfoGui CONSTANT)
 
 public:
 	static QSharedPointer<ChatMessageCore> create(const std::shared_ptr<linphone::ChatMessage> &chatmessage);
@@ -75,10 +80,12 @@ public:
 	void setMessageState(LinphoneEnums::ChatMessageState state);
 
 	std::shared_ptr<ChatMessageModel> getModel() const;
+	ConferenceInfoGui *getConferenceInfoGui() const;
 
 signals:
 	void timestampChanged(QDateTime timestamp);
 	void textChanged(QString text);
+	void utf8TextChanged(QString text);
 	void isReadChanged(bool read);
 	void isRemoteMessageChanged(bool isRemote);
 	void messageStateChanged();
@@ -90,6 +97,8 @@ signals:
 
 private:
 	DECLARE_ABSTRACT_OBJECT QString mText;
+	QString mUtf8Text;
+	bool mHasTextContent;
 	QString mPeerAddress;
 	QString mFromAddress;
 	QString mToAddress;
@@ -101,6 +110,7 @@ private:
 	bool mIsFromChatGroup = false;
 	bool mIsRead = false;
 	LinphoneEnums::ChatMessageState mMessageState;
+	QSharedPointer<ConferenceInfoCore> mConferenceInfo = nullptr;
 
 	std::shared_ptr<ChatMessageModel> mChatMessageModel;
 	QSharedPointer<SafeConnection<ChatMessageCore, ChatMessageModel>> mChatMessageModelConnection;

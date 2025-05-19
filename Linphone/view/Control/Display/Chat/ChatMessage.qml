@@ -20,7 +20,7 @@ Control.Control {
     property bool isRemoteMessage: chatMessage? chatMessage.core.isRemoteMessage : false
     property bool isFromChatGroup: chatMessage? chatMessage.core.isFromChatGroup : false
     property var msgState: chatMessage ? chatMessage.core.messageState : LinphoneEnums.ChatMessageState.StateIdle
-	property string richFormatText: UtilsCpp.encodeTextToQmlRichFormat(modelData.core.text)
+	property string richFormatText: modelData.core.hasTextContent ? UtilsCpp.encodeTextToQmlRichFormat(modelData.core.utf8Text) : ""
     hoverEnabled: true
     property bool linkHovered: false
 
@@ -43,6 +43,12 @@ Control.Control {
             }
         }
     }
+    
+    function handleDefaultMouseEvent(event) {
+		if (event.button === Qt.RightButton) {
+			optionsMenu.open()
+		}
+	}
 
     contentItem: RowLayout {
         spacing: 0
@@ -69,15 +75,13 @@ Control.Control {
             leftPadding: Math.round(12 * DefaultStyle.dp)
             rightPadding: Math.round(12 * DefaultStyle.dp)
 
-            MouseArea {
+            MouseArea { // Default mouse area. Each sub bubble can control the mouse and pass on to the main mouse handler. Child bubble mouse area must cover the entire bubble.
+            	id: defaultMouseArea
+            	visible: invitationLoader.status !== Loader.Ready // Add other bubbles here that could control the mouse themselves, then add in bubble a signal onMouseEvent
                 anchors.fill: parent
                 acceptedButtons: Qt.RightButton
-                onClicked: (mouse) => {
-                    if (mouse.button === Qt.RightButton) {
-                        optionsMenu.open()
-                    }
-                }
-                cursorShape: mainItem.linkHovered ? Qt.PointingHandCursor : Qt.IBeamCursor
+                onClicked:  (mouse) => mainItem.handleDefaultMouseEvent(mouse)
+				cursorShape: mainItem.linkHovered ? Qt.PointingHandCursor : Qt.ArrowCursor
             }
             
             background: Item {
@@ -110,7 +114,7 @@ Control.Control {
                     visible: mainItem.imgUrl != undefined
                     id: contentimage
                 }
-				Text {
+				Text { // Uses default mouse area for link hovering.
 					id: textElement
 					visible: mainItem.richFormatText !== ""
 					text: mainItem.richFormatText
@@ -134,6 +138,25 @@ Control.Control {
 						mainItem.linkHovered = hoveredLink !== ""
 					}
 				}
+				
+				// Meeting invitation bubble
+				/////////////////////////////
+				Loader {
+					id: invitationLoader
+					active: modelData.core.conferenceInfo !== null
+					sourceComponent: invitationComponent
+				}
+				Component {
+					id: invitationComponent
+					ChatMessageInvitationBubble {
+						conferenceInfoGui: modelData.core.conferenceInfo
+						Layout.fillWidth: true
+						Layout.fillHeight: true
+						onMouseEvent: mainItem.handleDefaultMouseEvent(event)
+					}
+				}
+				/////////////////////////////
+				
                 RowLayout {
                     Layout.alignment: Qt.AlignRight
                     Text {

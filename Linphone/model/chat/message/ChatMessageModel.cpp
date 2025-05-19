@@ -44,6 +44,17 @@ QString ChatMessageModel::getText() const {
 	return ToolModel::getMessageFromContent(mMonitor->getContents());
 }
 
+QString ChatMessageModel::getUtf8Text() const {
+	return Utils::coreStringToAppString(mMonitor->getUtf8Text());
+}
+
+bool ChatMessageModel::getHasTextContent() const {
+	for (auto content : mMonitor->getContents()) {
+		if (content->isText()) return true;
+	}
+	return false;
+}
+
 QString ChatMessageModel::getPeerAddress() const {
 	return Utils::coreStringToAppString(mMonitor->getPeerAddress()->asStringUriOnly());
 }

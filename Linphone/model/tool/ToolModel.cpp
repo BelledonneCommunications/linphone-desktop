@@ -28,6 +28,7 @@
 #include <QDirIterator>
 #include <QLibrary>
 #include <QTest>
+#include "core/conference/ConferenceInfoCore.hpp"
 
 DEFINE_ABSTRACT_OBJECT(ToolModel)
 
@@ -385,13 +386,21 @@ bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList>
 }
 
 QString ToolModel::getMessageFromContent(std::list<std::shared_ptr<linphone::Content>> contents) {
+	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 	for (auto &content : contents) {
 		if (content->isText()) {
 			return Utils::coreStringToAppString(content->getUtf8Text());
 		} else if (content->isFile()) {
 			return Utils::coreStringToAppString(content->getName());
 		} else if (content->isIcalendar()) {
-			return QString("Invitation à une réunion");
+			auto conferenceInfo = linphone::Factory::get()->createConferenceInfoFromIcalendarContent(content);
+			auto conferenceInfoCore = ConferenceInfoCore::create(conferenceInfo);
+			if (conferenceInfoCore->getConferenceInfoState() == LinphoneEnums::ConferenceInfoState::New)
+				return tr("conference_invitation");
+			if (conferenceInfoCore->getConferenceInfoState() == LinphoneEnums::ConferenceInfoState::Updated)
+				return tr("conference_invitation_updated");
+			if (conferenceInfoCore->getConferenceInfoState() == LinphoneEnums::ConferenceInfoState::Cancelled)
+				return tr("conference_invitation_cancelled");
 		} else if (content->isMultipart()) {
 			return getMessageFromContent(content->getParts());
 		}
