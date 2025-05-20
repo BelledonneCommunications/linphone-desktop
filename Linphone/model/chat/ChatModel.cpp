@@ -109,6 +109,10 @@ void ChatModel::deleteHistory() {
 	emit historyDeleted();
 }
 
+void ChatModel::leave() {
+	mMonitor->leave();
+}
+
 void ChatModel::deleteChatRoom() {
 	CoreModel::getInstance()->getCore()->deleteChatRoom(mMonitor);
 	emit deleted();

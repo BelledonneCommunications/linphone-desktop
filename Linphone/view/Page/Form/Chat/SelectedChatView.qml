@@ -104,6 +104,7 @@ RowLayout {
             },
             Control.Control {
                 id: messageSender
+				visible: !mainItem.chat.core.isReadOnly
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -268,6 +269,7 @@ RowLayout {
         }
         contentItem: CallHistoryLayout {
             chatGui: mainItem.chat
+            hideChat: mainItem.chat.core.isReadOnly
             detailContent: ColumnLayout {
                 DetailLayout {
                     //: Other actions
@@ -284,6 +286,27 @@ RowLayout {
                         //     }
                         //     style: ButtonStyle.noBackground
                         // }
+						IconLabelButton {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
+                            icon.source: AppIcons.signOut
+                            //: "Leave Chat Room"
+                            text: qsTr("chat_view_detail_leave_room_toast_button")
+                            visible: mainItem.chat.core.isGroupChat && !mainItem.chat.core.isReadOnly
+                            onClicked: {
+                                //: Leave Chat Room ?
+                                mainWindow.showConfirmationLambdaPopup(qsTr("chat_view_detail_leave_room_toast_title"),
+                                //: All the messages will be removed from the chat room. Do you want to continue ?
+                                qsTr("chat_view_detail_leave_room_toast_message"),
+                                "",
+                                function(confirmed) {
+                                    if (confirmed) {
+                                        mainItem.chat.core.lLeave()
+                                    }
+                                })
+                            }
+                            style: ButtonStyle.noBackground
+                        }
                         IconLabelButton {
                             Layout.fillWidth: true
                             Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)

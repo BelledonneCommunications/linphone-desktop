@@ -32,6 +32,8 @@ ColumnLayout {
 
 	property alias buttonContent: rightButton.data
 	property alias detailContent: detailControl.data
+	
+	property var hideChat: false
 
 	component LabelButton: ColumnLayout {
 		id: labelButton
@@ -169,7 +171,7 @@ ColumnLayout {
 			}
 		}
 		LabelButton {
-			visible: !mainItem.isConference && !SettingsCpp.disableChatFeature
+			visible: !mainItem.isConference && !SettingsCpp.disableChatFeature && !mainItem.hideChat
             width: Math.round(56 * DefaultStyle.dp)
             height: Math.round(56 * DefaultStyle.dp)
             button.icon.width: Math.round(24 * DefaultStyle.dp)

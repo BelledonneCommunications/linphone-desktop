@@ -4212,6 +4212,24 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation>Tous les messages seront supprimés. Souhaitez-vous continuer ?</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="292"/>
+		<source>chat_view_detail_leave_room_toast_button</source>
+		<extracomment>&quot;Leave chat room&quot;</extracomment>
+		<translation>Quitter la conversation</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="295"/>
+		<source>chat_view_detail_leave_room_toast_title</source>
+		<extracomment>Leave chat room ?</extracomment>
+		<translation>Quitter la conversation ?</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="297"/>
+		<source>chat_view_detail_leave_room_toast_message</source>
+		<extracomment>You will not be able to send or receive messages in this room anymore, leave ?</extracomment>
+		<translation>Vous ne recevrez ni pourrez envoyer des messages dans cette conversation, quitter ?</translation>
+	</message>
 </context>
 <context>
     <name>SettingsPage</name>

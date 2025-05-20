@@ -91,6 +91,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	mIdentifier = Utils::coreStringToAppString(chatRoom->getIdentifier());
 	mChatRoomState = LinphoneEnums::fromLinphone(chatRoom->getState());
 	mIsEncrypted = chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Encrypted);
+	mIsReadOnly = chatRoom->isReadOnly();
 	connect(this, &ChatCore::messageListChanged, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::messagesInserted, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::messageRemoved, this, &ChatCore::lUpdateLastMessage);
@@ -107,6 +108,8 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	mChatModelConnection->makeConnectToCore(&ChatCore::lDeleteHistory, [this]() {
 		mChatModelConnection->invokeToModel([this]() { mChatModel->deleteHistory(); });
 	});
+	mChatModelConnection->makeConnectToCore(
+	    &ChatCore::lLeave, [this]() { mChatModelConnection->invokeToModel([this]() { mChatModel->leave(); }); });
 	mChatModelConnection->makeConnectToModel(&ChatModel::historyDeleted, [this]() {
 		mChatModelConnection->invokeToCore([this]() {
 			clearMessagesList();
@@ -138,7 +141,11 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatModel::stateChanged,
 	    [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom, linphone::ChatRoom::State newState) {
 		    auto state = LinphoneEnums::fromLinphone(newState);
-		    mChatModelConnection->invokeToCore([this, state]() { setChatRoomState(state); });
+		    bool isReadOnly = chatRoom->isReadOnly();
+		    mChatModelConnection->invokeToCore([this, state, isReadOnly]() {
+			    setChatRoomState(state);
+			    setIsReadOnly(isReadOnly);
+		    });
 	    });
 
 	mChatModelConnection->makeConnectToModel(&ChatModel::chatMessageReceived,
@@ -294,6 +301,17 @@ void ChatCore::setChatRoomState(LinphoneEnums::ChatRoomState state) {
 		mChatRoomState = state;
 		emit chatRoomStateChanged();
 	}
+}
+
+void ChatCore::setIsReadOnly(bool readOnly) {
+	if (mIsReadOnly != readOnly) {
+		mIsReadOnly = readOnly;
+		emit readOnlyChanged();
+	}
+}
+
+bool ChatCore::getIsReadOnly() const {
+	return mIsReadOnly;
 }
 
 ChatMessageGui *ChatCore::getLastMessage() const {

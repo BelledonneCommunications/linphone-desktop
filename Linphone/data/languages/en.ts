@@ -4197,6 +4197,24 @@ To enable them in a commercial project, please contact us.</translation>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation>All the messages will be removed from the chat room. Do you want to continue ?</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="292"/>
+		<source>chat_view_detail_leave_room_toast_button</source>
+		<extracomment>&quot;Leave chat room&quot;</extracomment>
+		<translation>Leave chat room</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="295"/>
+		<source>chat_view_detail_leave_room_toast_title</source>
+		<extracomment>Leave chat room ?</extracomment>
+		<translation>Leave chat room ?</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="297"/>
+		<source>chat_view_detail_leave_room_toast_message</source>
+		<extracomment>You will not be able to send or receive messages in this room anymore, leave ?</extracomment>
+		<translation>You will not be able to send or receive messages in this room anymore, leave ?</translation>
+	</message>
 </context>
 <context>
     <name>SettingsPage</name>

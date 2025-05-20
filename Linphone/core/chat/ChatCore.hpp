@@ -50,6 +50,7 @@ public:
 	Q_PROPERTY(QString composingAddress READ getComposingAddress WRITE setComposingAddress NOTIFY composingUserChanged)
 	Q_PROPERTY(bool isGroupChat READ isGroupChat CONSTANT)
 	Q_PROPERTY(bool isEncrypted MEMBER mIsEncrypted)
+	Q_PROPERTY(bool isReadOnly READ getIsReadOnly WRITE setIsReadOnly NOTIFY readOnlyChanged)
 
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	static QSharedPointer<ChatCore> create(const std::shared_ptr<linphone::ChatRoom> &chatRoom);
@@ -74,6 +75,9 @@ public:
 
 	LinphoneEnums::ChatRoomState getChatRoomState() const;
 	void setChatRoomState(LinphoneEnums::ChatRoomState state);
+
+	bool getIsReadOnly() const;
+	void setIsReadOnly(bool readOnly);
 
 	QSharedPointer<ChatMessageCore> getLastMessageCore() const;
 	void setLastMessage(QSharedPointer<ChatMessageCore> lastMessage);
@@ -115,6 +119,7 @@ signals:
 	void deleted();
 	void composingUserChanged();
 	void chatRoomStateChanged();
+	void readOnlyChanged();
 
 	void lDeleteMessage();
 	void lDelete();
@@ -125,6 +130,7 @@ signals:
 	void lUpdateLastUpdatedTime();
 	void lSendTextMessage(QString message);
 	void lCompose();
+	void lLeave();
 
 private:
 	QString id;
@@ -139,6 +145,7 @@ private:
 	QString mComposingAddress;
 	bool mIsGroupChat = false;
 	bool mIsEncrypted = false;
+	bool mIsReadOnly = false;
 	LinphoneEnums::ChatRoomState mChatRoomState;
 	std::shared_ptr<ChatModel> mChatModel;
 	QSharedPointer<ChatMessageCore> mLastMessage;
