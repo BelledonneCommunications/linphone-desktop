@@ -1841,7 +1841,7 @@ QString Utils::encodeTextToQmlRichFormat(const QString &text, const QVariantMap 
 	if (lastWasUrl && formattedText.last().back() != ' ') {
 		formattedText.push_back(" ");
 	}
-	return "<p style=\"white-space:pre-wrap;\">" + formattedText.join("") + "</p>";
+	return "<p style=\"white-space:pre-wrap;\">" + formattedText.join("");
 }
 
 QString Utils::encodeEmojiToQmlRichFormat(const QString &body) {
@@ -1870,7 +1870,18 @@ QString Utils::encodeEmojiToQmlRichFormat(const QString &body) {
 	return fmtBody;
 }
 
+QString Utils::getFilename(QUrl url) {
+	return url.fileName();
+}
+
 bool Utils::codepointIsEmoji(uint code) {
-	return (code >= 0x2600 && code <= 0x27bf) || (code >= 0x2b00 && code <= 0x2bff) ||
-	       (code >= 0x1f000 && code <= 0x1faff) || code == 0x200d || code == 0xfe0f;
+	return ((code >= 0x1F600 && code <= 0x1F64F) || // Emoticons
+	        (code >= 0x1F300 && code <= 0x1F5FF) || // Misc Symbols and Pictographs
+	        (code >= 0x1F680 && code <= 0x1F6FF) || // Transport & Map
+	        (code >= 0x1F700 && code <= 0x1F77F) || // Alchemical Symbols
+	        (code >= 0x1F900 && code <= 0x1F9FF) || // Supplemental Symbols & Pictographs
+	        (code >= 0x1FA70 && code <= 0x1FAFF) || // Symbols and Pictographs Extended-A
+	        (code >= 0x2600 && code <= 0x26FF) ||   // Miscellaneous Symbols
+	        (code >= 0x2700 && code <= 0x27BF)      // Dingbats
+	);
 }

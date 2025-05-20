@@ -819,4 +819,11 @@ function updatePosition(scrollItem, list){
 	}
 }
 
-
+// Transform svg file to unicode emoji
+function codepointFromFilename(filename) {
+  let baseName = filename.split('.')[0];
+  let parts = baseName.replace(/_/g, '-').split('-');
+  let codePoints = parts.map(hex => parseInt(hex, 16));
+  var unicode = String.fromCodePoint(...codePoints);
+  return unicode;
+}

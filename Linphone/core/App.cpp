@@ -714,6 +714,14 @@ void App::initFonts() {
 			allFamilies << QFontDatabase::applicationFontFamilies(id);
 		}
 	}
+	QDirIterator itEmojis(":/emoji/font/", QDirIterator::Subdirectories);
+	while (itEmojis.hasNext()) {
+		QString ttf = itEmojis.next();
+		if (itEmojis.fileInfo().isFile()) {
+			auto id = QFontDatabase::addApplicationFont(ttf);
+			allFamilies << QFontDatabase::applicationFontFamilies(id);
+		}
+	}
 #ifdef Q_OS_LINUX
 	QDirIterator itFonts(":/linux/font/", QDirIterator::Subdirectories);
 	while (itFonts.hasNext()) {

@@ -154,6 +154,8 @@ public:
 	Q_INVOKABLE static QString encodeTextToQmlRichFormat(const QString &text,
 	                                                     const QVariantMap &options = QVariantMap());
 	Q_INVOKABLE static QString encodeEmojiToQmlRichFormat(const QString &body);
+
+	Q_INVOKABLE static QString getFilename(QUrl url);
 	static bool codepointIsEmoji(uint code);
 
 	//	QDir findDirectoryByName(QString startPath, QString name);

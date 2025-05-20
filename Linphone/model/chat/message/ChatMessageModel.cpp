@@ -93,6 +93,20 @@ void ChatMessageModel::deleteMessageFromChatRoom() {
 	}
 }
 
+void ChatMessageModel::sendReaction(const QString &reaction) {
+	auto linReaction = mMonitor->createReaction(Utils::appStringToCoreString(reaction));
+	linReaction->send();
+}
+
+void ChatMessageModel::removeReaction() {
+	sendReaction(QString());
+}
+
+QString ChatMessageModel::getOwnReaction() const {
+	auto reaction = mMonitor->getOwnReaction();
+	return reaction ? Utils::coreStringToAppString(reaction->getBody()) : QString();
+}
+
 linphone::ChatMessage::State ChatMessageModel::getState() const {
 	return mMonitor->getState();
 }

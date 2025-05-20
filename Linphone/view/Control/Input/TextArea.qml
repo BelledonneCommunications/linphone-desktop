@@ -12,7 +12,7 @@ TextEdit {
     property real placeholderWeight: Typography.p1.weight
 	property color placeholderTextColor: color
 	property alias background: background.data
-	property bool hoverEnabled: false
+	property bool hoverEnabled: true
 	property bool hovered: mouseArea.hoverEnabled && mouseArea.containsMouse
     topPadding: Math.round(5 * DefaultStyle.dp)
     bottomPadding: Math.round(5 * DefaultStyle.dp)
@@ -36,10 +36,10 @@ TextEdit {
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
+		enabled: mainItem.hoverEnabled
 		hoverEnabled: mainItem.hoverEnabled
-		// onPressed: mainItem.forceActiveFocus()
 		acceptedButtons: Qt.NoButton
-		cursorShape: mainItem.hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+		cursorShape: mainItem.hovered ? Qt.IBeamCursor : Qt.ArrowCursor
 	}
 
 	Item {

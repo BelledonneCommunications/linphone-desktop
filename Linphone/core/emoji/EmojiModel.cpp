@@ -47,7 +47,6 @@ EmojiModel::EmojiModel() {
 }
 
 int EmojiModel::count(QString category) {
-	qDebug() << "count of category" << category << emojies[category].size();
 	return emojies[category].size();
 }
 

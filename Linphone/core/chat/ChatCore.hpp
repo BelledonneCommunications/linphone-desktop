@@ -49,7 +49,7 @@ public:
 	Q_PROPERTY(QString composingName READ getComposingName WRITE setComposingName NOTIFY composingUserChanged)
 	Q_PROPERTY(QString composingAddress READ getComposingAddress WRITE setComposingAddress NOTIFY composingUserChanged)
 	Q_PROPERTY(bool isGroupChat READ isGroupChat CONSTANT)
-	Q_PROPERTY(bool isEncrypted MEMBER mIsEncrypted)
+	Q_PROPERTY(bool isEncrypted READ isEncrypted CONSTANT)
 	Q_PROPERTY(bool isReadOnly READ getIsReadOnly WRITE setIsReadOnly NOTIFY readOnlyChanged)
 
 	// Should be call from model Thread. Will be automatically in App thread after initialization

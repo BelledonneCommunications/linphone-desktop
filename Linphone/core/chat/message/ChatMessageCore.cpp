@@ -25,6 +25,36 @@
 
 DEFINE_ABSTRACT_OBJECT(ChatMessageCore)
 
+/***********************************************************************/
+
+Reaction Reaction::operator=(Reaction r) {
+	mAddress = r.mAddress;
+	mBody = r.mBody;
+	return *this;
+}
+bool Reaction::operator==(const Reaction &r) const {
+	return r.mBody == mBody && r.mAddress == mAddress;
+}
+bool Reaction::operator!=(Reaction r) {
+	return r.mBody != mBody || r.mAddress != mAddress;
+}
+
+Reaction Reaction::createMessageReactionVariant(const QString &body, const QString &address) {
+	Reaction r;
+	r.mBody = body;
+	r.mAddress = address;
+	return r;
+}
+
+QVariant createReactionSingletonVariant(const QString &body, int count = 1) {
+	QVariantMap map;
+	map.insert("body", body);
+	map.insert("count", count);
+	return map;
+}
+
+/***********************************************************************/
+
 QSharedPointer<ChatMessageCore> ChatMessageCore::create(const std::shared_ptr<linphone::ChatMessage> &chatmessage) {
 	auto sharedPointer = QSharedPointer<ChatMessageCore>(new ChatMessageCore(chatmessage), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
@@ -64,6 +94,34 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 			mConferenceInfo = ConferenceInfoCore::create(conferenceInfo);
 		}
 	}
+	auto reac = chatmessage->getOwnReaction();
+	mOwnReaction = reac ? Utils::coreStringToAppString(reac->getBody()) : QString();
+	for (auto &reaction : chatmessage->getReactions()) {
+		if (reaction) {
+			auto fromAddr = reaction->getFromAddress()->clone();
+			fromAddr->clean();
+			auto reac =
+			    Reaction::createMessageReactionVariant(Utils::coreStringToAppString(reaction->getBody()),
+			                                           Utils::coreStringToAppString(fromAddr->asStringUriOnly()));
+			mReactions.append(reac);
+
+			auto it = std::find_if(mReactionsSingletonMap.begin(), mReactionsSingletonMap.end(),
+			                       [body = reac.mBody](QVariant data) {
+				                       auto dataBody = data.toMap()["body"].toString();
+				                       return body == dataBody;
+			                       });
+			if (it == mReactionsSingletonMap.end())
+				mReactionsSingletonMap.push_back(createReactionSingletonVariant(reac.mBody, 1));
+			else {
+				auto map = it->toMap();
+				auto count = map["count"].toInt();
+				++count;
+				map.remove("count");
+				map.insert("count", count);
+			}
+		}
+	}
+	connect(this, &ChatMessageCore::messageReactionChanged, this, &ChatMessageCore::resetReactionsSingleton);
 }
 
 ChatMessageCore::~ChatMessageCore() {
@@ -84,7 +142,51 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lMarkAsRead, [this] {
 		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->markAsRead(); });
 	});
-	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageRead, [this]() { setIsRead(true); });
+	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageRead, [this]() {
+		mChatMessageModelConnection->invokeToCore([this] { setIsRead(true); });
+	});
+	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lSendReaction, [this](const QString &reaction) {
+		mChatMessageModelConnection->invokeToModel([this, reaction] { mChatMessageModel->sendReaction(reaction); });
+	});
+	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lRemoveReaction, [this]() {
+		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->removeReaction(); });
+	});
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::newMessageReaction,
+	    [this](const std::shared_ptr<linphone::ChatMessage> &message,
+	           const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) {
+		    auto ownReac = message->getOwnReaction();
+		    auto own = ownReac ? Utils::coreStringToAppString(message->getOwnReaction()->getBody()) : QString();
+		    // We must reset all the reactions each time cause reactionRemoved is not emitted
+		    // when someone change its current reaction
+		    QList<Reaction> reactions;
+		    for (auto &reaction : message->getReactions()) {
+			    if (reaction) {
+				    auto fromAddr = reaction->getFromAddress()->clone();
+				    fromAddr->clean();
+				    reactions.append(Reaction::createMessageReactionVariant(
+				        Utils::coreStringToAppString(reaction->getBody()),
+				        Utils::coreStringToAppString(fromAddr->asStringUriOnly())));
+			    }
+		    }
+		    mChatMessageModelConnection->invokeToCore([this, own, reactions] {
+			    setOwnReaction(own);
+			    setReactions(reactions);
+		    });
+	    });
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::reactionRemoved, [this](const std::shared_ptr<linphone::ChatMessage> &message,
+	                                               const std::shared_ptr<const linphone::Address> &address) {
+		    auto reac = message->getOwnReaction();
+		    auto own = reac ? Utils::coreStringToAppString(message->getOwnReaction()->getBody()) : QString();
+		    auto addr = address->clone();
+		    addr->clean();
+		    QString addressString = Utils::coreStringToAppString(addr->asStringUriOnly());
+		    mChatMessageModelConnection->invokeToCore([this, own, addressString] {
+			    removeReaction(addressString);
+			    setOwnReaction(own);
+		    });
+	    });
 
 	mChatMessageModelConnection->makeConnectToModel(
 	    &ChatMessageModel::msgStateChanged,
@@ -157,6 +259,94 @@ void ChatMessageCore::setIsRead(bool read) {
 		mIsRead = read;
 		emit isReadChanged(read);
 	}
+}
+
+QString ChatMessageCore::getOwnReaction() const {
+	return mOwnReaction;
+}
+
+void ChatMessageCore::setOwnReaction(const QString &reaction) {
+	if (mOwnReaction != reaction) {
+		mOwnReaction = reaction;
+		emit messageReactionChanged();
+	}
+}
+
+QList<Reaction> ChatMessageCore::getReactions() const {
+	return mReactions;
+}
+
+QList<QVariant> ChatMessageCore::getReactionsSingleton() const {
+	return mReactionsSingletonMap;
+}
+
+void ChatMessageCore::setReactions(const QList<Reaction> &reactions) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	mReactions = reactions;
+	emit messageReactionChanged();
+}
+
+void ChatMessageCore::resetReactionsSingleton() {
+	mReactionsSingletonMap.clear();
+	for (auto &reac : mReactions) {
+		auto it = std::find_if(mReactionsSingletonMap.begin(), mReactionsSingletonMap.end(),
+		                       [body = reac.mBody](QVariant data) {
+			                       auto dataBody = data.toMap()["body"].toString();
+			                       return body == dataBody;
+		                       });
+		if (it == mReactionsSingletonMap.end())
+			mReactionsSingletonMap.push_back(createReactionSingletonVariant(reac.mBody, 1));
+		else {
+			auto map = it->toMap();
+			auto count = map["count"].toInt();
+			++count;
+			map.remove("count");
+			map.insert("count", count);
+			mReactionsSingletonMap.erase(it);
+			mReactionsSingletonMap.push_back(map);
+		}
+	}
+	emit singletonReactionMapChanged();
+}
+
+void ChatMessageCore::removeReaction(const Reaction &reaction) {
+	int i = 0;
+	for (const auto &r : mReactions) {
+		if (reaction == r) {
+			mReactions.removeAt(i);
+			emit messageReactionChanged();
+		}
+		++i;
+	}
+}
+
+void ChatMessageCore::removeOneReactionFromSingletonMap(const QString &body) {
+	auto it = std::find_if(mReactionsSingletonMap.begin(), mReactionsSingletonMap.end(), [body](QVariant data) {
+		auto dataBody = data.toMap()["body"].toString();
+		return body == dataBody;
+	});
+	if (it != mReactionsSingletonMap.end()) {
+		auto map = it->toMap();
+		auto count = map["count"].toInt();
+		if (count <= 1) mReactionsSingletonMap.erase(it);
+		else {
+			--count;
+			map.remove("count");
+			map.insert("count", count);
+		}
+		emit messageReactionChanged();
+	}
+}
+
+void ChatMessageCore::removeReaction(const QString &address) {
+	int n = mReactions.removeIf([address, this](Reaction r) {
+		if (r.mAddress == address) {
+			removeOneReactionFromSingletonMap(r.mBody);
+			return true;
+		}
+		return false;
+	});
+	if (n > 0) emit messageReactionChanged();
 }
 
 LinphoneEnums::ChatMessageState ChatMessageCore::getMessageState() const {

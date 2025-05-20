@@ -109,8 +109,10 @@ ListView {
 
     delegate: ChatMessage {
         chatMessage: modelData
-        property real maxWidth: Math.round(mainItem.width * (3/4))
-        onVisibleChanged: if (!modelData.core.isRead) modelData.core.lMarkAsRead()
+        maxWidth: Math.round(mainItem.width * (3/4))
+        onVisibleChanged: {
+            if (visible && !modelData.core.isRead) modelData.core.lMarkAsRead()
+        }
         width: mainItem.width
         property var previousIndex: index - 1
         property var previousFromAddress: chatMessageProxy.getChatMessageAtIndex(index-1)?.core.fromAddress

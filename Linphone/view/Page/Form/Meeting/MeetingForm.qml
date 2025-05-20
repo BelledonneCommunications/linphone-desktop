@@ -212,7 +212,6 @@ FocusScope {
                     Layout.preferredWidth: Math.round(275 * DefaultStyle.dp)
                     leftPadding: Math.round(8 * DefaultStyle.dp)
                     rightPadding: Math.round(8 * DefaultStyle.dp)
-					hoverEnabled: true
                     //: "Ajouter une description"
                     placeholderText: qsTr("meeting_schedule_description_hint")
 					placeholderTextColor: DefaultStyle.main2_600

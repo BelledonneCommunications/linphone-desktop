@@ -45,6 +45,7 @@ public:
 	static constexpr char DefaultEmojiFont[] = "Apple Color Emoji";
 #else
 	static constexpr char DefaultEmojiFont[] = "Noto Color Emoji";
+
 #endif
 	static constexpr int DefaultEmojiFontPointSize = 10;
 	static QStringList getReactionsList();

@@ -91,6 +91,38 @@ RowLayout {
                 anchors.leftMargin: Math.round(18 * DefaultStyle.dp)
                 anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
                 Control.ScrollBar.vertical: scrollbar
+
+                Popup {
+                    id: emojiPickerPopup
+                    y: Math.round(chatMessagesListView.y + chatMessagesListView.height - height - 8*DefaultStyle.dp)
+                    x: Math.round(chatMessagesListView.x + 8*DefaultStyle.dp)
+                    width: Math.round(393 * DefaultStyle.dp)
+                    height: Math.round(291 * DefaultStyle.dp)
+                    visible: emojiPickerButton.checked
+                    closePolicy: Popup.CloseOnPressOutside
+                    onClosed: emojiPickerButton.checked = false
+                    background: Item {
+                        anchors.fill: parent
+                        Rectangle {
+                            id: buttonBackground
+                            anchors.fill: parent
+                            color: DefaultStyle.grey_0
+                            radius: Math.round(20 * DefaultStyle.dp)
+                        }
+                        MultiEffect {
+                            anchors.fill: buttonBackground
+                            source: buttonBackground
+                            shadowEnabled: true
+                            shadowColor: DefaultStyle.grey_1000
+                            shadowBlur: 0.1
+                            shadowOpacity: 0.5
+                        }
+                    }
+                    contentItem: EmojiPicker {
+                        id: emojiPicker
+                        editor: sendingTextArea
+                    }
+                }
             },
             ScrollBar {
                 id: scrollbar
@@ -130,12 +162,10 @@ RowLayout {
                     RowLayout {
                         spacing: Math.round(16 * DefaultStyle.dp)
                         BigButton {
+                            id: emojiPickerButton
                             style: ButtonStyle.noBackground
                             checkable: true
-                            icon.source: AppIcons.smiley
-                            onCheckedChanged: {
-                                console.log("TODO : emoji")
-                            }
+                            icon.source: checked ? AppIcons.closeX : AppIcons.smiley
                         }
                         BigButton {
                             style: ButtonStyle.noBackground
@@ -191,11 +221,9 @@ RowLayout {
 
                                     TextArea {
                                         id: sendingTextArea
-                                        width: parent.width
+                                        width: sendingAreaFlickable.width
                                         height: sendingAreaFlickable.height
-                                        anchors.left: parent.left
-                                        anchors.right: parent.right
-                                        wrapMode: TextEdit.WordWrap
+                                        textFormat: TextEdit.AutoText
                                         //: Say something… : placeholder text for sending message text area
                                         placeholderText: qsTr("chat_view_send_area_placeholder_text")
                                         placeholderTextColor: DefaultStyle.main2_400
@@ -205,9 +233,9 @@ RowLayout {
                                             weight: Typography.p1.weight
                                         }
                                         onCursorRectangleChanged: sendingAreaFlickable.ensureVisible(cursorRectangle)
+                                        wrapMode: TextEdit.WordWrap
                                         property string previousText
                                         Component.onCompleted: previousText = text
-										displayAsRichText: true
                                         onTextChanged: {
                                             if (previousText === "" && text !== "") {
                                                 mainItem.chat.core.lCompose()

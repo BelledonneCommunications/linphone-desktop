@@ -26,6 +26,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Linphone
+import UtilsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 // import EmojiModel
 
@@ -42,7 +44,9 @@ ColumnLayout {
     property var searchModel: ListModel {}
     property bool searchMode: false
     property int skinColor: -1
-    signal emojiClicked()
+    
+    signal emojiClicked(string emoji)
+
     function changeSkinColor(index) {
         if (index !== skinColors.current) {
             skinColors.itemAt(skinColors.current + 1).scale = 0.6
@@ -152,13 +156,14 @@ ColumnLayout {
     ListView {
         id: list
         width: mainItem.width
-        height: mainItem.height - categoriesRow.height
+        height: Math.round(250 * DefaultStyle.dp)
+        Layout.fillHeight: true
         model: mainItem.categories
         spacing: Math.round(30 * DefaultStyle.dp)
         topMargin: Math.round(7 * DefaultStyle.dp)
         bottomMargin: Math.round(7 * DefaultStyle.dp)
         leftMargin: Math.round(12 * DefaultStyle.dp)
-        // clip: true
+        clip: true
         delegate: GridLayout {
             id: grid
             property string category: mainItem.searchMode ? 'Search Result' : modelData
@@ -178,13 +183,11 @@ ColumnLayout {
                 Layout.bottomMargin: Math.round(8 * DefaultStyle.dp)
             }
             Repeater {
-                onCountChanged: console.log("emoji list count :", count)
                 model: mainItem.searchMode ? mainItem.searchModel : mainItem.model.count(grid.category)
                 delegate: Rectangle  {
                     property alias es: emojiSvg
                     Layout.preferredWidth: Math.round(40 * DefaultStyle.dp)
                     Layout.preferredHeight: Math.round(40 * DefaultStyle.dp)
-                    RectangleTest{anchors.fill: parent}
                     radius: Math.round(40 * DefaultStyle.dp)
                     color: mouseArea.containsMouse ? '#e6e6e6' : '#ffffff'
                     Image {
@@ -199,10 +202,11 @@ ColumnLayout {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
+                        property string imageUrl: emojiSvg.source
                         onClicked: {
-                            var tag = "<img src = '%1' width = '20' height = '20' align = 'top'>"
-                            if (mainItem.editor) mainItem.editor.insert(mainItem.editor.cursorPosition, tag.arg(emojiSvg.source))
-                            mainItem.emojiClicked(tag.arg(emojiSvg.source))
+                            var emojiInFont = Utils.codepointFromFilename(UtilsCpp.getFilename(emojiSvg.source))
+                            if (mainItem.editor) mainItem.editor.insert(mainItem.editor.cursorPosition, emojiInFont)
+                            mainItem.emojiClicked(emojiInFont)
                         }
                     }
                 }

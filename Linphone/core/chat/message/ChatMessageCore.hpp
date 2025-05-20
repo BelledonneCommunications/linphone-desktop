@@ -31,6 +31,22 @@
 
 #include <linphone++/linphone.hh>
 
+struct Reaction {
+	Q_GADGET
+
+	Q_PROPERTY(QString body MEMBER mBody)
+	Q_PROPERTY(QString address MEMBER mAddress)
+
+public:
+	QString mBody;
+	QString mAddress;
+
+	Reaction operator=(Reaction r);
+	bool operator==(const Reaction &r) const;
+	bool operator!=(Reaction r);
+	static Reaction createMessageReactionVariant(const QString &body, const QString &address);
+};
+
 class ChatCore;
 
 class ChatMessageCore : public QObject, public AbstractObject {
@@ -50,6 +66,9 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool isFromChatGroup READ isFromChatGroup CONSTANT)
 	Q_PROPERTY(bool isRead READ isRead WRITE setIsRead NOTIFY isReadChanged)
 	Q_PROPERTY(ConferenceInfoGui *conferenceInfo READ getConferenceInfoGui CONSTANT)
+	Q_PROPERTY(QString ownReaction READ getOwnReaction WRITE setOwnReaction NOTIFY messageReactionChanged)
+	Q_PROPERTY(QList<Reaction> reactions READ getReactions WRITE setReactions NOTIFY messageReactionChanged)
+	Q_PROPERTY(QList<QVariant> reactionsSingleton READ getReactionsSingleton NOTIFY singletonReactionMapChanged)
 
 public:
 	static QSharedPointer<ChatMessageCore> create(const std::shared_ptr<linphone::ChatMessage> &chatmessage);
@@ -76,6 +95,16 @@ public:
 	bool isRead() const;
 	void setIsRead(bool read);
 
+	QString getOwnReaction() const;
+	void setOwnReaction(const QString &reaction);
+	QList<Reaction> getReactions() const;
+	QList<QVariant> getReactionsSingleton() const;
+	void removeOneReactionFromSingletonMap(const QString &body);
+	void resetReactionsSingleton();
+	void setReactions(const QList<Reaction> &reactions);
+	void removeReaction(const Reaction &reaction);
+	void removeReaction(const QString &address);
+
 	LinphoneEnums::ChatMessageState getMessageState() const;
 	void setMessageState(LinphoneEnums::ChatMessageState state);
 
@@ -89,11 +118,15 @@ signals:
 	void isReadChanged(bool read);
 	void isRemoteMessageChanged(bool isRemote);
 	void messageStateChanged();
+	void messageReactionChanged();
+	void singletonReactionMapChanged();
 
 	void lDelete();
 	void deleted();
 	void lMarkAsRead();
 	void readChanged();
+	void lSendReaction(const QString &reaction);
+	void lRemoveReaction();
 
 private:
 	DECLARE_ABSTRACT_OBJECT QString mText;
@@ -105,6 +138,9 @@ private:
 	QString mFromName;
 	QString mPeerName;
 	QString mMessageId;
+	QString mOwnReaction;
+	QList<Reaction> mReactions;
+	QList<QVariant> mReactionsSingletonMap;
 	QDateTime mTimestamp;
 	bool mIsRemoteMessage = false;
 	bool mIsFromChatGroup = false;

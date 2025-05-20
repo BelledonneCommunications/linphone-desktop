@@ -35,6 +35,7 @@ Control.Button {
 	property var checkedImageColor: style?.image?.checked || Qt.darker(contentImageColor, 1.1)
 	property var pressedImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.1)
     property bool asynchronous: false
+	property var textFormat: Text.AutoText
     spacing: Math.round(5 * DefaultStyle.dp)
 	hoverEnabled: enabled
 	activeFocusOnTab: true
@@ -98,6 +99,7 @@ Control.Button {
 		width: textMetrics.advanceWidth
 		wrapMode: Text.WrapAnywhere
 		text: mainItem.text
+		textFormat: mainItem.textFormat
 		maximumLineCount: 1
         color: mainItem.checkable && mainItem.checked
             ? mainItem.checkedColor || mainItem.pressedColor

@@ -19,6 +19,9 @@
         <file>font/Noto_Sans/NotoSans-Thin.ttf</file>
         <file>font/Noto_Sans/NotoSans-ThinItalic.ttf</file>
     </qresource>
+    <qresource prefix="/emoji">
+        <file>font/EmojiFont.ttf</file>
+    </qresource>
     <qresource prefix="/linux">
         <file>font/OpenMoji-color-cbdt.ttf</file>
     </qresource>
