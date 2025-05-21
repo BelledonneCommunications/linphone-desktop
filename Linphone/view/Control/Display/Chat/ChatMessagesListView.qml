@@ -59,6 +59,7 @@ ListView {
     }
 
     header: Item {
+        visible: mainItem.chat && mainItem.chat.core.isEncrypted
         height: headerMessage.height + Math.round(50 * DefaultStyle.dp)
         width: headerMessage.width
         anchors.horizontalCenter: parent.horizontalCenter

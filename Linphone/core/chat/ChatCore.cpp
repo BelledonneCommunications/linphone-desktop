@@ -261,6 +261,10 @@ bool ChatCore::isGroupChat() const {
 	return mIsGroupChat;
 }
 
+bool ChatCore::isEncrypted() const {
+	return mIsEncrypted;
+}
+
 QString ChatCore::getIdentifier() const {
 	return mIdentifier;
 }

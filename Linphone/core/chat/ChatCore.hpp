@@ -66,6 +66,8 @@ public:
 
 	bool isGroupChat() const;
 
+	bool isEncrypted() const;
+
 	QString getIdentifier() const;
 
 	ChatMessageGui *getLastMessage() const;
