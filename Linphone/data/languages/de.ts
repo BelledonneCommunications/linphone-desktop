@@ -395,6 +395,7 @@
     <message numerus="yes">
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="52"/>
         <source>add_participant_selected_count</source>
+        <comment>0</comment>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -522,74 +523,74 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../../core/App.cpp" line="329"/>
+        <location filename="../../core/App.cpp" line="331"/>
         <source>remote_provisioning_dialog</source>
         <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
         <translation>Möchten Sie die Remote-Konfiguration von dieser Adresse herunterladen und anwenden?</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="786"/>
+        <location filename="../../core/App.cpp" line="797"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>Ein kostenloses Open-Source SIP Video-Telefon.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="788"/>
+        <location filename="../../core/App.cpp" line="799"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Kommandozeilen-Befehl an die Anwendung schicken</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="792"/>
+        <location filename="../../core/App.cpp" line="803"/>
         <source>command_line_option_show_help</source>
         <translation>Zeige Hilfe</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="797"/>
+        <location filename="../../core/App.cpp" line="808"/>
         <source>command_line_option_show_app_version</source>
         <translation type="unfinished">Zeige App-Version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="804"/>
+        <location filename="../../core/App.cpp" line="815"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Abzurufende Linphone-Konfigurationsdatei angeben. Sie wird mit der aktuellen Konfiguration zusammengeführt.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="806"/>
+        <location filename="../../core/App.cpp" line="817"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, Pfad oder Datei</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="811"/>
+        <location filename="../../core/App.cpp" line="822"/>
         <source>command_line_option_minimized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="814"/>
+        <location filename="../../core/App.cpp" line="825"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Debug-Informationen auf der Standardausgabe ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="817"/>
+        <location filename="../../core/App.cpp" line="828"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Nur Anwendungs-Logs ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1187"/>
+        <location filename="../../core/App.cpp" line="1198"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Ausblenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1187"/>
+        <location filename="../../core/App.cpp" line="1198"/>
         <source>show_action</source>
         <translation>Zeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1202"/>
+        <location filename="../../core/App.cpp" line="1213"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Beenden</translation>
@@ -1747,25 +1748,25 @@
 <context>
     <name>ChatMessage</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="182"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="267"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="190"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="275"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="192"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="277"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="198"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="283"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation type="unfinished"></translation>
@@ -1774,35 +1775,79 @@
 <context>
     <name>ChatMessageCore</name>
     <message>
-        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="71"/>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="137"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="73"/>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="139"/>
         <source>info_toast_deleted_message</source>
         <extracomment>The message has been deleted</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
+    <name>ChatMessageInvitationBubble</name>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="49"/>
+        <source>ics_bubble_meeting_from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="50"/>
+        <source>ics_bubble_meeting_to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="72"/>
+        <source>ics_bubble_organiser_invites_you_to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="74"/>
+        <source>ics_bubble_organiser_modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="76"/>
+        <source>ics_bubble_organiser_cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="198"/>
+        <source>ics_bubble_description_title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="233"/>
+        <source>ics_bubble_participants</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="243"/>
+        <source>ics_bubble_join</source>
+        <extracomment>&quot;Rejoindre&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="90"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="89"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="100"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="99"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Les messages de cette conversation sont chiffrés de bout 
  en bout. Seul votre correspondant peut les déchiffrer.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="155"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="160"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation type="unfinished"></translation>
@@ -1931,13 +1976,13 @@
 <context>
     <name>ConferenceInfoCore</name>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="577"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="573"/>
         <source>information_popup_error_title</source>
         <extracomment>&quot;Erreur&quot;</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="579"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="575"/>
         <source>information_popup_disconnected_account_message</source>
         <extracomment>&quot;Votre compte est déconnecté&quot;</extracomment>
         <translation>Ihr Konto ist getrennt</translation>
@@ -1966,13 +2011,13 @@
         <translation type="vanished">Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="192"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="193"/>
         <source>information_popup_error_title</source>
         <extracomment>Erreur</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="194"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="195"/>
         <source>information_popup_voicemail_address_undefined_message</source>
         <extracomment>L&apos;URI de messagerie vocale n&apos;est pas définie.</extracomment>
         <translation>Die Voicemail-URI ist nicht definiert.</translation>
@@ -3274,19 +3319,19 @@
         <translation>Titel hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="217"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="216"/>
         <source>meeting_schedule_description_hint</source>
         <extracomment>&quot;Ajouter une description&quot;</extracomment>
         <translation>Beschreibung hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="265"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="264"/>
         <source>meeting_schedule_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Teilnehmer hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="319"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="318"/>
         <source>meeting_schedule_send_invitations_title</source>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
         <translation>Einladung an Teilnehmer senden</translation>
@@ -4249,31 +4294,31 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
 <context>
     <name>SelectedChatView</name>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="199"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="227"/>
         <source>chat_view_send_area_placeholder_text</source>
         <extracomment>Say something… : placeholder text for sending message text area</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="274"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="302"/>
         <source>chat_view_detail_other_actions_title</source>
         <extracomment>Other actions</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="292"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="320"/>
         <source>chat_view_detail_delete_history_button</source>
         <extracomment>&quot;Delete history&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="295"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="323"/>
         <source>chat_view_detail_delete_history_toast_title</source>
         <extracomment>Delete history ?</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="297"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="325"/>
         <source>chat_view_detail_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation type="unfinished"></translation>
@@ -4372,28 +4417,43 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
 <context>
     <name>ToolModel</name>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="195"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="196"/>
         <source>call_error_uninterpretable_sip_address</source>
         <extracomment>&quot;The calling address is not an interpretable SIP address : %1</extracomment>
         <translation>Die Anrufadresse ist keine interpretierbare SIP-Adresse: %1</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="267"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="268"/>
         <source>group_call_error_no_account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="292"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="293"/>
         <source>group_call_error_participants_invite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="296"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="297"/>
         <source>group_call_error_creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="455"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="399"/>
+        <source>conference_invitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="401"/>
+        <source>conference_invitation_updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="403"/>
+        <source>conference_invitation_cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="464"/>
         <source>unknown_audio_device_name</source>
         <translation>Unbekannter Gerätename</translation>
     </message>

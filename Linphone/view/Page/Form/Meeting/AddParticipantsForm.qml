@@ -47,9 +47,9 @@ FocusScope{
 			header: Text {
 				Layout.fillWidth: true
 				horizontalAlignment: Text.AlignLeft
-				visible: count > 0
+				visible: mainItem.selectedParticipantsCount > 0
 				//: "%n participant(s) sélectionné(s)"
-				text: qsTr("add_participant_selected_count", '', count).arg(count)
+				text: qsTr("add_participant_selected_count", '0', mainItem.selectedParticipantsCount).arg(mainItem.selectedParticipantsCount)
 				maximumLineCount: 1
 				color: DefaultStyle.grey_1000
 				font {
