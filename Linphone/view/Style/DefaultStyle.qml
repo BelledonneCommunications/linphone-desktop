@@ -46,7 +46,8 @@ QtObject {
 
     property real defaultHeight: 1080.0
     property real defaultWidth: 1920.0
-    property double dp: (Screen.width/Screen.height)/(defaultWidth/defaultHeight)
+    property real maxDp: 0.98
+    property real dp: Math.min((Screen.width/Screen.height)/(defaultWidth/defaultHeight), maxDp)
 
     onDpChanged: {
         console.log("Screen ratio changed", dp)
