@@ -20,6 +20,7 @@
 
 #include "ToolModel.hpp"
 #include "core/App.hpp"
+#include "core/conference/ConferenceInfoCore.hpp"
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
 #include "model/friend/FriendsManager.hpp"
@@ -28,7 +29,6 @@
 #include <QDirIterator>
 #include <QLibrary>
 #include <QTest>
-#include "core/conference/ConferenceInfoCore.hpp"
 
 DEFINE_ABSTRACT_OBJECT(ToolModel)
 
@@ -379,6 +379,7 @@ std::shared_ptr<linphone::FriendList> ToolModel::getLdapFriendList() {
 
 bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList> &friendList,
                                      const std::shared_ptr<linphone::Friend> &f) {
+	if (!friendList) return false;
 	auto friends = friendList->getFriends();
 	auto it = std::find_if(friends.begin(), friends.end(),
 	                       [f](std::shared_ptr<linphone::Friend> linFriend) { return linFriend == f; });
