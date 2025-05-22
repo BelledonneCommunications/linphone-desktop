@@ -5,7 +5,7 @@ import Linphone
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
-ColumnLayout {
+Column {
 	id: mainItem
 	spacing: 20 * DefaultStyle.dp
 	anchors.centerIn: parent

@@ -77,7 +77,9 @@ Control.Control{
 							smooth: false
 							Layout.preferredWidth: 11 * DefaultStyle.dp
 							Layout.preferredHeight: 11 * DefaultStyle.dp
-							source: presenceBar.isRegistered ? mainItem.account.core.presenceIcon : mainItem.account?.core.registrationStateIcon
+							source: presenceBar.isRegistered 
+								? mainItem.account.core.presenceIcon 
+								: mainItem.account?.core.registrationStateIcon || ""
 							Layout.leftMargin: 8 * DefaultStyle.dp
 						}
 						Text {
@@ -110,7 +112,6 @@ Control.Control{
 			popup.contentItem: Rectangle {
 				implicitWidth: 280 * DefaultStyle.dp
 				implicitHeight: 20 * DefaultStyle.dp + (setCustomStatus.visible ? 240 * DefaultStyle.dp : setPresence.implicitHeight)
-				MouseArea{anchors.fill: parent}
 				Presence {
 					id: setPresence
 					anchors.fill: parent

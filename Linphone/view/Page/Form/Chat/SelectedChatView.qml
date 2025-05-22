@@ -101,6 +101,7 @@ RowLayout {
                     visible: emojiPickerButton.checked
                     closePolicy: Popup.CloseOnPressOutside
                     onClosed: emojiPickerButton.checked = false
+                    padding: 10 * DefaultStyle.dp
                     background: Item {
                         anchors.fill: parent
                         Rectangle {
@@ -234,13 +235,14 @@ RowLayout {
                                         }
                                         onCursorRectangleChanged: sendingAreaFlickable.ensureVisible(cursorRectangle)
                                         wrapMode: TextEdit.WordWrap
-                                        property string previousText
-                                        Component.onCompleted: previousText = text
+                                        Component.onCompleted: {
+                                            if (mainItem.chat) text = mainItem.chat.core.sendingText
+                                        }
                                         onTextChanged: {
-                                            if (previousText === "" && text !== "") {
+                                            if (text !== "" && mainItem.chat.core.composingName !== "") {
                                                 mainItem.chat.core.lCompose()
                                             }
-                                            previousText = text
+                                            mainItem.chat.core.sendingText = text
                                         }
                                         Keys.onPressed: (event) => {
                                             event.accepted = false

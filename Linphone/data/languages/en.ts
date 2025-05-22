@@ -397,9 +397,9 @@
         <source>add_participant_selected_count</source>
         <comment>0</comment>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
-            <numerusform>1 selected participant</numerusform>
-            <numerusform>%n selected participants</numerusform>
+        <translation>
+            <numerusform>%1 selected participant</numerusform>
+            <numerusform>%1 selected participants</numerusform>
         </translation>
     </message>
     <message>
@@ -789,25 +789,25 @@
 <context>
     <name>CallHistoryLayout</name>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="147"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="149"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
         <translation>Join meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="165"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="167"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Call</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="179"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="181"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
         <translation>Message</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="195"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="197"/>
         <source>contact_video_call_action</source>
         <extracomment>&quot;Appel Video&quot;</extracomment>
         <translation>Video call</translation>
@@ -1412,8 +1412,8 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1004"/>
         <source>group_call_participant_selected</source>
         <translation>
-            <numerusform>1 selected participant</numerusform>
-            <numerusform>%n selected participants</numerusform>
+            <numerusform>%1 selected participant</numerusform>
+            <numerusform>%1 selected participants</numerusform>
         </translation>
     </message>
     <message>
@@ -1674,13 +1674,13 @@
 <context>
     <name>ChatCore</name>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="114"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="117"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation>Deleted</translation>
     </message>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="116"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="119"/>
         <source>info_toast_deleted_message_history</source>
         <extracomment>Message history has been deleted</extracomment>
         <translation>Message history has been deleted</translation>
@@ -1689,19 +1689,31 @@
 <context>
     <name>ChatListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="260"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="217"/>
+        <source>chat_message_is_writing_info</source>
+        <extracomment>%1 is writing…</extracomment>
+        <translation>%1 is writing…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="227"/>
+        <source>chat_message_draft_sending_text</source>
+        <extracomment>Draft : %1</extracomment>
+        <translation>Draft : %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="281"/>
         <source>chat_room_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="266"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="287"/>
         <source>chat_list_delete_chat_popup_title</source>
         <extracomment>Delete the chat ?</extracomment>
         <translation>Delete the chat ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="268"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="289"/>
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This chat and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation>This chat and all its messages will be deleted. Do You want to continue ?</translation>
@@ -1710,25 +1722,25 @@
 <context>
     <name>ChatMessage</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="267"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="266"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="275"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="274"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
         <translation>Copied</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="277"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="276"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
         <translation>in clipboard</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="283"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="282"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Delete</translation>
@@ -1796,13 +1808,13 @@
 <context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="89"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="88"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation>End to end encrypted chat</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="99"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="98"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Les messages de cette conversation sont chiffrés de bout 
  en bout. Seul votre correspondant peut les déchiffrer.</extracomment>
@@ -1810,7 +1822,7 @@
 Only your correspondent can decrypt them.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="160"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="155"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 is writing…</translation>
@@ -3453,8 +3465,8 @@ Only your correspondent can decrypt them.</translation>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
         <translation>
-            <numerusform>1 selected participant</numerusform>
-            <numerusform>%n selected participants</numerusform>
+            <numerusform>%1 selected participant</numerusform>
+            <numerusform>%1 selected participants</numerusform>
         </translation>
     </message>
     <message>
@@ -4213,53 +4225,53 @@ To enable them in a commercial project, please contact us.</translation>
         <translation type="obsolete">Other actions</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="227"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="229"/>
         <source>chat_view_send_area_placeholder_text</source>
         <extracomment>Say something… : placeholder text for sending message text area</extracomment>
         <translation>Say something…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="302"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="306"/>
         <source>chat_view_detail_other_actions_title</source>
         <extracomment>Other actions</extracomment>
         <translation>Other actions</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="320"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="345"/>
         <source>chat_view_detail_delete_history_button</source>
         <extracomment>&quot;Delete history&quot;</extracomment>
         <translation>Delete history</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="323"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="348"/>
         <source>chat_view_detail_delete_history_toast_title</source>
         <extracomment>Delete history ?</extracomment>
         <translation>Delete history ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="325"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="350"/>
         <source>chat_view_detail_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation>All the messages will be removed from the chat room. Do you want to continue ?</translation>
     </message>
-	<message>
-		<location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="292"/>
-		<source>chat_view_detail_leave_room_toast_button</source>
-		<extracomment>&quot;Leave chat room&quot;</extracomment>
-		<translation>Leave chat room</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="295"/>
-		<source>chat_view_detail_leave_room_toast_title</source>
-		<extracomment>Leave chat room ?</extracomment>
-		<translation>Leave chat room ?</translation>
-	</message>
-	<message>
-		<location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="297"/>
-		<source>chat_view_detail_leave_room_toast_message</source>
-		<extracomment>You will not be able to send or receive messages in this room anymore, leave ?</extracomment>
-		<translation>You will not be able to send or receive messages in this room anymore, leave ?</translation>
-	</message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="324"/>
+        <source>chat_view_detail_leave_room_toast_button</source>
+        <extracomment>&quot;Leave Chat Room&quot;</extracomment>
+        <translation>Leave chat room</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="328"/>
+        <source>chat_view_detail_leave_room_toast_title</source>
+        <extracomment>Leave Chat Room ?</extracomment>
+        <translation>Leave chat room ?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="330"/>
+        <source>chat_view_detail_leave_room_toast_message</source>
+        <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+        <translation>You will not be able to send or receive messages in this room anymore, leave ?</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -4450,7 +4462,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <extracomment>%n an(s)</extracomment>
         <translation>
             <numerusform>one year</numerusform>
-            <numerusform>%n years</numerusform>
+            <numerusform>%1 years</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -4459,7 +4471,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <extracomment>&quot;%n mois&quot;</extracomment>
         <translation>
             <numerusform>one month</numerusform>
-            <numerusform>%n months</numerusform>
+            <numerusform>%1 months</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -4468,7 +4480,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <extracomment>%n semaine(s)</extracomment>
         <translation>
             <numerusform>one week</numerusform>
-            <numerusform>%n weeks</numerusform>
+            <numerusform>%1 weeks</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -4477,7 +4489,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <extracomment>%n jour(s)</extracomment>
         <translation>
             <numerusform>one day</numerusform>
-            <numerusform>%n days</numerusform>
+            <numerusform>%1 days</numerusform>
         </translation>
     </message>
     <message>

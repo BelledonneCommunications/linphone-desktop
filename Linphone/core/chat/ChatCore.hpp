@@ -51,6 +51,7 @@ public:
 	Q_PROPERTY(bool isGroupChat READ isGroupChat CONSTANT)
 	Q_PROPERTY(bool isEncrypted READ isEncrypted CONSTANT)
 	Q_PROPERTY(bool isReadOnly READ getIsReadOnly WRITE setIsReadOnly NOTIFY readOnlyChanged)
+	Q_PROPERTY(QString sendingText READ getSendingText WRITE setSendingText NOTIFY sendingTextChanged)
 
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	static QSharedPointer<ChatCore> create(const std::shared_ptr<linphone::ChatRoom> &chatRoom);
@@ -69,6 +70,9 @@ public:
 	bool isEncrypted() const;
 
 	QString getIdentifier() const;
+
+	QString getSendingText() const;
+	void setSendingText(const QString &text);
 
 	ChatMessageGui *getLastMessage() const;
 	QString getLastMessageText() const;
@@ -122,6 +126,7 @@ signals:
 	void composingUserChanged();
 	void chatRoomStateChanged();
 	void readOnlyChanged();
+	void sendingTextChanged(QString text);
 
 	void lDeleteMessage();
 	void lDelete();
@@ -142,6 +147,7 @@ private:
 	QString mTitle;
 	QString mIdentifier;
 	QString mAvatarUri;
+	QString mSendingText;
 	int mUnreadMessagesCount;
 	QString mComposingName;
 	QString mComposingAddress;

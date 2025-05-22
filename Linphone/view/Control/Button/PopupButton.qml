@@ -171,6 +171,7 @@ Button {
             }
         }
 
+
         background: Item {
             anchors.fill: parent
             Rectangle {
@@ -186,6 +187,9 @@ Button {
                 shadowBlur: 0.1
                 shadowColor: DefaultStyle.grey_1000
                 shadowOpacity: 0.4
+            }
+            MouseArea{
+                anchors.fill: parent
             }
         }
     }

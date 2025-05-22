@@ -809,25 +809,25 @@
         <translation type="vanished">Offline</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="147"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="149"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
         <translation>Besprechung beitreten</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="165"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="167"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Anrufen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="179"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="181"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
         <translation>Nachricht</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="195"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="197"/>
         <source>contact_video_call_action</source>
         <extracomment>&quot;Appel Video&quot;</extracomment>
         <translation>Videoanruf</translation>
@@ -1712,13 +1712,13 @@
 <context>
     <name>ChatCore</name>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="114"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="117"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="116"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="119"/>
         <source>info_toast_deleted_message_history</source>
         <extracomment>Message history has been deleted</extracomment>
         <translation type="unfinished"></translation>
@@ -1727,19 +1727,31 @@
 <context>
     <name>ChatListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="260"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="217"/>
+        <source>chat_message_is_writing_info</source>
+        <extracomment>%1 is writing…</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="227"/>
+        <source>chat_message_draft_sending_text</source>
+        <extracomment>Draft : %1</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="281"/>
         <source>chat_room_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="266"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="287"/>
         <source>chat_list_delete_chat_popup_title</source>
         <extracomment>Delete the chat ?</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="268"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="289"/>
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This chat and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation type="unfinished"></translation>
@@ -1748,25 +1760,25 @@
 <context>
     <name>ChatMessage</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="267"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="266"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="275"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="274"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="277"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="276"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="283"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="282"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation type="unfinished"></translation>
@@ -1834,20 +1846,20 @@
 <context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="89"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="88"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="99"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="98"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Les messages de cette conversation sont chiffrés de bout 
  en bout. Seul votre correspondant peut les déchiffrer.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="160"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="155"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation type="unfinished"></translation>
@@ -4294,31 +4306,49 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
 <context>
     <name>SelectedChatView</name>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="227"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="229"/>
         <source>chat_view_send_area_placeholder_text</source>
         <extracomment>Say something… : placeholder text for sending message text area</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="302"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="306"/>
         <source>chat_view_detail_other_actions_title</source>
         <extracomment>Other actions</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="320"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="324"/>
+        <source>chat_view_detail_leave_room_toast_button</source>
+        <extracomment>&quot;Leave Chat Room&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="328"/>
+        <source>chat_view_detail_leave_room_toast_title</source>
+        <extracomment>Leave Chat Room ?</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="330"/>
+        <source>chat_view_detail_leave_room_toast_message</source>
+        <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="345"/>
         <source>chat_view_detail_delete_history_button</source>
         <extracomment>&quot;Delete history&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="323"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="348"/>
         <source>chat_view_detail_delete_history_toast_title</source>
         <extracomment>Delete history ?</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="325"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="350"/>
         <source>chat_view_detail_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation type="unfinished"></translation>

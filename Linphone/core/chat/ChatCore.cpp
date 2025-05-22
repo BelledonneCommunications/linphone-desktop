@@ -257,6 +257,17 @@ void ChatCore::setTitle(QString title) {
 	}
 }
 
+QString ChatCore::getSendingText() const {
+	return mSendingText;
+}
+
+void ChatCore::setSendingText(const QString &text) {
+	if (mSendingText != text) {
+		mSendingText = text;
+		emit sendingTextChanged(text);
+	}
+}
+
 bool ChatCore::isGroupChat() const {
 	return mIsGroupChat;
 }

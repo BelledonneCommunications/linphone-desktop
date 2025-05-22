@@ -170,7 +170,8 @@ ColumnLayout {
             property int columnCount: Math.round(list.width / 50 * DefaultStyle.dp)
             property int sc: grid.category === 'People & Body' ? mainItem.skinColor : -1
             columns: columnCount
-            columnSpacing: Math.round(8 * DefaultStyle.dp)
+            width: list.width
+            columnSpacing: Math.round(5 * DefaultStyle.dp)
             Text {
                 Layout.fillWidth: true
                 Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)

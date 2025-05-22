@@ -197,6 +197,7 @@ ListView {
                 Text {
                     Layout.fillWidth: true
                     maximumLineCount: 1
+                    visible: !remoteComposingInfo.visible
                     text: modelData.core.lastMessageText
                     color: DefaultStyle.main2_400
                     font {
@@ -204,7 +205,22 @@ ListView {
                         weight: unreadCount.unread > 0 ? Typography.p2.weight : Typography.p1.weight
                     }
                 }
-                
+                Text {
+                    id: remoteComposingInfo
+                    visible: mainItem.currentIndex !== model.index && (modelData.core.composingName !== "" || modelData.core.sendingText !== "")
+                    Layout.fillWidth: true
+                    maximumLineCount: 1
+                    font {
+                        pixelSize: Typography.p3.pixelSize
+                        weight: Typography.p3.weight
+                    }
+                    //: %1 is writing…
+                    text: modelData.core.composingName !== ""
+                        ? qsTr("chat_message_is_writing_info").arg(modelData.core.composingName)
+                        : modelData.core.sendingText !== ""
+                            ? qsTr("chat_message_draft_sending_text").arg(modelData.core.sendingText)
+                            : ""
+                }
             }
             ColumnLayout {
                 Layout.alignment: Qt.AlignRight

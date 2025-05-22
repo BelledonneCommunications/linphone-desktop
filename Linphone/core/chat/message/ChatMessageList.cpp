@@ -74,10 +74,9 @@ void ChatMessageList::setChatCore(QSharedPointer<ChatCore> core) {
 			        [this](QList<QSharedPointer<ChatMessageCore>> list) {
 				        auto chatList = getSharedList<ChatMessageCore>();
 				        for (auto &message : list) {
-					        auto it = std::find_if(chatList.begin(), chatList.end(),
-					                               [message](const QSharedPointer<ChatMessageCore> item) {
-						                               return item->getMessageId() == message->getMessageId();
-					                               });
+					        auto it = std::find_if(
+					            chatList.begin(), chatList.end(),
+					            [message](const QSharedPointer<ChatMessageCore> item) { return item == message; });
 					        if (it == chatList.end()) {
 						        add(message);
 						        int index;
