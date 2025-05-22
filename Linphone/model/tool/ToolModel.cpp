@@ -20,6 +20,7 @@
 
 #include "ToolModel.hpp"
 #include "core/App.hpp"
+#include "core/conference/ConferenceInfoCore.hpp"
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
 #include "model/friend/FriendsManager.hpp"
@@ -120,20 +121,18 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &
 	auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
 	if (!defaultFriendList) return nullptr;
 	auto linphoneAddr = ToolModel::interpretUrl(address);
-	if (linphoneAddr)
-		return ToolModel::findFriendByAddress(linphoneAddr);
-	else
-		return nullptr;
+	if (linphoneAddr) return ToolModel::findFriendByAddress(linphoneAddr);
+	else return nullptr;
 }
 
 std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr<linphone::Address> linphoneAddr) {
 	auto friendsManager = FriendsManager::getInstance();
 	QString key = Utils::coreStringToAppString(linphoneAddr->asStringUriOnly());
 	if (friendsManager->isInKnownFriends(key)) {
-//		qDebug() << key << "have been found in known friend, return it";
+		//		qDebug() << key << "have been found in known friend, return it";
 		return friendsManager->getKnownFriendAtKey(key);
-	} else 	if (friendsManager->isInUnknownFriends(key)) {
-//		qDebug() << key << "have been found in unknown friend, return it";
+	} else if (friendsManager->isInUnknownFriends(key)) {
+		//		qDebug() << key << "have been found in unknown friend, return it";
 		return friendsManager->getUnknownFriendAtKey(key);
 	}
 	auto f = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
@@ -141,20 +140,21 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr
 		if (friendsManager->isInUnknownFriends(key)) {
 			friendsManager->removeUnknownFriend(key);
 		}
-//		qDebug() << "found friend, add to known map";
+		//		qDebug() << "found friend, add to known map";
 		friendsManager->appendKnownFriend(linphoneAddr, f);
 	}
 	if (!f) {
 		if (friendsManager->isInOtherAddresses(key)) {
-//			qDebug() << "A magic search has already be done for address" << key << "and nothing was found, return";
+			//			qDebug() << "A magic search has already be done for address" << key << "and nothing was found,
+			// return";
 			return nullptr;
 		}
 		friendsManager->appendOtherAddress(key);
-//		qDebug() << "Couldn't find friend" << linphoneAddr->asStringUriOnly() << "in core, use magic search";
+		//		qDebug() << "Couldn't find friend" << linphoneAddr->asStringUriOnly() << "in core, use magic search";
 		CoreModel::getInstance()->searchInMagicSearch(Utils::coreStringToAppString(linphoneAddr->asStringUriOnly()),
-														(int)linphone::MagicSearch::Source::LdapServers
-														| (int)linphone::MagicSearch::Source::RemoteCardDAV
-														, LinphoneEnums::MagicSearchAggregation::Friend, 50);
+		                                              (int)linphone::MagicSearch::Source::LdapServers |
+		                                                  (int)linphone::MagicSearch::Source::RemoteCardDAV,
+		                                              LinphoneEnums::MagicSearchAggregation::Friend, 50);
 	}
 	return f;
 }
@@ -378,6 +378,7 @@ std::shared_ptr<linphone::FriendList> ToolModel::getLdapFriendList() {
 
 bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList> &friendList,
                                      const std::shared_ptr<linphone::Friend> &f) {
+	if (!friendList) return false;
 	auto friends = friendList->getFriends();
 	auto it = std::find_if(friends.begin(), friends.end(),
 	                       [f](std::shared_ptr<linphone::Friend> linFriend) { return linFriend == f; });

@@ -83,14 +83,19 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 	auto ldapFriends = ToolModel::getLdapFriendList();
 	emit searchResultsReceived(results);
 	for (auto result : results) {
+		if (!result) continue;
 		auto f = result->getFriend();
 		auto friendsManager = FriendsManager::getInstance();
 		if (f) {
 			qDebug() << "friend exists, append to unknown map";
-			auto friendAddress = f->getAddress();
-			friendsManager->appendUnknownFriend(friendAddress->clone(), f);
-			if (friendsManager->isInOtherAddresses(Utils::coreStringToAppString(friendAddress->asStringUriOnly()))) {
-				friendsManager->removeOtherAddress(Utils::coreStringToAppString(friendAddress->asStringUriOnly()));
+			auto friendAddress = f->getAddress() ? f->getAddress()->clone() : nullptr;
+			if (friendAddress) {
+				friendAddress->clean();
+				friendsManager->appendUnknownFriend(friendAddress, f);
+				if (friendsManager->isInOtherAddresses(
+				        Utils::coreStringToAppString(friendAddress->asStringUriOnly()))) {
+					friendsManager->removeOtherAddress(Utils::coreStringToAppString(friendAddress->asStringUriOnly()));
+				}
 			}
 		}
 		auto fList = f ? f->getFriendList() : nullptr;
@@ -127,7 +132,7 @@ void MagicSearchModel::updateFriendListWithFriend(const std::shared_ptr<linphone
 	if (ToolModel::friendIsInFriendList(friendList, linphoneFriend))
 		return; // Already exist. We don't need to manipulate list.
 	for (auto address : linphoneFriend->getAddresses()) {
-		auto existingFriend = friendList->findFriendByAddress(address);
+		auto existingFriend = friendList ? friendList->findFriendByAddress(address) : nullptr;
 		if (existingFriend) {
 			friendList->removeFriend(existingFriend);
 			friendList->addFriend(linphoneFriend);
@@ -135,7 +140,7 @@ void MagicSearchModel::updateFriendListWithFriend(const std::shared_ptr<linphone
 		}
 	}
 	for (auto number : linphoneFriend->getPhoneNumbers()) {
-		auto existingFriend = friendList->findFriendByPhoneNumber(number);
+		auto existingFriend = friendList ? friendList->findFriendByPhoneNumber(number) : nullptr;
 		if (existingFriend) {
 			friendList->removeFriend(existingFriend);
 			friendList->addFriend(linphoneFriend);
@@ -143,6 +148,6 @@ void MagicSearchModel::updateFriendListWithFriend(const std::shared_ptr<linphone
 		}
 	}
 	qInfo() << log().arg("Adding Friend:") << linphoneFriend.get();
-	friendList->addFriend(linphoneFriend);
+	if (friendList) friendList->addFriend(linphoneFriend);
 	emit CoreModel::getInstance()->friendCreated(linphoneFriend);
 }
