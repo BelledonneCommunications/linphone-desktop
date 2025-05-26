@@ -54,10 +54,12 @@
 #include "core/call/CallProxy.hpp"
 #include "core/camera/CameraGui.hpp"
 #include "core/chat/ChatProxy.hpp"
-#include "core/chat/message/EventLogGui.hpp"
 #include "core/chat/message/ChatMessageGui.hpp"
+#include "core/chat/message/EventLogGui.hpp"
 #include "core/chat/message/EventLogList.hpp"
 #include "core/chat/message/EventLogProxy.hpp"
+#include "core/chat/message/content/ChatMessageContentGui.hpp"
+#include "core/chat/message/content/ChatMessageContentProxy.hpp"
 #include "core/conference/ConferenceGui.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
 #include "core/conference/ConferenceInfoProxy.hpp"
@@ -96,9 +98,11 @@
 #include "tool/providers/EmojiProvider.hpp"
 #include "tool/providers/ImageProvider.hpp"
 #include "tool/providers/ScreenProvider.hpp"
+#include "tool/providers/ThumbnailProvider.hpp"
 #include "tool/request/CallbackHelper.hpp"
 #include "tool/request/RequestDialog.hpp"
 #include "tool/thread/Thread.hpp"
+#include "tool/ui/DashRectangle.hpp"
 
 DEFINE_ABSTRACT_OBJECT(App)
 
@@ -495,6 +499,7 @@ void App::initCore() {
 			    mEngine->addImageProvider(ScreenProvider::ProviderId, new ScreenProvider());
 			    mEngine->addImageProvider(WindowProvider::ProviderId, new WindowProvider());
 			    mEngine->addImageProvider(WindowIconProvider::ProviderId, new WindowIconProvider());
+			    mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 
 			    // Enable notifications.
 			    mNotifier = new Notifier(mEngine);
@@ -551,7 +556,7 @@ void App::initCore() {
 					        static bool firstOpen = true;
 					        if (!firstOpen || !mParser->isSet("minimized")) {
 						        lDebug() << log().arg("Openning window");
-						        window->show();
+						        if (window) window->show();
 					        } else lInfo() << log().arg("Stay minimized");
 					        firstOpen = false;
 				        }
@@ -639,6 +644,7 @@ void App::initCppInterfaces() {
 	    "SettingsCpp", 1, 0, "SettingsCpp",
 	    [this](QQmlEngine *engine, QJSEngine *) -> QObject * { return mSettings.get(); });
 
+	qmlRegisterType<DashRectangle>(Constants::MainQmlUri, 1, 0, "DashRectangle");
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
 	qmlRegisterType<VariantObject>(Constants::MainQmlUri, 1, 0, "VariantObject");
 	qmlRegisterType<VariantList>(Constants::MainQmlUri, 1, 0, "VariantList");
@@ -663,9 +669,11 @@ void App::initCppInterfaces() {
 	qmlRegisterType<ChatProxy>(Constants::MainQmlUri, 1, 0, "ChatProxy");
 	qmlRegisterType<ChatGui>(Constants::MainQmlUri, 1, 0, "ChatGui");
 	qmlRegisterType<EventLogGui>(Constants::MainQmlUri, 1, 0, "EventLogGui");
-	qmlRegisterType<ChatMessageGui>(Constants::MainQmlUri, 1, 0, "ChatMessageGui");	
+	qmlRegisterType<ChatMessageGui>(Constants::MainQmlUri, 1, 0, "ChatMessageGui");
 	qmlRegisterType<EventLogList>(Constants::MainQmlUri, 1, 0, "EventLogList");
 	qmlRegisterType<EventLogProxy>(Constants::MainQmlUri, 1, 0, "EventLogProxy");
+	qmlRegisterType<ChatMessageContentProxy>(Constants::MainQmlUri, 1, 0, "ChatMessageContentProxy");
+	qmlRegisterType<ChatMessageContentGui>(Constants::MainQmlUri, 1, 0, "ChatMessageContentGui");
 	qmlRegisterUncreatableType<ConferenceCore>(Constants::MainQmlUri, 1, 0, "ConferenceCore",
 	                                           QLatin1String("Uncreatable"));
 	qmlRegisterType<ConferenceGui>(Constants::MainQmlUri, 1, 0, "ConferenceGui");
@@ -1283,4 +1291,12 @@ QString App::getSdkVersion() {
 #else
 	return tr('unknown');
 #endif
+}
+
+float App::getScreenRatio() const {
+	return mScreenRatio;
+}
+
+void App::setScreenRatio(float ratio) {
+	mScreenRatio = ratio;
 }

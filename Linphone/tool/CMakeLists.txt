@@ -3,6 +3,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	tool/EnumsToString.cpp
 	tool/Utils.cpp
 	tool/UriTools.cpp
+	tool/QExifImageHeader.cpp
 
 	tool/LinphoneEnums.cpp
 	tool/thread/SafeSharedPointer.hpp
@@ -10,8 +11,11 @@ list(APPEND _LINPHONEAPP_SOURCES
 	tool/thread/Thread.cpp
 	tool/providers/AvatarProvider.cpp
 	tool/providers/EmojiProvider.cpp
+	tool/providers/ExternalImageProvider.cpp
 	tool/providers/ImageProvider.cpp
 	tool/providers/ScreenProvider.cpp
+	tool/providers/ThumbnailProvider.cpp
+	tool/providers/VideoFrameGrabber.cpp
 	
 	tool/native/DesktopTools.hpp
 
@@ -20,6 +24,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 
 	tool/file/FileDownloader.cpp
 	tool/file/FileExtractor.cpp
+
+	tool/ui/DashRectangle.cpp
 
 )
 

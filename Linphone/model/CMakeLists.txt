@@ -13,6 +13,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	
     model/chat/ChatModel.cpp
     model/chat/message/ChatMessageModel.cpp
+    model/chat/message/content/ChatMessageContentModel.cpp
 
 	model/conference/ConferenceInfoModel.cpp
 	model/conference/ConferenceModel.cpp
@@ -42,6 +43,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 
 	
 	model/tool/ToolModel.cpp
+	model/tool/VfsUtils.cpp
 
 	model/videoSource/VideoSourceDescriptorModel.cpp
 	

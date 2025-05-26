@@ -3,9 +3,8 @@ import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import QtQml.Models
 
-
 // =============================================================================
-ColumnLayout{
+ColumnLayout {
 	id: mainLayout
 	property alias delegateModel: grid.model
 	property alias cellHeight: grid.cellHeight

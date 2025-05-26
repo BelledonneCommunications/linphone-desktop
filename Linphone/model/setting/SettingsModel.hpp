@@ -49,6 +49,7 @@ public:
 	std::shared_ptr<linphone::Config> mConfig;
 
 	bool getVfsEnabled() const;
+	bool getVfsEncrypted() const;
 	void setVfsEnabled(const bool enabled);
 
 	bool getVideoEnabled() const;
@@ -159,6 +160,8 @@ public:
 
 	QFont getEmojiFont() const;
 	int getEmojiFontSize() const;
+	QFont getTextMessageFont() const;
+	int getTextMessageFontSize() const;
 
 	// UI
 	DECLARE_GETSET(bool, disableChatFeature, DisableChatFeature)
@@ -239,6 +242,10 @@ private:
 	void notifyConfigReady();
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;
 	int mCaptureGraphListenerCount = 0;
+
+#ifdef ENABLE_QT_KEYCHAIN
+	VfsUtils mVfsUtils;
+#endif
 
 	void enableCallForward(QString destination);
 	void disableCallForward();

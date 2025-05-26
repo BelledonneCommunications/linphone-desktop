@@ -43,6 +43,10 @@ void VariantList::setModel(QList<QVariant> list) {
 	emit modelChanged();
 }
 
+QList<QVariant> VariantList::getModel() const {
+	return mList;
+}
+
 void VariantList::replace(int index, QVariant newValue) {
 	mList.replace(index, newValue);
 }

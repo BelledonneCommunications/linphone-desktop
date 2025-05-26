@@ -123,7 +123,9 @@ public:
 	}
 
 	virtual void clearData() override {
+		beginResetModel();
 		mList.clear();
+		endResetModel();
 	}
 
 	virtual void resetData(QList<T> newData = QList<T>()) {

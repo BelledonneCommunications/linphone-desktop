@@ -154,6 +154,9 @@ public:
 	QString getGitBranchName();
 	QString getSdkVersion();
 
+	float getScreenRatio() const;
+	Q_INVOKABLE void setScreenRatio(float ratio);
+
 #ifdef Q_OS_LINUX
 	Q_INVOKABLE void exportDesktopFile();
 
@@ -200,6 +203,7 @@ private:
 	DefaultTranslatorCore *mDefaultTranslatorCore = nullptr;
 	QTimer mDateUpdateTimer;
 	QDate mCurrentDate;
+	float mScreenRatio = 1;
 
 	DECLARE_ABSTRACT_OBJECT
 };

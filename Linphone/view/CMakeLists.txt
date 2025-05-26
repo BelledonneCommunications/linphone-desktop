@@ -35,6 +35,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Container/Call/CallLayout.qml
 	view/Control/Container/Call/CallGridLayout.qml
 	view/Control/Container/Call/Mosaic.qml
+	view/Control/Container/Chat/ChatFilesGridLayout.qml
 	view/Control/Container/Contact/ContactLayout.qml
 	view/Control/Container/Contact/PresenceNoteLayout.qml
 	view/Control/Container/Main/MainRightPanel.qml
@@ -46,6 +47,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/TemporaryText.qml
 	view/Control/Display/ProgressBar.qml
 	view/Control/Display/RoundedPane.qml
+	view/Control/Display/RoundProgressBar.qml
 	view/Control/Display/Sticker.qml
 	view/Control/Display/Text.qml
 	view/Control/Display/ToolTip.qml
@@ -53,11 +55,15 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Call/CallHistoryListView.qml
 	view/Control/Display/Call/CallStatistics.qml
 	view/Control/Display/Chat/Emoji/EmojiPicker.qml
+	view/Control/Display/Chat/ChatMessageContent.qml
+	view/Control/Display/Chat/ChatAudioContent.qml
+	view/Control/Display/Chat/ChatTextContent.qml
 	view/Control/Display/Chat/ChatListView.qml
 	view/Control/Display/Chat/ChatMessage.qml
 	view/Control/Display/Chat/ChatMessageInvitationBubble.qml
 	view/Control/Display/Chat/ChatMessagesListView.qml
 	view/Control/Display/Chat/Event.qml
+	view/Control/Display/Chat/FileView.qml
 	view/Control/Display/Contact/Avatar.qml
 	view/Control/Display/Contact/Contact.qml
 	view/Control/Display/Contact/Presence.qml
@@ -78,6 +84,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Form/Settings/MultimediaSettings.qml
 	view/Control/Form/Settings/ScreencastSettings.qml
 
+	view/Control/Input/Chat/ChatDroppableTextArea.qml
 	view/Control/Input/Calendar.qml
 	view/Control/Input/DecoratedTextField.qml
 	view/Control/Input/DigitInput.qml
@@ -167,6 +174,7 @@ list(APPEND _LINPHONEAPP_QML_SINGLETONS
 	view/Style/AppIcons.qml
 	view/Style/buttonStyle.js
 	view/Style/DefaultStyle.qml
+	view/Style/FileViewStyle.qml
 	view/Style/Typography.qml
 )
 

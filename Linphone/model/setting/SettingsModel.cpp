@@ -19,9 +19,11 @@
  */
 
 #include "SettingsModel.hpp"
+#include "core/App.hpp"
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
 #include "model/tool/ToolModel.hpp"
+// #include "model/tool/VfsUtils.hpp"
 #include "tool/Utils.hpp"
 
 // =============================================================================
@@ -486,6 +488,26 @@ void SettingsModel::setVfsEnabled(bool enabled) {
 	emit vfsEnabledChanged(enabled);
 }
 
+bool SettingsModel::getVfsEncrypted() const {
+	return false;
+	// mAppSettings.beginGroup("keychain");
+	// return mAppSettings.value("enabled", false).toBool();
+}
+
+// void SettingsModel::setVfsEncrypted(bool encrypted, const bool deleteUserData) {
+// #ifdef ENABLE_QT_KEYCHAIN
+// 	if (getVfsEncrypted() != encrypted) {
+// 		if (encrypted) {
+// 			mVfsUtils.newEncryptionKeyAsync();
+// 			shared_ptr<linphone::Factory> factory = linphone::Factory::get();
+// 			factory->setDownloadDir(Utils::appStringToCoreString(getDownloadFolder()));
+// 		} else { // Remove key, stop core, delete data and initiate reboot
+// 			mVfsUtils.needToDeleteUserData(deleteUserData);
+// 			mVfsUtils.deleteKey(mVfsUtils.getApplicationVfsEncryptionKey());
+// 		}
+// 	}
+// #endif
+// }
 // =============================================================================
 // Logs.
 // =============================================================================
@@ -738,6 +760,17 @@ QFont SettingsModel::getEmojiFont() const {
 
 int SettingsModel::getEmojiFontSize() const {
 	return mConfig->getInt(UiSection, "emoji_font_size", Constants::DefaultEmojiFontPointSize);
+}
+
+QFont SettingsModel::getTextMessageFont() const {
+	QString family = Utils::coreStringToAppString(mConfig->getString(
+	    UiSection, "text_message_font", Utils::appStringToCoreString(App::getInstance()->font().family())));
+	int pointSize = getTextMessageFontSize();
+	return QFont(family, pointSize);
+}
+
+int SettingsModel::getTextMessageFontSize() const {
+	return mConfig->getInt(UiSection, "text_message_font_size", Constants::DefaultFontPointSize);
 }
 
 // clang-format off

@@ -38,6 +38,7 @@ public:
 	~VariantList();
 
 	void setModel(QList<QVariant> list);
+	QList<QVariant> getModel() const;
 
 	void replace(int index, QVariant newValue);
 

@@ -16,7 +16,7 @@ Rectangle {
 	clip: true
 	antialiasing: true
 
-	property var conferenceInfoGui: ConferenceInfoGui
+	property ConferenceInfoGui conferenceInfoGui
 	property var conferenceInfo: conferenceInfoGui?.core
 	property string timeRangeText: ""
 	property bool linkHovered: false

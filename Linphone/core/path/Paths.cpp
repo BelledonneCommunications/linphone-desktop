@@ -269,7 +269,8 @@ QString Paths::getFriendsListFilePath() {
 }
 
 QString Paths::getDownloadDirPath() {
-	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + QDir::separator());
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+	                          Constants::PathFiles);
 }
 
 QString Paths::getLimeDatabasePath() {

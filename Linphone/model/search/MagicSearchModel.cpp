@@ -87,30 +87,30 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 		auto f = result->getFriend();
 		auto friendsManager = FriendsManager::getInstance();
 		if (f) {
-			qDebug() << "friend exists, append to unknown map";
 			auto friendAddress = f->getAddress() ? f->getAddress()->clone() : nullptr;
 			if (friendAddress) {
 				friendAddress->clean();
+				qDebug() << "friend exists, append to unknown map";
 				friendsManager->appendUnknownFriend(friendAddress, f);
 				if (friendsManager->isInOtherAddresses(
 				        Utils::coreStringToAppString(friendAddress->asStringUriOnly()))) {
 					friendsManager->removeOtherAddress(Utils::coreStringToAppString(friendAddress->asStringUriOnly()));
 				}
 			}
-		}
-		auto fList = f ? f->getFriendList() : nullptr;
+			auto fList = f->getFriendList();
 
-		//		qDebug() << log().arg("") << (f ? f->getName().c_str() : "NoFriend") << ", "
-		//		         << (result->getAddress() ? result->getAddress()->asString().c_str() : "NoAddr") << " / "
-		//		         << (fList ? fList->getDisplayName().c_str() : "NoList") << result->getSourceFlags() << " /
-		//"
-		//		         << (f ? f.get() : nullptr);
-		bool isLdap = (result->getSourceFlags() & (int)linphone::MagicSearch::Source::LdapServers) != 0;
-		// Do not add it into ldap_friends if it already exists in app_friends.
-		if (isLdap && f &&
-		    (!fList || fList->getDisplayName() != "app_friends")) { // Double check because of SDK merging that lead to
-			// use a ldap result as of app_friends/ldap_friends.
-			updateFriendListWithFriend(f, ldapFriends);
+			//		qDebug() << log().arg("") << (f ? f->getName().c_str() : "NoFriend") << ", "
+			//		         << (result->getAddress() ? result->getAddress()->asString().c_str() : "NoAddr") << " / "
+			//		         << (fList ? fList->getDisplayName().c_str() : "NoList") << result->getSourceFlags() << " /
+			//"
+			//		         << (f ? f.get() : nullptr);
+			bool isLdap = (result->getSourceFlags() & (int)linphone::MagicSearch::Source::LdapServers) != 0;
+			// Do not add it into ldap_friends if it already exists in app_friends.
+			if (isLdap && (!fList || fList->getDisplayName() !=
+			                             "app_friends")) { // Double check because of SDK merging that lead to
+				// use a ldap result as of app_friends/ldap_friends.
+				updateFriendListWithFriend(f, ldapFriends);
+			}
 		}
 	}
 }

@@ -51,6 +51,7 @@ QtObject {
 
     onDpChanged: {
         console.log("Screen ratio changed", dp)
+        AppCpp.setScreenRatio(dp)
     }
 
     // Warning: Qt 6.8.1 (current version) and previous versions, Qt only support COLRv0 fonts. Don't try to use v1.

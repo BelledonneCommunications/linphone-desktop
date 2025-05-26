@@ -22,6 +22,8 @@
 #define CHATMESSAGECORE_H_
 
 #include "EventLogCore.hpp"
+#include "core/chat/message/content/ChatMessageContentCore.hpp"
+#include "core/chat/message/content/ChatMessageContentProxy.hpp"
 #include "core/conference/ConferenceInfoCore.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
 #include "model/chat/message/ChatMessageModel.hpp"
@@ -67,7 +69,6 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool isRemoteMessage READ isRemoteMessage CONSTANT)
 	Q_PROPERTY(bool isFromChatGroup READ isFromChatGroup CONSTANT)
 	Q_PROPERTY(bool isRead READ isRead WRITE setIsRead NOTIFY isReadChanged)
-	Q_PROPERTY(ConferenceInfoGui *conferenceInfo READ getConferenceInfoGui CONSTANT)
 	Q_PROPERTY(QString ownReaction READ getOwnReaction WRITE setOwnReaction NOTIFY messageReactionChanged)
 	Q_PROPERTY(QList<Reaction> reactions READ getReactions WRITE setReactions NOTIFY messageReactionChanged)
 	Q_PROPERTY(QList<QVariant> reactionsSingleton READ getReactionsSingleton NOTIFY singletonReactionMapChanged)
@@ -106,6 +107,7 @@ public:
 	void setOwnReaction(const QString &reaction);
 	QList<Reaction> getReactions() const;
 	QList<QVariant> getReactionsSingleton() const;
+	QList<QSharedPointer<ChatMessageContentCore>> getChatMessageContentList() const;
 	void removeOneReactionFromSingletonMap(const QString &body);
 	void resetReactionsSingleton();
 	void setReactions(const QList<Reaction> &reactions);
@@ -116,7 +118,7 @@ public:
 	void setMessageState(LinphoneEnums::ChatMessageState state);
 
 	std::shared_ptr<ChatMessageModel> getModel() const;
-	ConferenceInfoGui *getConferenceInfoGui() const;
+	// ConferenceInfoGui *getConferenceInfoGui() const;
 
 signals:
 	void timestampChanged(QDateTime timestamp);
@@ -136,7 +138,8 @@ signals:
 	void lRemoveReaction();
 
 private:
-	DECLARE_ABSTRACT_OBJECT QString mText;
+	DECLARE_ABSTRACT_OBJECT
+	QString mText;
 	QString mUtf8Text;
 	bool mHasTextContent;
 	QString mPeerAddress;
@@ -158,8 +161,10 @@ private:
 	bool mIsCalendarInvite = false;
 	bool mIsVoiceRecording = false;
 
+	bool mIsOutgoing = false;
 	LinphoneEnums::ChatMessageState mMessageState;
-	QSharedPointer<ConferenceInfoCore> mConferenceInfo = nullptr;
+	QList<QSharedPointer<ChatMessageContentCore>> mChatMessageContentList;
+	// QSharedPointer<ConferenceInfoCore> mConferenceInfo = nullptr;
 
 	std::shared_ptr<ChatMessageModel> mChatMessageModel;
 	QSharedPointer<SafeConnection<ChatMessageCore, ChatMessageModel>> mChatMessageModelConnection;

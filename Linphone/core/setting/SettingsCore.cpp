@@ -95,6 +95,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 
 	// Chat
 	mEmojiFont = settingsModel->getEmojiFont();
+	mTextMessageFont = settingsModel->getTextMessageFont();
 
 	// Ui
 	INIT_CORE_MEMBER(DisableChatFeature, settingsModel)
@@ -537,6 +538,26 @@ void SettingsCore::setVfsEnabled(bool enabled) {
 		emit vfsEnabledChanged();
 		setIsSaved(false);
 	}
+}
+
+bool SettingsCore::getVfsEncrypted() {
+	mAppSettings.beginGroup("keychain");
+	return mAppSettings.value("enabled", false).toBool();
+}
+
+void SettingsCore::setVfsEncrypted(bool encrypted, const bool deleteUserData) {
+#ifdef ENABLE_QT_KEYCHAIN
+	if (getVfsEncrypted() != encrypted) {
+		if (encrypted) {
+			mVfsUtils.newEncryptionKeyAsync();
+			shared_ptr<linphone::Factory> factory = linphone::Factory::get();
+			factory->setDownloadDir(Utils::appStringToCoreString(getDownloadFolder()));
+		} else { // Remove key, stop core, delete data and initiate reboot
+			mVfsUtils.needToDeleteUserData(deleteUserData);
+			mVfsUtils.deleteKey(mVfsUtils.getApplicationVfsEncryptionKey());
+		}
+	}
+#endif
 }
 
 void SettingsCore::setVideoEnabled(bool enabled) {

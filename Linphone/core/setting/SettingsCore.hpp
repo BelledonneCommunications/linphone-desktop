@@ -112,6 +112,9 @@ public:
 	}
 	void setVfsEnabled(bool enabled);
 
+	bool getVfsEncrypted();
+	void setVfsEncrypted(bool encrypted, const bool deleteUserData);
+
 	// Call. --------------------------------------------------------------------
 
 	bool getVideoEnabled() {
@@ -234,6 +237,7 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(bool, disableCallForward, DisableCallForward)
 	DECLARE_CORE_GETSET_MEMBER(QString, callForwardToAddress, CallForwardToAddress)
 	DECLARE_CORE_GET_CONSTANT(QFont, emojiFont, EmojiFont)
+	DECLARE_CORE_GET_CONSTANT(QFont, textMessageFont, TextMessageFont)
 
 signals:
 

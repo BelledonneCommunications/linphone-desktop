@@ -68,10 +68,11 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mChatMessageModel = Utils::makeQObject_ptr<ChatMessageModel>(chatmessage);
 	mChatMessageModel->setSelf(mChatMessageModel);
-	mText = mChatMessageModel->getText();
+	mText = ToolModel::getMessageFromContent(chatmessage->getContents());
 	mUtf8Text = mChatMessageModel->getUtf8Text();
 	mHasTextContent = mChatMessageModel->getHasTextContent();
 	mTimestamp = QDateTime::fromSecsSinceEpoch(chatmessage->getTime());
+	mIsOutgoing = chatmessage->isOutgoing();
 	mIsRemoteMessage = !chatmessage->isOutgoing();
 	mPeerAddress = Utils::coreStringToAppString(chatmessage->getPeerAddress()->asStringUriOnly());
 	mPeerName = ToolModel::getDisplayName(chatmessage->getPeerAddress()->clone());
@@ -87,10 +88,8 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	mMessageState = LinphoneEnums::fromLinphone(chatmessage->getState());
 	mMessageId = Utils::coreStringToAppString(chatmessage->getMessageId());
 	for (auto content : chatmessage->getContents()) {
-		if (content->isIcalendar()) {
-			auto conferenceInfo = linphone::Factory::get()->createConferenceInfoFromIcalendarContent(content);
-			mConferenceInfo = ConferenceInfoCore::create(conferenceInfo);
-		}
+		auto contentCore = ChatMessageContentCore::create(content, mChatMessageModel);
+		mChatMessageContentList.push_back(contentCore);
 	}
 	auto reac = chatmessage->getOwnReaction();
 	mOwnReaction = reac ? Utils::coreStringToAppString(reac->getBody()) : QString();
@@ -201,6 +200,61 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 		    auto msgState = LinphoneEnums::fromLinphone(state);
 		    mChatMessageModelConnection->invokeToCore([this, msgState] { setMessageState(msgState); });
 	    });
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::fileTransferProgressIndication,
+	    [this](const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &content,
+	           size_t offset, size_t total) {
+		    mChatMessageModelConnection->invokeToCore([this, content, offset, total] {
+			    auto it =
+			        std::find_if(mChatMessageContentList.begin(), mChatMessageContentList.end(),
+			                     [content](QSharedPointer<ChatMessageContentCore> item) {
+				                     return item->getContentModel()->getContent()->getName() == content->getName();
+			                     });
+			    if (it != mChatMessageContentList.end()) {
+				    auto contentCore = mChatMessageContentList.at(std::distance(mChatMessageContentList.begin(), it));
+				    assert(contentCore);
+				    contentCore->setFileOffset(offset);
+			    }
+		    });
+	    });
+
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::fileTransferTerminated, [this](const std::shared_ptr<linphone::ChatMessage> &message,
+	                                                      const std::shared_ptr<linphone::Content> &content) {
+		    mChatMessageModelConnection->invokeToCore([this, content] {
+			    auto it =
+			        std::find_if(mChatMessageContentList.begin(), mChatMessageContentList.end(),
+			                     [content](QSharedPointer<ChatMessageContentCore> item) {
+				                     return item->getContentModel()->getContent()->getName() == content->getName();
+			                     });
+			    if (it != mChatMessageContentList.end()) {
+				    auto contentCore = mChatMessageContentList.at(std::distance(mChatMessageContentList.begin(), it));
+				    assert(contentCore);
+				    contentCore->setWasDownloaded(true);
+			    }
+		    });
+	    });
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::fileTransferRecv,
+	    [this](const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &content,
+	           const std::shared_ptr<const linphone::Buffer> &buffer) { qDebug() << "transfer received"; });
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::fileTransferSend,
+	    [this](const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &content,
+	           size_t offset, size_t size) { qDebug() << "transfer send"; });
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::fileTransferSendChunk,
+	    [this](const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &content,
+	           size_t offset, size_t size,
+	           const std::shared_ptr<linphone::Buffer> &buffer) { qDebug() << "transfer send chunk"; });
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::participantImdnStateChanged,
+	    [this](const std::shared_ptr<linphone::ChatMessage> &message,
+	           const std::shared_ptr<const linphone::ParticipantImdnState> &state) {});
+	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::ephemeralMessageTimerStarted,
+	                                                [this](const std::shared_ptr<linphone::ChatMessage> &message) {});
+	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::ephemeralMessageDeleted,
+	                                                [this](const std::shared_ptr<linphone::ChatMessage> &message) {});
 }
 
 QDateTime ChatMessageCore::getTimestamp() const {
@@ -284,6 +338,10 @@ QList<Reaction> ChatMessageCore::getReactions() const {
 
 QList<QVariant> ChatMessageCore::getReactionsSingleton() const {
 	return mReactionsSingletonMap;
+}
+
+QList<QSharedPointer<ChatMessageContentCore>> ChatMessageCore::getChatMessageContentList() const {
+	return mChatMessageContentList;
 }
 
 void ChatMessageCore::setReactions(const QList<Reaction> &reactions) {
@@ -370,6 +428,6 @@ std::shared_ptr<ChatMessageModel> ChatMessageCore::getModel() const {
 	return mChatMessageModel;
 }
 
-ConferenceInfoGui *ChatMessageCore::getConferenceInfoGui() const {
-	return mConferenceInfo ? new ConferenceInfoGui(mConferenceInfo) : nullptr;
-}
+// ConferenceInfoGui *ChatMessageCore::getConferenceInfoGui() const {
+// 	return mConferenceInfo ? new ConferenceInfoGui(mConferenceInfo) : nullptr;
+// }

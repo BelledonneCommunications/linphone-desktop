@@ -43,6 +43,7 @@
 #include <QDesktopServices>
 #include <QHostAddress>
 #include <QImageReader>
+#include <QMimeDatabase>
 #include <QProcess>
 #include <QQmlComponent>
 #include <QQmlProperty>
@@ -58,6 +59,10 @@
 #endif
 
 DEFINE_ABSTRACT_OBJECT(Utils)
+
+namespace {
+constexpr int SafeFilePathLimit = 100;
+}
 
 // =============================================================================
 
@@ -345,6 +350,12 @@ QString Utils::formatDate(const QDateTime &date, bool includeTime, bool includeD
 
 QString Utils::formatTime(const QDateTime &date) {
 	return date.time().toString("hh:mm");
+}
+
+QString Utils::formatDuration(int durationMs) {
+	QTime duration(0, 0);
+	duration = duration.addMSecs(durationMs);
+	return duration.hour() > 0 ? duration.toString("hh:mm:ss") : duration.toString("mm:ss");
 }
 
 QString Utils::formatDateElapsedTime(const QDateTime &date) {
@@ -1870,6 +1881,18 @@ QString Utils::encodeEmojiToQmlRichFormat(const QString &body) {
 	return fmtBody;
 }
 
+static bool codepointIsVisible(uint code) {
+	return code > 0x00020;
+}
+
+bool Utils::isOnlyEmojis(const QString &text) {
+	if (text.isEmpty()) return false;
+	QVector<uint> utf32_string = text.toUcs4();
+	for (auto &code : utf32_string)
+		if (codepointIsVisible(code) && !Utils::codepointIsEmoji(code)) return false;
+	return true;
+}
+
 QString Utils::getFilename(QUrl url) {
 	return url.fileName();
 }
@@ -1905,4 +1928,80 @@ QDateTime Utils::getOffsettedUTC(const QDateTime &date) {
 QString Utils::toTimeString(QDateTime date, const QString &format) {
 	// Issue : date.toString() will not print the good time in timezones. Get it from date and add ourself the offset.
 	return getOffsettedUTC(date).toString(format);
+}
+QString Utils::getSafeFilePath(const QString &filePath, bool *soFarSoGood) {
+	if (soFarSoGood) *soFarSoGood = true;
+
+	QFileInfo info(filePath);
+	if (!info.exists()) return filePath;
+
+	const QString prefix = QStringLiteral("%1/%2").arg(info.absolutePath()).arg(info.baseName());
+	const QString ext = info.completeSuffix();
+
+	for (int i = 1; i < SafeFilePathLimit; ++i) {
+		QString safePath = QStringLiteral("%1 (%3).%4").arg(prefix).arg(i).arg(ext);
+		if (!QFileInfo::exists(safePath)) return safePath;
+	}
+
+	if (soFarSoGood) *soFarSoGood = false;
+
+	return QString("");
+}
+
+bool Utils::isVideo(const QString &path) {
+	if (path.isEmpty()) return false;
+	return QMimeDatabase().mimeTypeForFile(path).name().contains("video/");
+}
+
+bool Utils::isPdf(const QString &path) {
+	if (path.isEmpty()) return false;
+	return QMimeDatabase().mimeTypeForFile(path).name().contains("application/pdf");
+}
+
+bool Utils::isText(const QString &path) {
+	if (path.isEmpty()) return false;
+	return QMimeDatabase().mimeTypeForFile(path).name().contains("text");
+}
+
+bool Utils::isImage(const QString &path) {
+	if (path.isEmpty()) return false;
+	QFileInfo info(path);
+	if (!info.exists() || SettingsModel::getInstance()->getVfsEncrypted()) {
+		return QMimeDatabase().mimeTypeForFile(path).name().contains("image/");
+	} else {
+		if (!QMimeDatabase().mimeTypeForFile(info).name().contains("image/")) return false;
+		QImageReader reader(path);
+		return reader.canRead() && reader.imageCount() == 1;
+	}
+}
+
+bool Utils::isAnimatedImage(const QString &path) {
+	if (path.isEmpty()) return false;
+	QFileInfo info(path);
+	if (!info.exists() || !QMimeDatabase().mimeTypeForFile(info).name().contains("image/")) return false;
+	QImageReader reader(path);
+	return reader.canRead() && reader.supportsAnimation() && reader.imageCount() > 1;
+}
+
+bool Utils::canHaveThumbnail(const QString &path) {
+	if (path.isEmpty()) return false;
+	return isImage(path) || isAnimatedImage(path) /*|| isPdf(path)*/ || isVideo(path);
+}
+
+QImage Utils::getImage(const QString &pUri) {
+	QImage image(pUri);
+	QImageReader reader(pUri);
+	reader.setAutoTransform(true);
+	if (image.isNull()) { // Try to determine format from headers instead of using suffix
+		reader.setDecideFormatFromContent(true);
+	}
+	return reader.read();
+}
+
+void Utils::setGlobalCursor(Qt::CursorShape cursor) {
+	App::getInstance()->setOverrideCursor(QCursor(cursor));
+}
+
+void Utils::restoreGlobalCursor() {
+	App::getInstance()->restoreOverrideCursor();
 }

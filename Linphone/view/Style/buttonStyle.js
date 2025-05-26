@@ -127,6 +127,28 @@
 		}
 	}
 
+// No background light
+	var noBackgroundLight = {
+		color: {
+			normal: "#00000000",
+			hovered: "#00000000",
+            pressed: "#00000000",
+			checked: "#00000000"
+		},
+		text: {
+			normal: Linphone.DefaultStyle.main2_200,
+			hovered: Linphone.DefaultStyle.main2_300,
+            pressed: Linphone.DefaultStyle.main2_400,
+            checked: Linphone.DefaultStyle.main1_500main
+		},
+		image: {
+			normal: Linphone.DefaultStyle.main2_200,
+			hovered: Linphone.DefaultStyle.main2_300,
+            pressed: Linphone.DefaultStyle.main2_400,
+            checked: Linphone.DefaultStyle.main1_500main,
+		}
+	}
+
 // No background
 	var noBackground = {
 		color: {

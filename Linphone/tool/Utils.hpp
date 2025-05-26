@@ -95,6 +95,7 @@ public:
 	                                      QString format = ""); // Return the date formated
 	Q_INVOKABLE static QString formatDateElapsedTime(const QDateTime &date);
 	Q_INVOKABLE static QString formatTime(const QDateTime &date); // Return the time formated
+	Q_INVOKABLE static QString formatDuration(int durationMs);    // Return the duration formated
 	Q_INVOKABLE static QStringList generateSecurityLettersArray(int arraySize, int correctIndex, QString correctCode);
 	Q_INVOKABLE static int getRandomIndex(int size);
 	Q_INVOKABLE static bool copyToClipboard(const QString &text);
@@ -154,9 +155,20 @@ public:
 	Q_INVOKABLE static QString encodeTextToQmlRichFormat(const QString &text,
 	                                                     const QVariantMap &options = QVariantMap());
 	Q_INVOKABLE static QString encodeEmojiToQmlRichFormat(const QString &body);
+	Q_INVOKABLE static bool isOnlyEmojis(const QString &text);
 
 	Q_INVOKABLE static QString getFilename(QUrl url);
 	static bool codepointIsEmoji(uint code);
+	Q_INVOKABLE static bool isVideo(const QString &path);
+	static QString getSafeFilePath(const QString &filePath, bool *soFarSoGood);
+	Q_INVOKABLE static bool isAnimatedImage(const QString &path);
+	Q_INVOKABLE static bool canHaveThumbnail(const QString &path);
+	Q_INVOKABLE static bool isImage(const QString &path);
+	Q_INVOKABLE static bool isPdf(const QString &path);
+	Q_INVOKABLE static bool isText(const QString &path);
+	Q_INVOKABLE static QImage getImage(const QString &pUri);
+	Q_INVOKABLE static void setGlobalCursor(Qt::CursorShape cursor);
+	Q_INVOKABLE static void restoreGlobalCursor();
 
 	Q_INVOKABLE static QString toDateTimeString(QDateTime date, const QString &format = "yyyy/MM/dd hh:mm:ss");
 	static QDateTime getOffsettedUTC(const QDateTime &date);

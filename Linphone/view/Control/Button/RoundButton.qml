@@ -8,13 +8,13 @@ Button {
 	id: mainItem
 	textSize: Typography.p1s.pixelSize
 	textWeight: Typography.p1s.weight
-    topPadding: Math.round(16 * DefaultStyle.dp)
-    bottomPadding: Math.round(16 * DefaultStyle.dp)
-    leftPadding: Math.round(16 * DefaultStyle.dp)
-    rightPadding: Math.round(16 * DefaultStyle.dp)
-    icon.width: Math.round(24 * DefaultStyle.dp)
-    icon.height: Math.round(24 * DefaultStyle.dp)
-    radius: Math.round(40 * DefaultStyle.dp)
-    width: Math.round(24 * DefaultStyle.dp)
-    height: Math.round(24 * DefaultStyle.dp)
+    padding: Math.round(16 * DefaultStyle.dp)
+    // bottomPadding: Math.round(16 * DefaultStyle.dp)
+    // leftPadding: Math.round(16 * DefaultStyle.dp)
+    // rightPadding: Math.round(16 * DefaultStyle.dp)
+    icon.width: width
+    icon.height: width
+    radius: width * 2
+    // width: Math.round(24 * DefaultStyle.dp)
+    height: width
 }

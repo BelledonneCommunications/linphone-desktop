@@ -133,6 +133,7 @@ public:
 
 	static constexpr char PathAssistantConfig[] = "/" EXECUTABLE_NAME "/assistant/";
 	static constexpr char PathAvatars[] = "/avatars/";
+	static constexpr char PathFiles[] = "/files/";
 	static constexpr char PathCaptures[] = "/" EXECUTABLE_NAME "/captures/";
 	static constexpr char PathCodecs[] = "/codecs/";
 	static constexpr char PathData[] = "/" EXECUTABLE_NAME;
