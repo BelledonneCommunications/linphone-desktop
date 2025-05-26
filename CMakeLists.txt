@@ -185,9 +185,9 @@ add_option(OPTION_LIST ENABLE_SCREENSHARING "Enable screen sharing." ${ENABLE_VI
 # QtKeychain
 add_option(OPTION_LIST LIBSECRET_SUPPORT "Build with libsecret support" OFF) # Need libsecret-devel
 if(WIN32)
-	add_cache(OPTION_LIST QTKEYCHAIN_TARGET_NAME "Override Qt5Keychain library name for a workaround with windeployqt" "EQt5Keychain")
+	add_cache(OPTION_LIST QTKEYCHAIN_TARGET_NAME "Override Qt6Keychain library name for a workaround with windeployqt" "EQt6Keychain")
 else()
-	add_cache(OPTION_LIST QTKEYCHAIN_TARGET_NAME "Override Qt5Keychain library name" "Qt5Keychain")
+	add_cache(OPTION_LIST QTKEYCHAIN_TARGET_NAME "Override Qt6Keychain library name" "Qt6Keychain")
 endif()
 if(WIN32)
 	add_option(OPTION_LIST ENABLE_OPENSSL_EXPORT "Enable OpenSSL deployment" YES)
@@ -206,7 +206,7 @@ set(ENABLE_CSHARP_WRAPPER OFF CACHE BOOL "Build the CSharp wrapper for Liblinpho
 set(ENABLE_THEORA OFF)
 set(ENABLE_QT_GL ${ENABLE_VIDEO})
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 
 if(NOT Qt6_FOUND)
 	message(FATAL_ERROR "Minimum supported Qt6!")
@@ -227,18 +227,11 @@ endif()
 if(NOT APPLE OR MONO_ARCH)
 	add_custom_target(linphone-deps)
 	if(NOT LINPHONE_QT_ONLY)
-			function(add_external)
-					set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # Prevent project from overriding the options we just set here
-					add_subdirectory("external")
-			endfunction()
-			add_external()
-
-			if(ENABLE_QT_KEYCHAIN)
-					function(add_linphone_keychain)
-						#add_subdirectory("external/qtkeychain")
-					endfunction()
-					add_linphone_keychain()
-			endif()
+		function(add_external)
+			set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # Prevent project from overriding the options we just set here
+			add_subdirectory("external")
+		endfunction()
+		add_external()
 	endif()
 	function(add_linphone_app)
 			set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # Prevent project from overriding the options we just set here
@@ -269,5 +262,17 @@ if(NOT APPLE OR MONO_ARCH)
 else()
     include(cmake/TasksMacos.cmake)
 endif()
+
+if (ENABLE_QT_KEYCHAIN)
+	target_include_directories(${TARGET_NAME} SYSTEM PUBLIC  ${PROJECT_SOURCE_DIR}/external/qtkeychain)
+	target_link_libraries(${TARGET_NAME} PUBLIC ${QTKEYCHAIN_TARGET_NAME})
+	message(STATUS "link libraries: ${TARGET_NAME} ${QTKEYCHAIN_TARGET_NAME}")
+endif()
+
+message(STATUS "CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
+message(STATUS "PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
+message(STATUS "Contents of qtkeychain:")
+file(GLOB QTKEYCHAIN_HEADERS "${PROJECT_SOURCE_DIR}/external/qtkeychain/qtkeychain/*.h")
+message(STATUS "Found headers: ${QTKEYCHAIN_HEADERS}")
 
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/cmake/hook/pre-commit" DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/.git/hooks/")

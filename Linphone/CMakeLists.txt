@@ -19,7 +19,7 @@ endforeach()
 set(TARGET_NAME Linphone)
 set(APP_TARGETS ${LinphoneCxx_TARGET}
 				${Mediastreamer2_TARGET}#MediastreamerUtils
-				${LibLinphone_TARGET})#MediastreamerUtils
+				${LibLinphone_TARGET})#Liblinphone
 
 set(QT_DEFAULT_MAJOR_VERSION 6)
 set(QT_PACKAGES Core Quick Qml Widgets Svg Multimedia Test NetworkAuth Concurrent)# Search Core at first for initialize Qt scripts for next find_packages.
