@@ -75,10 +75,19 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	qDebug() << "OIDC Client ID set to [" << clientid << "]";
 
 	// find an auth info from LinphoneCore where username = clientid
-	auto clientSecret = CoreModel::getInstance()->getCore()->findAuthInfo("", clientid.toStdString(), "");
+	std::shared_ptr<linphone::AuthInfo> clientSecret = nullptr;
+	// search for auth info for this client id
+	for (const auto &authInfo : CoreModel::getInstance()->getCore()->getAuthInfoList()) {
+		if (authInfo->getClientId() == clientid.toStdString()) {
+			qDebug() << "AuthInfo found for client id [" << clientid << "]";
+			clientSecret = authInfo;
+			break;
+		}
+	}
+
 	if (clientSecret != nullptr) {
 		qDebug() << "client secret found for client id [" << clientid << "]";
-		mOidc.setClientIdentifierSharedKey(clientSecret->getPassword().c_str());
+		mOidc.setClientIdentifierSharedKey(clientSecret->getClientSecret().c_str());
 	}
 
 	QSet<QByteArray> scopeTokens = {OIDCScope};
@@ -202,7 +211,8 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 		        //		for (auto it = tokens.cbegin(); it != tokens.cend(); ++it) {
 		        //			qDebug() << "Token key:" << it.key() << ", value:" << it.value().toString();
 		        //		}
-		        if (tokens.contains("id_token")) {
+		        if (tokens.contains("id_token") &&
+		            CoreModel::getInstance()->getCore()->getConfig()->getBool("app", "oidc_use_id_token", false)) {
 			        auto idToken = tokens["id_token"].toString();
 			        qDebug() << "ID Token received:" << idToken.left(3) + "..." + idToken.right(3);
 			        mIdToken = idToken;
@@ -315,7 +325,15 @@ void OIDCModel::setBearers() {
 }
 QString OIDCModel::idToken() const {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
-	return mOidc.idToken().isEmpty() ? mOidc.token() : mOidc.idToken();
+	if (CoreModel::getInstance()->getCore()->getConfig()->getBool("app", "oidc_use_id_token", false)) {
+		if (!mOidc.idToken().isEmpty()) {
+			return mOidc.idToken();
+		} else {
+			return mOidc.token();
+		}
+	} else {
+		return mOidc.token();
+	}
 #else
 	return mIdToken;
 #endif
