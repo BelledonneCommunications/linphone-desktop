@@ -57,6 +57,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Chat/ChatMessage.qml
 	view/Control/Display/Chat/ChatMessageInvitationBubble.qml
 	view/Control/Display/Chat/ChatMessagesListView.qml
+	view/Control/Display/Chat/Event.qml
 	view/Control/Display/Contact/Avatar.qml
 	view/Control/Display/Contact/Contact.qml
 	view/Control/Display/Contact/Presence.qml

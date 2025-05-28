@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -18,28 +18,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHAT_MESSAGE_LIST_H_
-#define CHAT_MESSAGE_LIST_H_
+#ifndef EVENT_LOG_LIST_H_
+#define EVENT_LOG_LIST_H_
 
 #include "core/proxy/ListProxy.hpp"
 #include "tool/AbstractObject.hpp"
 #include "tool/thread/SafeConnection.hpp"
 #include <QLocale>
 
-class ChatMessageGui;
-class ChatMessageCore;
+class EventLogGui;
 class ChatCore;
 class ChatGui;
 // =============================================================================
 
-class ChatMessageList : public ListProxy, public AbstractObject {
+class EventLogList : public ListProxy, public AbstractObject {
 	Q_OBJECT
 public:
-	static QSharedPointer<ChatMessageList> create();
-	// Create a ChatMessageCore and make connections to List.
-	QSharedPointer<ChatMessageCore> createChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &chatMessage);
-	ChatMessageList(QObject *parent = Q_NULLPTR);
-	~ChatMessageList();
+	static QSharedPointer<EventLogList> create();
+	EventLogList(QObject *parent = Q_NULLPTR);
+	~EventLogList();
 
 	QSharedPointer<ChatCore> getChatCore() const;
 	ChatGui *getChat() const;
@@ -48,18 +45,20 @@ public:
 
 	int findFirstUnreadIndex();
 
-	void setSelf(QSharedPointer<ChatMessageList> me);
+	void setSelf(QSharedPointer<EventLogList> me);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	QHash<int, QByteArray> roleNames() const override;
+
 signals:
 	void lUpdate();
 	void filterChanged(QString filter);
-	void chatChanged();
-	void messageInserted(int index, ChatMessageGui *message);
+	void eventChanged();
+	void eventInserted(int index, EventLogGui *message);
 
 private:
 	QString mFilter;
 	QSharedPointer<ChatCore> mChatCore;
-	QSharedPointer<SafeConnection<ChatMessageList, CoreModel>> mModelConnection;
+	QSharedPointer<SafeConnection<EventLogList, CoreModel>> mModelConnection;
 	DECLARE_ABSTRACT_OBJECT
 };
 

@@ -18,22 +18,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatMessageGui.hpp"
-#include "ChatMessageCore.hpp"
+#include "EventLogGui.hpp"
 #include "core/App.hpp"
 
-DEFINE_ABSTRACT_OBJECT(ChatMessageGui)
+DEFINE_ABSTRACT_OBJECT(EventLogGui)
 
-ChatMessageGui::ChatMessageGui(QSharedPointer<ChatMessageCore> core) {
+EventLogGui::EventLogGui(QSharedPointer<EventLogCore> core) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;
 	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
 }
 
-ChatMessageGui::~ChatMessageGui() {
+EventLogGui::~EventLogGui() {
 	mustBeInMainThread("~" + getClassName());
 }
 
-ChatMessageCore *ChatMessageGui::getCore() const {
+EventLogCore *EventLogGui::getCore() const {
 	return mCore.get();
 }

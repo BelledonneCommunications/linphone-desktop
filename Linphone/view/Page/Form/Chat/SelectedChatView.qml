@@ -16,10 +16,10 @@ RowLayout {
     property alias callHeaderContent: splitPanel.headerContent
     spacing: 0
 
-    onChatChanged: {
+    //onEventChanged: {
         // TODO : call when all messages read after scroll to unread feature available
         // if (chat) chat.core.lMarkAsRead()
-    }
+    //}
     MainRightPanel {
         id: splitPanel
         Layout.fillWidth: true

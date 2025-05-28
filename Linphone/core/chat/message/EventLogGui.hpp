@@ -18,22 +18,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatMessageGui.hpp"
-#include "ChatMessageCore.hpp"
-#include "core/App.hpp"
+#ifndef EVENT_LOG_GUI_H_
+#define EVENT_LOG_GUI_H_
 
-DEFINE_ABSTRACT_OBJECT(ChatMessageGui)
+#include "EventLogCore.hpp"
+#include <QObject>
+#include <QSharedPointer>
 
-ChatMessageGui::ChatMessageGui(QSharedPointer<ChatMessageCore> core) {
-	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
-	mCore = core;
-	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
-}
+class EventLogGui : public QObject, public AbstractObject {
+	Q_OBJECT
 
-ChatMessageGui::~ChatMessageGui() {
-	mustBeInMainThread("~" + getClassName());
-}
+	Q_PROPERTY(EventLogCore *core READ getCore CONSTANT)
 
-ChatMessageCore *ChatMessageGui::getCore() const {
-	return mCore.get();
-}
+public:
+	EventLogGui(QSharedPointer<EventLogCore> core);
+	~EventLogGui();
+	EventLogCore *getCore() const;
+	QSharedPointer<EventLogCore> mCore;
+	DECLARE_ABSTRACT_OBJECT
+};
+
+#endif

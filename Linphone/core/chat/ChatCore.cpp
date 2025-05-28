@@ -76,25 +76,29 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	mChatModel->setSelf(mChatModel);
 	auto lastMessage = chatRoom->getLastMessageInHistory();
 	mLastMessage = lastMessage ? ChatMessageCore::create(lastMessage) : nullptr;
-	auto history = chatRoom->getHistory(0, (int)linphone::ChatRoom::HistoryFilter::ChatMessage);
-	std::list<std::shared_ptr<linphone::ChatMessage>> lHistory;
+
+	int filter = mIsGroupChat ? static_cast<int>(linphone::ChatRoom::HistoryFilter::ChatMessage) |
+	                                static_cast<int>(linphone::ChatRoom::HistoryFilter::InfoNoDevice)
+	                          : static_cast<int>(linphone::ChatRoom::HistoryFilter::ChatMessage);
+
+	auto history = chatRoom->getHistory(0, filter);
+	std::list<std::shared_ptr<linphone::EventLog>> lHistory;
 	for (auto &eventLog : history) {
-		if (eventLog->getChatMessage()) lHistory.push_back(eventLog->getChatMessage());
+		lHistory.push_back(eventLog);
 	}
-	QList<QSharedPointer<ChatMessageCore>> messageList;
-	for (auto &message : lHistory) {
-		if (!message) continue;
-		auto chatMessage = ChatMessageCore::create(message);
-		messageList.append(chatMessage);
+	QList<QSharedPointer<EventLogCore>> eventList;
+	for (auto &event : lHistory) {
+		auto eventLogCore = EventLogCore::create(event);
+		eventList.append(eventLogCore);
 	}
-	resetChatMessageList(messageList);
+	resetEventLogList(eventList);
 	mIdentifier = Utils::coreStringToAppString(chatRoom->getIdentifier());
 	mChatRoomState = LinphoneEnums::fromLinphone(chatRoom->getState());
 	mIsEncrypted = chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Encrypted);
 	mIsReadOnly = chatRoom->isReadOnly();
-	connect(this, &ChatCore::messageListChanged, this, &ChatCore::lUpdateLastMessage);
-	connect(this, &ChatCore::messagesInserted, this, &ChatCore::lUpdateLastMessage);
-	connect(this, &ChatCore::messageRemoved, this, &ChatCore::lUpdateLastMessage);
+	connect(this, &ChatCore::eventListChanged, this, &ChatCore::lUpdateLastMessage);
+	connect(this, &ChatCore::eventsInserted, this, &ChatCore::lUpdateLastMessage);
+	connect(this, &ChatCore::eventRemoved, this, &ChatCore::lUpdateLastMessage);
 }
 
 ChatCore::~ChatCore() {
@@ -112,7 +116,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatCore::lLeave, [this]() { mChatModelConnection->invokeToModel([this]() { mChatModel->leave(); }); });
 	mChatModelConnection->makeConnectToModel(&ChatModel::historyDeleted, [this]() {
 		mChatModelConnection->invokeToCore([this]() {
-			clearMessagesList();
+			clearEventLogList();
 			//: Deleted
 			Utils::showInformationPopup(tr("info_toast_deleted_title"),
 			                            //: Message history has been deleted
@@ -148,36 +152,30 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		    });
 	    });
 
-	mChatModelConnection->makeConnectToModel(&ChatModel::chatMessageReceived,
+	mChatModelConnection->makeConnectToModel(&ChatModel::chatMessageReceived, // TODO onNewEvent?
 	                                         [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                                const std::shared_ptr<const linphone::EventLog> &eventLog) {
 		                                         if (mChatModel->getMonitor() != chatRoom) return;
-		                                         auto message = eventLog->getChatMessage();
 		                                         qDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
-		                                         if (message) {
-			                                         auto newMessage = ChatMessageCore::create(message);
-			                                         mChatModelConnection->invokeToCore([this, newMessage]() {
-				                                         appendMessageToMessageList(newMessage);
-				                                         emit lUpdateUnreadCount();
-				                                         emit lUpdateLastUpdatedTime();
-			                                         });
-		                                         }
+		                                         auto event = EventLogCore::create(eventLog);
+		                                         mChatModelConnection->invokeToCore([this, event]() {
+			                                         appendEventLogToEventLogList(event);
+			                                         emit lUpdateUnreadCount();
+			                                         emit lUpdateLastUpdatedTime();
+		                                         });
 	                                         });
 	mChatModelConnection->makeConnectToModel(
 	    &ChatModel::chatMessagesReceived, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
-	                                             const std::list<std::shared_ptr<linphone::EventLog>> &chatMessages) {
+	                                             const std::list<std::shared_ptr<linphone::EventLog>> &eventsLog) {
 		    if (mChatModel->getMonitor() != chatRoom) return;
 		    qDebug() << "EVENT LOGS RECEIVED IN CHATROOM" << mChatModel->getTitle();
-		    QList<QSharedPointer<ChatMessageCore>> list;
-		    for (auto &m : chatMessages) {
-			    auto message = m->getChatMessage();
-			    if (message) {
-				    auto newMessage = ChatMessageCore::create(message);
-				    list.push_back(newMessage);
-			    }
+		    QList<QSharedPointer<EventLogCore>> list;
+		    for (auto &e : eventsLog) {
+			    auto event = EventLogCore::create(e);
+			    list.push_back(event);
 		    }
 		    mChatModelConnection->invokeToCore([this, list]() {
-			    appendMessagesToMessageList(list);
+			    appendEventLogsToEventLogList(list);
 			    emit lUpdateUnreadCount();
 			    emit lUpdateLastUpdatedTime();
 		    });
@@ -211,11 +209,8 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	mChatModelConnection->makeConnectToModel(
 	    &ChatModel::chatMessageSending, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                           const std::shared_ptr<const linphone::EventLog> &eventLog) {
-		    auto message = eventLog->getChatMessage();
-		    if (message) {
-			    auto newMessage = ChatMessageCore::create(message);
-			    mChatModelConnection->invokeToCore([this, newMessage]() { appendMessageToMessageList(newMessage); });
-		    }
+		    auto event = EventLogCore::create(eventLog);
+		    mChatModelConnection->invokeToCore([this, event]() { appendEventLogToEventLogList(event); });
 	    });
 	mChatModelConnection->makeConnectToCore(
 	    &ChatCore::lCompose, [this]() { mChatModelConnection->invokeToModel([this]() { mChatModel->compose(); }); });
@@ -333,10 +328,6 @@ ChatMessageGui *ChatCore::getLastMessage() const {
 	return mLastMessage ? new ChatMessageGui(mLastMessage) : nullptr;
 }
 
-QSharedPointer<ChatMessageCore> ChatCore::getLastMessageCore() const {
-	return mLastMessage;
-}
-
 void ChatCore::setLastMessage(QSharedPointer<ChatMessageCore> lastMessage) {
 	if (mLastMessage != lastMessage) {
 		disconnect(mLastMessage.get());
@@ -357,45 +348,45 @@ void ChatCore::setUnreadMessagesCount(int count) {
 	}
 }
 
-QList<QSharedPointer<ChatMessageCore>> ChatCore::getChatMessageList() const {
-	return mChatMessageList;
+QList<QSharedPointer<EventLogCore>> ChatCore::getEventLogList() const {
+	return mEventLogList;
 }
 
-void ChatCore::resetChatMessageList(QList<QSharedPointer<ChatMessageCore>> list) {
-	mChatMessageList = list;
-	emit messageListChanged();
+void ChatCore::resetEventLogList(QList<QSharedPointer<EventLogCore>> list) {
+	mEventLogList = list;
+	emit eventListChanged();
 }
 
-void ChatCore::appendMessagesToMessageList(QList<QSharedPointer<ChatMessageCore>> list) {
+void ChatCore::appendEventLogsToEventLogList(QList<QSharedPointer<EventLogCore>> list) {
 	int nbAdded = 0;
-	for (auto &message : list) {
-		if (mChatMessageList.contains(message)) continue;
-		mChatMessageList.append(message);
+	for (auto &e : list) {
+		if (mEventLogList.contains(e)) continue;
+		mEventLogList.append(e);
 		++nbAdded;
 	}
-	if (nbAdded > 0) emit messagesInserted(list);
+	if (nbAdded > 0) emit eventsInserted(list);
 }
 
-void ChatCore::appendMessageToMessageList(QSharedPointer<ChatMessageCore> message) {
-	if (mChatMessageList.contains(message)) return;
-	mChatMessageList.append(message);
-	emit messagesInserted({message});
+void ChatCore::appendEventLogToEventLogList(QSharedPointer<EventLogCore> e) {
+	if (mEventLogList.contains(e)) return;
+	mEventLogList.append(e);
+	emit eventsInserted({e});
 }
 
-void ChatCore::removeMessagesFromMessageList(QList<QSharedPointer<ChatMessageCore>> list) {
+void ChatCore::removeEventLogsFromEventLogList(QList<QSharedPointer<EventLogCore>> list) {
 	int nbRemoved = 0;
-	for (auto &message : list) {
-		if (mChatMessageList.contains(message)) {
-			mChatMessageList.removeAll(message);
+	for (auto &e : list) {
+		if (mEventLogList.contains(e)) {
+			mEventLogList.removeAll(e);
 			++nbRemoved;
 		}
 	}
-	if (nbRemoved > 0) emit messageRemoved();
+	if (nbRemoved > 0) emit eventRemoved();
 }
 
-void ChatCore::clearMessagesList() {
-	mChatMessageList.clear();
-	emit messageListChanged();
+void ChatCore::clearEventLogList() {
+	mEventLogList.clear();
+	emit eventListChanged();
 }
 
 QString ChatCore::getComposingName() const {

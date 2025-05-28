@@ -5921,4 +5921,98 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <translation>Ok</translation>
     </message>
 </context>
+<context>
+	<name>EventLogCore</name>
+	<message>
+		<source>conference_created_event</source>
+		<extracomment>'You have joined the group' : Little message to show on the event when the user join the chat group.</extracomment>
+		<translation>You have joined the group</translation>
+	</message>
+	<message>
+		<source>conference_created_terminated</source>
+		<extracomment>'You have left the group' : Little message to show on the event when the user leave the chat group.</extracomment>
+		<translation>You have left the group</translation>
+	</message>
+	<message>
+		<source>conference_participant_added_event</source>
+		<extracomment>'%1 has joined' : Little message to show on the event when someone join the chat group.</extracomment>
+		<translation>%1 has joined</translation>
+	</message>
+	<message>
+		<source>conference_participant_removed_event</source>
+		<extracomment>'%1 has left' : Little message to show on the event when someone leave the chat group</extracomment>
+		<translation>%1 has left</translation>
+	</message>
+	<message>
+		<source>conference_participant_set_admin_event</source>
+		<extracomment>'%1 is now an admin' : Little message to show on the event when someone get the admin status. %1 is somebody</extracomment>
+		<translation>%1 is now an admin</translation>
+	</message>
+	<message>
+		<source>conference_participant_unset_admin_event</source>
+		<extracomment>'%1 is no longer an admin' : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
+		<translation>%1 is no longer an admin</translation>
+	</message>
+	<message>
+		<source>conference_security_event</source>
+		<extracomment>'Security level degraded by %1': Little message to show on the event when a security level has been lost.</extracomment>
+		<translation>Security level degraded by %1</translation>
+	</message>
+	<message>
+		<source>conference_ephemeral_message_enabled_event</source>
+		<extracomment>'Ephemeral messages have been enabled: %1' : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
+		<translation>Ephemeral messages have been enabled: %1</translation>
+	</message>
+	<message>
+		<source>conference_ephemeral_message_disabled_event</source>
+		<extracomment>'Ephemeral messages have been disabled': Little message to show on the event when ephemeral has been deactivated.</extracomment>
+		<translation>Ephemeral messages have been disabled</translation>
+	</message>
+	<message>
+		<source>conference_subject_changed_event</source>
+		<extracomment>'New subject : %1' : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.</extracomment>
+		<translation>New subject: %1</translation>
+	</message>
+	<message>
+		<source>conference_ephemeral_message_lifetime_changed_event</source>
+		<extracomment>'Ephemeral messages have been updated: %1' : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
+		<translation>Ephemeral messages have been updated: %1</translation>
+	</message>
+	<message numerus="yes">
+		<source>nSeconds</source>
+		<translation>
+			<numerusform>%1 second</numerusform>
+			<numerusform>%1 seconds</numerusform>
+		</translation>
+	</message>
+	<message numerus="yes">
+		<source>nMinute</source>
+		<translation>
+			<numerusform>%1 minute</numerusform>
+			<numerusform>%1 minutes</numerusform>
+		</translation>
+	</message>
+	<message numerus="yes">
+		<source>nHour</source>
+		<translation>
+			<numerusform>%1 hour</numerusform>
+			<numerusform>%1 hours</numerusform>
+		</translation>
+	</message>
+	<message numerus="yes">
+		<source>nDay</source>
+		<translation>
+			<numerusform>%1 day</numerusform>
+			<numerusform>%1 days</numerusform>
+		</translation>
+	</message>
+	<message numerus="yes">
+		<source>nWeek</source>
+		<translation>
+			<numerusform>%1 week</numerusform>
+			<numerusform>%1 weeks</numerusform>
+		</translation>
+	</message>
+</context>
+
 </TS>

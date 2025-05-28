@@ -18,10 +18,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHAT_MESSAGE_PROXY_H_
-#define CHAT_MESSAGE_PROXY_H_
+#ifndef EVENT_LIST_PROXY_H_
+#define EVENT_LIST_PROXY_H_
 
-#include "ChatMessageList.hpp"
+#include "EventLogList.hpp"
 #include "core/proxy/LimitProxy.hpp"
 #include "tool/AbstractObject.hpp"
 
@@ -29,30 +29,30 @@
 
 class ChatGui;
 
-class ChatMessageProxy : public LimitProxy, public AbstractObject {
+class EventLogProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
-	Q_PROPERTY(ChatGui *chatGui READ getChatGui WRITE setChatGui NOTIFY chatChanged)
+	Q_PROPERTY(ChatGui *chatGui READ getChatGui WRITE setChatGui NOTIFY eventChanged)
 
 public:
 	DECLARE_SORTFILTER_CLASS()
 
-	ChatMessageProxy(QObject *parent = Q_NULLPTR);
-	~ChatMessageProxy();
+	EventLogProxy(QObject *parent = Q_NULLPTR);
+	~EventLogProxy();
 
 	ChatGui *getChatGui();
 	void setChatGui(ChatGui *chat);
 
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
-	Q_INVOKABLE ChatMessageGui *getChatMessageAtIndex(int index);
+	Q_INVOKABLE EventLogGui *getEventAtIndex(int index);
 	Q_INVOKABLE int findFirstUnreadIndex();
 
 signals:
-	void chatChanged();
-	void messageInserted(int index, ChatMessageGui *message);
+	void eventChanged();
+	void eventInserted(int index, EventLogGui *message);
 
 protected:
-	QSharedPointer<ChatMessageList> mList;
+	QSharedPointer<EventLogList> mList;
 	ChatGui *mChatGui = nullptr;
 	DECLARE_ABSTRACT_OBJECT
 };

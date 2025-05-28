@@ -1885,3 +1885,24 @@ bool Utils::codepointIsEmoji(uint code) {
 	        (code >= 0x2700 && code <= 0x27BF)      // Dingbats
 	);
 }
+
+QString Utils::toDateTimeString(QDateTime date, const QString &format) {
+	if (date.date() == QDate::currentDate()) return toTimeString(date);
+	else {
+		return getOffsettedUTC(date).toString(format);
+	}
+}
+
+QDateTime Utils::getOffsettedUTC(const QDateTime &date) {
+	QDateTime utc = date.toUTC();
+	auto timezone = date.timeZone();
+	int offset = timezone.offsetFromUtc(date);
+	utc = utc.addSecs(offset);
+	utc.setTimeZone(QTimeZone(offset));
+	return utc;
+}
+
+QString Utils::toTimeString(QDateTime date, const QString &format) {
+	// Issue : date.toString() will not print the good time in timezones. Get it from date and add ourself the offset.
+	return getOffsettedUTC(date).toString(format);
+}

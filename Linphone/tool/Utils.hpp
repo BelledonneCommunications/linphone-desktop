@@ -158,6 +158,10 @@ public:
 	Q_INVOKABLE static QString getFilename(QUrl url);
 	static bool codepointIsEmoji(uint code);
 
+	Q_INVOKABLE static QString toDateTimeString(QDateTime date, const QString &format = "yyyy/MM/dd hh:mm:ss");
+	static QDateTime getOffsettedUTC(const QDateTime &date);
+	Q_INVOKABLE static QString toTimeString(QDateTime date, const QString &format = "hh:mm:ss");
+
 	//	QDir findDirectoryByName(QString startPath, QString name);
 
 	static QString getApplicationProduct();

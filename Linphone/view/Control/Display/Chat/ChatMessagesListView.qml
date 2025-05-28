@@ -15,17 +15,17 @@ ListView {
     property color backgroundColor
 
     Component.onCompleted: {
-        var index = chatMessageProxy.findFirstUnreadIndex()
+        var index = eventLogProxy.findFirstUnreadIndex()
         positionViewAtIndex(index, ListView.End)
-        var chatMessage = chatMessageProxy.getChatMessageAtIndex(index)
-        if (chatMessage && !chatMessage.core.isRead) chatMessage.core.lMarkAsRead()
+        var chatMessage = eventLogProxy.getEventAtIndex(index)?.core?.chatMessage
+        if (chatMessage && !chatMessage.isRead) chatMessage.lMarkAsRead()
     }
 
     onCountChanged: if (atYEnd) {
-        var index = chatMessageProxy.findFirstUnreadIndex()
+        var index = eventLogProxy.findFirstUnreadIndex()
         mainItem.positionViewAtIndex(index, ListView.End)
-        var chatMessage = chatMessageProxy.getChatMessageAtIndex(index)
-        if (chatMessage && !chatMessage.core.isRead) chatMessage.core.lMarkAsRead()
+        var chatMessage = eventLogProxy.getEventAtIndex(index)?.core?.chatMessage
+        if (chatMessage && !chatMessage.isRead) chatMessage.lMarkAsRead()
     }
     
     Button {
@@ -40,21 +40,22 @@ ListView {
         anchors.bottomMargin: Math.round(18 * DefaultStyle.dp)
         anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
         onClicked: {
-            var index = chatMessageProxy.findFirstUnreadIndex()
+            var index = eventLogProxy.findFirstUnreadIndex()
             mainItem.positionViewAtIndex(index, ListView.End)
-            var chatMessage = chatMessageProxy.getChatMessageAtIndex(index)
-            if (chatMessage && !chatMessage.core.isRead) chatMessage.core.lMarkAsRead()
+        	var chatMessage = eventLogProxy.getEventAtIndex(index)?.core?.chatMessage
+			if (chatMessage && !chatMessage.isRead) chatMessage.lMarkAsRead()
         }
     }
 
-    model: ChatMessageProxy {
-        id: chatMessageProxy
+    model: EventLogProxy {
+        id: eventLogProxy
         chatGui: mainItem.chat
         // scroll when in view and message inserted
-        onMessageInserted: (index, gui) => {
+        onEventInserted: (index, gui) => {
             if (!mainItem.visible) return
             mainItem.positionViewAtIndex(index, ListView.End)
-            if (!gui.core.isRead) gui.core.lMarkAsRead()
+            if (gui.core.chatMessage && !gui.core.chatMessage.isRead)
+            	gui.core.chatMessage.lMarkAsRead()
         }
     }
 
@@ -107,25 +108,51 @@ ListView {
             }
         }
     }
+    
+    
+     delegate: DelegateChooser {
+        role: "eventType"
 
-    delegate: ChatMessage {
-        chatMessage: modelData
-        maxWidth: Math.round(mainItem.width * (3/4))
-        onVisibleChanged: {
-            if (visible && !modelData.core.isRead) modelData.core.lMarkAsRead()
+        DelegateChoice {
+            roleValue: "chatMessage"
+            delegate:
+				ChatMessage {
+					chatMessage: modelData
+					maxWidth: Math.round(mainItem.width * (3/4))
+					onVisibleChanged: {
+						if (visible && !modelData.core.isRead) modelData.core.lMarkAsRead()
+					}
+					width: mainItem.width
+					property var previousIndex: index - 1
+					property var previousFromAddress: eventLogProxy.getEventAtIndex(index-1)?.core.chatMessage?.fromAddress
+					backgroundColor: isRemoteMessage ? DefaultStyle.main2_100 : DefaultStyle.main1_100
+					isFirstMessage: !previousFromAddress || previousFromAddress !== modelData.core.fromAddress
+					anchors.right: !isRemoteMessage && parent
+						? parent.right
+						: undefined
+
+					onMessageDeletionRequested: modelData.core.lDelete()
+				}
         }
-        width: mainItem.width
-        property var previousIndex: index - 1
-        property var previousFromAddress: chatMessageProxy.getChatMessageAtIndex(index-1)?.core.fromAddress
-        backgroundColor: isRemoteMessage ? DefaultStyle.main2_100 : DefaultStyle.main1_100
-        isFirstMessage: !previousFromAddress || previousFromAddress !== modelData.core.fromAddress
-        anchors.right: !isRemoteMessage && parent
-            ? parent.right
-            : undefined
 
-        onMessageDeletionRequested: modelData.core.lDelete()
+        DelegateChoice {
+            roleValue: "event"
+            delegate:
+				Item {
+					property bool showTopMargin: !header.visible && index == 0
+					width: mainItem.width
+					height: (showTopMargin ? 30 : 0 * DefaultStyle.dp) + eventItem.implicitHeight
+					Event {
+						id: eventItem
+						anchors.top: parent.top
+						anchors.topMargin: showTopMargin ? 30 : 0 * DefaultStyle.dp
+						width: parent.width
+						eventLogGui: modelData
+					}
+				}
+        }
     }
-
+    
     footerPositioning: ListView.OverlayFooter
     footer: Control.Control {
         visible: composeLayout.composingName !== ""
