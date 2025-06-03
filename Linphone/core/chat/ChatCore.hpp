@@ -55,6 +55,8 @@ public:
 	Q_PROPERTY(bool isEncrypted READ isEncrypted CONSTANT)
 	Q_PROPERTY(bool isReadOnly READ getIsReadOnly WRITE setIsReadOnly NOTIFY readOnlyChanged)
 	Q_PROPERTY(QString sendingText READ getSendingText WRITE setSendingText NOTIFY sendingTextChanged)
+	Q_PROPERTY(bool ephemeralEnabled READ isEphemeralEnabled WRITE lEnableEphemeral NOTIFY ephemeralEnabledChanged)
+	Q_PROPERTY(bool muted READ isMuted WRITE lSetMuted NOTIFY mutedChanged)
 
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	static QSharedPointer<ChatCore> create(const std::shared_ptr<linphone::ChatRoom> &chatRoom);
@@ -71,6 +73,10 @@ public:
 	bool isGroupChat() const;
 
 	bool isEncrypted() const;
+
+	bool isMuted() const;
+
+	bool isEphemeralEnabled() const;
 
 	QString getIdentifier() const;
 
@@ -130,6 +136,8 @@ signals:
 	void chatRoomStateChanged();
 	void readOnlyChanged();
 	void sendingTextChanged(QString text);
+	void mutedChanged();
+	void ephemeralEnabledChanged();
 
 	void lDeleteMessage();
 	void lDelete();
@@ -141,6 +149,8 @@ signals:
 	void lSendTextMessage(QString message);
 	void lCompose();
 	void lLeave();
+	void lSetMuted(bool muted);
+	void lEnableEphemeral(bool enable);
 
 private:
 	QString id;
@@ -157,6 +167,8 @@ private:
 	bool mIsGroupChat = false;
 	bool mIsEncrypted = false;
 	bool mIsReadOnly = false;
+	bool mEphemeralEnabled = false;
+	bool mIsMuted = false;
 	LinphoneEnums::ChatRoomState mChatRoomState;
 	std::shared_ptr<ChatModel> mChatModel;
 	QSharedPointer<ChatMessageCore> mLastMessage;

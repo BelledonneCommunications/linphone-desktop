@@ -51,11 +51,16 @@ public:
 	std::shared_ptr<linphone::ChatMessage> createTextMessageFromText(QString text);
 	void compose();
 	linphone::ChatRoom::State getState() const;
+	void setMuted(bool muted);
+	void enableEphemeral(bool enable);
+
 
 signals:
 	void historyDeleted();
 	void messagesRead();
 	void deleted();
+	void mutedChanged(bool muted);
+	void ephemeralEnableChanged(bool enable);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

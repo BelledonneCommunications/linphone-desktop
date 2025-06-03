@@ -71,6 +71,11 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString ownReaction READ getOwnReaction WRITE setOwnReaction NOTIFY messageReactionChanged)
 	Q_PROPERTY(QList<Reaction> reactions READ getReactions WRITE setReactions NOTIFY messageReactionChanged)
 	Q_PROPERTY(QList<QVariant> reactionsSingleton READ getReactionsSingleton NOTIFY singletonReactionMapChanged)
+	Q_PROPERTY(bool isForward MEMBER mIsForward CONSTANT)
+	Q_PROPERTY(bool isReply MEMBER mIsReply CONSTANT)
+	Q_PROPERTY(bool hasFileContent MEMBER mHasFileContent CONSTANT)
+	Q_PROPERTY(bool isVoiceRecording MEMBER mIsVoiceRecording CONSTANT)
+	Q_PROPERTY(bool isCalendarInvite MEMBER mIsCalendarInvite CONSTANT)
 
 public:
 	static QSharedPointer<ChatMessageCore> create(const std::shared_ptr<linphone::ChatMessage> &chatmessage);
@@ -147,6 +152,12 @@ private:
 	bool mIsRemoteMessage = false;
 	bool mIsFromChatGroup = false;
 	bool mIsRead = false;
+	bool mIsForward = false;
+	bool mIsReply = false;
+	bool mHasFileContent = false;
+	bool mIsCalendarInvite = false;
+	bool mIsVoiceRecording = false;
+
 	LinphoneEnums::ChatMessageState mMessageState;
 	QSharedPointer<ConferenceInfoCore> mConferenceInfo = nullptr;
 

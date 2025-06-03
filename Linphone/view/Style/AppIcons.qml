@@ -139,4 +139,9 @@ QtObject {
 	property string presenceDoNotDisturb: "image://internal/presence_do_not_disturb.svg"
 	property string presenceOffline: "image://internal/presence_offline.svg"
 	property string presenceNote: "image://internal/presence-note.svg"
+	property string clockCountDown: "image://internal/clock-countdown.svg"
+	property string reply: "image://internal/reply.svg"
+	property string forward: "image://internal/forward.svg"
+
+
 }

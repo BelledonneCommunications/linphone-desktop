@@ -171,7 +171,7 @@ ListView {
                 property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.peerAddress)
                 contact: contactObj?.value || null
                 displayNameVal: contact ? "" : modelData.core.avatarUri
-                // secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
+                secured: modelData.core.isEncrypted
                 Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
                 // isConference: modelData.core.isConference
@@ -194,32 +194,84 @@ ListView {
                         capitalization: Font.Capitalize
                     }
                 }
-                Text {
-                    Layout.fillWidth: true
-                    maximumLineCount: 1
-                    visible: !remoteComposingInfo.visible
-                    text: modelData.core.lastMessageText
-                    color: DefaultStyle.main2_400
-                    font {
-                        pixelSize: Typography.p1.pixelSize
-                        weight: unreadCount.unread > 0 ? Typography.p2.weight : Typography.p1.weight
-                    }
-                }
-                Text {
-                    id: remoteComposingInfo
-                    visible: mainItem.currentIndex !== model.index && (modelData.core.composingName !== "" || modelData.core.sendingText !== "")
-                    Layout.fillWidth: true
-                    maximumLineCount: 1
-                    font {
-                        pixelSize: Typography.p3.pixelSize
-                        weight: Typography.p3.weight
-                    }
-                    //: %1 is writing…
-                    text: modelData.core.composingName !== ""
-                        ? qsTr("chat_message_is_writing_info").arg(modelData.core.composingName)
-                        : modelData.core.sendingText !== ""
-                            ? qsTr("chat_message_draft_sending_text").arg(modelData.core.sendingText)
-                            : ""
+                
+                RowLayout {
+                	spacing: Math.round(5 * DefaultStyle.dp)
+					Layout.fillWidth: true
+					
+					EffectImage {
+						visible: modelData != undefined && modelData.core.lastMessage && modelData.core.lastMessage.core.isReply && !remoteComposingInfo.visible
+						fillMode: Image.PreserveAspectFit
+						imageSource: AppIcons.reply
+                        colorizationColor: DefaultStyle.main2_500
+						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
+						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+					}
+					
+					EffectImage {
+						visible: modelData != undefined && modelData.core.lastMessage && modelData.core.lastMessage.core.isForward && !remoteComposingInfo.visible
+						fillMode: Image.PreserveAspectFit
+						imageSource: AppIcons.forward
+						colorizationColor: DefaultStyle.main2_500
+						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
+						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+					}
+					
+					EffectImage {
+						visible: modelData != undefined && modelData.core.lastMessage && modelData.core.lastMessage.core.hasFileContent && !remoteComposingInfo.visible
+						fillMode: Image.PreserveAspectFit
+						imageSource: AppIcons.paperclip
+						colorizationColor: DefaultStyle.main2_500
+						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
+						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+					}
+					
+					EffectImage {
+						visible: modelData != undefined && modelData.core.lastMessage && modelData.core.lastMessage.core.isVoiceRecording && !remoteComposingInfo.visible
+						fillMode: Image.PreserveAspectFit
+						imageSource: AppIcons.waveform
+						colorizationColor: DefaultStyle.main2_500
+						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
+						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+					}
+					
+					EffectImage {
+						visible: modelData != undefined && modelData.core.lastMessage && modelData.core.lastMessage.core.isCalendarInvite && !remoteComposingInfo.visible
+						fillMode: Image.PreserveAspectFit
+						imageSource: AppIcons.calendar
+						colorizationColor: DefaultStyle.main2_500
+						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
+						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+					}
+					
+					Text {
+						id: lastMessageText
+						Layout.fillWidth: true
+						maximumLineCount: 1
+						visible: !remoteComposingInfo.visible
+						text: modelData.core.lastMessageText
+						color: DefaultStyle.main2_400
+						font {
+							pixelSize: Typography.p1.pixelSize
+							weight: unreadCount.unread > 0 ? Typography.p2.weight : Typography.p1.weight
+						}
+					}
+					Text {
+						id: remoteComposingInfo
+						visible: (modelData.core.composingName !== "" || modelData.core.sendingText !== "")
+						Layout.fillWidth: true
+						maximumLineCount: 1
+						font {
+							pixelSize: Typography.p3.pixelSize
+							weight: Typography.p3.weight
+						}
+						//: %1 is writing…
+						text: modelData.core.composingName !== ""
+							? qsTr("chat_message_is_writing_info").arg(modelData.core.composingName)
+							: modelData.core.sendingText !== ""
+								? qsTr("chat_message_draft_sending_text").arg(modelData.core.sendingText)
+								: ""
+					}
                 }
             }
             ColumnLayout {
@@ -240,14 +292,27 @@ ListView {
                 RowLayout {
                     spacing: Math.round(10 * DefaultStyle.dp)
                     Item {Layout.fillWidth: true}
-                    //sourdine, éphémère
-                    UnreadNotification {
+					EffectImage {
+						visible: modelData?.core.ephemeralEnabled
+                        Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
+                        Layout.preferredHeight: 14 * DefaultStyle.dp
+                        colorizationColor: DefaultStyle.main2_400
+                        imageSource: AppIcons.clockCountDown
+                    }
+					EffectImage {
+						visible: modelData != undefined && modelData?.core.muted
+                        Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
+                        Layout.preferredHeight: 14 * DefaultStyle.dp
+                        colorizationColor: DefaultStyle.main2_400
+                        imageSource: AppIcons.bellSlash
+                    }
+					UnreadNotification {
                         id: unreadCount
                         unread: modelData.core.unreadMessagesCount
                     }
                     EffectImage {
-                        visible: modelData?.core.lastEvent && modelData?.core.lastMessageState !== LinphoneEnums.ChatMessageState.StateIdle
-                        && !modelData.core.lastMessage.core.isRemoteMessage
+                        visible: modelData != undefined && lastMessageText.visible && modelData?.core.lastMessage && modelData?.core.lastMessageState !== LinphoneEnums.ChatMessageState.StateIdle
+                        && !modelData?.core.lastMessage.core.isRemoteMessage
                         Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
                         Layout.preferredHeight: 14 * DefaultStyle.dp
                         colorizationColor: DefaultStyle.main1_500_main

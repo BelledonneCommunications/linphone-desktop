@@ -104,6 +104,16 @@ void ChatModel::markAsRead() {
 	emit messagesRead();
 }
 
+void ChatModel::setMuted(bool muted) {
+	mMonitor->setMuted(muted);
+	emit mutedChanged(muted);
+}
+
+void ChatModel::enableEphemeral(bool enable) {
+	mMonitor->enableEphemeral(enable);
+	emit ephemeralEnableChanged(enable);
+}
+
 void ChatModel::deleteHistory() {
 	mMonitor->deleteHistory();
 	emit historyDeleted();

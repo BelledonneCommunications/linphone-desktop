@@ -72,9 +72,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	mUtf8Text = mChatMessageModel->getUtf8Text();
 	mHasTextContent = mChatMessageModel->getHasTextContent();
 	mTimestamp = QDateTime::fromSecsSinceEpoch(chatmessage->getTime());
-	auto from = chatmessage->getFromAddress();
-	auto to = chatmessage->getLocalAddress();
-	mIsRemoteMessage = !from->weakEqual(to);
+	mIsRemoteMessage = !chatmessage->isOutgoing();
 	mPeerAddress = Utils::coreStringToAppString(chatmessage->getPeerAddress()->asStringUriOnly());
 	mPeerName = ToolModel::getDisplayName(chatmessage->getPeerAddress()->clone());
 	auto fromAddress = chatmessage->getFromAddress()->clone();
@@ -122,6 +120,14 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 		}
 	}
 	connect(this, &ChatMessageCore::messageReactionChanged, this, &ChatMessageCore::resetReactionsSingleton);
+
+	mIsForward = chatmessage->isForward();
+	mIsReply = chatmessage->isReply();
+	for (auto &content : chatmessage->getContents()) {
+		if (content->isFile() && !content->isVoiceRecording()) mHasFileContent = true;
+		if (content->isIcalendar()) mIsCalendarInvite = true;
+		if (content->isVoiceRecording()) mIsVoiceRecording = true;
+	}
 }
 
 ChatMessageCore::~ChatMessageCore() {

@@ -99,6 +99,8 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	connect(this, &ChatCore::eventListChanged, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::eventsInserted, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::eventRemoved, this, &ChatCore::lUpdateLastMessage);
+	mEphemeralEnabled = chatRoom->ephemeralEnabled();
+	mIsMuted = chatRoom->getMuted();
 }
 
 ChatCore::~ChatCore() {
@@ -228,6 +230,29 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 			        setComposingAddress(address);
 		        });
 	    });
+	mChatModelConnection->makeConnectToCore(&ChatCore::lSetMuted, [this](bool muted) {
+		mChatModelConnection->invokeToModel([this, muted]() { mChatModel->setMuted(muted); });
+	});
+	mChatModelConnection->makeConnectToModel(&ChatModel::mutedChanged, [this](bool muted) {
+		mChatModelConnection->invokeToCore([this, muted]() {
+			if (mIsMuted != muted) {
+				mIsMuted = muted;
+				emit mutedChanged();
+			}
+		});
+	});
+
+	mChatModelConnection->makeConnectToCore(&ChatCore::lEnableEphemeral, [this](bool enable) {
+		mChatModelConnection->invokeToModel([this, enable]() { mChatModel->enableEphemeral(enable); });
+	});
+	mChatModelConnection->makeConnectToModel(&ChatModel::ephemeralEnableChanged, [this](bool enable) {
+		mChatModelConnection->invokeToCore([this, enable]() {
+			if (mEphemeralEnabled != enable) {
+				mEphemeralEnabled = enable;
+				emit ephemeralEnabledChanged();
+			}
+		});
+	});
 }
 
 QDateTime ChatCore::getLastUpdatedTime() const {
@@ -413,4 +438,12 @@ QString ChatCore::getComposingAddress() const {
 
 std::shared_ptr<ChatModel> ChatCore::getModel() const {
 	return mChatModel;
+}
+
+bool ChatCore::isMuted() const {
+	return mIsMuted;
+}
+
+bool ChatCore::isEphemeralEnabled() const {
+	return mEphemeralEnabled;
 }
