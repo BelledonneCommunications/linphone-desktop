@@ -22,6 +22,7 @@
 
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/providers/AvatarProvider.hpp"
@@ -394,6 +395,11 @@ bool FriendModel::isThisFriend(const std::shared_ptr<linphone::Friend> &data) {
 
 void FriendModel::remove() {
 	if (!mMonitor) return;
+	auto friendList = mMonitor->getFriendList();
+	if (friendList && friendList == SettingsModel::getCardDAVListForNewFriends()) {
+		friendList->removeFriend(mMonitor);
+		friendList->synchronizeFriendsFromServer();
+	}
 	auto temp = mMonitor;
 	temp->remove(); // mMonitor become null
 	emit CoreModel::getInstance()->friendRemoved(temp);
