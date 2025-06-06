@@ -47,6 +47,7 @@ public:
 
 	Q_INVOKABLE void displayMore();
 	Q_INVOKABLE QVariant getAt(const int &index) const;
+	Q_INVOKABLE QVariantList getAll() const;
 	virtual int getCount() const;
 
 	// Get the item following by what is shown from 2 lists

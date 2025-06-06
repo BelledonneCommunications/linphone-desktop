@@ -47,7 +47,6 @@ ListView {
             mainItem.currentIndex = indexToSelect
         }
         onLayoutChanged: {
-            var chatToSelect = getAt(mainItem.currentIndex)
             selectChat(mainItem.currentChatGui)
         }
     }

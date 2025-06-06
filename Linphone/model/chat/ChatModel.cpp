@@ -132,6 +132,16 @@ std::shared_ptr<linphone::ChatMessage> ChatModel::createTextMessageFromText(QStr
 	return mMonitor->createMessageFromUtf8(Utils::appStringToCoreString(text));
 }
 
+std::shared_ptr<linphone::ChatMessage>
+ChatModel::createMessage(QString text, QList<std::shared_ptr<ChatMessageContentModel>> filesContent) {
+	auto message = mMonitor->createEmptyMessage();
+	for (auto &content : filesContent) {
+		message->addFileContent(content->getContent());
+	}
+	if (!text.isEmpty()) message->addUtf8TextContent(Utils::appStringToCoreString(text));
+	return message;
+}
+
 void ChatModel::compose() {
 	mMonitor->compose();
 }

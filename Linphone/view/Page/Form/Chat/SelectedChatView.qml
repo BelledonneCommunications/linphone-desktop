@@ -147,10 +147,6 @@ RowLayout {
                 bottomPadding: Math.round(12 * DefaultStyle.dp)
                 leftPadding: Math.round(19 * DefaultStyle.dp)
                 rightPadding: Math.round(19 * DefaultStyle.dp)
-
-                function addFile(path) {
-                    contents.addFile(path)
-                }
                 
                 Button {
                     anchors.top: parent.top
@@ -212,6 +208,14 @@ RowLayout {
                             onClicked: contents.removeContent(modelData)
                         }
                     }
+                    Control.ScrollBar.horizontal: selectedFilesScrollbar
+                }
+                ScrollBar {
+                    id: selectedFilesScrollbar
+                    active: true
+                    anchors.bottom: selectedFilesArea.bottom
+                    anchors.left: selectedFilesArea.left
+                    anchors.right: selectedFilesArea.right
                 }
             }
             ChatDroppableTextArea {
@@ -228,9 +232,16 @@ RowLayout {
                     }
                     mainItem.chat.core.sendingText = text
                 }
-                onSendText: mainItem.chat.core.lSendTextMessage(text)
+                onSendText: {
+                    var filesContents = contents.getAll()
+                    if (filesContents.length === 0)
+                        mainItem.chat.core.lSendTextMessage(text)
+                    else mainItem.chat.core.lSendMessage(text, filesContents)
+                    messageSender.textArea.clear()
+                    contents.clear()
+                }
                 onDropped: (files) => {
-	                files.forEach(selectedFilesArea.addFile)
+                    contents.addFiles(files)
                 }
             }
         }

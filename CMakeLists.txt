@@ -163,7 +163,7 @@ add_option(OPTION_LIST ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video sup
 add_option(OPTION_LIST ENABLE_LDAP "Enable LDAP support." YES)
 add_option(OPTION_LIST ENABLE_NON_FREE_CODECS "Enable the use of non free codecs" YES)
 add_option(OPTION_LIST ENABLE_NON_FREE_FEATURES "Enable the use of non free codecs" ${ENABLE_NON_FREE_CODECS})
-add_option(OPTION_LIST ENABLE_QT_KEYCHAIN "Build QtKeychain to manage VFS from System key stores." ON)
+add_option(OPTION_LIST ENABLE_QT_KEYCHAIN "Build QtKeychain to manage VFS from System key stores." OFF)
 add_option(OPTION_LIST ENABLE_QRCODE "Enable QRCode support" OFF)#Experimental
 add_option(OPTION_LIST ENABLE_RELATIVE_PREFIX "Set Internal packages relative to the binary" ON)
 add_option(OPTION_LIST ENABLE_SANITIZER "Enable sanitizer." OFF)

@@ -81,6 +81,117 @@ int ChatMessageContentList::findFirstUnreadIndex() {
 	return it == chatList.end() ? -1 : std::distance(chatList.begin(), it);
 }
 
+void ChatMessageContentList::addFiles(const QStringList &paths) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+
+	QStringList finalList;
+	QList<QFileInfo> fileList;
+
+	int nbNotFound = 0;
+	QString lastNotFound;
+	int nbExcess = 0;
+	int count = rowCount();
+
+	for (auto &path : paths) {
+		QFileInfo file(path.toUtf8());
+		// #ifdef _WIN32
+		// 	// A bug from FileDialog suppose that the file is local and overwrite the uri by removing "\\".
+		// 	if (!file.exists()) {
+		// 		path.prepend("\\\\");
+		// 		file.setFileName(path);
+		// 	}
+		// #endif
+		if (!file.exists()) {
+			++nbNotFound;
+			lastNotFound = path;
+			continue;
+		}
+
+		if (count + finalList.count() >= 12) {
+			++nbExcess;
+			continue;
+		}
+		finalList.append(path);
+		fileList.append(file);
+	}
+	if (nbNotFound > 0) {
+		//: Error adding file
+		Utils::showInformationPopup(tr("popup_error_title"),
+		                            //: File was not found: %1
+		                            (nbNotFound == 1 ? tr("popup_error_path_does_not_exist_message").arg(lastNotFound)
+		                                             //: %n files were not found
+		                                             : tr("popup_error_nb_files_not_found_message").arg(nbNotFound)),
+		                            false);
+	}
+	if (nbExcess > 0) {
+		//: Error
+		Utils::showInformationPopup(tr("popup_error_title"),
+		                            //: You can send 12 files maximum at a time. %n files were ignored
+		                            tr("popup_error_max_files_count_message", "", nbExcess), false);
+	}
+
+	mModelConnection->invokeToModel([this, finalList, fileList] {
+		int nbTooBig = 0;
+		int nbMimeError = 0;
+		QString lastMimeError;
+		QList<QSharedPointer<ChatMessageContentCore>> contentList;
+		for (auto &file : fileList) {
+			qint64 fileSize = file.size();
+			if (fileSize > Constants::FileSizeLimit) {
+				++nbTooBig;
+				qWarning() << QString("Unable to send file. (Size limit=%1)").arg(Constants::FileSizeLimit);
+				continue;
+			}
+			auto name = file.fileName().toStdString();
+			auto path = file.filePath();
+			std::shared_ptr<linphone::Content> content = CoreModel::getInstance()->getCore()->createContent();
+			QStringList mimeType = QMimeDatabase().mimeTypeForFile(path).name().split('/');
+			if (mimeType.length() != 2) {
+				++nbMimeError;
+				lastMimeError = path;
+				qWarning() << QString("Unable to get supported mime type for: `%1`.").arg(path);
+				continue;
+			}
+			content->setType(Utils::appStringToCoreString(mimeType[0]));
+			content->setSubtype(Utils::appStringToCoreString(mimeType[1]));
+			content->setSize(size_t(fileSize));
+			content->setName(name);
+			content->setFilePath(Utils::appStringToCoreString(path));
+			contentList.append(ChatMessageContentCore::create(content, nullptr));
+		}
+		if (nbTooBig > 0) {
+			//: Error adding file
+			Utils::showInformationPopup(
+			    tr("popup_error_title"),
+			    //: %n files were ignored cause they exceed the maximum size. (Size limit=%2)
+			    tr("popup_error_file_too_big_message").arg(nbTooBig).arg(Constants::FileSizeLimit), false);
+		}
+		if (nbMimeError > 0) {
+			//: Error adding file
+			Utils::showInformationPopup(tr("popup_error_title"),
+			                            //: Unable to get supported mime type for: `%1`.
+			                            (nbMimeError == 1
+			                                 ? tr("popup_error_unsupported_file_message").arg(lastMimeError)
+			                                 //: Unable to get supported mime type for %1 files.
+			                                 : tr("popup_error_unsupported_files_message").arg(nbMimeError)),
+			                            false);
+		}
+
+		mModelConnection->invokeToCore([this, contentList] {
+			for (auto &contentCore : contentList) {
+				connect(contentCore.get(), &ChatMessageContentCore::isFileChanged, this, [this, contentCore] {
+					int i = -1;
+					get(contentCore.get(), &i);
+					emit dataChanged(index(i), index(i));
+				});
+				add(contentCore);
+				contentCore->lCreateThumbnail(
+				    true); // Was not created because linphone::Content is not considered as a file (yet)
+			}
+		});
+	});
+}
+
 void ChatMessageContentList::setSelf(QSharedPointer<ChatMessageContentList> me) {
 	mModelConnection = SafeConnection<ChatMessageContentList, CoreModel>::create(me, CoreModel::getInstance());
 
@@ -101,57 +212,8 @@ void ChatMessageContentList::setSelf(QSharedPointer<ChatMessageContentList> me) 
 		}
 		resetData<ChatMessageContentCore>(contents);
 	});
-	mModelConnection->makeConnectToCore(&ChatMessageContentList::lAddFile, [this](const QString &path) {
-		QFile file(path);
-		// #ifdef _WIN32
-		// 	// A bug from FileDialog suppose that the file is local and overwrite the uri by removing "\\".
-		// 	if (!file.exists()) {
-		// 		path.prepend("\\\\");
-		// 		file.setFileName(path);
-		// 	}
-		// #endif
-		if (!file.exists()) return;
-		if (rowCount() >= 12) {
-			//: Error
-			Utils::showInformationPopup(tr("popup_error_title"),
-			                            //: You can add 12 files maximum
-			                            tr("popup_error_max_files_count_message"), false);
-			return;
-		}
-
-		qint64 fileSize = file.size();
-		if (fileSize > Constants::FileSizeLimit) {
-			qWarning() << QStringLiteral("Unable to send file. (Size limit=%1)").arg(Constants::FileSizeLimit);
-			return;
-		}
-		auto name = QFileInfo(file).fileName().toStdString();
-		mModelConnection->invokeToModel([this, path, fileSize, name] {
-			std::shared_ptr<linphone::Content> content = CoreModel::getInstance()->getCore()->createContent();
-			{
-				QStringList mimeType = QMimeDatabase().mimeTypeForFile(path).name().split('/');
-				if (mimeType.length() != 2) {
-					qWarning() << QStringLiteral("Unable to get supported mime type for: `%1`.").arg(path);
-					return;
-				}
-				content->setType(Utils::appStringToCoreString(mimeType[0]));
-				content->setSubtype(Utils::appStringToCoreString(mimeType[1]));
-			}
-			content->setSize(size_t(fileSize));
-			content->setName(name);
-			content->setFilePath(Utils::appStringToCoreString(path));
-			auto contentCore = ChatMessageContentCore::create(content, nullptr);
-			mModelConnection->invokeToCore([this, contentCore] {
-				connect(contentCore.get(), &ChatMessageContentCore::isFileChanged, this, [this, contentCore] {
-					int i = -1;
-					get(contentCore.get(), &i);
-					emit dataChanged(index(i), index(i));
-				});
-				add(contentCore);
-				contentCore->lCreateThumbnail(
-				    true); // Was not created because linphone::Content is not considered as a file (yet)
-			});
-		});
-	});
+	mModelConnection->makeConnectToCore(&ChatMessageContentList::lAddFiles,
+	                                    [this](const QStringList &paths) { addFiles(paths); });
 	emit lUpdate();
 }
 

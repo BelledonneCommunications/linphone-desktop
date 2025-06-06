@@ -68,9 +68,9 @@ void ChatMessageContentProxy::setChatMessageGui(ChatMessageGui *chat) {
 // 	return nullptr;
 // }
 
-void ChatMessageContentProxy::addFile(const QString &path) {
+void ChatMessageContentProxy::addFiles(const QStringList &paths) {
 	auto model = getListModel<ChatMessageContentList>();
-	if (model) emit model->lAddFile(path.toUtf8());
+	if (model) emit model->lAddFiles(paths);
 }
 
 void ChatMessageContentProxy::removeContent(ChatMessageContentGui *contentGui) {

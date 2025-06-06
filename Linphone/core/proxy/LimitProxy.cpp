@@ -71,6 +71,15 @@ QVariant LimitProxy::getAt(const int &atIndex) const {
 	return sourceModel()->data(mapToSource(modelIndex), 0);
 }
 
+QVariantList LimitProxy::getAll() const {
+	QVariantList ret;
+	for (int i = 0; i < getCount(); ++i) {
+		auto modelIndex = index(i, 0);
+		if (modelIndex.isValid()) ret.append(sourceModel()->data(mapToSource(modelIndex), 0));
+	}
+	return ret;
+}
+
 int LimitProxy::getCount() const {
 	return rowCount();
 }

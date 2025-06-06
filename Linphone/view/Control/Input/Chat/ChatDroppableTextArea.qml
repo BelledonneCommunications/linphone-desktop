@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic as Control
+ import QtQuick.Dialogs
 import QtQuick.Layouts
 import Linphone
 import UtilsCpp
@@ -47,6 +48,12 @@ Control.Control {
 		}
 	}
 
+	FileDialog {
+		id: fileDialog
+		fileMode: FileDialog.OpenFiles
+		onAccepted: _emitFiles(fileDialog.selectedFiles)
+	}
+
 	// width: mainItem.implicitWidth
 	// height: mainItem.height
 	leftPadding: Math.round(15 * DefaultStyle.dp)
@@ -80,7 +87,7 @@ Control.Control {
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.paperclip
 				onClicked: {
-					console.log("TODO : open explorer to attach file")
+					fileDialog.open()
 				}
 			}
 			Control.Control {
@@ -144,10 +151,9 @@ Control.Control {
 							onCursorRectangleChanged: sendingAreaFlickable.ensureVisible(cursorRectangle)
 							wrapMode: TextEdit.WordWrap
 							Keys.onPressed: (event) => {
-								if ((event.key == Qt.Key_Enter || event.key == Qt.Key_Return)
-									&& (!(event.modifier & Qt.ShiftModifier))) {
+								if ((event.key == Qt.Key_Enter || event.key == Qt.Key_Return))
+									if(!(event.modifiers & Qt.ShiftModifier)) {
 									mainItem.sendText()
-									sendingTextArea.clear()
 									event.accepted = true
 								}
 							}
@@ -168,7 +174,6 @@ Control.Control {
 							icon.source: AppIcons.paperPlaneRight
 							onClicked: {
 								mainItem.sendText()
-								sendingTextArea.clear()
 							}
 						}
 					}

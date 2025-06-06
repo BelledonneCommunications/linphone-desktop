@@ -110,7 +110,11 @@ QImage ThumbnailAsyncImageResponse::createThumbnail(const QString &path, QImage 
 			else if (rotation == 7 || rotation == 8) transform.rotate(-90);
 			thumbnail = thumbnail.transformed(transform);
 			if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7)
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
+				thumbnail = thumbnail.mirrored(true, false);
+#else
 				thumbnail = thumbnail.flipped(Qt::Horizontal);
+#endif
 		}
 	}
 	return thumbnail;

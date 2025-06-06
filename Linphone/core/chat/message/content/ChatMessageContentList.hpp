@@ -44,11 +44,13 @@ public:
 
 	int findFirstUnreadIndex();
 
+	void addFiles(const QStringList &paths);
+
 	void setSelf(QSharedPointer<ChatMessageContentList> me);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 signals:
-	void lAddFile(QString path);
+	void lAddFiles(QStringList paths);
 	void isFileChanged();
 	void lUpdate();
 	void chatMessageChanged();

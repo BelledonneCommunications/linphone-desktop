@@ -21,6 +21,7 @@
 #ifndef CHAT_MODEL_H_
 #define CHAT_MODEL_H_
 
+#include "model/chat/message/content/ChatMessageContentModel.hpp"
 #include "model/listener/Listener.hpp"
 #include "tool/AbstractObject.hpp"
 #include "tool/LinphoneEnums.hpp"
@@ -49,11 +50,12 @@ public:
 	void deleteChatRoom();
 	void leave();
 	std::shared_ptr<linphone::ChatMessage> createTextMessageFromText(QString text);
+	std::shared_ptr<linphone::ChatMessage> createMessage(QString text,
+	                                                     QList<std::shared_ptr<ChatMessageContentModel>> filesContent);
 	void compose();
 	linphone::ChatRoom::State getState() const;
 	void setMuted(bool muted);
 	void enableEphemeral(bool enable);
-
 
 signals:
 	void historyDeleted();

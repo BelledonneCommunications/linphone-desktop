@@ -39,24 +39,28 @@ Item {
 	property bool isOutgoing: false
 	
 	MouseArea {
+		anchors.fill: parent
 		hoverEnabled: true
 		propagateComposedEvents: true
-		// Changing of cursor seems not to work with the Loader
-		// Use override cursor for this case
+		function handleMouseMove (mouse) {
+			thumbnailProvider.state = Utils.pointIsInItem(this, thumbnailProvider, mouse)
+					? 'hovered'
+					: ''
+		}
+		onMouseXChanged: (mouse) => handleMouseMove.call(this, mouse)
+			onMouseYChanged: (mouse) => handleMouseMove.call(this, mouse)
 		onEntered: {
-			UtilsCpp.setGlobalCursor(Qt.PointingHandCursor)
 			thumbnailProvider.state = 'hovered'
 		}
 		onExited: {
-			UtilsCpp.restoreGlobalCursor()
 			thumbnailProvider.state = ''
 		}
-		anchors.fill: parent
 		onClicked: (mouse) => {
 			mouse.accepted = false
 			if(mainItem.isTransferring) {
 				mainItem.contentGui.core.lCancelDownloadFile()
 				mouse.accepted = true
+				thumbnailProvider.state = ''
 			}
 			else if(!mainItem.contentGui.core.wasDownloaded) {
 				mouse.accepted = true
@@ -64,6 +68,7 @@ Item {
 				mainItem.contentGui.core.lDownloadFile()
 			} else if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
 				mouse.accepted = true
+				thumbnailProvider.state = ''
 				// if(SettingsModel.isVfsEncrypted){
 				//     window.attachVirtualWindow(Utils.buildCommonDialogUri('FileViewDialog'), {
 				//                                 contentGui: mainItem.contentGui,
@@ -289,6 +294,12 @@ Item {
 						
 		states: State {
 			name: 'hovered'
+		}
+		// Changing cursor in MouseArea seems not to work with the Loader
+		// Use override cursor for this case
+		onStateChanged: {
+			if (state === 'hovered') UtilsCpp.setGlobalCursor(Qt.PointingHandCursor)
+			else UtilsCpp.restoreGlobalCursor()
 		}
 	}
 }

@@ -147,6 +147,7 @@ signals:
 	void lUpdateUnreadCount();
 	void lUpdateLastUpdatedTime();
 	void lSendTextMessage(QString message);
+	void lSendMessage(QString message, QVariantList files);
 	void lCompose();
 	void lLeave();
 	void lSetMuted(bool muted);

@@ -20,6 +20,7 @@
 
 #include "ChatCore.hpp"
 #include "core/App.hpp"
+#include "core/chat/message/content/ChatMessageContentGui.hpp"
 #include "core/friend/FriendCore.hpp"
 #include "core/setting/SettingsCore.hpp"
 #include "model/tool/ToolModel.hpp"
@@ -205,6 +206,21 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		if (Utils::isEmptyMessage(message)) return;
 		mChatModelConnection->invokeToModel([this, message]() {
 			auto linMessage = mChatModel->createTextMessageFromText(message);
+			linMessage->send();
+		});
+	});
+	mChatModelConnection->makeConnectToCore(&ChatCore::lSendMessage, [this](QString message, QVariantList files) {
+		if (Utils::isEmptyMessage(message) && files.size() == 0) return;
+		QList<std::shared_ptr<ChatMessageContentModel>> filesContent;
+		for (auto &file : files) {
+			auto contentGui = qvariant_cast<ChatMessageContentGui *>(file);
+			if (contentGui) {
+				auto contentCore = contentGui->mCore;
+				filesContent.append(contentCore->getContentModel());
+			}
+		}
+		mChatModelConnection->invokeToModel([this, message, filesContent]() {
+			auto linMessage = mChatModel->createMessage(message, filesContent);
 			linMessage->send();
 		});
 	});

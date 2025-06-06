@@ -47,7 +47,7 @@ public:
 
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
-	Q_INVOKABLE void addFile(const QString &path);
+	Q_INVOKABLE void addFiles(const QStringList &paths);
 	Q_INVOKABLE void removeContent(ChatMessageContentGui *contentGui);
 	Q_INVOKABLE void clear();
 
