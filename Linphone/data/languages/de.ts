@@ -4501,45 +4501,9 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
 <context>
     <name>SelectedChatView</name>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="264"/>
-        <source>chat_view_detail_other_actions_title</source>
-        <extracomment>Other actions</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="282"/>
-        <source>chat_view_detail_leave_room_toast_button</source>
-        <extracomment>&quot;Leave Chat Room&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="286"/>
-        <source>chat_view_detail_leave_room_toast_title</source>
-        <extracomment>Leave Chat Room ?</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="288"/>
-        <source>chat_view_detail_leave_room_toast_message</source>
-        <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="303"/>
-        <source>chat_view_detail_delete_history_button</source>
-        <extracomment>&quot;Delete history&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="306"/>
-        <source>chat_view_detail_delete_history_toast_title</source>
-        <extracomment>Delete history ?</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="308"/>
-        <source>chat_view_detail_delete_history_toast_message</source>
-        <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="229"/>
+        <source>chat_view_send_area_placeholder_text</source>
+        <extracomment>Say something… : placeholder text for sending message text area</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6191,4 +6155,151 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <translation>Ok</translation>
     </message>
 </context>
+<context>
+	<name>OneOneConversationInfos</name>
+	<message>
+		<source>one_one_infos_call</source>
+		<extracomment>Call</extracomment>
+		<translation>Anrufen</translation>
+	</message>
+	<message>
+		<source>one_one_infos_mute</source>
+		<extracomment>Mute</extracomment>
+		<translation>Stummschalten</translation>
+	</message>
+	<message>
+		<source>one_one_infos_search</source>
+		<extracomment>Search</extracomment>
+		<translation>Suchen</translation>
+	</message>
+	<message>
+		<source>one_one_infos_media_docs</source>
+		<extracomment>Medias &amp; documents</extracomment>
+		<translation>Medien &amp; Dokumente</translation>
+	</message>
+	<message>
+		<source>one_one_infos_shared_media</source>
+		<extracomment>Shared medias</extracomment>
+		<translation>Geteilte Medien</translation>
+	</message>
+	<message>
+		<source>one_one_infos_shared_docs</source>
+		<extracomment>Shared documents</extracomment>
+		<translation>Geteilte Dokumente</translation>
+	</message>
+	<message>
+		<source>one_one_infos_other_actions</source>
+		<extracomment>Other actions</extracomment>
+		<translation>Weitere Aktionen</translation>
+	</message>
+	<message>
+		<source>one_one_infos_enable_ephemerals</source>
+		<extracomment>Enable ephemeral messages</extracomment>
+		<translation>Flüchtige Nachrichten aktivieren</translation>
+	</message>
+	<message>
+		<source>one_one_infos_disable_ephemerals</source>
+		<extracomment>Disable ephemeral messages</extracomment>
+		<translation>Flüchtige Nachrichten deaktivieren</translation>
+	</message>
+	<message>
+		<source>one_one_infos_delete_history</source>
+		<extracomment>Delete history</extracomment>
+		<translation>Verlauf löschen</translation>
+	</message>
+	<message>
+		<source>one_one_infos_delete_history_toast_title</source>
+		<extracomment>Delete history ?</extracomment>
+		<translation>Verlauf löschen?</translation>
+	</message>
+	<message>
+		<source>one_one_infos_delete_history_toast_message</source>
+		<extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+		<translation>Alle Nachrichten werden aus dem Chat entfernt. Möchten Sie fortfahren?</translation>
+	</message>
+	<message>
+		<source>one_one_infos_open_contact</source>
+		<extracomment>Open contact</extracomment>
+		<translation>Kontakt öffnen</translation>
+	</message>
+	<message>
+		<source>one_one_infos_create_contact</source>
+		<extracomment>Create contact</extracomment>
+		<translation>Kontakt erstellen</translation>
+	</message>
+</context>
+<context>
+	<name>GroupConversationInfos</name>
+	<message>
+		<source>group_infos_call</source>
+		<extracomment>Call</extracomment>
+		<translation>Anrufen</translation>
+	</message>
+	<message>
+		<source>group_infos_mute</source>
+		<extracomment>Mute</extracomment>
+		<translation>Stummschalten</translation>
+	</message>
+	<message>
+		<source>group_infos_meeting</source>
+		<extracomment>Meeting</extracomment>
+		<translation>Meeting</translation>
+	</message>
+	<message>
+		<source>group_infos_media_docs</source>
+		<extracomment>Medias &amp; documents</extracomment>
+		<translation>Medien &amp; Dokumente</translation>
+	</message>
+	<message>
+		<source>group_infos_shared_media</source>
+		<extracomment>Shared medias</extracomment>
+		<translation>Geteilte Medien</translation>
+	</message>
+	<message>
+		<source>group_infos_shared_docs</source>
+		<extracomment>Shared documents</extracomment>
+		<translation>Geteilte Dokumente</translation>
+	</message>
+	<message>
+		<source>group_infos_other_actions</source>
+		<extracomment>Other actions</extracomment>
+		<translation>Weitere Aktionen</translation>
+	</message>
+	<message>
+		<source>group_infos_enable_ephemerals</source>
+		<extracomment>Enable ephemeral messages</extracomment>
+		<translation>Flüchtige Nachrichten aktivieren</translation>
+	</message>
+	<message>
+		<source>group_infos_disable_ephemerals</source>
+		<extracomment>Disable ephemeral messages</extracomment>
+		<translation>Flüchtige Nachrichten deaktivieren</translation>
+	</message>
+	<message>
+		<source>group_infos_delete_history</source>
+		<extracomment>Delete history</extracomment>
+		<translation>Verlauf löschen</translation>
+	</message>
+	<message>
+		<source>group_infos_delete_history_toast_title</source>
+		<extracomment>Delete history ?</extracomment>
+		<translation>Verlauf löschen?</translation>
+	</message>
+	<message>
+		<source>group_infos_delete_history_toast_message</source>
+		<extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+		<translation>Alle Nachrichten werden aus dem Chat entfernt. Möchten Sie fortfahren?</translation>
+	</message>
+	<message>
+		<source>group_infos_leave_room_toast_title</source>
+		<extracomment>Leave Chat Room ?</extracomment>
+		<translation>Chatraum verlassen?</translation>
+	</message>
+	<message>
+		<source>group_infos_leave_room_toast_message</source>
+		<extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+		<translation>Alle Nachrichten werden aus dem Chat entfernt. Möchten Sie fortfahren?</translation>
+	</message>
+</context>
+
 </TS>

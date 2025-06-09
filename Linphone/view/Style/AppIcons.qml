@@ -149,6 +149,7 @@ QtObject {
 	property string clockCountDown: "image://internal/clock-countdown.svg"
 	property string reply: "image://internal/reply.svg"
 	property string forward: "image://internal/forward.svg"
-
-
+	property string search: "image://internal/search.svg"
+	property string pdf: "image://internal/pdf.svg"
+	property string photo: "image://internal/photo.svg"
 }

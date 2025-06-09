@@ -20,6 +20,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Button/Switch.qml
 	view/Control/Button/Settings/ComboSetting.qml
 	view/Control/Button/Settings/SwitchSetting.qml
+	view/Control/Button/LabelButton.qml
 
 	view/Control/Container/Carousel.qml
 	view/Control/Container/CreationFormLayout.qml
@@ -150,6 +151,9 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Settings/SecuritySettingsLayout.qml
 	view/Page/Layout/Settings/NetworkSettingsLayout.qml
 	view/Page/Layout/Settings/AdvancedSettingsLayout.qml
+	view/Page/Layout/Chat/GroupConversationInfos.qml
+	view/Page/Layout/Chat/OneOneConversationInfos.qml
+	view/Page/Layout/Chat/ChatInfoActionsGroup.qml
 
 	view/Page/Main/AbstractMainPage.qml
 	view/Page/Main/Account/AccountListView.qml

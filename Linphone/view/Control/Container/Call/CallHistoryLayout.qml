@@ -12,7 +12,6 @@ ColumnLayout {
     spacing: Math.round(30 * DefaultStyle.dp)
 
 	property var callHistoryGui
-	property var chatGui
 
 	property FriendGui contact
 	property var conferenceInfo: callHistoryGui?.core.conferenceInfo
@@ -32,37 +31,6 @@ ColumnLayout {
 
 	property alias buttonContent: rightButton.data
 	property alias detailContent: detailControl.data
-	
-	property var hideChat: false
-
-	component LabelButton: ColumnLayout {
-		id: labelButton
-		// property alias image: buttonImg
-		property alias button: button
-		property string label
-        spacing: Math.round(8 * DefaultStyle.dp)
-		Button {
-			id: button
-			Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: Math.round(56 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(56 * DefaultStyle.dp)
-            topPadding: Math.round(16 * DefaultStyle.dp)
-            bottomPadding: Math.round(16 * DefaultStyle.dp)
-            leftPadding: Math.round(16 * DefaultStyle.dp)
-            rightPadding: Math.round(16 * DefaultStyle.dp)
-			contentImageColor: DefaultStyle.main2_600
-            radius: Math.round(40 * DefaultStyle.dp)
-			style: ButtonStyle.grey
-		}
-		Text {
-			Layout.alignment: Qt.AlignHCenter
-			text: labelButton.label
-			font {
-                pixelSize: Typography.p1.pixelSize
-                weight: Typography.p1.weight
-			}
-		}
-	}
 
 	ColumnLayout {
         spacing: Math.round(13 * DefaultStyle.dp)
@@ -171,7 +139,7 @@ ColumnLayout {
 			}
 		}
 		LabelButton {
-			visible: !mainItem.isConference && !SettingsCpp.disableChatFeature && !mainItem.hideChat
+			visible: !mainItem.isConference && !SettingsCpp.disableChatFeature
             width: Math.round(56 * DefaultStyle.dp)
             height: Math.round(56 * DefaultStyle.dp)
             button.icon.width: Math.round(24 * DefaultStyle.dp)

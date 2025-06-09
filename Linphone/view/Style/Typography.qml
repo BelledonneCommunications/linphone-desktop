@@ -80,6 +80,13 @@ QtObject {
         weight: Math.min(Math.round(400 * DefaultStyle.dp), 1000)
 	})
 	
+	// Text/P1 - Paragraph text
+	property font p1b: Qt.font( {
+		family: DefaultStyle.defaultFont,
+        pixelSize: Math.round(15 * DefaultStyle.dp),
+        weight: Math.min(Math.round(400 * DefaultStyle.dp), 1000)
+	})
+	
 	// Button/B1 - Big Button
 	property font b1: Qt.font( {
 		family: DefaultStyle.defaultFont,

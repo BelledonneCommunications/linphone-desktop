@@ -4402,46 +4402,10 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 <context>
     <name>SelectedChatView</name>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="264"/>
-        <source>chat_view_detail_other_actions_title</source>
-        <extracomment>Other actions</extracomment>
-        <translation>Autres actions</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="303"/>
-        <source>chat_view_detail_delete_history_button</source>
-        <extracomment>&quot;Delete history&quot;</extracomment>
-        <translation>Supprimer l&apos;historique</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="306"/>
-        <source>chat_view_detail_delete_history_toast_title</source>
-        <extracomment>Delete history ?</extracomment>
-        <translation>Supprimer l&apos;historique ?</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="308"/>
-        <source>chat_view_detail_delete_history_toast_message</source>
-        <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
-        <translation>Tous les messages seront supprimés. Souhaitez-vous continuer ?</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="282"/>
-        <source>chat_view_detail_leave_room_toast_button</source>
-        <extracomment>&quot;Leave Chat Room&quot;</extracomment>
-        <translation>Quitter la conversation</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="286"/>
-        <source>chat_view_detail_leave_room_toast_title</source>
-        <extracomment>Leave Chat Room ?</extracomment>
-        <translation>Quitter la conversation ?</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="288"/>
-        <source>chat_view_detail_leave_room_toast_message</source>
-        <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
-        <translation>Vous ne recevrez ni pourrez envoyer des messages dans cette conversation, quitter ?</translation>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="229"/>
+        <source>chat_view_send_area_placeholder_text</source>
+        <extracomment>Say something… : placeholder text for sending message text area</extracomment>
+        <translation>Dites quelque chose…</translation>
     </message>
 </context>
 <context>
@@ -6091,5 +6055,156 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>okButton</source>
         <translation>Ok</translation>
     </message>
+</context>
+<context>
+	<name>OneOneConversationInfos</name>
+	<message>
+		<source>one_one_infos_call</source>
+		<extracomment>Call</extracomment>
+		<translation>Appel</translation>
+	</message>
+	<message>
+		<source>one_one_infos_mute</source>
+		<extracomment>Mute</extracomment>
+		<translation>Sourdine</translation>
+	</message>
+	<message>
+		<source>one_one_infos_search</source>
+		<extracomment>Search</extracomment>
+		<translation>Rechercher</translation>
+	</message>
+	<message>
+		<source>one_one_infos_media_docs</source>
+		<extracomment>Medias &amp; documents</extracomment>
+		<translation>Medias &amp; documents</translation>
+	</message>
+	<message>
+		<source>one_one_infos_shared_media</source>
+		<extracomment>Shared medias</extracomment>
+		<translation>Médias partagés</translation>
+	</message>
+	<message>
+		<source>one_one_infos_shared_docs</source>
+		<extracomment>Shared documents</extracomment>
+		<translation>Documents partagés</translation>
+	</message>
+	<message>
+		<source>one_one_infos_other_actions</source>
+		<extracomment>Other actions</extracomment>
+		<translation>Autres actions</translation>
+	</message>
+	<message>
+		<source>one_one_infos_enable_ephemerals</source>
+		<extracomment>Enable ephemeral messages</extracomment>
+		<translation>Activer les messages éphémères</translation>
+	</message>
+	<message>
+		<source>one_one_infos_disable_ephemerals</source>
+		<extracomment>Disable ephemeral messages</extracomment>
+		<translation>Désactiver les messages éphémères</translation>
+	</message>
+	<message>
+		<source>one_one_infos_delete_history</source>
+		<extracomment>Delete history</extracomment>
+		<translation>Supprimer l&apos;historique</translation>
+	</message>
+	<message>
+		<source>one_one_infos_delete_history_toast_title</source>
+		<extracomment>Delete history ?</extracomment>
+		<translation>Supprimer l&apos;historique ?</translation>
+	</message>
+	<message>
+		<source>one_one_infos_delete_history_toast_message</source>
+		<extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+		<translation>Tous les messages seront supprimés. Souhaitez-vous continuer ?</translation>
+	</message>
+	<message>
+		<source>one_one_infos_open_contact</source>
+		<extracomment>Open contact</extracomment>
+		<translation>Voir le contact</translation>
+	</message>
+	<message>
+		<source>one_one_infos_create_contact</source>
+		<extracomment>Create contact</extracomment>
+		<translation>Créer un contact</translation>
+	</message>
+</context>
+<context>
+	<name>GroupConversationInfos</name>
+	<message>
+		<source>group_infos_call</source>
+		<extracomment>Call</extracomment>
+		<translation>Appel</translation>
+	</message>
+	<message>
+		<source>group_infos_mute</source>
+		<extracomment>Mute</extracomment>
+		<translation>Sourdine</translation>
+	</message>
+	<message>
+		<source>group_infos_meeting</source>
+		<extracomment>Meeting</extracomment>
+		<translation>Réunion</translation>
+	</message>
+	<message>
+		<source>group_infos_media_docs</source>
+		<extracomment>Medias &amp; documents</extracomment>
+		<translation>Medias &amp; documents</translation>
+	</message>
+	<message>
+		<source>group_infos_shared_media</source>
+		<extracomment>Shared medias</extracomment>
+		<translation>Médias partagés</translation>
+	</message>
+	<message>
+		<source>group_infos_shared_docs</source>
+		<extracomment>Shared documents</extracomment>
+		<translation>Documents partagés</translation>
+	</message>
+	<message>
+		<source>group_infos_other_actions</source>
+		<extracomment>Other actions</extracomment>
+		<translation>Autres actions</translation>
+	</message>
+	<message>
+		<source>group_infos_enable_ephemerals</source>
+		<extracomment>Enable ephemeral messages</extracomment>
+		<translation>Activer les messages éphémères</translation>
+	</message>
+	<message>
+		<source>group_infos_disable_ephemerals</source>
+		<extracomment>Disable ephemeral messages</extracomment>
+		<translation>Désactiver les messages éphémères</translation>
+	</message>
+	<message>
+		<source>group_infos_delete_history</source>
+		<extracomment>Delete history</extracomment>
+		<translation>Supprimer l&apos;historique</translation>
+	</message>
+	<message>
+		<source>group_infos_delete_history_toast_title</source>
+		<extracomment>Delete history ?</extracomment>
+		<translation>Supprimer l&apos;historique ?</translation>
+	</message>
+	<message>
+		<source>group_infos_delete_history_toast_message</source>
+		<extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+		<translation>Tous les messages seront supprimés. Souhaitez-vous continuer ?</translation>
+	</message>
+	<message>
+		<source>group_infos_leave_room</source>
+		<extracomment>Leave Chat Room</extracomment>
+		<translation>Quitter la conversation</translation>
+	</message>
+	<message>
+		<source>group_infos_leave_room_toast_title</source>
+		<extracomment>Leave Chat Room ?</extracomment>
+		<translation>Quitter la conversation ?</translation>
+	</message>
+	<message>
+		<source>group_infos_leave_room_toast_message</source>
+		<extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+		<translation>Vous ne recevrez ni pourrez envoyer des messages dans cette conversation, quitter ?</translation>
+	</message>
 </context>
 </TS>

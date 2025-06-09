@@ -56,6 +56,10 @@ AbstractWindow {
 		openMainPage()
 		mainWindowStackView.currentItem.displayContactPage(contactAddress)
 	}
+	function displayCreateContactPage(name, contactAddress) {
+		openMainPage()
+		mainWindowStackView.currentItem.createContact(name, contactAddress)
+	}
 	function displayChatPage(contactAddress) {
 		openMainPage()
 		mainWindowStackView.currentItem.displayChatPage(contactAddress)

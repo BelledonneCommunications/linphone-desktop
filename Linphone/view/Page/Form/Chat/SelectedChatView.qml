@@ -253,80 +253,45 @@ RowLayout {
         Layout.preferredWidth: Math.round(1 * DefaultStyle.dp)
         Layout.fillHeight: true
     }
-    Control.Control {
-        id: detailsPanel
-        visible: false
-        Layout.fillHeight: true
-        Layout.preferredWidth: Math.round(387 * DefaultStyle.dp)
-        background: Rectangle {
-            color: DefaultStyle.grey_0
-            anchors.fill: parent
-        }
-        contentItem: CallHistoryLayout {
-            chatGui: mainItem.chat
-            hideChat: mainItem.chat.core.isReadOnly
-            detailContent: ColumnLayout {
-                DetailLayout {
-                    //: Other actions
-                    label: qsTr("chat_view_detail_other_actions_title")
-                    content: ColumnLayout {
-                        // IconLabelButton {
-                        //     Layout.fillWidth: true
-                        //     Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
-                        //     icon.source: AppIcons.signOut
-                        //     //: "Quitter la conversation"
-                        //     text: qsTr("chat_view_detail_quit_chat_title")
-                        //     onClicked: {
+	Control.Control {
+		id: detailsPanel
+		visible: false
+		Layout.fillHeight: true
+		Layout.preferredWidth: Math.round(387 * DefaultStyle.dp)
 
-                        //     }
-                        //     style: ButtonStyle.noBackground
-                        // }
-						IconLabelButton {
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
-                            icon.source: AppIcons.signOut
-                            //: "Leave Chat Room"
-                            text: qsTr("chat_view_detail_leave_room_toast_button")
-                            visible: mainItem.chat.core.isGroupChat && !mainItem.chat.core.isReadOnly
-                            onClicked: {
-                                //: Leave Chat Room ?
-                                mainWindow.showConfirmationLambdaPopup(qsTr("chat_view_detail_leave_room_toast_title"),
-                                //: All the messages will be removed from the chat room. Do you want to continue ?
-                                qsTr("chat_view_detail_leave_room_toast_message"),
-                                "",
-                                function(confirmed) {
-                                    if (confirmed) {
-                                        mainItem.chat.core.lLeave()
-                                    }
-                                })
-                            }
-                            style: ButtonStyle.noBackground
-                        }
-                        IconLabelButton {
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
-                            icon.source: AppIcons.trashCan
-                            //: "Delete history"
-                            text: qsTr("chat_view_detail_delete_history_button")
-                            onClicked: {
-                                //: Delete history ?
-                                mainWindow.showConfirmationLambdaPopup(qsTr("chat_view_detail_delete_history_toast_title"),
-                                //: All the messages will be removed from the chat room. Do you want to continue ?
-                                qsTr("chat_view_detail_delete_history_toast_message"),
-                                "",
-                                function(confirmed) {
-                                    if (confirmed) {
-                                        mainItem.chat.core.lDeleteHistory()
-                                    }
-                                })
-                            }
-                            style: ButtonStyle.noBackgroundRed
-                        }
-                    }
-                }
-                Item {Layout.fillHeight: true}
-            }
-        }
-    }
+		background: Rectangle {
+			color: DefaultStyle.grey_0
+			anchors.fill: parent
+		}
+
+		contentItem: Loader {
+			id: contentLoader
+			anchors.top: parent.top
+			anchors.topMargin: Math.round(39 * DefaultStyle.dp)
+			active: true
+			property var chat: mainItem.chat
+			sourceComponent: chat && chat.core.isGroupChat ? groupInfoComponent : oneToOneInfoComponent
+
+			onLoaded: {
+				if (item && item.hasOwnProperty("chat")) {
+					item.chat = chat
+				}
+			}
+		}
+
+		Component {
+			id: oneToOneInfoComponent
+			OneOneConversationInfos {
+				chat: contentLoader.chat
+			}
+		}
+
+		Component {
+			id: groupInfoComponent
+			GroupConversationInfos {
+				chat: contentLoader.chat
+			}
+		}
+	}
 }
 
