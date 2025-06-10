@@ -220,9 +220,8 @@ RowLayout {
             }
             ChatDroppableTextArea {
                 id: messageSender
-				visible: !mainItem.chat.core.isReadOnly
                 Layout.fillWidth: true
-                Layout.preferredHeight: height
+                Layout.preferredHeight: mainItem.chat.core.isReadOnly ? 0 : height
                 Component.onCompleted: {
                     if (mainItem.chat) text = mainItem.chat.core.sendingText
                 }
