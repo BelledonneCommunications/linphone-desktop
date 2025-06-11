@@ -383,7 +383,7 @@ Q_ENUM_NS(AccountManagerServicesRequestType)
 // &type); LinphoneEnums::AccountManagerServicesRequestType fromLinphone(const
 // linphone::AccountManagerServicesRequest::Type &type);
 
-enum VideoSourceScreenSharingType {
+enum class VideoSourceScreenSharingType {
 	VideoSourceScreenSharingTypeArea = int(linphone::VideoSourceScreenSharingType::Area),
 	VideoSourceScreenSharingTypeDisplay = int(linphone::VideoSourceScreenSharingType::Display),
 	VideoSourceScreenSharingTypeWindow = int(linphone::VideoSourceScreenSharingType::Window)
@@ -392,6 +392,9 @@ Q_ENUM_NS(VideoSourceScreenSharingType)
 
 linphone::VideoSourceScreenSharingType toLinphone(const LinphoneEnums::VideoSourceScreenSharingType &type);
 LinphoneEnums::VideoSourceScreenSharingType fromLinphone(const linphone::VideoSourceScreenSharingType &type);
+
+enum class PlaybackState { PlayingState = 0, PausedState = 1, StoppedState = 2, ErrorState = 3 };
+Q_ENUM_NS(PlaybackState);
 
 } // namespace LinphoneEnums
 /*

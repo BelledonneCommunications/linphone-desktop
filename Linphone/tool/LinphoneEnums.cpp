@@ -39,6 +39,7 @@ void LinphoneEnums::registerMetaTypes() {
 	qRegisterMetaType<LinphoneEnums::FriendCapability>();
 	qRegisterMetaType<LinphoneEnums::MediaEncryption>();
 	qRegisterMetaType<LinphoneEnums::ParticipantDeviceState>();
+	qRegisterMetaType<LinphoneEnums::PlaybackState>();
 	qRegisterMetaType<LinphoneEnums::RecorderState>();
 	qRegisterMetaType<LinphoneEnums::RegistrationState>();
 	qRegisterMetaType<LinphoneEnums::TunnelMode>();

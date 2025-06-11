@@ -83,6 +83,9 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/screen/ScreenList.cpp
 	core/screen/ScreenProxy.cpp
 
+	core/sound-player/SoundPlayerCore.cpp
+	core/sound-player/SoundPlayerGui.cpp
+
 	core/videoSource/VideoSourceDescriptorCore.cpp
 	core/videoSource/VideoSourceDescriptorGui.cpp
 	

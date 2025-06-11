@@ -111,7 +111,6 @@ Control.Control {
 					Flickable {
 						id: sendingAreaFlickable
 						Layout.fillWidth: true
-						Layout.preferredWidth: parent.width - stackButton.width
 						Layout.preferredHeight: Math.min(Math.round(60 * DefaultStyle.dp), contentHeight)
 						Binding {
 							target: sendingAreaFlickable
@@ -159,10 +158,11 @@ Control.Control {
 							}
 						}
 					}
-					StackLayout {
+					RowLayout {
 						id: stackButton
-						currentIndex: sendingTextArea.text.length === 0 ? 0 : 1
+						spacing: 0
 						BigButton {
+							visible: sendingTextArea.text.length === 0
 							style: ButtonStyle.noBackground
 							icon.source: AppIcons.microphone
 							onClicked: {
@@ -170,6 +170,7 @@ Control.Control {
 							}
 						}
 						BigButton {
+							visible: sendingTextArea.text.length !== 0
 							style: ButtonStyle.noBackgroundOrange
 							icon.source: AppIcons.paperPlaneRight
 							onClicked: {

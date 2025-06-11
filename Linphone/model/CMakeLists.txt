@@ -41,6 +41,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/setting/SettingsModel.cpp
 	model/setting/MediastreamerUtils.cpp
 
+	model/sound-player/SoundPlayerModel.cpp
 	
 	model/tool/ToolModel.cpp
 	model/tool/VfsUtils.cpp

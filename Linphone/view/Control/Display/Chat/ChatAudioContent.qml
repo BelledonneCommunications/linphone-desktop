@@ -11,117 +11,81 @@ Loader{
 	id: mainItem
 	property ChatMessageContentGui chatMessageContentGui
 	property int availableWidth : parent.width
-	property int width: active ? Math.max(availableWidth - ChatAudioMessageStyle.emptySpace, ChatAudioMessageStyle.minWidth) : 0
-	property int fitHeight: active ? 60 : 0
 	
-	property font customFont : SettingsModel.textMessageFont
-	property bool isActive: active
+	// property string filePath : tempFile.filePath
 	
-	property string filePath : tempFile.filePath
+	active: chatMessageContentGui && chatMessageContentGui.core.isVoiceRecording
 	
-	active: chatMessageContentGui && chatMessageContentGui.core.isVoiceRecording()
+	// onChatMessageContentGuiChanged: if(chatMessageContentGui){
+	// 	tempFile.createFileFromContentModel(chatMessageContentGui, false);
+	// }
 	
-	onChatMessageContentGuiChanged: if(chatMessageContentGui){
-		tempFile.createFileFromContentModel(chatMessageContentGui, false);
-	}
+	// TemporaryFile {
+	// 	id: tempFile
+	// }
 	
-	TemporaryFile {
-		id: tempFile
-	}
-	
-	sourceComponent: Item{
+	sourceComponent: Item {
 		id: loadedItem
-		property bool isPlaying : vocalPlayer.item && vocalPlayer.item.playbackState === SoundPlayer.PlayingState
+		property bool isPlaying : soundPlayerGui && soundPlayerGui.core.playbackState === LinphoneEnums.PlaybackState.PlayingState
 		onIsPlayingChanged: isPlaying ? mediaProgressBar.resume() : mediaProgressBar.stop()
 		
-		width: availableWidth < 0 || availableWidth > mainItem.width ? mainItem.width : availableWidth
-		height: mainItem.fitHeight
+		width: mainItem.width
+		height: mainItem.height
 		
 		clip: false
-		Loader {
-			id: vocalPlayer
-			
-			active: false
+
+		SoundPlayerGui {
+			id: soundPlayerGui
+			property int duration: mainItem.chatMessageContentGui ? mainItem.chatMessageContentGui.core.fileDuration : core.duration
+			property int position: core.position
+			source: mainItem.chatMessageContentGui && mainItem.chatMessageContentGui.core.filePath
+
 			function play(){
-				if(!vocalPlayer.active)
-					vocalPlayer.active = true
-				else {
-					if(loadedItem.isPlaying){// Pause the play
-						vocalPlayer.item.pause()
-					}else{// Play the audio
-						vocalPlayer.item.play()
-					}
+				if(loadedItem.isPlaying){// Pause the play
+					soundPlayerGui.core.lPause()
+				}else{// Play the audio
+					soundPlayerGui.core.lPlay()
 				}
 			}
-			sourceComponent: SoundPlayer {
-				source: mainItem.chatMessageContentGui && mainItem.filePath
-				onStopped:{
-					mediaProgressBar.value = 101
-				}
-				Component.onCompleted: {
-					play()// This will open the file and allow seeking
-					pause()
-					mediaProgressBar.value = 0
-					mediaProgressBar.refresh()
-				}
+			onStopped: {
+				mediaProgressBar.value = 101
 			}
-			onStatusChanged: if (loader.status == Loader.Ready) play()
+			onPositionChanged: {
+				mediaProgressBar.progressPosition = position
+				mediaProgressBar.value = 100 * ( mediaProgressBar.progressPosition / duration)
+			}
+			onSourceChanged: if (source != "") {
+				// core.lPlay()// This will open the file and allow seeking
+				// core.lPause()
+				core.lOpen()
+				mediaProgressBar.value = 0
+				mediaProgressBar.refresh()
+			}
 		}
-		RowLayout{
-			id: lineLayout
+		
+
+		MediaProgressBar{
+			id: mediaProgressBar
 			anchors.fill: parent
-			spacing: 5
-			ActionButton{
-				id: playButton
-				Layout.preferredHeight: iconSize
-				Layout.preferredWidth: iconSize
-				Layout.rightMargin: 5
-				Layout.leftMargin: 15
-				Layout.alignment: Qt.AlignVCenter
-				isCustom: true
-				backgroundRadius: width
-				colorSet:  (loadedItem.isPlaying ? ChatAudioMessageStyle.pauseAction
-												 : ChatAudioMessageStyle.playAction)
-				onClicked:{
-					vocalPlayer.play()
+			progressDuration: soundPlayerGui ? soundPlayerGui.duration : chatMessageContentGui.core.fileDuration
+			progressPosition: 0
+			value: 0
+			function refresh(){
+				if(soundPlayerGui){
+					soundPlayerGui.core.lRefreshPosition()
 				}
 			}
-			Item{
-				Layout.fillHeight: true
-				Layout.fillWidth: true
-				Layout.alignment: Qt.AlignVCenter
-				Layout.rightMargin: 10
-				Layout.topMargin: 10
-				Layout.bottomMargin: 10
-				MediaProgressBar{
-					id: mediaProgressBar
-					anchors.fill: parent
-					progressDuration: vocalPlayer.item ? vocalPlayer.item.duration : chatMessageContentGui.core.getFileDuration()
-					progressPosition: 0
-					value: 0
-					stopAtEnd: true 
-					resetAtEnd: false
-					backgroundColor: ChatAudioMessageStyle.backgroundColor.color
-					colorSet: ChatAudioMessageStyle.progressionWave
-					function refresh(){
-						if( vocalPlayer.item){
-							progressPosition = vocalPlayer.item.getPosition()
-							value = 100 * ( progressPosition / vocalPlayer.item.duration)
-						}
-					}
-					onEndReached:{
-						if(vocalPlayer.item)
-							vocalPlayer.item.stop()
-					}
-					onRefreshPositionRequested: refresh()
-					onSeekRequested: if(  vocalPlayer.item){
-										 vocalPlayer.item.seek(ms)
-										 progressPosition = vocalPlayer.item.getPosition()
-										 value = 100 * (progressPosition / vocalPlayer.item.duration)
-									 }
+			onEndReached:{
+				if(soundPlayerGui)
+					soundPlayerGui.core.lStop()
+			}
+			onPlayStopButtonToggled: soundPlayerGui.play()
+			onRefreshPositionRequested: refresh()
+			onSeekRequested: (ms) => {
+				if(soundPlayerGui) {
+					soundPlayerGui.core.lSeek(ms)
 				}
 			}
-			
 		}
 	}
 }

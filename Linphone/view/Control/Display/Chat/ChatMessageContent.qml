@@ -26,33 +26,23 @@ ColumnLayout {
 	property int padding: Math.round(10 * DefaultStyle.dp)
 
 	// VOICE MESSAGES
-	// ListView {
-	// 	id: messagesVoicesList
-	// 	width: parent.width-2*mainItem.padding
-	// 	visible: count > 0
-	// 	spacing: 0
-	// 	clip: false
-	// 	model: ChatMessageContentProxy {
-	// 		filterType: ChatMessageContentProxy.FilterContentType.Voice
-	// 		chatMessageGui: mainItem.chatMessageGui
-	// 	}
-	// 	height: contentHeight
-	// 	boundsBehavior: Flickable.StopAtBounds
-	// 	interactive: false
-	// 	function updateBestWidth(){
-	// 		var newWidth = mainItem.updateListBestWidth(messagesVoicesList)
-	// 		mainItem.voicesCount = newWidth[0]
-	// 		mainItem.voicesBestWidth = newWidth[1]
-	// 	}
-	// 	delegate: ChatAudioMessage{
-	// 		id: audioMessage
-	// 		contentModel: $modelData
-	// 		visible: contentModel
-	// 		z: 1
-	// 		Component.onCompleted: messagesVoicesList.updateBestWidth()
-	// 	}
-	// 	Component.onCompleted: messagesVoicesList.updateBestWidth
-	// }
+	Repeater {
+		id: messagesVoicesList
+		visible: mainItem.chatMessageGui.core.isVoiceRecording && count > 0
+		model: ChatMessageContentProxy{
+			filterType: ChatMessageContentProxy.FilterContentType.Voice
+			chatMessageGui: mainItem.chatMessageGui
+		}
+		delegate: ChatAudioContent {
+			// Layout.fillWidth: true
+			width: Math.round(269 * DefaultStyle.dp)
+			height: Math.round(48 * DefaultStyle.dp)
+			Layout.preferredHeight: height
+			chatMessageContentGui: modelData
+			// width: conferenceList.width
+			// onMouseEvent: (event) => mainItem.mouseEvent(event)
+		}
+	}
 	// CONFERENCE
 	Repeater {
 		id: conferenceList

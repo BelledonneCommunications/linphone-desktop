@@ -41,7 +41,8 @@ void VideoSourceDescriptorModel::setScreenSharingDisplay(int index) {
 
 void VideoSourceDescriptorModel::setScreenSharingWindow(void *window) { // Get data from DesktopTools.
 	if (!mDesc) mDesc = linphone::Factory::get()->createVideoSourceDescriptor();
-	else if (getVideoSourceType() == LinphoneEnums::VideoSourceScreenSharingTypeWindow && window == getScreenSharing())
+	else if (getVideoSourceType() == LinphoneEnums::VideoSourceScreenSharingType::VideoSourceScreenSharingTypeWindow &&
+	         window == getScreenSharing())
 		return;
 	mDesc->setScreenSharing(linphone::VideoSourceScreenSharingType::Window, window);
 	emit videoDescriptorChanged();

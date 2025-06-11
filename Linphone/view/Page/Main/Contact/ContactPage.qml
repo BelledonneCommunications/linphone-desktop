@@ -863,11 +863,11 @@ FriendGui{
         ContactEdition {
             property string objectName: "contactEdition"
             onCloseEdition: redirectAddress => {
-                                goToContactDetails()
-                                if (redirectAddress) {
-                                    initialFriendToDisplay = redirectAddress
-                                }
-                            }
+                goToContactDetails()
+                if (redirectAddress) {
+                    initialFriendToDisplay = redirectAddress
+                }
+            }
         }
     }
 }

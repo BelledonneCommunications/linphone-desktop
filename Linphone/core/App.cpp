@@ -84,6 +84,7 @@
 #include "core/search/MagicSearchProxy.hpp"
 #include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
+#include "core/sound-player/SoundPlayerGui.hpp"
 #include "core/timezone/TimeZoneProxy.hpp"
 #include "core/translator/DefaultTranslatorCore.hpp"
 #include "core/variant/VariantList.hpp"
@@ -684,6 +685,7 @@ void App::initCppInterfaces() {
 	qmlRegisterType<CameraGui>(Constants::MainQmlUri, 1, 0, "CameraGui");
 	qmlRegisterType<FPSCounter>(Constants::MainQmlUri, 1, 0, "FPSCounter");
 	qmlRegisterType<EmojiModel>(Constants::MainQmlUri, 1, 0, "EmojiModel");
+	qmlRegisterType<SoundPlayerGui>(Constants::MainQmlUri, 1, 0, "SoundPlayerGui");
 
 	qmlRegisterType<TimeZoneProxy>(Constants::MainQmlUri, 1, 0, "TimeZoneProxy");
 

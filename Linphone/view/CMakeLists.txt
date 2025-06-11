@@ -46,6 +46,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Flickable.qml
 	view/Control/Display/GradientRectangle.qml
 	view/Control/Display/TemporaryText.qml
+	view/Control/Display/MediaProgressBar.qml
 	view/Control/Display/ProgressBar.qml
 	view/Control/Display/RoundedPane.qml
 	view/Control/Display/RoundProgressBar.qml

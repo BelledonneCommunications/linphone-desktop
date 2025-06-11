@@ -1,8 +1,8 @@
 import QtQuick
-import QtQuick.Controls.Basic
+import QtQuick.Controls.Basic as Control
 import Linphone
 
-ProgressBar {
+Control.ProgressBar {
 	id: mainItem
 
     padding: Math.round(3 * DefaultStyle.dp)

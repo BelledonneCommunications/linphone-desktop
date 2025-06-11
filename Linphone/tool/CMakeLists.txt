@@ -24,6 +24,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 
 	tool/file/FileDownloader.cpp
 	tool/file/FileExtractor.cpp
+	tool/file/TemporaryFile.cpp
 
 	tool/ui/DashRectangle.cpp
 

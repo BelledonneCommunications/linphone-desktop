@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
 		result = app->exec();
 	} while (result == (int)App::StatusCode::gRestartCode);
 	QString message = "[Main] Exiting app with the code : " + QString::number(result);
-	if (result) qInfo() << message;
+	if (!result) qInfo() << message;
 	else qWarning() << message;
 	app->clean();
 	app = nullptr;

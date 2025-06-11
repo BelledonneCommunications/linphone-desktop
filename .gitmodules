@@ -3,4 +3,4 @@ path = external/linphone-sdk
 	url = https://gitlab.linphone.org/BC/public/linphone-sdk.git
 [submodule "external/qtkeychain"]
 	path = external/qtkeychain
-	url = https://github.com/frankosterfeld/qtkeychain.git
+	url = https://gitlab.linphone.org/BC/public/external/qtkeychain.git

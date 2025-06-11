@@ -206,7 +206,7 @@ set(ENABLE_CSHARP_WRAPPER OFF CACHE BOOL "Build the CSharp wrapper for Liblinpho
 set(ENABLE_THEORA OFF)
 set(ENABLE_QT_GL ${ENABLE_VIDEO})
 
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Core5Compat)
 
 if(NOT Qt6_FOUND)
 	message(FATAL_ERROR "Minimum supported Qt6!")
