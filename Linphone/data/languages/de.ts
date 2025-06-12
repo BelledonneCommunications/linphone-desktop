@@ -4500,6 +4500,11 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
 </context>
 <context>
     <name>SelectedChatView</name>
+	<message>
+		<source>chat_view_group_call_toast_message</source>
+		<extracomment>&quot;Start a group call ?&quot;</extracomment>
+		<translation>Start a group call ?</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="229"/>
         <source>chat_view_send_area_placeholder_text</source>
@@ -6304,11 +6309,6 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 		<source>group_infos_leave_room_toast_message</source>
 		<extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
 		<translation>Alle Nachrichten werden aus dem Chat entfernt. Möchten Sie fortfahren?</translation>
-	</message>
-	<message>
-		<source>group_infos_group_call_toast_message</source>
-		<extracomment>&quot;Start a group call ?&quot;</extracomment>
-		<translation>Start a group call ?</translation>
 	</message>
 </context>
 <context>

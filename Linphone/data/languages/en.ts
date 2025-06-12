@@ -4401,6 +4401,11 @@ To enable them in a commercial project, please contact us.</translation>
 </context>
 <context>
     <name>SelectedChatView</name>
+	<message>
+		<source>chat_view_group_call_toast_message</source>
+		<extracomment>&quot;Start a group call ?&quot;</extracomment>
+		<translation>Start a group call ?</translation>
+	</message>
     <message>
         <source>Dites quelque chose…</source>
         <extracomment>Say something… : placeholder text for sending message text area</extracomment>
@@ -6313,11 +6318,6 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 		<source>group_infos_leave_room_toast_message</source>
 		<extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
 		<translation>All the messages will be removed from the chat room. Do you want to continue ?</translation>
-	</message>
-	<message>
-		<source>group_infos_group_call_toast_message</source>
-		<extracomment>&quot;Start a group call ?&quot;</extracomment>
-		<translation>Start a group call ?</translation>
 	</message>
 </context>
 <context>

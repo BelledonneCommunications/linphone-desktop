@@ -12,9 +12,39 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 RowLayout {
     id: mainItem
     property ChatGui chat
+	property var contactObj: chat ? UtilsCpp.findFriendByAddress(mainItem.chat.core.peerAddress) : null
+	property var contact: contactObj?.value || null
     property CallGui call
     property alias callHeaderContent: splitPanel.headerContent
     spacing: 0
+    
+    signal oneOneCall(bool video)
+	signal groupCall()
+
+    onOneOneCall: {
+		if (contact)
+			mainWindow.startCallWithContact(contact, video, mainItem)
+		else
+			UtilsCpp.createCall(mainItem.chat?.core.peerAddress, {'localVideoEnabled':video})
+	}
+	
+	onGroupCall: {
+		mainWindow.showConfirmationLambdaPopup(qsTr(""),
+		qsTr("chat_view_group_call_toast_message"),
+		"",
+		function(confirmed) {
+			if (confirmed) {
+				const sourceList = mainItem.chat?.core.participants
+				let addresses = [];
+				for (let i = 0; i < sourceList.length; ++i) {
+					const participantGui = sourceList[i]
+					const participantCore = participantGui.core
+					addresses.push(participantCore.sipAddress)
+				}
+				UtilsCpp.createGroupCall(mainItem.chat?.core.title, addresses)
+			}
+		})
+	}
 
     //onEventChanged: {
         // TODO : call when all messages read after scroll to unread feature available
@@ -59,10 +89,19 @@ RowLayout {
                 BigButton {
                     style: ButtonStyle.noBackground
                     icon.source: AppIcons.phone
+					onPressed: {
+						if (mainItem.chat.core.isGroupChat) {
+							mainItem.groupCall()
+						} else {
+							mainItem.oneOneCall(false)
+						}
+					}
                 }
                 BigButton {
                     style: ButtonStyle.noBackground
                     icon.source: AppIcons.videoCamera
+                    visible: !mainItem.chat.core.isGroupChat
+					onPressed: mainItem.oneOneCall(true)
                 }
                 BigButton {
                     style: ButtonStyle.noBackground
@@ -269,6 +308,11 @@ RowLayout {
 			anchors.topMargin: Math.round(39 * DefaultStyle.dp)
 			sourceComponent: mainItem.chat.core.isGroupChat ? groupInfoComponent : oneToOneInfoComponent
 			active: detailsPanel.visible
+			onLoaded: {
+				if (contentLoader.item) {
+					contentLoader.item.parentView = mainItem
+				}
+			}
 		}
 
 		Component {

@@ -13,6 +13,7 @@ ColumnLayout {
 	id: mainItem
 	property ChatGui chatGui
 	property var chatCore: chatGui.core
+	property var parentView
 	spacing: 0
 
 	Avatar {
@@ -126,23 +127,7 @@ ColumnLayout {
 			button.icon.source: AppIcons.phone
 			//: "Appel"
 			label: qsTr("group_infos_call")
-			button.onClicked: {
-				mainWindow.showConfirmationLambdaPopup(qsTr("group_infos_call"),
-				qsTr("group_infos_group_call_toast_message"),
-				"",
-				function(confirmed) {
-					if (confirmed) {
-						const sourceList = mainItem.chatCore.participants
-						let addresses = [];
-						for (let i = 0; i < sourceList.length; ++i) {
-							const participantGui = sourceList[i]
-							const participantCore = participantGui.core
-							addresses.push(participantCore.sipAddress)
-						}
-						UtilsCpp.createGroupCall(mainItem.chatCore.title, addresses)
-					}
-				})
-			}
+			button.onClicked: parentView.groupCall()
 		}
 		LabelButton {
 			width: Math.round(56 * DefaultStyle.dp)

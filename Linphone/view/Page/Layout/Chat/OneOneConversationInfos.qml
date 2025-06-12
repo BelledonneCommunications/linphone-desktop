@@ -14,6 +14,7 @@ ColumnLayout {
 	property ChatGui chatGui
 	property var chatCore: chatGui.core
 	property var contactObj: chat ? UtilsCpp.findFriendByAddress(mainItem.chatCore.peerAddress) : null
+	property var parentView
 	spacing: 0
 
 	Avatar {
@@ -61,9 +62,7 @@ ColumnLayout {
 			button.icon.source: AppIcons.phone
 			//: "Appel"
 			label: qsTr("one_one_infos_call")
-			button.onClicked: {
-				mainWindow.startCallWithContact(contactObj.value, false, mainItem)
-			}
+			button.onClicked: parentView.oneOneCall(false)
 		}
 		LabelButton {
 			width: Math.round(56 * DefaultStyle.dp)
