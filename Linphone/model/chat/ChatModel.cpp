@@ -150,6 +150,15 @@ linphone::ChatRoom::State ChatModel::getState() const {
 	return mMonitor->getState();
 }
 
+void ChatModel::setSubject(QString subject) const {
+	return mMonitor->setSubject(Utils::appStringToCoreString(subject));
+}
+
+void ChatModel::removeParticipantAtIndex(int index) const {
+	auto participant = *std::next(mMonitor->getParticipants().begin(), index);
+	mMonitor->removeParticipant(participant);
+}
+
 //---------------------------------------------------------------//
 
 void ChatModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> &chatRoom,

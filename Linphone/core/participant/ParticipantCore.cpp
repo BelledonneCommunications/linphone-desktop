@@ -50,8 +50,7 @@ ParticipantCore::ParticipantCore(const std::shared_ptr<linphone::Participant> &p
 		mIsMe = ToolModel::isMe(mSipAddress);
 		mCreationTime = QDateTime::fromSecsSinceEpoch(participant->getCreationTime());
 		mDisplayName = Utils::coreStringToAppString(participant->getAddress()->getDisplayName());
-		if (mDisplayName.isEmpty())
-			mDisplayName = Utils::coreStringToAppString(participant->getAddress()->getUsername());
+		if (mDisplayName.isEmpty()) mDisplayName = ToolModel::getDisplayName(participant->getAddress()->clone());
 		for (auto &device : participant->getDevices()) {
 			auto name = Utils::coreStringToAppString(device->getName());
 			auto address = Utils::coreStringToAppString(device->getAddress()->asStringUriOnly());

@@ -267,28 +267,21 @@ RowLayout {
 			id: contentLoader
 			anchors.top: parent.top
 			anchors.topMargin: Math.round(39 * DefaultStyle.dp)
-			active: true
-			property var chat: mainItem.chat
-			sourceComponent: chat && chat.core.isGroupChat ? groupInfoComponent : oneToOneInfoComponent
-
-			onLoaded: {
-				if (item && item.hasOwnProperty("chat")) {
-					item.chat = chat
-				}
-			}
+			sourceComponent: mainItem.chat.core.isGroupChat ? groupInfoComponent : oneToOneInfoComponent
+			active: detailsPanel.visible
 		}
 
 		Component {
 			id: oneToOneInfoComponent
 			OneOneConversationInfos {
-				chat: contentLoader.chat
+				chatGui: mainItem.chat
 			}
 		}
 
 		Component {
 			id: groupInfoComponent
 			GroupConversationInfos {
-				chat: contentLoader.chat
+				chatGui: mainItem.chat
 			}
 		}
 	}

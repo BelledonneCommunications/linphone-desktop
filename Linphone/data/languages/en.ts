@@ -6224,7 +6224,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 	<message>
 		<source>one_one_infos_open_contact</source>
 		<extracomment>Open contact</extracomment>
-		<translation>Open contact</translation>
+		<translation>Show contact</translation>
 	</message>
 	<message>
 		<source>one_one_infos_create_contact</source>
@@ -6248,6 +6248,11 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 		<source>group_infos_meeting</source>
 		<extracomment>Meeting</extracomment>
 		<translation>Meeting</translation>
+	</message>
+	<message>
+		<source>group_infos_participants</source>
+		<extracomment>Participants</extracomment>
+		<translation>Participants (%1)</translation>
 	</message>
 	<message>
 		<source>group_infos_media_docs</source>
@@ -6309,5 +6314,64 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 		<extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
 		<translation>All the messages will be removed from the chat room. Do you want to continue ?</translation>
 	</message>
+	<message>
+		<source>group_infos_group_call_toast_message</source>
+		<extracomment>&quot;Start a group call ?&quot;</extracomment>
+		<translation>Start a group call ?</translation>
+	</message>
 </context>
+<context>
+	<name>GroupChatInfoParticipants</name>
+	<message>
+		<source>group_infos_add_participants_title</source>
+		<extracomment>Add Participants</extracomment>
+		<translation>Add Participants</translation>
+	</message>
+	<message>
+		<source>group_infos_participant_is_admin</source>
+		<extracomment>Admin</extracomment>
+		<translation>Admin</translation>
+	</message>
+	<message>
+		<source>menu_see_existing_contact</source>
+		<extracomment>&quot;Show contact&quot;</extracomment>
+		<translation>Show contact</translation>
+	</message>
+	<message>
+		<source>menu_add_address_to_contacts</source>
+		<extracomment>&quot;Add to contacts&quot;</extracomment>
+		<translation>Add to contacts</translation>
+	</message>
+	<message>
+		<source>group_infos_give_admin_rights</source>
+		<extracomment>&quot;Give admin rights&quot;</extracomment>
+		<translation>Give admin rights</translation>
+	</message>
+	<message>
+		<source>group_infos_remove_admin_rights</source>
+		<extracomment>&quot;Remove admin rights&quot;</extracomment>
+		<translation>Remove admin rights</translation>
+	</message>
+	<message>
+		<source>group_infos_copy_sip_address</source>
+		<extracomment>&quot;Copy SIP Address&quot;</extracomment>
+		<translation>Copy SIP Address</translation>
+	</message>
+	<message>
+		<source>group_infos_remove_participant</source>
+		<extracomment>&quot;Remove participant&quot;</extracomment>
+		<translation>Remove participant</translation>
+	</message>
+	<message>
+		<source>group_infos_remove_participants_toast_title</source>
+		<extracomment>&quot;Remove participant ?&quot;</extracomment>
+		<translation>Remove participant ?</translation>
+	</message>
+	<message>
+		<source>group_infos_remove_participants_toast_message</source>
+		<extracomment>&quot;Participant will be removed from chat room.&quot;</extracomment>
+		<translation>Participant will be removed from chat room.</translation>
+	</message>
+</context>
+
 </TS>

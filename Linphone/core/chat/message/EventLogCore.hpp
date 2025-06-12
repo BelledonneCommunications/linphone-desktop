@@ -56,6 +56,9 @@ public:
 	std::string getEventLogId();
 	QSharedPointer<ChatMessageCore> getChatMessageCore();
 	QSharedPointer<CallHistoryCore> getCallHistoryCore();
+	bool isHandled() const {
+		return mHandled;
+	}
 
 private:
 	DECLARE_ABSTRACT_OBJECT

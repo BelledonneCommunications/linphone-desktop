@@ -22,6 +22,7 @@
 #define CHAT_CORE_H_
 
 #include "core/chat/message/EventLogGui.hpp"
+#include "core/participant/ParticipantCore.hpp"
 #include "message/ChatMessageGui.hpp"
 #include "model/chat/ChatModel.hpp"
 #include "model/search/MagicSearchModel.hpp"
@@ -57,6 +58,8 @@ public:
 	Q_PROPERTY(QString sendingText READ getSendingText WRITE setSendingText NOTIFY sendingTextChanged)
 	Q_PROPERTY(bool ephemeralEnabled READ isEphemeralEnabled WRITE lEnableEphemeral NOTIFY ephemeralEnabledChanged)
 	Q_PROPERTY(bool muted READ isMuted WRITE lSetMuted NOTIFY mutedChanged)
+	Q_PROPERTY(bool meAdmin READ getMeAdmin WRITE setMeAdmin NOTIFY meAdminChanged)
+	Q_PROPERTY(QVariantList participants READ getParticipantsGui NOTIFY participantsChanged)
 
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	static QSharedPointer<ChatCore> create(const std::shared_ptr<linphone::ChatRoom> &chatRoom);
@@ -103,6 +106,9 @@ public:
 	QString getChatRoomAddress() const;
 	QString getPeerAddress() const;
 
+	bool getMeAdmin() const;
+	void setMeAdmin(bool admin);
+
 	QList<QSharedPointer<EventLogCore>> getEventLogList() const;
 	void resetEventLogList(QList<QSharedPointer<EventLogCore>> list);
 	void appendEventLogToEventLogList(QSharedPointer<EventLogCore> event);
@@ -119,6 +125,9 @@ public:
 	void setComposingAddress(QString composingAddress);
 
 	std::shared_ptr<ChatModel> getModel() const;
+
+	QList<QSharedPointer<ParticipantCore>> buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom) const;
+	QVariantList getParticipantsGui() const;
 
 signals:
 	// used to close all the notifications when one is clicked
@@ -138,6 +147,8 @@ signals:
 	void sendingTextChanged(QString text);
 	void mutedChanged();
 	void ephemeralEnabledChanged();
+	void meAdminChanged();
+	void participantsChanged();
 
 	void lDeleteMessage();
 	void lDelete();
@@ -152,6 +163,8 @@ signals:
 	void lLeave();
 	void lSetMuted(bool muted);
 	void lEnableEphemeral(bool enable);
+	void lSetSubject(QString subject);
+	void lRemoveParticipantAtIndex(int index);
 
 private:
 	QString id;
@@ -170,6 +183,8 @@ private:
 	bool mIsReadOnly = false;
 	bool mEphemeralEnabled = false;
 	bool mIsMuted = false;
+	bool mMeAdmin = false;
+	QList<QSharedPointer<ParticipantCore>> mParticipants;
 	LinphoneEnums::ChatRoomState mChatRoomState;
 	std::shared_ptr<ChatModel> mChatModel;
 	QSharedPointer<ChatMessageCore> mLastMessage;

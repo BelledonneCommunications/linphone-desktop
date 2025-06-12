@@ -11,14 +11,15 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ColumnLayout {
 	id: mainItem
-	property var chat
-	property var contactObj: chat ? UtilsCpp.findFriendByAddress(chat?.core.peerAddress) : null
+	property ChatGui chatGui
+	property var chatCore: chatGui.core
+	property var contactObj: chat ? UtilsCpp.findFriendByAddress(mainItem.chatCore.peerAddress) : null
 	spacing: 0
 
 	Avatar {
 		Layout.alignment: Qt.AlignHCenter
 		contact: contactObj?.value || null
-		displayNameVal: contact ? "" : mainItem.chat.core.avatarUri
+		displayNameVal: contact ? "" : mainItem.chatCore.avatarUri
 		Layout.preferredWidth: Math.round(100 * DefaultStyle.dp)
 		Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
 	}
@@ -26,7 +27,7 @@ ColumnLayout {
 	Text {
 		font: Typography.p1
 		color: DefaultStyle.main2_700
-		text: mainItem.chat?.core.title || ""
+		text: mainItem.chatCore.title || ""
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Math.round(11 * DefaultStyle.dp)
 	}
@@ -34,19 +35,19 @@ ColumnLayout {
 	Text {
 		font: Typography.p3
 		color: DefaultStyle.main2_700
-		text: mainItem.chat?.core.peerAddress
+		text: mainItem.chatCore.peerAddress
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Math.round(5 * DefaultStyle.dp)
 	}
 	
 	Text {
+		visible: contactObj?.value
 		font: Typography.p3
-		color: contactObj?.value.core.presenceColor
-		text: contactObj?.value.core.presenceStatus
+		color: contactObj?.value != null ? contactObj?.value.core.presenceColor : "transparent"
+		text: contactObj?.value != null ? contactObj?.value.core.presenceStatus : ""
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Math.round(5 * DefaultStyle.dp)
 	}
-	
 	
 	RowLayout {
 		spacing: Math.round(55 * DefaultStyle.dp)
@@ -69,11 +70,11 @@ ColumnLayout {
 			height: Math.round(56 * DefaultStyle.dp)
 			button.icon.width: Math.round(24 * DefaultStyle.dp)
 			button.icon.height: Math.round(24 * DefaultStyle.dp)
-			button.icon.source: chat.core.muted ? AppIcons.bell : AppIcons.bellSlash
+			button.icon.source: mainItem.chatCore.muted ? AppIcons.bell : AppIcons.bellSlash
 			//: "Sourdine"
 			label: qsTr("one_one_infos_mute")
 			button.onClicked: {
-				chat.core.muted = !chat.core.muted
+				mainItem.chatCore.muted = !mainItem.chatCore.muted
 			}
 		}
 		LabelButton {
@@ -126,7 +127,7 @@ ColumnLayout {
 		title: qsTr("one_one_infos_other_actions")
 		entries: [
 			{
-				icon: AppIcons.adressBook,
+				icon: contactObj.value ? AppIcons.adressBook : AppIcons.plusCircle,
 				visible: true,
 				text: contactObj.value ? qsTr("one_one_infos_open_contact") : qsTr("one_one_infos_create_contact"),
 				color: DefaultStyle.main2_600,
@@ -136,18 +137,17 @@ ColumnLayout {
 					if (contactObj.value)
 						mainWindow.displayContactPage(contactObj.value.core.defaultAddress)
 					else
-						mainWindow.displayCreateContactPage("",chat.core.peerAddress)
-						//mainItem.createContactRequested(contactDetail.contactName, chat.core.peerAddress)
+						mainWindow.displayCreateContactPage("",mainItem.chatCore.peerAddress)
 				}
 			},
 			{
 				icon: AppIcons.clockCountDown,
 				visible: true,
-				text: mainItem.chat.core.ephemeralEnabled ? qsTr("one_one_infos_disable_ephemerals") : qsTr("one_one_infos_enable_ephemerals"),
+				text: mainItem.chatCore.ephemeralEnabled ? qsTr("one_one_infos_disable_ephemerals") : qsTr("one_one_infos_enable_ephemerals"),
 				color: DefaultStyle.main2_600,
 				showRightArrow: false,
 				action: function() {
-					mainItem.chat.core.ephemeralEnabled = !mainItem.chat.core.ephemeralEnabled
+					mainItem.chatCore.ephemeralEnabled = !mainItem.chatCore.ephemeralEnabled
 				}
 			},
 			{
@@ -164,7 +164,7 @@ ColumnLayout {
 						"",
 						function(confirmed) {
 							if (confirmed) {
-								mainItem.chat.core.lDeleteHistory()
+								mainItem.chatCore.lDeleteHistory()
 							}
 						})
 				}

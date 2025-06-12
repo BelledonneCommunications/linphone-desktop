@@ -154,6 +154,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Chat/GroupConversationInfos.qml
 	view/Page/Layout/Chat/OneOneConversationInfos.qml
 	view/Page/Layout/Chat/ChatInfoActionsGroup.qml
+	view/Page/Layout/Chat/GroupChatInfoParticipants.qml
 
 	view/Page/Main/AbstractMainPage.qml
 	view/Page/Main/Account/AccountListView.qml
