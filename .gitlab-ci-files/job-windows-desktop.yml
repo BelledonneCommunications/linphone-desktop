@@ -94,6 +94,10 @@
   extends: .windows-vs
   tags: [ "windows-powershell-vs-17-2022" ]
 
+.windows-codesigning:
+  extends: .prepare
+  tags: [ "windows-powershell-vs-17-2022-apps" ]
+
 .windows-msbuild-variables:
   variables:
     PARALLEL_OPTIONS: "-- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false"
