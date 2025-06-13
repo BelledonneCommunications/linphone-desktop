@@ -181,7 +181,7 @@ win64-ninja-vs2022-scheduled-windows:
     - if: $PACKAGE_WINDOWS
     - if: $DEPLOY_WINDOWS
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$WINDOWS_PLATFORM/$APP_FOLDER
 
 win64-ninja-vs2022-package-windows:
@@ -193,6 +193,34 @@ win64-ninja-vs2022-package-windows:
     - .windows-vs2022
     - .windows-ninja-variables
     - .vs-win64-package
+
+#################################################
+#               SIGNING
+#################################################
+
+win64-codesigning:
+  stage: signing
+  allow_failure: true
+  extends:
+    - .windows-codesigning
+  needs:
+    - win64-ninja-vs2022-package-windows
+  variables:
+    MINGW_TYPE: mingw64
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
+    - if: $PACKAGE_WINDOWS
+    - if: $DEPLOY_WINDOWS
+  script:
+    - cd build-desktop/OUTPUT/Packages/
+    - Invoke-Expression "& ${WINDOWS_SIGN_TOOL} sign /fd SHA256 /t ${WINDOWS_SIGN_TIMESTAMP_URL} /sha1 ${WINDOWS_SIGN_HASH} *.exe"
+    - 'if (-not ($LastExitCode -eq 0)) {throw "Error: Signature failed"}'
+  artifacts:
+    paths:
+      - build-desktop\OUTPUT\Packages\*
+    when: always
+    expire_in: 1 week
 
 #################################################
 #               DEPLOY
