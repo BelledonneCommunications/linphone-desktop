@@ -32,6 +32,7 @@
 #include "core/participant/ParticipantDeviceCore.hpp"
 #include "core/path/Paths.hpp"
 #include "core/payload-type/DownloadablePayloadTypeCore.hpp"
+#include "core/recorder/RecorderGui.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/providers/AvatarProvider.hpp"
@@ -1946,6 +1947,56 @@ QString Utils::getSafeFilePath(const QString &filePath, bool *soFarSoGood) {
 	if (soFarSoGood) *soFarSoGood = false;
 
 	return QString("");
+}
+
+VariantObject *Utils::createVoiceRecordingMessage(RecorderGui *recorderGui, ChatGui *chatGui) {
+	VariantObject *data = new VariantObject("createVoiceRecordingMessage");
+	if (!data) return nullptr;
+	data->makeRequest([recorderCore = recorderGui ? recorderGui->getCore() : nullptr,
+	                   chatCore = chatGui ? chatGui->getCore() : nullptr]() {
+		if (!recorderCore || !chatCore) return QVariant();
+		auto model = recorderCore->getModel();
+		auto chatModel = chatCore->getModel();
+		if (!model || !chatModel) return QVariant();
+		auto recorder = model->getRecorder();
+		auto linMessage = chatModel->createVoiceRecordingMessage(recorder);
+		if (linMessage) {
+			auto messageCore = ChatMessageCore::create(linMessage);
+			return QVariant::fromValue(new ChatMessageGui(messageCore));
+		}
+		return QVariant();
+	});
+	data->requestValue();
+	return data;
+}
+
+void Utils::sendVoiceRecordingMessage(RecorderGui *recorderGui, ChatGui *chatGui) {
+	auto chatModel = chatGui && chatGui->mCore ? chatGui->mCore->getModel() : nullptr;
+	auto recorderModel = recorderGui && recorderGui->mCore ? recorderGui->mCore->getModel() : nullptr;
+	if (!chatModel || !recorderModel) {
+		//: Error with the recorder
+		QString error = !recorderModel ? tr("recorder_error")
+		                               //: Error in the chat
+		                               : tr("chat_error");
+		//: Error
+		showInformationPopup(tr("info_popup_error_title"),
+		                     //: Could not send voice message : %1
+		                     tr("info_popup_send_voice_message_error_message").arg(error));
+		return;
+	}
+	App::postModelAsync([chatModel, recorderModel] {
+		mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+		auto chat = chatModel->getMonitor();
+		auto recorder = recorderModel->getRecorder();
+		auto linMessage = chatModel->createVoiceRecordingMessage(recorder);
+		if (linMessage) {
+			linMessage->send();
+		} else
+			//: Error
+			showInformationPopup(tr("info_popup_error_title"),
+			                     //: Failed to create message from record
+			                     tr("info_popup_send_voice_message_sending_error_message"));
+	});
 }
 
 bool Utils::isVideo(const QString &path) {

@@ -428,6 +428,17 @@ void SettingsModel::setVideoEnabled(const bool enabled) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getAutoDownloadReceivedFiles() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return CoreModel::getInstance()->getCore()->getMaxSizeForAutoDownloadIncomingFiles() == 0;
+}
+
+void SettingsModel::setAutoDownloadReceivedFiles(bool status) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	CoreModel::getInstance()->getCore()->setMaxSizeForAutoDownloadIncomingFiles(status ? 0 : -1);
+	emit autoDownloadReceivedFilesChanged(status);
+}
+
 bool SettingsModel::getEchoCancellationEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return CoreModel::getInstance()->getCore()->echoCancellationEnabled();
@@ -556,6 +567,18 @@ QString SettingsModel::getLogsFolder(const shared_ptr<linphone::Config> &config)
 	return config ? Utils::coreStringToAppString(config->getString(
 	                    UiSection, "logs_folder", Utils::appStringToCoreString(Paths::getLogsDirPath())))
 	              : Paths::getLogsDirPath();
+}
+
+static inline std::string getLegacySavedCallsFolder(const shared_ptr<linphone::Config> &config) {
+	auto path = config->getString(SettingsModel::UiSection, "saved_videos_folder", "");
+	if (path == "") path = Utils::appStringToCoreString(Paths::getCapturesDirPath());
+	return path;
+}
+
+QString SettingsModel::getSavedCallsFolder() const {
+	auto path = mConfig->getString(UiSection, "saved_calls_folder", ""); // Avoid to call default function if exist.
+	if (path == "") path = getLegacySavedCallsFolder(mConfig);
+	return QDir::cleanPath(Utils::coreStringToAppString(path)) + QDir::separator();
 }
 
 QString SettingsModel::getLogsUploadUrl() const {

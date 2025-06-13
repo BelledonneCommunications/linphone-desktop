@@ -49,6 +49,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	// Call
 	mVideoEnabled = settingsModel->getVideoEnabled();
 	mEchoCancellationEnabled = settingsModel->getEchoCancellationEnabled();
+	mAutoDownloadReceivedFiles = settingsModel->getAutoDownloadReceivedFiles();
 	mAutomaticallyRecordCallsEnabled = settingsModel->getAutomaticallyRecordCallsEnabled();
 
 	// Audio
@@ -143,6 +144,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	// Call
 	mVideoEnabled = settingsCore.mVideoEnabled;
 	mEchoCancellationEnabled = settingsCore.mEchoCancellationEnabled;
+	mAutoDownloadReceivedFiles = settingsCore.mAutoDownloadReceivedFiles;
 	mAutomaticallyRecordCallsEnabled = settingsCore.mAutomaticallyRecordCallsEnabled;
 
 	// Audio
@@ -231,6 +233,12 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	mSettingsModelConnection->makeConnectToModel(
 	    &SettingsModel::echoCancellationEnabledChanged, [this](const bool enabled) {
 		    mSettingsModelConnection->invokeToCore([this, enabled]() { setEchoCancellationEnabled(enabled); });
+	    });
+
+	// Auto download incoming files
+	mSettingsModelConnection->makeConnectToModel(
+	    &SettingsModel::autoDownloadReceivedFilesChanged, [this](const bool enabled) {
+		    mSettingsModelConnection->invokeToCore([this, enabled]() { setAutoDownloadReceivedFiles(enabled); });
 	    });
 
 	// Auto recording
@@ -462,6 +470,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setEchoCancellationEnabled(settingsCore.mEchoCancellationEnabled);
 	setAutomaticallyRecordCallsEnabled(settingsCore.mAutomaticallyRecordCallsEnabled);
 
+	setAutoDownloadReceivedFiles(settingsCore.mAutoDownloadReceivedFiles);
 	// Audio
 	setCaptureDevices(settingsCore.mCaptureDevices);
 	setPlaybackDevices(settingsCore.mPlaybackDevices);
@@ -572,6 +581,14 @@ void SettingsCore::setEchoCancellationEnabled(bool enabled) {
 	if (mEchoCancellationEnabled != enabled) {
 		mEchoCancellationEnabled = enabled;
 		emit echoCancellationEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setAutoDownloadReceivedFiles(bool enabled) {
+	if (mAutoDownloadReceivedFiles != enabled) {
+		mAutoDownloadReceivedFiles = enabled;
+		emit autoDownloadReceivedFilesChanged();
 		setIsSaved(false);
 	}
 }
@@ -960,6 +977,9 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	model->setEchoCancellationEnabled(mEchoCancellationEnabled);
 	model->setAutomaticallyRecordCallsEnabled(mAutomaticallyRecordCallsEnabled);
 
+	// Chat
+	model->setAutoDownloadReceivedFiles(mAutoDownloadReceivedFiles);
+
 	// Audio
 	model->setRingerDevice(mRingerDevice);
 	model->setCaptureDevice(mCaptureDevice);
@@ -1021,6 +1041,9 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mVideoEnabled = model->getVideoEnabled();
 	mEchoCancellationEnabled = model->getEchoCancellationEnabled();
 	mAutomaticallyRecordCallsEnabled = model->getAutomaticallyRecordCallsEnabled();
+
+	// Chat
+	mAutoDownloadReceivedFiles = model->getAutoDownloadReceivedFiles();
 
 	// Audio
 	mCaptureDevices = model->getCaptureDevices();

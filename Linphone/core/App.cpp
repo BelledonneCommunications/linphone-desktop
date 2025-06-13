@@ -78,6 +78,7 @@
 #include "core/payload-type/PayloadTypeProxy.hpp"
 #include "core/phone-number/PhoneNumber.hpp"
 #include "core/phone-number/PhoneNumberProxy.hpp"
+#include "core/recorder/RecorderGui.hpp"
 #include "core/register/RegisterPage.hpp"
 #include "core/screen/ScreenList.hpp"
 #include "core/screen/ScreenProxy.hpp"
@@ -686,6 +687,7 @@ void App::initCppInterfaces() {
 	qmlRegisterType<FPSCounter>(Constants::MainQmlUri, 1, 0, "FPSCounter");
 	qmlRegisterType<EmojiModel>(Constants::MainQmlUri, 1, 0, "EmojiModel");
 	qmlRegisterType<SoundPlayerGui>(Constants::MainQmlUri, 1, 0, "SoundPlayerGui");
+	qmlRegisterType<RecorderGui>(Constants::MainQmlUri, 1, 0, "RecorderGui");
 
 	qmlRegisterType<TimeZoneProxy>(Constants::MainQmlUri, 1, 0, "TimeZoneProxy");
 

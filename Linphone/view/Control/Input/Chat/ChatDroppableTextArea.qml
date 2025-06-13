@@ -11,26 +11,27 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 Control.Control {
 	id: mainItem
 		
-	property alias placeholderText: sendingTextArea.placeholderText
-	property alias text: sendingTextArea.text
-	property alias textArea: sendingTextArea
-	property alias cursorPosition: sendingTextArea.cursorPosition
-	property alias emojiPickerButtonChecked: emojiPickerButton.checked
+	// property alias placeholderText: sendingTextArea.placeholderText
+	property string text
+	property var textArea
+	// property alias cursorPosition: sendingTextArea.cursorPosition
+	property bool emojiPickerButtonChecked
 	
 	property bool dropEnabled: true
 	property string dropDisabledReason
 	property bool isEphemeral : false
 	property bool emojiVisible: false
+
+    property ChatGui chat
 	
 	// ---------------------------------------------------------------------------
 	
 	signal dropped (var files)
 	signal validText (string text)
-	signal sendText()
-	signal audioRecordRequest()
+	signal sendMessage()
 	signal emojiClicked()
 	signal composing()
-	
+
 	// ---------------------------------------------------------------------------
 	
 	function _emitFiles (files) {
@@ -63,118 +64,196 @@ Control.Control {
 	background: Rectangle {
 		anchors.fill: parent
 		color: DefaultStyle.grey_100
-		MediumButton {
-			id: expandButton
-			anchors.top: parent.top
-			anchors.topMargin: Math.round(4 * DefaultStyle.dp)
-			anchors.horizontalCenter: parent.horizontalCenter
-			style: ButtonStyle.noBackgroundOrange
-			icon.source: checked ? AppIcons.downArrow : AppIcons.upArrow
-			checkable: true
-		}
 	}
-	contentItem: RowLayout {
-		spacing: Math.round(20 * DefaultStyle.dp)
-		RowLayout {
-			spacing: Math.round(16 * DefaultStyle.dp)
-			BigButton {
-				id: emojiPickerButton
-				style: ButtonStyle.noBackground
-				checkable: true
-				icon.source: checked ? AppIcons.closeX : AppIcons.smiley
-			}
-			BigButton {
-				style: ButtonStyle.noBackground
-				icon.source: AppIcons.paperclip
-				onClicked: {
-					fileDialog.open()
+	contentItem: Control.StackView {
+		id: sendingAreaStackView
+		initialItem: textAreaComp
+		Component {
+			id: textAreaComp
+			RowLayout {
+				// disable record button if call ongoing
+				CallProxy {
+					id: callsModel
+					sourceModel: AppCpp.calls
 				}
-			}
-			Control.Control {
-				Layout.fillWidth: true
-				leftPadding: Math.round(15 * DefaultStyle.dp)
-				rightPadding: Math.round(15 * DefaultStyle.dp)
-				topPadding: Math.round(15 * DefaultStyle.dp)
-				bottomPadding: Math.round(15 * DefaultStyle.dp)
-				background: Rectangle {
-					id: inputBackground
-					anchors.fill: parent
-					radius: Math.round(35 * DefaultStyle.dp)
-					color: DefaultStyle.grey_0
-					MouseArea {
-						anchors.fill: parent
-						onPressed: sendingTextArea.forceActiveFocus()
-						cursorShape: Qt.IBeamCursor
+				spacing: Math.round(16 * DefaultStyle.dp)
+				BigButton {
+					id: emojiPickerButton
+					style: ButtonStyle.noBackground
+					checkable: true
+					icon.source: checked ? AppIcons.closeX : AppIcons.smiley
+					onCheckedChanged: mainItem.emojiPickerButtonChecked = checked
+					Connections {
+						target: mainItem
+						function onEmojiPickerButtonCheckedChanged() {
+							emojiPickerButton.checked = mainItem.emojiPickerButtonChecked
+						}
 					}
 				}
-				contentItem: RowLayout {
-					Flickable {
-						id: sendingAreaFlickable
-						Layout.fillWidth: true
-						Layout.preferredHeight: Math.min(Math.round(60 * DefaultStyle.dp), contentHeight)
-						Binding {
-							target: sendingAreaFlickable
-							when: expandButton.checked
-							property: "Layout.preferredHeight"
-							value: Math.round(250 * DefaultStyle.dp)
-							restoreMode: Binding.RestoreBindingOrValue
+				BigButton {
+					style: ButtonStyle.noBackground
+					icon.source: AppIcons.paperclip
+					onClicked: {
+						fileDialog.open()
+					}
+				}
+				Control.Control {
+					Layout.fillWidth: true
+					leftPadding: Math.round(15 * DefaultStyle.dp)
+					rightPadding: Math.round(15 * DefaultStyle.dp)
+					topPadding: Math.round(15 * DefaultStyle.dp)
+					bottomPadding: Math.round(15 * DefaultStyle.dp)
+					background: Rectangle {
+						id: inputBackground
+						anchors.fill: parent
+						radius: Math.round(35 * DefaultStyle.dp)
+						color: DefaultStyle.grey_0
+						MouseArea {
+							anchors.fill: parent
+							onPressed: sendingTextArea.forceActiveFocus()
+							cursorShape: Qt.IBeamCursor
 						}
-						Layout.fillHeight: true
-						contentHeight: sendingTextArea.contentHeight
-						contentWidth: width
+					}
+					contentItem: RowLayout {
+						Flickable {
+							id: sendingAreaFlickable
+							Layout.preferredHeight: Math.min(Math.round(60 * DefaultStyle.dp), contentHeight)
+							Layout.fillHeight: true
+							Layout.fillWidth: true
+							contentHeight: sendingTextArea.contentHeight
+							contentWidth: width
 
-						function ensureVisible(r) {
-							if (contentX >= r.x)
-								contentX = r.x;
-							else if (contentX+width <= r.x+r.width)
-								contentX = r.x+r.width-width;
-							if (contentY >= r.y)
-								contentY = r.y;
-							else if (contentY+height <= r.y+r.height)
-								contentY = r.y+r.height-height;
-						}
-
-						TextArea {
-							id: sendingTextArea
-							width: sendingAreaFlickable.width
-							height: sendingAreaFlickable.height
-							textFormat: TextEdit.AutoText
-							//: Say something… : placeholder text for sending message text area
-							placeholderText: qsTr("chat_view_send_area_placeholder_text")
-							placeholderTextColor: DefaultStyle.main2_400
-							color: DefaultStyle.main2_700
-							font {
-								pixelSize: Typography.p1.pixelSize
-								weight: Typography.p1.weight
+							function ensureVisible(r) {
+								if (contentX >= r.x)
+									contentX = r.x;
+								else if (contentX+width <= r.x+r.width)
+									contentX = r.x+r.width-width;
+								if (contentY >= r.y)
+									contentY = r.y;
+								else if (contentY+height <= r.y+r.height)
+									contentY = r.y+r.height-height;
 							}
-							onCursorRectangleChanged: sendingAreaFlickable.ensureVisible(cursorRectangle)
-							wrapMode: TextEdit.WordWrap
-							Keys.onPressed: (event) => {
-								if ((event.key == Qt.Key_Enter || event.key == Qt.Key_Return))
-									if(!(event.modifiers & Qt.ShiftModifier)) {
-									mainItem.sendText()
-									event.accepted = true
+
+							TextArea {
+								id: sendingTextArea
+								width: sendingAreaFlickable.width
+								height: sendingAreaFlickable.height
+								textFormat: TextEdit.AutoText
+								onTextChanged: mainItem.text = text
+								Component.onCompleted: mainItem.textArea = sendingTextArea
+								//: Say something… : placeholder text for sending message text area
+								placeholderText: qsTr("chat_view_send_area_placeholder_text")
+								placeholderTextColor: DefaultStyle.main2_400
+								color: DefaultStyle.main2_700
+								font {
+									pixelSize: Typography.p1.pixelSize
+									weight: Typography.p1.weight
+								}
+								onCursorRectangleChanged: sendingAreaFlickable.ensureVisible(cursorRectangle)
+								wrapMode: TextEdit.WordWrap
+								Keys.onPressed: (event) => {
+									if ((event.key == Qt.Key_Enter || event.key == Qt.Key_Return))
+										if(!(event.modifiers & Qt.ShiftModifier)) {
+										mainItem.sendMessage()
+										event.accepted = true
+									}
+								}
+								Connections {
+									target: mainItem
+									function onTextChanged() {
+										if (mainItem.text !== text) text = mainItem.text
+									}
+									function onSendMessage() {
+										sendingTextArea.clear()
+									}
+								}
+							}
+						}
+						RowLayout {
+							id: stackButton
+							spacing: 0
+							BigButton {
+								id: recordButton
+								enabled: !callsModel.currentCall
+								ToolTip.visible: !enabled && hovered
+								//: Cannot record a message while a call is ongoing
+								ToolTip.text: qsTr("cannot_record_while_in_call_tooltip")
+								visible: sendingTextArea.text.length === 0
+								style: ButtonStyle.noBackground
+								hoverEnabled: true
+								icon.source: AppIcons.microphone
+								onClicked: {
+									sendingAreaStackView.push(voiceMessageRecordComp)
+								}
+							}
+							BigButton {
+								visible: sendingTextArea.text.length !== 0
+								style: ButtonStyle.noBackgroundOrange
+								icon.source: AppIcons.paperPlaneRight
+								onClicked: {
+									mainItem.sendMessage()
 								}
 							}
 						}
 					}
-					RowLayout {
-						id: stackButton
-						spacing: 0
-						BigButton {
-							visible: sendingTextArea.text.length === 0
-							style: ButtonStyle.noBackground
-							icon.source: AppIcons.microphone
-							onClicked: {
-								console.log("TODO : go to record message")
-							}
+				}
+			}
+		}
+		Component {
+			id: voiceMessageRecordComp
+			RowLayout {
+				spacing: Math.round(16 * DefaultStyle.dp)
+				RoundButton {
+					style: ButtonStyle.player
+					shadowEnabled: true
+					padding: Math.round(4 * DefaultStyle.dp)
+					icon.width: Math.round(22 * DefaultStyle.dp)
+					icon.height: Math.round(22 * DefaultStyle.dp)
+					icon.source: AppIcons.closeX
+					width: Math.round(30 * DefaultStyle.dp)
+					Layout.preferredWidth: width
+					Layout.preferredHeight: height
+					onClicked: {
+						if (voiceMessage.chatMessage) mainItem.chat.core.lDeleteMessage(voiceMessage.chatMessage)
+						sendingAreaStackView.pop()
+					}
+				}
+				ChatAudioContent {
+					id: voiceMessage
+					recording: true
+					Layout.fillWidth: true
+					Layout.preferredHeight: Math.round(48 * DefaultStyle.dp)
+					chatMessageContentGui: chatMessage ? chatMessage.core.getVoiceRecordingContent() : null
+					onVoiceRecordingMessageCreationRequested: (recorderGui) => {
+						chatMessageObj = UtilsCpp.createVoiceRecordingMessage(recorderGui, mainItem.chat)
+					}
+				}
+				BigButton {
+					id: sendButton
+					style: ButtonStyle.noBackgroundOrange
+					icon.source: AppIcons.paperPlaneRight
+					icon.width: Math.round(22 * DefaultStyle.dp)
+					icon.height: Math.round(22 * DefaultStyle.dp)
+					// Layout.preferredWidth: icon.width
+					// Layout.preferredHeight: icon.height
+					property bool sendVoiceRecordingOnCreated: false
+					onClicked: {
+						if (voiceMessage.chatMessage) {
+							voiceMessage.chatMessage.core.lSend()
+							sendingAreaStackView.pop()
 						}
-						BigButton {
-							visible: sendingTextArea.text.length !== 0
-							style: ButtonStyle.noBackgroundOrange
-							icon.source: AppIcons.paperPlaneRight
-							onClicked: {
-								mainItem.sendText()
+						else {
+							sendVoiceRecordingOnCreated = true
+							voiceMessage.stopRecording()
+						}
+					}
+					Connections {
+						target: voiceMessage
+						function onChatMessageChanged() {
+							if (sendButton.sendVoiceRecordingOnCreated) {
+								voiceMessage.chatMessage.core.lSend()
+								sendButton.sendVoiceRecordingOnCreated = false
+								sendingAreaStackView.pop()
 							}
 						}
 					}

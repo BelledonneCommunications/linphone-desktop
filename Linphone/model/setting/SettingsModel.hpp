@@ -61,6 +61,9 @@ public:
 	bool getEchoCancellationEnabled() const;
 	void setEchoCancellationEnabled(bool enabled);
 
+	void setAutoDownloadReceivedFiles(bool enabled);
+	bool getAutoDownloadReceivedFiles() const;
+
 	// Audio. --------------------------------------------------------------------
 
 	bool getIsInCall() const;
@@ -137,6 +140,7 @@ public:
 	QString getLogsFolder() const;
 	void setLogsFolder(const QString &folder);
 	static QString getLogsFolder(const std::shared_ptr<linphone::Config> &config);
+	QString getSavedCallsFolder() const;
 
 	QString getLogsUploadUrl() const;
 	void setLogsUploadUrl(const QString &url);
@@ -237,6 +241,9 @@ signals:
 	void fullLogsEnabledChanged(bool status);
 
 	void dndChanged(bool value);
+
+	// Messages. --------------------------------------------------------------------
+	void autoDownloadReceivedFilesChanged(bool enabled);
 
 private:
 	void notifyConfigReady();

@@ -99,7 +99,13 @@ bool SoundPlayerModel::play(QString source) {
 
 // -----------------------------------------------------------------------------
 
-void SoundPlayerModel::seek(int offset) {
+void SoundPlayerModel::seek(QString source, int offset) {
+	if (!open(source)) {
+		qWarning() << QStringLiteral("Unable to open: `%1`").arg(source);
+		//: Unable to open: `%1`
+		emit errorChanged(QString("sound_player_open_error").arg(source));
+		return;
+	}
 	mMonitor->seek(offset);
 	emit positionChanged(mMonitor->getCurrentPosition());
 }

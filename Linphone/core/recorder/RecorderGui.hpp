@@ -18,33 +18,32 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SOUND_PLAYER_GUI_H_
-#define SOUND_PLAYER_GUI_H_
+#ifndef RECORDER_GUI_H_
+#define RECORDER_GUI_H_
 
-#include "SoundPlayerCore.hpp"
+#include "RecorderCore.hpp"
+#include "tool/AbstractObject.hpp"
+
 #include <QObject>
 #include <QSharedPointer>
 
-class SoundPlayerGui : public QObject, public AbstractObject {
+class RecorderGui : public QObject, public AbstractObject {
 	Q_OBJECT
 
-	Q_PROPERTY(SoundPlayerCore *core READ getCore CONSTANT)
-	Q_PROPERTY(QString source READ getSource WRITE setSource NOTIFY sourceChanged)
+	Q_PROPERTY(RecorderCore *core READ getCore CONSTANT)
 
 public:
-	SoundPlayerGui(QObject *parent = nullptr);
-	SoundPlayerGui(QSharedPointer<SoundPlayerCore> core);
-	~SoundPlayerGui();
-	SoundPlayerCore *getCore() const;
-	QString getSource() const;
-	void setSource(QString source);
-	QSharedPointer<SoundPlayerCore> mCore;
+	RecorderGui(QObject *parent = nullptr);
+	RecorderGui(QSharedPointer<RecorderCore> core);
+	~RecorderGui();
+	RecorderCore *getCore() const;
+	LinphoneEnums::RecorderState getState() const;
+	QSharedPointer<RecorderCore> mCore;
 
 signals:
-	void sourceChanged();
-	void stopped();
-	void positionChanged();
 	void errorChanged(QString error);
+	void ready();
+	void stateChanged(LinphoneEnums::RecorderState state);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

@@ -88,7 +88,7 @@ bool ChatMessageContentProxy::SortFilterList::filterAcceptsRow(int sourceRow, co
 	if (contentCore) {
 		if (mFilterType == (int)FilterContentType::Unknown) return false;
 		else if (mFilterType == (int)FilterContentType::File) {
-			return contentCore->isFile() || contentCore->isFileTransfer();
+			return !contentCore->isVoiceRecording() && (contentCore->isFile() || contentCore->isFileTransfer());
 		} else if (mFilterType == (int)FilterContentType::Text) return contentCore->isText();
 		else if (mFilterType == (int)FilterContentType::Voice) return contentCore->isVoiceRecording();
 		else if (mFilterType == (int)FilterContentType::Conference) return contentCore->isCalendar();

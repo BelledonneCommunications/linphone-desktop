@@ -149,6 +149,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Settings/DebugSettingsLayout.qml
 	view/Page/Layout/Settings/LdapSettingsLayout.qml
 	view/Page/Layout/Settings/CarddavSettingsLayout.qml
+	view/Page/Layout/Settings/ChatSettingsLayout.qml
 	view/Page/Layout/Settings/SecuritySettingsLayout.qml
 	view/Page/Layout/Settings/NetworkSettingsLayout.qml
 	view/Page/Layout/Settings/AdvancedSettingsLayout.qml

@@ -18,37 +18,32 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SoundPlayerGui.hpp"
+#include "RecorderGui.hpp"
 #include "core/App.hpp"
 
-DEFINE_ABSTRACT_OBJECT(SoundPlayerGui)
+DEFINE_ABSTRACT_OBJECT(RecorderGui)
 
-SoundPlayerGui::SoundPlayerGui(QObject *parent) : QObject(parent) {
+RecorderGui::RecorderGui(QObject *parent) : QObject(parent) {
 	mustBeInMainThread(getClassName());
-	mCore = SoundPlayerCore::create();
-	if (mCore) connect(mCore.get(), &SoundPlayerCore::sourceChanged, this, &SoundPlayerGui::sourceChanged);
-	if (mCore) connect(mCore.get(), &SoundPlayerCore::stopped, this, &SoundPlayerGui::stopped);
-	if (mCore) connect(mCore.get(), &SoundPlayerCore::positionChanged, this, &SoundPlayerGui::positionChanged);
-	if (mCore) connect(mCore.get(), &SoundPlayerCore::errorChanged, this, &SoundPlayerGui::errorChanged);
+	mCore = RecorderCore::create();
+	if (mCore) connect(mCore.get(), &RecorderCore::errorChanged, this, &RecorderGui::errorChanged);
+	if (mCore) connect(mCore.get(), &RecorderCore::stateChanged, this, &RecorderGui::stateChanged);
+	if (mCore) connect(mCore.get(), &RecorderCore::ready, this, &RecorderGui::ready);
 }
-SoundPlayerGui::SoundPlayerGui(QSharedPointer<SoundPlayerCore> core) {
+RecorderGui::RecorderGui(QSharedPointer<RecorderCore> core) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;
 	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
 }
 
-SoundPlayerGui::~SoundPlayerGui() {
+LinphoneEnums::RecorderState RecorderGui::getState() const {
+	return mCore ? mCore->getState() : LinphoneEnums::RecorderState::Closed;
+}
+
+RecorderGui::~RecorderGui() {
 	mustBeInMainThread("~" + getClassName());
 }
 
-SoundPlayerCore *SoundPlayerGui::getCore() const {
+RecorderCore *RecorderGui::getCore() const {
 	return mCore.get();
-}
-
-QString SoundPlayerGui::getSource() const {
-	return mCore ? mCore->getSource() : QString();
-}
-
-void SoundPlayerGui::setSource(QString source) {
-	if (mCore) mCore->setSource(source);
 }

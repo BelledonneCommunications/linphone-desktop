@@ -12,8 +12,8 @@ Button {
     // bottomPadding: Math.round(16 * DefaultStyle.dp)
     // leftPadding: Math.round(16 * DefaultStyle.dp)
     // rightPadding: Math.round(16 * DefaultStyle.dp)
-    icon.width: width
-    icon.height: width
+    // icon.width: width
+    // icon.height: width
     radius: width * 2
     // width: Math.round(24 * DefaultStyle.dp)
     height: width

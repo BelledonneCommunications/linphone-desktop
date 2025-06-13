@@ -40,6 +40,8 @@ public:
 	Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY videoEnabledChanged)
 	Q_PROPERTY(bool echoCancellationEnabled READ getEchoCancellationEnabled WRITE setEchoCancellationEnabled NOTIFY
 	               echoCancellationEnabledChanged)
+	Q_PROPERTY(bool autoDownloadReceivedFiles READ getAutoDownloadReceivedFiles WRITE setAutoDownloadReceivedFiles
+	               NOTIFY autoDownloadReceivedFilesChanged)
 	Q_PROPERTY(
 	    int echoCancellationCalibration READ getEchoCancellationCalibration NOTIFY echoCancellationCalibrationChanged)
 	Q_PROPERTY(bool automaticallyRecordCallsEnabled READ getAutomaticallyRecordCallsEnabled WRITE
@@ -126,6 +128,11 @@ public:
 		return mEchoCancellationEnabled;
 	}
 	void setEchoCancellationEnabled(bool enabled);
+
+	bool getAutoDownloadReceivedFiles() {
+		return mAutoDownloadReceivedFiles;
+	}
+	void setAutoDownloadReceivedFiles(bool enabled);
 
 	bool getAutomaticallyRecordCallsEnabled() {
 		return mAutomaticallyRecordCallsEnabled;
@@ -248,6 +255,7 @@ signals:
 	void videoEnabledChanged();
 
 	void echoCancellationEnabledChanged();
+	void autoDownloadReceivedFilesChanged();
 
 	void automaticallyRecordCallsEnabledChanged();
 
@@ -327,6 +335,7 @@ private:
 	// Call
 	bool mVideoEnabled;
 	bool mEchoCancellationEnabled;
+	bool mAutoDownloadReceivedFiles;
 	bool mAutomaticallyRecordCallsEnabled;
 
 	// Audio

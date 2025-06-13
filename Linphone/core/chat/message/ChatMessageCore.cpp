@@ -90,6 +90,12 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	for (auto content : chatmessage->getContents()) {
 		auto contentCore = ChatMessageContentCore::create(content, mChatMessageModel);
 		mChatMessageContentList.push_back(contentCore);
+		if (content->isFile() && !content->isVoiceRecording()) mHasFileContent = true;
+		if (content->isIcalendar()) mIsCalendarInvite = true;
+		if (content->isVoiceRecording()) {
+			mIsVoiceRecording = true;
+			mVoiceRecordingContent = contentCore;
+		}
 	}
 	auto reac = chatmessage->getOwnReaction();
 	mOwnReaction = reac ? Utils::coreStringToAppString(reac->getBody()) : QString();
@@ -122,11 +128,6 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 
 	mIsForward = chatmessage->isForward();
 	mIsReply = chatmessage->isReply();
-	for (auto &content : chatmessage->getContents()) {
-		if (content->isFile() && !content->isVoiceRecording()) mHasFileContent = true;
-		if (content->isIcalendar()) mIsCalendarInvite = true;
-		if (content->isVoiceRecording()) mIsVoiceRecording = true;
-	}
 }
 
 ChatMessageCore::~ChatMessageCore() {
@@ -155,6 +156,9 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	});
 	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lRemoveReaction, [this]() {
 		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->removeReaction(); });
+	});
+	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lSend, [this]() {
+		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->send(); });
 	});
 	mChatMessageModelConnection->makeConnectToModel(
 	    &ChatMessageModel::newMessageReaction,
@@ -431,3 +435,7 @@ std::shared_ptr<ChatMessageModel> ChatMessageCore::getModel() const {
 // ConferenceInfoGui *ChatMessageCore::getConferenceInfoGui() const {
 // 	return mConferenceInfo ? new ConferenceInfoGui(mConferenceInfo) : nullptr;
 // }
+
+ChatMessageContentGui *ChatMessageCore::getVoiceRecordingContent() const {
+	return new ChatMessageContentGui(mVoiceRecordingContent);
+}

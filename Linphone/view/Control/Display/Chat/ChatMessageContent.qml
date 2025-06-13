@@ -28,7 +28,7 @@ ColumnLayout {
 	// VOICE MESSAGES
 	Repeater {
 		id: messagesVoicesList
-		visible: mainItem.chatMessageGui.core.isVoiceRecording && count > 0
+		visible: count > 0
 		model: ChatMessageContentProxy{
 			filterType: ChatMessageContentProxy.FilterContentType.Voice
 			chatMessageGui: mainItem.chatMessageGui

@@ -2,7 +2,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
-import SettingsCpp 1.0
+import SettingsCpp
 import Linphone
 
 AbstractSettingsLayout {

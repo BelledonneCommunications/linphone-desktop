@@ -7,41 +7,45 @@ import UtilsCpp
 
 // =============================================================================
 
-Loader{
+Item {
 	id: mainItem
 	property ChatMessageContentGui chatMessageContentGui
-	property int availableWidth : parent.width
-	
-	// property string filePath : tempFile.filePath
-	
-	active: chatMessageContentGui && chatMessageContentGui.core.isVoiceRecording
-	
-	// onChatMessageContentGuiChanged: if(chatMessageContentGui){
-	// 	tempFile.createFileFromContentModel(chatMessageContentGui, false);
-	// }
-	
-	// TemporaryFile {
-	// 	id: tempFile
-	// }
-	
-	sourceComponent: Item {
-		id: loadedItem
-		property bool isPlaying : soundPlayerGui && soundPlayerGui.core.playbackState === LinphoneEnums.PlaybackState.PlayingState
-		onIsPlayingChanged: isPlaying ? mediaProgressBar.resume() : mediaProgressBar.stop()
-		
-		width: mainItem.width
-		height: mainItem.height
-		
-		clip: false
+	property var chatMessageObj
+	property ChatMessageGui chatMessage: chatMessageObj && chatMessageObj.value || null
+	property bool isPlaying : soudPlayerLoader.item && soudPlayerLoader.item.core.playbackState === LinphoneEnums.PlaybackState.PlayingState
+	onIsPlayingChanged: isPlaying ? mediaProgressBar.resume() : mediaProgressBar.stop()
+	property bool recording: false
+	property RecorderGui recorderGui: recorderLoader.item || null
 
-		SoundPlayerGui {
+	signal voiceRecordingMessageCreationRequested(RecorderGui recorderGui)
+	signal stopRecording()
+
+	function createVoiceMessageInChat(chat) {
+		if (recorderLoader.item) {
+			mainItem.chatMessageObj = UtilsCpp.createVoiceRecordingMessage(recorderLoader.item, chat)
+		} else {
+			//: Error
+			UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+			//: Failed to create voice message : error in recorder
+			qsTr("information_popup_voice_message_error_message"), false)
+		}
+	}
+
+	Loader {
+		id: soudPlayerLoader
+		property int duration: mainItem.chatMessageContentGui 
+			? mainItem.chatMessageContentGui.core.fileDuration 
+			: item
+				? item.core.duration
+				: 0
+		property int position: item?.core.position || 0
+		active: mainItem.chatMessageContentGui && mainItem.chatMessageContentGui.core.isVoiceRecording
+		sourceComponent: SoundPlayerGui {
 			id: soundPlayerGui
-			property int duration: mainItem.chatMessageContentGui ? mainItem.chatMessageContentGui.core.fileDuration : core.duration
-			property int position: core.position
 			source: mainItem.chatMessageContentGui && mainItem.chatMessageContentGui.core.filePath
 
 			function play(){
-				if(loadedItem.isPlaying){// Pause the play
+				if(mainItem.isPlaying){// Pause the play
 					soundPlayerGui.core.lPause()
 				}else{// Play the audio
 					soundPlayerGui.core.lPlay()
@@ -51,40 +55,81 @@ Loader{
 				mediaProgressBar.value = 101
 			}
 			onPositionChanged: {
-				mediaProgressBar.progressPosition = position
-				mediaProgressBar.value = 100 * ( mediaProgressBar.progressPosition / duration)
+				mediaProgressBar.progressPosition = soudPlayerLoader.position
+				mediaProgressBar.value = 100 * ( mediaProgressBar.progressPosition / soudPlayerLoader.duration)
 			}
 			onSourceChanged: if (source != "") {
-				// core.lPlay()// This will open the file and allow seeking
-				// core.lPause()
-				core.lOpen()
+				core.lOpen() // Open the file and allow seeking
 				mediaProgressBar.value = 0
 				mediaProgressBar.refresh()
 			}
+			onErrorChanged: (error) => {
+				//: Error
+				UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), error, false)
+			}
 		}
-		
+	}
+	
+	Loader {
+		id: recorderLoader
+		active: mainItem.recording && !mainItem.chatMessageContentGui
+		property int duration: item?.core.duration || 0
+		property int captureVolume: item?.core.captureVolume || 0
+		property var state: item?.core.state
 
-		MediaProgressBar{
-			id: mediaProgressBar
-			anchors.fill: parent
-			progressDuration: soundPlayerGui ? soundPlayerGui.duration : chatMessageContentGui.core.fileDuration
-			progressPosition: 0
-			value: 0
-			function refresh(){
-				if(soundPlayerGui){
-					soundPlayerGui.core.lRefreshPosition()
+		Connections {
+			target: mainItem
+			function onStopRecording() {
+				recorderLoader.item.core.lStop()
+			}
+		}
+
+		sourceComponent: RecorderGui {
+			id: recorderGui
+			onReady: core.lStart()
+			onStateChanged: (state) => {
+				if (state === LinphoneEnums.RecorderState.Running) mediaProgressBar.start()
+				if (state === LinphoneEnums.RecorderState.Closed) {
+					mediaProgressBar.stop()
+					mainItem.voiceRecordingMessageCreationRequested(recorderGui)
 				}
 			}
-			onEndReached:{
-				if(soundPlayerGui)
-					soundPlayerGui.core.lStop()
+		}
+	}
+
+	MediaProgressBar{
+		id: mediaProgressBar
+		anchors.fill: parent
+		progressDuration: soudPlayerLoader.active 
+			? soudPlayerLoader.duration 
+			: recorderLoader
+				? recorderLoader.duration
+				: chatMessageContentGui.core.fileDuration
+		progressPosition: 0
+		value: 0
+		recording: recorderLoader.state === LinphoneEnums.RecorderState.Running
+		function refresh(){
+			if(soudPlayerLoader.item){
+				soudPlayerLoader.item.core.lRefreshPosition()
+			} else if (recorderLoader.item) {
+				recorderLoader.item.core.lRefresh()
 			}
-			onPlayStopButtonToggled: soundPlayerGui.play()
-			onRefreshPositionRequested: refresh()
-			onSeekRequested: (ms) => {
-				if(soundPlayerGui) {
-					soundPlayerGui.core.lSeek(ms)
-				}
+		}
+		onEndReached:{
+			if(soudPlayerLoader.item)
+				soudPlayerLoader.item.core.lStop()
+		}
+		onPlayStopButtonToggled: {
+			if(soudPlayerLoader.item) {
+				soudPlayerLoader.item.play()
+			} else if (recorderLoader.item) {
+				recorderLoader.item.core.lStop()
+			}
+		}
+		onRefreshPositionRequested: refresh()
+		onSeekRequested: (ms) => {
+			if(soudPlayerLoader.active) {
+				soudPlayerLoader.item.core.lSeek(ms)
 			}
 		}
 	}

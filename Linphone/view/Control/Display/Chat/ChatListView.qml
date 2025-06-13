@@ -342,9 +342,9 @@ ListView {
                         spacing: Math.round(10 * DefaultStyle.dp)
                         Layout.fillWidth: true
                         onClicked: {
-                            //: Delete the chat ?
+                            //: Delete the conversation ?
                             mainWindow.showConfirmationLambdaPopup(qsTr("chat_list_delete_chat_popup_title"),
-                                                                   //: This chat and all its messages will be deleted. Do You want to continue ?
+                                                                   //: This conversation and all its messages will be deleted. Do You want to continue ?
                                 qsTr("chat_list_delete_chat_popup_message"),
                                 "",
                                 function(confirmed) {

@@ -46,7 +46,7 @@ public:
 	void pause();
 	bool play(QString source);
 	void stop(bool force = false);
-	void seek(int offset);
+	void seek(QString source, int offset);
 
 	int getPosition() const;
 	bool hasVideo() const; // Call it after playing a video because the detection is not outside this scope.

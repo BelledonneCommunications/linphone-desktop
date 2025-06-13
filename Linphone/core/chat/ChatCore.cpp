@@ -117,6 +117,15 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	mChatModelConnection->makeConnectToCore(&ChatCore::lDeleteHistory, [this]() {
 		mChatModelConnection->invokeToModel([this]() { mChatModel->deleteHistory(); });
 	});
+	mChatModelConnection->makeConnectToCore(&ChatCore::lDeleteMessage, [this](ChatMessageGui *message) {
+		mChatModelConnection->invokeToModel([this, core = message ? message->mCore : nullptr]() {
+			auto messageModel = core ? core->getModel() : nullptr;
+			if (messageModel) {
+				mChatModel->deleteMessage(messageModel->getMonitor());
+			}
+		});
+	});
+
 	mChatModelConnection->makeConnectToCore(
 	    &ChatCore::lLeave, [this]() { mChatModelConnection->invokeToModel([this]() { mChatModel->leave(); }); });
 	mChatModelConnection->makeConnectToModel(&ChatModel::historyDeleted, [this]() {
@@ -458,8 +467,13 @@ void ChatCore::appendEventLogsToEventLogList(QList<QSharedPointer<EventLogCore>>
 
 void ChatCore::appendEventLogToEventLogList(QSharedPointer<EventLogCore> e) {
 	if (mEventLogList.contains(e)) return;
-	mEventLogList.append(e);
-	emit eventsInserted({e});
+	auto it = std::find_if(mEventLogList.begin(), mEventLogList.end(), [e](QSharedPointer<EventLogCore> event) {
+		return e->getEventLogId() == event->getEventLogId();
+	});
+	if (it == mEventLogList.end()) {
+		mEventLogList.append(e);
+		emit eventsInserted({e});
+	}
 }
 
 void ChatCore::removeEventLogsFromEventLogList(QList<QSharedPointer<EventLogCore>> list) {

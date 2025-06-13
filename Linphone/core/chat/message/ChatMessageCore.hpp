@@ -18,11 +18,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHATMESSAGECORE_H_
-#define CHATMESSAGECORE_H_
+#ifndef CHAT_MESSAGE_CORE_H_
+#define CHAT_MESSAGE_CORE_H_
 
 #include "EventLogCore.hpp"
-#include "core/chat/message/content/ChatMessageContentCore.hpp"
+#include "core/chat/message/content/ChatMessageContentGui.hpp"
 #include "core/chat/message/content/ChatMessageContentProxy.hpp"
 #include "core/conference/ConferenceInfoCore.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
@@ -118,7 +118,7 @@ public:
 	void setMessageState(LinphoneEnums::ChatMessageState state);
 
 	std::shared_ptr<ChatMessageModel> getModel() const;
-	// ConferenceInfoGui *getConferenceInfoGui() const;
+	Q_INVOKABLE ChatMessageContentGui *getVoiceRecordingContent() const;
 
 signals:
 	void timestampChanged(QDateTime timestamp);
@@ -136,6 +136,7 @@ signals:
 	void readChanged();
 	void lSendReaction(const QString &reaction);
 	void lRemoveReaction();
+	void lSend();
 
 private:
 	DECLARE_ABSTRACT_OBJECT
@@ -164,10 +165,12 @@ private:
 	bool mIsOutgoing = false;
 	LinphoneEnums::ChatMessageState mMessageState;
 	QList<QSharedPointer<ChatMessageContentCore>> mChatMessageContentList;
+	// for voice recording creation message
+	QSharedPointer<ChatMessageContentCore> mVoiceRecordingContent;
 	// QSharedPointer<ConferenceInfoCore> mConferenceInfo = nullptr;
 
 	std::shared_ptr<ChatMessageModel> mChatMessageModel;
 	QSharedPointer<SafeConnection<ChatMessageCore, ChatMessageModel>> mChatMessageModelConnection;
 };
 
-#endif // CHATMESSAGECORE_H_
+#endif // CHAT_MESSAGE_CORE_H_

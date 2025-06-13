@@ -324,7 +324,6 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 
 	if (messages.size() > 0) {
 		shared_ptr<linphone::ChatMessage> message = messages.front();
-
 		auto receiverAccount = ToolModel::findAccount(message->getToAddress());
 		if (receiverAccount) {
 			auto senderAccount = ToolModel::findAccount(message->getFromAddress());
@@ -340,7 +339,8 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 			}
 		}
 
-		if (messages.size() == 1) { // Display only sender on mono message.
+		auto getMessage = [this, &remoteAddress, &txt](const shared_ptr<linphone::ChatMessage> &message) {
+			if (message->isRead()) return;
 			auto remoteAddr = message->getFromAddress()->clone();
 			remoteAddr->clean();
 			remoteAddress = Utils::coreStringToAppString(remoteAddr->asStringUriOnly());
@@ -356,9 +356,22 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 			if (txt.isEmpty() && message->hasConferenceInvitationContent())
 				//: 'Conference invitation received!' : Notification about receiving an invitation to a conference.
 				txt = tr("new_conference_invitation");
+		};
+
+		if (messages.size() == 1) { // Display only sender on mono message.
+			getMessage(message);
 		} else {
-			//: 'New messages received!' Notification that warn the user of new messages.
-			txt = tr("new_chat_room_messages");
+			int unreadCount = 0;
+			for (auto &message : messages) {
+				if (!message->isRead()) {
+					++unreadCount;
+					if (unreadCount == 1) getMessage(message);
+				}
+			}
+			if (unreadCount == 0) return;
+			if (unreadCount > 1)
+				//: 'New messages received!' Notification that warn the user of new messages.
+				txt = tr("new_chat_room_messages");
 		}
 
 		auto chatCore = ChatCore::create(room);

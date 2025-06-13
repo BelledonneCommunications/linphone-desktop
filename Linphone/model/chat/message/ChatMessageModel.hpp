@@ -59,6 +59,8 @@ public:
 
 	void removeReaction();
 
+	void send();
+
 	linphone::ChatMessage::State getState() const;
 
 	QString getOwnReaction() const;

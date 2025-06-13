@@ -150,7 +150,7 @@ signals:
 	void meAdminChanged();
 	void participantsChanged();
 
-	void lDeleteMessage();
+	void lDeleteMessage(ChatMessageGui *message);
 	void lDelete();
 	void lDeleteHistory();
 	void lMarkAsRead();
@@ -159,6 +159,7 @@ signals:
 	void lUpdateLastUpdatedTime();
 	void lSendTextMessage(QString message);
 	void lSendMessage(QString message, QVariantList files);
+	void lSendVoiceMessage();
 	void lCompose();
 	void lLeave();
 	void lSetMuted(bool muted);

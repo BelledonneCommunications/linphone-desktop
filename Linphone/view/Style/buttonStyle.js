@@ -38,6 +38,23 @@
 		}
 	}
 
+	// White with orange icon
+	var player = {
+		color: {
+			normal: Linphone.DefaultStyle.grey_0,
+			hovered: Linphone.DefaultStyle.main1_100,
+			pressed: Linphone.DefaultStyle.main1_500_main
+		},
+		text: {
+			normal: Linphone.DefaultStyle.main1_500_main,
+			pressed: Linphone.DefaultStyle.main1_500_main
+		},
+		image: {
+			normal: Linphone.DefaultStyle.main1_500_main,
+			pressed: Linphone.DefaultStyle.main1_500_main
+		}
+	}
+
 // Light orange
 	var tertiary = {
 		color: {

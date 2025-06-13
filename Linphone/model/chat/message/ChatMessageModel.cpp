@@ -102,6 +102,10 @@ void ChatMessageModel::removeReaction() {
 	sendReaction(QString());
 }
 
+void ChatMessageModel::send() {
+	mMonitor->send();
+}
+
 QString ChatMessageModel::getOwnReaction() const {
 	auto reaction = mMonitor->getOwnReaction();
 	return reaction ? Utils::coreStringToAppString(reaction->getBody()) : QString();

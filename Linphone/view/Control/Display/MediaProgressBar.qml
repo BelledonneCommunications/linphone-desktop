@@ -30,7 +30,7 @@ ProgressBar {
 		animationTest.start()
 	}
 	function resume(){
-		if(mainItem.value >= 100)
+		if (mainItem.value >= 100)
 			mainItem.value = 0
 		animationTest.start()
 	}
@@ -41,7 +41,7 @@ ProgressBar {
 	signal endReached()
 	signal refreshPositionRequested()
 	signal seekRequested(int ms)
-	Timer{
+	Timer {
 		id: animationTest
 		repeat: true
 		onTriggered: mainItem.refreshPositionRequested()
@@ -60,7 +60,6 @@ ProgressBar {
 				mainItem.value = 100// Stay at 100
 				progressPosition = progressDuration
 			}
-			console.log("end reached")
 			mainItem.endReached()
 		}
 	}
@@ -128,8 +127,7 @@ ProgressBar {
 			onClicked: {
 				mainItem.playStopButtonToggled()
 			}
-			borderColor: "transparent"
-			style: ButtonStyle.secondary
+			style: ButtonStyle.player
 		}
 		Control.Control {
 			anchors.right: parent.right
@@ -150,6 +148,8 @@ ProgressBar {
 					visible: mainItem.recording
 					colorizationColor: DefaultStyle.danger_500main
 					imageSource: AppIcons.recordFill
+					Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+					Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
 				}
 				Text {
 					id: durationText

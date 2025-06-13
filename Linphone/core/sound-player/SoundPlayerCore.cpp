@@ -29,14 +29,6 @@
 
 DEFINE_ABSTRACT_OBJECT(SoundPlayerCore)
 
-// =============================================================================
-
-using namespace std;
-
-namespace {
-int ForceCloseTimerInterval = 20;
-}
-
 // -----------------------------------------------------------------------------
 
 QSharedPointer<SoundPlayerCore> SoundPlayerCore::create() {
@@ -114,7 +106,7 @@ void SoundPlayerCore::buildInternalPlayer(QSharedPointer<SoundPlayerCore> me) {
 		mSoundPlayerModelConnection->invokeToModel([this] { mSoundPlayerModel->play(mSource); });
 	});
 	mSoundPlayerModelConnection->makeConnectToCore(&SoundPlayerCore::lSeek, [this](int offset) {
-		mSoundPlayerModelConnection->invokeToModel([this, offset] { mSoundPlayerModel->seek(offset); });
+		mSoundPlayerModelConnection->invokeToModel([this, offset] { mSoundPlayerModel->seek(mSource, offset); });
 	});
 	mSoundPlayerModelConnection->makeConnectToModel(&SoundPlayerModel::positionChanged, [this](int pos) {
 		mSoundPlayerModelConnection->invokeToCore([this, pos] { setPosition(pos); });
@@ -126,12 +118,15 @@ void SoundPlayerCore::buildInternalPlayer(QSharedPointer<SoundPlayerCore> me) {
 		});
 	});
 	mSoundPlayerModelConnection->makeConnectToModel(&SoundPlayerModel::eofReached,
-	                                                [this](const shared_ptr<linphone::Player> &player) {
+	                                                [this](const std::shared_ptr<linphone::Player> &player) {
 		                                                mSoundPlayerModelConnection->invokeToCore([this] {
 			                                                mForceClose = true;
 			                                                handleEof();
 		                                                });
 	                                                });
+	mSoundPlayerModelConnection->makeConnectToModel(&SoundPlayerModel::errorChanged, [this](QString error) {
+		mSoundPlayerModelConnection->invokeToCore([this, error] { setError(error); });
+	});
 }
 
 // -----------------------------------------------------------------------------

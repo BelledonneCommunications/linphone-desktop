@@ -52,6 +52,7 @@ class ConferenceCore;
 class ParticipantDeviceCore;
 class DownloadablePayloadTypeCore;
 class ChatGui;
+class RecorderGui;
 
 class Utils : public QObject, public AbstractObject {
 	Q_OBJECT
@@ -173,6 +174,9 @@ public:
 	Q_INVOKABLE static QString toDateTimeString(QDateTime date, const QString &format = "yyyy/MM/dd hh:mm:ss");
 	static QDateTime getOffsettedUTC(const QDateTime &date);
 	Q_INVOKABLE static QString toTimeString(QDateTime date, const QString &format = "hh:mm:ss");
+
+	Q_INVOKABLE static VariantObject *createVoiceRecordingMessage(RecorderGui *recorderGui, ChatGui *chatGui);
+	Q_INVOKABLE static void sendVoiceRecordingMessage(RecorderGui *recorderGui, ChatGui *chatGui);
 
 	//	QDir findDirectoryByName(QString startPath, QString name);
 

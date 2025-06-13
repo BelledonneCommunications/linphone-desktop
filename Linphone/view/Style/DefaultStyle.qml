@@ -1,5 +1,6 @@
 pragma Singleton
 import QtQuick
+import Linphone
 
 QtObject {
     property color main1_100: "#FFEACB"

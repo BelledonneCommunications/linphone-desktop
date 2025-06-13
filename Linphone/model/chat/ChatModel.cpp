@@ -119,6 +119,10 @@ void ChatModel::deleteHistory() {
 	emit historyDeleted();
 }
 
+void ChatModel::deleteMessage(std::shared_ptr<linphone::ChatMessage> message) {
+	mMonitor->deleteMessage(message);
+}
+
 void ChatModel::leave() {
 	mMonitor->leave();
 }
@@ -126,6 +130,11 @@ void ChatModel::leave() {
 void ChatModel::deleteChatRoom() {
 	CoreModel::getInstance()->getCore()->deleteChatRoom(mMonitor);
 	emit deleted();
+}
+
+std::shared_ptr<linphone::ChatMessage>
+ChatModel::createVoiceRecordingMessage(const std::shared_ptr<linphone::Recorder> &recorder) {
+	return mMonitor->createVoiceRecordingMessage(recorder);
 }
 
 std::shared_ptr<linphone::ChatMessage> ChatModel::createTextMessageFromText(QString text) {

@@ -19,7 +19,7 @@ Control.Button {
 	property color pressedTextColor: style?.text?.pressed || Qt.darker(textColor, 1.1)
 	property color borderColor: style?.borderColor || "transparent"
 	ToolTip.visible: hovered && ToolTip.text != ""
-	ToolTip.delay: 1000
+	ToolTip.delay: 500
 	property color disabledFilterColor: color.hslLightness > 0.5
 		? DefaultStyle.grey_0
 		: DefaultStyle.grey_400
@@ -199,9 +199,20 @@ Control.Button {
 		}
 		Component{
 			id: imageComponent
-			ButtonImage{
+			Item {
 				width: stacklayout.width
 				height: stacklayout.height
+				ButtonImage {
+					id: buttonIcon
+					anchors.fill: parent
+				}
+				ButtonImage {
+					z: buttonIcon.z + 1
+					visible: !mainItem.enabled
+					anchors.fill: parent
+					colorizationColor: DefaultStyle.grey_0
+					opacity: 0.5
+				}
 			}
 		}
 		Component{

@@ -86,6 +86,9 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/sound-player/SoundPlayerCore.cpp
 	core/sound-player/SoundPlayerGui.cpp
 
+	core/recorder/RecorderCore.cpp
+	core/recorder/RecorderGui.cpp
+
 	core/videoSource/VideoSourceDescriptorCore.cpp
 	core/videoSource/VideoSourceDescriptorGui.cpp
 	

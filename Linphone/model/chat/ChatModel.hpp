@@ -47,8 +47,11 @@ public:
 	std::list<std::shared_ptr<linphone::ChatMessage>> getHistory() const;
 	QString getIdentifier() const;
 	void deleteHistory();
+	void deleteMessage(std::shared_ptr<linphone::ChatMessage> message);
 	void deleteChatRoom();
 	void leave();
+	std::shared_ptr<linphone::ChatMessage>
+	createVoiceRecordingMessage(const std::shared_ptr<linphone::Recorder> &recorder);
 	std::shared_ptr<linphone::ChatMessage> createTextMessageFromText(QString text);
 	std::shared_ptr<linphone::ChatMessage> createMessage(QString text,
 	                                                     QList<std::shared_ptr<ChatMessageContentModel>> filesContent);
