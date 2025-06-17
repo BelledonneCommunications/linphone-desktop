@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
+import Qt.labs.qmlmodels
 import Linphone
 import UtilsCpp
 import SettingsCpp
