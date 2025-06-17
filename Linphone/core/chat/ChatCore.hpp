@@ -128,6 +128,8 @@ public:
 
 	QList<QSharedPointer<ParticipantCore>> buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom) const;
 	QVariantList getParticipantsGui() const;
+	Q_INVOKABLE QStringList getParticipantsAddresses() const;
+
 
 signals:
 	// used to close all the notifications when one is clicked

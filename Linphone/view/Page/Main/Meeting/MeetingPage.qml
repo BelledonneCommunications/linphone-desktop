@@ -23,6 +23,17 @@ AbstractMainPage {
 	showDefaultItem: leftPanelStackView.currentItem?.objectName === "listLayout" && meetingListCount === 0
 
 
+	function createPreFilledMeeting(subject, addresses) {
+		mainItem.selectedConference = Qt.createQmlObject('import Linphone
+										ConferenceInfoGui{
+										}', mainItem)
+		mainItem.selectedConference.core.resetParticipants(addresses)
+		mainItem.selectedConference.core.subject = subject
+		var item = leftPanelStackView.push(createConf, {"conferenceInfoGui": mainItem.selectedConference, "isCreation": true})
+		item.forceActiveFocus()
+	}
+
+
 	function editConference(confInfoGui = null) {
 		var isCreation = !confInfoGui
 		var item

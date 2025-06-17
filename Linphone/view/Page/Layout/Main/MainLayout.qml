@@ -29,6 +29,7 @@ Item {
     signal displayChatRequested(string contactAddress)
     signal openChatRequested(ChatGui chat)
     signal createContactRequested(string name, string address)
+	signal scheduleMeetingRequested(string subject, list<string> addresses)
     signal accountRemoved
 
     function goToNewCall() {
@@ -51,10 +52,13 @@ Item {
         tabbar.currentIndex = 2
         mainItem.openChatRequested(chat)
     }
-
     function createContact(name, address) {
         tabbar.currentIndex = 1
         mainItem.createContactRequested(name, address)
+    }
+	function scheduleMeeting(subject, addresses) {
+        tabbar.currentIndex = 3
+        mainItem.scheduleMeetingRequested(subject, addresses)
     }
 
     function openContextualMenuComponent(component) {
@@ -647,7 +651,15 @@ Item {
                                 }
                             }
                         }
-                        MeetingPage {}
+                        MeetingPage {
+							id: meetingPage
+							Connections {
+								target: mainItem
+								function onScheduleMeetingRequested(subject, addresses) {
+									meetingPage.createPreFilledMeeting(subject, addresses)
+								}
+							}
+						}
                     }
                 }
                 Component {

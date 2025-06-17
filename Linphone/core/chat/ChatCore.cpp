@@ -546,6 +546,14 @@ QVariantList ChatCore::getParticipantsGui() const {
 	return result;
 }
 
+QStringList ChatCore::getParticipantsAddresses() const {
+	QStringList result;
+	for (auto participantCore : mParticipants) {
+		result.append(participantCore->getSipAddress());
+	}
+	return result;
+}
+
 QList<QSharedPointer<ParticipantCore>>
 ChatCore::buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom) const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));

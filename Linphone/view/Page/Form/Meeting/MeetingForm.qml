@@ -69,7 +69,7 @@ FocusScope {
 					Layout.fillWidth: true
                     //: "Ajouter un titre"
                     property string defaultText: qsTr("meeting_schedule_subject_hint")
-					text: defaultText
+					text: conferenceInfoGui.core.subject ? conferenceInfoGui.core.subject : defaultText
 					color: DefaultStyle.main2_600
 					font {
                         pixelSize: Math.round(20 * DefaultStyle.dp)

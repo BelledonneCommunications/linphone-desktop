@@ -120,6 +120,7 @@ ColumnLayout {
 			}
 		}
 		LabelButton {
+			visible: !SettingsCpp.disableMeetingsFeature
 			width: Math.round(56 * DefaultStyle.dp)
 			height: Math.round(56 * DefaultStyle.dp)
 			button.icon.width: Math.round(24 * DefaultStyle.dp)
@@ -130,6 +131,7 @@ ColumnLayout {
 			button.onClicked: parentView.groupCall()
 		}
 		LabelButton {
+			visible: !SettingsCpp.disableMeetingsFeature
 			width: Math.round(56 * DefaultStyle.dp)
 			height: Math.round(56 * DefaultStyle.dp)
 			button.icon.width: Math.round(24 * DefaultStyle.dp)
@@ -138,7 +140,7 @@ ColumnLayout {
 			//: "Réunion"
 			label: qsTr("group_infos_meeting")
 			button.onClicked: {
-				//TODO
+				UtilsCpp.getMainWindow().scheduleMeeting(mainItem.chatCore.title, mainItem.chatCore.getParticipantsAddresses())
 			}
 		}
 	}

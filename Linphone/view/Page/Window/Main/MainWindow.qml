@@ -91,6 +91,11 @@ AbstractWindow {
 			mainWindowStackView.replace(loginPage)
 	}
 
+	function scheduleMeeting(subject, addresses) {
+		openMainPage()
+		mainWindowStackView.currentItem.scheduleMeeting(subject, addresses)
+	}
+
 	property bool authenticationPopupOpened: false
 	Component {
 		id: authenticationPopupComp
