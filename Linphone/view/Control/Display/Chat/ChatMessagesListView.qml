@@ -14,6 +14,7 @@ ListView {
     spacing: Math.round(4 * DefaultStyle.dp)
     property ChatGui chat
     property color backgroundColor
+    signal showReactionsForMessageRequested(ChatMessageGui chatMessage)
 
     Component.onCompleted: {
         var index = eventLogProxy.findFirstUnreadIndex()
@@ -133,6 +134,7 @@ ListView {
 						: undefined
 
 					onMessageDeletionRequested: modelData.core.lDelete()
+                    onShowReactionsForMessageRequested: mainItem.showReactionsForMessageRequested(modelData)
 				}
         }
 

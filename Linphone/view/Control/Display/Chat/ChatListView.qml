@@ -263,6 +263,7 @@ ListView {
 						font {
 							pixelSize: Typography.p3.pixelSize
 							weight: Typography.p3.weight
+                            italic: modelData.core.sendingText !== ""
 						}
 						//: %1 is writing…
 						text: modelData.core.composingName !== ""

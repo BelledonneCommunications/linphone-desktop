@@ -114,8 +114,13 @@ Loader{
 					anchors.right: parent.right
 					anchors.rightMargin: stackView.width / 15
 					z: 1
-					source: account ? (account.core?.registrationState != LinphoneEnums.RegistrationState.Ok ? account.core?.registrationStateIcon : account.core?.presenceIcon)
-									: (contact ? contact.core?.presenceIcon : "")
+					source: account 
+							? (account.core?.registrationState !== LinphoneEnums.RegistrationState.Ok 
+								? account.core?.registrationStateIcon 
+								: account.core?.presenceIcon)
+							: (contact 
+								? contact.core?.presenceIcon 
+								: "")
 				}
 				
 			}

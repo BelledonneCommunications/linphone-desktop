@@ -154,6 +154,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Settings/NetworkSettingsLayout.qml
 	view/Page/Layout/Settings/AdvancedSettingsLayout.qml
 	view/Page/Layout/Chat/GroupConversationInfos.qml
+	view/Page/Layout/Chat/MessageReactionsInfos.qml
 	view/Page/Layout/Chat/OneOneConversationInfos.qml
 	view/Page/Layout/Chat/ChatInfoActionsGroup.qml
 	view/Page/Layout/Chat/GroupChatInfoParticipants.qml

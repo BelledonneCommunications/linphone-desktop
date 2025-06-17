@@ -34,7 +34,7 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 ColumnLayout {
     id: mainItem
     property var editor
-    property EmojiModel model: EmojiModel{
+    property EmojiModel model: EmojiModel {
         id: emojiModel
         iconsPath: "image://emoji/emojiSvgs/"
         iconsType: '.svg'

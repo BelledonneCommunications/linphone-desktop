@@ -12,6 +12,8 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 RowLayout {
     id: mainItem
     property ChatGui chat
+    // used to show chat message reactions in details panel
+    property ChatMessageGui chatMessage
 	property var contactObj: chat ? UtilsCpp.findFriendByAddress(mainItem.chat.core.peerAddress) : null
 	property var contact: contactObj?.value || null
     property CallGui call
@@ -112,12 +114,14 @@ RowLayout {
 					onPressed: mainItem.oneOneCall(true)
                 }
                 BigButton {
+                    id: detailsPanelButton
                     style: ButtonStyle.noBackground
                     checkable: true
                     checkedImageColor: DefaultStyle.main1_500_main
                     icon.source: AppIcons.info
+                    checked: detailsPanel.visible
                     onCheckedChanged: {
-                        detailsPanel.visible = !detailsPanel.visible
+                        detailsPanel.visible = checked
                     }
                 }
             }
@@ -147,6 +151,11 @@ RowLayout {
                         anchors.leftMargin: Math.round(18 * DefaultStyle.dp)
                         anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
                         Control.ScrollBar.vertical: scrollbar
+                        onShowReactionsForMessageRequested: (chatMessage) => {
+                            mainItem.chatMessage = chatMessage
+                            contentLoader.showingMessageReactions = true
+                            detailsPanel.visible = true
+                        }
 
                         Popup {
                             id: emojiPickerPopup
@@ -313,6 +322,7 @@ RowLayout {
 		visible: false
 		Layout.fillHeight: true
 		Layout.preferredWidth: Math.round(387 * DefaultStyle.dp)
+        onVisibleChanged: if(!visible) contentLoader.showingMessageReactions = false
 
 		background: Rectangle {
 			color: DefaultStyle.grey_0
@@ -321,9 +331,14 @@ RowLayout {
 
 		contentItem: Loader {
 			id: contentLoader
+            property bool showingMessageReactions: false
 			anchors.top: parent.top
 			anchors.topMargin: Math.round(39 * DefaultStyle.dp)
-			sourceComponent: mainItem.chat.core.isGroupChat ? groupInfoComponent : oneToOneInfoComponent
+			sourceComponent: showingMessageReactions
+                ? messageReactionsComponent
+                : mainItem.chat.core.isGroupChat
+                    ? groupInfoComponent
+                    : oneToOneInfoComponent
 			active: detailsPanel.visible
 			onLoaded: {
 				if (contentLoader.item) {
@@ -345,6 +360,16 @@ RowLayout {
 				chatGui: mainItem.chat
 			}
 		}
+
+        Component {
+			id: messageReactionsComponent
+			MessageReactionsInfos {
+                chatMessageGui: mainItem.chatMessage
+                onGoBackRequested: {
+                    detailsPanel.visible = false
+                    mainItem.chatMessage = null
+                }
+			}
+		}
 	}
 }
-

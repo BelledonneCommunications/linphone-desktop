@@ -88,7 +88,6 @@ Control.TabBar {
 				width: Math.min(implicitWidth, mainItem.width / mainItem.model.length)
 				font.weight: mainItem.textWeight
 				color: mainItem.currentIndex === index ? DefaultStyle.main2_600 : DefaultStyle.main2_400
-				font.family: DefaultStyle.defaultFont
 				font.pixelSize: mainItem.pixelSize
 				elide: Text.ElideRight
 				maximumLineCount: 1

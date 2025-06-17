@@ -64,6 +64,7 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString toAddress READ getToAddress CONSTANT)
 	Q_PROPERTY(QString peerName READ getPeerName CONSTANT)
 	Q_PROPERTY(QString fromName READ getFromName CONSTANT)
+	Q_PROPERTY(QString totalReactionsLabel READ getTotalReactionsLabel CONSTANT)
 	Q_PROPERTY(LinphoneEnums::ChatMessageState messageState READ getMessageState WRITE setMessageState NOTIFY
 	               messageStateChanged)
 	Q_PROPERTY(bool isRemoteMessage READ isRemoteMessage CONSTANT)
@@ -72,6 +73,8 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString ownReaction READ getOwnReaction WRITE setOwnReaction NOTIFY messageReactionChanged)
 	Q_PROPERTY(QList<Reaction> reactions READ getReactions WRITE setReactions NOTIFY messageReactionChanged)
 	Q_PROPERTY(QList<QVariant> reactionsSingleton READ getReactionsSingleton NOTIFY singletonReactionMapChanged)
+	Q_PROPERTY(
+	    QStringList reactionsSingletonAsStrings READ getReactionsSingletonAsStrings NOTIFY singletonReactionMapChanged)
 	Q_PROPERTY(bool isForward MEMBER mIsForward CONSTANT)
 	Q_PROPERTY(bool isReply MEMBER mIsReply CONSTANT)
 	Q_PROPERTY(bool hasFileContent MEMBER mHasFileContent CONSTANT)
@@ -105,8 +108,10 @@ public:
 
 	QString getOwnReaction() const;
 	void setOwnReaction(const QString &reaction);
+	QString getTotalReactionsLabel() const;
 	QList<Reaction> getReactions() const;
 	QList<QVariant> getReactionsSingleton() const;
+	QStringList getReactionsSingletonAsStrings() const;
 	QList<QSharedPointer<ChatMessageContentCore>> getChatMessageContentList() const;
 	void removeOneReactionFromSingletonMap(const QString &body);
 	void resetReactionsSingleton();
@@ -163,6 +168,7 @@ private:
 	bool mIsVoiceRecording = false;
 
 	bool mIsOutgoing = false;
+	QString mTotalReactionsLabel;
 	LinphoneEnums::ChatMessageState mMessageState;
 	QList<QSharedPointer<ChatMessageContentCore>> mChatMessageContentList;
 	// for voice recording creation message

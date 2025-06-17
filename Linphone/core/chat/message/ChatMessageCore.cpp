@@ -97,6 +97,8 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 			mVoiceRecordingContent = contentCore;
 		}
 	}
+	//: "Reactions": all reactions for one message label
+	mTotalReactionsLabel = tr("all_reactions_label");
 	auto reac = chatmessage->getOwnReaction();
 	mOwnReaction = reac ? Utils::coreStringToAppString(reac->getBody()) : QString();
 	for (auto &reaction : chatmessage->getReactions()) {
@@ -121,6 +123,8 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 				++count;
 				map.remove("count");
 				map.insert("count", count);
+				mReactionsSingletonMap.erase(it);
+				mReactionsSingletonMap.push_back(map);
 			}
 		}
 	}
@@ -336,12 +340,29 @@ void ChatMessageCore::setOwnReaction(const QString &reaction) {
 	}
 }
 
+QString ChatMessageCore::getTotalReactionsLabel() const {
+	return mTotalReactionsLabel;
+}
+
 QList<Reaction> ChatMessageCore::getReactions() const {
 	return mReactions;
 }
 
 QList<QVariant> ChatMessageCore::getReactionsSingleton() const {
 	return mReactionsSingletonMap;
+}
+
+QStringList ChatMessageCore::getReactionsSingletonAsStrings() const {
+	QStringList reacStringList;
+	int totalCount = 0;
+	for (auto &reac : mReactionsSingletonMap) {
+		auto map = reac.toMap();
+		auto count = map["count"].toInt();
+		totalCount += count;
+		reacStringList.append(QString("%1 %2").arg(map["body"].toString()).arg(count));
+	}
+	reacStringList.prepend(QString("%1 %2").arg(mTotalReactionsLabel).arg(totalCount));
+	return reacStringList;
 }
 
 QList<QSharedPointer<ChatMessageContentCore>> ChatMessageCore::getChatMessageContentList() const {

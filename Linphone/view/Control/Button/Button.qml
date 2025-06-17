@@ -42,6 +42,7 @@ Control.Button {
 	icon.source: style?.iconSource || ""
 	MouseArea {
 		id: mouseArea
+		z: stacklayout.z + 1
 		anchors.fill: parent
 		hoverEnabled: true
 		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor

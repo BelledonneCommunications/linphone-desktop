@@ -13,7 +13,7 @@ ColumnLayout {
 	id: mainItem
 	property ChatGui chatGui
 	property var chatCore: chatGui.core
-	property var contactObj: chat ? UtilsCpp.findFriendByAddress(mainItem.chatCore.peerAddress) : null
+	property var contactObj: chatGui ? UtilsCpp.findFriendByAddress(mainItem.chatCore.peerAddress) : null
 	property var parentView
 	spacing: 0
 
@@ -42,7 +42,7 @@ ColumnLayout {
 	}
 	
 	Text {
-		visible: contactObj?.value
+		visible: contactObj && contactObj.value || false
 		font: Typography.p3
 		color: contactObj?.value != null ? contactObj?.value.core.presenceColor : "transparent"
 		text: contactObj?.value != null ? contactObj?.value.core.presenceStatus : ""

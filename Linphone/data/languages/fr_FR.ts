@@ -1764,31 +1764,31 @@
 <context>
     <name>ChatMessage</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="236"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="238"/>
         <source>chat_message_copy_selection</source>
         <extracomment>&quot;Copy selection&quot;</extracomment>
         <translation>Copier la sélection</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="238"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="240"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
         <translation>Copier</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="246"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="248"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
         <translation>Copié</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="248"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="250"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
         <translation>dans le presse-papiers</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="254"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="256"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Supprimer</translation>
@@ -1878,13 +1878,19 @@ Error</extracomment>
 <context>
     <name>ChatMessageCore</name>
     <message>
-        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="143"/>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="101"/>
+        <source>all_reactions_label</source>
+        <extracomment>&quot;Reactions&quot;: all reactions for one message label</extracomment>
+        <translation>Réactions</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="145"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation>Supprimé</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="145"/>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="147"/>
         <source>info_toast_deleted_message</source>
         <extracomment>The message has been deleted</extracomment>
         <translation>Le message a été supprimé</translation>
@@ -1937,13 +1943,13 @@ Error</extracomment>
 <context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="89"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="90"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation>Conversation chiffrée de bout en bout</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="99"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="100"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Les messages de cette conversation sont chiffrés de bout 
  en bout. Seul votre correspondant peut les déchiffrer.</extracomment>
@@ -1951,7 +1957,7 @@ Error</extracomment>
 en bout. Seul votre correspondant peut les déchiffrer.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="182"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="184"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 est en train d&apos;écrire…</translation>
@@ -3935,6 +3941,21 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
     </message>
 </context>
 <context>
+    <name>MessageReactionsInfos</name>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/MessageReactionsInfos.qml" line="28"/>
+        <source>message_details_status title</source>
+        <extracomment>Message status</extracomment>
+        <translation>Statut du message</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/MessageReactionsInfos.qml" line="91"/>
+        <source>click_to_delete_reaction_info</source>
+        <extracomment>Click to delete</extracomment>
+        <translation>Appuyez pour supprimer</translation>
+    </message>
+</context>
+<context>
     <name>MultimediaSettings</name>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="44"/>
@@ -4712,7 +4733,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 <context>
     <name>SelectedChatView</name>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="33"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="35"/>
         <source>chat_view_group_call_toast_message</source>
         <translation>Démarrer un appel de groupe ?</translation>
     </message>

@@ -28,6 +28,7 @@ Control.Control {
 
     signal messageDeletionRequested()
 	signal isFileHoveringChanged(bool isFileHovering)
+    signal showReactionsForMessageRequested()
 
     background: Item {
         anchors.fill: parent
@@ -174,6 +175,7 @@ Control.Control {
                         property: "anchors.right"
                         value: chatBubble.right
                     }
+                    onClicked: mainItem.showReactionsForMessageRequested()
                     anchors.topMargin: Math.round(-6 * DefaultStyle.dp)
                     topPadding: Math.round(8 * DefaultStyle.dp)
                     bottomPadding: Math.round(8 * DefaultStyle.dp)

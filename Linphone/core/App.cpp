@@ -63,7 +63,7 @@
 #include "core/conference/ConferenceGui.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
 #include "core/conference/ConferenceInfoProxy.hpp"
-#include "core/emoji/EmojiModel.hpp"
+#include "core/emoji/EmojiProxy.hpp"
 #include "core/fps-counter/FPSCounter.hpp"
 #include "core/friend/FriendCore.hpp"
 #include "core/friend/FriendGui.hpp"
@@ -686,6 +686,7 @@ void App::initCppInterfaces() {
 	qmlRegisterType<CameraGui>(Constants::MainQmlUri, 1, 0, "CameraGui");
 	qmlRegisterType<FPSCounter>(Constants::MainQmlUri, 1, 0, "FPSCounter");
 	qmlRegisterType<EmojiModel>(Constants::MainQmlUri, 1, 0, "EmojiModel");
+	qmlRegisterType<EmojiProxy>(Constants::MainQmlUri, 1, 0, "EmojiProxy");
 	qmlRegisterType<SoundPlayerGui>(Constants::MainQmlUri, 1, 0, "SoundPlayerGui");
 	qmlRegisterType<RecorderGui>(Constants::MainQmlUri, 1, 0, "RecorderGui");
 
