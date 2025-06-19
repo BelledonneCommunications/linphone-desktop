@@ -61,6 +61,8 @@ public:
 	void enableEphemeral(bool enable);
 	void setSubject(QString subject) const;
 	void removeParticipantAtIndex(int index) const;
+	void setParticipantAddresses(const QStringList &addresses) const;
+	void toggleParticipantAdminStatusAtIndex(int index) const;
 
 signals:
 	void historyDeleted();

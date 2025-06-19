@@ -176,7 +176,6 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		                                         if (event->isHandled()) {
 			                                         mChatModelConnection->invokeToCore([this, event]() {
 				                                         appendEventLogToEventLogList(event);
-				                                         emit lUpdateUnreadCount();
 				                                         emit lUpdateLastUpdatedTime();
 			                                         });
 		                                         }
@@ -187,7 +186,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatModel::chatMessagesReceived, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                             const std::list<std::shared_ptr<linphone::EventLog>> &eventsLog) {
 		    if (mChatModel->getMonitor() != chatRoom) return;
-		    qDebug() << "EVENT LOGS RECEIVED IN CHATROOM" << mChatModel->getTitle();
+		    qDebug() << "CHAT MESSAGE RECEIVED IN CHATROOM" << mChatModel->getTitle();
 		    QList<QSharedPointer<EventLogCore>> list;
 		    for (auto &e : eventsLog) {
 			    auto event = EventLogCore::create(e);
@@ -325,6 +324,15 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	                                         });
 	mChatModelConnection->makeConnectToCore(&ChatCore::lRemoveParticipantAtIndex, [this](int index) {
 		mChatModelConnection->invokeToModel([this, index]() { mChatModel->removeParticipantAtIndex(index); });
+	});
+
+	mChatModelConnection->makeConnectToCore(&ChatCore::lSetParticipantsAddresses, [this](QStringList addresses) {
+		mChatModelConnection->invokeToModel([this, addresses]() { mChatModel->setParticipantAddresses(addresses); });
+	});
+
+	mChatModelConnection->makeConnectToCore(&ChatCore::lToggleParticipantAdminStatusAtIndex, [this](int index) {
+		mChatModelConnection->invokeToModel(
+		    [this, index]() { mChatModel->toggleParticipantAdminStatusAtIndex(index); });
 	});
 }
 

@@ -2811,7 +2811,7 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="97"/>
         <source>conference_participant_removed_event</source>
-        <translation>%1 a quitté le groupe</translation>
+        <translation>%1 ne fait plus partie du groupe</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="106"/>
@@ -2927,9 +2927,9 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
     <name>GroupChatInfoParticipants</name>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="194"/>
-        <source>group_infos_add_participants_title</source>
-        <extracomment>&quot;Ajouter des participants&quot;</extracomment>
-        <translation>Ajouter des Participants</translation>
+        <source>group_infos_manage_participants_title</source>
+        <extracomment>&quot;Gérer les participants&quot;</extracomment>
+        <translation>Gérer les participants</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="81"/>
@@ -2981,6 +2981,18 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
 </context>
 <context>
     <name>GroupConversationInfos</name>
+	<message>
+		<location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="129"/>
+		<source>group_infos_manage_participants</source>
+		<extracomment>Participants</extracomment>
+		<translation>Participants</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="117"/>
+		<source>group_infos_participants_edit_apply</source>
+		<extracomment>Apply</extracomment>
+		<translation>Appliquer</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="129"/>
         <source>group_infos_call</source>
@@ -3832,6 +3844,12 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Ajouter des participants</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Main/Meeting/MeetingPage.qml"/>
+		<source>meeting_schedule_add_participants_apply</source>
+		<extracomment>Appliquer</extracomment>
+		<translation>Appliquer</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="524"/>
         <source>add</source>

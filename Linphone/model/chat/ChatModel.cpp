@@ -168,6 +168,24 @@ void ChatModel::removeParticipantAtIndex(int index) const {
 	mMonitor->removeParticipant(participant);
 }
 
+void ChatModel::toggleParticipantAdminStatusAtIndex(int index) const {
+	auto participant = *std::next(mMonitor->getParticipants().begin(), index);
+	mMonitor->setParticipantAdminStatus(participant, !participant->isAdmin());
+}
+
+void ChatModel::setParticipantAddresses(const QStringList &addresses) const {
+	QSet<QString> s{addresses.cbegin(), addresses.cend()};
+	for (auto p : mMonitor->getParticipants()) {
+		auto address = Utils::coreStringToAppString(p->getAddress()->asStringUriOnly());
+		if (s.contains(address)) s.remove(address);
+		else mMonitor->removeParticipant(p);
+	}
+	for (const auto &a : s) {
+		auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(a));
+		if (address) mMonitor->addParticipant(address);
+	}
+}
+
 //---------------------------------------------------------------//
 
 void ChatModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> &chatRoom,

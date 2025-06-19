@@ -15,7 +15,7 @@ ColumnLayout {
     property var title: String
     property var participants
     property var chatCore
-    signal addParticipantRequested()
+    signal manageParticipantsRequested()
     
     function isGroupEditable() {
     	return chatCore && chatCore.meAdmin && !chatCore.isReadOnly
@@ -33,7 +33,7 @@ ColumnLayout {
         Layout.topMargin: Math.round(9 * DefaultStyle.dp)
         color: DefaultStyle.grey_100
         radius: Math.round(15 * DefaultStyle.dp)
-        height: contentColumn.implicitHeight
+        height: participants.length > 0 ? contentColumn.implicitHeight : Math.round(90 * DefaultStyle.dp)
 
         ColumnLayout {
             id: contentColumn
@@ -41,8 +41,7 @@ ColumnLayout {
             spacing: Math.round(16 * DefaultStyle.dp)
             
             Item {
-            	visible: participants.length > 0
-				Layout.preferredHeight: Math.round(1 * DefaultStyle.dp)
+				Layout.topMargin: Math.round(7 * DefaultStyle.dp)
 			}
 
 			Repeater {
@@ -133,7 +132,7 @@ ColumnLayout {
 									icon.height: Math.round(32 * DefaultStyle.dp)
 									onClicked: {
 										detailOptions.close()
-										participantCore.isAdmin = !participantCore.isAdmin
+										mainItem.chatCore.lToggleParticipantAdminStatusAtIndex(index)
 									}
 								}
 								IconLabelButton {
@@ -184,21 +183,21 @@ ColumnLayout {
 			}
             
 			MediumButton {
-				id: addParticipant
+				id: manageParticipants
 				visible: mainItem.isGroupEditable()
 				height: Math.round(40 * DefaultStyle.dp)
 				icon.source: AppIcons.plusCircle
 				icon.width: Math.round(16 * DefaultStyle.dp)
 				icon.height: Math.round(16 * DefaultStyle.dp)
-				//: "Ajouter des participants"
-				text: qsTr("group_infos_add_participants_title")
+				//: "Gérer des participants"
+				text: qsTr("group_infos_manage_participants_title")
 				style: ButtonStyle.secondary
-				onClicked: mainItem.addParticipantRequested()
+				onClicked: mainItem.manageParticipantsRequested()
 				Layout.alignment: Qt.AlignHCenter
 				Layout.bottomMargin: Math.round(17 * DefaultStyle.dp)
 			}
 			Item {
-				visible: !addParticipant.visible
+				visible: !manageParticipants.visible
 				Layout.bottomMargin: Math.round(7 * DefaultStyle.dp)
 			}
         }

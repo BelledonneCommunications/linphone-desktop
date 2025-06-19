@@ -39,12 +39,15 @@ EventLogCore::EventLogCore(const std::shared_ptr<const linphone::EventLog> &even
 	mTimestamp = QDateTime::fromMSecsSinceEpoch(eventLog->getCreationTime() * 1000);
 	if (eventLog->getChatMessage()) {
 		mChatMessageCore = ChatMessageCore::create(eventLog->getChatMessage());
-		mEventId = eventLog->getChatMessage()->getMessageId();
+		mEventId = Utils::coreStringToAppString(eventLog->getChatMessage()->getMessageId());
 	} else if (eventLog->getCallLog()) {
 		mCallHistoryCore = CallHistoryCore::create(eventLog->getCallLog());
-		mEventId = eventLog->getCallLog()->getCallId();
-	} else {
-		mEventId = eventLog->getNotifyId();
+		mEventId = Utils::coreStringToAppString(eventLog->getCallLog()->getCallId());
+	} else { // getNotifyId
+		QString type = QString::fromLatin1(
+		    QMetaEnum::fromType<LinphoneEnums::EventLogType>().valueToKey(static_cast<int>(mEventLogType)));
+		mEventId = type + QString::number(static_cast<qint64>(eventLog->getCreationTime()));
+		;
 		computeEvent(eventLog);
 	}
 }
@@ -55,7 +58,7 @@ EventLogCore::~EventLogCore() {
 void EventLogCore::setSelf(QSharedPointer<EventLogCore> me) {
 }
 
-std::string EventLogCore::getEventLogId() {
+QString EventLogCore::getEventLogId() {
 	return mEventId;
 }
 
@@ -127,11 +130,11 @@ void EventLogCore::computeEvent(const std::shared_ptr<const linphone::EventLog> 
 			break;
 		case linphone::EventLog::Type::ConferenceParticipantSetAdmin:
 			mEventDetails =
-			    tr("conference_participant_unset_admin_event").arg(ToolModel::getDisplayName(participantAddress));
+			    tr("conference_participant_set_admin_event").arg(ToolModel::getDisplayName(participantAddress));
 			break;
 		case linphone::EventLog::Type::ConferenceParticipantUnsetAdmin:
 			mEventDetails =
-			    tr("conference_participant_set_admin_event").arg(ToolModel::getDisplayName(participantAddress));
+			    tr("conference_participant_unset_admin_event").arg(ToolModel::getDisplayName(participantAddress));
 			break;
 		default:
 			mHandled = false;

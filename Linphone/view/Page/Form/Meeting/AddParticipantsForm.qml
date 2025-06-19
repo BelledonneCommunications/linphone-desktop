@@ -44,17 +44,23 @@ FocusScope{
 					nextItemInFocusChain(false).forceActiveFocus()
 				}
 			}
-			header: Text {
+			header: ColumnLayout {
 				Layout.fillWidth: true
-				horizontalAlignment: Text.AlignLeft
-				visible: mainItem.selectedParticipantsCount > 0
-				//: "%n participant(s) sélectionné(s)"
-				text: qsTr("add_participant_selected_count", '0', mainItem.selectedParticipantsCount).arg(mainItem.selectedParticipantsCount)
-				maximumLineCount: 1
-				color: DefaultStyle.grey_1000
-				font {
-					pixelSize: Math.round(12 * DefaultStyle.dp)
-					weight: Math.round(300 * DefaultStyle.dp)
+				Text {
+					Layout.fillWidth: true
+					horizontalAlignment: Text.AlignLeft
+					visible: mainItem.selectedParticipantsCount > 0
+					//: "%n participant(s) sélectionné(s)"
+					text: qsTr("add_participant_selected_count", '0', mainItem.selectedParticipantsCount).arg(mainItem.selectedParticipantsCount)
+					maximumLineCount: 1
+					color: DefaultStyle.grey_1000
+					font {
+						pixelSize: Math.round(12 * DefaultStyle.dp)
+						weight: Math.round(300 * DefaultStyle.dp)
+					}
+				}
+				Item {
+					Layout.preferredHeight: Math.round(10 * DefaultStyle.dp)
 				}
 			}
 			delegate: FocusScope {

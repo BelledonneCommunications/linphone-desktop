@@ -3009,9 +3009,9 @@ Error</extracomment>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="194"/>
-        <source>group_infos_add_participants_title</source>
-        <extracomment>&quot;Ajouter des participants&quot;</extracomment>
-        <translation>Add Participants</translation>
+        <source>group_infos_manage_participants_title</source>
+        <extracomment>&quot;Gérer les participants&quot;</extracomment>
+        <translation>Manage Participants</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="111"/>
@@ -3058,6 +3058,18 @@ Error</extracomment>
 </context>
 <context>
     <name>GroupConversationInfos</name>
+	<message>
+		<location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="129"/>
+		<source>group_infos_manage_participants</source>
+		<extracomment>Participants</extracomment>
+		<translation>Participants</translation>
+	</message>
+	<message>
+		<location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="117"/>
+		<source>group_infos_participants_edit_apply</source>
+		<extracomment>Apply</extracomment>
+		<translation>Apply</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="129"/>
         <source>group_infos_call</source>
@@ -3914,6 +3926,12 @@ Error</extracomment>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Teilnehmer hinzufügen</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Main/Meeting/MeetingPage.qml"/>
+		<source>meeting_schedule_add_participants_apply</source>
+		<extracomment>Apply</extracomment>
+		<translation>Apply</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="524"/>
         <source>add</source>

@@ -532,7 +532,7 @@ AbstractMainPage {
                             Layout.leftMargin: Math.round(11 * DefaultStyle.dp)
 							focus: enabled
 							style: ButtonStyle.main
-                            text: qsTr("add")
+                            text: qsTr("meeting_schedule_add_participants_apply")
 							KeyNavigation.left: addParticipantsBackButton
 							KeyNavigation.down: addParticipantLayout
 							onClicked: {

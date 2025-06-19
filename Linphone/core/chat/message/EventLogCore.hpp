@@ -53,7 +53,7 @@ public:
 	EventLogCore(const std::shared_ptr<const linphone::EventLog> &eventLog);
 	~EventLogCore();
 	void setSelf(QSharedPointer<EventLogCore> me);
-	std::string getEventLogId();
+	QString getEventLogId();
 	QSharedPointer<ChatMessageCore> getChatMessageCore();
 	QSharedPointer<CallHistoryCore> getCallHistoryCore();
 	bool isHandled() const {
@@ -62,7 +62,7 @@ public:
 
 private:
 	DECLARE_ABSTRACT_OBJECT
-	std::string mEventId;
+	QString mEventId;
 
 	QSharedPointer<ChatMessageCore> mChatMessageCore = nullptr;
 	QSharedPointer<CallHistoryCore> mCallHistoryCore = nullptr;

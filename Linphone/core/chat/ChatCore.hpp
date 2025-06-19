@@ -60,6 +60,8 @@ public:
 	Q_PROPERTY(bool muted READ isMuted WRITE lSetMuted NOTIFY mutedChanged)
 	Q_PROPERTY(bool meAdmin READ getMeAdmin WRITE setMeAdmin NOTIFY meAdminChanged)
 	Q_PROPERTY(QVariantList participants READ getParticipantsGui NOTIFY participantsChanged)
+	Q_PROPERTY(QStringList participantsAddresses READ getParticipantsAddresses WRITE lSetParticipantsAddresses NOTIFY
+	               participantsChanged)
 
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	static QSharedPointer<ChatCore> create(const std::shared_ptr<linphone::ChatRoom> &chatRoom);
@@ -128,8 +130,7 @@ public:
 
 	QList<QSharedPointer<ParticipantCore>> buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom) const;
 	QVariantList getParticipantsGui() const;
-	Q_INVOKABLE QStringList getParticipantsAddresses() const;
-
+	QStringList getParticipantsAddresses() const;
 
 signals:
 	// used to close all the notifications when one is clicked
@@ -168,6 +169,8 @@ signals:
 	void lEnableEphemeral(bool enable);
 	void lSetSubject(QString subject);
 	void lRemoveParticipantAtIndex(int index);
+	void lSetParticipantsAddresses(QStringList addresses);
+	void lToggleParticipantAdminStatusAtIndex(int index);
 
 private:
 	QString id;
