@@ -81,6 +81,14 @@ RowLayout {
                         capitalization: Font.Capitalize
                     }
                 }
+				EffectImage {
+					visible: mainItem.chat?.core.muted
+					Layout.preferredWidth: 20 * DefaultStyle.dp
+					Layout.alignment: Qt.AlignVCenter
+					Layout.preferredHeight: 20 * DefaultStyle.dp
+					colorizationColor: DefaultStyle.main1_500_main
+					imageSource: AppIcons.bellSlash
+				}
             },
             RowLayout {
                 anchors.right: parent.right

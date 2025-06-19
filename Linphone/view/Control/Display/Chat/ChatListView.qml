@@ -335,6 +335,17 @@ ListView {
                 visible: mouseArea.containsMouse || hovered || popup.opened
                 enabled: visible
                 popup.contentItem: ColumnLayout {
+					IconLabelButton {
+                        //: "Sourdine"
+                        text: modelData.core.muted ? qsTr("chat_room_unmute") : qsTr("chat_room_mute")
+						icon.source: modelData.core.muted ? AppIcons.bell : AppIcons.bellSlash
+                        spacing: Math.round(10 * DefaultStyle.dp)
+                        Layout.fillWidth: true
+                        onClicked:  {
+							modelData.core.muted = !modelData.core.muted
+							chatroomPopup.close()
+						}
+                    }
                     IconLabelButton {
                         //: "Supprimer"
                         text: qsTr("chat_room_delete")

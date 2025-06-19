@@ -1736,6 +1736,18 @@
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Delete</translation>
     </message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatListView.qml" line="340"/>
+		<source>chat_room_mute</source>
+		<extracomment>&quot;Sourdine&quot;</extracomment>
+		<translation>Mute</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatListView.qml" line="340"/>
+		<source>chat_room_unmute</source>
+		<extracomment>&quot;Unmute&quot;</extracomment>
+		<translation>Unmute</translation>
+	</message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="346"/>
         <source>chat_list_delete_chat_popup_title</source>
@@ -3005,6 +3017,12 @@ Only your correspondent can decrypt them.</translation>
         <extracomment>&quot;Sourdine&quot;</extracomment>
         <translation>Mute</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="117"/>
+		<source>group_infos_unmute</source>
+		<extracomment>&quot;Réactiver les notifications&quot;</extracomment>
+		<translation>Unmute</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="139"/>
         <source>group_infos_meeting</source>
@@ -4158,6 +4176,12 @@ Only your correspondent can decrypt them.</translation>
         <extracomment>&quot;Sourdine&quot;</extracomment>
         <translation>Mute</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="74"/>
+		<source>one_one_infos_unmute</source>
+		<extracomment>&quot;Réactiver les notifications&quot;</extracomment>
+		<translation>Unmute</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="86"/>
         <source>one_one_infos_search</source>

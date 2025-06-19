@@ -116,10 +116,8 @@ ColumnLayout {
 			button.icon.height: Math.round(24 * DefaultStyle.dp)
 			button.icon.source: chatCore.muted ? AppIcons.bell : AppIcons.bellSlash
 			//: "Sourdine"
-			label: qsTr("group_infos_mute")
-			button.onClicked: {
-				chatCore.muted = !chatCore.muted
-			}
+			label: chatCore.muted ? qsTr("group_infos_unmute") : qsTr("group_infos_mute")
+			button.onClicked: chatCore.muted = !chatCore.muted
 		}
 		LabelButton {
 			visible: !SettingsCpp.disableMeetingsFeature

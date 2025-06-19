@@ -1736,6 +1736,18 @@
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Supprimer</translation>
     </message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatListView.qml" line="340"/>
+		<source>chat_room_mute</source>
+		<extracomment>&quot;Sourdine&quot;</extracomment>
+		<translation>Mettre en sourdine</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatListView.qml" line="340"/>
+		<source>chat_room_unmute</source>
+		<extracomment>&quot;Unmute&quot;</extracomment>
+		<translation>Enlever la sourdine </translation>
+	</message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="346"/>
         <source>chat_list_delete_chat_popup_title</source>
@@ -3005,6 +3017,12 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <extracomment>&quot;Sourdine&quot;</extracomment>
         <translation>Sourdine</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="117"/>
+		<source>group_infos_unmute</source>
+		<extracomment>&quot;Réactiver les notifications&quot;</extracomment>
+		<translation>Réactiver les notifications</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="139"/>
         <source>group_infos_meeting</source>
@@ -4158,6 +4176,12 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <extracomment>&quot;Sourdine&quot;</extracomment>
         <translation>Sourdine</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="74"/>
+		<source>one_one_infos_unmute</source>
+		<extracomment>&quot;Réactiver les notifications&quot;</extracomment>
+		<translation>Réactiver les notifications</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="86"/>
         <source>one_one_infos_search</source>

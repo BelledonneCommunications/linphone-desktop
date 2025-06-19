@@ -319,6 +319,8 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
                                       const list<shared_ptr<linphone::ChatMessage>> &messages) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 
+	if (room->getMuted()) return;
+
 	QString txt;
 	QString remoteAddress;
 

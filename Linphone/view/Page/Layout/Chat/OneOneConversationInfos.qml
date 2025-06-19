@@ -71,7 +71,7 @@ ColumnLayout {
 			button.icon.height: Math.round(24 * DefaultStyle.dp)
 			button.icon.source: mainItem.chatCore.muted ? AppIcons.bell : AppIcons.bellSlash
 			//: "Sourdine"
-			label: qsTr("one_one_infos_mute")
+			label: mainItem.chatCore.muted ? qsTr("one_one_infos_unmute") : qsTr("one_one_infos_mute")
 			button.onClicked: {
 				mainItem.chatCore.muted = !mainItem.chatCore.muted
 			}
