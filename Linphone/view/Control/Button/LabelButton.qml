@@ -9,6 +9,7 @@ ColumnLayout {
 	id: labelButton
 	// property alias image: buttonImg
 	property alias button: button
+	property alias text: text
 	property string label
 	spacing: Math.round(8 * DefaultStyle.dp)
 	Button {
@@ -25,6 +26,7 @@ ColumnLayout {
 		style: ButtonStyle.grey
 	}
 	Text {
+		id: text
 		Layout.alignment: Qt.AlignHCenter
 		text: labelButton.label
 		font {

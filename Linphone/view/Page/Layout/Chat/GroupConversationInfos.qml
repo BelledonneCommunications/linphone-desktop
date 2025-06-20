@@ -106,12 +106,18 @@ ColumnLayout {
 	}
 
 	RowLayout {
-		spacing: Math.round(55 * DefaultStyle.dp)
+		spacing: Math.round(10 * DefaultStyle.dp)
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Math.round(30 * DefaultStyle.dp)
+		Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
+		Layout.minimumHeight: Math.round(100 * DefaultStyle.dp)
 		LabelButton {
-			width: Math.round(56 * DefaultStyle.dp)
-			height: Math.round(56 * DefaultStyle.dp)
+			text.Layout.fillWidth: true
+			text.horizontalAlignment: Text.AlignHCenter
+			text.wrapMode: Text.Wrap
+			Layout.alignment: Qt.AlignTop
+			Layout.preferredWidth: Math.round(130 * DefaultStyle.dp)
+			Layout.maximumWidth: Math.round(130 * DefaultStyle.dp)
 			button.icon.width: Math.round(24 * DefaultStyle.dp)
 			button.icon.height: Math.round(24 * DefaultStyle.dp)
 			button.icon.source: chatCore.muted ? AppIcons.bell : AppIcons.bellSlash
@@ -121,8 +127,12 @@ ColumnLayout {
 		}
 		LabelButton {
 			visible: !SettingsCpp.disableMeetingsFeature
-			width: Math.round(56 * DefaultStyle.dp)
-			height: Math.round(56 * DefaultStyle.dp)
+			text.Layout.fillWidth: true
+			text.horizontalAlignment: Text.AlignHCenter
+			text.wrapMode: Text.Wrap
+			Layout.alignment: Qt.AlignTop
+			Layout.preferredWidth: Math.round(130 * DefaultStyle.dp)
+			Layout.maximumWidth: Math.round(130 * DefaultStyle.dp)
 			button.icon.width: Math.round(24 * DefaultStyle.dp)
 			button.icon.height: Math.round(24 * DefaultStyle.dp)
 			button.icon.source: AppIcons.phone
@@ -132,8 +142,12 @@ ColumnLayout {
 		}
 		LabelButton {
 			visible: !SettingsCpp.disableMeetingsFeature
-			width: Math.round(56 * DefaultStyle.dp)
-			height: Math.round(56 * DefaultStyle.dp)
+			text.Layout.fillWidth: true
+			text.horizontalAlignment: Text.AlignHCenter
+			text.wrapMode: Text.Wrap
+			Layout.alignment: Qt.AlignTop
+			Layout.preferredWidth: Math.round(130 * DefaultStyle.dp)
+			Layout.maximumWidth: Math.round(130 * DefaultStyle.dp)
 			button.icon.width: Math.round(24 * DefaultStyle.dp)
 			button.icon.height: Math.round(24 * DefaultStyle.dp)
 			button.icon.source: AppIcons.videoconference
