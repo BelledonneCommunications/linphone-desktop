@@ -29,6 +29,7 @@ Control.Control {
     signal messageDeletionRequested()
 	signal isFileHoveringChanged(bool isFileHovering)
     signal showReactionsForMessageRequested()
+    signal showImdnStatusForMessageRequested()
 
     background: Item {
         anchors.fill: parent
@@ -241,14 +242,32 @@ Control.Control {
                         icon.source: AppIcons.copy
                         // spacing: Math.round(10 * DefaultStyle.dp)
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 45 * DefaultStyle.dp
+                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
                         onClicked: {
                             var success = UtilsCpp.copyToClipboard(chatBubbleContent.selectedText != "" ? chatBubbleContent.selectedText : mainItem.chatMessage.core.text)
                             //: Copied
                             if (success) UtilsCpp.showInformationPopup(qsTr("chat_message_copied_to_clipboard_title"),
                                             //: "to clipboard"
                                             qsTr("chat_message_copied_to_clipboard_toast"))
-                            }
+                            optionsMenu.close()
+                        }
+                    }
+                    IconLabelButton {
+                        inverseLayout: true
+                        //: "See message status"
+                        text: qsTr("chat_message_see_status")
+                        icon.source: AppIcons.chatTeardropText
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                        onClicked: {
+                            mainItem.showImdnStatusForMessageRequested()
+                            optionsMenu.close()
+                        }
+                    }
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: Math.min(1, Math.round(1 * DefaultStyle.dp))
+                        color: DefaultStyle.main2_400
                     }
                     IconLabelButton {
                         inverseLayout: true
@@ -257,18 +276,13 @@ Control.Control {
                         icon.source: AppIcons.trashCan
                         // spacing: Math.round(10 * DefaultStyle.dp)
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 45 * DefaultStyle.dp
+                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
                         onClicked: {
                             mainItem.messageDeletionRequested()
                             optionsMenu.close()
                         }
                         style: ButtonStyle.hoveredBackgroundRed
                     }
-                    // Rectangle {
-                    //     Layout.fillWidth: true
-                    //     Layout.preferredHeight: Math.round(1 * DefaultStyle.dp)
-                    //     color: DefaultStyle.main2_200
-                    // }
                 }
             }
             PopupButton {

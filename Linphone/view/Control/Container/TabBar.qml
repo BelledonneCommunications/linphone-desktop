@@ -57,15 +57,20 @@ Control.TabBar {
 				delay: 1000
 				text: modelData
 			}
+			MouseArea{
+				anchors.fill: parent
+				cursorShape: tabButton.hovered ? Qt.PointingHandCursor: Qt.ArrowCursor
+				acceptedButtons: Qt.NoButton
+			}
 
 			background: Item {
 				anchors.fill: parent
+				visible: mainItem.currentIndex === index || tabButton.hovered
 
 				Rectangle {
 					id: tabBackground
-					visible: mainItem.currentIndex === index
                     height: Math.round(5 * DefaultStyle.dp)
-					color: DefaultStyle.main1_500_main
+					color: mainItem.currentIndex === index ? DefaultStyle.main1_500_main : DefaultStyle.main2_400
 					anchors.bottom: parent.bottom
 					anchors.left: parent.left
 					anchors.right: parent.right
@@ -86,9 +91,12 @@ Control.TabBar {
 			contentItem: Text {
 				id: tabText
 				width: Math.min(implicitWidth, mainItem.width / mainItem.model.length)
-				font.weight: mainItem.textWeight
+				font {
+					pixelSize: mainItem.pixelSize
+					weight: mainItem.textWeight
+					capitalization: Font.Capitalize
+				}
 				color: mainItem.currentIndex === index ? DefaultStyle.main2_600 : DefaultStyle.main2_400
-				font.pixelSize: mainItem.pixelSize
 				elide: Text.ElideRight
 				maximumLineCount: 1
 				text: modelData

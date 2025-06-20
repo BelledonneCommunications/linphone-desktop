@@ -27,6 +27,40 @@ DEFINE_ABSTRACT_OBJECT(ChatMessageCore)
 
 /***********************************************************************/
 
+ImdnStatus ImdnStatus::operator=(ImdnStatus r) {
+	mAddress = r.mAddress;
+	mState = r.mState;
+	mLastUpdatedTime = r.mLastUpdatedTime;
+	return *this;
+}
+
+bool ImdnStatus::operator==(const ImdnStatus &r) const {
+	return r.mState == mState && r.mAddress == mAddress && r.mLastUpdatedTime == mLastUpdatedTime;
+}
+
+bool ImdnStatus::operator!=(ImdnStatus r) {
+	return r.mState != mState || r.mAddress != mAddress || r.mLastUpdatedTime != mLastUpdatedTime;
+}
+
+ImdnStatus ImdnStatus::createMessageImdnStatusVariant(const QString &address,
+                                                      const LinphoneEnums::ChatMessageState &state,
+                                                      QDateTime lastUpdatedTime) {
+	ImdnStatus s;
+	s.mState = state;
+	s.mAddress = address;
+	s.mLastUpdatedTime = lastUpdatedTime;
+	return s;
+}
+
+QVariant createImdnStatusSingletonVariant(const LinphoneEnums::ChatMessageState &state, int count = 1) {
+	QVariantMap map;
+	map.insert("state", QVariant::fromValue(state));
+	map.insert("count", count);
+	return map;
+}
+
+/***********************************************************************/
+
 Reaction Reaction::operator=(Reaction r) {
 	mAddress = r.mAddress;
 	mBody = r.mBody;
@@ -132,6 +166,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 
 	mIsForward = chatmessage->isForward();
 	mIsReply = chatmessage->isReply();
+	mImdnStatusList = computeDeliveryStatus(chatmessage);
 }
 
 ChatMessageCore::~ChatMessageCore() {
@@ -205,8 +240,12 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	    &ChatMessageModel::msgStateChanged,
 	    [this](const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state) {
 		    if (mChatMessageModel->getMonitor() != message) return;
+		    auto imdnStatusList = computeDeliveryStatus(message);
 		    auto msgState = LinphoneEnums::fromLinphone(state);
-		    mChatMessageModelConnection->invokeToCore([this, msgState] { setMessageState(msgState); });
+		    mChatMessageModelConnection->invokeToCore([this, msgState, imdnStatusList] {
+			    setImdnStatusList(imdnStatusList);
+			    setMessageState(msgState);
+		    });
 	    });
 	mChatMessageModelConnection->makeConnectToModel(
 	    &ChatMessageModel::fileTransferProgressIndication,
@@ -263,6 +302,40 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	                                                [this](const std::shared_ptr<linphone::ChatMessage> &message) {});
 	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::ephemeralMessageDeleted,
 	                                                [this](const std::shared_ptr<linphone::ChatMessage> &message) {});
+}
+
+QList<ImdnStatus> ChatMessageCore::computeDeliveryStatus(const std::shared_ptr<linphone::ChatMessage> &message) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	QList<ImdnStatus> imdnStatusList;
+	auto createImdnStatus = [this, &imdnStatusList](std::shared_ptr<linphone::ParticipantImdnState> participant,
+	                                                linphone::ChatMessage::State state) {
+		auto address = participant->getParticipant() ? participant->getParticipant()->getAddress()->clone() : nullptr;
+		auto lastUpdated = QDateTime::fromSecsSinceEpoch(participant->getStateChangeTime());
+		if (address) {
+			address->clean();
+			auto addrString = Utils::coreStringToAppString(address->asStringUriOnly());
+			auto imdn =
+			    ImdnStatus::createMessageImdnStatusVariant(addrString, LinphoneEnums::fromLinphone(state), lastUpdated);
+			imdnStatusList.append(imdn);
+		}
+	};
+	// Read
+	for (auto &participant : message->getParticipantsByImdnState(linphone::ChatMessage::State::Displayed)) {
+		createImdnStatus(participant, linphone::ChatMessage::State::Displayed);
+	}
+	// Received
+	for (auto &participant : message->getParticipantsByImdnState(linphone::ChatMessage::State::DeliveredToUser)) {
+		createImdnStatus(participant, linphone::ChatMessage::State::DeliveredToUser);
+	}
+	// Sent
+	for (auto &participant : message->getParticipantsByImdnState(linphone::ChatMessage::State::Delivered)) {
+		createImdnStatus(participant, linphone::ChatMessage::State::Delivered);
+	}
+	// Error
+	for (auto &participant : message->getParticipantsByImdnState(linphone::ChatMessage::State::NotDelivered)) {
+		createImdnStatus(participant, linphone::ChatMessage::State::NotDelivered);
+	}
+	return imdnStatusList;
 }
 
 QDateTime ChatMessageCore::getTimestamp() const {
@@ -447,6 +520,49 @@ void ChatMessageCore::setMessageState(LinphoneEnums::ChatMessageState state) {
 		mMessageState = state;
 		emit messageStateChanged();
 	}
+}
+
+QList<ImdnStatus> ChatMessageCore::getImdnStatusList() const {
+	return mImdnStatusList;
+}
+
+void ChatMessageCore::setImdnStatusList(QList<ImdnStatus> status) {
+	mImdnStatusList = status;
+	emit imdnStatusListChanged();
+}
+
+QStringList ChatMessageCore::getImdnStatusListLabels() const {
+	QStringList statusList;
+	int count = 0;
+	auto imdnSingletons = getImdnStatusAsSingletons();
+	for (auto &status : imdnSingletons) {
+		auto map = status.toMap();
+		auto val = map["state"].value<LinphoneEnums::ChatMessageState>();
+		auto count = map["count"].toInt();
+		statusList.append(QString("%1 %2").arg(LinphoneEnums::toString(val)).arg(count));
+	}
+	return statusList;
+}
+
+QList<QVariant> ChatMessageCore::getImdnStatusAsSingletons() const {
+	QList<QVariant> statusSingletons;
+	for (auto &stat : mImdnStatusList) {
+		auto it = std::find_if(statusSingletons.begin(), statusSingletons.end(), [state = stat.mState](QVariant data) {
+			auto dataState = data.toMap()["state"].value<LinphoneEnums::ChatMessageState>();
+			return state == dataState;
+		});
+		if (it == statusSingletons.end()) statusSingletons.push_back(createImdnStatusSingletonVariant(stat.mState, 1));
+		else {
+			auto map = it->toMap();
+			auto count = map["count"].toInt();
+			++count;
+			map.remove("count");
+			map.insert("count", count);
+			statusSingletons.erase(it);
+			statusSingletons.push_back(map);
+		}
+	}
+	return statusSingletons;
 }
 
 std::shared_ptr<ChatMessageModel> ChatMessageCore::getModel() const {

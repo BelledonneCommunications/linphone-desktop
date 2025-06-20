@@ -18,8 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef EMOJI_LIST_H_
-#define EMOJI_LIST_H_
+#ifndef IMDN_STATUS_LIST_H_
+#define IMDN_STATUS_LIST_H_
 
 #include "core/chat/message/ChatMessageCore.hpp"
 #include "core/proxy/AbstractListProxy.hpp"
@@ -29,20 +29,23 @@
 
 // =============================================================================
 
-class EmojiList : public AbstractListProxy<Reaction>, public AbstractObject {
+class ImdnStatusList : public AbstractListProxy<ImdnStatus>, public AbstractObject {
 	Q_OBJECT
 public:
-	static QSharedPointer<EmojiList> create();
-	EmojiList(QObject *parent = Q_NULLPTR);
-	~EmojiList();
+	static QSharedPointer<ImdnStatusList> create();
+	ImdnStatusList(QObject *parent = Q_NULLPTR);
+	~ImdnStatusList();
 
-	QList<Reaction> getReactions();
-	void setReactions(QList<Reaction> reactions);
+	QList<ImdnStatus> getImdnStatusList();
+	void setImdnStatusList(QList<ImdnStatus> imdnStatusList);
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+signals:
+	void imdnStatusListChanged();
+
 private:
-	QList<Reaction> mReactions;
+	QList<ImdnStatus> mImdnStatuss;
 	DECLARE_ABSTRACT_OBJECT
 };
 

@@ -118,6 +118,41 @@ LinphoneEnums::ChatMessageState LinphoneEnums::fromLinphone(const linphone::Chat
 	return static_cast<LinphoneEnums::ChatMessageState>(data);
 }
 
+QString LinphoneEnums::toString(const LinphoneEnums::ChatMessageState &data) {
+	switch (data) {
+		case LinphoneEnums::ChatMessageState::StateInProgress:
+			//: "delivery in progress"
+			return QObject::tr("message_state_in_progress");
+		case LinphoneEnums::ChatMessageState::StateDelivered:
+			//: sent
+			return QObject::tr("message_state_delivered");
+		case LinphoneEnums::ChatMessageState::StateNotDelivered:
+			//: error
+			return QObject::tr("message_state_not_delivered");
+		case LinphoneEnums::ChatMessageState::StateFileTransferError:
+			//: cannot get file from server
+			return QObject::tr("message_state_file_transfer_error");
+		case LinphoneEnums::ChatMessageState::StateFileTransferDone:
+			//: file transfer has been completed successfully
+			return QObject::tr("message_state_file_transfer_done");
+		case LinphoneEnums::ChatMessageState::StateDeliveredToUser:
+			//: received
+			return QObject::tr("message_state_delivered_to_user");
+		case LinphoneEnums::ChatMessageState::StateDisplayed:
+			//: read
+			return QObject::tr("message_state_displayed");
+		case LinphoneEnums::ChatMessageState::StateFileTransferInProgress:
+			//: file transfer in progress
+			return QObject::tr("message_state_file_transfer__in_progress");
+		case LinphoneEnums::ChatMessageState::StatePendingDelivery:
+			//: pending delivery
+			return QObject::tr("message_state_pending_delivery");
+		case LinphoneEnums::ChatMessageState::StateFileTransferCancelling:
+			//: file transfer canceled
+			return QObject::tr("message_state_file_transfer_cancelling");
+	}
+}
+
 linphone::ChatRoom::State LinphoneEnums::toLinphone(const LinphoneEnums::ChatRoomState &data) {
 	return static_cast<linphone::ChatRoom::State>(data);
 }

@@ -15,6 +15,7 @@ ListView {
     property ChatGui chat
     property color backgroundColor
     signal showReactionsForMessageRequested(ChatMessageGui chatMessage)
+    signal showImdnStatusForMessageRequested(ChatMessageGui chatMessage)
 
     Component.onCompleted: {
         var index = eventLogProxy.findFirstUnreadIndex()
@@ -135,6 +136,7 @@ ListView {
 
 					onMessageDeletionRequested: modelData.core.lDelete()
                     onShowReactionsForMessageRequested: mainItem.showReactionsForMessageRequested(modelData)
+                    onShowImdnStatusForMessageRequested: mainItem.showImdnStatusForMessageRequested(modelData)
 				}
         }
 

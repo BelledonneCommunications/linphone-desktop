@@ -7,36 +7,31 @@ import UtilsCpp
 MessageInfosLayout {
 	id: mainItem
 	spacing: Math.round(25 * DefaultStyle.dp)
-
-	//: Reactions
-	title: qsTr("message_details_reactions_title")
-	tabbarModel: chatMessageGui ? chatMessageGui.core.reactionsSingletonAsStrings : []
-	listModel: EmojiProxy {
-		reactions: chatMessageGui ? chatMessageGui.core.reactions : []
-		// First index of reactionsSingletonAsStrings list is all reactions combined which does not appear
-		// in reactionsSingleton list
-		filter: tabbar.currentIndex >=1 && chatMessageGui && chatMessageGui.core.reactionsSingleton[tabbar.currentIndex-1].body || ""
+	//: Message status
+	title: qsTr("message_details_status_title")
+	tabbarModel: chatMessageGui ? chatMessageGui.core.imdnStatusListAsString : []
+	listModel: ImdnStatusProxy {
+		imdnStatusList: chatMessageGui ? chatMessageGui.core.imdnStatusList : []
+		filter: chatMessageGui ? chatMessageGui.core.imdnStatusAsSingletons[mainItem.tabbar.currentIndex].state : ""
 	}
+
 	listView.delegate: Item {
+		id: listDelegate
 		width: listView.width
 		height: delegateIn.implicitHeight
 		property var contactObj: modelData ? UtilsCpp.findFriendByAddress(modelData.address) : null
+		property FriendGui contact: contactObj && contactObj.value || null
 		property var nameObj: modelData ? UtilsCpp.getDisplayName(modelData.address) : null
-		property var isMeObj: modelData ? UtilsCpp.isMe(modelData.address) : null
-		MouseArea {
-			anchors.fill: parent
-			enabled: isMeObj && isMeObj.value
-			cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-			hoverEnabled: true
-			onClicked: mainItem.chatMessageGui.core.lRemoveReaction()
-		}
+		property string updateTime: UtilsCpp.isCurrentDay(modelData.lastUpdatedTime)
+			? UtilsCpp.toTimeString(modelData.lastUpdatedTime, "hh:mm")
+			: UtilsCpp.formatDate(modelData.lastUpdatedTime, true)
 		RowLayout {
 			id: delegateIn
 			anchors.fill: parent
 			spacing: Math.round(16 * DefaultStyle.dp)
 			Avatar {
 				Layout.alignment: Qt.AlignHCenter
-				contact: contactObj?.value || null
+				contact: listDelegate.contact
 				displayNameVal: contact 
 					? "" 
 					: nameObj
@@ -46,6 +41,7 @@ MessageInfosLayout {
 				Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 			}
 			ColumnLayout {
+				spacing: 0
 				Text {
 					text: nameObj?.value || ""
 					font {
@@ -54,10 +50,11 @@ MessageInfosLayout {
 					}
 				}
 				Text {
-					visible: isMeObj && isMeObj.value
-					//: Click to delete
-					text: qsTr("click_to_delete_reaction_info")
-					color: DefaultStyle.main2_400
+					visible: listDelegate.contact
+					horizontalAlignment: Text.AlignLeft
+					Layout.fillWidth: true
+					text: listDelegate.contact ? listDelegate.contact.core.presenceStatus : ""
+					color: listDelegate.contact ? listDelegate.contact.core.presenceColor : 'transparent'
 					font {
 						pixelSize: Typography.p3.pixelSize
 						weight: Typography.p3.weight
@@ -66,9 +63,9 @@ MessageInfosLayout {
 			}
 			Item{Layout.fillWidth: true}
 			Text {
-				text: UtilsCpp.encodeEmojiToQmlRichFormat(modelData.body)
+				text: listDelegate.updateTime
 				font {
-					pixelSize: Typography.h3.pixelSize
+					pixelSize: Typography.p3.pixelSize
 					weight: Typography.p3.weight
 				}
 			}

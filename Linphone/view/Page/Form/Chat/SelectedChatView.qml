@@ -156,6 +156,11 @@ RowLayout {
                             contentLoader.showingMessageReactions = true
                             detailsPanel.visible = true
                         }
+                        onShowImdnStatusForMessageRequested: (chatMessage) => {
+                            mainItem.chatMessage = chatMessage
+                            contentLoader.showingImdnStatus = true
+                            detailsPanel.visible = true
+                        }
 
                         Popup {
                             id: emojiPickerPopup
@@ -322,7 +327,10 @@ RowLayout {
 		visible: false
 		Layout.fillHeight: true
 		Layout.preferredWidth: Math.round(387 * DefaultStyle.dp)
-        onVisibleChanged: if(!visible) contentLoader.showingMessageReactions = false
+        onVisibleChanged: if(!visible) {
+            contentLoader.showingMessageReactions = false
+            contentLoader.showingImdnStatus = false
+        }
 
 		background: Rectangle {
 			color: DefaultStyle.grey_0
@@ -332,13 +340,16 @@ RowLayout {
 		contentItem: Loader {
 			id: contentLoader
             property bool showingMessageReactions: false
+            property bool showingImdnStatus: false
 			anchors.top: parent.top
 			anchors.topMargin: Math.round(39 * DefaultStyle.dp)
 			sourceComponent: showingMessageReactions
                 ? messageReactionsComponent
-                : mainItem.chat.core.isGroupChat
-                    ? groupInfoComponent
-                    : oneToOneInfoComponent
+                : showingImdnStatus
+                    ? messageImdnStatusComponent
+                    : mainItem.chat.core.isGroupChat
+                        ? groupInfoComponent
+                        : oneToOneInfoComponent
 			active: detailsPanel.visible
 			onLoaded: {
 				if (contentLoader.item) {
@@ -371,5 +382,15 @@ RowLayout {
                 }
 			}
 		}
+        Component {
+			id: messageImdnStatusComponent
+            MessageImdnStatusInfos {
+                chatMessageGui: mainItem.chatMessage
+                onGoBackRequested: {
+                    detailsPanel.visible = false
+                    mainItem.chatMessage = null
+                }
+			}
+        }
 	}
 }

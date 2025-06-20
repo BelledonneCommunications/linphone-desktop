@@ -97,12 +97,15 @@ enum class ChatMessageState {
 	StateFileTransferDone = int(linphone::ChatMessage::State::FileTransferDone),
 	StateDeliveredToUser = int(linphone::ChatMessage::State::DeliveredToUser),
 	StateDisplayed = int(linphone::ChatMessage::State::Displayed),
-	StateFileTransferInProgress = int(linphone::ChatMessage::State::FileTransferInProgress)
+	StateFileTransferInProgress = int(linphone::ChatMessage::State::FileTransferInProgress),
+	StatePendingDelivery = int(linphone::ChatMessage::State::PendingDelivery),
+	StateFileTransferCancelling = int(linphone::ChatMessage::State::FileTransferCancelling)
 };
 Q_ENUM_NS(ChatMessageState)
 
 linphone::ChatMessage::State toLinphone(const LinphoneEnums::ChatMessageState &data);
 LinphoneEnums::ChatMessageState fromLinphone(const linphone::ChatMessage::State &data);
+QString toString(const LinphoneEnums::ChatMessageState &data);
 
 enum class ChatRoomState {
 	None = int(linphone::ChatRoom::State::None),

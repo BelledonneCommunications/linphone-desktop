@@ -69,8 +69,8 @@ ColumnLayout {
 				}
 			}
 			PresenceNoteLayout {
-				visible: contact.core.presenceNote.length > 0 && mainItem.useVerticalLayout
-				friendCore: contact.core
+				visible: contact?.core.presenceNote.length > 0 && mainItem.useVerticalLayout
+				friendCore: contact?.core || null
 				Layout.preferredWidth: 412 * DefaultStyle.dp
 				Layout.preferredHeight: 85 * DefaultStyle.dp
 			}
@@ -92,10 +92,10 @@ ColumnLayout {
 		Layout.fillWidth:true
 		Layout.preferredHeight: 79 * DefaultStyle.dp
 		color: 'transparent'
-		visible: contact.core.presenceNote.length > 0 && !mainItem.useVerticalLayout
+		visible: contact && contact.core.presenceNote.length > 0 && !mainItem.useVerticalLayout
 		PresenceNoteLayout {
 			anchors.centerIn: parent
-			friendCore: contact.core
+			friendCore: contact?.core || null
 			width: 412 * DefaultStyle.dp
 			height: 85 * DefaultStyle.dp
 		}

@@ -34,6 +34,26 @@
 
 #include <linphone++/linphone.hh>
 
+struct ImdnStatus {
+	Q_GADGET
+
+	Q_PROPERTY(QString address MEMBER mAddress)
+	Q_PROPERTY(LinphoneEnums::ChatMessageState state MEMBER mState)
+	Q_PROPERTY(QDateTime lastUpdatedTime MEMBER mLastUpdatedTime)
+
+public:
+	QString mAddress;
+	LinphoneEnums::ChatMessageState mState;
+	QDateTime mLastUpdatedTime;
+
+	ImdnStatus operator=(ImdnStatus r);
+	bool operator==(const ImdnStatus &r) const;
+	bool operator!=(ImdnStatus r);
+	static ImdnStatus createMessageImdnStatusVariant(const QString &address,
+	                                                 const LinphoneEnums::ChatMessageState &state,
+	                                                 QDateTime mLastUpdatedTime);
+};
+
 struct Reaction {
 	Q_GADGET
 
@@ -71,6 +91,9 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool isFromChatGroup READ isFromChatGroup CONSTANT)
 	Q_PROPERTY(bool isRead READ isRead WRITE setIsRead NOTIFY isReadChanged)
 	Q_PROPERTY(QString ownReaction READ getOwnReaction WRITE setOwnReaction NOTIFY messageReactionChanged)
+	Q_PROPERTY(QStringList imdnStatusListAsString READ getImdnStatusListLabels NOTIFY imdnStatusListChanged)
+	Q_PROPERTY(QList<ImdnStatus> imdnStatusList READ getImdnStatusList NOTIFY imdnStatusListChanged)
+	Q_PROPERTY(QList<QVariant> imdnStatusAsSingletons READ getImdnStatusAsSingletons NOTIFY imdnStatusListChanged)
 	Q_PROPERTY(QList<Reaction> reactions READ getReactions WRITE setReactions NOTIFY messageReactionChanged)
 	Q_PROPERTY(QList<QVariant> reactionsSingleton READ getReactionsSingleton NOTIFY singletonReactionMapChanged)
 	Q_PROPERTY(
@@ -86,6 +109,8 @@ public:
 	ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &chatmessage);
 	~ChatMessageCore();
 	void setSelf(QSharedPointer<ChatMessageCore> me);
+
+	QList<ImdnStatus> computeDeliveryStatus(const std::shared_ptr<linphone::ChatMessage> &message);
 
 	QDateTime getTimestamp() const;
 	void setTimestamp(QDateTime timestamp);
@@ -121,6 +146,10 @@ public:
 
 	LinphoneEnums::ChatMessageState getMessageState() const;
 	void setMessageState(LinphoneEnums::ChatMessageState state);
+	QList<ImdnStatus> getImdnStatusList() const;
+	void setImdnStatusList(QList<ImdnStatus> status);
+	QList<QVariant> getImdnStatusAsSingletons() const;
+	QStringList getImdnStatusListLabels() const;
 
 	std::shared_ptr<ChatMessageModel> getModel() const;
 	Q_INVOKABLE ChatMessageContentGui *getVoiceRecordingContent() const;
@@ -132,6 +161,7 @@ signals:
 	void isReadChanged(bool read);
 	void isRemoteMessageChanged(bool isRemote);
 	void messageStateChanged();
+	void imdnStatusListChanged();
 	void messageReactionChanged();
 	void singletonReactionMapChanged();
 
@@ -156,6 +186,7 @@ private:
 	QString mMessageId;
 	QString mOwnReaction;
 	QList<Reaction> mReactions;
+	QList<ImdnStatus> mImdnStatusList;
 	QList<QVariant> mReactionsSingletonMap;
 	QDateTime mTimestamp;
 	bool mIsRemoteMessage = false;

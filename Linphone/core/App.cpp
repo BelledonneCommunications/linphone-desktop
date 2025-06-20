@@ -60,6 +60,7 @@
 #include "core/chat/message/EventLogProxy.hpp"
 #include "core/chat/message/content/ChatMessageContentGui.hpp"
 #include "core/chat/message/content/ChatMessageContentProxy.hpp"
+#include "core/chat/message/imdn/ImdnStatusProxy.hpp"
 #include "core/conference/ConferenceGui.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
 #include "core/conference/ConferenceInfoProxy.hpp"
@@ -687,6 +688,7 @@ void App::initCppInterfaces() {
 	qmlRegisterType<FPSCounter>(Constants::MainQmlUri, 1, 0, "FPSCounter");
 	qmlRegisterType<EmojiModel>(Constants::MainQmlUri, 1, 0, "EmojiModel");
 	qmlRegisterType<EmojiProxy>(Constants::MainQmlUri, 1, 0, "EmojiProxy");
+	qmlRegisterType<ImdnStatusProxy>(Constants::MainQmlUri, 1, 0, "ImdnStatusProxy");
 	qmlRegisterType<SoundPlayerGui>(Constants::MainQmlUri, 1, 0, "SoundPlayerGui");
 	qmlRegisterType<RecorderGui>(Constants::MainQmlUri, 1, 0, "RecorderGui");
 

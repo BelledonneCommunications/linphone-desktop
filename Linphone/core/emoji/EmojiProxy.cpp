@@ -29,7 +29,7 @@ DEFINE_ABSTRACT_OBJECT(EmojiProxy)
 EmojiProxy::EmojiProxy(QObject *parent) : LimitProxy(parent) {
 	mList = EmojiList::create();
 	setSourceModel(mList.get());
-	connect(mList.get(), &EmojiList::reactionsChanged, this, &EmojiProxy::reactionsChanged);
+	connect(mList.get(), &EmojiList::modelReset, this, &EmojiProxy::reactionsChanged);
 	connect(this, &EmojiProxy::filterChanged, this, [this] { invalidate(); });
 }
 
