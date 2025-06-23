@@ -25,6 +25,7 @@
 #include "core/call/CallGui.hpp"
 #include "core/chat/ChatCore.hpp"
 #include "core/chat/ChatGui.hpp"
+#include "core/chat/message/ChatMessageGui.hpp"
 #include "core/conference/ConferenceCore.hpp"
 #include "core/conference/ConferenceInfoCore.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
@@ -1948,6 +1949,50 @@ QString Utils::getSafeFilePath(const QString &filePath, bool *soFarSoGood) {
 	if (soFarSoGood) *soFarSoGood = false;
 
 	return QString("");
+}
+
+void Utils::sendReplyMessage(ChatMessageGui *message, ChatGui *chatGui, QString text, QVariantList files) {
+	auto chatModel = chatGui && chatGui->mCore ? chatGui->mCore->getModel() : nullptr;
+	auto chatMessageModel = message && message->mCore ? message->mCore->getModel() : nullptr;
+	if (!chatModel || !chatMessageModel) {
+		//: Cannot reply to invalid message
+		QString error = !chatMessageModel ? tr("chatMessage_error")
+		                                  //: Error in the chat
+		                                  : tr("chat_error");
+		//: Error
+		showInformationPopup(tr("info_popup_error_title"),
+		                     //: Could not send voice message : %1
+		                     tr("info_popup_send_voice_message_error_message").arg(error));
+		return;
+	}
+	QList<std::shared_ptr<ChatMessageContentModel>> filesContent;
+	for (auto &file : files) {
+		auto contentGui = qvariant_cast<ChatMessageContentGui *>(file);
+		if (contentGui) {
+			auto contentCore = contentGui->mCore;
+			filesContent.append(contentCore->getContentModel());
+		}
+	}
+	App::postModelAsync([chatModel, chatMessageModel, text, filesContent] {
+		mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+		auto chat = chatModel->getMonitor();
+		auto messageToReplyTo = chatMessageModel->getMonitor();
+		auto linMessage = chatModel->createReplyMessage(messageToReplyTo);
+		if (linMessage) {
+			linMessage->addUtf8TextContent(Utils::appStringToCoreString(text));
+			for (auto &content : filesContent) {
+				linMessage->addFileContent(content->getContent());
+			}
+			linMessage->send();
+		} else {
+			App::postCoreAsync([] {
+				//: Error
+				showInformationPopup(tr("info_popup_error_title"),
+				                     //: Failed to create message from record
+				                     tr("info_popup_send_voice_message_sending_error_message"));
+			});
+		}
+	});
 }
 
 VariantObject *Utils::createVoiceRecordingMessage(RecorderGui *recorderGui, ChatGui *chatGui) {

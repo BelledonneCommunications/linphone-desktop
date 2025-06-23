@@ -43,11 +43,11 @@ EventLogCore::EventLogCore(const std::shared_ptr<const linphone::EventLog> &even
 	} else if (eventLog->getCallLog()) {
 		mCallHistoryCore = CallHistoryCore::create(eventLog->getCallLog());
 		mEventId = Utils::coreStringToAppString(eventLog->getCallLog()->getCallId());
-	} else { // getNotifyId
+	}
+	if (mEventId.isEmpty()) { // getNotifyId
 		QString type = QString::fromLatin1(
 		    QMetaEnum::fromType<LinphoneEnums::EventLogType>().valueToKey(static_cast<int>(mEventLogType)));
 		mEventId = type + QString::number(static_cast<qint64>(eventLog->getCreationTime()));
-		;
 		computeEvent(eventLog);
 	}
 }

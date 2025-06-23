@@ -137,6 +137,11 @@ ChatModel::createVoiceRecordingMessage(const std::shared_ptr<linphone::Recorder>
 	return mMonitor->createVoiceRecordingMessage(recorder);
 }
 
+std::shared_ptr<linphone::ChatMessage>
+ChatModel::createReplyMessage(const std::shared_ptr<linphone::ChatMessage> &message) {
+	return mMonitor->createReplyMessage(message);
+}
+
 std::shared_ptr<linphone::ChatMessage> ChatModel::createTextMessageFromText(QString text) {
 	return mMonitor->createMessageFromUtf8(Utils::appStringToCoreString(text));
 }

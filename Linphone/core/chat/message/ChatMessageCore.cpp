@@ -114,6 +114,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	fromAddress->clean();
 	mFromAddress = Utils::coreStringToAppString(fromAddress->asStringUriOnly());
 	mFromName = ToolModel::getDisplayName(chatmessage->getFromAddress()->clone());
+	mToName = ToolModel::getDisplayName(chatmessage->getToAddress()->clone());
 
 	auto chatroom = chatmessage->getChatRoom();
 	mIsFromChatGroup = chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference) &&
@@ -166,6 +167,13 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 
 	mIsForward = chatmessage->isForward();
 	mIsReply = chatmessage->isReply();
+	if (mIsReply) {
+		auto replymessage = chatmessage->getReplyMessage();
+		if (replymessage) {
+			mReplyText = ToolModel::getMessageFromContent(replymessage->getContents());
+			if (mIsFromChatGroup) mRepliedToName = ToolModel::getDisplayName(replymessage->getToAddress()->clone());
+		}
+	}
 	mImdnStatusList = computeDeliveryStatus(chatmessage);
 }
 
@@ -378,6 +386,10 @@ QString ChatMessageCore::getFromName() const {
 
 QString ChatMessageCore::getToAddress() const {
 	return mToAddress;
+}
+
+QString ChatMessageCore::getToName() const {
+	return mToName;
 }
 
 QString ChatMessageCore::getMessageId() const {

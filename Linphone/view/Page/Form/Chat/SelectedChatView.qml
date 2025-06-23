@@ -18,6 +18,7 @@ RowLayout {
 	property var contact: contactObj?.value || null
     property CallGui call
     property alias callHeaderContent: splitPanel.headerContent
+    property bool replyingToMessage: false
     spacing: 0
     
     signal oneOneCall(bool video)
@@ -161,6 +162,10 @@ RowLayout {
                             contentLoader.showingImdnStatus = true
                             detailsPanel.visible = true
                         }
+                        onReplyToMessageRequested: (chatMessage) => {
+                            mainItem.chatMessage = chatMessage
+                            mainItem.replyingToMessage = true
+                        }
 
                         Popup {
                             id: emojiPickerPopup
@@ -208,9 +213,9 @@ RowLayout {
                 }
                 Control.Control {
                     id: selectedFilesArea
-                    visible: selectedFiles.count > 0
+                    visible: selectedFiles.count > 0 || mainItem.replyingToMessage
                     Layout.fillWidth: true
-                    Layout.preferredHeight: Math.round(104 * DefaultStyle.dp)
+                    Layout.preferredHeight: implicitHeight
                     topPadding: Math.round(12 * DefaultStyle.dp)
                     bottomPadding: Math.round(12 * DefaultStyle.dp)
                     leftPadding: Math.round(19 * DefaultStyle.dp)
@@ -225,6 +230,7 @@ RowLayout {
                         style: ButtonStyle.noBackground
                         onClicked: {
                             contents.clear()
+                            mainItem.replyingToMessage = false
                         }
                     }
                     background: Item{
@@ -233,7 +239,6 @@ RowLayout {
                             color: DefaultStyle.grey_0
                             border.color: DefaultStyle.main2_100
                             border.width: Math.round(2 * DefaultStyle.dp)
-                            radius: Math.round(20 * DefaultStyle.dp)
                             height: parent.height / 2
                             anchors.top: parent.top
                             anchors.left: parent.left
@@ -246,37 +251,73 @@ RowLayout {
                             height: 2 * parent.height / 3
                         }
                     }
-                    contentItem: ListView {
-                        id: selectedFiles
-                        orientation: ListView.Horizontal
-                        spacing: Math.round(16 * DefaultStyle.dp)
-                        model: ChatMessageContentProxy {
-                            id: contents
-                            filterType: ChatMessageContentProxy.FilterContentType.File
-                        }
-                        delegate: Item {
-                            width: Math.round(80 * DefaultStyle.dp)
-                            height: Math.round(80 * DefaultStyle.dp)
-                            FileView {
-                                contentGui: modelData
-                                anchors.left: parent.left
-                                anchors.bottom: parent.bottom
-                                width: Math.round(69 * DefaultStyle.dp)
-                                height: Math.round(69 * DefaultStyle.dp)
+                    contentItem: ColumnLayout {
+                        spacing: Math.round(5 * DefaultStyle.dp)
+                        ColumnLayout {
+                            id: replyLayout
+                            spacing: 0
+                            visible: mainItem.chatMessage && mainItem.replyingToMessage
+                            Text {
+                                Layout.fillWidth: true
+                                //: Reply to %1
+                                text: mainItem.chatMessage ? qsTr("reply_to_label").arg(UtilsCpp.boldTextPart(mainItem.chatMessage.core.fromName, mainItem.chatMessage.core.fromName)) : ""
+                                color: DefaultStyle.main2_500main
+                                font {
+                                    pixelSize: Typography.p3.pixelSize
+                                    weight: Typography.p3.weight
+                                }
                             }
-                            RoundButton {
-                                icon.source: AppIcons.closeX
-                                icon.width: Math.round(12 * DefaultStyle.dp)
-                                icon.height: Math.round(12 * DefaultStyle.dp)
-                                anchors.top: parent.top
-                                anchors.right: parent.right
-                                style: ButtonStyle.numericPad
-                                shadowEnabled: true
-                                padding: Math.round(3 * DefaultStyle.dp)
-                                onClicked: contents.removeContent(modelData)
+                            Text {
+                                Layout.fillWidth: true
+                                text: mainItem.chatMessage ? mainItem.chatMessage.core.text : ""
+                                color: DefaultStyle.main2_400
+                                font {
+                                    pixelSize: Typography.p3.pixelSize
+                                    weight: Typography.p3.weight
+                                }
                             }
                         }
-                        Control.ScrollBar.horizontal: selectedFilesScrollbar
+                        Rectangle {
+                            Layout.fillWidth: true
+                            visible: replyLayout.visible && selectedFiles.visible
+                            color: DefaultStyle.main2_300
+                            Layout.preferredHeight: Math.max(1, Math.round(1 * DefaultStyle.dp))
+                        }
+                        ListView {
+                            id: selectedFiles
+                            orientation: ListView.Horizontal
+                            visible: count > 0
+                            spacing: Math.round(16 * DefaultStyle.dp)
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: Math.round(104 * DefaultStyle.dp)
+                            model: ChatMessageContentProxy {
+                                id: contents
+                                filterType: ChatMessageContentProxy.FilterContentType.File
+                            }
+                            delegate: Item {
+                                width: Math.round(80 * DefaultStyle.dp)
+                                height: Math.round(80 * DefaultStyle.dp)
+                                FileView {
+                                    contentGui: modelData
+                                    anchors.left: parent.left
+                                    anchors.bottom: parent.bottom
+                                    width: Math.round(69 * DefaultStyle.dp)
+                                    height: Math.round(69 * DefaultStyle.dp)
+                                }
+                                RoundButton {
+                                    icon.source: AppIcons.closeX
+                                    icon.width: Math.round(12 * DefaultStyle.dp)
+                                    icon.height: Math.round(12 * DefaultStyle.dp)
+                                    anchors.top: parent.top
+                                    anchors.right: parent.right
+                                    style: ButtonStyle.numericPad
+                                    shadowEnabled: true
+                                    padding: Math.round(3 * DefaultStyle.dp)
+                                    onClicked: contents.removeContent(modelData)
+                                }
+                            }
+                            Control.ScrollBar.horizontal: selectedFilesScrollbar
+                        }
                     }
                     ScrollBar {
                         id: selectedFilesScrollbar
@@ -304,7 +345,11 @@ RowLayout {
                 }
                 onSendMessage: {
                     var filesContents = contents.getAll()
-                    if (filesContents.length === 0)
+                    if (mainItem.replyingToMessage) {
+                        mainItem.replyingToMessage = false
+                        UtilsCpp.sendReplyMessage(mainItem.chatMessage, mainItem.chat, text, filesContents)
+                    }
+                    else if (filesContents.length === 0)
                         mainItem.chat.core.lSendTextMessage(text)
                     else mainItem.chat.core.lSendMessage(text, filesContents)
                     contents.clear()

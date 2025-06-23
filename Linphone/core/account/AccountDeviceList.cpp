@@ -76,9 +76,7 @@ void AccountDeviceList::setAccount(const QSharedPointer<AccountCore> &accountCor
 
 void AccountDeviceList::refreshDevices() {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
-	beginResetModel();
-	clearData();
-	endResetModel();
+	resetData();
 	if (mAccountCore) {
 		auto requestDeviceList = [this] {
 			if (!mAccountManagerServicesModelConnection) return;
@@ -150,14 +148,14 @@ void AccountDeviceList::setSelf(QSharedPointer<AccountDeviceList> me) {
 			    &AccountManagerServicesModel::requestError,
 			    [this](const std::shared_ptr<const linphone::AccountManagerServicesRequest> &request, int statusCode,
 			           const std::string &errorMessage,
-					   const std::shared_ptr<const linphone::Dictionary> &parameterErrors) {
-					lDebug() << "REQUEST ERROR" << errorMessage << "/" << int(request->getType());
-					QString message = QString::fromStdString(errorMessage);
-					if (request->getType() == linphone::AccountManagerServicesRequest::Type::GetDevicesList) {
-						//: "Erreur lors de la récupération des appareils"
-						message = tr("manage_account_no_device_found_error_message");
-					}
-					emit requestError(message);
+			           const std::shared_ptr<const linphone::Dictionary> &parameterErrors) {
+				    lDebug() << "REQUEST ERROR" << errorMessage << "/" << int(request->getType());
+				    QString message = QString::fromStdString(errorMessage);
+				    if (request->getType() == linphone::AccountManagerServicesRequest::Type::GetDevicesList) {
+					    //: "Erreur lors de la récupération des appareils"
+					    message = tr("manage_account_no_device_found_error_message");
+				    }
+				    emit requestError(message);
 			    });
 			mAccountManagerServicesModelConnection->makeConnectToModel(
 			    &AccountManagerServicesModel::devicesListFetched,

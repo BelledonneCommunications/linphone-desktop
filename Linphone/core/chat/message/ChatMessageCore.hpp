@@ -100,6 +100,8 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	    QStringList reactionsSingletonAsStrings READ getReactionsSingletonAsStrings NOTIFY singletonReactionMapChanged)
 	Q_PROPERTY(bool isForward MEMBER mIsForward CONSTANT)
 	Q_PROPERTY(bool isReply MEMBER mIsReply CONSTANT)
+	Q_PROPERTY(QString replyText MEMBER mReplyText CONSTANT)
+	Q_PROPERTY(QString repliedToName MEMBER mRepliedToName CONSTANT)
 	Q_PROPERTY(bool hasFileContent MEMBER mHasFileContent CONSTANT)
 	Q_PROPERTY(bool isVoiceRecording MEMBER mIsVoiceRecording CONSTANT)
 	Q_PROPERTY(bool isCalendarInvite MEMBER mIsCalendarInvite CONSTANT)
@@ -123,6 +125,7 @@ public:
 	QString getFromAddress() const;
 	QString getFromName() const;
 	QString getToAddress() const;
+	QString getToName() const;
 	QString getMessageId() const;
 
 	bool isRemoteMessage() const;
@@ -182,6 +185,7 @@ private:
 	QString mFromAddress;
 	QString mToAddress;
 	QString mFromName;
+	QString mToName;
 	QString mPeerName;
 	QString mMessageId;
 	QString mOwnReaction;
@@ -194,6 +198,8 @@ private:
 	bool mIsRead = false;
 	bool mIsForward = false;
 	bool mIsReply = false;
+	QString mReplyText;
+	QString mRepliedToName;
 	bool mHasFileContent = false;
 	bool mIsCalendarInvite = false;
 	bool mIsVoiceRecording = false;

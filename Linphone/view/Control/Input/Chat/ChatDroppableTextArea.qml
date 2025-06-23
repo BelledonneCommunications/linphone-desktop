@@ -37,7 +37,6 @@ Control.Control {
 	function _emitFiles (files) {
 		// Filtering files, other urls are forbidden.
 		files = files.reduce(function (files, file) {
-			console.log("dropping", file.toString())
 			if (file.toString().startsWith("file:")) {
 				files.push(Utils.getSystemPathFromUri(file))
 			}

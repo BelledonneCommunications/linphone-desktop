@@ -388,11 +388,13 @@ bool ToolModel::friendIsInFriendList(const std::shared_ptr<linphone::FriendList>
 
 QString ToolModel::getMessageFromContent(std::list<std::shared_ptr<linphone::Content>> contents) {
 	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+	QString res;
 	for (auto &content : contents) {
 		if (content->isText()) {
 			return Utils::coreStringToAppString(content->getUtf8Text());
 		} else if (content->isFile()) {
-			return Utils::coreStringToAppString(content->getName());
+			if (res.isEmpty()) res.append(Utils::coreStringToAppString(content->getName()));
+			else res.append(", " + Utils::coreStringToAppString(content->getName()));
 		} else if (content->isIcalendar()) {
 			auto conferenceInfo = linphone::Factory::get()->createConferenceInfoFromIcalendarContent(content);
 			auto conferenceInfoCore = ConferenceInfoCore::create(conferenceInfo);
@@ -406,7 +408,7 @@ QString ToolModel::getMessageFromContent(std::list<std::shared_ptr<linphone::Con
 			return getMessageFromContent(content->getParts());
 		}
 	}
-	return QString("");
+	return res;
 }
 
 // Load downloaded codecs like OpenH264 (needs to be after core is created and has loaded its plugins, as
