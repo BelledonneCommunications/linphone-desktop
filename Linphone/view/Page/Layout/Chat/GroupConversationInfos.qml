@@ -15,6 +15,7 @@ ColumnLayout {
 	property var chatCore: chatGui.core
 	property var parentView
 	property bool manageParticipants: false
+    signal manageParticipantsRequested()
 
 	spacing: 0
 
@@ -159,77 +160,6 @@ ColumnLayout {
 		}
 	}
 	
-	Rectangle {
-		visible: mainItem.manageParticipants
-		Layout.fillHeight: true
-		Layout.fillWidth: true
-		Layout.topMargin: Math.round(9 * DefaultStyle.dp)
-		Layout.leftMargin: Math.round(17 * DefaultStyle.dp)
-		Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
-		color: DefaultStyle.grey_100
-		radius: Math.round(15 * DefaultStyle.dp)
-		height: participantAddColumn.implicitHeight
-
-		ColumnLayout {
-			id: participantAddColumn
-			anchors.fill: parent
-			anchors.leftMargin: Math.round(17 * DefaultStyle.dp)
-			anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
-			anchors.topMargin: Math.round(17 * DefaultStyle.dp)
-			spacing: Math.round(5 * DefaultStyle.dp)
-			RowLayout {
-				id: manageParticipantsButtons
-				spacing: Math.round(10 * DefaultStyle.dp)
-				Button {
-					id: manageParticipantsBackButton
-					style: ButtonStyle.noBackgroundOrange
-					icon.source: AppIcons.leftArrow
-					icon.width: Math.round(20 * DefaultStyle.dp)
-					icon.height: Math.round(20 * DefaultStyle.dp)
-					onClicked: mainItem.manageParticipants = false
-				}
-				Text {
-					text: qsTr("group_infos_manage_participants")
-					color: DefaultStyle.main1_500_main
-					maximumLineCount: 1
-					font: Typography.h4
-					Layout.fillWidth: true
-				}
-				SmallButton {
-					enabled: manageParticipantsLayout.selectedParticipantsCount.length != 0
-					Layout.leftMargin: Math.round(11 * DefaultStyle.dp)
-					focus: enabled
-					style: ButtonStyle.main
-					text: qsTr("group_infos_participants_edit_apply")
-					KeyNavigation.left: manageParticipantsBackButton
-					KeyNavigation.down: manageParticipantsLayout
-					onClicked: {
-						mainItem.chatCore.participantsAddresses = manageParticipantsLayout.selectedParticipants
-						mainItem.manageParticipants = false
-					}
-				}
-			}
-			AddParticipantsForm {
-				id: manageParticipantsLayout
-				visible: manageParticipants
-				Layout.fillWidth: true
-				Layout.fillHeight: true
-				Layout.topMargin: Math.round(9 * DefaultStyle.dp)
-				Layout.bottomMargin: Math.round(17 * DefaultStyle.dp)
-				Layout.alignment: Qt.AlignVCenter
-				selectedParticipants: mainItem.chatCore.participantsAddresses
-				focus: true
-				onVisibleChanged: {
-					if (visible)
-						selectedParticipants = mainItem.chatCore.participantsAddresses
-				}
-			}
-			Item {
-				Layout.fillHeight: true
-			}
-		}
-	}
-	
 	Component {
 		id: participantList
 		GroupChatInfoParticipants {
@@ -237,14 +167,13 @@ ColumnLayout {
 			title: qsTr("group_infos_participants").arg(mainItem.chatCore.participants.length)
 			participants: mainItem.chatCore.participants
 			chatCore: mainItem.chatCore
-			onManageParticipantsRequested: mainItem.manageParticipants = true
+			onManageParticipantsRequested: mainItem.manageParticipantsRequested()
 		}
 	}
 
 	
 	ScrollView {
 		id: scrollView
-		visible: !mainItem.manageParticipants
 		Layout.fillHeight: true
 		Layout.fillWidth: true
 		Layout.topMargin: Math.round(30 * DefaultStyle.dp)

@@ -3035,16 +3035,6 @@ Only your correspondent can decrypt them.</translation>
 <context>
     <name>GroupConversationInfos</name>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="178"/>
-        <source>group_infos_manage_participants</source>
-        <translation>Participants</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="189"/>
-        <source>group_infos_participants_edit_apply</source>
-        <translation>Apply</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="130"/>
         <source>group_infos_call</source>
         <extracomment>&quot;Appel&quot;</extracomment>
@@ -6526,5 +6516,14 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>okButton</source>
         <translation>Ok</translation>
     </message>
+</context>
+<context>
+	<name>ManageParticipants</name>
+	<message>
+		<location filename="../../view/Page/Layout/Chat/ManageParticipants.qml"/>
+		<source>group_infos_manage_participants</source>
+		<extracomment>Participants</extracomment>
+		<translation>Participants</translation>
+	</message>
 </context>
 </TS>

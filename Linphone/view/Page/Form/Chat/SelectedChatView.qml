@@ -386,15 +386,18 @@ RowLayout {
 			id: contentLoader
             property bool showingMessageReactions: false
             property bool showingImdnStatus: false
+            property bool showingManageParticipants: false
 			anchors.top: parent.top
 			anchors.topMargin: Math.round(39 * DefaultStyle.dp)
 			sourceComponent: showingMessageReactions
-                ? messageReactionsComponent
-                : showingImdnStatus
-                    ? messageImdnStatusComponent
-                    : mainItem.chat.core.isGroupChat
-                        ? groupInfoComponent
-                        : oneToOneInfoComponent
+				? messageReactionsComponent
+				: showingImdnStatus
+					? messageImdnStatusComponent
+					: showingManageParticipants
+						? manageParticipantsComponents
+						: mainItem.chat.core.isGroupChat
+							? groupInfoComponent
+							: oneToOneInfoComponent
 			active: detailsPanel.visible
 			onLoaded: {
 				if (contentLoader.item) {
@@ -414,6 +417,7 @@ RowLayout {
 			id: groupInfoComponent
 			GroupConversationInfos {
 				chatGui: mainItem.chat
+				onManageParticipantsRequested: contentLoader.showingManageParticipants = true
 			}
 		}
 
@@ -437,5 +441,13 @@ RowLayout {
                 }
 			}
         }
+        
+		Component {
+			id: manageParticipantsComponents
+			ManageParticipants {
+				chatGui: mainItem.chat
+				onDone: contentLoader.showingManageParticipants = false
+			}
+		}
 	}
 }
