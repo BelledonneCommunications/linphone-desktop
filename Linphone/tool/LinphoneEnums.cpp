@@ -150,6 +150,8 @@ QString LinphoneEnums::toString(const LinphoneEnums::ChatMessageState &data) {
 		case LinphoneEnums::ChatMessageState::StateFileTransferCancelling:
 			//: file transfer canceled
 			return QObject::tr("message_state_file_transfer_cancelling");
+		default:
+			return QString();
 	}
 }
 

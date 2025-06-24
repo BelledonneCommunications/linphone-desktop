@@ -164,7 +164,6 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 					    engine->deleteLater();
 					    exit(-1);
 				    } else {
-					    lDebug() << engine->rootObjects()[0];
 					    auto window = qobject_cast<QQuickWindow *>(obj);
 					    if (window) {
 						    window->setProperty(NotificationPropertyData, data);

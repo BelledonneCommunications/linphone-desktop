@@ -69,6 +69,7 @@ void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
 	};
 	connect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, dataChange);
 	connect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, dataChange);
+	connect(chat.get(), &ChatCore::lastMessageChanged, this, dataChange);
 }
 
 void ChatList::setSelf(QSharedPointer<ChatList> me) {
@@ -80,6 +81,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			// Avoid copy to lambdas
 			QList<QSharedPointer<ChatCore>> *chats = new QList<QSharedPointer<ChatCore>>();
 			auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+			if (!currentAccount) return;
 			auto linphoneChatRooms = currentAccount->filterChatRooms(Utils::appStringToCoreString(mFilter));
 			for (auto it : linphoneChatRooms) {
 				auto model = createChatCore(it);
@@ -91,6 +93,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 						disconnect(chat.get(), &ChatCore::deleted, this, nullptr);
 						disconnect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, nullptr);
 						disconnect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, nullptr);
+						disconnect(chat.get(), &ChatCore::lastMessageChanged, this, nullptr);
 					}
 				}
 				for (auto &chat : *chats) {
@@ -106,6 +109,64 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	mModelConnection->makeConnectToModel(
 	    &CoreModel::defaultAccountChanged,
 	    [this](std::shared_ptr<linphone::Core> core, std::shared_ptr<linphone::Account> account) { lUpdate(); });
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::messageReceived,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::ChatRoom> &room,
+	           const std::shared_ptr<linphone::ChatMessage> &message) {
+		    auto chatCore = ChatCore::create(room);
+		    mModelConnection->invokeToCore([this, chatCore] {
+			    auto chatList = getSharedList<ChatCore>();
+			    auto it =
+			        std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
+				        return item && chatCore && item->getModel() && chatCore->getModel() &&
+				               item->getModel()->getMonitor() == chatCore->getModel()->getMonitor();
+			        });
+			    if (it == chatList.end()) {
+				    connectItem(chatCore);
+				    add(chatCore);
+				    emit chatAdded();
+			    }
+		    });
+	    });
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::messagesReceived,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::ChatRoom> &room,
+	           const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
+		    auto chatCore = ChatCore::create(room);
+		    mModelConnection->invokeToCore([this, chatCore] {
+			    auto chatList = getSharedList<ChatCore>();
+			    auto it =
+			        std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
+				        return item && chatCore && item->getModel() && chatCore->getModel() &&
+				               item->getModel()->getMonitor() == chatCore->getModel()->getMonitor();
+			        });
+			    if (it == chatList.end()) {
+				    connectItem(chatCore);
+				    add(chatCore);
+				    emit chatAdded();
+			    }
+		    });
+	    });
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::newMessageReaction,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::ChatRoom> &room,
+	           const std::shared_ptr<linphone::ChatMessage> &message,
+	           const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) {
+		    auto chatCore = ChatCore::create(room);
+		    mModelConnection->invokeToCore([this, chatCore] {
+			    auto chatList = getSharedList<ChatCore>();
+			    auto it =
+			        std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
+				        return item && chatCore && item->getModel() && chatCore->getModel() &&
+				               item->getModel()->getMonitor() == chatCore->getModel()->getMonitor();
+			        });
+			    if (it == chatList.end()) {
+				    connectItem(chatCore);
+				    add(chatCore);
+				    emit chatAdded();
+			    }
+		    });
+	    });
 
 	connect(this, &ChatList::filterChanged, [this](QString filter) {
 		mFilter = filter;
@@ -128,7 +189,8 @@ void ChatList::addChatInList(ChatGui *chatGui) {
 	auto chatCore = chatGui->mCore;
 	auto chatList = getSharedList<ChatCore>();
 	auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
-		return item->getIdentifier() == chatCore->getIdentifier();
+		return item && chatCore && item->getModel() && chatCore->getModel() &&
+		       item->getModel()->getMonitor() == chatCore->getModel()->getMonitor();
 	});
 	if (it == chatList.end()) {
 		connectItem(chatCore);

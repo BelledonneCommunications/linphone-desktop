@@ -17,12 +17,12 @@ Notification {
 
 	property var chat: notificationData ? notificationData.chat : null
 	
-	property string avatarUri: notificationData ? notificationData.avatarUri : ""
-	property string chatRoomName: notificationData ? notificationData.chatRoomName : ""
-	property string remoteAddress: notificationData ? notificationData.remoteAddress : ""
-	property string chatRoomAddress: notificationData ? notificationData.chatRoomAddress : ""
-	property bool isGroupChat: notificationData ? notificationData.isGroupChat : false
-	property string message: notificationData ? notificationData.message : ""
+	property string avatarUri: notificationData?.avatarUri? notificationData.avatarUri : ""
+	property string chatRoomName: notificationData?.chatRoomName ? notificationData.chatRoomName : ""
+	property string remoteAddress: notificationData?.remoteAddress ? notificationData.remoteAddress : ""
+	property string chatRoomAddress: notificationData?.chatRoomAddress ? notificationData.chatRoomAddress : ""
+	property bool isGroupChat: notificationData?.isGroupChat ? notificationData.isGroupChat : false
+	property string message: notificationData?.message ? notificationData.message : ""
 	Connections {
 		enabled: chat
 		target: chat ? chat.core : null
