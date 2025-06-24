@@ -97,7 +97,11 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	mIdentifier = Utils::coreStringToAppString(chatRoom->getIdentifier());
 	mChatRoomState = LinphoneEnums::fromLinphone(chatRoom->getState());
 	mIsEncrypted = chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Encrypted);
-	mIsReadOnly = chatRoom->isReadOnly();
+	auto localAccount = ToolModel::findAccount(chatRoom->getLocalAddress());
+	bool associatedAccountHasIMEncryptionMandatory =
+	    localAccount && localAccount->getParams() &&
+	    localAccount->getParams()->getInstantMessagingEncryptionMandatory();
+	mIsReadOnly = chatRoom->isReadOnly() || (!mIsEncrypted && associatedAccountHasIMEncryptionMandatory);
 	connect(this, &ChatCore::eventListChanged, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::eventsInserted, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::eventRemoved, this, &ChatCore::lUpdateLastMessage);
