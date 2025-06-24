@@ -57,6 +57,8 @@ public:
 	Q_PROPERTY(bool isReadOnly READ getIsReadOnly WRITE setIsReadOnly NOTIFY readOnlyChanged)
 	Q_PROPERTY(QString sendingText READ getSendingText WRITE setSendingText NOTIFY sendingTextChanged)
 	Q_PROPERTY(bool ephemeralEnabled READ isEphemeralEnabled WRITE lEnableEphemeral NOTIFY ephemeralEnabledChanged)
+	Q_PROPERTY(
+	    int ephemeralLifetime READ getEphemeralLifetime WRITE lSetEphemeralLifetime NOTIFY ephemeralLifetimeChanged)
 	Q_PROPERTY(bool muted READ isMuted WRITE lSetMuted NOTIFY mutedChanged)
 	Q_PROPERTY(bool meAdmin READ getMeAdmin WRITE setMeAdmin NOTIFY meAdminChanged)
 	Q_PROPERTY(QVariantList participants READ getParticipantsGui NOTIFY participantsChanged)
@@ -82,6 +84,7 @@ public:
 	bool isMuted() const;
 
 	bool isEphemeralEnabled() const;
+	int getEphemeralLifetime() const;
 
 	QString getIdentifier() const;
 
@@ -150,6 +153,7 @@ signals:
 	void sendingTextChanged(QString text);
 	void mutedChanged();
 	void ephemeralEnabledChanged();
+	void ephemeralLifetimeChanged();
 	void meAdminChanged();
 	void participantsChanged();
 
@@ -167,6 +171,7 @@ signals:
 	void lLeave();
 	void lSetMuted(bool muted);
 	void lEnableEphemeral(bool enable);
+	void lSetEphemeralLifetime(int time);
 	void lSetSubject(QString subject);
 	void lRemoveParticipantAtIndex(int index);
 	void lSetParticipantsAddresses(QStringList addresses);
@@ -188,6 +193,7 @@ private:
 	bool mIsEncrypted = false;
 	bool mIsReadOnly = false;
 	bool mEphemeralEnabled = false;
+	int mEphemeralLifetime = 0;
 	bool mIsMuted = false;
 	bool mMeAdmin = false;
 	QList<QSharedPointer<ParticipantCore>> mParticipants;

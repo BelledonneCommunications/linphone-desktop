@@ -82,6 +82,8 @@ void EventLogCore::computeEvent(const std::shared_ptr<const linphone::EventLog> 
 	mustBeInLinphoneThread(getClassName());
 	mHandled = true;
 	mImportant = false;
+	mEphemeralRelated = false;
+
 	auto participantAddress = eventLog->getParticipantAddress() ? eventLog->getParticipantAddress()->clone() : nullptr;
 
 	switch (eventLog->getType()) {
@@ -114,14 +116,18 @@ void EventLogCore::computeEvent(const std::shared_ptr<const linphone::EventLog> 
 			break;
 		}
 		case linphone::EventLog::Type::ConferenceEphemeralMessageEnabled:
+			mEphemeralRelated = true;
 			mEventDetails = tr("conference_ephemeral_message_enabled_event")
-			                    .arg(getEphemeralFormatedTime(eventLog->getEphemeralMessageLifetime()));
+			                    .arg(Utils::getEphemeralFormatedTime(eventLog->getEphemeralMessageLifetime()));
 			break;
 		case linphone::EventLog::Type::ConferenceEphemeralMessageLifetimeChanged:
+			mEphemeralRelated = true;
+			mHandled = eventLog->getEphemeralMessageLifetime() != 0; // Disabled is sent in case of 0.
 			mEventDetails = tr("conference_ephemeral_message_lifetime_changed_event")
-			                    .arg(getEphemeralFormatedTime(eventLog->getEphemeralMessageLifetime()));
+			                    .arg(Utils::getEphemeralFormatedTime(eventLog->getEphemeralMessageLifetime()));
 			break;
 		case linphone::EventLog::Type::ConferenceEphemeralMessageDisabled:
+			mEphemeralRelated = true;
 			mEventDetails = tr("conference_ephemeral_message_disabled_event");
 			mImportant = true;
 			break;
@@ -139,13 +145,4 @@ void EventLogCore::computeEvent(const std::shared_ptr<const linphone::EventLog> 
 		default:
 			mHandled = false;
 	}
-}
-
-QString EventLogCore::getEphemeralFormatedTime(int selectedTime) {
-	if (selectedTime == 60) return tr("nMinute", "", 1).arg(1);
-	else if (selectedTime == 3600) return tr("nHour", "", 1).arg(1);
-	else if (selectedTime == 86400) return tr("nDay", "", 1).arg(1);
-	else if (selectedTime == 259200) return tr("nDay", "", 3).arg(3);
-	else if (selectedTime == 604800) return tr("nWeek", "", 1).arg(1);
-	else return tr("nSeconds", "", selectedTime).arg(selectedTime);
 }

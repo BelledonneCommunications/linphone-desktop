@@ -2102,3 +2102,12 @@ void Utils::setGlobalCursor(Qt::CursorShape cursor) {
 void Utils::restoreGlobalCursor() {
 	App::getInstance()->restoreOverrideCursor();
 }
+
+QString Utils::getEphemeralFormatedTime(int selectedTime) {
+	if (selectedTime == 60) return tr("nMinute", "", 1).arg(1);
+	else if (selectedTime == 3600) return tr("nHour", "", 1).arg(1);
+	else if (selectedTime == 86400) return tr("nDay", "", 1).arg(1);
+	else if (selectedTime == 259200) return tr("nDay", "", 3).arg(3);
+	else if (selectedTime == 604800) return tr("nWeek", "", 1).arg(1);
+	else return tr("nSeconds", "", selectedTime).arg(selectedTime);
+}

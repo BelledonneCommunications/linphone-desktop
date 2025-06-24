@@ -16,6 +16,7 @@ ColumnLayout {
 	property var parentView
 	property bool manageParticipants: false
     signal manageParticipantsRequested()
+    signal ephemeralSettingsRequested()
 
 	spacing: 0
 
@@ -232,11 +233,11 @@ ColumnLayout {
 					{
 						icon: AppIcons.clockCountDown,
 						visible: !mainItem.chatCore.isReadOnly,
-						text: mainItem.chatCore.ephemeralEnabled ? qsTr("group_infos_disable_ephemerals") : qsTr("group_infos_enable_ephemerals"),
+						text: mainItem.chatCore.ephemeralEnabled ? qsTr("group_infos_ephemerals")+UtilsCpp.getEphemeralFormatedTime(mainItem.chatCore.ephemeralLifetime) : qsTr("group_infos_enable_ephemerals"),
 						color: DefaultStyle.main2_600,
 						showRightArrow: false,
 						action: function() {
-							mainItem.chatCore.ephemeralEnabled = !mainItem.chatCore.ephemeralEnabled
+							mainItem.ephemeralSettingsRequested()
 						}
 					},
 					{

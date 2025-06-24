@@ -59,6 +59,9 @@ public:
 	bool isHandled() const {
 		return mHandled;
 	}
+	bool isEphemeralRelated() const {
+		return mEphemeralRelated;
+	}
 
 private:
 	DECLARE_ABSTRACT_OBJECT
@@ -69,13 +72,13 @@ private:
 	LinphoneEnums::EventLogType mEventLogType;
 	bool mHandled;
 	bool mImportant;
+	bool mEphemeralRelated;
 	QString mEventDetails;
 	QDateTime mTimestamp;
 
 	ChatMessageCore *getChatMessageCorePointer();
 	CallHistoryCore *getCallHistoryCorePointer();
 	void computeEvent(const std::shared_ptr<const linphone::EventLog> &eventLog);
-	QString getEphemeralFormatedTime(int selectedTime);
 };
 
 #endif // EventLogCore_H_

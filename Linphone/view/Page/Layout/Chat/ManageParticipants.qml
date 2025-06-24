@@ -19,7 +19,6 @@ Rectangle {
 	Layout.leftMargin: Math.round(17 * DefaultStyle.dp)
 	Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
 	color: DefaultStyle.grey_0
-	radius: Math.round(15 * DefaultStyle.dp)
 	height: participantAddColumn.implicitHeight
 	signal done()
 
@@ -31,7 +30,6 @@ Rectangle {
 		anchors.topMargin: Math.round(17 * DefaultStyle.dp)
 		spacing: Math.round(5 * DefaultStyle.dp)
 		RowLayout {
-			id: manageParticipantsButtons
 			spacing: Math.round(5 * DefaultStyle.dp)
 			BigButton {
 				id: manageParticipantsBackButton

@@ -65,6 +65,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Chat/ChatMessageInvitationBubble.qml
 	view/Control/Display/Chat/ChatMessagesListView.qml
 	view/Control/Display/Chat/Event.qml
+	view/Control/Display/Chat/EphemeralEvent.qml
 	view/Control/Display/Chat/FileView.qml
 	view/Control/Display/Contact/Avatar.qml
 	view/Control/Display/Contact/Contact.qml
@@ -161,6 +162,8 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Chat/ChatInfoActionsGroup.qml
 	view/Page/Layout/Chat/GroupChatInfoParticipants.qml
 	view/Page/Layout/Chat/ManageParticipants.qml
+	view/Page/Layout/Chat/EphemeralSettings.qml
+	
 
 	view/Page/Main/AbstractMainPage.qml
 	view/Page/Main/Account/AccountListView.qml

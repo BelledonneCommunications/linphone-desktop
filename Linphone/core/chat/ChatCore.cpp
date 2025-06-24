@@ -102,6 +102,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	connect(this, &ChatCore::eventsInserted, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::eventRemoved, this, &ChatCore::lUpdateLastMessage);
 	mEphemeralEnabled = chatRoom->ephemeralEnabled();
+	mEphemeralLifetime = chatRoom->ephemeralEnabled() ? chatRoom->getEphemeralLifetime() : 0;
 	mIsMuted = chatRoom->getMuted();
 	mParticipants = buildParticipants(chatRoom);
 }
@@ -281,6 +282,18 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 			if (mEphemeralEnabled != enable) {
 				mEphemeralEnabled = enable;
 				emit ephemeralEnabledChanged();
+			}
+		});
+	});
+
+	mChatModelConnection->makeConnectToCore(&ChatCore::lSetEphemeralLifetime, [this](int time) {
+		mChatModelConnection->invokeToModel([this, time]() { mChatModel->setEphemeralLifetime(time); });
+	});
+	mChatModelConnection->makeConnectToModel(&ChatModel::ephemeralLifetimeChanged, [this](int time) {
+		mChatModelConnection->invokeToCore([this, time]() {
+			if (mEphemeralLifetime != time) {
+				mEphemeralLifetime = time;
+				emit ephemeralLifetimeChanged();
 			}
 		});
 	});
@@ -532,6 +545,10 @@ bool ChatCore::isMuted() const {
 
 bool ChatCore::isEphemeralEnabled() const {
 	return mEphemeralEnabled;
+}
+
+int ChatCore::getEphemeralLifetime() const {
+	return mEphemeralLifetime;
 }
 
 void ChatCore::setMeAdmin(bool admin) {

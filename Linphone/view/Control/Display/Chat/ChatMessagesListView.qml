@@ -158,6 +158,23 @@ ListView {
 					}
 				}
         }
+        
+		DelegateChoice {
+            roleValue: "ephemeralEvent"
+            delegate:
+				Item {
+					property bool showTopMargin: !header.visible && index == 0
+					width: mainItem.width
+					//height: 40 * DefaultStyle.dp
+					height: (showTopMargin ? 30 : 0 * DefaultStyle.dp) + eventItem.height
+					EphemeralEvent {
+						id: eventItem
+						anchors.top: parent.top
+						anchors.topMargin: showTopMargin ? 30 : 0 * DefaultStyle.dp
+						eventLogGui: modelData
+					}
+				}
+        }
     }
     
     footerPositioning: ListView.OverlayFooter

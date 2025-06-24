@@ -114,6 +114,12 @@ void ChatModel::enableEphemeral(bool enable) {
 	emit ephemeralEnableChanged(enable);
 }
 
+void ChatModel::setEphemeralLifetime(int time) {
+	mMonitor->setEphemeralLifetime(time);
+	emit ephemeralLifetimeChanged(time);
+	enableEphemeral(time != 0);
+}
+
 void ChatModel::deleteHistory() {
 	mMonitor->deleteHistory();
 	emit historyDeleted();

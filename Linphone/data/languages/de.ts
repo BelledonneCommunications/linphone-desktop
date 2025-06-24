@@ -2979,47 +2979,6 @@ Error</extracomment>
         <source>conference_participant_set_admin_event</source>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="145"/>
-        <source>nMinute</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="146"/>
-        <source>nHour</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="147"/>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="148"/>
-        <source>nDay</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="149"/>
-        <source>nWeek</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="150"/>
-        <source>nSeconds</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
 </context>
 <context>
     <name>FriendCore</name>
@@ -3166,9 +3125,9 @@ Error</extracomment>
         <translation>Flüchtige Nachrichten aktivieren</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="292"/>
-        <source>group_infos_disable_ephemerals</source>
-        <translation>Flüchtige Nachrichten deaktivieren</translation>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="203"/>
+        <source>group_infos_ephemerals</source>
+        <translation>Ephemeral messages : </translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="302"/>
@@ -4351,8 +4310,8 @@ Error</extracomment>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="145"/>
-        <source>one_one_infos_disable_ephemerals</source>
-        <translation>Flüchtige Nachrichten deaktivieren</translation>
+        <source>one_one_infos_ephemerals</source>
+        <translation>Ephemeral messages : </translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="155"/>
@@ -5067,6 +5026,41 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
 </context>
 <context>
     <name>Utils</name>
+	<message numerus="yes">
+		<source>nMinute</source>
+		<translation type="unfinished">
+			<numerusform></numerusform>
+			<numerusform></numerusform>
+		</translation>
+	</message>
+	<message numerus="yes">
+		<source>nHour</source>
+		<translation type="unfinished">
+			<numerusform></numerusform>
+			<numerusform></numerusform>
+		</translation>
+	</message>
+	<message numerus="yes">
+		<source>nDay</source>
+		<translation type="unfinished">
+			<numerusform></numerusform>
+			<numerusform></numerusform>
+		</translation>
+	</message>
+	<message numerus="yes">
+		<source>nWeek</source>
+		<translation type="unfinished">
+			<numerusform></numerusform>
+			<numerusform></numerusform>
+		</translation>
+	</message>
+	<message numerus="yes">
+		<source>nSeconds</source>
+		<translation type="unfinished">
+			<numerusform></numerusform>
+			<numerusform></numerusform>
+		</translation>
+	</message>
     <message>
         <location filename="../../tool/Utils.cpp" line="171"/>
         <source>information_popup_call_not_created_message</source>
@@ -6629,5 +6623,47 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 		<translation>Participants</translation>
 	</message>
 </context>
+<context>
+	<name>EphemeralSettings</name>
+	<message>
+		<source>title</source>
+		<extracomment>Ephemeral messages</extracomment>
+		<translation>Ephemeral messages</translation>
+	</message>
+	<message>
+		<source>explanations</source>
+		<extracomment>By enabling ephemeral messages in this chat, messages sent will be automatically deleted after the defined period.</extracomment>
+		<translation>By enabling ephemeral messages in this chat, messages sent will be automatically deleted after the defined period.</translation>
+	</message>
+	<message>
+		<source>one_minute</source>
+		<extracomment>1 minute</extracomment>
+		<translation>1 minute</translation>
+	</message>
+	<message>
+		<source>one_hour</source>
+		<extracomment>1 hour</extracomment>
+		<translation>1 hour</translation>
+	</message>
+	<message>
+		<source>one_day</source>
+		<extracomment>1 day</extracomment>
+		<translation>1 day</translation>
+	</message>
+	<message>
+		<source>one_week</source>
+		<extracomment>1 week</extracomment>
+		<translation>1 week</translation>
+	</message>
+	<message>
+		<source>disabled</source>
+		<extracomment>Disabled</extracomment>
+		<translation>Disabled</translation>
+	</message>
+	<message>
+		<source>custom</source>
+		<extracomment>Custom:</extracomment>
+		<translation>Custom: </translation>
+	</message>
+</context>
 </TS>
-

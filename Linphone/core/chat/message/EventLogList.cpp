@@ -143,6 +143,13 @@ QVariant EventLogList::data(const QModelIndex &index, int role) const {
 			case Qt::DisplayRole + 1:
 				return "callLog";
 		}
+	} else if (core->isEphemeralRelated()) {
+		switch (role) {
+			case Qt::DisplayRole:
+				return QVariant::fromValue(new EventLogGui(core));
+			case Qt::DisplayRole + 1:
+				return "ephemeralEvent";
+		}
 	} else {
 		switch (role) {
 			case Qt::DisplayRole:

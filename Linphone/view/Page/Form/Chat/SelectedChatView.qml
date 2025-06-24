@@ -387,20 +387,23 @@ RowLayout {
             property bool showingMessageReactions: false
             property bool showingImdnStatus: false
             property bool showingManageParticipants: false
+            property bool showingEphemeralSettings: false
 			anchors.top: parent.top
 			anchors.topMargin: Math.round(39 * DefaultStyle.dp)
-			sourceComponent: showingMessageReactions
-				? messageReactionsComponent
-				: showingImdnStatus
-					? messageImdnStatusComponent
-					: showingManageParticipants
-						? manageParticipantsComponents
-						: mainItem.chat.core.isGroupChat
-							? groupInfoComponent
-							: oneToOneInfoComponent
+			sourceComponent: showingEphemeralSettings
+				? ephemeralSettingsComponent
+				: showingMessageReactions
+					? messageReactionsComponent
+					: showingImdnStatus
+						? messageImdnStatusComponent
+						: showingManageParticipants
+							? manageParticipantsComponent
+							: mainItem.chat.core.isGroupChat
+								? groupInfoComponent
+								: oneToOneInfoComponent
 			active: detailsPanel.visible
 			onLoaded: {
-				if (contentLoader.item) {
+				if (contentLoader.item && contentLoader.item.parentView) {
 					contentLoader.item.parentView = mainItem
 				}
 			}
@@ -410,6 +413,7 @@ RowLayout {
 			id: oneToOneInfoComponent
 			OneOneConversationInfos {
 				chatGui: mainItem.chat
+				onEphemeralSettingsRequested: contentLoader.showingEphemeralSettings = true
 			}
 		}
 
@@ -418,6 +422,7 @@ RowLayout {
 			GroupConversationInfos {
 				chatGui: mainItem.chat
 				onManageParticipantsRequested: contentLoader.showingManageParticipants = true
+				onEphemeralSettingsRequested: contentLoader.showingEphemeralSettings = true
 			}
 		}
 
@@ -443,10 +448,18 @@ RowLayout {
         }
         
 		Component {
-			id: manageParticipantsComponents
+			id: manageParticipantsComponent
 			ManageParticipants {
 				chatGui: mainItem.chat
 				onDone: contentLoader.showingManageParticipants = false
+			}
+		}
+		
+		Component {
+			id: ephemeralSettingsComponent
+			EphemeralSettings {
+				chatGui: mainItem.chat
+				onDone: contentLoader.showingEphemeralSettings = false
 			}
 		}
 	}

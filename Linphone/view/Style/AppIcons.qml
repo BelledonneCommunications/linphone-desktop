@@ -154,4 +154,7 @@ QtObject {
 	property string search: "image://internal/search.svg"
 	property string pdf: "image://internal/pdf.svg"
 	property string photo: "image://internal/photo.svg"
+	property string ephemeralSettings: "image://internal/ephemeral-settings.svg"
+	property string radioOn: "image://internal/radio_on.svg"
+	property string radioOff: "image://internal/radio_off.svg"
 }

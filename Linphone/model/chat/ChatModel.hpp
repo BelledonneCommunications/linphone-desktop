@@ -62,6 +62,7 @@ public:
 	linphone::ChatRoom::State getState() const;
 	void setMuted(bool muted);
 	void enableEphemeral(bool enable);
+	void setEphemeralLifetime(int time);
 	void setSubject(QString subject) const;
 	void removeParticipantAtIndex(int index) const;
 	void setParticipantAddresses(const QStringList &addresses) const;
@@ -73,6 +74,7 @@ signals:
 	void deleted();
 	void mutedChanged(bool muted);
 	void ephemeralEnableChanged(bool enable);
+	void ephemeralLifetimeChanged(int time);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

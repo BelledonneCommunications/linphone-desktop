@@ -16,6 +16,8 @@ ColumnLayout {
 	property var contactObj: chatGui ? UtilsCpp.findFriendByAddress(mainItem.chatCore.peerAddress) : null
 	property var parentView
 	spacing: 0
+	signal ephemeralSettingsRequested()
+
 
 	Avatar {
 		Layout.alignment: Qt.AlignHCenter
@@ -155,12 +157,12 @@ ColumnLayout {
 			},
 			{
 				icon: AppIcons.clockCountDown,
-				visible: true,
-				text: mainItem.chatCore.ephemeralEnabled ? qsTr("one_one_infos_disable_ephemerals") : qsTr("one_one_infos_enable_ephemerals"),
+				visible: !mainItem.chatCore.isReadOnly,
+				text: mainItem.chatCore.ephemeralEnabled ? qsTr("one_one_infos_ephemerals")+UtilsCpp.getEphemeralFormatedTime(mainItem.chatCore.ephemeralLifetime) : qsTr("one_one_infos_enable_ephemerals"),
 				color: DefaultStyle.main2_600,
 				showRightArrow: false,
 				action: function() {
-					mainItem.chatCore.ephemeralEnabled = !mainItem.chatCore.ephemeralEnabled
+					mainItem.ephemeralSettingsRequested()
 				}
 			},
 			{
