@@ -40,6 +40,7 @@ class ParticipantCore : public QObject, public AbstractObject {
 
 	Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged)
 	Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged)
+	Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged)
 	Q_PROPERTY(bool isAdmin READ isAdmin WRITE setIsAdmin NOTIFY isAdminChanged)
 	Q_PROPERTY(bool isMe READ isMe NOTIFY isMeChanged)
 	Q_PROPERTY(QDateTime creationTime READ getCreationTime CONSTANT)
@@ -56,6 +57,7 @@ public:
 	void setSelf(QSharedPointer<ParticipantCore> me);
 
 	QString getDisplayName() const;
+	QString getUsername() const;
 	QString getSipAddress() const;
 	QDateTime getCreationTime() const;
 	bool isAdmin() const;
@@ -69,6 +71,7 @@ public:
 
 	void setSipAddress(const QString &address);
 	void setDisplayName(const QString &name);
+	void setUsername(const QString &name);
 	void setCreationTime(const QDateTime &date);
 	void setIsAdmin(const bool &status);
 	void setIsFocus(const bool &focus);
@@ -92,6 +95,7 @@ signals:
 	void invitingChanged();
 	void creationTimeChanged();
 	void displayNameChanged();
+	void usernameChanged();
 
 	void lStartInvitation(const int &secs = 30);
 	void lSetIsAdmin(bool status);
@@ -107,6 +111,7 @@ private:
 	QList<QVariant> mParticipantDevices;
 
 	QString mDisplayName;
+	QString mUsername;
 	QString mSipAddress;
 	QDateTime mCreationTime;
 	bool mAdminStatus;

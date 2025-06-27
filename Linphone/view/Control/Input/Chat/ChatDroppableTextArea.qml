@@ -138,8 +138,13 @@ Control.Control {
 								width: sendingAreaFlickable.width
 								height: sendingAreaFlickable.height
 								textFormat: TextEdit.AutoText
-								onTextChanged: mainItem.text = text
-								Component.onCompleted: mainItem.textArea = sendingTextArea
+								onTextChanged: {
+									mainItem.text = text
+								}
+								Component.onCompleted: {
+									mainItem.textArea = sendingTextArea
+									sendingTextArea.text = mainItem.text
+								}
 								//: Say something… : placeholder text for sending message text area
 								placeholderText: qsTr("chat_view_send_area_placeholder_text")
 								placeholderTextColor: DefaultStyle.main2_400
@@ -160,7 +165,7 @@ Control.Control {
 								Connections {
 									target: mainItem
 									function onTextChanged() {
-										if (mainItem.text !== text) text = mainItem.text
+										sendingTextArea.text = mainItem.text
 									}
 									function onSendMessage() {
 										sendingTextArea.clear()

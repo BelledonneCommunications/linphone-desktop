@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2010-2024 Belledonne Communications SARL.
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,34 +18,34 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef IMDN_STATUS_LIST_H_
-#define IMDN_STATUS_LIST_H_
+#ifndef PARTICIPANT_INFO_LIST_H_
+#define PARTICIPANT_INFO_LIST_H_
 
-#include "core/chat/message/ChatMessageCore.hpp"
-#include "core/proxy/AbstractListProxy.hpp"
-#include "tool/AbstractObject.hpp"
+#include "../proxy/ListProxy.hpp"
+#include "model/chat/ChatModel.hpp"
 #include "tool/thread/SafeConnection.hpp"
-#include <QLocale>
+
+class ChatCore;
 
 // =============================================================================
 
-class ImdnStatusList : public AbstractListProxy<ImdnStatus>, public AbstractObject {
+class ParticipantInfoList : public ListProxy, public AbstractObject {
 	Q_OBJECT
 public:
-	static QSharedPointer<ImdnStatusList> create();
-	ImdnStatusList(QObject *parent = Q_NULLPTR);
-	~ImdnStatusList();
+	static QSharedPointer<ParticipantInfoList> create();
+	static QSharedPointer<ParticipantInfoList> create(const QSharedPointer<ChatCore> &chatCore);
 
-	QList<ImdnStatus> getImdnStatusList();
-	void setImdnStatusList(QList<ImdnStatus> imdnStatusList);
+	ParticipantInfoList(QObject *parent = Q_NULLPTR);
+	virtual ~ParticipantInfoList();
 
+	void setChatCore(const QSharedPointer<ChatCore> &chatCore);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 signals:
-	void imdnStatusListChanged();
+	void lUpdateParticipants();
 
 private:
+	QSharedPointer<ChatCore> mChatCore;
 	DECLARE_ABSTRACT_OBJECT
 };
-
-#endif
+#endif // PARTICIPANT_INFO_LIST_H_

@@ -593,3 +593,7 @@ ChatCore::buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom)
 	}
 	return result;
 }
+
+QList<QSharedPointer<ParticipantCore>> ChatCore::getParticipants() const {
+	return mParticipants;
+}

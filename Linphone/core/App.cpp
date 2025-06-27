@@ -73,6 +73,7 @@
 #include "core/notifier/Notifier.hpp"
 #include "core/participant/ParticipantDeviceProxy.hpp"
 #include "core/participant/ParticipantGui.hpp"
+#include "core/participant/ParticipantInfoProxy.hpp"
 #include "core/participant/ParticipantProxy.hpp"
 #include "core/payload-type/PayloadTypeCore.hpp"
 #include "core/payload-type/PayloadTypeGui.hpp"
@@ -652,6 +653,7 @@ void App::initCppInterfaces() {
 	qmlRegisterType<VariantObject>(Constants::MainQmlUri, 1, 0, "VariantObject");
 	qmlRegisterType<VariantList>(Constants::MainQmlUri, 1, 0, "VariantList");
 
+	qmlRegisterType<ParticipantInfoProxy>(Constants::MainQmlUri, 1, 0, "ParticipantInfoProxy");
 	qmlRegisterType<ParticipantProxy>(Constants::MainQmlUri, 1, 0, "ParticipantProxy");
 	qmlRegisterType<ParticipantGui>(Constants::MainQmlUri, 1, 0, "ParticipantGui");
 	qmlRegisterType<ConferenceInfoProxy>(Constants::MainQmlUri, 1, 0, "ConferenceInfoProxy");

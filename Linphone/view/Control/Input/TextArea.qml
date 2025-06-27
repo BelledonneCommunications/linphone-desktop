@@ -19,7 +19,8 @@ TextEdit {
 	activeFocusOnTab: true
 
 	property bool displayAsRichText: false
-	property string richFormatText: UtilsCpp.encodeTextToQmlRichFormat(text)
+	property var encodeTextObj: UtilsCpp.encodeTextToQmlRichFormat(text)
+	property string richFormatText: encodeTextObj && encodeTextObj.value || ""
 	property color textAreaColor
 
 	
@@ -30,7 +31,7 @@ TextEdit {
 	}
 
 	onTextChanged: {
-		richFormatText = UtilsCpp.encodeTextToQmlRichFormat(text)
+		encodeTextObj = UtilsCpp.encodeTextToQmlRichFormat(text)
 	}
 
 	MouseArea {

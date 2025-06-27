@@ -1798,64 +1798,111 @@ QString Utils::getPresenceStatus(LinphoneEnums::Presence presence) {
 	return presenceStatus;
 }
 
-QString Utils::encodeTextToQmlRichFormat(const QString &text, const QVariantMap &options) {
+VariantObject *Utils::encodeTextToQmlRichFormat(const QString &text, const QVariantMap &options, ChatGui *chat) {
 	/*QString images;
 	QStringList imageFormat;
 	for(auto format : QImageReader::supportedImageFormats())
 	    imageFormat.append(QString::fromLatin1(format).toUpper());
-	*/
-	QStringList formattedText;
-	bool lastWasUrl = false;
+	    */
+	VariantObject *data = new VariantObject("encodeTextToQmlRichFormat");
+	if (!data) return nullptr;
+	auto primaryColor = getDefaultStyleColor("info_500_main");
+	data->makeRequest([text, options, chat, primaryColor] {
+		QStringList formattedText;
+		bool lastWasUrl = false;
 
-	if (options.contains("noLink") && options["noLink"].toBool()) {
-		formattedText.append(encodeEmojiToQmlRichFormat(text));
-	} else {
-		auto primaryColor = getDefaultStyleColor("info_500_main");
-		auto iriParsed = UriTools::parseIri(text);
+		if (options.contains("noLink") && options["noLink"].toBool()) {
+			formattedText.append(encodeEmojiToQmlRichFormat(text));
+		} else {
 
-		for (int i = 0; i < iriParsed.size(); ++i) {
-			QString iri = iriParsed[i]
-			                  .second.replace('&', "&amp;")
-			                  .replace('<', "\u2063&lt;")
-			                  .replace('>', "\u2063&gt;")
-			                  .replace('"', "&quot;")
-			                  .replace('\'', "&#039;");
-			if (!iriParsed[i].first) {
-				if (lastWasUrl) {
-					lastWasUrl = false;
-					if (iri.front() != ' ') iri.push_front(' ');
+			auto iriParsed = UriTools::parseIri(text);
+
+			for (int i = 0; i < iriParsed.size(); ++i) {
+				QString iri = iriParsed[i]
+				                  .second.replace('&', "&amp;")
+				                  .replace('<', "\u2063&lt;")
+				                  .replace('>', "\u2063&gt;")
+				                  .replace('"', "&quot;")
+				                  .replace('\'', "&#039;");
+				if (!iriParsed[i].first) {
+					if (lastWasUrl) {
+						lastWasUrl = false;
+						if (iri.front() != ' ') iri.push_front(' ');
+					}
+					formattedText.append(encodeEmojiToQmlRichFormat(iri));
+				} else {
+					QString uri =
+					    iriParsed[i].second.left(3) == "www" ? "http://" + iriParsed[i].second : iriParsed[i].second;
+					/* TODO : preview from link
+					int extIndex = iriParsed[i].second.lastIndexOf('.');
+					QString ext;
+					if( extIndex >= 0)
+					    ext = iriParsed[i].second.mid(extIndex+1).toUpper();
+					if(imageFormat.contains(ext.toLatin1())){// imagesHeight is not used because of bugs on display
+					(blank image if set without width) images += "<a href=\"" + uri + "\"><img" + (
+					options.contains("imagesWidth") ? QString(" width='") + options["imagesWidth"].toString() + "'" : ""
+					        ) + (
+					            options.contains("imagesWidth")
+					            ? QString(" height='auto'")
+					            : ""
+					        ) + " src=\"" + iriParsed[i].second + "\" />"+uri+"</a>";
+					}else{
+					*/
+					formattedText.append("<a style=\"color:" + primaryColor.name() + ";\" href=\"" + uri + "\">" + iri +
+					                     "</a>");
+					lastWasUrl = true;
+					/*}*/
 				}
-				formattedText.append(encodeEmojiToQmlRichFormat(iri));
-			} else {
-				QString uri =
-				    iriParsed[i].second.left(3) == "www" ? "http://" + iriParsed[i].second : iriParsed[i].second;
-				/* TODO : preview from link
-				int extIndex = iriParsed[i].second.lastIndexOf('.');
-				QString ext;
-				if( extIndex >= 0)
-				    ext = iriParsed[i].second.mid(extIndex+1).toUpper();
-				if(imageFormat.contains(ext.toLatin1())){// imagesHeight is not used because of bugs on display (blank
-				image if set without width) images += "<a href=\"" + uri + "\"><img" + ( options.contains("imagesWidth")
-				                ? QString(" width='") + options["imagesWidth"].toString() + "'"
-				                : ""
-				        ) + (
-				            options.contains("imagesWidth")
-				            ? QString(" height='auto'")
-				            : ""
-				        ) + " src=\"" + iriParsed[i].second + "\" />"+uri+"</a>";
-				}else{
-				*/
-				formattedText.append("<a style=\"color:" + primaryColor.name() + ";\" href=\"" + uri + "\">" + iri +
-				                     "</a>");
-				lastWasUrl = true;
-				/*}*/
 			}
 		}
-	}
-	if (lastWasUrl && formattedText.last().back() != ' ') {
-		formattedText.push_back(" ");
-	}
-	return "<p style=\"white-space:pre-wrap;\">" + formattedText.join("");
+		if (lastWasUrl && formattedText.last().back() != ' ') {
+			formattedText.push_back(" ");
+		}
+		if (chat && chat->mCore) {
+			auto participants = chat->mCore->getParticipants();
+			auto mentionsParsed = UriTools::parseMention(formattedText.join(""));
+			formattedText.clear();
+
+			for (int i = 0; i < mentionsParsed.size(); ++i) {
+				QString mention = mentionsParsed[i].second;
+
+				if (mentionsParsed[i].first) {
+					QString mentions = mentionsParsed[i].second;
+					QStringList finalMentions;
+					QStringList parts = mentions.split(" ");
+					for (auto part : parts) {
+						if (part.startsWith("@")) { // mention
+							QString username = part;
+							username.removeFirst();
+							auto it = std::find_if(
+							    participants.begin(), participants.end(),
+							    [username](QSharedPointer<ParticipantCore> p) { return username == p->getUsername(); });
+							if (it != participants.end()) {
+								auto foundParticipant = participants.at(std::distance(participants.begin(), it));
+								auto address = foundParticipant->getSipAddress();
+								auto isFriend = ToolModel::findFriendByAddress(address);
+								if (isFriend)
+									part = "@" + Utils::coreStringToAppString(isFriend->getAddress()->getDisplayName());
+								QString participantLink = "<a style=\"color:" + primaryColor.name() +
+								                          ";\" href=\"mention:" + address + "\">" + part + "</a>";
+								finalMentions.append(participantLink);
+							} else {
+								finalMentions.append(part);
+							}
+						} else {
+							finalMentions.append(part);
+						}
+					}
+					formattedText.push_back(finalMentions.join(" "));
+				} else {
+					formattedText.push_back(mentionsParsed[i].second);
+				}
+			}
+		}
+		return "<p style=\"white-space:pre-wrap;\">" + formattedText.join("");
+	});
+	data->requestValue();
+	return data;
 }
 
 QString Utils::encodeEmojiToQmlRichFormat(const QString &body) {
@@ -1894,6 +1941,24 @@ bool Utils::isOnlyEmojis(const QString &text) {
 	for (auto &code : utf32_string)
 		if (codepointIsVisible(code) && !Utils::codepointIsEmoji(code)) return false;
 	return true;
+}
+
+void Utils::openContactAtAddress(const QString &address) {
+	App::postModelAsync([address] {
+		auto isFriend = ToolModel::findFriendByAddress(address);
+		if (isFriend) {
+			App::postCoreAsync([address] {
+				auto window = getMainWindow();
+				QMetaObject::invokeMethod(window, "displayContactPage", Q_ARG(QVariant, address));
+			});
+		} else {
+			App::postCoreAsync([address] {
+				auto window = getMainWindow();
+				QMetaObject::invokeMethod(window, "displayCreateContactPage", Q_ARG(QVariant, ""),
+				                          Q_ARG(QVariant, address));
+			});
+		}
+	});
 }
 
 QString Utils::getFilename(QUrl url) {

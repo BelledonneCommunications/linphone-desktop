@@ -210,6 +210,54 @@ RowLayout {
                         anchors.rightMargin: Math.round(5 * DefaultStyle.dp)
                         policy: Control.ScrollBar.AsNeeded
                     }
+                    Control.Control {
+                        id: participantListPopup
+                        width: parent.width
+                        height: Math.min(contentItem.height, Math.round(200 * DefaultStyle.dp))
+                        visible: false
+                        anchors.bottom: chatMessagesListView.bottom
+                        anchors.left: chatMessagesListView.left
+                        anchors.right: chatMessagesListView.right
+                        
+                        background: Item {
+                            anchors.fill: parent
+                            Rectangle {
+                                id: participantBg
+                                color: DefaultStyle.grey_0
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                radius: Math.round(20 * DefaultStyle.dp)
+                                height: parent.height
+                            }
+                            MultiEffect {
+                                anchors.fill: participantBg
+                                source: participantBg
+                                shadowEnabled: true
+                                shadowBlur: 0.5
+                                shadowColor: DefaultStyle.grey_1000
+				                shadowOpacity: 0.3
+                            }
+                            Rectangle {
+                                id: bg
+                                color: DefaultStyle.grey_0
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.bottom: parent.bottom
+                                height: parent.height/2
+                            }
+                        }
+                        contentItem: ParticipantInfoListView {
+                            id: participantInfoList
+                            height: contentHeight
+                            width: participantListPopup.width
+                            chatGui: mainItem.chat
+                            onParticipantClicked: (username) => {
+                                messageSender.text = messageSender.text + username + " "
+                                messageSender.textArea.cursorPosition = messageSender.text.length
+                            }
+                        }
+                    }
                 }
                 Control.Control {
                     id: selectedFilesArea
@@ -333,14 +381,16 @@ RowLayout {
                 Control.SplitView.preferredHeight: mainItem.chat.core.isReadOnly ? 0 : Math.round(79 * DefaultStyle.dp)
                 Control.SplitView.minimumHeight: mainItem.chat.core.isReadOnly ? 0 : Math.round(79 * DefaultStyle.dp)
                 chat: mainItem.chat
-                Component.onCompleted: {
-                    
-                    if (mainItem.chat) text = mainItem.chat.core.sendingText
+                onChatChanged: {
+                    if (chat) messageSender.text = mainItem.chat.core.sendingText
                 }
                 onTextChanged: {
                     if (text !== "" && mainItem.chat.core.composingName !== "") {
                         mainItem.chat.core.lCompose()
                     }
+                    var lastChar = text.slice(-1)
+                    if (lastChar == "@") participantListPopup.visible = true
+                    else participantListPopup.visible = false
                     mainItem.chat.core.sendingText = text
                 }
                 onSendMessage: {
@@ -359,7 +409,6 @@ RowLayout {
                 }
             }
         }
-        
     }
     Rectangle {
         visible: detailsPanel.visible

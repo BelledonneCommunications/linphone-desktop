@@ -154,10 +154,11 @@ public:
 	Q_INVOKABLE static VariantObject *createGroupChat(QString subject, QStringList participantAddresses);
 	Q_INVOKABLE static void openChat(ChatGui *chat);
 	Q_INVOKABLE static bool isEmptyMessage(QString message);
-	Q_INVOKABLE static QString encodeTextToQmlRichFormat(const QString &text,
-	                                                     const QVariantMap &options = QVariantMap());
+	Q_INVOKABLE static VariantObject *
+	encodeTextToQmlRichFormat(const QString &text, const QVariantMap &options = QVariantMap(), ChatGui *chat = nullptr);
 	Q_INVOKABLE static QString encodeEmojiToQmlRichFormat(const QString &body);
 	Q_INVOKABLE static bool isOnlyEmojis(const QString &text);
+	Q_INVOKABLE static void openContactAtAddress(const QString &address);
 
 	Q_INVOKABLE static QString getFilename(QUrl url);
 	static bool codepointIsEmoji(uint code);

@@ -132,6 +132,7 @@ public:
 	std::shared_ptr<ChatModel> getModel() const;
 
 	QList<QSharedPointer<ParticipantCore>> buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom) const;
+	QList<QSharedPointer<ParticipantCore>> getParticipants() const;
 	QVariantList getParticipantsGui() const;
 	QStringList getParticipantsAddresses() const;
 

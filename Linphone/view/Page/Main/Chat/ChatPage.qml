@@ -311,7 +311,7 @@ AbstractMainPage {
         FocusScope {
             SelectedChatView {
                 anchors.fill: parent
-                chat: mainItem.selectedChatGui
+                chat: mainItem.selectedChatGui || null
             }
         }
     }

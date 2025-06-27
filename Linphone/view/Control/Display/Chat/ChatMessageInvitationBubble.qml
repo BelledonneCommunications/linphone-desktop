@@ -202,13 +202,14 @@ Rectangle {
 				}
 
 				Text {
-					text: UtilsCpp.encodeTextToQmlRichFormat(conferenceInfo.description)
+					property var encodeTextObj: UtilsCpp.encodeTextToQmlRichFormat(conferenceInfo.description)
+					text: encodeTextObj? encodeTextObj.value : ""
 					wrapMode: Text.WordWrap
 					textFormat: Text.RichText
 					font: Typography.p4
 					color: DefaultStyle.main2_500main
 					visible: conferenceInfo.description.length > 0
-					onLinkActivated: {
+					onLinkActivated: (link) => {
 						if (link.startsWith('sip'))
 							UtilsCpp.createCall(link)
 						else

@@ -1,5 +1,5 @@
-﻿/*
- * Copyright (c) 2010-2024 Belledonne Communications SARL.
+/*
+ * Copyright (c) 2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,34 +18,42 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef IMDN_STATUS_LIST_H_
-#define IMDN_STATUS_LIST_H_
+#ifndef PARTICIPANT_INFO_PROXY_H_
+#define PARTICIPANT_INFO_PROXY_H_
 
-#include "core/chat/message/ChatMessageCore.hpp"
-#include "core/proxy/AbstractListProxy.hpp"
+#include "../proxy/LimitProxy.hpp"
+#include "core/chat/ChatGui.hpp"
 #include "tool/AbstractObject.hpp"
-#include "tool/thread/SafeConnection.hpp"
-#include <QLocale>
 
+#include <memory>
+
+class ParticipantInfoList;
+class ChatModel;
 // =============================================================================
 
-class ImdnStatusList : public AbstractListProxy<ImdnStatus>, public AbstractObject {
+class QWindow;
+
+class ParticipantInfoProxy : public LimitProxy, public AbstractObject {
+
 	Q_OBJECT
+	Q_PROPERTY(ChatGui *chat READ getChat WRITE setChat NOTIFY chatChanged)
+
 public:
-	static QSharedPointer<ImdnStatusList> create();
-	ImdnStatusList(QObject *parent = Q_NULLPTR);
-	~ImdnStatusList();
+	DECLARE_SORTFILTER_CLASS(bool mShowMe;)
 
-	QList<ImdnStatus> getImdnStatusList();
-	void setImdnStatusList(QList<ImdnStatus> imdnStatusList);
+	ParticipantInfoProxy(QObject *parent = Q_NULLPTR);
+	~ParticipantInfoProxy();
 
-	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	ChatGui *getChat() const;
+	void setChat(ChatGui *chatGui);
 
 signals:
-	void imdnStatusListChanged();
+	void chatChanged();
 
 private:
+	ChatGui *mChat = nullptr;
+	QSharedPointer<ParticipantInfoList> mParticipants;
 	DECLARE_ABSTRACT_OBJECT
 };
 
-#endif
+#endif // PARTICIPANT_INFO_PROXY_H_

@@ -83,6 +83,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/participant/ParticipantDeviceProxy.cpp
 	core/participant/ParticipantList.cpp
 	core/participant/ParticipantProxy.cpp
+	core/participant/ParticipantInfoList.cpp
+	core/participant/ParticipantInfoProxy.cpp
 	
 	core/screen/ScreenList.cpp
 	core/screen/ScreenProxy.cpp

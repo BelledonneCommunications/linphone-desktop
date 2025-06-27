@@ -115,24 +115,8 @@ linphone::ChatMessage::State ChatMessageModel::getState() const {
 	return mMonitor->getState();
 }
 
-void ChatMessageModel::computeDeliveryStatus() {
-	// Read
-	for (auto &participant : mMonitor->getParticipantsByImdnState(linphone::ChatMessage::State::Displayed)) {
-	}
-	// Received
-	for (auto &participant : mMonitor->getParticipantsByImdnState(linphone::ChatMessage::State::DeliveredToUser)) {
-	}
-	// Sent
-	for (auto &participant : mMonitor->getParticipantsByImdnState(linphone::ChatMessage::State::Delivered)) {
-	}
-	// Error
-	for (auto &participant : mMonitor->getParticipantsByImdnState(linphone::ChatMessage::State::NotDelivered)) {
-	}
-}
-
 void ChatMessageModel::onMsgStateChanged(const std::shared_ptr<linphone::ChatMessage> &message,
                                          linphone::ChatMessage::State state) {
-	computeDeliveryStatus();
 	emit msgStateChanged(message, state);
 }
 
@@ -184,7 +168,6 @@ void ChatMessageModel::onFileTransferProgressIndication(const std::shared_ptr<li
 void ChatMessageModel::onParticipantImdnStateChanged(
     const std::shared_ptr<linphone::ChatMessage> &message,
     const std::shared_ptr<const linphone::ParticipantImdnState> &state) {
-	computeDeliveryStatus();
 	emit participantImdnStateChanged(message, state);
 }
 

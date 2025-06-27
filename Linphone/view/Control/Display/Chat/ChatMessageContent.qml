@@ -11,6 +11,7 @@ import Linphone
 ColumnLayout {
 	id: mainItem
 	property ChatMessageGui chatMessageGui: null
+	property ChatGui chatGui: null
 	
 	signal isFileHoveringChanged(bool isFileHovering)
 	signal lastSelectedTextChanged(string selectedText)
@@ -88,6 +89,7 @@ ColumnLayout {
 			Layout.fillWidth: true
 			// height: implicitHeight
 			contentGui: modelData
+			chatGui: mainItem.chatGui
 			onLastTextSelectedChanged: mainItem.selectedText = selectedText
 			// onRightClicked: mainItem.rightClicked()
 		}

@@ -41,14 +41,16 @@ public:
 
 	static QVector<QPair<bool, QString>> parseIri(const QString &text);
 	static QVector<QPair<bool, QString>> parseUri(const QString &text);
+	static QVector<QPair<bool, QString>> parseMention(const QString &text);
 	static QRegularExpression getRegularExpression();
 
 private:
 	void initRegularExpressions();
 	static QVector<QPair<bool, QString>> parse(const QString &text, const QRegularExpression regex);
 
-	QRegularExpression mIriRegularExpression; // https://tools.ietf.org/html/rfc3987
-	QRegularExpression mUriRegularExpression; // https://tools.ietf.org/html/rfc3986
+	QRegularExpression mIriRegularExpression;     // https://tools.ietf.org/html/rfc3987
+	QRegularExpression mUriRegularExpression;     // https://tools.ietf.org/html/rfc3986
+	QRegularExpression mMentionRegularExpression; // https://tools.ietf.org/html/rfc3986
 };
 
 #endif

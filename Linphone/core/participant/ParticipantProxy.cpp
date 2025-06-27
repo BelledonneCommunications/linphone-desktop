@@ -25,7 +25,6 @@
 #include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
 
-#include "ParticipantList.hpp"
 #include "core/participant/ParticipantCore.hpp"
 
 #include <QDebug>

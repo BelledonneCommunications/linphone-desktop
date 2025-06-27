@@ -46,11 +46,13 @@ ParticipantCore::ParticipantCore(const std::shared_ptr<linphone::Participant> &p
 	mParticipantModel->moveToThread(CoreModel::getInstance()->thread());
 	if (participant) {
 		mAdminStatus = participant->isAdmin();
-		mSipAddress = Utils::coreStringToAppString(participant->getAddress()->asStringUriOnly());
+		auto participantAddress = participant->getAddress();
+		mUsername = Utils::coreStringToAppString(participantAddress->getUsername());
+		mSipAddress = Utils::coreStringToAppString(participantAddress->asStringUriOnly());
 		mIsMe = ToolModel::isMe(mSipAddress);
 		mCreationTime = QDateTime::fromSecsSinceEpoch(participant->getCreationTime());
-		mDisplayName = Utils::coreStringToAppString(participant->getAddress()->getDisplayName());
-		if (mDisplayName.isEmpty()) mDisplayName = ToolModel::getDisplayName(participant->getAddress()->clone());
+		mDisplayName = Utils::coreStringToAppString(participantAddress->getDisplayName());
+		if (mDisplayName.isEmpty()) mDisplayName = ToolModel::getDisplayName(participantAddress->clone());
 		for (auto &device : participant->getDevices()) {
 			auto name = Utils::coreStringToAppString(device->getName());
 			auto address = Utils::coreStringToAppString(device->getAddress()->asStringUriOnly());
@@ -118,6 +120,17 @@ void ParticipantCore::setDisplayName(const QString &name) {
 
 QString ParticipantCore::getDisplayName() const {
 	return mDisplayName;
+}
+
+void ParticipantCore::setUsername(const QString &name) {
+	if (mUsername != name) {
+		mUsername = name;
+		emit usernameChanged();
+	}
+}
+
+QString ParticipantCore::getUsername() const {
+	return mUsername;
 }
 
 QDateTime ParticipantCore::getCreationTime() const {

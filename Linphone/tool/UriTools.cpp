@@ -40,6 +40,10 @@ QVector<QPair<bool, QString>> UriTools::parseUri(const QString &text) {
 	return parse(text, gUriTools.mUriRegularExpression);
 }
 
+QVector<QPair<bool, QString>> UriTools::parseMention(const QString &text) {
+	return parse(text, gUriTools.mMentionRegularExpression);
+}
+
 // Parse a text and return all lines where regex is matched or not
 QVector<QPair<bool, QString>> UriTools::parse(const QString &text, const QRegularExpression regex) {
 	QVector<QPair<bool, QString>> results;
@@ -200,4 +204,6 @@ void UriTools::initRegularExpressions() {
 	                                                    QRegularExpression::UseUnicodePropertiesOption);
 	mUriRegularExpression = QRegularExpression(URI, QRegularExpression::CaseInsensitiveOption |
 	                                                    QRegularExpression::UseUnicodePropertiesOption);
+	mMentionRegularExpression = QRegularExpression(
+	    "@[A-Za-z0-9.-_]+", QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
 }

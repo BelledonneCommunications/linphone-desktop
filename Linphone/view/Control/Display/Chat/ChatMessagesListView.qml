@@ -122,6 +122,7 @@ ListView {
             delegate:
 				ChatMessage {
 					chatMessage: modelData
+                    chat: mainItem.chat
 					maxWidth: Math.round(mainItem.width * (3/4))
 					onVisibleChanged: {
 						if (visible && !modelData.core.isRead) modelData.core.lMarkAsRead()

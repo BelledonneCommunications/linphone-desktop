@@ -126,6 +126,8 @@ public:
 	void writeFromModel(const std::shared_ptr<ConferenceInfoModel> &model);
 	void writeIntoModel(std::shared_ptr<ConferenceInfoModel> model);
 
+	std::shared_ptr<ConferenceInfoModel> getModel() const;
+
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
 	Q_INVOKABLE void cancelCreation();

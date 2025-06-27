@@ -42,6 +42,7 @@ ImdnStatusList::ImdnStatusList(QObject *parent) : AbstractListProxy<ImdnStatus>(
 
 ImdnStatusList::~ImdnStatusList() {
 	mustBeInMainThread("~" + getClassName());
+	mList.clear();
 }
 
 QList<ImdnStatus> ImdnStatusList::getImdnStatusList() {

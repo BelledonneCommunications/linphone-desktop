@@ -78,6 +78,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Contact/Voicemail.qml
 	view/Control/Display/Meeting/MeetingListView.qml
 	view/Control/Display/Participant/ParticipantDeviceListView.qml
+	view/Control/Display/Participant/ParticipantInfoListView.qml
 	view/Control/Display/Participant/ParticipantListView.qml
 	view/Control/Display/Settings/SettingsMenuItem.qml
 

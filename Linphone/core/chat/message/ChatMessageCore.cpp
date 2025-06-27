@@ -171,7 +171,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 		auto replymessage = chatmessage->getReplyMessage();
 		if (replymessage) {
 			mReplyText = ToolModel::getMessageFromContent(replymessage->getContents());
-			if (mIsFromChatGroup) mRepliedToName = ToolModel::getDisplayName(replymessage->getToAddress()->clone());
+			if (mIsFromChatGroup) mRepliedToName = ToolModel::getDisplayName(replymessage->getFromAddress()->clone());
 		}
 	}
 	mImdnStatusList = computeDeliveryStatus(chatmessage);
@@ -305,7 +305,10 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	mChatMessageModelConnection->makeConnectToModel(
 	    &ChatMessageModel::participantImdnStateChanged,
 	    [this](const std::shared_ptr<linphone::ChatMessage> &message,
-	           const std::shared_ptr<const linphone::ParticipantImdnState> &state) {});
+	           const std::shared_ptr<const linphone::ParticipantImdnState> &state) {
+		    auto imdnStatusList = computeDeliveryStatus(message);
+		    mChatMessageModelConnection->invokeToCore([this, imdnStatusList] { setImdnStatusList(imdnStatusList); });
+	    });
 	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::ephemeralMessageTimerStarted,
 	                                                [this](const std::shared_ptr<linphone::ChatMessage> &message) {});
 	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::ephemeralMessageDeleted,

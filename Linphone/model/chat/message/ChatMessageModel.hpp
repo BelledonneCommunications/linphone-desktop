@@ -53,8 +53,6 @@ public:
 
 	void deleteMessageFromChatRoom();
 
-	void computeDeliveryStatus();
-
 	void sendReaction(const QString &reaction);
 
 	void removeReaction();

@@ -9,8 +9,9 @@ import UtilsCpp
 // TODO : into Loader
 // =============================================================================
 TextEdit {
-	id: message
+	id: mainItem
 	property ChatMessageContentGui contentGui
+	property ChatGui chatGui: null
 	property string lastTextSelected : ''
 	color: DefaultStyle.main2_700
 	font {
@@ -24,15 +25,19 @@ TextEdit {
 	readOnly: true
 	selectByMouse: true
 	
-	text: visible ? UtilsCpp.encodeTextToQmlRichFormat(contentGui.core.utf8Text)
+	property var encodeTextObj: visible ? UtilsCpp.encodeTextToQmlRichFormat(contentGui.core.utf8Text, {}, mainItem.chatGui)
 				  : ''
-	
+	text: encodeTextObj ? encodeTextObj.value : ""	
 	textFormat: Text.RichText // To supports links and imgs.
 	wrapMode: TextEdit.Wrap
 	
 	onLinkActivated: (link) => {
 		if (link.startsWith('sip'))
 			UtilsCpp.createCall(link)
+		else if (link.startsWith('mention:')) {
+			var mentionAddress = link.substring(8) // remove "mention:"
+			UtilsCpp.openContactAtAddress(mentionAddress);
+		}
 		else
 			Qt.openUrlExternally(link)
 	}

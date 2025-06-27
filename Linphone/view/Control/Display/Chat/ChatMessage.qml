@@ -15,6 +15,7 @@ Control.Control {
     property bool isFirstMessage
 
     property ChatMessageGui chatMessage
+    property ChatGui chat
     property string ownReaction: chatMessage? chatMessage.core.ownReaction : ""
     property string fromAddress: chatMessage? chatMessage.core.fromAddress : ""
     property bool isRemoteMessage: chatMessage? chatMessage.core.isRemoteMessage : false
@@ -140,7 +141,6 @@ Control.Control {
                 Layout.preferredWidth: mainItem.isRemoteMessage ? 26 * DefaultStyle.dp : 0
                 Layout.preferredHeight: 26 * DefaultStyle.dp
                 Layout.alignment: Qt.AlignTop
-                Layout.topMargin: isFirstMessage ? 16 * DefaultStyle.dp : 0
                 _address: chatMessage ? chatMessage.core.fromAddress : ""
             }
             Item {
@@ -197,6 +197,7 @@ Control.Control {
                             id: chatBubbleContent
                             Layout.fillWidth: true
                             Layout.fillHeight: true
+                            chatGui: mainItem.chat
                             chatMessageGui: mainItem.chatMessage
                             onMouseEvent: (event) => {
                                 mainItem.handleDefaultMouseEvent(event)

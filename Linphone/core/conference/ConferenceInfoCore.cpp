@@ -551,6 +551,10 @@ void ConferenceInfoCore::writeIntoModel(std::shared_ptr<ConferenceInfoModel> mod
 	model->setParticipantInfos(participantInfos);
 }
 
+std::shared_ptr<ConferenceInfoModel> ConferenceInfoCore::getModel() const {
+	return mConferenceInfoModel;
+}
+
 void ConferenceInfoCore::save() {
 	mustBeInMainThread(getClassName() + "::save()");
 	ConferenceInfoCore *thisCopy = new ConferenceInfoCore(*this); // Pointer to avoid multiple copies in lambdas
@@ -571,8 +575,8 @@ void ConferenceInfoCore::save() {
 			    linphone::RegistrationState::Ok) {
 				//: "Erreur"
 				Utils::showInformationPopup(tr("information_popup_error_title"),
-											//: "Votre compte est déconnecté"
-											tr("information_popup_disconnected_account_message"), false);
+				                            //: "Votre compte est déconnecté"
+				                            tr("information_popup_disconnected_account_message"), false);
 				emit saveFailed();
 				return;
 			}
