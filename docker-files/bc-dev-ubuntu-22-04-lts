@@ -6,9 +6,9 @@ FROM ubuntu:22.04
 
 # Qt on Ubuntu 22.04 is too old. Use a downloader.
 ARG QT_VERSION=5.15.2
-ARG QT6_VERSION=6.9.0
+ARG QT6_VERSION=6.9.1
 #Do not use it. It seems that it cannot be used from python command.
-#ARG QT_MODULES=qtnetworkauth qtquick3d qtmultimedia
+#ARG QT_MODULES=qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
 
 LABEL Gaelle Braud <gaelle.braud@belledonne-communications.com>
 
@@ -90,7 +90,7 @@ RUN sudo pip3 install --upgrade aqtinstall
 RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt
 RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d
 RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt
-RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d qtmultimedia qt5compat
+RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
 
 RUN sudo chown -R bc:bc /opt/Qt/
 
