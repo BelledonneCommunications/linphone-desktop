@@ -45,8 +45,7 @@ AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QO
 	});
 
 	connect(CoreModel::getInstance().get(), &CoreModel::unreadNotificationsChanged, this, [this]() {
-		emit unreadNotificationsChanged(0 /*mMonitor->getUnreadChatMessageCount()*/,
-		                                mMonitor->getMissedCallsCount()); // TODO
+		emit unreadNotificationsChanged(mMonitor->getUnreadChatMessageCount(), mMonitor->getMissedCallsCount());
 	});
 	connect(CoreModel::getInstance().get(), &CoreModel::accountRemoved, this,
 	        [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {

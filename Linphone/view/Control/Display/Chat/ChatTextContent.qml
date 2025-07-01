@@ -27,7 +27,7 @@ TextEdit {
 	
 	property var encodeTextObj: visible ? UtilsCpp.encodeTextToQmlRichFormat(contentGui.core.utf8Text, {}, mainItem.chatGui)
 				  : ''
-	text: encodeTextObj ? encodeTextObj.value : ""	
+	text: encodeTextObj && encodeTextObj.value || ""	
 	textFormat: Text.RichText // To supports links and imgs.
 	wrapMode: TextEdit.Wrap
 	
@@ -43,11 +43,10 @@ TextEdit {
 	}
 	onSelectedTextChanged:{
 		if(selectedText != '') lastTextSelected = selectedText
-		// else {
-		// 	if(mouseArea.keepLastSelection) {
-		// 		mouseArea.keepLastSelection = false
-		// 	}
-		// }
+	}
+	onLinkHovered: {
+		if (hoveredLink !== "") UtilsCpp.setGlobalCursor(Qt.PointingHandCursor)
+		else UtilsCpp.restoreGlobalCursor()
 	}
 	onActiveFocusChanged: {
 		if(activeFocus) {

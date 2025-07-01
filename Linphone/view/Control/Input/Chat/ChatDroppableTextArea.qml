@@ -58,7 +58,7 @@ Control.Control {
 	// height: mainItem.height
 	leftPadding: Math.round(15 * DefaultStyle.dp)
 	rightPadding: Math.round(15 * DefaultStyle.dp)
-	topPadding: Math.round(24 * DefaultStyle.dp)
+	topPadding: Math.round(16 * DefaultStyle.dp)
 	bottomPadding: Math.round(16 * DefaultStyle.dp)
 	background: Rectangle {
 		anchors.fill: parent
@@ -67,6 +67,10 @@ Control.Control {
 	contentItem: Control.StackView {
 		id: sendingAreaStackView
 		initialItem: textAreaComp
+		width: currentItem.width
+		onHeightChanged: {
+			mainItem.height = height + mainItem.topPadding + mainItem.bottomPadding
+		}
 		Component {
 			id: textAreaComp
 			RowLayout {
@@ -97,11 +101,16 @@ Control.Control {
 					}
 				}
 				Control.Control {
+					id: sendingControl
+					onHeightChanged: {
+						sendingAreaStackView.height = height
+					}
 					Layout.fillWidth: true
-					leftPadding: Math.round(15 * DefaultStyle.dp)
-					rightPadding: Math.round(15 * DefaultStyle.dp)
-					topPadding: Math.round(15 * DefaultStyle.dp)
-					bottomPadding: Math.round(15 * DefaultStyle.dp)
+					Layout.alignment: Qt.AlignCenter
+					leftPadding: Math.round(24 * DefaultStyle.dp)
+					rightPadding: Math.round(20 * DefaultStyle.dp)
+					topPadding: Math.round(12 * DefaultStyle.dp)
+					bottomPadding: Math.round(12 * DefaultStyle.dp)
 					background: Rectangle {
 						id: inputBackground
 						anchors.fill: parent
@@ -116,7 +125,7 @@ Control.Control {
 					contentItem: RowLayout {
 						Flickable {
 							id: sendingAreaFlickable
-							Layout.preferredHeight: Math.min(Math.round(60 * DefaultStyle.dp), contentHeight)
+							Layout.preferredHeight: Math.min(Math.round(100 * DefaultStyle.dp), contentHeight)
 							Layout.fillHeight: true
 							Layout.fillWidth: true
 							contentHeight: sendingTextArea.contentHeight
@@ -224,6 +233,9 @@ Control.Control {
 				}
 				ChatAudioContent {
 					id: voiceMessage
+					onHeightChanged: {
+						sendingAreaStackView.height = height
+					}
 					recording: true
 					Layout.fillWidth: true
 					Layout.preferredHeight: Math.round(48 * DefaultStyle.dp)

@@ -17,20 +17,23 @@ Item {
 	property string thumbnail: contentGui && contentGui.core.thumbnail
 	property string name: contentGui && contentGui.core.name
 	property string filePath: contentGui && contentGui.core.filePath
-	property bool active: true
-	property real animationScale : FileViewStyle.animation.to
-	property alias imageScale: thumbnailProvider.scale
 	property bool wasDownloaded: contentGui && contentGui.core.wasDownloaded
 	property bool isAnimatedImage : contentGui && contentGui.core.wasDownloaded && UtilsCpp.isAnimatedImage(filePath)
 	property bool haveThumbnail: contentGui && UtilsCpp.canHaveThumbnail(filePath)
 	property int fileSize: contentGui ? contentGui.core.fileSize : 0
 	property bool isTransferring
+	property bool isVideo: UtilsCpp.isVideo(filePath)
+	property bool isImage: UtilsCpp.isImage(filePath)
+	property bool isPdf: UtilsCpp.isPdf(filePath)
+	property bool isThumbnail: isVideo || isImage || isPdf
+	property int overriddenWidth
+	property int overriddenHeight
 	
 	Connections {
 		enabled: contentGui
 		target: contentGui.core
 		function onMsgStateChanged(state) {
-			isTransferring = state === LinphoneEnums.ChatMessageState.StateFileTransferInProgress 
+			mainItem.isTransferring = state === LinphoneEnums.ChatMessageState.StateFileTransferInProgress 
 			|| state === LinphoneEnums.ChatMessageState.StateInProgress
 		}
 	}

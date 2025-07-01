@@ -213,7 +213,7 @@ RowLayout {
                     Control.Control {
                         id: participantListPopup
                         width: parent.width
-                        height: Math.min(contentItem.height, Math.round(200 * DefaultStyle.dp))
+                        height: Math.min(participantInfoList.height, Math.round(200 * DefaultStyle.dp))
                         visible: false
                         anchors.bottom: chatMessagesListView.bottom
                         anchors.left: chatMessagesListView.left
@@ -378,7 +378,7 @@ RowLayout {
             }
             ChatDroppableTextArea {
                 id: messageSender
-                Control.SplitView.preferredHeight: mainItem.chat.core.isReadOnly ? 0 : Math.round(79 * DefaultStyle.dp)
+                Control.SplitView.preferredHeight: mainItem.chat.core.isReadOnly ? 0 : height
                 Control.SplitView.minimumHeight: mainItem.chat.core.isReadOnly ? 0 : Math.round(79 * DefaultStyle.dp)
                 chat: mainItem.chat
                 onChatChanged: {

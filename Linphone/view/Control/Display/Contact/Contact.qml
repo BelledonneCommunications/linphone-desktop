@@ -145,7 +145,7 @@ Control.Control{
             Layout.preferredHeight: Math.round(26 * DefaultStyle.dp)
 			Layout.fillHeight: true
             Layout.leftMargin: Math.round(40 * DefaultStyle.dp)
-			visible: mainItem.account.core.unreadCallNotifications > 0
+			visible: mainItem.account.core.unreadNotifications > 0
 			Rectangle{
 				id: unreadNotifications
 				anchors.verticalCenter: parent.verticalCenter
@@ -166,7 +166,7 @@ Control.Control{
 					fontSizeMode: Text.Fit
                     font.pixelSize: Math.round(11 *  DefaultStyle.dp)
                     font.weight: Math.round(700 *  DefaultStyle.dp)
-					text: mainItem.account.core.unreadCallNotifications >= 100 ? '99+' : mainItem.account.core.unreadCallNotifications
+					text: mainItem.account.core.unreadNotifications >= 100 ? '99+' : mainItem.account.core.unreadNotifications
 				}
 			}
 			MultiEffect {

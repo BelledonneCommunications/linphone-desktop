@@ -14,26 +14,24 @@ ListView {
     spacing: Math.round(4 * DefaultStyle.dp)
     property ChatGui chat
     property color backgroundColor
+    property bool lastItemVisible: false
     signal showReactionsForMessageRequested(ChatMessageGui chatMessage)
     signal showImdnStatusForMessageRequested(ChatMessageGui chatMessage)
     signal replyToMessageRequested(ChatMessageGui chatMessage)
 
     Component.onCompleted: {
-        var index = eventLogProxy.findFirstUnreadIndex()
-        positionViewAtIndex(index, ListView.End)
-        var chatMessage = eventLogProxy.getEventAtIndex(index)?.core?.chatMessage
-        if (chatMessage && !chatMessage.isRead) chatMessage.lMarkAsRead()
+        Qt.callLater(function() {
+            var index = eventLogProxy.findFirstUnreadIndex()
+            positionViewAtIndex(index, ListView.End)
+        })
     }
 
     onCountChanged: if (atYEnd) {
-        var index = eventLogProxy.findFirstUnreadIndex()
-        mainItem.positionViewAtIndex(index, ListView.End)
-        var chatMessage = eventLogProxy.getEventAtIndex(index)?.core?.chatMessage
-        if (chatMessage && !chatMessage.isRead) chatMessage.lMarkAsRead()
+        positionViewAtEnd()
     }
-    
+
     Button {
-        visible: !mainItem.atYEnd
+        visible: !mainItem.lastItemVisible
         icon.source: AppIcons.downArrow
         leftPadding: Math.round(16 * DefaultStyle.dp)
         rightPadding: Math.round(16 * DefaultStyle.dp)
@@ -46,9 +44,12 @@ ListView {
         onClicked: {
             var index = eventLogProxy.findFirstUnreadIndex()
             mainItem.positionViewAtIndex(index, ListView.End)
-        	var chatMessage = eventLogProxy.getEventAtIndex(index)?.core?.chatMessage
-			if (chatMessage && !chatMessage.isRead) chatMessage.lMarkAsRead()
         }
+    }
+
+    onAtYEndChanged: if (atYEnd) {
+        if (eventLogProxy.haveMore)
+            eventLogProxy.displayMore()
     }
 
     model: EventLogProxy {
@@ -58,8 +59,6 @@ ListView {
         onEventInserted: (index, gui) => {
             if (!mainItem.visible) return
             mainItem.positionViewAtIndex(index, ListView.End)
-            if (gui.core.chatMessage && !gui.core.chatMessage.isRead)
-            	gui.core.chatMessage.lMarkAsRead()
         }
     }
 
@@ -114,67 +113,92 @@ ListView {
     }
     
     
-     delegate: DelegateChooser {
+    delegate: DelegateChooser {
         role: "eventType"
 
         DelegateChoice {
             roleValue: "chatMessage"
-            delegate:
-				ChatMessage {
-					chatMessage: modelData
-                    chat: mainItem.chat
-					maxWidth: Math.round(mainItem.width * (3/4))
-					onVisibleChanged: {
-						if (visible && !modelData.core.isRead) modelData.core.lMarkAsRead()
-					}
-					width: mainItem.width
-					property var previousIndex: index - 1
-					property var previousFromAddress: eventLogProxy.getEventAtIndex(index-1)?.core.chatMessage?.fromAddress
-					backgroundColor: isRemoteMessage ? DefaultStyle.main2_100 : DefaultStyle.main1_100
-					isFirstMessage: !previousFromAddress || previousFromAddress !== modelData.core.fromAddress
-					anchors.right: !isRemoteMessage && parent
-						? parent.right
-						: undefined
+            delegate: ChatMessage {
+                id: chatMessageDelegate
+                property int yoff: Math.round(chatMessageDelegate.y - mainItem.contentY)
+                property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
+                onIsFullyVisibleChanged: {
+                    if (index === mainItem.count - 1) {
+                        mainItem.lastItemVisible = isFullyVisible
+                    }
+                    if (isFullyVisible)
+                        modelData.core.lMarkAsRead()
+                }
+                chatMessage: modelData
+                chat: mainItem.chat
+                maxWidth: Math.round(mainItem.width * (3/4))
+                onVisibleChanged: {
+                    if (visible) {
+                        modelData.core.lMarkAsRead()
+                    }
+                }
+                width: mainItem.width
+                property var previousIndex: index - 1
+                property var previousFromAddress: eventLogProxy.getEventAtIndex(index-1)?.core.chatMessage?.fromAddress
+                backgroundColor: isRemoteMessage ? DefaultStyle.main2_100 : DefaultStyle.main1_100
+                isFirstMessage: !previousFromAddress || previousFromAddress !== modelData.core.fromAddress
+                anchors.right: !isRemoteMessage && parent
+                    ? parent.right
+                    : undefined
 
-					onMessageDeletionRequested: modelData.core.lDelete()
-                    onShowReactionsForMessageRequested: mainItem.showReactionsForMessageRequested(modelData)
-                    onShowImdnStatusForMessageRequested: mainItem.showImdnStatusForMessageRequested(modelData)
-                    onReplyToMessageRequested: mainItem.replyToMessageRequested(modelData)
-				}
+                onMessageDeletionRequested: modelData.core.lDelete()
+                onShowReactionsForMessageRequested: mainItem.showReactionsForMessageRequested(modelData)
+                onShowImdnStatusForMessageRequested: mainItem.showImdnStatusForMessageRequested(modelData)
+                onReplyToMessageRequested: mainItem.replyToMessageRequested(modelData)
+            }
         }
 
         DelegateChoice {
             roleValue: "event"
-            delegate:
-				Item {
-					property bool showTopMargin: !header.visible && index == 0
-					width: mainItem.width
-					height: (showTopMargin ? 30 : 0 * DefaultStyle.dp) + eventItem.implicitHeight
-					Event {
-						id: eventItem
-						anchors.top: parent.top
-						anchors.topMargin: showTopMargin ? 30 : 0 * DefaultStyle.dp
-						width: parent.width
-						eventLogGui: modelData
-					}
-				}
+            delegate: Item {
+                id: eventDelegate
+                property int yoff: Math.round(eventDelegate.y - mainItem.contentY)
+                property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
+                onIsFullyVisibleChanged: {
+                    if (index === mainItem.count - 1) {
+                        mainItem.lastItemVisible = isFullyVisible
+                    }
+                }
+                property bool showTopMargin: !header.visible && index == 0
+                width: mainItem.width
+                height: (showTopMargin ? 30 : 0 * DefaultStyle.dp) + eventItem.implicitHeight
+                Event {
+                    id: eventItem
+                    anchors.top: parent.top
+                    anchors.topMargin: showTopMargin ? 30 : 0 * DefaultStyle.dp
+                    width: parent.width
+                    eventLogGui: modelData
+                }
+            }
         }
         
 		DelegateChoice {
             roleValue: "ephemeralEvent"
-            delegate:
-				Item {
-					property bool showTopMargin: !header.visible && index == 0
-					width: mainItem.width
-					//height: 40 * DefaultStyle.dp
-					height: (showTopMargin ? 30 : 0 * DefaultStyle.dp) + eventItem.height
-					EphemeralEvent {
-						id: eventItem
-						anchors.top: parent.top
-						anchors.topMargin: showTopMargin ? 30 : 0 * DefaultStyle.dp
-						eventLogGui: modelData
-					}
-				}
+            delegate: Item {
+                id: ephemeralEventDelegate
+                property int yoff: Math.round(ephemeralEventDelegate.y - mainItem.contentY)
+                property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
+                onIsFullyVisibleChanged: {
+                    if (index === mainItem.count - 1) {
+                        mainItem.lastItemVisible = isFullyVisible
+                    }
+                }
+                property bool showTopMargin: !header.visible && index == 0
+                width: mainItem.width
+                //height: 40 * DefaultStyle.dp
+                height: (showTopMargin ? 30 : 0 * DefaultStyle.dp) + eventItem.height
+                EphemeralEvent {
+                    id: eventItem
+                    anchors.top: parent.top
+                    anchors.topMargin: showTopMargin ? 30 : 0 * DefaultStyle.dp
+                    eventLogGui: modelData
+                }
+            }
         }
     }
     

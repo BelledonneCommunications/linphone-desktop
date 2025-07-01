@@ -476,6 +476,14 @@ QList<QSharedPointer<EventLogCore>> ChatCore::getEventLogList() const {
 }
 
 void ChatCore::resetEventLogList(QList<QSharedPointer<EventLogCore>> list) {
+	for (auto &e : mEventLogList) {
+		disconnect(e.get());
+	}
+	for (auto &e : list) {
+		if (auto message = e->getChatMessageCore()) {
+			connect(message.get(), &ChatMessageCore::isReadChanged, this, [this] { emit lUpdateUnreadCount(); });
+		}
+	}
 	mEventLogList = list;
 	emit eventListChanged();
 }
@@ -484,6 +492,8 @@ void ChatCore::appendEventLogsToEventLogList(QList<QSharedPointer<EventLogCore>>
 	int nbAdded = 0;
 	for (auto &e : list) {
 		if (mEventLogList.contains(e)) continue;
+		if (auto message = e->getChatMessageCore())
+			connect(message.get(), &ChatMessageCore::isReadChanged, this, [this] { emit lUpdateUnreadCount(); });
 		mEventLogList.append(e);
 		++nbAdded;
 	}
@@ -496,6 +506,8 @@ void ChatCore::appendEventLogToEventLogList(QSharedPointer<EventLogCore> e) {
 		return e->getEventLogId() == event->getEventLogId();
 	});
 	if (it == mEventLogList.end()) {
+		if (auto message = e->getChatMessageCore())
+			connect(message.get(), &ChatMessageCore::isReadChanged, this, [this] { emit lUpdateUnreadCount(); });
 		mEventLogList.append(e);
 		emit eventsInserted({e});
 	}
@@ -505,6 +517,7 @@ void ChatCore::removeEventLogsFromEventLogList(QList<QSharedPointer<EventLogCore
 	int nbRemoved = 0;
 	for (auto &e : list) {
 		if (mEventLogList.contains(e)) {
+			if (auto message = e->getChatMessageCore()) disconnect(message.get());
 			mEventLogList.removeAll(e);
 			++nbRemoved;
 		}
@@ -513,6 +526,9 @@ void ChatCore::removeEventLogsFromEventLogList(QList<QSharedPointer<EventLogCore
 }
 
 void ChatCore::clearEventLogList() {
+	for (auto &e : mEventLogList) {
+		disconnect(e.get());
+	}
 	mEventLogList.clear();
 	emit eventListChanged();
 }
