@@ -20,7 +20,8 @@ ListView {
     property ChatGui currentChatGui
     onCurrentIndexChanged: currentChatGui = model.getAt(currentIndex) || null
 
-    signal resultsReceived
+    signal resultsReceived()
+    signal markAllAsRead()
 
     onResultsReceived: {
         loading = false
@@ -157,6 +158,10 @@ ListView {
     delegate: FocusScope {
         width: mainItem.width
         height: Math.round(63 * DefaultStyle.dp)
+        Connections {
+            target: mainItem
+            function onMarkAllAsRead() {modelData.core.lMarkAsRead()}
+        }
         RowLayout {
             z: 1
             anchors.fill: parent
@@ -337,7 +342,7 @@ ListView {
                 enabled: visible
                 popup.contentItem: ColumnLayout {
 					IconLabelButton {
-                        //: "Sourdine"
+                        //: "Mute"
                         text: modelData.core.muted ? qsTr("chat_room_unmute") : qsTr("chat_room_mute")
 						icon.source: modelData.core.muted ? AppIcons.bell : AppIcons.bellSlash
                         spacing: Math.round(10 * DefaultStyle.dp)
@@ -348,7 +353,18 @@ ListView {
 						}
                     }
                     IconLabelButton {
-                        //: "Supprimer"
+                        //: "Mark as read"
+                        text: qsTr("chat_room_mark_as_read")
+                        icon.source: AppIcons.checks
+                        spacing: Math.round(10 * DefaultStyle.dp)
+                        Layout.fillWidth: true
+                        onClicked: {
+                            modelData.core.lMarkAsRead()
+                            chatroomPopup.close()
+                        }
+                    }
+                    IconLabelButton {
+                        //: "Delete"
                         text: qsTr("chat_room_delete")
                         icon.source: AppIcons.trashCan
                         spacing: Math.round(10 * DefaultStyle.dp)
@@ -366,7 +382,7 @@ ListView {
                                     }
                                 })
                         }
-                        style: ButtonStyle.noBackgroundRed
+                        style: ButtonStyle.hoveredBackgroundRed
                     }
                 }
             }

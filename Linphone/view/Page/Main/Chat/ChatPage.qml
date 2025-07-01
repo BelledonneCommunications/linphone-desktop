@@ -107,6 +107,28 @@ AbstractMainPage {
                     Item {
                         Layout.fillWidth: true
                     }
+                    PopupButton {
+                        id: chatListMenu
+                        width: Math.round(24 * DefaultStyle.dp)
+                        height: Math.round(24 * DefaultStyle.dp)
+                        focus: true
+                        popup.x: 0
+                        KeyNavigation.right: newCallButton
+                        KeyNavigation.down: listStackView
+                        popup.contentItem: ColumnLayout {
+                            IconLabelButton {
+                                Layout.fillWidth: true
+                                focus: visible
+                                //: "mark all as read"
+                                text: qsTr("menu_mark_all_as_read")
+                                icon.source: AppIcons.checks
+                                onClicked: {
+                                    chatListView.markAllAsRead()
+                                    chatListMenu.close()
+                                }
+                            }
+                        }
+                    }
                     Button {
                         id: newChatButton
                         style: ButtonStyle.noBackground
