@@ -150,13 +150,16 @@ ChatRoomModel::ChatRoomModel (const std::shared_ptr<linphone::ChatRoom>& chatRoo
 	if(mChatRoom){
 		mParticipantListModel = QSharedPointer<ParticipantListModel>::create(this);
 		connect(mParticipantListModel.get(), &ParticipantListModel::participantsChanged, this, &ChatRoomModel::fullPeerAddressChanged);
+		int adminCount = mChatRoom->getMe()->isAdmin() ? 1 : 0;
 		auto participants = getParticipants(false);
 		for(auto participant : participants){
+			if (participant->isAdmin()) ++adminCount;
 			auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((participant)->getAddress()->asString()));
 			if(contact) {
 				connect(contact.get(), &ContactModel::contactUpdated, this, &ChatRoomModel::fullPeerAddressChanged);
 			}
 		}
+		mAdminCount = adminCount;
 		time_t callDate = 0;
 		if(lastCalls.size() > 0){
 			QString peerAddress = getParticipantAddress();
@@ -475,6 +478,17 @@ bool ChatRoomModel::isOneToOne() const{
 
 bool ChatRoomModel::isMeAdmin() const{
 	return mChatRoom && mChatRoom->getMe()->isAdmin();
+}
+
+int ChatRoomModel::getAdminCount() const{
+	return mAdminCount;
+}
+
+void ChatRoomModel::setAdminCount(int count) {
+	if (mAdminCount != count) {
+		mAdminCount = count;
+		emit adminCountChanged();
+	}
 }
 
 bool ChatRoomModel::isCurrentAccount() const{
@@ -1280,6 +1294,10 @@ void ChatRoomModel::onParticipantAdminStatusChanged(const std::shared_ptr<linpho
 		auto e = std::find(events.begin(), events.end(), eventLog);
 		if( e != events.end() )
 			insertNotice(*e);
+		if (eventLog->getType() == linphone::EventLog::Type::ConferenceParticipantSetAdmin) {
+			setAdminCount(getAdminCount()+1);
+		}else
+			setAdminCount(getAdminCount()-1);
 	}
 	updateLastUpdateTime();
 	emit participantAdminStatusChanged(eventLog);

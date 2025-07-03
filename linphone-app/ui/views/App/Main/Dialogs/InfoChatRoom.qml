@@ -147,6 +147,7 @@ DialogPlus {
 					showAdminStatus:!dialog.adminMode
 					isSelectable: false
 					hoveredCursor:Qt.WhatsThisCursor
+					chatRoomModel: dialog.chatRoomModel
 					
 					
 					actions:  dialog.adminMode ? [{
@@ -168,8 +169,7 @@ DialogPlus {
 						chatRoomModel:dialog.chatRoomModel
 						onAddressAdded: smartSearchBar.addAddressToIgnore(sipAddress)
 						onAddressRemoved: smartSearchBar.removeAddressToIgnore(sipAddress)
-						showMe: dialog.adminMode
-						
+						showMe: true
 					}
 					
 					onEntryClicked: {

@@ -34,6 +34,7 @@ ScrollableListView {
 	property bool isSelectable : true
 	property bool showInvitingIndicator : true
 	property int hoveredCursor : Qt.PointingHandCursor
+	property ChatRoomModel chatRoomModel
 	
 	property var switchHandler : function(checked, index){
 	}
@@ -277,7 +278,7 @@ ScrollableListView {
 						
 						visible: sipAddressesView.showSwitch
 						
-						enabled:true
+						enabled: !$modelData.isMe || (!chatRoomModel || !checked || (chatRoomModel.adminCount > 1 && checked))
 						checked: $modelData.adminStatus
 						onClicked: {
 							$modelData.adminStatus = !checked

@@ -70,6 +70,7 @@ public:
 	Q_PROPERTY(bool haveEncryption READ haveEncryption CONSTANT)
 	Q_PROPERTY(bool isMeAdmin READ isMeAdmin NOTIFY isMeAdminChanged)
 	Q_PROPERTY(bool canHandleParticipants READ canHandleParticipants CONSTANT)
+	Q_PROPERTY(int adminCount READ getAdminCount NOTIFY adminCountChanged)
 	
 	Q_PROPERTY(bool isComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged)
 	Q_PROPERTY(QList<QString> composers READ getComposers NOTIFY isRemoteComposingChanged)
@@ -146,6 +147,9 @@ public:
 	bool isBasic() const;
 	bool isUpdating() const;
 	bool isNotificationsEnabled() const;
+
+	int getAdminCount() const;
+	void setAdminCount(int count);
 	
 	ParticipantListModel* getParticipantListModel() const;
 	std::list<std::shared_ptr<linphone::Participant>> getParticipants(const bool& withMe = true) const;
@@ -277,6 +281,7 @@ signals:
 	void securityLevelChanged(int securityLevel);
 	void groupEnabledChanged(bool groupEnabled);
 	void isMeAdminChanged();
+	void adminCountChanged();
 	void stateChanged(int state);
 	void isReadOnlyChanged();
 	void ephemeralEnabledChanged();
@@ -321,6 +326,7 @@ private:
 	int mBindingCalls = 0;
 	bool mPostModelChangedEvents = true;
 	int mSecurityLevel = 0;
+	int mAdminCount = 0;
 	
 	QWeakPointer<ChatRoomModel> mSelf;
 };
