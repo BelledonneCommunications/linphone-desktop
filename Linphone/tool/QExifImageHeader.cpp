@@ -1011,7 +1011,7 @@ template <typename T>
 quint32 QExifImageHeader::calculateSize(const QMap<T, QExifValue> &values) const {
 	quint32 size = sizeof(quint16);
 
-	foreach (const QExifValue &value, values)
+	for (const QExifValue &value : values)
 		size += sizeOf(value);
 
 	return size;
@@ -1387,7 +1387,7 @@ QExifImageHeader::readIfdValues(QDataStream &stream, int startPos, const QList<E
 
 	// This needs to be non-const so it works with gcc3
 	QList<ExifIfdHeader> headers_ = headers;
-	foreach (const ExifIfdHeader &header, headers_)
+	for (const ExifIfdHeader &header : headers_)
 		values[T(header.tag)] = readIfdValue(stream, startPos, header);
 
 	return values;
@@ -1491,7 +1491,7 @@ QExifImageHeader::writeExifHeader(QDataStream &stream, quint16 tag, const QExifV
 	switch (value.type()) {
 		case QExifValue::Byte:
 			if (value.count() <= 4) {
-				foreach (quint8 byte, value.toByteVector())
+				for (quint8 byte : value.toByteVector())
 					stream << byte;
 				for (int j = value.count(); j < 4; j++)
 					stream << quint8(0);
@@ -1526,7 +1526,7 @@ QExifImageHeader::writeExifHeader(QDataStream &stream, quint16 tag, const QExifV
 			break;
 		case QExifValue::Short:
 			if (value.count() <= 2) {
-				foreach (quint16 shrt, value.toShortVector())
+				for (quint16 shrt : value.toShortVector())
 					stream << shrt;
 				for (int j = value.count(); j < 2; j++)
 					stream << quint16(0);
@@ -1588,7 +1588,7 @@ void QExifImageHeader::writeExifValue(QDataStream &stream, const QExifValue &val
 	switch (value.type()) {
 		case QExifValue::Byte:
 			if (value.count() > 4)
-				foreach (quint8 byte, value.toByteVector())
+				for (quint8 byte : value.toByteVector())
 					stream << byte;
 			break;
 		case QExifValue::Undefined:
@@ -1603,27 +1603,27 @@ void QExifImageHeader::writeExifValue(QDataStream &stream, const QExifValue &val
 			break;
 		case QExifValue::Short:
 			if (value.count() > 2)
-				foreach (quint16 shrt, value.toShortVector())
+				for (quint16 shrt : value.toShortVector())
 					stream << shrt;
 			break;
 		case QExifValue::Long:
 			if (value.count() > 1)
-				foreach (quint32 lng, value.toLongVector())
+				for (quint32 lng : value.toLongVector())
 					stream << lng;
 			break;
 		case QExifValue::SignedLong:
 			if (value.count() > 1)
-				foreach (qint32 lng, value.toSignedLongVector())
+				for (qint32 lng : value.toSignedLongVector())
 					stream << lng;
 			break;
 		case QExifValue::Rational:
 			if (value.count() > 0)
-				foreach (QExifURational rational, value.toRationalVector())
+				for (QExifURational rational : value.toRationalVector())
 					stream << rational;
 			break;
 		case QExifValue::SignedRational:
 			if (value.count() > 0)
-				foreach (QExifSRational rational, value.toSignedRationalVector())
+				for (QExifSRational rational : value.toSignedRationalVector())
 					stream << rational;
 			break;
 		default:

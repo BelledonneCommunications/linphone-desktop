@@ -323,7 +323,7 @@ void ChatModel::onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::C
 
 void ChatModel::onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatRoom> &chatRoom,
                                           const std::shared_ptr<const linphone::EventLog> &eventLog) {
-	emit onEphemeralMessageDeleted(chatRoom, eventLog);
+	emit ephemeralMessageDeleted(chatRoom, eventLog);
 }
 
 void ChatModel::onConferenceAddressGeneration(const std::shared_ptr<linphone::ChatRoom> &chatRoom) {

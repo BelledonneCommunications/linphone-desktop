@@ -27,6 +27,7 @@
 #include <QLocale>
 
 class EventLogGui;
+class EventLogCore;
 class ChatCore;
 class ChatGui;
 // =============================================================================
@@ -42,6 +43,8 @@ public:
 	ChatGui *getChat() const;
 	void setChatCore(QSharedPointer<ChatCore> core);
 	void setChatGui(ChatGui *chat);
+
+	void connectItem(const QSharedPointer<EventLogCore> item);
 
 	int findFirstUnreadIndex();
 

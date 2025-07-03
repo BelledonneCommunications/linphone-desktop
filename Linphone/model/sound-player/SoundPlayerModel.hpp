@@ -74,7 +74,7 @@ signals:
 private:
 	DECLARE_ABSTRACT_OBJECT
 
-	void onEofReached(const std::shared_ptr<linphone::Player> &player);
+	void onEofReached(const std::shared_ptr<linphone::Player> &player) override;
 };
 
 #endif // SOUND_PLAYER_H_

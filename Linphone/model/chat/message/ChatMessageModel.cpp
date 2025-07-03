@@ -34,6 +34,16 @@ ChatMessageModel::ChatMessageModel(const std::shared_ptr<linphone::ChatMessage> 
     : ::Listener<linphone::ChatMessage, linphone::ChatMessageListener>(chatMessage, parent) {
 	// lDebug() << "[ChatMessageModel] new" << this << " / SDKModel=" << chatMessage.get();
 	mustBeInLinphoneThread(getClassName());
+	mEphemeralTimer.setInterval(60);
+	mEphemeralTimer.setSingleShot(false);
+	if (mMonitor->getEphemeralExpireTime() != 0) mEphemeralTimer.start();
+	connect(&mEphemeralTimer, &QTimer::timeout, this,
+	        [this] { emit ephemeralMessageTimeUpdated(mMonitor, mMonitor->getEphemeralExpireTime()); });
+	connect(this, &ChatMessageModel::ephemeralMessageTimerStarted, this, [this] { mEphemeralTimer.start(); });
+	connect(this, &ChatMessageModel::ephemeralMessageDeleted, this, [this] {
+		mEphemeralTimer.stop();
+		deleteMessageFromChatRoom(false);
+	});
 }
 
 ChatMessageModel::~ChatMessageModel() {
@@ -85,11 +95,11 @@ void ChatMessageModel::markAsRead() {
 	emit CoreModel::getInstance()->messageReadInChatRoom(mMonitor->getChatRoom());
 }
 
-void ChatMessageModel::deleteMessageFromChatRoom() {
+void ChatMessageModel::deleteMessageFromChatRoom(bool deletedByUser) {
 	auto chatRoom = mMonitor->getChatRoom();
 	if (chatRoom) {
 		chatRoom->deleteMessage(mMonitor);
-		emit messageDeleted();
+		emit messageDeleted(deletedByUser);
 	}
 }
 

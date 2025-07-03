@@ -89,6 +89,9 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	               messageStateChanged)
 	Q_PROPERTY(bool isRemoteMessage READ isRemoteMessage CONSTANT)
 	Q_PROPERTY(bool isFromChatGroup READ isFromChatGroup CONSTANT)
+	Q_PROPERTY(bool isEphemeral READ isEphemeral CONSTANT)
+	Q_PROPERTY(
+	    int ephemeralDuration READ getEphemeralDuration WRITE setEphemeralDuration NOTIFY ephemeralDurationChanged)
 	Q_PROPERTY(bool isRead READ isRead WRITE setIsRead NOTIFY isReadChanged)
 	Q_PROPERTY(QString ownReaction READ getOwnReaction WRITE setOwnReaction NOTIFY messageReactionChanged)
 	Q_PROPERTY(QStringList imdnStatusListAsString READ getImdnStatusListLabels NOTIFY imdnStatusListChanged)
@@ -130,6 +133,9 @@ public:
 
 	bool isRemoteMessage() const;
 	bool isFromChatGroup() const;
+	bool isEphemeral() const;
+	int getEphemeralDuration() const;
+	void setEphemeralDuration(int duration);
 
 	bool hasFileContent() const;
 
@@ -169,6 +175,7 @@ signals:
 	void imdnStatusListChanged();
 	void messageReactionChanged();
 	void singletonReactionMapChanged();
+	void ephemeralDurationChanged(int duration);
 
 	void lDelete();
 	void deleted();
@@ -205,6 +212,8 @@ private:
 	bool mHasFileContent = false;
 	bool mIsCalendarInvite = false;
 	bool mIsVoiceRecording = false;
+	bool mIsEphemeral = false;
+	int mEphemeralDuration = 0;
 
 	bool mIsOutgoing = false;
 	QString mTotalReactionsLabel;

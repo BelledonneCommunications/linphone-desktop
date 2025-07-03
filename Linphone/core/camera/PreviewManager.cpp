@@ -71,10 +71,12 @@ QQuickFramebufferObject::Renderer *PreviewManager::subscribe(const CameraGui *ca
 	App::postModelBlock([&renderer, isFirst = (itCandidate == mCandidates.begin()),
 	                     name = itCandidate->first->getQmlName()]() {
 		renderer =
-		    (QQuickFramebufferObject::Renderer *)CoreModel::getInstance()->getCore()->createNativePreviewWindowId();
+		    (QQuickFramebufferObject::Renderer *)CoreModel::getInstance()->getCore()->createNativePreviewWindowId(
+		        nullptr);
 		if (!renderer) { // TODO debug
 			renderer =
-			    (QQuickFramebufferObject::Renderer *)CoreModel::getInstance()->getCore()->createNativePreviewWindowId();
+			    (QQuickFramebufferObject::Renderer *)CoreModel::getInstance()->getCore()->createNativePreviewWindowId(
+			        nullptr);
 		}
 		if (isFirst) {
 			lDebug() << "[PreviewManager] " << name << " Set Native Preview Id with " << renderer;

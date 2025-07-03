@@ -58,6 +58,21 @@ QSharedPointer<ChatCore> EventLogList::getChatCore() const {
 	return mChatCore;
 }
 
+void EventLogList::connectItem(const QSharedPointer<EventLogCore> item) {
+	auto message = item->getChatMessageCore();
+	if (message) {
+		connect(message.get(), &ChatMessageCore::deleted, this, [this, item] {
+			emit mChatCore->lUpdateLastMessage();
+			remove(item);
+		});
+		connect(message.get(), &ChatMessageCore::ephemeralDurationChanged, this, [this, item](int duration) {
+			int i;
+			get(item.get(), &i);
+			emit dataChanged(index(i), index(i));
+		});
+	}
+}
+
 void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 	if (mChatCore != core) {
 		if (mChatCore) disconnect(mChatCore.get(), &ChatCore::eventListChanged, this, nullptr);
@@ -104,12 +119,7 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 		if (!mChatCore) return;
 		auto events = mChatCore->getEventLogList();
 		for (auto &event : events) {
-			auto message = event->getChatMessageCore();
-			if (message)
-				connect(message.get(), &ChatMessageCore::deleted, this, [this, message, event] {
-					emit mChatCore->lUpdateLastMessage();
-					remove(event);
-				});
+			connectItem(event);
 		}
 		resetData<EventLogCore>(events);
 	});

@@ -356,9 +356,21 @@ QString Utils::formatTime(const QDateTime &date) {
 }
 
 QString Utils::formatDuration(int durationMs) {
-	QTime duration(0, 0);
-	duration = duration.addMSecs(durationMs);
-	return duration.hour() > 0 ? duration.toString("hh:mm:ss") : duration.toString("mm:ss");
+	auto now = QDateTime::currentDateTime();
+	auto end = now.addMSecs(durationMs);
+	auto daysTo = now.daysTo(end);
+	if (daysTo > 0) {
+		//: Tomorrow
+		if (daysTo == 1) return tr("duration_tomorrow");
+		else {
+			//: %1 jour(s)
+			return tr("duration_number_of_days", "", daysTo);
+		}
+	} else {
+		QTime duration(0, 0);
+		duration = duration.addMSecs(durationMs);
+		return duration.hour() > 0 ? duration.toString("hh:mm:ss") : duration.toString("mm:ss");
+	}
 }
 
 QString Utils::formatDateElapsedTime(const QDateTime &date) {

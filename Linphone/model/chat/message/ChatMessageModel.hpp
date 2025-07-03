@@ -51,7 +51,7 @@ public:
 	bool isRead() const;
 	void markAsRead();
 
-	void deleteMessageFromChatRoom();
+	void deleteMessageFromChatRoom(bool deletedByUser);
 
 	void sendReaction(const QString &reaction);
 
@@ -64,7 +64,7 @@ public:
 	QString getOwnReaction() const;
 
 signals:
-	void messageDeleted();
+	void messageDeleted(bool deletedByUser);
 	void messageRead();
 
 	void msgStateChanged(const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state);
@@ -94,9 +94,11 @@ signals:
 	                                 const std::shared_ptr<const linphone::ParticipantImdnState> &state);
 	void ephemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> &message);
 	void ephemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> &message);
+	void ephemeralMessageTimeUpdated(const std::shared_ptr<linphone::ChatMessage> &message, int expireTime);
 
 private:
 	linphone::ChatMessage::State mMessageState;
+	QTimer mEphemeralTimer;
 
 	DECLARE_ABSTRACT_OBJECT
 

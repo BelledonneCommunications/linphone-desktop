@@ -120,6 +120,13 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	                   !chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne);
 	mIsRead = chatmessage->isRead();
 	mMessageState = LinphoneEnums::fromLinphone(chatmessage->getState());
+	mIsEphemeral = chatmessage->isEphemeral();
+	if (mIsEphemeral) {
+		auto now = QDateTime::currentDateTime();
+		mEphemeralDuration = chatmessage->getEphemeralExpireTime() == 0
+		                         ? chatmessage->getEphemeralLifetime()
+		                         : now.secsTo(QDateTime::fromSecsSinceEpoch(chatmessage->getEphemeralExpireTime()));
+	}
 	mMessageId = Utils::coreStringToAppString(chatmessage->getMessageId());
 	for (auto content : chatmessage->getContents()) {
 		auto contentCore = ChatMessageContentCore::create(content, mChatMessageModel);
@@ -182,14 +189,17 @@ ChatMessageCore::~ChatMessageCore() {
 void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	mChatMessageModelConnection = SafeConnection<ChatMessageCore, ChatMessageModel>::create(me, mChatMessageModel);
 	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lDelete, [this] {
-		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->deleteMessageFromChatRoom(); });
+		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->deleteMessageFromChatRoom(true); });
 	});
-	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageDeleted, [this]() {
-		//: Deleted
-		Utils::showInformationPopup(tr("info_toast_deleted_title"),
-		                            //: The message has been deleted
-		                            tr("info_toast_deleted_message"), true);
-		emit deleted();
+	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageDeleted, [this](bool deletedByUser) {
+		mChatMessageModelConnection->invokeToCore([this, deletedByUser] {
+			//: Deleted
+			if (deletedByUser)
+				Utils::showInformationPopup(tr("info_toast_deleted_title"),
+				                            //: The message has been deleted
+				                            tr("info_toast_deleted_message"), true);
+			emit deleted();
+		});
 	});
 	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lMarkAsRead, [this] {
 		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->markAsRead(); });
@@ -308,10 +318,13 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 		    auto imdnStatusList = computeDeliveryStatus(message);
 		    mChatMessageModelConnection->invokeToCore([this, imdnStatusList] { setImdnStatusList(imdnStatusList); });
 	    });
-	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::ephemeralMessageTimerStarted,
-	                                                [this](const std::shared_ptr<linphone::ChatMessage> &message) {});
-	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::ephemeralMessageDeleted,
-	                                                [this](const std::shared_ptr<linphone::ChatMessage> &message) {});
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::ephemeralMessageTimeUpdated,
+	    [this](const std::shared_ptr<linphone::ChatMessage> &message, int expireTime) {
+		    auto now = QDateTime::currentDateTime();
+		    int duration = now.secsTo(QDateTime::fromSecsSinceEpoch(expireTime));
+		    mChatMessageModelConnection->invokeToCore([this, duration] { setEphemeralDuration(duration); });
+	    });
 }
 
 QList<ImdnStatus> ChatMessageCore::computeDeliveryStatus(const std::shared_ptr<linphone::ChatMessage> &message) {
@@ -403,6 +416,21 @@ bool ChatMessageCore::isRemoteMessage() const {
 
 bool ChatMessageCore::isFromChatGroup() const {
 	return mIsFromChatGroup;
+}
+
+bool ChatMessageCore::isEphemeral() const {
+	return mIsEphemeral;
+}
+
+int ChatMessageCore::getEphemeralDuration() const {
+	return mEphemeralDuration;
+}
+
+void ChatMessageCore::setEphemeralDuration(int duration) {
+	if (mEphemeralDuration != duration) {
+		mEphemeralDuration = duration;
+		emit ephemeralDurationChanged(duration);
+	}
 }
 
 bool ChatMessageCore::hasFileContent() const {

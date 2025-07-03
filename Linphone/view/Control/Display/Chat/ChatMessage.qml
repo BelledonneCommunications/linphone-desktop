@@ -204,30 +204,60 @@ Control.Control {
                             }
                         }
                         RowLayout {
-                            Layout.fillWidth: false
+                            Layout.preferredHeight: childrenRect.height
                             Layout.alignment: mainItem.isRemoteMessage ? Qt.AlignLeft : Qt.AlignRight
-                            Text {
-                                text: UtilsCpp.formatDate(mainItem.chatMessage.core.timestamp, true, false, "dd/MM")
-                                color: DefaultStyle.main2_500main
-                                font {
-                                    pixelSize: Typography.p3.pixelSize
-                                    weight: Typography.p3.weight
+                            layoutDirection: mainItem.isRemoteMessage ? Qt.RightToLeft : Qt.LeftToRight
+                            spacing: Math.round(7 * DefaultStyle.dp)
+                            RowLayout {
+                                spacing: Math.round(3 * DefaultStyle.dp)
+                                Layout.preferredHeight: childrenRect.height
+                                Text {
+                                    id: ephemeralTime
+                                    visible: mainItem.chatMessage.core.isEphemeral
+                                    color: DefaultStyle.main2_500main
+                                    text: UtilsCpp.formatDuration(mainItem.chatMessage.core.ephemeralDuration * 1000)
+                                    font {
+                                        pixelSize: Typography.p3.pixelSize
+                                        weight: Typography.p3.weight
+                                    }
+                                }
+                                EffectImage {
+                                    visible: mainItem.chatMessage.core.isEphemeral
+                                    imageSource: AppIcons.clockCountDown
+                                    colorizationColor: DefaultStyle.main2_500main
+                                    Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
+                                    Layout.preferredHeight: visible ? 14 * DefaultStyle.dp : 0
                                 }
                             }
-                            EffectImage {
-                                visible: !mainItem.isRemoteMessage
-                                Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
-                                Layout.preferredHeight: 14 * DefaultStyle.dp
-                                colorizationColor: DefaultStyle.main1_500_main
-                                imageSource: mainItem.msgState === LinphoneEnums.ChatMessageState.StateDelivered
-                                    ? AppIcons.envelope
-                                    : mainItem.msgState === LinphoneEnums.ChatMessageState.StateDeliveredToUser
-                                        ? AppIcons.check
-                                        : mainItem.msgState === LinphoneEnums.ChatMessageState.StateNotDelivered
-                                            ? AppIcons.warningCircle
-                                            : mainItem.msgState === LinphoneEnums.ChatMessageState.StateDisplayed
-                                                ? AppIcons.checks
-                                                : ""
+                            RowLayout {
+                                spacing: mainItem.isRemoteMessage ? 0 : Math.round(5 * DefaultStyle.dp)
+                                Layout.alignment: Qt.AlignVCenter
+                                Layout.preferredHeight: childrenRect.height
+                                Text {
+                                    Layout.alignment: Qt.AlignVCenter
+                                    text: UtilsCpp.formatDate(mainItem.chatMessage.core.timestamp, true, false, "dd/MM")
+                                    color: DefaultStyle.main2_500main
+                                    font {
+                                        pixelSize: Typography.p3.pixelSize
+                                        weight: Typography.p3.weight
+                                    }
+                                }
+                                EffectImage {
+                                    visible: !mainItem.isRemoteMessage
+                                    Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
+                                    Layout.preferredHeight: visible ? 14 * DefaultStyle.dp : 0
+                                    Layout.alignment: Qt.AlignVCenter
+                                    colorizationColor: DefaultStyle.main1_500_main
+                                    imageSource: mainItem.msgState === LinphoneEnums.ChatMessageState.StateDelivered
+                                        ? AppIcons.envelope
+                                        : mainItem.msgState === LinphoneEnums.ChatMessageState.StateDeliveredToUser
+                                            ? AppIcons.check
+                                            : mainItem.msgState === LinphoneEnums.ChatMessageState.StateNotDelivered
+                                                ? AppIcons.warningCircle
+                                                : mainItem.msgState === LinphoneEnums.ChatMessageState.StateDisplayed
+                                                    ? AppIcons.checks
+                                                    : ""
+                                }
                             }
                         }
                     }
