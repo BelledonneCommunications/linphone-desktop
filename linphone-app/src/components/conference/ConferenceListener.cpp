@@ -42,7 +42,7 @@ ConferenceListener::~ConferenceListener(){
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
 void ConferenceListener::onActiveSpeakerParticipantDevice(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice) {
-	qDebug() << "onActiveSpeakerParticipantDevice: "  << participantDevice->getAddress()->asString().c_str();
+	qDebug() << "onActiveSpeakerParticipantDevice: "  << (participantDevice ? participantDevice->getAddress()->asString().c_str() : " No active speaker");
 	emit activeSpeakerParticipantDevice(participantDevice);
 }
 
