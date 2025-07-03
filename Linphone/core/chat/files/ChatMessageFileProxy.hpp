@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
@@ -18,46 +19,37 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHAT_MESSAGE_CONENT_PROXY_H_
-#define CHAT_MESSAGE_CONENT_PROXY_H_
+#ifndef CHAT_MESSAGE_FILE_PROXY_H_
+#define CHAT_MESSAGE_FILE_PROXY_H_
 
-#include "ChatMessageContentList.hpp"
+#include "ChatMessageFileList.hpp"
+#include "core/chat/message/ChatMessageCore.hpp"
 #include "core/proxy/LimitProxy.hpp"
 #include "tool/AbstractObject.hpp"
 
 // =============================================================================
 
-class ChatMessageGui;
-class ChatMessageContentGui;
-
-class ChatMessageContentProxy : public LimitProxy, public AbstractObject {
+class ChatMessageFileProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
-	Q_PROPERTY(ChatMessageGui *chatMessageGui READ getChatMessageGui WRITE setChatMessageGui NOTIFY chatChanged)
+	Q_PROPERTY(ChatGui *chat READ getChatGui WRITE setChatGui NOTIFY chatGuiChanged)
 
 public:
-	enum class FilterContentType { Unknown = 0, File = 1, Text = 2, Voice = 3, Conference = 4, All = 5 };
+	enum class FilterContentType { All = 0, Medias = 1, Documents = 2 };
 	Q_ENUM(FilterContentType)
 
-	DECLARE_SORTFILTER_CLASS(ChatMessageContentProxy *mHideListProxy = nullptr;)
-	ChatMessageContentProxy(QObject *parent = Q_NULLPTR);
-	~ChatMessageContentProxy();
+	DECLARE_SORTFILTER_CLASS()
+	ChatMessageFileProxy(QObject *parent = Q_NULLPTR);
+	~ChatMessageFileProxy();
 
-	ChatMessageGui *getChatMessageGui();
-	void setChatMessageGui(ChatMessageGui *chat);
-
-	void setSourceModel(QAbstractItemModel *sourceModel) override;
-
-	Q_INVOKABLE void addFiles(const QStringList &paths);
-	Q_INVOKABLE void removeContent(ChatMessageContentGui *contentGui);
-	Q_INVOKABLE void clear();
+	ChatGui *getChatGui() const;
+	void setChatGui(ChatGui *chat) const;
 
 signals:
-	void chatChanged();
+	void chatGuiChanged();
+	void filterChanged();
 
 protected:
-	QSharedPointer<ChatMessageContentList> mList;
-	ChatMessageGui *mChatMessageGui = nullptr;
-
+	QSharedPointer<ChatMessageFileList> mList;
 	DECLARE_ABSTRACT_OBJECT
 };
 

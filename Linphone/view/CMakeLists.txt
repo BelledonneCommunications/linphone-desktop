@@ -159,6 +159,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Chat/MessageImdnStatusInfos.qml
 	view/Page/Layout/Chat/MessageInfosLayout.qml
 	view/Page/Layout/Chat/MessageReactionsInfos.qml
+	view/Page/Layout/Chat/MessageSharedFilesInfos.qml
 	view/Page/Layout/Chat/OneOneConversationInfos.qml
 	view/Page/Layout/Chat/ChatInfoActionsGroup.qml
 	view/Page/Layout/Chat/GroupChatInfoParticipants.qml

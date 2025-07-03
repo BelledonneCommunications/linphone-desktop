@@ -434,6 +434,8 @@ RowLayout {
 		contentItem: Loader {
 			id: contentLoader
             property bool showingMessageReactions: false
+            property bool showingSharedFiles: false
+            property bool showingMedias: false
             property bool showingImdnStatus: false
             property bool showingManageParticipants: false
             property bool showingEphemeralSettings: false
@@ -445,11 +447,13 @@ RowLayout {
 					? messageReactionsComponent
 					: showingImdnStatus
 						? messageImdnStatusComponent
-						: showingManageParticipants
-							? manageParticipantsComponent
-							: mainItem.chat.core.isGroupChat
-								? groupInfoComponent
-								: oneToOneInfoComponent
+                        : showingSharedFiles
+					        ? sharedFilesComponent
+                            : showingManageParticipants
+                                ? manageParticipantsComponent
+                                : mainItem.chat.core.isGroupChat
+                                    ? groupInfoComponent
+                                    : oneToOneInfoComponent
 			active: detailsPanel.visible
 			onLoaded: {
 				if (contentLoader.item && contentLoader.item.parentView) {
@@ -463,6 +467,10 @@ RowLayout {
 			OneOneConversationInfos {
 				chatGui: mainItem.chat
 				onEphemeralSettingsRequested: contentLoader.showingEphemeralSettings = true
+                onShowSharedFilesRequested: (showMedias) => {
+                    contentLoader.showingSharedFiles = true
+                    contentLoader.showingMedias = showMedias
+                }
 			}
 		}
 
@@ -471,6 +479,10 @@ RowLayout {
 			GroupConversationInfos {
 				chatGui: mainItem.chat
 				onManageParticipantsRequested: contentLoader.showingManageParticipants = true
+				onShowSharedFilesRequested: (showMedias) => {
+                    contentLoader.showingSharedFiles = true
+                    contentLoader.showingMedias = showMedias
+                }
 				onEphemeralSettingsRequested: contentLoader.showingEphemeralSettings = true
 			}
 		}
@@ -495,6 +507,23 @@ RowLayout {
                 }
 			}
         }
+
+        Component {
+			id: sharedFilesComponent
+			MessageSharedFilesInfos {
+				chatGui: mainItem.chat
+                title: contentLoader.showingMedias 
+                    //: Shared medias
+                    ? qsTr("shared_medias_title") 
+                    //: Shared documents
+                    : qsTr("shared_documents_title")
+                filter: contentLoader.showingMedias ? ChatMessageFileProxy.FilterContentType.Medias : ChatMessageFileProxy.FilterContentType.Documents
+                onGoBackRequested: {
+                    // detailsPanel.visible = false
+                    contentLoader.showingSharedFiles = false
+                }
+			}
+		}
         
 		Component {
 			id: manageParticipantsComponent

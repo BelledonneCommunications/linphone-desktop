@@ -64,6 +64,7 @@ public:
 	Q_PROPERTY(QVariantList participants READ getParticipantsGui NOTIFY participantsChanged)
 	Q_PROPERTY(QStringList participantsAddresses READ getParticipantsAddresses WRITE lSetParticipantsAddresses NOTIFY
 	               participantsChanged)
+	Q_PROPERTY(QList<QSharedPointer<ChatMessageContentCore>> fileList READ getFileList NOTIFY fileListChanged)
 
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	static QSharedPointer<ChatCore> create(const std::shared_ptr<linphone::ChatRoom> &chatRoom);
@@ -93,6 +94,9 @@ public:
 
 	ChatMessageGui *getLastMessage() const;
 	QString getLastMessageText() const;
+
+	QList<QSharedPointer<ChatMessageContentCore>> getFileList() const;
+	void resetFileList(QList<QSharedPointer<ChatMessageContentCore>> list);
 
 	LinphoneEnums::ChatMessageState getLastMessageState() const;
 
@@ -157,6 +161,7 @@ signals:
 	void ephemeralLifetimeChanged();
 	void meAdminChanged();
 	void participantsChanged();
+	void fileListChanged();
 
 	void lDeleteMessage(ChatMessageGui *message);
 	void lDelete();
@@ -195,6 +200,7 @@ private:
 	bool mIsReadOnly = false;
 	bool mEphemeralEnabled = false;
 	int mEphemeralLifetime = 0;
+	QList<QSharedPointer<ChatMessageContentCore>> mFileList;
 	bool mIsMuted = false;
 	bool mMeAdmin = false;
 	QList<QSharedPointer<ParticipantCore>> mParticipants;

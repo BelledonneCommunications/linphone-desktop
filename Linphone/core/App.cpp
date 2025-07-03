@@ -54,6 +54,7 @@
 #include "core/call/CallProxy.hpp"
 #include "core/camera/CameraGui.hpp"
 #include "core/chat/ChatProxy.hpp"
+#include "core/chat/files/ChatMessageFileProxy.hpp"
 #include "core/chat/message/ChatMessageGui.hpp"
 #include "core/chat/message/EventLogGui.hpp"
 #include "core/chat/message/EventLogList.hpp"
@@ -678,6 +679,7 @@ void App::initCppInterfaces() {
 	qmlRegisterType<EventLogList>(Constants::MainQmlUri, 1, 0, "EventLogList");
 	qmlRegisterType<EventLogProxy>(Constants::MainQmlUri, 1, 0, "EventLogProxy");
 	qmlRegisterType<ChatMessageContentProxy>(Constants::MainQmlUri, 1, 0, "ChatMessageContentProxy");
+	qmlRegisterType<ChatMessageFileProxy>(Constants::MainQmlUri, 1, 0, "ChatMessageFileProxy");
 	qmlRegisterType<ChatMessageContentGui>(Constants::MainQmlUri, 1, 0, "ChatMessageContentGui");
 	qmlRegisterUncreatableType<ConferenceCore>(Constants::MainQmlUri, 1, 0, "ConferenceCore",
 	                                           QLatin1String("Uncreatable"));

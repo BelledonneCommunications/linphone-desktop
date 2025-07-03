@@ -33,6 +33,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/chat/message/content/ChatMessageContentGui.cpp
 	core/chat/message/content/ChatMessageContentList.cpp
 	core/chat/message/content/ChatMessageContentProxy.cpp
+	core/chat/files/ChatMessageFileList.cpp
+	core/chat/files/ChatMessageFileProxy.cpp
 	core/chat/message/imdn/ImdnStatusList.cpp
 	core/chat/message/imdn/ImdnStatusProxy.cpp
 	core/emoji/EmojiList.cpp

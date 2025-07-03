@@ -17,6 +17,7 @@ ColumnLayout {
 	property var parentView
 	spacing: 0
 	signal ephemeralSettingsRequested()
+	signal showSharedFilesRequested()
 
 
 	Avatar {
@@ -119,7 +120,7 @@ ColumnLayout {
 				color: DefaultStyle.main2_600,
 				showRightArrow: true,
 				action: function() {
-					console.log("Opening shared media")
+					mainItem.showSharedFilesRequested(true)
 				}
 			},
 			{
@@ -129,7 +130,7 @@ ColumnLayout {
 				color: DefaultStyle.main2_600,
 				showRightArrow: true,
 				action: function() {
-					console.log("Opening shared documents")
+					mainItem.showSharedFilesRequested(false)
 				}
 			}
 		]

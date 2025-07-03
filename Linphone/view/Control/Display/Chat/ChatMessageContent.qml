@@ -68,9 +68,8 @@ ColumnLayout {
 		Layout.fillHeight: true
 		// Layout.preferredHeight: contentHeight
 		chatMessageGui: mainItem.chatMessageGui
-		// onIsHoveringFileChanged: mainItem.isHoveringFile = isHoveringFile
 		onIsHoveringFileChanged: mainItem.isFileHoveringChanged(isHoveringFile)
-				// borderWidth: mainItem.fileBorderWidth
+		// borderWidth: mainItem.fileBorderWidth
 		// property int availableSection: mainItem.availableWidth / mainItem.filesBestWidth
 		// property int bestFitSection: mainItem.bestWidth / mainItem.filesBestWidth
 		// columns: Math.max(1, Math.min(availableSection , bestFitSection))

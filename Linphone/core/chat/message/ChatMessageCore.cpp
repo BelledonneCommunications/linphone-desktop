@@ -20,7 +20,6 @@
 
 #include "ChatMessageCore.hpp"
 #include "core/App.hpp"
-#include "core/chat/ChatCore.hpp"
 #include "model/tool/ToolModel.hpp"
 
 DEFINE_ABSTRACT_OBJECT(ChatMessageCore)
@@ -404,6 +403,10 @@ bool ChatMessageCore::isRemoteMessage() const {
 
 bool ChatMessageCore::isFromChatGroup() const {
 	return mIsFromChatGroup;
+}
+
+bool ChatMessageCore::hasFileContent() const {
+	return mHasFileContent;
 }
 
 bool ChatMessageCore::isRead() const {

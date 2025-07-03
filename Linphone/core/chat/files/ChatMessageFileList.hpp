@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -18,46 +18,34 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef EVENT_LOG_LIST_H_
-#define EVENT_LOG_LIST_H_
+#ifndef CHAT_MESSAGE_FILE_LIST_H_
+#define CHAT_MESSAGE_FILE_LIST_H_
 
+#include "core/chat/ChatCore.hpp"
 #include "core/proxy/ListProxy.hpp"
 #include "tool/AbstractObject.hpp"
 #include "tool/thread/SafeConnection.hpp"
 #include <QLocale>
 
-class EventLogGui;
-class ChatCore;
-class ChatGui;
 // =============================================================================
 
-class EventLogList : public ListProxy, public AbstractObject {
+class ChatMessageFileList : public ListProxy, public AbstractObject {
 	Q_OBJECT
 public:
-	static QSharedPointer<EventLogList> create();
-	EventLogList(QObject *parent = Q_NULLPTR);
-	~EventLogList();
+	static QSharedPointer<ChatMessageFileList> create();
+	ChatMessageFileList(QObject *parent = Q_NULLPTR);
+	~ChatMessageFileList();
 
 	QSharedPointer<ChatCore> getChatCore() const;
-	ChatGui *getChat() const;
-	void setChatCore(QSharedPointer<ChatCore> core);
-	void setChatGui(ChatGui *chat);
+	void setChatCore(QSharedPointer<ChatCore> chatCore);
 
-	int findFirstUnreadIndex();
-
-	void setSelf(QSharedPointer<EventLogList> me);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	QHash<int, QByteArray> roleNames() const override;
 
 signals:
-	void lUpdate();
-	void filterChanged(QString filter);
-	void eventChanged();
-	void eventInserted(int index, EventLogGui *message);
+	void chatChanged();
 
 private:
-	QString mFilter;
-	QSharedPointer<ChatCore> mChatCore;
+	QSharedPointer<ChatCore> mChat;
 	DECLARE_ABSTRACT_OBJECT
 };
 

@@ -17,6 +17,7 @@ ColumnLayout {
 	property bool manageParticipants: false
     signal manageParticipantsRequested()
     signal ephemeralSettingsRequested()
+	signal showSharedFilesRequested(bool showMedias)
 
 	spacing: 0
 
@@ -201,26 +202,29 @@ ColumnLayout {
 
 			ChatInfoActionsGroup {
 				Layout.topMargin: Math.round(30 * DefaultStyle.dp)
+				//: Medias & documents
 				title: qsTr("group_infos_media_docs")
 				entries: [
 					{
 						icon: AppIcons.photo,
 						visible: true,
-						text: qsTr("group_infos_media_docs"),
+						//: Shared medias
+						text: qsTr("group_infos_shared_medias"),
 						color: DefaultStyle.main2_600,
 						showRightArrow: true,
 						action: function() {
-							console.log("group_infos_shared_media")
+							mainItem.showSharedFilesRequested(true)
 						}
 					},
 					{
 						icon: AppIcons.pdf,
 						visible: true,
+						//: Shared documents
 						text: qsTr("group_infos_shared_docs"),
 						color: DefaultStyle.main2_600,
 						showRightArrow: true,
 						action: function() {
-							console.log("Opening shared documents")
+							mainItem.showSharedFilesRequested(false)
 						}
 					}
 				]

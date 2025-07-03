@@ -113,7 +113,7 @@ AbstractMainPage {
                         height: Math.round(24 * DefaultStyle.dp)
                         focus: true
                         popup.x: 0
-                        KeyNavigation.right: newCallButton
+                        KeyNavigation.right: newChatButton
                         KeyNavigation.down: listStackView
                         popup.contentItem: ColumnLayout {
                             IconLabelButton {

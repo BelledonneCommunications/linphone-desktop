@@ -21,14 +21,25 @@ ColumnLayout {
     	return chatCore && chatCore.meAdmin && !chatCore.isReadOnly
 	}
 
-    Text {
-        font: Typography.h4
-        color: DefaultStyle.main2_600
-        text: title
-        Layout.topMargin: Math.round(5 * DefaultStyle.dp)
-    }
+	RowLayout {
+		Text {
+			font: Typography.h4
+			color: DefaultStyle.main2_600
+			text: title
+			Layout.topMargin: Math.round(5 * DefaultStyle.dp)
+		}
+		Item{Layout.fillWidth: true}
+		BigButton {
+			id: expandButton
+			style: ButtonStyle.noBackground
+			checkable: true
+			checked: true
+			icon.source: checked ? AppIcons.upArrow : AppIcons.downArrow
+		}
+	}
 
     Rectangle {
+		visible: expandButton.checked
         Layout.fillWidth: true
         Layout.topMargin: Math.round(9 * DefaultStyle.dp)
         color: DefaultStyle.grey_100

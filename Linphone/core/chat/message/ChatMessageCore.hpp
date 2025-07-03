@@ -131,6 +131,8 @@ public:
 	bool isRemoteMessage() const;
 	bool isFromChatGroup() const;
 
+	bool hasFileContent() const;
+
 	bool isRead() const;
 	void setIsRead(bool read);
 

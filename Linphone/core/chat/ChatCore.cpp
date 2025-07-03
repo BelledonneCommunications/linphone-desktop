@@ -92,6 +92,13 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	for (auto &event : lHistory) {
 		auto eventLogCore = EventLogCore::create(event);
 		eventList.append(eventLogCore);
+		if (auto isMessage = eventLogCore->getChatMessageCore()) {
+			for (auto content : isMessage->getChatMessageContentList()) {
+				if (content->isFile() && !content->isVoiceRecording()) {
+					mFileList.append(content);
+				}
+			}
+		}
 	}
 	resetEventLogList(eventList);
 	mIdentifier = Utils::coreStringToAppString(chatRoom->getIdentifier());
@@ -105,6 +112,22 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	connect(this, &ChatCore::eventListChanged, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::eventsInserted, this, &ChatCore::lUpdateLastMessage);
 	connect(this, &ChatCore::eventRemoved, this, &ChatCore::lUpdateLastMessage);
+	auto resetFileListLambda = [this] {
+		QList<QSharedPointer<ChatMessageContentCore>> fileList;
+		for (auto &eventLogCore : mEventLogList) {
+			if (auto isMessage = eventLogCore->getChatMessageCore()) {
+				for (auto content : isMessage->getChatMessageContentList()) {
+					if (content->isFile() && !content->isVoiceRecording()) {
+						fileList.append(content);
+					}
+				}
+			}
+		}
+		resetFileList(fileList);
+	};
+	connect(this, &ChatCore::eventListChanged, this, resetFileListLambda);
+	connect(this, &ChatCore::eventsInserted, this, resetFileListLambda);
+	connect(this, &ChatCore::eventRemoved, this, resetFileListLambda);
 	mEphemeralEnabled = chatRoom->ephemeralEnabled();
 	mEphemeralLifetime = chatRoom->ephemeralEnabled() ? chatRoom->getEphemeralLifetime() : 0;
 	mIsMuted = chatRoom->getMuted();
@@ -114,6 +137,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 ChatCore::~ChatCore() {
 	lDebug() << "[ChatCore] delete" << this;
 	mustBeInMainThread("~" + getClassName());
+	mChatModelConnection->disconnect();
 	emit mChatModel->removeListener();
 }
 
@@ -553,6 +577,15 @@ void ChatCore::setComposingAddress(QString composingAddress) {
 
 QString ChatCore::getComposingAddress() const {
 	return mComposingAddress;
+}
+
+QList<QSharedPointer<ChatMessageContentCore>> ChatCore::getFileList() const {
+	return mFileList;
+}
+
+void ChatCore::resetFileList(QList<QSharedPointer<ChatMessageContentCore>> list) {
+	mFileList = list;
+	emit fileListChanged();
 }
 
 std::shared_ptr<ChatModel> ChatCore::getModel() const {

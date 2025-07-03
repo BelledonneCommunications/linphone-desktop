@@ -47,7 +47,6 @@ EventLogList::EventLogList(QObject *parent) : ListProxy(parent) {
 
 EventLogList::~EventLogList() {
 	mustBeInMainThread("~" + getClassName());
-	mModelConnection = nullptr;
 }
 
 ChatGui *EventLogList::getChat() const {
@@ -97,9 +96,7 @@ int EventLogList::findFirstUnreadIndex() {
 }
 
 void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
-	mModelConnection = SafeConnection<EventLogList, CoreModel>::create(me, CoreModel::getInstance());
-
-	mModelConnection->makeConnectToCore(&EventLogList::lUpdate, [this]() {
+	connect(this, &EventLogList::lUpdate, this, [this]() {
 		for (auto &event : getSharedList<EventLogCore>()) {
 			auto message = event->getChatMessageCore();
 			if (message) disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);

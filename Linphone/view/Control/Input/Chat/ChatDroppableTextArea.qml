@@ -67,7 +67,6 @@ Control.Control {
 	contentItem: Control.StackView {
 		id: sendingAreaStackView
 		initialItem: textAreaComp
-		width: currentItem.width
 		onHeightChanged: {
 			mainItem.height = height + mainItem.topPadding + mainItem.bottomPadding
 		}

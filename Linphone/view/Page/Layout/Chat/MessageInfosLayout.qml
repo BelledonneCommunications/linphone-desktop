@@ -20,6 +20,7 @@ ColumnLayout {
 	property alias tabbar: tabbar
 	property alias listView: listView
 	property var parentView
+	property alias content: contentLayout.children
 
 	spacing: Math.round(25 * DefaultStyle.dp)
 
@@ -41,6 +42,7 @@ ColumnLayout {
 	}
 
 	ColumnLayout {
+		id: contentLayout
 		spacing: Math.round(21 * DefaultStyle.dp)
 		Layout.leftMargin: Math.round(16 * DefaultStyle.dp)
 		Layout.rightMargin: Math.round(16 * DefaultStyle.dp)
