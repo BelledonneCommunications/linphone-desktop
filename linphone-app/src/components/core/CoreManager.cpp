@@ -443,6 +443,12 @@ void CoreManager::migrate () {
 			config->setString("misc", "version_check_url_root", Constants::VersionCheckReleaseUrl);
 		qInfo() << "Migrating Video Policy for version 7.";
 	}
+	if (rcVersion < 8) {
+		// Revert automatically_accept_direction=2 from version 7 or set default to 3
+		if (config->getInt("video", "automatically_accept_direction",2) == 2)
+			config->setInt("video", "automatically_accept_direction", 3);
+		qInfo() << "Migrating Video Policy for version 8.";
+	}
 	
 	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
 }

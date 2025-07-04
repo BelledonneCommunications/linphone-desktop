@@ -429,7 +429,8 @@ bool CallModel::transferToAnother (const QString &peerAddress) {
 void CallModel::acceptVideoRequest () {
 	if(mCall) {
 		shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(mCall);
-		params->enableVideo(true);
+		params->enableVideo(CoreManager::getInstance()->getSettingsModel()->getVideoEnabled());
+		params->setVideoDirection(linphone::MediaDirection::SendRecv);// Force for symmetric case
 		mCall->acceptUpdate(params);
 	}
 }
@@ -438,7 +439,6 @@ void CallModel::rejectVideoRequest () {
 	if(mCall) {
 		shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(mCall);
 		params->enableVideo(false);
-	
 		mCall->acceptUpdate(params);
 	}
 }
@@ -595,7 +595,8 @@ void CallModel::accept (bool withVideo) {
 	shared_ptr<linphone::Core> core = coreManager->getCore();
 	if(mCall) {
 		shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
-		params->enableVideo(withVideo);
+		params->enableVideo(withVideo && CoreManager::getInstance()->getSettingsModel()->getVideoEnabled());
+		params->setVideoDirection(withVideo ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly);
 		setRecordFile(params);
 		auto localAddress = mCall->getCallLog()->getLocalAddress();
 		for(auto account : coreManager->getAccountList()){
@@ -792,10 +793,6 @@ bool CallModel::getCameraEnabled () const{
 
 void CallModel::setCameraEnabled (bool status){
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	if (!CoreManager::getInstance()->getSettingsModel()->getVideoEnabled()) {
-		qWarning() << QStringLiteral("Unable to update video call property. (Video not enabled.)");
-		return;
-	}
 	if(mCall) {
 		switch (mCall->getState()) {
 			case linphone::Call::State::Connected:
@@ -808,9 +805,8 @@ void CallModel::setCameraEnabled (bool status){
 		}
 		if (status == getCameraEnabled())
 			return;
-
 		shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
-		params->enableVideo(true);
+		params->enableVideo(CoreManager::getInstance()->getSettingsModel()->getVideoEnabled());
 		params->setVideoDirection(status ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly);
 		mCall->update(params);
 	}
@@ -879,10 +875,6 @@ bool CallModel::getVideoEnabled () const {
 
 void CallModel::setVideoEnabled (bool status) {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	if (!CoreManager::getInstance()->getSettingsModel()->getVideoEnabled()) {
-		qWarning() << QStringLiteral("Unable to update video call property. (Video not enabled.)");
-		return;
-	}
 	if(mCall) {
 		switch (mCall->getState()) {
 			case linphone::Call::State::Connected:
@@ -898,8 +890,8 @@ void CallModel::setVideoEnabled (bool status) {
 			return;
 		
 		shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
-		params->enableVideo(status);
-		
+		params->enableVideo(status && CoreManager::getInstance()->getSettingsModel()->getVideoEnabled());
+		params->setVideoDirection(status ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly);
 		mCall->update(params);
 	}
 }
