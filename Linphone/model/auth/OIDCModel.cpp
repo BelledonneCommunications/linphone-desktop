@@ -90,7 +90,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 		mOidc.setClientIdentifierSharedKey(clientSecret->getClientSecret().c_str());
 	}
 
-	QSet<QByteArray> scopeTokens = {OIDCScope};
+	QSet<QByteArray> scopeTokens;
 	if (autorizationUrl.hasQuery()) {
 		QUrlQuery query(autorizationUrl);
 		if (query.hasQueryItem("scope")) {
@@ -100,6 +100,11 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 			}
 		}
 	}
+	if (scopeTokens.isEmpty()) {
+		scopeTokens.insert(OIDCScope);
+		qDebug() << "No scope found in authorization URL, using default scope [" << OIDCScope << "]";
+	}
+
 #if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
 	mOidc.setRequestedScopeTokens(scopeTokens);
 #else
