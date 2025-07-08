@@ -1720,47 +1720,47 @@
 <context>
     <name>ChatListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="275"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="276"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 est en train d&apos;écrire…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="277"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="278"/>
         <source>chat_message_draft_sending_text</source>
         <translation>Brouillon : %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="368"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="369"/>
         <source>chat_room_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="346"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="347"/>
         <source>chat_room_mute</source>
         <translation>Mettre en sourdine</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="346"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="347"/>
         <source>chat_room_unmute</source>
         <extracomment>&quot;Mute&quot;</extracomment>
         <translation>Enlever la sourdine </translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="357"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="358"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
         <translation>Marquer comme lu</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="374"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="375"/>
         <source>chat_list_delete_chat_popup_title</source>
         <extracomment>Delete the conversation ?</extracomment>
         <translation>Supprimer la conversation ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="376"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="377"/>
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation>La conversation et tous ses messages seront supprimés. Souhaitez-vous continuer ?</translation>
@@ -1769,67 +1769,79 @@
 <context>
     <name>ChatMessage</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="341"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="388"/>
         <source>chat_message_copy_selection</source>
         <extracomment>&quot;Copy selection&quot;</extracomment>
         <translation>Copier la sélection</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="343"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="390"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
         <translation>Copier</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="351"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="398"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
         <translation>Copié</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="353"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="400"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
         <translation>dans le presse-papiers</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="90"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="114"/>
         <source>chat_message_remote_replied</source>
         <extracomment>%1 replied</extracomment>
         <translation>%1 a répondu</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="88"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="407"/>
+        <source>chat_message_forward</source>
+        <extracomment>Forward</extracomment>
+        <translation>Transférer</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="112"/>
         <source>chat_message_remote_replied_to</source>
         <extracomment>%1 replied to %2</extracomment>
         <translation>%1 a répondu à %2</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="93"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="81"/>
+        <source>chat_message_forwarded</source>
+        <extracomment>Forwarded</extracomment>
+        <translation>Transféré</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="117"/>
         <source>chat_message_user_replied_to</source>
         <extracomment>You replied to %1</extracomment>
         <translation>Vous avez répondu à %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="95"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="119"/>
         <source>chat_message_user_replied</source>
         <extracomment>You replied</extracomment>
         <translation>Vous avez répondu</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="316"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="363"/>
         <source>chat_message_reception_info</source>
         <extracomment>&quot;Reception info&quot;</extracomment>
         <translation>Info de réception</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="328"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="375"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
         <translation>Répondre</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="365"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="424"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Supprimer</translation>
@@ -1925,13 +1937,13 @@ Error</extracomment>
         <translation>Réactions</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="196"/>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="198"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation>Supprimé</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="198"/>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="200"/>
         <source>info_toast_deleted_message</source>
         <extracomment>The message has been deleted</extracomment>
         <translation>Le message a été supprimé</translation>
@@ -1984,13 +1996,13 @@ Error</extracomment>
 <context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="92"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="93"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation>Conversation chiffrée de bout en bout</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="102"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="103"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Les messages de cette conversation sont chiffrés de bout 
  en bout. Seul votre correspondant peut les déchiffrer.</extracomment>
@@ -1998,7 +2010,7 @@ Error</extracomment>
 en bout. Seul votre correspondant peut les déchiffrer.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="231"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="233"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 est en train d&apos;écrire…</translation>
@@ -2061,37 +2073,37 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <translation>Aucune conversation dans votre historique</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="246"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="248"/>
         <source>chat_action_start_new_chat</source>
         <extracomment>&quot;New chat&quot;</extracomment>
         <translation>Nouvelle conversation</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="282"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="284"/>
         <source>chat_start_group_chat_title</source>
         <extracomment>&quot;Nouveau groupe&quot;</extracomment>
         <translation>Nouveau groupe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="284"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="286"/>
         <source>chat_action_start_group_chat</source>
         <extracomment>&quot;Créer&quot;</extracomment>
         <translation>Créer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="310"/>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="314"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="312"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="316"/>
         <source>information_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="312"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="314"/>
         <source>group_chat_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné au groupe</extracomment>
         <translation>Un nom doit être donné au groupe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="316"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="318"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
         <translation>Vous n&apos;êtes pas connecté</translation>
@@ -2273,53 +2285,53 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
 <context>
     <name>ContactListItem</name>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="192"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="193"/>
         <source>contact_details_remove_from_favourites</source>
         <extracomment>&quot;Enlever des favoris&quot;</extracomment>
         <translation>Enlever des favoris</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="194"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="195"/>
         <source>contact_details_add_to_favourites</source>
         <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
         <translation>Ajouter aux favoris</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="208"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="209"/>
         <source>Partager</source>
         <translation>Partager</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="221"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="222"/>
         <source>information_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="223"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="224"/>
         <source>information_popup_vcard_creation_error</source>
         <extracomment>La création du fichier vcard a échoué</extracomment>
         <translation>La création du fichier vcard a échoué</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="227"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="228"/>
         <source>information_popup_vcard_creation_title</source>
         <extracomment>VCard créée</extracomment>
         <translation>VCard créée</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="229"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="230"/>
         <source>information_popup_vcard_creation_success</source>
         <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
         <translation>VCard du contact enregistrée dans %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="231"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="232"/>
         <source>contact_sharing_email_title</source>
         <extracomment>Partage de contact</extracomment>
         <translation>Partage de contact</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="237"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="238"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Supprimer</translation>
@@ -4843,27 +4855,39 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 <context>
     <name>SelectedChatView</name>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="36"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="37"/>
         <source>chat_view_group_call_toast_message</source>
         <translation>Démarrer un appel de groupe ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="311"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="317"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
         <translation>Réponse à %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="517"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="518"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation>Médias partagés</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="519"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="520"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation>Documents partagés</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="549"/>
+        <source>forward_to_title</source>
+        <extracomment>Transfer to...</extracomment>
+        <translation>Transférer à…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="581"/>
+        <source>conversations_title</source>
+        <extracomment>Conversations</extracomment>
+        <translation>Conversations</translation>
     </message>
 </context>
 <context>
@@ -5003,7 +5027,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 <context>
     <name>Utils</name>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2184"/>
+        <location filename="../../tool/Utils.cpp" line="2216"/>
         <source>nMinute</source>
         <translation>
             <numerusform>%1 minute</numerusform>
@@ -5011,7 +5035,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2185"/>
+        <location filename="../../tool/Utils.cpp" line="2217"/>
         <source>nHour</source>
         <translation>
             <numerusform>%1 heure</numerusform>
@@ -5019,8 +5043,8 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2186"/>
-        <location filename="../../tool/Utils.cpp" line="2187"/>
+        <location filename="../../tool/Utils.cpp" line="2218"/>
+        <location filename="../../tool/Utils.cpp" line="2219"/>
         <source>nDay</source>
         <translation>
             <numerusform>%1 jour</numerusform>
@@ -5028,7 +5052,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2188"/>
+        <location filename="../../tool/Utils.cpp" line="2220"/>
         <source>nWeek</source>
         <translation>
             <numerusform>%1 semaine</numerusform>
@@ -5036,7 +5060,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2189"/>
+        <location filename="../../tool/Utils.cpp" line="2221"/>
         <source>nSeconds</source>
         <translation>
             <numerusform>%1 seconde</numerusform>
@@ -5167,42 +5191,73 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <translation>Erreur lors de la création de la conversation avec %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2036"/>
-        <source>chatMessage_error</source>
-        <extracomment>Cannot reply to invalid message</extracomment>
-        <translation>Impossible de répondre : message invalide</translation>
-    </message>
-    <message>
-        <location filename="../../tool/Utils.cpp" line="2101"/>
+        <location filename="../../tool/Utils.cpp" line="2133"/>
         <source>recorder_error</source>
         <extracomment>Error with the recorder</extracomment>
         <translation>Erreur avec l&apos;enregistreur</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2038"/>
-        <location filename="../../tool/Utils.cpp" line="2103"/>
+        <location filename="../../tool/Utils.cpp" line="2070"/>
+        <location filename="../../tool/Utils.cpp" line="2135"/>
         <source>chat_error</source>
         <translation>Erreur dans le chat</translation>
     </message>
     <message>
+        <location filename="../../tool/Utils.cpp" line="2036"/>
+        <source>chat_message_forward_error</source>
+        <extracomment>Cannot forward an invalid message</extracomment>
+        <translation>Transfert impossible: message invalide</translation>
+    </message>
+    <message>
         <location filename="../../tool/Utils.cpp" line="2040"/>
-        <location filename="../../tool/Utils.cpp" line="2067"/>
-        <location filename="../../tool/Utils.cpp" line="2105"/>
-        <location filename="../../tool/Utils.cpp" line="2119"/>
+        <location filename="../../tool/Utils.cpp" line="2055"/>
+        <location filename="../../tool/Utils.cpp" line="2072"/>
+        <location filename="../../tool/Utils.cpp" line="2099"/>
+        <location filename="../../tool/Utils.cpp" line="2137"/>
+        <location filename="../../tool/Utils.cpp" line="2151"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Erreur</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2042"/>
-        <location filename="../../tool/Utils.cpp" line="2107"/>
+        <source>info_popup_forward_message_error</source>
+        <extracomment>Could not forward message : %1</extracomment>
+        <translation>Impossible de transférer le message : %1</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2057"/>
+        <source>info_popup_send_forward_message_error_message</source>
+        <extracomment>Failed to create forward message</extracomment>
+        <translation>Le transfert du message a échoué</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2068"/>
+        <source>chat_message_reply_error</source>
+        <extracomment>Cannot reply to invalid message</extracomment>
+        <translation>Impossible de répondre: message invalide</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2074"/>
+        <source>info_popup_reply_message_error</source>
+        <extracomment>Could not send reply message : %1</extracomment>
+        <translation>Impossible d&apos;envoyer la réponse: %1</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2101"/>
+        <source>info_popup_send_reply_message_error_message</source>
+        <extracomment>Failed to create reply message</extracomment>
+        <translation>La création du message a échoué</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2139"/>
         <source>info_popup_send_voice_message_error_message</source>
         <extracomment>Could not send voice message : %1</extracomment>
         <translation>Impossible d&apos;envoyer le message vocal : %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2069"/>
-        <location filename="../../tool/Utils.cpp" line="2121"/>
+        <location filename="../../tool/Utils.cpp" line="2153"/>
         <source>info_popup_send_voice_message_sending_error_message</source>
         <extracomment>Failed to create message from record</extracomment>
         <translation>Impossible de créer le message vocal</translation>

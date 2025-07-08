@@ -2028,18 +2028,50 @@ QString Utils::getSafeFilePath(const QString &filePath, bool *soFarSoGood) {
 	return QString("");
 }
 
+void Utils::forwardMessageTo(ChatMessageGui *message, ChatGui *chatGui) {
+	auto chatModel = chatGui && chatGui->mCore ? chatGui->mCore->getModel() : nullptr;
+	auto chatMessageModel = message && message->mCore ? message->mCore->getModel() : nullptr;
+	if (!chatModel || !chatMessageModel) {
+		//: Cannot forward an invalid message
+		QString error = !chatMessageModel ? tr("chat_message_forward_error")
+		                                  //: Error creating or opening the chat
+		                                  : tr("chat_error");
+		//: Error
+		showInformationPopup(tr("info_popup_error_title"),
+		                     //: Could not forward message : %1
+		                     tr("info_popup_forward_message_error").arg(error));
+		return;
+	}
+	App::postModelAsync([chatModel, chatMessageModel] {
+		mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+		auto chat = chatModel->getMonitor();
+		auto messageToForward = chatMessageModel->getMonitor();
+		auto linMessage = chatModel->createForwardMessage(messageToForward);
+		if (linMessage) {
+			linMessage->send();
+		} else {
+			App::postCoreAsync([] {
+				//: Error
+				showInformationPopup(tr("info_popup_error_title"),
+				                     //: Failed to create forward message
+				                     tr("info_popup_send_forward_message_error_message"));
+			});
+		}
+	});
+}
+
 void Utils::sendReplyMessage(ChatMessageGui *message, ChatGui *chatGui, QString text, QVariantList files) {
 	auto chatModel = chatGui && chatGui->mCore ? chatGui->mCore->getModel() : nullptr;
 	auto chatMessageModel = message && message->mCore ? message->mCore->getModel() : nullptr;
 	if (!chatModel || !chatMessageModel) {
 		//: Cannot reply to invalid message
-		QString error = !chatMessageModel ? tr("chatMessage_error")
+		QString error = !chatMessageModel ? tr("chat_message_reply_error")
 		                                  //: Error in the chat
 		                                  : tr("chat_error");
 		//: Error
 		showInformationPopup(tr("info_popup_error_title"),
-		                     //: Could not send voice message : %1
-		                     tr("info_popup_send_voice_message_error_message").arg(error));
+		                     //: Could not send reply message : %1
+		                     tr("info_popup_reply_message_error").arg(error));
 		return;
 	}
 	QList<std::shared_ptr<ChatMessageContentModel>> filesContent;
@@ -2065,8 +2097,8 @@ void Utils::sendReplyMessage(ChatMessageGui *message, ChatGui *chatGui, QString 
 			App::postCoreAsync([] {
 				//: Error
 				showInformationPopup(tr("info_popup_error_title"),
-				                     //: Failed to create message from record
-				                     tr("info_popup_send_voice_message_sending_error_message"));
+				                     //: Failed to create reply message
+				                     tr("info_popup_send_reply_message_error_message"));
 			});
 		}
 	});

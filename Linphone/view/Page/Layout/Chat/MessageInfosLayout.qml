@@ -48,6 +48,7 @@ ColumnLayout {
 		Layout.rightMargin: Math.round(16 * DefaultStyle.dp)
 		TabBar {
 			id: tabbar
+			visible: mainItem.tabbarModel !== undefined
 			Layout.fillWidth: true
             model: mainItem.tabbarModel
 			pixelSize: Typography.h3m.pixelSize
@@ -56,6 +57,7 @@ ColumnLayout {
 
 		ListView {
 			id: listView
+			visible: mainItem.listModel !== undefined
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			spacing: Math.round(11 * DefaultStyle.dp)

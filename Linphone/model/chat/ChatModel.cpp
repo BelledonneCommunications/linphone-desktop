@@ -148,6 +148,11 @@ ChatModel::createReplyMessage(const std::shared_ptr<linphone::ChatMessage> &mess
 	return mMonitor->createReplyMessage(message);
 }
 
+std::shared_ptr<linphone::ChatMessage>
+ChatModel::createForwardMessage(const std::shared_ptr<linphone::ChatMessage> &message) {
+	return mMonitor->createForwardMessage(message);
+}
+
 std::shared_ptr<linphone::ChatMessage> ChatModel::createTextMessageFromText(QString text) {
 	return mMonitor->createMessageFromUtf8(Utils::appStringToCoreString(text));
 }

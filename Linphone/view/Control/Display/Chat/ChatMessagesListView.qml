@@ -18,6 +18,7 @@ ListView {
     signal showReactionsForMessageRequested(ChatMessageGui chatMessage)
     signal showImdnStatusForMessageRequested(ChatMessageGui chatMessage)
     signal replyToMessageRequested(ChatMessageGui chatMessage)
+    signal forwardMessageRequested(ChatMessageGui chatMessage)
 
     Component.onCompleted: {
         Qt.callLater(function() {
@@ -64,7 +65,7 @@ ListView {
 
     header: Item {
         visible: mainItem.chat && mainItem.chat.core.isEncrypted
-        height: visible ? headerMessage.height + Math.round(50 * DefaultStyle.dp) : 0
+        height: visible ? headerMessage.height + Math.round(50 * DefaultStyle.dp) : Math.round(30 * DefaultStyle.dp)
         width: headerMessage.width
         anchors.horizontalCenter: parent.horizontalCenter
         Control.Control {
@@ -150,6 +151,7 @@ ListView {
                 onShowReactionsForMessageRequested: mainItem.showReactionsForMessageRequested(modelData)
                 onShowImdnStatusForMessageRequested: mainItem.showImdnStatusForMessageRequested(modelData)
                 onReplyToMessageRequested: mainItem.replyToMessageRequested(modelData)
+                onForwardMessageRequested: mainItem.forwardMessageRequested(modelData)
             }
         }
 

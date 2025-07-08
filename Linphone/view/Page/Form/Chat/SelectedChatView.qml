@@ -20,6 +20,7 @@ RowLayout {
     property alias callHeaderContent: splitPanel.headerContent
     property bool replyingToMessage: false
     spacing: 0
+    enum PanelType { MessageReactions, SharedFiles, Medias, ImdnStatus, ForwardToList, ManageParticipants, EphemeralSettings, None}
     
     signal oneOneCall(bool video)
 	signal groupCall()
@@ -154,17 +155,22 @@ RowLayout {
                         Control.ScrollBar.vertical: scrollbar
                         onShowReactionsForMessageRequested: (chatMessage) => {
                             mainItem.chatMessage = chatMessage
-                            contentLoader.showingMessageReactions = true
+                            contentLoader.panelType = SelectedChatView.PanelType.MessageReactions
                             detailsPanel.visible = true
                         }
                         onShowImdnStatusForMessageRequested: (chatMessage) => {
                             mainItem.chatMessage = chatMessage
-                            contentLoader.showingImdnStatus = true
+                            contentLoader.panelType = SelectedChatView.PanelType.ImdnStatus
                             detailsPanel.visible = true
                         }
                         onReplyToMessageRequested: (chatMessage) => {
                             mainItem.chatMessage = chatMessage
                             mainItem.replyingToMessage = true
+                        }
+                        onForwardMessageRequested: (chatMessage) => {
+                            mainItem.chatMessage = chatMessage
+                            contentLoader.panelType = SelectedChatView.PanelType.ForwardToList
+                            detailsPanel.visible = true
                         }
 
                         Popup {
@@ -422,8 +428,7 @@ RowLayout {
 		Layout.fillHeight: true
 		Layout.preferredWidth: Math.round(387 * DefaultStyle.dp)
         onVisibleChanged: if(!visible) {
-            contentLoader.showingMessageReactions = false
-            contentLoader.showingImdnStatus = false
+            contentLoader.panelType = SelectedChatView.PanelType.None
         }
 
 		background: Rectangle {
@@ -433,27 +438,25 @@ RowLayout {
 
 		contentItem: Loader {
 			id: contentLoader
-            property bool showingMessageReactions: false
-            property bool showingSharedFiles: false
-            property bool showingMedias: false
-            property bool showingImdnStatus: false
-            property bool showingManageParticipants: false
-            property bool showingEphemeralSettings: false
-			anchors.top: parent.top
+            property int panelType: SelectedChatView.PanelType.None
+			// anchors.top: parent.top
+            anchors.fill: parent
 			anchors.topMargin: Math.round(39 * DefaultStyle.dp)
-			sourceComponent: showingEphemeralSettings
+			sourceComponent: panelType === SelectedChatView.PanelType.EphemeralSettings
 				? ephemeralSettingsComponent
-				: showingMessageReactions
+				: panelType === SelectedChatView.PanelType.MessageReactions
 					? messageReactionsComponent
-					: showingImdnStatus
+					: panelType === SelectedChatView.PanelType.ImdnStatus
 						? messageImdnStatusComponent
-                        : showingSharedFiles
+                        : panelType === SelectedChatView.PanelType.SharedFiles || panelType === SelectedChatView.PanelType.Medias
 					        ? sharedFilesComponent
-                            : showingManageParticipants
-                                ? manageParticipantsComponent
-                                : mainItem.chat.core.isGroupChat
-                                    ? groupInfoComponent
-                                    : oneToOneInfoComponent
+                            : panelType === SelectedChatView.PanelType.ForwardToList
+                                ? forwardToListsComponent
+                                : panelType === SelectedChatView.PanelType.ManageParticipants
+                                    ? manageParticipantsComponent
+                                    : mainItem.chat.core.isGroupChat
+                                        ? groupInfoComponent
+                                        : oneToOneInfoComponent
 			active: detailsPanel.visible
 			onLoaded: {
 				if (contentLoader.item && contentLoader.item.parentView) {
@@ -466,10 +469,9 @@ RowLayout {
 			id: oneToOneInfoComponent
 			OneOneConversationInfos {
 				chatGui: mainItem.chat
-				onEphemeralSettingsRequested: contentLoader.showingEphemeralSettings = true
+				onEphemeralSettingsRequested: contentLoader.panelType = SelectedChatView.PanelType.EphemeralSettings
                 onShowSharedFilesRequested: (showMedias) => {
-                    contentLoader.showingSharedFiles = true
-                    contentLoader.showingMedias = showMedias
+                    contentLoader.panelType = showMedias ? SelectedChatView.PanelType.SharedFiles : SelectedChatView.PanelType.Medias
                 }
 			}
 		}
@@ -478,12 +480,11 @@ RowLayout {
 			id: groupInfoComponent
 			GroupConversationInfos {
 				chatGui: mainItem.chat
-				onManageParticipantsRequested: contentLoader.showingManageParticipants = true
+				onManageParticipantsRequested: contentLoader.panelType = SelectedChatView.PanelType.ManageParticipants
 				onShowSharedFilesRequested: (showMedias) => {
-                    contentLoader.showingSharedFiles = true
-                    contentLoader.showingMedias = showMedias
+                    contentLoader.panelType = showMedias ? SelectedChatView.PanelType.SharedFiles : SelectedChatView.PanelType.Medias
                 }
-				onEphemeralSettingsRequested: contentLoader.showingEphemeralSettings = true
+				onEphemeralSettingsRequested: contentLoader.panelType = SelectedChatView.PanelType.EphemeralSettings
 			}
 		}
 
@@ -512,15 +513,15 @@ RowLayout {
 			id: sharedFilesComponent
 			MessageSharedFilesInfos {
 				chatGui: mainItem.chat
-                title: contentLoader.showingMedias 
+                title: contentLoader.panelType === SelectedChatView.PanelType.Medias 
                     //: Shared medias
                     ? qsTr("shared_medias_title") 
                     //: Shared documents
                     : qsTr("shared_documents_title")
-                filter: contentLoader.showingMedias ? ChatMessageFileProxy.FilterContentType.Medias : ChatMessageFileProxy.FilterContentType.Documents
+                filter: contentLoader.panelType === SelectedChatView.PanelType.Medias ? ChatMessageFileProxy.FilterContentType.Medias : ChatMessageFileProxy.FilterContentType.Documents
                 onGoBackRequested: {
                     // detailsPanel.visible = false
-                    contentLoader.showingSharedFiles = false
+                    contentLoader.panelType = SelectedChatView.PanelType.SharedFiles
                 }
 			}
 		}
@@ -529,7 +530,7 @@ RowLayout {
 			id: manageParticipantsComponent
 			ManageParticipants {
 				chatGui: mainItem.chat
-				onDone: contentLoader.showingManageParticipants = false
+				onDone: contentLoader.panelType = SelectedChatView.PanelType.None
 			}
 		}
 		
@@ -537,8 +538,98 @@ RowLayout {
 			id: ephemeralSettingsComponent
 			EphemeralSettings {
 				chatGui: mainItem.chat
-				onDone: contentLoader.showingEphemeralSettings = false
+				onDone: contentLoader.panelType = SelectedChatView.PanelType.None
 			}
 		}
+
+        Component {
+            id: forwardToListsComponent
+            MessageInfosLayout {
+                //: Transfer to...
+                title: qsTr("forward_to_title")
+                // width: detailsPanel.width
+                // RectangleTest{anchors.fill: parent}
+                onGoBackRequested: {
+                    detailsPanel.visible = false
+                    mainItem.chatMessage = null
+                }
+                content: ColumnLayout {
+                    spacing: Math.round(31 * DefaultStyle.dp)
+                    SearchBar {
+                        id: forwardSearchBar
+                        Layout.fillWidth: true
+                    }
+                    Flickable {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        contentWidth: parent.width
+                        // width: parent.width
+                        // Control.ScrollBar.vertical: ScrollBar {
+                        //     id: scrollbar
+                        //     topPadding: Math.round(24 * DefaultStyle.dp) // Avoid to be on top of collapse button
+                        //     active: true
+                        //     interactive: true
+                        //     visible: parent.contentHeight > parent.height
+                        //     policy: Control.ScrollBar.AsNeeded
+                        // }
+                        ColumnLayout {
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            spacing: Math.round(8 * DefaultStyle.dp)
+                            // width: parent.width //- scrollbar.width - Math.round(5 * DefaultStyle.dp)
+                            RowLayout {
+                                Text {
+                                    //: Conversations
+                                    text: qsTr("conversations_title")
+                                    font {
+                                        pixelSize: Typography.h4.pixelSize
+                                        weight: Typography.h4.weight
+                                    }
+                                }
+                                Item{Layout.fillWidth: true}
+                                RoundButton {
+                                    id: expandChatButton
+                                    style: ButtonStyle.noBackground
+                                    checkable: true
+                                    checked: true
+                                    icon.source: checked ? AppIcons.upArrow : AppIcons.downArrow
+                                    KeyNavigation.down: contentControl
+                                }
+                            }
+                            ChatListView {
+                                visible: expandChatButton.checked
+                                searchBar: forwardSearchBar
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: contentHeight
+                                onChatClicked: (chat) => {
+                                    UtilsCpp.forwardMessageTo(mainItem.chatMessage, chat)
+                                    mainItem.chat = chat
+                                    detailsPanel.visible = false
+                                }
+                            }
+                            AllContactListView {
+                                visible: expandContactButton.checked
+                                Layout.fillWidth: true
+                                itemsRightMargin: 0
+                                showActions: false
+                                showContactMenu: false
+                                showFavorites: false
+                                searchBarText: forwardSearchBar.text
+                                Layout.preferredHeight: contentHeight
+                                onContactSelected: contact => selectedFriend = contact
+                                property FriendGui selectedFriend
+                                property var chatForSelectedAddressObj: selectedFriend ? UtilsCpp.getChatForAddress(selectedFriend.core.defaultAddress) : null
+                                property ChatGui chatForAddress: chatForSelectedAddressObj ? chatForSelectedAddressObj.value : null
+                                onChatForAddressChanged: if(chatForAddress) {
+                                    UtilsCpp.forwardMessageTo(mainItem.chatMessage, chatForAddress)
+                                    mainItem.chat = chatForAddress
+                                    detailsPanel.visible = false
+                                }
+                            }
+                        }
+                    }
+                } 
+            }
+        }
 	}
 }

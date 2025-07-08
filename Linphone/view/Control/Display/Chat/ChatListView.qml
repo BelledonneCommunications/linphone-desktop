@@ -22,6 +22,7 @@ ListView {
 
     signal resultsReceived()
     signal markAllAsRead()
+    signal chatClicked(ChatGui chat)
 
     onResultsReceived: {
         loading = false
@@ -411,6 +412,7 @@ ListView {
                 if (pressedButtons & Qt.RightButton) {
                     chatroomPopup.open()
                 } else {
+                    mainItem.chatClicked(modelData)
                     mainItem.currentIndex = model.index
                     mainItem.forceActiveFocus()
                 }

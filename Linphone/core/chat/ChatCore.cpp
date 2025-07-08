@@ -196,19 +196,17 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    });
 
 	// Events (excluding messages)
-	mChatModelConnection->makeConnectToModel(&ChatModel::newEvent,
-	                                         [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
-	                                                const std::shared_ptr<const linphone::EventLog> &eventLog) {
-		                                         if (mChatModel->getMonitor() != chatRoom) return;
-		                                         qDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
-		                                         auto event = EventLogCore::create(eventLog);
-		                                         if (event->isHandled()) {
-			                                         mChatModelConnection->invokeToCore([this, event]() {
-				                                         appendEventLogToEventLogList(event);
-				                                         emit lUpdateLastUpdatedTime();
-			                                         });
-		                                         }
-	                                         });
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::newEvent, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	                                 const std::shared_ptr<const linphone::EventLog> &eventLog) {
+		    if (mChatModel->getMonitor() != chatRoom) return;
+		    qDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
+		    auto event = EventLogCore::create(eventLog);
+		    if (event->isHandled()) {
+			    mChatModelConnection->invokeToCore([this, event]() { appendEventLogToEventLogList(event); });
+		    }
+		    mChatModelConnection->invokeToCore([this, event]() { emit lUpdateLastUpdatedTime(); });
+	    });
 
 	// Chat messages
 	mChatModelConnection->makeConnectToModel(

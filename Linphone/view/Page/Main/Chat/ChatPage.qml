@@ -196,7 +196,9 @@ AbstractMainPage {
 
                             Connections {
                                 target: mainItem
-                                onSelectedChatGuiChanged: chatListView.selectChat(mainItem.selectedChatGui)
+                                onSelectedChatGuiChanged: {
+                                    chatListView.selectChat(mainItem.selectedChatGui)
+                                }
                             }
                         }
                     }
@@ -334,6 +336,7 @@ AbstractMainPage {
             SelectedChatView {
                 anchors.fill: parent
                 chat: mainItem.selectedChatGui || null
+                onChatChanged: if (mainItem.selectedChatGui !== chat) mainItem.selectedChatGui = chat
             }
         }
     }

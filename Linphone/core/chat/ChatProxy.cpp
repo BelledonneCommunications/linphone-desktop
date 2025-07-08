@@ -45,6 +45,7 @@ void ChatProxy::setSourceModel(QAbstractItemModel *model) {
 		        [this, newChatList] { emit newChatList->filterChanged(getFilterText()); });
 		connect(newChatList, &ChatList::chatRemoved, this, &ChatProxy::chatRemoved);
 		connect(newChatList, &ChatList::chatAdded, this, [this] { invalidate(); });
+		connect(newChatList, &ChatList::dataChanged, this, [this] { invalidate(); });
 	}
 	auto firstList = new SortFilterList(model, Qt::AscendingOrder);
 	firstList->setDynamicSortFilter(true);

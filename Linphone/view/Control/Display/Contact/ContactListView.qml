@@ -170,15 +170,11 @@ ListView {
 					Item {
 						Layout.fillWidth: true
 					}
-					Button {
+					RoundButton {
 						id: headerExpandButton
 						style: ButtonStyle.noBackground
 						icon.source: mainItem.expanded ? AppIcons.upArrow : AppIcons.downArrow
-						Layout.fillHeight: true
-						Layout.preferredWidth: height
-                        Layout.rightMargin: Math.round(23 * DefaultStyle.dp)
-                        icon.width: Math.round(24 * DefaultStyle.dp)
-                        icon.height: Math.round(24 * DefaultStyle.dp)
+                        Layout.rightMargin: mainItem.itemsRightMargin
 						focus: true
 						onClicked: mainItem.expanded = !mainItem.expanded
 					}

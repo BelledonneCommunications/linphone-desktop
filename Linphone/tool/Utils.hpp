@@ -180,6 +180,8 @@ public:
 	Q_INVOKABLE static VariantObject *createVoiceRecordingMessage(RecorderGui *recorderGui, ChatGui *chatGui);
 	Q_INVOKABLE static void
 	sendReplyMessage(ChatMessageGui *message, ChatGui *chatGui, QString text, QVariantList files);
+	Q_INVOKABLE static void forwardMessageTo(ChatMessageGui *message, ChatGui *chatGui);
+
 	Q_INVOKABLE static void sendVoiceRecordingMessage(RecorderGui *recorderGui, ChatGui *chatGui);
 	Q_INVOKABLE static QString getEphemeralFormatedTime(int selectedTime);
 

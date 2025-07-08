@@ -21,6 +21,7 @@ Control.Control {
     property bool isRemoteMessage: chatMessage? chatMessage.core.isRemoteMessage : false
     property bool isFromChatGroup: chatMessage? chatMessage.core.isFromChatGroup : false
     property bool isReply: chatMessage? chatMessage.core.isReply : false
+    property bool isForward: chatMessage? chatMessage.core.isForward : false
     property string replyText: chatMessage? chatMessage.core.replyText : false
     property var msgState: chatMessage ? chatMessage.core.messageState : LinphoneEnums.ChatMessageState.StateIdle
     hoverEnabled: true
@@ -34,6 +35,7 @@ Control.Control {
     signal showReactionsForMessageRequested()
     signal showImdnStatusForMessageRequested()
     signal replyToMessageRequested()
+    signal forwardMessageRequested()
 
     background: Item {
         anchors.fill: parent
@@ -60,6 +62,28 @@ Control.Control {
             font {
                 pixelSize: Typography.p4.pixelSize
                 weight: Typography.p4.weight
+            }
+        }
+        RowLayout {
+            id: forwardLayout
+            spacing: Math.round(8 * DefaultStyle.dp)
+            visible: mainItem.isForward
+            Layout.leftMargin: mainItem.isFromChatGroup ? Math.round(9 * DefaultStyle.dp) + avatar.width : 0
+            Layout.alignment: mainItem.isRemoteMessage ? Qt.AlignLeft: Qt.AlignRight
+            EffectImage {
+                imageSource: AppIcons.forward
+                colorizationColor: DefaultStyle.main2_500main
+                Layout.preferredWidth: Math.round(12 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(12 * DefaultStyle.dp)
+            }
+            Text {
+                //: Forwarded
+                text: qsTr("chat_message_forwarded")
+                color: DefaultStyle.main2_600
+                font {
+                    pixelSize: Typography.p4.pixelSize
+                    weight: Typography.p4.weight
+                }
             }
         }
         RowLayout {
@@ -374,6 +398,18 @@ Control.Control {
                                 if (success) UtilsCpp.showInformationPopup(qsTr("chat_message_copied_to_clipboard_title"),
                                                 //: "to clipboard"
                                                 qsTr("chat_message_copied_to_clipboard_toast"))
+                                optionsMenu.close()
+                            }
+                        }
+                        IconLabelButton {
+                            inverseLayout: true
+                            //: Forward
+                            text: qsTr("chat_message_forward")
+                            icon.source: AppIcons.forward
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                            onClicked: {
+                                mainItem.forwardMessageRequested()
                                 optionsMenu.close()
                             }
                         }
