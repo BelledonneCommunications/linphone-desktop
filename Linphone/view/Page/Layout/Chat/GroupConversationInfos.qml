@@ -18,6 +18,7 @@ ColumnLayout {
     signal manageParticipantsRequested()
     signal ephemeralSettingsRequested()
 	signal showSharedFilesRequested(bool showMedias)
+	signal searchInHistoryRequested()
 
 	spacing: 0
 
@@ -144,7 +145,6 @@ ColumnLayout {
 			button.onClicked: parentView.groupCall()
 		}
 		LabelButton {
-			visible: !SettingsCpp.disableMeetingsFeature
 			text.Layout.fillWidth: true
 			text.horizontalAlignment: Text.AlignHCenter
 			text.wrapMode: Text.Wrap
@@ -153,11 +153,11 @@ ColumnLayout {
 			Layout.maximumWidth: Math.round(130 * DefaultStyle.dp)
 			button.icon.width: Math.round(24 * DefaultStyle.dp)
 			button.icon.height: Math.round(24 * DefaultStyle.dp)
-			button.icon.source: AppIcons.videoconference
-			//: "Réunion"
-			label: qsTr("group_infos_meeting")
+			button.icon.source: AppIcons.search
+			//: "Rechercher"
+			label: qsTr("group_infos_search")
 			button.onClicked: {
-				UtilsCpp.getMainWindow().scheduleMeeting(mainItem.chatCore.title, mainItem.chatCore.participantsAddresses)
+				mainItem.searchInHistoryRequested()
 			}
 		}
 	}
@@ -232,6 +232,7 @@ ColumnLayout {
 		
 			ChatInfoActionsGroup {
 				Layout.topMargin: Math.round(17 * DefaultStyle.dp)
+				//: Other actions
 				title: qsTr("group_infos_other_actions")
 				entries: [
 					{
@@ -245,8 +246,20 @@ ColumnLayout {
 						}
 					},
 					{
+						visible: !SettingsCpp.disableMeetingsFeature,
+						icon: AppIcons.videoconference,
+						color: DefaultStyle.main2_600,
+						showRightArrow: false,
+						//: Schedule a meeting
+						text: qsTr("group_infos_meeting"),
+						action: function() {
+							UtilsCpp.getMainWindow().scheduleMeeting(mainItem.chatCore.title, mainItem.chatCore.participantsAddresses)
+						}
+					},
+					{
 						icon: AppIcons.signOut,
 						visible: !mainItem.chatCore.isReadOnly,
+						//: Leave chat room
 						text: qsTr("group_infos_leave_room"),
 						color: DefaultStyle.main2_600,
 						showRightArrow: false,
@@ -266,6 +279,7 @@ ColumnLayout {
 					{
 						icon: AppIcons.trashCan,
 						visible: true,
+						//: Delete history
 						text: qsTr("group_infos_delete_history"),
 						color: DefaultStyle.danger_500main,
 						showRightArrow: false,

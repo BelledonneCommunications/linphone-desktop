@@ -5,9 +5,6 @@ import QtQuick.Controls.Basic as Control
 import Qt.labs.qmlmodels
 import Linphone
 import UtilsCpp
-import SettingsCpp
-import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
-import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
     id: mainItem
@@ -19,6 +16,41 @@ ListView {
     signal showImdnStatusForMessageRequested(ChatMessageGui chatMessage)
     signal replyToMessageRequested(ChatMessageGui chatMessage)
     signal forwardMessageRequested(ChatMessageGui chatMessage)
+    signal requestHighlight(int indexToHighlight)
+
+    property string filterText
+    onFilterTextChanged: {
+        if (filterText === "") return
+        eventLogProxy.filterText = filterText
+        var indexVisible = indexAt(contentX, contentY)
+        var found = eventLogProxy.findIndexCorrespondingToFilter(indexVisible)
+        if (found !== -1) {
+            currentIndex = found
+            positionViewAtIndex(found, ListView.Center)
+            requestHighlight(found)
+        } else {
+            //: Find message
+            UtilsCpp.showInformationPopup(qsTr("popup_info_find_message_title"),
+            //: No result found
+            qsTr("info_popup_no_result_message"), false)
+        }
+    }
+    signal findIndexWithFilter(bool goingBackward)
+    onFindIndexWithFilter: (goingBackward) => {
+        var nextIndex = eventLogProxy.findIndexCorrespondingToFilter(currentIndex, goingBackward)
+        if (nextIndex !== -1 && nextIndex !== currentIndex) {
+            currentIndex = nextIndex
+            positionViewAtIndex(nextIndex, ListView.Center)
+            requestHighlight(nextIndex)
+        } else if (currentIndex !== -1) {
+            //: Find message
+            UtilsCpp.showInformationPopup(qsTr("popup_info_find_message_title"),
+            //: First result reached
+            goingBackward ? qsTr("info_popup_first_result_message")
+            //: Last result reached
+            : qsTr("info_popup_last_result_message"), false)
+        }
+    }
 
     Component.onCompleted: {
         Qt.callLater(function() {
@@ -57,6 +89,7 @@ ListView {
         id: eventLogProxy
         chatGui: mainItem.chat
         // scroll when in view and message inserted
+        filterText: mainItem.filterText
         onEventInserted: (index, gui) => {
             if (!mainItem.visible) return
             mainItem.positionViewAtIndex(index, ListView.End)
@@ -132,6 +165,7 @@ ListView {
                 }
                 chatMessage: modelData
                 chat: mainItem.chat
+                searchedTextPart: mainItem.filterText
                 maxWidth: Math.round(mainItem.width * (3/4))
                 onVisibleChanged: {
                     if (visible) {
@@ -152,6 +186,14 @@ ListView {
                 onShowImdnStatusForMessageRequested: mainItem.showImdnStatusForMessageRequested(modelData)
                 onReplyToMessageRequested: mainItem.replyToMessageRequested(modelData)
                 onForwardMessageRequested: mainItem.forwardMessageRequested(modelData)
+                Connections {
+                    target: mainItem
+                    function onRequestHighlight(indexToHighlight) {
+                        if (indexToHighlight === index) {
+                            requestHighlight()
+                        }
+                    }
+                }
             }
         }
 
@@ -193,9 +235,9 @@ ListView {
                 property bool showTopMargin: !header.visible && index == 0
                 width: mainItem.width
                 //height: 40 * DefaultStyle.dp
-                height: (showTopMargin ? 30 : 0 * DefaultStyle.dp) + eventItem.height
+                height: (showTopMargin ? 30 : 0 * DefaultStyle.dp) + ephemeralEventItem.height
                 EphemeralEvent {
-                    id: eventItem
+                    id: ephemeralEventItem
                     anchors.top: parent.top
                     anchors.topMargin: showTopMargin ? 30 : 0 * DefaultStyle.dp
                     eventLogGui: modelData

@@ -18,6 +18,7 @@ ColumnLayout {
 	spacing: 0
 	signal ephemeralSettingsRequested()
 	signal showSharedFilesRequested()
+	signal searchInHistoryRequested()
 
 
 	Avatar {
@@ -102,7 +103,7 @@ ColumnLayout {
 			//: "Rechercher"
 			label: qsTr("one_one_infos_search")
 			button.onClicked: {
-				//TODO
+				mainItem.searchInHistoryRequested()
 			}
 		}
 	}

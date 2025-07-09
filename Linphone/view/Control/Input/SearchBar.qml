@@ -66,7 +66,7 @@ FocusScope {
 		anchors.verticalCenter: parent.verticalCenter
 		
 		property string searchText
-		
+
 		focus: true
 		placeholderText: mainItem.placeholderText
 		placeholderTextColor: mainItem.placeholderTextColor

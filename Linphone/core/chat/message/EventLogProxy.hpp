@@ -46,6 +46,7 @@ public:
 
 	Q_INVOKABLE EventLogGui *getEventAtIndex(int index);
 	Q_INVOKABLE int findFirstUnreadIndex();
+	Q_INVOKABLE int findIndexCorrespondingToFilter(int startIndex, bool goingBackward = false);
 
 signals:
 	void eventChanged();

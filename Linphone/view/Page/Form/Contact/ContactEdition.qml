@@ -41,38 +41,33 @@ MainRightPanel {
         text: qsTr("contact_editor_dialog_cancel_change_message")
 	}
 
-	headerContent: [
-			Text {
-				anchors.left: parent.left
-                anchors.leftMargin: Math.round(31 * DefaultStyle.dp)
-				anchors.verticalCenter: parent.verticalCenter
-				text: mainItem.title
-				font {
-                    pixelSize: Math.round(20 * DefaultStyle.dp)
-                    weight: Typography.h4.weight
-				}
-			},
-			Button {
-				style: ButtonStyle.noBackground
-				anchors.right: parent.right
-                anchors.rightMargin: Math.round(41 * DefaultStyle.dp)
-				anchors.verticalCenter: parent.verticalCenter
-                width: Math.round(24 * DefaultStyle.dp)
-                height: Math.round(24 * DefaultStyle.dp)
-				icon.source: AppIcons.closeX
-                icon.width: Math.round(24 * DefaultStyle.dp)
-                icon.height: Math.round(24 * DefaultStyle.dp)
-				onClicked: {
-					if (contact.core.isSaved) mainItem.closeEdition('')
-                    else showConfirmationLambdaPopup("", qsTr("contact_editor_dialog_cancel_change_message"), "", function(confirmed) {
-						if (confirmed) {
-							mainItem.contact.core.undo()
-							mainItem.closeEdition('')
-						}
-					})
-				}
+	headerContentItem: RowLayout {
+		Text {
+			text: mainItem.title
+			font {
+				pixelSize: Math.round(20 * DefaultStyle.dp)
+				weight: Typography.h4.weight
 			}
-	]
+		}
+		Item{Layout.fillWidth: true}
+		Button {
+			style: ButtonStyle.noBackground
+			width: Math.round(24 * DefaultStyle.dp)
+			height: Math.round(24 * DefaultStyle.dp)
+			icon.source: AppIcons.closeX
+			icon.width: Math.round(24 * DefaultStyle.dp)
+			icon.height: Math.round(24 * DefaultStyle.dp)
+			onClicked: {
+				if (contact.core.isSaved) mainItem.closeEdition('')
+				else showConfirmationLambdaPopup("", qsTr("contact_editor_dialog_cancel_change_message"), "", function(confirmed) {
+					if (confirmed) {
+						mainItem.contact.core.undo()
+						mainItem.closeEdition('')
+					}
+				})
+			}
+		}
+	}
 
 	content: ContactLayout {
 		anchors.fill: parent

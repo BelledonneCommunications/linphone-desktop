@@ -13,6 +13,7 @@ TextEdit {
 	property ChatMessageContentGui contentGui
 	property ChatGui chatGui: null
 	property string lastTextSelected : ''
+	property string searchedTextPart
 	color: DefaultStyle.main2_700
 	font {
 		pixelSize: (contentGui && UtilsCpp.isOnlyEmojis(contentGui.core.text)) ? Typography.h1.pixelSize : Typography.p1.pixelSize
@@ -27,7 +28,11 @@ TextEdit {
 	
 	property var encodeTextObj: visible ? UtilsCpp.encodeTextToQmlRichFormat(contentGui.core.utf8Text, {}, mainItem.chatGui)
 				  : ''
-	text: encodeTextObj && encodeTextObj.value || ""	
+	text: encodeTextObj 
+		&& (searchedTextPart !== "" 
+			? UtilsCpp.boldTextPart(encodeTextObj.value, searchedTextPart)
+			:  encodeTextObj.value) 
+		|| ""	
 	textFormat: Text.RichText // To supports links and imgs.
 	wrapMode: TextEdit.Wrap
 	

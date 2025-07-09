@@ -17,8 +17,9 @@ RowLayout {
 	property var contactObj: chat ? UtilsCpp.findFriendByAddress(mainItem.chat.core.peerAddress) : null
 	property var contact: contactObj?.value || null
     property CallGui call
-    property alias callHeaderContent: splitPanel.headerContent
+    property alias callHeaderContent: splitPanel.headerContentItem
     property bool replyingToMessage: false
+    property bool showSearchBar: false
     spacing: 0
     enum PanelType { MessageReactions, SharedFiles, Medias, ImdnStatus, ForwardToList, ManageParticipants, EphemeralSettings, None}
     
@@ -61,73 +62,131 @@ RowLayout {
         panelColor: DefaultStyle.grey_0
         header.visible: !mainItem.call
         clip: true
-        headerContent: [
+        header.leftPadding: Math.round(32 * DefaultStyle.dp)
+        header.rightPadding: Math.round(32 * DefaultStyle.dp)
+        header.topPadding: Math.round(6 * DefaultStyle.dp)
+	    header.bottomPadding: mainItem.showSearchBar ? Math.round(3 * DefaultStyle.dp) : Math.round(6 * DefaultStyle.dp)
+
+        headerContentItem: ColumnLayout {
+            anchors.left: parent?.left
+            anchors.leftMargin: mainItem.call ? 0 : Math.round(31 * DefaultStyle.dp)
+            anchors.verticalCenter: parent?.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: Math.round(41 * DefaultStyle.dp)
+            spacing: searchBarLayout.visible ? Math.round(9 * DefaultStyle.dp) : 0
             RowLayout {
-                anchors.left: parent?.left
-                anchors.leftMargin: mainItem.call ? 0 : Math.round(31 * DefaultStyle.dp)
-                anchors.verticalCenter: parent?.verticalCenter
-                spacing: Math.round(12 * DefaultStyle.dp)
-                Avatar {
-                    property var contactObj: mainItem.chat ? UtilsCpp.findFriendByAddress(mainItem.chat?.core.peerAddress) : null
-                    contact: contactObj?.value || null
-                    displayNameVal: contact ? "" : mainItem.chat.core.avatarUri
-                    Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
-                }
-                Text {
-                    text: mainItem.chat?.core.title || ""
-                    color: DefaultStyle.main2_600
-                    Layout.fillWidth: true
-                    maximumLineCount: 1
-                    font {
-                        pixelSize: Typography.h4.pixelSize
-                        weight: Math.round(400 * DefaultStyle.dp)
-                        capitalization: Font.Capitalize
+                RowLayout {
+                    id: chatHeader
+                    spacing: Math.round(12 * DefaultStyle.dp)
+                    Avatar {
+                        property var contactObj: mainItem.chat ? UtilsCpp.findFriendByAddress(mainItem.chat?.core.peerAddress) : null
+                        contact: contactObj?.value || null
+                        displayNameVal: contact ? "" : mainItem.chat.core.avatarUri
+                        Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                    }
+                    Text {
+                        text: mainItem.chat?.core.title || ""
+                        color: DefaultStyle.main2_600
+                        Layout.fillWidth: true
+                        maximumLineCount: 1
+                        font {
+                            pixelSize: Typography.h4.pixelSize
+                            weight: Math.round(400 * DefaultStyle.dp)
+                            capitalization: Font.Capitalize
+                        }
+                    }
+                    EffectImage {
+                        visible: mainItem.chat?.core.muted
+                        Layout.preferredWidth: 20 * DefaultStyle.dp
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.preferredHeight: 20 * DefaultStyle.dp
+                        colorizationColor: DefaultStyle.main1_500_main
+                        imageSource: AppIcons.bellSlash
                     }
                 }
-				EffectImage {
-					visible: mainItem.chat?.core.muted
-					Layout.preferredWidth: 20 * DefaultStyle.dp
-					Layout.alignment: Qt.AlignVCenter
-					Layout.preferredHeight: 20 * DefaultStyle.dp
-					colorizationColor: DefaultStyle.main1_500_main
-					imageSource: AppIcons.bellSlash
-				}
-            },
-            RowLayout {
-                anchors.right: parent.right
-                anchors.rightMargin: Math.round(41 * DefaultStyle.dp)
-                anchors.verticalCenter: parent.verticalCenter
-                BigButton {
-                    style: ButtonStyle.noBackground
-                    icon.source: AppIcons.phone
-					onPressed: {
-						if (mainItem.chat.core.isGroupChat) {
-							mainItem.groupCall()
-						} else {
-							mainItem.oneOneCall(false)
-						}
-					}
-                }
-                BigButton {
-                    style: ButtonStyle.noBackground
-                    icon.source: AppIcons.videoCamera
-                    visible: !mainItem.chat.core.isGroupChat
-					onPressed: mainItem.oneOneCall(true)
-                }
-                BigButton {
-                    id: detailsPanelButton
-                    style: ButtonStyle.noBackground
-                    checkable: true
-                    checkedImageColor: DefaultStyle.main1_500_main
-                    icon.source: AppIcons.info
-                    checked: detailsPanel.visible
-                    onCheckedChanged: {
-                        detailsPanel.visible = checked
+                Item{Layout.fillWidth: true}
+                RowLayout {
+                    spacing: Math.round(16 * DefaultStyle.dp)
+                    RoundButton {
+                        style: ButtonStyle.noBackground
+                        icon.source: AppIcons.phone
+                        onPressed: {
+                            if (mainItem.chat.core.isGroupChat) {
+                                mainItem.groupCall()
+                            } else {
+                                mainItem.oneOneCall(false)
+                            }
+                        }
+                    }
+                    RoundButton {
+                        style: ButtonStyle.noBackground
+                        icon.source: AppIcons.videoCamera
+                        visible: !mainItem.chat.core.isGroupChat
+                        onPressed: mainItem.oneOneCall(true)
+                    }
+                    RoundButton {
+                        id: detailsPanelButton
+                        style: ButtonStyle.noBackground
+                        checkable: true
+                        checkedImageColor: DefaultStyle.main1_500_main
+                        icon.source: AppIcons.info
+                        checked: detailsPanel.visible
+                        onCheckedChanged: {
+                            detailsPanel.visible = checked
+                        }
                     }
                 }
             }
-        ]
+            RowLayout {
+                id: searchBarLayout
+                visible: mainItem.showSearchBar
+                onVisibleChanged: {
+                    if(!visible) chatMessagesSearchBar.clearText()
+                    else chatMessagesSearchBar.forceActiveFocus()
+                }
+                spacing: Math.round(50 * DefaultStyle.dp)
+                height: Math.round(65 * DefaultStyle.dp)
+                SearchBar {
+                    id: chatMessagesSearchBar
+                    Layout.fillWidth: true
+                    Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
+                    delaySearch: false
+                    Keys.onPressed: (event) => {
+                        if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+                            if (chatMessagesListView.filterText !== text) {
+                                chatMessagesListView.filterText = text
+                            } else {
+                                if (event.modifiers & Qt.ShiftModifier) {
+                                    chatMessagesListView.findIndexWithFilter(true)
+                                } else {
+                                    chatMessagesListView.findIndexWithFilter(false)
+                                }
+                            }
+                        }
+                    }
+                }
+                RowLayout {
+                    spacing: Math.round(10 * DefaultStyle.dp)
+                    RoundButton {
+                        icon.source: AppIcons.upArrow
+                        style: ButtonStyle.noBackground
+                        onClicked: chatMessagesListView.findIndexWithFilter(true)
+                    }
+                    RoundButton {
+                        icon.source: AppIcons.downArrow
+                        style: ButtonStyle.noBackground
+                        onClicked: chatMessagesListView.findIndexWithFilter(false)
+                    }
+                }
+                RoundButton {
+                    icon.source: AppIcons.closeX
+                    Layout.rightMargin: Math.round(20 * DefaultStyle.dp)
+                    onClicked: mainItem.showSearchBar = false
+                    style: ButtonStyle.noBackground
+                }
+            }
+        }
 
         content: Control.SplitView {
             anchors.fill: parent
@@ -473,6 +532,10 @@ RowLayout {
                 onShowSharedFilesRequested: (showMedias) => {
                     contentLoader.panelType = showMedias ? SelectedChatView.PanelType.SharedFiles : SelectedChatView.PanelType.Medias
                 }
+                onSearchInHistoryRequested: {
+                    mainItem.showSearchBar = true
+                    detailsPanel.visible = false
+                }
 			}
 		}
 
@@ -485,6 +548,10 @@ RowLayout {
                     contentLoader.panelType = showMedias ? SelectedChatView.PanelType.SharedFiles : SelectedChatView.PanelType.Medias
                 }
 				onEphemeralSettingsRequested: contentLoader.panelType = SelectedChatView.PanelType.EphemeralSettings
+                onSearchInHistoryRequested: {
+                    mainItem.showSearchBar = true
+                    detailsPanel.visible = false
+                }
 			}
 		}
 
@@ -545,7 +612,7 @@ RowLayout {
         Component {
             id: forwardToListsComponent
             MessageInfosLayout {
-                //: Transfer to...
+                //: Forward to…
                 title: qsTr("forward_to_title")
                 // width: detailsPanel.width
                 // RectangleTest{anchors.fill: parent}

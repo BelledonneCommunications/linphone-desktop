@@ -16,6 +16,7 @@ Control.Control {
 
     property ChatMessageGui chatMessage
     property ChatGui chat
+    property string searchedTextPart
     property string ownReaction: chatMessage? chatMessage.core.ownReaction : ""
     property string fromAddress: chatMessage? chatMessage.core.fromAddress : ""
     property bool isRemoteMessage: chatMessage? chatMessage.core.isRemoteMessage : false
@@ -36,6 +37,17 @@ Control.Control {
     signal showImdnStatusForMessageRequested()
     signal replyToMessageRequested()
     signal forwardMessageRequested()
+
+    Timer {
+        id: hightlightTimer
+        interval: 1000
+        repeat: false
+        onTriggered: highlightRectangle.opacity = 0
+    }
+    function requestHighlight() {
+        highlightRectangle.opacity = 0.8
+        hightlightTimer.start()
+    }
 
     background: Item {
         anchors.fill: parent
@@ -214,6 +226,21 @@ Control.Control {
                             height: Math.round(parent.height / 4)
                             color: mainItem.backgroundColor
                         }
+                        Rectangle {
+                            id: highlightRectangle
+                            anchors.fill: parent
+                            radius: Math.round(16 * DefaultStyle.dp)
+                            color: Qt.lighter(mainItem.backgroundColor, 2)
+                            border.color: mainItem.backgroundColor
+                            border.width: Math.round(2 * DefaultStyle.dp)
+                            opacity: 0
+                            Behavior on opacity {
+                                NumberAnimation {
+                                    duration: 300
+                                    easing.type: Easing.InOutQuad
+                                }
+                            }
+                        }
                     }
                     contentItem: ColumnLayout {
                         spacing: Math.round(5 * DefaultStyle.dp)
@@ -222,6 +249,7 @@ Control.Control {
                             Layout.fillWidth: true
                             Layout.fillHeight: true
                             chatGui: mainItem.chat
+                            searchedTextPart: mainItem.searchedTextPart
                             chatMessageGui: mainItem.chatMessage
                             onMouseEvent: (event) => {
                                 mainItem.handleDefaultMouseEvent(event)

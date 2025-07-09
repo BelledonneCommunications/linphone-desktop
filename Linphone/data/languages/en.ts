@@ -1769,79 +1769,79 @@
 <context>
     <name>ChatMessage</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="388"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="416"/>
         <source>chat_message_copy_selection</source>
         <extracomment>&quot;Copy selection&quot;</extracomment>
         <translation>Copy selection</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="390"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="418"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="398"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="426"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
         <translation>Copied</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="400"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="428"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
         <translation>in clipboard</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="114"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="126"/>
         <source>chat_message_remote_replied</source>
         <extracomment>%1 replied</extracomment>
         <translation>%1 replied to</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="407"/>
-        <source>chat_message_forward</source>
-        <extracomment>Forward</extracomment>
-        <translation>Forward</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="112"/>
-        <source>chat_message_remote_replied_to</source>
-        <extracomment>%1 replied to %2</extracomment>
-        <translation>%1 replied to %2</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="81"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="93"/>
         <source>chat_message_forwarded</source>
         <extracomment>Forwarded</extracomment>
         <translation>Forwarded</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="117"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="124"/>
+        <source>chat_message_remote_replied_to</source>
+        <extracomment>%1 replied to %2</extracomment>
+        <translation>%1 replied to %2</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="129"/>
         <source>chat_message_user_replied_to</source>
         <extracomment>You replied to %1</extracomment>
         <translation>You replied to %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="119"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="131"/>
         <source>chat_message_user_replied</source>
         <extracomment>You replied</extracomment>
         <translation>You replied</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="363"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="391"/>
         <source>chat_message_reception_info</source>
         <extracomment>&quot;Reception info&quot;</extracomment>
         <translation>Reception info</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="375"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="403"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
         <translation>Reply</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="424"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="435"/>
+        <source>chat_message_forward</source>
+        <extracomment>Forward</extracomment>
+        <translation>Forward</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="452"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Delete</translation>
@@ -1996,13 +1996,38 @@ Error</extracomment>
 <context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="93"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="33"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="47"/>
+        <source>popup_info_find_message_title</source>
+        <extracomment>Find message</extracomment>
+        <translation>Find message</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="35"/>
+        <source>info_popup_no_result_message</source>
+        <extracomment>No result found</extracomment>
+        <translation>No result found</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="49"/>
+        <source>info_popup_first_result_message</source>
+        <extracomment>First result reached</extracomment>
+        <translation>First result reached</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="51"/>
+        <source>info_popup_last_result_message</source>
+        <extracomment>Last result reached</extracomment>
+        <translation>Last result reached</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="126"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation>End to end encrypted chat</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="103"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="136"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Les messages de cette conversation sont chiffrés de bout 
  en bout. Seul votre correspondant peut les déchiffrer.</extracomment>
@@ -2010,7 +2035,7 @@ Error</extracomment>
 Only your correspondent can decrypt them.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="233"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="275"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 is writing…</translation>
@@ -2209,74 +2234,74 @@ Only your correspondent can decrypt them.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="41"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="67"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="62"/>
         <source>contact_editor_dialog_cancel_change_message</source>
         <extracomment>&quot;Les changements seront annulés. Souhaitez-vous continuer ?&quot;</extracomment>
         <translation>Changes will be discarded. Do you wish to continue?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="89"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="84"/>
         <source>contact_editor_mandatory_first_name_not_filled</source>
         <extracomment>&quot;Veuillez saisir un prénom&quot;</extracomment>
         <translation>Please enter a first name</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="93"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="88"/>
         <source>contact_editor_mandatory_address_or_number_not_filled</source>
         <extracomment>&quot;Veuillez saisir une adresse ou un numéro de téléphone&quot;</extracomment>
         <translation>Please enter a SIP address or phone number</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="110"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="105"/>
         <source>contact_editor_add_image_label</source>
         <extracomment>&quot;Ajouter une image&quot;</extracomment>
         <translation>Add an image</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="128"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="123"/>
         <source>contact_details_edit</source>
         <extracomment>&quot;Modifier&quot;</extracomment>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="153"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="148"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="212"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="207"/>
         <source>contact_editor_first_name</source>
         <extracomment>&quot;Prénom&quot;</extracomment>
         <translation>First name</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="228"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="223"/>
         <source>contact_editor_last_name</source>
         <extracomment>&quot;Nom&quot;</extracomment>
         <translation>Last name</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="241"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="236"/>
         <source>contact_editor_company</source>
         <extracomment>&quot;Entreprise&quot;</extracomment>
         <translation>Company</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="254"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="249"/>
         <source>contact_editor_job_title</source>
         <extracomment>&quot;Fonction&quot;</extracomment>
         <translation>Job</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="304"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="332"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="299"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="327"/>
         <source>sip_address</source>
         <translation>SIP address</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="398"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="420"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="393"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="415"/>
         <source>phone</source>
         <extracomment>&quot;Téléphone&quot;</extracomment>
         <translation>Phone</translation>
@@ -3063,32 +3088,38 @@ Expiration : %1</translation>
 <context>
     <name>GroupConversationInfos</name>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="143"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="144"/>
         <source>group_infos_call</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="128"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="129"/>
         <source>group_infos_mute</source>
         <translation>Mute</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="128"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="129"/>
         <source>group_infos_unmute</source>
         <extracomment>&quot;Sourdine&quot;</extracomment>
         <translation>Unmute</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="158"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="254"/>
         <source>group_infos_meeting</source>
-        <extracomment>&quot;Réunion&quot;</extracomment>
-        <translation>Meeting</translation>
+        <extracomment>Schedule a meeting</extracomment>
+        <translation>Schedule a meeting</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="169"/>
         <source>group_infos_participants</source>
         <translation>Participants (%1)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="158"/>
+        <source>group_infos_search</source>
+        <extracomment>&quot;Rechercher&quot;</extracomment>
+        <translation>Search</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="206"/>
@@ -3109,50 +3140,53 @@ Expiration : %1</translation>
         <translation>Shared documents</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="235"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="236"/>
         <source>group_infos_other_actions</source>
+        <extracomment>Other actions</extracomment>
         <translation>Other actions</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="240"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="241"/>
         <source>group_infos_enable_ephemerals</source>
         <translation>Enable ephemeral messages</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="240"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="241"/>
         <source>group_infos_ephemerals</source>
         <translation>Ephemeral messages : </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="269"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="283"/>
         <source>group_infos_delete_history</source>
+        <extracomment>Delete history</extracomment>
         <translation>Delete history</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="274"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="288"/>
         <source>group_infos_delete_history_toast_title</source>
         <extracomment>Delete history ?</extracomment>
         <translation>Delete history ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="276"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="290"/>
         <source>group_infos_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation>All the messages will be removed from the chat room. Do you want to continue ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="250"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="263"/>
         <source>group_infos_leave_room</source>
+        <extracomment>Leave chat room</extracomment>
         <translation>Leave Chat Room</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="255"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="268"/>
         <source>group_infos_leave_room_toast_title</source>
         <extracomment>Leave Chat Room ?</extracomment>
         <translation>Leave Chat Room ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="257"/>
+        <location filename="../../view/Page/Layout/Chat/GroupConversationInfos.qml" line="270"/>
         <source>group_infos_leave_room_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation>All the messages will be removed from the chat room. Do you want to continue ?</translation>
@@ -4249,82 +4283,82 @@ Expiration : %1</translation>
 <context>
     <name>OneOneConversationInfos</name>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="73"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="74"/>
         <source>one_one_infos_call</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Call</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="87"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="88"/>
         <source>one_one_infos_mute</source>
         <translation>Mute</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="87"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="88"/>
         <source>one_one_infos_unmute</source>
         <extracomment>&quot;Sourdine&quot;</extracomment>
         <translation>Unmute</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="103"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="104"/>
         <source>one_one_infos_search</source>
         <extracomment>&quot;Rechercher&quot;</extracomment>
         <translation>Search</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="114"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="115"/>
         <source>one_one_infos_media_docs</source>
         <translation>Medias &amp; documents</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="119"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="120"/>
         <source>one_one_infos_shared_media</source>
         <translation>Shared medias</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="129"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="130"/>
         <source>one_one_infos_shared_docs</source>
         <translation>Shared documents</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="143"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="144"/>
         <source>one_one_infos_other_actions</source>
         <translation>Other actions</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="162"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="163"/>
         <source>one_one_infos_enable_ephemerals</source>
         <translation>Enable ephemeral messages</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="162"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="163"/>
         <source>one_one_infos_ephemerals</source>
         <translation>Ephemeral messages : </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="172"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="173"/>
         <source>one_one_infos_delete_history</source>
         <translation>Delete history</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="177"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="178"/>
         <source>one_one_infos_delete_history_toast_title</source>
         <extracomment>Delete history ?</extracomment>
         <translation>Delete history ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="179"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="180"/>
         <source>one_one_infos_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation>All the messages will be removed from the chat room. Do you want to continue ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="148"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="149"/>
         <source>one_one_infos_open_contact</source>
         <translation>Show contact</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="148"/>
+        <location filename="../../view/Page/Layout/Chat/OneOneConversationInfos.qml" line="149"/>
         <source>one_one_infos_create_contact</source>
         <translation>Create contact</translation>
     </message>
@@ -4855,36 +4889,36 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>SelectedChatView</name>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="37"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="38"/>
         <source>chat_view_group_call_toast_message</source>
         <translation>Start a group call ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="317"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="376"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
         <translation>Reply to %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="518"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="585"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation>Shared medias</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="520"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="587"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation>Shared documents</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="549"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="616"/>
         <source>forward_to_title</source>
-        <extracomment>Transfer to...</extracomment>
-        <translation>Transfer to…</translation>
+        <extracomment>Forward to…</extracomment>
+        <translation>Froward to…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="581"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="650"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Conversations</translation>

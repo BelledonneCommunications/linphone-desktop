@@ -43,7 +43,7 @@ ColumnLayout {
 
                     Item {
                         Layout.fillWidth: true
-                        Layout.preferredHeight: Math.round(56 * DefaultStyle.dp)
+                        Layout.preferredHeight: visible ? Math.round(56 * DefaultStyle.dp) : 0
                         visible: modelData.visible
 
                         RowLayout {

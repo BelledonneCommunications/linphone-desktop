@@ -20,6 +20,7 @@ ColumnLayout {
 	property string selectedText
 	
 	property color textColor
+	property string searchedTextPart
 	
 	property int fileBorderWidth : 0
 	
@@ -89,6 +90,7 @@ ColumnLayout {
 			// height: implicitHeight
 			contentGui: modelData
 			chatGui: mainItem.chatGui
+			searchedTextPart: mainItem.searchedTextPart
 			onLastTextSelectedChanged: mainItem.selectedText = selectedText
 			// onRightClicked: mainItem.rightClicked()
 		}

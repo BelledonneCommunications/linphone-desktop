@@ -8,28 +8,36 @@ import UtilsCpp 1.0
 ColumnLayout {
 	id: mainItem
 	property color panelColor: DefaultStyle.grey_100
-	property alias headerContent: rightPanelHeader.children
+	property alias headerContentItem: rightPanelHeader.contentItem
 	property alias content: rightPanelContent.children
 	property alias header: rightPanelHeader
 	spacing: 0
 
-	Item {
-		Layout.preferredHeight: Math.round(57 * DefaultStyle.dp)
+	Control.Control {
+		id: rightPanelHeader
 		Layout.fillWidth: true
 		z: rightPanelContent.z + 1
-		Rectangle {
-			id: rightPanelHeader
+		topPadding: Math.round(30 * DefaultStyle.dp)
+		bottomPadding: Math.round(24 * DefaultStyle.dp)
+		leftPadding: Math.round(32 * DefaultStyle.dp)
+		rightPadding: Math.round(32 * DefaultStyle.dp)
+
+		background: Item {
 			anchors.fill: parent
-			color: DefaultStyle.grey_0
-		}
-		MultiEffect {
-			anchors.fill: rightPanelHeader
-			source: rightPanelHeader
-			shadowEnabled: true
-			shadowColor: DefaultStyle.grey_1000
-			shadowBlur: 1
-			shadowOpacity: 0.05
-			shadowVerticalOffset: Math.round(10 * DefaultStyle.dp)
+			Rectangle {
+				id: bg
+				anchors.fill: parent
+				color: DefaultStyle.grey_0
+			}
+			MultiEffect {
+				anchors.fill: bg
+				source: bg
+				shadowEnabled: true
+				shadowColor: DefaultStyle.grey_1000
+				shadowBlur: 1
+				shadowOpacity: 0.05
+				shadowVerticalOffset: Math.round(10 * DefaultStyle.dp)
+			}
 		}
 	}
 	Rectangle {

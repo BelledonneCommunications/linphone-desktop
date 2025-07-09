@@ -94,10 +94,26 @@ int EventLogProxy::findFirstUnreadIndex() {
 	return std::max(0, getCount() - 1);
 }
 
+int EventLogProxy::findIndexCorrespondingToFilter(int startIndex, bool goingBackward) {
+	auto filter = getFilterText();
+	if (filter.isEmpty()) return startIndex;
+	int endIndex = goingBackward ? 0 : getCount() - 1;
+	startIndex = goingBackward ? startIndex - 1 : startIndex + 1;
+	for (int i = startIndex; (goingBackward ? i >= 0 : i < getCount() - 1); (goingBackward ? --i : ++i)) {
+		auto eventLog = getItemAt<SortFilterList, EventLogList, EventLogCore>(i);
+		if (!eventLog) continue;
+		if (auto message = eventLog->getChatMessageCore()) {
+			auto text = message->getText();
+			int regexIndex = text.indexOf(filter, 0, Qt::CaseInsensitive);
+			if (regexIndex != -1) return i;
+		}
+	}
+	return -1;
+}
+
 bool EventLogProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-	//	auto l = getItemAtSource<EventLogList, ChatMessageCore>(sourceRow);
-	//	return l != nullptr;
-	return true;
+	auto l = getItemAtSource<EventLogList, EventLogCore>(sourceRow);
+	return l != nullptr;
 }
 
 bool EventLogProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
