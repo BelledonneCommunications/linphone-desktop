@@ -35,12 +35,13 @@
 #include <linphone++/linphone.hh>
 
 class ChatMessageCore;
+class ChatMessageGui;
 
 class EventLogCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
 	Q_PROPERTY(LinphoneEnums::EventLogType type MEMBER mEventLogType CONSTANT)
-	Q_PROPERTY(ChatMessageCore *chatMessage READ getChatMessageCorePointer CONSTANT)
+	Q_PROPERTY(ChatMessageGui *chatMessageGui READ getChatMessageGui CONSTANT)
 	// Q_PROPERTY(NotifyCore *notification MEMBER mNotifyCore CONSTANT)
 	Q_PROPERTY(CallHistoryCore *callLog READ getCallHistoryCorePointer CONSTANT)
 	Q_PROPERTY(bool important MEMBER mImportant CONSTANT)
@@ -55,6 +56,7 @@ public:
 	void setSelf(QSharedPointer<EventLogCore> me);
 	QString getEventLogId();
 	QSharedPointer<ChatMessageCore> getChatMessageCore();
+	ChatMessageGui *getChatMessageGui();
 	QSharedPointer<CallHistoryCore> getCallHistoryCore();
 	bool isHandled() const {
 		return mHandled;

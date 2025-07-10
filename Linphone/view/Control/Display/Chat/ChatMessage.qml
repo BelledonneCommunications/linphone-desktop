@@ -37,6 +37,9 @@ Control.Control {
     signal showImdnStatusForMessageRequested()
     signal replyToMessageRequested()
     signal forwardMessageRequested()
+    signal endOfVoiceRecordingReached()
+    signal requestAutoPlayVoiceRecording()
+    onRequestAutoPlayVoiceRecording: chatBubbleContent.requestAutoPlayVoiceRecording()
 
     Timer {
         id: hightlightTimer
@@ -254,6 +257,7 @@ Control.Control {
                             onMouseEvent: (event) => {
                                 mainItem.handleDefaultMouseEvent(event)
                             }
+                            onEndOfVoiceRecordingReached: mainItem.endOfVoiceRecordingReached()
                         }
                         RowLayout {
                             Layout.preferredHeight: childrenRect.height

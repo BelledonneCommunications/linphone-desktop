@@ -71,6 +71,7 @@ signals:
 	bool lOpen();
 	void lPause();
 	bool lPlay();
+	bool lRestart();
 	void lStop(bool force = false);
 	void lSeek(int offset);
 	void lRefreshPosition();
@@ -79,6 +80,7 @@ signals:
 	void playing();
 	void stopped();
 	void errorChanged(QString error);
+	void eofReached();
 
 	void sourceChanged(const QString &source);
 	void playbackStateChanged(LinphoneEnums::PlaybackState playbackState);

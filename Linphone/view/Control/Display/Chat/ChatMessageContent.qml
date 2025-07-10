@@ -17,6 +17,8 @@ ColumnLayout {
 	signal lastSelectedTextChanged(string selectedText)
 	// signal conferenceIcsCopied()
 	signal mouseEvent(MouseEvent event)
+	signal endOfVoiceRecordingReached()
+	signal requestAutoPlayVoiceRecording()
 	property string selectedText
 	
 	property color textColor
@@ -36,11 +38,19 @@ ColumnLayout {
 			chatMessageGui: mainItem.chatMessageGui
 		}
 		delegate: ChatAudioContent {
+			id: audioContent
 			// Layout.fillWidth: true
 			width: Math.round(269 * DefaultStyle.dp)
 			height: Math.round(48 * DefaultStyle.dp)
 			Layout.preferredHeight: height
 			chatMessageContentGui: modelData
+			onEndOfFileReached: mainItem.endOfVoiceRecordingReached()
+			Connections {
+				target: mainItem
+				function onRequestAutoPlayVoiceRecording() {
+					audioContent.requestPlaying()
+				}
+			}
 			// width: conferenceList.width
 			// onMouseEvent: (event) => mainItem.mouseEvent(event)
 		}

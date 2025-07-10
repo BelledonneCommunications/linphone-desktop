@@ -30,6 +30,7 @@ SoundPlayerGui::SoundPlayerGui(QObject *parent) : QObject(parent) {
 	if (mCore) connect(mCore.get(), &SoundPlayerCore::stopped, this, &SoundPlayerGui::stopped);
 	if (mCore) connect(mCore.get(), &SoundPlayerCore::positionChanged, this, &SoundPlayerGui::positionChanged);
 	if (mCore) connect(mCore.get(), &SoundPlayerCore::errorChanged, this, &SoundPlayerGui::errorChanged);
+	if (mCore) connect(mCore.get(), &SoundPlayerCore::eofReached, this, &SoundPlayerGui::eofReached);
 }
 SoundPlayerGui::SoundPlayerGui(QSharedPointer<SoundPlayerCore> core) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);

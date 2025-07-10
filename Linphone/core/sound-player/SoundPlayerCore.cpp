@@ -105,6 +105,9 @@ void SoundPlayerCore::buildInternalPlayer(QSharedPointer<SoundPlayerCore> me) {
 	mSoundPlayerModelConnection->makeConnectToCore(&SoundPlayerCore::lPlay, [this]() {
 		mSoundPlayerModelConnection->invokeToModel([this] { mSoundPlayerModel->play(mSource); });
 	});
+	mSoundPlayerModelConnection->makeConnectToCore(&SoundPlayerCore::lRestart, [this]() {
+		mSoundPlayerModelConnection->invokeToModel([this] { mSoundPlayerModel->play(mSource, true); });
+	});
 	mSoundPlayerModelConnection->makeConnectToCore(&SoundPlayerCore::lSeek, [this](int offset) {
 		mSoundPlayerModelConnection->invokeToModel([this, offset] { mSoundPlayerModel->seek(mSource, offset); });
 	});
@@ -150,6 +153,7 @@ void SoundPlayerCore::handleEof() {
 	if (mForceClose) {
 		mForceClose = false;
 		lStop();
+		emit eofReached();
 	}
 }
 

@@ -10,6 +10,7 @@ import UtilsCpp
 Item {
 	id: mainItem
 	property ChatMessageContentGui chatMessageContentGui
+	// used for creating a voice recording message
 	property var chatMessageObj
 	property ChatMessageGui chatMessage: chatMessageObj && chatMessageObj.value || null
 	property bool isPlaying : soudPlayerLoader.item && soudPlayerLoader.item.core.playbackState === LinphoneEnums.PlaybackState.PlayingState
@@ -19,7 +20,14 @@ Item {
 
 	signal voiceRecordingMessageCreationRequested(RecorderGui recorderGui)
 	signal stopRecording()
-
+	signal endOfFileReached()
+	// auto play if follows a voice recording
+	function requestPlaying() {
+		if(soudPlayerLoader.item) {
+			soudPlayerLoader.item.play(true)
+		}
+	}
+	
 	function createVoiceMessageInChat(chat) {
 		if (recorderLoader.item) {
 			mainItem.chatMessageObj = UtilsCpp.createVoiceRecordingMessage(recorderLoader.item, chat)
@@ -44,10 +52,12 @@ Item {
 			id: soundPlayerGui
 			source: mainItem.chatMessageContentGui && mainItem.chatMessageContentGui.core.filePath
 
-			function play(){
-				if(mainItem.isPlaying){// Pause the play
+			function play(restartIfPlaying){
+				if(mainItem.isPlaying && (restartIfPlaying === undefined || !restartIfPlaying)){// Pause the play
 					soundPlayerGui.core.lPause()
-				}else{// Play the audio
+				} else if (restartIfPlaying) { //Play from scratch
+					soundPlayerGui.core.lRestart()
+				} else {// Play the audio
 					soundPlayerGui.core.lPlay()
 				}
 			}
@@ -66,6 +76,9 @@ Item {
 			onErrorChanged: (error) => {
 				//: Error
 				UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), error, false)
+			}
+			onEofReached: {
+				mainItem.endOfFileReached()
 			}
 		}
 	}

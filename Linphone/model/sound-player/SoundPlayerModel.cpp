@@ -78,8 +78,9 @@ bool SoundPlayerModel::open(QString source) {
 	// return false;
 }
 
-bool SoundPlayerModel::play(QString source) {
+bool SoundPlayerModel::play(QString source, bool fromStart) {
 	if (source == "") return false;
+	if (fromStart) stop();
 	if (!open(source)) {
 		qWarning() << QStringLiteral("Unable to open: `%1`").arg(source);
 		//: Unable to open: `%1`

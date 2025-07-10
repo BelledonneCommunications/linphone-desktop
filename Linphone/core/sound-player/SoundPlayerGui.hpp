@@ -45,6 +45,7 @@ signals:
 	void stopped();
 	void positionChanged();
 	void errorChanged(QString error);
+	void eofReached();
 
 private:
 	DECLARE_ABSTRACT_OBJECT

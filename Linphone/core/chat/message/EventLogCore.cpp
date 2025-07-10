@@ -65,6 +65,10 @@ QString EventLogCore::getEventLogId() {
 QSharedPointer<ChatMessageCore> EventLogCore::getChatMessageCore() {
 	return mChatMessageCore;
 }
+ChatMessageGui *EventLogCore::getChatMessageGui() {
+	return mChatMessageCore ? new ChatMessageGui(mChatMessageCore) : nullptr;
+}
+
 QSharedPointer<CallHistoryCore> EventLogCore::getCallHistoryCore() {
 	return mCallHistoryCore;
 }

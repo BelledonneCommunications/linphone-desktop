@@ -17,6 +17,7 @@ ListView {
     signal replyToMessageRequested(ChatMessageGui chatMessage)
     signal forwardMessageRequested(ChatMessageGui chatMessage)
     signal requestHighlight(int indexToHighlight)
+    signal requestAutoPlayVoiceRecording(int indexToPlay)
 
     property string filterText
     onFilterTextChanged: {
@@ -174,6 +175,11 @@ ListView {
                 }
                 width: mainItem.width
                 property var previousIndex: index - 1
+                property ChatMessageGui nextChatMessage: index >= (mainItem.count - 1) 
+                    ? null 
+                    : eventLogProxy.getEventAtIndex(index+1)
+                        ? eventLogProxy.getEventAtIndex(index+1).core.chatMessageGui
+                        : null
                 property var previousFromAddress: eventLogProxy.getEventAtIndex(index-1)?.core.chatMessage?.fromAddress
                 backgroundColor: isRemoteMessage ? DefaultStyle.main2_100 : DefaultStyle.main1_100
                 isFirstMessage: !previousFromAddress || previousFromAddress !== modelData.core.fromAddress
@@ -186,11 +192,19 @@ ListView {
                 onShowImdnStatusForMessageRequested: mainItem.showImdnStatusForMessageRequested(modelData)
                 onReplyToMessageRequested: mainItem.replyToMessageRequested(modelData)
                 onForwardMessageRequested: mainItem.forwardMessageRequested(modelData)
+                onEndOfVoiceRecordingReached: {
+                    if (nextChatMessage && nextChatMessage.core.isVoiceRecording) mainItem.requestAutoPlayVoiceRecording(index + 1)
+                }
                 Connections {
                     target: mainItem
                     function onRequestHighlight(indexToHighlight) {
                         if (indexToHighlight === index) {
                             requestHighlight()
+                        }
+                    }
+                    function onRequestAutoPlayVoiceRecording(indexToPlay) {
+                        if (indexToPlay === index) {
+                            chatMessageDelegate.requestAutoPlayVoiceRecording()
                         }
                     }
                 }

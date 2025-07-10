@@ -44,7 +44,7 @@ public:
 
 	bool open(QString source);
 	void pause();
-	bool play(QString source);
+	bool play(QString source, bool fromStart = false);
 	void stop(bool force = false);
 	void seek(QString source, int offset);
 
