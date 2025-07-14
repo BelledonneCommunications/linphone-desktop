@@ -81,7 +81,7 @@ RowLayout {
                     Avatar {
                         property var contactObj: mainItem.chat ? UtilsCpp.findFriendByAddress(mainItem.chat?.core.peerAddress) : null
                         contact: contactObj?.value || null
-                        displayNameVal: contact ? "" : mainItem.chat.core.avatarUri
+                        displayNameVal: contact ? "" : mainItem.chat?.core.avatarUri
                         Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
                     }
@@ -97,7 +97,7 @@ RowLayout {
                         }
                     }
                     EffectImage {
-                        visible: mainItem.chat?.core.muted
+                        visible: mainItem.chat?.core.muted || false
                         Layout.preferredWidth: 20 * DefaultStyle.dp
                         Layout.alignment: Qt.AlignVCenter
                         Layout.preferredHeight: 20 * DefaultStyle.dp
@@ -122,7 +122,7 @@ RowLayout {
                     RoundButton {
                         style: ButtonStyle.noBackground
                         icon.source: AppIcons.videoCamera
-                        visible: !mainItem.chat.core.isGroupChat
+                        visible: !mainItem.chat?.core.isGroupChat || false
                         onPressed: mainItem.oneOneCall(true)
                     }
                     RoundButton {
@@ -443,8 +443,8 @@ RowLayout {
             }
             ChatDroppableTextArea {
                 id: messageSender
-                Control.SplitView.preferredHeight: mainItem.chat.core.isReadOnly ? 0 : height
-                Control.SplitView.minimumHeight: mainItem.chat.core.isReadOnly ? 0 : Math.round(79 * DefaultStyle.dp)
+                Control.SplitView.preferredHeight: mainItem.chat?.core.isReadOnly ? 0 : height
+                Control.SplitView.minimumHeight: mainItem.chat?.core.isReadOnly ? 0 : Math.round(79 * DefaultStyle.dp)
                 chat: mainItem.chat
                 onChatChanged: {
                     if (chat) messageSender.text = mainItem.chat.core.sendingText
@@ -513,7 +513,7 @@ RowLayout {
                                 ? forwardToListsComponent
                                 : panelType === SelectedChatView.PanelType.ManageParticipants
                                     ? manageParticipantsComponent
-                                    : mainItem.chat.core.isGroupChat
+                                    : mainItem.chat?.core.isGroupChat
                                         ? groupInfoComponent
                                         : oneToOneInfoComponent
 			active: detailsPanel.visible

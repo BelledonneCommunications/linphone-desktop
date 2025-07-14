@@ -33,6 +33,7 @@
 #include <linphone++/linphone.hh>
 
 class EventLogCore;
+class FriendModel;
 
 class ChatCore : public QObject, public AbstractObject {
 	Q_OBJECT
@@ -140,6 +141,8 @@ public:
 	QVariantList getParticipantsGui() const;
 	QStringList getParticipantsAddresses() const;
 
+	void updateInfo(const std::shared_ptr<linphone::Friend> &updatedFriend, bool isRemoval = false);
+
 signals:
 	// used to close all the notifications when one is clicked
 	void messageOpen();
@@ -208,7 +211,10 @@ private:
 	std::shared_ptr<ChatModel> mChatModel;
 	QSharedPointer<ChatMessageCore> mLastMessage;
 	QList<QSharedPointer<EventLogCore>> mEventLogList;
+	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
+	QSharedPointer<SafeConnection<ChatCore, CoreModel>> mCoreModelConnection;
+	QSharedPointer<SafeConnection<ChatCore, FriendModel>> mFriendModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };

@@ -175,7 +175,7 @@ ListView {
                 id: historyAvatar
                 property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.peerAddress)
                 contact: contactObj?.value || null
-                displayNameVal: contact ? "" : modelData.core.avatarUri
+                displayNameVal: contact ? undefined : modelData.core.avatarUri
                 secured: modelData.core.isEncrypted
                 Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)

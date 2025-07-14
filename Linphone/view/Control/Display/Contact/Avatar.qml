@@ -17,7 +17,7 @@ Loader{
 	property CallGui call: null
 	property bool isConference: false
 	property bool shadowEnabled: true
-	property string _address: account
+	property var _address: account
 		? account.core?.identityAddress || ""
 		: call
 			? call.core.remoteAddress
@@ -26,7 +26,7 @@ Loader{
 				: ''
 	readonly property string address: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_address) : _address
 	property var displayNameObj: UtilsCpp.getDisplayName(_address)
-	property string displayNameVal: account && account.core.displayName
+	property var displayNameVal: account && account.core.displayName
 		? account.core.displayName
 		: contact && contact.core.fullName
 			? contact.core.fullName
@@ -152,7 +152,7 @@ Loader{
 						}
 						EffectImage {
 							id: initialImg
-							visible: initialItem.initials == ''
+							visible: initialItem.initials === ""
 							width: stackView.width/2
 							height: width
 							colorizationColor: DefaultStyle.main2_600

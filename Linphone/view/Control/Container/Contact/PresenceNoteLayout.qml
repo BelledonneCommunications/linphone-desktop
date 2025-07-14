@@ -44,7 +44,7 @@ Rectangle {
         Text {
             font: Typography.p3
             color: DefaultStyle.main2_500main
-            text: mainItem.friendCore.presenceNote
+            text: mainItem.friendCore?.presenceNote || ""
             wrapMode: Text.Wrap
             Layout.fillWidth: true
         }

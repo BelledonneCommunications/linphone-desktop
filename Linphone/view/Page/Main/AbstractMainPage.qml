@@ -192,6 +192,7 @@ FocusScope {
 					id: rightPanelStackView
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					visible: false
 				}
 			}
 		}

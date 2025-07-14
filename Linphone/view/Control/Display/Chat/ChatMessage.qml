@@ -148,7 +148,7 @@ Control.Control {
                     bottomPadding: Math.round(19 * DefaultStyle.dp)
                     leftPadding: Math.round(18 * DefaultStyle.dp)
                     rightPadding: Math.round(18 * DefaultStyle.dp)
-                    width: Math.min(implicitWidth, mainItem.maxWidth - avatar.implicitWidth)
+                    Layout.preferredWidth: Math.min(implicitWidth, mainItem.maxWidth - avatar.implicitWidth)
                     background: Rectangle {
                         anchors.fill: parent
                         color: DefaultStyle.grey_200

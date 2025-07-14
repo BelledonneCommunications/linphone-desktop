@@ -212,8 +212,6 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 
 void Notifier::showNotification(QObject *notification, int timeout) {
 	// Display notification.
-	QMetaObject::invokeMethod(notification, NotificationShowMethodName, Qt::DirectConnection);
-
 	QTimer *timer = new QTimer(notification);
 	timer->setInterval(timeout);
 	timer->setSingleShot(true);

@@ -254,7 +254,7 @@ VariantObject *Utils::haveAccount() {
 void Utils::smartShowWindow(QQuickWindow *window) {
 	if (!window) return;
 	if (window->visibility() == QWindow::Maximized) // Avoid to change visibility mode
-		window->showNormal();
+		window->showMaximized();
 	else window->show();
 	App::getInstance()->setLastActiveWindow(window);
 	window->raise(); // Raise ensure to get focus on Mac

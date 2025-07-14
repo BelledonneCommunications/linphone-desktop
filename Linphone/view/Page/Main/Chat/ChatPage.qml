@@ -25,7 +25,7 @@ AbstractMainPage {
     property bool isRegistered: account ? account.core?.registrationState
                                           == LinphoneEnums.RegistrationState.Ok : false
 
-    property var selectedChatGui
+    property var selectedChatGui: null
     property string remoteAddress
     onRemoteAddressChanged: console.log("ChatPage : remote address changed :", remoteAddress)
     property var remoteChatObj: UtilsCpp.getChatForAddress(remoteAddress)
@@ -40,17 +40,14 @@ AbstractMainPage {
                 listStackView.popToIndex(0)
                 if (listStackView.depth === 0 || listStackView.currentItem.objectName !== "chatListItem") listStackView.push(chatListItem)
             }
-            rightPanelStackView.replace(currentChatComp,
-                                        Control.StackView.Immediate)
-        }
-        else {
-            rightPanelStackView.replace(emptySelection,
-                                        Control.StackView.Immediate)
         }
     }
 
-    rightPanelStackView.initialItem: emptySelection
-    rightPanelStackView.visible: listStackView.currentItem && listStackView.currentItem.objectName === "chatListItem"
+    rightPanelStackView.initialItem: currentChatComp
+    // Only play on the visible property of the right panel as there is only one item pushed
+    // and the sending TextArea must be instantiated only once, otherwise it looses focus
+    // when the chat list order is updated
+    rightPanelStackView.visible: false//listStackView.currentItem && listStackView.currentItem.objectName === "chatListItem" && selectedChatGui !== null
 
     onNoItemButtonPressed: goToNewChat()
 
@@ -334,6 +331,7 @@ AbstractMainPage {
         id: currentChatComp
         FocusScope {
             SelectedChatView {
+                visible: chat != undefined && chat != null
                 anchors.fill: parent
                 chat: mainItem.selectedChatGui || null
                 onChatChanged: if (mainItem.selectedChatGui !== chat) mainItem.selectedChatGui = chat

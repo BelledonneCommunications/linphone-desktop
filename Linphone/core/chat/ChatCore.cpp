@@ -23,6 +23,8 @@
 #include "core/chat/message/content/ChatMessageContentGui.hpp"
 #include "core/friend/FriendCore.hpp"
 #include "core/setting/SettingsCore.hpp"
+#include "model/core/CoreModel.hpp"
+#include "model/friend/FriendModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
@@ -38,7 +40,7 @@ QSharedPointer<ChatCore> ChatCore::create(const std::shared_ptr<linphone::ChatRo
 }
 
 ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObject(nullptr) {
-	lDebug() << "[ChatCore] new" << this;
+	// lDebug() << "[ChatCore] new" << this;
 	mustBeInLinphoneThread(getClassName());
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mLastUpdatedTime = QDateTime::fromSecsSinceEpoch(chatRoom->getLastUpdateTime());
@@ -373,6 +375,15 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		mChatModelConnection->invokeToModel(
 		    [this, index]() { mChatModel->toggleParticipantAdminStatusAtIndex(index); });
 	});
+
+	mCoreModelConnection = SafeConnection<ChatCore, CoreModel>::create(me, CoreModel::getInstance());
+	if (!ToolModel::findFriendByAddress(mPeerAddress))
+		mCoreModelConnection->makeConnectToModel(&CoreModel::friendCreated,
+		                                         [this](std::shared_ptr<linphone::Friend> f) { updateInfo(f); });
+	mCoreModelConnection->makeConnectToModel(&CoreModel::friendUpdated,
+	                                         [this](std::shared_ptr<linphone::Friend> f) { updateInfo(f); });
+	mCoreModelConnection->makeConnectToModel(&CoreModel::friendRemoved,
+	                                         [this](std::shared_ptr<linphone::Friend> f) { updateInfo(f, true); });
 }
 
 QDateTime ChatCore::getLastUpdatedTime() const {
@@ -643,4 +654,48 @@ ChatCore::buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom)
 
 QList<QSharedPointer<ParticipantCore>> ChatCore::getParticipants() const {
 	return mParticipants;
+}
+
+void ChatCore::updateInfo(const std::shared_ptr<linphone::Friend> &updatedFriend, bool isRemoval) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto fAddress = ToolModel::interpretUrl(mPeerAddress);
+	bool isThisFriend = mFriendModel && updatedFriend == mFriendModel->getFriend();
+	if (!isThisFriend)
+		for (auto f : updatedFriend->getAddresses()) {
+			if (f->weakEqual(fAddress)) {
+				isThisFriend = true;
+				break;
+			}
+		}
+	if (isThisFriend) {
+		if (isRemoval) {
+			mFriendModel = nullptr;
+			mFriendModelConnection = nullptr;
+		}
+		int capabilities = mChatModel->getCapabilities();
+		auto chatroom = mChatModel->getMonitor();
+		auto chatRoomAddress = chatroom->getPeerAddress()->clone();
+		if (mChatModel->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)) {
+			mTitle = ToolModel::getDisplayName(chatRoomAddress);
+			mAvatarUri = ToolModel::getDisplayName(chatRoomAddress);
+			emit titleChanged(mTitle);
+			emit avatarUriChanged();
+		} else {
+			if (mChatModel->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
+				auto participants = chatroom->getParticipants();
+				if (participants.size() > 0) {
+					auto peer = participants.front();
+					if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress()->clone());
+					mAvatarUri = ToolModel::getDisplayName(peer->getAddress()->clone());
+					if (participants.size() == 1) {
+						auto peerAddress = peer->getAddress();
+						if (peerAddress) mPeerAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
+					}
+				}
+			} else if (mChatModel->hasCapability((int)linphone::ChatRoom::Capabilities::Conference)) {
+				mTitle = Utils::coreStringToAppString(chatroom->getSubject());
+				mAvatarUri = Utils::coreStringToAppString(chatroom->getSubject());
+			}
+		}
+	}
 }

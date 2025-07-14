@@ -63,6 +63,7 @@ ListView {
     onCountChanged: if (atYEnd) {
         positionViewAtEnd()
     }
+    onChatChanged: lastItemVisible = false
 
     Button {
         visible: !mainItem.lastItemVisible
@@ -95,6 +96,10 @@ ListView {
             if (!mainItem.visible) return
             mainItem.positionViewAtIndex(index, ListView.End)
         }
+        onModelReset: Qt.callLater(function() {
+            var index = eventLogProxy.findFirstUnreadIndex()
+            positionViewAtIndex(index, ListView.End)
+        })
     }
 
     header: Item {
@@ -262,7 +267,7 @@ ListView {
     
     footerPositioning: ListView.OverlayFooter
     footer: Control.Control {
-        visible: composeLayout.composingName !== ""
+        visible: composeLayout.composingName !== "" && composeLayout.composingName !== undefined
         width: mainItem.width
         z: mainItem.z + 2
         topPadding: Math.round(5 * DefaultStyle.dp)
@@ -273,11 +278,11 @@ ListView {
         }
         contentItem: RowLayout {
             id: composeLayout
-            property string composingName: mainItem.chat.core.composingName
+            property var composingName: mainItem.chat?.core.composingName
             Avatar {
                 Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
-                _address: mainItem.chat.core.composingAddress
+                _address: mainItem.chat?.core.composingAddress
             }
             Text {
                 Layout.fillWidth: true

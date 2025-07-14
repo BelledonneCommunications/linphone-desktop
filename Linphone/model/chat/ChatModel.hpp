@@ -42,6 +42,8 @@ public:
 	QString getTitle();
 	QString getPeerAddress() const;
 	std::shared_ptr<linphone::ChatMessage> getLastChatMessage();
+	int getCapabilities() const;
+	bool hasCapability(int capability) const;
 	int getUnreadMessagesCount() const;
 	void markAsRead();
 	std::list<std::shared_ptr<linphone::ChatMessage>> getHistory() const;

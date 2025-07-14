@@ -32,7 +32,7 @@ DEFINE_ABSTRACT_OBJECT(ChatModel)
 
 ChatModel::ChatModel(const std::shared_ptr<linphone::ChatRoom> &chatroom, QObject *parent)
     : ::Listener<linphone::ChatRoom, linphone::ChatRoomListener>(chatroom, parent) {
-	lDebug() << "[ChatModel] new" << this << " / SDKModel=" << chatroom.get();
+	// lDebug() << "[ChatModel] new" << this << " / SDKModel=" << chatroom.get();
 	mustBeInLinphoneThread(getClassName());
 	auto coreModel = CoreModel::getInstance();
 	if (coreModel)
@@ -86,6 +86,14 @@ QString ChatModel::getTitle() {
 
 QString ChatModel::getPeerAddress() const {
 	return Utils::coreStringToAppString(mMonitor->getPeerAddress()->asStringUriOnly());
+}
+
+int ChatModel::getCapabilities() const {
+	return mMonitor->getCapabilities();
+}
+
+bool ChatModel::hasCapability(int capability) const {
+	return mMonitor->hasCapability(capability);
 }
 
 std::shared_ptr<linphone::ChatMessage> ChatModel::getLastChatMessage() {
