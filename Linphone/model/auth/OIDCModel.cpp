@@ -237,7 +237,6 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	// in case we want to add parameters. Needed to override redirect_url
 	mOidc.setModifyParametersFunction([&, username = Utils::coreStringToAppString(authInfo->getUsername())](
 	                                      QAbstractOAuth::Stage stage, QMultiMap<QString, QVariant> *parameters) {
-		parameters->insert("login_hint", username);
 		parameters->replace("application_type", "native");
 		switch (stage) {
 			case QAbstractOAuth::Stage::RequestingAccessToken: {
