@@ -28,7 +28,7 @@ AbstractWindow {
 	property var accountProxy
 
 	// TODO : use this to make the border transparent
-	flags: Qt.Window | Qt.WindowTitleHint
+	flags: Qt.Window
 	// menuBar: Rectangle {
 	// 	width: parent.width
     // 	height: Math.round(40 * DefaultStyle.dp)

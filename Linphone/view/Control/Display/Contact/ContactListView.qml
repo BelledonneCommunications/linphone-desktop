@@ -59,10 +59,6 @@ ListView {
 
     onVisibleChanged: if (visible && !expanded) expanded = true
 	
-	property var _currentItemY: currentItem?.y
-	on_CurrentItemYChanged: if(_currentItemY){
-		updatePosition()
-	}
 	onYChanged: updatePosition()
 	
 	// Qt bug: sometimes, containsMouse may not be send and update on each MouseArea.

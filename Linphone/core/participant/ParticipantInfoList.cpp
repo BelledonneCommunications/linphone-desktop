@@ -57,7 +57,8 @@ void ParticipantInfoList::setChatCore(const QSharedPointer<ChatCore> &chatCore) 
 			QStringList participantAddresses;
 			QList<QSharedPointer<ParticipantGui>> participantList;
 			auto participants = mChatCore->getParticipants();
-			resetData<ParticipantCore>(participants);
+            resetData();
+            for(auto p: participants) add(p);
 		};
 		connect(mChatCore.get(), &ChatCore::participantsChanged, this, buildList);
 		buildList();

@@ -169,6 +169,7 @@ ListView {
                     if (isFullyVisible)
                         modelData.core.lMarkAsRead()
                 }
+                Component.onCompleted: if (index === mainItem.count - 1) mainItem.lastItemVisible = isFullyVisible
                 chatMessage: modelData
                 chat: mainItem.chat
                 searchedTextPart: mainItem.filterText

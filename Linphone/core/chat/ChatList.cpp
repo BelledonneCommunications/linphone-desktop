@@ -101,8 +101,11 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 					connectItem(chat);
 				}
 				mustBeInMainThread(getClassName());
-				resetData<ChatCore>(*chats);
-				delete chats;
+                clearData();
+                for(auto chat: *chats) {
+                    add(chat);
+                }
+                delete chats;
 			});
 		});
 	});
