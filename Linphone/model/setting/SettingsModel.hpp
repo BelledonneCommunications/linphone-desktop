@@ -168,7 +168,7 @@ public:
 	DECLARE_GETSET(bool, assistantHideCreateAccount, AssistantHideCreateAccount)
 	DECLARE_GETSET(bool, assistantDisableQrCode, AssistantDisableQrCode)
 	DECLARE_GETSET(bool, assistantHideThirdPartyAccount, AssistantHideThirdPartyAccount)
-	DECLARE_GETSET(bool, onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
+	DECLARE_GETSET(bool, hideSipAddresses, HideSipAddresses)
 	DECLARE_GETSET(bool, darkModeAllowed, DarkModeAllowed)
 	DECLARE_GETSET(int, maxAccount, MaxAccount)
 	DECLARE_GETSET(bool, assistantGoDirectlyToThirdPartySipAccountLogin, AssistantGoDirectlyToThirdPartySipAccountLogin)

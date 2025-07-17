@@ -732,7 +732,7 @@ void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(assistantHideCreateAccount, AssistantHideCreateAccount)
 	DEFINE_NOTIFY_CONFIG_READY(assistantDisableQrCode, AssistantDisableQrCode)
 	DEFINE_NOTIFY_CONFIG_READY(assistantHideThirdPartyAccount, AssistantHideThirdPartyAccount)
-	DEFINE_NOTIFY_CONFIG_READY(onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
+	DEFINE_NOTIFY_CONFIG_READY(hideSipAddresses, HideSipAddresses)
 	DEFINE_NOTIFY_CONFIG_READY(darkModeAllowed, DarkModeAllowed)
     DEFINE_NOTIFY_CONFIG_READY(assistantGoDirectlyToThirdPartySipAccountLogin,
                                AssistantGoDirectlyToThirdPartySipAccountLogin)
@@ -794,9 +794,9 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 DEFINE_GETSET_CONFIG(SettingsModel,
 						bool,
 						Bool,
-						onlyDisplaySipUriUsername,
-						OnlyDisplaySipUriUsername,
-						"only_display_sip_uri_username",
+						hideSipAddresses,
+						HideSipAddresses,
+						"hide_sip_addresses",
 						false) 
 DEFINE_GETSET_CONFIG(SettingsModel,
 							bool,

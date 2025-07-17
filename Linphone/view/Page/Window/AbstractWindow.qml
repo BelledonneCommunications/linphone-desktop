@@ -119,7 +119,7 @@ ApplicationWindow {
                             }
                             Text {
                                 Layout.leftMargin: Math.round(5 * DefaultStyle.dp)
-                                text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(modelData.address) : modelData.address
+                                text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(modelData.address) : modelData.address
                                 font {
                                     pixelSize: Typography.p1.pixelSize
                                     weight: Typography.p1.weight

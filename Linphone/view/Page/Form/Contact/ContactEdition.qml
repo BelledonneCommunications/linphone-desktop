@@ -305,7 +305,7 @@ MainRightPanel {
                                     if (text.length != 0) mainItem.contact.core.setAddressAt(index, label, text)
 								}
 								property string _initialText: modelData.address
-								initialText: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_initialText) : _initialText
+								initialText: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(_initialText) : _initialText
 								backgroundColor: DefaultStyle.grey_0
 								focus: true
 								KeyNavigation.right: removeAddressButton

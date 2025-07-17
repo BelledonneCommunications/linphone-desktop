@@ -91,7 +91,7 @@ FocusScope {
                 Layout.topMargin: Math.round(2 * DefaultStyle.dp)
                 Layout.fillWidth: true
                 visible: mainItem.showDefaultAddress
-                property string address: SettingsCpp.onlyDisplaySipUriUsername
+                property string address: SettingsCpp.hideSipAddresses
                     ? UtilsCpp.getUsername(mainItem.addressFromFilter)
                     : mainItem.addressFromFilter
                 text: UtilsCpp.boldTextPart(address, mainItem.highlightText)
