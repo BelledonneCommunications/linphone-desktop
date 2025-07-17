@@ -4,7 +4,6 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import SettingsCpp 1.0
 import Linphone
-import UtilsCpp
 
 AbstractSettingsLayout {
 	width: parent?.width

@@ -517,7 +517,7 @@ FriendGui{
                                                     Text {
                                                         Layout.fillWidth: true
                                                         property string _text: listViewModelData.address
-                                                        text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
+                                                        text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(_text) : _text
                                                         font {
                                                             pixelSize: Typography.p1.pixelSize
                                                             weight: Typography.p1.weight

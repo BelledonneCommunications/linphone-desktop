@@ -76,9 +76,10 @@ void EventLogList::connectItem(const QSharedPointer<EventLogCore> item) {
 void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 	if (mChatCore != core) {
 		if (mChatCore) disconnect(mChatCore.get(), &ChatCore::eventListChanged, this, nullptr);
+		if (mChatCore) disconnect(mChatCore.get(), &ChatCore::eventsInserted, this, nullptr);
 		mChatCore = core;
-		if (mChatCore) connect(mChatCore.get(), &ChatCore::eventListChanged, this, &EventLogList::lUpdate);
-		if (mChatCore)
+		if (mChatCore) {
+			connect(mChatCore.get(), &ChatCore::eventListChanged, this, &EventLogList::lUpdate);
 			connect(mChatCore.get(), &ChatCore::eventsInserted, this, [this](QList<QSharedPointer<EventLogCore>> list) {
 				auto eventsList = getSharedList<EventLogCore>();
 				for (auto &event : list) {
@@ -92,6 +93,7 @@ void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 					}
 				}
 			});
+		}
 		emit eventChanged();
 		lUpdate();
 	}

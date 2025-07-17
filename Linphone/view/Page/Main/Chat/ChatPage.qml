@@ -187,8 +187,9 @@ AbstractMainPage {
                             searchBar: searchBar
                             Control.ScrollBar.vertical: scrollbar
 
-                            onCurrentIndexChanged: {
-                                mainItem.selectedChatGui = model.getAt(currentIndex)
+                            onChatClicked: (chat) => {
+                                console.log("chat clicked")
+                                mainItem.selectedChatGui = chat
                             }
 
                             Connections {

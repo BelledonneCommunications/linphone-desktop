@@ -24,7 +24,7 @@ Loader{
 			: contact
 				? contact.core.defaultAddress
 				: ''
-	readonly property string address: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_address) : _address
+	readonly property string address: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(_address) : _address
 	property var displayNameObj: UtilsCpp.getDisplayName(_address)
 	property var displayNameVal: account && account.core.displayName
 		? account.core.displayName

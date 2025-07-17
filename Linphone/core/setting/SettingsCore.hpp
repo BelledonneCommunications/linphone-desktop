@@ -221,7 +221,7 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(bool, assistantHideCreateAccount, AssistantHideCreateAccount)
 	DECLARE_CORE_GETSET_MEMBER(bool, assistantDisableQrCode, AssistantDisableQrCode)
 	DECLARE_CORE_GETSET_MEMBER(bool, assistantHideThirdPartyAccount, AssistantHideThirdPartyAccount)
-	DECLARE_CORE_GETSET_MEMBER(bool, onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
+	DECLARE_CORE_GETSET_MEMBER(bool, hideSipAddresses, HideSipAddresses)
 	DECLARE_CORE_GETSET_MEMBER(bool, darkModeAllowed, DarkModeAllowed)
 	DECLARE_CORE_GETSET_MEMBER(int, maxAccount, MaxAccount)
 	DECLARE_CORE_GETSET_MEMBER(bool,

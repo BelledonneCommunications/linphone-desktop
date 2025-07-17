@@ -326,7 +326,9 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 		auto receiverAccount = ToolModel::findAccount(message->getToAddress());
 		if (receiverAccount) {
 			auto senderAccount = ToolModel::findAccount(message->getFromAddress());
-			if (senderAccount) {
+			auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+			if (senderAccount && senderAccount->getContactAddress()->weakEqual(currentAccount->getContactAddress())) {
+				qDebug() << "sender is current account, return";
 				return;
 			}
 			auto accountModel = Utils::makeQObject_ptr<AccountModel>(receiverAccount);

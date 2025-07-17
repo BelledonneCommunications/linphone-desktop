@@ -23,6 +23,8 @@ AbstractSettingsMenu {
         {title: qsTr("settings_meetings_title"), layout: "MeetingsSettingsLayout", visible: !SettingsCpp.disableMeetingsFeature},
         //: "Affichage"
         //{title: qsTr("settings_user_interface_title"), layout: "DisplaySettingsLayout"},
+        //: "Security"
+        {title: qsTr("settings_security_title"), layout: "SecuritySettingsLayout"},
         //: "Réseau"
         {title: qsTr("settings_network_title"), layout: "NetworkSettingsLayout"},
         //: "Paramètres avancés"

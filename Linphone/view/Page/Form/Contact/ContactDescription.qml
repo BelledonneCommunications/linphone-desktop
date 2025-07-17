@@ -10,7 +10,7 @@ ColumnLayout{
 	id: mainItem
 	property AccountGui account: null
 	property string topText: account ? account.core.displayName : ""
-	property string bottomText: account ? SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(account.core.identityAddress) : account.core.identityAddress : ""
+	property string bottomText: account ? SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(account.core.identityAddress) : account.core.identityAddress : ""
 	spacing: 0
 	width: topTextItem.implicitWidth
 	Text {

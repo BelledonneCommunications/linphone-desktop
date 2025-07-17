@@ -55,6 +55,7 @@ ChatList::~ChatList() {
 
 void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
 	connect(chat.get(), &ChatCore::deleted, this, [this, chat] {
+		disconnect(chat.get());
 		remove(chat);
 		// We cannot use countChanged here because it is called before mList
 		// really has removed the item, then emit specific signal

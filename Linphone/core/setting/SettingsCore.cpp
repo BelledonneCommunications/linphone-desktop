@@ -111,7 +111,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(AssistantDisableQrCode, settingsModel)
 
 	INIT_CORE_MEMBER(AssistantHideThirdPartyAccount, settingsModel)
-	INIT_CORE_MEMBER(OnlyDisplaySipUriUsername, settingsModel)
+	INIT_CORE_MEMBER(HideSipAddresses, settingsModel)
 	INIT_CORE_MEMBER(DarkModeAllowed, settingsModel)
 	INIT_CORE_MEMBER(MaxAccount, settingsModel)
 	INIT_CORE_MEMBER(AssistantGoDirectlyToThirdPartySipAccountLogin, settingsModel)
@@ -189,7 +189,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mAssistantDisableQrCode = settingsCore.mAssistantDisableQrCode;
 
 	mAssistantHideThirdPartyAccount = settingsCore.mAssistantHideThirdPartyAccount;
-	mOnlyDisplaySipUriUsername = settingsCore.mOnlyDisplaySipUriUsername;
+	mHideSipAddresses = settingsCore.mHideSipAddresses;
 	mDarkModeAllowed = settingsCore.mDarkModeAllowed;
 	mMaxAccount = settingsCore.mMaxAccount;
 	mAssistantGoDirectlyToThirdPartySipAccountLogin = settingsCore.mAssistantGoDirectlyToThirdPartySipAccountLogin;
@@ -398,7 +398,7 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
 	                           assistantHideThirdPartyAccount, AssistantHideThirdPartyAccount)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
-	                           onlyDisplaySipUriUsername, OnlyDisplaySipUriUsername)
+	                           hideSipAddresses, HideSipAddresses)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
 	                           darkModeAllowed, DarkModeAllowed)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, int, maxAccount,
@@ -515,7 +515,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setAssistantDisableQrCode(settingsCore.mAssistantDisableQrCode);
 
 	setAssistantHideThirdPartyAccount(settingsCore.mAssistantHideThirdPartyAccount);
-	setOnlyDisplaySipUriUsername(settingsCore.mOnlyDisplaySipUriUsername);
+	setHideSipAddresses(settingsCore.mHideSipAddresses);
 	setDarkModeAllowed(settingsCore.mDarkModeAllowed);
 	setMaxAccount(settingsCore.mMaxAccount);
 	setAssistantGoDirectlyToThirdPartySipAccountLogin(settingsCore.mAssistantGoDirectlyToThirdPartySipAccountLogin);
@@ -1017,7 +1017,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	model->setAssistantDisableQrCode(mAssistantDisableQrCode);
 
 	model->setAssistantHideThirdPartyAccount(mAssistantHideThirdPartyAccount);
-	model->setOnlyDisplaySipUriUsername(mOnlyDisplaySipUriUsername);
+	model->setHideSipAddresses(mHideSipAddresses);
 	model->setDarkModeAllowed(mDarkModeAllowed);
 	model->setMaxAccount(mMaxAccount);
 	model->setAssistantGoDirectlyToThirdPartySipAccountLogin(mAssistantGoDirectlyToThirdPartySipAccountLogin);
@@ -1086,7 +1086,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mAssistantDisableQrCode = model->getAssistantDisableQrCode();
 
 	mAssistantHideThirdPartyAccount = model->getAssistantHideThirdPartyAccount();
-	mOnlyDisplaySipUriUsername = model->getOnlyDisplaySipUriUsername();
+	mHideSipAddresses = model->getHideSipAddresses();
 	mDarkModeAllowed = model->getDarkModeAllowed();
 	mMaxAccount = model->getMaxAccount();
 	mAssistantGoDirectlyToThirdPartySipAccountLogin = model->getAssistantGoDirectlyToThirdPartySipAccountLogin();
