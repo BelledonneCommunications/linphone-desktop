@@ -334,6 +334,8 @@ Rectangle{
 				id: screenSharingItem
 				property VideoSourceDescriptorModel desc: mainItem.callModel.videoSourceDescriptorModel
 				property string title
+				property bool isSelected: !!screenSharingItem.desc.windowId || screenSharingItem.desc.screenSharingIndex>=0
+
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				RadioButton{
@@ -445,12 +447,12 @@ Rectangle{
 				}
 				Item{// Item encapsulation because of a bug on width update when changing text
 					Layout.fillWidth: true
-					Layout.preferredHeight: screenSharingButton.fitHeight
+					Layout.preferredHeight: screenSharingItem.isSelected ? screenSharingButton.fitHeight : 0
 					Layout.margins: 20
 					TextButtonB{
 						id: screenSharingButton
 						anchors.fill: parent
-						visible: mainItem.screenSharingAvailable
+						visible: mainItem.screenSharingAvailable && screenSharingItem.isSelected
 						enabled: displayRadioButton.checked || windowSharingRadioButton.checked
 						text: mainItem.conferenceModel && mainItem.conferenceModel.isLocalScreenSharingEnabled
 						//: 'Stop' : Text button to stop the screen sharing.
