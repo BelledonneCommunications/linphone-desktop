@@ -23,6 +23,7 @@ Rectangle {
 	property bool previewLoaderEnabled: callModel ? callModel.videoEnabled : SettingsModel.videoAvailable
 	property var _sipAddressObserver: callModel ? SipAddressesModel.getSipAddressObserver(callModel.fullPeerAddress, callModel.fullLocalAddress) : undefined
 	property bool isEnded: callModel && callModel.status == CallModel.CallStatusEnded
+	property bool _simpleGraphRunning: false
 	
 	signal cancel()
 	
@@ -32,14 +33,25 @@ Rectangle {
 	}
 	function close(){
 		mainItem.previewLoaderEnabled = false// Need it to close camera.
+		updateSimpleGraph(false)
 	}
 	function open(){
 		mainItem.previewLoaderEnabled = callModel ? callModel.videoEnabled : true
+		updateSimpleGraph(true)
 	}
-	
+	function updateSimpleGraph(enable){
+		if(enable != _simpleGraphRunning){
+			_simpleGraphRunning = enable;
+			if(_simpleGraphRunning) SettingsModel.startCaptureGraph()
+			else SettingsModel.stopCaptureGraph();
+		}
+	}
+
+	onEnabledChanged: updateSimpleGraph(enabled)
 	//onCallModelChanged: callModel ? contentsStack.replace(callingComponent) : contentsStack.replace(cameraComponent)
 	//onCallModelChanged: contentsStack.flipped = !!callModel
-	Component.onDestruction: {mainItem.previewLoaderEnabled = false;_sipAddressObserver=null}// Need to set it to null because of not calling destructor if not.
+	Component.onCompleted: updateSimpleGraph(true)
+	Component.onDestruction: {mainItem.previewLoaderEnabled = false;_sipAddressObserver=null;updateSimpleGraph(false)}// Need to set it to null because of not calling destructor if not.
 	
 	Connections{
 		target:window

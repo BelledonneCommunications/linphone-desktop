@@ -2097,6 +2097,7 @@ void SettingsModel::handleCallCreated(const shared_ptr<linphone::Call> &) {
 void SettingsModel::handleCallStateChanged(const shared_ptr<linphone::Call> &, linphone::Call::State) {
 	bool isInCall = getIsInCall();
 	if (isInCall) stopCaptureGraphs(); // Ensure to stop all graphs
+	else if (!isInCall && mCurrentSettingsTab == 1 && !getCaptureGraphRunning()) startCaptureGraph();
 	emit isInCallChanged(isInCall);
 }
 void SettingsModel::handleEcCalibrationResult(linphone::EcCalibratorStatus status, int delayMs) {

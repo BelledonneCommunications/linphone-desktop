@@ -18,7 +18,17 @@ DialogPlus {
 
 	property int fitHeight: MultimediaParametersDialogStyle.height+30
 	property int fitWidth: MultimediaParametersDialogStyle.width
-	// ---------------------------------------------------------------------------
+	property bool _simpleGraphRunning: false
+    	// ---------------------------------------------------------------------------
+
+	function updateSimpleGraph(enable){
+		if(enable != _simpleGraphRunning){
+			_simpleGraphRunning = enable;
+			if(_simpleGraphRunning) SettingsModel.startCaptureGraph()
+			else SettingsModel.stopCaptureGraph();
+		}
+	}
+
 
 	buttons: [
 		TextButtonB {
@@ -35,16 +45,15 @@ DialogPlus {
 	buttonsAlignment: Qt.AlignCenter
 	onVisibleChanged: if(visible) {SettingsModel.reloadDevices()}
 	Component.onCompleted: {
-							SettingsModel.stopCaptureGraph()
+							updateSimpleGraph(false)
 							SettingsModel.reloadDevices()
-							if(!call)
-								SettingsModel.startCaptureGraph()
+							if(!call) updateSimpleGraph(true)
 							if( fixedSize){
 							   height = fitHeight
 							   width = fitWidth
 						   }
 	}
-	Component.onDestruction: SettingsModel.stopCaptureGraph()
+	Component.onDestruction: updateSimpleGraph(false)
 	onCallChanged: !call && exit(0)
 
 	//: 'Multimedia parameters' : Menu title to show multimedia devices configuration.
