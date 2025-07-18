@@ -83,6 +83,9 @@ void ConferenceListener::onParticipantDeviceMediaAvailabilityChanged(const std::
 	qDebug() << "onParticipantDeviceMediaAvailabilityChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Device: " << participantDevice->getAddress()->asString().c_str();
 	emit participantDeviceMediaAvailabilityChanged(participantDevice);
 }
+void ConferenceListener::onParticipantDeviceIsMuted(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice, bool isMuted) {
+	emit participantDeviceIsMuted(participantDevice, isMuted);
+}
 void ConferenceListener::onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice, bool isSpeaking) {
 	//qDebug() << "onParticipantDeviceIsSpeakingChanged: "  << participantDevice->getAddress()->asString().c_str() << ". Speaking:" << isSpeaking;
 	emit participantDeviceIsSpeakingChanged(participantDevice, isSpeaking);

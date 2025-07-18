@@ -774,14 +774,17 @@ void CallModel::setSpeakerMuted (bool status) {
 // -----------------------------------------------------------------------------
 
 bool CallModel::getMicroMuted () const {
-	return mCall && mCall->getMicrophoneMuted();
+	if (isConference())
+		return mConferenceModel && mConferenceModel->getMicroMuted();
+	else
+		return mCall && mCall->getMicrophoneMuted();
 }
 
 void CallModel::setMicroMuted (bool status) {
 	if (status == getMicroMuted())
 		return;
-	if(mCall)
-		mCall->setMicrophoneMuted(status);
+	if (isConference()) mConferenceModel->setMicroMuted(status);
+	else if(mCall) mCall->setMicrophoneMuted(status);
 	emit microMutedChanged(getMicroMuted());
 }
 

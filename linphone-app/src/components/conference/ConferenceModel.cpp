@@ -43,6 +43,7 @@ void ConferenceModel::connectTo(ConferenceListener * listener){
 	connect(listener, &ConferenceListener::participantDeviceStateChanged, this, &ConferenceModel::onParticipantDeviceStateChanged);
 	connect(listener, &ConferenceListener::participantDeviceMediaCapabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaCapabilityChanged);
 	connect(listener, &ConferenceListener::participantDeviceMediaAvailabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaAvailabilityChanged);
+	connect(listener, &ConferenceListener::participantDeviceIsMuted, this, &ConferenceModel::onParticipantDeviceIsMuted);
 	connect(listener, &ConferenceListener::participantDeviceIsSpeakingChanged, this, &ConferenceModel::onParticipantDeviceIsSpeakingChanged);
 	connect(listener, &ConferenceListener::participantDeviceScreenSharingChanged, this, &ConferenceModel::onParticipantDeviceScreenSharingChanged);
 	connect(listener, &ConferenceListener::conferenceStateChanged, this, &ConferenceModel::onConferenceStateChanged);
@@ -174,6 +175,20 @@ void ConferenceModel::setIsReady(bool state){
 		emit isReadyChanged();
 	}
 }
+
+// -----------------------------------------------------------------------------
+
+bool ConferenceModel::getMicroMuted () const {
+	return mConference && mConference->getMicrophoneMuted();
+}
+
+void ConferenceModel::setMicroMuted (bool status) {
+	if (status == getMicroMuted())
+		return;
+	else if(mConference) mConference->setMicrophoneMuted(status);
+	emit microMutedChanged(getMicroMuted());
+}
+
 //-----------------------------------------------------------------------------------------------------------------------
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
@@ -222,6 +237,9 @@ void ConferenceModel::onParticipantDeviceMediaCapabilityChanged(const std::share
 void ConferenceModel::onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "ConferenceModel::onParticipantDeviceMediaAvailabilityChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceMediaAvailabilityChanged(participantDevice);
+}
+void ConferenceModel::onParticipantDeviceIsMuted(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice, bool isMuted){
+	emit participantDeviceIsMuted(participantDevice, isMuted);
 }
 void ConferenceModel::onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice, bool isSpeaking){
 	emit participantDeviceIsSpeakingChanged(participantDevice, isSpeaking);
