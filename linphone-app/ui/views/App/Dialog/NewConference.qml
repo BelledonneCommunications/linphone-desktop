@@ -51,7 +51,6 @@ DialogPlus {
 			Layout.alignment: Qt.AlignLeft
 			Layout.leftMargin: 15
 			spacing:4
-			visible: false	// TODO
 			Text {
 				Layout.fillWidth: true
 				//: 'Would you like to encrypt your meeting ?' : Ask about setting the meeting as secured.
@@ -80,14 +79,12 @@ DialogPlus {
 					anchors.verticalCenter: parent.verticalCenter
 					width:50
 					enabled:true
-					checked: !SettingsModel.standardChatEnabled && SettingsModel.secureChatEnabled 
-					
+					checked: conferenceInfoModel.isSecured
 					onClicked: {
 						var newCheck = checked
 						if(SettingsModel.standardChatEnabled && checked || SettingsModel.secureChatEnabled && !checked)
 							newCheck = !checked;
-						
-						checked = newCheck;
+						conferenceInfoModel.isSecured = newCheck
 					}
 					indicatorStyle: SwitchStyle.aux
 				}
@@ -141,7 +138,8 @@ DialogPlus {
 				
 				conferenceInfoModel.setParticipants(selectedParticipants.participantListModel)
 				conferenceInfoModel.inviteMode = getInviteMode();
-				conferenceInfoModel.createConference(false && secureSwitch.checked)	// TODO remove false when Encryption is ready to use
+				conferenceInfoModel.isSecured = secureSwitch.checked
+				conferenceInfoModel.createConference()
 			}
 			TooltipArea{
 				visible: AccountSettingsModel.conferenceUri == '' || subject.text == '' || selectedParticipants.count < conferenceManager.minParticipants

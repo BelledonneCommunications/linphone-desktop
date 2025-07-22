@@ -35,15 +35,15 @@
 #include <qqmlapplicationengine.h>
 
 #include "app/App.hpp"
+#include "components/calls/CallsListModel.hpp"
 #include "components/conferenceScheduler/ConferenceScheduler.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/other/timeZone/TimeZoneModel.hpp"
 #include "components/participant/ParticipantListModel.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "components/timeline/TimelineListModel.hpp"
-#include "utils/Utils.hpp"
 #include "utils/LinphoneEnums.hpp"
-
-
+#include "utils/Utils.hpp"
 
 // =============================================================================
 
@@ -63,10 +63,14 @@ QSharedPointer<ConferenceInfoModel> ConferenceInfoModel::create(std::shared_ptr<
 ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	mConferenceInfo = linphone::Factory::get()->createConferenceInfo();
 	mIsScheduled = false;
+	if(CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled())
+		mConferenceInfo->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
 	initDateTime();
 	auto defaultAccount = CoreManager::getInstance()->getCore()->getDefaultAccount();
 	if(defaultAccount){
-		auto accountAddress = defaultAccount->getContactAddress();
+		std::shared_ptr<const linphone::Address> accountAddress = defaultAccount->getContactAddress();
+		if(!accountAddress)
+			accountAddress = defaultAccount->getParams()->getIdentityAddress();
 		if(accountAddress){
 			auto cleanedClonedAddress = accountAddress->clone();
 			cleanedClonedAddress->clean();
@@ -163,7 +167,7 @@ QDateTime ConferenceInfoModel::getEndDateTimeUtc() const{
 }
 
 QString ConferenceInfoModel::getOrganizer() const{
-	return Utils::coreStringToAppString(mConferenceInfo->getOrganizer()->asString());
+	return Utils::coreStringToAppString(mConferenceInfo->getOrganizer() ? mConferenceInfo->getOrganizer()->asString() : "Self");
 }
 
 QString ConferenceInfoModel::getSubject() const{
@@ -197,6 +201,11 @@ bool ConferenceInfoModel::isScheduled() const{
 
 bool ConferenceInfoModel::isEnded() const{
 	return mIsEnded;
+}
+
+bool ConferenceInfoModel::isSecured() const{
+	return mConferenceInfo ? mConferenceInfo->getSecurityLevel() != linphone::Conference::SecurityLevel::None
+		: CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled();
 }
 
 bool ConferenceInfoModel::getIsEnded() const{
@@ -323,6 +332,14 @@ void ConferenceInfoModel::setIsEnded(const bool& end){
 	}
 }
 
+void ConferenceInfoModel::setIsSecured(const bool& on){
+	if( on != isSecured()){
+		if(mConferenceInfo)
+			mConferenceInfo->setSecurityLevel(on ? linphone::Conference::SecurityLevel::EndToEnd : linphone::Conference::SecurityLevel::None);
+		emit isSecuredChanged();
+	}
+}
+
 void ConferenceInfoModel::setInviteMode(const int& mode){
 	if( mode != mInviteMode){
 		mInviteMode = mode;
@@ -353,20 +370,46 @@ void ConferenceInfoModel::resetConferenceInfo() {
 	}
 }
 
-void ConferenceInfoModel::createConference(const int& securityLevel) {
+void ConferenceInfoModel::createConference() {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	static std::shared_ptr<linphone::Conference> conference;
-	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by " << getOrganizer() << " for " << getDateTimeSystem().toString();
+	qInfo() << "Conference creation of " << getSubject() << " at " << (int)mConferenceInfo->getSecurityLevel() << " security, organized by " << getOrganizer() << " for " << getDateTimeSystem().toString();
 	qInfo() << "Participants:";
 	for(auto p : mConferenceInfo->getParticipants())
 		qInfo() << "\t" << p->asString().c_str();
-	
-	mConferenceScheduler = ConferenceScheduler::create();
-	mConferenceScheduler->mSendInvite = mInviteMode;
-	connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
-	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onConferenceSchedulerStateChanged);
-	mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);
+
+	if(isScheduled()) {
+		mConferenceScheduler = ConferenceScheduler::create();
+		mConferenceScheduler->mSendInvite = mInviteMode;
+		connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
+		connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onConferenceSchedulerStateChanged);
+		mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);
+	}else {
+		// Since SDK 5.4, unscheduled conference must be created from a group call.
+		auto callListModel = CoreManager::getInstance()->getCallsListModel();
+		auto settingsModel = CoreManager::getInstance()->getSettingsModel();
+		bool videoEnabled = CoreManager::getInstance()->getSettingsModel()->getVideoConferenceEnabled() &&  settingsModel->getVideoConferenceEnabled();
+
+		auto parameters = core->createConferenceParams(nullptr);
+		if(!CoreManager::getInstance()->getSettingsModel()->getVideoConferenceEnabled()) {
+			parameters->enableVideo(false);
+			parameters->setConferenceFactoryAddress(nullptr);// Do a local conference
+		}else {
+			parameters->enableVideo(videoEnabled);
+			conference = core->createConferenceWithParams(parameters);
+		}
+		if(!conference) emit conferenceCreationFailed();
+		else {
+			auto callParameters = CoreManager::getInstance()->getCore()->createCallParams(nullptr);
+			callParameters->enableVideo(videoEnabled);
+			if(!conference->inviteParticipants(mConferenceInfo->getParticipants(), callParameters)) {
+				emit conferenceCreated();
+			}else{
+				emit conferenceCreationFailed();
+			}
+		}
+	}
 }
 
 void ConferenceInfoModel::cancelConference(){

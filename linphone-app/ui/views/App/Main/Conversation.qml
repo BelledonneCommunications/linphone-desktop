@@ -341,7 +341,8 @@ ColumnLayout  {
 														
 															conferenceInfoModel.setParticipants(conversation.chatRoomModel.participants)
 															conferenceInfoModel.inviteMode = 0;
-															conferenceInfoModel.createConference(false)// TODO activate it when secure video conference is implemented
+															conferenceInfoModel.isSecured = conversation.securityLevel
+															conferenceInfoModel.createConference()
 														}else{
 															Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
 														}

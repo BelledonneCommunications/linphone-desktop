@@ -154,13 +154,13 @@ Rectangle {
 				asynchronous: index > 20
 				active: true
 				sourceComponent: TimelineItem{
-					timelineModel: $modelData
+					timelineModel: !!$modelData ? $modelData : null
 					modelIndex: index
 					optionsTogglable: timeline.optionsTogglable
 					actions: timeline.actions
 										
 					Connections{
-						target: $modelData
+						target: !!$modelData ? $modelData : null
 						onSelectedChanged:{
 							if(selected) {
 								view.currentIndex = index;

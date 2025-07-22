@@ -50,6 +50,7 @@ public:
 	Q_PROPERTY(QString uri READ getUri NOTIFY uriChanged)
 	Q_PROPERTY(bool isScheduled READ isScheduled WRITE setIsScheduled NOTIFY isScheduledChanged)
 	Q_PROPERTY(bool isEnded READ isEnded WRITE setIsEnded NOTIFY isEndedChanged)
+	Q_PROPERTY(bool isSecured READ isSecured WRITE setIsSecured NOTIFY isSecuredChanged)
 	Q_PROPERTY(int inviteMode READ getInviteMode WRITE setInviteMode NOTIFY inviteModeChanged)
 	Q_PROPERTY(int participantCount READ getParticipantCount NOTIFY participantsChanged)
 	Q_PROPERTY(int allParticipantCount READ getAllParticipantCount NOTIFY participantsChanged)
@@ -78,6 +79,7 @@ public:
 	QString getUri() const;
 	bool isScheduled() const;
 	bool isEnded() const;
+	bool isSecured() const;
 	bool getIsEnded() const;
 	int getInviteMode() const;
 	Q_INVOKABLE QVariantList getParticipants() const;
@@ -96,6 +98,7 @@ public:
 	void setDescription(const QString& description);
 	void setIsScheduled(const bool& on);
 	void setIsEnded(const bool& end);
+	void setIsSecured(const bool& on);
 	void setInviteMode(const int& modes);
 	
 	void setDateTime(const QDate& date, const QTime& time, TimeZoneModel * model);
@@ -105,7 +108,7 @@ public:
 	
 // Tools
 	Q_INVOKABLE void resetConferenceInfo();// Recreate a new conference info from factory
-	Q_INVOKABLE void createConference(const int& securityLevel);
+	Q_INVOKABLE void createConference();
 	Q_INVOKABLE void cancelConference();
 	Q_INVOKABLE void deleteConferenceInfo();// Remove completly this conference info from DB
 
@@ -124,6 +127,7 @@ signals:
 	void uriChanged();
 	void isScheduledChanged();
 	void isEndedChanged();
+	void isSecuredChanged();
 	void inviteModeChanged();
 	void conferenceInfoStateChanged();
 	void conferenceSchedulerStateChanged();
@@ -140,6 +144,7 @@ private:
 	
 	bool mIsScheduled = true;
 	bool mIsEnded = false;
+	bool mIsSecured = true;
 	QTimer mCheckEndTimer;
 	int mInviteMode = 0;
 	bool mRemoveRequested = false;// true if user has request its deletion from DB
