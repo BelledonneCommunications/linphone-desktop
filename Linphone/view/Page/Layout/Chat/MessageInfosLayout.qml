@@ -43,16 +43,19 @@ ColumnLayout {
 
 	ColumnLayout {
 		id: contentLayout
-		spacing: Math.round(21 * DefaultStyle.dp)
 		Layout.leftMargin: Math.round(16 * DefaultStyle.dp)
 		Layout.rightMargin: Math.round(16 * DefaultStyle.dp)
+		spacing: Math.round(21 * DefaultStyle.dp)
 		TabBar {
 			id: tabbar
+			onCurrentIndexChanged: console.log("current index", currentIndex)
 			visible: mainItem.tabbarModel !== undefined
 			Layout.fillWidth: true
+			Layout.preferredWidth: parent.width
             model: mainItem.tabbarModel
 			pixelSize: Typography.h3m.pixelSize
 			textWeight: Typography.h3m.weight
+			spacing: Math.round(10 * DefaultStyle.dp)
 		}
 
 		ListView {

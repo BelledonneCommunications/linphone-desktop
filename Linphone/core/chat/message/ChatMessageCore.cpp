@@ -41,6 +41,17 @@ bool ImdnStatus::operator!=(ImdnStatus r) {
 	return r.mState != mState || r.mAddress != mAddress || r.mLastUpdatedTime != mLastUpdatedTime;
 }
 
+ImdnStatus::ImdnStatus() {
+}
+
+ImdnStatus::ImdnStatus(const QString &address,
+                       const LinphoneEnums::ChatMessageState &state,
+                       QDateTime lastUpdatedTime) {
+	mState = state;
+	mAddress = address;
+	mLastUpdatedTime = lastUpdatedTime;
+}
+
 ImdnStatus ImdnStatus::createMessageImdnStatusVariant(const QString &address,
                                                       const LinphoneEnums::ChatMessageState &state,
                                                       QDateTime lastUpdatedTime) {
@@ -330,8 +341,8 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 QList<ImdnStatus> ChatMessageCore::computeDeliveryStatus(const std::shared_ptr<linphone::ChatMessage> &message) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	QList<ImdnStatus> imdnStatusList;
-	auto createImdnStatus = [this, &imdnStatusList](std::shared_ptr<linphone::ParticipantImdnState> participant,
-	                                                linphone::ChatMessage::State state) {
+	auto createImdnStatus = [this](std::shared_ptr<linphone::ParticipantImdnState> participant,
+	                               linphone::ChatMessage::State state) -> ImdnStatus {
 		auto address = participant->getParticipant() ? participant->getParticipant()->getAddress()->clone() : nullptr;
 		auto lastUpdated = QDateTime::fromSecsSinceEpoch(participant->getStateChangeTime());
 		if (address) {
@@ -339,24 +350,30 @@ QList<ImdnStatus> ChatMessageCore::computeDeliveryStatus(const std::shared_ptr<l
 			auto addrString = Utils::coreStringToAppString(address->asStringUriOnly());
 			auto imdn =
 			    ImdnStatus::createMessageImdnStatusVariant(addrString, LinphoneEnums::fromLinphone(state), lastUpdated);
-			imdnStatusList.append(imdn);
+			return imdn;
 		}
+		return ImdnStatus();
 	};
+
 	// Read
 	for (auto &participant : message->getParticipantsByImdnState(linphone::ChatMessage::State::Displayed)) {
-		createImdnStatus(participant, linphone::ChatMessage::State::Displayed);
+		auto imdn = createImdnStatus(participant, linphone::ChatMessage::State::Displayed);
+		imdnStatusList.append(imdn);
 	}
 	// Received
 	for (auto &participant : message->getParticipantsByImdnState(linphone::ChatMessage::State::DeliveredToUser)) {
-		createImdnStatus(participant, linphone::ChatMessage::State::DeliveredToUser);
+		auto imdn = createImdnStatus(participant, linphone::ChatMessage::State::DeliveredToUser);
+		imdnStatusList.append(imdn);
 	}
 	// Sent
 	for (auto &participant : message->getParticipantsByImdnState(linphone::ChatMessage::State::Delivered)) {
-		createImdnStatus(participant, linphone::ChatMessage::State::Delivered);
+		auto imdn = createImdnStatus(participant, linphone::ChatMessage::State::Delivered);
+		imdnStatusList.append(imdn);
 	}
 	// Error
 	for (auto &participant : message->getParticipantsByImdnState(linphone::ChatMessage::State::NotDelivered)) {
-		createImdnStatus(participant, linphone::ChatMessage::State::NotDelivered);
+		auto imdn = createImdnStatus(participant, linphone::ChatMessage::State::NotDelivered);
+		imdnStatusList.append(imdn);
 	}
 	return imdnStatusList;
 }
@@ -592,20 +609,25 @@ QStringList ChatMessageCore::getImdnStatusListLabels() const {
 
 QList<QVariant> ChatMessageCore::getImdnStatusAsSingletons() const {
 	QList<QVariant> statusSingletons;
+	statusSingletons.append(createImdnStatusSingletonVariant(LinphoneEnums::ChatMessageState::StateDisplayed, 0));
+	statusSingletons.append(createImdnStatusSingletonVariant(LinphoneEnums::ChatMessageState::StateDelivered, 0));
+	statusSingletons.append(createImdnStatusSingletonVariant(LinphoneEnums::ChatMessageState::StateDeliveredToUser, 0));
+	statusSingletons.append(createImdnStatusSingletonVariant(LinphoneEnums::ChatMessageState::StateNotDelivered, 0));
 	for (auto &stat : mImdnStatusList) {
 		auto it = std::find_if(statusSingletons.begin(), statusSingletons.end(), [state = stat.mState](QVariant data) {
 			auto dataState = data.toMap()["state"].value<LinphoneEnums::ChatMessageState>();
 			return state == dataState;
 		});
-		if (it == statusSingletons.end()) statusSingletons.push_back(createImdnStatusSingletonVariant(stat.mState, 1));
-		else {
+		if (it == statusSingletons.end()) {
+			if (!stat.mAddress.isEmpty()) statusSingletons.append(createImdnStatusSingletonVariant(stat.mState, 1));
+		} else {
 			auto map = it->toMap();
 			auto count = map["count"].toInt();
 			++count;
 			map.remove("count");
 			map.insert("count", count);
 			statusSingletons.erase(it);
-			statusSingletons.push_back(map);
+			statusSingletons.append(map);
 		}
 	}
 	return statusSingletons;

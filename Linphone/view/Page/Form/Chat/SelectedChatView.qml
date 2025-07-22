@@ -513,9 +513,7 @@ RowLayout {
                                 ? forwardToListsComponent
                                 : panelType === SelectedChatView.PanelType.ManageParticipants
                                     ? manageParticipantsComponent
-                                    : mainItem.chat?.core.isGroupChat
-                                        ? groupInfoComponent
-                                        : oneToOneInfoComponent
+                                    : infoComponent
 			active: detailsPanel.visible
 			onLoaded: {
 				if (contentLoader.item && contentLoader.item.parentView) {
@@ -524,10 +522,11 @@ RowLayout {
 			}
 		}
 
-		Component {
-			id: oneToOneInfoComponent
-			OneOneConversationInfos {
-				chatGui: mainItem.chat
+        Component {
+            id: infoComponent
+            ConversationInfos {
+                chatGui: mainItem.chat
+
 				onEphemeralSettingsRequested: contentLoader.panelType = SelectedChatView.PanelType.EphemeralSettings
                 onShowSharedFilesRequested: (showMedias) => {
                     contentLoader.panelType = showMedias ? SelectedChatView.PanelType.SharedFiles : SelectedChatView.PanelType.Medias
@@ -536,24 +535,9 @@ RowLayout {
                     mainItem.showSearchBar = true
                     detailsPanel.visible = false
                 }
-			}
-		}
-
-		Component {
-			id: groupInfoComponent
-			GroupConversationInfos {
-				chatGui: mainItem.chat
 				onManageParticipantsRequested: contentLoader.panelType = SelectedChatView.PanelType.ManageParticipants
-				onShowSharedFilesRequested: (showMedias) => {
-                    contentLoader.panelType = showMedias ? SelectedChatView.PanelType.SharedFiles : SelectedChatView.PanelType.Medias
-                }
-				onEphemeralSettingsRequested: contentLoader.panelType = SelectedChatView.PanelType.EphemeralSettings
-                onSearchInHistoryRequested: {
-                    mainItem.showSearchBar = true
-                    detailsPanel.visible = false
-                }
-			}
-		}
+            }
+        }
 
         Component {
 			id: messageReactionsComponent

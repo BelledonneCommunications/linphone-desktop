@@ -236,7 +236,9 @@ QVariant ConferenceInfoList::data(const QModelIndex &index, int role) const {
 		if (role == Qt::DisplayRole) {
 			return QVariant::fromValue(new ConferenceInfoGui(mList[row].objectCast<ConferenceInfoCore>()));
 		} else if (role == Qt::DisplayRole + 1) {
-			return Utils::toDateMonthString(mList[row].objectCast<ConferenceInfoCore>()->getDateTimeUtc());
+			auto date = mList[row].objectCast<ConferenceInfoCore>()->getDateTimeUtc();
+			if (date.date().year() != QDate::currentDate().year()) return Utils::toDateMonthAndYearString(date);
+			else return Utils::toDateMonthString(date);
 		}
 	} else { // Dummy date
 		if (role == Qt::DisplayRole) {

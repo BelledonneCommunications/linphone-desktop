@@ -10,7 +10,6 @@ Control.TabBar {
 	readonly property int originX: count > 0 
 							? itemAt(0).x 
 							: 0
-    spacing: Math.round(40 * DefaultStyle.dp)
     property real pixelSize: Typography.h3.pixelSize
     property real textWeight: Typography.h3.weight
 	wheelEnabled: true

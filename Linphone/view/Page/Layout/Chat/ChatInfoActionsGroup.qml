@@ -21,16 +21,18 @@ ColumnLayout {
         Layout.topMargin: Math.round(5 * DefaultStyle.dp)
     }
 
-    Rectangle {
+    Control.Control {
         Layout.fillWidth: true
+        Layout.preferredHeight: implicitHeight
         Layout.topMargin: Math.round(9 * DefaultStyle.dp)
-        color: DefaultStyle.grey_100
-        radius: Math.round(15 * DefaultStyle.dp)
-        height: contentColumn.implicitHeight
-
-        ColumnLayout {
-            id: contentColumn
+        background: Rectangle {
             anchors.fill: parent
+            color: DefaultStyle.grey_100
+            radius: Math.round(15 * DefaultStyle.dp)
+        }
+
+        contentItem: ColumnLayout {
+            id: contentColumn
             spacing: 0
 
             Repeater {

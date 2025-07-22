@@ -98,6 +98,7 @@ LoginLayout {
 			TabBar {
 				Layout.fillWidth: true
 				id: bar
+    			spacing: Math.round(40 * DefaultStyle.dp)
                 Layout.rightMargin: Math.round(Math.max(5 * DefaultStyle.dp,(127 - ((127/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp))
                 // "S'inscrire avec un numéro de téléphone"
                 model: [qsTr("assistant_account_register_with_phone_number"),

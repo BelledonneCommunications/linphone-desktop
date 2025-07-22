@@ -46,6 +46,8 @@ public:
 	LinphoneEnums::ChatMessageState mState;
 	QDateTime mLastUpdatedTime;
 
+	ImdnStatus(const QString &address, const LinphoneEnums::ChatMessageState &state, QDateTime mLastUpdatedTime);
+	ImdnStatus();
 	ImdnStatus operator=(ImdnStatus r);
 	bool operator==(const ImdnStatus &r) const;
 	bool operator!=(ImdnStatus r);

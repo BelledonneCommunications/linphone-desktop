@@ -27,6 +27,7 @@ ColumnLayout {
 	TabBar {
 		Layout.fillWidth: true
 		id: bar
+    	spacing: Math.round(40 * DefaultStyle.dp)
         pixelSize: Math.round(16 * DefaultStyle.dp)
         //: "Ecran entier"
         model: [qsTr("screencast_settings_all_screen_label"),
