@@ -111,7 +111,7 @@ else
 	if [ -f "${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage" ]; then
 		echo "appimagetool-x86_64.AppImage exists"
 	else
-		wget -P "${WORK_DIR}/AppBin" https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+		wget -P "${WORK_DIR}/AppBin" https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
 		chmod +x "${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage"
 	fi
 	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/${APP_NAME} --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/${APP_NAME}.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/${APP_NAME}.svg --plugin qt
