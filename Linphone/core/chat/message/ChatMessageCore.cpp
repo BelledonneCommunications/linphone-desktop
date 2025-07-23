@@ -382,13 +382,6 @@ QDateTime ChatMessageCore::getTimestamp() const {
 	return mTimestamp;
 }
 
-void ChatMessageCore::setTimestamp(QDateTime timestamp) {
-	if (mTimestamp != timestamp) {
-		mTimestamp = timestamp;
-		emit timestampChanged(timestamp);
-	}
-}
-
 QString ChatMessageCore::getText() const {
 	return mText;
 }

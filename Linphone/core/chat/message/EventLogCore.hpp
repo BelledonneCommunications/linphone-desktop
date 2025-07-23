@@ -47,7 +47,7 @@ class EventLogCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool important MEMBER mImportant CONSTANT)
 	Q_PROPERTY(bool handled MEMBER mHandled CONSTANT)
 	Q_PROPERTY(QString eventDetails MEMBER mEventDetails CONSTANT)
-	Q_PROPERTY(QDateTime timestamp MEMBER mTimestamp CONSTANT)
+	Q_PROPERTY(QDateTime timestamp READ getTimestamp CONSTANT)
 
 public:
 	static QSharedPointer<EventLogCore> create(const std::shared_ptr<const linphone::EventLog> &eventLog);
@@ -58,6 +58,9 @@ public:
 	QSharedPointer<ChatMessageCore> getChatMessageCore();
 	ChatMessageGui *getChatMessageGui();
 	QSharedPointer<CallHistoryCore> getCallHistoryCore();
+
+	QDateTime getTimestamp() const;
+
 	bool isHandled() const {
 		return mHandled;
 	}

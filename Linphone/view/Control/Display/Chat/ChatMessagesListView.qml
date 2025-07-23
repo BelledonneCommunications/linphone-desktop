@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import Qt.labs.qmlmodels
 import Linphone
 import UtilsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ListView {
     id: mainItem
@@ -57,6 +58,7 @@ ListView {
         Qt.callLater(function() {
             var index = eventLogProxy.findFirstUnreadIndex()
             positionViewAtIndex(index, ListView.End)
+            eventLogProxy.markIndexAsRead(index)
         })
     }
 
@@ -73,18 +75,21 @@ ListView {
         topPadding: Math.round(16 * DefaultStyle.dp)
         bottomPadding: Math.round(16 * DefaultStyle.dp)
         anchors.bottom: parent.bottom
+        style: ButtonStyle.main
         anchors.right: parent.right
         anchors.bottomMargin: Math.round(18 * DefaultStyle.dp)
         anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
         onClicked: {
             var index = eventLogProxy.findFirstUnreadIndex()
             mainItem.positionViewAtIndex(index, ListView.End)
+            eventLogProxy.markIndexAsRead(index)
         }
     }
 
     onAtYEndChanged: if (atYEnd) {
         if (eventLogProxy.haveMore)
             eventLogProxy.displayMore()
+        else chat.core.lMarkAsRead()
     }
 
     model: EventLogProxy {
@@ -94,11 +99,12 @@ ListView {
         filterText: mainItem.filterText
         onEventInserted: (index, gui) => {
             if (!mainItem.visible) return
-            mainItem.positionViewAtIndex(index, ListView.End)
+            if(mainItem.lastItemVisible) mainItem.positionViewAtIndex(index, ListView.End)
         }
         onModelReset: Qt.callLater(function() {
             var index = eventLogProxy.findFirstUnreadIndex()
             positionViewAtIndex(index, ListView.End)
+            eventLogProxy.markIndexAsRead(index)
         })
     }
 
@@ -162,23 +168,16 @@ ListView {
                 id: chatMessageDelegate
                 property int yoff: Math.round(chatMessageDelegate.y - mainItem.contentY)
                 property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
+                chatMessage: modelData.core.chatMessageGui
                 onIsFullyVisibleChanged: {
                     if (index === mainItem.count - 1) {
                         mainItem.lastItemVisible = isFullyVisible
                     }
-                    if (isFullyVisible)
-                        modelData.core.lMarkAsRead()
                 }
                 Component.onCompleted: if (index === mainItem.count - 1) mainItem.lastItemVisible = isFullyVisible
-                chatMessage: modelData
                 chat: mainItem.chat
                 searchedTextPart: mainItem.filterText
                 maxWidth: Math.round(mainItem.width * (3/4))
-                onVisibleChanged: {
-                    if (visible) {
-                        modelData.core.lMarkAsRead()
-                    }
-                }
                 width: mainItem.width
                 property var previousIndex: index - 1
                 property ChatMessageGui nextChatMessage: index >= (mainItem.count - 1) 
@@ -188,16 +187,16 @@ ListView {
                         : null
                 property var previousFromAddress: eventLogProxy.getEventAtIndex(index-1)?.core.chatMessage?.fromAddress
                 backgroundColor: isRemoteMessage ? DefaultStyle.main2_100 : DefaultStyle.main1_100
-                isFirstMessage: !previousFromAddress || previousFromAddress !== modelData.core.fromAddress
+                isFirstMessage: !previousFromAddress || previousFromAddress !== chatMessage.core.fromAddress
                 anchors.right: !isRemoteMessage && parent
                     ? parent.right
                     : undefined
 
-                onMessageDeletionRequested: modelData.core.lDelete()
-                onShowReactionsForMessageRequested: mainItem.showReactionsForMessageRequested(modelData)
-                onShowImdnStatusForMessageRequested: mainItem.showImdnStatusForMessageRequested(modelData)
-                onReplyToMessageRequested: mainItem.replyToMessageRequested(modelData)
-                onForwardMessageRequested: mainItem.forwardMessageRequested(modelData)
+                onMessageDeletionRequested: chatMessage.core.lDelete()
+                onShowReactionsForMessageRequested: mainItem.showReactionsForMessageRequested(chatMessage)
+                onShowImdnStatusForMessageRequested: mainItem.showImdnStatusForMessageRequested(chatMessage)
+                onReplyToMessageRequested: mainItem.replyToMessageRequested(chatMessage)
+                onForwardMessageRequested: mainItem.forwardMessageRequested(chatMessage)
                 onEndOfVoiceRecordingReached: {
                     if (nextChatMessage && nextChatMessage.core.isVoiceRecording) mainItem.requestAutoPlayVoiceRecording(index + 1)
                 }

@@ -53,7 +53,7 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 			        emit eventInserted(index, event);
 		        });
 	}
-	setSourceModels(new SortFilterList(model));
+	setSourceModels(new SortFilterList(model, Qt::AscendingOrder));
 	sort(0);
 }
 
@@ -94,6 +94,11 @@ int EventLogProxy::findFirstUnreadIndex() {
 	return std::max(0, getCount() - 1);
 }
 
+void EventLogProxy::markIndexAsRead(int proxyIndex) {
+	auto event = getItemAt<SortFilterList, EventLogList, EventLogCore>(proxyIndex);
+	if (event && event->getChatMessageCore()) event->getChatMessageCore()->lMarkAsRead();
+}
+
 int EventLogProxy::findIndexCorrespondingToFilter(int startIndex, bool goingBackward) {
 	auto filter = getFilterText();
 	if (filter.isEmpty()) return startIndex;
@@ -117,8 +122,8 @@ bool EventLogProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModel
 }
 
 bool EventLogProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
-	auto l = getItemAtSource<EventLogList, ChatMessageCore>(sourceLeft.row());
-	auto r = getItemAtSource<EventLogList, ChatMessageCore>(sourceRight.row());
+	auto l = getItemAtSource<EventLogList, EventLogCore>(sourceLeft.row());
+	auto r = getItemAtSource<EventLogList, EventLogCore>(sourceRight.row());
 	if (l && r) return l->getTimestamp() <= r->getTimestamp();
 	else return true;
 }

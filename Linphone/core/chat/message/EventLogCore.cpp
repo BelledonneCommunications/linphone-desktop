@@ -37,9 +37,11 @@ EventLogCore::EventLogCore(const std::shared_ptr<const linphone::EventLog> &even
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mEventLogType = LinphoneEnums::fromLinphone(eventLog->getType());
 	mTimestamp = QDateTime::fromMSecsSinceEpoch(eventLog->getCreationTime() * 1000);
-	if (eventLog->getChatMessage()) {
-		mChatMessageCore = ChatMessageCore::create(eventLog->getChatMessage());
-		mEventId = Utils::coreStringToAppString(eventLog->getChatMessage()->getMessageId());
+	auto chatmessage = eventLog->getChatMessage();
+	if (chatmessage) {
+		mChatMessageCore = ChatMessageCore::create(chatmessage);
+		mEventId = Utils::coreStringToAppString(chatmessage->getMessageId());
+		mTimestamp = QDateTime::fromSecsSinceEpoch(chatmessage->getTime());
 	} else if (eventLog->getCallLog()) {
 		mCallHistoryCore = CallHistoryCore::create(eventLog->getCallLog());
 		mEventId = Utils::coreStringToAppString(eventLog->getCallLog()->getCallId());
@@ -78,6 +80,10 @@ ChatMessageCore *EventLogCore::getChatMessageCorePointer() {
 }
 CallHistoryCore *EventLogCore::getCallHistoryCorePointer() {
 	return mCallHistoryCore.get();
+}
+
+QDateTime EventLogCore::getTimestamp() const {
+	return mTimestamp;
 }
 
 // Events (other than ChatMessage and CallLog which are handled in their respective Core)

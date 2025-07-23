@@ -141,14 +141,14 @@ QVariant EventLogList::data(const QModelIndex &index, int role) const {
 	if (core->getChatMessageCore()) {
 		switch (role) {
 			case Qt::DisplayRole:
-				return QVariant::fromValue(new ChatMessageGui(core->getChatMessageCore()));
+				return QVariant::fromValue(new EventLogGui(core));
 			case Qt::DisplayRole + 1:
 				return "chatMessage";
 		}
 	} else if (core->getCallHistoryCore()) {
 		switch (role) {
 			case Qt::DisplayRole:
-				return QVariant::fromValue(new CallHistoryGui(core->getCallHistoryCore()));
+				return QVariant::fromValue(new EventLogGui(core));
 			case Qt::DisplayRole + 1:
 				return "callLog";
 		}
