@@ -425,6 +425,25 @@ VariantObject *Utils::findFriendByAddress(const QString &address) {
 	return data;
 }
 
+VariantObject *Utils::getFriendSecurityLevel(const QString &address) {
+	VariantObject *data = new VariantObject("getFriendAddressSecurityLevel");
+	if (!data) return nullptr;
+	data->makeRequest([address]() {
+		auto defaultFriendList = ToolModel::getAppFriendList();
+		if (!defaultFriendList) return QVariant();
+		auto linphoneAddr = ToolModel::interpretUrl(address);
+		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+		if (!linFriend) return QVariant();
+		auto linAddr = ToolModel::interpretUrl(address);
+		if (!linAddr) return QVariant();
+		auto devices = linFriend->getDevicesForAddress(linphoneAddr);
+		int verified = 0;
+		return QVariant::fromValue(LinphoneEnums::fromLinphone(linFriend->getSecurityLevel()));
+	});
+	data->requestValue();
+	return data;
+}
+
 VariantObject *Utils::getFriendAddressSecurityLevel(const QString &address) {
 	VariantObject *data = new VariantObject("getFriendAddressSecurityLevel");
 	if (!data) return nullptr;
@@ -1440,7 +1459,7 @@ QList<QVariant> Utils::append(const QList<QVariant> a, const QList<QVariant> b) 
 
 QString Utils::getAddressToDisplay(QVariantList addressList, QString filter, QString defaultAddress) {
 	if (filter.isEmpty()) return defaultAddress;
-	for (auto& item: addressList) {
+	for (auto &item : addressList) {
 		QString address = item.toMap()["address"].toString();
 		if (address.contains(filter)) return address;
 	}

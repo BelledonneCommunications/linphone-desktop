@@ -66,6 +66,7 @@ Notification {
                         Layout.preferredHeight: Math.round(60 * DefaultStyle.dp)
 						Layout.alignment: Qt.AlignHCenter
 						call: mainItem.call
+						secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 						isConference: mainItem.call && mainItem.call.core.isConference
 					}
 					ColumnLayout {

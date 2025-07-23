@@ -47,6 +47,7 @@ ListView {
                 Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 				_address: modelData.core.address
+				secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 				shadowEnabled: false
 			}
 			Text {

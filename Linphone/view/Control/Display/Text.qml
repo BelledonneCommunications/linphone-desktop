@@ -10,7 +10,6 @@ Quick.Text {
 		family: DefaultStyle.defaultFont
         pixelSize: Math.round(10 * DefaultStyle.dp)
         weight: Typography.p1.weight
-		bold: true
 	}
 	color: DefaultStyle.main2_600
 	wrapMode: Quick.Text.Wrap

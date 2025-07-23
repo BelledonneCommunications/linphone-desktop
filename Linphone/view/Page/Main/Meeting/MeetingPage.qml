@@ -764,6 +764,7 @@ AbstractMainPage {
                             Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                             Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 							_address: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerAddress : ""
+							secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 						}
 						Text {
 							text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerName : ""
@@ -801,6 +802,7 @@ AbstractMainPage {
                                     Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                                     Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 									_address: modelData.address
+									secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 									shadowEnabled: false
 								}
 								Text {

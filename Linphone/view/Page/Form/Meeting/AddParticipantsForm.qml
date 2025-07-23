@@ -50,6 +50,7 @@ FocusScope{
                         Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 						_address: modelData
 						shadowEnabled: false
+						secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 					}
 					Text {
 						Layout.fillWidth: true

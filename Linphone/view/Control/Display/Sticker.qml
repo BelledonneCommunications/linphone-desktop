@@ -111,6 +111,7 @@ Item {
 					call: !mainItem.previewEnabled ? mainItem.call : null
 					displayNameVal: mainItem.displayName
 					securityBreach: mainItem.securityBreach ? mainItem.securityBreach : securityLevel === LinphoneEnums.SecurityLevel.Unsafe
+					secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 				}
 				ColumnLayout{
 					id: joiningView
