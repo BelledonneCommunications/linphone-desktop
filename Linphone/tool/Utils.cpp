@@ -1555,7 +1555,7 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 			if (linphoneChatRoom != nullptr) {
 				qDebug() << "Chatroom created with" << callModel->getRemoteAddress()->asStringUriOnly();
 				auto id = linphoneChatRoom->getIdentifier();
-				auto params = linphoneChatRoom->getCurrentParams();
+				auto params = linphoneChatRoom->getParams();
 				auto chatCore = ChatCore::create(linphoneChatRoom);
 				return QVariant::fromValue(new ChatGui(chatCore));
 			} else {
@@ -1592,7 +1592,7 @@ VariantObject *Utils::getChatForAddress(QString address) {
 			linphoneChatRoom = ToolModel::createChatForAddress(linAddr);
 			if (linphoneChatRoom != nullptr) {
 				qDebug() << "Chatroom created with" << linAddr->asStringUriOnly();
-				auto params = linphoneChatRoom->getCurrentParams();
+				auto params = linphoneChatRoom->getParams();
 				auto chatCore = ChatCore::create(linphoneChatRoom);
 				return QVariant::fromValue(new ChatGui(chatCore));
 			} else {
