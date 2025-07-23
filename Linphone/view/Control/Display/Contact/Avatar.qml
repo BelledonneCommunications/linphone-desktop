@@ -40,6 +40,11 @@ Loader{
 			: computedAvatarUri.length != 0
 	property var avatarObj: UtilsCpp.findAvatarByAddress(_address)
 	property string computedAvatarUri: avatarObj ? avatarObj.value : ''
+
+	// To get the secured property for a friend using an address to find it,
+	// override it as secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
+	property var friendSecurityLevelObj: UtilsCpp.getFriendSecurityLevel(_address)
+	property var friendSecurityLevel: friendSecurityLevelObj ? securityLevelObj.value : LinphoneEnums.SecurityLevel.None
 	
 	// To get the secured property for a specific address,
 	// override it as secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified

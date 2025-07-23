@@ -76,6 +76,7 @@ FocusScope{
 							anchors.fill: parent
 							_address: modelData
 							shadowEnabled: false
+							secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 						}
 						Button {
 							Layout.preferredWidth: Math.round(17 * DefaultStyle.dp)

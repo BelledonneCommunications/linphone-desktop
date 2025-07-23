@@ -133,6 +133,7 @@ public:
 	Q_INVOKABLE static VariantObject *findAvatarByAddress(const QString &address);
 	Q_INVOKABLE static VariantObject *findFriendByAddress(const QString &address);
 	Q_INVOKABLE static VariantObject *getFriendAddressSecurityLevel(const QString &address);
+	Q_INVOKABLE static VariantObject *getFriendSecurityLevel(const QString &address);
 	static QString generateSavedFilename(const QString &from, const QString &to);
 	Q_INVOKABLE static VariantObject *isMe(const QString &address);
 	Q_INVOKABLE static VariantObject *isLocal(const QString &address);

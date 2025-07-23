@@ -466,6 +466,25 @@ VariantObject *Utils::findFriendByAddress(const QString &address) {
 	return data;
 }
 
+VariantObject *Utils::getFriendSecurityLevel(const QString &address) {
+	VariantObject *data = new VariantObject("getFriendAddressSecurityLevel");
+	if (!data) return nullptr;
+	data->makeRequest([address]() {
+		auto defaultFriendList = ToolModel::getAppFriendList();
+		if (!defaultFriendList) return QVariant();
+		auto linphoneAddr = ToolModel::interpretUrl(address);
+		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+		if (!linFriend) return QVariant();
+		auto linAddr = ToolModel::interpretUrl(address);
+		if (!linAddr) return QVariant();
+		auto devices = linFriend->getDevicesForAddress(linphoneAddr);
+		int verified = 0;
+		return QVariant::fromValue(LinphoneEnums::fromLinphone(linFriend->getSecurityLevel()));
+	});
+	data->requestValue();
+	return data;
+}
+
 VariantObject *Utils::getFriendAddressSecurityLevel(const QString &address) {
 	VariantObject *data = new VariantObject("getFriendAddressSecurityLevel");
 	if (!data) return nullptr;

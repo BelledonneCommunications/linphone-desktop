@@ -33,8 +33,8 @@ FocusScope {
     // Use directly previous initial
     property real itemsRightMargin: Math.round(39 * DefaultStyle.dp)
 
-    property string displayName: searchResultItem? searchResultItem.core.fullName : ""
-    property string initial: displayName != "" ? displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale) : ''
+    property var displayName: searchResultItem? searchResultItem.core.fullName : ""
+    property var initial: displayName != "" ? displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale) : ''
 
     signal clicked(var mouse)
     signal contactDeletionRequested(FriendGui contact)
