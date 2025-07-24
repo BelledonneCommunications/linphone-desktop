@@ -171,28 +171,24 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 						    //							    window->setProperty(it.key().toLatin1(), it.value());
 						    const int timeout = Notifications[type].getTimeout() * 1000;
 						    auto updateNotificationCoordinates = [this, window, screen](int width, int height) {
-							    int *screenHeightOffset = &mScreenHeightOffset[screen->name()]; // Access optimization
+							    auto screenHeightOffset =
+							        screen ? mScreenHeightOffset.value(screen->name()) : 0; // Access optimization
 							    QRect availableGeometry = screen->availableGeometry();
-							    int heightOffset = availableGeometry.y() +
-							                       (availableGeometry.height() -
-							                        height); //*screen->devicePixelRatio(); when using manual scaler
 
 							    window->setX(availableGeometry.x() +
 							                 (availableGeometry.width() -
 							                  width)); //*screen->devicePixelRatio()); when using manual scaler
-							    window->setY(heightOffset - (*screenHeightOffset % heightOffset));
+							    window->setY(availableGeometry.y() + availableGeometry.height() - screenHeightOffset -
+							                 height);
 						    };
-						    QObject::connect(window, &QQuickWindow::widthChanged,
-						                     [window, updateNotificationCoordinates](int w) {
-							                     updateNotificationCoordinates(w, window->height());
-						                     });
-						    QObject::connect(window, &QQuickWindow::heightChanged,
-						                     [window, updateNotificationCoordinates](int h) {
-							                     updateNotificationCoordinates(window->width(), h);
-						                     });
 						    updateNotificationCoordinates(window->width(), window->height());
-						    QObject::connect(window, &QQuickWindow::closing, window,
-						                     [this, window] { deleteNotification(QVariant::fromValue(window)); });
+						    auto screenHeightOffset =
+						        screen ? mScreenHeightOffset.take(screen->name()) : 0; // Access optimization
+						    mScreenHeightOffset.insert(screen->name(), screenHeightOffset + window->height());
+						    QObject::connect(window, &QQuickWindow::closing, window, [this, window] {
+							    qDebug() << "closing notification";
+							    deleteNotification(QVariant::fromValue(window));
+						    });
 						    showNotification(window, timeout);
 						    lInfo() << QStringLiteral("Create notification:") << QVariant::fromValue(window);
 					    }
