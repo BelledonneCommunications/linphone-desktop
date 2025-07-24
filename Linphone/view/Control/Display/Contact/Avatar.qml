@@ -116,10 +116,10 @@ Loader{
 					z: 1
 					source: account 
 							? (account.core?.registrationState !== LinphoneEnums.RegistrationState.Ok 
-								? account.core?.registrationStateIcon 
+								? account.core?.registrationIcon 
 								: account.core?.presenceIcon)
 							: (contact 
-								? contact.core?.presenceIcon 
+								? contact.core?.presenceIcon
 								: "")
 				}
 				

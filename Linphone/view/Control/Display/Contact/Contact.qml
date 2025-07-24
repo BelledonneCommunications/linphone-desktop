@@ -63,52 +63,53 @@ Control.Control{
 			Layout.maximumWidth: Math.round(150 * DefaultStyle.dp)
 			Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 			Layout.preferredWidth: presenceOrRegistrationText.implicitWidth + Math.round(50 * DefaultStyle.dp)
-			contentItem:
-				Rectangle{
-					id: presenceBar
-					property bool isRegistered: mainItem.account?.core.registrationState == LinphoneEnums.RegistrationState.Ok
-					color: DefaultStyle.main2_200
-                	radius: Math.round(15 * DefaultStyle.dp)
-					RowLayout {
-						anchors.fill: parent
-						Image {
-							sourceSize.width: 11 * DefaultStyle.dp
-							sourceSize.height: 11 * DefaultStyle.dp
-							smooth: false
-							Layout.preferredWidth: 11 * DefaultStyle.dp
-							Layout.preferredHeight: 11 * DefaultStyle.dp
-							source: presenceBar.isRegistered 
-								? mainItem.account.core.presenceIcon 
-								: mainItem.account?.core.registrationStateIcon || ""
-							Layout.leftMargin: 8 * DefaultStyle.dp
-						}
-						Text {
-							id: presenceOrRegistrationText
-							verticalAlignment: Text.AlignVCenter
-							horizontalAlignment: Text.AlignHCenter
-							visible: mainItem.account
-							// Test texts
-							// Timer{
-							// 	running: true
-							// 	interval: 1000
-							// 	repeat: true
-							// 	onTriggered: text.mode = (++text.mode) % 4
-							// }
-							font.weight: Math.round(300 * DefaultStyle.dp)
-							font.pixelSize: Math.round(12 * DefaultStyle.dp)
-							color: presenceBar.isRegistered ? mainItem.account.core.presenceColor : mainItem.account?.core.registrationColor
-							text: presenceBar.isRegistered ? mainItem.account.core.presenceStatus : mainItem.account?.core.humaneReadableRegistrationState
-						}
-						EffectImage {
-							fillMode: Image.PreserveAspectFit
-							imageSource: AppIcons.downArrow
-							colorizationColor: DefaultStyle.main2_600
-							Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
-							Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
-							Layout.rightMargin: 8 * DefaultStyle.dp
-						}
+			enabled: mainItem.account && mainItem.account.core.registrationState === LinphoneEnums.RegistrationState.Ok
+			onEnabledChanged: if(!enabled) close()
+			contentItem: Rectangle {
+				id: presenceBar
+				property bool isRegistered: mainItem.account?.core.registrationState === LinphoneEnums.RegistrationState.Ok
+				color: DefaultStyle.main2_200
+				radius: Math.round(15 * DefaultStyle.dp)
+				RowLayout {
+					anchors.fill: parent
+					Image {
+						sourceSize.width: 11 * DefaultStyle.dp
+						sourceSize.height: 11 * DefaultStyle.dp
+						smooth: false
+						Layout.preferredWidth: 11 * DefaultStyle.dp
+						Layout.preferredHeight: 11 * DefaultStyle.dp
+						source: presenceBar.isRegistered 
+							? mainItem.account.core.presenceIcon 
+							: mainItem.account?.core.registrationIcon || ""
+						Layout.leftMargin: 8 * DefaultStyle.dp
+					}
+					Text {
+						id: presenceOrRegistrationText
+						verticalAlignment: Text.AlignVCenter
+						horizontalAlignment: Text.AlignHCenter
+						visible: mainItem.account
+						// Test texts
+						// Timer{
+						// 	running: true
+						// 	interval: 1000
+						// 	repeat: true
+						// 	onTriggered: text.mode = (++text.mode) % 4
+						// }
+						font.weight: Math.round(300 * DefaultStyle.dp)
+						font.pixelSize: Math.round(12 * DefaultStyle.dp)
+						color: presenceBar.isRegistered ? mainItem.account.core.presenceColor : mainItem.account?.core.registrationColor
+						text: presenceBar.isRegistered ? mainItem.account.core.presenceStatus : mainItem.account?.core.humaneReadableRegistrationState
+					}
+					EffectImage {
+						fillMode: Image.PreserveAspectFit
+						imageSource: AppIcons.downArrow
+						colorizationColor: DefaultStyle.main2_600
+						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
+						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+						Layout.rightMargin: 8 * DefaultStyle.dp
 					}
 				}
+			}
 			popup.contentItem: Rectangle {
 				implicitWidth: 280 * DefaultStyle.dp
 				implicitHeight: 20 * DefaultStyle.dp + (setCustomStatus.visible ? 240 * DefaultStyle.dp : setPresence.implicitHeight)

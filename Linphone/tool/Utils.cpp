@@ -1764,19 +1764,19 @@ QUrl Utils::getRegistrationStateIcon(LinphoneEnums::RegistrationState state) {
 	QUrl registrationStateIcon;
 	switch (state) {
 		case LinphoneEnums::RegistrationState::Refreshing:
-			registrationStateIcon = Utils::getAppIcon("regitrationProgress");
+			registrationStateIcon = Utils::getAppIcon("registrationProgress");
 			break;
 		case LinphoneEnums::RegistrationState::Progress:
-			registrationStateIcon = Utils::getAppIcon("regitrationProgress");
+			registrationStateIcon = Utils::getAppIcon("registrationProgress");
 			break;
 		case LinphoneEnums::RegistrationState::Failed:
-			registrationStateIcon = Utils::getAppIcon("regitrationError");
+			registrationStateIcon = Utils::getAppIcon("registrationError");
 			break;
 		case LinphoneEnums::RegistrationState::Cleared:
-			registrationStateIcon = Utils::getAppIcon("regitrationDeactivated");
+			registrationStateIcon = Utils::getAppIcon("registrationDeactivated");
 			break;
 		case LinphoneEnums::RegistrationState::None:
-			registrationStateIcon = Utils::getAppIcon("regitrationDeactivated");
+			registrationStateIcon = Utils::getAppIcon("registrationDeactivated");
 			break;
 		default:
 			registrationStateIcon = QUrl();
