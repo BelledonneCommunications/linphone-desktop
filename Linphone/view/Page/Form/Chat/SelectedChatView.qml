@@ -529,7 +529,7 @@ RowLayout {
 
 				onEphemeralSettingsRequested: contentLoader.panelType = SelectedChatView.PanelType.EphemeralSettings
                 onShowSharedFilesRequested: (showMedias) => {
-                    contentLoader.panelType = showMedias ? SelectedChatView.PanelType.SharedFiles : SelectedChatView.PanelType.Medias
+                    contentLoader.panelType = showMedias ? SelectedChatView.PanelType.Medias : SelectedChatView.PanelType.SharedFiles
                 }
                 onSearchInHistoryRequested: {
                     mainItem.showSearchBar = true
@@ -572,7 +572,7 @@ RowLayout {
                 filter: contentLoader.panelType === SelectedChatView.PanelType.Medias ? ChatMessageFileProxy.FilterContentType.Medias : ChatMessageFileProxy.FilterContentType.Documents
                 onGoBackRequested: {
                     // detailsPanel.visible = false
-                    contentLoader.panelType = SelectedChatView.PanelType.SharedFiles
+                    contentLoader.panelType = SelectedChatView.PanelType.None
                 }
 			}
 		}

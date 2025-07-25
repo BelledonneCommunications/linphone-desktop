@@ -18,7 +18,7 @@ ColumnLayout {
 	property bool isGroup: chatCore && chatCore.isGroupChat
 	spacing: 0
 	signal ephemeralSettingsRequested()
-	signal showSharedFilesRequested()
+	signal showSharedFilesRequested(bool showMedias)
 	signal searchInHistoryRequested()
 	signal manageParticipantsRequested()
 
