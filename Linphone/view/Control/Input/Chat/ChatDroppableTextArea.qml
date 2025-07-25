@@ -14,11 +14,11 @@ Control.Control {
 	// property alias placeholderText: sendingTextArea.placeholderText
 	property string text
 	property var textArea
+	property int selectedFilesCount: 0
 	// property alias cursorPosition: sendingTextArea.cursorPosition
 	property bool emojiPickerButtonChecked
 	
 	property bool dropEnabled: true
-	property string dropDisabledReason
 	property bool isEphemeral : false
 	property bool emojiVisible: false
 
@@ -190,7 +190,7 @@ Control.Control {
 								ToolTip.visible: !enabled && hovered
 								//: Cannot record a message while a call is ongoing
 								ToolTip.text: qsTr("cannot_record_while_in_call_tooltip")
-								visible: sendingTextArea.text.length === 0
+								visible: sendingTextArea.text.length === 0 && mainItem.selectedFilesCount === 0
 								style: ButtonStyle.noBackground
 								hoverEnabled: true
 								icon.source: AppIcons.microphone
@@ -199,7 +199,7 @@ Control.Control {
 								}
 							}
 							BigButton {
-								visible: sendingTextArea.text.length !== 0
+								visible: sendingTextArea.text.length !== 0 || mainItem.selectedFilesCount > 0
 								style: ButtonStyle.noBackgroundOrange
 								icon.source: AppIcons.paperPlaneRight
 								onClicked: {

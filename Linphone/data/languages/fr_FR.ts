@@ -4854,25 +4854,25 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <translation>Réponse à %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="569"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="570"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation>Médias partagés</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="571"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="572"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation>Documents partagés</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="600"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="601"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
         <translation>Transférer à…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="634"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="635"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Conversations</translation>

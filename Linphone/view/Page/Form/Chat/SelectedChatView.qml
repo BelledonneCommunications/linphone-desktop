@@ -446,6 +446,7 @@ RowLayout {
                 Control.SplitView.preferredHeight: mainItem.chat?.core.isReadOnly ? 0 : height
                 Control.SplitView.minimumHeight: mainItem.chat?.core.isReadOnly ? 0 : Math.round(79 * DefaultStyle.dp)
                 chat: mainItem.chat
+                selectedFilesCount: contents.count
                 onChatChanged: {
                     if (chat) messageSender.text = mainItem.chat.core.sendingText
                 }
