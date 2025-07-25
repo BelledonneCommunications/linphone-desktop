@@ -155,6 +155,10 @@ Button {
             if (y < mainItem.height && y + popupHeight > 0) {
                 x += mainItem.width
             }
+            var globalPos = mapToItem(mainItem.Window.contentItem, x, y)
+            if (globalPos.x + popupWidth >= mainItem.Window.width) {
+                x = -popupWidth
+            }
         }
 
         onHeightChanged: Qt.callLater(updatePosition)
