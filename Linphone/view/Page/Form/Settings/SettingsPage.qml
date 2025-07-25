@@ -19,7 +19,7 @@ AbstractSettingsMenu {
         {title: qsTr("settings_contacts_title"), layout: "ContactsSettingsLayout"},
         //: "Réunions"
         {title: qsTr("settings_meetings_title"), layout: "MeetingsSettingsLayout", visible: !SettingsCpp.disableMeetingsFeature},
-        //: "Affichage"
+        ////: "Affichage"
         //{title: qsTr("settings_user_interface_title"), layout: "DisplaySettingsLayout"},
         //: "Security"
         {title: qsTr("settings_security_title"), layout: "SecuritySettingsLayout"},

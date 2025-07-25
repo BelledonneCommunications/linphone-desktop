@@ -49,6 +49,7 @@ AbstractMainPage {
 				text: titleText
 				color: DefaultStyle.main2_700
 				font: Typography.h3
+				Layout.fillWidth: true
 			}
 			Item {
 				Layout.fillWidth: true
@@ -67,6 +68,7 @@ AbstractMainPage {
 			
 			delegate: SettingsMenuItem {
 				titleText: modelData.title
+				width: familiesList.width
 				visible: modelData.visible != undefined ? modelData.visible : true
 				isSelected: familiesList.selectedIndex == index
 				focus: index == 0

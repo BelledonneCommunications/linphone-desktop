@@ -259,7 +259,7 @@ void App::setAutoStart(bool enabled) {
 // -----------------------------------------------------------------------------
 
 App::App(int &argc, char *argv[])
-: SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
+    : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
 	// Do not use APPLICATION_NAME here.
 	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
 	QThread::currentThread()->setPriority(QThread::HighPriority);
@@ -522,7 +522,7 @@ void App::initCore() {
 				    setLocale(settings->getConfigLocale());
 				    setAutoStart(settings->getAutoStart());
 				    setQuitOnLastWindowClosed(settings->getExitOnClose());
-				}
+			    }
 			    const QUrl url("qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml");
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,
@@ -573,28 +573,28 @@ void App::initLocale() {
 	mLocale = QLocale(QLocale::English);
 	if (!installLocale(*this, *mDefaultTranslatorCore, mLocale)) qFatal("Unable to install default translator.");
 
-//	if (installLocale(*this, *mTranslatorCore, getLocale())) {
-//		qDebug() << "installed locale" << getLocale().name();
-//		return;
-//	}
+	//	if (installLocale(*this, *mTranslatorCore, getLocale())) {
+	//		qDebug() << "installed locale" << getLocale().name();
+	//		return;
+	//	}
 
-		   // Try to use system locale.
-		   // #ifdef Q_OS_MACOS
-		   // Use this workaround if there is still an issue about detecting wrong language from system on Mac. Qt doesn't use
-		   // the current system language on QLocale::system(). So we need to get it from user settings and overwrite its
-		   // Locale.
-		   //	QSettings settings;
-		   //	QString preferredLanguage = settings.value("AppleLanguages").toStringList().first();
-		   //	QStringList qtLocale = QLocale::system().name().split('_');
-		   //	if(qtLocale[0] != preferredLanguage){
-		   //		qInfo() << "Override Qt language from " << qtLocale[0] << " to the preferred language : " <<
-		   // preferredLanguage; 		qtLocale[0] = preferredLanguage;
-		   //	}
-		   //	QLocale sysLocale = QLocale(qtLocale.join('_'));
-		   // #else
+	// Try to use system locale.
+	// #ifdef Q_OS_MACOS
+	// Use this workaround if there is still an issue about detecting wrong language from system on Mac. Qt doesn't use
+	// the current system language on QLocale::system(). So we need to get it from user settings and overwrite its
+	// Locale.
+	//	QSettings settings;
+	//	QString preferredLanguage = settings.value("AppleLanguages").toStringList().first();
+	//	QStringList qtLocale = QLocale::system().name().split('_');
+	//	if(qtLocale[0] != preferredLanguage){
+	//		qInfo() << "Override Qt language from " << qtLocale[0] << " to the preferred language : " <<
+	// preferredLanguage; 		qtLocale[0] = preferredLanguage;
+	//	}
+	//	QLocale sysLocale = QLocale(qtLocale.join('_'));
+	// #else
 	QLocale sysLocale(QLocale::system().name()); // Use Locale from name because Qt has a bug where it didn't use the
-												 // QLocale::language (aka : translator.language != locale.language) on
-												 // Mac. #endif
+	// QLocale::language (aka : translator.language != locale.language) on
+	// Mac. #endif
 	if (installLocale(*this, *mTranslatorCore, sysLocale)) {
 		qDebug() << "installed sys locale" << sysLocale.name();
 		setLocale(sysLocale.name());
@@ -775,34 +775,37 @@ void App::createCommandParser() {
 	//: "A free and open source SIP video-phone."
 	mParser->setApplicationDescription(tr("application_description"));
 	//: "Send an order to the application towards a command line"
-	mParser->addPositionalArgument("command", tr("command_line_arg_order").replace("%1", APPLICATION_NAME), "[command]");
+	mParser->addPositionalArgument("command", tr("command_line_arg_order").replace("%1", APPLICATION_NAME),
+	                               "[command]");
 	mParser->addOptions({
-		//: "Show this help"
-		{{"h", "help"}, tr("command_line_option_show_help")},
+	    //: "Show this help"
+	    {{"h", "help"}, tr("command_line_option_show_help")},
 
 	    //{"cli-help", tr("commandLineOptionCliHelp").replace("%1", APPLICATION_NAME)},
 
-		//:"Show app version"
-		{{"v", "version"}, tr("command_line_option_show_app_version")},
+	    //:"Show app version"
+	    {{"v", "version"}, tr("command_line_option_show_app_version")},
 
-		//{"config", tr("command_line_option_config").replace("%1", EXECUTABLE_NAME), tr("command_line_option_config_arg")},
+	    //{"config", tr("command_line_option_config").replace("%1", EXECUTABLE_NAME),
+	    // tr("command_line_option_config_arg")},
 
 	    {"fetch-config",
-		 //: "Specify the linphone configuration file to be fetched. It will be merged with the current configuration."
-		 tr("command_line_option_config_to_fetch")
-	         .replace("%1", EXECUTABLE_NAME),
-		 //: "URL, path or file"
-		 tr("command_line_option_config_to_fetch_arg")},
+	     //: "Specify the linphone configuration file to be fetched. It will be merged with the current
+	     //: configuration."
+	     tr("command_line_option_config_to_fetch").replace("%1", EXECUTABLE_NAME),
+	     //: "URL, path or file"
+	     tr("command_line_option_config_to_fetch_arg")},
 
-		//{{"c", "call"}, tr("command_line_option_call").replace("%1", EXECUTABLE_NAME), tr("command_line_option_call_arg")},
+	    //{{"c", "call"}, tr("command_line_option_call").replace("%1", EXECUTABLE_NAME),
+	    // tr("command_line_option_call_arg")},
 
-		{"minimized", tr("command_line_option_minimized")},
+	    {"minimized", tr("command_line_option_minimized")},
 
-		//: "Log to stdout some debug information while running"
-		{{"V", "verbose"}, tr("command_line_option_log_to_stdout")},
+	    //: "Log to stdout some debug information while running"
+	    {{"V", "verbose"}, tr("command_line_option_log_to_stdout")},
 
-		//: "Print only logs from the application"
-		{"qt-logs-only", tr("command_line_option_print_app_logs_only")},
+	    //: "Print only logs from the application"
+	    {"qt-logs-only", tr("command_line_option_print_app_logs_only")},
 	});
 }
 // Should be call only at first start
