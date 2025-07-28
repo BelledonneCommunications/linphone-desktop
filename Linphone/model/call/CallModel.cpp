@@ -116,8 +116,10 @@ void CallModel::terminateAllCalls() {
 
 void CallModel::setMicrophoneMuted(bool isMuted) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	mMonitor->setMicrophoneMuted(isMuted);
-	emit microphoneMutedChanged(isMuted);
+	if (mMonitor->getConference()) mMonitor->getConference()->setMicrophoneMuted(isMuted);
+	else mMonitor->setMicrophoneMuted(isMuted);
+	emit microphoneMutedChanged(mMonitor->getConference() ? mMonitor->getConference()->getMicrophoneMuted()
+	                                                      : mMonitor->getMicrophoneMuted());
 }
 
 void CallModel::setSpeakerMuted(bool isMuted) {

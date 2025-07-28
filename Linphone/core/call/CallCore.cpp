@@ -107,8 +107,6 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mCallModel->setSelf(mCallModel);
 	mDuration = call->getDuration();
 	mIsStarted = mDuration > 0;
-	mMicrophoneMuted = call->getMicrophoneMuted();
-	mSpeakerMuted = call->getSpeakerMuted();
 	auto videoDirection = call->getParams()->getVideoDirection();
 	mLocalVideoEnabled =
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
@@ -158,6 +156,8 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	if (mIsConference) {
 		mConference = ConferenceCore::create(conference);
 	}
+	mMicrophoneMuted = conference ? conference->getMicrophoneMuted() : call->getMicrophoneMuted();
+	mSpeakerMuted = call->getSpeakerMuted();
 	mPaused = mState == LinphoneEnums::CallState::Pausing || mState == LinphoneEnums::CallState::Paused ||
 	          mState == LinphoneEnums::CallState::PausedByRemote;
 
@@ -208,10 +208,11 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		    mCallModelConnection->invokeToCore([this, recording]() {
 			    setRecording(recording);
 			    if (recording == false) {
-					//: "Enregistrement terminé"
-					Utils::showInformationPopup(tr("call_record_end_message"),
-												//: "L'appel a été enregistré dans le fichier : %1"
-												tr("call_record_saved_in_file_message").arg(QString::fromStdString(mCallModel->getRecordFile())),
+				    //: "Enregistrement terminé"
+				    Utils::showInformationPopup(tr("call_record_end_message"),
+				                                //: "L'appel a été enregistré dans le fichier : %1"
+				                                tr("call_record_saved_in_file_message")
+				                                    .arg(QString::fromStdString(mCallModel->getRecordFile())),
 				                                true, App::getInstance()->getCallsWindow());
 			    }
 		    });
@@ -308,8 +309,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		        [this, call, encryption, tokenVerified, localToken, remoteTokens, isCaseMismatch]() {
 			        setLocalToken(localToken);
 			        setRemoteTokens(remoteTokens);
-					setIsMismatch(isCaseMismatch);
-					setTokenVerified(tokenVerified);
+			        setIsMismatch(isCaseMismatch);
+			        setTokenVerified(tokenVerified);
 			        setEncryption(encryption);
 		        });
 		    auto mediaEncryption = call->getParams()->getMediaEncryption();
@@ -321,7 +322,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    zrtpStats.mHashAlgorithm = Utils::coreStringToAppString(stats->getZrtpHashAlgo());
 			    zrtpStats.mAuthenticationAlgorithm = Utils::coreStringToAppString(stats->getZrtpAuthTagAlgo());
 			    zrtpStats.mSasAlgorithm = Utils::coreStringToAppString(stats->getZrtpSasAlgo());
-				zrtpStats.mIsPostQuantum = stats->isZrtpKeyAgreementAlgoPostQuantum();
+			    zrtpStats.mIsPostQuantum = stats->isZrtpKeyAgreementAlgoPostQuantum();
 			    mCallModelConnection->invokeToCore([this, zrtpStats]() { setZrtpStats(zrtpStats); });
 		    }
 	    });
@@ -388,23 +389,23 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    auto codecType = playloadType ? playloadType->getMimeType() : "";
 			    auto codecRate = playloadType ? playloadType->getClockRate() / 1000 : 0;
 			    audioStats.mCodec =
-					//: "Codec: %1 / %2 kHz"
-					tr("call_stats_codec_label").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
+			        //: "Codec: %1 / %2 kHz"
+			        tr("call_stats_codec_label").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
 			    auto linAudioStats = call->getAudioStats();
 			    if (linAudioStats) {
-					//: "Bande passante : %1 %2 kbits/s %3 %4 kbits/s"
-					audioStats.mBandwidth = tr("call_stats_bandwidth_label")
+				    //: "Bande passante : %1 %2 kbits/s %3 %4 kbits/s"
+				    audioStats.mBandwidth = tr("call_stats_bandwidth_label")
 				                                .arg("↑")
 				                                .arg(round(linAudioStats->getUploadBandwidth()))
 				                                .arg("↓")
 				                                .arg(round(linAudioStats->getDownloadBandwidth()));
-					//: "Taux de perte: %1% %2%"
-					audioStats.mLossRate = tr("call_stats_loss_rate_label")
+				    //: "Taux de perte: %1% %2%"
+				    audioStats.mLossRate = tr("call_stats_loss_rate_label")
 				                               .arg(linAudioStats->getSenderLossRate())
 				                               .arg(linAudioStats->getReceiverLossRate());
-					//: "Tampon de gigue: %1 ms"
-					audioStats.mJitterBufferSize =
-						tr("call_stats_jitter_buffer_label").arg(linAudioStats->getJitterBufferSizeMs());
+				    //: "Tampon de gigue: %1 ms"
+				    audioStats.mJitterBufferSize =
+				        tr("call_stats_jitter_buffer_label").arg(linAudioStats->getJitterBufferSizeMs());
 			    }
 			    setAudioStats(audioStats);
 		    } else if (stats->getType() == linphone::StreamType::Video) {
@@ -414,15 +415,15 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    auto codecType = playloadType ? playloadType->getMimeType() : "";
 			    auto codecRate = playloadType ? playloadType->getClockRate() / 1000 : 0;
 			    videoStats.mCodec =
-					tr("call_stats_codec_label").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
+			        tr("call_stats_codec_label").arg(Utils::coreStringToAppString(codecType)).arg(codecRate);
 			    auto linVideoStats = call->getVideoStats();
 			    if (stats) {
-					videoStats.mBandwidth = tr("call_stats_bandwidth_label")
+				    videoStats.mBandwidth = tr("call_stats_bandwidth_label")
 				                                .arg("↑")
 				                                .arg(round(linVideoStats->getUploadBandwidth()))
 				                                .arg("↓")
 				                                .arg(round(linVideoStats->getDownloadBandwidth()));
-					videoStats.mLossRate = tr("call_stats_loss_rate_label")
+				    videoStats.mLossRate = tr("call_stats_loss_rate_label")
 				                               .arg(linVideoStats->getSenderLossRate())
 				                               .arg(linVideoStats->getReceiverLossRate());
 			    }
@@ -430,14 +431,14 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			        params->getSentVideoDefinition() ? params->getSentVideoDefinition()->getName() : "";
 			    auto receivedResolution =
 			        params->getReceivedVideoDefinition() ? params->getReceivedVideoDefinition()->getName() : "";
-				//: "Définition vidéo : %1 %2 %3 %4"
-				videoStats.mResolution = tr("call_stats_resolution_label")
+			    //: "Définition vidéo : %1 %2 %3 %4"
+			    videoStats.mResolution = tr("call_stats_resolution_label")
 			                                 .arg("↑", Utils::coreStringToAppString(sentResolution), "↓",
 			                                      Utils::coreStringToAppString(receivedResolution));
 			    auto sentFps = params->getSentFramerate();
 			    auto receivedFps = params->getReceivedFramerate();
-				//: "FPS : %1 %2 %3 %4"
-				videoStats.mFps = tr("call_stats_fps_label").arg("↑").arg(sentFps).arg("↓").arg(receivedFps);
+			    //: "FPS : %1 %2 %3 %4"
+			    videoStats.mFps = tr("call_stats_fps_label").arg("↑").arg(sentFps).arg("↓").arg(receivedFps);
 			    setVideoStats(videoStats);
 		    }
 	    });
