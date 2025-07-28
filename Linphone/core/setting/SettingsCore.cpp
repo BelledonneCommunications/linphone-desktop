@@ -616,7 +616,7 @@ QVariantList SettingsCore::getPlaybackDevices() const {
 
 void SettingsCore::setPlaybackDevices(QVariantList devices) {
 	mPlaybackDevices = devices;
-	emit captureDevicesChanged(devices);
+	emit playbackDevicesChanged(devices);
 }
 
 QVariantList SettingsCore::getRingerDevices() const {
