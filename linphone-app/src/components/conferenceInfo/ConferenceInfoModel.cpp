@@ -374,6 +374,7 @@ void ConferenceInfoModel::createConference() {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	static std::shared_ptr<linphone::Conference> conference;
+	mConferenceInfo->setSecurityLevel(linphone::Conference::SecurityLevel::None); // TODO: remove when conferences can be encrypted
 	qInfo() << "Conference creation of " << getSubject() << " at " << (int)mConferenceInfo->getSecurityLevel() << " security, organized by " << getOrganizer() << " for " << getDateTimeSystem().toString();
 	qInfo() << "Participants:";
 	for(auto p : mConferenceInfo->getParticipants())

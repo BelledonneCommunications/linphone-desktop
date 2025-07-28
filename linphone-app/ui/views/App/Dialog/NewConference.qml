@@ -51,6 +51,7 @@ DialogPlus {
 			Layout.alignment: Qt.AlignLeft
 			Layout.leftMargin: 15
 			spacing:4
+			visible: false  // TODO: remove when conferences can be encrypted
 			Text {
 				Layout.fillWidth: true
 				//: 'Would you like to encrypt your meeting ?' : Ask about setting the meeting as secured.
