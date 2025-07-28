@@ -271,6 +271,8 @@ QVariantList SettingsModel::getCaptureDevices() const {
 	for (const auto &device : core->getExtendedAudioDevices()) {
 		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityRecord)) {
 			list << ToolModel::createVariant(device);
+		} else if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityAll)) {
+			list << ToolModel::createVariant(device);
 		}
 	}
 	return list;
@@ -282,8 +284,11 @@ QVariantList SettingsModel::getPlaybackDevices() const {
 	QVariantList list;
 
 	for (const auto &device : core->getExtendedAudioDevices()) {
-		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityPlay))
+		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityPlay)) {
 			list << ToolModel::createVariant(device);
+		} else if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityAll)) {
+			list << ToolModel::createVariant(device);
+		}
 	}
 
 	return list;
