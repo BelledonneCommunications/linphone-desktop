@@ -166,7 +166,7 @@ void LimitProxy::displayMore() {
 	auto model = sourceModel();
 	int newCount = getDisplayCount(model ? model->rowCount() : 0, mMaxDisplayItems + mDisplayItemsStep);
 	if (newCount != oldCount) {
-		setMaxDisplayItems(mMaxDisplayItems + mDisplayItemsStep);
+		setMaxDisplayItems(newCount);
 	}
 }
 

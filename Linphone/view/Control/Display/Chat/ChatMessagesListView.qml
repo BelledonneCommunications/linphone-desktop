@@ -97,6 +97,8 @@ ListView {
         chatGui: mainItem.chat
         // scroll when in view and message inserted
         filterText: mainItem.filterText
+        initialDisplayItems: 10
+        displayItemsStep: 3 * initialDisplayItems / 2
         onEventInserted: (index, gui) => {
             if (!mainItem.visible) return
             if(mainItem.lastItemVisible) mainItem.positionViewAtIndex(index, ListView.End)
