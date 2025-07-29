@@ -100,9 +100,6 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, [this]() { emit lUpdate(true); });
 
 	mCoreModelConnection->makeConnectToModel(
-	    &CoreModel::conferenceInfoCreated,
-	    [this](const std::shared_ptr<linphone::ConferenceInfo> &confInfo) { addConference(confInfo); });
-	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::conferenceInfoReceived,
 	    [this](const std::shared_ptr<linphone::Core> &core,
 	           const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {

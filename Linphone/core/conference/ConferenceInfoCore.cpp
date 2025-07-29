@@ -194,15 +194,6 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 				                                            uri] {
 					    setConferenceSchedulerState(state);
 					    setConferenceInfoState(infoState);
-					    if (state == LinphoneEnums::ConferenceSchedulerState::Ready) {
-						    setUri(uri);
-						    mConfInfoModelConnection->invokeToModel([this, uri, infoState] {
-							    if (infoState == LinphoneEnums::ConferenceInfoState::New)
-								    emit CoreModel::getInstance()->conferenceInfoCreated(
-								        mConferenceInfoModel->getConferenceInfo());
-						    });
-					    }
-					    setConferenceSchedulerState(state);
 				    });
 			    });
 			mConfInfoModelConnection->makeConnectToModel(
