@@ -64,7 +64,7 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	mConferenceInfo = linphone::Factory::get()->createConferenceInfo();
 	mIsScheduled = false;
 	if(CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled())
-		mConferenceInfo->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
+		mConferenceInfo->setSecurityLevel(linphone::Conference::SecurityLevel::PointToPoint);
 	initDateTime();
 	auto defaultAccount = CoreManager::getInstance()->getCore()->getDefaultAccount();
 	if(defaultAccount){
@@ -335,7 +335,7 @@ void ConferenceInfoModel::setIsEnded(const bool& end){
 void ConferenceInfoModel::setIsSecured(const bool& on){
 	if( on != isSecured()){
 		if(mConferenceInfo)
-			mConferenceInfo->setSecurityLevel(on ? linphone::Conference::SecurityLevel::EndToEnd : linphone::Conference::SecurityLevel::None);
+			mConferenceInfo->setSecurityLevel(on ? linphone::Conference::SecurityLevel::PointToPoint : linphone::Conference::SecurityLevel::None);
 		emit isSecuredChanged();
 	}
 }
@@ -374,7 +374,6 @@ void ConferenceInfoModel::createConference() {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	static std::shared_ptr<linphone::Conference> conference;
-	mConferenceInfo->setSecurityLevel(linphone::Conference::SecurityLevel::None); // TODO: remove when conferences can be encrypted
 	qInfo() << "Conference creation of " << getSubject() << " at " << (int)mConferenceInfo->getSecurityLevel() << " security, organized by " << getOrganizer() << " for " << getDateTimeSystem().toString();
 	qInfo() << "Participants:";
 	for(auto p : mConferenceInfo->getParticipants())
