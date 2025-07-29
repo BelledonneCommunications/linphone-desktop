@@ -82,7 +82,7 @@ void RecorderModel::start() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	bool soFarSoGood;
 	QString filename =
-	    QStringLiteral("vocal_%1.mkv").arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss-zzz"));
+	    QStringLiteral("vocal_%1.mka").arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss-zzz"));
 	const QString safeFilePath = Utils::getSafeFilePath(
 	    QStringLiteral("%1%2").arg(SettingsModel::getInstance()->getSavedCallsFolder()).arg(filename), &soFarSoGood);
 
