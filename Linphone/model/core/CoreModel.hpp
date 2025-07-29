@@ -76,7 +76,6 @@ signals:
 	void friendRemoved(const std::shared_ptr<linphone::Friend> &f);
 	void friendUpdated(const std::shared_ptr<linphone::Friend> &f);
 	void bearerAccountAdded();
-	void conferenceInfoCreated(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
 	void unreadNotificationsChanged();
 	void requestFetchConfig(QString path);
 	void requestRestart();
