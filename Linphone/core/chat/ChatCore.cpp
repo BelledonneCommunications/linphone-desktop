@@ -139,7 +139,6 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 ChatCore::~ChatCore() {
 	lDebug() << "[ChatCore] delete" << this;
 	mustBeInMainThread("~" + getClassName());
-	mChatModelConnection->disconnect();
 	emit mChatModel->removeListener();
 }
 
@@ -670,7 +669,6 @@ void ChatCore::updateInfo(const std::shared_ptr<linphone::Friend> &updatedFriend
 	if (isThisFriend) {
 		if (isRemoval) {
 			mFriendModel = nullptr;
-			mFriendModelConnection = nullptr;
 		}
 		int capabilities = mChatModel->getCapabilities();
 		auto chatroom = mChatModel->getMonitor();

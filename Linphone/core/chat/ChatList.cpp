@@ -69,14 +69,17 @@ void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
 			emit dataChanged(modelIndex, modelIndex);
 		}
 	};
-	connect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, dataChange);
+	connect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, [this, dataChange] {
+		dataChange();
+		auto defaultAccount = App::getInstance()->getAccountList()->getDefaultAccountCore();
+		if (defaultAccount) emit defaultAccount->lRefreshNotifications();
+	});
 	connect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, dataChange);
 	connect(chat.get(), &ChatCore::lastMessageChanged, this, dataChange);
 }
 
 void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	mModelConnection = SafeConnection<ChatList, CoreModel>::create(me, CoreModel::getInstance());
-
 	mModelConnection->makeConnectToCore(&ChatList::lUpdate, [this]() {
 		mModelConnection->invokeToModel([this]() {
 			mustBeInLinphoneThread(getClassName());
@@ -102,11 +105,11 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 					connectItem(chat);
 				}
 				mustBeInMainThread(getClassName());
-                clearData();
-                for(auto chat: *chats) {
-                    add(chat);
-                }
-                delete chats;
+				clearData();
+				for (auto chat : *chats) {
+					add(chat);
+				}
+				delete chats;
 			});
 		});
 	});
@@ -118,19 +121,19 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	                            const std::shared_ptr<linphone::ChatRoom> &room,
 	                            const std::shared_ptr<linphone::ChatMessage> &message) {
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		auto receiverAccount = ToolModel::findAccount(message->getToAddress());
-		if (!receiverAccount) {
-			qWarning() << log().arg("Receiver account not found in account list, return");
-			return;
-		}
-		auto receiverAddress = receiverAccount->getContactAddress();
+		auto receiverAddress = message->getToAddress();
 		if (!receiverAddress) {
 			qWarning() << log().arg("Receiver account has no address, return");
 			return;
 		}
+		auto senderAddress = message->getFromAddress();
 		auto defaultAddress = core->getDefaultAccount()->getContactAddress();
 		if (!defaultAddress->weakEqual(receiverAddress)) {
 			qDebug() << log().arg("Receiver account is not the default one, do not add chat to list");
+			return;
+		}
+		if (defaultAddress->weakEqual(senderAddress)) {
+			qDebug() << log().arg("Sender account is the default one, do not add chat to list");
 			return;
 		}
 

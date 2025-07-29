@@ -214,7 +214,6 @@ private:
 	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
 	QSharedPointer<SafeConnection<ChatCore, CoreModel>> mCoreModelConnection;
-	QSharedPointer<SafeConnection<ChatCore, FriendModel>> mFriendModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };
