@@ -89,7 +89,7 @@ Control.TabBar {
 
 			contentItem: Text {
 				id: tabText
-				width: Math.min(implicitWidth, mainItem.width / mainItem.model.length)
+				width: implicitWidth
 				font {
 					pixelSize: mainItem.pixelSize
 					weight: mainItem.textWeight

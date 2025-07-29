@@ -51,7 +51,7 @@ ColumnLayout {
 			onCurrentIndexChanged: console.log("current index", currentIndex)
 			visible: mainItem.tabbarModel !== undefined
 			Layout.fillWidth: true
-			Layout.preferredWidth: parent.width
+			Layout.preferredWidth: implicitWidth
             model: mainItem.tabbarModel
 			pixelSize: Typography.h3m.pixelSize
 			textWeight: Typography.h3m.weight
