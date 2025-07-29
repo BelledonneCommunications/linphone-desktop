@@ -373,7 +373,7 @@ ListView {
                     IconLabelButton {
                         //: "leave"
                         text: qsTr("chat_room_leave")
-                        visible: mainItem.currentChatGui && !mainItem.currentChatGui.core.isReadOnly
+                        visible: mainItem.currentChatGui && !mainItem.currentChatGui.core.isReadOnly && mainItem.currentChatGui.core.isGroupChat
                         icon.source: AppIcons.trashCan
                         spacing: Math.round(10 * DefaultStyle.dp)
                         Layout.fillWidth: true
