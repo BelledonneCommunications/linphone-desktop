@@ -445,8 +445,9 @@ QList<QVariant> FriendCore::getAllAddresses() const {
 	auto phoneNumbers = mPhoneNumberList;
 	while (addressIt != mAddressList.end()) {
 		auto username = Utils::getUsername(addressIt->toMap()["address"].toString());
-		std::remove_if(phoneNumbers.begin(), phoneNumbers.end(),
-		               [username](const QVariant &data) { return data.toMap()["address"].toString() == username; });
+		phoneNumbers.erase(std::remove_if(phoneNumbers.begin(), phoneNumbers.end(),
+		               [username](const QVariant &data) { return data.toMap()["address"].toString() == username; })
+		               , phoneNumbers.end());
 		++addressIt;
 	}
 	addresses << phoneNumbers;

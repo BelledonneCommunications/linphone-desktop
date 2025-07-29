@@ -99,10 +99,16 @@ Item {
             x: mainItem.width / 2 - width / 2
             y: contentItem.height / 2
             property var currentCall: callsModel.currentCall ? callsModel.currentCall : null
+            property var conference: currentCall ? currentCall.core.conference : null
             property string remoteName: currentCall ? currentCall.core.remoteName : ""
+            property string subject: conference ? conference.core.subject : ''
             contentItem: MediumButton {
                 style: ButtonStyle.toast
-                text: currentCallNotif.currentCall ? currentCallNotif.currentCall.core.conference ? ("Réunion en cours : ") + currentCallNotif.currentCall.core.conference.core.subject : (("Appel en cours : ") + currentCallNotif.remoteName) : "appel en cours"
+                text: currentCallNotif.currentCall
+                    ? currentCallNotif.conference
+                        ? ("Réunion en cours : ") + currentCallNotif.subject
+                        : (("Appel en cours : ") + currentCallNotif.remoteName)
+                    : "appel en cours"
                 onClicked: {
                     var callsWindow = UtilsCpp.getCallsWindow(
                                 currentCallNotif.currentCall)
