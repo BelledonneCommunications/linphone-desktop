@@ -85,7 +85,7 @@ Control.TabBar {
 
 			contentItem: Text {
 				id: tabText
-				width: Math.min(implicitWidth, mainItem.width / mainItem.model.length)
+				width: implicitWidth
 				font.weight: mainItem.textWeight
 				color: mainItem.currentIndex === index ? DefaultStyle.main2_600 : DefaultStyle.main2_400
 				font.family: DefaultStyle.defaultFont
