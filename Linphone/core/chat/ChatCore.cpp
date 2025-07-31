@@ -523,11 +523,15 @@ void ChatCore::resetEventLogList(QList<QSharedPointer<EventLogCore>> list) {
 void ChatCore::appendEventLogsToEventLogList(QList<QSharedPointer<EventLogCore>> list) {
 	int nbAdded = 0;
 	for (auto &e : list) {
-		if (mEventLogList.contains(e)) continue;
-		if (auto message = e->getChatMessageCore())
-			connect(message.get(), &ChatMessageCore::isReadChanged, this, [this] { emit lUpdateUnreadCount(); });
-		mEventLogList.append(e);
-		++nbAdded;
+		auto it = std::find_if(mEventLogList.begin(), mEventLogList.end(), [e](QSharedPointer<EventLogCore> event) {
+			return e->getEventLogId() == event->getEventLogId();
+		});
+		if (it == mEventLogList.end()) {
+			if (auto message = e->getChatMessageCore())
+				connect(message.get(), &ChatMessageCore::isReadChanged, this, [this] { emit lUpdateUnreadCount(); });
+			mEventLogList.append(e);
+			++nbAdded;
+		}
 	}
 	if (nbAdded > 0) emit eventsInserted(list);
 }

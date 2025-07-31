@@ -75,7 +75,7 @@ private:
 	QSharedPointer<ChatMessageCore> mChatMessageCore = nullptr;
 	QSharedPointer<CallHistoryCore> mCallHistoryCore = nullptr;
 	LinphoneEnums::EventLogType mEventLogType;
-	bool mHandled;
+	bool mHandled = false;
 	bool mImportant;
 	bool mEphemeralRelated;
 	QString mEventDetails;
