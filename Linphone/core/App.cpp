@@ -426,6 +426,21 @@ void App::initCore() {
 	CoreModel::create("", mLinphoneThread);
 	if (mParser->isSet("verbose")) QtLogger::enableVerbose(true);
 	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
+
+	// Config error message
+	connect(CoreModel::getInstance().get(), &CoreModel::configuringStatus, this,
+	        [this](const std::shared_ptr<linphone::Core> &core, linphone::ConfiguringState status,
+	               const std::string &message) {
+		        mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		        QMetaObject::invokeMethod(thread(), [this, message]() {
+			        mustBeInMainThread(log().arg(Q_FUNC_INFO));
+			        //: Error
+			        Utils::showInformationPopup(
+			            tr("info_popup_error_title"),
+			            tr("info_popup_configuration_failed_message").arg(Utils::coreStringToAppString(message)),
+			            false);
+		        });
+	        });
 	QMetaObject::invokeMethod(
 	    mLinphoneThread->getThreadId(),
 	    [this, settings = mSettings]() mutable {
@@ -546,6 +561,20 @@ void App::initCore() {
 						        window->show();
 					        } else lInfo() << log().arg("Stay minimized");
 					        firstOpen = false;
+					        lInfo() << log().arg("Checking remote provisioning");
+					        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed) {
+						        QMetaObject::invokeMethod(thread(), [this]() {
+							        auto message = CoreModel::getInstance()->mConfigMessage;
+							        //: not reachable
+							        if (message.isEmpty()) message = tr("configuration_error_detail");
+							        mustBeInMainThread(log().arg(Q_FUNC_INFO));
+							        //: Error
+							        Utils::showInformationPopup(
+							            tr("info_popup_error_title"),
+							            //: Remote provisioning failed : %1
+							            tr("info_popup_configuration_failed_message").arg(message), false);
+						        });
+					        }
 				        }
 			        },
 			        Qt::QueuedConnection);

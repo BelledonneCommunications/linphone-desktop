@@ -451,6 +451,8 @@ void CoreModel::onConferenceStateChanged(const std::shared_ptr<linphone::Core> &
 void CoreModel::onConfiguringStatus(const std::shared_ptr<linphone::Core> &core,
                                     linphone::ConfiguringState status,
                                     const std::string &message) {
+	mConfigStatus = status;
+	mConfigMessage = Utils::coreStringToAppString(message);
 	emit configuringStatus(core, status, message);
 }
 void CoreModel::onDefaultAccountChanged(const std::shared_ptr<linphone::Core> &core,

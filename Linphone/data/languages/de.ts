@@ -519,68 +519,88 @@
         <translation>Möchten Sie die Remote-Konfiguration von dieser Adresse herunterladen und anwenden?</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="776"/>
+        <location filename="../../core/App.cpp" line="439"/>
+        <location filename="../../core/App.cpp" line="573"/>
+        <source>info_popup_error_title</source>
+        <extracomment>Error</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="440"/>
+        <location filename="../../core/App.cpp" line="575"/>
+        <source>info_popup_configuration_failed_message</source>
+        <extracomment>Remote provisioning failed : %1</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="569"/>
+        <source>configuration_error_detail</source>
+        <extracomment>not reachable</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="805"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>Ein kostenloses Open-Source SIP Video-Telefon.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="778"/>
+        <location filename="../../core/App.cpp" line="807"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Kommandozeilen-Befehl an die Anwendung schicken</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="782"/>
+        <location filename="../../core/App.cpp" line="811"/>
         <source>command_line_option_show_help</source>
         <translation>Zeige Hilfe</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="787"/>
+        <location filename="../../core/App.cpp" line="816"/>
         <source>command_line_option_show_app_version</source>
         <translation type="unfinished">Zeige App-Version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="794"/>
+        <location filename="../../core/App.cpp" line="824"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Abzurufende Linphone-Konfigurationsdatei angeben. Sie wird mit der aktuellen Konfiguration zusammengeführt.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="796"/>
+        <location filename="../../core/App.cpp" line="826"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, Pfad oder Datei</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="801"/>
+        <location filename="../../core/App.cpp" line="831"/>
         <source>command_line_option_minimized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="804"/>
+        <location filename="../../core/App.cpp" line="834"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Debug-Informationen auf der Standardausgabe ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="807"/>
+        <location filename="../../core/App.cpp" line="837"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Nur Anwendungs-Logs ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1167"/>
+        <location filename="../../core/App.cpp" line="1197"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Ausblenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1167"/>
+        <location filename="../../core/App.cpp" line="1197"/>
         <source>show_action</source>
         <translation>Zeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1182"/>
+        <location filename="../../core/App.cpp" line="1212"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Beenden</translation>
@@ -639,64 +659,64 @@
         <translation>Die Aufnahme wurde in der folgenden Datei gespeichert: %1</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="392"/>
-        <location filename="../../core/call/CallCore.cpp" line="417"/>
+        <location filename="../../core/call/CallCore.cpp" line="393"/>
+        <location filename="../../core/call/CallCore.cpp" line="418"/>
         <source>call_stats_codec_label</source>
         <extracomment>&quot;Codec: %1 / %2 kHz&quot;</extracomment>
         <translation>Codec: %1 / %2 kHz</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="396"/>
-        <location filename="../../core/call/CallCore.cpp" line="420"/>
+        <location filename="../../core/call/CallCore.cpp" line="397"/>
+        <location filename="../../core/call/CallCore.cpp" line="421"/>
         <source>call_stats_bandwidth_label</source>
         <extracomment>&quot;Bande passante : %1 %2 kbits/s %3 %4 kbits/s&quot;</extracomment>
         <translation>Bandbreite: %1 %2 kbits/s %3 %4 kbits/s</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="402"/>
-        <location filename="../../core/call/CallCore.cpp" line="425"/>
+        <location filename="../../core/call/CallCore.cpp" line="403"/>
+        <location filename="../../core/call/CallCore.cpp" line="426"/>
         <source>call_stats_loss_rate_label</source>
         <extracomment>&quot;Taux de perte: %1% %2%&quot;</extracomment>
         <translation>Verlustquote: %1% %2%</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="407"/>
+        <location filename="../../core/call/CallCore.cpp" line="408"/>
         <source>call_stats_jitter_buffer_label</source>
         <extracomment>&quot;Tampon de gigue: %1 ms&quot;</extracomment>
         <translation>Jitter-Puffer: %1 ms</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="434"/>
+        <location filename="../../core/call/CallCore.cpp" line="435"/>
         <source>call_stats_resolution_label</source>
         <extracomment>&quot;Définition vidéo : %1 %2 %3 %4&quot;</extracomment>
         <translation>Videoauflösung: %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="440"/>
+        <location filename="../../core/call/CallCore.cpp" line="441"/>
         <source>call_stats_fps_label</source>
         <extracomment>&quot;FPS : %1 %2 %3 %4&quot;</extracomment>
         <translation>FPS : %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="653"/>
+        <location filename="../../core/call/CallCore.cpp" line="654"/>
         <source>media_encryption_dtls</source>
         <extracomment>DTLS</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="656"/>
+        <location filename="../../core/call/CallCore.cpp" line="657"/>
         <source>media_encryption_none</source>
         <extracomment>None</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="659"/>
+        <location filename="../../core/call/CallCore.cpp" line="660"/>
         <source>media_encryption_srtp</source>
         <extracomment>SRTP</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="662"/>
+        <location filename="../../core/call/CallCore.cpp" line="663"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
         <translation type="unfinished">Post-quantum ZRTP</translation>
@@ -827,43 +847,43 @@
 <context>
     <name>CallModel</name>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="338"/>
+        <location filename="../../model/call/CallModel.cpp" line="340"/>
         <source>call_error_user_declined_toast</source>
         <extracomment>&quot;Le correspondant a décliné l&apos;appel&quot;</extracomment>
         <translation>Der Benutzer hat den Anruf abgelehnt</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="342"/>
+        <location filename="../../model/call/CallModel.cpp" line="344"/>
         <source>call_error_user_not_found_toast</source>
         <extracomment>&quot;Le correspondant n&apos;a pas été trouvé&quot;</extracomment>
         <translation>Benutzer nicht gefunden</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="346"/>
+        <location filename="../../model/call/CallModel.cpp" line="348"/>
         <source>call_error_user_busy_toast</source>
         <extracomment>&quot;Le correspondant est occupé&quot;</extracomment>
         <translation>Der Benutzer ist beschäftigt</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="350"/>
+        <location filename="../../model/call/CallModel.cpp" line="352"/>
         <source>call_error_incompatible_media_params_toast</source>
         <extracomment>&quot;Le correspondant ne peut accepter votre appel.&quot;</extracomment>
         <translation>Der Benutzer kann Ihren Anruf nicht annehmen</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="354"/>
+        <location filename="../../model/call/CallModel.cpp" line="356"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Service indisponible ou erreur réseau&quot;</extracomment>
         <translation>Dienst nicht verfügbar oder Netzwerkfehler</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="358"/>
+        <location filename="../../model/call/CallModel.cpp" line="360"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporairement indisponible&quot;</extracomment>
         <translation>Vorübergehend nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="362"/>
+        <location filename="../../model/call/CallModel.cpp" line="364"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Délai d&apos;attente du serveur dépassé&quot;</extracomment>
         <translation>Server-Zeitüberschreitung</translation>
@@ -1641,13 +1661,13 @@
 <context>
     <name>ConferenceInfoCore</name>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="577"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="568"/>
         <source>information_popup_error_title</source>
         <extracomment>&quot;Erreur&quot;</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="579"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="570"/>
         <source>information_popup_disconnected_account_message</source>
         <extracomment>&quot;Votre compte est déconnecté&quot;</extracomment>
         <translation>Ihr Konto ist getrennt</translation>
