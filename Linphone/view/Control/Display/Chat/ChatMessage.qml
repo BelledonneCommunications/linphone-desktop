@@ -312,7 +312,16 @@ Control.Control {
                                                 ? AppIcons.warningCircle
                                                 : mainItem.msgState === LinphoneEnums.ChatMessageState.StateDisplayed
                                                     ? AppIcons.checks
-                                                    : ""
+                                                    : mainItem.msgState === LinphoneEnums.ChatMessageState.StatePendingDelivery
+                                                        ? AppIcons.hourglass
+                                                        : ""
+                                    BusyIndicator {
+                                        anchors.fill: parent
+                                        z: parent.z + 1
+                                        visible: mainItem.msgState === LinphoneEnums.ChatMessageState.StateIdle
+                                            || mainItem.msgState === LinphoneEnums.ChatMessageState.StateInProgress
+                                            || mainItem.msgState === LinphoneEnums.ChatMessageState.StateFileTransferInProgress
+                                    }
                                 }
                             }
                         }

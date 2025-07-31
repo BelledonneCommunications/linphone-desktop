@@ -157,4 +157,5 @@ QtObject {
 	property string ephemeralSettings: "image://internal/ephemeral-settings.svg"
 	property string radioOn: "image://internal/radio_on.svg"
 	property string radioOff: "image://internal/radio_off.svg"
+	property string hourglass: "image://internal/hourglass-simple.svg"
 }
