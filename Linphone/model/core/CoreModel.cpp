@@ -409,7 +409,7 @@ void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
                                    linphone::Call::State state,
                                    const std::string &message) {
 	if (state == linphone::Call::State::IncomingReceived) {
-        if (App::getInstance()->getNotifier()) App::getInstance()->getNotifier()->notifyReceivedCall(call);
+		if (App::getInstance()->getNotifier()) App::getInstance()->getNotifier()->notifyReceivedCall(call);
 		if (!core->getConfig()->getBool(SettingsModel::UiSection, "disable_command_line", false) &&
 		    !core->getConfig()->getString(SettingsModel::UiSection, "command_line", "").empty()) {
 			QString command = Utils::coreStringToAppString(
@@ -464,6 +464,8 @@ void CoreModel::onConferenceStateChanged(const std::shared_ptr<linphone::Core> &
 void CoreModel::onConfiguringStatus(const std::shared_ptr<linphone::Core> &core,
                                     linphone::ConfiguringState status,
                                     const std::string &message) {
+	mConfigStatus = status;
+	mConfigMessage = Utils::coreStringToAppString(message);
 	emit configuringStatus(core, status, message);
 }
 void CoreModel::onDefaultAccountChanged(const std::shared_ptr<linphone::Core> &core,
@@ -513,14 +515,14 @@ void CoreModel::onMessageReceived(const std::shared_ptr<linphone::Core> &core,
 	emit unreadNotificationsChanged();
 	std::list<std::shared_ptr<linphone::ChatMessage>> messages;
 	messages.push_back(message);
-    if (App::getInstance()->getNotifier()) App::getInstance()->getNotifier()->notifyReceivedMessages(room, messages);
+	if (App::getInstance()->getNotifier()) App::getInstance()->getNotifier()->notifyReceivedMessages(room, messages);
 	emit messageReceived(core, room, message);
 }
 void CoreModel::onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
                                    const std::shared_ptr<linphone::ChatRoom> &room,
                                    const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
 	emit unreadNotificationsChanged();
-    if (App::getInstance()->getNotifier()) App::getInstance()->getNotifier()->notifyReceivedMessages(room, messages);
+	if (App::getInstance()->getNotifier()) App::getInstance()->getNotifier()->notifyReceivedMessages(room, messages);
 	emit messagesReceived(core, room, messages);
 }
 

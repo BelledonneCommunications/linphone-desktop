@@ -529,68 +529,88 @@
         <translation>Möchten Sie die Remote-Konfiguration von dieser Adresse herunterladen und anwenden?</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="818"/>
+        <location filename="../../core/App.cpp" line="455"/>
+        <location filename="../../core/App.cpp" line="591"/>
+        <source>info_popup_error_title</source>
+        <extracomment>Error</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="456"/>
+        <location filename="../../core/App.cpp" line="593"/>
+        <source>info_popup_configuration_failed_message</source>
+        <extracomment>Remote provisioning failed : %1</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="587"/>
+        <source>configuration_error_detail</source>
+        <extracomment>not reachable</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="847"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>Ein kostenloses Open-Source SIP Video-Telefon.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="820"/>
+        <location filename="../../core/App.cpp" line="849"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Kommandozeilen-Befehl an die Anwendung schicken</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="824"/>
+        <location filename="../../core/App.cpp" line="853"/>
         <source>command_line_option_show_help</source>
         <translation>Zeige Hilfe</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="829"/>
+        <location filename="../../core/App.cpp" line="858"/>
         <source>command_line_option_show_app_version</source>
         <translation type="unfinished">Zeige App-Version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="836"/>
+        <location filename="../../core/App.cpp" line="865"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Abzurufende Linphone-Konfigurationsdatei angeben. Sie wird mit der aktuellen Konfiguration zusammengeführt.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="838"/>
+        <location filename="../../core/App.cpp" line="867"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, Pfad oder Datei</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="843"/>
+        <location filename="../../core/App.cpp" line="872"/>
         <source>command_line_option_minimized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="846"/>
+        <location filename="../../core/App.cpp" line="875"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Debug-Informationen auf der Standardausgabe ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="849"/>
+        <location filename="../../core/App.cpp" line="878"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Nur Anwendungs-Logs ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1219"/>
+        <location filename="../../core/App.cpp" line="1248"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Ausblenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1219"/>
+        <location filename="../../core/App.cpp" line="1248"/>
         <source>show_action</source>
         <translation>Zeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1234"/>
+        <location filename="../../core/App.cpp" line="1263"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Beenden</translation>
@@ -649,64 +669,64 @@
         <translation>Die Aufnahme wurde in der folgenden Datei gespeichert: %1</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="392"/>
-        <location filename="../../core/call/CallCore.cpp" line="417"/>
+        <location filename="../../core/call/CallCore.cpp" line="393"/>
+        <location filename="../../core/call/CallCore.cpp" line="418"/>
         <source>call_stats_codec_label</source>
         <extracomment>&quot;Codec: %1 / %2 kHz&quot;</extracomment>
         <translation>Codec: %1 / %2 kHz</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="396"/>
-        <location filename="../../core/call/CallCore.cpp" line="420"/>
+        <location filename="../../core/call/CallCore.cpp" line="397"/>
+        <location filename="../../core/call/CallCore.cpp" line="421"/>
         <source>call_stats_bandwidth_label</source>
         <extracomment>&quot;Bande passante : %1 %2 kbits/s %3 %4 kbits/s&quot;</extracomment>
         <translation>Bandbreite: %1 %2 kbits/s %3 %4 kbits/s</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="402"/>
-        <location filename="../../core/call/CallCore.cpp" line="425"/>
+        <location filename="../../core/call/CallCore.cpp" line="403"/>
+        <location filename="../../core/call/CallCore.cpp" line="426"/>
         <source>call_stats_loss_rate_label</source>
         <extracomment>&quot;Taux de perte: %1% %2%&quot;</extracomment>
         <translation>Verlustquote: %1% %2%</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="407"/>
+        <location filename="../../core/call/CallCore.cpp" line="408"/>
         <source>call_stats_jitter_buffer_label</source>
         <extracomment>&quot;Tampon de gigue: %1 ms&quot;</extracomment>
         <translation>Jitter-Puffer: %1 ms</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="434"/>
+        <location filename="../../core/call/CallCore.cpp" line="435"/>
         <source>call_stats_resolution_label</source>
         <extracomment>&quot;Définition vidéo : %1 %2 %3 %4&quot;</extracomment>
         <translation>Videoauflösung: %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="440"/>
+        <location filename="../../core/call/CallCore.cpp" line="441"/>
         <source>call_stats_fps_label</source>
         <extracomment>&quot;FPS : %1 %2 %3 %4&quot;</extracomment>
         <translation>FPS : %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="653"/>
+        <location filename="../../core/call/CallCore.cpp" line="654"/>
         <source>media_encryption_dtls</source>
         <extracomment>DTLS</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="656"/>
+        <location filename="../../core/call/CallCore.cpp" line="657"/>
         <source>media_encryption_none</source>
         <extracomment>None</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="659"/>
+        <location filename="../../core/call/CallCore.cpp" line="660"/>
         <source>media_encryption_srtp</source>
         <extracomment>SRTP</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="662"/>
+        <location filename="../../core/call/CallCore.cpp" line="663"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
         <translation type="unfinished">Post-quantum ZRTP</translation>
@@ -907,43 +927,43 @@
 <context>
     <name>CallModel</name>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="342"/>
+        <location filename="../../model/call/CallModel.cpp" line="344"/>
         <source>call_error_user_declined_toast</source>
         <extracomment>&quot;Le correspondant a décliné l&apos;appel&quot;</extracomment>
         <translation>Der Benutzer hat den Anruf abgelehnt</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="346"/>
+        <location filename="../../model/call/CallModel.cpp" line="348"/>
         <source>call_error_user_not_found_toast</source>
         <extracomment>&quot;Le correspondant n&apos;a pas été trouvé&quot;</extracomment>
         <translation>Benutzer nicht gefunden</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="350"/>
+        <location filename="../../model/call/CallModel.cpp" line="352"/>
         <source>call_error_user_busy_toast</source>
         <extracomment>&quot;Le correspondant est occupé&quot;</extracomment>
         <translation>Der Benutzer ist beschäftigt</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="354"/>
+        <location filename="../../model/call/CallModel.cpp" line="356"/>
         <source>call_error_incompatible_media_params_toast</source>
         <extracomment>&quot;Le correspondant ne peut accepter votre appel.&quot;</extracomment>
         <translation>Der Benutzer kann Ihren Anruf nicht annehmen</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="358"/>
+        <location filename="../../model/call/CallModel.cpp" line="360"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Service indisponible ou erreur réseau&quot;</extracomment>
         <translation>Dienst nicht verfügbar oder Netzwerkfehler</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="362"/>
+        <location filename="../../model/call/CallModel.cpp" line="364"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporairement indisponible&quot;</extracomment>
         <translation>Vorübergehend nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="366"/>
+        <location filename="../../model/call/CallModel.cpp" line="368"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Délai d&apos;attente du serveur dépassé&quot;</extracomment>
         <translation>Server-Zeitüberschreitung</translation>
@@ -1728,13 +1748,13 @@
 <context>
     <name>ChatCore</name>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="166"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="165"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="168"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="167"/>
         <source>info_toast_deleted_message_history</source>
         <extracomment>Message history has been deleted</extracomment>
         <translation type="unfinished"></translation>
@@ -1825,25 +1845,25 @@
 <context>
     <name>ChatMessage</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="420"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="429"/>
         <source>chat_message_copy_selection</source>
         <extracomment>&quot;Copy selection&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="422"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="431"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="430"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="439"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="432"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="441"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
         <translation type="unfinished"></translation>
@@ -1879,25 +1899,25 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="395"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="404"/>
         <source>chat_message_reception_info</source>
         <extracomment>&quot;Reception info&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="407"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="416"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="439"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="448"/>
         <source>chat_message_forward</source>
         <extracomment>Forward</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="456"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="465"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation type="unfinished"></translation>
@@ -2077,20 +2097,20 @@ Error</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="138"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="140"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="148"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="150"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Les messages de cette conversation sont chiffrés de bout 
  en bout. Seul votre correspondant peut les déchiffrer.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="294"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="296"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation type="unfinished"></translation>
@@ -2246,13 +2266,13 @@ Error</extracomment>
 <context>
     <name>ConferenceInfoCore</name>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="577"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="568"/>
         <source>information_popup_error_title</source>
         <extracomment>&quot;Erreur&quot;</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="579"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="570"/>
         <source>information_popup_disconnected_account_message</source>
         <extracomment>&quot;Votre compte est déconnecté&quot;</extracomment>
         <translation>Ihr Konto ist getrennt</translation>
@@ -3714,78 +3734,78 @@ Error</extracomment>
         <translation>Besprechungen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="210"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="211"/>
         <source>searchbar_placeholder_text</source>
         <extracomment>&quot;Rechercher un contact, appeler %1&quot;</extracomment>
         <translation>Kontakt suchen, %1 anrufen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="213"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="214"/>
         <source>searchbar_placeholder_text_chat_feature_enabled</source>
         <extracomment>&quot;ou envoyer un message …&quot;</extracomment>
         <translation>oder eine Nachricht senden …</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="319"/>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="453"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="320"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="454"/>
         <source>contact_presence_status_disable_do_not_disturb</source>
         <extracomment>&quot;Désactiver ne pas déranger&quot;</extracomment>
         <translation>Nicht stören deaktivieren</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="375"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="376"/>
         <source>information_popup_error_title</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="377"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="378"/>
         <source>no_voicemail_uri_error_message</source>
         <extracomment>&quot;L&apos;URI de messagerie vocale n&apos;est pas définie.&quot;</extracomment>
         <translation>Die Voicemail-URI ist nicht definiert.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="437"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="438"/>
         <source>drawer_menu_manage_account</source>
         <extracomment>Mon compte</extracomment>
         <translation>Mein Konto</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="455"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="456"/>
         <source>contact_presence_status_enable_do_not_disturb</source>
         <extracomment>&quot;Activer ne pas déranger&quot;</extracomment>
         <translation>Nicht stören aktivieren</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="474"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="475"/>
         <source>settings_title</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="492"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="493"/>
         <source>recordings_title</source>
         <extracomment>&quot;Enregistrements&quot;</extracomment>
         <translation>Aufnahmen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="507"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="508"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
         <translation>Hilfe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="524"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="525"/>
         <source>help_quit_title</source>
         <extracomment>&quot;Quitter l&apos;application&quot;</extracomment>
         <translation>App beenden</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="529"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="530"/>
         <source>quit_app_question</source>
         <extracomment>&quot;Quitter %1 ?&quot;</extracomment>
         <translation>%1 beenden?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="558"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="559"/>
         <source>drawer_menu_add_account</source>
         <extracomment>&quot;Ajouter un compte&quot;</extracomment>
         <translation>Konto hinzufügen</translation>

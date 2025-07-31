@@ -192,6 +192,7 @@ Item {
                     }
                     initButtons()
                     currentIndex = SettingsCpp.getLastActiveTabIndex()
+                    if (currentIndex === -1) currentIndex = 0
                 }
             }
             ColumnLayout {

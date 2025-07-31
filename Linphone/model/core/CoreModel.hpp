@@ -66,6 +66,8 @@ public:
 	                         int maxResults);
 
 	bool mEnd = false;
+	linphone::ConfiguringState mConfigStatus;
+	QString mConfigMessage;
 
 	std::shared_ptr<linphone::Core> mCore;
 	std::shared_ptr<LoggerModel> mLogger;
