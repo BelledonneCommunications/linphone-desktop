@@ -57,7 +57,7 @@ Rectangle{
 		EffectImage {
 			anchors.fill: parent
             anchors.margins: Math.round(1.5 * DefaultStyle.dp) * scaleFactor
-			imageSource: AppIcons.bellMwi
+			imageSource: AppIcons.bell
 			colorizationColor: DefaultStyle.grey_0
 		}
 	}
