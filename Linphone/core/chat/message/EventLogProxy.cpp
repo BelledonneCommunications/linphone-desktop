@@ -44,6 +44,7 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 		connect(newEventLogList, &EventLogList::eventChanged, this, &EventLogProxy::eventChanged);
 		connect(newEventLogList, &EventLogList::eventInserted, this,
 		        [this, newEventLogList](int index, EventLogGui *event) {
+			        invalidate();
 			        if (index != -1) {
 				        index = dynamic_cast<SortFilterList *>(sourceModel())
 				                    ->mapFromSource(newEventLogList->index(index, 0))
@@ -53,7 +54,7 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 			        emit eventInserted(index, event);
 		        });
 	}
-	setSourceModels(new SortFilterList(model, Qt::AscendingOrder));
+	setSourceModels(new SortFilterList(model, Qt::DescendingOrder));
 	sort(0);
 }
 
@@ -88,10 +89,10 @@ int EventLogProxy::findFirstUnreadIndex() {
 			if (mMaxDisplayItems <= listIndex) setMaxDisplayItems(listIndex + mDisplayItemsStep);
 			return listIndex;
 		} else {
-			return std::max(0, getCount() - 1);
+			return 0;
 		}
 	}
-	return std::max(0, getCount() - 1);
+	return 0;
 }
 
 void EventLogProxy::markIndexAsRead(int proxyIndex) {

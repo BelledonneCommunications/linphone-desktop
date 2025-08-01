@@ -2072,45 +2072,45 @@ Error</extracomment>
 <context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="35"/>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="49"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="36"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="50"/>
         <source>popup_info_find_message_title</source>
         <extracomment>Find message</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="37"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="38"/>
         <source>info_popup_no_result_message</source>
         <extracomment>No result found</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="51"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="52"/>
         <source>info_popup_first_result_message</source>
         <extracomment>First result reached</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="53"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="54"/>
         <source>info_popup_last_result_message</source>
         <extracomment>Last result reached</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="140"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="143"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="150"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="153"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Les messages de cette conversation sont chiffrés de bout 
  en bout. Seul votre correspondant peut les déchiffrer.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="296"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="191"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation type="unfinished"></translation>

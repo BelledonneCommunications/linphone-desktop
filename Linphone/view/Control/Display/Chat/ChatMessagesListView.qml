@@ -13,6 +13,7 @@ ListView {
     property ChatGui chat
     property color backgroundColor
     property bool lastItemVisible: false
+    verticalLayoutDirection: ListView.BottomToTop
     signal showReactionsForMessageRequested(ChatMessageGui chatMessage)
     signal showImdnStatusForMessageRequested(ChatMessageGui chatMessage)
     signal replyToMessageRequested(ChatMessageGui chatMessage)
@@ -57,7 +58,7 @@ ListView {
     Component.onCompleted: {
         Qt.callLater(function() {
             var index = eventLogProxy.findFirstUnreadIndex()
-            positionViewAtIndex(index, ListView.End)
+            positionViewAtIndex(index, ListView.Beginning)
             eventLogProxy.markIndexAsRead(index)
         })
     }
@@ -81,43 +82,46 @@ ListView {
         anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
         onClicked: {
             var index = eventLogProxy.findFirstUnreadIndex()
-            mainItem.positionViewAtIndex(index, ListView.End)
+            mainItem.positionViewAtIndex(index, ListView.Beginning)
             eventLogProxy.markIndexAsRead(index)
         }
     }
 
     onAtYEndChanged: if (atYEnd) {
+        chat.core.lMarkAsRead()
+    }
+    onAtYBeginningChanged: if (atYBeginning) {
         if (eventLogProxy.haveMore)
             eventLogProxy.displayMore()
-        else chat.core.lMarkAsRead()
     }
 
     model: EventLogProxy {
         id: eventLogProxy
         chatGui: mainItem.chat
-        // scroll when in view and message inserted
         filterText: mainItem.filterText
         initialDisplayItems: 10
-        displayItemsStep: 3 * initialDisplayItems / 2
         onEventInserted: (index, gui) => {
             if (!mainItem.visible) return
-            if(mainItem.lastItemVisible) mainItem.positionViewAtIndex(index, ListView.End)
+            if(mainItem.lastItemVisible) mainItem.positionViewAtIndex(index, ListView.Beginning)
         }
         onModelReset: Qt.callLater(function() {
             var index = eventLogProxy.findFirstUnreadIndex()
-            positionViewAtIndex(index, ListView.End)
+            positionViewAtIndex(index, ListView.Beginning)
             eventLogProxy.markIndexAsRead(index)
         })
     }
 
-    header: Item {
-        visible: mainItem.chat && mainItem.chat.core.isEncrypted
-        height: visible ? headerMessage.height + Math.round(50 * DefaultStyle.dp) : Math.round(30 * DefaultStyle.dp)
+    footer: Item {
+        visible: mainItem.chat && mainItem.chat.core.isEncrypted && !eventLogProxy.haveMore
+        height: visible ? headerMessage.height + headerMessage.topMargin + headerMessage.bottomMargin : Math.round(30 * DefaultStyle.dp)
         width: headerMessage.width
         anchors.horizontalCenter: parent.horizontalCenter
         Control.Control {
             id: headerMessage
-            anchors.topMargin: Math.round(30 * DefaultStyle.dp)
+            property int topMargin: mainItem.contentHeight > mainItem.height ? Math.round(30 * DefaultStyle.dp) : Math.round(50 * DefaultStyle.dp)
+            property int bottomMargin: Math.round(30 * DefaultStyle.dp)
+            anchors.topMargin: topMargin
+            anchors.bottomMargin: bottomMargin
             anchors.top: parent.top
             padding: Math.round(10 * DefaultStyle.dp)
             background: Rectangle {
@@ -159,7 +163,38 @@ ListView {
             }
         }
     }
-    
+    footerPositioning: ListView.PullBackFooter
+    headerPositioning: ListView.OverlayHeader
+    header: Control.Control {
+        visible: composeLayout.composingName !== "" && composeLayout.composingName !== undefined
+        width: mainItem.width
+        // height: visible ? contentItem.implicitHeight + topPadding + bottomPadding : 0
+        z: mainItem.z + 2
+        topPadding: Math.round(5 * DefaultStyle.dp)
+        bottomPadding: Math.round(5 * DefaultStyle.dp)
+        background: Rectangle {
+            anchors.fill: parent
+            color: mainItem.backgroundColor
+        }
+        contentItem: RowLayout {
+            id: composeLayout
+            property var composingName: mainItem.chat?.core.composingName
+            Avatar {
+                Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
+                Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
+                _address: mainItem.chat?.core.composingAddress
+            }
+            Text {
+                Layout.fillWidth: true
+                font {
+                    pixelSize: Typography.p3.pixelSize
+                    weight: Typography.p3.weight
+                }
+                //: %1 is writing…
+                text: qsTr("chat_message_is_writing_info").arg(composeLayout.composingName)
+            }
+        }
+    }
     
     delegate: DelegateChooser {
         role: "eventType"
@@ -172,22 +207,24 @@ ListView {
                 property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
                 chatMessage: modelData.core.chatMessageGui
                 onIsFullyVisibleChanged: {
-                    if (index === mainItem.count - 1) {
+                    if (index === 0) {
                         mainItem.lastItemVisible = isFullyVisible
                     }
                 }
-                Component.onCompleted: if (index === mainItem.count - 1) mainItem.lastItemVisible = isFullyVisible
+                Component.onCompleted: {
+                    if (index === 0) mainItem.lastItemVisible = isFullyVisible
+                }
                 chat: mainItem.chat
                 searchedTextPart: mainItem.filterText
                 maxWidth: Math.round(mainItem.width * (3/4))
                 width: mainItem.width
                 property var previousIndex: index - 1
-                property ChatMessageGui nextChatMessage: index >= (mainItem.count - 1) 
+                property ChatMessageGui nextChatMessage: index <= 0 
                     ? null 
-                    : eventLogProxy.getEventAtIndex(index+1)
-                        ? eventLogProxy.getEventAtIndex(index+1).core.chatMessageGui
+                    : eventLogProxy.getEventAtIndex(index-1)
+                        ? eventLogProxy.getEventAtIndex(index-1).core.chatMessageGui
                         : null
-                property var previousFromAddress: eventLogProxy.getEventAtIndex(index-1)?.core.chatMessage?.fromAddress
+                property var previousFromAddress: eventLogProxy.getEventAtIndex(index+1)?.core.chatMessage?.fromAddress
                 backgroundColor: isRemoteMessage ? DefaultStyle.main2_100 : DefaultStyle.main1_100
                 isFirstMessage: !previousFromAddress || previousFromAddress !== chatMessage.core.fromAddress
                 anchors.right: !isRemoteMessage && parent
@@ -200,7 +237,7 @@ ListView {
                 onReplyToMessageRequested: mainItem.replyToMessageRequested(chatMessage)
                 onForwardMessageRequested: mainItem.forwardMessageRequested(chatMessage)
                 onEndOfVoiceRecordingReached: {
-                    if (nextChatMessage && nextChatMessage.core.isVoiceRecording) mainItem.requestAutoPlayVoiceRecording(index + 1)
+                    if (nextChatMessage && nextChatMessage.core.isVoiceRecording) mainItem.requestAutoPlayVoiceRecording(index - 1)
                 }
                 Connections {
                     target: mainItem
@@ -225,13 +262,13 @@ ListView {
                 property int yoff: Math.round(eventDelegate.y - mainItem.contentY)
                 property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
                 onIsFullyVisibleChanged: {
-                    if (index === mainItem.count - 1) {
+                    if (index === 0) {
                         mainItem.lastItemVisible = isFullyVisible
                     }
                 }
                 property bool showTopMargin: !header.visible && index == 0
                 width: mainItem.width
-                height: (showTopMargin ? 30 : 0 * DefaultStyle.dp) + eventItem.implicitHeight
+                height: (showTopMargin ? 30 * DefaultStyle.dp : 0) + eventItem.implicitHeight
                 Event {
                     id: eventItem
                     anchors.top: parent.top
@@ -249,7 +286,7 @@ ListView {
                 property int yoff: Math.round(ephemeralEventDelegate.y - mainItem.contentY)
                 property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
                 onIsFullyVisibleChanged: {
-                    if (index === mainItem.count - 1) {
+                    if (index === 0) {
                         mainItem.lastItemVisible = isFullyVisible
                     }
                 }
@@ -263,37 +300,6 @@ ListView {
                     anchors.topMargin: showTopMargin ? 30 : 0 * DefaultStyle.dp
                     eventLogGui: modelData
                 }
-            }
-        }
-    }
-    
-    footerPositioning: ListView.OverlayFooter
-    footer: Control.Control {
-        visible: composeLayout.composingName !== "" && composeLayout.composingName !== undefined
-        width: mainItem.width
-        z: mainItem.z + 2
-        topPadding: Math.round(5 * DefaultStyle.dp)
-        bottomPadding: Math.round(5 * DefaultStyle.dp)
-        background: Rectangle {
-            anchors.fill: parent
-            color: mainItem.backgroundColor
-        }
-        contentItem: RowLayout {
-            id: composeLayout
-            property var composingName: mainItem.chat?.core.composingName
-            Avatar {
-                Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
-                _address: mainItem.chat?.core.composingAddress
-            }
-            Text {
-                Layout.fillWidth: true
-                font {
-                    pixelSize: Typography.p3.pixelSize
-                    weight: Typography.p3.weight
-                }
-                //: %1 is writing…
-                text: qsTr("chat_message_is_writing_info").arg(composeLayout.composingName)
             }
         }
     }
