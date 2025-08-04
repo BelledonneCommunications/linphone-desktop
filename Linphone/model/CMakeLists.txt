@@ -13,6 +13,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	
     model/chat/ChatModel.cpp
     model/chat/message/ChatMessageModel.cpp
+    model/chat/message/EventLogModel.cpp
     model/chat/message/content/ChatMessageContentModel.cpp
 
 	model/conference/ConferenceInfoModel.cpp

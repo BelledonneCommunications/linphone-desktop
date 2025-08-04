@@ -51,8 +51,20 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 				                    .row();
 				        if (mMaxDisplayItems <= index) setMaxDisplayItems(index + mDisplayItemsStep);
 			        }
+			        loadUntil(index);
 			        emit eventInserted(index, event);
 		        });
+		connect(newEventLogList, &EventLogList::messageWithFilterFound, this, [this, newEventLogList](int index) {
+			if (index != -1) {
+				auto model = getListModel<EventLogList>();
+				mLastSearchStart = model->getAt<EventLogCore>(index);
+				index = dynamic_cast<SortFilterList *>(sourceModel())
+				            ->mapFromSource(newEventLogList->index(index, 0))
+				            .row();
+				loadUntil(index);
+			}
+			emit indexWithFilterFound(index);
+		});
 	}
 	setSourceModels(new SortFilterList(model, Qt::DescendingOrder));
 	sort(0);
@@ -69,14 +81,17 @@ void EventLogProxy::setChatGui(ChatGui *chat) {
 }
 
 EventLogGui *EventLogProxy::getEventAtIndex(int i) {
-	auto model = getListModel<EventLogList>();
-	auto sourceIndex = mapToSource(index(i, 0)).row();
-	if (model) {
-		auto event = model->getAt<EventLogCore>(sourceIndex);
-		if (event) return new EventLogGui(event);
-		else return nullptr;
-	}
-	return nullptr;
+	auto eventCore = getEventCoreAtIndex(i);
+	return eventCore == nullptr ? nullptr : new EventLogGui(eventCore);
+}
+
+QSharedPointer<EventLogCore> EventLogProxy::getEventCoreAtIndex(int i) {
+	return getItemAt<SortFilterList, EventLogList, EventLogCore>(i);
+}
+
+void EventLogProxy::loadUntil(int index) {
+	auto confInfoList = getListModel<EventLogList>();
+	if (mMaxDisplayItems < index) setMaxDisplayItems(index + mDisplayItemsStep);
 }
 
 int EventLogProxy::findFirstUnreadIndex() {
@@ -100,21 +115,17 @@ void EventLogProxy::markIndexAsRead(int proxyIndex) {
 	if (event && event->getChatMessageCore()) event->getChatMessageCore()->lMarkAsRead();
 }
 
-int EventLogProxy::findIndexCorrespondingToFilter(int startIndex, bool goingBackward) {
+void EventLogProxy::findIndexCorrespondingToFilter(int startIndex, bool forward, bool isFirstResearch) {
 	auto filter = getFilterText();
-	if (filter.isEmpty()) return startIndex;
-	int endIndex = goingBackward ? 0 : getCount() - 1;
-	startIndex = goingBackward ? startIndex - 1 : startIndex + 1;
-	for (int i = startIndex; (goingBackward ? i >= 0 : i < getCount() - 1); (goingBackward ? --i : ++i)) {
-		auto eventLog = getItemAt<SortFilterList, EventLogList, EventLogCore>(i);
-		if (!eventLog) continue;
-		if (auto message = eventLog->getChatMessageCore()) {
-			auto text = message->getText();
-			int regexIndex = text.indexOf(filter, 0, Qt::CaseInsensitive);
-			if (regexIndex != -1) return i;
+	if (filter.isEmpty()) return;
+	auto eventLogList = getListModel<EventLogList>();
+	if (eventLogList) {
+		auto startEvent = mLastSearchStart;
+		if (!startEvent) {
+			startEvent = getItemAt<SortFilterList, EventLogList, EventLogCore>(startIndex);
 		}
+		eventLogList->findChatMessageWithFilter(filter, startEvent, forward, isFirstResearch);
 	}
-	return -1;
 }
 
 bool EventLogProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {

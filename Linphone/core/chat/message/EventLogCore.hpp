@@ -36,6 +36,7 @@
 
 class ChatMessageCore;
 class ChatMessageGui;
+class EventLogModel;
 
 class EventLogCore : public QObject, public AbstractObject {
 	Q_OBJECT
@@ -68,6 +69,8 @@ public:
 		return mEphemeralRelated;
 	}
 
+	std::shared_ptr<EventLogModel> getModel() const;
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 	QString mEventId;
@@ -83,6 +86,7 @@ private:
 
 	ChatMessageCore *getChatMessageCorePointer();
 	CallHistoryCore *getCallHistoryCorePointer();
+	std::shared_ptr<EventLogModel> mEventLogModel;
 	void computeEvent(const std::shared_ptr<const linphone::EventLog> &eventLog);
 };
 

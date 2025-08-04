@@ -13,6 +13,7 @@ ListView {
     property ChatGui chat
     property color backgroundColor
     property bool lastItemVisible: false
+    property int lastIndexFoundWithFilter: -1
     verticalLayoutDirection: ListView.BottomToTop
     signal showReactionsForMessageRequested(ChatMessageGui chatMessage)
     signal showImdnStatusForMessageRequested(ChatMessageGui chatMessage)
@@ -20,39 +21,21 @@ ListView {
     signal forwardMessageRequested(ChatMessageGui chatMessage)
     signal requestHighlight(int indexToHighlight)
     signal requestAutoPlayVoiceRecording(int indexToPlay)
+    currentIndex: -1
 
     property string filterText
     onFilterTextChanged: {
+        lastIndexFoundWithFilter = -1
         if (filterText === "") return
         eventLogProxy.filterText = filterText
         var indexVisible = indexAt(contentX, contentY)
-        var found = eventLogProxy.findIndexCorrespondingToFilter(indexVisible)
-        if (found !== -1) {
-            currentIndex = found
-            positionViewAtIndex(found, ListView.Center)
-            requestHighlight(found)
-        } else {
-            //: Find message
-            UtilsCpp.showInformationPopup(qsTr("popup_info_find_message_title"),
-            //: No result found
-            qsTr("info_popup_no_result_message"), false)
-        }
+        eventLogProxy.findIndexCorrespondingToFilter(indexVisible, true, true)
     }
-    signal findIndexWithFilter(bool goingBackward)
-    onFindIndexWithFilter: (goingBackward) => {
-        var nextIndex = eventLogProxy.findIndexCorrespondingToFilter(currentIndex, goingBackward)
-        if (nextIndex !== -1 && nextIndex !== currentIndex) {
-            currentIndex = nextIndex
-            positionViewAtIndex(nextIndex, ListView.Center)
-            requestHighlight(nextIndex)
-        } else if (currentIndex !== -1) {
-            //: Find message
-            UtilsCpp.showInformationPopup(qsTr("popup_info_find_message_title"),
-            //: First result reached
-            goingBackward ? qsTr("info_popup_first_result_message")
-            //: Last result reached
-            : qsTr("info_popup_last_result_message"), false)
-        }
+    signal findIndexWithFilter(bool forward)
+    property bool searchForward: true
+    onFindIndexWithFilter: (forward) => {
+        searchForward = forward
+        eventLogProxy.findIndexCorrespondingToFilter(currentIndex, forward, false)
     }
 
     Component.onCompleted: {
@@ -62,10 +45,7 @@ ListView {
             eventLogProxy.markIndexAsRead(index)
         })
     }
-
-    onCountChanged: if (atYEnd) {
-        positionViewAtEnd()
-    }
+    
     onChatChanged: lastItemVisible = false
 
     Button {
@@ -109,6 +89,32 @@ ListView {
             positionViewAtIndex(index, ListView.Beginning)
             eventLogProxy.markIndexAsRead(index)
         })
+        onIndexWithFilterFound: (index) => {
+            if (index !== -1) {
+                currentIndex = index
+                mainItem.positionViewAtIndex(index, ListView.Center)
+                mainItem.requestHighlight(index)
+                mainItem.lastIndexFoundWithFilter = index
+            } else {
+                if (mainItem.lastIndexFoundWithFilter !== index) {
+                    //: Find message
+                    UtilsCpp.showInformationPopup(qsTr("popup_info_find_message_title"),
+                    mainItem.searchForward 
+                        //: Last result reached
+                        ? qsTr("info_popup_last_result_message")
+                        //: First result reached
+                        : qsTr("info_popup_first_result_message"), false)
+                    mainItem.positionViewAtIndex(mainItem.lastIndexFoundWithFilter, ListView.Center)
+                    mainItem.requestHighlight(mainItem.lastIndexFoundWithFilter)
+                }
+                else {
+                    //: Find message
+                    UtilsCpp.showInformationPopup(qsTr("popup_info_find_message_title"),
+                    //: No result found
+                    qsTr("info_popup_no_result_message"), false)
+                }
+            }
+        }
     }
 
     footer: Item {

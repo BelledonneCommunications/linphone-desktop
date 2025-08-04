@@ -21,6 +21,7 @@
 #include "EventLogCore.hpp"
 #include "core/App.hpp"
 #include "core/chat/ChatCore.hpp"
+#include "model/chat/message/EventLogModel.hpp"
 #include "model/tool/ToolModel.hpp"
 
 DEFINE_ABSTRACT_OBJECT(EventLogCore)
@@ -36,6 +37,7 @@ EventLogCore::EventLogCore(const std::shared_ptr<const linphone::EventLog> &even
 	mustBeInLinphoneThread(getClassName());
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mEventLogType = LinphoneEnums::fromLinphone(eventLog->getType());
+	mEventLogModel = Utils::makeQObject_ptr<EventLogModel>(eventLog);
 	mTimestamp = QDateTime::fromMSecsSinceEpoch(eventLog->getCreationTime() * 1000);
 	auto chatmessage = eventLog->getChatMessage();
 	if (chatmessage) {
@@ -84,6 +86,10 @@ CallHistoryCore *EventLogCore::getCallHistoryCorePointer() {
 
 QDateTime EventLogCore::getTimestamp() const {
 	return mTimestamp;
+}
+
+std::shared_ptr<EventLogModel> EventLogCore::getModel() const {
+	return mEventLogModel;
 }
 
 // Events (other than ChatMessage and CallLog which are handled in their respective Core)

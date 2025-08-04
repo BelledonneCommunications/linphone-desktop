@@ -30,6 +30,7 @@ class EventLogGui;
 class EventLogCore;
 class ChatCore;
 class ChatGui;
+class ChatModel;
 // =============================================================================
 
 class EventLogList : public ListProxy, public AbstractObject {
@@ -48,6 +49,11 @@ public:
 
 	int findFirstUnreadIndex();
 
+	void findChatMessageWithFilter(QString filter,
+	                               QSharedPointer<EventLogCore> startEvent,
+	                               bool forward = true,
+	                               bool isFirstResearch = true);
+
 	void setSelf(QSharedPointer<EventLogList> me);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 	QHash<int, QByteArray> roleNames() const override;
@@ -57,10 +63,12 @@ signals:
 	void filterChanged(QString filter);
 	void eventChanged();
 	void eventInserted(int index, EventLogGui *message);
+	void messageWithFilterFound(int index);
 
 private:
 	QString mFilter;
 	QSharedPointer<ChatCore> mChatCore;
+	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mModelConnection;
 	DECLARE_ABSTRACT_OBJECT
 };
 

@@ -26,6 +26,7 @@
 #include "core/call-history/CallHistoryGui.hpp"
 #include "core/chat/ChatCore.hpp"
 #include "core/chat/ChatGui.hpp"
+#include "model/chat/message/EventLogModel.hpp"
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
 
@@ -75,8 +76,11 @@ void EventLogList::connectItem(const QSharedPointer<EventLogCore> item) {
 
 void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 	if (mChatCore != core) {
-		if (mChatCore) disconnect(mChatCore.get(), &ChatCore::eventListChanged, this, nullptr);
-		if (mChatCore) disconnect(mChatCore.get(), &ChatCore::eventsInserted, this, nullptr);
+		if (mChatCore) {
+			disconnect(mChatCore.get(), &ChatCore::eventListChanged, this, nullptr);
+			disconnect(mChatCore.get(), &ChatCore::eventsInserted, this, nullptr);
+			mModelConnection->disconnect();
+		}
 		mChatCore = core;
 		if (mChatCore) {
 			connect(mChatCore.get(), &ChatCore::eventListChanged, this, &EventLogList::lUpdate);
@@ -93,6 +97,7 @@ void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 					}
 				}
 			});
+			mModelConnection = SafeConnection<ChatCore, ChatModel>::create(mChatCore, mChatCore->getModel());
 		}
 		emit eventChanged();
 		lUpdate();
@@ -110,6 +115,39 @@ int EventLogList::findFirstUnreadIndex() {
 		return item->getChatMessageCore() && !item->getChatMessageCore()->isRead();
 	});
 	return it == eventList.end() ? -1 : std::distance(eventList.begin(), it);
+}
+
+void EventLogList::findChatMessageWithFilter(QString filter,
+                                             QSharedPointer<EventLogCore> startEvent,
+                                             bool forward,
+                                             bool isFirstResearch) {
+	if (mChatCore) {
+		auto modelConnection = mChatCore->getChatModelConnection();
+		auto chatModel = mChatCore->getModel();
+		auto startEventModel = startEvent ? startEvent->getModel() : nullptr;
+		modelConnection->invokeToModel(
+		    [this, chatModel, startEventModel, filter, forward, modelConnection, isFirstResearch] {
+			    auto linStartEvent = startEventModel ? startEventModel->getEventLog() : nullptr;
+			    auto eventLog = chatModel->searchMessageByText(filter, linStartEvent, forward);
+			    // If it is the first research and event was not found from the start event, search in the
+			    // entire history
+			    if (!eventLog && isFirstResearch) {
+				    auto firstEvent = getAt<EventLogCore>(0);
+				    auto linFirst = firstEvent ? firstEvent->getModel()->getEventLog() : nullptr;
+				    eventLog = chatModel->searchMessageByText(filter, nullptr, forward);
+			    }
+			    int index = -1;
+			    if (eventLog) {
+				    auto eventList = getSharedList<EventLogCore>();
+				    auto it = std::find_if(eventList.begin(), eventList.end(),
+				                           [eventLog](const QSharedPointer<EventLogCore> item) {
+					                           return item->getModel()->getEventLog() == eventLog;
+				                           });
+				    index = it == eventList.end() ? -1 : std::distance(eventList.begin(), it);
+			    }
+			    modelConnection->invokeToCore([this, index] { emit messageWithFilterFound(index); });
+		    });
+	}
 }
 
 void EventLogList::setSelf(QSharedPointer<EventLogList> me) {

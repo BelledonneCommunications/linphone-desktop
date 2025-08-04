@@ -23,6 +23,7 @@
 #include "core/chat/message/content/ChatMessageContentGui.hpp"
 #include "core/friend/FriendCore.hpp"
 #include "core/setting/SettingsCore.hpp"
+#include "model/chat/message/EventLogModel.hpp"
 #include "model/core/CoreModel.hpp"
 #include "model/friend/FriendModel.hpp"
 #include "model/tool/ToolModel.hpp"
@@ -602,6 +603,10 @@ void ChatCore::resetFileList(QList<QSharedPointer<ChatMessageContentCore>> list)
 
 std::shared_ptr<ChatModel> ChatCore::getModel() const {
 	return mChatModel;
+}
+
+QSharedPointer<SafeConnection<ChatCore, ChatModel>> ChatCore::getChatModelConnection() const {
+	return mChatModelConnection;
 }
 
 bool ChatCore::isMuted() const {

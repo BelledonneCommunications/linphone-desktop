@@ -61,6 +61,10 @@ public:
 	std::shared_ptr<linphone::ChatMessage> createTextMessageFromText(QString text);
 	std::shared_ptr<linphone::ChatMessage> createMessage(QString text,
 	                                                     QList<std::shared_ptr<ChatMessageContentModel>> filesContent);
+
+	std::shared_ptr<linphone::EventLog>
+	searchMessageByText(QString text, std::shared_ptr<const linphone::EventLog> = nullptr, bool forward = true);
+
 	void compose();
 	linphone::ChatRoom::State getState() const;
 	void setMuted(bool muted);

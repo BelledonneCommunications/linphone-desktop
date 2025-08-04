@@ -28,6 +28,7 @@ ColumnLayout {
 	Text {
 		id: text
 		Layout.alignment: Qt.AlignHCenter
+		Layout.fillWidth: true
 		text: labelButton.label
 		font {
 			pixelSize: Typography.p1.pixelSize

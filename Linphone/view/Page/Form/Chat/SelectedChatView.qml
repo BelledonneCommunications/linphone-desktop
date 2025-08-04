@@ -19,7 +19,6 @@ RowLayout {
     property CallGui call
     property alias callHeaderContent: splitPanel.headerContentItem
     property bool replyingToMessage: false
-    property bool showSearchBar: false
     spacing: 0
     enum PanelType { MessageReactions, SharedFiles, Medias, ImdnStatus, ForwardToList, ManageParticipants, EphemeralSettings, None}
     
@@ -51,6 +50,10 @@ RowLayout {
 		})
 	}
 
+    Keys.onPressed: (event) => {
+        if (event.modifiers & Qt.ControlModifier && event.key === Qt.Key_F) searchBarLayout.visible = true
+    }
+
     //onEventChanged: {
         // TODO : call when all messages read after scroll to unread feature available
         // if (chat) chat.core.lMarkAsRead()
@@ -65,7 +68,7 @@ RowLayout {
         header.leftPadding: Math.round(32 * DefaultStyle.dp)
         header.rightPadding: Math.round(32 * DefaultStyle.dp)
         header.topPadding: Math.round(6 * DefaultStyle.dp)
-	    header.bottomPadding: mainItem.showSearchBar ? Math.round(3 * DefaultStyle.dp) : Math.round(6 * DefaultStyle.dp)
+	    header.bottomPadding: searchBarLayout.visible ? Math.round(3 * DefaultStyle.dp) : Math.round(6 * DefaultStyle.dp)
 
         headerContentItem: ColumnLayout {
             anchors.left: parent?.left
@@ -120,6 +123,18 @@ RowLayout {
                         }
                     }
                     RoundButton {
+                        id: searchInHistoryButton
+                        style: ButtonStyle.noBackground
+                        icon.source: AppIcons.search
+                        checkable: true
+                        checkedImageColor: DefaultStyle.main1_500_main
+                        onCheckedChanged: searchBarLayout.visible = checked
+                        Connections {
+                            target: searchBarLayout
+                            function onVisibleChanged() {searchInHistoryButton.checked = searchBarLayout.visible}
+                        }
+                    }
+                    RoundButton {
                         style: ButtonStyle.noBackground
                         icon.source: AppIcons.videoCamera
                         visible: !mainItem.chat?.core.isGroupChat || false
@@ -140,7 +155,7 @@ RowLayout {
             }
             RowLayout {
                 id: searchBarLayout
-                visible: mainItem.showSearchBar
+                visible: searchInHistoryButton.checked
                 onVisibleChanged: {
                     if(!visible) chatMessagesSearchBar.clearText()
                     else chatMessagesSearchBar.forceActiveFocus()
@@ -151,18 +166,24 @@ RowLayout {
                     id: chatMessagesSearchBar
                     Layout.fillWidth: true
                     Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
+                    property ChatMessageGui messageFound
                     delaySearch: false
                     Keys.onPressed: (event) => {
+                        event.accepted = false
                         if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
                             if (chatMessagesListView.filterText !== text) {
                                 chatMessagesListView.filterText = text
                             } else {
                                 if (event.modifiers & Qt.ShiftModifier) {
-                                    chatMessagesListView.findIndexWithFilter(true)
-                                } else {
                                     chatMessagesListView.findIndexWithFilter(false)
+                                } else {
+                                    chatMessagesListView.findIndexWithFilter(true)
                                 }
                             }
+                            event.accepted = true
+                        } else if (event.key === Qt.Key_Escape) {
+                            searchBarLayout.visible = false
+                            event.accepted = true
                         }
                     }
                 }
@@ -171,18 +192,21 @@ RowLayout {
                     RoundButton {
                         icon.source: AppIcons.upArrow
                         style: ButtonStyle.noBackground
-                        onClicked: chatMessagesListView.findIndexWithFilter(true)
+                        onClicked: chatMessagesListView.findIndexWithFilter(false)
                     }
                     RoundButton {
                         icon.source: AppIcons.downArrow
                         style: ButtonStyle.noBackground
-                        onClicked: chatMessagesListView.findIndexWithFilter(false)
+                        onClicked: chatMessagesListView.findIndexWithFilter(true)
                     }
                 }
                 RoundButton {
                     icon.source: AppIcons.closeX
                     Layout.rightMargin: Math.round(20 * DefaultStyle.dp)
-                    onClicked: mainItem.showSearchBar = false
+                    onClicked: {
+                        chatMessagesListView.filterText = ""
+                        searchBarLayout.visible = false
+                    }
                     style: ButtonStyle.noBackground
                 }
             }
@@ -204,7 +228,7 @@ RowLayout {
                     ChatMessagesListView {
                         id: chatMessagesListView
                         clip: true
-                        height: contentHeight
+                        height: implicitHeight
                         backgroundColor: splitPanel.panelColor
                         width: parent.width - anchors.leftMargin - anchors.rightMargin
                         chat: mainItem.chat
@@ -502,6 +526,7 @@ RowLayout {
 			// anchors.top: parent.top
             anchors.fill: parent
 			anchors.topMargin: Math.round(39 * DefaultStyle.dp)
+			anchors.rightMargin: Math.round(15 * DefaultStyle.dp)
 			sourceComponent: panelType === SelectedChatView.PanelType.EphemeralSettings
 				? ephemeralSettingsComponent
 				: panelType === SelectedChatView.PanelType.MessageReactions
@@ -531,10 +556,6 @@ RowLayout {
 				onEphemeralSettingsRequested: contentLoader.panelType = SelectedChatView.PanelType.EphemeralSettings
                 onShowSharedFilesRequested: (showMedias) => {
                     contentLoader.panelType = showMedias ? SelectedChatView.PanelType.Medias : SelectedChatView.PanelType.SharedFiles
-                }
-                onSearchInHistoryRequested: {
-                    mainItem.showSearchBar = true
-                    detailsPanel.visible = false
                 }
 				onManageParticipantsRequested: contentLoader.panelType = SelectedChatView.PanelType.ManageParticipants
             }

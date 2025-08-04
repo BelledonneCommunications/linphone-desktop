@@ -44,17 +44,21 @@ public:
 
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
-	Q_INVOKABLE EventLogGui *getEventAtIndex(int index);
+	Q_INVOKABLE void loadUntil(int index);
+	Q_INVOKABLE EventLogGui *getEventAtIndex(int i);
+	QSharedPointer<EventLogCore> getEventCoreAtIndex(int i);
 	Q_INVOKABLE int findFirstUnreadIndex();
 	Q_INVOKABLE void markIndexAsRead(int proxyIndex);
-	Q_INVOKABLE int findIndexCorrespondingToFilter(int startIndex, bool goingBackward = false);
+	Q_INVOKABLE void findIndexCorrespondingToFilter(int startIndex, bool forward = true, bool isFirstResearch = true);
 
 signals:
 	void eventChanged();
 	void eventInserted(int index, EventLogGui *message);
+	void indexWithFilterFound(int index);
 
 protected:
 	QSharedPointer<EventLogList> mList;
+	QSharedPointer<EventLogCore> mLastSearchStart;
 	ChatGui *mChatGui = nullptr;
 	DECLARE_ABSTRACT_OBJECT
 };

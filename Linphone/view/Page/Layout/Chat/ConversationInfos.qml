@@ -19,7 +19,6 @@ ColumnLayout {
 	spacing: 0
 	signal ephemeralSettingsRequested()
 	signal showSharedFilesRequested(bool showMedias)
-	signal searchInHistoryRequested()
 	signal manageParticipantsRequested()
 
 	Avatar {
@@ -202,6 +201,7 @@ ColumnLayout {
 			}
 		}
 		LabelButton {
+			visible: !mainItem.isGroup || !SettingsCpp.disableMeetingsFeature
 			text.Layout.fillWidth: true
 			text.horizontalAlignment: Text.AlignHCenter
 			text.wrapMode: Text.Wrap
@@ -210,11 +210,28 @@ ColumnLayout {
 			Layout.maximumWidth: Math.round(130 * DefaultStyle.dp)
 			button.icon.width: Math.round(24 * DefaultStyle.dp)
 			button.icon.height: Math.round(24 * DefaultStyle.dp)
-			button.icon.source: AppIcons.search
-			//: "Rechercher"
-			label: qsTr("one_one_infos_search")
+			button.icon.source: mainItem.isGroup 
+				? AppIcons.videoconference
+				: contactObj.value 
+					? AppIcons.adressBook 
+					: AppIcons.plusCircle
+			label: mainItem.isGroup
+				//: Schedule a meeting
+				? qsTr("group_infos_meeting") 
+				: contactObj.value
+					//: Show contact
+					? qsTr("one_one_infos_open_contact") 
+					//: Create contact
+					: qsTr("one_one_infos_create_contact")
 			button.onClicked: {
-				mainItem.searchInHistoryRequested()
+				if (mainItem.isGroup)
+					UtilsCpp.getMainWindow().scheduleMeeting(mainItem.chatCore.title, mainItem.chatCore.participantsAddresses)
+				else {
+					if (contactObj.value)
+						mainWindow.displayContactPage(contactObj.value.core.defaultAddress)
+					else
+						mainWindow.displayCreateContactPage("",mainItem.chatCore.peerAddress)
+				}
 			}
 		}
 	}
@@ -226,7 +243,6 @@ ColumnLayout {
 		Layout.topMargin: Math.round(30 * DefaultStyle.dp)
 		clip: true
 		Layout.leftMargin: Math.round(15 * DefaultStyle.dp)
-		Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
 		
 		ColumnLayout {
 			spacing: 0
@@ -299,17 +315,6 @@ ColumnLayout {
 						}
 					},
 					{
-						visible: !SettingsCpp.disableMeetingsFeature,
-						icon: AppIcons.videoconference,
-						color: DefaultStyle.main2_600,
-						showRightArrow: false,
-						//: Schedule a meeting
-						text: qsTr("group_infos_meeting"),
-						action: function() {
-							UtilsCpp.getMainWindow().scheduleMeeting(mainItem.chatCore.title, mainItem.chatCore.participantsAddresses)
-						}
-					},
-					{
 						icon: AppIcons.signOut,
 						visible: !mainItem.chatCore.isReadOnly,
 						//: Leave chat room
@@ -351,20 +356,6 @@ ColumnLayout {
 					}
 				]
 				: [
-					{
-						icon: contactObj.value ? AppIcons.adressBook : AppIcons.plusCircle,
-						visible: true,
-						text: contactObj.value ? qsTr("one_one_infos_open_contact") : qsTr("one_one_infos_create_contact"),
-						color: DefaultStyle.main2_600,
-						showRightArrow: false,
-						action: function() {
-							// contactObj.value = friendGui
-							if (contactObj.value)
-								mainWindow.displayContactPage(contactObj.value.core.defaultAddress)
-							else
-								mainWindow.displayCreateContactPage("",mainItem.chatCore.peerAddress)
-						}
-					},
 					{
 						icon: AppIcons.clockCountDown,
 						visible: !mainItem.chatCore.isReadOnly,

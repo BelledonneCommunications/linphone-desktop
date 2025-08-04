@@ -175,6 +175,12 @@ ChatModel::createMessage(QString text, QList<std::shared_ptr<ChatMessageContentM
 	return message;
 }
 
+std::shared_ptr<linphone::EventLog>
+ChatModel::searchMessageByText(QString text, std::shared_ptr<const linphone::EventLog> from, bool forward) {
+	return mMonitor->searchChatMessageByText(Utils::appStringToCoreString(text), from,
+	                                         forward ? linphone::SearchDirection::Down : linphone::SearchDirection::Up);
+}
+
 void ChatModel::compose() {
 	mMonitor->compose();
 }
