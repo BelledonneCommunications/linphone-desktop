@@ -24,7 +24,7 @@ Loader{
 			: contact
 				? contact.core.defaultAddress
 				: ''
-	readonly property string address: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(_address) : _address
+	readonly property var address: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(_address) : _address
 	property var displayNameObj: UtilsCpp.getDisplayName(_address)
 	property var displayNameVal: account && account.core.displayName
 		? account.core.displayName
@@ -126,6 +126,14 @@ Loader{
 							: (contact 
 								? contact.core?.presenceIcon
 								: "")
+					RotationAnimator on rotation {
+						running: mainItem.account && mainItem.account.core.registrationState === LinphoneEnums.RegistrationState.Progress
+						direction: RotationAnimator.Clockwise
+						from: 0
+						to: 360
+						loops: Animation.Infinite
+						duration: 10000
+					}
 				}
 				
 			}

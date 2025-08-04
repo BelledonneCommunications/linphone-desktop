@@ -73,15 +73,24 @@ Control.Control{
 				RowLayout {
 					anchors.fill: parent
 					Image {
-						sourceSize.width: 11 * DefaultStyle.dp
-						sourceSize.height: 11 * DefaultStyle.dp
+						id: registrationImage
+						sourceSize.width: Math.round(11 * DefaultStyle.dp)
+						sourceSize.height: Math.round(11 * DefaultStyle.dp)
 						smooth: false
-						Layout.preferredWidth: 11 * DefaultStyle.dp
-						Layout.preferredHeight: 11 * DefaultStyle.dp
+						Layout.preferredWidth: Math.round(11 * DefaultStyle.dp)
+						Layout.preferredHeight: Math.round(11 * DefaultStyle.dp)
 						source: presenceBar.isRegistered 
 							? mainItem.account.core.presenceIcon 
 							: mainItem.account?.core.registrationIcon || ""
-						Layout.leftMargin: 8 * DefaultStyle.dp
+						Layout.leftMargin: Math.round(8 * DefaultStyle.dp)
+						RotationAnimator on rotation {
+							running: mainItem.account && mainItem.account.core.registrationState === LinphoneEnums.RegistrationState.Progress
+							direction: RotationAnimator.Clockwise
+							from: 0
+							to: 360
+							loops: Animation.Infinite
+							duration: 10000
+						}
 					}
 					Text {
 						id: presenceOrRegistrationText

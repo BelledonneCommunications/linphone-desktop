@@ -334,8 +334,8 @@ AbstractMainPage {
             SelectedChatView {
                 visible: chat != undefined && chat != null
                 anchors.fill: parent
-                chat: mainItem.selectedChatGui || null
                 onChatChanged: if (mainItem.selectedChatGui !== chat) mainItem.selectedChatGui = chat
+                chat: mainItem.selectedChatGui ? mainItem.selectedChatGui : null
             }
         }
     }

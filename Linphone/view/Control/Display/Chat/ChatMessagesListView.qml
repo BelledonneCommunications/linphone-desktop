@@ -67,7 +67,7 @@ ListView {
         }
     }
 
-    onAtYEndChanged: if (atYEnd) {
+    onAtYEndChanged: if (atYEnd && chat) {
         chat.core.lMarkAsRead()
     }
     onAtYBeginningChanged: if (atYBeginning) {
