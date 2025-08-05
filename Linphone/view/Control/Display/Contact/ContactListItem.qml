@@ -14,6 +14,7 @@ FocusScope {
     property var searchResultItem
     property bool showInitials: true // Display Initials of Display name.
     property bool showDefaultAddress: true // Display address below display name.
+    property bool showDisplayName: true // Display name above address.
     property bool showActions: false // Display actions layout (call buttons)
     property bool showContactMenu: true // Display the dot menu for contacts.
     property string highlightText
@@ -77,6 +78,10 @@ FocusScope {
             ColumnLayout {
                 spacing: 0
                 Text {
+                    id: displayNameText
+                    visible: mainItem.showDisplayName
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: visible ? implicitHeight: 0
                     text: UtilsCpp.boldTextPart(mainItem.displayName,
                                                 mainItem.highlightText)
                     font {
@@ -85,11 +90,11 @@ FocusScope {
                         weight: mainItem.showDefaultAddress ? Typography.h4.weight : Typography.p1.weight
                     }
                     maximumLineCount: 1
-                    Layout.fillWidth: true
                 }
                 Text {
                     Layout.topMargin: Math.round(2 * DefaultStyle.dp)
                     Layout.fillWidth: true
+                    Layout.preferredHeight: visible ? implicitHeight: 0
                     visible: mainItem.showDefaultAddress
                     property string address: SettingsCpp.hideSipAddresses
                         ? UtilsCpp.getUsername(mainItem.addressFromFilter)

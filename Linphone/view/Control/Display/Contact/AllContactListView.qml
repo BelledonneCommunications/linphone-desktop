@@ -14,7 +14,6 @@ Flickable {
     flickableDirection: Flickable.VerticalFlick
 
     property bool showInitials: true // Display Initials of Display name.
-    property bool showDefaultAddress: true // Display address below display name.
     property bool showActions: false // Display actions layout (call buttons)
     property bool showContactMenu: true // Display the dot menu for contacts.
     property bool showFavorites: true // Display the favorites in the header
@@ -269,7 +268,7 @@ Flickable {
             showActions: mainItem.showActions
             showInitials: mainItem.showInitials
             showContactMenu: mainItem.showContactMenu
-            showDefaultAddress: mainItem.showDefaultAddress
+            showDefaultAddress: false
             selectionEnabled: mainItem.selectionEnabled
             multiSelectionEnabled: mainItem.multiSelectionEnabled
             selectedContacts: mainItem.selectedContacts
@@ -315,7 +314,7 @@ Flickable {
             showActions: mainItem.showActions
             showInitials: mainItem.showInitials
             showContactMenu: mainItem.showContactMenu
-            showDefaultAddress: mainItem.showDefaultAddress
+            showDefaultAddress: false
             selectionEnabled: mainItem.selectionEnabled
             multiSelectionEnabled: mainItem.multiSelectionEnabled
             selectedContacts: mainItem.selectedContacts
@@ -368,7 +367,8 @@ Flickable {
             highlightText: mainItem.highlightText
             showActions: mainItem.showActions
             showContactMenu: mainItem.showContactMenu
-            showDefaultAddress: mainItem.showDefaultAddress
+            showDefaultAddress: true
+            showDisplayName: false
             selectionEnabled: mainItem.selectionEnabled
             multiSelectionEnabled: mainItem.multiSelectionEnabled
             selectedContacts: mainItem.selectedContacts

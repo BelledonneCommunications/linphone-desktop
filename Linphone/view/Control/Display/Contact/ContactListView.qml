@@ -15,6 +15,7 @@ ListView {
 	property string title
 	property bool showInitials: true	// Display Initials of Display name.
 	property bool showDefaultAddress: true	// Display address below display name.
+    property bool showDisplayName: true // Display name above address.
 	property bool showActions: false	// Display actions layout (call buttons)
 	property bool showContactMenu: true	// Display the dot menu for contacts.
 	property bool showFavorites: true	// Display the favorites in the header
