@@ -135,6 +135,12 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	mEphemeralLifetime = chatRoom->ephemeralEnabled() ? chatRoom->getEphemeralLifetime() : 0;
 	mIsMuted = chatRoom->getMuted();
 	mParticipants = buildParticipants(chatRoom);
+
+	connect(this, &ChatCore::participantsChanged, this, [this] {
+		// refresh secured status of the chatroom
+		setIsSecured(computeSecuredStatus());
+	});
+	mIsSecured = computeSecuredStatus();
 }
 
 ChatCore::~ChatCore() {
@@ -186,6 +192,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	});
 	mChatModelConnection->makeConnectToModel(
 	    &ChatModel::deleted, [this]() { mChatModelConnection->invokeToCore([this]() { emit deleted(); }); });
+
 	mChatModelConnection->makeConnectToModel(
 	    &ChatModel::stateChanged,
 	    [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom, linphone::ChatRoom::State newState) {
@@ -195,6 +202,12 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 			    setChatRoomState(state);
 			    setIsReadOnly(isReadOnly);
 		    });
+	    });
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::conferenceJoined, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	                                         const std::shared_ptr<const linphone::EventLog> &eventLog) {
+		    auto participants = buildParticipants(chatRoom);
+		    mChatModelConnection->invokeToCore([this, participants]() { setParticipants(participants); });
 	    });
 
 	// Events (excluding messages)
@@ -336,33 +349,24 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		    mChatModelConnection->invokeToCore([this, subject]() { setTitle(subject); });
 	    });
 
-	mChatModelConnection->makeConnectToModel(&ChatModel::participantAdded,
-	                                         [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
-	                                                const std::shared_ptr<const linphone::EventLog> &eventLog) {
-		                                         auto participants = buildParticipants(chatRoom);
-		                                         mChatModelConnection->invokeToCore([this, participants]() {
-			                                         mParticipants = participants;
-			                                         emit participantsChanged();
-		                                         });
-	                                         });
-	mChatModelConnection->makeConnectToModel(&ChatModel::participantRemoved,
-	                                         [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
-	                                                const std::shared_ptr<const linphone::EventLog> &eventLog) {
-		                                         auto participants = buildParticipants(chatRoom);
-		                                         mChatModelConnection->invokeToCore([this, participants]() {
-			                                         mParticipants = participants;
-			                                         emit participantsChanged();
-		                                         });
-	                                         });
-	mChatModelConnection->makeConnectToModel(&ChatModel::participantAdminStatusChanged,
-	                                         [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
-	                                                const std::shared_ptr<const linphone::EventLog> &eventLog) {
-		                                         auto participants = buildParticipants(chatRoom);
-		                                         mChatModelConnection->invokeToCore([this, participants]() {
-			                                         mParticipants = participants;
-			                                         emit participantsChanged();
-		                                         });
-	                                         });
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::participantAdded, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	                                         const std::shared_ptr<const linphone::EventLog> &eventLog) {
+		    auto participants = buildParticipants(chatRoom);
+		    mChatModelConnection->invokeToCore([this, participants]() { setParticipants(participants); });
+	    });
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::participantRemoved, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	                                           const std::shared_ptr<const linphone::EventLog> &eventLog) {
+		    auto participants = buildParticipants(chatRoom);
+		    mChatModelConnection->invokeToCore([this, participants]() { setParticipants(participants); });
+	    });
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::participantAdminStatusChanged, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	                                                      const std::shared_ptr<const linphone::EventLog> &eventLog) {
+		    auto participants = buildParticipants(chatRoom);
+		    mChatModelConnection->invokeToCore([this, participants]() { setParticipants(participants); });
+	    });
 	mChatModelConnection->makeConnectToCore(&ChatCore::lRemoveParticipantAtIndex, [this](int index) {
 		mChatModelConnection->invokeToModel([this, index]() { mChatModel->removeParticipantAtIndex(index); });
 	});
@@ -632,6 +636,25 @@ bool ChatCore::getMeAdmin() const {
 	return mMeAdmin;
 }
 
+bool ChatCore::isSecured() const {
+	return mIsSecured;
+}
+
+void ChatCore::setIsSecured(bool secured) {
+	if (mIsSecured != secured) {
+		mIsSecured = secured;
+		emit isSecuredChanged();
+	}
+}
+
+bool ChatCore::computeSecuredStatus() const {
+	if (mParticipants.size() == 0) return false;
+	for (auto &participant : mParticipants) {
+		if (participant->getSecurityLevel() != LinphoneEnums::SecurityLevel::EndToEndEncryptedAndVerified) return false;
+	}
+	return true;
+}
+
 QVariantList ChatCore::getParticipantsGui() const {
 	QVariantList result;
 	for (auto participantCore : mParticipants) {
@@ -647,6 +670,12 @@ QStringList ChatCore::getParticipantsAddresses() const {
 		result.append(participantCore->getSipAddress());
 	}
 	return result;
+}
+
+void ChatCore::setParticipants(QList<QSharedPointer<ParticipantCore>> participants) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	mParticipants = participants;
+	emit participantsChanged();
 }
 
 QList<QSharedPointer<ParticipantCore>>

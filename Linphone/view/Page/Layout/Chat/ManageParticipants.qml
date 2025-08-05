@@ -36,7 +36,7 @@ Rectangle {
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.leftArrow
 				onClicked: {
-					mainItem.chatCore.participantsAddresses = manageParticipantsLayout.selectedParticipants
+					mainItem.chatCore.lSetParticipantsAddresses(manageParticipantsLayout.selectedParticipants)
 					mainItem.done()
 				}
 			}

@@ -176,7 +176,7 @@ ListView {
                 property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.peerAddress)
                 contact: contactObj?.value || null
                 displayNameVal: contact ? undefined : modelData.core.avatarUri
-                secured: modelData.core.isEncrypted
+                secured: modelData.core.isSecured
                 Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
                 // isConference: modelData.core.isConference

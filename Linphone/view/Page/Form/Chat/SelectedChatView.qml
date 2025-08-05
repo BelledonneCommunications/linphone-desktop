@@ -93,6 +93,7 @@ FocusScope {
                             property var contactObj: mainItem.chat ? UtilsCpp.findFriendByAddress(mainItem.chat?.core.peerAddress) : null
                             contact: contactObj?.value || null
                             displayNameVal: contact ? "" : mainItem.chat?.core.avatarUri
+                            secured: mainItem.chat && mainItem.chat.core.isSecured
                             Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                             Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
                         }

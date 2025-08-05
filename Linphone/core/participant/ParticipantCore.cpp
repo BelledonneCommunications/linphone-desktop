@@ -53,6 +53,9 @@ ParticipantCore::ParticipantCore(const std::shared_ptr<linphone::Participant> &p
 		mCreationTime = QDateTime::fromSecsSinceEpoch(participant->getCreationTime());
 		mDisplayName = Utils::coreStringToAppString(participantAddress->getDisplayName());
 		if (mDisplayName.isEmpty()) mDisplayName = ToolModel::getDisplayName(participantAddress->clone());
+		auto isFriend = ToolModel::findFriendByAddress(participantAddress->clone());
+		mSecurityLevel =
+		    isFriend ? LinphoneEnums::fromLinphone(isFriend->getSecurityLevel()) : LinphoneEnums::SecurityLevel::None;
 		for (auto &device : participant->getDevices()) {
 			auto name = Utils::coreStringToAppString(device->getName());
 			auto address = Utils::coreStringToAppString(device->getAddress()->asStringUriOnly());
@@ -76,7 +79,7 @@ void ParticipantCore::setSelf(QSharedPointer<ParticipantCore> me) {
 	connect(this, &ParticipantCore::sipAddressChanged, this, &ParticipantCore::updateIsMe);
 }
 
-int ParticipantCore::getSecurityLevel() const {
+LinphoneEnums::SecurityLevel ParticipantCore::getSecurityLevel() const {
 	return mSecurityLevel;
 }
 
@@ -165,7 +168,7 @@ void ParticipantCore::setIsFocus(const bool &focus) {
 	}
 }
 
-void ParticipantCore::setSecurityLevel(int level) {
+void ParticipantCore::setSecurityLevel(LinphoneEnums::SecurityLevel level) {
 	if (level != mSecurityLevel) {
 		mSecurityLevel = level;
 		emit securityLevelChanged();

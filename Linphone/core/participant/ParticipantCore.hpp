@@ -45,7 +45,7 @@ class ParticipantCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool isMe READ isMe NOTIFY isMeChanged)
 	Q_PROPERTY(QDateTime creationTime READ getCreationTime CONSTANT)
 	Q_PROPERTY(bool focus READ isFocus CONSTANT)
-	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
+	Q_PROPERTY(LinphoneEnums::SecurityLevel securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
 	Q_PROPERTY(int deviceCount READ getDeviceCount NOTIFY deviceCountChanged)
 	Q_PROPERTY(QList<QVariant> devices READ getParticipantDevices NOTIFY deviceChanged)
 
@@ -62,7 +62,7 @@ public:
 	QDateTime getCreationTime() const;
 	bool isAdmin() const;
 	bool isFocus() const;
-	int getSecurityLevel() const;
+	LinphoneEnums::SecurityLevel getSecurityLevel() const;
 	int getDeviceCount() const;
 
 	bool isMe() const;
@@ -75,7 +75,7 @@ public:
 	void setCreationTime(const QDateTime &date);
 	void setIsAdmin(const bool &status);
 	void setIsFocus(const bool &focus);
-	void setSecurityLevel(int level);
+	void setSecurityLevel(LinphoneEnums::SecurityLevel level);
 
 	QList<QVariant> getParticipantDevices();
 
@@ -116,7 +116,7 @@ private:
 	QDateTime mCreationTime;
 	bool mAdminStatus;
 	bool mIsFocus;
-	int mSecurityLevel;
+	LinphoneEnums::SecurityLevel mSecurityLevel;
 	bool mIsMe;
 
 	DECLARE_ABSTRACT_OBJECT

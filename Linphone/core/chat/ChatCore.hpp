@@ -56,6 +56,7 @@ public:
 	Q_PROPERTY(bool isGroupChat READ isGroupChat CONSTANT)
 	Q_PROPERTY(bool isEncrypted READ isEncrypted CONSTANT)
 	Q_PROPERTY(bool isReadOnly READ getIsReadOnly WRITE setIsReadOnly NOTIFY readOnlyChanged)
+	Q_PROPERTY(bool isSecured READ isSecured WRITE setIsSecured NOTIFY isSecuredChanged)
 	Q_PROPERTY(QString sendingText READ getSendingText WRITE setSendingText NOTIFY sendingTextChanged)
 	Q_PROPERTY(bool ephemeralEnabled READ isEphemeralEnabled WRITE lEnableEphemeral NOTIFY ephemeralEnabledChanged)
 	Q_PROPERTY(
@@ -119,6 +120,10 @@ public:
 	bool getMeAdmin() const;
 	void setMeAdmin(bool admin);
 
+	bool isSecured() const;
+	void setIsSecured(bool secured);
+	bool computeSecuredStatus() const;
+
 	QList<QSharedPointer<EventLogCore>> getEventLogList() const;
 	void resetEventLogList(QList<QSharedPointer<EventLogCore>> list);
 	void appendEventLogToEventLogList(QSharedPointer<EventLogCore> event);
@@ -137,6 +142,7 @@ public:
 	std::shared_ptr<ChatModel> getModel() const;
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> getChatModelConnection() const;
 
+	void setParticipants(QList<QSharedPointer<ParticipantCore>> participants);
 	QList<QSharedPointer<ParticipantCore>> buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom) const;
 	QList<QSharedPointer<ParticipantCore>> getParticipants() const;
 	QVariantList getParticipantsGui() const;
@@ -166,6 +172,7 @@ signals:
 	void meAdminChanged();
 	void participantsChanged();
 	void fileListChanged();
+	void isSecuredChanged();
 
 	void lDeleteMessage(ChatMessageGui *message);
 	void lDelete();
@@ -203,6 +210,9 @@ private:
 	bool mIsEncrypted = false;
 	bool mIsReadOnly = false;
 	bool mEphemeralEnabled = false;
+	// ChatRoom is secured if all its participants are
+	// EndToEndEncryptedAndVerified friends
+	bool mIsSecured = false;
 	int mEphemeralLifetime = 0;
 	QList<QSharedPointer<ChatMessageContentCore>> mFileList;
 	bool mIsMuted = false;
