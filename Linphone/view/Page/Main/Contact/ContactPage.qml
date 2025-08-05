@@ -290,7 +290,6 @@ FriendGui{
                     Layout.rightMargin: Math.round(8 * DefaultStyle.dp)
                     searchBarText: searchBar.text
                     hideSuggestions: true
-                    showDefaultAddress: false
                     sourceFlags: LinphoneEnums.MagicSearchSource.Friends
                                  | LinphoneEnums.MagicSearchSource.FavoriteFriends
                                  | LinphoneEnums.MagicSearchSource.LdapServers

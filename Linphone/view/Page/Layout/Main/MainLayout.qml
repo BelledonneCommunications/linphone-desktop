@@ -274,7 +274,6 @@ Item {
                                 showActions: true
                                 showFavorites: false
                                 selectionEnabled: false
-                                showDefaultAddress: true
                                 searchOnEmpty: false
 
                                 sectionsPixelSize: Typography.p2.pixelSize
