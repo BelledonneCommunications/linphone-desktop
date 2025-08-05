@@ -1657,7 +1657,24 @@ void Utils::openChat(ChatGui *chat) {
 	smartShowWindow(mainWindow);
 	if (mainWindow && chat) {
 		emit chat->mCore->messageOpen();
-		QMetaObject::invokeMethod(mainWindow, "openChat", Q_ARG(QVariant, QVariant::fromValue(chat)));
+		auto localChatAccount = chat->mCore->getLocalAccount();
+		auto accountList = App::getInstance()->getAccountList();
+		auto defaultAccount = accountList->getDefaultAccountCore();
+		// If multiple accounts, we must switch to the correct account before opening the chatroom, otherwise,
+		// a chat room corresponding to the wrong account could be added in the chat list
+		if (localChatAccount && localChatAccount->getIdentityAddress() != defaultAccount->getIdentityAddress()) {
+			connect(accountList.get(), &AccountList::defaultAccountChanged, accountList.get(),
+			        [localChatAccount, accountList, chat] {
+				        auto defaultAccount = accountList->getDefaultAccountCore();
+				        if (defaultAccount->getIdentityAddress() == localChatAccount->getIdentityAddress()) {
+					        disconnect(accountList.get(), &AccountList::defaultAccountChanged, accountList.get(),
+					                   nullptr);
+					        QMetaObject::invokeMethod(getMainWindow(), "openChat",
+					                                  Q_ARG(QVariant, QVariant::fromValue(chat)));
+				        }
+			        });
+			localChatAccount->lSetDefaultAccount();
+		} else QMetaObject::invokeMethod(mainWindow, "openChat", Q_ARG(QVariant, QVariant::fromValue(chat)));
 	}
 }
 

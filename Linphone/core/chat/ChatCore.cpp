@@ -108,6 +108,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	mChatRoomState = LinphoneEnums::fromLinphone(chatRoom->getState());
 	mIsEncrypted = chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Encrypted);
 	auto localAccount = ToolModel::findAccount(chatRoom->getLocalAddress());
+	if (localAccount) mLocalAccount = AccountCore::create(localAccount);
 	bool associatedAccountHasIMEncryptionMandatory =
 	    localAccount && localAccount->getParams() &&
 	    localAccount->getParams()->getInstantMessagingEncryptionMandatory();
@@ -691,6 +692,10 @@ ChatCore::buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom)
 
 QList<QSharedPointer<ParticipantCore>> ChatCore::getParticipants() const {
 	return mParticipants;
+}
+
+QSharedPointer<AccountCore> ChatCore::getLocalAccount() const {
+	return mLocalAccount;
 }
 
 void ChatCore::updateInfo(const std::shared_ptr<linphone::Friend> &updatedFriend, bool isRemoval) {
