@@ -38,20 +38,23 @@ ColumnLayout {
 		}
 	}
 
-    Rectangle {
+	Control.Control {
 		visible: expandButton.checked
-        Layout.fillWidth: true
-        Layout.topMargin: Math.round(9 * DefaultStyle.dp)
-        color: DefaultStyle.grey_100
-        radius: Math.round(15 * DefaultStyle.dp)
-        height: participants.length > 0 ? contentColumn.implicitHeight : Math.round(90 * DefaultStyle.dp)
+		Layout.fillWidth: true
+		Layout.topMargin: Math.round(9 * DefaultStyle.dp)
+		height: Math.min(contentColumn.implicitHeight, Math.round(90 * DefaultStyle.dp))
+		bottomPadding: Math.round(15 * DefaultStyle.dp)
 
-        ColumnLayout {
-            id: contentColumn
-            anchors.fill: parent
-            spacing: Math.round(16 * DefaultStyle.dp)
-            
-            Item {
+		background: Rectangle {
+			color: DefaultStyle.grey_100
+			radius: Math.round(15 * DefaultStyle.dp)
+		}
+
+		contentItem: ColumnLayout {
+			id: contentColumn
+			spacing: Math.round(16 * DefaultStyle.dp)
+			
+			Item {
 				Layout.topMargin: Math.round(7 * DefaultStyle.dp)
 			}
 
@@ -119,8 +122,8 @@ ColumnLayout {
 									Layout.fillWidth: true
 									//: "Show contact"
 									text: contact && contact.core && contact.core.isAppFriend ? qsTr("menu_see_existing_contact") :
-																  //: "Add to contacts"
-																  qsTr("menu_add_address_to_contacts")
+																//: "Add to contacts"
+																qsTr("menu_add_address_to_contacts")
 									icon.source: (contact && contact.core && contact.core.isAppFriend)
 										? AppIcons.adressBook
 										: AppIcons.plusCircle
@@ -188,11 +191,11 @@ ColumnLayout {
 								}
 							}
 						}
-                    }
+					}
 					
 				}
 			}
-            
+			
 			MediumButton {
 				id: manageParticipants
 				visible: mainItem.isGroupEditable()
@@ -205,12 +208,7 @@ ColumnLayout {
 				style: ButtonStyle.secondary
 				onClicked: mainItem.manageParticipantsRequested()
 				Layout.alignment: Qt.AlignHCenter
-				Layout.bottomMargin: Math.round(17 * DefaultStyle.dp)
 			}
-			Item {
-				visible: !manageParticipants.visible
-				Layout.bottomMargin: Math.round(7 * DefaultStyle.dp)
-			}
-        }
-    }
+		}
+	}
 }

@@ -447,7 +447,6 @@ ListView {
                 } else {
                     mainItem.chatClicked(modelData)
                     mainItem.currentIndex = model.index
-                    mainItem.forceActiveFocus()
                 }
             }
         }

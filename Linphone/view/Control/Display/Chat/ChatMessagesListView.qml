@@ -46,7 +46,10 @@ ListView {
         })
     }
     
-    onChatChanged: lastItemVisible = false
+    onChatChanged: {
+        lastItemVisible = false
+        forceActiveFocus()
+    }
 
     Button {
         visible: !mainItem.lastItemVisible
