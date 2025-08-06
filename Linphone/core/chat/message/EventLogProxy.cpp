@@ -134,8 +134,5 @@ bool EventLogProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModel
 }
 
 bool EventLogProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
-	auto l = getItemAtSource<EventLogList, EventLogCore>(sourceLeft.row());
-	auto r = getItemAtSource<EventLogList, EventLogCore>(sourceRight.row());
-	if (l && r) return l->getTimestamp() <= r->getTimestamp();
-	else return true;
+	return true;
 }
