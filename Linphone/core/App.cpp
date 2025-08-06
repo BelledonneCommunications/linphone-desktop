@@ -365,6 +365,22 @@ void App::setSelf(QSharedPointer<App>(me)) {
 		    }
 	    });
 	mCoreModelConnection->makeConnectToModel(&CoreModel::authenticationRequested, &App::onAuthenticationRequested);
+	// Config error message
+	mCoreModelConnection->makeConnectToModel(
+	    &CoreModel::configuringStatus, [this](const std::shared_ptr<linphone::Core> &core,
+	                                          linphone::ConfiguringState status, const std::string &message) {
+		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		    if (status == linphone::ConfiguringState::Failed) {
+			    mCoreModelConnection->invokeToCore([this, message]() {
+				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+				    //: Error
+				    Utils::showInformationPopup(
+				        tr("info_popup_error_title"),
+				        tr("info_popup_configuration_failed_message").arg(Utils::coreStringToAppString(message)),
+				        false);
+			    });
+		    }
+	    });
 
 	// Synchronize state for because linphoneCore was ran before any connections.
 	mCoreModelConnection->invokeToModel([this]() {
@@ -438,25 +454,12 @@ void App::init() {
 }
 
 void App::initCore() {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	// Core. Manage the logger so it must be instantiate at first.
 	CoreModel::create("", mLinphoneThread);
 	if (mParser->isSet("verbose")) QtLogger::enableVerbose(true);
 	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
 
-	// Config error message
-	connect(CoreModel::getInstance().get(), &CoreModel::configuringStatus, this,
-	        [this](const std::shared_ptr<linphone::Core> &core, linphone::ConfiguringState status,
-	               const std::string &message) {
-		        mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		        QMetaObject::invokeMethod(thread(), [this, message]() {
-			        mustBeInMainThread(log().arg(Q_FUNC_INFO));
-			        //: Error
-			        Utils::showInformationPopup(
-			            tr("info_popup_error_title"),
-			            tr("info_popup_configuration_failed_message").arg(Utils::coreStringToAppString(message)),
-			            false);
-		        });
-	        });
 	QMetaObject::invokeMethod(
 	    mLinphoneThread->getThreadId(),
 	    [this, settings = mSettings]() mutable {
