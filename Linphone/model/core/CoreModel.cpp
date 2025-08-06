@@ -85,9 +85,9 @@ void CoreModel::start() {
 	// Useful if the app was built without video support.
 	// (The capture/display attributes are reset by the core in this case.)
 	auto config = mCore->getConfig();
-	if (mCore->videoSupported()) {
-		config->setInt("video", "capture", 1);
-		config->setInt("video", "display", 1);
+	if (!mCore->videoSupported()) {
+		config->setInt("video", "capture", 0);
+		config->setInt("video", "display", 0);
 	}
 
 	// TODO : set the real transport type when sdk will be updated

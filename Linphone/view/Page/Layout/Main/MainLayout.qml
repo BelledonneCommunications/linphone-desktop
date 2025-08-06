@@ -1,8 +1,3 @@
-
-
-/**
-* Qml template used for welcome and login/register pages
-**/
 import QtCore
 import QtQuick
 import QtQuick.Layouts
