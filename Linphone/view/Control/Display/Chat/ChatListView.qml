@@ -19,6 +19,7 @@ ListView {
 
     property ChatGui currentChatGui
     onCurrentIndexChanged: currentChatGui = model.getAt(currentIndex) || null
+    onCurrentChatGuiChanged: chatClicked(currentChatGui)
 
     signal resultsReceived()
     signal markAllAsRead()
@@ -44,9 +45,9 @@ ListView {
             mainItem.resultsReceived()
         }
         onChatRemoved: {
-            var indexToSelect = mainItem.currentIndex
+            var currentChat = model.getAt(currentIndex)
             mainItem.currentIndex = -1
-            mainItem.currentIndex = indexToSelect
+            selectChat(currentChat)
         }
         onLayoutChanged: {
             selectChat(mainItem.currentChatGui)
@@ -57,6 +58,7 @@ ListView {
 
     function selectChat(chatGui) {
         var index = chatProxy.findChatIndex(chatGui)
+        console.log("current index", mainItem.currentIndex, "new", index)
         mainItem.currentIndex = index
         // if the chat exists, it may not be displayed
         // in list if hide_empty_chatrooms is set. Thus, we need
@@ -366,14 +368,15 @@ ListView {
                     }
                     Rectangle {
                         Layout.fillWidth: true
-                        visible: mainItem.currentChatGui && !mainItem.currentChatGui.core.isReadOnly
+                        visible: leaveButton.visible
                         Layout.preferredHeight: Math.min(1, Math.round(1 * DefaultStyle.dp))
                         color: DefaultStyle.main2_400
                     }
                     IconLabelButton {
+                        id: leaveButton
                         //: "leave"
                         text: qsTr("chat_room_leave")
-                        visible: mainItem.currentChatGui && !mainItem.currentChatGui.core.isReadOnly && mainItem.currentChatGui.core.isGroupChat
+                        visible: !modelData.core.isReadOnly && modelData.core.isGroupChat
                         icon.source: AppIcons.trashCan
                         spacing: Math.round(10 * DefaultStyle.dp)
                         Layout.fillWidth: true
@@ -393,11 +396,13 @@ ListView {
                         style: ButtonStyle.hoveredBackground
                     }
                     Rectangle {
+                        visible: deleteButton.visible
                         Layout.fillWidth: true
                         Layout.preferredHeight: Math.min(1, Math.round(1 * DefaultStyle.dp))
                         color: DefaultStyle.main2_400
                     }
                     IconLabelButton {
+                        id: deleteButton
                         //: "Delete"
                         text: qsTr("chat_room_delete")
                         icon.source: AppIcons.trashCan

@@ -59,6 +59,7 @@ Item {
 	Text {
 		anchors.margins: 25
 		anchors.left: parent.left
+		anchors.right: parent.right
 		anchors.verticalCenter: parent.verticalCenter
 		text: titleText
 		font: Typography.h4

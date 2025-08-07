@@ -79,7 +79,6 @@ void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 		if (mChatCore) {
 			disconnect(mChatCore.get(), &ChatCore::eventListChanged, this, nullptr);
 			disconnect(mChatCore.get(), &ChatCore::eventsInserted, this, nullptr);
-			mModelConnection->disconnect();
 		}
 		mChatCore = core;
 		if (mChatCore) {
@@ -97,7 +96,6 @@ void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 					}
 				}
 			});
-			mModelConnection = SafeConnection<ChatCore, ChatModel>::create(mChatCore, mChatCore->getModel());
 		}
 		emit eventChanged();
 		lUpdate();
