@@ -72,7 +72,6 @@ Dialog {
                 id: passwordEdit
                 hidden: true
                 isError: passwordItem.errorTextVisible
-                KeyNavigation.up: usernameEdit
                 KeyNavigation.down: cancelButton
             }
         }

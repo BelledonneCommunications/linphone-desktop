@@ -355,6 +355,23 @@ void App::setSelf(QSharedPointer<App>(me)) {
 		auto state = CoreModel::getInstance()->getCore()->getGlobalState();
 		mCoreModelConnection->invokeToCore([this, state] { setCoreStarted(state == linphone::GlobalState::On); });
 	});
+	mCoreModelConnection->makeConnectToModel(
+	    &CoreModel::accountAdded,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
+		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		    qDebug() << "account added";
+		    if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Successful) {
+			    qDebug() << "remote prov finished";
+			    bool accountConnected = account && account->getState() == linphone::RegistrationState::Ok;
+			    mCoreModelConnection->invokeToCore([this, accountConnected]() {
+				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+				    // There is an account added by a remote provisioning, force switching to main  page
+				    // because the account may not be connected already
+				    QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
+				                              Q_ARG(QVariant, accountConnected));
+			    });
+		    }
+	    });
 	//---------------------------------------------------------------------------------------------
 	mCliModelConnection = SafeConnection<App, CliModel>::create(me, CliModel::getInstance());
 	mCliModelConnection->makeConnectToCore(&App::receivedMessage, [this](int, const QByteArray &byteArray) {
@@ -432,14 +449,16 @@ void App::initCore() {
 	        [this](const std::shared_ptr<linphone::Core> &core, linphone::ConfiguringState status,
 	               const std::string &message) {
 		        mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		        QMetaObject::invokeMethod(thread(), [this, message]() {
-			        mustBeInMainThread(log().arg(Q_FUNC_INFO));
-			        //: Error
-			        Utils::showInformationPopup(
-			            tr("info_popup_error_title"),
-			            tr("info_popup_configuration_failed_message").arg(Utils::coreStringToAppString(message)),
-			            false);
-		        });
+		        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed) {
+			        QMetaObject::invokeMethod(thread(), [this, message]() {
+				        mustBeInMainThread(log().arg(Q_FUNC_INFO));
+				        //: Error
+				        Utils::showInformationPopup(
+				            tr("info_popup_error_title"),
+				            tr("info_popup_configuration_failed_message").arg(Utils::coreStringToAppString(message)),
+				            false);
+			        });
+		        }
 	        });
 	QMetaObject::invokeMethod(
 	    mLinphoneThread->getThreadId(),
