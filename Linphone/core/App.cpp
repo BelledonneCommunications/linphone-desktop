@@ -381,6 +381,21 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			    });
 		    }
 	    });
+	mCoreModelConnection->makeConnectToModel(
+	    &CoreModel::accountAdded,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
+		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		    if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Successful) {
+			    bool accountConnected = account && account->getState() == linphone::RegistrationState::Ok;
+			    mCoreModelConnection->invokeToCore([this, accountConnected]() {
+				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+				    // There is an account added by a remote provisioning, force switching to main  page
+				    // because the account may not be connected already
+				    QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
+				                              Q_ARG(QVariant, accountConnected));
+			    });
+		    }
+	    });
 
 	// Synchronize state for because linphoneCore was ran before any connections.
 	mCoreModelConnection->invokeToModel([this]() {
