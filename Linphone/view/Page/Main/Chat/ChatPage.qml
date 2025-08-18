@@ -187,8 +187,8 @@ AbstractMainPage {
                             searchBar: searchBar
                             Control.ScrollBar.vertical: scrollbar
 
-                            onChatClicked: (chat) => {
-                                mainItem.selectedChatGui = chat
+                            onCurrentChatGuiChanged: {
+                                mainItem.selectedChatGui = currentChatGui
                             }
 
                             Connections {
@@ -331,10 +331,21 @@ AbstractMainPage {
         id: currentChatComp
         FocusScope {
             SelectedChatView {
+                id: selectedChatView
                 visible: chat != undefined && chat != null
                 anchors.fill: parent
-                onChatChanged: if (mainItem.selectedChatGui !== chat) mainItem.selectedChatGui = chat
                 chat: mainItem.selectedChatGui ? mainItem.selectedChatGui : null
+                onChatChanged: {
+                    if (mainItem.selectedChatGui !== chat) mainItem.selectedChatGui = chat
+                }
+                // Binding is destroyed when forward message is done so
+                // we need this connection in addition
+                Connections {
+                    target: mainItem
+                    function onSelectedChatGuiChanged() {
+                        selectedChatView.chat = mainItem.selectedChatGui
+                    }
+                }
             }
         }
     }

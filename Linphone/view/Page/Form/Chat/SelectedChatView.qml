@@ -679,7 +679,6 @@ FocusScope {
                                         checkable: true
                                         checked: true
                                         icon.source: checked ? AppIcons.upArrow : AppIcons.downArrow
-                                        KeyNavigation.down: contentControl
                                     }
                                 }
                                 ChatListView {
@@ -694,7 +693,6 @@ FocusScope {
                                     }
                                 }
                                 AllContactListView {
-                                    visible: expandContactButton.checked
                                     Layout.fillWidth: true
                                     itemsRightMargin: 0
                                     showActions: false
@@ -703,7 +701,7 @@ FocusScope {
                                     searchBarText: forwardSearchBar.text
                                     Layout.preferredHeight: contentHeight
                                     onContactSelected: contact => selectedFriend = contact
-                                    property FriendGui selectedFriend
+                                    property FriendGui selectedFriend: null
                                     property var chatForSelectedAddressObj: selectedFriend ? UtilsCpp.getChatForAddress(selectedFriend.core.defaultAddress) : null
                                     property ChatGui chatForAddress: chatForSelectedAddressObj ? chatForSelectedAddressObj.value : null
                                     onChatForAddressChanged: if(chatForAddress) {

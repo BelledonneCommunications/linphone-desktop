@@ -19,7 +19,7 @@ ListView {
 
     property ChatGui currentChatGui
     onCurrentIndexChanged: currentChatGui = model.getAt(currentIndex) || null
-    onCurrentChatGuiChanged: chatClicked(currentChatGui)
+    onChatClicked: (chat) => {currentChatGui = chat}
 
     signal resultsReceived()
     signal markAllAsRead()
