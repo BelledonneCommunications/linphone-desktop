@@ -63,7 +63,7 @@ public:                                                                         
 
 #define DECLARE_CORE_GETSET_MEMBER(type, x, X)                                                                         \
 	Q_PROPERTY(type x MEMBER m##X WRITE set##X NOTIFY x##Changed)                                                      \
-	Q_SIGNAL void set##X(type data);                                                                                   \
+	Q_SIGNAL void set##X(const type &data);                                                                            \
 	Q_SIGNAL void x##Changed();                                                                                        \
 	type m##X;
 
@@ -74,14 +74,14 @@ public:                                                                         
 
 #define DECLARE_CORE_GETSET(type, x, X)                                                                                \
 	Q_PROPERTY(type x READ get##X WRITE set##X NOTIFY x##Changed)                                                      \
-	Q_SIGNAL void set##X(type data);                                                                                   \
+	Q_SIGNAL void set##X(const type &data);                                                                            \
 	type get##X() const;                                                                                               \
 	Q_SIGNAL void x##Changed();                                                                                        \
 	type m##X;
 
 #define DECLARE_GUI_GETSET(type, x, X)                                                                                 \
 	Q_PROPERTY(type x READ get##X WRITE set##X NOTIFY x##Changed)                                                      \
-	void set##X(type data);                                                                                            \
+	void set##X(const type &data);                                                                                     \
 	type get##X() const;                                                                                               \
 	Q_SIGNAL void x##Changed();                                                                                        \
 	type m##X;
@@ -94,11 +94,13 @@ public:                                                                         
 #define DECLARE_CORE_GET_CONSTANT(type, x, X)                                                                          \
 	Q_PROPERTY(type x MEMBER m##X CONSTANT)                                                                            \
 	type m##X;                                                                                                         \
-	type get##X() const { return m##X;}
+	type get##X() const {                                                                                              \
+		return m##X;                                                                                                   \
+	}
 
 #define DECLARE_GETSET(type, x, X)                                                                                     \
 	type get##X() const;                                                                                               \
-	void set##X(type data);                                                                                            \
+	void set##X(const type &data);                                                                                     \
 	Q_SIGNAL void x##Changed(type x);
 
 #define INIT_CORE_MEMBER(X, model) m##X = model->get##X();
@@ -129,7 +131,7 @@ public:                                                                         
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		return !!mConfig->get##Type(UiSection, key, def);                                                              \
 	}                                                                                                                  \
-	void Class::set##X(type data) {                                                                                    \
+	void Class::set##X(const type &data) {                                                                             \
 		if (get##X() != data) {                                                                                        \
 			mConfig->set##Type(UiSection, key, data);                                                                  \
 			emit x##Changed(data);                                                                                     \
@@ -141,7 +143,7 @@ public:                                                                         
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		return Utils::coreStringToAppString(mConfig->getString(UiSection, key, def));                                  \
 	}                                                                                                                  \
-	void Class::set##X(QString data) {                                                                                 \
+	void Class::set##X(const QString &data) {                                                                          \
 		if (get##X() != data) {                                                                                        \
 			mConfig->setString(UiSection, key, Utils::appStringToCoreString(data));                                    \
 			emit x##Changed(data);                                                                                     \
@@ -152,14 +154,14 @@ public:                                                                         
 
 #define DECLARE_GETSET_API(type, x, X)                                                                                 \
 	type get##X() const;                                                                                               \
-	void set##X(type data);                                                                                            \
+	void set##X(const type &data);                                                                                     \
 	Q_SIGNAL void x##Changed(type x);
 
 #define DEFINE_GET_SET_API(Class, type, x, X)                                                                          \
 	type Class::get##X() const {                                                                                       \
 		return m##X;                                                                                                   \
 	}                                                                                                                  \
-	void Class::set##X(type data) {                                                                                    \
+	void Class::set##X(const type &data) {                                                                             \
 		if (get##X() != data) {                                                                                        \
 			m##X = data;                                                                                               \
 			emit x##Changed();                                                                                         \
@@ -171,7 +173,7 @@ public:                                                                         
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		return ownerNotNull->get##X();                                                                                 \
 	}                                                                                                                  \
-	void Class::set##X(type data) {                                                                                    \
+	void Class::set##X(const type &data) {                                                                             \
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		if (get##X() != data) {                                                                                        \
 			ownerNotNull->set##X(data);                                                                                \
@@ -196,7 +198,7 @@ public:                                                                         
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		return Utils::coreStringToAppString(ownerNotNull->get##X());                                                   \
 	}                                                                                                                  \
-	void Class::set##X(QString data) {                                                                                 \
+	void Class::set##X(const QString &data) {                                                                          \
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		if (get##X() != data) {                                                                                        \
 			ownerNotNull->set##X(Utils::appStringToCoreString(data));                                                  \
@@ -209,7 +211,7 @@ public:                                                                         
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		return ownerNotNull->x##Enabled();                                                                             \
 	}                                                                                                                  \
-	void Class::set##X(bool data) {                                                                                    \
+	void Class::set##X(const bool &data) {                                                                             \
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		if (get##X() != data) {                                                                                        \
 			ownerNotNull->enable##X(data);                                                                             \
@@ -222,7 +224,7 @@ public:                                                                         
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		return ownerNotNull->enabled();                                                                                \
 	}                                                                                                                  \
-	void Class::set##X(bool data) {                                                                                    \
+	void Class::set##X(const bool &data) {                                                                             \
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));                                                                \
 		if (get##X() != data) {                                                                                        \
 			ownerNotNull->enable(data);                                                                                \

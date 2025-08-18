@@ -385,6 +385,11 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 			map["chat"] = QVariant::fromValue(chatCore ? new ChatGui(chatCore) : nullptr);
 			CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
 		});
+		auto settings = SettingsModel::getInstance();
+		if (settings && !settings->dndEnabled()) {
+			CoreModel::getInstance()->getCore()->playLocal(
+			    Utils::appStringToCoreString(settings->getChatNotificationSoundPath()));
+		}
 	}
 }
 /*

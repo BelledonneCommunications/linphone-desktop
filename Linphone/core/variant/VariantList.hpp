@@ -31,7 +31,7 @@
 
 class VariantList : public AbstractListProxy<QVariant>, public AbstractObject {
 	Q_OBJECT
-	Q_PROPERTY(QList<QVariant> model WRITE setModel NOTIFY modelChanged)
+	Q_PROPERTY(QList<QVariant> model READ getModel WRITE setModel NOTIFY modelChanged)
 public:
 	VariantList(QObject *parent = Q_NULLPTR);
 	VariantList(QList<QVariant> list, QObject *parent = Q_NULLPTR);

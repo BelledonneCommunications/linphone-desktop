@@ -652,7 +652,7 @@ bool SettingsModel::getIpv6Enabled() const {
 	return CoreModel::getInstance()->getCore()->ipv6Enabled();
 }
 
-void SettingsModel::setIpv6Enabled(bool status) {
+void SettingsModel::setIpv6Enabled(const bool &status) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (getIpv6Enabled() != status) {
 		CoreModel::getInstance()->getCore()->enableIpv6(status);
@@ -728,7 +728,7 @@ QVariantList SettingsModel::getShortcuts() const {
 	return shortcuts;
 }
 
-void SettingsModel::setShortcuts(QVariantList data) {
+void SettingsModel::setShortcuts(const QVariantList &data) {
 	if (getShortcuts() != data) {
 		// clean
 		auto sections = mConfig->getSectionsNamesList();
@@ -773,10 +773,21 @@ QString SettingsModel::getCallForwardToAddress() const {
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "call_forward_to_address", ""));
 }
 
-void SettingsModel::setCallForwardToAddress(QString data) {
+void SettingsModel::setCallForwardToAddress(const QString &data) {
 	if (data == "") disableCallForward();
 	else enableCallForward(data);
 	emit(callForwardToAddressChanged(data));
+}
+
+QString SettingsModel::getChatNotificationSoundPath() const {
+	static const string defaultFile = linphone::Factory::get()->getSoundResourcesDir() + "/incoming_chat.wav";
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "chat_sound_notification_file", defaultFile));
+}
+
+void SettingsModel::setChatNotificationSoundPath(const QString &path) {
+	QString cleanedPath = QDir::cleanPath(path);
+	mConfig->setString(UiSection, "chat_sound_notification_file", Utils::appStringToCoreString(cleanedPath));
+	emit chatNotificationSoundPathChanged(cleanedPath);
 }
 
 QFont SettingsModel::getEmojiFont() const {

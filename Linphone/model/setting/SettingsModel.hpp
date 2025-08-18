@@ -198,6 +198,7 @@ public:
 	DECLARE_GETSET(bool, disableCommandLine, DisableCommandLine)
 	DECLARE_GETSET(bool, disableCallForward, DisableCallForward)
 	DECLARE_GETSET(QString, callForwardToAddress, CallForwardToAddress)
+	DECLARE_GETSET(QString, chatNotificationSoundPath, ChatNotificationSoundPath)
 
 signals:
 	void logsUploadUrlChanged();
