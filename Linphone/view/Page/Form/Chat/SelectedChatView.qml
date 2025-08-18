@@ -248,7 +248,6 @@ FocusScope {
                             anchors.fill: parent
                             anchors.leftMargin: Math.round(18 * DefaultStyle.dp)
                             anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
-                            onActiveFocusChanged: console.log("chat messages focus", activeFocus)
                             Control.ScrollBar.vertical: scrollbar
                             onShowReactionsForMessageRequested: (chatMessage) => {
                                 mainItem.chatMessage = chatMessage

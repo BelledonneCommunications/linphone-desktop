@@ -27,6 +27,7 @@ DEFINE_ABSTRACT_OBJECT(CallHistoryProxy)
 
 CallHistoryProxy::CallHistoryProxy(QObject *parent) : LimitProxy(parent) {
 	mHistoryList = CallHistoryList::create();
+	connect(mHistoryList.get(), &CallHistoryList::listAboutToBeReset, this, &CallHistoryProxy::listAboutToBeReset);
 	setSourceModels(new SortFilterList(mHistoryList.get(), Qt::DescendingOrder));
 	connect(App::getInstance(), &App::currentDateChanged, this, [this] { emit mHistoryList->lUpdate(); });
 }
@@ -56,7 +57,7 @@ bool CallHistoryProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 		                          QRegularExpression::CaseInsensitiveOption |
 		                              QRegularExpression::UseUnicodePropertiesOption);
 		auto callLog = getItemAtSource<CallHistoryList, CallHistoryCore>(sourceRow);
-		show = callLog->mDisplayName.contains(search) || callLog->mRemoteAddress.contains(search);
+		show = callLog && (callLog->mDisplayName.contains(search) || callLog->mRemoteAddress.contains(search));
 	}
 	return show;
 }

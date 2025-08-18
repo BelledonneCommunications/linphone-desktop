@@ -81,6 +81,8 @@ void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
 void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	mModelConnection = SafeConnection<ChatList, CoreModel>::create(me, CoreModel::getInstance());
 	mModelConnection->makeConnectToCore(&ChatList::lUpdate, [this]() {
+		clearData();
+		emit listAboutToBeReset();
 		mModelConnection->invokeToModel([this]() {
 			mustBeInLinphoneThread(getClassName());
 			// Avoid copy to lambdas
@@ -126,13 +128,13 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			qWarning() << log().arg("Receiver account has no address, return");
 			return;
 		}
-		auto senderAddress = message->getFromAddress();
 		auto defaultAddress = core->getDefaultAccount()->getContactAddress();
-		if (!defaultAddress->weakEqual(receiverAddress)) {
+		if (defaultAddress && !defaultAddress->weakEqual(receiverAddress)) {
 			qDebug() << log().arg("Receiver account is not the default one, do not add chat to list");
 			return;
 		}
-		if (defaultAddress->weakEqual(senderAddress)) {
+		auto senderAddress = message->getFromAddress();
+		if (defaultAddress && defaultAddress->weakEqual(senderAddress)) {
 			qDebug() << log().arg("Sender account is the default one, do not add chat to list");
 			return;
 		}

@@ -42,6 +42,7 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 	auto newEventLogList = dynamic_cast<EventLogList *>(model);
 	if (newEventLogList) {
 		connect(newEventLogList, &EventLogList::eventChanged, this, &EventLogProxy::eventChanged);
+		connect(newEventLogList, &EventLogList::listAboutToBeReset, this, &EventLogProxy::listAboutToBeReset);
 		connect(newEventLogList, &EventLogList::eventInserted, this,
 		        [this, newEventLogList](int index, EventLogGui *event) {
 			        invalidate();

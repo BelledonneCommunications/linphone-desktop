@@ -188,7 +188,6 @@ AbstractMainPage {
                             Control.ScrollBar.vertical: scrollbar
 
                             onChatClicked: (chat) => {
-                                console.log("chat clicked")
                                 mainItem.selectedChatGui = chat
                             }
 

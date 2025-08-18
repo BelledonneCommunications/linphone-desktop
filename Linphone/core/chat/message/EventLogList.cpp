@@ -150,6 +150,8 @@ void EventLogList::findChatMessageWithFilter(QString filter,
 
 void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 	connect(this, &EventLogList::lUpdate, this, [this]() {
+		resetData();
+		emit listAboutToBeReset();
 		for (auto &event : getSharedList<EventLogCore>()) {
 			auto message = event->getChatMessageCore();
 			if (message) disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);

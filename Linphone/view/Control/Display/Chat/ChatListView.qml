@@ -44,6 +44,9 @@ ListView {
         onModelReset: {
             mainItem.resultsReceived()
         }
+        onListAboutToBeReset: {
+            loading = true
+        }
         onChatRemoved: {
             var currentChat = model.getAt(currentIndex)
             mainItem.currentIndex = -1
@@ -58,7 +61,6 @@ ListView {
 
     function selectChat(chatGui) {
         var index = chatProxy.findChatIndex(chatGui)
-        console.log("current index", mainItem.currentIndex, "new", index)
         mainItem.currentIndex = index
         // if the chat exists, it may not be displayed
         // in list if hide_empty_chatrooms is set. Thus, we need

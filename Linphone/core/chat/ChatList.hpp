@@ -51,6 +51,7 @@ signals:
 	void chatRemoved(ChatGui *chat);
 	void chatAdded();
 	void chatUpdated();
+	void listAboutToBeReset();
 
 private:
 	QString mFilter;

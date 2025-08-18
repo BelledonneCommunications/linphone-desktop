@@ -29,6 +29,7 @@ ListView {
         Component.onCompleted: {
             loading = true
         }
+        onListAboutToBeReset: loading = true
         filterText: mainItem.searchText
         onFilterTextChanged: maxDisplayItems = initialDisplayItems
         initialDisplayItems: Math.max(
@@ -43,16 +44,14 @@ ListView {
     spacing: Math.round(10 * DefaultStyle.dp)
 
     Keys.onPressed: event => {
-                        if (event.key == Qt.Key_Escape) {
-                            console.log("Back")
-                            searchBar.forceActiveFocus()
-                            event.accepted = true
-                        }
-                    }
+        if (event.key == Qt.Key_Escape) {
+            console.log("Back")
+            searchBar.forceActiveFocus()
+            event.accepted = true
+        }
+    }
 
-    Component.onCompleted: cacheBuffer = Math.max(
-                               contentHeight,
-                               0) //contentHeight>0 ? contentHeight : 0// cache all items
+    Component.onCompleted: cacheBuffer = Math.max(mainItem.height,0) //contentHeight>0 ? contentHeight : 0// cache all items
     // remove binding loop
     onContentHeightChanged: Qt.callLater(function () {
         if (mainItem)

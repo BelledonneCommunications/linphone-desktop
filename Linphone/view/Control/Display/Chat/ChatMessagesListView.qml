@@ -14,6 +14,9 @@ ListView {
     property color backgroundColor
     property bool lastItemVisible: false
     property int lastIndexFoundWithFilter: -1
+    property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
+    property bool loading: false
+
     verticalLayoutDirection: ListView.BottomToTop
     signal showReactionsForMessageRequested(ChatMessageGui chatMessage)
     signal showImdnStatusForMessageRequested(ChatMessageGui chatMessage)
@@ -87,7 +90,10 @@ ListView {
             if (!mainItem.visible) return
             if(mainItem.lastItemVisible) mainItem.positionViewAtIndex(index, ListView.Beginning)
         }
+        Component.onCompleted: loading = true
+        onListAboutToBeReset: loading = true
         onModelReset: Qt.callLater(function() {
+            loading = false
             var index = eventLogProxy.findFirstUnreadIndex()
             positionViewAtIndex(index, ListView.Beginning)
             eventLogProxy.markIndexAsRead(index)
@@ -203,6 +209,16 @@ ListView {
                 text: qsTr("chat_message_is_writing_info").arg(composeLayout.composingName)
             }
         }
+    }
+
+    BusyIndicator {
+        anchors.horizontalCenter: mainItem.horizontalCenter
+        visible: mainItem.loading
+        height: visible ? mainItem.busyIndicatorSize : 0
+        width: mainItem.busyIndicatorSize
+        indicatorHeight: mainItem.busyIndicatorSize
+        indicatorWidth: mainItem.busyIndicatorSize
+        indicatorColor: DefaultStyle.main1_500_main
     }
     
     delegate: DelegateChooser {

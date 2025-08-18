@@ -55,6 +55,7 @@ signals:
 	void eventChanged();
 	void eventInserted(int index, EventLogGui *message);
 	void indexWithFilterFound(int index);
+	void listAboutToBeReset();
 
 protected:
 	QSharedPointer<EventLogList> mList;

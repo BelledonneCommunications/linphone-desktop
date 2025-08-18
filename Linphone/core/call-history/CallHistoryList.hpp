@@ -62,6 +62,7 @@ signals:
 	void lUpdate();
 	void lRemoveEntriesForAddress(QString address);
 	void lRemoveAllEntries();
+	void listAboutToBeReset();
 
 private:
 	// Check the state from CallHistoryCore: sender() must be a CallHistoryCore.

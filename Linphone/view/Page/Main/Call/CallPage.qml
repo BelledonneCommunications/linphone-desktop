@@ -21,8 +21,8 @@ AbstractMainPage {
     signal goToCallForwardSettings
 
     onVisibleChanged: if (!visible) {
-                          goToCallHistory()
-                      }
+        goToCallHistory()
+    }
 
     //Group call properties
     property ConferenceInfoGui confInfoGui
@@ -109,8 +109,8 @@ AbstractMainPage {
             initialItem: historyListItem
             focus: true
             onActiveFocusChanged: if (activeFocus) {
-                                      currentItem.forceActiveFocus()
-                                  }
+                currentItem.forceActiveFocus()
+            }
         }
 
         Item {
@@ -264,7 +264,7 @@ AbstractMainPage {
                         background: Item {}
                         contentItem: ColumnLayout {
                             Text {
-                                visible: historyListView.count === 0
+                                visible: historyListView.count === 0 && !historyListView.loading
                                 Layout.alignment: Qt.AlignHCenter
                                 Layout.topMargin: Math.round(137 * DefaultStyle.dp)
                                 //: "Aucun résultat…"
@@ -289,6 +289,12 @@ AbstractMainPage {
                                     function onListViewUpdated() {
                                         historyListView.model.reload()
                                     }
+                                }
+                                Binding {
+                                    target: mainItem
+                                    property: "showDefaultItem"
+                                    when: historyListView.loading
+                                    value: false
                                 }
                                 onCurrentIndexChanged: {
                                     mainItem.selectedRowHistoryGui = model.getAt(

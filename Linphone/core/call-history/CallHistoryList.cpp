@@ -57,10 +57,12 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 	mModelConnection = SafeConnection<CallHistoryList, CoreModel>::create(me, CoreModel::getInstance());
 
 	mModelConnection->makeConnectToCore(&CallHistoryList::lUpdate, [this]() {
+		clearData();
+		emit listAboutToBeReset();
 		mModelConnection->invokeToModel([this]() {
+			mustBeInLinphoneThread(getClassName());
 			// Avoid copy to lambdas
 			QList<QSharedPointer<CallHistoryCore>> *callLogs = new QList<QSharedPointer<CallHistoryCore>>();
-			mustBeInLinphoneThread(getClassName());
 			std::list<std::shared_ptr<linphone::CallLog>> linphoneCallLogs;
 			if (auto account = CoreModel::getInstance()->getCore()->getDefaultAccount()) {
 				linphoneCallLogs = account->getCallLogs();

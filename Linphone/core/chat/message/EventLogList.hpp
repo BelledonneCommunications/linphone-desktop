@@ -64,6 +64,7 @@ signals:
 	void eventChanged();
 	void eventInserted(int index, EventLogGui *message);
 	void messageWithFilterFound(int index);
+	void listAboutToBeReset();
 
 private:
 	QString mFilter;

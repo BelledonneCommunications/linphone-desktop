@@ -41,6 +41,9 @@ public:
 	Q_INVOKABLE void removeEntriesWithFilter(QString filter);
 	Q_INVOKABLE void reload();
 
+signals:
+	void listAboutToBeReset();
+
 protected:
 	QSharedPointer<CallHistoryList> mHistoryList;
 

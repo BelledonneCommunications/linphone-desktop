@@ -84,9 +84,8 @@ Item {
     AccountProxy {
         id: accountProxy
         sourceModel: AppCpp.accounts
-        onDefaultAccountChanged: if (tabbar.currentIndex === 0
-                                         && defaultAccount)
-                                     defaultAccount.core?.lResetMissedCalls()
+        onDefaultAccountChanged: if (tabbar.currentIndex === 0 && defaultAccount)
+            defaultAccount.core?.lResetMissedCalls()
     }
 
     CallProxy {
@@ -130,7 +129,6 @@ Item {
                 Layout.fillHeight: true
                 Layout.preferredWidth: Math.round(82 * DefaultStyle.dp)
                 defaultAccount: accountProxy.defaultAccount
-                currentIndex: 0
                 Binding on currentIndex {
                     when: mainItem.contextualMenuOpenedComponent != undefined
                     value: -1
