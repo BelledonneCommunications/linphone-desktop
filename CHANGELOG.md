@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 5.3.0 - undefined
 ### Fixed
-- Update SDK to 5.4
+- Update SDK to 5.4.37
 - Urls (Privacy policy, terms, file transfer, update check)
 - Blinking on resize or Ui updates on screen that have low frame rates.
 - Timezones and Windows fix.
