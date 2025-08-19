@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Download the correct version of openH264 (2.2.0)
 - Avoid to register the account while activating it.
 - Volumes settings based on hardware volumes. Remove software gains.
+- Display call duration instead of conference duration.
 
 ### Added
 - Screen Sharing

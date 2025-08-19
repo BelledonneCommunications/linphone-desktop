@@ -214,8 +214,7 @@ Rectangle {
 						running: true
 						interval: 1000
 						repeat: true
-						onTriggered: if(conferenceModel) parent.elaspedTime = Utils.formatElapsedTime(conferenceModel.getElapsedSeconds())
-									else parent.elaspedTime = Utils.formatElapsedTime(mainItem.callModel.duration)
+						onTriggered: parent.elaspedTime = Utils.formatElapsedTime(mainItem.callModel.duration)
 					}
 					property string elaspedTime
 					horizontalAlignment: Qt.AlignHCenter
