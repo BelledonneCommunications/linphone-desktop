@@ -177,10 +177,14 @@ ListView {
             spacing: Math.round(10 * DefaultStyle.dp)
             Avatar {
                 id: historyAvatar
-                property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.peerAddress)
+                property var contactObj: modelData ? UtilsCpp.findFriendByAddress(modelData.core.peerAddress) : null
                 contact: contactObj?.value || null
-                displayNameVal: contact ? undefined : modelData.core.avatarUri
-                secured: modelData.core.isSecured
+                displayNameVal: contact 
+                    ? undefined 
+                    : modelData
+                        ? modelData.core.avatarUri
+                        : null
+                secured: modelData?.core.isSecured || false
                 Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
                 // isConference: modelData.core.isConference
@@ -195,7 +199,7 @@ ListView {
                     id: friendAddress
                     Layout.fillWidth: true
                     maximumLineCount: 1
-                    text: modelData.core.title
+                    text: modelData? modelData.core.title : ""
                     color: DefaultStyle.main2_800
                     font {
                         pixelSize: Typography.p1.pixelSize
@@ -258,7 +262,7 @@ ListView {
 						Layout.fillWidth: true
 						maximumLineCount: 1
 						visible: !remoteComposingInfo.visible
-						text: modelData.core.lastMessageText
+						text: modelData ? modelData.core.lastMessageText : ""
 						color: DefaultStyle.main2_400
 						font {
 							pixelSize: Typography.p1.pixelSize
@@ -267,20 +271,22 @@ ListView {
 					}
 					Text {
 						id: remoteComposingInfo
-						visible: (modelData.core.composingName !== "" || modelData.core.sendingText !== "")
+						visible: modelData ? (modelData.core.composingName !== "" || modelData.core.sendingText !== "") : false
 						Layout.fillWidth: true
 						maximumLineCount: 1
 						font {
 							pixelSize: Typography.p3.pixelSize
 							weight: Typography.p3.weight
-                            italic: modelData.core.sendingText !== ""
+                            italic: modelData?.core.sendingText !== ""
 						}
 						//: %1 is writing…
-						text: modelData.core.composingName !== ""
-							? qsTr("chat_message_is_writing_info").arg(modelData.core.composingName)
-							: modelData.core.sendingText !== ""
-								? qsTr("chat_message_draft_sending_text").arg(modelData.core.sendingText)
-								: ""
+						text: modelData
+                            ? modelData.core.composingName !== ""
+                                ? qsTr("chat_message_is_writing_info").arg(modelData.core.composingName)
+                                : modelData.core.sendingText !== ""
+                                    ? qsTr("chat_message_draft_sending_text").arg(modelData.core.sendingText)
+                                    : ""
+                            : ""
 					}
                 }
             }
@@ -290,7 +296,7 @@ ListView {
                     Item{Layout.fillWidth: true}
                     Text {
                         color: DefaultStyle.main2_500main
-                        text: UtilsCpp.formatDate(modelData.core.lastUpdatedTime, true, false)
+                        text: modelData ? UtilsCpp.formatDate(modelData.core.lastUpdatedTime, true, false) : ""
                         font {
                             pixelSize: Typography.p3.pixelSize
                             weight: Typography.p3.weight
@@ -303,7 +309,7 @@ ListView {
                     spacing: Math.round(10 * DefaultStyle.dp)
                     Item {Layout.fillWidth: true}
 					EffectImage {
-						visible: modelData?.core.ephemeralEnabled
+						visible: modelData?.core.ephemeralEnabled || false
                         Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
                         Layout.preferredHeight: 14 * DefaultStyle.dp
                         colorizationColor: DefaultStyle.main2_400
@@ -318,23 +324,25 @@ ListView {
                     }
 					UnreadNotification {
                         id: unreadCount
-                        unread: modelData.core.unreadMessagesCount
+                        unread: modelData?.core.unreadMessagesCount || false
                     }
                     EffectImage {
-                        visible: modelData?.core.lastMessage && modelData?.core.lastMessageState !== LinphoneEnums.ChatMessageState.StateIdle
+                        visible: modelData?.core.lastMessage && modelData?.core.lastMessageState !== LinphoneEnums.ChatMessageState.StateIdle || false
                         && !modelData.core.lastMessage.core.isRemoteMessage
                         Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
                         Layout.preferredHeight: 14 * DefaultStyle.dp
                         colorizationColor: DefaultStyle.main1_500_main
-                        imageSource: modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateDelivered
-                            ? AppIcons.envelope
-                            : modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateDeliveredToUser
-                                ? AppIcons.check
-                                : modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateNotDelivered
-                                    ? AppIcons.warningCircle
-                                    : modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateDisplayed
-                                        ? AppIcons.checks
-                                        : ""
+                        imageSource: modelData
+                            ? modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateDelivered
+                                ? AppIcons.envelope
+                                : modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateDeliveredToUser
+                                    ? AppIcons.check
+                                    : modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateNotDelivered
+                                        ? AppIcons.warningCircle
+                                        : modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateDisplayed
+                                            ? AppIcons.checks
+                                            : ""
+                            : ""
                     }
                 }
             }
@@ -348,8 +356,12 @@ ListView {
                 popup.contentItem: ColumnLayout {
 					IconLabelButton {
                         //: "Mute"
-                        text: modelData.core.muted ? qsTr("chat_room_unmute") : qsTr("chat_room_mute")
-						icon.source: modelData.core.muted ? AppIcons.bell : AppIcons.bellSlash
+                        text: modelData 
+                            ? modelData.core.muted 
+                                ? qsTr("chat_room_unmute") 
+                                : qsTr("chat_room_mute")
+                            : ""
+						icon.source: modelData ? modelData.core.muted ? AppIcons.bell : AppIcons.bellSlash : ""
                         spacing: Math.round(10 * DefaultStyle.dp)
                         Layout.fillWidth: true
                         onClicked:  {
@@ -378,7 +390,7 @@ ListView {
                         id: leaveButton
                         //: "leave"
                         text: qsTr("chat_room_leave")
-                        visible: !modelData.core.isReadOnly && modelData.core.isGroupChat
+                        visible: modelData ? !modelData.core.isReadOnly && modelData.core.isGroupChat : false
                         icon.source: AppIcons.trashCan
                         spacing: Math.round(10 * DefaultStyle.dp)
                         Layout.fillWidth: true

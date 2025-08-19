@@ -102,7 +102,7 @@ FocusScope {
 		checked: numericPadPopup?.visible || false
 		style: ButtonStyle.noBackground
 		icon.source: AppIcons.dialer
-		contentImageColor: dialerButton.checked ? DefaultStyle.main1_500_main : DefaultStyle.main2_600 
+		contentImageColor: checked ? DefaultStyle.main1_500_main : DefaultStyle.main2_600 
 		hoveredImageColor: contentImageColor
         width: Math.round(24 * DefaultStyle.dp)
         height: Math.round(24 * DefaultStyle.dp)

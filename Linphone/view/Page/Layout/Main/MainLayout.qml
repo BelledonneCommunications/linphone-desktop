@@ -75,9 +75,7 @@ Item {
     }
 
     function openAccountSettings(account) {
-        var page = accountSettingsPageComponent.createObject(parent, {
-                                                                 "account": account
-                                                             })
+        var page = accountSettingsPageComponent.createObject(parent, {"account": account})
         openContextualMenuComponent(page)
     }
 
@@ -129,6 +127,7 @@ Item {
                 Layout.fillHeight: true
                 Layout.preferredWidth: Math.round(82 * DefaultStyle.dp)
                 defaultAccount: accountProxy.defaultAccount
+                currentIndex: 0
                 Binding on currentIndex {
                     when: mainItem.contextualMenuOpenedComponent != undefined
                     value: -1
@@ -157,7 +156,7 @@ Item {
                         "visible": !SettingsCpp.disableMeetingsFeature
                     }]
                 onCurrentIndexChanged: {
-                    if (currentIndex == -1)
+                    if (currentIndex === -1)
                         return
                     if (currentIndex === 0 && accountProxy.defaultAccount)
                         accountProxy.defaultAccount.core?.lResetMissedCalls()
@@ -429,8 +428,9 @@ Item {
                                         //: Mon compte
                                         text: qsTr("drawer_menu_manage_account")
                                         icon.source: AppIcons.manageProfile
-                                        onClicked: openAccountSettings(
-                                                       accountProxy.defaultAccount ? accountProxy.defaultAccount : accountProxy.firstAccount())
+                                        onClicked: openAccountSettings(accountProxy.defaultAccount 
+                                            ? accountProxy.defaultAccount 
+                                            : accountProxy.firstAccount())
                                         KeyNavigation.up: visibleChildren.length
                                                           != 0 ? settingsMenuButton.getPreviousItem(
                                                                      0) : null
@@ -575,14 +575,11 @@ Item {
                                                   children[currentIndex].forceActiveFocus()
                         on_CurrentIndexChanged: {
                             if (count > 0) {
-                                if (_currentIndex >= count
-                                        && tabbar.model[_currentIndex].link) {
-                                    Qt.openUrlExternally(
-                                                tabbar.model[_currentIndex].link)
+                                if (_currentIndex >= count && tabbar.model[_currentIndex].link) {
+                                    Qt.openUrlExternally(tabbar.model[_currentIndex].link)
                                 } else if (_currentIndex >= 0) {
                                     currentIndex = _currentIndex
-                                    SettingsCpp.setLastActiveTabIndex(
-                                                currentIndex)
+                                    SettingsCpp.setLastActiveTabIndex(currentIndex)
                                 }
                             }
                         }

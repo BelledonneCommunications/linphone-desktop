@@ -275,9 +275,10 @@ FocusScope {
                                 x: Math.round(chatMessagesListView.x + 8*DefaultStyle.dp)
                                 width: Math.round(393 * DefaultStyle.dp)
                                 height: Math.round(291 * DefaultStyle.dp)
-                                visible: messageSender.emojiPickerButtonChecked
-                                closePolicy: Popup.CloseOnPressOutside
-                                onClosed: messageSender.emojiPickerButtonChecked = false
+                                visible: false
+                                modal: true
+                                dim: false
+                                closePolicy: Popup.CloseOnReleaseOutside
                                 padding: 10 * DefaultStyle.dp
                                 background: Item {
                                     anchors.fill: parent
@@ -484,6 +485,7 @@ FocusScope {
                     Control.SplitView.minimumHeight: mainItem.chat?.core.isReadOnly ? 0 : Math.round(79 * DefaultStyle.dp)
                     chat: mainItem.chat
                     selectedFilesCount: contents.count
+                    emojiPicker: emojiPickerPopup
                     onChatChanged: {
                         if (chat) messageSender.text = mainItem.chat.core.sendingText
                     }

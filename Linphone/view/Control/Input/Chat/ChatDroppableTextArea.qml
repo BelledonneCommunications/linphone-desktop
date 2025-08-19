@@ -16,7 +16,7 @@ Control.Control {
 	property var textArea
 	property int selectedFilesCount: 0
 	// property alias cursorPosition: sendingTextArea.cursorPosition
-	property bool emojiPickerButtonChecked
+	property Popup emojiPicker
 	
 	property bool dropEnabled: true
 	property bool isEphemeral : false
@@ -82,14 +82,11 @@ Control.Control {
 				BigButton {
 					id: emojiPickerButton
 					style: ButtonStyle.noBackground
-					checkable: true
+					checked: mainItem.emojiPicker?.visible || false
 					icon.source: checked ? AppIcons.closeX : AppIcons.smiley
-					onCheckedChanged: mainItem.emojiPickerButtonChecked = checked
-					Connections {
-						target: mainItem
-						function onEmojiPickerButtonCheckedChanged() {
-							emojiPickerButton.checked = mainItem.emojiPickerButtonChecked
-						}
+					onPressed: {
+						if (!checked) mainItem.emojiPicker.open()
+						else mainItem.emojiPicker.close()
 					}
 				}
 				BigButton {

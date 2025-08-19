@@ -103,13 +103,13 @@ Control.TabBar {
             bottomInset:  Math.round(32 * DefaultStyle.dp)
             topInset:  Math.round(32 * DefaultStyle.dp)
 			hoverEnabled: true
-			visible: modelData?.visible != undefined ? modelData?.visible : true
+			visible: modelData?.visible != undefined ? modelData.visible : true
 			UnreadNotification {
 				unread: !defaultAccount 
 				? -1
-				: index == 0 
+				: index === 0 
 					? defaultAccount.core?.unreadCallNotifications || -1
-					: index == 2 
+					: index === 2 
 						? defaultAccount.core?.unreadMessageNotifications || -1
 						: 0
 				anchors.right: parent.right
