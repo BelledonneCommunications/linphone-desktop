@@ -106,6 +106,7 @@ public:
 			);
 	
 	Q_INVOKABLE void eraseAllPasswords ();
+	void clearAuthInfo(std::shared_ptr<linphone::Account> account, bool delay);
 	
 signals:
 	

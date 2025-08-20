@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Screen Sharing
+- Deactivated account is no longer a logout and is just related to registration: Keep background activities and avoid requesting passwords.
 
 ## 5.2.6 - 2024-07-22
 

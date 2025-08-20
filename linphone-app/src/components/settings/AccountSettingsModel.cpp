@@ -331,6 +331,7 @@ void AccountSettingsModel::removeAccount (const shared_ptr<linphone::Account> &a
 		mRemovingAccounts.push_back(account);
 	}else{// Registration is not enabled : Removing without wait.
 		CoreManager::getInstance()->getCore()->removeAccount(account);
+		clearAuthInfo(account, false);
 	}
 	
 	emit accountSettingsUpdated();
@@ -520,6 +521,19 @@ void AccountSettingsModel::addAuthInfo (
 	CoreManager::getInstance()->getCore()->addAuthInfo(authInfo);
 }
 
+void AccountSettingsModel::clearAuthInfo(std::shared_ptr<linphone::Account> account, bool delay) {
+	if (account) {
+		auto authInfo = account->findAuthInfo();
+		if(authInfo)
+			if ( delay)
+				QTimer::singleShot(60000, [authInfo](){// 60s is just to be sure. account_update remove deleted account only after 32s
+					CoreManager::getInstance()->getCore()->removeAuthInfo(authInfo);
+				});
+		else
+			CoreManager::getInstance()->getCore()->removeAuthInfo(authInfo);
+	}
+}
+
 void AccountSettingsModel::eraseAllPasswords () {
 	CoreManager::getInstance()->getCore()->clearAllAuthInfo();
 }
@@ -648,11 +662,8 @@ void AccountSettingsModel::handleRegistrationStateChanged (
 	auto coreManager = CoreManager::getInstance();
 	shared_ptr<linphone::Account> defaultAccount = coreManager->getCore()->getDefaultAccount();
 	if( state == linphone::RegistrationState::Cleared){
-		auto authInfo = account->findAuthInfo();
-		if(authInfo)
-			QTimer::singleShot(60000, [authInfo](){// 60s is just to be sure. account_update remove deleted account only after 32s
-				CoreManager::getInstance()->getCore()->removeAuthInfo(authInfo);
-			});
+		if (!findAccount(account->getContactAddress()))
+			clearAuthInfo(account, true);
 	}else if(mRemovingAccounts.contains(account)){
 		mRemovingAccounts.removeAll(account);
 		QTimer::singleShot(100, [account, this](){// removeAccount cannot be called from callback
