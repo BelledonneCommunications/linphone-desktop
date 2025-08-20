@@ -54,6 +54,9 @@ public:
 	static QThread *getLinphoneThread();
 	Notifier *getNotifier() const;
 
+	EventCountNotifier *getEventCountNotifier();
+	int getEventCount() const;
+
 	// App::postModelAsync(<lambda>) => run lambda in model thread and continue.
 	// App::postModelSync(<lambda>) => run lambda in current thread and block connection.
 	template <typename Func, typename... Args>
@@ -119,6 +122,10 @@ public:
 	void restart();
 	bool autoStartEnabled();
 	void setSysTrayIcon();
+	QSystemTrayIcon *getSystemTrayIcon() const {
+		return mSystemTrayIcon;
+	}
+	void updateSysTrayCount(int n);
 	QLocale getLocale();
 
 	void onLoggerInitialized();
@@ -184,6 +191,7 @@ private:
 	QCommandLineParser *mParser = nullptr;
 	Thread *mLinphoneThread = nullptr;
 	Notifier *mNotifier = nullptr;
+	EventCountNotifier *mEventCountNotifier = nullptr;
 	QSystemTrayIcon *mSystemTrayIcon = nullptr;
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;

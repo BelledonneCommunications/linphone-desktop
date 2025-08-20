@@ -36,10 +36,13 @@
 #include <limits.h>
 
 #include <QClipboard>
+#include <QColor>
 #include <QCryptographicHash>
 #include <QDesktopServices>
 #include <QHostAddress>
 #include <QImageReader>
+#include <QQmlComponent>
+#include <QQmlProperty>
 #include <QQuickWindow>
 #include <QRandomGenerator>
 #include <QRegularExpression>
@@ -549,6 +552,16 @@ QString Utils::getOsProduct() {
 	    QSysInfo::productVersion().remove(' '); // A version can be "Server 2016" (for Windows Server 2016)
 	QString product = QSysInfo::productType().replace(' ', '-'); // Just in case
 	return product + "/" + version;
+}
+
+QColor Utils::getDefaultStyleColor(const QString &colorName) {
+	mustBeInMainThread(sLog().arg(Q_FUNC_INFO));
+	static QObject *defaultStyleSingleton = nullptr;
+	if (!defaultStyleSingleton) {
+		QQmlComponent component(App::getInstance()->mEngine, QUrl("qrc:/qt/qml/Linphone/view/Style/DefaultStyle.qml"));
+		defaultStyleSingleton = component.create();
+	}
+	return QQmlProperty::read(defaultStyleSingleton, colorName).value<QColor>();
 }
 
 QString Utils::getCountryName(const QLocale::Territory &p_country) {

@@ -726,6 +726,20 @@ QString SettingsModel::getDefaultDomain() const {
 	    mConfig->getString(SettingsModel::AppSection, "default_domain", "sip.linphone.org"));
 }
 
+bool SettingsModel::isSystrayNotificationBlinkEnabled() const {
+	return !!mConfig->getInt(UiSection, "systray_notification_blink", 1);
+}
+
+bool SettingsModel::isSystrayNotificationGlobal() const {
+	return !!mConfig->getInt(UiSection, "systray_notification_global", 1);
+}
+
+bool SettingsModel::isSystrayNotificationFiltered() const {
+	return !!mConfig->getInt(UiSection, "systray_notification_filtered", 0);
+}
+bool SettingsModel::getLimeIsSupported() const {
+	return CoreModel::getInstance()->getCore()->limeX3DhAvailable();
+}
 // clang-format off
 void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(disableChatFeature, DisableChatFeature)

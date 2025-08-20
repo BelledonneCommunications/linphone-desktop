@@ -93,6 +93,12 @@
 #include "tool/request/RequestDialog.hpp"
 #include "tool/thread/Thread.hpp"
 
+#if defined(Q_OS_MACOS)
+#include "core/event-count-notifier/EventCountNotifierMacOs.hpp"
+#else
+#include "core/event-count-notifier/EventCountNotifierSystemTrayIcon.hpp"
+#endif // if defined(Q_OS_MACOS)
+
 DEFINE_ABSTRACT_OBJECT(App)
 
 #ifdef Q_OS_LINUX
@@ -263,6 +269,7 @@ App::App(int &argc, char *argv[])
 	// Do not use APPLICATION_NAME here.
 	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
 	QThread::currentThread()->setPriority(QThread::HighPriority);
+	qDebug() << "app thread is" << QThread::currentThread();
 	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
 	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
 	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
@@ -291,6 +298,7 @@ App::App(int &argc, char *argv[])
 			emit currentDateChanged();
 		}
 	});
+	mEventCountNotifier = new EventCountNotifier(this);
 	mDateUpdateTimer.start();
 }
 
@@ -372,6 +380,16 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			    });
 		    }
 	    });
+
+	mCoreModelConnection->makeConnectToModel(&CoreModel::unreadNotificationsChanged, [this] {
+		int n = mEventCountNotifier->getCurrentEventCount();
+		mCoreModelConnection->invokeToCore([this, n] { mEventCountNotifier->notifyEventCount(n); });
+	});
+	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, [this] {
+		int n = mEventCountNotifier->getCurrentEventCount();
+		mCoreModelConnection->invokeToCore([this, n] { mEventCountNotifier->notifyEventCount(n); });
+	});
+
 	//---------------------------------------------------------------------------------------------
 	mCliModelConnection = SafeConnection<App, CliModel>::create(me, CliModel::getInstance());
 	mCliModelConnection->makeConnectToCore(&App::receivedMessage, [this](int, const QByteArray &byteArray) {
@@ -400,6 +418,15 @@ QThread *App::getLinphoneThread() {
 Notifier *App::getNotifier() const {
 	return mNotifier;
 }
+
+EventCountNotifier *App::getEventCountNotifier() {
+	return mEventCountNotifier;
+}
+
+int App::getEventCount() const {
+	return mEventCountNotifier ? mEventCountNotifier->getEventCount() : 0;
+}
+
 //-----------------------------------------------------------
 //		Initializations
 //-----------------------------------------------------------
@@ -613,7 +640,6 @@ static inline bool installLocale(App &app, QTranslator &translator, const QLocal
 }
 
 void App::initLocale() {
-
 	// Try to use preferred locale.
 	QString locale;
 
@@ -628,9 +654,9 @@ void App::initLocale() {
 
 	// Try to use system locale.
 	// #ifdef Q_OS_MACOS
-	// Use this workaround if there is still an issue about detecting wrong language from system on Mac. Qt doesn't use
-	// the current system language on QLocale::system(). So we need to get it from user settings and overwrite its
-	// Locale.
+	// Use this workaround if there is still an issue about detecting wrong language from system on Mac. Qt doesn't
+	// use the current system language on QLocale::system(). So we need to get it from user settings and overwrite
+	// its Locale.
 	//	QSettings settings;
 	//	QString preferredLanguage = settings.value("AppleLanguages").toStringList().first();
 	//	QStringList qtLocale = QLocale::system().name().split('_');
@@ -640,9 +666,9 @@ void App::initLocale() {
 	//	}
 	//	QLocale sysLocale = QLocale(qtLocale.join('_'));
 	// #else
-	QLocale sysLocale(QLocale::system().name()); // Use Locale from name because Qt has a bug where it didn't use the
-	// QLocale::language (aka : translator.language != locale.language) on
-	// Mac. #endif
+	QLocale sysLocale(QLocale::system().name()); // Use Locale from name because Qt has a bug where it didn't use
+	                                             // the QLocale::language (aka : translator.language !=
+	                                             // locale.language) on Mac. #endif
 	if (installLocale(*this, *mTranslatorCore, sysLocale)) {
 		qDebug() << "installed sys locale" << sysLocale.name();
 		setLocale(sysLocale.name());

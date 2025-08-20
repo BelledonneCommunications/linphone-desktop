@@ -157,6 +157,11 @@ public:
 
 	static bool clearLocalLdapFriendsUponStartup(const std::shared_ptr<linphone::Config> &config);
 
+	bool isSystrayNotificationBlinkEnabled() const;
+	bool isSystrayNotificationGlobal() const;
+	bool isSystrayNotificationFiltered() const;
+	bool getLimeIsSupported() const;
+
 	// UI
 	DECLARE_GETSET(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_GETSET(bool, disableMeetingsFeature, DisableMeetingsFeature)

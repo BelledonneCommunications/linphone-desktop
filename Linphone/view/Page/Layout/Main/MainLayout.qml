@@ -460,8 +460,7 @@ Item {
                                         icon.height: Math.round(32 * DefaultStyle.dp)
                                         text: qsTr("settings_title")
                                         icon.source: AppIcons.settings
-                                        onClicked: openContextualMenuComponent(
-                                                       settingsPageComponent)
+                                        onClicked: openContextualMenuComponent(settingsPageComponent)
                                         KeyNavigation.up: visibleChildren.length
                                                           != 0 ? settingsMenuButton.getPreviousItem(
                                                                      2) : null

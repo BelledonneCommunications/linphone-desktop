@@ -19,6 +19,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/camera/CameraGui.cpp
 	core/camera/CameraDummy.cpp
 	core/camera/PreviewManager.cpp
+	core/event-count-notifier/AbstractEventCountNotifier.cpp
 	core/fps-counter/FPSCounter.cpp
 	core/friend/FriendCore.cpp
 	core/friend/FriendGui.cpp
@@ -99,5 +100,9 @@ else() # Use QDBus for Linux
 		core/singleapplication/SingleApplicationDBusPrivate.hpp
 		core/singleapplication/SingleApplicationDBus.cpp)
 endif()
-
+if(APPLE)
+	list(APPEND _LINPHONEAPP_SOURCES core/event-count-notifier/EventCountNotifierMacOs.m)
+else()
+	list(APPEND _LINPHONEAPP_SOURCES core/event-count-notifier/EventCountNotifierSystemTrayIcon.cpp)
+endif()
 set(_LINPHONEAPP_SOURCES ${_LINPHONEAPP_SOURCES} PARENT_SCOPE)

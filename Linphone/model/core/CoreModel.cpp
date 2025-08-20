@@ -34,6 +34,12 @@
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
+#if defined(Q_OS_MACOS)
+#include "core/event-count-notifier/EventCountNotifierMacOs.hpp"
+#else
+#include "core/event-count-notifier/EventCountNotifierSystemTrayIcon.hpp"
+#endif // if defined(Q_OS_MACOS)
+
 // =============================================================================
 DEFINE_ABSTRACT_OBJECT(CoreModel)
 
@@ -129,8 +135,13 @@ void CoreModel::start() {
 	mMagicSearch->setSelf(mMagicSearch);
 	connect(mMagicSearch.get(), &MagicSearchModel::searchResultsReceived, this,
 	        [this] { emit magicSearchResultReceived(mMagicSearch->mLastSearch); });
+	mStarted = true;
 }
 // -----------------------------------------------------------------------------
+
+bool CoreModel::isInitialized() const {
+	return mStarted;
+}
 
 std::shared_ptr<CoreModel> CoreModel::getInstance() {
 	return gCoreModel;
