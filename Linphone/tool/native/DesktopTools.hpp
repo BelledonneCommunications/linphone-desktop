@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -24,11 +24,11 @@
 #include <QtGlobal>
 
 #ifdef Q_OS_LINUX
-  #include "DesktopToolsLinux.hpp"
+#include "DesktopToolsLinux.hpp"
 #elif defined(Q_OS_WIN)
-  #include "DesktopToolsWindows.hpp"
+#include "DesktopToolsWindows.hpp"
 #else
-  #include "DesktopToolsMacOs.hpp"
+#include "DesktopToolsMacOs.hpp"
 #endif // ifdef Q_OS_LINUX
 
 // =============================================================================

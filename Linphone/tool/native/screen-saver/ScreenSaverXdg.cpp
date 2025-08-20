@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -25,32 +25,29 @@
 // =============================================================================
 
 namespace {
-  constexpr char Program[] = "xdg-screensaver";
-  const QStringList Arguments{"reset"};
+constexpr char Program[] = "xdg-screensaver";
+const QStringList Arguments{"reset"};
 
-  constexpr int Interval = 30000;
+constexpr int Interval = 30000;
+} // namespace
+
+ScreenSaverXdg::ScreenSaverXdg(QObject *parent) : QObject(parent) {
+	mTimer.setInterval(Interval);
+	QObject::connect(&mTimer, &QTimer::timeout, []() {
+		// Legacy for systems without DBus screensaver.
+		QProcess::startDetached(Program, Arguments);
+	});
 }
 
-ScreenSaverXdg::ScreenSaverXdg (QObject *parent) : QObject(parent) {
-  mTimer.setInterval(Interval);
-  QObject::connect(&mTimer, &QTimer::timeout, []() {
-    // Legacy for systems without DBus screensaver.
-    QProcess::startDetached(Program, Arguments);
-  });
+bool ScreenSaverXdg::getScreenSaverStatus() const {
+	return !mTimer.isActive();
 }
 
-bool ScreenSaverXdg::getScreenSaverStatus () const {
-  return !mTimer.isActive();
-}
+void ScreenSaverXdg::setScreenSaverStatus(bool status) {
+	if (status == !mTimer.isActive()) return;
 
-void ScreenSaverXdg::setScreenSaverStatus (bool status) {
-  if (status == !mTimer.isActive())
-    return;
+	if (status) mTimer.stop();
+	else mTimer.start();
 
-  if (status)
-    mTimer.stop();
-  else
-    mTimer.start();
-
-  emit screenSaverStatusChanged(status);
+	emit screenSaverStatusChanged(status);
 }

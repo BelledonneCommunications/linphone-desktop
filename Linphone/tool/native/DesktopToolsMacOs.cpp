@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -22,22 +22,23 @@
 
 // =============================================================================
 
-extern "C" bool enableScreenSaverMacOs ();
-extern "C" bool disableScreenSaverMacOs ();
+extern "C" bool enableScreenSaverMacOs();
+extern "C" bool disableScreenSaverMacOs();
 
-DesktopTools::DesktopTools (QObject *parent) : QObject(parent) {}
-
-DesktopTools::~DesktopTools () {
-  setScreenSaverStatus(true);
+DesktopTools::DesktopTools(QObject *parent) : QObject(parent) {
 }
 
-bool DesktopTools::getScreenSaverStatus () const {
-  return mScreenSaverStatus;
+DesktopTools::~DesktopTools() {
+	setScreenSaverStatus(true);
 }
 
-void DesktopTools::setScreenSaverStatus (bool status) {
-  if (status != mScreenSaverStatus && (status ? enableScreenSaverMacOs() : disableScreenSaverMacOs())) {
-    mScreenSaverStatus = status;
-    emit screenSaverStatusChanged(mScreenSaverStatus);
-  }
+bool DesktopTools::getScreenSaverStatus() const {
+	return mScreenSaverStatus;
+}
+
+void DesktopTools::setScreenSaverStatus(bool status) {
+	if (status != mScreenSaverStatus && (status ? enableScreenSaverMacOs() : disableScreenSaverMacOs())) {
+		mScreenSaverStatus = status;
+		emit screenSaverStatusChanged(mScreenSaverStatus);
+	}
 }

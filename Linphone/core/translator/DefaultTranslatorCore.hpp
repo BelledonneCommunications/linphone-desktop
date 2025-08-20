@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -28,22 +28,20 @@
 
 class DefaultTranslatorCore : public QTranslator {
 public:
-  DefaultTranslatorCore (QObject *parent = Q_NULLPTR);
+	DefaultTranslatorCore(QObject *parent = Q_NULLPTR);
 
-  QString translate (
-    const char *context,
-    const char *sourceText,
-    const char *disambiguation = Q_NULLPTR,
-    int n = -1
-  ) const override;
+	QString translate(const char *context,
+	                  const char *sourceText,
+	                  const char *disambiguation = Q_NULLPTR,
+	                  int n = -1) const override;
 
 private:
-  QSet<QString> mContexts;
+	QSet<QString> mContexts;
 };
 
 // Workaround for bad Application Menu translation on Mac:
 // Overwrite Qt source by our translations :
-//static const char *application_menu_strings[] =
+// static const char *application_menu_strings[] =
 //{
 //    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","About %1"),
 //    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Preferences…"),
@@ -54,10 +52,11 @@ private:
 //    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Quit %1")
 //};
 
-//class MAC_APPLICATION_MENU : public QObject{
+// class MAC_APPLICATION_MENU : public QObject{
 //	QString forcedTranslation(){
-//		return tr("About %1") + tr("Preferences…") + tr("Services") + tr("Hide %1") + tr("Hide Others") + tr("Show All") + tr("Quit %1");
+//		return tr("About %1") + tr("Preferences…") + tr("Services") + tr("Hide %1") + tr("Hide Others") + tr("Show All") +
+//tr("Quit %1");
 //	}
-//};
+// };
 
 #endif // DEFAULT_TRANSLATOR_CORE_H_

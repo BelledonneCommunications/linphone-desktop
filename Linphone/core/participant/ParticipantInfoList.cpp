@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -57,8 +57,9 @@ void ParticipantInfoList::setChatCore(const QSharedPointer<ChatCore> &chatCore) 
 			QStringList participantAddresses;
 			QList<QSharedPointer<ParticipantGui>> participantList;
 			auto participants = mChatCore->getParticipants();
-            resetData();
-            for(auto p: participants) add(p);
+			resetData();
+			for (auto p : participants)
+				add(p);
 		};
 		connect(mChatCore.get(), &ChatCore::participantsChanged, this, buildList);
 		buildList();

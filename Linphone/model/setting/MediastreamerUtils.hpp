@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -36,64 +36,62 @@ struct _MSFactory;
 
 namespace MediastreamerUtils {
 
-	inline float computeVu (float volume) {
-		constexpr float VuMin = -20.f;
-		constexpr float VuMax = 4.f;
+inline float computeVu(float volume) {
+	constexpr float VuMin = -20.f;
+	constexpr float VuMax = 4.f;
 
-		if (volume < VuMin)
-			return 0.f;
-		if (volume > VuMax)
-			return 1.f;
+	if (volume < VuMin) return 0.f;
+	if (volume > VuMax) return 1.f;
 
-		return (volume - VuMin) / (VuMax - VuMin);
-	}
-
-	inline float dbToLinear(float volume) {
-        return static_cast<float>(pow(10.0, volume / 10.0));
-	}
-
-	float linearToDb(float volume);
-
-	//Simple mediastreamer audio capture graph
-	//Used to get current microphone volume in audio settings
-	class SimpleCaptureGraph {
-	public:
-		SimpleCaptureGraph(const std::string &captureCardId, const std::string &playbackCardId);
-		~SimpleCaptureGraph();
-
-		void start();
-		void stop();
-
-		float getCaptureVolume();
-
-		float getCaptureGain();
-		float getPlaybackGain();
-		void setCaptureGain(float volume);
-		void setPlaybackGain(float volume);
-
-		bool isRunning() const {
-			return running;
-		}
-
-		void init();
-		void destroy();
-
-		bool running = false;
-
-		std::string captureCardId;
-		std::string playbackCardId;
-
-		_MSFilter *audioSink = nullptr;
-		_MSFilter *audioCapture = nullptr;
-		_MSFilter *captureVolumeFilter = nullptr;
-		_MSFilter *playbackVolumeFilter = nullptr;
-		_MSFilter *resamplerFilter = nullptr;
-		_MSTicker *ticker = nullptr;
-		_MSSndCard *playbackCard = nullptr;
-		_MSSndCard *captureCard = nullptr;
-		_MSFactory *msFactory = nullptr;
-	};
-
+	return (volume - VuMin) / (VuMax - VuMin);
 }
+
+inline float dbToLinear(float volume) {
+	return static_cast<float>(pow(10.0, volume / 10.0));
+}
+
+float linearToDb(float volume);
+
+// Simple mediastreamer audio capture graph
+// Used to get current microphone volume in audio settings
+class SimpleCaptureGraph {
+public:
+	SimpleCaptureGraph(const std::string &captureCardId, const std::string &playbackCardId);
+	~SimpleCaptureGraph();
+
+	void start();
+	void stop();
+
+	float getCaptureVolume();
+
+	float getCaptureGain();
+	float getPlaybackGain();
+	void setCaptureGain(float volume);
+	void setPlaybackGain(float volume);
+
+	bool isRunning() const {
+		return running;
+	}
+
+	void init();
+	void destroy();
+
+	bool running = false;
+
+	std::string captureCardId;
+	std::string playbackCardId;
+
+	_MSFilter *audioSink = nullptr;
+	_MSFilter *audioCapture = nullptr;
+	_MSFilter *captureVolumeFilter = nullptr;
+	_MSFilter *playbackVolumeFilter = nullptr;
+	_MSFilter *resamplerFilter = nullptr;
+	_MSTicker *ticker = nullptr;
+	_MSSndCard *playbackCard = nullptr;
+	_MSSndCard *captureCard = nullptr;
+	_MSFactory *msFactory = nullptr;
+};
+
+} // namespace MediastreamerUtils
 
 #endif // ifndef MEDIASTREAMER_UTILS_H_

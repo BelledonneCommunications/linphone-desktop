@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -25,46 +25,40 @@
 
 // =============================================================================
 
-DefaultTranslatorCore::DefaultTranslatorCore (QObject *parent) : QTranslator(parent) {
-  QDirIterator it(":", QDirIterator::Subdirectories);
-  while (it.hasNext()) {
-    QFileInfo info(it.next());
+DefaultTranslatorCore::DefaultTranslatorCore(QObject *parent) : QTranslator(parent) {
+	QDirIterator it(":", QDirIterator::Subdirectories);
+	while (it.hasNext()) {
+		QFileInfo info(it.next());
 
-    if (info.suffix() == QLatin1String("qml")) {
-      QString dir = info.absoluteDir().absolutePath();
+		if (info.suffix() == QLatin1String("qml")) {
+			QString dir = info.absoluteDir().absolutePath();
 
-      // Ignore extra selectors.
-      // TODO: Remove 5.9 support in July 2019.
-      for (const auto &selector : { "+linux", "+mac", "+windows", "+custom", "+5.9" })
-        if (dir.contains(selector))
-          goto end;
+			// Ignore extra selectors.
+			// TODO: Remove 5.9 support in July 2019.
+			for (const auto &selector : {"+linux", "+mac", "+windows", "+custom", "+5.9"})
+				if (dir.contains(selector)) goto end;
 
-      // Ignore default imports.
-      if (dir.startsWith(":/QtQuick"))
-        continue;
+			// Ignore default imports.
+			if (dir.startsWith(":/QtQuick")) continue;
 
-      QString basename = info.baseName();
-      if (!mContexts.contains(basename))
-        mContexts << basename;
-    }
-    end:;
-  }
+			QString basename = info.baseName();
+			if (!mContexts.contains(basename)) mContexts << basename;
+		}
+	end:;
+	}
 }
 
-QString DefaultTranslatorCore::translate (
-  const char *context,
-  const char *sourceText,
-  const char *disambiguation,
-  int n
-) const {
-  if (!context)
-    return QString("");
+QString
+DefaultTranslatorCore::translate(const char *context, const char *sourceText, const char *disambiguation, int n) const {
+	if (!context) return QString("");
 
-  QString translation = QTranslator::translate(context, sourceText, disambiguation, n);
+	QString translation = QTranslator::translate(context, sourceText, disambiguation, n);
 
-  if (translation.length() == 0 && mContexts.contains(context))
-    qDebug() << QStringLiteral("Unable to find a translation. (context=%1, label=%2, disambiguation=%3)")
-      .arg(context).arg(sourceText).arg(disambiguation);
+	if (translation.length() == 0 && mContexts.contains(context))
+		qDebug() << QStringLiteral("Unable to find a translation. (context=%1, label=%2, disambiguation=%3)")
+		                .arg(context)
+		                .arg(sourceText)
+		                .arg(disambiguation);
 
-  return translation;
+	return translation;
 }

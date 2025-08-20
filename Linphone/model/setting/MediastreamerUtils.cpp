@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,62 +18,58 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "MediastreamerUtils.hpp"
 #include <linphone/linphonecore.h>
-#include <mediastreamer2/msvolume.h>
 #include <mediastreamer2/mssndcard.h>
 #include <mediastreamer2/msticker.h>
+#include <mediastreamer2/msvolume.h>
 #include <model/core/CoreModel.hpp>
-#include "MediastreamerUtils.hpp"
 
 #include <qlogging.h>
 
 using namespace MediastreamerUtils;
 
 SimpleCaptureGraph::SimpleCaptureGraph(const std::string &capture, const std::string &playback)
-	: captureCardId(capture), playbackCardId(playback)
-{
+    : captureCardId(capture), playbackCardId(playback) {
 	LinphoneCore *ccore = CoreModel::getInstance()->getCore()->cPtr();
 	msFactory = linphone_core_get_ms_factory(ccore);
 
 	playbackCard = ms_snd_card_manager_get_card(ms_factory_get_snd_card_manager(msFactory), playbackCardId.c_str());
-	if (!playbackCard)
-		qWarning("Cannot get playback card from MSFactory with : %s", playbackCardId.c_str());
+	if (!playbackCard) qWarning("Cannot get playback card from MSFactory with : %s", playbackCardId.c_str());
 	captureCard = ms_snd_card_manager_get_card(ms_factory_get_snd_card_manager(msFactory), captureCardId.c_str());
-	if (!captureCard)
-		qWarning("Cannot get capture card from MSFactory with : %s", captureCardId.c_str());
+	if (!captureCard) qWarning("Cannot get capture card from MSFactory with : %s", captureCardId.c_str());
 
-	if(playbackCard && captureCard)// Assure to initialize when playback and capture are available
+	if (playbackCard && captureCard) // Assure to initialize when playback and capture are available
 		init();
 }
 
-SimpleCaptureGraph::~SimpleCaptureGraph()
-{
+SimpleCaptureGraph::~SimpleCaptureGraph() {
 	destroy();
 }
 static void device_notify_cb(void *user_data, MSFilter *f, unsigned int event, void *eventdata) {
 	if (event == MS_FILTER_OUTPUT_FMT_CHANGED) {
-		SimpleCaptureGraph * graph = (SimpleCaptureGraph *)user_data;
+		SimpleCaptureGraph *graph = (SimpleCaptureGraph *)user_data;
 		int captureRate, playbackRate, captureChannels, playbackChannels;
-		ms_filter_call_method(graph->audioCapture,MS_FILTER_GET_SAMPLE_RATE,&captureRate);
-		ms_filter_call_method(graph->audioSink,MS_FILTER_GET_SAMPLE_RATE,&playbackRate);
-		ms_filter_call_method(graph->audioCapture,MS_FILTER_GET_NCHANNELS,&captureChannels);
-		ms_filter_call_method(graph->audioSink,MS_FILTER_GET_NCHANNELS,&playbackChannels);
-		
-		ms_filter_call_method(graph->resamplerFilter,MS_FILTER_SET_SAMPLE_RATE,&captureRate);
-		ms_filter_call_method(graph->resamplerFilter,MS_FILTER_SET_OUTPUT_SAMPLE_RATE,&playbackRate);
-		ms_filter_call_method(graph->resamplerFilter,MS_FILTER_SET_NCHANNELS,&captureChannels);
-		ms_filter_call_method(graph->resamplerFilter,MS_FILTER_SET_OUTPUT_NCHANNELS,&playbackChannels);
+		ms_filter_call_method(graph->audioCapture, MS_FILTER_GET_SAMPLE_RATE, &captureRate);
+		ms_filter_call_method(graph->audioSink, MS_FILTER_GET_SAMPLE_RATE, &playbackRate);
+		ms_filter_call_method(graph->audioCapture, MS_FILTER_GET_NCHANNELS, &captureChannels);
+		ms_filter_call_method(graph->audioSink, MS_FILTER_GET_NCHANNELS, &playbackChannels);
+
+		ms_filter_call_method(graph->resamplerFilter, MS_FILTER_SET_SAMPLE_RATE, &captureRate);
+		ms_filter_call_method(graph->resamplerFilter, MS_FILTER_SET_OUTPUT_SAMPLE_RATE, &playbackRate);
+		ms_filter_call_method(graph->resamplerFilter, MS_FILTER_SET_NCHANNELS, &captureChannels);
+		ms_filter_call_method(graph->resamplerFilter, MS_FILTER_SET_OUTPUT_NCHANNELS, &playbackChannels);
 	}
 }
 
 void SimpleCaptureGraph::init() {
 	if (!audioCapture) {
 		audioCapture = ms_snd_card_create_reader(captureCard);
-		ms_filter_add_notify_callback(audioCapture, device_notify_cb,this,FALSE);
+		ms_filter_add_notify_callback(audioCapture, device_notify_cb, this, FALSE);
 	}
 	if (!audioSink) {
 		audioSink = ms_snd_card_create_writer(playbackCard);
-		ms_filter_add_notify_callback(audioSink, device_notify_cb,this,FALSE);
+		ms_filter_add_notify_callback(audioSink, device_notify_cb, this, FALSE);
 	}
 	if (!captureVolumeFilter) {
 		captureVolumeFilter = ms_factory_create_filter(msFactory, MS_VOLUME_ID);
@@ -81,42 +77,39 @@ void SimpleCaptureGraph::init() {
 	if (!playbackVolumeFilter) {
 		playbackVolumeFilter = ms_factory_create_filter(msFactory, MS_VOLUME_ID);
 	}
-	if(!resamplerFilter)
-		resamplerFilter = ms_factory_create_filter(msFactory, MS_RESAMPLE_ID);
+	if (!resamplerFilter) resamplerFilter = ms_factory_create_filter(msFactory, MS_RESAMPLE_ID);
 	int captureRate, playbackRate, captureChannels, playbackChannels;
-	ms_filter_call_method(audioCapture,MS_FILTER_GET_SAMPLE_RATE,&captureRate);
-	ms_filter_call_method(audioSink,MS_FILTER_GET_SAMPLE_RATE,&playbackRate);
-	ms_filter_call_method(audioCapture,MS_FILTER_GET_NCHANNELS,&captureChannels);
-	ms_filter_call_method(audioSink,MS_FILTER_GET_NCHANNELS,&playbackChannels);
-	
-	ms_filter_call_method(resamplerFilter,MS_FILTER_SET_SAMPLE_RATE,&captureRate);
-	ms_filter_call_method(resamplerFilter,MS_FILTER_SET_OUTPUT_SAMPLE_RATE,&playbackRate);
-	ms_filter_call_method(resamplerFilter,MS_FILTER_SET_NCHANNELS,&captureChannels);
-	ms_filter_call_method(resamplerFilter,MS_FILTER_SET_OUTPUT_NCHANNELS,&playbackChannels);
+	ms_filter_call_method(audioCapture, MS_FILTER_GET_SAMPLE_RATE, &captureRate);
+	ms_filter_call_method(audioSink, MS_FILTER_GET_SAMPLE_RATE, &playbackRate);
+	ms_filter_call_method(audioCapture, MS_FILTER_GET_NCHANNELS, &captureChannels);
+	ms_filter_call_method(audioSink, MS_FILTER_GET_NCHANNELS, &playbackChannels);
+
+	ms_filter_call_method(resamplerFilter, MS_FILTER_SET_SAMPLE_RATE, &captureRate);
+	ms_filter_call_method(resamplerFilter, MS_FILTER_SET_OUTPUT_SAMPLE_RATE, &playbackRate);
+	ms_filter_call_method(resamplerFilter, MS_FILTER_SET_NCHANNELS, &captureChannels);
+	ms_filter_call_method(resamplerFilter, MS_FILTER_SET_OUTPUT_NCHANNELS, &playbackChannels);
 
 	ms_filter_link(audioCapture, 0, captureVolumeFilter, 0);
 	ms_filter_link(captureVolumeFilter, 0, resamplerFilter, 0);
 	ms_filter_link(resamplerFilter, 0, playbackVolumeFilter, 0);
 	ms_filter_link(playbackVolumeFilter, 0, audioSink, 0);
 
-	//Mute playback
+	// Mute playback
 	float muteGain = 0.0f;
 	ms_filter_call_method(playbackVolumeFilter, static_cast<unsigned int>(MS_VOLUME_SET_GAIN), &muteGain);
 	ticker = ms_ticker_new();
 	running = false;
-
 }
 
 void SimpleCaptureGraph::start() {
 	if (!running && audioCapture) {
 		running = true;
 		ms_ticker_attach(ticker, audioCapture);
-		
 	}
 }
 
 void SimpleCaptureGraph::stop() {
-	if (running && audioCapture){
+	if (running && audioCapture) {
 		ms_ticker_detach(ticker, audioCapture);
 		running = false;
 	}
@@ -126,27 +119,18 @@ void SimpleCaptureGraph::destroy() {
 	if (running) {
 		stop();
 	}
-	
-	if (audioSink)
-		ms_filter_unlink(playbackVolumeFilter, 0, audioSink, 0);
-	if (captureVolumeFilter && resamplerFilter)
-		ms_filter_unlink(captureVolumeFilter, 0, resamplerFilter, 0);
-	if (resamplerFilter && playbackVolumeFilter)
-		ms_filter_unlink(resamplerFilter, 0, playbackVolumeFilter, 0);
-	if (audioCapture)
-		ms_filter_unlink(audioCapture, 0, captureVolumeFilter, 0);
-	if (playbackVolumeFilter)
-		ms_filter_destroy(playbackVolumeFilter);
-	if (captureVolumeFilter)
-		ms_filter_destroy(captureVolumeFilter);
-	if (resamplerFilter)
-		ms_filter_destroy(resamplerFilter);
-	if (audioSink)
-		ms_filter_destroy(audioSink);
-	if (audioCapture)
-		ms_filter_destroy(audioCapture);
+
+	if (audioSink) ms_filter_unlink(playbackVolumeFilter, 0, audioSink, 0);
+	if (captureVolumeFilter && resamplerFilter) ms_filter_unlink(captureVolumeFilter, 0, resamplerFilter, 0);
+	if (resamplerFilter && playbackVolumeFilter) ms_filter_unlink(resamplerFilter, 0, playbackVolumeFilter, 0);
+	if (audioCapture) ms_filter_unlink(audioCapture, 0, captureVolumeFilter, 0);
+	if (playbackVolumeFilter) ms_filter_destroy(playbackVolumeFilter);
+	if (captureVolumeFilter) ms_filter_destroy(captureVolumeFilter);
+	if (resamplerFilter) ms_filter_destroy(resamplerFilter);
+	if (audioSink) ms_filter_destroy(audioSink);
+	if (audioCapture) ms_filter_destroy(audioCapture);
 	if (ticker) {
-		ms_ticker_destroy(ticker);// Destroy ticker at the end to avoid conflicts between attached filters
+		ms_ticker_destroy(ticker); // Destroy ticker at the end to avoid conflicts between attached filters
 	}
 	ticker = nullptr;
 	playbackVolumeFilter = nullptr;

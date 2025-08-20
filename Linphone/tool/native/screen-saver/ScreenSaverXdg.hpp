@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -26,19 +26,19 @@
 // =============================================================================
 
 class ScreenSaverXdg : public QObject {
-  Q_OBJECT;
+	Q_OBJECT;
 
 public:
-  ScreenSaverXdg (QObject *parent = Q_NULLPTR);
+	ScreenSaverXdg(QObject *parent = Q_NULLPTR);
 
-  bool getScreenSaverStatus () const;
-  void setScreenSaverStatus (bool status);
+	bool getScreenSaverStatus() const;
+	void setScreenSaverStatus(bool status);
 
 signals:
-  void screenSaverStatusChanged (bool status);
+	void screenSaverStatusChanged(bool status);
 
 private:
-  QTimer mTimer;
+	QTimer mTimer;
 };
 
 #endif // SCREEN_SAVER_XDG_H_
