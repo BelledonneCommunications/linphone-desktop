@@ -4,14 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.3.0 - 2025-08-21
 
-## 6.0 - undefined
-### Added
-- Screen Sharing
-
-## 5.3.0 - undefined
 ### Fixed
-- Update SDK to 5.4.37
 - Urls (Privacy policy, terms, file transfer, update check)
 - Blinking on resize or Ui updates on screen that have low frame rates.
 - Timezones and Windows fix.
@@ -21,7 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Display call duration instead of conference duration.
 
 ### Added
-- Screen Sharing
+- Screen Sharing in conference calls
+
+### Changed
+- SDK Updated to 5.4.38
 - Deactivated account is no longer a logout and is just related to registration: Keep background activities and avoid requesting passwords.
 
 ## 5.2.6 - 2024-07-22
