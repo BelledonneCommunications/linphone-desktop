@@ -25,6 +25,7 @@
 #include <QObject>
 #include <QSharedPointer>
 #include <QString>
+#include <QSystemTrayIcon>
 #include <QThread>
 #include <QTimer>
 #include <linphone++/linphone.hh>
@@ -39,6 +40,9 @@
 
 // =============================================================================
 
+class AbstractEventCountNotifier;
+class EventCountNotifier;
+
 class CoreModel : public ::Listener<linphone::Core, linphone::CoreListener>,
                   public linphone::CoreListener,
                   public AbstractObject {
@@ -51,6 +55,8 @@ public:
 
 	std::shared_ptr<linphone::Core> getCore();
 	std::shared_ptr<LoggerModel> getLogger();
+
+	bool isInitialized() const;
 
 	void start();
 	void setConfigPath(QString path);
@@ -90,6 +96,7 @@ private:
 	QTimer *mIterateTimer = nullptr;
 	QMap<QString, OIDCModel *> mOpenIdConnections;
 	std::shared_ptr<MagicSearchModel> mMagicSearch;
+	bool mStarted = false;
 
 	void setPathBeforeCreation();
 	void setPathsAfterCreation();

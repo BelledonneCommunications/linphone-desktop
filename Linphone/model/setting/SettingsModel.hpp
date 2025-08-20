@@ -167,6 +167,15 @@ public:
 	QFont getTextMessageFont() const;
 	int getTextMessageFontSize() const;
 
+	bool isSystrayNotificationBlinkEnabled() const;
+	bool isSystrayNotificationGlobal() const;
+	bool isSystrayNotificationFiltered() const;
+	bool getStandardChatEnabled() const;
+	bool getSecureChatEnabled() const;
+	bool getGroupChatEnabled() const;
+
+	bool getLimeIsSupported() const;
+
 	// UI
 	DECLARE_GETSET(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_GETSET(bool, disableMeetingsFeature, DisableMeetingsFeature)

@@ -779,9 +779,43 @@ void SettingsModel::setCallForwardToAddress(const QString &data) {
 	emit(callForwardToAddressChanged(data));
 }
 
+bool SettingsModel::isSystrayNotificationBlinkEnabled() const {
+	return !!mConfig->getInt(UiSection, "systray_notification_blink", 1);
+}
+
+bool SettingsModel::isSystrayNotificationGlobal() const {
+	return !!mConfig->getInt(UiSection, "systray_notification_global", 1);
+}
+
+bool SettingsModel::isSystrayNotificationFiltered() const {
+	return !!mConfig->getInt(UiSection, "systray_notification_filtered", 0);
+}
+
+bool SettingsModel::getStandardChatEnabled() const {
+	return !getDisableChatFeature() &&
+	       !!mConfig->getInt(UiSection, getEntryFullName(UiSection, "standard_chat_enabled"), 1);
+}
+
+bool SettingsModel::getSecureChatEnabled() const {
+	auto core = CoreModel::getInstance()->getCore();
+	return !getDisableChatFeature() &&
+	       !!mConfig->getInt(UiSection, getEntryFullName(UiSection, "secure_chat_enabled"), 1) &&
+	       getLimeIsSupported() && core->getDefaultAccount() &&
+	       !core->getDefaultAccount()->getParams()->getLimeServerUrl().empty() && getGroupChatEnabled();
+}
+
+bool SettingsModel::getGroupChatEnabled() const {
+	return CoreModel::getInstance()->getCore()->getDefaultAccount() &&
+	       !CoreModel::getInstance()->getCore()->getDefaultAccount()->getParams()->getConferenceFactoryUri().empty();
+}
+
 QString SettingsModel::getChatNotificationSoundPath() const {
 	static const string defaultFile = linphone::Factory::get()->getSoundResourcesDir() + "/incoming_chat.wav";
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "chat_sound_notification_file", defaultFile));
+}
+
+bool SettingsModel::getLimeIsSupported() const {
+	return CoreModel::getInstance()->getCore()->limeX3DhAvailable();
 }
 
 void SettingsModel::setChatNotificationSoundPath(const QString &path) {

@@ -40,6 +40,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/emoji/EmojiList.cpp
 	core/emoji/EmojiModel.cpp
 	core/emoji/EmojiProxy.cpp
+	core/event-count-notifier/AbstractEventCountNotifier.cpp
+	core/event-count-notifier/EventCountNotifierSystemTrayIcon.cpp
 	core/fps-counter/FPSCounter.cpp
 	core/friend/FriendCore.cpp
 	core/friend/FriendGui.cpp
@@ -128,5 +130,7 @@ else() # Use QDBus for Linux
 		core/singleapplication/SingleApplicationDBusPrivate.hpp
 		core/singleapplication/SingleApplicationDBus.cpp)
 endif()
-
+if(APPLE)
+	list(APPEND _LINPHONEAPP_SOURCES core/event-count-notifier/EventCountNotifierMacOs.m)
+endif()
 set(_LINPHONEAPP_SOURCES ${_LINPHONEAPP_SOURCES} PARENT_SCOPE)

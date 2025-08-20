@@ -1726,6 +1726,7 @@ void Utils::runCommandLine(const QString command) {
 // Presence
 
 QColor Utils::getDefaultStyleColor(const QString &colorName) {
+	mustBeInMainThread(sLog().arg(Q_FUNC_INFO));
 	static QObject *defaultStyleSingleton = nullptr;
 	if (!defaultStyleSingleton) {
 		QQmlComponent component(App::getInstance()->mEngine, QUrl("qrc:/qt/qml/Linphone/view/Style/DefaultStyle.qml"));
