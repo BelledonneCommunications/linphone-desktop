@@ -88,7 +88,10 @@ ListView {
         initialDisplayItems: 10
         onEventInserted: (index, gui) => {
             if (!mainItem.visible) return
-            if(mainItem.lastItemVisible) mainItem.positionViewAtIndex(index, ListView.Beginning)
+            if(mainItem.lastItemVisible) {
+                mainItem.positionViewAtIndex(index, ListView.Beginning)
+                markIndexAsRead(index)
+            }
         }
         Component.onCompleted: loading = true
         onListAboutToBeReset: loading = true
@@ -239,6 +242,7 @@ ListView {
                 Component.onCompleted: {
                     if (index === 0) mainItem.lastItemVisible = isFullyVisible
                 }
+                onYChanged: if (index === 0) mainItem.lastItemVisible = isFullyVisible
                 chat: mainItem.chat
                 searchedTextPart: mainItem.filterText
                 maxWidth: Math.round(mainItem.width * (3/4))

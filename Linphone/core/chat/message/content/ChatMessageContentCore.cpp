@@ -63,6 +63,8 @@ ChatMessageContentCore::ChatMessageContentCore(const std::shared_ptr<linphone::C
 		mFileDuration = content->getFileDuration();
 		mFileOffset = 0;
 		mUtf8Text = Utils::coreStringToAppString(content->getUtf8Text());
+		auto chatRoom = chatMessageModel ? chatMessageModel->getMonitor()->getChatRoom() : nullptr;
+		mRichFormatText = ToolModel::encodeTextToQmlRichFormat(mUtf8Text, {}, chatRoom);
 		mWasDownloaded = !mFilePath.isEmpty() && QFileInfo(mFilePath).isFile();
 		mThumbnail = mFilePath.isEmpty()
 		                 ? QString()

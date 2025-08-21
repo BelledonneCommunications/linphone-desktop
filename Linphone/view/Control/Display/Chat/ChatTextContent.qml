@@ -26,13 +26,10 @@ TextEdit {
 	readOnly: true
 	selectByMouse: true
 	
-	property var encodeTextObj: visible ? UtilsCpp.encodeTextToQmlRichFormat(contentGui.core.utf8Text, {}, mainItem.chatGui)
-				  : ''
-	text: encodeTextObj 
-		&& (searchedTextPart !== "" 
-			? UtilsCpp.boldTextPart(encodeTextObj.value, searchedTextPart)
-			:  encodeTextObj.value) 
-		|| ""	
+	text: searchedTextPart !== ""
+			? UtilsCpp.boldTextPart(contentGui.core.richFormatText, searchedTextPart)
+			: contentGui.core.richFormatText
+
 	textFormat: Text.RichText // To supports links and imgs.
 	wrapMode: TextEdit.Wrap
 	

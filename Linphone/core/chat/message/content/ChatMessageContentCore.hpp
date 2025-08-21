@@ -40,6 +40,7 @@ class ChatMessageContentCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool wasDownloaded READ wasDownloaded WRITE setWasDownloaded NOTIFY wasDownloadedChanged)
 	Q_PROPERTY(QString filePath READ getFilePath WRITE setFilePath NOTIFY filePathChanged)
 	Q_PROPERTY(QString utf8Text READ getUtf8Text CONSTANT)
+	Q_PROPERTY(QString richFormatText MEMBER mRichFormatText CONSTANT)
 	Q_PROPERTY(bool isFile READ isFile WRITE setIsFile NOTIFY isFileChanged)
 	Q_PROPERTY(bool isFileEncrypted READ isFileEncrypted WRITE setIsFileEncrypted NOTIFY isFileEncryptedChanged)
 	Q_PROPERTY(bool isFileTransfer READ isFileTransfer WRITE setIsFileTransfer NOTIFY isFileTransferChanged)
@@ -122,6 +123,7 @@ private:
 	int mFileDuration;
 	QString mThumbnail;
 	QString mUtf8Text;
+	QString mRichFormatText;
 	QString mFilePath;
 	QString mName;
 	quint64 mFileSize;

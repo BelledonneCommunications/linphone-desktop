@@ -24,6 +24,7 @@
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
 #include "model/friend/FriendsManager.hpp"
+#include "tool/UriTools.hpp"
 #include "tool/Utils.hpp"
 #include <QDebug>
 #include <QDirIterator>
@@ -115,6 +116,108 @@ QString ToolModel::getDisplayName(QString address) {
 		part[0] = part[0].toUpper();
 	}
 	return nameSplitted.join(" ");
+}
+
+QString ToolModel::encodeTextToQmlRichFormat(const QString &text,
+                                             const QVariantMap &options,
+                                             std::shared_ptr<linphone::ChatRoom> chatRoom) {
+	QStringList formattedText;
+	bool lastWasUrl = false;
+	auto primaryColor = QColor::fromString("#4AA8FF");
+
+	if (options.contains("noLink") && options["noLink"].toBool()) {
+		formattedText.append(Utils::encodeEmojiToQmlRichFormat(text));
+	} else {
+
+		auto iriParsed = UriTools::parseIri(text);
+
+		for (int i = 0; i < iriParsed.size(); ++i) {
+			QString iri = iriParsed[i]
+			                  .second.replace('&', "&amp;")
+			                  .replace('<', "\u2063&lt;")
+			                  .replace('>', "\u2063&gt;")
+			                  .replace('"', "&quot;")
+			                  .replace('\'', "&#039;");
+			if (!iriParsed[i].first) {
+				if (lastWasUrl) {
+					lastWasUrl = false;
+					if (iri.front() != ' ') iri.push_front(' ');
+				}
+				formattedText.append(Utils::encodeEmojiToQmlRichFormat(iri));
+			} else {
+				QString uri =
+				    iriParsed[i].second.left(3) == "www" ? "http://" + iriParsed[i].second : iriParsed[i].second;
+				/* TODO : preview from link
+				int extIndex = iriParsed[i].second.lastIndexOf('.');
+				QString ext;
+				if( extIndex >= 0)
+				    ext = iriParsed[i].second.mid(extIndex+1).toUpper();
+				if(imageFormat.contains(ext.toLatin1())){// imagesHeight is not used because of bugs on display
+				(blank image if set without width) images += "<a href=\"" + uri + "\"><img" + (
+				options.contains("imagesWidth") ? QString(" width='") + options["imagesWidth"].toString() + "'" : ""
+				        ) + (
+				 options.contains("imagesWidth")
+				 ? QString(" height='auto'")
+				 : ""
+			 ) + " src=\"" + iriParsed[i].second + "\" />"+uri+"</a>";
+	  }else{
+	  */
+				formattedText.append("<a style=\"color:" + primaryColor.name() + ";\" href=\"" + uri + "\">" + iri +
+				                     "</a>");
+				lastWasUrl = true;
+				/*}*/
+			}
+		}
+	}
+	if (lastWasUrl && formattedText.last().back() != ' ') {
+		formattedText.push_back(" ");
+	}
+	if (chatRoom) {
+		auto participants = chatRoom->getParticipants();
+		auto mentionsParsed = UriTools::parseMention(formattedText.join(""));
+		formattedText.clear();
+
+		for (int i = 0; i < mentionsParsed.size(); ++i) {
+			QString mention = mentionsParsed[i].second;
+
+			if (mentionsParsed[i].first) {
+				QString mentions = mentionsParsed[i].second;
+				QStringList finalMentions;
+				QStringList parts = mentions.split(" ");
+				for (auto part : parts) {
+					if (part.startsWith("@")) { // mention
+						QString username = part;
+						username.removeFirst();
+						auto it = std::find_if(participants.begin(), participants.end(),
+						                       [username](std::shared_ptr<linphone::Participant> p) {
+							                       return p->getAddress() && username == p->getAddress()->getUsername();
+						                       });
+						if (it != participants.end()) {
+							auto foundParticipant = *it;
+							// participants.at(std::distance(participants.begin(), it));
+							auto address = foundParticipant->getAddress()->clone();
+							auto isFriend = findFriendByAddress(address);
+							address->clean();
+							auto addressString = Utils::coreStringToAppString(address->asStringUriOnly());
+							if (isFriend)
+								part = "@" + Utils::coreStringToAppString(isFriend->getAddress()->getDisplayName());
+							QString participantLink = "<a style=\"color:" + primaryColor.name() +
+							                          ";\" href=\"mention:" + addressString + "\">" + part + "</a>";
+							finalMentions.append(participantLink);
+						} else {
+							finalMentions.append(part);
+						}
+					} else {
+						finalMentions.append(part);
+					}
+				}
+				formattedText.push_back(finalMentions.join(" "));
+			} else {
+				formattedText.push_back(mentionsParsed[i].second);
+			}
+		}
+	}
+	return "<p style=\"white-space:pre-wrap;\">" + formattedText.join("");
 }
 
 std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &address) {
