@@ -45,7 +45,7 @@ public:
 	void setChatCore(QSharedPointer<ChatCore> core);
 	void setChatGui(ChatGui *chat);
 
-	void connectItem(const QSharedPointer<EventLogCore> item);
+	void connectItem(const QSharedPointer<EventLogCore> &item);
 
 	int findFirstUnreadIndex();
 

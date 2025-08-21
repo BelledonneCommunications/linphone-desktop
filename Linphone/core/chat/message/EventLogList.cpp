@@ -59,7 +59,7 @@ QSharedPointer<ChatCore> EventLogList::getChatCore() const {
 	return mChatCore;
 }
 
-void EventLogList::connectItem(const QSharedPointer<EventLogCore> item) {
+void EventLogList::connectItem(const QSharedPointer<EventLogCore> &item) {
 	auto message = item->getChatMessageCore();
 	if (message) {
 		connect(message.get(), &ChatMessageCore::deleted, this, [this, item] {
@@ -89,6 +89,7 @@ void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 					auto it = std::find_if(eventsList.begin(), eventsList.end(),
 					                       [event](const QSharedPointer<EventLogCore> item) { return item == event; });
 					if (it == eventsList.end()) {
+						connectItem(event);
 						add(event);
 						int index;
 						get(event.get(), &index);
@@ -154,7 +155,10 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 		emit listAboutToBeReset();
 		for (auto &event : getSharedList<EventLogCore>()) {
 			auto message = event->getChatMessageCore();
-			if (message) disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);
+			if (message) {
+				disconnect(message.get(), &ChatMessageCore::ephemeralDurationChanged, this, nullptr);
+				disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);
+			}
 		}
 		if (!mChatCore) return;
 		auto events = mChatCore->getEventLogList();
