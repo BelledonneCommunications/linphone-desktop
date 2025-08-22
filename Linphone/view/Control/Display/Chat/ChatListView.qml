@@ -176,14 +176,9 @@ ListView {
             anchors.bottomMargin: Math.round(9 * DefaultStyle.dp)
             spacing: Math.round(10 * DefaultStyle.dp)
             Avatar {
-                id: historyAvatar
                 property var contactObj: modelData ? UtilsCpp.findFriendByAddress(modelData.core.peerAddress) : null
                 contact: contactObj?.value || null
-                displayNameVal: contact 
-                    ? undefined 
-                    : modelData
-                        ? modelData.core.avatarUri
-                        : null
+                displayNameVal: modelData.core.avatarUri
                 secured: modelData?.core.isSecured || false
                 Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
