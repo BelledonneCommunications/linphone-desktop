@@ -124,6 +124,8 @@ Then simply re-build using cmake.
 
 #### General Troubleshooting
 
+* In case of the error "Squashfs image uses (null) compression, this version supports only xz, zlib." or anything about compressions when using AppImageLauncher, you must update update the version of AppImageLauncher to at leaset 3.0-alpha3. LinuxDeploy/AppImageTool decide to change the compression from gzip to zstd, that it not supported with previous version.
+
 * The latest version of Doxygen may not work with the SDK. If you some build issues and have a specific version of Doxygen that is not in your PATH, you can use `-DLINPHONESDK_DOXYGEN_PROGRAM`.
 
 Eg on Mac : `-DLINPHONESDK_DOXYGEN_PROGRAM=/Applications/Doxygen.app/Contents/Resources/doxygen`
