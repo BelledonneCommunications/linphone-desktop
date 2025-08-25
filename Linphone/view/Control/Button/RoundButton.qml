@@ -9,9 +9,6 @@ Button {
 	textSize: Typography.p1s.pixelSize
 	textWeight: Typography.p1s.weight
     padding: Math.round(16 * DefaultStyle.dp)
-    // bottomPadding: Math.round(16 * DefaultStyle.dp)
-    // leftPadding: Math.round(16 * DefaultStyle.dp)
-    // rightPadding: Math.round(16 * DefaultStyle.dp)
     // icon.width: width
     // icon.height: width
     radius: width * 2

@@ -123,15 +123,30 @@ AbstractMainPage {
 		]
 	}
 
-	Item {
+	Control.ScrollView {
 		id: overridenRightPanel
+		width: Math.round((393 + 10) * DefaultStyle.dp)
+		anchors.top: parent.top
+		anchors.bottom: parent.bottom
+		anchors.topMargin: Math.round(58 * DefaultStyle.dp)
+		anchors.bottomMargin: Math.round(30 * DefaultStyle.dp)
+		height: parent.height - anchors.topMargin
+		anchors.horizontalCenter: parent.horizontalCenter
+		contentHeight: overridenRightPanelStackView.currentItem.childrenRect.height
+		contentWidth: width
+		clip: true
+		Control.ScrollBar.vertical: ScrollBar {
+			visible: overridenRightPanel.contentHeight > overridenRightPanel.height
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			anchors.right: parent.right
+		}
 		Control.StackView {
 			id: overridenRightPanelStackView
-            width: Math.round(393 * DefaultStyle.dp)
-			height: parent.height
-			anchors.top: parent.top
-			anchors.centerIn: parent
-			anchors.horizontalCenter: parent.horiztonalCenter
+			anchors.fill: parent
+			anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
+			height: currentItem ? currentItem.height : 0
+			width: Math.round(393 * DefaultStyle.dp)
 		}
 	}
 
@@ -149,9 +164,11 @@ AbstractMainPage {
 			
 			ColumnLayout {
 				anchors.fill: parent
-				spacing: 0 
+				spacing: 0
 				RowLayout {
                     Layout.rightMargin: Math.round(38 * DefaultStyle.dp)
+					Layout.alignment: Qt.AlignTop
+					Layout.fillWidth: true
 					spacing: 0					
 					Text {
 						Layout.fillWidth: true
@@ -373,10 +390,9 @@ AbstractMainPage {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.top: parent.top
-                anchors.topMargin: Math.round(58 * DefaultStyle.dp)
 				spacing: 0
 				Section {
-                    Layout.preferredWidth: Math.round(393 * DefaultStyle.dp)
+                    Layout.fillWidth: true
 					content: RowLayout {
                         spacing: Math.round(16 * DefaultStyle.dp)
 						Layout.preferredWidth: overridenRightPanelStackView.width
@@ -574,13 +590,12 @@ AbstractMainPage {
 		id: meetingDetail
 		FocusScope{
 			width: overridenRightPanelStackView.width
-			height: meetingDetailsLayout.implicitHeight
+			height: meetingDetailsLayout.childrenRect.height
 			ColumnLayout {
 				id: meetingDetailsLayout
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.top: parent.top
-                anchors.topMargin: Math.round(58 * DefaultStyle.dp)
 				visible: mainItem.selectedConference
                 spacing: Math.round(25 * DefaultStyle.dp)
 				Section {
@@ -616,6 +631,7 @@ AbstractMainPage {
 							KeyNavigation.right: deletePopup
 							KeyNavigation.up: joinButton
 							KeyNavigation.down: shareNetworkButton
+							Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
 							onClicked: mainItem.editConference(mainItem.selectedConference)
 						}
 						PopupButton {
@@ -701,6 +717,7 @@ AbstractMainPage {
 								KeyNavigation.right: linkButton
 								KeyNavigation.up: deletePopup
 								KeyNavigation.down: joinButton
+								Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
 								onClicked: {
 									var success = UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri)
                                     if (success) UtilsCpp.showInformationPopup(qsTr("saved"),
@@ -739,6 +756,7 @@ AbstractMainPage {
 								colorizationColor: DefaultStyle.main2_600
 							}
 							Text {
+								Layout.fillWidth: true
                                 //: "Fuseau horaire"
                                 text: "%1: %2".arg(qsTr("meeting_schedule_timezone_title")).arg(mainItem.selectedConference && mainItem.selectedConference.core ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
 								font {
@@ -795,6 +813,7 @@ AbstractMainPage {
 				}
 				Section {
 					visible: participantList.count > 0
+					Layout.fillWidth: true
 					content: RowLayout {
 						Layout.preferredHeight: participantList.height
                         width: Math.round(393 * DefaultStyle.dp)
@@ -851,6 +870,8 @@ AbstractMainPage {
 					id: joinButton
 					visible: mainItem.selectedConference && mainItem.selectedConference.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
 					Layout.fillWidth: true
+					Layout.preferredHeight: implicitHeight
+					Layout.bottomMargin: Math.round(5 * DefaultStyle.dp)
                     //: "Rejoindre la réunion"
                     text: qsTr("meeting_info_join_title")
 					focus: true

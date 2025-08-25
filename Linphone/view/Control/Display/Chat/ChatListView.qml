@@ -322,8 +322,8 @@ ListView {
                         unread: modelData?.core.unreadMessagesCount || false
                     }
                     EffectImage {
-                        visible: modelData?.core.lastMessage && modelData?.core.lastMessageState !== LinphoneEnums.ChatMessageState.StateIdle || false
-                        && !modelData.core.lastMessage.core.isRemoteMessage
+                        visible: modelData?.core.lastMessage && modelData?.core.lastMessageState !== LinphoneEnums.ChatMessageState.StateIdle
+                        && !modelData.core.lastMessage.core.isRemoteMessage || false
                         Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
                         Layout.preferredHeight: 14 * DefaultStyle.dp
                         colorizationColor: DefaultStyle.main1_500_main
