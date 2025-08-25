@@ -32,6 +32,7 @@ class ConferenceInfoProxy : public LimitProxy, public AbstractObject {
 
 	Q_OBJECT
 	Q_PROPERTY(bool haveCurrentDate READ haveCurrentDate NOTIFY haveCurrentDateChanged)
+	Q_PROPERTY(bool accountConnected READ getAccountConnected NOTIFY accountConnectedChanged)
 
 public:
 	enum ConferenceInfoFiltering { None = 0, Future = 1 };
@@ -43,6 +44,7 @@ public:
 	~ConferenceInfoProxy();
 
 	bool haveCurrentDate() const;
+	bool getAccountConnected() const;
 
 	Q_INVOKABLE void clear();
 	Q_INVOKABLE int loadUntil(ConferenceInfoGui *confInfo);
@@ -52,6 +54,7 @@ signals:
 	void haveCurrentDateChanged();
 	void conferenceInfoCreated(ConferenceInfoGui *confInfo);
 	void conferenceInfoUpdated(ConferenceInfoGui *confInfo);
+	void accountConnectedChanged(bool connected);
 
 private:
 	QSharedPointer<ConferenceInfoList> mList;

@@ -157,7 +157,6 @@ Item {
 					}
 					Text {
 						z: parent.z + 1
-						RectangleTest{anchors.fill: parent}
 						property int timeDisplayed: videoThumbnail.playbackState === MediaPlayer.PlayingState ? videoThumbnail.position : videoThumbnail.duration
 						anchors.bottom: parent.bottom
 						anchors.left: parent.left

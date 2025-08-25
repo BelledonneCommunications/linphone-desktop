@@ -58,13 +58,19 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
 	    },
 	    Qt::QueuedConnection);
 	connect(mList.get(), &ConferenceInfoList::initialized, this, &ConferenceInfoProxy::initialized);
+	connect(mList.get(), &ConferenceInfoList::accountConnectedChanged, this,
+	        &ConferenceInfoProxy::accountConnectedChanged);
 }
 
 ConferenceInfoProxy::~ConferenceInfoProxy() {
 }
 
 bool ConferenceInfoProxy::haveCurrentDate() const {
-	return mList->haveCurrentDate();
+	return mList && mList->haveCurrentDate();
+}
+
+bool ConferenceInfoProxy::getAccountConnected() const {
+	return mList && mList->getAccountConnected();
 }
 
 bool ConferenceInfoProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {

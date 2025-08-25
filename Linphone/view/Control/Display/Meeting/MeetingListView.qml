@@ -16,8 +16,9 @@ ListView {
 	property var delegateButtons
 	property ConferenceInfoGui selectedConference
 	property bool _moveToIndex: false
+    property bool loading: false
+    property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
 
-	visible: count > 0
 	clip: true
 	cacheBuffer: height/2
 	
@@ -88,8 +89,21 @@ ListView {
 		filterType: ConferenceInfoProxy.None
         initialDisplayItems: Math.max(20, 2 * mainItem.height / (Math.round(63 * DefaultStyle.dp)))
 		displayItemsStep: initialDisplayItems/2
+		Component.onCompleted: {
+            mainItem.loading = !confInfoProxy.accountConnected
+        }
+		onModelAboutToBeReset: {
+            mainItem.loading = true
+        }
+		onModelReset: {
+			mainItem.loading = !confInfoProxy.accountConnected
+		}
+		onAccountConnectedChanged: (connected) => {
+            mainItem.loading = !connected
+        }
 		function selectData(confInfoGui){
 			mainItem.currentIndex = loadUntil(confInfoGui)
+			mainItem.positionViewAtIndex(mainItem.currentIndex, ListView.Contain)
 		}
 		onConferenceInfoCreated: (confInfoGui) => {
 			selectData(confInfoGui)
@@ -102,6 +116,16 @@ ListView {
 			selectData(null)
 		}
 	}
+
+	BusyIndicator {
+        anchors.horizontalCenter: mainItem.horizontalCenter
+        visible: mainItem.loading
+        height: visible ? mainItem.busyIndicatorSize : 0
+        width: mainItem.busyIndicatorSize
+        indicatorHeight: mainItem.busyIndicatorSize
+        indicatorWidth: mainItem.busyIndicatorSize
+        indicatorColor: DefaultStyle.main1_500_main
+    }
 	
 	ScrollBar.vertical: ScrollBar {
 		id: scrollbar

@@ -55,7 +55,6 @@ AbstractMainPage {
 	onVisibleChanged: if (!visible) {
 		leftPanelStackView.clear()
 		leftPanelStackView.push(leftPanelStackView.initialItem)
-		
 	}
 
 	onSelectedConferenceChanged: {
@@ -193,7 +192,7 @@ AbstractMainPage {
 					}
 				}
 				Text {
-					visible: conferenceList.count === 0
+					visible: conferenceList.count === 0 && !conferenceList.loading
                     Layout.topMargin: Math.round(137 * DefaultStyle.dp)
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignHCenter
@@ -215,7 +214,15 @@ AbstractMainPage {
 					
 					searchBarText: searchBar.text
 					
-					onCountChanged: mainItem.meetingListCount = count
+					onCountChanged: {
+						mainItem.meetingListCount = count === 0
+					}
+					Binding {
+						target: mainItem
+						property: "showDefaultItem"
+						when: conferenceList.loading
+						value: false
+					}
 					onSelectedConferenceChanged: {
 						mainItem.selectedConference = selectedConference
 					}

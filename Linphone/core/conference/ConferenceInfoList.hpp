@@ -55,6 +55,9 @@ public:
 
 	QHash<int, QByteArray> roleNames() const override;
 
+	void setAccountConnected(bool connected);
+	bool getAccountConnected() const;
+
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 signals:
@@ -65,11 +68,13 @@ signals:
 	void currentDateIndexChanged(int index);
 	void confInfoInserted(QSharedPointer<ConferenceInfoCore> data);
 	void confInfoUpdated(QSharedPointer<ConferenceInfoCore> data);
+	void accountConnectedChanged(bool connected);
 
 private:
 	QSharedPointer<SafeConnection<ConferenceInfoList, CoreModel>> mCoreModelConnection;
 	QSharedPointer<AccountCore> mCurrentAccountCore;
 	bool mHaveCurrentDate = false;
+	bool mAccountConnected = false;
 	DECLARE_ABSTRACT_OBJECT
 };
 #endif // CONFERENCE_INFO_LIST_H_
