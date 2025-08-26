@@ -78,10 +78,10 @@ MainRightPanel {
 		Timer{
 			id: saveDelay
 			interval: 200
-			onTriggered:{
-                //: "Veuillez saisir un prénom"
-				if (mainItem.contact.core.givenName.length === 0) {
-                    givenName.errorMessage = qsTr("contact_editor_mandatory_first_name_not_filled")
+			onTriggered: {
+				//: "Veuillez saisir un prénom ou un nom d'entreprise"
+				if (mainItem.contact.core.givenName.length === 0 && mainItem.contact.core.organization.length === 0) {
+					givenName.errorMessage = qsTr("contact_editor_mandatory_first_name_or_company_not_filled")
 					return
 				} else if (addressesList.count === 0 && phoneNumberList.count === 0) {
                     //: "Veuillez saisir une adresse ou un numéro de téléphone"
