@@ -16,7 +16,9 @@ FocusScope {
 	ColumnLayout {
 		id: formLayout
         spacing: Math.round(16 * DefaultStyle.dp)
-		anchors.fill: parent
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.top: parent.top
 
 		Component.onCompleted: {
 			endHour.selectedDateTime = mainItem.conferenceInfoGui.core.endDateTime

@@ -132,7 +132,7 @@ AbstractMainPage {
 		anchors.bottomMargin: Math.round(30 * DefaultStyle.dp)
 		height: parent.height - anchors.topMargin
 		anchors.horizontalCenter: parent.horizontalCenter
-		contentHeight: overridenRightPanelStackView.currentItem.childrenRect.height
+		contentHeight: overridenRightPanelStackView.currentItem ? overridenRightPanelStackView.currentItem.childrenRect.height : 0
 		contentWidth: width
 		clip: true
 		Control.ScrollBar.vertical: ScrollBar {
@@ -141,12 +141,16 @@ AbstractMainPage {
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
 		}
-		Control.StackView {
-			id: overridenRightPanelStackView
+		contentChildren: ColumnLayout {
 			anchors.fill: parent
 			anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
-			height: currentItem ? currentItem.height : 0
 			width: Math.round(393 * DefaultStyle.dp)
+			Control.StackView {
+				id: overridenRightPanelStackView
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+				height: currentItem ? currentItem.height : 0
+			}
 		}
 	}
 
@@ -384,12 +388,12 @@ AbstractMainPage {
 			property bool isCreation
 			property ConferenceInfoGui conferenceInfoGui
 			width: overridenRightPanelStackView.width
-			height: editLayout.height
 			ColumnLayout {
 				id: editLayout
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.top: parent.top
+				height: childrenRect.height
 				spacing: 0
 				Section {
                     Layout.fillWidth: true
@@ -468,7 +472,7 @@ AbstractMainPage {
 					isCreation: editFocusScope.isCreation
 					conferenceInfoGui: editFocusScope.conferenceInfoGui
 					Layout.fillWidth: true
-					Layout.fillHeight: true
+					Layout.preferredHeight: childrenRect.height
 					
 					onAddParticipantsRequested: {
 						overridenRightPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": overridenRightPanelStackView})
@@ -515,47 +519,54 @@ AbstractMainPage {
 
 	Component {
 		id: addParticipants
-		ColumnLayout {
+		FocusScope{
+			id: addParticipantInItem
 			property Control.StackView container
 			property ConferenceInfoGui conferenceInfoGui
-            spacing: Math.round(18 * DefaultStyle.dp)
-			FocusScope{
-				Layout.fillWidth: true
-				Layout.preferredHeight: childrenRect.height
+			width: overridenRightPanelStackView.width
+			ColumnLayout {
+				id: addParticipantsLayout
+				spacing: Math.round(18 * DefaultStyle.dp)
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.top: parent.top
+				anchors.bottom: parent.bottom
 				ColumnLayout {
-                    spacing: Math.round(4 * DefaultStyle.dp)
+					id: title
 					Layout.fillWidth: true
+					Layout.preferredHeight: childrenRect.height
+					spacing: Math.round(4 * DefaultStyle.dp)
 					RowLayout {
 						id: addParticipantsButtons
-                        spacing: Math.round(10 * DefaultStyle.dp)
+						spacing: Math.round(10 * DefaultStyle.dp)
 						Button {
 							id: addParticipantsBackButton
 							style: ButtonStyle.noBackgroundOrange
 							icon.source: AppIcons.leftArrow
-                            icon.width: Math.round(24 * DefaultStyle.dp)
-                            icon.height: Math.round(24 * DefaultStyle.dp)
+							icon.width: Math.round(24 * DefaultStyle.dp)
+							icon.height: Math.round(24 * DefaultStyle.dp)
 							KeyNavigation.right: addButton
 							KeyNavigation.down: addParticipantLayout
 							onClicked: container.pop()
 						}
 						Text {
-                            //: "Ajouter des participants"
-                            text: qsTr("meeting_schedule_add_participants_title")
+							//: "Ajouter des participants"
+							text: qsTr("meeting_schedule_add_participants_title")
 							color: DefaultStyle.main1_500_main
 							maximumLineCount: 1
 							font {
-                                pixelSize: Math.round(18 * DefaultStyle.dp)
-                                weight: Typography.h4.weight
+								pixelSize: Math.round(18 * DefaultStyle.dp)
+								weight: Typography.h4.weight
 							}
 							Layout.fillWidth: true
 						}
 						SmallButton {
 							id: addButton
 							enabled: addParticipantLayout.selectedParticipantsCount.length != 0
-                            Layout.leftMargin: Math.round(11 * DefaultStyle.dp)
+							Layout.leftMargin: Math.round(11 * DefaultStyle.dp)
 							focus: enabled
 							style: ButtonStyle.main
-                            text: qsTr("meeting_schedule_add_participants_apply")
+							text: qsTr("meeting_schedule_add_participants_apply")
 							KeyNavigation.left: addParticipantsBackButton
 							KeyNavigation.down: addParticipantLayout
 							onClicked: {
@@ -564,24 +575,26 @@ AbstractMainPage {
 						}
 					}
 					Text {
-                        //: "%n participant(s) sélectionné(s)"
-                        text: qsTr("group_call_participant_selected", '', addParticipantLayout.selectedParticipantsCount).arg(addParticipantLayout.selectedParticipantsCount)
-                        color: DefaultStyle.main2_500main
+						//: "%n participant(s) sélectionné(s)"
+						text: qsTr("group_call_participant_selected", '', addParticipantLayout.selectedParticipantsCount).arg(addParticipantLayout.selectedParticipantsCount)
+						color: DefaultStyle.main2_500main
 						Layout.leftMargin: addParticipantsBackButton.width + addParticipantsButtons.spacing
 						maximumLineCount: 1
 						font {
-                            pixelSize: Math.round(12 * DefaultStyle.dp)
-                            weight: Math.round(300 * DefaultStyle.dp)
+							pixelSize: Math.round(12 * DefaultStyle.dp)
+							weight: Math.round(300 * DefaultStyle.dp)
 						}
 						Layout.fillWidth: true
 					}
 				}
-			}
-			AddParticipantsForm {
-				id: addParticipantLayout
-				Layout.fillWidth: true
-				Layout.fillHeight: true
-				conferenceInfoGui: parent.conferenceInfoGui
+				AddParticipantsForm {
+					id: addParticipantLayout
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					height: addParticipantInItem.height - title.height
+					conferenceInfoGui: addParticipantInItem.conferenceInfoGui
+					participantscSrollBarRightMargin: 0
+				}
 			}
 		}
 	}
@@ -590,7 +603,6 @@ AbstractMainPage {
 		id: meetingDetail
 		FocusScope{
 			width: overridenRightPanelStackView.width
-			height: meetingDetailsLayout.childrenRect.height
 			ColumnLayout {
 				id: meetingDetailsLayout
 				anchors.left: parent.left

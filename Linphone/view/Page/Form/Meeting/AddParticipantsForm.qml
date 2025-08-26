@@ -16,6 +16,7 @@ FocusScope{
 	property ConferenceInfoGui conferenceInfoGui
 	property color searchBarColor: DefaultStyle.grey_100
 	property color searchBarBorderColor: "transparent"
+	property int participantscSrollBarRightMargin: Math.round(8 * DefaultStyle.dp)
 
 	function clearSelectedParticipants() {
 		// TODO
@@ -131,7 +132,8 @@ FocusScope{
 				anchors.top: parent.top
 				anchors.bottom: parent.bottom
 				anchors.right: parent.right
-                anchors.rightMargin: Math.round(8 * DefaultStyle.dp)
+                anchors.rightMargin: mainItem.participantscSrollBarRightMargin
+				visible: participantList.height < participantList.contentHeight
 			}
 		}
 		SearchBar {
