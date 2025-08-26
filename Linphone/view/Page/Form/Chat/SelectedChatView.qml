@@ -205,12 +205,22 @@ FocusScope {
                         RoundButton {
                             icon.source: AppIcons.upArrow
                             style: ButtonStyle.noBackground
-                            onClicked: chatMessagesListView.findIndexWithFilter(false)
+                            onClicked: {
+                                if (chatMessagesListView.filterText !== chatMessagesSearchBar.text)
+                                    chatMessagesListView.filterText = chatMessagesSearchBar.text
+                                else
+                                    chatMessagesListView.findIndexWithFilter(false)
+                            }
                         }
                         RoundButton {
                             icon.source: AppIcons.downArrow
                             style: ButtonStyle.noBackground
-                            onClicked: chatMessagesListView.findIndexWithFilter(true)
+                            onClicked: {
+                                if (chatMessagesListView.filterText !== chatMessagesSearchBar.text)
+                                    chatMessagesListView.filterText = chatMessagesSearchBar.text
+                                else
+                                    chatMessagesListView.findIndexWithFilter(true)
+                            }
                         }
                     }
                     RoundButton {
