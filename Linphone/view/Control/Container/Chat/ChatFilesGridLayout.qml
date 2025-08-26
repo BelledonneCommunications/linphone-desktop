@@ -55,7 +55,7 @@ GridLayout {
 			visible: modelData
 			height: mainItem.itemWidth
 			width: mainItem.itemWidth
-			onIsHoveringChanged: mainItem.isHoveringFile = isHovering
+			// onIsHoveringChanged: mainItem.isHoveringFile = isHovering
 		}
 	}
 }

@@ -2242,7 +2242,9 @@ QImage Utils::getImage(const QString &pUri) {
 }
 
 void Utils::setGlobalCursor(Qt::CursorShape cursor) {
-	App::getInstance()->setOverrideCursor(QCursor(cursor));
+	if (!App::getInstance()->overrideCursor() || App::getInstance()->overrideCursor()->shape() != cursor) {
+		App::getInstance()->setOverrideCursor(QCursor(cursor));
+	}
 }
 
 void Utils::restoreGlobalCursor() {

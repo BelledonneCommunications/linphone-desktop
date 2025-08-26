@@ -30,6 +30,16 @@ Item {
 	property int overriddenHeight
 	// property to change default view display
 	property bool showAsSquare: true
+	// default image
+	property var imageSource: mainItem.contentGui
+		? UtilsCpp.isImage(mainItem.filePath)
+			? AppIcons.fileImage
+			:  UtilsCpp.isPdf(mainItem.filePath)
+				? AppIcons.filePdf
+				: UtilsCpp.isText(mainItem.filePath)
+					? AppIcons.fileText
+					: AppIcons.file
+		: ''
 	
 	Connections {
 		enabled: contentGui
@@ -40,54 +50,8 @@ Item {
 		}
 	}
 
-	property bool isHovering: thumbnailProvider.state == 'hovered'
+	// property bool isHovering: thumbnailProvider.state == 'hovered'
 	property bool isOutgoing: false
-	
-	MouseArea {
-		anchors.fill: parent
-		hoverEnabled: true
-		propagateComposedEvents: true
-		function handleMouseMove (mouse) {
-			thumbnailProvider.state = Utils.pointIsInItem(this, thumbnailProvider, mouse)
-					? 'hovered'
-					: ''
-		}
-		onMouseXChanged: (mouse) => handleMouseMove.call(this, mouse)
-			onMouseYChanged: (mouse) => handleMouseMove.call(this, mouse)
-		onEntered: {
-			thumbnailProvider.state = 'hovered'
-		}
-		onExited: {
-			thumbnailProvider.state = ''
-		}
-		onClicked: (mouse) => {
-			mouse.accepted = false
-			if(mainItem.isTransferring) {
-				mainItem.contentGui.core.lCancelDownloadFile()
-				mouse.accepted = true
-				thumbnailProvider.state = ''
-			}
-			else if(!mainItem.contentGui.core.wasDownloaded) {
-				mouse.accepted = true
-				thumbnailProvider.state = ''
-				mainItem.contentGui.core.lDownloadFile()
-			} else if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
-				mouse.accepted = true
-				thumbnailProvider.state = ''
-				// if(SettingsModel.isVfsEncrypted){
-				//     window.attachVirtualWindow(Utils.buildCommonDialogUri('FileViewDialog'), {
-				//                                 contentGui: mainItem.contentGui,
-				//                             }, function (status) {
-				//                             })
-				// }else
-					mainItem.contentGui.core.lOpenFile()
-			} else if (mainItem.contentGui) {
-				mouse.accepted = true
-				thumbnailProvider.state = ''
-				mainItem.contentGui.core.lOpenFile(true)// Show directory
-			}
-		}
-	}
 	
 	// ---------------------------------------------------------------------
 	// Thumbnail
@@ -184,184 +148,156 @@ Item {
 		}
 	}
 
-		// ---------------------------------------------------------------------
-	// Extension
+	// ---------------------------------------------------------------------
+	// Default view
 	// ---------------------------------------------------------------------
 	Component {
-		id: defaultFileView
+		id: defaultSquareView
+		Control.Control {
+			leftPadding: Math.round(4 * DefaultStyle.dp)
+			rightPadding: Math.round(4 * DefaultStyle.dp)
+			topPadding: Math.round(23 * DefaultStyle.dp)
+			bottomPadding: Math.round(4 * DefaultStyle.dp)
+			hoverEnabled: false
 
-		Control.StackView {
-			id: defaultViewStack
-			width: childrenRect.width
-			height: childrenRect.height
-			initialItem: mainItem.showAsSquare ? defaultSquareView : defaultView
-			Connections {
-				target: mainItem
-				function onShowAsSquareChanged() {
-					if (mainItem.showAsSquare) defaultViewStack.replace(defaultSquareView)
-					else defaultViewStack.replace(defaultView)
+			background: Rectangle {
+				anchors.fill: parent
+				color: FileViewStyle.extension.background.color
+				radius: FileViewStyle.extension.radius
+				
+				Rectangle {
+					color: DefaultStyle.main2_200
+					anchors.top: parent.top
+					anchors.left: parent.left
+					anchors.right: parent.right
+					height: Math.round(23 * DefaultStyle.dp)
+					EffectImage {
+						anchors.centerIn: parent
+						imageSource: mainItem.imageSource
+						imageWidth: Math.round(14 * DefaultStyle.dp)
+						imageHeight: Math.round(14 * DefaultStyle.dp)
+						colorizationColor: DefaultStyle.main2_600
+					}
 				}
 			}
-			property var imageSource: mainItem.contentGui
-				? UtilsCpp.isImage(mainItem.filePath)
-					? AppIcons.fileImage
-					:  UtilsCpp.isPdf(mainItem.filePath)
-						? AppIcons.filePdf
-						: UtilsCpp.isText(mainItem.filePath)
-							? AppIcons.fileText
-							: AppIcons.file
-				: ''
-			
-			Component {
-				id: defaultSquareView
-				Control.Control {
-					leftPadding: Math.round(4 * DefaultStyle.dp)
-					rightPadding: Math.round(4 * DefaultStyle.dp)
-					topPadding: Math.round(23 * DefaultStyle.dp)
-					bottomPadding: Math.round(4 * DefaultStyle.dp)
-					hoverEnabled: false
-
-					background: Rectangle {
-						anchors.fill: parent
-						color: FileViewStyle.extension.background.color
-						radius: FileViewStyle.extension.radius
 						
-						Rectangle {
-							color: DefaultStyle.main2_200
-							anchors.top: parent.top
-							anchors.left: parent.left
-							anchors.right: parent.right
-							height: Math.round(23 * DefaultStyle.dp)
-							EffectImage {
-								anchors.centerIn: parent
-								imageSource: defaultViewStack.imageSource
-								imageWidth: Math.round(14 * DefaultStyle.dp)
-								imageHeight: Math.round(14 * DefaultStyle.dp)
-								colorizationColor: DefaultStyle.main2_600
-							}
-						}
-					}
-								
-					contentItem: Item {
-						Text {
-							id: fileName
-							visible: !progressBar.visible
-							anchors.left: parent.left
-							anchors.right: parent.right
-							anchors.verticalCenter: parent.verticalCenter
-							// visible: mainItem.contentGui && !mainItem.isAnimatedImage
-							font.pixelSize: Typography.f1.pixelSize
-							font.weight: Typography.f1l.weight
-							wrapMode: Text.WrapAnywhere
-							maximumLineCount: 2
-							text: mainItem.name
-							verticalAlignment: Text.AlignVCenter
-							horizontalAlignment: Text.AlignHCenter
-						}
-						Text {
-							id: fileSizeText
-							visible: !progressBar.visible
-							anchors.bottom: parent.bottom
-							anchors.right: parent.right
-							text: Utils.formatSize(mainItem.fileSize)
-							font.pixelSize: Typography.f1l.pixelSize
-							font.weight: Typography.f1l.weight
-						}
-						RoundProgressBar {
-							id: progressBar
-							anchors.centerIn: parent
-							to: 100
-							value: mainItem.contentGui ? (mainItem.fileSize>0 ? Math.floor(100 * mainItem.contentGui.core.fileOffset / mainItem.fileSize) : 0) : to
-							visible: mainItem.isTransferring && value != 0
-							/* Change format? Current is %
-							text: if(mainRow.contentGui){
-										var mainItem.fileSize = Utils.formatSize(mainRow.contentGui.core.mainItem.fileSize)
-										return progressBar.visible
-													? Utils.formatSize(mainRow.contentGui.core.fileOffset) + '/' + mainItem.fileSize
-													: mainItem.fileSize
-									}else
-										return ''
-							*/
-						}
-						Rectangle {
-							visible: thumbnailProvider.state === 'hovered' && mainItem.contentGui && (/*!mainItem.isOutgoing &&*/ !mainItem.contentGui.core.wasDownloaded)
-							color: DefaultStyle.grey_0
-							opacity: 0.5
-							anchors.fill: parent
-						}
-						EffectImage {
-							visible: thumbnailProvider.state === 'hovered' && mainItem.contentGui && (/*!mainItem.isOutgoing &&*/ !mainItem.contentGui.core.wasDownloaded)
-							anchors.centerIn: parent
-							imageSource: AppIcons.download
-							width: Math.round(24 * DefaultStyle.dp)
-							height: Math.round(24 * DefaultStyle.dp)
-							colorizationColor: DefaultStyle.main2_600
-						}
-					}
+			contentItem: Item {
+				Text {
+					id: fileName
+					visible: !progressBar.visible
+					anchors.left: parent.left
+					anchors.right: parent.right
+					anchors.verticalCenter: parent.verticalCenter
+					// visible: mainItem.contentGui && !mainItem.isAnimatedImage
+					font.pixelSize: Typography.f1.pixelSize
+					font.weight: Typography.f1l.weight
+					wrapMode: Text.WrapAnywhere
+					maximumLineCount: 2
+					text: mainItem.name
+					verticalAlignment: Text.AlignVCenter
+					horizontalAlignment: Text.AlignHCenter
+				}
+				Text {
+					id: fileSizeText
+					visible: !progressBar.visible
+					anchors.bottom: parent.bottom
+					anchors.right: parent.right
+					text: Utils.formatSize(mainItem.fileSize)
+					font.pixelSize: Typography.f1l.pixelSize
+					font.weight: Typography.f1l.weight
+				}
+				RoundProgressBar {
+					id: progressBar
+					anchors.centerIn: parent
+					to: 100
+					value: mainItem.contentGui ? (mainItem.fileSize>0 ? Math.floor(100 * mainItem.contentGui.core.fileOffset / mainItem.fileSize) : 0) : to
+					visible: mainItem.isTransferring && value != 0
+					/* Change format? Current is %
+					text: if(mainRow.contentGui){
+								var mainItem.fileSize = Utils.formatSize(mainRow.contentGui.core.mainItem.fileSize)
+								return progressBar.visible
+											? Utils.formatSize(mainRow.contentGui.core.fileOffset) + '/' + mainItem.fileSize
+											: mainItem.fileSize
+							}else
+								return ''
+					*/
+				}
+				Rectangle {
+					visible: thumbnailProvider.state === 'hovered' && mainItem.contentGui && (/*!mainItem.isOutgoing &&*/ !mainItem.contentGui.core.wasDownloaded)
+					color: DefaultStyle.grey_0
+					opacity: 0.5
+					anchors.fill: parent
+				}
+				EffectImage {
+					visible: thumbnailProvider.state === 'hovered' && mainItem.contentGui && (/*!mainItem.isOutgoing &&*/ !mainItem.contentGui.core.wasDownloaded)
+					anchors.centerIn: parent
+					imageSource: AppIcons.download
+					width: Math.round(24 * DefaultStyle.dp)
+					height: Math.round(24 * DefaultStyle.dp)
+					colorizationColor: DefaultStyle.main2_600
 				}
 			}
-			Component {
-				id: defaultView
-				Control.Control {
-					rightPadding: Math.round(17*DefaultStyle.dp)
+		}
+	}
+	Component {
+		id: defaultView
+		Control.Control {
+			rightPadding: Math.round(17*DefaultStyle.dp)
 
-					background: Rectangle {
-						id: bg
-						color: DefaultStyle.grey_100
-						width: mainItem.width
-						height: mainItem.height
-						radius: Math.round(10 * DefaultStyle.dp)
+			background: Rectangle {
+				id: bg
+				color: DefaultStyle.grey_100
+				width: mainItem.width
+				height: mainItem.height
+				radius: Math.round(10 * DefaultStyle.dp)
+			}
+			contentItem: RowLayout {
+				spacing: Math.round(16 * DefaultStyle.dp)
+				Rectangle {
+					color: DefaultStyle.main2_200
+					width: Math.round(58 * DefaultStyle.dp)
+					height: bg.height
+					radius: bg.radius
+					Rectangle {
+						anchors.right: parent.right
+						color: DefaultStyle.main2_200
+						width: parent.width / 2
+						height: parent.height
+						radius: parent.radius
+						
 					}
-					contentItem: RowLayout {
-						spacing: Math.round(16 * DefaultStyle.dp)
-						Rectangle {
-							color: DefaultStyle.main2_200
-							width: Math.round(58 * DefaultStyle.dp)
-							height: bg.height
-							radius: bg.radius
-							Rectangle {
-								anchors.right: parent.right
-								color: DefaultStyle.main2_200
-								width: parent.width / 2
-								height: parent.height
-								radius: parent.radius
-								
-							}
-							EffectImage {
-								z: parent.z + 1
-								anchors.centerIn: parent
-								imageSource: defaultViewStack.imageSource
-								width: Math.round(22 * DefaultStyle.dp)
-								height: width
-								colorizationColor: DefaultStyle.main2_600
-							}
+					EffectImage {
+						z: parent.z + 1
+						anchors.centerIn: parent
+						imageSource: defaultViewStack.imageSource
+						width: Math.round(22 * DefaultStyle.dp)
+						height: width
+						colorizationColor: DefaultStyle.main2_600
+					}
+				}
+				ColumnLayout {
+					spacing: Math.round(1 * DefaultStyle.dp)
+					Text {
+						text: mainItem.name
+						Layout.fillWidth: true
+						font {
+							pixelSize: Typography.p2.pixelSize
+							weight: Typography.p2.weight
 						}
-						ColumnLayout {
-							spacing: Math.round(1 * DefaultStyle.dp)
-							Text {
-								text: mainItem.name
-								Layout.fillWidth: true
-								font {
-									pixelSize: Typography.p2.pixelSize
-									weight: Typography.p2.weight
-								}
-							}
-							Text {
-								text: mainItem.fileSize
-								Layout.fillWidth: true
-								font {
-									pixelSize: Typography.p4.pixelSize
-									weight: Typography.p4.weight
-								}
-							}
+					}
+					Text {
+						text: mainItem.fileSize
+						Layout.fillWidth: true
+						font {
+							pixelSize: Typography.p4.pixelSize
+							weight: Typography.p4.weight
 						}
 					}
 				}
 			}
 		}
-		
 	}
-	
+
 	Loader {
 		id: thumbnailProvider
 		anchors.fill: parent
@@ -370,17 +306,51 @@ Item {
 				? animatedImage
 				:  mainItem.haveThumbnail
 					? thumbnailImage
-					: defaultFileView
+					: mainItem.showAsSquare 
+						? defaultSquareView 
+						: defaultView
 			: undefined
-						
+
 		states: State {
 			name: 'hovered'
 		}
-		// Changing cursor in MouseArea seems not to work with the Loader
-		// Use override cursor for this case
-		onStateChanged: {
-			if (state === 'hovered') UtilsCpp.setGlobalCursor(Qt.PointingHandCursor)
-			else UtilsCpp.restoreGlobalCursor()
+
+		MouseArea {
+			anchors.fill: thumbnailProvider.item
+			hoverEnabled: true
+			propagateComposedEvents: true
+			cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+			// Changing cursor in MouseArea seems not to work with the Loader
+			// Use override cursor for this case
+			onContainsMouseChanged: {
+				console.log("contains mouse", containsMouse)
+				if (containsMouse) UtilsCpp.setGlobalCursor(Qt.PointingHandCursor)
+				else UtilsCpp.restoreGlobalCursor()
+				thumbnailProvider.state = containsMouse ? 'hovered' : ''
+			}
+			onPressed: (mouse) => {
+				mouse.accepted = false
+				if(mainItem.isTransferring) {
+					mainItem.contentGui.core.lCancelDownloadFile()
+					mouse.accepted = true
+				}
+				else if(!mainItem.contentGui.core.wasDownloaded) {
+					mouse.accepted = true
+					mainItem.contentGui.core.lDownloadFile()
+				} else if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
+					mouse.accepted = true
+					// if(SettingsModel.isVfsEncrypted){
+					//     window.attachVirtualWindow(Utils.buildCommonDialogUri('FileViewDialog'), {
+					//                                 contentGui: mainItem.contentGui,
+					//                             }, function (status) {
+					//                             })
+					// }else
+					mainItem.contentGui.core.lOpenFile()
+				} else if (mainItem.contentGui) {
+					mouse.accepted = true
+					mainItem.contentGui.core.lOpenFile(true)// Show directory
+				}
+			}
 		}
 	}
 }
