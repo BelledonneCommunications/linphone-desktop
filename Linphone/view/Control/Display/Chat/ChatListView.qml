@@ -17,9 +17,8 @@ ListView {
     property string searchText: searchBar?.text
     property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
 
-    property ChatGui currentChatGui
-    onCurrentIndexChanged: currentChatGui = model.getAt(currentIndex) || null
-    onChatClicked: (chat) => {currentChatGui = chat}
+    property ChatGui currentChatGui: model.getAt(currentIndex) || null
+    onChatClicked: (chat) => {selectChat(chat)}
 
     signal resultsReceived()
     signal markAllAsRead()
@@ -44,7 +43,7 @@ ListView {
         onModelReset: {
             mainItem.resultsReceived()
         }
-        onListAboutToBeReset: {
+        onModelAboutToBeReset: {
             loading = true
         }
         onChatRemoved: {
@@ -460,7 +459,6 @@ ListView {
                     chatroomPopup.open()
                 } else {
                     mainItem.chatClicked(modelData)
-                    mainItem.currentIndex = model.index
                 }
             }
         }

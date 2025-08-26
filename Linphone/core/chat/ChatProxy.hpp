@@ -44,7 +44,6 @@ public:
 
 signals:
 	void chatRemoved(ChatGui *chat);
-	void listAboutToBeReset();
 
 protected:
 	QSharedPointer<ChatList> mList;

@@ -82,7 +82,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	mModelConnection = SafeConnection<ChatList, CoreModel>::create(me, CoreModel::getInstance());
 	mModelConnection->makeConnectToCore(&ChatList::lUpdate, [this]() {
 		clearData();
-		emit listAboutToBeReset();
+		beginResetModel();
 		mModelConnection->invokeToModel([this]() {
 			mustBeInLinphoneThread(getClassName());
 			// Avoid copy to lambdas
@@ -107,10 +107,8 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 					connectItem(chat);
 				}
 				mustBeInMainThread(getClassName());
-				clearData();
-				for (auto chat : *chats) {
-					add(chat);
-				}
+				add(*chats);
+				endResetModel();
 				delete chats;
 			});
 		});
