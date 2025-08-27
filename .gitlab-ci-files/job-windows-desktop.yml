@@ -246,7 +246,7 @@ win64-ninja-vs2022-upload:
   extends:
     - .win64-upload
   needs:
-    - win64-ninja-vs2022-package-windows
+    - win64-codesigning
 
 .win64-plugins-upload:
   stage: deploy
