@@ -315,7 +315,8 @@ void ConferenceInfoCore::setTimeZoneModel(TimeZoneModel *model) {
 	    mTimeZoneModel->getStandardTimeOffset() != model->getStandardTimeOffset() ||
 	    mTimeZoneModel->getTimeZone() != model->getTimeZone()) {
 
-		mTimeZoneModel = QSharedPointer<TimeZoneModel>(model);
+		mTimeZoneModel = QSharedPointer<TimeZoneModel>(new TimeZoneModel(model->getTimeZone()));
+
 		emit timeZoneModelChanged();
 	}
 }
