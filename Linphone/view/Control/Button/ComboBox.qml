@@ -71,7 +71,7 @@ Control.ComboBox {
 	}
 	contentItem: RowLayout {
 		anchors.fill: parent
-        anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
+        anchors.leftMargin: mainItem.leftMargin
         anchors.rightMargin: indicImage.width + Math.round(10 * DefaultStyle.dp)
         spacing: Math.round(5 * DefaultStyle.dp)
 		EffectImage {

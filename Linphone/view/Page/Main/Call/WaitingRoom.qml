@@ -11,7 +11,7 @@ RowLayout {
 	id: mainItem
 	property alias localVideoEnabled: preview.videoEnabled
 	property bool microEnabled: true
-	property bool settingsButtonChecked: settingsButton.checked
+	property alias settingsButtonChecked: settingsButton.checked
 	property ConferenceInfoGui conferenceInfo
 	signal joinConfRequested(string uri)
 	signal cancelJoiningRequested()

@@ -247,6 +247,7 @@ FocusScope {
 					id: addParticipantsButton
 					Layout.fillWidth: true
                     Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
+					leftPadding: 0
 					background: Rectangle {
 						anchors.fill: parent
 						color: addParticipantsButton.hovered || addParticipantsButton.activeFocus ? DefaultStyle.grey_100 : "transparent"
@@ -321,6 +322,7 @@ FocusScope {
             text: qsTr("meeting_schedule_send_invitations_title")
 			checked: mainItem.conferenceInfoGui.core.inviteEnabled
 			onToggled: mainItem.conferenceInfoGui.core.inviteEnabled = checked
+			leftPadding: 0
 		}
 		Item {
 			Layout.fillHeight: true

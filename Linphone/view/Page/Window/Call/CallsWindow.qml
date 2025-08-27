@@ -879,9 +879,9 @@ AbstractWindow {
                         rightPanel.headerTitleText = qsTr("call_action_go_to_settings")
                     }
                     Keys.onEscapePressed: event => {
-                                              rightPanel.visible = false
-                                              event.accepted = true
-                                          }
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
                     MultimediaSettings {
                         id: inSettingsPanel
                         call: mainWindow.call
@@ -1068,8 +1068,10 @@ AbstractWindow {
                     Connections {
                         target: rightPanel
                         function onVisibleChanged() {
-                            if (!visible)
+                            if (!rightPanel.visible) {
+                                console.log("unceck settings button")
                                 waitingRoomIn.settingsButtonChecked = false
+                            }
                         }
                     }
                     Connections {
