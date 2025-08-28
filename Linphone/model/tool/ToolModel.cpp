@@ -662,7 +662,14 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::createCurrentCallChat(std::shared
 	auto call = callModel->getMonitor();
 	auto remoteAddress = call->getRemoteAddress();
 	std::list<std::shared_ptr<linphone::Address>> participants;
-	participants.push_back(remoteAddress->clone());
+	if (call->getConference()) {
+		for (auto &participant : call->getConference()->getParticipantList()) {
+			auto address = participant->getAddress();
+			if (address) participants.push_back(address->clone());
+		}
+	} else {
+		participants.push_back(remoteAddress->clone());
+	}
 	auto core = CoreModel::getInstance()->getCore();
 	auto params = getChatRoomParams(call);
 	if (!params) {
