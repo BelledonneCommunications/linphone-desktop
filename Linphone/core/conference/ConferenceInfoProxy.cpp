@@ -57,7 +57,6 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
 		    if (isSignalConnected(conferenceInfoUpdatedSignal)) emit conferenceInfoUpdated(new ConferenceInfoGui(data));
 	    },
 	    Qt::QueuedConnection);
-	connect(mList.get(), &ConferenceInfoList::initialized, this, &ConferenceInfoProxy::initialized);
 	connect(mList.get(), &ConferenceInfoList::accountConnectedChanged, this,
 	        &ConferenceInfoProxy::accountConnectedChanged);
 }
@@ -103,6 +102,14 @@ bool ConferenceInfoProxy::SortFilterList::filterAcceptsRow(int sourceRow, const 
 
 void ConferenceInfoProxy::clear() {
 	mList->clearData();
+}
+
+ConferenceInfoGui *ConferenceInfoProxy::getCurrentDateConfInfo() {
+	if (mList) {
+		auto confInfo = mList->getCurrentDateConfInfo();
+		return confInfo ? new ConferenceInfoGui(confInfo) : nullptr;
+	}
+	return nullptr;
 }
 
 int ConferenceInfoProxy::loadUntil(ConferenceInfoGui *confInfo) {

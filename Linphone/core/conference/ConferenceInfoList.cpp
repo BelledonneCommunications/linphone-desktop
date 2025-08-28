@@ -58,8 +58,8 @@ ConferenceInfoList::~ConferenceInfoList() {
 void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	mCoreModelConnection = SafeConnection<ConferenceInfoList, CoreModel>::create(me, CoreModel::getInstance());
 
-	mCoreModelConnection->makeConnectToCore(&ConferenceInfoList::lUpdate, [this](bool isInitialization) {
-		mCoreModelConnection->invokeToModel([this, isInitialization]() {
+	mCoreModelConnection->makeConnectToCore(&ConferenceInfoList::lUpdate, [this]() {
+		mCoreModelConnection->invokeToModel([this]() {
 			QList<QSharedPointer<ConferenceInfoCore>> *items = new QList<QSharedPointer<ConferenceInfoCore>>();
 			mustBeInLinphoneThread(getClassName());
 			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
@@ -82,16 +82,13 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 					items->push_back(confInfoCore);
 				}
 			}
-			mCoreModelConnection->invokeToCore([this, items, isInitialization]() {
+			mCoreModelConnection->invokeToCore([this, items]() {
 				mustBeInMainThread(getClassName());
 				for (auto &item : *items) {
 					connectItem(item);
 				}
 				resetData(*items);
 				delete items;
-				if (isInitialization) {
-					emit initialized();
-				}
 			});
 		});
 	});
@@ -118,7 +115,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			    if (mCurrentAccountCore)
 				    connect(mCurrentAccountCore.get(), &AccountCore::registrationStateChanged, this,
 				            [this] { emit lUpdate(); });
-			    emit lUpdate(true);
+			    emit lUpdate();
 		    });
 	    });
 	mCoreModelConnection->invokeToModel([this] {
@@ -131,7 +128,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 				        [this] { emit lUpdate(); });
 		});
 	});
-	emit lUpdate(true);
+	emit lUpdate();
 }
 
 void ConferenceInfoList::setAccountConnected(bool connected) {

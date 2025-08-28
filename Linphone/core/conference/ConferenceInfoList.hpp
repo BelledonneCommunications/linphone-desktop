@@ -61,8 +61,7 @@ public:
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 signals:
-	void lUpdate(bool isInitialization = false);
-	void initialized();
+	void lUpdate();
 	void addCurrentDateChanged();
 	void haveCurrentDateChanged();
 	void currentDateIndexChanged(int index);

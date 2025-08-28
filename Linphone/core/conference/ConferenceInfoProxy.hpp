@@ -47,10 +47,10 @@ public:
 	bool getAccountConnected() const;
 
 	Q_INVOKABLE void clear();
+	Q_INVOKABLE ConferenceInfoGui *getCurrentDateConfInfo();
 	Q_INVOKABLE int loadUntil(ConferenceInfoGui *confInfo);
 	int loadUntil(QSharedPointer<ConferenceInfoCore> data);
 signals:
-	void initialized();
 	void haveCurrentDateChanged();
 	void conferenceInfoCreated(ConferenceInfoGui *confInfo);
 	void conferenceInfoUpdated(ConferenceInfoGui *confInfo);

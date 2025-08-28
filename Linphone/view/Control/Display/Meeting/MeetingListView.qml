@@ -36,8 +36,8 @@ ListView {
 	
 //----------------------------------------------------------------	
 	function moveToCurrentItem(){
-		if( mainItem.currentIndex >= 0)
-			Utils.updatePosition(mainItem, mainItem)
+		if( mainItem.currentIndex >= 0) 
+			mainItem.positionViewAtIndex(mainItem.currentIndex, ListView.Contain)
 	}
 	onCurrentItemChanged: {
 		moveToCurrentItem()
@@ -97,23 +97,19 @@ ListView {
         }
 		onModelReset: {
 			mainItem.loading = !confInfoProxy.accountConnected
+			selectData(getCurrentDateConfInfo())
 		}
 		onAccountConnectedChanged: (connected) => {
             mainItem.loading = !connected
         }
 		function selectData(confInfoGui){
 			mainItem.currentIndex = loadUntil(confInfoGui)
-			mainItem.positionViewAtIndex(mainItem.currentIndex, ListView.Contain)
 		}
 		onConferenceInfoCreated: (confInfoGui) => {
 			selectData(confInfoGui)
 		}
 		onConferenceInfoUpdated: (confInfoGui) => {
 			selectData(confInfoGui)
-		}
-		onInitialized: {
-			// Move to currentDate
-			selectData(null)
 		}
 	}
 
