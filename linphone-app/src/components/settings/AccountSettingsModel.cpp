@@ -76,6 +76,8 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::accountsChanged);
 	QObject::connect(this, &AccountSettingsModel::accountsChanged, this, &AccountSettingsModel::missedCallsCountChanged);
 	QObject::connect(this, &AccountSettingsModel::accountsChanged, this, &AccountSettingsModel::unreadMessagesCountChanged);
+	QObject::connect(this, &AccountSettingsModel::defaultAccountChanged, this, &AccountSettingsModel::publishPresenceChanged);
+
 	mSelectedAccount = coreManager->getCore()->getDefaultAccount();
 }
 
@@ -425,7 +427,7 @@ bool AccountSettingsModel::addOrUpdateAccount(
 		newPublishPresence = accountParams->publishEnabled() != data["publishPresence"].toBool();
 		accountParams->enablePublish(data["publishPresence"].toBool());
 	}else
-		newPublishPresence = accountParams->publishEnabled();
+		newPublishPresence = true;
 	if(data.contains("avpfEnabled"))
 		accountParams->setAvpfMode(data["avpfEnabled"].toBool()
 			? linphone::AVPFMode::Enabled

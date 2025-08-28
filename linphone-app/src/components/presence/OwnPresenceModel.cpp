@@ -37,7 +37,7 @@ OwnPresenceModel::OwnPresenceModel (QObject *parent) : QObject(parent) {
     Presence::PresenceStatus status = static_cast<Presence::PresenceStatus>(CoreManager::getInstance()->getCore()->getConsolidatedPresence());
     emit presenceStatusChanged(status);
     emit presenceLevelChanged(Presence::getPresenceLevel(status));
-  });
+  }, Qt::QueuedConnection);
 }
 
 Presence::PresenceLevel OwnPresenceModel::getPresenceLevel () const {
@@ -75,7 +75,7 @@ QVariantList OwnPresenceModel::getStatuses () const {
   addBuildStatus(statuses, Presence::Online);
   addBuildStatus(statuses, Presence::Busy);
   //addBuildStatus(statuses, Presence::DoNotDisturb); // Do not propose this status as it is not fully supported
-  //addBuildStatus(statuses, Presence::Offline);	// Do not propose this status as it is not fully supported
+  addBuildStatus(statuses, Presence::Offline);
 
   return statuses;
 }

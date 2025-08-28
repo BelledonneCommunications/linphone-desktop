@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Avoid to register the account while activating it.
 - Volumes settings based on hardware volumes. Remove software gains.
 - Display call duration instead of conference duration.
+- Publish presence indicator synchronized on default account.
 
 ### Added
 - Screen Sharing in conference calls
