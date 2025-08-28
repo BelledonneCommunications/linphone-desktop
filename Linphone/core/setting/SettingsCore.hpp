@@ -82,6 +82,9 @@ public:
 	Q_PROPERTY(bool fullLogsEnabled READ getFullLogsEnabled WRITE setFullLogsEnabled NOTIFY fullLogsEnabledChanged)
 	Q_PROPERTY(QString logsEmail READ getLogsEmail)
 	Q_PROPERTY(QString logsFolder READ getLogsFolder)
+	Q_PROPERTY(QString ringtoneName READ getRingtoneFileName NOTIFY ringtoneChanged)
+	Q_PROPERTY(QString ringtonePath READ getRingtonePath WRITE setRingtone NOTIFY ringtoneChanged)
+	Q_PROPERTY(QString ringtoneFolder MEMBER mRingtoneFolder NOTIFY ringtoneChanged)
 	Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
 	Q_PROPERTY(bool isSaved READ isSaved WRITE setIsSaved NOTIFY isSavedChanged)
 
@@ -196,6 +199,10 @@ public:
 	bool getFullLogsEnabled() const;
 	void setFullLogsEnabled(bool enabled);
 
+	void setRingtone(QString path);
+	QString getRingtoneFileName() const;
+	QString getRingtonePath() const;
+
 	Q_INVOKABLE void cleanLogs() const;
 	Q_INVOKABLE void sendLogs() const;
 	QString getLogsEmail() const;
@@ -275,6 +282,8 @@ signals:
 	void lSetCaptureDevice(QVariantMap device);
 	void captureDeviceChanged(const QVariantMap &device);
 
+	void ringtoneChanged();
+
 	void lSetConferenceLayout(QVariantMap layout);
 	void conferenceLayoutChanged();
 
@@ -345,6 +354,10 @@ private:
 	QVariantMap mCaptureDevice;
 	QVariantMap mPlaybackDevice;
 	QVariantMap mRingerDevice;
+
+	QString mRingtonePath;
+	QString mRingtoneFileName;
+	QString mRingtoneFolder;
 
 	QVariantList mConferenceLayouts;
 	QVariantMap mConferenceLayout;

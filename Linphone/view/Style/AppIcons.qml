@@ -62,6 +62,7 @@ QtObject {
 	property string arrowRight: "image://internal/arrow-right.svg"
 	property string arrowUpRight: "image://internal/arrow-up-right.svg"
 	property string arrowElbow: "image://internal/arrow-elbow-left.svg"
+	property string arrowSquareOut: "image://internal/arrow-square-out.svg"
 	property string microphone: "image://internal/microphone.svg"
 	property string microphoneSlash: "image://internal/microphone-slash.svg"
 	property string camera: "image://internal/camera.svg"

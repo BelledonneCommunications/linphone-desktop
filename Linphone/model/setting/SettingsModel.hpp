@@ -113,6 +113,9 @@ public:
 	QVariantMap getRingerDevice() const;
 	void setRingerDevice(QVariantMap device);
 
+	void setRingtone(QString ringtonePath);
+	QString getRingtone() const;
+
 	QString getVideoDevice() const;
 	void setVideoDevice(QString device);
 
@@ -232,6 +235,8 @@ signals:
 	void playbackDeviceChanged(QVariantMap device);
 	void ringerDeviceChanged(QVariantMap device);
 	void videoDeviceChanged(QString device);
+
+	void ringtoneChanged(QString ringtonePath);
 
 	void conferenceLayoutChanged();
 	void mediaEncryptionChanged();

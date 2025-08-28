@@ -51,6 +51,15 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	mEchoCancellationEnabled = settingsModel->getEchoCancellationEnabled();
 	mAutoDownloadReceivedFiles = settingsModel->getAutoDownloadReceivedFiles();
 	mAutomaticallyRecordCallsEnabled = settingsModel->getAutomaticallyRecordCallsEnabled();
+	mRingtonePath = settingsModel->getRingtone();
+	QFileInfo ringtone(mRingtonePath);
+	if (ringtone.exists()) {
+		mRingtoneFileName = ringtone.fileName();
+		mRingtoneFolder = ringtone.absolutePath();
+	} else {
+		mRingtoneFileName = mRingtonePath.right(mRingtonePath.lastIndexOf(QDir::separator()));
+		mRingtoneFolder = mRingtonePath.left(mRingtonePath.lastIndexOf(QDir::separator()));
+	}
 
 	// Audio
 	mCaptureDevices = settingsModel->getCaptureDevices();
@@ -210,6 +219,9 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 
 	mDefaultDomain = settingsCore.mDefaultDomain;
 	mShowAccountDevices = settingsCore.mShowAccountDevices;
+
+	mRingtonePath = settingsCore.mRingtonePath;
+	mRingtoneFileName = settingsCore.mRingtoneFileName;
 }
 
 SettingsCore::~SettingsCore() {
@@ -313,6 +325,10 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 			mAutoSaved = true;
 			SettingsModel::getInstance()->setVideoDevice(id);
 		});
+	});
+
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ringtoneChanged, [this](QString ringtonePath) {
+		mSettingsModelConnection->invokeToCore([this, ringtonePath]() { setRingtone(ringtonePath); });
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::videoDeviceChanged, [this](const QString device) {
@@ -900,6 +916,30 @@ void SettingsCore::setFullLogsEnabled(bool enabled) {
 	}
 }
 
+void SettingsCore::setRingtone(QString path) {
+	if (mRingtonePath != path) {
+		mRingtonePath = path;
+		QFileInfo ringtone(path);
+		if (ringtone.exists()) {
+			mRingtoneFileName = ringtone.fileName();
+			mRingtoneFolder = ringtone.absolutePath();
+		} else {
+			mRingtoneFileName = mRingtonePath.right(mRingtonePath.lastIndexOf(QDir::separator()));
+			mRingtoneFolder = mRingtonePath.left(mRingtonePath.lastIndexOf(QDir::separator()));
+		}
+		emit ringtoneChanged();
+		setIsSaved(false);
+	}
+}
+
+QString SettingsCore::getRingtoneFileName() const {
+	return mRingtoneFileName;
+}
+
+QString SettingsCore::getRingtonePath() const {
+	return mRingtonePath;
+}
+
 void SettingsCore::cleanLogs() const {
 	mSettingsModelConnection->invokeToModel([this]() { SettingsModel::getInstance()->cleanLogs(); });
 }
@@ -984,6 +1024,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	model->setRingerDevice(mRingerDevice);
 	model->setCaptureDevice(mCaptureDevice);
 	model->setPlaybackDevice(mPlaybackDevice);
+	model->setRingtone(mRingtonePath);
 
 	model->setDefaultConferenceLayout(
 	    LinphoneEnums::toLinphone(LinphoneEnums::ConferenceLayout(mConferenceLayout["id"].toInt())));
@@ -1041,6 +1082,11 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mVideoEnabled = model->getVideoEnabled();
 	mEchoCancellationEnabled = model->getEchoCancellationEnabled();
 	mAutomaticallyRecordCallsEnabled = model->getAutomaticallyRecordCallsEnabled();
+	mRingtonePath = model->getRingtone();
+	QFileInfo ringtone(mRingtonePath);
+	mRingtoneFolder = ringtone.exists() ? ringtone.absolutePath() : "";
+	mRingtoneFileName =
+	    ringtone.exists() ? ringtone.fileName() : mRingtonePath.right(mRingtonePath.lastIndexOf(QDir::separator()));
 
 	// Chat
 	mAutoDownloadReceivedFiles = model->getAutoDownloadReceivedFiles();
