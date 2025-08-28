@@ -58,6 +58,7 @@ public:
 	Q_PROPERTY(bool isEncrypted READ isEncrypted CONSTANT)
 	Q_PROPERTY(bool isReadOnly READ getIsReadOnly WRITE setIsReadOnly NOTIFY readOnlyChanged)
 	Q_PROPERTY(bool isSecured READ isSecured WRITE setIsSecured NOTIFY isSecuredChanged)
+	Q_PROPERTY(bool isBasic MEMBER mIsBasic CONSTANT)
 	Q_PROPERTY(QString sendingText READ getSendingText WRITE setSendingText NOTIFY sendingTextChanged)
 	Q_PROPERTY(bool ephemeralEnabled READ isEphemeralEnabled WRITE lEnableEphemeral NOTIFY ephemeralEnabledChanged)
 	Q_PROPERTY(
@@ -216,6 +217,7 @@ private:
 	// ChatRoom is secured if all its participants are
 	// EndToEndEncryptedAndVerified friends
 	bool mIsSecured = false;
+	bool mIsBasic = false;
 	int mEphemeralLifetime = 0;
 	QList<QSharedPointer<ChatMessageContentCore>> mFileList;
 	bool mIsMuted = false;

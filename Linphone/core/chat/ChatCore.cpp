@@ -53,7 +53,9 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 		mAvatarUri = ToolModel::getDisplayName(chatRoomAddress);
 		mPeerAddress = Utils::coreStringToAppString(chatRoomAddress->asStringUriOnly());
 		mIsGroupChat = false;
+		mIsBasic = true;
 	} else {
+		mIsBasic = false;
 		if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
 			auto participants = chatRoom->getParticipants();
 			if (participants.size() > 0) {

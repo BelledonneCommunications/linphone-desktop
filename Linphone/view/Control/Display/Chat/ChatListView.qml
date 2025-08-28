@@ -310,6 +310,13 @@ ListView {
                         imageSource: AppIcons.clockCountDown
                     }
 					EffectImage {
+						visible: modelData != undefined && modelData?.core.isBasic
+                        Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
+                        Layout.preferredHeight: 14 * DefaultStyle.dp
+                        colorizationColor: DefaultStyle.warning_500_main
+                        imageSource: AppIcons.lockSimpleOpen
+                    }
+                    EffectImage {
 						visible: modelData != undefined && modelData?.core.muted
                         Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
                         Layout.preferredHeight: 14 * DefaultStyle.dp
@@ -374,34 +381,35 @@ ListView {
                             chatroomPopup.close()
                         }
                     }
-                    Rectangle {
-                        Layout.fillWidth: true
-                        visible: leaveButton.visible
-                        Layout.preferredHeight: Math.min(1, Math.round(1 * DefaultStyle.dp))
-                        color: DefaultStyle.main2_400
-                    }
-                    IconLabelButton {
-                        id: leaveButton
-                        //: "leave"
-                        text: qsTr("chat_room_leave")
-                        visible: modelData ? !modelData.core.isReadOnly && modelData.core.isGroupChat : false
-                        icon.source: AppIcons.trashCan
-                        spacing: Math.round(10 * DefaultStyle.dp)
-                        Layout.fillWidth: true
-                        onClicked: {
-                            //: leave the conversation ?
-                            mainWindow.showConfirmationLambdaPopup(qsTr("chat_list_leave_chat_popup_title"),
-                                //: You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?
-                                qsTr("chat_list_leave_chat_popup_message"),
-                                "",
-                                function(confirmed) {
-                                    if (confirmed) {
-                                        modelData.core.lLeave()
-                                        chatroomPopup.close()
-                                    }
-                                })
+                    ColumnLayout {
+                        spacing: parent.spacing
+                        visible: modelData && !modelData.core.isReadOnly && modelData.core.isGroupChat
+                        Rectangle {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: Math.min(1, Math.round(1 * DefaultStyle.dp))
+                            color: DefaultStyle.main2_400
                         }
-                        style: ButtonStyle.hoveredBackground
+                        IconLabelButton {
+                            //: "leave"
+                            text: qsTr("chat_room_leave")
+                            icon.source: AppIcons.trashCan
+                            spacing: Math.round(10 * DefaultStyle.dp)
+                            Layout.fillWidth: true
+                            onClicked: {
+                                //: leave the conversation ?
+                                mainWindow.showConfirmationLambdaPopup(qsTr("chat_list_leave_chat_popup_title"),
+                                    //: You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?
+                                    qsTr("chat_list_leave_chat_popup_message"),
+                                    "",
+                                    function(confirmed) {
+                                        if (confirmed) {
+                                            modelData.core.lLeave()
+                                            chatroomPopup.close()
+                                        }
+                                    })
+                            }
+                            style: ButtonStyle.hoveredBackground
+                        }
                     }
                     Rectangle {
                         visible: deleteButton.visible

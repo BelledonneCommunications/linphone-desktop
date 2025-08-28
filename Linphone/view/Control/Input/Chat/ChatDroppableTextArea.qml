@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic as Control
- import QtQuick.Dialogs
+import QtQuick.Dialogs
 import QtQuick.Layouts
 import Linphone
 import UtilsCpp

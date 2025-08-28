@@ -100,7 +100,6 @@ FocusScope {
                         Text {
                             text: mainItem.chat?.core.title || ""
                             color: DefaultStyle.main2_600
-                            Layout.fillWidth: true
                             maximumLineCount: 1
                             font {
                                 pixelSize: Typography.h4.pixelSize
@@ -108,6 +107,14 @@ FocusScope {
                                 capitalization: Font.Capitalize
                             }
                         }
+                        EffectImage {
+                            visible: mainItem.chat != undefined && mainItem.chat.core.isBasic
+                            Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
+                            Layout.preferredHeight: 14 * DefaultStyle.dp
+                            colorizationColor: DefaultStyle.warning_500_main
+                            imageSource: AppIcons.lockSimpleOpen
+                        }
+                        Layout.fillWidth: true
                         EffectImage {
                             visible: mainItem.chat?.core.muted || false
                             Layout.preferredWidth: 20 * DefaultStyle.dp
