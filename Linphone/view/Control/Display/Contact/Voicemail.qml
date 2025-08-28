@@ -38,8 +38,8 @@ Rectangle{
         width: Math.round(14 * DefaultStyle.dp) * scaleFactor
 		height: width
 		horizontalAlignment: Text.AlignHCenter
-        font.weight: Typography.p2.pixelSize
-        font.pixelSize: Typography.p2.weight * scaleFactor
+        font.weight: Typography.p2.weight
+        font.pixelSize: Typography.p2.pixelSize * scaleFactor
 		color: DefaultStyle.danger_500main
 		text: voicemailCount >= 100 ? '99+' : voicemailCount
 		visible: showMwi && voicemailCount > 0
