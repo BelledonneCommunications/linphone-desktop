@@ -229,5 +229,16 @@ void ContactsListModel::onContactUpdated(const std::shared_ptr<linphone::Friend>
 void ContactsListModel::onSyncStatusChanged(linphone::FriendList::SyncStatus status, const std::string & message){
 }
 void ContactsListModel::onPresenceReceived(const std::list<std::shared_ptr<linphone::Friend>> & friends){
+	for (auto linphoneFriend : friends) {
+		if(linphoneFriend) {
+			QQmlEngine *engine = App::getInstance()->getEngine();
+			auto haveContact = std::find_if(mList.begin(), mList.end(), [linphoneFriend] (const QSharedPointer<QObject>& item){
+					return item.objectCast<ContactModel>()->getFriend() == linphoneFriend;
+				});
+			if ( haveContact != mList.end()) {
+				haveContact->objectCast<ContactModel>()->refreshPresence();
+			}
+		}
+	}
 }
 

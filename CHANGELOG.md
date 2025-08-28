@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.3.1 - undefined
+
+- Publish presence indicator synchronized on default account.
+- Remove from GUI a bad account created from Assistant.
+- Synchronize contacts presence status.
+
 ## 5.3.0 - 2025-08-21
 
 ### Fixed
@@ -14,8 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Avoid to register the account while activating it.
 - Volumes settings based on hardware volumes. Remove software gains.
 - Display call duration instead of conference duration.
-- Publish presence indicator synchronized on default account.
-- Remove from GUI a bad account created from Assistant.
 
 ### Added
 - Screen Sharing in conference calls
