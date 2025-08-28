@@ -9,6 +9,7 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 FocusScope {
 	id: mainItem
+	height: childrenRect.height
 	property bool isCreation
 	property ConferenceInfoGui conferenceInfoGui
 	signal addParticipantsRequested()
@@ -212,6 +213,7 @@ FocusScope {
 					id: descriptionEdit
 					Layout.fillWidth: true
                     Layout.preferredWidth: Math.round(275 * DefaultStyle.dp)
+					Layout.preferredHeight: contentHeight
                     leftPadding: Math.round(8 * DefaultStyle.dp)
                     rightPadding: Math.round(8 * DefaultStyle.dp)
                     //: "Ajouter une description"
@@ -219,6 +221,7 @@ FocusScope {
 					placeholderTextColor: DefaultStyle.main2_600
                     placeholderWeight: Typography.p2l.weight
 					color: DefaultStyle.main2_600
+					wrapMode: TextEdit.Wrap
 					Component.onCompleted: text = conferenceInfoGui.core.description
 					font {
                         pixelSize: Typography.p1.pixelSize

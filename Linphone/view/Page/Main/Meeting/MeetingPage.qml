@@ -29,7 +29,7 @@ AbstractMainPage {
 										}', mainItem)
 		mainItem.selectedConference.core.resetParticipants(addresses)
 		mainItem.selectedConference.core.subject = subject
-		var item = leftPanelStackView.push(createConf, {"conferenceInfoGui": mainItem.selectedConference, "isCreation": true})
+		var item = leftPanelStackView.push(createConf, {"conferenceInfoGui": mainItem.selectedConference})
 		item.forceActiveFocus()
 	}
 
@@ -42,11 +42,11 @@ AbstractMainPage {
 											ConferenceInfoGui{
 											}', mainItem)
 			mainItem.selectedConference = confInfoGui
-			item = leftPanelStackView.push(createConf, {"conferenceInfoGui": mainItem.selectedConference, "isCreation": isCreation})
+			item = leftPanelStackView.push(createConf, {"conferenceInfoGui": mainItem.selectedConference})
 			item.forceActiveFocus()
 		} else {
 			mainItem.selectedConference = confInfoGui
-			item = overridenRightPanelStackView.push(editConf, {"conferenceInfoGui": mainItem.selectedConference, "isCreation": isCreation})
+			item = overridenRightPanelStackView.push(editConf, {"conferenceInfoGui": mainItem.selectedConference})
 			item.forceActiveFocus()
 		}
 	}
@@ -268,7 +268,6 @@ AbstractMainPage {
 			id: createConfLayout
 			objectName: "createConf"
 			property ConferenceInfoGui conferenceInfoGui
-			property bool isCreation
 			ColumnLayout {
                 spacing: Math.round(33 * DefaultStyle.dp)
 				anchors.fill: parent
@@ -326,53 +325,62 @@ AbstractMainPage {
 						}
 					}
 				}
-				MeetingForm {
-					id: meetingSetup
-					conferenceInfoGui: createConfLayout.conferenceInfoGui
-					isCreation: createConfLayout.isCreation
+				Control.ScrollView {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
-                    Layout.rightMargin: Math.round(35 * DefaultStyle.dp)
-					Connections {
-						target: meetingSetup.conferenceInfoGui ? meetingSetup.conferenceInfoGui.core : null
-						function onConferenceSchedulerStateChanged() {
-							var mainWin = UtilsCpp.getMainWindow()
-							if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) {
-								leftPanelStackView.pop()
-                                //: "Nouvelle réunion"
-                                UtilsCpp.showInformationPopup(qsTr("meeting_schedule_title"),
-                                                              //: "Réunion planifiée avec succès"
-                                                              qsTr("meeting_info_created_toast"), true)
-								mainWindow.closeLoadingPopup()
-							}
-							else if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
-								|| meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
-                                mainWin.showLoadingPopup(qsTr("meeting_schedule_creation_in_progress"), true, function () {
+					contentHeight: meetingSetup.height
+					Control.ScrollBar.vertical: ScrollBar {
+						visible: parent.contentHeight > parent.height
+						anchors.top: parent.top
+						anchors.bottom: parent.bottom
+						anchors.right: parent.right
+					}
+					contentChildren: MeetingForm {
+						id: meetingSetup
+						conferenceInfoGui: createConfLayout.conferenceInfoGui
+						isCreation: true
+						anchors.rightMargin: Math.round(35 * DefaultStyle.dp)
+						Connections {
+							target: meetingSetup.conferenceInfoGui ? meetingSetup.conferenceInfoGui.core : null
+							function onConferenceSchedulerStateChanged() {
+								var mainWin = UtilsCpp.getMainWindow()
+								if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) {
 									leftPanelStackView.pop()
-								})
-							} else {
-								if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
-                                    UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
-                                                                  //: "Échec de création de la réunion !"
-                                                                  qsTr("meeting_failed_to_schedule_toast"), false)
+									//: "Nouvelle réunion"
+									UtilsCpp.showInformationPopup(qsTr("meeting_schedule_title"),
+																//: "Réunion planifiée avec succès"
+																qsTr("meeting_info_created_toast"), true)
+									mainWindow.closeLoadingPopup()
 								}
+								else if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
+									|| meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
+									mainWin.showLoadingPopup(qsTr("meeting_schedule_creation_in_progress"), true, function () {
+										leftPanelStackView.pop()
+									})
+								} else {
+									if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
+										UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+																	//: "Échec de création de la réunion !"
+																	qsTr("meeting_failed_to_schedule_toast"), false)
+									}
+									mainWin.closeLoadingPopup()
+								}
+								createConfLayout.enabled = meetingSetup.conferenceInfoGui.core.schedulerState != LinphoneEnums.ConferenceSchedulerState.AllocationPending
+							}
+							function onSaveFailed() {
+								var mainWin = UtilsCpp.getMainWindow()
 								mainWin.closeLoadingPopup()
 							}
-							createConfLayout.enabled = meetingSetup.conferenceInfoGui.core.schedulerState != LinphoneEnums.ConferenceSchedulerState.AllocationPending
 						}
-						function onSaveFailed() {
-							var mainWin = UtilsCpp.getMainWindow()
-							mainWin.closeLoadingPopup()
+						onAddParticipantsRequested: {
+							leftPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": leftPanelStackView})
 						}
-					}
-					onAddParticipantsRequested: {
-						leftPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": leftPanelStackView})
-					}
-					Connections {
-						target: mainItem
-						onAddParticipantsValidated: (selectedParticipants) => {
-							meetingSetup.conferenceInfoGui.core.resetParticipants(selectedParticipants)
-							leftPanelStackView.pop()
+						Connections {
+							target: mainItem
+							onAddParticipantsValidated: (selectedParticipants) => {
+								meetingSetup.conferenceInfoGui.core.resetParticipants(selectedParticipants)
+								leftPanelStackView.pop()
+							}
 						}
 					}
 				}
@@ -385,7 +393,6 @@ AbstractMainPage {
 		FocusScope{
 			id: editFocusScope
 			objectName: "editConf"
-			property bool isCreation
 			property ConferenceInfoGui conferenceInfoGui
 			width: overridenRightPanelStackView.width
 			ColumnLayout {
@@ -468,8 +475,7 @@ AbstractMainPage {
 				}
 				MeetingForm {
 					id: conferenceEdit
-					property bool isCreation
-					isCreation: editFocusScope.isCreation
+					isCreation: false
 					conferenceInfoGui: editFocusScope.conferenceInfoGui
 					Layout.fillWidth: true
 					Layout.preferredHeight: childrenRect.height

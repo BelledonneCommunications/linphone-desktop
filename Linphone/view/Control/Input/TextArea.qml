@@ -66,6 +66,8 @@ TextEdit {
 		text: mainItem.richFormatText
 		textFormat: Text.RichText
 		wrapMode: mainItem.wrapMode
+		width: mainItem.width
+		elide: Text.ElideRight
 		font: mainItem.font
 		color: mainItem.textAreaColor
 		anchors.fill: parent
