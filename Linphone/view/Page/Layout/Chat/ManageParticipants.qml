@@ -50,7 +50,6 @@ Rectangle {
 		}
 		AddParticipantsForm {
 			id: manageParticipantsLayout
-			visible: manageParticipants
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			Layout.topMargin: Math.round(9 * DefaultStyle.dp)

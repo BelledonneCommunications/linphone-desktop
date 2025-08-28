@@ -391,8 +391,7 @@ AbstractWindow {
                                     color: DefaultStyle.grey_0
                                 }
                                 Text {
-                                    text: mainWindow.call ? UtilsCpp.formatElapsedTime(
-                                                                mainWindow.call.core.duration) : ""
+                                    text: mainWindow.call ? UtilsCpp.formatElapsedTime(mainWindow.call.core.duration) : ""
                                     color: DefaultStyle.grey_0
                                     font {
                                         pixelSize: Typography.h3.pixelSize
@@ -406,8 +405,7 @@ AbstractWindow {
                                 Text {
                                     Layout.leftMargin: Math.round(14 * DefaultStyle.dp)
                                     id: conferenceDate
-                                    text: mainWindow.conferenceInfo ? mainWindow.conferenceInfo.core.getStartEndDateString(
-                                                                          ) : ""
+                                    text: mainWindow.conferenceInfo ? mainWindow.conferenceInfo.core.getStartEndDateString() : ""
                                     color: DefaultStyle.grey_0
                                     font {
                                         pixelSize: Typography.p1.pixelSize
@@ -950,7 +948,7 @@ AbstractWindow {
                                             //: Partager le lien de la réunion
                                             text: qsTr("conference_share_link_title")
                                             onClicked: {
-                                                UtilsCpp.copyToClipboard(mainWindow.call.core.remoteAddress)
+                                                UtilsCpp.copyToClipboard(mainWindow.conference ? mainWindow.conference.core.uri : mainWindow.call.core.remoteAddress)
                                                 //: Copié
                                                 showInformationPopup(qsTr("copied"),
                                                 //: Le lien de la réunion a été copié dans le presse-papier

@@ -43,6 +43,7 @@ public:
 	Q_PROPERTY(bool isRecording READ isRecording WRITE setRecording NOTIFY isRecordingChanged)
 
 	Q_PROPERTY(QString subject READ getSubject WRITE setSubject NOTIFY subjectChanged)
+	Q_PROPERTY(QString uri MEMBER mConfUri NOTIFY conferenceUriChanged)
 	Q_PROPERTY(bool isLocalScreenSharing MEMBER mIsLocalScreenSharing WRITE setIsLocalScreenSharing NOTIFY
 	               isLocalScreenSharingChanged)
 	Q_PROPERTY(bool isScreenSharingEnabled MEMBER mIsScreenSharingEnabled WRITE setIsScreenSharingEnabled NOTIFY
@@ -92,6 +93,7 @@ signals:
 	void activeSpeakerDeviceChanged();
 	void subjectChanged();
 	void isRecordingChanged();
+	void conferenceUriChanged();
 
 	void lToggleScreenSharing();
 
@@ -107,6 +109,7 @@ private:
 	bool mIsLocalScreenSharing = false;
 	bool mIsScreenSharingEnabled = false;
 	QString mSubject;
+	QString mConfUri;
 	QDateTime mStartDate = QDateTime::currentDateTime();
 
 	DECLARE_ABSTRACT_OBJECT

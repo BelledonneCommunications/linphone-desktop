@@ -48,6 +48,10 @@ ConferenceCore::ConferenceCore(const std::shared_ptr<linphone::Conference> &conf
 	mIsScreenSharingEnabled = mConferenceModel->isScreenSharingEnabled();
 	mIsRecording = conference->isRecording();
 	auto me = conference->getMe();
+	auto confAddress = conference->getConferenceAddress()->clone();
+	if (confAddress) {
+		mConfUri = Utils::coreStringToAppString(confAddress->asStringUriOnly());
+	}
 	if (me) {
 		mMe = ParticipantCore::create(me);
 	}
@@ -75,7 +79,14 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 		    if (newState == linphone::Conference::State::Created) {
 			    if (auto participantDevice = conference->getActiveSpeakerParticipantDevice()) {
 				    auto device = ParticipantDeviceCore::create(participantDevice);
-				    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeakerDevice(device); });
+				    QString address;
+				    auto confAddress = conference->getConferenceAddress();
+				    if (confAddress) address = Utils::coreStringToAppString(confAddress->asStringUriOnly());
+				    mConferenceModelConnection->invokeToCore([this, device, address]() {
+					    setActiveSpeakerDevice(device);
+					    mConfUri = address;
+					    emit conferenceUriChanged();
+				    });
 			    } else if (conference->getParticipantDeviceList().size() > 1) {
 				    for (auto &device : conference->getParticipantDeviceList()) {
 					    if (!ToolModel::isMe(device->getAddress())) {

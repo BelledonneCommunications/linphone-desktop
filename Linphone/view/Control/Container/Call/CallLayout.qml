@@ -112,7 +112,7 @@ Item {
 						textColor: DefaultStyle.main2_400
 						onClicked: {
 							if (mainItem.conference) {
-								UtilsCpp.copyToClipboard(mainItem.call.core.remoteAddress)
+								UtilsCpp.copyToClipboard(mainItem.conference.core.uri)
                                 showInformationPopup(qsTr("copied"),
                                                      //: Le lien de la réunion a été copié dans le presse-papier
                                                      qsTr("information_popup_meeting_address_copied_to_clipboard"), true)
