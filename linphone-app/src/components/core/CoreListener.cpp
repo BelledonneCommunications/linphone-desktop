@@ -33,6 +33,12 @@ CoreListener::~CoreListener(){
 void CoreListener::onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> & core,const std::shared_ptr<linphone::Account> & account,linphone::RegistrationState state,const std::string & message){
 	emit accountRegistrationStateChanged(core,account,state,message);
 }
+void CoreListener::onAccountAdded(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::Account> & account) {
+	emit accountAdded(core, account);
+}
+void CoreListener::onAccountRemoved(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::Account> & account) {
+	emit accountRemoved(core, account);
+}
 void CoreListener::onAuthenticationRequested (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::AuthInfo> &authInfo,linphone::AuthMethod method){
 	emit authenticationRequested (core,authInfo,method);
 }

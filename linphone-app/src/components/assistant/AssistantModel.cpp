@@ -382,7 +382,7 @@ public:
 		case linphone::RegistrationState::Failed:
 			emit mAssistant->loginStatusChanged(QObject::tr("loginWithUsernameFailed"));
 			mAssistant->setIsProcessing(false);
-			CoreManager::getInstance()->getCore()->removeAccount(account);
+			CoreManager::getInstance()->getAccountSettingsModel()->removeAccount(account);
 			account->removeListener(mSelf);
 			mSelf = nullptr;
 			break;

@@ -36,6 +36,8 @@ public:
 	virtual ~CoreListener ();
 
 	virtual void onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> & core,const std::shared_ptr<linphone::Account> & account,linphone::RegistrationState state,const std::string & message) override;
+	virtual void onAccountAdded(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::Account> & account) override;
+	virtual void onAccountRemoved(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::Account> & account) override;
 	virtual void onAuthenticationRequested (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::AuthInfo> &authInfo,linphone::AuthMethod method) override;
 	virtual void onCallEncryptionChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,bool on,const std::string &authenticationToken) override;
 	virtual void onCallLogUpdated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::CallLog> & callLog) override;
@@ -64,6 +66,8 @@ public:
 	
 signals:
 	void accountRegistrationStateChanged(const std::shared_ptr<linphone::Core> & core,const std::shared_ptr<linphone::Account> & account,linphone::RegistrationState state,const std::string & message);
+	void accountAdded(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::Account> & account);
+	void accountRemoved(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::Account> & account);
 	void authenticationRequested (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::AuthInfo> &authInfo,linphone::AuthMethod method);
 	void callEncryptionChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,bool on,const std::string &authenticationToken);
 	void callLogUpdated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::CallLog> & callLog);

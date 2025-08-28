@@ -39,6 +39,8 @@ public:
 	
 signals:
 	void authenticationRequested (const std::shared_ptr<linphone::AuthInfo> &authInfo);
+	void accountAdded (const std::shared_ptr<linphone::Account> &account);
+	void accountRemoved (const std::shared_ptr<linphone::Account> &account);
 	void callEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
 	void callLogUpdated(const std::shared_ptr<linphone::CallLog> &call);
 	void callStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
@@ -69,6 +71,8 @@ signals:
 public slots:
 
 	void onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> & core,const std::shared_ptr<linphone::Account> & account,linphone::RegistrationState state,const std::string & message);
+	void onAccountAdded(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::Account> & account);
+	void onAccountRemoved(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::Account> & account);
 	void onAuthenticationRequested (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::AuthInfo> &authInfo,linphone::AuthMethod method);
 	void onCallEncryptionChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,bool on,const std::string &authenticationToken);
 	void onCallLogUpdated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::CallLog> & callLog);

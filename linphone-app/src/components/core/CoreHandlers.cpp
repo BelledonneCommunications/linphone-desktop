@@ -100,6 +100,14 @@ void CoreHandlers::onAccountRegistrationStateChanged (
 	emit registrationStateChanged(account, state);
 }
 
+void CoreHandlers::onAccountAdded(const std::shared_ptr<linphone::Core> &, const std::shared_ptr<linphone::Account> & account){
+	emit accountAdded(account);
+}
+
+void CoreHandlers::onAccountRemoved(const std::shared_ptr<linphone::Core> &, const std::shared_ptr<linphone::Account> & account) {
+	emit accountRemoved(account);
+}
+
 void CoreHandlers::onAuthenticationRequested (
 		const shared_ptr<linphone::Core> & core,
 		const shared_ptr<linphone::AuthInfo> &authInfo,
