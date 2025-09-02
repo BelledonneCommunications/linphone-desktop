@@ -89,6 +89,9 @@ ListView {
 		}
 	}
 	
+	// Let some space for better UI
+	footer: Item{height: Math.round(38 * DefaultStyle.dp)}
+
 	model: ConferenceInfoProxy {
 		id: confInfoProxy
 		filterText: searchBarText

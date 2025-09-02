@@ -3841,25 +3841,25 @@ Expiration : %1</translation>
         <translation>Webinar</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="74"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="77"/>
         <source>meeting_schedule_subject_hint</source>
         <extracomment>&quot;Ajouter un titre&quot;</extracomment>
         <translation>Ajouter un titre</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="220"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="224"/>
         <source>meeting_schedule_description_hint</source>
         <extracomment>&quot;Ajouter une description&quot;</extracomment>
         <translation>Ajouter une description</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="270"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="274"/>
         <source>meeting_schedule_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Ajouter des participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="325"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="329"/>
         <source>meeting_schedule_send_invitations_title</source>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
         <translation>Envoyer une invitation aux participants</translation>
@@ -3868,13 +3868,13 @@ Expiration : %1</translation>
 <context>
     <name>MeetingListView</name>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="273"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="276"/>
         <source>meeting_info_cancelled</source>
         <extracomment>&quot;Réunion annulée&quot;</extracomment>
         <translation>Réunion annulée</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="297"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="300"/>
         <source>meetings_list_no_meeting_for_today</source>
         <extracomment>&quot;Aucune réunion aujourd&apos;hui&quot;</extracomment>
         <translation>Aucune réunion aujourd&apos;hui</translation>

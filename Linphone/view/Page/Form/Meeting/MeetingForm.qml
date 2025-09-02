@@ -64,15 +64,19 @@ FocusScope {
 				EffectImage {
 					imageSource: AppIcons.usersThree
 					colorizationColor: DefaultStyle.main2_600
+                    width: Math.round(24 * DefaultStyle.dp)
+                    height: Math.round(24 * DefaultStyle.dp)
                     Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
                     Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 				}
 				TextInput {
 					id: confTitle
 					Layout.fillWidth: true
+					maximumLength: width
                     //: "Ajouter un titre"
                     property string defaultText: qsTr("meeting_schedule_subject_hint")
-					text: conferenceInfoGui.core.subject ? conferenceInfoGui.core.subject : defaultText
+					Component.onCompleted: text = defaultText
+					text: conferenceInfoGui.core.subject ? conferenceInfoGui.core.subject : ""
 					color: DefaultStyle.main2_600
 					font {
                         pixelSize: Math.round(20 * DefaultStyle.dp)
@@ -83,7 +87,7 @@ FocusScope {
 						if (text == defaultText)
 							clear()
 						else selectAll()
-					}
+					} else if (text.length === 0) text = defaultText
 					onTextEdited: mainItem.conferenceInfoGui.core.subject = text
 					KeyNavigation.down: startDate
 				}
