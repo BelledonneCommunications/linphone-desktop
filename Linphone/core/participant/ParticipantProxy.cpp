@@ -138,7 +138,7 @@ bool ParticipantProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 	if (mShowMe) return true;
 	else {
 		auto participant = qobject_cast<ParticipantList *>(sourceModel())->getAt<ParticipantCore>(sourceRow);
-		return !participant->isMe();
+		return participant != nullptr;
 	}
 }
 
