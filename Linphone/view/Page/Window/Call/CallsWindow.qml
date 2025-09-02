@@ -432,6 +432,7 @@ AbstractWindow {
                                     }
                                 }
                                 BusyIndicator {
+                                    //: Waiting for encryption
                                     visible: encryptionStatusText.text === qsTr("call_waiting_for_encryption_info")
                                     Layout.preferredWidth: Math.round(15 * DefaultStyle.dp)
                                     Layout.preferredHeight: Math.round(15 * DefaultStyle.dp)
@@ -463,8 +464,7 @@ AbstractWindow {
                                 Text {
                                     id: encryptionStatusText
                                     text: mainWindow.conference
-                                        //: Appel chiffré de bout en bout
-                                        ? qsTr("call_zrtp_end_to_end_encrypted")
+                                        ? qsTr("call_srtp_point_to_point_encrypted")
                                         :mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
                                           //: Appel chiffré de point à point
                                             ? qsTr("call_srtp_point_to_point_encrypted")
@@ -472,11 +472,11 @@ AbstractWindow {
                                                 ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
                                                   //: Vérification nécessaire
                                                     ? qsTr("call_zrtp_sas_validation_required")
+                                                    //: Appel chiffré de bout en bout
                                                     : qsTr("call_zrtp_end_to_end_encrypted")
                                                 : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.None
                                                     //: "Appel non chiffré"
                                                     ? qsTr("call_not_encrypted")
-                                                    //: "En attente de chiffrement"
                                                     : qsTr("call_waiting_for_encryption_info")
                                     color: mainWindow.conference || mainWindow.call?.core.encryption === LinphoneEnums.MediaEncryption.Srtp
                                         ? DefaultStyle.info_500_main
