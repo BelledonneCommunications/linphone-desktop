@@ -64,6 +64,7 @@ public:
 	Q_PROPERTY(
 	    int ephemeralLifetime READ getEphemeralLifetime WRITE lSetEphemeralLifetime NOTIFY ephemeralLifetimeChanged)
 	Q_PROPERTY(bool muted READ isMuted WRITE lSetMuted NOTIFY mutedChanged)
+	Q_PROPERTY(bool conferenceJoined MEMBER mConferenceJoined NOTIFY conferenceJoined)
 	Q_PROPERTY(bool meAdmin READ getMeAdmin WRITE setMeAdmin NOTIFY meAdminChanged)
 	Q_PROPERTY(QVariantList participants READ getParticipantsGui NOTIFY participantsChanged)
 	Q_PROPERTY(QStringList participantsAddresses READ getParticipantsAddresses WRITE lSetParticipantsAddresses NOTIFY
@@ -177,6 +178,7 @@ signals:
 	void participantsChanged();
 	void fileListChanged();
 	void isSecuredChanged();
+	void conferenceJoined();
 
 	void lDeleteMessage(ChatMessageGui *message);
 	void lDelete();
@@ -222,6 +224,7 @@ private:
 	QList<QSharedPointer<ChatMessageContentCore>> mFileList;
 	bool mIsMuted = false;
 	bool mMeAdmin = false;
+	bool mConferenceJoined = false;
 	QList<QSharedPointer<ParticipantCore>> mParticipants;
 	LinphoneEnums::ChatRoomState mChatRoomState;
 	std::shared_ptr<ChatModel> mChatModel;

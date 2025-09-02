@@ -16,6 +16,7 @@ FocusScope {
     property ChatMessageGui chatMessage
     property var contactObj: chat ? UtilsCpp.findFriendByAddress(mainItem.chat.core.peerAddress) : null
     property var contact: contactObj?.value || null
+    property alias messagesLoading: chatMessagesListView.loading
     property CallGui call
     property alias callHeaderContent: splitPanel.headerContentItem
     property bool replyingToMessage: false
@@ -258,7 +259,6 @@ FocusScope {
                         ChatMessagesListView {
                             id: chatMessagesListView
                             clip: true
-                            height: implicitHeight
                             backgroundColor: splitPanel.panelColor
                             width: parent.width - anchors.leftMargin - anchors.rightMargin
                             chat: mainItem.chat

@@ -54,10 +54,11 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 		mPeerAddress = Utils::coreStringToAppString(chatRoomAddress->asStringUriOnly());
 		mIsGroupChat = false;
 		mIsBasic = true;
+		mConferenceJoined = true;
 	} else {
 		mIsBasic = false;
+		auto participants = chatRoom->getParticipants();
 		if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
-			auto participants = chatRoom->getParticipants();
 			if (participants.size() > 0) {
 				auto peer = participants.front();
 				if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress()->clone());
@@ -74,6 +75,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 			mIsGroupChat = true;
 			mMeAdmin = chatRoom->getMe() && chatRoom->getMe()->isAdmin();
 		}
+		mConferenceJoined = participants.size() != 0;
 	}
 	mUnreadMessagesCount = chatRoom->getUnreadMessagesCount();
 	connect(this, &ChatCore::unreadMessagesCountChanged, this, [this] {
@@ -210,6 +212,25 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatModel::conferenceJoined, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                         const std::shared_ptr<const linphone::EventLog> &eventLog) {
 		    auto participants = buildParticipants(chatRoom);
+		    if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
+			    QString title, avatarUri;
+			    auto linParticipants = chatRoom->getParticipants();
+			    if (linParticipants.size() > 0) {
+				    auto peer = linParticipants.front();
+				    if (peer) title = ToolModel::getDisplayName(peer->getAddress()->clone());
+				    avatarUri = ToolModel::getDisplayName(peer->getAddress()->clone());
+				    if (linParticipants.size() == 1) {
+					    auto peerAddress = peer->getAddress();
+					    if (peerAddress) mPeerAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
+				    }
+			    }
+			    mChatModelConnection->invokeToCore([this, title, avatarUri]() {
+				    setTitle(title);
+				    setAvatarUri(avatarUri);
+				    mConferenceJoined = true;
+				    emit conferenceJoined();
+			    });
+		    }
 		    mChatModelConnection->invokeToCore([this, participants]() { setParticipants(participants); });
 	    });
 

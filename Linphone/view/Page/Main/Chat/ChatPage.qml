@@ -31,7 +31,8 @@ AbstractMainPage {
     property var remoteChatObj: UtilsCpp.getChatForAddress(remoteAddress)
     property var remoteChat: remoteChatObj ? remoteChatObj.value : null
     onRemoteChatChanged: {
-        selectedChatGui = remoteChat
+        if (remoteChat) selectedChatGui = remoteChat
+        else console.log("chat is null")
     }
 
     onSelectedChatGuiChanged: {
@@ -330,9 +331,16 @@ AbstractMainPage {
     Component {
         id: currentChatComp
         FocusScope {
+            BusyIndicator {
+                anchors.centerIn: parent
+                visible: selectedChatView.chat && !selectedChatView.visible
+                indicatorHeight: visible ? Math.round(60 * DefaultStyle.dp) : 0
+                indicatorWidth: Math.round(60 * DefaultStyle.dp)
+                indicatorColor: DefaultStyle.main1_500_main
+            }
             SelectedChatView {
                 id: selectedChatView
-                visible: chat != undefined && chat != null
+                visible: chat && (chat.core.isBasic || chat.core.conferenceJoined)
                 anchors.fill: parent
                 chat: mainItem.selectedChatGui ? mainItem.selectedChatGui : null
                 onChatChanged: {
@@ -343,8 +351,14 @@ AbstractMainPage {
                 Connections {
                     target: mainItem
                     function onSelectedChatGuiChanged() {
-                        selectedChatView.chat = mainItem.selectedChatGui
+                        if (mainItem.selectedChatGui) selectedChatView.chat = mainItem.selectedChatGui
                     }
+                }
+                Binding {
+                    target: mainItem
+                    property: "showDefaultItem"
+                    when: selectedChatView.messagesLoading
+                    value: false
                 }
             }
         }
