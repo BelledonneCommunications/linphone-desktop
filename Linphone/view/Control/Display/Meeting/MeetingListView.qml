@@ -33,10 +33,16 @@ ListView {
 		mainItem.selectedConference = null
 		mainItem.currentIndex = -1
 	}
+
+	function scrollToCurrentDate() {
+		currentIndex = -1
+		confInfoProxy.selectData(confInfoProxy.getCurrentDateConfInfo())
+		moveToCurrentItem()
+	}
 	
 //----------------------------------------------------------------	
 	function moveToCurrentItem(){
-		if( mainItem.currentIndex >= 0) 
+		if(mainItem.currentIndex >= 0) 
 			mainItem.positionViewAtIndex(mainItem.currentIndex, ListView.Contain)
 	}
 	onCurrentItemChanged: {

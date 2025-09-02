@@ -184,32 +184,47 @@ AbstractMainPage {
 					}
 					Item{Layout.fillWidth: true}
 					Button {
+						id: newConfButton
 						style: ButtonStyle.noBackground
 						icon.source: AppIcons.plusCircle
                         Layout.preferredWidth: Math.round(28 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(28 * DefaultStyle.dp)
                         icon.width: Math.round(28 * DefaultStyle.dp)
                         icon.height: Math.round(28 * DefaultStyle.dp)
+						KeyNavigation.down: scrollToCurrentDateButton
 						onClicked: {
 							mainItem.editConference()
 						}
 					}
 				}
-				SearchBar {
-					id: searchBar
-					Layout.fillWidth: true
-                    Layout.topMargin: Math.round(18 * DefaultStyle.dp)
-                    Layout.rightMargin: Math.round(38 * DefaultStyle.dp)
-                    //: "Rechercher une réunion"
-                    placeholderText: qsTr("meetings_search_hint")
-					KeyNavigation.up: conferenceList
-					KeyNavigation.down: conferenceList
-                    visible: conferenceList.count !== 0 || text.length !== 0
-					Binding {
-						target: mainItem
-						property: "showDefaultItem"
-						when: searchBar.text.length !== 0
-						value: false
+				RowLayout {
+					id: scrollToCurrentDateButton
+					visible: conŒferenceList.count !== 0 || text.length !== 0
+					spacing: Math.round(11 * DefaultStyle.dp)
+					Layout.topMargin: Math.round(18 * DefaultStyle.dp)
+					Layout.rightMargin: Math.round(38 * DefaultStyle.dp)
+					KeyNavigation.up: newConfButton
+					KeyNavigation.down: searchBar
+					Button {
+						Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
+						Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
+						icon.source: AppIcons.calendar
+						style: ButtonStyle.noBackground
+						onClicked: conferenceList.scrollToCurrentDate()
+					}
+					SearchBar {
+						id: searchBar
+						Layout.fillWidth: true
+						//: "Rechercher une réunion"
+						placeholderText: qsTr("meetings_search_hint")
+						KeyNavigation.up: scrollToCurrentDateButton
+						KeyNavigation.down: conferenceList
+						Binding {
+							target: mainItem
+							property: "showDefaultItem"
+							when: searchBar.text.length !== 0
+							value: false
+						}
 					}
 				}
 				Text {

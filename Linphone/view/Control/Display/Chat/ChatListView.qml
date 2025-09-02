@@ -245,7 +245,7 @@ ListView {
 					EffectImage {
 						visible: modelData != undefined && modelData.core.lastMessage && modelData.core.lastMessage.core.isCalendarInvite && !remoteComposingInfo.visible
 						fillMode: Image.PreserveAspectFit
-						imageSource: AppIcons.calendar
+						imageSource: AppIcons.calendarBlank
 						colorizationColor: DefaultStyle.main2_500
 						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
 						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)

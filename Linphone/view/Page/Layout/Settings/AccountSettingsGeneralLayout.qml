@@ -331,7 +331,7 @@ AbstractSettingsLayout {
 								EffectImage {
                                     Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
                                     Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
-									imageSource: AppIcons.calendar
+									imageSource: AppIcons.calendarBlank
 									colorizationColor: DefaultStyle.main2_600
 									fillMode: Image.PreserveAspectFit
 								}
