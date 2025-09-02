@@ -478,7 +478,7 @@ AbstractWindow {
                                                     ? qsTr("call_not_encrypted")
                                                     //: "En attente de chiffrement"
                                                     : qsTr("call_waiting_for_encryption_info")
-                                    color: mainWindow.conference || mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+                                    color: mainWindow.conference || mainWindow.call?.core.encryption === LinphoneEnums.MediaEncryption.Srtp
                                         ? DefaultStyle.info_500_main
                                         : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
                                             ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
@@ -611,8 +611,7 @@ AbstractWindow {
                     visible: false
                     function replace(id) {
                         rightPanel.customHeaderButtons = null
-                        contentStackView.replace(id,
-                                                 Control.StackView.Immediate)
+                        contentStackView.replace(id, Control.StackView.Immediate)
                     }
                     headerStack.currentIndex: 0
                     contentStackView.initialItem: callListPanel
@@ -629,6 +628,10 @@ AbstractWindow {
                     Binding on rightPadding {
                         when: rightPanel.contentStackView.currentItem.objectName == "chatPanel"
                         value: 0
+                    }
+                    Binding on rightPadding {
+                        when: rightPanel.contentStackView.currentItem.objectName == "participantListView"
+                        value: Math.round(10 * DefaultStyle.dp)
                     }
 
                     Item {
@@ -940,6 +943,9 @@ AbstractWindow {
                             id: participantListComp
                             ParticipantListView {
                                 id: participantList
+                                objectName: "participantListView"
+                                call: mainWindow.call
+                                rightMargin: 0
                                 Component {
                                     id: headerbutton
                                     PopupButton {
@@ -962,7 +968,6 @@ AbstractWindow {
                                     //: "Participants (%1)"
                                     rightPanel.headerTitleText = qsTr("conference_participants_list_title").arg(count)
                                 }
-                                call: mainWindow.call
                                 onAddParticipantRequested: participantsStack.push(addParticipantComp)
                                 onCountChanged: {
                                     rightPanel.headerTitleText = qsTr("conference_participants_list_title").arg(count)

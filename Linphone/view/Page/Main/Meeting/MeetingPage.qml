@@ -198,14 +198,14 @@ AbstractMainPage {
 					}
 				}
 				RowLayout {
-					id: scrollToCurrentDateButton
-					visible: conŒferenceList.count !== 0 || text.length !== 0
+					visible: conferenceList.count !== 0 || searchBar.text.length !== 0
 					spacing: Math.round(11 * DefaultStyle.dp)
 					Layout.topMargin: Math.round(18 * DefaultStyle.dp)
 					Layout.rightMargin: Math.round(38 * DefaultStyle.dp)
 					KeyNavigation.up: newConfButton
 					KeyNavigation.down: searchBar
 					Button {
+						id: scrollToCurrentDateButton
 						Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
 						Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
 						icon.source: AppIcons.calendar

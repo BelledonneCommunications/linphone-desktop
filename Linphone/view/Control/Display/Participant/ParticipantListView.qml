@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls.Basic as Control
 
 import Linphone
 import UtilsCpp 1.0
@@ -7,12 +8,10 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ListView {
 	id: mainItem
-	Layout.preferredHeight: contentHeight
-	height: contentHeight
 	visible: contentHeight > 0
 	clip: true
     rightMargin: Math.round(5 * DefaultStyle.dp)
-    spacing: Math.round(5 * DefaultStyle.dp)
+    spacing: Math.round(8 * DefaultStyle.dp)
 
 	property string searchBarText
 
@@ -28,6 +27,14 @@ ListView {
 
 	signal addParticipantRequested()
 
+	Control.ScrollBar.vertical: ScrollBar {
+		id: scrollbar
+		anchors.top: mainItem.top
+		anchors.bottom: mainItem.bottom
+		anchors.right: mainItem.right
+		visible: mainItem.height < mainItem.contentHeight
+	}
+
 	currentIndex: -1
 
 	model: ParticipantProxy {
@@ -41,11 +48,8 @@ ListView {
 		
 		RowLayout {
 			id: participantDelegate
-			anchors.left: parent.left
-            anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
-			anchors.right: parent.right
-            anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
-			anchors.verticalCenter: parent.verticalCenter
+			anchors.fill: parent
+			anchors.rightMargin: (scrollbar.width + 5 * DefaultStyle.dp)
             spacing: Math.round(10 * DefaultStyle.dp)
 			z: 1
 			Avatar {
@@ -62,33 +66,41 @@ ListView {
 				maximumLineCount: 1
 				Layout.fillWidth: true
 			}
-			Text {
-				Layout.alignment: Qt.AlignRight
-				visible: modelData.core.isAdmin
-                //: "Admin"
-                text: qsTr("meeting_participant_is_admin_label")
-				color: DefaultStyle.main2_400
-				font {
-                    pixelSize: Math.round(12 * DefaultStyle.dp)
-                    weight: Math.round(300 * DefaultStyle.dp)
-				}
-			}
+			Item{Layout.fillWidth: true}
 			RowLayout {
 				Layout.alignment: Qt.AlignRight
 				property bool isMe: modelData.core.isMe
 				onIsMeChanged: if (isMe) mainItem.me = modelData
-				enabled: mainItem.isMeAdmin && !modelData.core.isMe
-				opacity: enabled ? 1.0 : 0
                 spacing: Math.round(26 * DefaultStyle.dp)
-				Switch {
-					Component.onCompleted: if (modelData.core.isAdmin) toggle()
-					//TODO : Utilser checked et onToggled (pas compris)
-					onToggled: participantModel.setParticipantAdminStatus(modelData.core, position === 1)
+				RowLayout {
+                	spacing: Math.round(10 * DefaultStyle.dp)
+					Text {
+						visible: mainItem.isMeAdmin || modelData.core.isAdmin
+						Layout.alignment: Qt.AlignRight
+						//: "Admin"
+						text: qsTr("meeting_participant_is_admin_label")
+						color: DefaultStyle.main2_400
+						font {
+							pixelSize: Math.round(12 * DefaultStyle.dp)
+							weight: Math.round(300 * DefaultStyle.dp)
+						}
+					}
+					Switch {
+						opacity: mainItem.isMeAdmin && !modelData.core.isMe ? 1 : 0
+						Component.onCompleted: if (modelData.core.isAdmin) toggle()
+						//TODO : Utilser checked et onToggled (pas compris)
+						onToggled: participantModel.setParticipantAdminStatus(modelData.core, position === 1)
+					}
 				}
 				SmallButton {
+					opacity: mainItem.isMeAdmin && !modelData.core.isMe ? 1 : 0
                     Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
                     Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
 					color: DefaultStyle.main2_100
+    				leftPadding: Math.round(3 * DefaultStyle.dp)
+    				rightPadding: Math.round(3 * DefaultStyle.dp)
+    				topPadding: Math.round(3 * DefaultStyle.dp)
+    				bottomPadding: Math.round(3 * DefaultStyle.dp)
 					style: ButtonStyle.hoveredBackground
 					icon.source: AppIcons.closeX
 					onClicked: participantModel.removeParticipant(modelData.core)
@@ -98,19 +110,16 @@ ListView {
 	}
 
 	footer: Rectangle {
-		color: DefaultStyle.grey_100
-		visible: mainItem.isMeAdmin
-        height: Math.round(74 * DefaultStyle.dp)
+		color: "transparent"
 		width: mainItem.width
+		height: childrenRect.height
+		visible: mainItem.isMeAdmin
 		MediumButton {
 			anchors.centerIn: parent
-            height: Math.round(40 * DefaultStyle.dp)
 			icon.source: AppIcons.plusCircle
-            icon.width: Math.round(16 * DefaultStyle.dp)
-            icon.height: Math.round(16 * DefaultStyle.dp)
-            //: "Ajouter des participants"
-            text: qsTr("meeting_add_participants_title")
-			style: ButtonStyle.secondary
+			//: "Ajouter des participants"
+			text: qsTr("meeting_add_participants_title")
+			style: ButtonStyle.tertiary
 			onClicked: mainItem.addParticipantRequested()
 		}
 	}
