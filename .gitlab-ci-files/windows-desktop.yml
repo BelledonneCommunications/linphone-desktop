@@ -177,7 +177,7 @@ win64-ninja-vs2022-scheduled-windows:
 
 .vs-win64-package:
   stage: package
-  dependencies: []
+  needs: []
   rules:
     - !reference [.rules-merge-request-manual, rules]
     - if: $NIGHTLY_MASTER

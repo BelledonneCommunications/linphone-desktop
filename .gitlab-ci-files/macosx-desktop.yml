@@ -94,7 +94,7 @@ macosx-ninja-novideo:
 macosx-ninja-package:
   stage: package
   tags: [ "macos-min-xcode12.2" ]
-  dependencies: []
+  needs: []
   rules:
     - !reference [.rules-merge-request-manual, rules]
     - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
