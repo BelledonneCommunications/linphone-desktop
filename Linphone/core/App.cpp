@@ -973,9 +973,9 @@ bool App::notify(QObject *receiver, QEvent *event) {
 	try {
 		done = QApplication::notify(receiver, event);
 	} catch (const std::exception &ex) {
-		lCritical() << log().arg("Exception has been catch in notify: %1").arg(ex.what());
+		lFatal() << log().arg("Exception has been catch in notify: %1").arg(ex.what());
 	} catch (...) {
-		lCritical() << log().arg("Generic exeption has been catch in notify");
+		lFatal() << log().arg("Generic exeption has been catch in notify");
 	}
 	if (event->type() == QEvent::MouseButtonPress) {
 		auto window = findParentWindow(receiver);
