@@ -31,7 +31,6 @@
 
 #include <QColor>
 #include <QDateTime>
-#include <QMap>
 #include <QObject>
 #include <QSharedPointer>
 

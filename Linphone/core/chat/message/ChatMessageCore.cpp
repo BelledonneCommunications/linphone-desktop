@@ -600,11 +600,11 @@ QStringList ChatMessageCore::getImdnStatusListLabels() const {
 	return statusList;
 }
 
-QList<QVariant> ChatMessageCore::getImdnStatusAsSingletons() const {
-	QList<QVariant> statusSingletons;
+QVariantList ChatMessageCore::getImdnStatusAsSingletons() const {
+	QVariantList statusSingletons;
 	statusSingletons.append(createImdnStatusSingletonVariant(LinphoneEnums::ChatMessageState::StateDisplayed, 0));
-	statusSingletons.append(createImdnStatusSingletonVariant(LinphoneEnums::ChatMessageState::StateDelivered, 0));
 	statusSingletons.append(createImdnStatusSingletonVariant(LinphoneEnums::ChatMessageState::StateDeliveredToUser, 0));
+	statusSingletons.append(createImdnStatusSingletonVariant(LinphoneEnums::ChatMessageState::StateDelivered, 0));
 	statusSingletons.append(createImdnStatusSingletonVariant(LinphoneEnums::ChatMessageState::StateNotDelivered, 0));
 	for (auto &stat : mImdnStatusList) {
 		auto it = std::find_if(statusSingletons.begin(), statusSingletons.end(), [state = stat.mState](QVariant data) {
@@ -619,8 +619,8 @@ QList<QVariant> ChatMessageCore::getImdnStatusAsSingletons() const {
 			++count;
 			map.remove("count");
 			map.insert("count", count);
-			statusSingletons.erase(it);
-			statusSingletons.append(map);
+			int index = std::distance(statusSingletons.begin(), it);
+			statusSingletons.replace(index, map);
 		}
 	}
 	return statusSingletons;

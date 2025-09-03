@@ -29,6 +29,7 @@
 #include "model/chat/message/ChatMessageModel.hpp"
 #include "tool/AbstractObject.hpp"
 #include "tool/thread/SafeConnection.hpp"
+
 #include <QObject>
 #include <QSharedPointer>
 
@@ -98,7 +99,7 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString ownReaction READ getOwnReaction WRITE setOwnReaction NOTIFY messageReactionChanged)
 	Q_PROPERTY(QStringList imdnStatusListAsString READ getImdnStatusListLabels NOTIFY imdnStatusListChanged)
 	Q_PROPERTY(QList<ImdnStatus> imdnStatusList READ getImdnStatusList NOTIFY imdnStatusListChanged)
-	Q_PROPERTY(QList<QVariant> imdnStatusAsSingletons READ getImdnStatusAsSingletons NOTIFY imdnStatusListChanged)
+	Q_PROPERTY(QVariantList imdnStatusAsSingletons READ getImdnStatusAsSingletons NOTIFY imdnStatusListChanged)
 	Q_PROPERTY(QList<Reaction> reactions READ getReactions WRITE setReactions NOTIFY messageReactionChanged)
 	Q_PROPERTY(QList<QVariant> reactionsSingleton READ getReactionsSingleton NOTIFY singletonReactionMapChanged)
 	Q_PROPERTY(
@@ -159,7 +160,7 @@ public:
 	void setMessageState(LinphoneEnums::ChatMessageState state);
 	QList<ImdnStatus> getImdnStatusList() const;
 	void setImdnStatusList(QList<ImdnStatus> status);
-	QList<QVariant> getImdnStatusAsSingletons() const;
+	QVariantList getImdnStatusAsSingletons() const;
 	QStringList getImdnStatusListLabels() const;
 
 	std::shared_ptr<ChatMessageModel> getModel() const;
