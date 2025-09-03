@@ -71,7 +71,7 @@ ColumnLayout {
 					property var contact: contactObj?.value || null
 					Avatar {
 						contact: contactObj?.value || null
-						displayNameVal: contact ? "" : participantCore.displayName
+						displayNameVal: participantCore.displayName
 						Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
 						Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 					}

@@ -17,7 +17,7 @@ Notification {
 
 	property var chat: notificationData ? notificationData.chat : null
 	
-	property string avatarUri: notificationData?.avatarUri? notificationData.avatarUri : ""
+	property string avatarUri: notificationData?.avatarUri
 	property string chatRoomName: notificationData?.chatRoomName ? notificationData.chatRoomName : ""
 	property string remoteAddress: notificationData?.remoteAddress ? notificationData.remoteAddress : ""
 	property string chatRoomAddress: notificationData?.chatRoomAddress ? notificationData.chatRoomAddress : ""
@@ -98,7 +98,7 @@ Notification {
 					// Layout.alignment: Qt.AlignHCenter
 					property var contactObj: UtilsCpp.findFriendByAddress(mainItem.remoteAddress)
 					contact: contactObj?.value || null
-					displayNameVal: contact ? "" : mainItem.avatarUri
+					displayNameVal: mainItem.avatarUri
 				}
 				ColumnLayout {
 					spacing: 0

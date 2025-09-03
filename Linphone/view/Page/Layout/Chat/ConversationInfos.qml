@@ -24,7 +24,7 @@ ColumnLayout {
 	Avatar {
 		Layout.alignment: Qt.AlignHCenter
 		contact: contactObj?.value || null
-		displayNameVal: contact ? "" : mainItem.chatCore.avatarUri
+		displayNameVal: mainItem.chatCore.avatarUri
 		secured: mainItem.chatGui && mainItem.chatGui.core.isSecured
 		Layout.preferredWidth: Math.round(100 * DefaultStyle.dp)
 		Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
