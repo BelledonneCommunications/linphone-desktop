@@ -290,7 +290,7 @@ DialogPlus {
 					
 				}
 				FormLine{
-					maxItemWidth: width / 2
+					maxItemWidth: width
 					FormGroup {
 					//: 'Apply prefix for outgoing calls and chats' : Label to set an option for applying the specified prefix to outgoings calls and chats.
 						label: qsTr('dialPrefixCallChat')
