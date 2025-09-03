@@ -262,6 +262,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		bool isConf = call && call->getConference() != nullptr;
 		auto subject = call->getConference() ? Utils::coreStringToAppString(call->getConference()->getSubject()) : "";
 		mCallModelConnection->invokeToCore([this, state, subject, isConf]() {
+			lDebug() << log().arg("::onStateChanged") << LinphoneEnums::fromLinphone(state);
 			setRecordable(state == linphone::Call::State::StreamsRunning);
 			setPaused(state == linphone::Call::State::Paused || state == linphone::Call::State::PausedByRemote);
 			if (mConference) mConference->setSubject(subject);

@@ -11,6 +11,7 @@ import Linphone
 ColumnLayout {
 	id: mainItem
 	property ChatMessageGui chatMessageGui: null
+    property bool isRemoteMessage: chatMessageGui? chatMessageGui.core.isRemoteMessage : false
 	property ChatGui chatGui: null
 	
 	signal isFileHoveringChanged(bool isFileHovering)
@@ -28,7 +29,7 @@ ColumnLayout {
 	
 	spacing: Math.round(5 * DefaultStyle.dp)
 	property int padding: Math.round(10 * DefaultStyle.dp)
-
+	
 	// VOICE MESSAGES
 	Repeater {
 		id: messagesVoicesList
@@ -97,6 +98,7 @@ ColumnLayout {
 		}
 		delegate: ChatTextContent {
 			Layout.fillWidth: true
+			horizontalAlignment: mainItem.isRemoteMessage || implicitWidth > mainItem.width ? TextEdit.AlignLeft : TextEdit.AlignRight
 			// height: implicitHeight
 			contentGui: modelData
 			chatGui: mainItem.chatGui

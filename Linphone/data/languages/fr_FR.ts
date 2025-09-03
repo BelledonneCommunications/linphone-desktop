@@ -669,64 +669,64 @@
         <translation>L&apos;appel a été enregistré dans le fichier : %1</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="393"/>
-        <location filename="../../core/call/CallCore.cpp" line="418"/>
+        <location filename="../../core/call/CallCore.cpp" line="394"/>
+        <location filename="../../core/call/CallCore.cpp" line="419"/>
         <source>call_stats_codec_label</source>
         <extracomment>&quot;Codec: %1 / %2 kHz&quot;</extracomment>
         <translation>Codec: %1 / %2 kHz</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="397"/>
-        <location filename="../../core/call/CallCore.cpp" line="421"/>
+        <location filename="../../core/call/CallCore.cpp" line="398"/>
+        <location filename="../../core/call/CallCore.cpp" line="422"/>
         <source>call_stats_bandwidth_label</source>
         <extracomment>&quot;Bande passante : %1 %2 kbits/s %3 %4 kbits/s&quot;</extracomment>
         <translation>Bande passante : %1 %2 kbits/s %3 %4 kbits/s</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="403"/>
-        <location filename="../../core/call/CallCore.cpp" line="426"/>
+        <location filename="../../core/call/CallCore.cpp" line="404"/>
+        <location filename="../../core/call/CallCore.cpp" line="427"/>
         <source>call_stats_loss_rate_label</source>
         <extracomment>&quot;Taux de perte: %1% %2%&quot;</extracomment>
         <translation>Taux de perte: %1% %2%</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="408"/>
+        <location filename="../../core/call/CallCore.cpp" line="409"/>
         <source>call_stats_jitter_buffer_label</source>
         <extracomment>&quot;Tampon de gigue: %1 ms&quot;</extracomment>
         <translation>Tampon de gigue: %1 ms</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="435"/>
+        <location filename="../../core/call/CallCore.cpp" line="436"/>
         <source>call_stats_resolution_label</source>
         <extracomment>&quot;Définition vidéo : %1 %2 %3 %4&quot;</extracomment>
         <translation>Définition vidéo : %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="441"/>
+        <location filename="../../core/call/CallCore.cpp" line="442"/>
         <source>call_stats_fps_label</source>
         <extracomment>&quot;FPS : %1 %2 %3 %4&quot;</extracomment>
         <translation>FPS : %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="654"/>
+        <location filename="../../core/call/CallCore.cpp" line="655"/>
         <source>media_encryption_dtls</source>
         <extracomment>DTLS</extracomment>
         <translation>DTLS</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="657"/>
+        <location filename="../../core/call/CallCore.cpp" line="658"/>
         <source>media_encryption_none</source>
         <extracomment>None</extracomment>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="660"/>
+        <location filename="../../core/call/CallCore.cpp" line="661"/>
         <source>media_encryption_srtp</source>
         <extracomment>SRTP</extracomment>
         <translation>SRTP</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="663"/>
+        <location filename="../../core/call/CallCore.cpp" line="664"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
         <translation>ZRTP - Post quantique</translation>

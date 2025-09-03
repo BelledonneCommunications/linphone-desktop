@@ -374,8 +374,8 @@ void AccountCore::setUnreadMessageNotifications(int unread) {
 void AccountCore::onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
                                              linphone::RegistrationState state,
                                              const std::string &message) {
-	lDebug() << log().arg(Q_FUNC_INFO) << (int)state;
 	mRegistrationState = LinphoneEnums::fromLinphone(state);
+	lDebug() << log().arg(Q_FUNC_INFO) << mRegistrationState;
 	emit registrationStateChanged(Utils::coreStringToAppString(message));
 }
 

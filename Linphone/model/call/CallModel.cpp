@@ -407,7 +407,6 @@ void CallModel::onInfoMessageReceived(const std::shared_ptr<linphone::Call> &cal
 void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
                                linphone::Call::State state,
                                const std::string &message) {
-	lDebug() << "CallModel::onStateChanged" << (int)state;
 	if (state == linphone::Call::State::StreamsRunning) {
 		setConference(call->getConference());
 		mDurationTimer.start();
