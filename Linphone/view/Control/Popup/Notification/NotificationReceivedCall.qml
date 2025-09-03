@@ -15,8 +15,11 @@ Notification {
 	overriddenHeight: content.height
 	
 	readonly property var call: notificationData && notificationData.call
+	readonly property var displayName: notificationData && notificationData.displayName
 	property var state: call.core.state
 	property var status: call.core.status
+	property var conference: call.core.conference
+
 	onStateChanged:{
 		if (state != LinphoneEnums.CallState.IncomingReceived){
 			close()
@@ -72,7 +75,7 @@ Notification {
 					ColumnLayout {
 						spacing: 0
 						Text {
-							text: call.core.remoteName
+							text: displayName
 							Layout.fillWidth: true
                             Layout.maximumWidth: mainItem.width - content.leftPadding - content.rightPadding
 							Layout.alignment: Qt.AlignHCenter

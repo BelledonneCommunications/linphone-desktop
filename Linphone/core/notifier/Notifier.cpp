@@ -299,10 +299,14 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	auto model = CallCore::create(call);
 	auto gui = new CallGui(model);
 	gui->moveToThread(App::getInstance()->thread());
-	App::postCoreAsync([this, gui]() {
+	QString displayName = call->getCallLog() && call->getCallLog()->getConferenceInfo()
+	                          ? Utils::coreStringToAppString(call->getCallLog()->getConferenceInfo()->getSubject())
+	                          : Utils::coreStringToAppString(call->getRemoteAddress()->getDisplayName());
+	App::postCoreAsync([this, gui, displayName]() {
 		mustBeInMainThread(getClassName());
 		QVariantMap map;
 
+		map["displayName"].setValue(displayName);
 		map["call"].setValue(gui);
 		CREATE_NOTIFICATION(Notifier::ReceivedCall, map)
 	});

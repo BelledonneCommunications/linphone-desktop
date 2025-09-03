@@ -2143,79 +2143,79 @@ Error</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="70"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="69"/>
         <source>chat_dialog_delete_chat_title</source>
         <extracomment>Supprimer la conversation ?</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="72"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="71"/>
         <source>chat_dialog_delete_chat_message</source>
         <extracomment>&quot;La conversation et tous ses messages seront supprimés.&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="101"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="100"/>
         <source>chat_list_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="122"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="121"/>
         <source>menu_mark_all_as_read</source>
         <extracomment>&quot;mark all as read&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="153"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="152"/>
         <source>chat_search_in_history</source>
         <extracomment>&quot;Rechercher une conversation&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="176"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="175"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="178"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="177"/>
         <source>chat_list_empty_history</source>
         <extracomment>&quot;Aucune conversation dans votre historique&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="247"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="246"/>
         <source>chat_action_start_new_chat</source>
         <extracomment>&quot;New chat&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="283"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="282"/>
         <source>chat_start_group_chat_title</source>
         <extracomment>&quot;Nouveau groupe&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="285"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="284"/>
         <source>chat_action_start_group_chat</source>
         <extracomment>&quot;Créer&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="311"/>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="315"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="310"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="314"/>
         <source>information_popup_error_title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="313"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="312"/>
         <source>group_chat_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné au groupe</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="317"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="316"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
         <translation type="unfinished">Sie sind nicht verbunden</translation>
@@ -4303,19 +4303,19 @@ Error</extracomment>
 <context>
     <name>NotificationReceivedCall</name>
     <message>
-        <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="90"/>
+        <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="93"/>
         <source>call_audio_incoming</source>
         <extracomment>&quot;Appel entrant&quot;</extracomment>
         <translation>Eingehender Anruf</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="113"/>
+        <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="116"/>
         <source>dialog_accept</source>
         <extracomment>&quot;Accepter&quot;</extracomment>
         <translation>Akzeptieren</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="131"/>
+        <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="134"/>
         <source>dialog_deny</source>
         <extracomment>&quot;Refuser</extracomment>
         <translation>Ablehnen</translation>
@@ -4324,24 +4324,24 @@ Error</extracomment>
 <context>
     <name>Notifier</name>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="351"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="355"/>
         <source>new_voice_message</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="352"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="356"/>
         <source>new_file_message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="355"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="359"/>
         <source>new_conference_invitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="371"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="375"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation type="unfinished"></translation>

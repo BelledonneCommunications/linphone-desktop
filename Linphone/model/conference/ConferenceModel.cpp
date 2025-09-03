@@ -265,7 +265,7 @@ void ConferenceModel::onParticipantDeviceScreenSharingChanged(
 
 void ConferenceModel::onStateChanged(const std::shared_ptr<linphone::Conference> &conference,
                                      linphone::Conference::State newState) {
-	lDebug() << "onStateChanged:" << (int)newState;
+	lDebug() << log().arg("onStateChanged:") << (int)newState;
 	if (newState == linphone::Conference::State::Created) {
 		emit participantDeviceCountChanged(conference, mMonitor->getParticipantDeviceList().size());
 		if (mMonitor->getScreenSharingParticipant()) emit isScreenSharingEnabledChanged(true);

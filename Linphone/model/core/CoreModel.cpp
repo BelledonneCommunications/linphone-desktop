@@ -426,7 +426,10 @@ void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
 			QString command = Utils::coreStringToAppString(
 			    core->getConfig()->getString(SettingsModel::UiSection, "command_line", ""));
 			QString userName = Utils::coreStringToAppString(call->getRemoteAddress()->getUsername());
-			QString displayName = Utils::coreStringToAppString(call->getRemoteAddress()->getDisplayName());
+			QString displayName =
+			    call->getCallLog() && call->getCallLog()->getConferenceInfo()
+			        ? Utils::coreStringToAppString(call->getCallLog()->getConferenceInfo()->getSubject())
+			        : Utils::coreStringToAppString(call->getRemoteAddress()->getDisplayName());
 			command = command.replace("$1", userName);
 			command = command.replace("$2", displayName);
 			Utils::runCommandLine(command);
