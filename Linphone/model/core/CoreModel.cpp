@@ -526,18 +526,29 @@ void CoreModel::onLogCollectionUploadProgressIndication(const std::shared_ptr<li
 void CoreModel::onMessageReceived(const std::shared_ptr<linphone::Core> &core,
                                   const std::shared_ptr<linphone::ChatRoom> &room,
                                   const std::shared_ptr<linphone::ChatMessage> &message) {
+	if (message->isOutgoing()) return;
 	emit unreadNotificationsChanged();
 	std::list<std::shared_ptr<linphone::ChatMessage>> messages;
 	messages.push_back(message);
-	if (App::getInstance()->getNotifier()) App::getInstance()->getNotifier()->notifyReceivedMessages(room, messages);
+	if (App::getInstance()->getNotifier()) {
+		App::getInstance()->getNotifier()->notifyReceivedMessages(room, messages);
+	}
 	emit messageReceived(core, room, message);
 }
 void CoreModel::onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
                                    const std::shared_ptr<linphone::ChatRoom> &room,
                                    const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
-	emit unreadNotificationsChanged();
-	if (App::getInstance()->getNotifier()) App::getInstance()->getNotifier()->notifyReceivedMessages(room, messages);
-	emit messagesReceived(core, room, messages);
+	std::list<std::shared_ptr<linphone::ChatMessage>> finalMessages;
+	for (auto &message : messages) {
+		if (message->isOutgoing()) continue;
+		finalMessages.push_back(message);
+	}
+	if (finalMessages.size() > 0) {
+		emit unreadNotificationsChanged();
+		emit messagesReceived(core, room, finalMessages);
+	}
+	if (App::getInstance()->getNotifier())
+		App::getInstance()->getNotifier()->notifyReceivedMessages(room, finalMessages);
 }
 
 void CoreModel::onNewMessageReaction(const std::shared_ptr<linphone::Core> &core,

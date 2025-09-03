@@ -121,6 +121,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	                            const std::shared_ptr<linphone::ChatRoom> &room,
 	                            const std::shared_ptr<linphone::ChatMessage> &message) {
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		if (!message) return;
 		auto receiverAddress = message->getToAddress();
 		if (!receiverAddress) {
 			qWarning() << log().arg("Receiver account has no address, return");
