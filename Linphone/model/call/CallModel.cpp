@@ -132,7 +132,7 @@ void CallModel::activateLocalVideo(std::shared_ptr<linphone::CallParams> &params
 	lInfo() << sLog()
 	               .arg("Updating call with video enabled and media direction set to %1")
 	               .arg((int)params->getVideoDirection());
-	if (enable) params->enableVideo(SettingsModel::getInstance()->getVideoEnabled());
+	params->enableVideo(SettingsModel::getInstance()->getVideoEnabled());
 	auto videoDirection = enable ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly;
 	params->setVideoDirection(videoDirection);
 }

@@ -1084,11 +1084,11 @@ AbstractWindow {
                         }
                     }
                     onJoinConfRequested: uri => {
-                                             mainWindow.joinConference(uri, {
-                                                                           "microEnabled": microEnabled,
-                                                                           "localVideoEnabled": localVideoEnabled
-                                                                       })
-                                         }
+                                            mainWindow.joinConference(uri, {
+                                                "microEnabled": microEnabled,
+                                                "localVideoEnabled": localVideoEnabled
+                                            })
+                                        }
                     onCancelJoiningRequested: mainWindow.cancelJoinConference()
                     onCancelAfterJoinRequested: mainWindow.cancelAfterJoin()
                 }
