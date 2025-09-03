@@ -244,10 +244,17 @@ ColumnLayout {
 		Layout.topMargin: Math.round(30 * DefaultStyle.dp)
 		clip: true
 		Layout.leftMargin: Math.round(15 * DefaultStyle.dp)
+
+		Control.ScrollBar.vertical: ScrollBar {
+			id: scrollbar
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			anchors.right: parent.right
+		}
 		
 		ColumnLayout {
 			spacing: 0
-			width: scrollView.width
+			width: scrollView.width - scrollbar.width - Math.round(5 * DefaultStyle.dp)
 			
 			Loader {
 				id: participantLoader

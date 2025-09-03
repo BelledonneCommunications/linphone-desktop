@@ -287,9 +287,16 @@ FocusScope {
                     Layout.maximumHeight: Math.round(250 * DefaultStyle.dp)
 					clip: true
 					model: mainItem.conferenceInfoGui.core.participants
+					Control.ScrollBar.vertical: ScrollBar {
+						id: participantScrollBar
+						anchors.right: participantList.right
+						anchors.top: participantList.top
+						anchors.bottom: participantList.bottom
+						visible: participantList.height < participantList.contentHeight
+					}
 					delegate: Item {
                         height: Math.round(56 * DefaultStyle.dp)
-						width: participantList.width
+						width: participantList.width - participantScrollBar.width
 						RowLayout {
 							anchors.fill: parent
                             spacing: Math.round(16 * DefaultStyle.dp)

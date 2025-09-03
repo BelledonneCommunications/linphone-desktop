@@ -544,7 +544,6 @@ AbstractMainPage {
 			id: addParticipantInItem
 			property Control.StackView container
 			property ConferenceInfoGui conferenceInfoGui
-			width: overridenRightPanelStackView.width
 			ColumnLayout {
 				id: addParticipantsLayout
 				spacing: Math.round(18 * DefaultStyle.dp)
@@ -584,7 +583,6 @@ AbstractMainPage {
 						SmallButton {
 							id: addButton
 							enabled: addParticipantLayout.selectedParticipantsCount.length != 0
-							Layout.leftMargin: Math.round(11 * DefaultStyle.dp)
 							focus: enabled
 							style: ButtonStyle.main
 							text: qsTr("meeting_schedule_add_participants_apply")
@@ -865,9 +863,16 @@ AbstractMainPage {
 							Layout.fillWidth: true
 							model: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.participants : []
 							clip: true
+							Control.ScrollBar.vertical: ScrollBar {
+								id: participantScrollBar
+								anchors.right: participantList.right
+								anchors.top: participantList.top
+								anchors.bottom: participantList.bottom
+								visible: participantList.height < participantList.contentHeight
+							}
 							delegate: RowLayout {
                                 height: Math.round(56 * DefaultStyle.dp)
-								width: participantList.width
+								width: participantList.width - participantScrollBar.width - Math.round(5 * DefaultStyle.dp)
 								Avatar {
                                     Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                                     Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)

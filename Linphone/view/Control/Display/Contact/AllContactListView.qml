@@ -47,7 +47,7 @@ Flickable {
     property real sectionsPixelSize: Typography.h4.pixelSize
     property real sectionsWeight: Typography.h4.weight
     property real sectionsSpacing: Math.round(18 * DefaultStyle.dp)
-    property real busyIndicatorSize: Math.round(40 * DefaultStyle.dp)
+    property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
 
     property real itemsRightMargin: Math.round(39 * DefaultStyle.dp)
     property int count: contactsList.count + suggestionsList.count + favoritesList.count

@@ -2777,41 +2777,41 @@ Only your correspondent can decrypt them.</translation>
         <translation>Mute</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="258"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="265"/>
         <source>group_infos_participants</source>
         <translation>Participants (%1)</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="275"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="282"/>
         <source>group_infos_media_docs</source>
         <extracomment>Medias &amp; documents</extracomment>
         <translation>Medias &amp; documents</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="281"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="288"/>
         <source>group_infos_shared_medias</source>
         <extracomment>Shared medias</extracomment>
         <translation>Shared medias</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="292"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="299"/>
         <source>group_infos_shared_docs</source>
         <extracomment>Shared documents</extracomment>
         <translation>Shared documents</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="305"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="312"/>
         <source>group_infos_other_actions</source>
         <extracomment>Other actions</extracomment>
         <translation>Other actions</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="311"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="318"/>
         <source>group_infos_ephemerals</source>
         <translation>Ephemeral messages : </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="311"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="318"/>
         <source>group_infos_enable_ephemerals</source>
         <translation>Enable ephemeral messages</translation>
     </message>
@@ -2822,37 +2822,37 @@ Only your correspondent can decrypt them.</translation>
         <translation>Schedule a meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="322"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="329"/>
         <source>group_infos_leave_room</source>
         <extracomment>Leave chat room</extracomment>
         <translation>Leave Chat Room</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="327"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="334"/>
         <source>group_infos_leave_room_toast_title</source>
         <extracomment>Leave Chat Room ?</extracomment>
         <translation>Leave Chat Room ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="329"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="336"/>
         <source>group_infos_leave_room_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation>All the messages will be removed from the chat room. Do you want to continue ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="342"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="349"/>
         <source>group_infos_delete_history</source>
         <extracomment>Delete history</extracomment>
         <translation>Delete history</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="347"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="354"/>
         <source>group_infos_delete_history_toast_title</source>
         <extracomment>Delete history ?</extracomment>
         <translation>Delete history ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="349"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="356"/>
         <source>group_infos_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation>All the messages will be removed from the chat room. Do you want to continue ?</translation>
@@ -2870,28 +2870,28 @@ Only your correspondent can decrypt them.</translation>
         <translation>Create contact</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="363"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="370"/>
         <source>one_one_infos_ephemerals</source>
         <translation>Ephemeral messages : </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="363"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="370"/>
         <source>one_one_infos_enable_ephemerals</source>
         <translation>Enable ephemeral messages</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="373"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="380"/>
         <source>one_one_infos_delete_history</source>
         <translation>Delete history</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="378"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="385"/>
         <source>one_one_infos_delete_history_toast_title</source>
         <extracomment>Delete history ?</extracomment>
         <translation>Delete history ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="380"/>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="387"/>
         <source>one_one_infos_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation>All the messages will be removed from the chat room. Do you want to continue ?</translation>
@@ -3859,7 +3859,7 @@ Expiration : %1</translation>
         <translation>Add participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="329"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="336"/>
         <source>meeting_schedule_send_invitations_title</source>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
         <translation>Send an invitation to participants</translation>
@@ -4016,7 +4016,7 @@ Expiration : %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="520"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="756"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="755"/>
         <source>saved</source>
         <extracomment>&quot;Enregistré&quot;</extracomment>
         <translation>Saved</translation>
@@ -4046,12 +4046,12 @@ Expiration : %1</translation>
         <translation>Add participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="590"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="589"/>
         <source>meeting_schedule_add_participants_apply</source>
         <translation>Apply</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="600"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="599"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
         <translation>
@@ -4060,31 +4060,31 @@ Expiration : %1</translation>
         </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="686"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="685"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Delete meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="758"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="757"/>
         <source>meeting_address_copied_to_clipboard_toast</source>
         <extracomment>&quot;Adresse de la réunion copiée&quot;</extracomment>
         <translation>Meeting URI copied</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="794"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="793"/>
         <source>meeting_schedule_timezone_title</source>
         <extracomment>&quot;Fuseau horaire&quot;</extracomment>
         <translation>Timezone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="890"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="896"/>
         <source>meeting_info_organizer_label</source>
         <extracomment>&quot;Organisateur&quot;</extracomment>
         <translation>Organizer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="909"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="915"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
         <translation>Join meeting</translation>
