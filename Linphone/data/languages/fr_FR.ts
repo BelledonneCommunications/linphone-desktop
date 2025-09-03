@@ -236,7 +236,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="327"/>
         <source>manage_account_device_last_connection</source>
         <extracomment>&quot;Dernière connexion:&quot;</extracomment>
-        <translation>Dernière connexion:</translation>
+        <translation>Dernière connexion&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -1019,8 +1019,8 @@
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="526"/>
         <source>menu_see_existing_contact</source>
-        <extracomment>&quot;Show contact&quot;</extracomment>
-        <translation>Voir le contact</translation>
+        <extracomment>&quot;Voir le contact&quot;</extracomment>
+        <translation>Afficher le contact</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="528"/>
@@ -3335,13 +3335,13 @@
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="56"/>
         <source>OAuthHttpServerReplyHandler is not listening</source>
-        <translation>OAuthHttpServerReplyHandler n&apos;est pas disponible</translation>
+        <translation>OAuthHttpServerReplyHandler n&apos;écoute pas</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="120"/>
         <source>oidc_authentication_timeout_message</source>
         <extracomment>Timeout: Not authenticated</extracomment>
-        <translation>Timeout : non authentifié</translation>
+        <translation>Délai d&apos;expiration&#xa0;: Non authentifié</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="137"/>
@@ -3359,7 +3359,7 @@
         <location filename="../../model/auth/OIDCModel.cpp" line="150"/>
         <source>oidc_authentication_refresh_message</source>
         <extracomment>Refreshing token</extracomment>
-        <translation>Token en cours de rafraîchissement</translation>
+        <translation>Jeton en cours de rafraîchissement</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="155"/>
@@ -3377,31 +3377,31 @@
         <location filename="../../model/auth/OIDCModel.cpp" line="177"/>
         <source>oidc_authentication_server_error</source>
         <extracomment>Server error</extracomment>
-        <translation>Erreur de serveur</translation>
+        <translation>Erreur du serveur</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="181"/>
         <source>oidc_authentication_token_not_found_error</source>
         <extracomment>OAuth token not found</extracomment>
-        <translation>Token OAuth non trouvé</translation>
+        <translation>Jeton OAuth non trouvé</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="185"/>
         <source>oidc_authentication_token_secret_not_found_error</source>
         <extracomment>OAuth token secret not found</extracomment>
-        <translation>Token OAuth secret non trouvé</translation>
+        <translation>Jeton OAuth secret introuvable</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="189"/>
         <source>oidc_authentication_callback_not_verified_error</source>
         <extracomment>OAuth callback not verified</extracomment>
-        <translation>Retour OAuth non vérifié</translation>
+        <translation>Rappel OAuth non vérifié</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="200"/>
         <source>oidc_authentication_request_auth_message</source>
         <extracomment>Requesting authorization from browser</extracomment>
-        <translation>En attente d&apos;autorisation du navigateur</translation>
+        <translation>Demande d&apos;autorisation du navigateur en cours</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="232"/>
@@ -3412,19 +3412,19 @@
         <location filename="../../model/auth/OIDCModel.cpp" line="244"/>
         <source>oidc_authentication_request_token_message</source>
         <extracomment>Requesting access token</extracomment>
-        <translation>En attente du token d&apos;accès</translation>
+        <translation>Demande de jeton d&apos;accès</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="249"/>
         <source>oidc_authentication_refresh_token_message</source>
         <extracomment>Refreshing access token</extracomment>
-        <translation>Token en cours de rafraîchissement</translation>
+        <translation>Actualisation du jeton d&apos;accès</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="254"/>
         <source>oidc_authentication_request_authorization_message</source>
         <extracomment>Requesting authorization</extracomment>
-        <translation>Autorisation en cours</translation>
+        <translation>Demande d&apos;autorisation en cours</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="259"/>
@@ -3436,13 +3436,13 @@
         <location filename="../../model/auth/OIDCModel.cpp" line="286"/>
         <source>oidc_authentication_no_auth_found_in_config_error</source>
         <extracomment>No authorization endpoint found in OpenID configuration</extracomment>
-        <translation>Pas d&apos;autorisation trouvé dans la configuration OpenID</translation>
+        <translation>Aucun point de terminaison d&apos;autorisation trouvé dans la configuration OpenID</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="301"/>
         <source>oidc_authentication_no_token_found_in_config_error</source>
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
-        <translation>Pas de token trouvé dans la configuration OpenID</translation>
+        <translation>Aucun jeton de point de terminaison trouvé dans la configuration OpenID</translation>
     </message>
 </context>
 <context>
