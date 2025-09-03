@@ -530,87 +530,87 @@
     </message>
     <message>
         <location filename="../../core/App.cpp" line="386"/>
-        <location filename="../../core/App.cpp" line="636"/>
+        <location filename="../../core/App.cpp" line="639"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Error</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="387"/>
-        <location filename="../../core/App.cpp" line="638"/>
+        <location filename="../../core/App.cpp" line="641"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation>Remote provisioning failed : %1</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="632"/>
+        <location filename="../../core/App.cpp" line="635"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation>not reachable</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="891"/>
+        <location filename="../../core/App.cpp" line="894"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>A free and open source SIP video-phone.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="893"/>
+        <location filename="../../core/App.cpp" line="896"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Send an order to the application towards a command line</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="897"/>
+        <location filename="../../core/App.cpp" line="900"/>
         <source>command_line_option_show_help</source>
         <translation>Show this help</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="902"/>
+        <location filename="../../core/App.cpp" line="905"/>
         <source>command_line_option_show_app_version</source>
         <translation>Show app version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="910"/>
+        <location filename="../../core/App.cpp" line="913"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="912"/>
+        <location filename="../../core/App.cpp" line="915"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, path or file</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="917"/>
+        <location filename="../../core/App.cpp" line="920"/>
         <source>command_line_option_minimized</source>
         <translation>Minimize</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="920"/>
+        <location filename="../../core/App.cpp" line="923"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Log to stdout some debug information while running</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="923"/>
+        <location filename="../../core/App.cpp" line="926"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1293"/>
+        <location filename="../../core/App.cpp" line="1296"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1293"/>
+        <location filename="../../core/App.cpp" line="1296"/>
         <source>show_action</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1308"/>
+        <location filename="../../core/App.cpp" line="1311"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quit</translation>

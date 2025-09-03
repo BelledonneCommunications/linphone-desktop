@@ -417,7 +417,10 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	});
 	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, [this] {
 		int n = mEventCountNotifier->getCurrentEventCount();
-		mCoreModelConnection->invokeToCore([this, n] { mEventCountNotifier->notifyEventCount(n); });
+		mCoreModelConnection->invokeToCore([this, n] {
+			mEventCountNotifier->notifyEventCount(n);
+			emit defaultAccountChanged();
+		});
 	});
 
 	//---------------------------------------------------------------------------------------------

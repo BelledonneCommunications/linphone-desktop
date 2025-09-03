@@ -346,6 +346,14 @@ AbstractMainPage {
                 onChatChanged: {
                     if (mainItem.selectedChatGui !== chat) mainItem.selectedChatGui = chat
                 }
+                // Reset current chat when switching account, otherwise the binding makes
+                // the last chat from last account the current chat for the new default account
+                Connections {
+                    target: AppCpp
+                    function onDefaultAccountChanged() {
+                        selectedChatView.chat = null
+                    }
+                }
                 // Binding is destroyed when forward message is done so
                 // we need this connection in addition
                 Connections {

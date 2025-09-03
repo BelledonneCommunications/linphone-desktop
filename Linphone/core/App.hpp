@@ -182,6 +182,7 @@ signals:
 	void mainWindowChanged();
 	void coreStartedChanged(bool coreStarted);
 	void accountsChanged();
+	void defaultAccountChanged();
 	void callsChanged();
 	void currentDateChanged();
 	// void executeCommand(QString command);
