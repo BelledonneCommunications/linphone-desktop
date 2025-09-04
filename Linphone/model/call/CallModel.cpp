@@ -338,33 +338,53 @@ void CallModel::sendDtmf(const QString &dtmf) {
 
 void CallModel::updateCallErrorFromReason(linphone::Reason reason) {
 	QString error;
+	qDebug() << "call Error reason" << (int)reason;
 	switch (reason) {
+		case linphone::Reason::None:
+			error = "";
+			break;
+		case linphone::Reason::NoResponse:
+			//: "No response"
+			error = tr("call_error_no_response_toast");
+			break;
+		case linphone::Reason::Forbidden:
+			//: "403 : Forbidden resource"
+			error = tr("call_error_forbidden_resource_toast");
+			break;
+		case linphone::Reason::NotAnswered:
+			//: "Request timeout"
+			error = tr("call_error_not_answered_toast");
+			break;
 		case linphone::Reason::Declined:
-			//: "Le correspondant a décliné l'appel"
+			//: "User declined the call"
 			error = tr("call_error_user_declined_toast");
 			break;
 		case linphone::Reason::NotFound:
-			//: "Le correspondant n'a pas été trouvé"
+			//: "User was not found"
 			error = tr("call_error_user_not_found_toast");
 			break;
 		case linphone::Reason::Busy:
-			//: "Le correspondant est occupé"
+			//: "User is busy"
 			error = tr("call_error_user_busy_toast");
 			break;
 		case linphone::Reason::NotAcceptable:
-			//: "Le correspondant ne peut accepter votre appel."
+			//: "User can&apos;t accept your call"
 			error = tr("call_error_incompatible_media_params_toast");
 			break;
 		case linphone::Reason::IOError:
-			//: "Service indisponible ou erreur réseau"
+			//: "Unavailable service or network error"
 			error = tr("call_error_io_error_toast");
 			break;
+		case linphone::Reason::DoNotDisturb:
+			//: "Le correspondant ne peut être dérangé"
+			error = tr("call_error_do_not_disturb_toast");
+			break;
 		case linphone::Reason::TemporarilyUnavailable:
-			//: "Temporairement indisponible"
+			//: "Temporarily unavailable"
 			error = tr("call_error_temporarily_unavailable_toast");
 			break;
 		case linphone::Reason::ServerTimeout:
-			//: "Délai d'attente du serveur dépassé"
+			//: "Server tiemout"
 			error = tr("call_error_server_timeout_toast");
 			break;
 		default:
