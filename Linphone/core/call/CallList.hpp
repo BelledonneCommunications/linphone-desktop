@@ -45,7 +45,7 @@ public:
 
 	CallGui *getCurrentCall() const; // Used for Ui
 	QSharedPointer<CallCore> getCurrentCallCore() const;
-	void setCurrentCall(CallGui* callGui);
+	void setCurrentCall(CallGui *callGui);
 	void setCurrentCallCore(QSharedPointer<CallCore> call);
 
 	bool getHaveCall() const;
@@ -53,7 +53,7 @@ public:
 
 	// Get the next call after the current one. Used to switch the current call.
 	// At the moment, it select the last call in the list.
-	QSharedPointer<CallCore> getNextCall() const;
+	QSharedPointer<CallCore> getNextCall();
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 signals:

@@ -159,11 +159,7 @@ CallGui *CallList::getCurrentCall() const {
 }
 
 void CallList::setCurrentCall(CallGui *callGui) {
-	auto callCore = callGui ? callGui->mCore : nullptr;
-	if (mCurrentCall != callCore) {
-		mCurrentCall = callCore;
-		emit currentCallChanged();
-	}
+	setCurrentCallCore(callGui ? callGui->mCore : nullptr);
 }
 
 void CallList::setCurrentCallCore(QSharedPointer<CallCore> call) {
@@ -184,16 +180,12 @@ void CallList::setHaveCall(bool haveCall) {
 	}
 }
 
-QSharedPointer<CallCore> CallList::getNextCall() const {
-	QSharedPointer<CallCore> call;
+QSharedPointer<CallCore> CallList::getNextCall() {
 	auto currentCall = getCurrentCallCore();
-	for (auto it = mList.rbegin(); !call && it != mList.rend(); ++it) {
-		if (*it != currentCall) {
-			call = it->objectCast<CallCore>();
-		}
+	for (auto &item : getSharedList<CallCore>()) {
+		if (item != currentCall) return item;
 	}
-
-	return call;
+	return nullptr;
 }
 
 void CallList::onStateChanged() {
@@ -202,21 +194,26 @@ void CallList::onStateChanged() {
 		case LinphoneEnums::CallState::StreamsRunning:
 		case LinphoneEnums::CallState::Resuming: {
 			auto sharedCall = get(call);
-			setCurrentCallCore(sharedCall.objectCast<CallCore>());
+			setCurrentCallCore(sharedCall ? sharedCall.objectCast<CallCore>() : nullptr);
 			break;
 		}
 		case LinphoneEnums::CallState::Released: {
 			auto sharedCall = get(call);
-			auto currentCall = getCurrentCallCore();
-			// Update current call
-			if (sharedCall == currentCall) {
-				// Unpause the next call. The current call will change on resume.
-				// Assumption: All calls that are not the current are paused.
-				auto nextCall = getNextCall();
-				if (nextCall) nextCall->lSetPaused(false);
+			if (sharedCall) {
+				auto currentCall = getCurrentCallCore();
+				sharedCall->disconnect(this);
+				// Update current call
+				if (currentCall == sharedCall) {
+					auto nextCall = getNextCall();
+					if (nextCall) {
+						// Unpause the next call. The current call will change on resume.
+						// Assumption: All calls that are not the current are paused.
+						nextCall->lSetPaused(false);
+					}
+					setCurrentCallCore(nextCall);
+				}
+				bool removed = remove(sharedCall);
 			}
-			sharedCall->disconnect(this);
-			remove(sharedCall);
 			break;
 		}
 		default: {
