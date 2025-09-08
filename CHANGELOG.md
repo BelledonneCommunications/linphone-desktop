@@ -10,9 +10,21 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
-## [6.0.0] - 2025-04-17
+## [6.0.1] - 2025-09-08
 
-6.0.0 release is a complete rework of Linphone Desktop, with only the call and contact list features availables
+### Changed
+- SDK updated to 5.4.42 release
+- Updated translations from Weblate
+
+### Fixed
+- Various issues related to OpenID connect
+- Wrong thread issue for remote provisioning
+- Other UI related fixes
+
+## [6.0.0] - 2025-05-16
+
+6.0.0 release is a complete rework of Linphone Desktop, with only the call and contact list features availables.
+Disclaimer: this release is focused on calls, meetings/conferences are available but aren't stable yet and chat features are missing.
 
 ### Added
 - Contacts trust: contacts for which all devices have been validated through a ZRTP call with SAS exchange are now highlighted with a blue circle (and with a red one in case of mistrust). That trust is now handled at contact level (instead of conversation level in previous versions).
