@@ -53,7 +53,7 @@ Item {
 					: call.core.remoteName
 				: ""
 
-	property var contactObj: UtilsCpp.findFriendByAddress(call.core.remoteAddress)
+	property var contactObj: call ? UtilsCpp.findFriendByAddress(call.core.remoteAddress) : null
 	property var contact: contactObj && contactObj.value || null
 	
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null

@@ -170,6 +170,7 @@ RowLayout {
                     Layout.preferredWidth: Math.round(292 * DefaultStyle.dp)
 					Layout.alignment: Qt.AlignHCenter
 					style: ButtonStyle.main
+					//: Cancel
                     text: qsTr("cancel")
 					onClicked: {
 						settingsButton.checked = false

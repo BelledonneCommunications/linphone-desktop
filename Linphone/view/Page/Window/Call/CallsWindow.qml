@@ -12,6 +12,8 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 AbstractWindow {
     id: mainWindow
     flags: Qt.Window
+    minimumWidth: Math.round(1020 * DefaultStyle.dp)
+    minimumHeight: Math.round(700 * DefaultStyle.dp)
 
     // modality: Qt.WindowModal
     property CallGui call
@@ -101,6 +103,9 @@ AbstractWindow {
     function endCall(callToFinish) {
         if (callToFinish)
             callToFinish.core.lTerminate()
+        else {
+            if (!callsModel.haveCall) UtilsCpp.closeCallsWindow()
+        }
         // var mainWin = UtilsCpp.getMainWindow()
         // mainWin.goToCallHistory()
     }
@@ -465,25 +470,29 @@ AbstractWindow {
                                     id: encryptionStatusText
                                     text: mainWindow.conference
                                         ? qsTr("call_srtp_point_to_point_encrypted")
-                                        :mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
-                                          //: Appel chiffré de point à point
-                                            ? qsTr("call_srtp_point_to_point_encrypted")
-                                            : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-                                                ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
-                                                  //: Vérification nécessaire
-                                                    ? qsTr("call_zrtp_sas_validation_required")
-                                                    //: Appel chiffré de bout en bout
-                                                    : qsTr("call_zrtp_end_to_end_encrypted")
-                                                : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.None
-                                                    //: "Appel non chiffré"
-                                                    ? qsTr("call_not_encrypted")
-                                                    : qsTr("call_waiting_for_encryption_info")
+                                        : mainWindow.call
+                                            ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+                                            //: Appel chiffré de point à point
+                                                ? qsTr("call_srtp_point_to_point_encrypted")
+                                                : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+                                                    ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+                                                    //: Vérification nécessaire
+                                                        ? qsTr("call_zrtp_sas_validation_required")
+                                                        //: Appel chiffré de bout en bout
+                                                        : qsTr("call_zrtp_end_to_end_encrypted")
+                                                    : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.None
+                                                        //: "Appel non chiffré"
+                                                        ? qsTr("call_not_encrypted")
+                                                        : qsTr("call_waiting_for_encryption_info")
+                                            : ""
                                     color: mainWindow.conference || mainWindow.call?.core.encryption === LinphoneEnums.MediaEncryption.Srtp
                                         ? DefaultStyle.info_500_main
-                                        : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-                                            ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
-                                                ? DefaultStyle.warning_600
-                                                : DefaultStyle.info_500_main
+                                        : mainWindow.call
+                                            ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+                                                ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+                                                    ? DefaultStyle.warning_600
+                                                    : DefaultStyle.info_500_main
+                                                : DefaultStyle.grey_0
                                             : DefaultStyle.grey_0
                                     font {
                                         pixelSize: Math.round(12 * DefaultStyle.dp)
@@ -495,7 +504,7 @@ AbstractWindow {
                                         cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
                                         onClicked: {
                                             if (rightPanel.visible
-                                                    && rightPanel.contentStackView.currentItem.objectName
+                                                    && rightPanel.contentLoader.item.objectName
                                                     === "encryptionPanel")
                                                 rightPanel.visible = false
                                             else {
@@ -527,7 +536,7 @@ AbstractWindow {
                             cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
                             onClicked: {
                                 if (rightPanel.visible
-                                        && rightPanel.contentStackView.currentItem.objectName
+                                        && rightPanel.contentLoader.item.objectName
                                         === "statsPanel")
                                     rightPanel.visible = false
                                 else {
@@ -609,30 +618,89 @@ AbstractWindow {
                     Layout.topMargin: Math.round(10 * DefaultStyle.dp)
                     property int currentIndex: 0
                     visible: false
+                    onVisibleChanged: if(!visible) contentLoader.sourceComponent = null
                     function replace(id) {
                         rightPanel.customHeaderButtons = null
-                        contentStackView.replace(id, Control.StackView.Immediate)
+                        contentLoader.sourceComponent = id
                     }
                     headerStack.currentIndex: 0
-                    contentStackView.initialItem: callListPanel
                     headerValidateButtonText: qsTr("add")
 
+                    // Do not consider padding for chat
                     Binding on topPadding {
-                        when: rightPanel.contentStackView.currentItem.objectName === "chatPanel"
+                        when: rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName === "chatPanel"
                         value: 0
+                        restoreMode: Binding.RestoreBindingOrValue
                     }
                     Binding on leftPadding {
-                        when: rightPanel.contentStackView.currentItem.objectName === "chatPanel"
+                        when: rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName === "chatPanel"
                         value: 0
+                        restoreMode: Binding.RestoreBindingOrValue
                     }
                     Binding on rightPadding {
-                        when: rightPanel.contentStackView.currentItem.objectName == "chatPanel"
+                        when: rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName == "chatPanel"
                         value: 0
+                        restoreMode: Binding.RestoreBindingOrValue
                     }
-                    Binding on rightPadding {
-                        when: rightPanel.contentStackView.currentItem.objectName == "participantListView"
-                        value: Math.round(10 * DefaultStyle.dp)
+                    Connections {
+                        target: rightPanel.contentLoader
+                        function onItemChanged() {
+                            if (rightPanel.contentLoader.item) {
+                                if (rightPanel.contentLoader.item.objectName === "callTransferPanel") {
+                                    //: "Transférer %1 à…"
+                                    rightPanel.headerTitleText = qsTr("call_transfer_current_call_title").arg(mainWindow.call.core.remoteName)
+                                }
+                                else if (rightPanel.contentLoader.item.objectName === "newCallPanel") {
+                                    //: "Nouvel appel"
+                                    rightPanel.headerTitleText = qsTr("call_action_start_new_call")
+                                }
+                                else if (rightPanel.contentLoader.item.objectName === "dialerPanel") {
+                                    //: "Pavé numérique"
+                                    rightPanel.headerTitleText = qsTr("call_action_show_dialer")
+                                }
+                                else if (rightPanel.contentLoader.item.objectName === "changeLayoutPanel") {
+                                    //: "Modifier la disposition"
+                                    rightPanel.headerTitleText = qsTr("call_action_change_layout")
+                                }
+                                else if (rightPanel.contentLoader.item.objectName === "callListPanel") {
+                                    //: "Liste d'appel"
+                                    rightPanel.headerTitleText = qsTr("call_action_go_to_calls_list")
+                                }
+                                else if (rightPanel.contentLoader.item.objectName === "chatPanel") {
+                                    rightPanel.headerTitleText = ""
+                                }
+                                else if (rightPanel.contentLoader.item.objectName === "settingsPanel") {
+                                    //: "Paramètres"
+                                    rightPanel.headerTitleText = qsTr("call_action_go_to_settings")
+                                }
+                                else if (rightPanel.contentLoader.item.objectName === "screencastPanel") {
+                                    //: "Partage de votre écran"
+                                    rightPanel.headerTitleText = qsTr("conference_action_screen_sharing")
+                                }
+                                else if (rightPanel.contentLoader.item.objectName === "encryptionPanel") {
+                                    //: Chiffrement
+                                    rightPanel.headerTitleText = qsTr("call_encryption_title")
+                                }
+                                else if (rightPanel.contentLoader.item.objectName === "statsPanel") {
+                                    //: Statistiques
+                                    rightPanel.headerTitleText = qsTr("call_stats_title")
+                                }
+                            }
+                            if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "participantListPanel") rightPanel.headerStack.currentIndex = 0
+                            if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "callTransferPanel") transferCallButton.checked = false
+                            if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "newCallPanel") newCallButton.checked = false
+                            if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "callListPanel") callListButton.checked = false
+                            if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "screencastPanel") screencastPanelButton.checked = false
+                            if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "chatPanel") chatPanelButton.checked = false
+                            if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "participantListPanel") participantListButton.checked = false
+                        }
                     }
+
+                    // Binding on rightPadding {
+                    //     when: rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName == "participantListView"
+                    //     value: Math.round(10 * DefaultStyle.dp)
+                    //     restoreMode: Binding.RestoreBindingOrValue
+                    // }
 
                     Item {
                         id: numericPadContainer
@@ -646,144 +714,155 @@ AbstractWindow {
 
             Component {
                 id: callTransferPanel
-                NewCallForm {
-                    id: newCallForm
-                    //: "Transférer %1 à…"
-                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("call_transfer_current_call_title").arg(mainWindow.call.core.remoteName)
-                    Keys.onEscapePressed: event => {
-                                              rightPanel.visible = false
-                                              event.accepted = true
-                                          }
-                    groupCallVisible: false
-                    displayCurrentCalls: true
-                    searchBarColor: DefaultStyle.grey_0
-                    searchBarBorderColor: DefaultStyle.grey_200
-                    onContactClicked: contact => {
-                                          var callsWin = UtilsCpp.getCallsWindow()
-                                          if (contact)
-                                          //: "Confirmer le transfert"
-                                          callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
-                                                                               //: "Vous allez transférer %1 à %2."
-                                                                               qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(contact.core.fullName), "",
-                                              function (confirmed) {
-                                                  if (confirmed) {
-                                                      mainWindow.transferCallToContact(mainWindow.call,contact,newCallForm)
-                                                  }
-                                              })
-                                      }
-                    onTransferCallToAnotherRequested: dest => {
-                                                          var callsWin = UtilsCpp.getCallsWindow()
-                                                          console.log("transfer to",dest)
-                                                          callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
-                                                                                               qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(dest.core.remoteName),"",
-                                                                function (confirmed) {
-                                                                  if (confirmed) {
-                                                                      mainWindow.call.core.lTransferCallToAnother(dest.core.remoteAddress)
-                                                                  }
-                                                          })
-                                                      }
-                    numPadPopup: numPadPopup
-
-                    NumericPadPopup {
-                        id: numPadPopup
-                        parent: numericPadContainer
+                Control.Control {
+                    objectName: "callTransferPanel"
+                    width: parent.width
+                    NewCallForm {
+                        id: newCallForm
                         width: parent.width
-                        roundedBottom: true
-                        lastRowVisible: false
-                        visible: false
-                        leftPadding: Math.round(40 * DefaultStyle.dp)
-                        rightPadding: Math.round(40 * DefaultStyle.dp)
-                        topPadding: Math.round(41 * DefaultStyle.dp)
-                        bottomPadding: Math.round(18 * DefaultStyle.dp)
-                        Component.onCompleted: parent.height = height
+                        height: rightPanel.contentItemHeight
+                        Keys.onEscapePressed: event => {
+                                                rightPanel.visible = false
+                                                event.accepted = true
+                                            }
+                        groupCallVisible: false
+                        displayCurrentCalls: true
+                        searchBarColor: DefaultStyle.grey_0
+                        searchBarBorderColor: DefaultStyle.grey_200
+                        onContactClicked: contact => {
+                                            var callsWin = UtilsCpp.getCallsWindow()
+                                            if (contact)
+                                            //: "Confirmer le transfert"
+                                            callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
+                                                                                //: "Vous allez transférer %1 à %2."
+                                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(contact.core.fullName), "",
+                                                function (confirmed) {
+                                                    if (confirmed) {
+                                                        mainWindow.transferCallToContact(mainWindow.call,contact,newCallForm)
+                                                    }
+                                                })
+                                        }
+                        onTransferCallToAnotherRequested: dest => {
+                                                            var callsWin = UtilsCpp.getCallsWindow()
+                                                            console.log("transfer to",dest)
+                                                            callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
+                                                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(dest.core.remoteName),"",
+                                                                    function (confirmed) {
+                                                                    if (confirmed) {
+                                                                        mainWindow.call.core.lTransferCallToAnother(dest.core.remoteAddress)
+                                                                    }
+                                                            })
+                                                        }
+                        numPadPopup: numPadPopup
+
+                        NumericPadPopup {
+                            id: numPadPopup
+                            parent: numericPadContainer
+                            width: parent.width
+                            roundedBottom: true
+                            lastRowVisible: false
+                            visible: false
+                            leftPadding: Math.round(40 * DefaultStyle.dp)
+                            rightPadding: Math.round(40 * DefaultStyle.dp)
+                            topPadding: Math.round(41 * DefaultStyle.dp)
+                            bottomPadding: Math.round(18 * DefaultStyle.dp)
+                            Component.onCompleted: parent.height = height
+                        }
                     }
                 }
             }
             Component {
                 id: newCallPanel
-                NewCallForm {
-                    id: newCallForm
+                Control.Control {
                     objectName: "newCallPanel"
-                    //: "Nouvel appel"
-                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("call_action_start_new_call")
-                    groupCallVisible: false
-                    searchBarColor: DefaultStyle.grey_0
-                    searchBarBorderColor: DefaultStyle.grey_200
-                    numPadPopup: numericPad
-                    onContactClicked: contact => {
-                                          mainWindow.startCallWithContact(
-                                              contact, false, rightPanel)
-                                      }
-                    Connections {
-                        target: mainWindow
-                        function onCallChanged() {
-                            if (newCallForm.Control.StackView.status === Control.StackView.Active)
-                                rightPanel.visible = false
-                        }
-                    }
-
-                    NumericPadPopup {
-                        id: numericPad
+                    width: parent.width
+                    NewCallForm {
+                        id: newCallForm
                         width: parent.width
-                        parent: numericPadContainer
-                        roundedBottom: true
-                        visible: newCallForm.searchBar.numericPadButton.checked
-                        leftPadding: Math.round(40 * DefaultStyle.dp)
-                        rightPadding: Math.round(40 * DefaultStyle.dp)
-                        topPadding: Math.round(41 * DefaultStyle.dp)
-                        bottomPadding: Math.round(18 * DefaultStyle.dp)
-                        onLaunchCall: {
-                            rightPanel.visible = false
-                            UtilsCpp.createCall(newCallForm.searchBar.text)
+                        height: rightPanel.contentItemHeight
+                        groupCallVisible: false
+                        searchBarColor: DefaultStyle.grey_0
+                        searchBarBorderColor: DefaultStyle.grey_200
+                        numPadPopup: numericPad
+                        onContactClicked: contact => {
+                                            mainWindow.startCallWithContact(
+                                                contact, false, rightPanel)
+                                        }
+                        Connections {
+                            target: mainWindow
+                            function onCallChanged() {
+                                if (newCallForm.Control.StackView.status === Control.StackView.Active)
+                                    rightPanel.visible = false
+                            }
                         }
-                        Component.onCompleted: parent.height = height
+
+                        NumericPadPopup {
+                            id: numericPad
+                            width: parent.width
+                            parent: numericPadContainer
+                            roundedBottom: true
+                            visible: newCallForm.searchBar.numericPadButton.checked
+                            leftPadding: Math.round(40 * DefaultStyle.dp)
+                            rightPadding: Math.round(40 * DefaultStyle.dp)
+                            topPadding: Math.round(41 * DefaultStyle.dp)
+                            bottomPadding: Math.round(18 * DefaultStyle.dp)
+                            onLaunchCall: {
+                                rightPanel.visible = false
+                                UtilsCpp.createCall(newCallForm.searchBar.text)
+                            }
+                            Component.onCompleted: parent.height = height
+                        }
                     }
                 }
             }
             Component {
                 id: dialerPanel
-                Item {
+                Control.Control {
                     id: dialerPanelContent
-                    //: "Pavé numérique"
-                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("call_action_show_dialer")
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
+                    objectName: "dialerPanel"
+                    width: parent.width
                     Keys.onEscapePressed: event => {
-                                              rightPanel.visible = false
-                                              event.accepted = true
-                                          }
-                    SearchBar {
-                        anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
-                        anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
-                        anchors.bottom: numPad.top
-                        anchors.bottomMargin: Math.round(41 * DefaultStyle.dp)
-                        magnifierVisible: false
-                        color: DefaultStyle.grey_0
-                        borderColor: DefaultStyle.grey_200
-                        placeholderText: ""
-                        numericPadPopup: numPad
-                        numericPadButton.visible: false
-                        enabled: false
+                        rightPanel.visible = false
+                        event.accepted = true
                     }
-                    NumericPad {
-                        id: numPad
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottom: parent.bottom
-                        currentCall: callsModel.currentCall
-                        lastRowVisible: false
-                        anchors.bottomMargin: Math.round(18 * DefaultStyle.dp)
-                        onLaunchCall: {
-                            UtilsCpp.createCall(dialerTextInput.text)
+                    FocusScope {
+                        width: parent.width
+                        height: rightPanel.contentItemHeight
+                        ColumnLayout {
+                            anchors.fill: parent
+                            spacing: Math.round(41 * DefaultStyle.dp)
+                            Item{Layout.fillHeight: true}
+                            SearchBar {
+                                id: searchBar
+                                height: Math.round(45 * DefaultStyle.dp)
+                                magnifierVisible: false
+                                color: DefaultStyle.grey_0
+                                borderColor: DefaultStyle.grey_200
+                                placeholderText: ""
+                                numericPadPopup: numPad
+                                numericPadButton.visible: false
+                                enabled: false
+                            }
+                            NumericPad {
+                                id: numPad
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+                                Layout.bottomMargin: Math.round(18 * DefaultStyle.dp)
+                                currentCall: callsModel.currentCall
+                                lastRowVisible: false
+                                onLaunchCall: {
+                                    UtilsCpp.createCall(dialerTextInput.text)
+                                }
+                                Component.onCompleted: parent.height = height
+                            }
                         }
-                        Component.onCompleted: parent.height = height
                     }
                 }
             }
             Component {
                 id: changeLayoutPanel
                 ChangeLayoutForm {
-                    //: "Modifier la disposition"
-                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("call_action_change_layout")
+                    objectName: "changeLayoutPanel"
+                    width: parent.width
                     Keys.onEscapePressed: event => {
                                               rightPanel.visible = false
                                               event.accepted = true
@@ -797,12 +876,7 @@ AbstractWindow {
             Component {
                 id: callListPanel
                 ColumnLayout {
-                    Control.StackView.onActivated: {
-                        //: "Liste d'appel"
-                        rightPanel.headerTitleText = qsTr("call_action_go_to_calls_list")
-                        rightPanel.customHeaderButtons = mergeCallPopupButton.createObject(
-                                    rightPanel)
-                    }
+                    objectName: "callListPanel"
                     Keys.onEscapePressed: event => {
                                               rightPanel.visible = false
                                               event.accepted = true
@@ -848,88 +922,94 @@ AbstractWindow {
                     Item {
                         Layout.fillHeight: true
                     }
+                    Connections {
+                        target: rightPanel.contentLoader
+                        function onItemChanged() {
+                            if (rightPanel.contentLoader.item.objectName === "callListPanel") {
+                                rightPanel.customHeaderButtons = mergeCallPopupButton.createObject(rightPanel)
+                            }
+                        }
+                    }
                 }
             }
             Component {
                 id: chatPanel
-                Item {
-                    id: chatPanelContent
+                Control.Control {
                     objectName: "chatPanel"
-                    Control.StackView.onActivated: {
-                        rightPanel.customHeaderButtons = chatView.callHeaderContent
-                        rightPanel.headerTitleText = ""
-                    }
-                    Keys.onEscapePressed: event => {
-                        rightPanel.visible = false
-                        event.accepted = true
-                    }
+                    width: parent.width
                     SelectedChatView {
                         id: chatView
-                        anchors.fill: parent
+                        width: parent.width
+                        height: rightPanel.contentItemHeight
+                        Keys.onEscapePressed: event => {
+                            rightPanel.visible = false
+                            event.accepted = true
+                        }
                         call: mainWindow.call
                         property var chatObj: UtilsCpp.getCurrentCallChat(mainWindow.call)
                         chat: chatObj ? chatObj.value : null
+                    }
+                    Connections {
+                        target: rightPanel.contentLoader
+                        function onItemChanged() {
+                            if (rightPanel.contentLoader.item.objectName === "chatPanel") {
+                                rightPanel.customHeaderButtons = chatView.callHeaderContent
+                            }
+                        }
                     }
                 }
             }
             Component {
                 id: settingsPanel
-                Item {
-                    Control.StackView.onActivated: {
-                        //: "Paramètres"
-                        rightPanel.headerTitleText = qsTr("call_action_go_to_settings")
-                    }
+                MultimediaSettings {
+                    id: inSettingsPanel
+                    objectName: "settingsPanel"
                     Keys.onEscapePressed: event => {
                         rightPanel.visible = false
                         event.accepted = true
                     }
-                    MultimediaSettings {
-                        id: inSettingsPanel
-                        call: mainWindow.call
-                        anchors.fill: parent
-                        anchors.topMargin: Math.round(16 * DefaultStyle.dp)
-                        anchors.bottomMargin: Math.round(16 * DefaultStyle.dp)
-                        anchors.leftMargin: Math.round(17 * DefaultStyle.dp)
-                        anchors.rightMargin: Math.round(17 * DefaultStyle.dp)
-                    }
+                    call: mainWindow.call
+                    height: childrenRect.height
+                    width: parent.width
                 }
             }
             Component {
                 id: screencastPanel
-                Item {
-                    //: "Partage de votre écran"
-                    Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("conference_action_screen_sharing")
+                Control.Control {
+                    objectName: "screencastPanel"
+                    width: parent.width
+                    height: contentChildren.height
                     Keys.onEscapePressed: event => {
-                                              rightPanel.visible = false
-                                              event.accepted = true
-                                          }
-                    ScreencastSettings {
-                        anchors.fill: parent
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
+                    contentItem: ScreencastSettings {
+                        id: screencastsettings
                         anchors.topMargin: Math.round(16 * DefaultStyle.dp)
-                        anchors.bottomMargin: Math.round(16 * DefaultStyle.dp)
-                        anchors.leftMargin: Math.round(17 * DefaultStyle.dp)
-                        anchors.rightMargin: Math.round(17 * DefaultStyle.dp)
+                        width: parent.width
                         call: mainWindow.call
                     }
                 }
             }
             Component {
                 id: participantListPanel
-                Item {
+                Control.Control {
+                    width: parent.width
                     objectName: "participantListPanel"
                     Keys.onEscapePressed: event => {
-                                              rightPanel.visible = false
-                                              event.accepted = true
-                                          }
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
                     Control.StackView {
                         id: participantsStack
-                        anchors.fill: parent
-                        anchors.bottomMargin: Math.round(16 * DefaultStyle.dp)
-                        anchors.leftMargin: Math.round(17 * DefaultStyle.dp)
-                        anchors.rightMargin: Math.round(17 * DefaultStyle.dp)
+                        width: parent.width
+                        height: rightPanel.contentItemHeight
+                        // anchors.fill: parent
+                        // anchors.bottomMargin: Math.round(16 * DefaultStyle.dp)
+                        // anchors.leftMargin: Math.round(17 * DefaultStyle.dp)
+                        // anchors.rightMargin: Math.round(17 * DefaultStyle.dp)
                         initialItem: participantListComp
-                        onCurrentItemChanged: rightPanel.headerStack.currentIndex
-                                              = currentItem.Control.StackView.index
+                        onCurrentItemChanged: rightPanel.headerStack.currentIndex = currentItem.Control.StackView.index
                         property list<string> selectedParticipants
 
                         Connections {
@@ -945,6 +1025,8 @@ AbstractWindow {
                                 id: participantList
                                 objectName: "participantListView"
                                 call: mainWindow.call
+                                height: contentHeight
+                                width: parent.width
                                 rightMargin: 0
                                 Component {
                                     id: headerbutton
@@ -963,7 +1045,8 @@ AbstractWindow {
                                         }
                                     }
                                 }
-                                Control.StackView.onActivated: {
+                                
+                                onVisibleChanged: if (visible) {
                                     rightPanel.customHeaderButtons = headerbutton.createObject(rightPanel)
                                     //: "Participants (%1)"
                                     rightPanel.headerTitleText = qsTr("conference_participants_list_title").arg(count)
@@ -982,8 +1065,7 @@ AbstractWindow {
                                 Connections {
                                     target: rightPanel
                                     function onValidateRequested() {
-                                        participantList.model.addAddresses(
-                                                    participantsStack.selectedParticipants)
+                                        participantList.model.addAddresses(participantsStack.selectedParticipants)
                                         participantsStack.pop()
                                     }
                                 }
@@ -993,6 +1075,8 @@ AbstractWindow {
                             id: addParticipantComp
                             AddParticipantsForm {
                                 id: addParticipantLayout
+                                // height: childrenRect.height
+                                // width: parent.width
                                 searchBarColor: DefaultStyle.grey_0
                                 searchBarBorderColor: DefaultStyle.grey_200
                                 onSelectedParticipantsCountChanged: {
@@ -1005,6 +1089,8 @@ AbstractWindow {
                                         if (participantsStack.currentItem == addParticipantLayout) {
                                             rightPanel.headerTitleText = qsTr("meeting_schedule_add_participants_title")
                                             rightPanel.headerSubtitleText = qsTr("group_call_participant_selected", '', addParticipantLayout.selectedParticipants.length).arg(addParticipantLayout.selectedParticipants.length)
+                                        } else {
+                                            rightPanel.headerSubtitleText = ""
                                         }
                                     }
                                 }
@@ -1018,10 +1104,7 @@ AbstractWindow {
                 EncryptionSettings {
                     objectName: "encryptionPanel"
                     call: mainWindow.call
-                    Control.StackView.onActivated: {
-                        //: Chiffrement
-                        rightPanel.headerTitleText = qsTr("call_encryption_title")
-                    }
+                    width: parent.width
                     onEncryptionValidationRequested: zrtpValidation.open()
                 }
             }
@@ -1029,10 +1112,7 @@ AbstractWindow {
                 id: statsPanel
                 CallStatistics {
                     objectName: "statsPanel"
-                    Control.StackView.onActivated: {
-                        //: Statistiques
-                        rightPanel.headerTitleText = qsTr("call_stats_title")
-                    }
+                    width: parent.width
                     call: mainWindow.call
                 }
             }
@@ -1072,7 +1152,6 @@ AbstractWindow {
                         target: rightPanel
                         function onVisibleChanged() {
                             if (!rightPanel.visible) {
-                                console.log("unceck settings button")
                                 waitingRoomIn.settingsButtonChecked = false
                             }
                         }
@@ -1216,20 +1295,13 @@ AbstractWindow {
                         contentImageColor: DefaultStyle.grey_0
                         //: "Transférer l'appel"
                         ToolTip.text: qsTr("call_action_transfer_call")
-                        onCheckedChanged: {
+                        onToggled: {
                             console.log("checked transfer changed", checked)
                             if (checked) {
                                 rightPanel.visible = true
                                 rightPanel.replace(callTransferPanel)
                             } else {
                                 rightPanel.visible = false
-                            }
-                        }
-                        Connections {
-                            target: rightPanel
-                            function onVisibleChanged() {
-                                if (!rightPanel.visible)
-                                    transferCallButton.checked = false
                             }
                         }
                     }
@@ -1243,20 +1315,13 @@ AbstractWindow {
                         icon.height: Math.round(32 * DefaultStyle.dp)
                         //: "Initier un nouvel appel"
                         ToolTip.text: qsTr("call_action_start_new_call_hint")
-                        onCheckedChanged: {
+                        onToggled: {
                             console.log("checked newcall changed", checked)
                             if (checked) {
                                 rightPanel.visible = true
                                 rightPanel.replace(newCallPanel)
                             } else {
                                 rightPanel.visible = false
-                            }
-                        }
-                        Connections {
-                            target: rightPanel
-                            function onVisibleChanged() {
-                                if (!rightPanel.visible)
-                                    newCallButton.checked = false
                             }
                         }
                     }
@@ -1270,19 +1335,12 @@ AbstractWindow {
                         icon.height: Math.round(32 * DefaultStyle.dp)
                         //: "Afficher la liste d'appels"
                         ToolTip.text: qsTr("call_display_call_list_hint")
-                        onCheckedChanged: {
+                        onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
                                 rightPanel.replace(callListPanel)
                             } else {
                                 rightPanel.visible = false
-                            }
-                        }
-                        Connections {
-                            target: rightPanel
-                            function onVisibleChanged() {
-                                if (!rightPanel.visible)
-                                    newCallButton.checked = false
                             }
                         }
                     }
@@ -1336,6 +1394,7 @@ AbstractWindow {
                                        !mainWindow.call.core.microphoneMuted)
                     }
                     CheckableButton {
+                        id: screencastPanelButton
                         iconUrl: AppIcons.screencast
                         visible: !!mainWindow.conference
                         //: Partager l'écran…
@@ -1344,7 +1403,7 @@ AbstractWindow {
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
                         icon.height: Math.round(32 * DefaultStyle.dp)
-                        onCheckedChanged: {
+                        onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
                                 rightPanel.replace(screencastPanel)
@@ -1354,6 +1413,7 @@ AbstractWindow {
                         }
                     }
                     CheckableButton {
+                        id: chatPanelButton
                         iconUrl: AppIcons.chatTeardropText
                         //: Open chat…
                         ToolTip.text: qsTr("call_open_chat_hint")
@@ -1361,7 +1421,7 @@ AbstractWindow {
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
                         icon.height: Math.round(32 * DefaultStyle.dp)
-                        onCheckedChanged: {
+                        onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
                                 rightPanel.replace(chatPanel)
@@ -1401,18 +1461,13 @@ AbstractWindow {
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
                         icon.height: Math.round(32 * DefaultStyle.dp)
-                        onCheckedChanged: {
+                        onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
                                 rightPanel.replace(participantListPanel)
                             } else {
                                 rightPanel.visible = false
                             }
-                        }
-                        Connections {
-                            target: rightPanel
-                            onVisibleChanged: if (!rightPanel.visible)
-                                                  participantListButton.checked = false
                         }
                     }
                     PopupButton {

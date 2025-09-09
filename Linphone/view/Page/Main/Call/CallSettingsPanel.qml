@@ -7,8 +7,9 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 Control.Page {
 	id: mainItem
 	property alias headerStack: headerStack
-	property alias contentStackView: contentStackView
+	property alias contentLoader: contentLoader
 	property alias customHeaderButtons: customButtonLayout.children
+	property int contentItemHeight: scrollview.height
 	property bool closeButtonVisible: true
 	clip: true
 
@@ -19,8 +20,9 @@ Control.Page {
 	signal validateRequested()
 
     topPadding: Math.round(20 * DefaultStyle.dp)
+    bottomPadding: Math.round(20 * DefaultStyle.dp)
     leftPadding: Math.round(17 * DefaultStyle.dp)
-    rightPadding: Math.round(17 * DefaultStyle.dp)
+    rightPadding: Math.round(5 * DefaultStyle.dp)
 
 	background: Rectangle {
 		width: mainItem.width
@@ -123,7 +125,31 @@ Control.Page {
 			}
 		}
 	}
-	contentItem: Control.StackView {
-		id: contentStackView
+	contentItem: Control.ScrollView {
+		id: scrollview
+		width: mainItem.width - mainItem.leftPadding - mainItem.rightPadding
+		height: mainItem.height - mainItem.topPadding - mainItem.bottomPadding
+		Control.ScrollBar.vertical: ScrollBar {
+			id: scrollbar
+			anchors.right: scrollview.right
+			anchors.top: scrollview.top
+			anchors.bottom: scrollview.bottom
+			visible: contentControl.height > scrollview.height
+		}
+	    Control.ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+		Control.Control {
+			id: contentControl
+			rightPadding: Math.round(scrollbar.width + 10 * DefaultStyle.dp)
+			anchors.left: scrollview.left
+			anchors.right: scrollview.right
+			width: scrollview.width
+			// parent: scrollview
+			padding: 0
+			contentItem: Loader {
+				id: contentLoader
+				width: contentcontrol.width - contentControl.rightPadding
+				onHeightChanged: console.log("height current item in loader", height, contentControl.height, scrollview.height)
+			}
+		}
 	}
 }

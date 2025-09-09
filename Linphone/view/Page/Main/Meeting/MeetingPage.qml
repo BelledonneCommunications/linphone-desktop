@@ -20,7 +20,7 @@ AbstractMainPage {
     emptyListText: qsTr("meetings_list_empty")
 	newItemIconSource: AppIcons.plusCircle
 	rightPanelColor: selectedConference ? DefaultStyle.grey_0 : DefaultStyle.grey_100 
-	showDefaultItem: leftPanelStackView.currentItem?.objectName === "listLayout" && meetingListCount === 0
+	showDefaultItem: leftPanelStackView.currentItem && leftPanelStackView.currentItem.objectName === "listLayout" && meetingListCount === 0
 
 
 	function createPreFilledMeeting(subject, addresses) {

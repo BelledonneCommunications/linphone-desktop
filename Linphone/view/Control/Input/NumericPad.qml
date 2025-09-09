@@ -6,7 +6,7 @@ import Linphone
 import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
-FocusScope{
+FocusScope {
 	id: mainItem
 	width: numPadGrid.width
 	height: numPadGrid.height
@@ -90,8 +90,8 @@ FocusScope{
 	Layout.GridLayout {
 		id: numPadGrid
 		columns: 3
-        columnSpacing: (40 * DefaultStyle.dp)
-        rowSpacing: (10 * DefaultStyle.dp)
+        columnSpacing: Math.round(40 * DefaultStyle.dp)
+        rowSpacing: Math.round(10 * DefaultStyle.dp)
 		function getButtonAt(index){
 			index = (index+15) % 15
 			if(index >= 0){
@@ -113,8 +113,8 @@ FocusScope{
 				id: numPadButton
 				Layout.Layout.alignment: Qt.AlignHCenter
 				required property int index
-                implicitWidth: (60 * DefaultStyle.dp)
-                implicitHeight: (60 * DefaultStyle.dp)
+                implicitWidth: Math.round(60 * DefaultStyle.dp)
+                implicitHeight: Math.round(60 * DefaultStyle.dp)
 				onClicked: {
 					mainItem.buttonPressed(text)
 				}
@@ -123,10 +123,10 @@ FocusScope{
 				KeyNavigation.up: numPadGrid.getButtonAt(index - 3)
 				KeyNavigation.down: numPadGrid.getButtonAt(index + 3)
 				style: ButtonStyle.numericPad
-                radius: (71 * DefaultStyle.dp)
+                radius: Math.round(71 * DefaultStyle.dp)
 				text: index + 1
-                textSize: (32 * DefaultStyle.dp)
-                textWeight: (400 * DefaultStyle.dp)
+                textSize: Math.round(32 * DefaultStyle.dp)
+                textWeight: Math.round(400 * DefaultStyle.dp)
 			}
 		}
 		Repeater {
@@ -139,8 +139,8 @@ FocusScope{
 			BigButton {
 				id: digitButton
 				Layout.Layout.alignment: Qt.AlignHCenter
-                implicitWidth: (60 * DefaultStyle.dp)
-                implicitHeight: (60 * DefaultStyle.dp)
+                implicitWidth: Math.round(60 * DefaultStyle.dp)
+                implicitHeight: Math.round(60 * DefaultStyle.dp)
 				
 				onClicked: mainItem.buttonPressed(pressText.text)
 				onPressAndHold: mainItem.buttonPressed(longPressText.text)
@@ -149,7 +149,7 @@ FocusScope{
 				KeyNavigation.right: numPadGrid.getButtonAt((index + 1)+9)
 				KeyNavigation.up: numPadGrid.getButtonAt((index - 3)+9)
 				KeyNavigation.down: numPadGrid.getButtonAt((index + 3)+9)
-                radius: (71 * DefaultStyle.dp)
+                radius: Math.round(71 * DefaultStyle.dp)
 				style: ButtonStyle.numericPad
 
 				contentItem: Item {
@@ -163,7 +163,7 @@ FocusScope{
 						horizontalAlignment: Text.AlignHCenter
 						Component.onCompleted: {if (modelData.longPressText === undefined) anchors.centerIn= parent}
 						text: modelData.pressText
-                        font.pixelSize: (32 * DefaultStyle.dp)
+                        font.pixelSize: Math.round(32 * DefaultStyle.dp)
 					}
 					Text {
 						id: longPressText
@@ -175,7 +175,7 @@ FocusScope{
 						horizontalAlignment: Text.AlignHCenter
 						visible: modelData.longPressText ? modelData.longPressText.length > 0 : false
 						text: modelData.longPressText ? modelData.longPressText : ""
-                        font.pixelSize: (22 * DefaultStyle.dp)
+                        font.pixelSize: Math.round(22 * DefaultStyle.dp)
 					}
 				}
 			}
@@ -187,12 +187,12 @@ FocusScope{
 		Button {
 			id: launchCallButton
 			visible: mainItem.lastRowVisible
-            implicitWidth: (75 * DefaultStyle.dp)
-            implicitHeight: (55 * DefaultStyle.dp)
+            implicitWidth: Math.round(75 * DefaultStyle.dp)
+            implicitHeight: Math.round(55 * DefaultStyle.dp)
 			Layout.Layout.alignment: Qt.AlignHCenter
-            icon.width: (32 * DefaultStyle.dp)
-            icon.height: (32 * DefaultStyle.dp)
-            radius: (71 * DefaultStyle.dp)
+            icon.width: Math.round(32 * DefaultStyle.dp)
+            icon.height: Math.round(32 * DefaultStyle.dp)
+            radius: Math.round(71 * DefaultStyle.dp)
 			style: ButtonStyle.phoneGreen
 			
 			onClicked: mainItem.launchCall()
@@ -205,17 +205,17 @@ FocusScope{
 		Button {
 			id: eraseButton
 			visible: mainItem.lastRowVisible
-            leftPadding: (5 * DefaultStyle.dp)
-            rightPadding: (5 * DefaultStyle.dp)
-            topPadding: (5 * DefaultStyle.dp)
-            bottomPadding: (5 * DefaultStyle.dp)
+            leftPadding: Math.round(5 * DefaultStyle.dp)
+            rightPadding: Math.round(5 * DefaultStyle.dp)
+            topPadding: Math.round(5 * DefaultStyle.dp)
+            bottomPadding: Math.round(5 * DefaultStyle.dp)
 			Layout.Layout.alignment: Qt.AlignHCenter
 			icon.source: AppIcons.backspaceFill
 			style: ButtonStyle.noBackground
-            icon.width: (38 * DefaultStyle.dp)
-            icon.height: (38 * DefaultStyle.dp)
-            Layout.Layout.preferredWidth: (38 * DefaultStyle.dp)
-            Layout.Layout.preferredHeight: (38 * DefaultStyle.dp)
+            icon.width: Math.round(38 * DefaultStyle.dp)
+            icon.height: Math.round(38 * DefaultStyle.dp)
+            Layout.Layout.preferredWidth: Math.round(38 * DefaultStyle.dp)
+            Layout.Layout.preferredHeight: Math.round(38 * DefaultStyle.dp)
 			
 			onClicked: mainItem.wipe()
 			

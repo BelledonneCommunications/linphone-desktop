@@ -62,7 +62,7 @@ ColumnLayout {
 			}
 		}
 		contentItem: ColumnLayout {
-			spacing: 0				
+			spacing: 0
 			Item{
 				Layout.fillWidth: true
 				Layout.fillHeight: true
@@ -101,10 +101,14 @@ ColumnLayout {
 	}
 	StackLayout {
 		currentIndex: bar.currentIndex
+		height: currentIndex === 0 ? screensLayout.contentHeight : windowsLayout.contentHeight
+		onHeightChanged: console.log("stacklayout height =====", height)
 		ListView{
 			id: screensLayout
             spacing: Math.round(16 * DefaultStyle.dp)
 			clip: true
+			Layout.fillWidth: true
+			height: contentHeight
 			//property int selectedIndex
 			model: ScreenProxy{
 				id: screensList
@@ -112,24 +116,25 @@ ColumnLayout {
 			}
 			onVisibleChanged: if(visible) screensList.update()
 			delegate: ScreenPreviewLayout {
-                    horizontalMargin: Math.round((28 - 20 ) * DefaultStyle.dp) // 20 coming from CallsWindow panel
-					width: screensLayout.width
-                    height: Math.round(219 * DefaultStyle.dp)
-					screenIndex: index
-					onClicked: {//screensLayout.selectedIndex = index
-						screensLayout.currentIndex = index
-						mainItem.desc.core.screenSharingIndex = index
-						if( mainItem.conference.core.isLocalScreenSharing)
-							mainItem.call.core.videoSourceDescriptor = mainItem.desc
-					}
-					selected: //screensLayout.selectedIndex === index
-								mainItem.desc.core.screenSharingIndex === index
+				horizontalMargin: Math.round((28 - 20 ) * DefaultStyle.dp) // 20 coming from CallsWindow panel
+				width: screensLayout.width
+				height: Math.round(219 * DefaultStyle.dp)
+				screenIndex: index
+				onClicked: {//screensLayout.selectedIndex = index
+					screensLayout.currentIndex = index
+					mainItem.desc.core.screenSharingIndex = index
+					if( mainItem.conference.core.isLocalScreenSharing)
+						mainItem.call.core.videoSourceDescriptor = mainItem.desc
 				}
+				selected: mainItem.desc.core.screenSharingIndex === index
+			}
 		}
 
 		GridView{
 			id: windowsLayout
 			//property int selectedIndex
+			Layout.preferredHeight: contentHeight
+			Layout.fillWidth: true
 			model: ScreenProxy{
 				id: windowsList
 				mode: ScreenList.WINDOWS
@@ -139,29 +144,28 @@ ColumnLayout {
 			cellWidth: width / 2
             cellHeight: Math.round((112 + 15) * DefaultStyle.dp)
 			clip: true
-			delegate: Item{
-					width: windowsLayout.cellWidth
-					height: windowsLayout.cellHeight
-					ScreenPreviewLayout {
-						anchors.fill: parent
-                        anchors.margins:  Math.round(7 * DefaultStyle.dp)
-						displayScreen: false
-						screenIndex: index
-						onClicked: {
-							windowsLayout.currentIndex = index
-							mainItem.desc.core.windowId = $modelData.windowId
-							if( mainItem.conference.core.isLocalScreenSharing)
-									mainItem.call.core.videoSourceDescriptor = mainItem.desc
-						}
-						selected: mainItem.desc.core.windowId == $modelData.windowId
-
-						//onClicked: screensLayout.selectedIndex = index
-						//selected: screensLayout.selectedIndex === index
+			delegate: Item {
+				width: windowsLayout.cellWidth
+				height: windowsLayout.cellHeight
+				ScreenPreviewLayout {
+					anchors.fill: parent
+					anchors.margins:  Math.round(7 * DefaultStyle.dp)
+					displayScreen: false
+					screenIndex: index
+					onClicked: {
+						windowsLayout.currentIndex = index
+						mainItem.desc.core.windowId = $modelData.windowId
+						if( mainItem.conference.core.isLocalScreenSharing)
+								mainItem.call.core.videoSourceDescriptor = mainItem.desc
 					}
+					selected: mainItem.desc.core.windowId == $modelData.windowId
 				}
+			}
 		}
 	}
-	Button {
+	BigButton {
+		Layout.preferredHeight: height
+		height: implicitHeight
         visible: mainItem.screenSharingAvailable$
 		enabled: windowsLayout.currentIndex !== -1 || screensLayout.currentIndex !== -1
 		text:  mainItem.conference && mainItem.conference.core.isLocalScreenSharing

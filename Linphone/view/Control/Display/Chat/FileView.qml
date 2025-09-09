@@ -323,7 +323,6 @@ Item {
 			// Changing cursor in MouseArea seems not to work with the Loader
 			// Use override cursor for this case
 			onContainsMouseChanged: {
-				console.log("contains mouse", containsMouse)
 				if (containsMouse) UtilsCpp.setGlobalCursor(Qt.PointingHandCursor)
 				else UtilsCpp.restoreGlobalCursor()
 				thumbnailProvider.state = containsMouse ? 'hovered' : ''

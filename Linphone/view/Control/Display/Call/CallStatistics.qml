@@ -81,7 +81,7 @@ ColumnLayout {
         Layout.leftMargin: Math.round(16 * DefaultStyle.dp)
         Layout.rightMargin: Math.round(16 * DefaultStyle.dp)
 
-		visible: mainItem.call?.core.localVideoEnabled || mainItem.call?.core.remoteVideoEnabled || false
+		visible: mainItem.call && (mainItem.call.core.localVideoEnabled || mainItem.call.core.remoteVideoEnabled)
 
 		contentItem: ColumnLayout {
             spacing: Math.round(12 * DefaultStyle.dp)

@@ -36,7 +36,7 @@ FocusScope {
                 id: searchBar
                 Layout.alignment: Qt.AlignTop
                 Layout.fillWidth: true
-                Layout.rightMargin: Math.round(39 * DefaultStyle.dp)
+                // Layout.rightMargin: Math.round(39 * DefaultStyle.dp)
                 focus: true
                 color: mainItem.searchBarColor
                 borderColor: mainItem.searchBarBorderColor

@@ -18,7 +18,7 @@ FocusScope {
     property var contact: contactObj?.value || null
     property alias messagesLoading: chatMessagesListView.loading
     property CallGui call
-    property alias callHeaderContent: splitPanel.headerContentItem
+    property alias callHeaderContent: splitPanel.header.contentItem
     property bool replyingToMessage: false
     enum PanelType { MessageReactions, SharedFiles, Medias, ImdnStatus, ForwardToList, ManageParticipants, EphemeralSettings, None}
     
@@ -79,12 +79,10 @@ FocusScope {
             header.topPadding: Math.round(6 * DefaultStyle.dp)
             header.bottomPadding: searchBarLayout.visible ? Math.round(3 * DefaultStyle.dp) : Math.round(6 * DefaultStyle.dp)
 
-            headerContentItem: ColumnLayout {
-                anchors.left: parent?.left
-                anchors.leftMargin: mainItem.call ? 0 : Math.round(31 * DefaultStyle.dp)
-                anchors.verticalCenter: parent?.verticalCenter
-                anchors.right: parent.right
-                anchors.rightMargin: Math.round(41 * DefaultStyle.dp)
+            header.contentItem: ColumnLayout {
+                Layout.fillWidth: true
+                Layout.leftMargin: mainItem.call ? 0 : Math.round(31 * DefaultStyle.dp)
+                Layout.rightMargin: Math.round(41 * DefaultStyle.dp)
                 spacing: searchBarLayout.visible ? Math.round(9 * DefaultStyle.dp) : 0
                 RowLayout {
                     RowLayout {
