@@ -1397,7 +1397,7 @@ QString CallModel::generateSavedFilename (const QString &from, const QString &to
 		return QString(str).replace(regexp, "");
 	};
 	return QStringLiteral("%1_%2_%3")
-			.arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))
+			.arg(QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd_hh-mm-ss"))
 			.arg(escape(from))
 			.arg(escape(to));
 }
@@ -1412,9 +1412,11 @@ QStringList CallModel::splitSavedFilename(const QString& filename){
 
 QDateTime CallModel::getDateTimeSavedFilename(const QString& filename){
 	auto fields = splitSavedFilename(filename);
-	if(fields.size() > 1)
-		return QDateTime::fromString(fields[0] + "_" +fields[1], "yyyy-MM-dd_hh-mm-ss");
-	else
+	if(fields.size() > 1) {
+		QDateTime t = QDateTime::fromString(fields[0] + "_" +fields[1], "yyyy-MM-dd_hh-mm-ss");
+		t.setTimeSpec(Qt::UTC);
+		return t;
+	}else
 		return QDateTime();
 }
 

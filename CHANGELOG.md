@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Publish presence indicator synchronized on default account.
 - Remove from GUI a bad account created from Assistant.
 - Synchronize contacts presence status.
+- Timezones in recordings date times.
 
 ### Changed
 - SDK Updated to 5.4.41
