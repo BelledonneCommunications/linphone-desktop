@@ -245,6 +245,8 @@ FocusScope {
                 anchors.fill: parent
                 orientation: Qt.Vertical
                 handle: Rectangle {
+                    visible: !mainItem.chat?.core.isReadOnly
+                    enabled: visible
                     implicitHeight: Math.round(8 * DefaultStyle.dp)
                     color: Control.SplitHandle.hovered ? DefaultStyle.grey_200 : DefaultStyle.grey_100
                 }
