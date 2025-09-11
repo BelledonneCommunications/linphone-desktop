@@ -449,7 +449,7 @@ void SettingsModel::setVideoEnabled(const bool enabled) {
 
 bool SettingsModel::getAutoDownloadReceivedFiles() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	return CoreModel::getInstance()->getCore()->getMaxSizeForAutoDownloadIncomingFiles() == 0;
+	return CoreModel::getInstance()->getCore()->getMaxSizeForAutoDownloadIncomingFiles() != -1;
 }
 
 void SettingsModel::setAutoDownloadReceivedFiles(bool status) {
