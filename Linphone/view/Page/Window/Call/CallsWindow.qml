@@ -87,16 +87,13 @@ AbstractWindow {
     function changeLayout(layoutIndex) {
         if (layoutIndex == 0) {
             console.log("Set Grid layout")
-            call.core.lSetConferenceVideoLayout(
-                        LinphoneEnums.ConferenceLayout.Grid)
+            call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.Grid)
         } else if (layoutIndex == 1) {
             console.log("Set AS layout")
-            call.core.lSetConferenceVideoLayout(
-                        LinphoneEnums.ConferenceLayout.ActiveSpeaker)
+            call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.ActiveSpeaker)
         } else {
-            console.log("Set audio-only layout")
-            call.core.lSetConferenceVideoLayout(
-                        LinphoneEnums.ConferenceLayout.AudioOnly)
+            console.log("Set audio-only layout", layoutIndex)
+            call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.AudioOnly)
         }
     }
 
@@ -869,8 +866,8 @@ AbstractWindow {
                                           }
                     call: mainWindow.call
                     onChangeLayoutRequested: index => {
-                                                 mainWindow.changeLayout(index)
-                                             }
+                        mainWindow.changeLayout(index)
+                    }
                 }
             }
             Component {

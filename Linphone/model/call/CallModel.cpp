@@ -287,7 +287,7 @@ void CallModel::updateConferenceVideoLayout() {
 	auto callParams = mMonitor->getParams();
 	//	auto settings = CoreManager::getInstance()->getSettingsModel();
 	auto newLayout = LinphoneEnums::fromLinphone(callParams->getConferenceVideoLayout());
-	if (!SettingsModel::getInstance()->getVideoEnabled()) newLayout = LinphoneEnums::ConferenceLayout::AudioOnly;
+	if (!callParams->videoEnabled()) newLayout = LinphoneEnums::ConferenceLayout::AudioOnly;
 	if (!mConference) newLayout = LinphoneEnums::ConferenceLayout::ActiveSpeaker;
 	if (mConferenceVideoLayout != newLayout) { // && !getPausedByUser()) { // Only update if not in pause.
 		                                       //		if (mMonitor->getConference()) {
@@ -297,7 +297,7 @@ void CallModel::updateConferenceVideoLayout() {
 		//		} else settings->setCameraMode(settings->getCallCameraMode());
 
 		// TODO : change layout for grid/active speaker in settings
-		lDebug() << "Changing layout from " << mConferenceVideoLayout << " into " << newLayout;
+		lDebug() << "Updating layout from " << mConferenceVideoLayout << " into " << newLayout;
 		mConferenceVideoLayout = newLayout;
 		emit conferenceVideoLayoutChanged(mConferenceVideoLayout);
 	}
