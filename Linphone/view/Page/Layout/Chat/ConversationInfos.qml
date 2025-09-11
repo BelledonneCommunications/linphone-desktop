@@ -250,6 +250,7 @@ ColumnLayout {
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
+			visible: scrollView.contentHeight > scrollView.height
 		}
 		
 		ColumnLayout {

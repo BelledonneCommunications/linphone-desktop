@@ -576,6 +576,12 @@ FocusScope {
                         contentLoader.item.parentView = mainItem
                     }
                 }
+                Connections {
+                    target: mainItem
+                    function onChatChanged() {
+                        detailsPanel.visible = false
+                    }
+                }
             }
 
             Component {
