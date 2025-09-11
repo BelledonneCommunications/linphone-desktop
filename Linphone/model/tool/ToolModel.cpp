@@ -495,7 +495,7 @@ QString ToolModel::getMessageFromContent(std::list<std::shared_ptr<linphone::Con
 	for (auto &content : contents) {
 		if (content->isText()) {
 			return Utils::coreStringToAppString(content->getUtf8Text());
-		} else if (content->isFile()) {
+		} else if (content->isFile() || content->isFileTransfer() || content->isFileEncrypted()) {
 			if (res.isEmpty()) res.append(Utils::coreStringToAppString(content->getName()));
 			else res.append(", " + Utils::coreStringToAppString(content->getName()));
 		} else if (content->isIcalendar()) {
