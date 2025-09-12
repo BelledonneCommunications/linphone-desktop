@@ -65,9 +65,8 @@ ColumnLayout {
 			chatMessageGui: mainItem.chatMessageGui
 		}
 		delegate: ChatMessageInvitationBubble {
-			Layout.fillWidth: true
+			Layout.preferredWidth: 490 * DefaultStyle.dp
 			conferenceInfoGui: modelData.core.conferenceInfo
-			// width: conferenceList.width
 			onMouseEvent: (event) => mainItem.mouseEvent(event)
 		}
 	}
