@@ -32,7 +32,6 @@ AbstractMainPage {
     property var remoteChat: remoteChatObj ? remoteChatObj.value : null
     onRemoteChatChanged: {
         if (remoteChat) selectedChatGui = remoteChat
-        else console.log("chat is null")
     }
 
     onSelectedChatGuiChanged: {

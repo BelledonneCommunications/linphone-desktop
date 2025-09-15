@@ -192,7 +192,7 @@ FocusScope {
                     popup.contentItem: ColumnLayout {
                         IconLabelButton {
                             Layout.fillWidth: true
-                            visible: searchResultItem.core.isStored
+                            visible: searchResultItem && searchResultItem.core.isStored
                                         && !searchResultItem.core.readOnly
                             //: "Enlever des favoris"
                             text: searchResultItem.core.starred ? qsTr("contact_details_remove_from_favourites")
@@ -243,11 +243,10 @@ FocusScope {
                             text: qsTr("contact_details_delete")
                             icon.source: AppIcons.trashCan
                             spacing: Math.round(10 * DefaultStyle.dp)
-                            visible: !searchResultItem.core.readOnly
+                            visible: searchResultItem && searchResultItem.core.isStored && !searchResultItem.core.readOnly
                             Layout.fillWidth: true
                             onClicked: {
-                                mainItem.contactDeletionRequested(
-                                            searchResultItem)
+                                mainItem.contactDeletionRequested(searchResultItem)
                                 friendPopup.close()
                             }
                             style: ButtonStyle.noBackgroundRed

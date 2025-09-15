@@ -368,14 +368,14 @@ FriendGui{
                 anchors.fill: parent
                 contact: mainItem.selectedContact
                 button.color: DefaultStyle.main1_100
+                //: Edit
                 button.text: qsTr("contact_details_edit")
                 button.style: ButtonStyle.tertiary
                 button.icon.source: AppIcons.pencil
                 button.onClicked: mainItem.editContact(mainItem.selectedContact)
-                button.visible: !mainItem.selectedContact?.core.readOnly
+                button.visible: mainItem.selectedContact && mainItem.selectedContact.core.isStored && !mainItem.selectedContact.core.readOnly
                 property string contactAddress: contact ? contact.core.defaultAddress : ""
-                property var computedContactNameObj: UtilsCpp.getDisplayName(
-                                                         contactAddress)
+                property var computedContactNameObj: UtilsCpp.getDisplayName(contactAddress)
                 property string computedContactName: computedContactNameObj ? computedContactNameObj.value : ""
                 property string contactName: contact ? contact.core.fullName : computedContactName
                 component LabelButton: ColumnLayout {
@@ -734,42 +734,47 @@ FriendGui{
                             //: "Autres actions"
                             label: qsTr("contact_details_actions_title")
                             content: ColumnLayout {
-                                IconLabelButton {
-                                    Layout.fillWidth: true
-                                    Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
-                                    icon.source: AppIcons.pencil
-                                    //: "Éditer"
-                                    text: qsTr("contact_details_edit")
-                                    onClicked: mainItem.editContact(
-                                                   mainItem.selectedContact)
-                                    visible: !mainItem.selectedContact?.core.readOnly
-                                    style: ButtonStyle.noBackground
+                                spacing: Math.round(10 * DefaultStyle.dp)
+                                ColumnLayout {
+                                    visible: mainItem.selectedContact && mainItem.selectedContact.core.isStored && !mainItem.selectedContact.core.readOnly
+                                    IconLabelButton {
+                                        Layout.fillWidth: true
+                                        Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
+                                        icon.source: AppIcons.pencil
+                                        //: "Éditer"
+                                        text: qsTr("contact_details_edit")
+                                        onClicked: mainItem.editContact(mainItem.selectedContact)
+                                        style: ButtonStyle.noBackground
+                                    }
+                                    Rectangle {
+                                        Layout.fillWidth: true
+                                        Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+                                        color: DefaultStyle.main2_200
+                                    }
                                 }
-                                Rectangle {
-                                    Layout.fillWidth: true
-                                    Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
-                                    color: DefaultStyle.main2_200
-                                }
-                                IconLabelButton {
-                                    Layout.fillWidth: true
-                                    Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
-                                    icon.source: mainItem.selectedContact
-                                                 && mainItem.selectedContact.core.starred ? AppIcons.heartFill : AppIcons.heart
-                                    text: mainItem.selectedContact
-                                          && mainItem.selectedContact.core.starred
-                                          //: "Retirer des favoris"
-                                          ? qsTr("contact_details_remove_from_favourites")
-                                          //: "Ajouter aux favoris"
-                                          : qsTr("contact_details_add_to_favourites")
-                                    style: ButtonStyle.noBackground
-                                    onClicked: if (mainItem.selectedContact)
-                                                   mainItem.selectedContact.core.lSetStarred(
-                                                               !mainItem.selectedContact.core.starred)
-                                }
-                                Rectangle {
-                                    Layout.fillWidth: true
-                                    Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
-                                    color: DefaultStyle.main2_200
+                                ColumnLayout {
+                                    visible: mainItem.selectedContact && mainItem.selectedContact.core.isStored && !mainItem.selectedContact.core.readOnly
+                                    IconLabelButton {
+                                        Layout.fillWidth: true
+                                        Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
+                                        icon.source: mainItem.selectedContact
+                                                    && mainItem.selectedContact.core.starred ? AppIcons.heartFill : AppIcons.heart
+                                        text: mainItem.selectedContact
+                                            && mainItem.selectedContact.core.starred
+                                            //: "Retirer des favoris"
+                                            ? qsTr("contact_details_remove_from_favourites")
+                                            //: "Ajouter aux favoris"
+                                            : qsTr("contact_details_add_to_favourites")
+                                        style: ButtonStyle.noBackground
+                                        onClicked: if (mainItem.selectedContact)
+                                                    mainItem.selectedContact.core.lSetStarred(
+                                                                !mainItem.selectedContact.core.starred)
+                                    }
+                                    Rectangle {
+                                        Layout.fillWidth: true
+                                        Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+                                        color: DefaultStyle.main2_200
+                                    }
                                 }
                                 IconLabelButton {
                                     Layout.fillWidth: true
@@ -804,11 +809,6 @@ FriendGui{
                                         }
                                     }
                                 }
-                                Rectangle {
-                                    Layout.fillWidth: true
-                                    Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
-                                    color: DefaultStyle.main2_200
-                                }
                                 // IconLabelButton {
                                 // 	Layout.fillWidth: true
                                 // 	Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
@@ -833,18 +833,25 @@ FriendGui{
                                 // 	Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
                                 // 	color: DefaultStyle.main2_200
                                 // }
-                                IconLabelButton {
-                                    Layout.fillWidth: true
-                                    Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
-                                    icon.source: AppIcons.trashCan
-                                    //: "Supprimer ce contact"
-                                    text: qsTr("contact_details_delete")
-                                    visible: !mainItem.selectedContact?.core.readOnly
-                                    onClicked: {
-                                        mainItem.deleteContact(
-                                                    mainItem.selectedContact)
+                                ColumnLayout {
+                                    visible: mainItem.selectedContact && mainItem.selectedContact.core.isStored && !mainItem.selectedContact.core.readOnly
+                                    Rectangle {
+                                        Layout.fillWidth: true
+                                        Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+                                        color: DefaultStyle.main2_200
                                     }
-                                    style: ButtonStyle.noBackgroundRed
+                                    IconLabelButton {
+                                        Layout.fillWidth: true
+                                        Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
+                                        icon.source: AppIcons.trashCan
+                                        //: "Supprimer ce contact"
+                                        text: qsTr("contact_details_delete")
+                                        onClicked: {
+                                            mainItem.deleteContact(
+                                                        mainItem.selectedContact)
+                                        }
+                                        style: ButtonStyle.noBackgroundRed
+                                    }
                                 }
                             }
                         }

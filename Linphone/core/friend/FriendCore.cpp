@@ -91,7 +91,8 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		mStarred = contact->getStarred();
 		mIsSaved = true;
 		mIsStored = isStored;
-		mIsLdap = ToolModel::friendIsInFriendList(ToolModel::getLdapFriendList(), contact);
+		mIsLdap = ToolModel::friendIsInFriendList(ToolModel::getLdapFriendList(), contact) ||
+		          (sourceFlags & (int)linphone::MagicSearch::Source::LdapServers) != 0;
 		mIsCardDAV = (sourceFlags & (int)linphone::MagicSearch::Source::RemoteCardDAV) != 0;
 		mIsAppFriend = ToolModel::friendIsInFriendList(ToolModel::getAppFriendList(), contact);
 	} else {
