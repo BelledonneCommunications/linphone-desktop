@@ -14,6 +14,8 @@ ColumnLayout {
 	property ChatGui chatGui
 	property var chatCore: chatGui.core
 	property var contactObj: chatGui ? UtilsCpp.findFriendByAddress(mainItem.chatCore.peerAddress) : null
+	property FriendGui contact: contactObj ? contactObj.value : null
+	property bool isAppFriend: contact && contact.core.isAppFriend
 	property var parentView
 	property bool isGroup: chatCore && chatCore.isGroupChat
 	spacing: 0
@@ -23,7 +25,7 @@ ColumnLayout {
 
 	Avatar {
 		Layout.alignment: Qt.AlignHCenter
-		contact: contactObj?.value || null
+		contact: mainItem.contact
 		displayNameVal: mainItem.chatCore.avatarUri
 		secured: mainItem.chatGui && mainItem.chatGui.core.isSecured
 		Layout.preferredWidth: Math.round(100 * DefaultStyle.dp)
@@ -157,10 +159,10 @@ ColumnLayout {
 	}
 	
 	Text {
-		visible: contactObj && contactObj.value || false
+		visible: mainItem.contact
 		font: Typography.p3
-		color: contactObj?.value != null ? contactObj?.value.core.presenceColor : "transparent"
-		text: contactObj?.value != null ? contactObj?.value.core.presenceStatus : ""
+		color: mainItem.contact ? mainItem.contact.core.presenceColor : "transparent"
+		text: mainItem.contact ? mainItem.contact.core.presenceStatus : ""
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Math.round(5 * DefaultStyle.dp)
 	}
@@ -213,13 +215,13 @@ ColumnLayout {
 			button.icon.height: Math.round(24 * DefaultStyle.dp)
 			button.icon.source: mainItem.isGroup 
 				? AppIcons.videoconference
-				: contactObj.value 
+				: mainItem.isAppFriend
 					? AppIcons.adressBook 
 					: AppIcons.plusCircle
 			label: mainItem.isGroup
 				//: Schedule a meeting
 				? qsTr("group_infos_meeting") 
-				: contactObj.value
+				: mainItem.isAppFriend
 					//: Show contact
 					? qsTr("one_one_infos_open_contact") 
 					//: Create contact
@@ -228,8 +230,8 @@ ColumnLayout {
 				if (mainItem.isGroup)
 					UtilsCpp.getMainWindow().scheduleMeeting(mainItem.chatCore.title, mainItem.chatCore.participantsAddresses)
 				else {
-					if (contactObj.value)
-						mainWindow.displayContactPage(contactObj.value.core.defaultAddress)
+					if (mainItem.isAppFriend)
+						mainWindow.displayContactPage(mainItem.contact.core.defaultAddress)
 					else
 						mainWindow.displayCreateContactPage("",mainItem.chatCore.peerAddress)
 				}

@@ -142,7 +142,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	for (auto content : chatmessage->getContents()) {
 		auto contentCore = ChatMessageContentCore::create(content, mChatMessageModel);
 		mChatMessageContentList.push_back(contentCore);
-		if (content->isFile() && !content->isVoiceRecording()) mHasFileContent = true;
+		if ((content->isFile() || content->isFileTransfer()) && !content->isVoiceRecording()) mHasFileContent = true;
 		if (content->isIcalendar()) mIsCalendarInvite = true;
 		if (content->isVoiceRecording()) {
 			mIsVoiceRecording = true;

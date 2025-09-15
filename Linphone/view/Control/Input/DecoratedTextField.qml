@@ -18,11 +18,12 @@ FormItemLayout {
 	property bool useTitleAsPlaceHolder: true
 	property bool canBeEmpty: true
 	property bool toValidate: false
+	property alias text: textField.text
 
 	function value() {
 		return propertyOwnerGui ? propertyOwnerGui.core[propertyName] : propertyOwner[propertyName]
 	}
-
+	
     property alias hidden: textField.hidden
 	property alias validator: textField.validator
 

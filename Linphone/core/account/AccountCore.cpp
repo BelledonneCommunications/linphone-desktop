@@ -296,6 +296,10 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mCoreModelConnection = SafeConnection<AccountCore, CoreModel>::create(me, CoreModel::getInstance());
 	mCoreModelConnection->makeConnectToModel(&CoreModel::messageReadInChatRoom,
 	                                         [this] { mAccountModel->refreshUnreadNotifications(); });
+
+	mAccountModelConnection->makeConnectToModel(&AccountModel::setValueFailed, [this](const QString &errorMessage) {
+		mAccountModelConnection->invokeToCore([this, errorMessage]() { emit setValueFailed(errorMessage); });
+	});
 }
 
 void AccountCore::reset(const AccountCore &accountCore) {
@@ -806,22 +810,21 @@ void AccountCore::writeIntoModel(std::shared_ptr<AccountModel> model) const {
 
 void AccountCore::writeFromModel(const std::shared_ptr<AccountModel> &model) {
 	mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
-
-	mUnreadCallNotifications = model->getMissedCallsCount();
-	mUnreadMessageNotifications = model->getUnreadMessagesCount();
-	mMwiServerAddress = model->getMwiServerAddress();
-	mTransport = LinphoneEnums::toString(LinphoneEnums::fromLinphone(model->getTransport()));
-	mServerAddress = model->getServerAddress();
-	mOutboundProxyEnabled = model->getOutboundProxyEnabled();
-	mStunServer = model->getStunServer();
-	mIceEnabled = model->getIceEnabled();
-	mAvpfEnabled = model->getAvpfEnabled();
-	mBundleModeEnabled = model->getBundleModeEnabled();
-	mExpire = model->getExpire();
-	mConferenceFactoryAddress = model->getConferenceFactoryAddress();
-	mAudioVideoConferenceFactoryAddress = model->getAudioVideoConferenceFactoryAddress();
-	mLimeServerUrl = model->getLimeServerUrl();
-	mVoicemailAddress = model->getVoicemailAddress();
+	setUnreadCallNotifications(model->getMissedCallsCount());
+	setUnreadMessageNotifications(model->getUnreadMessagesCount());
+	setMwiServerAddress(model->getMwiServerAddress());
+	setTransport(LinphoneEnums::toString(LinphoneEnums::fromLinphone(model->getTransport())));
+	setServerAddress(model->getServerAddress());
+	setOutboundProxyEnabled(model->getOutboundProxyEnabled());
+	setStunServer(model->getStunServer());
+	setIceEnabled(model->getIceEnabled());
+	setAvpfEnabled(model->getAvpfEnabled());
+	setBundleModeEnabled(model->getBundleModeEnabled());
+	setExpire(model->getExpire());
+	setConferenceFactoryAddress(model->getConferenceFactoryAddress());
+	setAudioVideoConferenceFactoryAddress(model->getAudioVideoConferenceFactoryAddress());
+	setLimeServerUrl(model->getLimeServerUrl());
+	setVoicemailAddress(model->getVoicemailAddress());
 }
 
 void AccountCore::save() {

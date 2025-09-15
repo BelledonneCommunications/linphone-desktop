@@ -60,6 +60,9 @@ Item {
         if (mainItem.contextualMenuOpenedComponent
                 && mainItem.contextualMenuOpenedComponent != component) {
             mainStackView.pop()
+            if (mainItem.contextualMenuOpenedComponent) {
+                mainItem.contextualMenuOpenedComponent.destroy()
+            }
             mainItem.contextualMenuOpenedComponent = undefined
         }
         if (!mainItem.contextualMenuOpenedComponent) {
@@ -71,6 +74,8 @@ Item {
 
     function closeContextualMenuComponent() {
         mainStackView.pop()
+        if (mainItem.contextualMenuOpenedComponent)
+            mainItem.contextualMenuOpenedComponent.destroy()
         mainItem.contextualMenuOpenedComponent = undefined
     }
 

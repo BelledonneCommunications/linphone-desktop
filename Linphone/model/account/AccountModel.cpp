@@ -243,7 +243,11 @@ void AccountModel::setMwiServerAddress(QString value) {
 			newParams->setMwiServerAddress(address);
 			if (!mMonitor->setParams(newParams)) emit mwiServerAddressChanged(value);
 		}
-	} else qWarning() << "Unable to set MWI address, failed creating address from" << value;
+	} else {
+		//: "Unable to set voicemail server address, failed creating address from %1" : %1 is address
+		emit setValueFailed(tr("set_mwi_server_address_failed_error_message").arg(value));
+		qWarning() << "Unable to set MWI address, failed creating address from" << value;
+	}
 }
 
 linphone::TransportType AccountModel::getTransport() const {
@@ -279,7 +283,11 @@ void AccountModel::setServerAddress(QString value, linphone::TransportType trans
 		if (save) mMonitor->setParams(params);
 		emit serverAddressChanged(value);
 		emit transportChanged(address->getTransport());
-	} else qWarning() << "Unable to set ServerAddress, failed creating address from" << value;
+	} else {
+		//: "Unable to set server address, failed creating address from %1"
+		emit setValueFailed(tr("set_server_address_failed_error_message").arg(value));
+		qWarning() << "Unable to set ServerAddress, failed creating address from" << value;
+	}
 }
 
 bool AccountModel::getOutboundProxyEnabled() const {
@@ -380,7 +388,11 @@ void AccountModel::setConferenceFactoryAddress(QString value) {
 		params->setConferenceFactoryAddress(address);
 		mMonitor->setParams(params);
 		emit conferenceFactoryAddressChanged(value);
-	} else qWarning() << "Unable to set ConferenceFactoryAddress address, failed creating address from" << value;
+	} else {
+		//: "Unable to set the conversation server address, failed creating address from %1"
+		emit setValueFailed(tr("set_conference_factory_address_failed_error_message").arg(value));
+		qWarning() << "Unable to set ConferenceFactoryAddress address, failed creating address from" << value;
+	}
 }
 
 QString AccountModel::getAudioVideoConferenceFactoryAddress() const {
@@ -398,8 +410,11 @@ void AccountModel::setAudioVideoConferenceFactoryAddress(QString value) {
 		params->setAudioVideoConferenceFactoryAddress(address);
 		mMonitor->setParams(params);
 		emit audioVideoConferenceFactoryAddressChanged(value);
-	} else
+	} else {
+		//: "Unable to set the meeting server address, failed creating address from %1"
+		emit setValueFailed(tr("set_audio_conference_factory_address_failed_error_message").arg(value));
 		qWarning() << "Unable to set AudioVideoConferenceFactoryAddress address, failed creating address from" << value;
+	}
 }
 
 QString AccountModel::getLimeServerUrl() const {
@@ -442,7 +457,11 @@ void AccountModel::setVoicemailAddress(QString value) {
 		params->setVoicemailAddress(address);
 		mMonitor->setParams(params);
 		emit voicemailAddressChanged(value);
-	} else qWarning() << "Unable to set VoicemailAddress, failed creating address from" << value;
+	} else {
+		//: Unable to set voicemail address, failed creating address from %1
+		emit setValueFailed(tr("set_voicemail_address_failed_error_message").arg(value));
+		qWarning() << "Unable to set VoicemailAddress, failed creating address from" << value;
+	}
 }
 
 QString AccountModel::getVoicemailAddress() const {

@@ -63,7 +63,7 @@ void EventLogList::connectItem(const QSharedPointer<EventLogCore> &item) {
 	auto message = item->getChatMessageCore();
 	if (message) {
 		connect(message.get(), &ChatMessageCore::deleted, this, [this, item] {
-			emit mChatCore->lUpdateLastMessage();
+			if (mChatCore) emit mChatCore->lUpdateLastMessage();
 			remove(item);
 		});
 		connect(message.get(), &ChatMessageCore::ephemeralDurationChanged, this, [this, item](int duration) {

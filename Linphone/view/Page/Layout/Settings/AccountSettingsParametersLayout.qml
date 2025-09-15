@@ -29,12 +29,21 @@ AbstractSettingsLayout {
     Connections {
         target: account.core
         function onIsSavedChanged() {
-            if (account.core.isSaved)
+            if (account.core.isSaved) {
                 UtilsCpp.showInformationPopup(
                             qsTr("information_popup_success_title"),
                             //: "Modifications sauvegardés"
                             qsTr("contact_editor_saved_changes_toast"), true,
                             mainWindow)
+            }
+        }
+        function onSetValueFailed(error) {
+            if (error) {
+                UtilsCpp.showInformationPopup(
+                            qsTr("information_popup_error_title"),
+                            error, false,
+                            mainWindow)
+            }
         }
     }
 
@@ -47,6 +56,7 @@ AbstractSettingsLayout {
             Layout.fillWidth: true
             spacing: Math.round(20 * DefaultStyle.dp)
             DecoratedTextField {
+                id: mwiServerAddressField
                 propertyName: "mwiServerAddress"
                 propertyOwnerGui: account
                 //: "URI du serveur de messagerie vocale"
@@ -56,8 +66,17 @@ AbstractSettingsLayout {
                     return text.length == 0 || !text.endsWith(".")
                 } // work around sdk crash when adress ends with .
                 toValidate: true
+
+                Connections {
+                    target: account.core
+                    function onMwiServerAddressAddressChanged() {
+                        if (mwiServerAddressField.text != mwiServerAddressField.propertyOwnerGui.core[mwiServerAddressField.propertyName]) 
+                            mwiServerAddressField.text = mwiServerAddressField.propertyOwnerGui.core[mwiServerAddressField.propertyName]
+                    }
+                }
             }
             DecoratedTextField {
+                id: voicemailAddressField
                 propertyName: "voicemailAddress"
                 propertyOwnerGui: account
                 //: "URI de messagerie vocale"
@@ -65,6 +84,14 @@ AbstractSettingsLayout {
                 title: qsTr("account_settings_voicemail_uri_title")
                 Layout.fillWidth: true
                 toValidate: true
+
+                Connections {
+                    target: account.core
+                    function onVoicemailAddressAddressChanged() {
+                        if (voicemailAddressField.text != voicemailAddressField.propertyOwnerGui.core[voicemailAddressField.propertyName]) 
+                            voicemailAddressField.text = voicemailAddressField.propertyOwnerGui.core[voicemailAddressField.propertyName]
+                    }
+                }
             }
         }
     }
@@ -142,20 +169,36 @@ AbstractSettingsLayout {
                 toValidate: true
             }
             DecoratedTextField {
+                id: conferenceFactoryUriField
                 Layout.fillWidth: true
                 //: "URI du serveur de conversations"
                 title: qsTr("account_settings_conference_factory_uri_title")
                 propertyName: "conferenceFactoryAddress"
                 propertyOwnerGui: account
+                Connections {
+                    target: account.core
+                    function onConferenceFactoryAddressChanged() {
+                        if (conferenceFactoryUriField.text != conferenceFactoryUriField.propertyOwnerGui.core[conferenceFactoryUriField.propertyName]) 
+                            conferenceFactoryUriField.text = conferenceFactoryUriField.propertyOwnerGui.core[conferenceFactoryUriField.propertyName]
+                    }
+                }
                 toValidate: true
             }
             DecoratedTextField {
+                id: audioVideoConfUriField
                 Layout.fillWidth: true
                 propertyName: "audioVideoConferenceFactoryAddress"
                 //: "URI du serveur de réunions"
                 title: qsTr("account_settings_audio_video_conference_factory_uri_title")
                 propertyOwnerGui: account
                 toValidate: true
+                Connections {
+                    target: account.core
+                    function onAudioVideoConferenceFactoryAddressChanged() {
+                        if (audioVideoConfUriField.text != audioVideoConfUriField.propertyOwnerGui.core[audioVideoConfUriField.propertyName]) 
+                            audioVideoConfUriField.text = audioVideoConfUriField.propertyOwnerGui.core[audioVideoConfUriField.propertyName]
+                    }
+                }
             }
             DecoratedTextField {
                 Layout.fillWidth: true

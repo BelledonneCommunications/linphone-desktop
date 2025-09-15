@@ -188,6 +188,7 @@ ListView {
 		searchResultItem: $modelData
 		showInitials: mainItem.showInitials && isStored
 		showDefaultAddress: mainItem.showDefaultAddress
+		showDisplayName: mainItem.showDisplayName
 		showActions: mainItem.showActions
 		showContactMenu: mainItem.showContactMenu && searchResultItem.core.isStored
 		highlightText: mainItem.highlightText

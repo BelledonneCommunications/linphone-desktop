@@ -179,9 +179,11 @@ public:
 
 	bool getLimeIsSupported() const;
 
+	void setDisableMeetingsFeature(bool value);
+	bool getDisableMeetingsFeature() const;
+
 	// UI
 	DECLARE_GETSET(bool, disableChatFeature, DisableChatFeature)
-	DECLARE_GETSET(bool, disableMeetingsFeature, DisableMeetingsFeature)
 	DECLARE_GETSET(bool, disableBroadcastFeature, DisableBroadcastFeature)
 	DECLARE_GETSET(bool, hideSettings, HideSettings)
 	DECLARE_GETSET(bool, hideAccountSettings, HideAccountSettings)
@@ -256,6 +258,8 @@ signals:
 	void fullLogsEnabledChanged(bool status);
 
 	void dndChanged(bool value);
+
+	void disableMeetingsFeatureChanged(bool value);
 
 	// Messages. --------------------------------------------------------------------
 	void autoDownloadReceivedFilesChanged(bool enabled);

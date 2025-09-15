@@ -69,7 +69,7 @@ void AccountDeviceList::setAccount(const QSharedPointer<AccountCore> &accountCor
 		mAccountCore = accountCore;
 		lDebug() << log().arg("Set account model") << mAccountCore.get();
 		// oldConnect.unlock();
-		refreshDevices();
+		if (mAccountCore) refreshDevices();
 		// }
 	}
 }

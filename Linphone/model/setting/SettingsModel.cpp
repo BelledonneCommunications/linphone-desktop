@@ -832,6 +832,15 @@ bool SettingsModel::getLimeIsSupported() const {
 	return CoreModel::getInstance()->getCore()->limeX3DhAvailable();
 }
 
+void SettingsModel::setDisableMeetingsFeature(bool value) {
+	mConfig->setBool(UiSection, "disable_meetings_feature", value);
+	emit disableMeetingsFeatureChanged(value);
+}
+
+bool SettingsModel::getDisableMeetingsFeature() const {
+	return !!mConfig->getInt(UiSection, "disable_meetings_feature", 0);
+}
+
 void SettingsModel::setChatNotificationSoundPath(const QString &path) {
 	QString cleanedPath = QDir::cleanPath(path);
 	mConfig->setString(UiSection, "chat_sound_notification_file", Utils::appStringToCoreString(cleanedPath));
@@ -891,8 +900,6 @@ void SettingsModel::notifyConfigReady(){
 }
 
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", false)
-DEFINE_GETSET_CONFIG(
-	SettingsModel, bool, Bool, disableMeetingsFeature, DisableMeetingsFeature, "disable_meetings_feature", false)
 DEFINE_GETSET_CONFIG(SettingsModel,
 						bool,
 						Bool,

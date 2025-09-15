@@ -74,7 +74,7 @@ Control.TextField {
         idleTimer.stop()
         updateText()
     }
-    onTextEdited: {
+    onTextChanged: {
         if (mainItem.toValidate) {
             idleTimer.restart()
         }
@@ -90,8 +90,9 @@ Control.TextField {
         }
         if (mainItem.propertyName && isValid(text)) {
             if (mainItem.propertyOwnerGui) {
-                if (mainItem.propertyOwnerGui.core[mainItem.propertyName] != text)
+                if (mainItem.propertyOwnerGui.core[mainItem.propertyName] != text) {
                     mainItem.propertyOwnerGui.core[mainItem.propertyName] = text
+                }
             } else {
                 if (mainItem.propertyOwner[mainItem.propertyName] != text)
                     mainItem.propertyOwner[mainItem.propertyName] = text

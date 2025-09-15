@@ -220,6 +220,8 @@ signals:
 	void voicemailAddressChanged();
 	void presenceChanged();
 
+	void setValueFailed(const QString &error);
+
 	// Account requests
 	void lSetPictureUri(QString pictureUri);
 	void lSetDefaultAccount();
@@ -271,6 +273,7 @@ private:
 	int mMaxPresenceNoteSize;
 
 	bool mIsSaved = true;
+
 	std::shared_ptr<AccountModel> mAccountModel;
 	QSharedPointer<SafeConnection<AccountCore, AccountModel>> mAccountModelConnection;
 	QSharedPointer<SafeConnection<AccountCore, CoreModel>> mCoreModelConnection;

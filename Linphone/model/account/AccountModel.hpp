@@ -119,6 +119,8 @@ signals:
 	void voicemailAddressChanged(QString value);
 	void presenceChanged(LinphoneEnums::Presence presence, bool userInitiated);
 
+	void setValueFailed(const QString &errorMessage);
+
 private:
 	/**Linphone **/
 	virtual void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
