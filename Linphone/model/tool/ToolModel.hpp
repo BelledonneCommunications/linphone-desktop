@@ -55,7 +55,8 @@ public:
 	                                         std::shared_ptr<linphone::ChatRoom> chatRoom);
 
 	static std::shared_ptr<linphone::Friend> findFriendByAddress(const QString &address);
-	static std::shared_ptr<linphone::Friend> findFriendByAddress(std::shared_ptr<linphone::Address> linphoneAddr);
+	static std::shared_ptr<linphone::Friend>
+	findFriendByAddress(const std::shared_ptr<linphone::Address> &linphoneAddr);
 
 	static bool createCall(const QString &sipAddress,
 	                       const QVariantMap &options = {},

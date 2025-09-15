@@ -33,6 +33,7 @@ LdapModel::LdapModel(const std::shared_ptr<linphone::RemoteContactDirectory> &ld
 		mLdapParamsClone = CoreModel::getInstance()->getCore()->createLdapParams();
 		mLdapParamsClone->setDelay(2000);
 		mLdapParamsClone->enableTls(true);
+		mLdapParamsClone->setEnabled(true);
 
 		mLdap = CoreModel::getInstance()->getCore()->createLdapRemoteContactDirectory(mLdapParamsClone);
 		mLdap->setTimeout(5);

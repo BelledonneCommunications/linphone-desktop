@@ -84,7 +84,7 @@ std::shared_ptr<linphone::AudioDevice> ToolModel::findAudioDevice(const QString 
 QString ToolModel::getDisplayName(const std::shared_ptr<linphone::Address> &address) {
 	QString displayName;
 	if (address) {
-		auto linFriend = ToolModel::findFriendByAddress(address);
+		auto linFriend = findFriendByAddress(address);
 		if (linFriend) {
 			if (displayName.isEmpty()) displayName = Utils::coreStringToAppString(linFriend->getName());
 		}
@@ -228,7 +228,8 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &
 	else return nullptr;
 }
 
-std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr<linphone::Address> linphoneAddr) {
+std::shared_ptr<linphone::Friend>
+ToolModel::findFriendByAddress(const std::shared_ptr<linphone::Address> &linphoneAddr) {
 	auto friendsManager = FriendsManager::getInstance();
 	linphoneAddr->clean();
 	QString key = Utils::coreStringToAppString(linphoneAddr->asStringUriOnly());
