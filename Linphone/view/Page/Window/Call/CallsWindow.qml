@@ -1495,7 +1495,7 @@ AbstractWindow {
                             IconLabelButton {
                                 Layout.fillWidth: true
                                 visible: mainWindow.conference
-                                icon.source: AppIcons.squaresFour
+                                icon.source: AppIcons.layout
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
                                 //: "Modifier la disposition"

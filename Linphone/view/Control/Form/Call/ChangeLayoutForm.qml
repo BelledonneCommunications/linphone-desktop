@@ -24,7 +24,7 @@ FocusScope {
 				spacing: 0
 				Repeater {
 					model: [
-                        {text: qsTr("conference_layout_grid"), imgUrl: AppIcons.squaresFour},
+                        {text: qsTr("conference_layout_grid"), imgUrl: AppIcons.layout},
                         {text: qsTr("conference_layout_active_speaker"), imgUrl: AppIcons.pip},
                         {text: qsTr("conference_layout_audio_only"), imgUrl: AppIcons.waveform}
 					]

@@ -74,6 +74,7 @@ QtObject {
 	property string trustedWhite: "image://internal/trusted-white.svg"
 	property string trustedMask: "image://internal/trusted-mask.svg"
 	property string avatar: "image://internal/randomAvatar.png"
+    property string layout: "image://internal/layout.svg"
 	property string pause: "image://internal/pause.svg"
 	property string pauseFill: "image://internal/pause-fill.svg"
     property string play: "image://internal/play.svg"
