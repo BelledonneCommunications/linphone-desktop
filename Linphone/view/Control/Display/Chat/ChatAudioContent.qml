@@ -42,7 +42,7 @@ Item {
 	Loader {
 		id: soudPlayerLoader
 		property int duration: mainItem.chatMessageContentGui 
-			? mainItem.chatMessageContentGui.core.fileDuration 
+			? mainItem.chatMessageContentGui.core.fileDuration
 			: item
 				? item.core.duration
 				: 0

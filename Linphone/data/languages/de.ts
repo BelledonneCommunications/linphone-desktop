@@ -329,94 +329,94 @@
         <translation>Kontoeinstellungen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="35"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="34"/>
         <source>information_popup_success_title</source>
         <translation>Erfolg</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="37"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="36"/>
         <source>contact_editor_saved_changes_toast</source>
         <extracomment>&quot;Modifications sauvegardés&quot;</extracomment>
         <translation>Änderungen gespeichert</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="44"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="43"/>
         <source>information_popup_error_title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="64"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="63"/>
         <source>account_settings_mwi_uri_title</source>
         <extracomment>&quot;URI du serveur de messagerie vocale&quot;</extracomment>
         <translation>Voicemail-Server-URI</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="85"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="84"/>
         <source>account_settings_voicemail_uri_title</source>
         <extracomment>&quot;URI de messagerie vocale&quot;</extracomment>
         <translation>Voicemail-URI</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="109"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="108"/>
         <source>account_settings_transport_title</source>
         <extracomment>&quot;Transport&quot;</extracomment>
         <translation>Transport</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="123"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="122"/>
         <source>account_settings_sip_proxy_url_title</source>
         <translation>Proxy-Server-URL</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="130"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="129"/>
         <source>account_settings_outbound_proxy_title</source>
         <extracomment>&quot;Serveur mandataire sortant&quot;</extracomment>
         <translation>Ausgehender Proxy-Server</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="139"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="138"/>
         <source>account_settings_stun_server_url_title</source>
         <extracomment>&quot;Adresse du serveur STUN&quot;</extracomment>
         <translation>STUN-Server-Adresse</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="144"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="143"/>
         <source>account_settings_enable_ice_title</source>
         <extracomment>&quot;Activer ICE&quot;</extracomment>
         <translation>ICE aktivieren</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="150"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="149"/>
         <source>account_settings_avpf_title</source>
         <extracomment>&quot;AVPF&quot;</extracomment>
         <translation>AVPF</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="156"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="155"/>
         <source>account_settings_bundle_mode_title</source>
         <extracomment>&quot;Mode bundle&quot;</extracomment>
         <translation>Bundle-Modus</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="165"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="164"/>
         <source>account_settings_expire_title</source>
         <extracomment>&quot;Expiration (en seconde)&quot;</extracomment>
         <translation>Ablaufzeit (in Sekunden)</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="176"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="175"/>
         <source>account_settings_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de conversations&quot;</extracomment>
         <translation>Konferenz-Factory-URI</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="193"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="192"/>
         <source>account_settings_audio_video_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de réunions&quot;</extracomment>
         <translation>Video-Konferenz-Factory-URI</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="207"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="206"/>
         <source>account_settings_lime_server_url_title</source>
         <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
         <translation>Lime-Server-URL</translation>
@@ -5226,22 +5226,28 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="506"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="501"/>
+        <source>voice_recording_duration</source>
+        <extracomment>&quot;Voice recording (%1)&quot; : %1 is the duration formated in mm:ss</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="509"/>
         <source>conference_invitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="508"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="511"/>
         <source>conference_invitation_updated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="510"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="513"/>
         <source>conference_invitation_cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="571"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="574"/>
         <source>unknown_audio_device_name</source>
         <translation>Unbekannter Gerätename</translation>
     </message>
