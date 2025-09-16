@@ -12,6 +12,7 @@ Control.TabBar {
 							: 0
     property real pixelSize: Typography.h3.pixelSize
     property real textWeight: Typography.h3.weight
+	property int capitalization: Font.Capitalize
 	wheelEnabled: true
 	background: Item {
 		id: tabBarBackground
@@ -93,7 +94,7 @@ Control.TabBar {
 				font {
 					pixelSize: mainItem.pixelSize
 					weight: mainItem.textWeight
-					capitalization: Font.Capitalize
+					capitalization: mainItem.capitalization
 				}
 				color: mainItem.currentIndex === index ? DefaultStyle.main2_600 : DefaultStyle.main2_400
 				elide: Text.ElideRight

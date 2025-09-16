@@ -104,6 +104,7 @@ LoginLayout {
                 model: [qsTr("assistant_account_register_with_phone_number"),
                     // "S'inscrire avec un email"
                     qsTr("assistant_account_register_with_email")]
+				capitalization: Font.MixedCase
 			}
 			Flickable {
 				Layout.fillWidth: true

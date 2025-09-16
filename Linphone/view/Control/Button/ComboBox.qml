@@ -17,6 +17,10 @@ Control.ComboBox {
 	property bool oneLine: false
 	property bool shadowEnabled: mainItem.activeFocus || mainItem.hovered
 	property string flagRole// Specific case if flag is shown (special font)
+	property var indicatorColor: DefaultStyle.main2_600
+	property int indicatorRightMargin: Math.round(20 * DefaultStyle.dp)
+	leftPadding: Math.round(10 * DefaultStyle.dp)
+	rightPadding: indicImage.width + indicatorRightMargin
 
 	onConstantImageSourceChanged: if (constantImageSource)  selectedItemImg.imageSource = constantImageSource
 	onCurrentIndexChanged: {
@@ -70,9 +74,6 @@ Control.ComboBox {
 		}
 	}
 	contentItem: RowLayout {
-		anchors.fill: parent
-        anchors.leftMargin: mainItem.leftMargin
-        anchors.rightMargin: indicImage.width + Math.round(10 * DefaultStyle.dp)
         spacing: Math.round(5 * DefaultStyle.dp)
 		EffectImage {
 			id: selectedItemImg
@@ -119,11 +120,13 @@ Control.ComboBox {
 		id: indicImage
 		z: 1
 		anchors.right: parent.right
-        anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
+		anchors.rightMargin: mainItem.indicatorRightMargin
 		anchors.verticalCenter: parent.verticalCenter
 		imageSource: AppIcons.downArrow
-        width: Math.round(14 * DefaultStyle.dp)
+		width: Math.round(15 * DefaultStyle.dp)
+		height: Math.round(15 * DefaultStyle.dp)
 		fillMode: Image.PreserveAspectFit
+		colorizationColor: mainItem.indicatorColor
 	}
 
 	popup: Control.Popup {
@@ -132,7 +135,6 @@ Control.ComboBox {
 		width: mainItem.width
 		implicitHeight: Math.min(contentItem.implicitHeight, mainWindow.height)
         padding: Math.max(Math.round(1 * DefaultStyle.dp), 1)
-		//height: Math.min(implicitHeight, 300)
 
 		onOpened: {
 			listView.positionViewAtIndex(listView.currentIndex, ListView.Center)

@@ -4,6 +4,7 @@ import UtilsCpp 1.0
   
 ComboBox {
 	id: mainItem
+	indicatorRightMargin: Math.round(10 * DefaultStyle.dp)
 	property var selectedDateTime
 	onSelectedDateTimeChanged: {
 		if (minTime != undefined) {
@@ -31,9 +32,9 @@ ComboBox {
 	popup.onOpened: {
 		input.forceActiveFocus()
 	}
+
 	contentItem: TextInput {
 		id: input
-		anchors.right: indicator.left
 		validator: IntValidator{}
 		// activeFocusOnPress: false
 		inputMask: "00:00"
@@ -45,7 +46,6 @@ ComboBox {
 		onActiveFocusChanged: {
 			if (activeFocus) {
 				selectAll()
-				mainItem.popup.open()
 			} else {
 				listView.currentIndex = -1
 				mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min)

@@ -43,7 +43,6 @@ ColumnLayout {
 						: "transparent"
 		}
 		contentItem: Item {
-			anchors.fill: parent
 			readonly property var currentItem: combobox.model.getAt(combobox.currentIndex)
             anchors.leftMargin: Math.round(15 * DefaultStyle.dp)
 			Text {
