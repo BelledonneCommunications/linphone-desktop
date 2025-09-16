@@ -187,6 +187,7 @@ ColumnLayout {
 	
 	
 	Rectangle {
+		visible: conferenceInfo.description.length > 0 || conferenceInfo.participantCount > 0
 		Layout.fillWidth: true
 		height: 10 * DefaultStyle.dp
 		color: DefaultStyle.grey_100
@@ -194,6 +195,7 @@ ColumnLayout {
 		z: infoControl.z + 1
 	}
 	Rectangle {
+		visible: conferenceInfo.description.length > 0 || conferenceInfo.participantCount > 0
 		Layout.fillWidth: true
 		height: 10 * DefaultStyle.dp
 		color: DefaultStyle.grey_0

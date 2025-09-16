@@ -188,6 +188,9 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 				    QString uri;
 				    if (state == linphone::ConferenceScheduler::State::Ready) {
 					    uri = mConferenceInfoModel->getConferenceScheduler()->getUri();
+					    emit CoreModel::getInstance() -> conferenceInfoReceived(
+					                                      CoreModel::getInstance()->getCore(),
+					                                      mConferenceInfoModel->getConferenceInfo());
 				    }
 				    mConfInfoModelConnection->invokeToCore([this, state = LinphoneEnums::fromLinphone(state),
 				                                            infoState = LinphoneEnums::fromLinphone(confInfoState),

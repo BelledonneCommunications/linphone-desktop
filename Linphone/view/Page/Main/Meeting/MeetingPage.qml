@@ -11,7 +11,7 @@ AbstractMainPage {
 	id: mainItem
 	
 	property ConferenceInfoGui selectedConference
-	property int meetingListCount
+	property int meetingListCount: 0
 	signal returnRequested()
 	signal addParticipantsValidated(list<string> selectedParticipants)
     //: "Créer une réunion"
@@ -251,7 +251,7 @@ AbstractMainPage {
 					searchBarText: searchBar.text
 					
 					onCountChanged: {
-						mainItem.meetingListCount = count === 0
+						mainItem.meetingListCount = count
 					}
 					Binding {
 						target: mainItem

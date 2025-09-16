@@ -107,10 +107,9 @@ bool AccountManager::login(QString username,
 		                  .arg(QStringLiteral("Unable to set identity address: `%1`."))
 		                  .arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
 
-
 		//: "Impossible de configurer l'adresse : `%1`."
-		*errorMessage =
-			tr("assistant_account_login_address_configuration_error").arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
+		*errorMessage = tr("assistant_account_login_address_configuration_error")
+		                    .arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
 		return false;
 	}
 
@@ -131,25 +130,26 @@ bool AccountManager::login(QString username,
 	mAccountModel->setSelf(mAccountModel);
 	connect(mAccountModel.get(), &AccountModel::registrationStateChanged, this,
 	        [this, authInfo, core](const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state,
-								   const std::string &message) {
-				QString errorMessage = QString::fromStdString(message);
+	                               const std::string &message) {
+		        QString errorMessage = QString::fromStdString(message);
 		        if (mAccountModel && account == mAccountModel->getAccount()) {
 			        if (state == linphone::RegistrationState::Failed) {
 				        connect(
 				            mAccountModel.get(), &AccountModel::removed, this, [this]() { mAccountModel = nullptr; },
 				            Qt::SingleShotConnection);
-						//: "Le couple identifiant mot de passe ne correspond pas"
-						if (account->getError() == linphone::Reason::Forbidden) errorMessage = tr("assistant_account_login_forbidden_error");
-						//: "Erreur durant la connexion"
-						else errorMessage = tr("assistant_account_login_error");
-						mAccountModel->removeAccount();
+				        //: "Le couple identifiant mot de passe ne correspond pas"
+				        if (account->getError() == linphone::Reason::Forbidden)
+					        errorMessage = tr("assistant_account_login_forbidden_error");
+				        //: "Erreur durant la connexion"
+				        else errorMessage = tr("assistant_account_login_error");
+				        mAccountModel->removeAccount();
 			        } else if (state == linphone::RegistrationState::Ok) {
 				        core->setDefaultAccount(account);
 				        emit mAccountModel->removeListener();
 				        mAccountModel = nullptr;
 			        }
-				}
-				emit registrationStateChanged(state, errorMessage);
+		        }
+		        emit registrationStateChanged(state, errorMessage);
 	        });
 	auto status = core->addAccount(account);
 	if (status == -1) {

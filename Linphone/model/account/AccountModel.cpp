@@ -86,6 +86,11 @@ void AccountModel::onRegistrationStateChanged(const std::shared_ptr<linphone::Ac
 	emit registrationStateChanged(account, state, message);
 }
 
+void AccountModel::onConferenceInformationUpdated(const std::shared_ptr<linphone::Account> &account,
+                                                  const std::list<std::shared_ptr<linphone::ConferenceInfo>> &infos) {
+	emit conferenceInformationUpdated(account, infos);
+}
+
 void AccountModel::onMessageWaitingIndicationChanged(
     const std::shared_ptr<linphone::Account> &account,
     const std::shared_ptr<const linphone::MessageWaitingIndication> &mwi) {
@@ -120,7 +125,7 @@ void AccountModel::setPictureUri(QString uri) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit pictureUriChanged(uri);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::onDefaultAccountChanged() {
@@ -177,7 +182,7 @@ void AccountModel::setDisplayName(QString displayName) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit displayNameChanged(displayName);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::setDialPlan(int index) {

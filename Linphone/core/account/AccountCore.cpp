@@ -155,6 +155,12 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 		    mAccountModelConnection->invokeToCore(
 		        [this, account, state, message]() { onRegistrationStateChanged(account, state, message); });
 	    });
+	mAccountModelConnection->makeConnectToModel(
+	    &AccountModel::conferenceInformationUpdated,
+	    [this](const std::shared_ptr<linphone::Account> &account,
+	           const std::list<std::shared_ptr<linphone::ConferenceInfo>> &infos) {
+		    mAccountModelConnection->invokeToCore([this]() { emit conferenceInformationUpdated(); });
+	    });
 	// From Model
 	mAccountModelConnection->makeConnectToModel(&AccountModel::defaultAccountChanged, [this](bool isDefault) {
 		mAccountModelConnection->invokeToCore([this, isDefault]() { onDefaultAccountChanged(isDefault); });

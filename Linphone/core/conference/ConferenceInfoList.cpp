@@ -98,7 +98,9 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	    [this](const std::shared_ptr<linphone::Core> &core,
 	           const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
 		    lDebug() << log().arg("conference info received") << conferenceInfo->getSubject();
-		    addConference(conferenceInfo->clone());
+		    // We must refresh all the conference infos cause we are not able to determine
+		    // which account is concerned by the signal if multiple accounts are connected
+		    emit lUpdate();
 	    });
 
 	// This is needed because account does not have a contact address until
@@ -109,12 +111,17 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
 		    auto accountCore = account ? AccountCore::create(account) : nullptr;
 		    mCoreModelConnection->invokeToCore([this, accountCore] {
-			    if (mCurrentAccountCore)
+			    if (mCurrentAccountCore) {
 				    disconnect(mCurrentAccountCore.get(), &AccountCore::registrationStateChanged, this, nullptr);
+				    disconnect(mCurrentAccountCore.get(), &AccountCore::conferenceInformationUpdated, this, nullptr);
+			    }
 			    mCurrentAccountCore = accountCore;
-			    if (mCurrentAccountCore)
+			    if (mCurrentAccountCore) {
 				    connect(mCurrentAccountCore.get(), &AccountCore::registrationStateChanged, this,
 				            [this] { emit lUpdate(); });
+				    connect(mCurrentAccountCore.get(), &AccountCore::conferenceInformationUpdated, this,
+				            [this] { emit lUpdate(); });
+			    }
 			    emit lUpdate();
 		    });
 	    });
@@ -159,6 +166,7 @@ void ConferenceInfoList::addConference(const std::shared_ptr<linphone::Conferenc
 		return confInfo->getUri()->weakEqual(confAddr);
 	});
 	if (haveConf == list.end()) {
+		if (confInfo->getState() == linphone::ConferenceInfo::State::Cancelled) return;
 		auto confInfoCore = build(confInfo);
 		mCoreModelConnection->invokeToCore([this, confInfoCore] {
 			connectItem(confInfoCore);

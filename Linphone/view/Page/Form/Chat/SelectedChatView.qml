@@ -596,6 +596,8 @@ FocusScope {
                         contentLoader.panelType = showMedias ? SelectedChatView.PanelType.Medias : SelectedChatView.PanelType.SharedFiles
                     }
                     onManageParticipantsRequested: contentLoader.panelType = SelectedChatView.PanelType.ManageParticipants
+                    onOneOneCall: (video) => mainItem.oneOneCall(video)
+                    onGroupCall: mainItem.groupCall()
                 }
             }
 

@@ -193,6 +193,7 @@ public:
 signals:
 	void pictureUriChanged();
 	void registrationStateChanged(const QString &message);
+	void conferenceInformationUpdated();
 	void defaultAccountChanged(bool isDefault);
 	void unreadNotificationsChanged(int unread);
 	void unreadCallNotificationsChanged(int unread);

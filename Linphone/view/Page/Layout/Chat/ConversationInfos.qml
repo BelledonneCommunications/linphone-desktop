@@ -16,12 +16,14 @@ ColumnLayout {
 	property var contactObj: chatGui ? UtilsCpp.findFriendByAddress(mainItem.chatCore.peerAddress) : null
 	property FriendGui contact: contactObj ? contactObj.value : null
 	property bool isAppFriend: contact && contact.core.isAppFriend
-	property var parentView
 	property bool isGroup: chatCore && chatCore.isGroupChat
 	spacing: 0
 	signal ephemeralSettingsRequested()
 	signal showSharedFilesRequested(bool showMedias)
 	signal manageParticipantsRequested()
+
+	signal oneOneCall(bool video)
+	signal groupCall()
 
 	Avatar {
 		Layout.alignment: Qt.AlignHCenter
@@ -185,7 +187,7 @@ ColumnLayout {
 			button.icon.source: AppIcons.phone
 			//: "Appel"
 			label: qsTr("one_one_infos_call")
-			button.onClicked: mainItem.isGroup ? parentView.groupCall() : parentView.oneOneCall(false)
+			button.onClicked: mainItem.isGroup ? mainItem.groupCall() : mainItem.oneOneCall(false)
 		}
 		LabelButton {
 			text.Layout.fillWidth: true

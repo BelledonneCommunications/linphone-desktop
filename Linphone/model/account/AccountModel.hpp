@@ -93,6 +93,10 @@ signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
 	                              linphone::RegistrationState state,
 	                              const std::string &message);
+
+	void conferenceInformationUpdated(const std::shared_ptr<linphone::Account> &account,
+	                                  const std::list<std::shared_ptr<linphone::ConferenceInfo>> &infos);
+
 	void defaultAccountChanged(bool isDefault);
 
 	void pictureUriChanged(QString uri);
@@ -130,6 +134,9 @@ private:
 	onMessageWaitingIndicationChanged(const std::shared_ptr<linphone::Account> &account,
 	                                  const std::shared_ptr<const linphone::MessageWaitingIndication> &mwi) override;
 
+	virtual void
+	onConferenceInformationUpdated(const std::shared_ptr<linphone::Account> &account,
+	                               const std::list<std::shared_ptr<linphone::ConferenceInfo>> &infos) override;
 	// UserData
 	static void setUserData(const std::shared_ptr<linphone::Account> &account, std::shared_ptr<AccountUserData> &data);
 	static std::shared_ptr<AccountUserData> getUserData(const std::shared_ptr<linphone::Account> &account);
