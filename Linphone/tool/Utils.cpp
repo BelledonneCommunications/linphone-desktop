@@ -117,21 +117,38 @@ QString Utils::getFamilyNameFromFullName(const QString &fullName) {
 	return nameSplitted.join(" ");
 }
 
+inline std::string u32_to_ascii(std::u32string const &s) {
+	std::string out;
+	std::transform(begin(s), end(s), back_inserter(out),
+	               [](char32_t c) { return c < 128 ? static_cast<char>(c) : '?'; });
+	return out;
+}
+
 QString Utils::getInitials(const QString &username) {
 	if (username.isEmpty()) return "";
 
 	QRegularExpression regex("[\\s\\.]+");
 	QStringList words = username.split(regex); // Qt 5.14: Qt::SkipEmptyParts
-	QStringList initials;
-	auto str32 = words[0].toStdU32String();
 	std::u32string char32;
+	auto str32 = words[0].toStdU32String();
 	char32 += str32[0];
+
+	// if name starts by an emoji, only return this one
+	QVector<uint> utf32_string = username.toUcs4();
+	auto code = utf32_string[0];
+	if (Utils::codepointIsEmoji(code)) return QString::fromStdU32String(char32);
+
+	QStringList initials;
 	initials << QString::fromStdU32String(char32);
 	for (int i = 1; i < words.size() && initials.size() <= 1; ++i) {
 		if (words[i].size() > 0) {
 			str32 = words[i].toStdU32String();
 			char32[0] = str32[0];
 			initials << QString::fromStdU32String(char32);
+			std::string converted = u32_to_ascii(char32);
+			if (Utils::codepointIsEmoji(atoi(converted.c_str()))) {
+				break;
+			}
 		}
 	}
 	return QLocale().toUpper(initials.join(""));

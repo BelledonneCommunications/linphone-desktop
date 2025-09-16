@@ -133,7 +133,7 @@ ListView {
                 property var contactObj: UtilsCpp.findFriendByAddress(
                                              modelData.core.remoteAddress)
                 contact: contactObj?.value || null
-                displayNameVal: modelData.core.displayName
+                _address: modelData.core.remoteAddress
                 secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
                 width: Math.round(45 * DefaultStyle.dp)
                 height: Math.round(45 * DefaultStyle.dp)

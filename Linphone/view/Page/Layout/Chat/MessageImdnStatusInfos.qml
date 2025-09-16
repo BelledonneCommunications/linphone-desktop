@@ -32,11 +32,7 @@ MessageInfosLayout {
 			Avatar {
 				Layout.alignment: Qt.AlignHCenter
 				contact: listDelegate.contact
-				displayNameVal: contact 
-					? "" 
-					: nameObj
-						? nameObj.value
-						: ""
+				_address: modelData.address
 				Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
 				Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
 			}
