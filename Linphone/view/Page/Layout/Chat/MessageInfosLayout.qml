@@ -53,8 +53,8 @@ ColumnLayout {
 			Layout.fillWidth: true
 			Layout.preferredWidth: implicitWidth
             model: mainItem.tabbarModel
-			pixelSize: Typography.h3m.pixelSize
-			textWeight: Typography.h3m.weight
+			pixelSize: Typography.h4.pixelSize
+			textWeight: Typography.h4.weight
 			spacing: Math.round(10 * DefaultStyle.dp)
 		}
 

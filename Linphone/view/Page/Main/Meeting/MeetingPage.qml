@@ -287,8 +287,8 @@ AbstractMainPage {
                 spacing: Math.round(33 * DefaultStyle.dp)
 				anchors.fill: parent
 				RowLayout {
-                    Layout.rightMargin: Math.round(35 * DefaultStyle.dp)
                     spacing: Math.round(5 * DefaultStyle.dp)
+					Layout.rightMargin: Math.round(35 * DefaultStyle.dp)
 					Button {
 						id: backButton
 						style: ButtonStyle.noBackground
@@ -345,15 +345,19 @@ AbstractMainPage {
 					Layout.fillWidth: true
 					contentHeight: meetingSetup.height
 					Control.ScrollBar.vertical: ScrollBar {
+						id: meetingScrollBar
 						visible: parent.contentHeight > parent.height
 						anchors.top: parent.top
 						anchors.bottom: parent.bottom
 						anchors.right: parent.right
+						anchors.rightMargin: Math.round(8 * DefaultStyle.dp)
 					}
-					contentChildren: MeetingForm {
+					MeetingForm {
 						id: meetingSetup
 						conferenceInfoGui: createConfLayout.conferenceInfoGui
 						isCreation: true
+						anchors.left: parent.left
+						anchors.right: parent.right
 						anchors.rightMargin: Math.round(35 * DefaultStyle.dp)
 						Connections {
 							target: meetingSetup.conferenceInfoGui ? meetingSetup.conferenceInfoGui.core : null
