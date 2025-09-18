@@ -53,3 +53,11 @@ linphone.spec
 linphone60*.log
 linphone61*.log
 linphone62*.log
+
+# QT Creator
+*.cflags
+*.config
+*.creator
+*.cxxflags
+*.files
+*.includes

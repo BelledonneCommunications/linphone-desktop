@@ -23,55 +23,75 @@ Linphone is dual licensed, and is available either :
 - [Linphone public wiki](https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/)
 
 
-## Getting started
+## Build dependencies
 
-Here are the general instructions to build Linphone for desktop. The specific instructions for each build platform is described just below.
-You will need the tools :
-- `cmake` >= 3.22 : download it in https://cmake.org/download/
-- `python` : https://www.python.org/downloads/release/python-381/
-- `pip` : it is already embedded inside Python, so there should be nothing to do about it
-- `yasm` : https://yasm.tortall.net/Download.html
-- `nasm` : https://www.nasm.us/pub/nasm/releasebuilds/
-- `doxygen` (required for the Cxx Wrapper)
-- `Perl`
-- `pystache` : use 'pip install pystache --user'
-- `six` : use 'pip install six --user'
-- `git`
+As linphone-desktop depends on [Linphone SDK](https://gitlab.linphone.org/BC/public/linphone-sdk), you need to install to Build dependencies common to all target platforms of this project: [The Linphone SDK depdencies](https://gitlab.linphone.org/BC/public/linphone-sdk#common-to-all-target-platforms) 
 
-For Desktop : you will need [Qt6](https://www.qt.io/download-thank-you) (_6.5.3 or newer_). `C++17` support is required!
+
+For Desktop : you will need QT6 (_6.5.3 or newer_). `C++17` support is required!. You have two way to install it :
+- Using the [official QT installer](https://www.qt.io/download-thank-you)
+- Using an alternative installer like [aqtinstall](https://github.com/miurahr/aqtinstall)
 
 ### Set your environment
 
-1. It's necessary to install the `pip` command and to execute:
-
-        pip install pystache six
+1. Make sure you have all your build dependencies installed
 
 2. You have to set the environment variable `Qt6_DIR` to point to the path containing the cmake folders of Qt6, and the `PATH` to the Qt6 `bin`. Example:
 
-        Qt6_DIR="~/Qt/6.5.3/gcc_64/lib/cmake/Qt6"
-        PATH="~/Qt/6.5.3/gcc_64/bin/:$PATH"
+```bash
+export Qt6_DIR="~/Qt/6.5.3/gcc_64/lib/cmake/Qt6"
+export PATH="~/Qt/6.5.3/gcc_64/bin/:$PATH"
+```
 
-Note: If you have the third party tool `qtchooser` installed : 
-        eval "$(qtchooser -print-env)"
-        export Qt6_DIR=${QTLIBDIR}/cmake/Qt6
-        export PATH=${QTTOOLDIR}:$PATH
+
+>**NOTE** : If you have the third party tool `qtchooser` installed : 
+>```bash
+>eval "$(qtchooser -print-env)"
+>export Qt6_DIR=${QTLIBDIR}/cmake/Qt6
+>export PATH=${QTTOOLDIR}:$PATH
+>```
+
+
 3. For specific requirements, see platform instructions sections below.
 
 ### Summary of Building steps
 
-        `git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive`
-        `cd linphone-desktop`
-        `mkdir build`
-        `cd build`
-        `cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo`
-        `cmake --build . --parallel 10 --config RelWithDebInfo`
-        `cmake --install .`
-        `./OUTPUT/bin/linphone --verbose` or `./OUTPUT/Linphone.app/Contents/MacOS/linphone --verbose`
+#### On Linux and Windows
+
+```bash
+git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive`
+cd linphone-desktop
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build . --parallel 10 --config RelWithDebInfo
+cmake --install .
+./OUTPUT/bin/linphone --verbose
+```
+
+#### On MacOS
+
+Build may take a long time on MacOS. We recommend to use a linux VM on this OS.
+
+>**NOTE** : If you are on an ARM Mac (with M chip), check that you install a QT compatible VM : https://doc.qt.io/qt-6/supported-platforms.html.
+> We are using Ubuntu 24.04 ARM VM. If you have an error with icu lib when installing qt with aqtinstall, try to [build the icu lib v73](https://unicode-org.github.io/icu/userguide/icu4c/build#how-to-build-and-install-on-unix)
+
+If you still want to build on MacOS:
+```bash
+git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive
+cd linphone-desktop
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_APP_PACKAGING=ON
+cmake --build . --parallel 10 --config RelWithDebInfo --target install app_macos-arm64
+./app_macos-arm64/_CPack_Packages/Darwin/DragNDrop/Linphone6-6.1.0-alpha-190-g4fca0a414-mac/Linphone6.app/Contents/MacOS/linphone6 --verbose
+```
 
 ### Get sources
 
-        git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive
-
+```bash
+git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive
+```
 
 ### Building : General Steps
 
@@ -83,11 +103,11 @@ Go to this new folder and begin the build process : `cd build`
 2. Prepare your options : `cmake ..`. By default, it will try compile all needed dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them. You can add `-DCMAKE_BUILD_PARALLEL_LEVEL=<count>` to do `<count>` parallel builds for speeding up the process.
 Also, you can add `-DENABLE_BUILD_VERBOSE=ON` to get more feedback while generating the project.
 
-Note : For Makefile or Ninja, you have to add `-DCMAKE_BUILD_TYPE=<your_config>` if you wish to build in a specific configuration (for example `RelWithDebInfo`).
+>**NOTE** : For Makefile or Ninja, you have to add `-DCMAKE_BUILD_TYPE=<your_config>` if you wish to build in a specific configuration (for example `RelWithDebInfo`).
 
 3. Build and install the whole project : `cmake --build . --target <target> --parallel <count>` (replace `<target>` with the target name and `<count>` by the number of parallel builds).
 
-Note : For XCode or Visual Studio, you have to add `--config <your_config>` if you wish to build in a specific configuration (for example `RelWithDebInfo`).
+>**NOTE** : For XCode or Visual Studio, you have to add `--config <your_config>` if you wish to build in a specific configuration (for example `RelWithDebInfo`).
 
 When all are over, the files will be in the OUTPUT folder in the build directory. When rebuilding, you have to use `cmake --build . --target install` (or `cmake --install .`) to put the application in the correct configuration.
 
@@ -102,12 +122,16 @@ Binaries inside other folders (like `build/bin/` and `linphone-sdk`) are not sup
 
 1. Update your project with :
 
-    git fetch
-    git pull --rebase
+```bash
+git fetch
+git pull --rebase
+```
 
 2. Update sub-modules from your current branch
 
-    git submodule update --init --recursive
+```bash
+git submodule update --init --recursive
+```
 
 Then simply re-build using cmake.
 
@@ -133,36 +157,41 @@ Before you install packages with Brew, you may have to change directories permis
 
 1. Install XCode from the Apple store. Run it at least once to allow it to install its tools. You may need to run :
 
-	xcode-select --install
+```bash
+xcode-select --install
+```
 
 2. Install Homebrew by following the instructions here https://brew.sh/
 
 3. Install dependencies:
 
-    brew install cmake pkg-config git doxygen nasm yasm
+```bash
+brew install cmake pkg-config git doxygen nasm yasm
+```
 
 4. First ensure you have [pip](https://pypi.org/project/pip/)
 
 5. Then, you can install a pip package with the following command:
 
-    python -m pip install [package]
+```bash
+python -m pip install [package]
+```
 
- For instance, enter the following command:
-
-    python -m pip install pystache six graphviz
+>For instance, enter the following command:
+> `python -m pip install pystache six graphviz`
 
 6. Download [Qt](https://www.qt.io/download), install a Qt6 version and set Qt6_DIR and PATH variables.
 
-7. If you are building on a arm64 system and want a Intel version, you have to select the x86_64 processor on the generation stage of cmake :
-
-	-DCMAKE_APPLE_SILICON_PROCESSOR=x86_64
+7. If you are building on a arm64 system and want a Intel version, you have to select the x86_64 processor on the generation stage of cmake `-DCMAKE_APPLE_SILICON_PROCESSOR=x86_64`
 
 8. Build as usual (General Steps).
 
 9. If you get an error about modules that are not found for Python, it may be because cmake try to use another version from your PATH. It can be the case if you installed Python from brew. Install Python modules by using absolute path.
 For example:
 
-	/opt/homebrew/python3 -m pip install pystache six graphviz
+```
+/opt/homebrew/python3 -m pip install pystache six graphviz
+```
 
 ## Specific instructions for the Windows platform
 
@@ -198,7 +227,9 @@ The default build is very long. It is prefered to use the Ninja generator `-G "N
 
 ## Specific instructions for Linux
 
+```bash
 sudo apt install qt6-base-dev
+```
 
 In case of 'module "QtQuick.\*" is not installed' error, you may install these packages:
   - qml-qt6
@@ -312,6 +343,8 @@ Launch the application with `--verbose` parameter to get full logs and send it w
 
 On some OS (like Fedora 22 and later), they disable Qt debug output by default. To get full output, you need to create `~/.config/QtProject/qtlogging.ini` and add :
 
-        [Rules]
-        *.debug=true
-        qt.*.debug=false
+```
+[Rules]
+*.debug=true
+qt.*.debug=false
+```
