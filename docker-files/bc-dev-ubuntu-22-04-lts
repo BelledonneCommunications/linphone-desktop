@@ -7,6 +7,7 @@ FROM ubuntu:22.04
 # Qt on Ubuntu 22.04 is too old. Use a downloader.
 ARG QT_VERSION=5.15.2
 ARG QT6_VERSION=6.9.1
+
 #Do not use it. It seems that it cannot be used from python command.
 #ARG QT_MODULES=qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
 
@@ -42,7 +43,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV SHELL=/bin/bash
-#ENV PS1='\[\e[33m\]\u@bc-dev-ubuntu-20-04>\[\e[0m\] '
+#ENV PS1='\[\e[33m\]\u@bc-dev-ubuntu-22-04>\[\e[0m\] '
 
 # Install common general tools
 RUN apt-get update && \
@@ -87,14 +88,70 @@ RUN sudo apt install --upgrade -y python3-setuptools
 # installation is split because there is a way where some modules are not downloaded in the first attempt.
 RUN sudo apt install -y python3-py7zr
 RUN sudo pip3 install --upgrade aqtinstall
-RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt
-RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d
-RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt
-RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
+RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt/opensource
+RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d
+RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt/opensource
+RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
 
 RUN sudo chown -R bc:bc /opt/Qt/
 
-RUN qtchooser -install $QT_VERSION /opt/Qt/$QT_VERSION/gcc_64/bin/qmake
-RUN qtchooser -install $QT6_VERSION /opt/Qt/$QT6_VERSION/gcc_64/bin/qmake
+RUN qtchooser -install $QT_VERSION /opt/Qt/opensource/$QT_VERSION/gcc_64/bin/qmake
+RUN qtchooser -install $QT6_VERSION /opt/Qt/opensource/$QT6_VERSION/gcc_64/bin/qmake
 
-CMD bash
+# Download QT official installer for proprietary versions
+# -O : name the destination file after the remote file name, in the current directory
+# -L : follow http redirections
+RUN curl -O -L https://download.qt.io/official_releases/online_installers/qt-online-installer-linux-x64-online.run
+RUN chmod u+x qt-online-installer-linux-x64-online.run
+
+RUN mkdir -p /home/bc/.local/share/Qt/
+
+# Ask infra@belledonne-communications.com for these files
+COPY qtaccount.ini /home/bc/.local/share/Qt/
+COPY qtlicenses.ini /home/bc/.local/share/Qt/
+
+RUN sudo chmod 600 /home/bc/.local/share/Qt/*
+RUN sudo chown bc /home/bc/.local/share/Qt/*
+
+# Install Qt 5.15.19 proprietary
+RUN ./qt-online-installer-linux-x64-online.run \
+ --accept-licenses \
+ --accept-obligations \
+ --confirm-command \
+ --root "/opt/Qt/proprietary" \
+ --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
+  install qt.qt5.51519.gcc_64 qt.qt5.51519.qtnetworkauth qt.qt5.51519.qtquick3d
+
+# Install Qt 5.15.14 proprietary
+RUN /opt/Qt/proprietary/MaintenanceTool \
+  --accept-licenses \
+  --accept-obligations \
+  --confirm-command \
+  --root "/opt/Qt/proprietary" \
+  --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
+  install qt.qt5.51514.gcc_64 qt.qt5.51514.qtnetworkauth qt.qt5.51514.qtquick3d
+
+# Install Qt 6.8.1 proprietary
+RUN /opt/Qt/proprietary/MaintenanceTool \
+  --accept-licenses \
+  --accept-obligations \
+  --confirm-command \
+  --root "/opt/Qt/proprietary" \
+  --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
+  install qt.qt6.681.linux_gcc_64 qt.qt6.681.addons.qtnetworkauth qt.qt6.681.addons.qtquick3d qt.qt6.681.addons.qtmultimedia qt.qt6.681.addons.qt5compat qt.qt6.681.addons.qtshadertools
+
+# # Install Qt 6.8.3 proprietary
+RUN /opt/Qt/proprietary/MaintenanceTool \
+  --accept-licenses \
+  --accept-obligations \
+  --confirm-command \
+  --root "/opt/Qt/proprietary" \
+  --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
+  install qt.qt6.683.linux_gcc_64 qt.qt6.683.addons.qtnetworkauth qt.qt6.683.addons.qtquick3d qt.qt6.683.addons.qtmultimedia qt.qt6.683.addons.qt5compat qt.qt6.683.addons.qtshadertools
+
+RUN qtchooser -install 5.15.19 /opt/Qt/proprietary/5.15.19/gcc_64/bin/qmake
+RUN qtchooser -install 5.15.14 /opt/Qt/proprietary/5.15.14/gcc_64/bin/qmake
+RUN qtchooser -install 6.8.1 /opt/Qt/proprietary/6.8.1/gcc_64/bin/qmake
+RUN qtchooser -install 6.8.3 /opt/Qt/proprietary/6.8.3/gcc_64/bin/qmake
+
+cmd bash
