@@ -22,7 +22,7 @@ Button {
             : mainItem.hovered || mainItem.hasNavigationFocus
                 ? mainItem.hoveredColor
                 : mainItem.color
-        border.color: mainItem.borderColor
+        border.color: mainItem.hovered ? mainItem.focusedBorderColor : mainItem.borderColor
     }
 	
     contentItem: EffectImage {

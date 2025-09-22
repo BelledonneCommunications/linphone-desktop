@@ -3,6 +3,8 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import Linphone
+import CustomControls 1.0
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
   
 Control.TabBar {
 	id: mainItem
@@ -20,7 +22,7 @@ Control.TabBar {
 
 		Rectangle {
 			id: barBG
-            height: Math.round(4 * DefaultStyle.dp)
+            height: Utils.getSizeWithScreenRatio(4)
 			color: DefaultStyle.grey_200
 			anchors.bottom: parent.bottom
 			width: parent.width
@@ -49,9 +51,11 @@ Control.TabBar {
 			required property string modelData
 			required property int index
 			property bool shadowEnabled: activeFocus || hovered
+			property bool keyboardFocus: FocusHelper.keyboardFocus
 			width: implicitWidth
 			activeFocusOnTab: true
 			hoverEnabled: true
+			Accessible.name: modelData
 			ToolTip {
 				visible: tabText.truncated && hovered
 				delay: 1000
@@ -65,26 +69,34 @@ Control.TabBar {
 
 			background: Item {
 				anchors.fill: parent
-				visible: mainItem.currentIndex === index || tabButton.hovered
-
 				Rectangle {
 					id: tabBackground
-                    height: Math.round(5 * DefaultStyle.dp)
+					visible: mainItem.currentIndex === index || tabButton.hovered
+                    height: Utils.getSizeWithScreenRatio(5)
 					color: mainItem.currentIndex === index ? DefaultStyle.main1_500_main : DefaultStyle.main2_400
 					anchors.bottom: parent.bottom
 					anchors.left: parent.left
 					anchors.right: parent.right
 				}
 				MultiEffect {
+					visible: (mainItem.currentIndex === index || tabButton.hovered) && tabButton.shadowEnabled
 					enabled: tabButton.shadowEnabled
 					anchors.fill: tabBackground
 					source: tabBackground
-					visible:  tabButton.shadowEnabled
 					// Crash : https://bugreports.qt.io/browse/QTBUG-124730
 					shadowEnabled: true //mainItem.shadowEnabled
 					shadowColor: DefaultStyle.grey_1000
 					shadowBlur: 0.1
 					shadowOpacity: tabButton.shadowEnabled ? 0.5 : 0.0
+				}
+				Rectangle{
+					id: borderBackground
+					visible: tabButton.keyboardFocus
+					height: tabButton.height
+					width: tabButton.width
+					color: "transparent"
+					border.color: "black"
+					border.width: 3
 				}
 			}
 
@@ -100,7 +112,7 @@ Control.TabBar {
 				elide: Text.ElideRight
 				maximumLineCount: 1
 				text: modelData
-                bottomPadding: Math.round(5 * DefaultStyle.dp)
+                bottomPadding: Utils.getSizeWithScreenRatio(5)
 			}
 		}
 	}

@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import SettingsCpp 1.0
 import UtilsCpp
 import Linphone
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 RowLayout {
@@ -14,6 +15,8 @@ RowLayout {
 	property string addText
 	property string addTextDescription
 	property string editText
+	property string accessibleEditButtonText
+	property string accessibleUseButtonText
 	property var newItemGui
 	property string settingsLayout
 	property var proxyModel
@@ -25,18 +28,18 @@ RowLayout {
 	signal save()
 	signal undo()
 
-    spacing: Math.round(5 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(5)
 	ColumnLayout {
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-        spacing: Math.round(16 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(16)
 		Repeater {
 			model: mainItem.proxyModel
 			RowLayout {
 				Layout.fillWidth: true
 				Layout.alignment: Qt.AlignLeft|Qt.AlignHCenter
-                Layout.preferredHeight: Math.round(74 * DefaultStyle.dp)
-                spacing: Math.round(20 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(74)
+                spacing: Utils.getSizeWithScreenRatio(20)
 				Text {
 					text: modelData.core[titleProperty]
 					font: Typography.p2l
@@ -51,8 +54,10 @@ RowLayout {
 				Button {
 					style: ButtonStyle.noBackground
 					icon.source: AppIcons.pencil
-                    icon.width: Math.round(24 * DefaultStyle.dp)
-                    icon.height: Math.round(24 * DefaultStyle.dp)
+                    icon.width: Utils.getSizeWithScreenRatio(24)
+                    icon.height: Utils.getSizeWithScreenRatio(24)
+					Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+					Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 					onClicked: {
 						mainItem.owner.container.push(mainItem.settingsLayout, {
 							titleText: mainItem.editText,
@@ -60,6 +65,7 @@ RowLayout {
 							container: mainItem.owner.container,
 							isNew: false})
 					}
+					Accessible.name: mainItem.accessibleEditButtonText.arg(modelData.core[titleProperty])
 				}
 				Switch {
 					id: switchButton
@@ -69,6 +75,7 @@ RowLayout {
 					onToggled: {
 						binding.when = true
 					}
+					Accessible.name: mainItem.accessibleUseButtonText.arg(modelData.core[titleProperty])
 				}
 				Binding {
 					id: binding
@@ -106,7 +113,7 @@ RowLayout {
 		}
 		RowLayout {
 			Layout.fillWidth: true
-            spacing: Math.round(5 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(5)
 			Item {
 				Layout.fillWidth: true
 			}
@@ -114,6 +121,7 @@ RowLayout {
 				Layout.alignment: Qt.AlignRight | Qt.AlignHCenter
                 //: "Ajouter"
                 text: qsTr("add")
+				Accessible.name: mainItem.addText
 				style: ButtonStyle.main
 				visible: mainItem.showAddButton
 				onClicked: {

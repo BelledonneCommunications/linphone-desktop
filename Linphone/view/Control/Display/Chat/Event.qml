@@ -25,7 +25,7 @@ RowLayout {
 			id: message
 			text: eventLogCore.eventDetails
 			font: Typography.p3
-			color: eventLogCore.important ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
+			color: eventLogCore.important ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
 			horizontalAlignment: Text.AlignHCenter
 			Layout.alignment: Qt.AlignHCenter
 		}
@@ -33,7 +33,7 @@ RowLayout {
 			id: date
 			text: UtilsCpp.toDateTimeString(eventLogCore.timestamp)
 			font: Typography.p3
-			color: DefaultStyle.main2_500main
+			color: DefaultStyle.main2_500_main
 			horizontalAlignment: Text.AlignHCenter
 			Layout.alignment: Qt.AlignHCenter
 		}

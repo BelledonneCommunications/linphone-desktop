@@ -126,6 +126,8 @@ AbstractSettingsLayout {
 					onClicked: {
 						fileDialog.open()
 					}
+					//: Choose ringtone file
+					Accessible.name:qsTr("choose_ringtone_file_accessible_name")
 				}
 			}
 		}

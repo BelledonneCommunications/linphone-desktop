@@ -146,7 +146,7 @@ ProgressBar {
 				spacing: mainItem.recording ? Math.round(5 * DefaultStyle.dp) : 0
 				EffectImage {
 					visible: mainItem.recording
-					colorizationColor: DefaultStyle.danger_500main
+					colorizationColor: DefaultStyle.danger_500_main
 					imageSource: AppIcons.recordFill
 					Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
 					Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)

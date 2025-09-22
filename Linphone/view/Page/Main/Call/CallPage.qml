@@ -60,7 +60,7 @@ AbstractMainPage {
                                         Control.StackView.Immediate)
     }
     rightPanelStackView.initialItem: emptySelection
-    rightPanelStackView.width: Math.round(360 * DefaultStyle.dp)
+    rightPanelStackView.width: Utils.getSizeWithScreenRatio(360)
 
     onNoItemButtonPressed: goToNewCall()
 
@@ -81,7 +81,7 @@ AbstractMainPage {
 
     Dialog {
         id: deleteHistoryPopup
-        width: Math.round(637 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(637)
         //: Supprimer l\'historique d\'appels ?
         title: qsTr("history_dialog_delete_all_call_logs_title")
         //: "L'ensemble de votre historique d'appels sera définitivement supprimé."
@@ -89,7 +89,7 @@ AbstractMainPage {
     }
     Dialog {
         id: deleteForUserPopup
-        width: Math.round(637 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(637)
         //: Supprimer l'historique d\'appels ?
         title: qsTr("history_dialog_delete_call_logs_title")
         //: "L\'ensemble de votre historique d\'appels avec ce correspondant sera définitivement supprimé."
@@ -104,7 +104,7 @@ AbstractMainPage {
         Control.StackView {
             id: listStackView
             anchors.fill: parent
-            anchors.leftMargin: Math.round(45 * DefaultStyle.dp)
+            anchors.leftMargin: Utils.getSizeWithScreenRatio(45)
             clip: true
             initialItem: historyListItem
             focus: true
@@ -117,7 +117,7 @@ AbstractMainPage {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            height: Math.round(402 * DefaultStyle.dp)
+            height: Utils.getSizeWithScreenRatio(402)
             NumericPadPopup {
                 id: numericPadPopupItem
                 width: parent.width
@@ -130,7 +130,7 @@ AbstractMainPage {
         }
     }
 
-    Component {
+    Component {                 
         id: historyListItem
         FocusScope {
             objectName: "historyListItem"
@@ -140,7 +140,7 @@ AbstractMainPage {
                 spacing: 0
                 RowLayout {
                     id: titleCallLayout
-                    spacing: Math.round(16 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(16)
                     Text {
                         Layout.fillWidth: true
                         //: "Appels"
@@ -154,12 +154,14 @@ AbstractMainPage {
                     }
                     PopupButton {
                         id: removeHistory
-                        width: Math.round(24 * DefaultStyle.dp)
-                        height: Math.round(24 * DefaultStyle.dp)
+                        icon.width: Utils.getSizeWithScreenRatio(24)
+                        icon.height: Utils.getSizeWithScreenRatio(24)
                         focus: true
                         popup.x: 0
                         KeyNavigation.right: newCallButton
                         KeyNavigation.down: listStackView
+                        //: Call history options
+                        popUpTitle: qsTr("call_history_list_options_accessible_name")
                         popup.contentItem: ColumnLayout {
                             IconLabelButton {
                                 Layout.fillWidth: true
@@ -186,13 +188,15 @@ AbstractMainPage {
                         id: newCallButton
                         style: ButtonStyle.noBackground
                         icon.source: AppIcons.newCall
-                        Layout.preferredWidth: Math.round(28 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(28 * DefaultStyle.dp)
-                        Layout.rightMargin: Math.round(39 * DefaultStyle.dp)
-                        icon.width: Math.round(28 * DefaultStyle.dp)
-                        icon.height: Math.round(28 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(34)
+                        Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+                        icon.width: Utils.getSizeWithScreenRatio(28)
+                        icon.height: Utils.getSizeWithScreenRatio(28)
                         KeyNavigation.left: removeHistory
                         KeyNavigation.down: listStackView
+                        //: Create new call
+                        Accessible.name: qsTr("create_new_call_accessible_name")
                         onClicked: {
                             console.debug("[CallPage]User: create new call")
                             listStackView.push(newCallItem)
@@ -202,8 +206,8 @@ AbstractMainPage {
                 SearchBar {
                     id: searchBar
                     Layout.fillWidth: true
-                    Layout.topMargin: Math.round(18 * DefaultStyle.dp)
-                    Layout.rightMargin: Math.round(39 * DefaultStyle.dp)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(18)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                     //: "Rechercher un appel"
                     placeholderText: qsTr("call_search_in_history")
                     visible: historyListView.count !== 0 || text.length !== 0
@@ -220,9 +224,9 @@ AbstractMainPage {
 				Rectangle {
 					visible: SettingsCpp.callForwardToAddress.length > 0
 					Layout.fillWidth: true
-					Layout.preferredHeight: Math.round(40 * DefaultStyle.dp)
-					Layout.topMargin: Math.round(18 * DefaultStyle.dp)
-					Layout.rightMargin: Math.round(39 * DefaultStyle.dp)
+					Layout.preferredHeight: Utils.getSizeWithScreenRatio(40)
+					Layout.topMargin: Utils.getSizeWithScreenRatio(18)
+					Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
 					color: "transparent"
 					radius: 25 * DefaultStyle.dp
 					border.color: DefaultStyle.warning_500_main
@@ -235,8 +239,8 @@ AbstractMainPage {
 							fillMode: Image.PreserveAspectFit
 							imageSource: AppIcons.callForward
 							colorizationColor: DefaultStyle.warning_500_main
-							Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-							Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+							Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+							Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
 						}
 						Text {
 							text: qsTr("call_forward_to_address_info") + (SettingsCpp.callForwardToAddress == 'voicemail' ? qsTr("call_forward_to_address_info_voicemail") : SettingsCpp.callForwardToAddress)
@@ -259,14 +263,14 @@ AbstractMainPage {
                     Control.Control {
                         id: listLayout
                         anchors.fill: parent
-                        anchors.rightMargin: Math.round(39 * DefaultStyle.dp)
+                        anchors.rightMargin: Utils.getSizeWithScreenRatio(39)
                         padding: 0
                         background: Item {}
                         contentItem: ColumnLayout {
                             Text {
                                 visible: historyListView.count === 0 && !historyListView.loading
                                 Layout.alignment: Qt.AlignHCenter
-                                Layout.topMargin: Math.round(137 * DefaultStyle.dp)
+                                Layout.topMargin: Utils.getSizeWithScreenRatio(137)
                                 //: "Aucun résultat…"
                                 text: searchBar.text.length != 0 ? qsTr("list_filter_no_result_found")
                                                                    //: "Aucun appel dans votre historique"
@@ -280,7 +284,7 @@ AbstractMainPage {
                                 id: historyListView
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
-                                Layout.topMargin: Math.round(38 * DefaultStyle.dp)
+                                Layout.topMargin: Utils.getSizeWithScreenRatio(38)
                                 searchBar: searchBar
                                 Control.ScrollBar.vertical: scrollbar
 
@@ -314,7 +318,7 @@ AbstractMainPage {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.right: parent.right
-                        anchors.rightMargin: Math.round(8 * DefaultStyle.dp)
+                        anchors.rightMargin: Utils.getSizeWithScreenRatio(8)
                         policy: Control.ScrollBar.AsNeeded
                     }
                 }
@@ -336,14 +340,18 @@ AbstractMainPage {
                 anchors.fill: parent
                 spacing: 0
                 RowLayout {
-                    spacing: Math.round(10 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(10)
                     Button {
-                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                        icon.width: Utils.getSizeWithScreenRatio(24)
+                        icon.height: Utils.getSizeWithScreenRatio(24)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
                         style: ButtonStyle.noBackground
                         icon.source: AppIcons.leftArrow
                         focus: true
                         KeyNavigation.down: listStackView
+                        //: Return to call history
+                        Accessible.name: qsTr("return_to_call_history_accessible_name")
                         onClicked: {
                             console.debug(
                                         "[CallPage]User: return to call history")
@@ -365,7 +373,7 @@ AbstractMainPage {
                 }
                 NewCallForm {
                     id: callContactsList
-                    Layout.topMargin: Math.round(18 * DefaultStyle.dp)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(18)
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     focus: true
@@ -433,8 +441,8 @@ AbstractMainPage {
             CallHistoryLayout {
                 id: contactDetail
                 anchors.fill: parent
-                anchors.topMargin: Math.round(45 * DefaultStyle.dp)
-                anchors.bottomMargin: Math.round(45 * DefaultStyle.dp)
+                anchors.topMargin: Utils.getSizeWithScreenRatio(45)
+                anchors.bottomMargin: Utils.getSizeWithScreenRatio(45)
                 visible: mainItem.selectedRowHistoryGui != undefined
                 callHistoryGui: selectedRowHistoryGui
 
@@ -448,6 +456,7 @@ AbstractMainPage {
                     id: detailOptions
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
+                    popUpTitle: qsTr("call_history_options_accessible_name")
                     popup.x: width
                     popup.contentItem: FocusScope {
                         implicitHeight: detailsButtons.implicitHeight
@@ -463,14 +472,15 @@ AbstractMainPage {
                             id: detailsButtons
                             anchors.fill: parent
                             IconLabelButton {
+                                id: addContactButton
                                 Layout.fillWidth: true
                                 //: "Show contact"
                                 text: contactDetail.isLocalFriend ? qsTr("menu_see_existing_contact") :
                                                               //: "Add to contacts"
                                                               qsTr("menu_add_address_to_contacts")
                                 icon.source: AppIcons.plusCircle
-                                icon.width: Math.round(32 * DefaultStyle.dp)
-                                icon.height: Math.round(32 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(32)
+                                icon.height: Utils.getSizeWithScreenRatio(32)
                                 onClicked: {
                                     detailOptions.close()
                                     if (contactDetail.isLocalFriend)
@@ -478,14 +488,21 @@ AbstractMainPage {
                                     else
                                         mainItem.createContactRequested(contactDetail.contactName, contactDetail.contactAddress)
                                 }
+                                KeyNavigation.up: visibleChildren.length
+                                                    != 0 ? detailOptions.getPreviousItem(
+                                                                0) : null
+                                KeyNavigation.down: visibleChildren.length
+                                                    != 0 ? detailOptions.getNextItem(
+                                                                0) : null
                             }
                             IconLabelButton {
+                                id: copySIPAddressButton
                                 Layout.fillWidth: true
                                 //: "Copier l'adresse SIP"
                                 text: qsTr("menu_copy_sip_address")
                                 icon.source: AppIcons.copy
-                                icon.width: Math.round(32 * DefaultStyle.dp)
-                                icon.height: Math.round(32 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(32)
+                                icon.height: Utils.getSizeWithScreenRatio(32)
                                 onClicked: {
                                     detailOptions.close()
                                     var success = UtilsCpp.copyToClipboard(
@@ -505,6 +522,12 @@ AbstractMainPage {
                                                     qsTr("sip_address_copy_to_clipboard_error"),
                                                     false)
                                 }
+                                KeyNavigation.up: visibleChildren.length
+                                                    != 0 ? detailOptions.getPreviousItem(
+                                                                1) : null
+                                KeyNavigation.down: visibleChildren.length
+                                                    != 0 ? detailOptions.getNextItem(
+                                                                1) : null
                             }
                             // IconLabelButton {
                             // 	background: Item {}
@@ -517,17 +540,18 @@ AbstractMainPage {
                             // }
                             Rectangle {
                                 Layout.fillWidth: true
-                                Layout.preferredHeight: Math.round(2 * DefaultStyle.dp)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(2)
                                 color: DefaultStyle.main2_400
                             }
 
                             IconLabelButton {
+                                id: deleteHistoryButton
                                 Layout.fillWidth: true
                                 //: "Supprimer l'historique"
                                 text: qsTr("menu_delete_history")
                                 icon.source: AppIcons.trashCan
-                                icon.width: Math.round(32 * DefaultStyle.dp)
-                                icon.height: Math.round(32 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(32)
+                                icon.height: Utils.getSizeWithScreenRatio(32)
                                 style: ButtonStyle.hoveredBackgroundRed
                                 Connections {
                                     target: deleteForUserPopup
@@ -541,12 +565,18 @@ AbstractMainPage {
                                     detailOptions.close()
                                     deleteForUserPopup.open()
                                 }
+                                KeyNavigation.up: visibleChildren.length
+                                                    != 0 ? detailOptions.getPreviousItem(
+                                                                2) : null
+                                KeyNavigation.down: visibleChildren.length
+                                                    != 0 ? detailOptions.getNextItem(
+                                                                2) : null
                             }
                         }
                     }
                 }
                 detailContent: Item {
-                    Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
                     Layout.fillHeight: true
                     RoundedPane {
                         id: detailControl
@@ -557,7 +587,7 @@ AbstractMainPage {
                             id: detailListBackground
                             anchors.fill: parent
                             color: DefaultStyle.grey_0
-                            radius: Math.round(15 * DefaultStyle.dp)
+                            radius: Utils.getSizeWithScreenRatio(15)
                         }
 
                         contentItem: Control.ScrollView {
@@ -573,37 +603,37 @@ AbstractMainPage {
                                 id: detailListView
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
-                                Layout.rightMargin: historyScrollBar.width + Math.round(8 * DefaultStyle.dp)
-                                spacing: Math.round(14 * DefaultStyle.dp)
+                                Layout.rightMargin: historyScrollBar.width + Utils.getSizeWithScreenRatio(8)
+                                spacing: Utils.getSizeWithScreenRatio(14)
                                 clip: true
                                 searchText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
-                                busyIndicatorSize: Math.round(40 * DefaultStyle.dp)
+                                busyIndicatorSize: Utils.getSizeWithScreenRatio(40)
 
-                                delegate: Item {
-                                    width: detailListView.width
-                                    height: Math.round(56 * DefaultStyle.dp)
-                                    RowLayout {
-                                        anchors.fill: parent
-                                        anchors.leftMargin: Math.round(20 * DefaultStyle.dp)
-                                        anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
-                                        anchors.verticalCenter: parent.verticalCenter
-                                        ColumnLayout {
-                                            Layout.alignment: Qt.AlignVCenter
-                                            RowLayout {
-                                                EffectImage {
-                                                    id: statusIcon
-                                                    imageSource: modelData.core.status
-                                                                    === LinphoneEnums.CallStatus.Declined
-                                                                    || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted ? AppIcons.arrowElbow : modelData.core.isOutgoing ? AppIcons.arrowUpRight : AppIcons.arrowDownLeft
-                                                    colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted || modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500main : modelData.core.isOutgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500main
-                                                    Layout.preferredWidth: Math.round(16 * DefaultStyle.dp)
-                                                    Layout.preferredHeight: Math.round(16 * DefaultStyle.dp)
-                                                    transform: Rotation {
-                                                        angle: modelData.core.isOutgoing
-                                                                && (modelData.core.status === LinphoneEnums.CallStatus.Declined || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
-                                                        origin {
-                                                            x: statusIcon.width / 2
-                                                            y: statusIcon.height / 2
+                            delegate: Item {
+                                width: detailListView.width
+                                height: Utils.getSizeWithScreenRatio(56)
+                                RowLayout {
+                                    anchors.fill: parent
+                                    anchors.leftMargin: Utils.getSizeWithScreenRatio(20)
+                                    anchors.rightMargin: Utils.getSizeWithScreenRatio(20)
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    ColumnLayout {
+                                        Layout.alignment: Qt.AlignVCenter
+                                        RowLayout {
+                                            EffectImage {
+                                                id: statusIcon
+                                                imageSource: modelData.core.status
+                                                             === LinphoneEnums.CallStatus.Declined
+                                                             || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted ? AppIcons.arrowElbow : modelData.core.isOutgoing ? AppIcons.arrowUpRight : AppIcons.arrowDownLeft
+                                                colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted || modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500_main : modelData.core.isOutgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500_main
+                                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(16)
+                                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(16)
+                                                transform: Rotation {
+                                                    angle: modelData.core.isOutgoing
+                                                           && (modelData.core.status === LinphoneEnums.CallStatus.Declined || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
+                                                    origin {
+                                                        x: statusIcon.width / 2
+                                                        y: statusIcon.height / 2
                                                         }
                                                     }
                                                 }
@@ -623,10 +653,10 @@ AbstractMainPage {
                                             }
                                             Text {
                                                 text: UtilsCpp.formatDate(modelData.core.date)
-                                                color: modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
+                                                color: modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
                                                 font {
-                                                    pixelSize: Math.round(12 * DefaultStyle.dp)
-                                                    weight: Math.round(300 * DefaultStyle.dp)
+                                                    pixelSize: Utils.getSizeWithScreenRatio(12)
+                                                    weight: Utils.getSizeWithScreenRatio(300)
                                                 }
                                             }
                                         }
@@ -639,8 +669,8 @@ AbstractMainPage {
                                                         modelData.core.duration,
                                                         false)
                                             font {
-                                                pixelSize: Math.round(12 * DefaultStyle.dp)
-                                                weight: Math.round(300 * DefaultStyle.dp)
+                                                pixelSize: Utils.getSizeWithScreenRatio(12)
+                                                weight: Utils.getSizeWithScreenRatio(300)
                                             }
                                         }
                                     }
@@ -660,11 +690,11 @@ AbstractMainPage {
         id: iconLabel
         property string text
         property string iconSource
-        property color colorizationColor: DefaultStyle.main2_500main
+        property color colorizationColor: DefaultStyle.main2_500_main
         EffectImage {
             imageSource: iconLabel.iconSource
-            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
             fillMode: Image.PreserveAspectFit
             colorizationColor: iconLabel.colorizationColor
         }

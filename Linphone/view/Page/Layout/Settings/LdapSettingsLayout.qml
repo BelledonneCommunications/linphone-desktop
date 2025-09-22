@@ -6,6 +6,7 @@ import QtQuick.Dialogs
 import Linphone
 import SettingsCpp 1.0
 import UtilsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 AbstractSettingsLayout {
@@ -39,12 +40,14 @@ AbstractSettingsLayout {
 	Component {
 		id: topBar
 		RowLayout {
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
 			Button {
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.trashCan
-                icon.width: Math.round(32 * DefaultStyle.dp)
-                icon.height: Math.round(32 * DefaultStyle.dp)
+                icon.width: Utils.getSizeWithScreenRatio(30)
+                icon.height: Utils.getSizeWithScreenRatio(30)
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(38)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(38)
 				visible: !isNew
 				onClicked: {
 					var mainWin = UtilsCpp.getMainWindow()
@@ -60,6 +63,8 @@ AbstractSettingsLayout {
 						}
 					)
 				}
+				//: Delete LDAP server
+				Accessible.name: qsTr("delete_ldap_server_accessible_name")
 			}
 		}
 	}
@@ -68,10 +73,10 @@ AbstractSettingsLayout {
 		id: ldapParametersComponent
 		ColumnLayout {
 			Layout.fillWidth: true
-            spacing: Math.round(20 * DefaultStyle.dp)
-            Layout.rightMargin: Math.round(44 * DefaultStyle.dp)
-            Layout.topMargin: Math.round(20 * DefaultStyle.dp)
-            Layout.leftMargin: Math.round(64 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
+            Layout.rightMargin: Utils.getSizeWithScreenRatio(44)
+            Layout.topMargin: Utils.getSizeWithScreenRatio(20)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(64)
 			DecoratedTextField {
 				id: server
 				propertyName: "serverUrl"

@@ -138,6 +138,49 @@ function getTopParent (object, useFakeParent) {
   return parent
 }
 
+
+// -----------------------------------------------------------------------------
+
+// Check that an item is descendant of another one
+function isDescendant(child, parent) {
+  console.debug("---")
+  console.debug(child)
+  var current = child.parent
+  while (current) {
+  console.debug(current)
+    if (current === parent)
+      return true
+    current = current.parent
+  }
+  return false
+}
+
+// -----------------------------------------------------------------------------
+
+// Retrieve first focussable item of an Item. If no item found, return undefined
+function getFirstFocussableItemInItem(item) {
+  var next = item.nextItemInFocusChain();
+  if (next && isDescendant(next, item)){
+      return next;
+  }
+  return undefined;
+}
+
+// Retrieve last focussable item of an Item. If no item found, return undefined
+function getLastFocussableItemInItem(item) {
+  var next = item.nextItemInFocusChain();
+  if(next && !isDescendant(next, item)){
+    return undefined;
+  }
+  var current
+  do{
+    current = next;
+    next = current.nextItemInFocusChain();
+  } while(isDescendant(next, item) && next.visible)
+  console.log("find last content", current)
+  return current;
+}
+
 // -----------------------------------------------------------------------------
 
 // Load by default a window in the ui/views folder.
@@ -826,4 +869,14 @@ function codepointFromFilename(filename) {
   let codePoints = parts.map(hex => parseInt(hex, 16));
   var unicode = String.fromCodePoint(...codePoints);
   return unicode;
+}
+
+
+// -----------------------------------------------------------------------------
+
+function getSizeWithScreenRatio(size){
+  if (size == 0) {
+		return size;
+	}
+	return Math.max(Math.round(size * Linphone.DefaultStyle.dp), 1);
 }

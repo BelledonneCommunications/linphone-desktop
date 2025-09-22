@@ -3,22 +3,30 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
+import CustomControls 1.0
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Control.Slider {
     id: mainItem
-	property bool shadowEnabled: mainItem.hovered || mainItem.activeFocus
+    property bool keyboardFocus: FocusHelper.keyboardFocus
+    property bool shadowEnabled: mainItem.hovered || mainItem.activeFocus && !keyboardFocus
 	hoverEnabled: true
+    // Border properties
+    property color borderColor: "transparent"
+    property color keyboardFocusedBorderColor: DefaultStyle.main2_900
+    property real borderWidth: 0
+    property real keyboardFocusedBorderWidth: Utils.getSizeWithScreenRatio(3)
     background: Item{
 		x: mainItem.leftPadding
 		y: mainItem.topPadding + mainItem.availableHeight / 2 - height / 2
-        implicitWidth: Math.round(200 * DefaultStyle.dp)
-        implicitHeight: Math.round(4 * DefaultStyle.dp)
+        implicitWidth: Utils.getSizeWithScreenRatio(200)
+        implicitHeight: Utils.getSizeWithScreenRatio(4)
 		width: mainItem.availableWidth
 		height: implicitHeight
 		Rectangle {
 			id: sliderBackground
 			anchors.fill: parent
-            radius: Math.round(30 * DefaultStyle.dp)
+            radius: Math.round(height / 2)
 			// TODO : change the colors when mockup indicates their names
 			color: DefaultStyle.grey_850
 	
@@ -30,7 +38,7 @@ Control.Slider {
 					GradientStop { position: 0.0; color: DefaultStyle.main1_300 }
 					GradientStop { position: 1.0; color: DefaultStyle.main1_500_main }
 				}
-                radius: Math.round(40 * DefaultStyle.dp)
+                radius: Math.round(height / 2)
 			}
 		}
 		MultiEffect {
@@ -49,13 +57,15 @@ Control.Slider {
     handle: Item {
 		x: mainItem.leftPadding + mainItem.visualPosition * (mainItem.availableWidth - width)
 		y: mainItem.topPadding + mainItem.availableHeight / 2 - height / 2
-        implicitWidth: Math.round(16 * DefaultStyle.dp)
-        implicitHeight: Math.round(16 * DefaultStyle.dp)
+        implicitWidth: Utils.getSizeWithScreenRatio(16)
+        implicitHeight: Utils.getSizeWithScreenRatio(16)
 		Rectangle {
 			id: handleRect
 			anchors.fill: parent
-            radius: Math.round(30 * DefaultStyle.dp)
+            radius: Math.round(height / 2)
 			color: DefaultStyle.grey_0
+            border.color: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderColor : mainItem.borderColor
+            border.width: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth
 		}
 		MultiEffect {
 			source: handleRect
@@ -63,7 +73,7 @@ Control.Slider {
 			shadowEnabled: true
 			shadowColor: DefaultStyle.grey_1000
 			shadowBlur: 0.1
-			shadowOpacity: 0.1
+			shadowOpacity: 0.5
 		}
 	}
 }

@@ -19,6 +19,11 @@
 			pressed: Linphone.DefaultStyle.grey_0
 		}
 	}
+	var mainLightBorder =  Object.assign({
+			borderColor : {
+				keybaordFocused: Linphone.DefaultStyle.main2_000
+			}
+		}, main)
 
 // White with orange border
 	var secondary = {
@@ -27,7 +32,10 @@
 			hovered: Linphone.DefaultStyle.main1_100,
 			pressed: Linphone.DefaultStyle.main1_500_main
 		},
-		borderColor: Linphone.DefaultStyle.main1_500_main,
+		borderColor: {
+			normal: Linphone.DefaultStyle.main1_500_main,
+			keybaordFocused: Linphone.DefaultStyle.main2_900
+		},
 		text: {
 			normal: Linphone.DefaultStyle.main1_500_main,
 			pressed: Linphone.DefaultStyle.grey_0
@@ -80,11 +88,11 @@
 			pressed: Linphone.DefaultStyle.main2_400
 		},
 		text: {
-			normal: Linphone.DefaultStyle.main2_500main,
+			normal: Linphone.DefaultStyle.main2_500_main,
 			pressed: Linphone.DefaultStyle.main2_700
 		},
 		image: {
-			normal: Linphone.DefaultStyle.main2_500main,
+			normal: Linphone.DefaultStyle.main2_500_main,
 			pressed: Linphone.DefaultStyle.main2_700
 		}
 	}
@@ -93,7 +101,7 @@
 	var phoneRed = {
 		iconSource: Linphone.AppIcons.endCall,
 		color: {
-			normal: Linphone.DefaultStyle.danger_500main,
+			normal: Linphone.DefaultStyle.danger_500_main,
 			hovered: Linphone.DefaultStyle.danger_700,
 			pressed: Linphone.DefaultStyle.danger_900
 		},
@@ -106,12 +114,17 @@
 			pressed: Linphone.DefaultStyle.grey_0
 		}
 	}
+	var phoneRedLightBorder =  Object.assign({
+			borderColor : {
+				keybaordFocused: Linphone.DefaultStyle.main2_000
+			}
+		}, phoneRed)
 
 // Green phone
 	var phoneGreen = {
 		iconSource: Linphone.AppIcons.phone,
 		color: {
-			normal: Linphone.DefaultStyle.success_500main,
+			normal: Linphone.DefaultStyle.success_500_main,
 			hovered: Linphone.DefaultStyle.success_700,
 			pressed: Linphone.DefaultStyle.success_900
 		},
@@ -137,6 +150,9 @@
 			normal: Linphone.DefaultStyle.grey_0,
 			pressed: Linphone.DefaultStyle.grey_0
 		},
+		borderColor: {
+			keybaordFocused: Linphone.DefaultStyle.main2_000
+		},
 		image: {
 			normal: Linphone.DefaultStyle.grey_0,
 			pressed: Linphone.DefaultStyle.grey_0,
@@ -156,13 +172,13 @@
 			normal: Linphone.DefaultStyle.main2_200,
 			hovered: Linphone.DefaultStyle.main2_300,
             pressed: Linphone.DefaultStyle.main2_400,
-            checked: Linphone.DefaultStyle.main1_500main
+            checked: Linphone.DefaultStyle.main1_500_main
 		},
 		image: {
 			normal: Linphone.DefaultStyle.main2_200,
 			hovered: Linphone.DefaultStyle.main2_300,
             pressed: Linphone.DefaultStyle.main2_400,
-            checked: Linphone.DefaultStyle.main1_500main,
+            checked: Linphone.DefaultStyle.main1_500_main,
 		}
 	}
 
@@ -178,15 +194,20 @@
 			normal: Linphone.DefaultStyle.main2_600,
 			hovered: Linphone.DefaultStyle.main2_700,
             pressed: Linphone.DefaultStyle.main2_800,
-            checked: Linphone.DefaultStyle.main1_500main
+            checked: Linphone.DefaultStyle.main1_500_main
 		},
 		image: {
 			normal: Linphone.DefaultStyle.main2_600,
 			hovered: Linphone.DefaultStyle.main2_700,
             pressed: Linphone.DefaultStyle.main2_800,
-            checked: Linphone.DefaultStyle.main1_500main,
+            checked: Linphone.DefaultStyle.main1_500_main,
 		}
 	}
+	var noBackgroundLightBorder =  Object.assign({
+			borderColor : {
+				keybaordFocused: Linphone.DefaultStyle.main2_000
+			}
+		}, noBackground)
 
 // No background red
 	var noBackgroundRed = {
@@ -196,12 +217,12 @@
 			pressed: "#00000000"
 		},
 		text: {
-			normal: Linphone.DefaultStyle.danger_500main,
+			normal: Linphone.DefaultStyle.danger_500_main,
 			hovered: Linphone.DefaultStyle.danger_700,
 			pressed: Linphone.DefaultStyle.danger_900
 		},
 		image: {
-			normal: Linphone.DefaultStyle.danger_500main,
+			normal: Linphone.DefaultStyle.danger_500_main,
 			hovered: Linphone.DefaultStyle.danger_700,
 			pressed: Linphone.DefaultStyle.danger_900,
 			checked: Linphone.DefaultStyle.danger_900
@@ -254,14 +275,14 @@
 			pressed: Linphone.DefaultStyle.main2_100
 		},
 		text: {
-			normal: Linphone.DefaultStyle.main2_500main,
-			hovered: Linphone.DefaultStyle.main2_500main,
-			pressed: Linphone.DefaultStyle.main2_500main
+			normal: Linphone.DefaultStyle.main2_500_main,
+			hovered: Linphone.DefaultStyle.main2_500_main,
+			pressed: Linphone.DefaultStyle.main2_500_main
 		},
 		image: {
-			normal: Linphone.DefaultStyle.main2_500main,
-			hovered: Linphone.DefaultStyle.main2_500main,
-			pressed: Linphone.DefaultStyle.main2_500main
+			normal: Linphone.DefaultStyle.main2_500_main,
+			hovered: Linphone.DefaultStyle.main2_500_main,
+			pressed: Linphone.DefaultStyle.main2_500_main
 		}
 	}
 
@@ -273,12 +294,12 @@
 			pressed: Linphone.DefaultStyle.main2_100
 		},
 		text: {
-			normal: Linphone.DefaultStyle.danger_500main,
+			normal: Linphone.DefaultStyle.danger_500_main,
 			hovered: Linphone.DefaultStyle.danger_700,
 			pressed: Linphone.DefaultStyle.danger_900
 		},
 		image: {
-			normal: Linphone.DefaultStyle.danger_500main,
+			normal: Linphone.DefaultStyle.danger_500_main,
 			hovered: Linphone.DefaultStyle.danger_700,
 			pressed: Linphone.DefaultStyle.danger_900
 		}
@@ -304,9 +325,12 @@
 			hovered: Linphone.DefaultStyle.grey_0,
 			pressed: Linphone.DefaultStyle.grey_0
 		},
-		borderColor: Linphone.DefaultStyle.success_500main,
+		borderColor: {
+			normal: Linphone.DefaultStyle.success_500_main,
+			keybaordFocused: Linphone.DefaultStyle.main2_900
+		},
 		text: {
-			normal: Linphone.DefaultStyle.success_500main,
+			normal: Linphone.DefaultStyle.success_500_main,
 			pressed: Linphone.DefaultStyle.success_700
 		}
 	}
@@ -318,7 +342,10 @@
 			hovered: Linphone.DefaultStyle.grey_0,
 			pressed: Linphone.DefaultStyle.grey_0
 		},
-		borderColor: Linphone.DefaultStyle.info_500_main,
+		borderColor: {
+			normal: Linphone.DefaultStyle.info_500_main,
+			keybaordFocused: Linphone.DefaultStyle.main2_900
+		},
 		text: {
 			normal: Linphone.DefaultStyle.info_500_main,
 			pressed: Linphone.DefaultStyle.info_500_main
@@ -332,9 +359,32 @@
 			hovered: Linphone.DefaultStyle.grey_0,
 			pressed: Linphone.DefaultStyle.grey_0
 		},
-		borderColor: Linphone.DefaultStyle.danger_500main,
+		borderColor: {
+			normal: Linphone.DefaultStyle.danger_500_main,
+			keybaordFocused: Linphone.DefaultStyle.main2_900
+		},
 		text: {
-			normal: Linphone.DefaultStyle.danger_500main,
-			pressed: Linphone.DefaultStyle.danger_500main
+			normal: Linphone.DefaultStyle.danger_500_main,
+			pressed: Linphone.DefaultStyle.danger_500_main
+		}
+	}
+
+// White selected
+	var whiteSelected = {
+		color: {
+			normal: Linphone.DefaultStyle.grey_0,
+			hovered: Linphone.DefaultStyle.main2_100,
+			selected: Linphone.DefaultStyle.grey_200,
+		},
+		borderColor: {
+			keybaordFocused: Linphone.DefaultStyle.main2_900
+		}
+	}
+
+	var hoveredBackgroundBis = {
+		color: {
+			normal: "#00000000",
+			hovered: Linphone.DefaultStyle.main2_100,
+			pressed: Linphone.DefaultStyle.main2_100
 		}
 	}

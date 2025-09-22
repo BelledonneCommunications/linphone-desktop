@@ -116,6 +116,7 @@ AbstractWindow {
 		console.log("Showing authentication dialog")
 		var popup = authenticationPopupComp.createObject(mainWindow, {"identity": identity, "domain": domain, "callback":callback})	// Callback ownership is not passed
 		popup.open()
+		popup.announce()
 	}
 
 	Connections {

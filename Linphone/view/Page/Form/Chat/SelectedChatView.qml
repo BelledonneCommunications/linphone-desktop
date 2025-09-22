@@ -425,7 +425,7 @@ FocusScope {
                                     Layout.fillWidth: true
                                     //: Reply to %1
                                     text: mainItem.chatMessage ? qsTr("reply_to_label").arg(UtilsCpp.boldTextPart(mainItem.chatMessage.core.fromName, mainItem.chatMessage.core.fromName)) : ""
-                                    color: DefaultStyle.main2_500main
+                                    color: DefaultStyle.main2_500_main
                                     font {
                                         pixelSize: Typography.p3.pixelSize
                                         weight: Typography.p3.weight

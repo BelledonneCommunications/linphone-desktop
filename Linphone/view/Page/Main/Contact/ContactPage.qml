@@ -245,6 +245,8 @@ FriendGui{
                     mainItem.createContact("", "")
                 }
                 KeyNavigation.down: searchBar
+                //: Create new contact
+                Accessible.name: qsTr("create_contact_accessible_name")
             }
         }
 
@@ -340,6 +342,8 @@ FriendGui{
                         icon.source: contactDetailLayout.icon
                         style: ButtonStyle.noBackgroundOrange
                         onClicked: contactDetailLayout.titleIconClicked()
+                        //: More info %1
+                        Accessible.name: qsTr("more_info_accessible_name").arg(contactDetailLayout.label)
                     }
                     Item {
                         Layout.fillWidth: true
@@ -351,6 +355,12 @@ FriendGui{
                         checked: true
                         icon.source: checked ? AppIcons.upArrow : AppIcons.downArrow
                         KeyNavigation.down: contentControl
+                        Accessible.name: (checked ?
+                            //: Shrink %1
+                            qsTr("shrink_accessible_name"):
+                            //: Expand %1
+                            qsTr("expand_accessible_name")).arg(contactDetailLayout.label)
+
                     }
                 }
                 RoundedPane {
@@ -378,28 +388,6 @@ FriendGui{
                 property var computedContactNameObj: UtilsCpp.getDisplayName(contactAddress)
                 property string computedContactName: computedContactNameObj ? computedContactNameObj.value : ""
                 property string contactName: contact ? contact.core.fullName : computedContactName
-                component LabelButton: ColumnLayout {
-                    id: labelButton
-                    // property alias image: buttonImg
-                    property alias button: button
-                    property string label
-                    spacing: Math.round(8 * DefaultStyle.dp)
-                    RoundButton {
-                        id: button
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.preferredWidth: Math.round(56 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(56 * DefaultStyle.dp)
-                        style: ButtonStyle.grey
-                    }
-                    Text {
-                        Layout.alignment: Qt.AlignHCenter
-                        text: labelButton.label
-                        font {
-                            pixelSize: Typography.p1.pixelSize
-                            weight: Typography.p1.weight
-                        }
-                    }
-                }
                 component ActionsButtons: RowLayout {
                     spacing: Math.round(58 * DefaultStyle.dp)
                     LabelButton {
@@ -533,6 +521,8 @@ FriendGui{
                                                         UtilsCpp.createCall(
                                                                     listViewModelData.address)
                                                     }
+                                                    //: Call address %1
+                                                    Accessible.name: qsTr("call_adress_accessible_name").arg(listViewModelData.address)
                                                 }
                                             }
 
@@ -639,6 +629,7 @@ FriendGui{
                                 }
                                 onClicked: console.debug(
                                                "TODO : go to shared media")
+                                Accessible.name: qsTr("contact_details_medias_subtitle")
                             }
                         }
                         ContactDetailLayout {
@@ -707,6 +698,8 @@ FriendGui{
                                             style: ButtonStyle.tertiary
                                             //: "Vérifier"
                                             text: qsTr("contact_make_call_check_device_trust")
+                                            //: Verify %1 device
+                                            Accessible.name: qsTr("verify_device_accessible_name").arg(deviceDelegate.deviceName)
                                             onClicked: {
                                                 if (SettingsCpp.getDisplayDeviceCheckConfirmation(
                                                             )) {

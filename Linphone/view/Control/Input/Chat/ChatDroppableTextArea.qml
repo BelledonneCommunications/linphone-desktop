@@ -158,6 +158,7 @@ Control.Control {
 								}
 								onCursorRectangleChanged: sendingAreaFlickable.ensureVisible(cursorRectangle)
 								wrapMode: TextEdit.WordWrap
+								KeyNavigation.tab: recordButton.visible ? recordButton : sendMessageButton
 								Keys.onPressed: (event) => {
 									if ((event.key == Qt.Key_Enter || event.key == Qt.Key_Return))
 										if(!(event.modifiers & Qt.ShiftModifier)) {
@@ -194,6 +195,7 @@ Control.Control {
 								}
 							}
 							BigButton {
+								id: sendMessageButton
 								visible: sendingTextArea.text.length !== 0 || mainItem.selectedFilesCount > 0
 								style: ButtonStyle.noBackgroundOrange
 								icon.source: AppIcons.paperPlaneRight
@@ -275,7 +277,7 @@ Control.Control {
 	Rectangle {
 		id: hoverContent
 		anchors.fill: parent
-		color: DefaultStyle.main2_0
+		color: DefaultStyle.main2_000
 		visible: false
 		radius: Math.round(20 * DefaultStyle.dp)
 
@@ -284,14 +286,14 @@ Control.Control {
 			imageSource: AppIcons.filePlus
 			width: Math.round(37 * DefaultStyle.dp)
 			height: Math.round(37 * DefaultStyle.dp)
-			colorizationColor: DefaultStyle.main2_500main
+			colorizationColor: DefaultStyle.main2_500_main
 		}
 
 		DashRectangle {
 			x: parent.x
 			y: parent.y
 			radius: hoverContent.radius
-			color: DefaultStyle.main2_500main
+			color: DefaultStyle.main2_500_main
 			width: parent.width
 			height: parent.height
 		}

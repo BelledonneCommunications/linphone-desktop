@@ -71,7 +71,7 @@ ColumnLayout {
 					conferenceInfo.state == LinphoneEnums.ConferenceInfoState.Updated ?
 						DefaultStyle.warning_600 :
 					conferenceInfo.state == LinphoneEnums.ConferenceInfoState.Cancelled ?
-						DefaultStyle.danger_500main :
+						DefaultStyle.danger_500_main :
 					DefaultStyle.main2_600
 			}
 
@@ -109,7 +109,7 @@ ColumnLayout {
 							Layout.fillWidth: true
 							// Layout.preferredWidth: advancedWidth
 							text: conferenceInfo.dateTime.toLocaleString(Qt.locale(), "ddd")
-							color: DefaultStyle.main2_500main
+							color: DefaultStyle.main2_500_main
 							font {
 								pixelSize: Typography.p4.pixelSize
 								weight: Typography.p4.weight
@@ -161,7 +161,7 @@ ColumnLayout {
 					Text {
 						text: conferenceInfo.dateTime.toLocaleString(Qt.locale(), "dddd d MMMM yyyy")
 						font: Typography.p4
-						color: DefaultStyle.main2_500main
+						color: DefaultStyle.main2_500_main
 					}
 					Text {
 						//: from %1 to %2 (UTC%3)
@@ -171,14 +171,14 @@ ColumnLayout {
 						text: qsTr("").arg(
 								conferenceInfo.dateTime.toLocaleString(Qt.locale(), "hh:mm")).arg(
 								conferenceInfo.endDateTime.toLocaleString(Qt.locale(), "hh:mm")).arg(offsetFromUtc)
-						color: DefaultStyle.main2_500main
+						color: DefaultStyle.main2_500_main
 						font: Typography.p4
 					}
 
 					Text {
 						text: timeRangeText
 						font: Typography.p4
-						color: DefaultStyle.main2_500main
+						color: DefaultStyle.main2_500_main
 					}
 				}
 			}
@@ -244,7 +244,7 @@ ColumnLayout {
 					wrapMode: Text.WordWrap
 					textFormat: Text.RichText
 					font: Typography.p4
-					color: DefaultStyle.main2_500main
+					color: DefaultStyle.main2_500_main
 					maximumLineCount: 3
 					elide: Text.ElideRight
 					visible: conferenceInfo.description.length > 0

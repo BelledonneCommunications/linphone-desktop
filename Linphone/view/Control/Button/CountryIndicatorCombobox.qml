@@ -26,6 +26,7 @@ ColumnLayout {
 	Control.ComboBox {
 		id: combobox
 		currentIndex: phoneNumberModel.count > 0 ? Math.max(0, phoneNumberModel.findIndexByCountryCallingCode(defaultCallingCode)) : -1
+		Accessible.name: mainItem.Accessible.name
 		model: PhoneNumberProxy {
 			id: phoneNumberModel
 		}
@@ -36,7 +37,7 @@ ColumnLayout {
 			color: mainItem.enableBackgroundColor ? DefaultStyle.grey_100 : "transparent"
 			border.color: mainItem.enableBackgroundColors 
 						? (mainItem.errorMessage.length > 0 
-							? DefaultStyle.danger_500main 
+							? DefaultStyle.danger_500_main 
 							: textField.activeFocus
 								? DefaultStyle.main1_500_main
 								: DefaultStyle.grey_200)
@@ -140,7 +141,7 @@ ColumnLayout {
 							id: countryText
 							text: $modelData.country
 							elide: Text.ElideRight
-							color: DefaultStyle.main2_500main
+							color: DefaultStyle.main2_500_main
 							font {
                                 pixelSize: Typography.p1.pixelSize
                                 weight: Typography.p1.weight
@@ -151,13 +152,13 @@ ColumnLayout {
 							id: separator
                             width: Math.max(Math.round(1 * DefaultStyle.dp), 1)
 							height: combobox.height / 2
-							color: DefaultStyle.main2_500main
+							color: DefaultStyle.main2_500_main
 						}
 
 						Text {
 							text: "+" + $modelData.countryCallingCode
 							elide: Text.ElideRight
-							color: DefaultStyle.main2_500main
+							color: DefaultStyle.main2_500_main
 							font {
                                 pixelSize: Typography.p1.pixelSize
                                 weight: Typography.p1.weight
@@ -174,7 +175,7 @@ ColumnLayout {
 							anchors.fill: parent
 							opacity: 0.1
                             radius: Math.round(15 * DefaultStyle.dp)
-							color: DefaultStyle.main2_500main
+							color: DefaultStyle.main2_500_main
 							visible: parent.containsMouse
 						}
 						onClicked: {

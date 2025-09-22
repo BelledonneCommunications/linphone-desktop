@@ -239,6 +239,7 @@ FocusScope {
 							event.accepted = true;
 						}
 					}
+					KeyNavigation.tab: addParticipantsButton
 					background: Rectangle {
 						anchors.fill: parent
 						color: descriptionEdit.hovered || descriptionEdit.activeFocus ? DefaultStyle.grey_100 : "transparent"

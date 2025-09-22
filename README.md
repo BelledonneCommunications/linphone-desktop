@@ -327,6 +327,30 @@ Please note that we don't offer free support and these contributions will be add
 - external : external projects.
 	- linphone-sdk
 
+#### Add new text/label
+
+For each text/label that you want to put in the application, you need to follow thoses steps:
+
+1. In you code, add the label like this :
+```qml
+//: "Trad in english"
+qsTr("variable_name")
+```
+
+2. Build the application with the target `update_translations`
+
+3. In the translation files on `Linphone/data/languages/*.ts`, modify all translations that you can. They have been generated with `<translation type="unfinished"></translation>`
+```xml
+<message>
+    <location filename="xxx.qml" line="xxx"/>
+    <source>variable_name</source>
+    <extracomment>&quot;Trad in english&quot;</extracomment>
+    <translation>My Translation</translation>
+</message>
+```
+
+4. Build again the application with the target `release_translations`
+
 ### Languages
 
 <a href="https://weblate.linphone.org/engage/linphone/">

@@ -2,14 +2,15 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
-
 import Linphone
 import SettingsCpp
+import CustomControls 1.0
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 Control.TabBar {
 	id: mainItem
-    //spacing: Math.round(32 * DefaultStyle.dp)
-    topPadding: Math.round(36 * DefaultStyle.dp)
+    //spacing: Utils.getSizeWithScreenRatio(32)
+    topPadding: Utils.getSizeWithScreenRatio(36)
 
 	property var model
 	readonly property alias cornerRadius: bottomLeftCorner.radius
@@ -38,10 +39,10 @@ Control.TabBar {
 	component UnreadNotification: Rectangle {
 		property int unread: 0
 		visible: unread > 0
-        width: Math.round(15 * DefaultStyle.dp)
-        height: Math.round(15 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(15)
+        height: Utils.getSizeWithScreenRatio(15)
 		radius: width/2
-		color: DefaultStyle.danger_500main
+		color: DefaultStyle.danger_500_main
 		Text{
 			id: unreadCount
 			anchors.fill: parent
@@ -77,7 +78,7 @@ Control.TabBar {
 			id: bottomLeftCorner
 			anchors.fill: parent
 			color: DefaultStyle.main1_500_main
-            radius: Math.round(25 * DefaultStyle.dp)
+            radius: Utils.getSizeWithScreenRatio(25)
 		}
 		Rectangle {
 			color: DefaultStyle.main1_500_main
@@ -100,10 +101,12 @@ Control.TabBar {
 			id: tabButton
 			width: mainItem.width
 			height: visible && buttonIcon.isImageReady ? undefined : 0
-            bottomInset:  Math.round(32 * DefaultStyle.dp)
-            topInset:  Math.round(32 * DefaultStyle.dp)
+            bottomInset:  Utils.getSizeWithScreenRatio(32)
+            topInset:  Utils.getSizeWithScreenRatio(32)
 			hoverEnabled: true
 			visible: modelData?.visible != undefined ? modelData.visible : true
+			text: modelData.accessibilityLabel
+			property bool keyboardFocus: FocusHelper.keyboardFocus
 			UnreadNotification {
 				unread: !defaultAccount 
 				? -1
@@ -113,18 +116,27 @@ Control.TabBar {
 						? defaultAccount.core?.unreadMessageNotifications || -1
 						: 0
 				anchors.right: parent.right
-                anchors.rightMargin: Math.round(15 * DefaultStyle.dp)
+                anchors.rightMargin: Utils.getSizeWithScreenRatio(15)
 				anchors.top: parent.top
 			}
 			MouseArea {
 				anchors.fill: tabButton
 				cursorShape: tabButton.hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
-				acceptedButtons: Qt.NoButton
+				acceptedButtons: Qt.NoButton				
+			}
+			background: Rectangle{
+				// Black border for keyboard navigation
+				visible: tabButton.keyboardFocus
+				color: "transparent"
+				border.color: DefaultStyle.main2_900
+				border.width: Utils.getSizeWithScreenRatio(3)
+				radius: Utils.getSizeWithScreenRatio(5)
+				anchors.fill: tabButton
 			}
 			contentItem: ColumnLayout {
 				EffectImage {
 					id: buttonIcon
-                    property real buttonSize: mainItem.currentIndex !== index && tabButton.hovered ? Math.round(26 * DefaultStyle.dp) : Math.round(24 * DefaultStyle.dp)
+					property real buttonSize: mainItem.currentIndex !== index && tabButton.hovered ? Utils.getSizeWithScreenRatio(26) : Utils.getSizeWithScreenRatio(24)
 					imageSource: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
 					Layout.preferredWidth: buttonSize
 					Layout.preferredHeight: buttonSize
@@ -138,20 +150,20 @@ Control.TabBar {
 					visible: buttonIcon.isImageReady
 					text: modelData.label
 					font {
-						weight: mainItem.currentIndex === index 
-                            ? Math.round(800 * DefaultStyle.dp)
+						weight: mainItem.currentIndex === index
+							? Utils.getSizeWithScreenRatio(800)
 							: tabButton.hovered 
-                                ? Math.round(600 * DefaultStyle.dp)
-                                : Math.round(400 * DefaultStyle.dp)
-                        pixelSize: Math.round(11 * DefaultStyle.dp)
+								? Utils.getSizeWithScreenRatio(600)
+								: Utils.getSizeWithScreenRatio(400)
+						pixelSize: Utils.getSizeWithScreenRatio(11)
 					}
 					color: DefaultStyle.grey_0
 					Layout.fillWidth: true
 					Layout.preferredHeight: txtMeter.height
 					Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
-                    leftPadding: Math.round(3 * DefaultStyle.dp)
-                    rightPadding: Math.round(3 * DefaultStyle.dp)
+					leftPadding: Utils.getSizeWithScreenRatio(3)
+					rightPadding: Utils.getSizeWithScreenRatio(3)
 				}
 			}
 			TextMetrics {
@@ -159,15 +171,13 @@ Control.TabBar {
 				text: modelData.label
 				font: buttonText.font
 				Component.onCompleted: {
-                    font.weight = Math.round(800 * DefaultStyle.dp)
+                    font.weight = Utils.getSizeWithScreenRatio(800)
 					mainItem.implicitWidth = Math.max(mainItem.implicitWidth, advanceWidth + buttonIcon.buttonSize)
 				}
 			}
 			onClicked: {
 				mainItem.setCurrentIndex(TabBar.index)
 			}
-
-			background: Item {}
 		}
 	}
 }

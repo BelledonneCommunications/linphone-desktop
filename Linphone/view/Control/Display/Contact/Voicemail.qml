@@ -40,7 +40,7 @@ Rectangle{
 		horizontalAlignment: Text.AlignHCenter
         font.weight: Typography.p2.weight
         font.pixelSize: Typography.p2.pixelSize * scaleFactor
-		color: DefaultStyle.danger_500main
+		color: DefaultStyle.danger_500_main
 		text: voicemailCount >= 100 ? '99+' : voicemailCount
 		visible: showMwi && voicemailCount > 0
 		maximumLineCount: 1
@@ -49,7 +49,7 @@ Rectangle{
 	Rectangle {
 		anchors.top: parent.top
 		anchors.right: parent.right
-		color: DefaultStyle.danger_500main
+		color: DefaultStyle.danger_500_main
 		visible: showMwi && voicemailCount == 0
         width: Math.round(14 * DefaultStyle.dp) * scaleFactor
 		height: width

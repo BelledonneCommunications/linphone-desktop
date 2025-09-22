@@ -73,7 +73,7 @@ Control.Control {
             width: implicitWidth
             x: mapToItem(this, chatBubble.x, chatBubble.y).x
             text: mainItem.chatMessage.core.fromName
-            color: DefaultStyle.main2_500main
+            color: DefaultStyle.main2_500_main
             font {
                 pixelSize: Typography.p4.pixelSize
                 weight: Typography.p4.weight
@@ -87,7 +87,7 @@ Control.Control {
             Layout.alignment: mainItem.isRemoteMessage ? Qt.AlignLeft: Qt.AlignRight
             EffectImage {
                 imageSource: AppIcons.forward
-                colorizationColor: DefaultStyle.main2_500main
+                colorizationColor: DefaultStyle.main2_500_main
                 Layout.preferredWidth: Math.round(12 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(12 * DefaultStyle.dp)
             }
@@ -115,7 +115,7 @@ Control.Control {
                     Layout.alignment: mainItem.isRemoteMessage ? Qt.AlignLeft : Qt.AlignRight
                     EffectImage {
                         imageSource: AppIcons.reply
-                        colorizationColor: DefaultStyle.main2_500main
+                        colorizationColor: DefaultStyle.main2_500_main
                         Layout.preferredWidth: Math.round(12 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(12 * DefaultStyle.dp)
                     }
@@ -270,7 +270,7 @@ Control.Control {
                                 Text {
                                     id: ephemeralTime
                                     visible: mainItem.chatMessage.core.isEphemeral
-                                    color: DefaultStyle.main2_500main
+                                    color: DefaultStyle.main2_500_main
                                     text: UtilsCpp.formatDuration(mainItem.chatMessage.core.ephemeralDuration * 1000)
                                     font {
                                         pixelSize: Typography.p3.pixelSize
@@ -280,7 +280,7 @@ Control.Control {
                                 EffectImage {
                                     visible: mainItem.chatMessage.core.isEphemeral
                                     imageSource: AppIcons.clockCountDown
-                                    colorizationColor: DefaultStyle.main2_500main
+                                    colorizationColor: DefaultStyle.main2_500_main
                                     Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
                                     Layout.preferredHeight: visible ? 14 * DefaultStyle.dp : 0
                                 }
@@ -292,7 +292,7 @@ Control.Control {
                                 Text {
                                     Layout.alignment: Qt.AlignVCenter
                                     text: UtilsCpp.formatDate(mainItem.chatMessage.core.timestamp, true, false, "dd/MM")
-                                    color: DefaultStyle.main2_500main
+                                    color: DefaultStyle.main2_500_main
                                     font {
                                         pixelSize: Typography.p3.pixelSize
                                         weight: Typography.p3.weight

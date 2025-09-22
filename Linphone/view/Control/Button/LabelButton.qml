@@ -24,6 +24,7 @@ ColumnLayout {
 		contentImageColor: DefaultStyle.main2_600
 		radius: Math.round(40 * DefaultStyle.dp)
 		style: ButtonStyle.grey
+		Accessible.name: labelButton.label
 	}
 	Text {
 		id: text

@@ -2,16 +2,12 @@ import QtQuick
 import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import Linphone
+import CustomControls 1.0
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 FocusScope {
 	id: mainItem
-	property string placeholderText: ""
-	property color placeholderTextColor: DefaultStyle.main2_400
-    property real textInputWidth: Math.round(350 * DefaultStyle.dp)
-	property color borderColor: "transparent"
-	property color focusedBorderColor: DefaultStyle.main2_500main
-	property string text: textField.searchText
 	property bool magnifierVisible: true
 	property var validator: RegularExpressionValidator{}
 	property var numericPadPopup
@@ -20,6 +16,17 @@ FocusScope {
 	property alias color: backgroundItem.color
 	property bool delaySearch: true	// Wait some idle time after typing to start searching
 	property bool handleNumericPadPopupButtonsPressed: true
+    // Border properties
+	property color borderColor: "transparent"
+	property color focusedBorderColor: DefaultStyle.main2_500_main
+	property color keyboardFocusedBorderColor: DefaultStyle.main2_900
+	property real borderWidth: Utils.getSizeWithScreenRatio(1)
+	property real keyboardFocusedBorderWidth: Utils.getSizeWithScreenRatio(3)
+	// Text properties
+	property string placeholderText: ""
+	property color placeholderTextColor: DefaultStyle.main2_400									
+    property real textInputWidth: Math.round(350 * DefaultStyle.dp)
+	property string text: textField.searchText
 	
 	signal openNumericPadRequested()// Useful for redirection before displaying numeric pad.
 	
@@ -45,12 +52,13 @@ FocusScope {
 		anchors.fill: parent
         radius: Math.round(28 * DefaultStyle.dp)
 		color: DefaultStyle.grey_100
-		border.color: textField.activeFocus ? mainItem.focusedBorderColor : mainItem.borderColor
+		border.color: textField.keyboardFocus ? mainItem.keyboardFocusedBorderColor : textField.activeFocus ? mainItem.focusedBorderColor : mainItem.borderColor
+		border.width: textField.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth
 	}
 	EffectImage {
 		id: magnifier
 		visible: mainItem.magnifierVisible
-		colorizationColor: DefaultStyle.main2_500main
+		colorizationColor: DefaultStyle.main2_500_main
 		anchors.left: parent.left
 		anchors.verticalCenter: parent.verticalCenter
         anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
@@ -64,6 +72,7 @@ FocusScope {
         anchors.leftMargin: magnifier.visible ? 0 : Math.round(10 * DefaultStyle.dp)
 		anchors.right: clearTextButton.left
 		anchors.verticalCenter: parent.verticalCenter
+		property bool keyboardFocus: FocusHelper.keyboardFocus
 		
 		property string searchText
 
@@ -86,7 +95,7 @@ FocusScope {
 		}
 		cursorDelegate: Rectangle {
 			visible: textField.cursorVisible
-			color: DefaultStyle.main2_500main
+			color: DefaultStyle.main2_500_main
             width: Math.max(Math.round(1 * DefaultStyle.dp), 1)
 		}
 		Timer{
@@ -104,11 +113,15 @@ FocusScope {
 		icon.source: AppIcons.dialer
 		contentImageColor: checked ? DefaultStyle.main1_500_main : DefaultStyle.main2_600 
 		hoveredImageColor: contentImageColor
-        width: Math.round(24 * DefaultStyle.dp)
-        height: Math.round(24 * DefaultStyle.dp)
+        width: Math.round(30 * DefaultStyle.dp)
+        height: Math.round(30* DefaultStyle.dp)
+		icon.width: Utils.getSizeWithScreenRatio(24)
+		icon.height: Utils.getSizeWithScreenRatio(24)
 		anchors.verticalCenter: parent.verticalCenter 
 		anchors.right: parent.right
         anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
+		//: "Open dialer"
+		Accessible.name: qsTr("open_dialer_acccessibility_label")
 		onClicked: {
 			if(!checked){
 				mainItem.openNumericPadRequested()
@@ -127,6 +140,8 @@ FocusScope {
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
         anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
+		//: "Clear text input"
+		Accessible.name: qsTr("clear_text_input_acccessibility_label")
 		onClicked: {
 			textField.clear()
 		}

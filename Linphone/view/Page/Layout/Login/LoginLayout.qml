@@ -8,6 +8,7 @@ import QtQuick.Controls.Basic as Control
 
 import Linphone
 import ConstantsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Rectangle {
@@ -18,15 +19,15 @@ Rectangle {
 
 	component AboutLine: RowLayout {
 		id: line
-        spacing: Math.round(20 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(20)
 		property var imageSource
 		property string title
 		property string text
 		property bool enableMouseArea: false
 		signal contentClicked()
 		EffectImage {
-            Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(32)
 			imageSource: parent.imageSource
 			colorizationColor: DefaultStyle.main1_500_main
 		}
@@ -46,8 +47,8 @@ Rectangle {
 				id: content
 				Layout.fillWidth: true
 				text: line.text
-				color: DefaultStyle.main2_500main
-                font.pixelSize: Math.round(14 * DefaultStyle.dp)
+				color: DefaultStyle.main2_500_main
+                font.pixelSize: Utils.getSizeWithScreenRatio(14)
 				horizontalAlignment: Layout.AlignLeft
 				Keys.onPressed: (event)=> {
 					if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
@@ -71,14 +72,14 @@ Rectangle {
 	Dialog {
 		id: aboutPopup
 		anchors.centerIn: parent
-        width: Math.round(637 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(637)
         //: À propos de %1
         title: qsTr("help_about_title").arg(applicationName)
-        bottomPadding: Math.round(10 * DefaultStyle.dp)
+        bottomPadding: Utils.getSizeWithScreenRatio(10)
 		buttons: []
 		content: RowLayout {
 			ColumnLayout {
-                spacing: Math.round(17 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(17)
 				Layout.alignment: Qt.AlignTop | Qt.AlignLeft
 				AboutLine {
 					imageSource: AppIcons.detective
@@ -109,7 +110,7 @@ Rectangle {
 				}
 				Item {
 					// Item to shift close button
-                    Layout.preferredHeight: Math.round(10 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(10)
 				}
 			}
 			MediumButton {
@@ -137,10 +138,10 @@ Rectangle {
 				id: aboutButton
 				Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 				icon.source: AppIcons.info
-                text: qsTr("help_about_title").arg(applicationName)
+				text: qsTr("help_about_title").arg(applicationName)
 				textSize: Typography.p1.pixelSize
 				textWeight: Typography.p1.weight
-				textColor: DefaultStyle.main2_500main
+				textColor: DefaultStyle.main2_500_main
 				onClicked: aboutPopup.open()
 				style: ButtonStyle.noBackground
 			}
@@ -165,7 +166,7 @@ Rectangle {
 			source: AppIcons.belledonne
 			fillMode: Image.Stretch
 			Layout.fillWidth: true
-            Layout.preferredHeight: Math.round(108 * DefaultStyle.dp)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(108)
 		}
 	}
 

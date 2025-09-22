@@ -99,6 +99,8 @@ AbstractSettingsLayout {
                         //: Invalid URL format
                         UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("settings_advanced_invalid_url_message"), false, UtilsCpp.getMainWindow())
 				}
+				//: "Download and apply remote provisioning"
+				Accessible.name: qsTr("download_apply_remote_provisioning_accessible_name")
 			}
 		}
 	}
@@ -124,6 +126,7 @@ AbstractSettingsLayout {
 					propertyName: "mediaEncryption"
 					textRole: 'display_name'
                     propertyOwner: SettingsCpp
+					Accessible.name: qsTr("settings_advanced_media_encryption_title")
 				}
 			}
 			SwitchSetting {

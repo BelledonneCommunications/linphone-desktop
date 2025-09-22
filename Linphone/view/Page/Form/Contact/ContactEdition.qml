@@ -7,6 +7,7 @@ import QtQuick.Layouts
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 MainRightPanel {
@@ -36,7 +37,7 @@ MainRightPanel {
 			mainItem.contact.core.undo()
 			mainItem.closeEdition('')
 		}
-        width: Math.round(278 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(278)
         //: "Les changements seront annulés. Souhaitez-vous continuer ?"
         text: qsTr("contact_editor_dialog_cancel_change_message")
 	}
@@ -45,18 +46,20 @@ MainRightPanel {
 		Text {
 			text: mainItem.title
 			font {
-				pixelSize: Math.round(20 * DefaultStyle.dp)
+				pixelSize: Utils.getSizeWithScreenRatio(20)
 				weight: Typography.h4.weight
 			}
 		}
 		Item{Layout.fillWidth: true}
 		Button {
 			style: ButtonStyle.noBackground
-			width: Math.round(24 * DefaultStyle.dp)
-			height: Math.round(24 * DefaultStyle.dp)
+			Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+			Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 			icon.source: AppIcons.closeX
-			icon.width: Math.round(24 * DefaultStyle.dp)
-			icon.height: Math.round(24 * DefaultStyle.dp)
+			icon.width: Utils.getSizeWithScreenRatio(24)
+			icon.height: Utils.getSizeWithScreenRatio(24)
+			//: Close %n
+			Accessible.name: qsTr("close_accessible_name").arg(mainItem.title)
 			onClicked: {
 				if (contact.core.isSaved) mainItem.closeEdition('')
 				else showConfirmationLambdaPopup("", qsTr("contact_editor_dialog_cancel_change_message"), "", function(confirmed) {
@@ -70,9 +73,16 @@ MainRightPanel {
 	}
 
 	content: ContactLayout {
+		id: contactLayoutItem
 		anchors.fill: parent
 		contact: mainItem.contact
 		button.text: mainItem.saveButtonText
+		button.Keys.onPressed: (event) => {
+			if(event.key == Qt.Key_Up){
+				phoneNumberInput.forceActiveFocus(Qt.BacktabFocusReason)
+				event.accepted = true
+			}
+		}
 		
 		// Let some time to GUI to set fields on losing focus.
 		Timer{
@@ -114,7 +124,7 @@ MainRightPanel {
 			RowLayout {
 				visible: mainItem.contact && mainItem.contact.core.pictureUri.length != 0
 				Layout.alignment: Qt.AlignHCenter
-                spacing: Math.round(32 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(32)
 				IconLabelButton {
 					id: editButton
 					Layout.preferredWidth: width
@@ -128,6 +138,8 @@ MainRightPanel {
                     textWeight: Typography.h4.weight
 					KeyNavigation.right: removeButton
 					onClicked: fileDialog.open()
+					//: "Edit contact image"
+					Accessible.name: qsTr("edit_contact_image_accessible_name")
 				}
 				FileDialog {
 					id: fileDialog
@@ -153,6 +165,8 @@ MainRightPanel {
                     textWeight: Typography.h4.weight
 					KeyNavigation.left: editButton
 					onClicked: mainItem.contact.core.pictureUri = ""
+					//: "Delete contact image"
+					Accessible.name: qsTr("delete_contact_image_accessible_name")
 				}
 			},
 			Item{Layout.fillWidth: true}
@@ -195,7 +209,7 @@ MainRightPanel {
 			ScrollBar.horizontal: Control.ScrollBar {
 			}
 			ColumnLayout {
-                spacing: Math.round(20 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(20)
 				anchors.left: parent.left
 				anchors.right: parent.right
 
@@ -207,15 +221,16 @@ MainRightPanel {
                     label: qsTr("contact_editor_first_name")
 					contentItem: TextField {
 						id: givenNameEdit
-                        Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 						initialText: contact.core.givenName
 						onTextEdited: {
 							contact.core.givenName = givenNameEdit.text
 						}
 						backgroundColor: DefaultStyle.grey_0
-						backgroundBorderColor: givenName.errorTextVisible ? DefaultStyle.danger_500main : DefaultStyle.grey_200
+						backgroundBorderColor: givenName.errorTextVisible ? DefaultStyle.danger_500_main : DefaultStyle.grey_200
 						KeyNavigation.up: editButton.visible ? editButton : addPictureButton
 						KeyNavigation.down: nameTextField
+						Accessible.name: qsTr("contact_editor_first_name")
 					}
 				}
                 FormItemLayout {
@@ -229,6 +244,7 @@ MainRightPanel {
 						backgroundColor: DefaultStyle.grey_0
 						KeyNavigation.up: givenNameEdit
 						KeyNavigation.down: companyTextField
+						Accessible.name: qsTr("contact_editor_last_name")
 					}
 				}
 				FormItemLayout {
@@ -242,6 +258,7 @@ MainRightPanel {
 						backgroundColor: DefaultStyle.grey_0
 						KeyNavigation.up: nameTextField
 						KeyNavigation.down: jobTextField
+						Accessible.name: qsTr("contact_editor_company")
 					}
 				}
 				FormItemLayout {
@@ -256,13 +273,11 @@ MainRightPanel {
 						KeyNavigation.up: companyTextField
 						Keys.onPressed: (event) => {
 							if(event.key == Qt.Key_Down){
-								if(addressesList.count > 0)
-									addressesList.itemAt(0).forceActiveFocus()
-								else
-									newAddressTextField.forceActiveFocus()
+								(addressesList.count > 0 ? addressesList.itemAt(0) : newAddressTextField).forceActiveFocus(Qt.TabFocusReason)
 								event.accepted = true
 							}
 						}
+						Accessible.name: qsTr("contact_editor_job_title")
 					}
 				}
 				Repeater {
@@ -275,25 +290,23 @@ MainRightPanel {
 						label: modelData.label
 						contentItem: RowLayout {
 							id: addressLayout
-                            spacing: Math.round(10 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(10)
 							function updateFocus(event){
 								if(event.key == Qt.Key_Up){
-									if(index - 1 >=0 )
-										addressesList.itemAt(index - 1).forceActiveFocus()
-									else
-										jobTextField.forceActiveFocus()
+									(index - 1 >=0 ? addressesList.itemAt(index - 1) : jobTextField).forceActiveFocus(Qt.BacktabFocusReason)
 									event.accepted = true
 								}else if(event.key == Qt.Key_Down){
-									if(index + 1 < addressesList.count)
-										addressesList.itemAt(index+1).forceActiveFocus()
-									else
-										newAddressTextField.forceActiveFocus()
+									(index + 1 < addressesList.count ? addressesList.itemAt(index+1) : newAddressTextField).forceActiveFocus(Qt.TabFocusReason)
 									event.accepted = true
+								}else if(event.key == Qt.Key_Right && addressTextField.activeFocus){
+									removeAddressButton.forceActiveFocus(Qt.TabFocusReason)
+								}else if(event.key == Qt.Key_Left && removeAddressButton.activeFocus){
+									addressTextField.forceActiveFocus(Qt.BacktabFocusReason)
 								}
 							}
 							TextField {
 								id: addressTextField
-                                Layout.preferredWidth: Math.round(421 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(421)
 								Layout.preferredHeight: height
 								onEditingFinished: {
                                     var label = qsTr("sip_address")
@@ -305,19 +318,23 @@ MainRightPanel {
 								focus: true
 								KeyNavigation.right: removeAddressButton
 								Keys.onPressed: (event) => addressLayout.updateFocus(event)
+								//: "SIP address number %1"
+								Accessible.name: qsTr("sip_address_number_accessible_name").arg(index+1)
 							}
 							Button {
 								id: removeAddressButton
-                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 								Layout.alignment: Qt.AlignVCenter
 								icon.source: AppIcons.closeX
-                                icon.width: Math.round(24 * DefaultStyle.dp)
-                                icon.height: Math.round(24 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(24)
+                                icon.height: Utils.getSizeWithScreenRatio(24)
 								style: ButtonStyle.noBackground
 								KeyNavigation.left: addressTextField
 								Keys.onPressed: (event) => addressLayout.updateFocus(event)
 								onClicked: mainItem.contact.core.removeAddress(index)
+								//: "Remove SIP address %1"
+								Accessible.name: qsTr("remove_sip_address_accessible_name").arg(addressTextField.text)
 							}
 						}
 					}
@@ -334,16 +351,10 @@ MainRightPanel {
 						backgroundColor: DefaultStyle.grey_0
 						Keys.onPressed: (event) => {
 							if(event.key == Qt.Key_Up){
-								if(addressesList.count > 0 )
-									addressesList.itemAt(addressesList.count - 1).forceActiveFocus()
-								else
-									jobTextField.forceActiveFocus()
+								(addressesList.count > 0 ? addressesList.itemAt(addressesList.count - 1) : jobTextField).forceActiveFocus(Qt.BacktabFocusReason)
 								event.accepted = true
 							}else if(event.key == Qt.Key_Down){
-								if(phoneNumberList.count > 0)
-									phoneNumberList.itemAt(0).forceActiveFocus()
-								else
-									phoneNumberInputTextField.forceActiveFocus()
+								(phoneNumberList.count > 0 ? phoneNumberList.itemAt(0) : phoneNumberInputTextField).forceActiveFocus(Qt.TabFocusReason)
 								event.accepted = true
 							}
 						}
@@ -352,6 +363,8 @@ MainRightPanel {
 							newAddressTextField.clear()
 							editionLayout.connectOnce(editionLayout.ensureVisibleRequested, editionLayout.ensureVisible)
 						}
+						//: "New SIP address"
+						Accessible.name: qsTr("new_sip_address_accessible_name")
 					}
 				}
 				Repeater {
@@ -363,25 +376,19 @@ MainRightPanel {
 						label: modelData.label
 						contentItem: RowLayout {
 							id: phoneNumberLayout
-                            spacing: Math.round(10 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(10)
 							function updateFocus(event){
 								if(event.key == Qt.Key_Up){
-									if(index - 1 >=0 )
-										phoneNumberList.itemAt(index - 1).forceActiveFocus()
-									else
-										newAddressTextField.forceActiveFocus()
+									(index - 1 >=0 ? phoneNumberList.itemAt(index - 1): newAddressTextField).forceActiveFocus(Qt.BacktabFocusReason)
 									event.accepted = true
 								}else if(event.key == Qt.Key_Down){
-									if(index + 1 < phoneNumberList.count)
-										phoneNumberList.itemAt(index+1).forceActiveFocus()
-									else
-										phoneNumberInputTextField.forceActiveFocus()
+									(index + 1 < phoneNumberList.count ? phoneNumberList.itemAt(index+1) : phoneNumberInputTextField).forceActiveFocus(Qt.TabFocusReason)
 									event.accepted = true
 								}
 							}
 							TextField {
 								id: phoneTextField
-                                Layout.preferredWidth: Math.round(421 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(421)
 								Layout.preferredHeight: height
 								initialText: modelData.address
 								backgroundColor: DefaultStyle.grey_0
@@ -392,19 +399,23 @@ MainRightPanel {
                                     //: "Téléphone"
                                     if (text.length != 0) mainItem.contact.core.setPhoneNumberAt(index, qsTr("phone"), text)
 								}
+								//: "Phone number number %1"
+								Accessible.name: qsTr("phone_number_number_accessible_name").arg(index+1)
 							}
 							Button {
 								id: removePhoneButton
-                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 								Layout.alignment: Qt.AlignVCenter
 								style: ButtonStyle.noBackground
 								icon.source: AppIcons.closeX
-                                icon.width: Math.round(24 * DefaultStyle.dp)
-                                icon.height: Math.round(24 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(24)
+                                icon.height: Utils.getSizeWithScreenRatio(24)
 								KeyNavigation.left: phoneTextField
 								Keys.onPressed: (event) => phoneNumberLayout.updateFocus(event)
 								onClicked: mainItem.contact.core.removePhoneNumber(index)
+								//: Remove phone number %1
+								Accessible.name: qsTr("remove_phone_number_accessible_name").arg(phoneTextField.text)
 							}
 						}
 					}
@@ -421,16 +432,10 @@ MainRightPanel {
 						backgroundColor: DefaultStyle.grey_0
 						Keys.onPressed: (event) => {
 							if(event.key == Qt.Key_Up){
-								if(phoneNumberList.count > 0 )
-									phoneNumberList.itemAt(phoneNumberList.count - 1).forceActiveFocus()
-								else
-									newAddressTextField.forceActiveFocus()
+								(phoneNumberList.count > 0 ? phoneNumberList.itemAt(phoneNumberList.count - 1) : newAddressTextField).forceActiveFocus(Qt.BacktabFocusReason)
 								event.accepted = true
 							}else if(event.key == Qt.Key_Down){
-								if(saveButton.enabled)
-									saveButton.forceActiveFocus()
-								else
-									givenNameEdit.forceActiveFocus()
+								(contactLayoutItem.button.enabled ? contactLayoutItem.button : givenNameEdit).forceActiveFocus(Qt.TabFocusReason)
 								event.accepted = true
 							}
 						}
@@ -439,6 +444,8 @@ MainRightPanel {
 							phoneNumberInputTextField.clear()
 							editionLayout.connectOnce(editionLayout.ensureVisibleRequested, editionLayout.ensureVisible)
 						}
+						//: "New phone number"
+						Accessible.name: qsTr("new_phone_number_accessible_name")
 					}
 				}
 				TemporaryText {

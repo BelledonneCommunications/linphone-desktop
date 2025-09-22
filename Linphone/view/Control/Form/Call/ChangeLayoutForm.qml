@@ -50,11 +50,11 @@ FocusScope {
                                 Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
                                 Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
 								imageSource: modelData.imgUrl
-								colorizationColor: DefaultStyle.main2_500main
+								colorizationColor: DefaultStyle.main2_500_main
 							}
 							Text {
 								text: modelData.text
-								color: DefaultStyle.main2_500main
+								color: DefaultStyle.main2_500_main
 								verticalAlignment: Text.AlignVCenter
                                 font.pixelSize: Math.round(14 * DefaultStyle.dp)
 								Layout.fillWidth: true

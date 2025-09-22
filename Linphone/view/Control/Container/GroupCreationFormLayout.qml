@@ -6,6 +6,7 @@ import QtQuick.Effects
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 FocusScope {
@@ -22,16 +23,20 @@ FocusScope {
         spacing: 0
         anchors.fill: parent
         RowLayout {
-            spacing: Math.round(10 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(10)
             Button {
                 id: backGroupCallButton
                 style: ButtonStyle.noBackgroundOrange
                 icon.source: AppIcons.leftArrow
-                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
+                icon.width: Utils.getSizeWithScreenRatio(24)
+                icon.height: Utils.getSizeWithScreenRatio(24)
                 KeyNavigation.down: groupName
                 KeyNavigation.right: groupCallButton
                 KeyNavigation.left: groupCallButton
+                //: Return
+                Accessible.name: qsTr("return_accessible_name")
                 onClicked: {
                     mainItem.returnRequested()
                 }
@@ -41,7 +46,7 @@ FocusScope {
                 color: DefaultStyle.main1_500_main
                 maximumLineCount: 1
                 font {
-                    pixelSize: Math.round(18 * DefaultStyle.dp)
+                    pixelSize: Utils.getSizeWithScreenRatio(18)
                     weight: Typography.h4.weight
                 }
                 Layout.fillWidth: true
@@ -49,7 +54,7 @@ FocusScope {
             SmallButton {
                 id: groupCallButton
                 enabled: mainItem.selectedParticipantsCount.length != 0
-                Layout.rightMargin: Math.round(21 * DefaultStyle.dp)
+                Layout.rightMargin: Utils.getSizeWithScreenRatio(21)
                 text: mainItem.createGroupButtonText
                 style: ButtonStyle.main
                 KeyNavigation.down: addParticipantsLayout
@@ -62,8 +67,8 @@ FocusScope {
         }
         RowLayout {
             spacing: 0
-            Layout.topMargin: Math.round(18 * DefaultStyle.dp)
-            Layout.rightMargin: Math.round(38 * DefaultStyle.dp)
+            Layout.topMargin: Utils.getSizeWithScreenRatio(18)
+            Layout.rightMargin: Utils.getSizeWithScreenRatio(38)
             Text {
                 font.pixelSize: Typography.p2.pixelSize
                 font.weight: Typography.p2.weight
@@ -74,8 +79,8 @@ FocusScope {
                 Layout.fillWidth: true
             }
             Text {
-                font.pixelSize: Math.round(12 * DefaultStyle.dp)
-                font.weight: Math.round(300 * DefaultStyle.dp)
+                font.pixelSize: Utils.getSizeWithScreenRatio(12)
+                font.weight: Utils.getSizeWithScreenRatio(300)
                 //: "Requis"
                 text: qsTr("required")
             }
@@ -83,16 +88,17 @@ FocusScope {
         TextField {
             id: groupName
             Layout.fillWidth: true
-            Layout.rightMargin: Math.round(38 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+            Layout.rightMargin: Utils.getSizeWithScreenRatio(38)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
             focus: true
             KeyNavigation.down: addParticipantsLayout //participantList.count > 0 ? participantList : searchbar
+            Accessible.name: qsTr("group_start_dialog_subject_hint")
         }
         AddParticipantsForm {
             id: addParticipantsLayout
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.topMargin: Math.round(15 * DefaultStyle.dp)
+            Layout.topMargin: Utils.getSizeWithScreenRatio(15)
             onSelectedParticipantsCountChanged: mainItem.selectedParticipantsCount = selectedParticipantsCount
             focus: true
             

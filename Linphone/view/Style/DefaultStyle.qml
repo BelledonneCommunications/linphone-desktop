@@ -15,12 +15,12 @@ QtObject {
     property color main1_600: currentTheme.main600
     property color main1_700: currentTheme.main700
 
-    property color main2_0: "#FAFEFF"
+    property color main2_000: "#FAFEFF"
     property color main2_100: "#EEF6F8"
     property color main2_200: "#DFECF2"
     property color main2_300: "#C0D1D9"
     property color main2_400: "#9AABB5"
-    property color main2_500main: "#6C7A87"
+    property color main2_500_main: "#6C7A87"
     property color main2_600: "#4E6074"
     property color main2_700: "#364860"
     property color main2_800: "#22334D"
@@ -38,11 +38,11 @@ QtObject {
     property color grey_1000: "#000000"
 
     property color warning_600: "#DBB820"
-    property color danger_500main: "#DD5F5F"
+    property color danger_500_main: "#DD5F5F"
     property color warning_500_main: "#FFDC2E"
     property color danger_700: "#9E3548"
     property color danger_900: "#723333"
-    property color success_500main: "#4FAE80"
+    property color success_500_main: "#4FAE80"
     property color success_700: "#377d71"
     property color success_900: "#1E4C53"
     property color info_500_main: "#4AA8FF"

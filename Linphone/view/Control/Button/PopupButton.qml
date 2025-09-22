@@ -2,94 +2,100 @@ import QtQuick
 import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 Button {
     id: mainItem
     property alias popup: popup
-    property bool shadowEnabled: mainItem.activeFocus || hovered
+    property bool shadowEnabled: mainItem.activeFocus && !keyboardFocus || hovered
     property alias popupBackgroundColor: popupBackground.color
-    property color backgroundColor: checked ? pressedColor : hovered ? hoveredColor : color
+    property color backgroundColor: checked ? pressedColor : hovered || mainItem.activeFocus ? hoveredColor : color
+    property string popUpTitle: ""
+    Accessible.name: popup.visible ?
+    //: "Close %1 popup"
+    qsTr("close_popup_panel_accessible_name").arg(popUpTitle) :
+    //: "Open %1" popup
+    qsTr("open_popup_panel_accessible_name").arg(popUpTitle)
     style: ButtonStyle.popupButton
     checked: popup.visible
-    implicitWidth: Math.round(24 * DefaultStyle.dp)
-    implicitHeight: Math.round(24 * DefaultStyle.dp)
-    width: Math.round(24 * DefaultStyle.dp)
-    height: Math.round(24 * DefaultStyle.dp)
     leftPadding: 0
     rightPadding: 0
     topPadding: 0
     bottomPadding: 0
     icon.source: AppIcons.verticalDots
-    icon.width: width
-    icon.height: width
+    icon.width: Utils.getSizeWithScreenRatio(24)
+    icon.height: Utils.getSizeWithScreenRatio(24)
+    implicitWidth: Utils.getSizeWithScreenRatio(30)
+    implicitHeight: Utils.getSizeWithScreenRatio(30)
     function close() {
-        popup.close()
+        popup.close();
     }
     function open() {
-        popup.open()
+        popup.open();
     }
 
     function isFocusable(item) {
-        return item.activeFocusOnTab
+        return item.activeFocusOnTab;
     }
+
+    /**
+     * Check if an element has at least one child that is focusable
+     */
+    function hasFocusableChild(content) {
+        return content.children.some(child => isFocusable(child));
+    }
+
     function getPreviousItem(index) {
-        return _getPreviousItem(
-                    popup.contentItem
-                    instanceof FocusScope ? popup.contentItem.children[0] : popup.contentItem,
-                    index)
+        return _getPreviousItem(popup.contentItem instanceof FocusScope ? popup.contentItem.children[0] : popup.contentItem, index);
     }
+
     function getNextItem(index) {
-        return _getNextItem(
-                    popup.contentItem
-                    instanceof FocusScope ? popup.contentItem.children[0] : popup.contentItem,
-                    index)
+        return _getNextItem(popup.contentItem instanceof FocusScope ? popup.contentItem.children[0] : popup.contentItem, index);
     }
 
     function _getPreviousItem(content, index) {
-        if (content.visibleChildren.length == 0)
-            return null
-        --index
+        if (content.visibleChildren.length == 0 || !hasFocusableChild(content))
+            return null;
+        --index;
         while (index >= 0) {
-            if (isFocusable(content.children[index])
-                    && content.children[index].visible)
-                return content.children[index]
-            --index
+            if (isFocusable(content.children[index]) && content.children[index].visible)
+                return content.children[index];
+            --index;
         }
-        return _getPreviousItem(content, content.children.length)
+        return _getPreviousItem(content, content.visibleChildren.length);
     }
+
     function _getNextItem(content, index) {
-        ++index
+        if (content.visibleChildren.length == 0 || !hasFocusableChild(content))
+            return null;
+        ++index;
         while (index < content.children.length) {
-            if (isFocusable(content.children[index])
-                    && content.children[index].visible)
-                return content.children[index]
-            ++index
+            if (isFocusable(content.children[index]) && content.children[index].visible)
+                return content.children[index];
+            ++index;
         }
-        return _getNextItem(content, -1)
+        return _getNextItem(content, -1);
     }
 
     Keys.onPressed: event => {
-                        if (mainItem.checked) {
-                            if (event.key == Qt.Key_Escape
-                                || event.key == Qt.Key_Left
-                                || event.key == Qt.Key_Space) {
-                                mainItem.close()
-                                mainItem.forceActiveFocus()
-                                event.accepted = true
-                            } else if (event.key == Qt.Key_Up) {
-                                getPreviousItem(0).forceActiveFocus()
-                                event.accepted = true
-                            } else if (event.key == Qt.Key_Tab
-                                       || event.key == Qt.Key_Down) {
-                                getNextItem(-1).forceActiveFocus()
-                                event.accepted = true
-                            }
-                        } else if (event.key == Qt.Key_Space) {
-                            mainItem.open()
-                            event.accepted = true
-                        }
-                    }
+        if (mainItem.checked) {
+            if (event.key == Qt.Key_Escape || event.key == Qt.Key_Left || event.key == Qt.Key_Space) {
+                mainItem.close();
+                mainItem.forceActiveFocus(Qt.TabFocusReason);
+                event.accepted = true;
+            } else if (event.key == Qt.Key_Up) {
+                getPreviousItem(0).forceActiveFocus(Qt.TabFocusReason);
+                event.accepted = true;
+            } else if (event.key == Qt.Key_Tab || event.key == Qt.Key_Down) {
+                getNextItem(-1).forceActiveFocus(Qt.BacktabFocusReason);
+                event.accepted = true;
+            }
+        } else if (event.key == Qt.Key_Space) {
+            mainItem.open();
+            event.accepted = true;
+        }
+    }
 
     background: Item {
         anchors.fill: mainItem
@@ -97,7 +103,9 @@ Button {
             id: buttonBackground
             anchors.fill: parent
             color: mainItem.backgroundColor
-            radius: Math.round(40 * DefaultStyle.dp)
+            radius: Utils.getSizeWithScreenRatio(40)
+            border.color: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderColor : mainItem.borderColor
+            border.width: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth
         }
         MultiEffect {
             enabled: mainItem.shadowEnabled
@@ -119,45 +127,37 @@ Button {
     }
     onPressed: {
         if (popup.visible)
-            popup.close()
+            popup.close();
         else
-            popup.open()
+            popup.open();
     }
     Control.Popup {
         id: popup
         x: 0
         y: mainItem.height
         visible: false
-        closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside
-                     | Popup.CloseOnEscape
-        padding: Math.round(10 * DefaultStyle.dp)
+        closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside | Popup.CloseOnEscape
+        padding: Utils.getSizeWithScreenRatio(10)
         parent: mainItem // Explicit define for coordinates references.
         function updatePosition() {
             if (!visible)
-                return
-            var popupHeight = popup.height + popup.padding
-            var popupWidth = popup.width + popup.padding
-            var winPosition = mainItem.Window.contentItem ? mainItem.Window.contentItem.mapToItem(
-                                                                mainItem, 0,
-                                                                0) : {
-                                                                "x": 0,
-                                                                "y": 0
-                                                            }
+                return;
+            var popupHeight = popup.height + popup.padding;
+            var popupWidth = popup.width + popup.padding;
+            var winPosition = mainItem.Window.contentItem ? mainItem.Window.contentItem.mapToItem(mainItem, 0, 0) : {
+                "x": 0,
+                "y": 0
+            };
             // Stay inside main window
-            y = Math.max(Math.min(
-                             winPosition.y + mainItem.Window.height - popupHeight,
-                             mainItem.height), winPosition.y)
-            x = Math.max(
-                        Math.min(
-                            winPosition.x + mainItem.Window.width - popupWidth,
-                            0), winPosition.x)
+            y = Math.max(Math.min(winPosition.y + mainItem.Window.height - popupHeight, mainItem.height), winPosition.y);
+            x = Math.max(Math.min(winPosition.x + mainItem.Window.width - popupWidth, 0), winPosition.x);
             // Avoid overlapping with popup button by going to the right (todo: check if left is better?)
             if (y < mainItem.height && y + popupHeight > 0) {
-                x += mainItem.width
+                x += mainItem.width;
             }
-            var globalPos = mapToItem(mainItem.Window.contentItem, x, y)
+            var globalPos = mapToItem(mainItem.Window.contentItem, x, y);
             if (globalPos.x + popupWidth >= mainItem.Window.width) {
-                x = -popupWidth
+                x = -popupWidth;
             }
         }
 
@@ -168,13 +168,12 @@ Button {
         Connections {
             target: mainItem.Window
             function onHeightChanged() {
-                Qt.callLater(popup.updatePosition)
+                Qt.callLater(popup.updatePosition);
             }
             function onWidthChanged() {
-                Qt.callLater(popup.updatePosition)
+                Qt.callLater(popup.updatePosition);
             }
         }
-
 
         background: Item {
             anchors.fill: parent
@@ -182,7 +181,7 @@ Button {
                 id: popupBackground
                 anchors.fill: parent
                 color: DefaultStyle.grey_0
-                radius: Math.round(16 * DefaultStyle.dp)
+                radius: Utils.getSizeWithScreenRatio(16)
             }
             MultiEffect {
                 source: popupBackground
@@ -192,7 +191,7 @@ Button {
                 shadowColor: DefaultStyle.grey_1000
                 shadowOpacity: 0.4
             }
-            MouseArea{
+            MouseArea {
                 anchors.fill: parent
             }
         }

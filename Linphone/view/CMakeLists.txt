@@ -45,12 +45,13 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/EffectImage.qml
 	view/Control/Display/Flickable.qml
 	view/Control/Display/GradientRectangle.qml
-	view/Control/Display/TemporaryText.qml
+	view/Control/Display/HorizontalBar.qml
 	view/Control/Display/MediaProgressBar.qml
 	view/Control/Display/ProgressBar.qml
 	view/Control/Display/RoundedPane.qml
 	view/Control/Display/RoundProgressBar.qml
 	view/Control/Display/Sticker.qml
+	view/Control/Display/TemporaryText.qml
 	view/Control/Display/Text.qml
 	view/Control/Display/ToolTip.qml
 	view/Control/Display/Call/CallListView.qml
@@ -72,6 +73,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Chat/VideoFileView.qml
 	view/Control/Display/Contact/Avatar.qml
 	view/Control/Display/Contact/Contact.qml
+	view/Control/Display/Contact/ContactStatusPopup.qml
 	view/Control/Display/Contact/Presence.qml
 	view/Control/Display/Contact/PresenceStatusItem.qml
 	view/Control/Display/Contact/PresenceSetCustomStatus.qml

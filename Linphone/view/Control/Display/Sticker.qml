@@ -303,7 +303,7 @@ Item {
                 imageWidth: Math.min(mainItem.width / 16, Math.round(20 * DefaultStyle.dp))
                 imageHeight: Math.min(mainItem.width / 16, Math.round(20 * DefaultStyle.dp))
 				imageSource: AppIcons.microphoneSlash
-				colorizationColor: DefaultStyle.main2_500main
+				colorizationColor: DefaultStyle.main2_500_main
 			}
 		}
 	}

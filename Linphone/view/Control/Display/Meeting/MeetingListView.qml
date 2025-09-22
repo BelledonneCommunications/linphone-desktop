@@ -200,7 +200,7 @@ ListView {
                     Layout.preferredHeight: Math.round(19 * DefaultStyle.dp)
 					Layout.alignment: Qt.AlignCenter
 					text: day.substring(0,3) + '.'
-					color: DefaultStyle.main2_500main
+					color: DefaultStyle.main2_500_main
 					wrapMode: Text.NoWrap
 					elide: Text.ElideNone
 					font {
@@ -224,7 +224,7 @@ ListView {
 						verticalAlignment: Text.AlignVCenter
 						horizontalAlignment: Text.AlignHCenter
 						text: UtilsCpp.toDateDayString(dateTime)
-						color: dayNum.isCurrentDay ? DefaultStyle.grey_0 : DefaultStyle.main2_500main
+						color: dayNum.isCurrentDay ? DefaultStyle.grey_0 : DefaultStyle.main2_500_main
 						wrapMode: Text.NoWrap
 						font {
                             pixelSize: Math.round(20 * DefaultStyle.dp)
@@ -275,7 +275,7 @@ ListView {
 						Text {
                             //: "Réunion annulée"
                             text: itemDelegate.isCanceled ? qsTr("meeting_info_cancelled") : UtilsCpp.toDateHourString(dateTime) + " - " + UtilsCpp.toDateHourString(endDateTime)
-							color: itemDelegate.isCanceled ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
+							color: itemDelegate.isCanceled ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
 							font {
                                 pixelSize: Typography.p1.pixelSize
                                 weight: Typography.p1.weight

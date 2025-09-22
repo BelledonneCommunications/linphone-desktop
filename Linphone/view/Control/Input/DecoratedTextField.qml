@@ -60,6 +60,7 @@ FormItemLayout {
 			}
 		}
 		onTextChanged: mainItem.clearErrorText()
+		Accessible.name: mainItem.title
 	}
 }
 

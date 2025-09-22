@@ -94,7 +94,7 @@ Loader{
 					color: "transparent"
 					border {
                         width: Math.round(2 * DefaultStyle.dp)
-						color: mainItem.secured ? DefaultStyle.info_500_main : DefaultStyle.danger_500main
+						color: mainItem.secured ? DefaultStyle.info_500_main : DefaultStyle.danger_500_main
 					}
 					EffectImage {
 						x: parent.width / 7

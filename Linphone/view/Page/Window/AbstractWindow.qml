@@ -275,7 +275,7 @@ ApplicationWindow {
             font.pixelSize: Math.round(14 * DefaultStyle.dp)
             // "%1 FPS"
             text: qsTr("fps_counter").arg(parent.fps)
-            color: parent.fps < 30 ? DefaultStyle.danger_500main : DefaultStyle.main2_900
+            color: parent.fps < 30 ? DefaultStyle.danger_500_main : DefaultStyle.main2_900
         }
     }
 }

@@ -42,6 +42,10 @@ AbstractSettingsLayout {
             addText: qsTr("settings_contacts_add_ldap_server_title")
             //: "Modifier un annuaire LDAP"
             editText: qsTr("settings_contacts_edit_ldap_server_title")
+			//: "Editer le serveur LDAP %1"
+			accessibleEditButtonText: qsTr("edit_ldap_server_accessible_name")
+			//: "Utiliser le serveur LDAP %1"
+			accessibleUseButtonText: qsTr("use_ldap_server_accessible_name")
 			proxyModel: LdapProxy {}
 			newItemGui: createGuiObject('Ldap')
 			settingsLayout: layoutUrl("LdapSettingsLayout")
@@ -69,6 +73,10 @@ AbstractSettingsLayout {
             addText: qsTr("settings_contacts_add_carddav_server_title")
             //: "Modifier un carnet d'adresse CardDAV"
             editText: qsTr("settings_contacts_edit_carddav_server_title")
+			//: "Editer le carnet d'adresses CardDAV %1"
+			accessibleEditButtonText: qsTr("edit_cardav_server_accessible_name")
+			//: "Utiliser le d'adresses CardDAV %1"
+			accessibleUseButtonText: qsTr("use_cardav_server_accessible_name")
 			proxyModel: CarddavProxy {
 				onModelReset:  {
 					carddavProvider.showAddButton = carddavProvider.proxyModel.count == 0

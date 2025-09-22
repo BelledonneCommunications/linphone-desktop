@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import Linphone
+import CustomControls 1.0
 
 Control.Popup{
 	id: mainItem
@@ -9,6 +10,7 @@ Control.Popup{
 	property color underlineColor : DefaultStyle.main1_500_main
     property real radius: Math.round(16 * DefaultStyle.dp)
 	property bool hovered: mouseArea.containsMouse
+	property bool keyboardFocus: FocusHelper.keyboardFocus
 
 	background: Item{
 		Rectangle {

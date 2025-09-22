@@ -67,6 +67,7 @@ FocusScope{
 				Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.info
+				popUpTitle: mainItem.label
 				popup.contentItem: Text {
 					text: mainItem.tooltip
 				}
@@ -85,7 +86,7 @@ FocusScope{
 			TemporaryText {
 				id: errorText
 				anchors.top: contentItem.bottom
-				color: DefaultStyle.danger_500main
+				color: DefaultStyle.danger_500_main
 			}
 		}
 	

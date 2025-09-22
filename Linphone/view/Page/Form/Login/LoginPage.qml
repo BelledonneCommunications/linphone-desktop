@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 LoginLayout {
@@ -19,23 +20,25 @@ LoginLayout {
 		BigButton {
 			enabled: mainItem.showBackButton
 			opacity: mainItem.showBackButton ? 1.0 : 0
-            Layout.leftMargin: Math.round(79 * DefaultStyle.dp)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(79)
 			icon.source: AppIcons.leftArrow
 			style: ButtonStyle.noBackground
 			onClicked: {
 				console.debug("[LoginLayout] User: return")
 				mainItem.goBack()
 			}
+			//: Return
+			Accessible.name: qsTr("return_accessible_name")
 		},
 		RowLayout {
-            spacing: Math.round(15 * DefaultStyle.dp)
-            Layout.leftMargin: Math.round(21 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(15)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(21)
 			EffectImage {
 				fillMode: Image.PreserveAspectFit
 				imageSource: AppIcons.profile
 				colorizationColor: DefaultStyle.main2_600
-                Layout.preferredHeight: Math.round(34 * DefaultStyle.dp)
-                Layout.preferredWidth: Math.round(34 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(34)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)
 			}
 			Text {
                 //: Connexion
@@ -51,11 +54,11 @@ LoginLayout {
 		},
 		RowLayout {
 			visible: !SettingsCpp.assistantHideCreateAccount
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
             Layout.rightMargin: Math.round(Math.max(10 * DefaultStyle.dp, (51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp))
 
 			Text {
-                Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
+                Layout.rightMargin: Utils.getSizeWithScreenRatio(15)
                 //: "Pas encore de compte ?"
                 text: qsTr("assistant_no_account_yet")
                 font.pixelSize: Typography.p1.pixelSize
@@ -77,7 +80,7 @@ LoginLayout {
 		Flickable {
 			anchors.left: parent.left
 			anchors.top: parent.top
-            anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
+            anchors.leftMargin: Utils.getSizeWithScreenRatio(127)
 			anchors.bottom: parent.bottom
 			ColumnLayout {
 				id: content
@@ -87,8 +90,8 @@ LoginLayout {
 				}
 				BigButton {
 					Layout.preferredWidth: loginForm.width
-                    Layout.preferredHeight: Math.round(47 * DefaultStyle.dp)
-                    Layout.topMargin: Math.round(39 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(47)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(39)
 					visible: !SettingsCpp.assistantHideThirdPartyAccount
                     //: "Compte SIP tiers"
                     text: qsTr("assistant_login_third_party_sip_account_title")
@@ -97,8 +100,8 @@ LoginLayout {
 				}
 				BigButton {
 					Layout.preferredWidth: loginForm.width
-                    Layout.preferredHeight: Math.round(47 * DefaultStyle.dp)
-                    Layout.topMargin: Math.round(25 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(47)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(25)
                     //: "Configuration distante"
                     text: qsTr("assistant_login_remote_provisioning")
 					style: ButtonStyle.secondary
@@ -110,22 +113,22 @@ LoginLayout {
 			z: -1
 			anchors.top: parent.top
 			anchors.right: parent.right
-            anchors.topMargin: Math.round(129 * DefaultStyle.dp)
-            anchors.rightMargin: Math.round(127 * DefaultStyle.dp)
-            width: Math.round(395 * DefaultStyle.dp)
-            height: Math.round(350 * DefaultStyle.dp)
+            anchors.topMargin: Utils.getSizeWithScreenRatio(129)
+            anchors.rightMargin: Utils.getSizeWithScreenRatio(127)
+            width: Utils.getSizeWithScreenRatio(395)
+            height: Utils.getSizeWithScreenRatio(350)
 			fillMode: Image.PreserveAspectFit
 			source: AppIcons.loginImage
 		}
 	]
 	Dialog{
 		id: fetchConfigDialog
-        height: Math.round(315 * DefaultStyle.dp)
-        width: Math.round(637 * DefaultStyle.dp)
-        leftPadding: Math.round(33 * DefaultStyle.dp)
-        rightPadding: Math.round(33 * DefaultStyle.dp)
-        topPadding: Math.round(41 * DefaultStyle.dp)
-        bottomPadding: Math.round(29 * DefaultStyle.dp)
+        height: Utils.getSizeWithScreenRatio(315)
+        width: Utils.getSizeWithScreenRatio(637)
+        leftPadding: Utils.getSizeWithScreenRatio(33)
+        rightPadding: Utils.getSizeWithScreenRatio(33)
+        topPadding: Utils.getSizeWithScreenRatio(41)
+        bottomPadding: Utils.getSizeWithScreenRatio(29)
 		radius: 0
         //: "Télécharger une configuration distante"
         title: qsTr('assistant_login_download_remote_config')
@@ -147,7 +150,7 @@ LoginLayout {
 			TextField{
 				id: configUrl
 				Layout.fillWidth: true
-                Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
                 //: 'Lien de configuration distante'
                 placeholderText: qsTr("settings_advanced_remote_provisioning_url")
 			}

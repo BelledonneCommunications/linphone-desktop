@@ -17,6 +17,7 @@ TextEdit {
     topPadding: Math.round(5 * DefaultStyle.dp)
     bottomPadding: Math.round(5 * DefaultStyle.dp)
 	activeFocusOnTab: true
+	KeyNavigation.priority: KeyNavigation.BeforeItem	
 
 	property bool displayAsRichText: false
 	property var encodeTextObj: UtilsCpp.encodeTextToQmlRichFormat(text)

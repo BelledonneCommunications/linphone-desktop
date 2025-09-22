@@ -8,24 +8,44 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import CustomControls 1.0
 import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Control.Control{
 	id: mainItem
-    padding: Math.round(10 * DefaultStyle.dp)
+	activeFocusOnTab: true
+    padding: Utils.getSizeWithScreenRatio(10)
 	property AccountGui account
-    property color backgroundColor: DefaultStyle.grey_0
-    leftPadding: Math.round(8 * DefaultStyle.dp)
-    rightPadding: Math.round(8 * DefaultStyle.dp)
+    leftPadding: Utils.getSizeWithScreenRatio(8)
+    rightPadding: Utils.getSizeWithScreenRatio(8)
+	property var style
+
+	property bool isSelected
+	property bool keyboardFocus: FocusHelper.keyboardFocus
+
+	// Background properties
+    readonly property color defaultBackgroundColor: style?.color?.normal ?? DefaultStyle.grey_0
+	readonly property color hoveredBackgroundColor: style?.color?.hovered ?? defaultBackgroundColor
+	readonly property color selectedBackgroundColor: style?.color?.selected ?? defaultBackgroundColor
+	readonly property color focusedBackgroundColor: style?.color?.keybaordFocused ?? defaultBackgroundColor
+	// Border properties
+	readonly property color defaultBorderColor: style?.borderColor?.normal ?? "transparent"
+	readonly property color hoveredBorderColor: style?.borderColor?.hovered ?? defaultBorderColor
+	readonly property color selectedBorderColor: style?.borderColor?.selected ?? defaultBorderColor
+	readonly property color keyboardFocusedBorderColor: style?.borderColor?.keybaordFocused || DefaultStyle.main2_900
+	property real borderWidth: Utils.getSizeWithScreenRatio(1)
+	property real keyboardFocusedBorderWidth: Utils.getSizeWithScreenRatio(3)
 
 	signal avatarClicked()
 	signal backgroundClicked()
 	signal edit()
 
 	background: Rectangle {
-        radius: Math.round(10 * DefaultStyle.dp)
-		color: mainItem.backgroundColor
+        radius: Utils.getSizeWithScreenRatio(10)
+		color: mainItem.isSelected ? mainItem.selectedBackgroundColor : hovered ? mainItem.hoveredBackgroundColor : mainItem.defaultBackgroundColor
+		border.color: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderColor : mainItem.isSelected ? mainItem.selectedBorderColor : hovered ? mainItem.hoveredBorderColor : mainItem.defaultBorderColor
+		border.width: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth 
 		MouseArea{
 			id: mouseArea
 			anchors.fill: parent
@@ -35,21 +55,39 @@ Control.Control{
 	contentItem: RowLayout{
 		spacing: 0
 		RowLayout {
-            spacing: Math.round(10 * DefaultStyle.dp)
-			Avatar{
-				id: avatar
-                Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
-				account: mainItem.account
-				MouseArea{
+            spacing: Utils.getSizeWithScreenRatio(10)
+			Button {
+				id: avatarButton
+				onClicked: mainItem.avatarClicked()
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
+				color: "transparent"
+				contentItem: Item{
 					anchors.fill: parent
-					onClicked: mainItem.avatarClicked()
-				}
+					width: avatarButton.width
+					height: avatarButton.height
+					Avatar{
+						id: avatar
+						height: avatarButton.height
+						width: avatarButton.width
+						account: mainItem.account
+					}
+					Rectangle{
+						// Black border for keyboard navigation
+						visible: avatarButton.keyboardFocus
+						width: avatarButton.width
+						height: avatarButton.height
+						color: "transparent"
+						border.color: DefaultStyle.main2_900
+						border.width: Utils.getSizeWithScreenRatio(3)
+						radius: width / 2
+					}
+				}	
 			}
 			Item {
-                Layout.preferredWidth: Math.round(200 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(200)
 				Layout.fillHeight: true
-                Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
+                Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
 				ContactDescription{
 					id: description
 					anchors.fill: parent
@@ -57,118 +95,26 @@ Control.Control{
 				}
 			}
 		}
-		PopupButton {
-			id: presenceAndRegistrationItem
-			Layout.minimumWidth: Math.round(86 * DefaultStyle.dp)
-			Layout.maximumWidth: Math.round(150 * DefaultStyle.dp)
-			Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-			Layout.preferredWidth: presenceOrRegistrationText.implicitWidth + Math.round(50 * DefaultStyle.dp)
-			enabled: mainItem.account && mainItem.account.core.registrationState === LinphoneEnums.RegistrationState.Ok
-			onEnabledChanged: if(!enabled) close()
-			contentItem: Rectangle {
-				id: presenceBar
-				property bool isRegistered: mainItem.account?.core.registrationState === LinphoneEnums.RegistrationState.Ok
-				color: DefaultStyle.main2_200
-				radius: Math.round(15 * DefaultStyle.dp)
-				RowLayout {
-					anchors.fill: parent
-					Image {
-						id: registrationImage
-						sourceSize.width: Math.round(11 * DefaultStyle.dp)
-						sourceSize.height: Math.round(11 * DefaultStyle.dp)
-						smooth: false
-						Layout.preferredWidth: Math.round(11 * DefaultStyle.dp)
-						Layout.preferredHeight: Math.round(11 * DefaultStyle.dp)
-						source: presenceBar.isRegistered 
-							? mainItem.account.core.presenceIcon 
-							: mainItem.account?.core.registrationIcon || ""
-						Layout.leftMargin: Math.round(8 * DefaultStyle.dp)
-						RotationAnimator on rotation {
-							running: mainItem.account && mainItem.account.core.registrationState === LinphoneEnums.RegistrationState.Progress
-							direction: RotationAnimator.Clockwise
-							from: 0
-							to: 360
-							loops: Animation.Infinite
-							duration: 10000
-						}
-					}
-					Text {
-						id: presenceOrRegistrationText
-						verticalAlignment: Text.AlignVCenter
-						horizontalAlignment: Text.AlignHCenter
-						visible: mainItem.account
-						// Test texts
-						// Timer{
-						// 	running: true
-						// 	interval: 1000
-						// 	repeat: true
-						// 	onTriggered: text.mode = (++text.mode) % 4
-						// }
-						font.weight: Math.round(300 * DefaultStyle.dp)
-						font.pixelSize: Math.round(12 * DefaultStyle.dp)
-						color: presenceBar.isRegistered ? mainItem.account.core.presenceColor : mainItem.account?.core.registrationColor
-						text: presenceBar.isRegistered ? mainItem.account.core.presenceStatus : mainItem.account?.core.humaneReadableRegistrationState
-					}
-					EffectImage {
-						fillMode: Image.PreserveAspectFit
-						imageSource: AppIcons.downArrow
-						colorizationColor: DefaultStyle.main2_600
-						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
-						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
-						Layout.rightMargin: 8 * DefaultStyle.dp
-					}
-				}
-			}
-			popup.contentItem: Rectangle {
-				implicitWidth: 280 * DefaultStyle.dp
-				implicitHeight: 20 * DefaultStyle.dp + (setCustomStatus.visible ? 240 * DefaultStyle.dp : setPresence.implicitHeight)
-				Presence {
-					id: setPresence
-					anchors.fill: parent
-					anchors.margins: 20 * DefaultStyle.dp
-					accountCore: mainItem.account.core
-					onSetCustomStatusClicked: {
-						setPresence.visible = false
-						setCustomStatus.visible = true
-					}
-					onIsSet: presenceAndRegistrationItem.popup.close()
-				}
-				PresenceSetCustomStatus {
-					id: setCustomStatus
-					visible: false
-					anchors.fill: parent
-					anchors.margins: 20 * DefaultStyle.dp
-					accountCore: mainItem.account.core
-					onVisibleChanged: {
-						if (!visible) {
-							setPresence.visible = true
-							setCustomStatus.visible = false
-						}
-					}
-					onIsSet: presenceAndRegistrationItem.popup.close()
-				}
-			}
-		}
-		
+		ContactStatusPopup{}
 		Item{
-            Layout.preferredWidth: Math.round(26 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(26 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(26)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(26)
 			Layout.fillHeight: true
-            Layout.leftMargin: Math.round(40 * DefaultStyle.dp)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(40)
 			visible: mainItem.account.core.unreadNotifications > 0
 			Rectangle{
 				id: unreadNotifications
 				anchors.verticalCenter: parent.verticalCenter
-                width: Math.round(26 * DefaultStyle.dp)
-                height: Math.round(26 * DefaultStyle.dp)
+                width: Utils.getSizeWithScreenRatio(26)
+                height: Utils.getSizeWithScreenRatio(26)
 				radius: width/2
-				color: DefaultStyle.danger_500main
+				color: DefaultStyle.danger_500_main
 				border.color: DefaultStyle.grey_0
-                border.width: Math.round(2 * DefaultStyle.dp)
+                border.width: Utils.getSizeWithScreenRatio(2)
 				Text{
 					id: unreadCount
 					anchors.fill: parent
-                    anchors.margins: Math.round(2 * DefaultStyle.dp)
+                    anchors.margins: Utils.getSizeWithScreenRatio(2)
 					verticalAlignment: Text.AlignVCenter
 					horizontalAlignment: Text.AlignHCenter
 					color: DefaultStyle.grey_0
@@ -188,10 +134,10 @@ Control.Control{
 			}
 		}
 		Voicemail {
-            Layout.leftMargin: Math.round(18 * DefaultStyle.dp)
-            Layout.rightMargin: Math.round(20 * DefaultStyle.dp)
-            Layout.preferredWidth: Math.round(30 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(26 * DefaultStyle.dp)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(18)
+            Layout.rightMargin: Utils.getSizeWithScreenRatio(20)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(26)
 			scaleFactor: 0.7
 			showMwi: mainItem.account.core.showMwi
 			visible: mainItem.account.core.voicemailAddress.length > 0 || mainItem.account.core.showMwi
@@ -207,20 +153,19 @@ Control.Control{
 			}
 		}
 		Item{Layout.fillWidth: true}
-		EffectImage {
+		Button {				
 			id: manageAccount
-			imageSource: AppIcons.manageProfile
-            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-			Layout.alignment: Qt.AlignHCenter
+			style: ButtonStyle.noBackground
+			icon.source: AppIcons.manageProfile
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
+            icon.width: Utils.getSizeWithScreenRatio(24)
+            icon.height: Utils.getSizeWithScreenRatio(24)
 			visible: !SettingsCpp.hideAccountSettings
-            width: Math.round(24 * DefaultStyle.dp)
-			fillMode: Image.PreserveAspectFit
-			colorizationColor: DefaultStyle.main2_500main
-			MouseArea{
-				anchors.fill: parent
-				onClicked: mainItem.edit()
-				cursorShape: Qt.PointingHandCursor
+			//: Account settings of %1
+			Accessible.name: qsTr("account_settings_name_accessible_name")
+			onClicked: {
+				mainItem.edit()
 			}
 		}
 	}

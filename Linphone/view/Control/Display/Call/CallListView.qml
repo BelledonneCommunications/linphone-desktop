@@ -24,9 +24,12 @@ ListView {
     property string currentRemoteAddress: AppCpp.calls.currentCall ? AppCpp.calls.currentCall.core.remoteAddress : ""
 
 	delegate: RowLayout {
+		id: callInformationItem
         spacing: Math.round(8 * DefaultStyle.dp)
 		width: mainItem.width
         height: Math.round(45 * DefaultStyle.dp)
+		property var remoteNameObj: UtilsCpp.getDisplayName(modelData.core.remoteAddress)
+		property var callName : modelData.core.isConference ? modelData.core.conference.core.subject : remoteNameObj ? remoteNameObj.value : ""
 		Avatar {
 			id: delegateAvatar
             Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
@@ -41,9 +44,7 @@ ListView {
 			Text {
 				id: delegateName
 				property var remoteNameObj: UtilsCpp.getDisplayName(modelData.core.remoteAddress)
-				text: modelData.core.isConference 
-					? modelData.core.conference.core.subject
-					: remoteNameObj ? remoteNameObj.value : ""
+				text: callInformationItem.callName
                 font.pixelSize: Math.round(14 * DefaultStyle.dp)
 				Layout.fillWidth: true
 				maximumLineCount: 1
@@ -79,6 +80,8 @@ ListView {
 			onClicked: {
 				mainItem.transferCallToAnotherRequested(modelData)
 			}
+			//: Transfer call %1
+			Accessible.name: qsTr("transfer_call_name_accessible_name").arg(callInformationItem.callName)
 		}
 		Button {
 			id: pausingButton
@@ -91,7 +94,7 @@ ListView {
             topPadding: Math.round(5 * DefaultStyle.dp)
             bottomPadding: Math.round(5 * DefaultStyle.dp)
 			property bool pausedByUser: modelData.core.state === LinphoneEnums.CallState.Paused
-			color: pausedByUser ? DefaultStyle.success_500main : DefaultStyle.grey_500
+			color: pausedByUser ? DefaultStyle.success_500_main : DefaultStyle.grey_500
 			contentImageColor: DefaultStyle.grey_0
 			KeyNavigation.right: endCallButton
 			KeyNavigation.left: endCallButton
@@ -104,6 +107,12 @@ ListView {
 				text: pausingButton.text
 				font.bold: true
 			}
+			Accessible.name: (pausedByUser ?
+				//: Resume %1 call
+				qsTr("resume_call_name_accessible_name") :
+				//: Pause %1 call
+				qsTr("pause_call_name_accessible_name")
+				).arg(callInformationItem.callName)
 		}
 		SmallButton {
 			id: endCallButton
@@ -124,6 +133,8 @@ ListView {
 				text: endCallButton.text
 				font.bold: true
 			}
+			//: End %1 call
+			Accessible.name: qsTr("end_call_name_accessible_name").arg(callInformationItem.callName)
 		}
 	}
 }

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import Linphone
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 RowLayout {
 	id:mainItem
@@ -45,6 +46,8 @@ RowLayout {
 		enabled: mainItem.enabled
 		onCheckedChanged: mainItem.checkedChanged(checked)
 		onToggled: binding.when = true
+		implicitHeight: Utils.getSizeWithScreenRatio(30)
+		Accessible.name: "%1 %2".arg(mainItem.titleText).arg(mainItem.subTitleText)
 	}
 	Binding {
 		id: binding

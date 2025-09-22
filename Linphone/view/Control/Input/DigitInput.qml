@@ -5,7 +5,7 @@ import Linphone
 Control.TextField {
 	id: mainItem
     property real inputSize: Math.round(100 * DefaultStyle.dp)
-	color: activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
+	color: activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.main2_500_main
 	validator: IntValidator{bottom: 0; top: 9}
 
 	width: inputSize * 0.9
@@ -33,7 +33,7 @@ Control.TextField {
 		Rectangle {
 			id: background
             border.width: Math.round(Math.max(DefaultStyle.dp), 1)
-			border.color: mainItem.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
+			border.color: mainItem.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.main2_500_main
 			radius: mainItem.inputSize * 0.15
 			width: mainItem.inputSize * 0.9
 			height: mainItem.inputSize

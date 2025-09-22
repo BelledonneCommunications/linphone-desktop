@@ -60,10 +60,7 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mRegisterEnabled = params->registerEnabled();
 	mMwiServerAddress =
 	    params->getMwiServerAddress() ? Utils::coreStringToAppString(params->getMwiServerAddress()->asString()) : "";
-	mTransports << "UDP"
-	            << "TCP"
-	            << "TLS"
-	            << "DTLS";
+	mTransports << "UDP" << "TCP" << "TLS" << "DTLS";
 	mTransport = LinphoneEnums::toString(LinphoneEnums::fromLinphone(params->getTransport()));
 	mRegistrarUri =
 	    params->getServerAddress() ? Utils::coreStringToAppString(params->getServerAddress()->asString()) : "";
@@ -458,13 +455,13 @@ QColor AccountCore::getRegistrationColor() const {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	switch (mRegistrationState) {
 		case LinphoneEnums::RegistrationState::Ok:
-			return Utils::getDefaultStyleColor("success_500main");
+			return Utils::getDefaultStyleColor("success_500_main");
 		case LinphoneEnums::RegistrationState::Refreshing:
-			return Utils::getDefaultStyleColor("main2_500main");
+			return Utils::getDefaultStyleColor("main2_500_main");
 		case LinphoneEnums::RegistrationState::Progress:
-			return Utils::getDefaultStyleColor("main2_500main");
+			return Utils::getDefaultStyleColor("main2_500_main");
 		case LinphoneEnums::RegistrationState::Failed:
-			return Utils::getDefaultStyleColor("danger_500main");
+			return Utils::getDefaultStyleColor("danger_500_main");
 		case LinphoneEnums::RegistrationState::None:
 		case LinphoneEnums::RegistrationState::Cleared:
 			return Utils::getDefaultStyleColor("warning_600");

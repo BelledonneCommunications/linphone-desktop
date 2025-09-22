@@ -40,9 +40,9 @@ ListView {
 	property bool haveContacts: count > 0
     property real sectionsPixelSize: Typography.h4.pixelSize
     property real sectionsWeight: Typography.h4.weight
-    property real sectionsSpacing: Math.round(18 * DefaultStyle.dp)
+    property real sectionsSpacing: Utils.getSizeWithScreenRatio(18)
 	
-    property real itemsRightMargin: Math.round(39 * DefaultStyle.dp)
+    property real itemsRightMargin: Utils.getSizeWithScreenRatio(39)
 	property bool expanded: true
     property real headerHeight: headerItem?.height
 	
@@ -56,7 +56,7 @@ ListView {
 	highlightFollowsCurrentItem: false
 	cacheBuffer: 400
 	implicitHeight: contentHeight
-    spacing: expanded ? Math.round(4 * DefaultStyle.dp) : 0
+    spacing: expanded ? Utils.getSizeWithScreenRatio(4) : 0
 
     onVisibleChanged: if (visible && !expanded) expanded = true
 	
@@ -150,7 +150,7 @@ ListView {
 			Item{// Do not use directly RowLayout : there is an issue where the layout doesn't update on visible
 				Layout.fillWidth: true
 				Layout.preferredHeight: mainItem.count > 0 ? headerTitleLayout.implicitHeight : 0
-                Layout.bottomMargin: Math.round(4 * DefaultStyle.dp)
+                Layout.bottomMargin: Utils.getSizeWithScreenRatio(4)
 				RowLayout {
 					id: headerTitleLayout
 					anchors.fill: parent
@@ -174,6 +174,11 @@ ListView {
                         Layout.rightMargin: mainItem.itemsRightMargin
 						focus: true
 						onClicked: mainItem.expanded = !mainItem.expanded
+						Accessible.name: (mainItem.expanded ?
+							//: Shrink %1
+							qsTr("shrink_accessible_name") :
+							//: Expand %1
+							qsTr("expand_accessible_name")).arg(mainItem.title)
 					}
 				}
 			}

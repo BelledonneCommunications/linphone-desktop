@@ -93,7 +93,7 @@ ColumnLayout {
 								visible: participantCore.isAdmin
 								text: qsTr("group_infos_participant_is_admin")
 								font: Typography.p3
-								color: DefaultStyle.main2_500main
+								color: DefaultStyle.main2_500_main
 							}
 						}
 					}

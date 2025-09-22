@@ -4,6 +4,7 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp 1.0
 import ConstantsCpp 1.0
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 LoginLayout {
@@ -32,8 +33,8 @@ LoginLayout {
 
 	titleContent: [
 		RowLayout {
-            spacing: Math.round(21 * DefaultStyle.dp)
-            Layout.leftMargin: Math.round(79 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(21)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(79)
 			BigButton {
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.leftArrow
@@ -41,12 +42,14 @@ LoginLayout {
 					console.debug("[RegisterPage] User: return")
 					returnToLogin()
 				}
+				//: Return
+				Accessible.name: qsTr("return_accessible_name")
 			}
 			EffectImage {
 				fillMode: Image.PreserveAspectFit
 				imageSource: AppIcons.profile
-                Layout.preferredHeight: Math.round(34 * DefaultStyle.dp)
-                Layout.preferredWidth: Math.round(34 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(34)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
@@ -65,10 +68,10 @@ LoginLayout {
 			Layout.fillWidth: true
 		},
 		RowLayout {
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
             Layout.rightMargin: Math.round(Math.max(10 * DefaultStyle.dp,(51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp))
 			Text {
-                Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
+                Layout.rightMargin: Utils.getSizeWithScreenRatio(15)
 				color: DefaultStyle.main2_700
                 // "Déjà un compte ?"
                 text: qsTr("assistant_already_have_an_account")
@@ -92,13 +95,13 @@ LoginLayout {
 		ColumnLayout {
             id: registerForm
 			anchors.fill: parent
-            anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
-            spacing: Math.round(50 * DefaultStyle.dp)
+            anchors.leftMargin: Utils.getSizeWithScreenRatio(127)
+            spacing: Utils.getSizeWithScreenRatio(50)
 
 			TabBar {
 				Layout.fillWidth: true
 				id: bar
-    			spacing: Math.round(40 * DefaultStyle.dp)
+    			spacing: Utils.getSizeWithScreenRatio(40)
                 Layout.rightMargin: Math.round(Math.max(5 * DefaultStyle.dp,(127 - ((127/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp))
                 // "S'inscrire avec un numéro de téléphone"
                 model: [qsTr("assistant_account_register_with_phone_number"),
@@ -127,35 +130,38 @@ LoginLayout {
 					id: contentLayout
 					anchors.left: parent.left
 					anchors.right: parent.right
-                    spacing: Math.round(8 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(8)
 					ColumnLayout {
 						id: formLayout
-                        spacing: Math.round(24 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(24)
 						RowLayout {
 							Layout.preferredHeight: usernameItem.height
-                            spacing: Math.round(16 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(16)
 							FormItemLayout {
 								id: usernameItem
                                 label: qsTr("username")
 								mandatory: true
 								enableErrorText: true
-                                Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
 								contentItem: TextField {
 									id: usernameInput
-									backgroundBorderColor: usernameItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
+									backgroundBorderColor: usernameItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : DefaultStyle.grey_200
+									//: "%1 mandatory"
+									Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("username"))
 								}
 							}
 							RowLayout {
-                                spacing: Math.round(10 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(10)
 								ComboBox {
-                                    Layout.preferredWidth: Math.round(210 * DefaultStyle.dp)
-                                    Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(210)
+                                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 									enabled: false
 									model: [{text:"@sip.linphone.org"}]
+									Accessible.name: qsTr("domain")
 								}
 								EffectImage {
-                                    Layout.preferredWidth: Math.round(16 * DefaultStyle.dp)
-                                    Layout.preferredHeight: Math.round(16 * DefaultStyle.dp)
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(16)
+                                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(16)
 									imageSource: AppIcons.lock
 									colorizationColor: DefaultStyle.main2_600
 								}
@@ -165,7 +171,7 @@ LoginLayout {
 							currentIndex: bar.currentIndex
 							PhoneNumberInput {
 								id: phoneNumberInput
-                                Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
 								property string completePhoneNumber: countryCode + phoneNumber
                                 //: "Numéro de téléphone"
                                 label: qsTr("phone_number")
@@ -173,17 +179,21 @@ LoginLayout {
 								mandatory: true
                                 placeholderText: qsTr("phone_number")
 								defaultCallingCode: "33"
+								//: "%1 mandatory"
+								Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("phone_number"))
 							}
 							FormItemLayout {
 								id: emailItem
 								Layout.fillWidth: false
-                                Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
                                 label: qsTr("email")
 								mandatory: true
 								enableErrorText: true
 								contentItem: TextField {
 									id: emailInput
-									backgroundBorderColor: emailItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
+									backgroundBorderColor: emailItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : DefaultStyle.grey_200
+									//: "%1 mandatory"
+									Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("email"))
 								}
 							}
 						}
@@ -193,22 +203,24 @@ LoginLayout {
 							clip: false
 							RowLayout {
 								id: rowlayout
-                                spacing: Math.round(16 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(16)
 								FormItemLayout {
 									id: passwordItem
-                                    Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
                                     label: qsTr("password")
 									mandatory: true
 									enableErrorText: true
 									contentItem: TextField {
 										id: pwdInput
 										hidden: true
-                                        Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
-										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
+                                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
+										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : DefaultStyle.grey_200
+										//: "%1 mandatory"
+										Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("password"))
 									}
 								}
 								FormItemLayout {
-                                    Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
                                     //: "Confirmation mot de passe"
                                     label: qsTr("assistant_account_register_password_confirmation")
 									mandatory: true
@@ -216,22 +228,24 @@ LoginLayout {
 									contentItem: TextField {
 										id: confirmPwdInput
 										hidden: true
-                                        Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
-										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500main : DefaultStyle.grey_200
+                                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
+										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : DefaultStyle.grey_200
+										//: "%1 mandatory"
+										Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("assistant_account_register_password_confirmation"))
 									}
 								}
 							}
 							TemporaryText {
 								id: otherErrorText
 								Layout.fillWidth: true
-                                Layout.topMargin: Math.round(5 * DefaultStyle.dp)
+                                Layout.topMargin: Utils.getSizeWithScreenRatio(5)
 							}
 						}
 					}
 					// ColumnLayout {
-                    // 	spacing: Math.round(18 * DefaultStyle.dp)
+                    // 	spacing: Utils.getSizeWithScreenRatio(18)
 					// 	RowLayout {
-                    // 		spacing: Math.round(10 * DefaultStyle.dp)
+                    // 		spacing: Utils.getSizeWithScreenRatio(10)
 					// 		CheckBox {
 					// 			id: subscribeToNewsletterCheckBox
 					// 		}
@@ -249,17 +263,20 @@ LoginLayout {
 					// 	}
 
 					RowLayout {
-                        spacing: Math.round(10 * DefaultStyle.dp)
-						CheckBox {
-							id: termsCheckBox
-                        }
-                        Text {
-                            //: "J'accepte les %1 et la %2"
-                            text: qsTr("assistant_dialog_cgu_and_privacy_policy_message")
+						id: acceptCguAndPrivacyPolicyItem
+                        spacing: Utils.getSizeWithScreenRatio(10)
+						//: "J'accepte les %1 et la %2"
+						property string associatedText: qsTr("assistant_dialog_cgu_and_privacy_policy_message")
                             //: "conditions d'utilisation"
                             .arg(("<a href='%1'><font color='DefaultStyle.main2_600'>%2</font></a>").arg(ConstantsCpp.CguUrl).arg(qsTr("assistant_dialog_general_terms_label")))
                             //: "politique de confidentialité"
                             .arg(("<a href='%1'><font color='DefaultStyle.main2_600'>%2</font></a>").arg(ConstantsCpp.PrivatePolicyUrl).arg(qsTr("assistant_dialog_privacy_policy_label")))
+						CheckBox {
+							id: termsCheckBox
+							Accessible.name: acceptCguAndPrivacyPolicyItem.associatedText
+                        }
+                        Text {
+                            text: acceptCguAndPrivacyPolicyItem.associatedText
                             onLinkActivated: (link) => Qt.openUrlExternally(link)
                             font {
                                 pixelSize: Typography.p1.pixelSize
@@ -318,10 +335,10 @@ LoginLayout {
 //            visible: registerForm.x+registerForm.width < x
 			anchors.top: parent.top
 			anchors.right: parent.right
-            anchors.topMargin: Math.round(129 * DefaultStyle.dp)
-            anchors.rightMargin: Math.round(127 * DefaultStyle.dp)
-            width: Math.round(395 * DefaultStyle.dp)
-            height: Math.round(350 * DefaultStyle.dp)
+            anchors.topMargin: Utils.getSizeWithScreenRatio(129)
+            anchors.rightMargin: Utils.getSizeWithScreenRatio(127)
+            width: Utils.getSizeWithScreenRatio(395)
+            height: Utils.getSizeWithScreenRatio(350)
 			fillMode: Image.PreserveAspectFit
 			source: AppIcons.loginImage
 		}

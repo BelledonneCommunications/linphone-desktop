@@ -600,7 +600,7 @@ AbstractMainPage {
 					Text {
 						//: "%n participant(s) sélectionné(s)"
 						text: qsTr("group_call_participant_selected", '', addParticipantLayout.selectedParticipantsCount).arg(addParticipantLayout.selectedParticipantsCount)
-						color: DefaultStyle.main2_500main
+						color: DefaultStyle.main2_500_main
 						Layout.leftMargin: addParticipantsBackButton.width + addParticipantsButtons.spacing
 						maximumLineCount: 1
 						font {

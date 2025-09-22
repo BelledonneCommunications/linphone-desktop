@@ -1765,16 +1765,16 @@ QColor Utils::getPresenceColor(LinphoneEnums::Presence presence) {
 	QColor presenceColor = QColorConstants::Transparent;
 	switch (presence) {
 		case LinphoneEnums::Presence::Online:
-			presenceColor = Utils::getDefaultStyleColor("success_500main");
+			presenceColor = Utils::getDefaultStyleColor("success_500_main");
 			break;
 		case LinphoneEnums::Presence::Away:
 			presenceColor = Utils::getDefaultStyleColor("warning_500_main");
 			break;
 		case LinphoneEnums::Presence::Busy:
-			presenceColor = Utils::getDefaultStyleColor("danger_500main");
+			presenceColor = Utils::getDefaultStyleColor("danger_500_main");
 			break;
 		case LinphoneEnums::Presence::DoNotDisturb:
-			presenceColor = Utils::getDefaultStyleColor("danger_500main");
+			presenceColor = Utils::getDefaultStyleColor("danger_500_main");
 			break;
 		case LinphoneEnums::Presence::Offline:
 			presenceColor = Utils::getDefaultStyleColor("main2_600");

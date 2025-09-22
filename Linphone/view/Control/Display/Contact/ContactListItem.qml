@@ -40,6 +40,7 @@ FocusScope {
     signal clicked(var mouse)
     signal contactDeletionRequested(FriendGui contact)
     signal containsMouseChanged(bool containsMouse)
+    Accessible.name: displayName
 
     MouseArea {
         Text {
@@ -200,9 +201,9 @@ FocusScope {
                                                                 : qsTr("contact_details_add_to_favourites")
                             icon.source: searchResultItem.core.starred ? AppIcons.heartFill : AppIcons.heart
                             spacing: Math.round(10 * DefaultStyle.dp)
-                            textColor: DefaultStyle.main2_500main
+                            textColor: DefaultStyle.main2_500_main
                             hoveredImageColor: searchResultItem.core.starred ? DefaultStyle.main1_700 : DefaultStyle.danger_700
-                            contentImageColor: searchResultItem.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
+                            contentImageColor: searchResultItem.core.starred ? DefaultStyle.danger_500_main : DefaultStyle.main2_600
                             onClicked: {
                                 searchResultItem.core.lSetStarred(
                                             !searchResultItem.core.starred)
@@ -215,7 +216,7 @@ FocusScope {
                             Layout.fillWidth: true
                             icon.source: AppIcons.shareNetwork
                             spacing: Math.round(10 * DefaultStyle.dp)
-                            textColor: DefaultStyle.main2_500main
+                            textColor: DefaultStyle.main2_500_main
                             onClicked: {
                                 var vcard = searchResultItem.core.getVCard()
                                 var username = searchResultItem.core.givenName

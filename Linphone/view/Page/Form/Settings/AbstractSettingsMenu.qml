@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 AbstractMainPage {
@@ -28,17 +29,19 @@ AbstractMainPage {
 		id: leftPanel
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-        property real sideMargin: Math.round(45 * DefaultStyle.dp)
-        spacing: Math.round(5 * DefaultStyle.dp)
+        property real sideMargin: Utils.getSizeWithScreenRatio(45)
+        spacing: Utils.getSizeWithScreenRatio(5)
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-            spacing: Math.round(5 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(5)
 			Button {
 				id: backButton
-                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+				icon.width: Utils.getSizeWithScreenRatio(24)
+				icon.height: Utils.getSizeWithScreenRatio(24)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
 				focus: true
@@ -61,10 +64,11 @@ AbstractMainPage {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			model: mainItem.families
-            Layout.topMargin: Math.round(41 * DefaultStyle.dp)
+            Layout.topMargin: Utils.getSizeWithScreenRatio(41)
 			Layout.leftMargin: leftPanel.sideMargin
 			property int selectedIndex: mainItem.defaultIndex != -1 ? mainItem.defaultIndex : 0
 			activeFocusOnTab: true
+			spacing: Utils.getSizeWithScreenRatio(5)
 			
 			delegate: SettingsMenuItem {
 				titleText: modelData.title

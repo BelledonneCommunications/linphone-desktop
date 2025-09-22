@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Control.Page {
@@ -11,6 +12,8 @@ Control.Page {
 	property alias customHeaderButtons: customButtonLayout.children
 	property int contentItemHeight: scrollview.height
 	property bool closeButtonVisible: true
+	property Item firstContentFocusableItem: undefined
+	property Item lastContentFocusableItem: undefined
 	clip: true
 
 	property string headerTitleText
@@ -77,6 +80,9 @@ Control.Page {
 					style: ButtonStyle.noBackground
 					icon.source: AppIcons.closeX
 					onClicked: mainItem.visible = false
+					//: Close %1 panel
+					Accessible.name: qsTr("close_name_panel_accessible_button").arg(mainItem.headerTitleText)
+					KeyNavigation.tab : firstContentFocusableItem ?? nextItemInFocusChain()
 				}
 			}
 			RowLayout {
@@ -106,7 +112,7 @@ Control.Page {
 					verticalAlignment: Text.AlignVCenter
 
 						text: mainItem.headerSubtitleText
-						color: DefaultStyle.main2_500main
+						color: DefaultStyle.main2_500_main
 						font {
                             pixelSize: Math.round(12 * DefaultStyle.dp)
                             weight: Math.round(300 * DefaultStyle.dp)

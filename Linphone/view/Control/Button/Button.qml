@@ -4,42 +4,63 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import QtQml
 import Linphone
+import CustomControls 1.0
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 Control.Button {
 	id: mainItem
-	property int capitalization
 	property var style
+    property bool asynchronous: false
+	hoverEnabled: enabled
+	activeFocusOnTab: true
+	property color disabledFilterColor: color.hslLightness > 0.5
+		? DefaultStyle.grey_0
+		: DefaultStyle.grey_400
+	property bool hasNavigationFocus: enabled && (activeFocus || hovered)
+	property bool keyboardFocus: FocusHelper.keyboardFocus
+	// Background properties
 	property color color: style?.color?.normal || DefaultStyle.main1_500_main
 	property color hoveredColor: style?.color?.hovered || Qt.darker(color, 1.05)
     property color pressedColor: style?.color?.pressed || Qt.darker(color, 1.1)
     property color checkedColor: style?.color?.checked || style?.color?.pressed || Qt.darker(color, 1.1)
+	property bool shadowEnabled: false
+	property int capitalization
+	property color backgroundColor: mainItem.checkable && mainItem.checked
+                    ? mainItem.checkedColor || mainItem.pressedColor
+                    : mainItem.pressed
+                        ? mainItem.pressedColor
+                        : mainItem.hovered
+                            ? mainItem.hoveredColor
+                            : mainItem.color
+	// Text properties
+	property bool underline: false
+    property real textSize: Utils.getSizeWithScreenRatio(18)
+    property real textWeight: Typography.b1.weight
     property color textColor: style?.text?.normal || DefaultStyle.grey_0
 	property color hoveredTextColor: style?.text?.hovered || Qt.darker(textColor, 1.05)
 	property color pressedTextColor: style?.text?.pressed || Qt.darker(textColor, 1.1)
-	property color borderColor: style?.borderColor || "transparent"
+	property var textFormat: Text.AutoText
+	property var textHAlignment: Text.AlignHCenter
+	// Tooltip properties
 	ToolTip.visible: hovered && ToolTip.text != ""
 	ToolTip.delay: 500
-	property color disabledFilterColor: color.hslLightness > 0.5
-		? DefaultStyle.grey_0
-		: DefaultStyle.grey_400
-    property real textSize: Math.round(18 * DefaultStyle.dp)
-    property real textWeight: Typography.b1.weight
-	property var textHAlignment: Text.AlignHCenter
-    property real radius: Math.round(48 * DefaultStyle.dp)
-	property bool underline: false
-	property bool hasNavigationFocus: enabled && (activeFocus  || hovered)
-	property bool shadowEnabled: false
+	// Border properties
+	property color borderColor: style?.borderColor?.normal || "transparent"
+	property color keyboardFocusedBorderColor: style?.borderColor?.keybaordFocused || DefaultStyle.main2_900
+	property real borderWidth: Utils.getSizeWithScreenRatio(1)
+	property real keyboardFocusedBorderWidth: Utils.getSizeWithScreenRatio(3)
+	// Image properties
 	property var contentImageColor: style?.image?.normal || DefaultStyle.main2_600
 	property var hoveredImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.05)
 	property var checkedImageColor: style?.image?.checked || Qt.darker(contentImageColor, 1.1)
 	property var pressedImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.1)
-    property bool asynchronous: false
-	property var textFormat: Text.AutoText
-    spacing: Math.round(5 * DefaultStyle.dp)
-	hoverEnabled: enabled
-	activeFocusOnTab: true
 	icon.source: style?.iconSource || ""
+	property color colorizationColor:  mainItem.checkable && mainItem.checked ? mainItem.checkedImageColor || mainItem.checkedColor || mainItem.pressedColor : mainItem.pressed ? mainItem.pressedImageColor : mainItem.hovered ? mainItem.hoveredImageColor : mainItem.contentImageColor
+	// Size properties
+	spacing: Utils.getSizeWithScreenRatio(5)
+    property real radius: Math.ceil(height / 2)
+
 	MouseArea {
 		id: mouseArea
 		z: stacklayout.z + 1
@@ -54,18 +75,15 @@ Control.Button {
 		anchors.fill: parent
 		
 		sourceComponent: Item {
+			width: mainItem.width
+			height: mainItem.height
 			Rectangle {
 				id: buttonBackground
 				anchors.fill: parent
-                color: mainItem.checkable && mainItem.checked
-                    ? mainItem.checkedColor || mainItem.pressedColor
-                    : mainItem.pressed
-                        ? mainItem.pressedColor
-                        : mainItem.hovered || mainItem.hasNavigationFocus
-                            ? mainItem.hoveredColor
-                            : mainItem.color
+                color: mainItem.backgroundColor
 				radius: mainItem.radius
-				border.color: mainItem.borderColor
+				border.color: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderColor : mainItem.borderColor
+				border.width: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth 
 			}
 			MultiEffect {
 				enabled: mainItem.shadowEnabled
@@ -115,7 +133,7 @@ Control.Button {
 			family: DefaultStyle.defaultFont
 			capitalization: mainItem.capitalization
 			underline: mainItem.underline
-			bold: mainItem.style === ButtonStyle.noBackground && (mainItem.hovered || mainItem.pressed)
+			bold: (mainItem.style === ButtonStyle.noBackground || mainItem.style === ButtonStyle.noBackgroundRed) && (mainItem.hovered || mainItem.pressed)
 		}
 		TextMetrics {
 			id: textMetrics
@@ -129,13 +147,7 @@ Control.Button {
 		imageSource: mainItem.icon.source
 		imageWidth: mainItem.icon.width
 		imageHeight: mainItem.icon.height
-        colorizationColor: mainItem.checkable && mainItem.checked
-            ? mainItem.checkedImageColor || mainItem.checkedColor || mainItem.pressedColor
-            : mainItem.pressed
-                ? mainItem.pressedImageColor
-                : mainItem.hovered
-                    ? mainItem.hoveredImageColor
-                    : mainItem.contentImageColor
+        colorizationColor: mainItem.colorizationColor
 	}
 	
 	contentItem: Control.StackView{

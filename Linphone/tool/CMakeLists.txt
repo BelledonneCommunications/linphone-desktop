@@ -28,6 +28,9 @@ list(APPEND _LINPHONEAPP_SOURCES
 
 	tool/ui/DashRectangle.cpp
 
+	tool/accessibility/FocusHelper.cpp
+	tool/accessibility/AccessibilityHelper.cpp
+
 )
 
 if (APPLE)

@@ -22,7 +22,7 @@ ColumnLayout {
         //: "Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants"
         text: qsTr("screencast_settings_choose_window_text")
         font.pixelSize: Math.round(14 * DefaultStyle.dp)
-		color: DefaultStyle.main2_500main
+		color: DefaultStyle.main2_500_main
 	}
 	TabBar {
 		Layout.fillWidth: true

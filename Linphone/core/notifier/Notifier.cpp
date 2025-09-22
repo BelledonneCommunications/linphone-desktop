@@ -36,6 +36,7 @@
 #include "core/chat/ChatGui.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/LinphoneEnums.hpp"
+#include "tool/accessibility/AccessibilityHelper.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/ImageProvider.hpp"
 
@@ -302,6 +303,11 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	QString displayName = call->getCallLog() && call->getCallLog()->getConferenceInfo()
 	                          ? Utils::coreStringToAppString(call->getCallLog()->getConferenceInfo()->getSubject())
 	                          : Utils::coreStringToAppString(call->getRemoteAddress()->getDisplayName());
+
+	// Accessibility alert
+	//: New call from %1
+	AccessibilityHelper::announceMessage(tr("new_call_alert_accessible_name").arg(displayName));
+
 	App::postCoreAsync([this, gui, displayName]() {
 		mustBeInMainThread(getClassName());
 		QVariantMap map;
@@ -380,6 +386,10 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 		}
 
 		auto chatCore = ChatCore::create(room);
+
+		// Accessibility alert
+		//: New message on chatroom %1
+		AccessibilityHelper::announceMessage(tr("new_message_alert_accessible_name").arg(chatCore->getTitle()));
 
 		App::postCoreAsync([this, txt, chatCore, remoteAddress]() {
 			mustBeInMainThread(getClassName());

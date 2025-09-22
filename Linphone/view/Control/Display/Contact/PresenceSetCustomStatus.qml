@@ -34,7 +34,7 @@ Column {
 				id: statusMessage
 				wrapMode: TextEdit.Wrap
 				font: Typography.p1
-				color: DefaultStyle.main2_500main
+				color: DefaultStyle.main2_500_main
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				property string previoustext: ""

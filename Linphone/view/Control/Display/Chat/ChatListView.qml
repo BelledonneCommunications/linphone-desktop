@@ -141,7 +141,7 @@ ListView {
             id: background
             anchors.fill: parent
             radius: width/2
-            color: DefaultStyle.danger_500main
+            color: DefaultStyle.danger_500_main
             Text{
                 anchors.fill: parent
                 verticalAlignment: Text.AlignVCenter
@@ -295,7 +295,7 @@ ListView {
                 RowLayout {
                     Item{Layout.fillWidth: true}
                     Text {
-                        color: DefaultStyle.main2_500main
+                        color: DefaultStyle.main2_500_main
                         text: modelData ? UtilsCpp.formatDate(modelData.core.lastUpdatedTime, true, false) : ""
                         font {
                             pixelSize: Typography.p3.pixelSize

@@ -7,84 +7,93 @@ import QtQuick.Dialogs
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
-Item {
+ColumnLayout{
 	id: mainItem
-    width: Math.round(517 * DefaultStyle.dp)
-
-    readonly property real spacing: Math.round(16 * DefaultStyle.dp)
-	property AccountProxy  accountProxy
+	anchors.top: parent.top
+	anchors.topMargin: Utils.getSizeWithScreenRatio(23)
+	anchors.left: parent.left
+	anchors.leftMargin: Utils.getSizeWithScreenRatio(24)
+	anchors.right: parent.right
+	anchors.rightMargin: Utils.getSizeWithScreenRatio(24)
+	anchors.bottom: parent.bottom
+	anchors.bottomMargin: Utils.getSizeWithScreenRatio(23)
 	
 	signal addAccountRequest()
     signal editAccount(AccountGui account)
+    readonly property var childrenWidth: Utils.getSizeWithScreenRatio(517)
 
-    implicitHeight: list.contentHeight + Math.round(32 * DefaultStyle.dp) + 1 + addAccountButton.height
-	ColumnLayout{
-		id: childLayout
-		anchors.top: parent.top
-        anchors.topMargin: mainItem.topPadding
-		anchors.left: parent.left
-        anchors.leftMargin: mainItem.leftPadding
-		anchors.right: parent.right
-        anchors.rightMargin: mainItem.rightPadding
-		anchors.bottom: parent.bottom
-        anchors.bottomMargin: mainItem.bottomPadding
-		ListView{
-			id: list
-			Layout.preferredHeight: contentHeight
-			Layout.fillWidth: true
-			spacing: mainItem.spacing
-			model: AccountProxy {
-				id: accountProxy
-				sourceModel: AppCpp.accounts
+    readonly property real spacing: Utils.getSizeWithScreenRatio(16)
+	required property var getPreviousItem
+	required property var getNextItem
+	property AccountProxy  accountProxy
+	property var popupId
+	Component{
+		id: contactDelegate
+		Contact{
+			id: contactItem
+			Layout.preferredWidth: mainItem.childrenWidth
+			account: modelData
+			isSelected: modelData && accountProxy.defaultAccount && modelData.core === accountProxy.defaultAccount.core
+			onAvatarClicked: fileDialog.open()
+			onBackgroundClicked: {
+				modelData.core.lSetDefaultAccount()
 			}
-			delegate: Contact{
-				id: contactItem
-				width: list.width
-				account: modelData
-				property bool isSelected: modelData && accountProxy.defaultAccount && modelData.core === accountProxy.defaultAccount.core
-				onAvatarClicked: fileDialog.open()
-				onBackgroundClicked: {
-					modelData.core.lSetDefaultAccount()
-				}
-				onEdit: editAccount(modelData)
-				hoverEnabled: true
-				backgroundColor: contactItem.isSelected 
-					? DefaultStyle.grey_200
-					: hovered
-						? DefaultStyle.main2_100
-						: DefaultStyle.grey_0
-				FileDialog {
-					id: fileDialog
-					currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
-					onAccepted: {
-						var avatarPath = UtilsCpp.createAvatar( selectedFile )
-						if(avatarPath){
-							modelData.core.pictureUri = avatarPath
-						}
+			onEdit: editAccount(modelData)
+			hoverEnabled: true
+			spacing: mainItem.spacing
+			FileDialog {
+				id: fileDialog
+				currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+				onAccepted: {
+					var avatarPath = UtilsCpp.createAvatar( selectedFile )
+					if(avatarPath){
+						modelData.core.pictureUri = avatarPath
 					}
 				}
 			}
-		}
-		Rectangle{
-			id: separator
-			Layout.fillWidth: true
-			Layout.topMargin: mainItem.spacing
-			Layout.bottomMargin: mainItem.spacing
-			visible: addAccountButton.visible
-            height: Math.max(Math.round(1 * DefaultStyle.dp), 1)
-			color: DefaultStyle.main2_300
-		}
-		IconLabelButton{
-			id: addAccountButton
-			Layout.fillWidth: true
-			visible: SettingsCpp.maxAccount == 0 || SettingsCpp.maxAccount > accountProxy.count
-			onClicked: mainItem.addAccountRequest()
-			icon.source: AppIcons.plusCircle
-            icon.width: Math.round(32 * DefaultStyle.dp)
-            icon.height: Math.round(32 * DefaultStyle.dp)
-			text: 'Ajouter un compte'
+			style: ButtonStyle.whiteSelected
+			KeyNavigation.up: visibleChildren.length
+								!= 0 ? getPreviousItem(
+											index) : null
+			KeyNavigation.down: visibleChildren.length
+								!= 0 ? getNextItem(
+											index) : null
 		}
 	}
-}
+
+	Repeater{
+		model: AccountProxy {
+			id: accountProxy
+			sourceModel: AppCpp.accounts
+		}
+		delegate: contactDelegate
+	}
+	HorizontalBar{
+		Layout.topMargin: mainItem.spacing
+		Layout.bottomMargin: mainItem.spacing
+		visible: addAccountButton.visible
+		color: DefaultStyle.main2_300
+	}
+	IconLabelButton{
+		id: addAccountButton
+		Layout.fillWidth: true
+		visible: SettingsCpp.maxAccount == 0 || SettingsCpp.maxAccount > accountProxy.count
+		onClicked: mainItem.addAccountRequest()
+		icon.source: AppIcons.plusCircle
+		icon.width: Utils.getSizeWithScreenRatio(32)
+		icon.height: Utils.getSizeWithScreenRatio(32)
+		//: Add an account
+		text: qsTr("add_an_account")
+		KeyNavigation.up: visibleChildren.length
+							!= 0 ? getPreviousItem(
+										AppCpp.accounts.getCount()) : null
+		KeyNavigation.down: visibleChildren.length
+							!= 0 ? getNextItem(
+										AppCpp.accounts.getCount()) : null
+	}
+	}
+
  

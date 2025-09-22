@@ -3,41 +3,47 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
 import ConstantsCpp 1.0
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ColumnLayout {
 	id: mainItem
-    spacing: Math.round(8 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(8)
 
 	FormItemLayout {
 		id: username
-        Layout.preferredWidth: Math.round(346 * DefaultStyle.dp)
+        Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
         //: Nom d'utilisateur : username
         label: qsTr("username")
 		mandatory: true
 		enableErrorText: true
 		contentItem: TextField {
 			id: usernameEdit
-            Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 			isError: username.errorTextVisible || (errorText.isVisible && text.length > 0)
+			onAccepted: passwordEdit.forceActiveFocus()
+			//: "%1 mandatory"
+			Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("username"))
 		}
 	}
 	Item {
 		Layout.preferredHeight: password.implicitHeight
 		FormItemLayout {
 			id: password
-            width: Math.round(346 * DefaultStyle.dp)
+            width: Utils.getSizeWithScreenRatio(346)
             //: Mot de passe
             label: qsTr("password")
 			mandatory: true
 			enableErrorText: true
 			contentItem: TextField {
 				id: passwordEdit
-                Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 				isError: password.errorTextVisible || (errorText.isVisible && text.length > 0)
 				hidden: true
+				onAccepted: connectionButton.trigger()
+				Accessible.name: qsTr("password")
 			}
 			TemporaryText {
 				id: errorText
@@ -55,11 +61,12 @@ ColumnLayout {
 	}
 
 	RowLayout {
-        Layout.topMargin: Math.round(7 * DefaultStyle.dp)
-        spacing: Math.round(29 * DefaultStyle.dp)
+        Layout.topMargin: Utils.getSizeWithScreenRatio(7)
+        spacing: Utils.getSizeWithScreenRatio(29)
 		BigButton {
 			id: connectionButton
 			style: ButtonStyle.main
+			Accessible.name: qsTr("assistant_account_login") 
 			contentItem: StackLayout {
 				id: connectionButtonContent
 				currentIndex: 0
@@ -115,11 +122,6 @@ ColumnLayout {
 				connectionButtonContent.currentIndex = 1
 			}
 
-			Shortcut {
-				sequences: ["Return", "Enter"]
-				onActivated: if(passwordEdit.activeFocus) connectionButton.trigger()
-							else if( usernameEdit.activeFocus) passwordEdit.forceActiveFocus()
-			}
 			onPressed: connectionButton.trigger()
 		}
 		SmallButton {

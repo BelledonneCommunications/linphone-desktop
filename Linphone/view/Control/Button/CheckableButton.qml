@@ -20,19 +20,9 @@ Button {
 			? pressedColor
 			: color
 	checkable: true
-	background: Rectangle {
-		anchors.fill: parent
-		color: mainItem.backgroundColor
-		radius: mainItem.width /2
-		Rectangle {
-			anchors.fill: parent
-			visible: !mainItem.enabled
-			opacity: 0.2
-			color: DefaultStyle.grey_600
-		}
-	}
+	Accessible.role: Accessible.Button
 	icon.source: checkedIconUrl && mainItem.checked ? checkedIconUrl : iconUrl
-	icon.width: width * 0.58
-	icon.height: width * 0.58
+	icon.width: Math.round(width * 0.58)
+	icon.height: Math.round(width * 0.58)
 	contentImageColor: style?.image?.normal || DefaultStyle.grey_0
 }

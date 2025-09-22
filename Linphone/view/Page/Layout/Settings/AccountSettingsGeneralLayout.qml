@@ -180,7 +180,7 @@ AbstractSettingsLayout {
                         text: qsTr("manage_account_delete")
 						font: Typography.p2l
 						wrapMode: Text.WordWrap
-						color: DefaultStyle.danger_500main
+						color: DefaultStyle.danger_500_main
 						Layout.fillWidth: true
 					}
 					Text {
@@ -188,7 +188,7 @@ AbstractSettingsLayout {
                         text: qsTr("manage_account_delete_message")
 						font: Typography.p1
 						wrapMode: Text.WordWrap
-						color: DefaultStyle.main2_500main
+						color: DefaultStyle.main2_500_main
 						Layout.fillWidth: true
 					}
 				}

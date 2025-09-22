@@ -118,7 +118,7 @@ ColumnLayout {
 					anchors.fill: parent
 					fillMode: Image.PreserveAspectFit
 					imageSource: titleMainItem.isEditingSubject ? AppIcons.check : AppIcons.pencil
-					colorizationColor: titleMainItem.isEditingSubject ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
+					colorizationColor: titleMainItem.isEditingSubject ? DefaultStyle.main1_500_main : DefaultStyle.main2_500_main
 				}
 
 				MouseArea {
@@ -352,7 +352,7 @@ ColumnLayout {
 						visible: true,
 						//: Delete history
 						text: qsTr("group_infos_delete_history"),
-						color: DefaultStyle.danger_500main,
+						color: DefaultStyle.danger_500_main,
 						showRightArrow: false,
 						action: function() {
 							//: Delete history ?
@@ -383,7 +383,7 @@ ColumnLayout {
 						icon: AppIcons.trashCan,
 						visible: true,
 						text: qsTr("one_one_infos_delete_history"),
-						color: DefaultStyle.danger_500main,
+						color: DefaultStyle.danger_500_main,
 						showRightArrow: false,
 						action: function() {
 							//: Delete history ?

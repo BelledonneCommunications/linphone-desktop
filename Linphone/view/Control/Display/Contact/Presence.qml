@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Linphone
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ColumnLayout {
@@ -11,7 +12,7 @@ ColumnLayout {
 	signal setCustomStatusClicked
 	signal isSet
 	
-	spacing: 8 * DefaultStyle.dp
+	spacing: Utils.getSizeWithScreenRatio(8)
 	PresenceStatusItem { presence: LinphoneEnums.Presence.Online; accountCore: mainItem.accountCore; onClick: mainItem.isSet()}
 	PresenceStatusItem { presence: LinphoneEnums.Presence.Away; accountCore: mainItem.accountCore; onClick: mainItem.isSet()}
 	PresenceStatusItem { presence: LinphoneEnums.Presence.Busy; accountCore: mainItem.accountCore; onClick: mainItem.isSet()}
@@ -22,8 +23,8 @@ ColumnLayout {
 		spacing: 0
 		visible: accountCore.explicitPresence != LinphoneEnums.Presence.Undefined
 		Layout.alignment: Qt.AlignLeft
-		Layout.topMargin: Math.round(3 * DefaultStyle.dp)
-		Layout.bottomMargin: Math.round(3 * DefaultStyle.dp)
+		Layout.topMargin: Utils.getSizeWithScreenRatio(3)
+		Layout.bottomMargin: Utils.getSizeWithScreenRatio(3)
 		Label {
 			font: Typography.p1
 			text: qsTr("contact_presence_reset_status")
@@ -32,46 +33,30 @@ ColumnLayout {
 		Item {
 			   Layout.fillWidth: true
 		}
-		Item {
-			width: Math.round(17 * DefaultStyle.dp)
-			height: Math.round(17 * DefaultStyle.dp)
-
-			MouseArea {
-				id: hoverArea
-				anchors.fill: parent
-				hoverEnabled: true
-				cursorShape: Qt.PointingHandCursor
-				onClicked: {
-					accountCore.resetToAutomaticPresence()
-				}
-			}
-
-			EffectImage {
-				fillMode: Image.PreserveAspectFit
-				imageSource: AppIcons.reloadArrow
-				colorizationColor: hoverArea.containsMouse ? DefaultStyle.main2_800 : DefaultStyle.main2_600
-				anchors.fill: parent
-			}
+		Button {
+			id: resetStatusItem
+			style: ButtonStyle.noBackground
+			icon.width: Utils.getSizeWithScreenRatio(17)
+			icon.height: Utils.getSizeWithScreenRatio(17)
+			icon.source: AppIcons.reloadArrow
+			onClicked: accountCore.resetToAutomaticPresence()
 		}
 	}
-	Rectangle {
-		height: 1
-		width: parent.width
-		color: DefaultStyle.main2_500main
-		Layout.topMargin: 8 * DefaultStyle.dp
+	HorizontalBar {
+		Layout.topMargin: Utils.getSizeWithScreenRatio(8)
 	}
 	ColumnLayout {
-		spacing: 19 * DefaultStyle.dp
+		spacing: Utils.getSizeWithScreenRatio(19)
 		RowLayout {
-			spacing: 10 * DefaultStyle.dp
-			Layout.topMargin: Math.round(3 * DefaultStyle.dp)
+			spacing: Utils.getSizeWithScreenRatio(10)
+			Layout.topMargin: Utils.getSizeWithScreenRatio(3)
 			Layout.alignment: Qt.AlignLeft
 			Text {
 				font: Typography.p1
 				text: accountCore.presenceNote.length > 0 ? accountCore.presenceNote : qsTr("contact_presence_custom_status")
 				color: DefaultStyle.main2_600
 				wrapMode: Text.WordWrap
-				Layout.preferredWidth: (accountCore.presenceNote.length == 0 ? 175 : 230) * DefaultStyle.dp
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(accountCore.presenceNote.length == 0 ? 175 : 230)
 			}
 			Item {
 				   Layout.fillWidth: true
@@ -87,7 +72,7 @@ ColumnLayout {
 		}
 		RowLayout {
 			visible: accountCore.presenceNote.length > 0
-			spacing: 10 * DefaultStyle.dp
+			spacing: Utils.getSizeWithScreenRatio(10)
 			Item {
 				   Layout.fillWidth: true
 			}

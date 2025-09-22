@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import Linphone
+import CustomControls 1.0
   
 ColumnLayout {
 	id: mainItem
@@ -16,6 +17,7 @@ ColumnLayout {
 	readonly property string phoneNumber: textField.text
 	readonly property string countryCode: combobox.currentText
 	property string defaultCallingCode
+	property bool keyboardFocus: FocusHelper.keyboardFocus
 
 	Text {
 		visible: label.length > 0
@@ -38,7 +40,7 @@ ColumnLayout {
             radius: Math.round(63 * DefaultStyle.dp)
 			color: DefaultStyle.grey_100
 			border.color: mainItem.errorMessage.length > 0 
-							? DefaultStyle.danger_500main 
+							? DefaultStyle.danger_500_main 
 							: (textField.hasActiveFocus || combobox.hasActiveFocus)
 								? DefaultStyle.main1_500_main
 								: DefaultStyle.grey_200
@@ -48,6 +50,9 @@ ColumnLayout {
 					id: combobox
                     implicitWidth: Math.round(110 * DefaultStyle.dp)
 					defaultCallingCode: mainItem.defaultCallingCode
+					property bool keyboardFocus: FocusHelper.keyboardFocus
+					//: %1 prefix
+					Accessible.name: qsTr("prefix_phone_number_accessible_name").arg(mainItem.Accessible.name)
 				}
 				Rectangle {
                     Layout.preferredWidth: Math.max(Math.round(1 * DefaultStyle.dp), 1)
@@ -63,6 +68,9 @@ ColumnLayout {
 					background: Item{}
 					initialText: initialPhoneNumber
 					validator: RegularExpressionValidator{ regularExpression: /[0-9]+/}
+					property bool keyboardFocus: FocusHelper.keyboardFocus
+					//: %1 number
+					Accessible.name: qsTr("number_phone_number_accessible_name").arg(mainItem.Accessible.name)
 				}
 			}
 		}
@@ -71,7 +79,7 @@ ColumnLayout {
 			anchors.top: contentBackground.bottom
 			// visible: mainItem.enableErrorText
 			text: mainItem.errorMessage
-			color: DefaultStyle.danger_500main
+			color: DefaultStyle.danger_500_main
 			verticalAlignment: Text.AlignVCenter
 			elide: Text.ElideRight
 			wrapMode: Text.Wrap

@@ -7,6 +7,7 @@ import EnumsToStringCpp
 import UtilsCpp
 import SettingsCpp
 import DesktopToolsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 AbstractWindow {
@@ -28,6 +29,16 @@ AbstractWindow {
     property bool callTerminatedByUser: false
     property var callState: call ? call.core.state : LinphoneEnums.CallState.Idle
     property var transferState: call && call.core.transferState
+    property bool startingCall: mainWindow.callState == LinphoneEnums.CallState.OutgoingInit
+        || mainWindow.callState
+        == LinphoneEnums.CallState.OutgoingProgress
+        || mainWindow.callState
+        == LinphoneEnums.CallState.OutgoingRinging
+        || mainWindow.callState
+        == LinphoneEnums.CallState.OutgoingEarlyMedia
+        || mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
+    property Item firstButtonInBottomTab : mainWindow.startingCall ? endCallButton : (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton)
+    property Item lastButtonInBottomTab : mainWindow.startingCall ? Utils.getLastFocussableItemInItem(controlCallButtons) : endCallButton
 
     onCallStateChanged: {
         if (callState === LinphoneEnums.CallState.Connected) {
@@ -338,7 +349,7 @@ AbstractWindow {
                                                === LinphoneEnums.CallState.End
                                                || mainWindow.callState
                                                === LinphoneEnums.CallState.Released
-                                               || mainWindow.conference ? DefaultStyle.danger_500main : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500main
+                                               || mainWindow.conference ? DefaultStyle.danger_500_main : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500_main
                             onColorizationColorChanged: {
                                 callStatusIcon.active = !callStatusIcon.active
                                 callStatusIcon.active = !callStatusIcon.active
@@ -520,31 +531,36 @@ AbstractWindow {
                     Item {
                         Layout.fillWidth: true
                     }
-                    EffectImage {
-                        Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
-                        Layout.rightMargin: Math.round(30 * DefaultStyle.dp)
+
+                    // Button open statistics panel
+                    Button{
+                        id: openStatisticPanelButton
                         property int quality: mainWindow.call ? mainWindow.call.core.quality : 0
-                        imageSource: quality >= 4 ? AppIcons.cellSignalFull : quality >= 3 ? AppIcons.cellSignalMedium : quality >= 2 ? AppIcons.cellSignalLow : AppIcons.cellSignalNone
+                        icon.width: Math.round(32 * DefaultStyle.dp)
+                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Math.round(40 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(40 * DefaultStyle.dp)
+                        Layout.rightMargin: Math.round(30 * DefaultStyle.dp)
+                        icon.source: quality >= 4 ? AppIcons.cellSignalFull : quality >= 3 ? AppIcons.cellSignalMedium : quality >= 2 ? AppIcons.cellSignalLow : AppIcons.cellSignalNone
                         colorizationColor: DefaultStyle.grey_0
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-                            onClicked: {
-                                if (rightPanel.visible
-                                        && rightPanel.contentLoader.item.objectName
-                                        === "statsPanel")
-                                    rightPanel.visible = false
-                                else {
-                                    rightPanel.visible = true
-                                    rightPanel.replace(statsPanel)
-                                }
+                        style: ButtonStyle.noBackgroundLightBorder
+                        Accessible.name: qsTr("open_statistic_panel_accessible_name")
+                        onClicked: {
+                            if (rightPanel.visible
+                                    && rightPanel.contentLoader.item.objectName
+                                    === "statsPanel")
+                                rightPanel.visible = false
+                            else {
+                                rightPanel.visible = true
+                                rightPanel.replace(statsPanel)
                             }
                         }
+                        KeyNavigation.tab: rightPanel.visible ? nextItemInFocusChain() : mainWindow.firstButtonInBottomTab
+                        KeyNavigation.backtab: mainWindow.lastButtonInBottomTab
                     }
                 }
 
+                // Banner middle of header - screen sharing or record screen
                 Control.Control {
                     id: screenSharingOrRecordBanner
                     property var isScreenSharing: mainWindow.conference && mainWindow.conference.core.isLocalScreenSharing 
@@ -573,14 +589,14 @@ AbstractWindow {
                                     : AppIcons.recordFill
                                 colorizationColor: screenSharingOrRecordBanner.isScreenSharing
                                     ? DefaultStyle.grey_0
-                                    : DefaultStyle.danger_500main
+                                    : DefaultStyle.danger_500_main
                                 Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
                                 Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
                             }
                             Text {
                                 color: screenSharingOrRecordBanner.isScreenSharing
                                     ? DefaultStyle.grey_0
-                                    : DefaultStyle.danger_500main
+                                    : DefaultStyle.danger_500_main
                                 font: Typography.b1
                                 text: mainWindow.call
                                         ? screenSharingOrRecordBanner.isScreenSharing
@@ -603,12 +619,18 @@ AbstractWindow {
                         MediumButton {
                             visible: mainWindow.call
                                      && mainWindow.call.core.recording || screenSharingOrRecordBanner.isScreenSharing
-                            //: "Stop recording"
+                            
                             text: screenSharingOrRecordBanner.isScreenSharing
-                            ? qsTr("call_stop_recording")
                             //: "Stop sharing"
-                            : qsTr("call_stop_screen_sharing")
-                            style: ButtonStyle.main
+                            ? qsTr("call_stop_screen_sharing")
+                            //: "Stop recording"
+                            : qsTr("call_stop_recording")
+                            Accessible.name: screenSharingOrRecordBanner.isScreenSharing ?
+                            //: "Stop screen sharing"
+                            qsTr("stop_screen_sharing_accessible_name")
+                            //: Stop recording
+                            : qsTr("stop_recording_accessible_name") 
+                            style: ButtonStyle.mainLightBorder
                             onPressed: {
                                 if (screenSharingOrRecordBanner.isScreenSharing) mainWindow.conference.core.lToggleScreenSharing()
                                 else mainWindow.call.core.lStopRecording()
@@ -643,6 +665,7 @@ AbstractWindow {
                     }
                     headerStack.currentIndex: 0
                     headerValidateButtonText: qsTr("add")
+                    KeyNavigation.tab : Utils.isDescendant(nextItemInFocusChain(), rightPanel) ? nextItemInFocusChain() : videoCameraButton
 
                     // Do not consider padding for chat
                     Binding on topPadding {
@@ -711,6 +734,14 @@ AbstractWindow {
                             if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "screencastPanel") screencastPanelButton.checked = false
                             if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "chatPanel") chatPanelButton.checked = false
                             if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "participantListPanel") participantListButton.checked = false
+
+                            // Update tab focus properties
+                            var firstContentFocusableItem = Utils.getFirstFocussableItemInItem(rightPanel.contentLoader.item)
+                            rightPanel.firstContentFocusableItem = firstContentFocusableItem ?? mainWindow.firstButtonInBottomTab
+                            var lastContentFocusableItem = Utils.getLastFocussableItemInItem(rightPanel.contentLoader.item)
+                            if(lastContentFocusableItem != undefined){
+                                lastContentFocusableItem.KeyNavigation.tab = mainWindow.firstButtonInBottomTab
+                            }
                         }
                     }
 
@@ -1209,11 +1240,16 @@ AbstractWindow {
                 }
             }
 
+
+            // -----------------------------------------------------------------------------
+            //  Bottom round buttons
+            // -----------------------------------------------------------------------------
             RowLayout {
                 id: bottomButtonsLayout
                 Layout.alignment: Qt.AlignHCenter
                 spacing: Math.round(58 * DefaultStyle.dp)
                 visible: middleItemStackView.currentItem.objectName == "inCallItem"
+                property bool moreOptionsButtonVisibility: true
 
                 function refreshLayout() {
                     if (mainWindow.callState === LinphoneEnums.CallState.Connected
@@ -1221,12 +1257,12 @@ AbstractWindow {
                             || mainWindow.callState === LinphoneEnums.CallState.Paused
                             || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote) {
                         connectedCallButtons.visible = bottomButtonsLayout.visible
-                        moreOptionsButton.visible = bottomButtonsLayout.visible
+                        moreOptionsButtonVisibility = bottomButtonsLayout.visible
                         bottomButtonsLayout.layoutDirection = Qt.RightToLeft
                     } else if (mainWindow.callState === LinphoneEnums.CallState.OutgoingInit) {
                         connectedCallButtons.visible = false
                         bottomButtonsLayout.layoutDirection = Qt.LeftToRight
-                        moreOptionsButton.visible = false
+                        moreOptionsButtonVisibility = false
                     }
                 }
 
@@ -1244,35 +1280,40 @@ AbstractWindow {
                         children[i].enabled = false
                     }
                 }
+
+                // End call button
                 BigButton {
+                    id: endCallButton
                     Layout.row: 0
                     icon.width: Math.round(32 * DefaultStyle.dp)
                     icon.height: Math.round(32 * DefaultStyle.dp)
                     //: "Terminer l'appel"
                     ToolTip.text: qsTr("call_action_end_call")
+                    Accessible.name: qsTr("call_action_end_call")
                     Layout.preferredWidth: Math.round(75 * DefaultStyle.dp)
                     Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                     radius: Math.round(71 * DefaultStyle.dp)
-                    style: ButtonStyle.phoneRed
-                    Layout.column: mainWindow.callState == LinphoneEnums.CallState.OutgoingInit
-                                   || mainWindow.callState
-                                   == LinphoneEnums.CallState.OutgoingProgress
-                                   || mainWindow.callState
-                                   == LinphoneEnums.CallState.OutgoingRinging
-                                   || mainWindow.callState
-                                   == LinphoneEnums.CallState.OutgoingEarlyMedia
-                                   || mainWindow.callState == LinphoneEnums.CallState.IncomingReceived ? 0 : bottomButtonsLayout.columns - 1
+                    style: ButtonStyle.phoneRedLightBorder
+                    Layout.column: mainWindow.startingCall ? 0 : bottomButtonsLayout.columns - 1
+                    KeyNavigation.tab: mainWindow.startingCall ? (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : openStatisticPanelButton
+                    KeyNavigation.backtab: mainWindow.startingCall ? rightPanel.visible ? Utils.getLastFocussableItemInItem(rightPanel) : nextItemInFocusChain(false): callListButton
                     onClicked: {
                         mainWindow.callTerminatedByUser = true
                         mainWindow.endCall(mainWindow.call)
                     }
                 }
+
+                // -----------------------------------------------------------------------------
+                //  Group button: pauseCall, transfertCall, newCall, callList
+                // -----------------------------------------------------------------------------
                 RowLayout {
                     id: connectedCallButtons
                     visible: false
                     Layout.row: 0
                     Layout.column: 1
                     spacing: Math.round(10 * DefaultStyle.dp)
+
+                    // Pause call button
                     CheckableButton {
                         id: pauseButton
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
@@ -1283,11 +1324,7 @@ AbstractWindow {
                         ToolTip.text: checked ? qsTr("call_action_resume_call")
                                                 //: "Mettre l'appel en pause"
                                               : qsTr("call_action_pause_call")
-                        background: Rectangle {
-                            anchors.fill: parent
-                            radius: Math.round(71 * DefaultStyle.dp)
-                            color: parent.enabled ? parent.checked ? DefaultStyle.success_500main : parent.pressed || parent.hovered ? DefaultStyle.main2_400 : DefaultStyle.grey_500 : DefaultStyle.grey_600
-                        }
+                        Accessible.name: checked ? qsTr("call_action_resume_call") : qsTr("call_action_pause_call")
                         enabled: mainWindow.conference
                                  || mainWindow.callState != LinphoneEnums.CallState.PausedByRemote
                         icon.source: enabled
@@ -1298,11 +1335,17 @@ AbstractWindow {
                                  || (!mainWindow.conference
                                      && mainWindow.callState
                                      == LinphoneEnums.CallState.PausedByRemote)
+                        color: enabled ? DefaultStyle.grey_500 : DefaultStyle.grey_600
+                        pressedColor: enabled ? DefaultStyle.success_500_main : DefaultStyle.grey_600
+                        hoveredColor: enabled ? DefaultStyle.main2_400 : DefaultStyle.grey_600
                         onClicked: {
                             mainWindow.call.core.lSetPaused(
                                         !mainWindow.call.core.paused)
                         }
+                        KeyNavigation.backtab: moreOptionsButton
                     }
+
+                    // Transfert call button
                     CheckableButton {
                         id: transferCallButton
                         visible: !mainWindow.conference
@@ -1314,6 +1357,7 @@ AbstractWindow {
                         contentImageColor: DefaultStyle.grey_0
                         //: "Transférer l'appel"
                         ToolTip.text: qsTr("call_action_transfer_call")
+                        Accessible.name: qsTr("call_action_transfer_call")
                         onToggled: {
                             console.log("checked transfer changed", checked)
                             if (checked) {
@@ -1324,6 +1368,8 @@ AbstractWindow {
                             }
                         }
                     }
+
+                    // New call button
                     CheckableButton {
                         id: newCallButton
                         checkable: true
@@ -1334,6 +1380,7 @@ AbstractWindow {
                         icon.height: Math.round(32 * DefaultStyle.dp)
                         //: "Initier un nouvel appel"
                         ToolTip.text: qsTr("call_action_start_new_call_hint")
+                        Accessible.name: qsTr("call_action_start_new_call_hint")
                         onToggled: {
                             console.log("checked newcall changed", checked)
                             if (checked) {
@@ -1344,6 +1391,8 @@ AbstractWindow {
                             }
                         }
                     }
+
+                    // Call list button
                     CheckableButton {
                         id: callListButton
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
@@ -1354,6 +1403,7 @@ AbstractWindow {
                         icon.height: Math.round(32 * DefaultStyle.dp)
                         //: "Afficher la liste d'appels"
                         ToolTip.text: qsTr("call_display_call_list_hint")
+                        Accessible.name: qsTr("call_display_call_list_hint")
                         onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
@@ -1362,19 +1412,20 @@ AbstractWindow {
                                 rightPanel.visible = false
                             }
                         }
+                        KeyNavigation.tab: mainWindow.startingCall ? nextItemInFocusChain() : endCallButton
                     }
                 }
+
+                // -----------------------------------------------------------------------------
+                //  Group button: Video, audio, screensharing, chat, raiseHand, reaction, participantList, callOptions
+                // -----------------------------------------------------------------------------
                 RowLayout {
+                    id: controlCallButtons
                     Layout.row: 0
-                    Layout.column: mainWindow.callState == LinphoneEnums.CallState.OutgoingInit
-                                   || mainWindow.callState
-                                   == LinphoneEnums.CallState.OutgoingProgress
-                                   || mainWindow.callState
-                                   == LinphoneEnums.CallState.OutgoingRinging
-                                   || mainWindow.callState
-                                   == LinphoneEnums.CallState.OutgoingEarlyMedia
-                                   || mainWindow.callState == LinphoneEnums.CallState.IncomingReceived ? bottomButtonsLayout.columns - 1 : 0
+                    Layout.column: mainWindow.startingCall ? bottomButtonsLayout.columns - 1 : 0
                     spacing: Math.round(10 * DefaultStyle.dp)
+
+                    // Video camera button
                     CheckableButton {
                         id: videoCameraButton
                         visible: SettingsCpp.videoEnabled
@@ -1387,6 +1438,7 @@ AbstractWindow {
                         //: "Désactiver la vidéo"
                         //: "Activer la vidéo"
                         ToolTip.text: mainWindow.localVideoEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
+                        Accessible.name: mainWindow.localVideoEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
                         checked: !mainWindow.localVideoEnabled
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
@@ -1395,29 +1447,36 @@ AbstractWindow {
                         onClicked: mainWindow.call.core.lSetLocalVideoEnabled(
                                        !mainWindow.call.core.localVideoEnabled)
                     }
+
+                    // Audio microphone button
                     CheckableButton {
+                        id: audioMicrophoneButton
                         iconUrl: AppIcons.microphone
+                        checkedIconUrl: AppIcons.microphoneSlash
                         ToolTip.text: mainWindow.call && mainWindow.call.core.microphoneMuted
                             //: "Activer le micro"
                             ? qsTr("call_activate_microphone")
                             //: "Désactiver le micro"
                             : qsTr("call_deactivate_microphone")
-                        checkedIconUrl: AppIcons.microphoneSlash
-                        checked: mainWindow.call
-                                 && mainWindow.call.core.microphoneMuted
+                        Accessible.name: mainWindow.call && mainWindow.call.core.microphoneMuted ? qsTr("call_activate_microphone") : qsTr("call_deactivate_microphone")
+                        checked: mainWindow.call && mainWindow.call.core.microphoneMuted
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
                         icon.height: Math.round(32 * DefaultStyle.dp)
                         onClicked: mainWindow.call.core.lSetMicrophoneMuted(
                                        !mainWindow.call.core.microphoneMuted)
+                        KeyNavigation.backtab: videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : nextItemInFocusChain(false)
                     }
+
+                    // Screen cast button
                     CheckableButton {
                         id: screencastPanelButton
                         iconUrl: AppIcons.screencast
                         visible: !!mainWindow.conference
                         //: Partager l'écran…
                         ToolTip.text: qsTr("call_share_screen_hint")
+                        Accessible.name: qsTr("call_share_screen_hint")
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
@@ -1431,11 +1490,14 @@ AbstractWindow {
                             }
                         }
                     }
+
+                    // Chat panel button
                     CheckableButton {
                         id: chatPanelButton
                         iconUrl: AppIcons.chatTeardropText
                         //: Open chat…
                         ToolTip.text: qsTr("call_open_chat_hint")
+                        Accessible.name: qsTr("call_open_chat_hint")
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
@@ -1449,31 +1511,42 @@ AbstractWindow {
                             }
                         }
                     }
+
+                    // Raise hand button
                     CheckableButton {
+                        id: raiseHandButton
                         visible: false
                         checkable: false
                         iconUrl: AppIcons.handWaving
                         //: "Lever la main"
                         ToolTip.text: qsTr("call_rise_hand_hint")
+                        Accessible.name: qsTr("call_rise_hand_hint")
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
                         icon.height: Math.round(32 * DefaultStyle.dp)
                     }
+
+                    // Reaction button
                     CheckableButton {
+                        id: reactionButton
                         visible: false
                         iconUrl: AppIcons.smiley
                         //: "Envoyer une réaction"
                         ToolTip.text: qsTr("call_send_reaction_hint")
+                        Accessible.name: qsTr("call_send_reaction_hint")
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
                         icon.height: Math.round(32 * DefaultStyle.dp)
                     }
+
+                    // Participant list button
                     CheckableButton {
                         id: participantListButton
                         //: "Gérer les participants"
                         ToolTip.text: qsTr("call_manage_participants_hint")
+                        Accessible.name: qsTr("call_manage_participants_hint")
                         visible: mainWindow.conference
                         iconUrl: AppIcons.usersTwo
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
@@ -1489,12 +1562,15 @@ AbstractWindow {
                             }
                         }
                     }
+
+                    // More option button
                     PopupButton {
                         id: moreOptionsButton
                         //: "Plus d'options…"
                         ToolTip.text: qsTr("call_more_options_hint")
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
+                        popUpTitle: qsTr("call_more_options_hint")
+                        implicitWidth: Math.round(55 * DefaultStyle.dp)
+                        implicitHeight: Math.round(55 * DefaultStyle.dp)
                         popup.topPadding: Math.round(20 * DefaultStyle.dp)
                         popup.bottomPadding: Math.round(20 * DefaultStyle.dp)
                         popup.leftPadding: Math.round(10 * DefaultStyle.dp)
@@ -1502,6 +1578,8 @@ AbstractWindow {
                         style: ButtonStyle.checkable
                         icon.width: Math.round(32 * DefaultStyle.dp)
                         icon.height: Math.round(32 * DefaultStyle.dp)
+                        KeyNavigation.tab: connectedCallButtons.visible ? pauseButton : nextItemInFocusChain()
+                        visible: bottomButtonsLayout.moreOptionsButtonVisibility
 
                         Connections {
                             target: moreOptionsButton.popup
@@ -1528,6 +1606,8 @@ AbstractWindow {
                                     rightPanel.replace(changeLayoutPanel)
                                     moreOptionsButton.close()
                                 }
+                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(0) : null
+                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(0) : null
                             }
                             IconLabelButton {
                                 Layout.fillWidth: true
@@ -1549,6 +1629,8 @@ AbstractWindow {
                                     }
                                     moreOptionsButton.close()
                                 }
+                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(1) : null
+                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(1) : null
                             }
                             IconLabelButton {
                                 Layout.fillWidth: true
@@ -1562,6 +1644,8 @@ AbstractWindow {
                                     rightPanel.replace(dialerPanel)
                                     moreOptionsButton.close()
                                 }
+                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(2) : null
+                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(2) : null
                             }
                             IconLabelButton {
                                 Layout.fillWidth: true
@@ -1579,14 +1663,14 @@ AbstractWindow {
                                          && mainWindow.call.core.recording
                                 hoveredImageColor: contentImageColor
                                 contentImageColor: mainWindow.call
-                                                   && mainWindow.call.core.recording ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
+                                                   && mainWindow.call.core.recording ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
                                 text: mainWindow.call && mainWindow.call.core.recording
                                     //: "Terminer l'enregistrement"
                                     ? qsTr("call_action_stop_recording")
                                     //: "Enregistrer l'appel"
                                     : qsTr("call_action_record")
                                 textColor: mainWindow.call
-                                           && mainWindow.call.core.recording ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
+                                           && mainWindow.call.core.recording ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
                                 hoveredTextColor: textColor
                                 onToggled: {
                                     if (mainWindow.call)
@@ -1596,6 +1680,8 @@ AbstractWindow {
                                         else
                                             mainWindow.call.core.lStartRecording()
                                 }
+                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(3) : null
+                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(3) : null
                             }
                             IconLabelButton {
                                 Layout.fillWidth: true
@@ -1606,7 +1692,7 @@ AbstractWindow {
                                 icon.source: !mainWindow.call
                                              || mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
                                 contentImageColor: mainWindow.call
-                                                   && mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
+                                                   && mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
                                 hoveredImageColor: contentImageColor
                                 text: mainWindow.call && mainWindow.call.core.speakerMuted
                                     //: "Activer le son"
@@ -1614,13 +1700,15 @@ AbstractWindow {
                                     //: "Désactiver le son"
                                     : qsTr("call_deactivate_speaker_hint")
                                 textColor: mainWindow.call
-                                           && mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
+                                           && mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
                                 hoveredTextColor: textColor
                                 onCheckedChanged: {
                                     if (mainWindow.call)
                                         mainWindow.call.core.lSetSpeakerMuted(
                                                     !mainWindow.call.core.speakerMuted)
                                 }
+                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(4) : null
+                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(4) : null
                             }
                             IconLabelButton {
                                 Layout.fillWidth: true
@@ -1635,6 +1723,8 @@ AbstractWindow {
                                     rightPanel.replace(settingsPanel)
                                     moreOptionsButton.close()
                                 }
+                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(5) : null
+                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(5) : null
                             }
                         }
                     }

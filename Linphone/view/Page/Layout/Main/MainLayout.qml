@@ -24,64 +24,65 @@ Item {
     signal displayChatRequested(string contactAddress)
     signal openChatRequested(ChatGui chat)
     signal createContactRequested(string name, string address)
-	signal scheduleMeetingRequested(string subject, list<string> addresses)
+    signal scheduleMeetingRequested(string subject, list<string> addresses)
     signal accountRemoved
 
     function goToNewCall() {
-        tabbar.currentIndex = 0
-        mainItem.openNewCallRequest()
+        tabbar.currentIndex = 0;
+        mainItem.openNewCallRequest();
     }
     function goToCallHistory() {
-        tabbar.currentIndex = 0
-        mainItem.openCallHistory()
+        tabbar.currentIndex = 0;
+        mainItem.openCallHistory();
     }
     function displayContactPage(contactAddress) {
-        tabbar.currentIndex = 1
-        mainItem.displayContactRequested(contactAddress)
+        tabbar.currentIndex = 1;
+        mainItem.displayContactRequested(contactAddress);
     }
     function displayChatPage(contactAddress) {
-        tabbar.currentIndex = 2
-        mainItem.displayChatRequested(contactAddress)
+        tabbar.currentIndex = 2;
+        mainItem.displayChatRequested(contactAddress);
     }
     function openChat(chat) {
-        tabbar.currentIndex = 2
-        mainItem.openChatRequested(chat)
+        tabbar.currentIndex = 2;
+        mainItem.openChatRequested(chat);
     }
     function createContact(name, address) {
-        tabbar.currentIndex = 1
-        mainItem.createContactRequested(name, address)
+        tabbar.currentIndex = 1;
+        mainItem.createContactRequested(name, address);
     }
-	function scheduleMeeting(subject, addresses) {
-        tabbar.currentIndex = 3
-        mainItem.scheduleMeetingRequested(subject, addresses)
+    function scheduleMeeting(subject, addresses) {
+        tabbar.currentIndex = 3;
+        mainItem.scheduleMeetingRequested(subject, addresses);
     }
 
     function openContextualMenuComponent(component) {
-        if (mainItem.contextualMenuOpenedComponent
-                && mainItem.contextualMenuOpenedComponent != component) {
-            mainStackView.pop()
+        if (mainItem.contextualMenuOpenedComponent && mainItem.contextualMenuOpenedComponent != component) {
+            mainStackView.pop();
             if (mainItem.contextualMenuOpenedComponent) {
-                mainItem.contextualMenuOpenedComponent.destroy()
+                mainItem.contextualMenuOpenedComponent.destroy();
             }
-            mainItem.contextualMenuOpenedComponent = undefined
+            mainItem.contextualMenuOpenedComponent = undefined;
         }
         if (!mainItem.contextualMenuOpenedComponent) {
-            mainStackView.push(component)
-            mainItem.contextualMenuOpenedComponent = component
+            mainStackView.push(component);
+            mainItem.contextualMenuOpenedComponent = component;
         }
-        settingsMenuButton.popup.close()
+        settingsMenuButton.popup.close();
     }
 
     function closeContextualMenuComponent() {
-        mainStackView.pop()
+        mainStackView.pop();
         if (mainItem.contextualMenuOpenedComponent)
-            mainItem.contextualMenuOpenedComponent.destroy()
-        mainItem.contextualMenuOpenedComponent = undefined
+            mainItem.contextualMenuOpenedComponent.destroy();
+        mainItem.contextualMenuOpenedComponent = undefined;
     }
 
     function openAccountSettings(account) {
-        var page = accountSettingsPageComponent.createObject(parent, {"account": account})
-        openContextualMenuComponent(page)
+        var page = accountSettingsPageComponent.createObject(parent, {
+            "account": account
+        });
+        openContextualMenuComponent(page);
     }
 
     AccountProxy {
@@ -103,10 +104,7 @@ Item {
             id: currentCallNotif
             background: Item {}
             closePolicy: Control.Popup.NoAutoClose
-            visible: currentCall
-                     && currentCall.core.state != LinphoneEnums.CallState.Idle
-                     && currentCall.core.state != LinphoneEnums.CallState.IncomingReceived
-                     && currentCall.core.state != LinphoneEnums.CallState.PushIncomingReceived
+            visible: currentCall && currentCall.core.state != LinphoneEnums.CallState.Idle && currentCall.core.state != LinphoneEnums.CallState.IncomingReceived && currentCall.core.state != LinphoneEnums.CallState.PushIncomingReceived
             x: mainItem.width / 2 - width / 2
             y: contentItem.height / 2
             property var currentCall: callsModel.currentCall ? callsModel.currentCall : null
@@ -115,9 +113,8 @@ Item {
                 style: ButtonStyle.toast
                 text: currentCallNotif.currentCall ? currentCallNotif.currentCall.core.conference ? ("Réunion en cours : ") + currentCallNotif.currentCall.core.conference.core.subject : (("Appel en cours : ") + currentCallNotif.remoteName) : "appel en cours"
                 onClicked: {
-                    var callsWindow = UtilsCpp.getCallsWindow(
-                                currentCallNotif.currentCall)
-                    UtilsCpp.smartShowWindow(callsWindow)
+                    var callsWindow = UtilsCpp.getCallsWindow(currentCallNotif.currentCall);
+                    UtilsCpp.smartShowWindow(callsWindow);
                 }
             }
         }
@@ -125,71 +122,85 @@ Item {
         RowLayout {
             anchors.fill: parent
             spacing: 0
-            anchors.topMargin: Math.round(25 * DefaultStyle.dp)
+            anchors.topMargin: Utils.getSizeWithScreenRatio(25)
 
             VerticalTabBar {
                 id: tabbar
                 Layout.fillHeight: true
-                Layout.preferredWidth: Math.round(82 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(82)
                 defaultAccount: accountProxy.defaultAccount
                 currentIndex: 0
                 Binding on currentIndex {
                     when: mainItem.contextualMenuOpenedComponent != undefined
                     value: -1
                 }
-                model: [{
+                model: [
+                    {
                         "icon": AppIcons.phone,
                         "selectedIcon": AppIcons.phoneSelected,
                         //: "Appels"
-                        "label": qsTr("bottom_navigation_calls_label")
-                    }, {
+                        "label": qsTr("bottom_navigation_calls_label"),
+                        //: "Open calls page"
+                        "accessibilityLabel": qsTr("open_calls_page_accessible_name")
+                    },
+                    {
                         "icon": AppIcons.adressBook,
                         "selectedIcon": AppIcons.adressBookSelected,
                         //: "Contacts"
-                        "label": qsTr("bottom_navigation_contacts_label")
-                    }, {
+                        "label": qsTr("bottom_navigation_contacts_label"),
+                        //: "Open contacts page"
+                        "accessibilityLabel": qsTr("open_contacts_page_accessible_name")
+                    },
+                    {
                         "icon": AppIcons.chatTeardropText,
                         "selectedIcon": AppIcons.chatTeardropTextSelected,
                         //: "Conversations"
                         "label": qsTr("bottom_navigation_conversations_label"),
+                        //: "Open conversations page"
+                        "accessibilityLabel": qsTr("open_conversations_page_accessible_name"),
                         "visible": !SettingsCpp.disableChatFeature
-                    }, {
+                    },
+                    {
                         "icon": AppIcons.videoconference,
                         "selectedIcon": AppIcons.videoconferenceSelected,
                         //: "Réunions"
                         "label": qsTr("bottom_navigation_meetings_label"),
+                        //: "Open meetings page"
+                        "accessibilityLabel": qsTr("open_contact_page_accessible_name"),
                         "visible": !SettingsCpp.disableMeetingsFeature
-                    }]
+                    }
+                ]
                 onCurrentIndexChanged: {
                     if (currentIndex === -1)
-                        return
+                        return;
                     if (currentIndex === 0 && accountProxy.defaultAccount)
-                        accountProxy.defaultAccount.core?.lResetMissedCalls()
+                        accountProxy.defaultAccount.core?.lResetMissedCalls();
                     if (mainItem.contextualMenuOpenedComponent) {
-                        closeContextualMenuComponent()
+                        closeContextualMenuComponent();
                     }
                 }
                 Keys.onPressed: event => {
-                                    if (event.key == Qt.Key_Right) {
-                                        mainStackView.currentItem.forceActiveFocus()
-                                    }
-                                }
+                    if (event.key == Qt.Key_Right) {
+                        mainStackView.currentItem.forceActiveFocus();
+                    }
+                }
                 Component.onCompleted: {
                     if (SettingsCpp.shortcutCount > 0) {
-                        var shortcuts = SettingsCpp.shortcuts
+                        var shortcuts = SettingsCpp.shortcuts;
                         shortcuts.forEach(shortcut => {
-                                              model.push({
-                                                             "icon": shortcut.icon,
-                                                             "selectedIcon": shortcut.icon,
-                                                             "label": shortcut.name,
-                                                             "colored": true,
-                                                             "link": shortcut.link
-                                                         })
-                                          })
+                            model.push({
+                                "icon": shortcut.icon,
+                                "selectedIcon": shortcut.icon,
+                                "label": shortcut.name,
+                                "colored": true,
+                                "link": shortcut.link
+                            });
+                        });
                     }
-                    initButtons()
-                    currentIndex = SettingsCpp.getLastActiveTabIndex()
-                    if (currentIndex === -1) currentIndex = 0
+                    initButtons();
+                    currentIndex = SettingsCpp.getLastActiveTabIndex();
+                    if (currentIndex === -1)
+                        currentIndex = 0;
                 }
             }
             ColumnLayout {
@@ -197,18 +208,17 @@ Item {
 
                 RowLayout {
                     id: topRow
-                    Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
-                    Layout.leftMargin: Math.round(45 * DefaultStyle.dp)
-                    Layout.rightMargin: Math.round(41 * DefaultStyle.dp)
-                    spacing: Math.round(25 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(50)
+                    Layout.leftMargin: Utils.getSizeWithScreenRatio(45)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(41)
+                    spacing: Utils.getSizeWithScreenRatio(25)
                     SearchBar {
                         id: magicSearchBar
                         Layout.fillWidth: true
                         //: "Rechercher un contact, appeler %1"
-                        placeholderText: qsTr("searchbar_placeholder_text").arg(SettingsCpp.disableChatFeature
-                                                                                ? "…"
-                                                                                //: "ou envoyer un message …"
-                                                                                : qsTr("searchbar_placeholder_text_chat_feature_enabled"))
+                        placeholderText: qsTr("searchbar_placeholder_text").arg(SettingsCpp.disableChatFeature ? "…" :
+                        //: "ou envoyer un message …"
+                        qsTr("searchbar_placeholder_text_chat_feature_enabled"))
                         focusedBorderColor: DefaultStyle.main1_500_main
                         numericPadButton.visible: text.length === 0
                         numericPadButton.checkable: false
@@ -219,16 +229,16 @@ Item {
                         Connections {
                             target: mainItem
                             function onCallCreated() {
-                                magicSearchBar.focus = false
-                                magicSearchBar.clearText()
+                                magicSearchBar.focus = false;
+                                magicSearchBar.clearText();
                             }
                         }
 
                         onTextChanged: {
                             if (text.length != 0)
-                                listPopup.open()
+                                listPopup.open();
                             else
-                                listPopup.close()
+                                listPopup.close();
                         }
                         KeyNavigation.down: contactList //contactLoader.item?.count > 0 || !contactLoader.item?.footerItem? contactLoader.item : contactLoader.item?.footerItem
                         KeyNavigation.up: contactList //contactLoader.item?.footerItem ? contactLoader.item?.footerItem : contactLoader.item
@@ -236,24 +246,22 @@ Item {
                         Popup {
                             id: listPopup
                             width: magicSearchBar.width
-                            property real maxHeight: Math.round(400 * DefaultStyle.dp)
+                            property real maxHeight: Utils.getSizeWithScreenRatio(400)
                             property bool displayScrollbar: contactList.height > maxHeight
-                            height: Math.min(
-                                        contactList.contentHeight,
-                                        maxHeight) + topPadding + bottomPadding
+                            height: Math.min(contactList.contentHeight, maxHeight) + topPadding + bottomPadding
                             y: magicSearchBar.height
                             //                            closePolicy: Popup.CloseOnEscape
-                            topPadding: Math.round(20 * DefaultStyle.dp)
-                            bottomPadding:  Math.round((contactList.haveContacts ? 20 : 10) * DefaultStyle.dp)
-                            rightPadding: Math.round(8 * DefaultStyle.dp)
-                            leftPadding: Math.round(20 * DefaultStyle.dp)
+                            topPadding: Utils.getSizeWithScreenRatio(20)
+                            bottomPadding: Math.round((contactList.haveContacts ? 20 : 10) * DefaultStyle.dp)
+                            rightPadding: Utils.getSizeWithScreenRatio(8)
+                            leftPadding: Utils.getSizeWithScreenRatio(20)
                             visible: magicSearchBar.text.length != 0
 
                             background: Item {
                                 anchors.fill: parent
                                 Rectangle {
                                     id: popupBg
-                                    radius: Math.round(16 * DefaultStyle.dp)
+                                    radius: Utils.getSizeWithScreenRatio(16)
                                     color: DefaultStyle.grey_0
                                     anchors.fill: parent
                                     border.color: DefaultStyle.main1_500_main
@@ -271,9 +279,8 @@ Item {
 
                             contentItem: AllContactListView {
                                 id: contactList
-                                width: listPopup.width - listPopup.leftPadding
-                                       - listPopup.rightPadding
-                                itemsRightMargin: Math.round(5 * DefaultStyle.dp) //(Actions have already 10 of margin)
+                                width: listPopup.width - listPopup.leftPadding - listPopup.rightPadding
+                                itemsRightMargin: Utils.getSizeWithScreenRatio(5) //(Actions have already 10 of margin)
                                 showInitials: false
                                 showContactMenu: false
                                 showActions: true
@@ -283,26 +290,28 @@ Item {
 
                                 sectionsPixelSize: Typography.p2.pixelSize
                                 sectionsWeight: Typography.p2.weight
-                                sectionsSpacing: Math.round(5 * DefaultStyle.dp)
+                                sectionsSpacing: Utils.getSizeWithScreenRatio(5)
 
                                 searchBarText: magicSearchBar.text
                             }
                         }
                     }
                     RowLayout {
-                        spacing: Math.round(10 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(10)
                         PopupButton {
                             id: deactivateDndButton
-                            Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
-                            popup.padding: Math.round(14 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(32)
+                            popup.padding: Utils.getSizeWithScreenRatio(14)
+                            //: "Do not disturb"
+                            popUpTitle: qsTr("do_not_disturb_accessible_name")
                             visible: SettingsCpp.dnd
                             contentItem: EffectImage {
                                 imageSource: AppIcons.bellDnd
-                                width: Math.round(32 * DefaultStyle.dp)
-                                height: Math.round(32 * DefaultStyle.dp)
-                                Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
+                                width: Utils.getSizeWithScreenRatio(32)
+                                height: Utils.getSizeWithScreenRatio(32)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(32)
                                 fillMode: Image.PreserveAspectFit
                                 colorizationColor: DefaultStyle.main1_500_main
                             }
@@ -310,199 +319,195 @@ Item {
                                 IconLabelButton {
                                     Layout.fillWidth: true
                                     focus: visible
-                                    icon.width: Math.round(32 * DefaultStyle.dp)
-                                    icon.height: Math.round(32 * DefaultStyle.dp)
+                                    icon.width: Utils.getSizeWithScreenRatio(32)
+                                    icon.height: Utils.getSizeWithScreenRatio(32)
                                     //: "Désactiver ne pas déranger"
                                     text: qsTr("contact_presence_status_disable_do_not_disturb")
                                     icon.source: AppIcons.bellDnd
                                     onClicked: {
-                                        deactivateDndButton.popup.close()
-                                        SettingsCpp.dnd = false
+                                        deactivateDndButton.popup.close();
+                                        SettingsCpp.dnd = false;
                                     }
                                 }
                             }
                         }
                         Voicemail {
                             id: voicemail
-                            Layout.preferredWidth: Math.round(42 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(36 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(42)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(36)
                             Repeater {
                                 model: accountProxy
                                 delegate: Item {
                                     Connections {
                                         target: modelData.core
                                         function onShowMwiChanged() {
-                                            voicemail.updateCumulatedMwi()
+                                            voicemail.updateCumulatedMwi();
                                         }
                                         function onVoicemailAddressChanged() {
-                                            voicemail.updateCumulatedMwi()
+                                            voicemail.updateCumulatedMwi();
                                         }
                                     }
                                 }
                             }
 
                             function updateCumulatedMwi() {
-                                var count = 0
-                                var showMwi = false
-                                var supportsVoiceMail = false
+                                var count = 0;
+                                var showMwi = false;
+                                var supportsVoiceMail = false;
                                 for (var i = 0; i < accountProxy.count; i++) {
-                                    var core = accountProxy.getAt(i).core
-                                    count += core.voicemailCount
-                                    showMwi |= core.showMwi
-                                    supportsVoiceMail |= core.voicemailAddress.length > 0
+                                    var core = accountProxy.getAt(i).core;
+                                    count += core.voicemailCount;
+                                    showMwi |= core.showMwi;
+                                    supportsVoiceMail |= core.voicemailAddress.length > 0;
                                 }
-                                voicemail.showMwi = showMwi
-                                voicemail.voicemailCount = count
-                                voicemail.visible = showMwi || supportsVoiceMail
+                                voicemail.showMwi = showMwi;
+                                voicemail.voicemailCount = count;
+                                voicemail.visible = showMwi || supportsVoiceMail;
                             }
 
                             Component.onCompleted: {
-                                updateCumulatedMwi()
+                                updateCumulatedMwi();
                             }
 
                             onClicked: {
                                 if (accountProxy.count > 1) {
-                                    avatarButton.popup.open()
+                                    avatarButton.popup.open();
                                 } else {
-                                    if (accountProxy.defaultAccount.core.voicemailAddress.length
-                                            > 0)
-                                        UtilsCpp.createCall(
-                                                    accountProxy.defaultAccount.core.voicemailAddress)
+                                    if (accountProxy.defaultAccount.core.voicemailAddress.length > 0)
+                                        UtilsCpp.createCall(accountProxy.defaultAccount.core.voicemailAddress);
                                     else
                                         UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
-                                                                      //: "L'URI de messagerie vocale n'est pas définie."
-                                                                      qsTr("no_voicemail_uri_error_message"), false)
+                                        //: "L'URI de messagerie vocale n'est pas définie."
+                                        qsTr("no_voicemail_uri_error_message"), false);
                                 }
                             }
                         }
                         PopupButton {
                             id: avatarButton
-                            Layout.preferredWidth: Math.round(54 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(54)
                             Layout.preferredHeight: width
-                            popup.topPadding: Math.round(23 * DefaultStyle.dp)
-                            popup.bottomPadding: Math.round(23 * DefaultStyle.dp)
-                            popup.leftPadding: Math.round(24 * DefaultStyle.dp)
-                            popup.rightPadding: Math.round(24 * DefaultStyle.dp)
-                            contentItem: Avatar {
-                                id: avatar
-                                height: avatarButton.height
-                                width: avatarButton.width
-                                account: accountProxy.defaultAccount
-                            }
-                            popup.contentItem: ColumnLayout {
-                                AccountListView {
-                                    id: accounts
-                                    onAddAccountRequest: mainItem.addAccountRequest()
-                                    onEditAccount: function (account) {
-                                        avatarButton.popup.close()
-                                        openAccountSettings(account)
-                                    }
+                            popup.topPadding: Utils.getSizeWithScreenRatio(23)
+                            popup.bottomPadding: Utils.getSizeWithScreenRatio(23)
+                            popup.leftPadding: Utils.getSizeWithScreenRatio(24)
+                            popup.rightPadding: Utils.getSizeWithScreenRatio(24)
+                            //: "Account list"
+                            popUpTitle: qsTr("account_list_accessible_name")
+                            contentItem: Item {
+                                Avatar {
+                                    id: avatar
+                                    height: avatarButton.height
+                                    width: avatarButton.width
+                                    account: accountProxy.defaultAccount
                                 }
+                                Rectangle {
+                                    // Black border for keyboard navigation
+                                    visible: avatarButton.keyboardFocus
+                                    width: avatar.width
+                                    height: avatar.height
+                                    color: "transparent"
+                                    border.color: DefaultStyle.main2_900
+                                    border.width: Utils.getSizeWithScreenRatio(3)
+                                    radius: width / 2
+                                }
+                            }
+                            popup.contentItem: AccountListView {
+                                id: accounts
+                                popupId: avatarButton
+                                onAddAccountRequest: mainItem.addAccountRequest()
+                                onEditAccount: function (account) {
+                                    avatarButton.popup.close();
+                                    openAccountSettings(account);
+                                }
+                                getPreviousItem: avatarButton.getPreviousItem
+                                getNextItem: avatarButton.getNextItem
                             }
                         }
                         PopupButton {
                             id: settingsMenuButton
-                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                            popup.width: Math.round(271 * DefaultStyle.dp)
-                            popup.padding: Math.round(14 * DefaultStyle.dp)
+                            icon.width: Utils.getSizeWithScreenRatio(24)
+                            icon.height: Utils.getSizeWithScreenRatio(24)
+                            popup.width: Utils.getSizeWithScreenRatio(271)
+                            popup.padding: Utils.getSizeWithScreenRatio(14)
+                            //: "Application options"
+                            popUpTitle: qsTr("application_options_accessible_name")
                             popup.contentItem: FocusScope {
                                 id: popupFocus
                                 implicitHeight: settingsButtons.implicitHeight
                                 implicitWidth: settingsButtons.implicitWidth
                                 Keys.onPressed: event => {
-                                                    if (event.key == Qt.Key_Left
-                                                        || event.key == Qt.Key_Escape) {
-                                                        settingsMenuButton.popup.close()
-                                                        event.accepted = true
-                                                    }
-                                                }
+                                    if (event.key == Qt.Key_Left || event.key == Qt.Key_Escape) {
+                                        settingsMenuButton.popup.close();
+                                        event.accepted = true;
+                                    }
+                                }
 
                                 ColumnLayout {
                                     id: settingsButtons
-                                    spacing: Math.round(16 * DefaultStyle.dp)
+                                    spacing: Utils.getSizeWithScreenRatio(16)
                                     anchors.fill: parent
 
                                     IconLabelButton {
                                         id: accountButton
                                         Layout.fillWidth: true
                                         visible: !SettingsCpp.hideAccountSettings
-                                        icon.width: Math.round(32 * DefaultStyle.dp)
-                                        icon.height: Math.round(32 * DefaultStyle.dp)
+                                        icon.width: Utils.getSizeWithScreenRatio(32)
+                                        icon.height: Utils.getSizeWithScreenRatio(32)
 
                                         //: Mon compte
                                         text: qsTr("drawer_menu_manage_account")
                                         icon.source: AppIcons.manageProfile
-                                        onClicked: openAccountSettings(accountProxy.defaultAccount 
-                                            ? accountProxy.defaultAccount 
-                                            : accountProxy.firstAccount())
-                                        KeyNavigation.up: visibleChildren.length
-                                                          != 0 ? settingsMenuButton.getPreviousItem(
-                                                                     0) : null
-                                        KeyNavigation.down: visibleChildren.length
-                                                            != 0 ? settingsMenuButton.getNextItem(
-                                                                       0) : null
+                                        onClicked: openAccountSettings(accountProxy.defaultAccount ? accountProxy.defaultAccount : accountProxy.firstAccount())
+                                        KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(0) : null
+                                        KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(0) : null
                                     }
                                     IconLabelButton {
                                         id: dndButton
                                         Layout.fillWidth: true
-                                        icon.width: Math.round(32 * DefaultStyle.dp)
-                                        icon.height: Math.round(32 * DefaultStyle.dp)
-                                        text: SettingsCpp.dnd ? qsTr("contact_presence_status_disable_do_not_disturb")
-                                                                //: "Activer ne pas déranger"
-                                                              : qsTr("contact_presence_status_enable_do_not_disturb")
+                                        icon.width: Utils.getSizeWithScreenRatio(32)
+                                        icon.height: Utils.getSizeWithScreenRatio(32)
+                                        text: SettingsCpp.dnd ? qsTr("contact_presence_status_disable_do_not_disturb") :
+                                        //: "Activer ne pas déranger"
+                                        qsTr("contact_presence_status_enable_do_not_disturb")
                                         icon.source: AppIcons.bellDnd
                                         onClicked: {
-                                            settingsMenuButton.popup.close()
-                                            SettingsCpp.dnd = !SettingsCpp.dnd
+                                            settingsMenuButton.popup.close();
+                                            SettingsCpp.dnd = !SettingsCpp.dnd;
                                         }
-                                        KeyNavigation.up: visibleChildren.length
-                                                          != 0 ? settingsMenuButton.getPreviousItem(
-                                                                     1) : null
-                                        KeyNavigation.down: visibleChildren.length
-                                                            != 0 ? settingsMenuButton.getNextItem(
-                                                                       1) : null
+                                        KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(1) : null
+                                        KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(1) : null
                                     }
                                     IconLabelButton {
                                         id: settingsButton
                                         Layout.fillWidth: true
                                         visible: !SettingsCpp.hideSettings
-                                        icon.width: Math.round(32 * DefaultStyle.dp)
-                                        icon.height: Math.round(32 * DefaultStyle.dp)
+                                        icon.width: Utils.getSizeWithScreenRatio(32)
+                                        icon.height: Utils.getSizeWithScreenRatio(32)
                                         text: qsTr("settings_title")
                                         icon.source: AppIcons.settings
                                         onClicked: {
                                             var page = settingsPageComponent.createObject(parent);
                                             openContextualMenuComponent(page)
                                         }
-                                        KeyNavigation.up: visibleChildren.length
-                                                          != 0 ? settingsMenuButton.getPreviousItem(
-                                                                     2) : null
-                                        KeyNavigation.down: visibleChildren.length
-                                                            != 0 ? settingsMenuButton.getNextItem(
-                                                                       2) : null
+                                        KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(2) : null
+                                        KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(2) : null
                                     }
                                     IconLabelButton {
                                         id: recordsButton
                                         Layout.fillWidth: true
                                         visible: !SettingsCpp.disableCallRecordings
-                                        icon.width: Math.round(32 * DefaultStyle.dp)
-                                        icon.height: Math.round(32 * DefaultStyle.dp)
+                                        icon.width: Utils.getSizeWithScreenRatio(32)
+                                        icon.height: Utils.getSizeWithScreenRatio(32)
                                         //: "Enregistrements"
                                         text: qsTr("recordings_title")
                                         icon.source: AppIcons.micro
-                                        KeyNavigation.up: visibleChildren.length
-                                                          != 0 ? settingsMenuButton.getPreviousItem(
-                                                                     3) : null
-                                        KeyNavigation.down: visibleChildren.length
-                                                            != 0 ? settingsMenuButton.getNextItem(
-                                                                       3) : null
+                                        KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(3) : null
+                                        KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(3) : null
                                     }
                                     IconLabelButton {
                                         id: helpButton
                                         Layout.fillWidth: true
-                                        icon.width: Math.round(32 * DefaultStyle.dp)
-                                        icon.height: Math.round(32 * DefaultStyle.dp)
+                                        icon.width: Utils.getSizeWithScreenRatio(32)
+                                        icon.height: Utils.getSizeWithScreenRatio(32)
                                         //: "Aide"
                                         text: qsTr("help_title")
                                         icon.source: AppIcons.question
@@ -510,62 +515,48 @@ Item {
                                             var page = helpPageComponent.createObject(parent);
                                             openContextualMenuComponent(page)
                                         }
-                                        KeyNavigation.up: visibleChildren.length
-                                                          != 0 ? settingsMenuButton.getPreviousItem(
-                                                                     4) : null
-                                        KeyNavigation.down: visibleChildren.length
-                                                            != 0 ? settingsMenuButton.getNextItem(
-                                                                       4) : null
+                                        KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(4) : null
+                                        KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(4) : null
                                     }
                                     IconLabelButton {
                                         id: quitButton
                                         Layout.fillWidth: true
-                                        icon.width: Math.round(32 * DefaultStyle.dp)
-                                        icon.height: Math.round(32 * DefaultStyle.dp)
+                                        icon.width: Utils.getSizeWithScreenRatio(32)
+                                        icon.height: Utils.getSizeWithScreenRatio(32)
                                         //: "Quitter l'application"
                                         text: qsTr("help_quit_title")
                                         icon.source: AppIcons.power
                                         onClicked: {
-                                            settingsMenuButton.popup.close()
+                                            settingsMenuButton.popup.close();
                                             //: "Quitter %1 ?"
-                                            UtilsCpp.getMainWindow().showConfirmationLambdaPopup("", qsTr("quit_app_question").arg(applicationName),"",
-                                                        function (confirmed) {
-                                                            if (confirmed) {
-                                                                console.info("Exiting App from Top Menu")
-                                                                Qt.quit()
-                                                            }
-                                                        })
+                                            UtilsCpp.getMainWindow().showConfirmationLambdaPopup("", qsTr("quit_app_question").arg(applicationName), "", function (confirmed) {
+                                                if (confirmed) {
+                                                    console.info("Exiting App from Top Menu");
+                                                    Qt.quit();
+                                                }
+                                            });
                                         }
-                                        KeyNavigation.up: visibleChildren.length
-                                                          != 0 ? settingsMenuButton.getPreviousItem(
-                                                                     5) : null
-                                        KeyNavigation.down: visibleChildren.length
-                                                            != 0 ? settingsMenuButton.getNextItem(
-                                                                       5) : null
+                                        KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(5) : null
+                                        KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(5) : null
                                     }
                                     Rectangle {
                                         Layout.fillWidth: true
-                                        Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+                                        Layout.preferredHeight: Math.max(Utils.getSizeWithScreenRatio(1), 1)
                                         visible: addAccountButton.visible
                                         color: DefaultStyle.main2_400
                                     }
                                     IconLabelButton {
                                         id: addAccountButton
                                         Layout.fillWidth: true
-                                        visible: SettingsCpp.maxAccount == 0
-                                                 || SettingsCpp.maxAccount > accountProxy.count
-                                        icon.width: Math.round(32 * DefaultStyle.dp)
-                                        icon.height: Math.round(32 * DefaultStyle.dp)
+                                        visible: SettingsCpp.maxAccount == 0 || SettingsCpp.maxAccount > accountProxy.count
+                                        icon.width: Utils.getSizeWithScreenRatio(32)
+                                        icon.height: Utils.getSizeWithScreenRatio(32)
                                         //: "Ajouter un compte"
                                         text: qsTr("drawer_menu_add_account")
                                         icon.source: AppIcons.plusCircle
                                         onClicked: mainItem.addAccountRequest()
-                                        KeyNavigation.up: visibleChildren.length
-                                                          != 0 ? settingsMenuButton.getPreviousItem(
-                                                                     7) : null
-                                        KeyNavigation.down: visibleChildren.length
-                                                            != 0 ? settingsMenuButton.getNextItem(
-                                                                       7) : null
+                                        KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(7) : null
+                                        KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(7) : null
                                     }
                                 }
                             }
@@ -579,16 +570,15 @@ Item {
                         objectName: "mainStackLayout"
                         property int _currentIndex: tabbar.currentIndex
                         currentIndex: -1
-                        onActiveFocusChanged: if (activeFocus
-                                                      && currentIndex >= 0)
-                                                  children[currentIndex].forceActiveFocus()
+                        onActiveFocusChanged: if (activeFocus && currentIndex >= 0)
+                            children[currentIndex].forceActiveFocus()
                         on_CurrentIndexChanged: {
                             if (count > 0) {
                                 if (_currentIndex >= count && tabbar.model[_currentIndex].link) {
-                                    Qt.openUrlExternally(tabbar.model[_currentIndex].link)
+                                    Qt.openUrlExternally(tabbar.model[_currentIndex].link);
                                 } else if (_currentIndex >= 0) {
-                                    currentIndex = _currentIndex
-                                    SettingsCpp.setLastActiveTabIndex(currentIndex)
+                                    currentIndex = _currentIndex;
+                                    SettingsCpp.setLastActiveTabIndex(currentIndex);
                                 }
                             }
                         }
@@ -597,41 +587,40 @@ Item {
                             Connections {
                                 target: mainItem
                                 function onOpenNewCallRequest() {
-                                    callPage.goToNewCall()
+                                    callPage.goToNewCall();
                                 }
                                 function onCallCreated() {
-                                    callPage.goToCallHistory()
+                                    callPage.goToCallHistory();
                                 }
                                 function onOpenCallHistory() {
-                                    callPage.goToCallHistory()
+                                    callPage.goToCallHistory();
                                 }
                                 function onOpenNumPadRequest() {
-                                    callPage.openNumPadRequest()
+                                    callPage.openNumPadRequest();
                                 }
                             }
                             onCreateContactRequested: (name, address) => {
-                                                          mainItem.createContact(
-                                                              name, address)
-                                                      }
+                                mainItem.createContact(name, address);
+                            }
                             Component.onCompleted: {
-                                magicSearchBar.numericPadPopup = callPage.numericPadPopup
+                                magicSearchBar.numericPadPopup = callPage.numericPadPopup;
                             }
                             onGoToCallForwardSettings: {
-                            	var page = settingsPageComponent.createObject(parent, {
-									defaultIndex: 1
-								});
-								openContextualMenuComponent(page)
-							}
+                                var page = settingsPageComponent.createObject(parent, {
+                                    defaultIndex: 1
+                                });
+                                openContextualMenuComponent(page);
+                            }
                         }
                         ContactPage {
                             id: contactPage
                             Connections {
                                 target: mainItem
                                 function onCreateContactRequested(name, address) {
-                                    contactPage.createContact(name, address)
+                                    contactPage.createContact(name, address);
                                 }
                                 function onDisplayContactRequested(contactAddress) {
-                                    contactPage.initialFriendToDisplay = contactAddress
+                                    contactPage.initialFriendToDisplay = contactAddress;
                                 }
                             }
                         }
@@ -640,25 +629,25 @@ Item {
                             Connections {
                                 target: mainItem
                                 function onDisplayChatRequested(contactAddress) {
-                                    console.log("display chat requested, open with address", contactAddress)
-                                    chatPage.remoteAddress = ""
-                                    chatPage.remoteAddress = contactAddress
+                                    console.log("display chat requested, open with address", contactAddress);
+                                    chatPage.remoteAddress = "";
+                                    chatPage.remoteAddress = contactAddress;
                                 }
                                 function onOpenChatRequested(chat) {
-                                    console.log("open chat requested, open", chat.core.title)
-                                    chatPage.openChatRequested(chat)
+                                    console.log("open chat requested, open", chat.core.title);
+                                    chatPage.openChatRequested(chat);
                                 }
                             }
                         }
                         MeetingPage {
-							id: meetingPage
-							Connections {
-								target: mainItem
-								function onScheduleMeetingRequested(subject, addresses) {
-									meetingPage.createPreFilledMeeting(subject, addresses)
-								}
-							}
-						}
+                            id: meetingPage
+                            Connections {
+                                target: mainItem
+                                function onScheduleMeetingRequested(subject, addresses) {
+                                    meetingPage.createPreFilledMeeting(subject, addresses);
+                                }
+                            }
+                        }
                     }
                 }
                 Component {
@@ -666,8 +655,8 @@ Item {
                     AccountSettingsPage {
                         onGoBack: closeContextualMenuComponent()
                         onAccountRemoved: {
-                            closeContextualMenuComponent()
-                            mainItem.accountRemoved()
+                            closeContextualMenuComponent();
+                            mainItem.accountRemoved();
                         }
                     }
                 }
@@ -697,7 +686,7 @@ Item {
                     pushExit: noTransition
                     popEnter: noTransition
                     popExit: noTransition
-                    Layout.topMargin: Math.round(24 * DefaultStyle.dp)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(24)
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     initialItem: mainStackLayoutComponent

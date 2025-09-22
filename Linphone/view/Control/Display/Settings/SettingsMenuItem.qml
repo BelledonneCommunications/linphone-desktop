@@ -3,19 +3,23 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import QtQuick.Effects
 import Linphone
+import CustomControls 1.0
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 Item {
 	id: mainItem
-	
-    height: visible ? Math.round(50 * DefaultStyle.dp) : 0
+    height: visible ? Utils.getSizeWithScreenRatio(50) : 0
 	anchors.right: parent.right
 	anchors.left: parent.left
+	property bool keyboardOtherFocus: FocusHelper.keyboardFocus || FocusHelper.otherFocus
 
 	property string titleText
 	property bool isSelected: false
-	property bool shadowEnabled: mainItem.activeFocus || mouseArea.containsMouse
 	
 	signal selected()
+
+	//: %1 settings
+	Accessible.name: qsTr("setting_tab_accessible_name").arg(titleText)
 	
 	Keys.onPressed: (event)=>{
 		if(event.key == Qt.Key_Space || event.key == Qt.Key_Return || event.key == Qt.Key_Enter){
@@ -29,29 +33,14 @@ Item {
 		Rectangle {
 			id: background
 			anchors.fill: parent
-			color: DefaultStyle.main2_200
-            radius: Math.round(35 * DefaultStyle.dp)
-			visible: parent.containsMouse || isSelected || mainItem.shadowEnabled
+			color: mainItem.isSelected ? DefaultStyle.main2_200 : parent.containsMouse ? DefaultStyle.main2_100 : "transparent"
+            radius: mainItem.height / 2
+			bottomRightRadius: 0
+			topRightRadius: 0
+			visible: parent.containsMouse || mainItem.isSelected || mainItem.keyboardOtherFocus
+			border.color: DefaultStyle.main2_900
+			border.width: mainItem.keyboardOtherFocus ? Utils.getSizeWithScreenRatio(3) : 0
 		}
-		Rectangle {
-			id: backgroundRightFiller
-			anchors.right: parent.right
-			color: DefaultStyle.main2_200
-            width: Math.round(35 * DefaultStyle.dp)
-            height: Math.round(50 * DefaultStyle.dp)
-			visible: parent.containsMouse || isSelected
-		}
-		// MultiEffect {
-		// 	enabled: mainItem.shadowEnabled
-		// 	anchors.fill: background
-		// 	source: background
-		// 	visible:  mainItem.shadowEnabled
-		// 	// Crash : https://bugreports.qt.io/browse/QTBUG-124730
-		// 	shadowEnabled: true //mainItem.shadowEnabled
-		// 	shadowColor: DefaultStyle.grey_1000
-		// 	shadowBlur: 0.1
-		// 	shadowOpacity: mainItem.shadowEnabled ? 0.5 : 0.0
-		// }
 		onClicked: {
 			mainItem.selected()
 		}
@@ -61,7 +50,7 @@ Item {
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.verticalCenter: parent.verticalCenter
-		text: titleText
+		text: mainItem.titleText
 		font: Typography.h4
 	}
 	

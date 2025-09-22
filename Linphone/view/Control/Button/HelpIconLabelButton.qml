@@ -50,7 +50,7 @@ MouseArea {
 				verticalAlignment: Text.AlignTop
 				Layout.fillWidth: true
 				text: mainItem.subTitle
-				color: DefaultStyle.main2_500main
+				color: DefaultStyle.main2_500_main
 				visible: subTitle.length > 0
 				font: Typography.p1
 			}

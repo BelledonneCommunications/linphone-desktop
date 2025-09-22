@@ -3,6 +3,7 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import Linphone
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 ColumnLayout {
 	id: mainItem
@@ -13,31 +14,31 @@ ColumnLayout {
 	property string microDevice: inputAudioDeviceCBox.currentText
 	property bool ringerDevicesVisible: false
 	property bool backgroundVisible: true
-    spacing: Math.round(40 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(40)
 
 	RoundedPane {
 		background.visible: mainItem.backgroundVisible
 		Layout.alignment: Qt.AlignHCenter
 		height: contentItem.implicitHeight + topPadding + bottomPadding
 		Layout.fillWidth: true
-        topPadding: background.visible ? Math.round(25 * DefaultStyle.dp) : 0
-        bottomPadding: background.visible ? Math.round(25 * DefaultStyle.dp) : 0
-        leftPadding: background.visible ? Math.round(25 * DefaultStyle.dp) : 0
-        rightPadding: background.visible ? Math.round(25 * DefaultStyle.dp) : 0
+        topPadding: background.visible ? Utils.getSizeWithScreenRatio(25) : 0
+        bottomPadding: background.visible ? Utils.getSizeWithScreenRatio(25) : 0
+        leftPadding: background.visible ? Utils.getSizeWithScreenRatio(25) : 0
+        rightPadding: background.visible ? Utils.getSizeWithScreenRatio(25) : 0
 		contentItem: ColumnLayout {
 			spacing: mainItem.spacing
 			ColumnLayout {
-                spacing: Math.round(12 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(12)
 				visible: mainItem.ringerDevicesVisible
 				RowLayout {
-                    spacing: Math.round(8 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(8)
 					EffectImage {
 						imageSource: AppIcons.bellRinger
 						colorizationColor: DefaultStyle.main1_500_main
-                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                        imageWidth: Math.round(24 * DefaultStyle.dp)
-                        imageHeight: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                        imageWidth: Utils.getSizeWithScreenRatio(24)
+                        imageHeight: Utils.getSizeWithScreenRatio(24)
 					}
 					Text {
                         //: Ringtone - Incoming calls
@@ -49,28 +50,30 @@ ColumnLayout {
 				}
 				ComboSetting {
 					Layout.fillWidth: true
-                    Layout.topMargin: Math.round(12 * DefaultStyle.dp)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(12)
 					Layout.preferredWidth: parent.width
 					entries: SettingsCpp.ringerDevices
 					propertyName: "ringerDevice"
 					propertyOwner: SettingsCpp
 					textRole: 'display_name'
+					//: Choose %1
+					Accessible.name: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_ringer_title"))
 				}
 				Item {
 					Layout.fillHeight: true
 				}
 			}
 			ColumnLayout {
-                spacing: Math.round(12 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(12)
 				RowLayout {
-                    spacing: Math.round(8 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(8)
 					EffectImage {
 						imageSource: AppIcons.speaker
 						colorizationColor: DefaultStyle.main1_500_main
-                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                        imageWidth: Math.round(24 * DefaultStyle.dp)
-                        imageHeight: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                        imageWidth: Utils.getSizeWithScreenRatio(24)
+                        imageHeight: Utils.getSizeWithScreenRatio(24)
 					}
 					Text {
                         //: "Haut-parleurs"
@@ -83,7 +86,7 @@ ColumnLayout {
 					id: outputAudioDeviceCBox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
-                    Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 					entries: SettingsCpp.playbackDevices
 					propertyName: "playbackDevice"
 					propertyOwner: SettingsCpp
@@ -95,6 +98,7 @@ ColumnLayout {
 							SettingsCpp.lSetPlaybackDevice(outputAudioDeviceCBox.currentValue)
 						}
 					}
+					Accessible.name: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_speaker_title"))
 				}
 				Slider {
 					id: speakerVolume
@@ -106,19 +110,21 @@ ColumnLayout {
 						if (mainItem.call) SettingsCpp.lSetPlaybackGain(value)
 						else SettingsCpp.playbackGain = value
 					}
+					//: %1 volume
+					Accessible.name: qsTr("device_volume_accessible_name").arg(qsTr("multimedia_settings_speaker_title"))
 				}
 			}
 			ColumnLayout {
-                spacing: Math.round(12 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(12)
 				RowLayout {
-                    spacing: Math.round(8 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(8)
 					EffectImage {
 						imageSource: AppIcons.microphone
 						colorizationColor: DefaultStyle.main1_500_main
-                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                        imageWidth: Math.round(24 * DefaultStyle.dp)
-                        imageHeight: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                        imageWidth: Utils.getSizeWithScreenRatio(24)
+                        imageHeight: Utils.getSizeWithScreenRatio(24)
 					}
 					Text {
                         //: "Microphone"
@@ -131,7 +137,7 @@ ColumnLayout {
 					id: inputAudioDeviceCBox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
-                    Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 					entries: SettingsCpp.captureDevices
 					propertyName: "captureDevice"
 					propertyOwner: SettingsCpp
@@ -143,6 +149,7 @@ ColumnLayout {
 							SettingsCpp.lSetCaptureDevice(inputAudioDeviceCBox.currentValue)
 						}
 					}
+					Accessible.name: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_microphone_title"))
 				}
 				Slider {
 					id: microVolume
@@ -154,6 +161,8 @@ ColumnLayout {
 						if (mainItem.call) SettingsCpp.lSetCaptureGain(value)
 						else SettingsCpp.captureGain = value
 					}
+					//: %1 volume
+					Accessible.name: qsTr("device_volume_accessible_name").arg(qsTr("multimedia_settings_microphone_title"))
 				}
 				Timer {
 					id: audioTestSliderTimer
@@ -168,16 +177,16 @@ ColumnLayout {
 					id: audioTestSlider
 					Layout.fillWidth: true
 					enabled: false
-                    Layout.preferredHeight: Math.round(10 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(10)
 
 					background: Rectangle {
 						x: audioTestSlider.leftPadding
 						y: audioTestSlider.topPadding + audioTestSlider.availableHeight / 2 - height / 2
-                        implicitWidth: Math.round(200 * DefaultStyle.dp)
-                        implicitHeight: Math.round(10 * DefaultStyle.dp)
+                        implicitWidth: Utils.getSizeWithScreenRatio(200)
+                        implicitHeight: Utils.getSizeWithScreenRatio(10)
 						width: audioTestSlider.availableWidth
 						height: implicitHeight
-                        radius: Math.round(2 * DefaultStyle.dp)
+                        radius: Utils.getSizeWithScreenRatio(2)
 						color: DefaultStyle.grey_850
 
 						Rectangle {
@@ -188,24 +197,24 @@ ColumnLayout {
 								GradientStop { position: 0.0; color: DefaultStyle.vue_meter_light_green }
 								GradientStop { position: 1.0; color: DefaultStyle.vue_meter_dark_green}
 							}
-                            radius: Math.round(2 * DefaultStyle.dp)
+                            radius: Utils.getSizeWithScreenRatio(2)
 						}
 					}
 					handle: Item {visible: false}
 				}
 			}
             ColumnLayout {
-                spacing: Math.round(12 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(12)
                 visible: SettingsCpp.videoEnabled
                 RowLayout {
-                    spacing: Math.round(8 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(8)
                     EffectImage {
                         imageSource: AppIcons.videoCamera
                         colorizationColor: DefaultStyle.main1_500_main
-                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                        imageWidth: Math.round(24 * DefaultStyle.dp)
-                        imageHeight: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                        imageWidth: Utils.getSizeWithScreenRatio(24)
+                        imageHeight: Utils.getSizeWithScreenRatio(24)
                     }
                     Text {
                         //: "Caméra"
@@ -218,7 +227,7 @@ ColumnLayout {
 					id: videoDevicesCbox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
-                    Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 					entries: SettingsCpp.videoDevices
 					propertyName: "videoDevice"
 					propertyOwner: SettingsCpp
@@ -229,6 +238,7 @@ ColumnLayout {
 							SettingsCpp.lSetVideoDevice(videoDevicesCbox.currentValue)
 						}
 					}
+					Accessible.name: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_camera_title"))
 				}
 			}
 			Connections {

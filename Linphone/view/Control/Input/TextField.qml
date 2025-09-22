@@ -2,17 +2,19 @@ import QtQuick
 import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import Linphone
+import CustomControls 1.0
+import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 Control.TextField {
     id: mainItem
     property var customWidth
     width: Math.round((customWidth ? customWidth - 1 : 360) * DefaultStyle.dp)
-    height: Math.round(49 * DefaultStyle.dp)
-    leftPadding: Math.round(15 * DefaultStyle.dp)
+    height: Utils.getSizeWithScreenRatio(49)
+    leftPadding: Utils.getSizeWithScreenRatio(15)
     rightPadding: eyeButton.visible
-        ? Math.round(5 * DefaultStyle.dp) + eyeButton.width + eyeButton.rightMargin
-        : Math.round(15 * DefaultStyle.dp)
+        ? Utils.getSizeWithScreenRatio(5) + eyeButton.width + eyeButton.rightMargin
+        : Utils.getSizeWithScreenRatio(15)
     echoMode: (hidden && !eyeButton.checked) ? TextInput.Password : TextInput.Normal
 
     // Workaround for Windows slowness when first typing a password
@@ -23,7 +25,7 @@ Control.TextField {
     }
 
     verticalAlignment: TextInput.AlignVCenter
-    color: isError ? DefaultStyle.danger_500main : DefaultStyle.main2_600
+    color: isError ? DefaultStyle.danger_500_main : DefaultStyle.main2_600
     placeholderTextColor: DefaultStyle.placeholders
     font {
         family: DefaultStyle.defaultFont
@@ -38,10 +40,19 @@ Control.TextField {
     property bool controlIsDown: false
     property bool hidden: false
     property bool isError: false
+	property bool keyboardFocus: FocusHelper.keyboardFocus
+    // Background properties
     property bool backgroundVisible: true
     property color backgroundColor: DefaultStyle.grey_100
     property color disabledBackgroundColor: DefaultStyle.grey_200
+    // Border properties
     property color backgroundBorderColor: DefaultStyle.grey_200
+    property color activeBorderColor: DefaultStyle.main1_500_main
+	property color keyboardFocusedBorderColor: DefaultStyle.main2_900
+	property color errorBorderColor: DefaultStyle.danger_500_main
+	property real borderWidth: Utils.getSizeWithScreenRatio(1)
+	property real keyboardFocusedBorderWidth: Utils.getSizeWithScreenRatio(3)
+    // Text properties
     property string initialText
     property real pixelSize: Typography.p1.pixelSize
     property real weight: Typography.p1.weight
@@ -116,15 +127,16 @@ Control.TextField {
         id: inputBackground
         visible: mainItem.backgroundVisible
         anchors.fill: parent
-        radius: Math.round(79 * DefaultStyle.dp)
+        radius: Utils.getSizeWithScreenRatio(79)
         color: mainItem.enabled ? mainItem.backgroundColor : mainItem.disabledBackgroundColor
-        border.color: mainItem.isError ? DefaultStyle.danger_500main : mainItem.activeFocus ? DefaultStyle.main1_500_main : mainItem.backgroundBorderColor
+        border.color: mainItem.isError ? mainItem.errorBorderColor : mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderColor : mainItem.activeFocus ? mainItem.activeBorderColor : mainItem.backgroundBorderColor
+        border.width: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth
     }
 
     cursorDelegate: Rectangle {
         id: cursor
         color: DefaultStyle.main1_500_main
-        width: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+        width: Math.max(Utils.getSizeWithScreenRatio(1), 1)
         anchors.verticalCenter: mainItem.verticalCenter
 
         SequentialAnimation {
@@ -175,18 +187,25 @@ Control.TextField {
     Button {
         id: eyeButton
         KeyNavigation.left: mainItem
-        property real rightMargin: Math.round(15 * DefaultStyle.dp)
+        property real rightMargin: Utils.getSizeWithScreenRatio(15)
         z: 1
         visible: mainItem.hidden
         checkable: true
         style: ButtonStyle.noBackground
         icon.source: eyeButton.checked ? AppIcons.eyeShow : AppIcons.eyeHide
-        width: Math.round(20 * DefaultStyle.dp)
-        height: Math.round(20 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(20)
+        height: Utils.getSizeWithScreenRatio(20)
         icon.width: width
         icon.height: height
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: rightMargin
+        
+        Accessible.name: (eyeButton.checked ?
+            //: Hide %1
+            qsTr("hide_accessible_name") :
+            //: Show %1
+            qsTr("show_accessible_name")
+        ).arg(mainItem.Accessible.name)
     }
 }

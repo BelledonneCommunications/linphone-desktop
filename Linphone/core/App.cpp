@@ -98,6 +98,8 @@
 #include "tool/Constants.hpp"
 #include "tool/EnumsToString.hpp"
 #include "tool/Utils.hpp"
+#include "tool/accessibility/AccessibilityHelper.hpp"
+#include "tool/accessibility/FocusHelper.hpp"
 #include "tool/native/DesktopTools.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/EmojiProvider.hpp"
@@ -724,6 +726,12 @@ void App::initCppInterfaces() {
 	qmlRegisterSingletonType<SettingsCore>(
 	    "SettingsCpp", 1, 0, "SettingsCpp",
 	    [this](QQmlEngine *engine, QJSEngine *) -> QObject * { return mSettings.get(); });
+
+	qmlRegisterSingletonType<AccessibilityHelper>(
+	    "AccessibilityHelperCpp", 1, 0, "AccessibilityHelperCpp",
+	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new AccessibilityHelper(engine); });
+
+	qmlRegisterType<FocusHelper>("CustomControls", 1, 0, "FocusHelper");
 
 	qmlRegisterType<DashRectangle>(Constants::MainQmlUri, 1, 0, "DashRectangle");
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");

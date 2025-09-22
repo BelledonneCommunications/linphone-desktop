@@ -6,7 +6,7 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 ComboBox {
 	id: mainItem
-    Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+    Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 	property string propertyName
 	
 	property var propertyOwner

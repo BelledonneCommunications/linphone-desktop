@@ -29,6 +29,8 @@ LoginLayout {
 					console.debug("[SIPLoginPage] User: return")
 					mainItem.goBack()
 				}
+				//: Return
+				Accessible.name: qsTr("return_accessible_name")
 			}
 			EffectImage {
 				fillMode: Image.PreserveAspectFit
@@ -194,6 +196,8 @@ LoginLayout {
 									isError: username.errorTextVisible || (LoginPageCpp.badIds && errorText.isVisible)
 									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
 									KeyNavigation.down: passwordEdit
+									//: "%1 mandatory"
+									Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("username"))
 								}
 							}
 							FormItemLayout {
@@ -209,6 +213,7 @@ LoginLayout {
 									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
 									KeyNavigation.up: usernameEdit
 									KeyNavigation.down: domainEdit
+									Accessible.name: qsTr("password")
 								}
 							}
 							FormItemLayout {
@@ -225,6 +230,8 @@ LoginLayout {
 									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
 									KeyNavigation.up: passwordEdit
 									KeyNavigation.down: displayName
+									//: "%1 mandatory"
+									Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("sip_address_domain"))
 								}
 								Connections {
 									target: SettingsCpp
@@ -242,6 +249,7 @@ LoginLayout {
 									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
 									KeyNavigation.up: domainEdit
 									KeyNavigation.down: transportCbox
+									Accessible.name: qsTr("sip_address_display_name")
 								}
 							}
 							FormItemLayout {
@@ -263,6 +271,9 @@ LoginLayout {
 									currentIndex: Utils.findIndex(model, function (entry) {
 										return entry.text === SettingsCpp.assistantThirdPartySipAccountTransport.toUpperCase()
 									})
+									KeyNavigation.up: displayName
+									KeyNavigation.down: outboundProxyUriEdit
+									Accessible.name: qsTr("transport")
 								}
 							}
 						}
@@ -283,6 +294,8 @@ LoginLayout {
 						id: connectionButton
 						Layout.topMargin: Math.round(15 * DefaultStyle.dp)
 						style: ButtonStyle.main
+						property Item tabTarget
+						Accessible.name: qsTr("assistant_account_login")
 						contentItem: StackLayout {
 							id: connectionButtonContent
 							currentIndex: 0
@@ -330,7 +343,8 @@ LoginLayout {
 							loginDelay.restart()
 						}
 						onPressed: trigger()
-						KeyNavigation.up: transportCbox
+						KeyNavigation.up: connectionId
+						KeyNavigation.tab: tabTarget
 						Timer{
 							id: loginDelay
 							interval: 200
@@ -347,12 +361,13 @@ LoginLayout {
 								}
 								console.debug("[SIPLoginPage] User: Log in")
 								LoginPageCpp.login(usernameEdit.text, passwordEdit.text, displayName.text, domainEdit.text, 
-								transportCbox.currentValue, registrarUriEdit.text, outboundProxyUriEdit.text, connectionIdEdit.text);
+								transportCbox.currentValue, serverAddressEdit.text, connectionIdEdit.text);
 								connectionButton.enabled = false
 								connectionButtonContent.currentIndex = 1
 							}
 						}
 					}
+					
 					Item {
 						Layout.fillHeight: true
 					}
@@ -379,6 +394,8 @@ LoginLayout {
 							contentItem: TextField {
 								id: outboundProxyUriEdit
 								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+								Accessible.name: qsTr("login_proxy_server_url")
+								KeyNavigation.up: transportCbox
 								KeyNavigation.down: registrarUriEdit
 							}
 						}
@@ -390,6 +407,7 @@ LoginLayout {
 							contentItem: TextField {
 								id: registrarUriEdit
 								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+								Accessible.name: qsTr("login_registrar_uri")
 								KeyNavigation.up: outboundProxyUriEdit
 								KeyNavigation.down: connectionIdEdit
 							}
@@ -403,6 +421,7 @@ LoginLayout {
 								id: connectionIdEdit
 								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
 								KeyNavigation.up: registrarUriEdit
+								Accessible.name: qsTr("login_id")
 							}
 						}
 					}

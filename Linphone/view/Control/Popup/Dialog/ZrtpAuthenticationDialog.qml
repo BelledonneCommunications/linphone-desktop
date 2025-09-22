@@ -32,7 +32,7 @@ Dialog {
 			width: mainItem.width
 			height: mainItem.implicitHeight
 			color: mainItem.securityError
-				? DefaultStyle.danger_500main
+				? DefaultStyle.danger_500_main
 				: mainItem.isCaseMismatch
 					? DefaultStyle.warning_600
 					: DefaultStyle.info_500_main
@@ -244,8 +244,8 @@ Dialog {
             //: "Aucune correspondance"
             text: qsTr("call_dialog_zrtp_validate_trust_letters_do_not_match")
 			color: DefaultStyle.grey_0
-			borderColor: DefaultStyle.danger_500main
-			textColor: DefaultStyle.danger_500main
+			borderColor: DefaultStyle.danger_500_main
+			textColor: DefaultStyle.danger_500_main
 			visible: !mainItem.securityError
 			onClicked: {
 				if(mainItem.call) mainItem.call.core.lCheckAuthenticationTokenSelected(" ")
