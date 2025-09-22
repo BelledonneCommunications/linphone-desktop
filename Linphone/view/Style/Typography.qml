@@ -9,6 +9,13 @@ QtObject {
         pixelSize: Math.round(16 * DefaultStyle.dp),
         weight: Math.min(Math.round(800 * DefaultStyle.dp), 1000)
 	})
+
+	// Title/H3m - Bloc title
+	property font h3m: Qt.font( {
+		family: DefaultStyle.defaultFont,
+        pixelSize: Math.round(16 * DefaultStyle.dp),
+        weight: Math.min(Math.round(700 * DefaultStyle.dp), 1000)
+	})
 	
 	// Title/H3 -  Bloc title
 	property font h3: Qt.font( {

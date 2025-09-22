@@ -35,12 +35,15 @@ public:
 
 	Q_PROPERTY(linphone::RegistrationState registrationState READ getRegistrationState NOTIFY registrationStateChanged)
 	Q_PROPERTY(QString errorMessage READ getErrorMessage NOTIFY errorMessageChanged)
+	Q_PROPERTY(bool badIds MEMBER mBadIds NOTIFY reasonChanged)
 
 	Q_INVOKABLE void login(const QString &username,
 	                       const QString &password,
 	                       QString displayName = QString(),
 	                       QString domain = QString(),
-	                       LinphoneEnums::TransportType transportType = LinphoneEnums::TransportType::Tls);
+	                       LinphoneEnums::TransportType transportType = LinphoneEnums::TransportType::Tls,
+	                       QString serverAddress = QString(),
+	                       QString connectionId = QString());
 
 	linphone::RegistrationState getRegistrationState() const;
 	void setRegistrationState(linphone::RegistrationState status);
@@ -51,10 +54,12 @@ public:
 signals:
 	void registrationStateChanged();
 	void errorMessageChanged(QString error);
+	void reasonChanged();
 
 private:
 	linphone::RegistrationState mRegistrationState = linphone::RegistrationState::None;
 	QString mErrorMessage;
+	bool mBadIds = false;
 
 	DECLARE_ABSTRACT_OBJECT
 };

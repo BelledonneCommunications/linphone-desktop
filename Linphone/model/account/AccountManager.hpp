@@ -41,7 +41,9 @@ public:
 	           QString displayName = QString(),
 	           QString domain = QString(),
 	           linphone::TransportType transportType = linphone::TransportType::Tls,
-	           QString *errorMessage = nullptr);
+	           QString *errorMessage = nullptr,
+	           QString serverAddress = QString(),
+	           QString connectionId = QString());
 
 	std::shared_ptr<linphone::Account> createAccount(const QString &assistantFile);
 
@@ -55,7 +57,8 @@ public:
 	void linkNewAccountUsingCode(const QString &code, RegisterType registerType, const QString &sipAddress);
 
 signals:
-	void registrationStateChanged(linphone::RegistrationState state, QString message = QString());
+	void
+	registrationStateChanged(linphone::RegistrationState state, linphone::Reason reason, QString message = QString());
 	void newAccountCreationSucceed(QString sipAddress, RegisterType registerType, const QString &registerAddress);
 	void registerNewAccountFailed(const QString &error);
 	void tokenConversionSucceed(QString convertedToken);

@@ -64,22 +64,26 @@ void LoginPage::login(const QString &username,
                       const QString &password,
                       QString displayName,
                       QString domain,
-                      LinphoneEnums::TransportType transportType) {
+                      LinphoneEnums::TransportType transportType,
+                      QString serverAddress,
+                      QString connectionId) {
 	setErrorMessage("");
 	App::postModelAsync([=]() {
 		// Create on Model thread.
 		AccountManager *accountManager = new AccountManager();
 		connect(accountManager, &AccountManager::registrationStateChanged, this,
-				[accountManager, this](linphone::RegistrationState state, QString message) mutable {
+		        [accountManager, this](linphone::RegistrationState state, linphone::Reason reason,
+		                               QString message) mutable {
 			        // View thread
 			        setRegistrationState(state);
+			        mBadIds = reason == linphone::Reason::Forbidden;
+			        emit reasonChanged();
 			        switch (state) {
 				        case linphone::RegistrationState::Failed: {
-							if (message.isEmpty())
-								//: Erreur durant la connexion
-								setErrorMessage(tr("default_account_connection_state_error_toast"));
-							else
-								setErrorMessage(message);
+					        if (message.isEmpty())
+						        //: Erreur durant la connexion, veuillez vérifier vos paramètres
+						        setErrorMessage(tr("default_account_connection_state_error_toast"));
+					        else setErrorMessage(message);
 					        if (accountManager) {
 						        accountManager->deleteLater();
 						        accountManager = nullptr;
@@ -110,9 +114,9 @@ void LoginPage::login(const QString &username,
 
 		QString error;
 		if (!accountManager->login(username, password, displayName, domain, LinphoneEnums::toLinphone(transportType),
-		                           &error)) {
+		                           &error, serverAddress, connectionId)) {
 			setErrorMessage(error);
-			emit accountManager->registrationStateChanged(linphone::RegistrationState::None);
+			emit accountManager->registrationStateChanged(linphone::RegistrationState::None, linphone::Reason::None);
 		}
 	});
 }
