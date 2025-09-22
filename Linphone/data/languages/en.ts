@@ -83,45 +83,45 @@
 <context>
     <name>AccountManager</name>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="84"/>
+        <location filename="../../model/account/AccountManager.cpp" line="86"/>
         <source>assistant_account_login_already_connected_error</source>
-        <extracomment>&quot;Le compte est déjà connecté&quot;</extracomment>
+        <extracomment>&quot;The account is already connected&quot;</extracomment>
         <translation>The account is already connected</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="98"/>
+        <location filename="../../model/account/AccountManager.cpp" line="104"/>
         <source>assistant_account_login_proxy_address_error</source>
-        <extracomment>&quot;Impossible de créer l&apos;adresse proxy. Merci de vérifier le nom de domaine.&quot;</extracomment>
+        <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
         <translation>Unable to create proxy address. Please check the domain name.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="111"/>
+        <location filename="../../model/account/AccountManager.cpp" line="117"/>
         <source>assistant_account_login_address_configuration_error</source>
-        <extracomment>&quot;Impossible de configurer l&apos;adresse : `%1`.&quot;</extracomment>
+        <extracomment>&quot;Unable to configure address: `%1`.&quot;</extracomment>
         <translation>Unable to configure address: `%1`.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="118"/>
+        <location filename="../../model/account/AccountManager.cpp" line="124"/>
         <source>assistant_account_login_params_configuration_error</source>
-        <extracomment>&quot;Impossible de configurer les paramètres du compte.&quot;</extracomment>
+        <extracomment>&quot;Unable to configure account settings.&quot;</extracomment>
         <translation>Unable to configure account settings.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="142"/>
+        <location filename="../../model/account/AccountManager.cpp" line="148"/>
         <source>assistant_account_login_forbidden_error</source>
-        <extracomment>&quot;Le couple identifiant mot de passe ne correspond pas&quot;</extracomment>
+        <extracomment>&quot;Username and password do not match&quot;</extracomment>
         <translation>Username and password do not match</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="144"/>
+        <location filename="../../model/account/AccountManager.cpp" line="150"/>
         <source>assistant_account_login_error</source>
-        <extracomment>&quot;Erreur durant la connexion&quot;</extracomment>
+        <extracomment>&quot;Error during connection, please verify your parameters&quot;</extracomment>
         <translation>Error during connection</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="157"/>
+        <location filename="../../model/account/AccountManager.cpp" line="163"/>
         <source>assistant_account_add_error</source>
-        <extracomment>&quot;Impossible d&apos;ajouter le compte.&quot;</extracomment>
+        <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Unable to add account.</translation>
     </message>
 </context>
@@ -3693,7 +3693,7 @@ Expiration : %1</translation>
         <translation>Remote provisioning link</translation>
     </message>
     <message>
-        <location filename="../../core/login/LoginPage.cpp" line="80"/>
+        <location filename="../../core/login/LoginPage.cpp" line="85"/>
         <source>default_account_connection_state_error_toast</source>
         <translation>Error during connection</translation>
     </message>
@@ -4796,75 +4796,84 @@ These features will be hidden if you use a third-party SIP account.
 To enable them in a commercial project, please contact us.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="132"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="131"/>
         <source>assistant_third_party_sip_account_create_linphone_account</source>
         <extracomment>&quot;Créer un compte linphone&quot;</extracomment>
         <translation>Create a linphone account</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="144"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="143"/>
         <source>assistant_third_party_sip_account_warning_ok</source>
         <extracomment>&quot;Je comprends&quot;</extracomment>
         <translation>I understand</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="182"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="188"/>
         <source>username</source>
         <extracomment>&quot;Nom d&apos;utilisateur&quot;</extracomment>
         <translation>Username</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="195"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="201"/>
         <source>password</source>
         <translation>Password</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="211"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="217"/>
         <source>sip_address_domain</source>
         <extracomment>&quot;Domaine&quot;</extracomment>
         <translation>Domain</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="232"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="238"/>
         <source>sip_address_display_name</source>
         <extracomment>Nom d&apos;affichage</extracomment>
         <translation>Display name</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="243"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="249"/>
         <source>transport</source>
         <extracomment>&quot;Transport&quot;</extracomment>
         <translation>Transport</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="283"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="290"/>
         <source>assistant_account_login</source>
         <translation>Connection</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="332"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="339"/>
         <source>assistant_account_login_missing_username</source>
         <translation>Please enter a username</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="334"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="341"/>
         <source>assistant_account_login_missing_password</source>
         <translation>Please enter a password</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="337"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="344"/>
         <source>assistant_account_login_missing_domain</source>
         <extracomment>&quot;Veuillez saisir un nom de domaine</extracomment>
         <translation>Please enter a domain</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="358"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="369"/>
-        <source>login_server_address</source>
-        <extracomment>&quot;URL du serveur mandataire&quot;
-----------
-&quot;Identifiant de connexion (si différent)&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="366"/>
+        <source>login_advanced_parameters_label</source>
+        <extracomment>Advanced parameters</extracomment>
+        <translation>Advanced parameters</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="374"/>
+        <source>login_proxy_server_url</source>
+        <extracomment>&quot;Proxy server URL&quot;</extracomment>
+        <translation>Proxy server URL</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="385"/>
+        <source>login_id</source>
+        <extracomment>&quot;Connexion ID (if different)&quot;</extracomment>
+        <translation>Connexion ID (if different)</translation>
     </message>
 </context>
 <context>

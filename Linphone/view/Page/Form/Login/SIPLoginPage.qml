@@ -107,7 +107,6 @@ LoginLayout {
 							}
                             text: qsTr("Certaines fonctionnalités telles que les conversations de groupe, les vidéo-conférences, etc… nécessitent un compte %1.\n\nCes fonctionnalités seront masquées si vous utilisez un compte SIP tiers.\n\nPour les activer dans un projet commercial, merci de nous contacter.").arg(applicationName)
 						}
-
 					}
 					SmallButton {
 						id: openLinkButton
@@ -170,93 +169,101 @@ LoginLayout {
 			RowLayout {
 				id: content
 				width: formFlickable.width - scrollbar.width*2
+				spacing: Math.round(50 * DefaultStyle.dp)
 				ColumnLayout {
 					spacing: Math.round(2 * DefaultStyle.dp)
-								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+					Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
 					Layout.fillHeight: true
 					ColumnLayout {
-						spacing: Math.round(8 * DefaultStyle.dp)
-						FormItemLayout {
-							id: username
-							//: "Nom d'utilisateur"
-							label: qsTr("username")
-							mandatory: true
-							enableErrorText: true
-							Layout.fillWidth: true
-							contentItem: TextField {
-								id: usernameEdit
-								isError: username.errorTextVisible || errorText.isVisible
-								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
-								KeyNavigation.down: passwordEdit
-							}
+						spacing: Math.round(22 * DefaultStyle.dp)
+						// alignment item
+						Item {
+							Layout.preferredHeight: advancedParametersTitle.implicitHeight
 						}
-						FormItemLayout {
-							id: password
-							label: qsTr("password")
-							mandatory: true
-							enableErrorText: true
-							Layout.fillWidth: true
-							contentItem: TextField {
-								id: passwordEdit
-								isError: password.errorTextVisible || errorText.isVisible
-								hidden: true
-								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
-								KeyNavigation.up: usernameEdit
-								KeyNavigation.down: domainEdit
-							}
-						}
-						FormItemLayout {
-							id: domain
-							//: "Domaine"
-							label: qsTr("sip_address_domain")
-							mandatory: true
-							enableErrorText: true
-							Layout.fillWidth: true
-							contentItem: TextField {
-								id: domainEdit
-								isError: domain.errorTextVisible
-								initialText: SettingsCpp.assistantThirdPartySipAccountDomain
-								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
-								KeyNavigation.up: passwordEdit
-								KeyNavigation.down: displayName
-							}
-							Connections {
-								target: SettingsCpp
-								function onAssistantThirdPartySipAccountDomainChanged() {
-									domainEdit.resetText()
+						ColumnLayout {
+							spacing: Math.round(10 * DefaultStyle.dp)
+							FormItemLayout {
+								id: username
+								//: "Nom d'utilisateur"
+								label: qsTr("username")
+								mandatory: true
+								enableErrorText: true
+								Layout.fillWidth: true
+								contentItem: TextField {
+									id: usernameEdit
+									isError: username.errorTextVisible || (LoginPageCpp.badIds && errorText.isVisible)
+									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+									KeyNavigation.down: passwordEdit
 								}
 							}
-						}
-						FormItemLayout {
-							//: Nom d'affichage
-							label: qsTr("sip_address_display_name")
-							Layout.fillWidth: true
-							contentItem: TextField {
-								id: displayName
-								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
-								KeyNavigation.up: domainEdit
-								KeyNavigation.down: transportCbox
+							FormItemLayout {
+								id: password
+								label: qsTr("password")
+								mandatory: true
+								enableErrorText: true
+								Layout.fillWidth: true
+								contentItem: TextField {
+									id: passwordEdit
+									isError: password.errorTextVisible || (LoginPageCpp.badIds && errorText.isVisible)
+									hidden: true
+									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+									KeyNavigation.up: usernameEdit
+									KeyNavigation.down: domainEdit
+								}
 							}
-						}
-						FormItemLayout {
-							//: "Transport"
-							label: qsTr("transport")
-							Layout.fillWidth: true
-							contentItem: ComboBox {
-								id: transportCbox
-								height: Math.round(49 * DefaultStyle.dp)
-								width: Math.round(360 * DefaultStyle.dp)
-								textRole: "text"
-								valueRole: "value"
-								model: [
-									{text: "TCP", value: LinphoneEnums.TransportType.Tcp},
-									{text: "UDP", value: LinphoneEnums.TransportType.Udp},
-									{text: "TLS", value: LinphoneEnums.TransportType.Tls},
-									{text: "DTLS", value: LinphoneEnums.TransportType.Dtls}
-								]
-								currentIndex: Utils.findIndex(model, function (entry) {
-									return entry.text === SettingsCpp.assistantThirdPartySipAccountTransport.toUpperCase()
-								})
+							FormItemLayout {
+								id: domain
+								//: "Domaine"
+								label: qsTr("sip_address_domain")
+								mandatory: true
+								enableErrorText: true
+								Layout.fillWidth: true
+								contentItem: TextField {
+									id: domainEdit
+									isError: domain.errorTextVisible
+									initialText: SettingsCpp.assistantThirdPartySipAccountDomain
+									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+									KeyNavigation.up: passwordEdit
+									KeyNavigation.down: displayName
+								}
+								Connections {
+									target: SettingsCpp
+									function onAssistantThirdPartySipAccountDomainChanged() {
+										domainEdit.resetText()
+									}
+								}
+							}
+							FormItemLayout {
+								//: Nom d'affichage
+								label: qsTr("sip_address_display_name")
+								Layout.fillWidth: true
+								contentItem: TextField {
+									id: displayName
+									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+									KeyNavigation.up: domainEdit
+									KeyNavigation.down: transportCbox
+								}
+							}
+							FormItemLayout {
+								//: "Transport"
+								label: qsTr("transport")
+								Layout.fillWidth: true
+								contentItem: ComboBox {
+									id: transportCbox
+									height: Math.round(49 * DefaultStyle.dp)
+									width: Math.round(360 * DefaultStyle.dp)
+									textRole: "text"
+									valueRole: "value"
+									model: [
+										{text: "TCP", value: LinphoneEnums.TransportType.Tcp},
+										{text: "UDP", value: LinphoneEnums.TransportType.Udp},
+										{text: "TLS", value: LinphoneEnums.TransportType.Tls},
+										{text: "DTLS", value: LinphoneEnums.TransportType.Dtls}
+									]
+									currentIndex: Utils.findIndex(model, function (entry) {
+										return entry.text === SettingsCpp.assistantThirdPartySipAccountTransport.toUpperCase()
+									})
+								}
 							}
 						}
 					}
@@ -338,7 +345,8 @@ LoginLayout {
 									return
 								}
 								console.debug("[SIPLoginPage] User: Log in")
-								LoginPageCpp.login(usernameEdit.text, passwordEdit.text, displayName.text, domainEdit.text, transportCbox.currentValue);
+								LoginPageCpp.login(usernameEdit.text, passwordEdit.text, displayName.text, domainEdit.text, 
+								transportCbox.currentValue, serverAddressEdit.text, connectionIdEdit.text);
 								connectionButton.enabled = false
 								connectionButtonContent.currentIndex = 1
 							}
@@ -349,33 +357,43 @@ LoginLayout {
 					}
 				}
 				ColumnLayout {
-								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+					Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
 					Layout.fillHeight: true
-					spacing: Math.round(8 * DefaultStyle.dp)
-					FormItemLayout {
-						id: serverAddress
-						//: "URL du serveur mandataire"
-						label: qsTr("login_server_address")
-						Layout.fillWidth: true
-						contentItem: TextField {
-							id: serverAddressEdit
-							Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
-							KeyNavigation.down: connectionIdEdit
-						}
+					spacing: Math.round(22 * DefaultStyle.dp)
+					Text {
+						id: advancedParametersTitle
+						//: Advanced parameters
+						text: qsTr("login_advanced_parameters_label")
+						font: Typography.h3m
 					}
-					FormItemLayout {
-						id: connectionId
-						//: "Identifiant de connexion (si différent)"
-						label: qsTr("login_server_address")
-						Layout.fillWidth: true
-						contentItem: TextField {
-							id: connectionIdEdit
-							Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
-							KeyNavigation.up: serverAddressEdit
+					ColumnLayout {
+						spacing: Math.round(10 * DefaultStyle.dp)
+						FormItemLayout {
+							id: serverAddress
+							//: "Proxy server URL"
+							label: qsTr("login_proxy_server_url")
+							Layout.fillWidth: true
+							contentItem: TextField {
+								id: serverAddressEdit
+								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+								KeyNavigation.down: connectionIdEdit
+							}
+						}
+						FormItemLayout {
+							id: connectionId
+							//: "Connexion ID (if different)"
+							label: qsTr("login_id")
+							Layout.fillWidth: true
+							contentItem: TextField {
+								id: connectionIdEdit
+								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+								KeyNavigation.up: serverAddressEdit
+							}
 						}
 					}
 					Item{Layout.fillHeight: true}
 				}
+				Item{Layout.fillHeight: true}
 			}
 		}
 	}
@@ -387,11 +405,11 @@ LoginLayout {
 			active: true
 			interactive: true
 			parent: rootStackView.currentItem
-			// visible: parent.contentHeight > parent.height
+			visible: parent.contentHeight > parent.height
 			policy: Control.ScrollBar.AsNeeded
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
-			anchors.left: parent.left
+			anchors.right: parent.right
 			// Layout.leftMargin: Math.round(119 * DefaultStyle.dp)
 			// anchors.leftMargin: Math.round(119 * DefaultStyle.dp)
 			// anchors.rightMargin: -8 * DefaultStyle.dp
