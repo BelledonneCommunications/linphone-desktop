@@ -7,6 +7,7 @@ FROM ubuntu:22.04
 # Qt on Ubuntu 22.04 is too old. Use a downloader.
 ARG QT_VERSION=5.15.2
 ARG QT6_VERSION=6.9.1
+
 #Do not use it. It seems that it cannot be used from python command.
 #ARG QT_MODULES=qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
 
@@ -42,7 +43,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV SHELL=/bin/bash
-#ENV PS1='\[\e[33m\]\u@bc-dev-ubuntu-20-04>\[\e[0m\] '
+#ENV PS1='\[\e[33m\]\u@bc-dev-ubuntu-22-04>\[\e[0m\] '
 
 # Install common general tools
 RUN apt-get update && \
@@ -87,10 +88,10 @@ RUN sudo apt install --upgrade -y python3-setuptools
 # installation is split because there is a way where some modules are not downloaded in the first attempt.
 RUN sudo apt install -y python3-py7zr
 RUN sudo pip3 install --upgrade aqtinstall
-RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt
-RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d
-RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt
-RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
+RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt/opensource
+RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d
+RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt/opensource
+RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
 
 RUN sudo chown -R bc:bc /opt/Qt/
 
