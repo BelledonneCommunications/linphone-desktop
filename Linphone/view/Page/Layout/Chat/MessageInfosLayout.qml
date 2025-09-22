@@ -34,10 +34,7 @@ ColumnLayout {
 		}
 		Text {
 			text: mainItem.title
-			font {
-				pixelSize: Typography.h4.pixelSize
-				weight: Typography.h4.weight
-			}
+			font: Typography.h4
 		}
 	}
 
@@ -48,7 +45,6 @@ ColumnLayout {
 		spacing: Math.round(21 * DefaultStyle.dp)
 		TabBar {
 			id: tabbar
-			onCurrentIndexChanged: console.log("current index", currentIndex)
 			visible: mainItem.tabbarModel !== undefined
 			Layout.fillWidth: true
 			Layout.preferredWidth: implicitWidth

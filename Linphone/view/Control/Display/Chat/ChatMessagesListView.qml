@@ -93,8 +93,7 @@ ListView {
                 markIndexAsRead(index)
             }
         }
-        Component.onCompleted: loading = true
-        onListAboutToBeReset: loading = true
+        onModelAboutToBeReset: loading = true
         onModelReset: Qt.callLater(function() {
             loading = false
             var index = eventLogProxy.findFirstUnreadIndex()
@@ -130,7 +129,7 @@ ListView {
     }
 
     footer: Item {
-        visible: mainItem.chat && mainItem.chat.core.isEncrypted && !eventLogProxy.haveMore
+        visible: mainItem.chat && !mainItem.loading && mainItem.chat.core.isEncrypted && !eventLogProxy.haveMore
         height: visible ? headerMessage.height + headerMessage.topMargin + headerMessage.bottomMargin : Math.round(30 * DefaultStyle.dp)
         width: headerMessage.width
         anchors.horizontalCenter: parent.horizontalCenter
@@ -216,6 +215,7 @@ ListView {
 
     BusyIndicator {
         anchors.horizontalCenter: mainItem.horizontalCenter
+        anchors.verticalCenter: mainItem.verticalCenter
         visible: mainItem.loading
         height: visible ? mainItem.busyIndicatorSize : 0
         width: mainItem.busyIndicatorSize
@@ -226,11 +226,11 @@ ListView {
     
     delegate: DelegateChooser {
         role: "eventType"
-
         DelegateChoice {
             roleValue: "chatMessage"
             delegate: ChatMessage {
                 id: chatMessageDelegate
+                visible: !mainItem.loading
                 property int yoff: Math.round(chatMessageDelegate.y - mainItem.contentY)
                 property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
                 chatMessage: modelData.core.chatMessageGui
@@ -288,6 +288,7 @@ ListView {
             roleValue: "event"
             delegate: Item {
                 id: eventDelegate
+                visible: !mainItem.loading
                 property int yoff: Math.round(eventDelegate.y - mainItem.contentY)
                 property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
                 onIsFullyVisibleChanged: {
@@ -312,6 +313,7 @@ ListView {
             roleValue: "ephemeralEvent"
             delegate: Item {
                 id: ephemeralEventDelegate
+                visible: !mainItem.loading
                 property int yoff: Math.round(ephemeralEventDelegate.y - mainItem.contentY)
                 property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
                 onIsFullyVisibleChanged: {

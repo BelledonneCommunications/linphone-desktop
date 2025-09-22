@@ -60,6 +60,7 @@ AbstractMainPage {
                 && listStackView.currentItem.objectName != "newChatItem")
             listStackView.push(newChatItem)
     }
+    signal openChatRequested(ChatGui chat)
 
     Dialog {
         id: deleteChatPopup
@@ -193,8 +194,12 @@ AbstractMainPage {
 
                             Connections {
                                 target: mainItem
-                                onSelectedChatGuiChanged: {
+                                function onSelectedChatGuiChanged() {
+                                    console.log("selected chat gui changed")
                                     chatListView.selectChat(mainItem.selectedChatGui)
+                                }
+                                function onOpenChatRequested(chat) {
+                                    chatListView.chatToSelect = chat
                                 }
                             }
                         }

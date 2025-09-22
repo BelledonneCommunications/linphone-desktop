@@ -51,7 +51,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)) {
 		mTitle = ToolModel::getDisplayName(chatRoomAddress);
 		mAvatarUri = ToolModel::getDisplayName(chatRoomAddress);
-		mPeerAddress = Utils::coreStringToAppString(chatRoomAddress->asStringUriOnly());
+		mParticipantAddress = Utils::coreStringToAppString(chatRoomAddress->asStringUriOnly());
 		mIsGroupChat = false;
 		mIsBasic = true;
 		mConferenceJoined = true;
@@ -65,7 +65,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 				mAvatarUri = ToolModel::getDisplayName(peer->getAddress()->clone());
 				if (participants.size() == 1) {
 					auto peerAddress = peer->getAddress();
-					if (peerAddress) mPeerAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
+					if (peerAddress) mParticipantAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
 				}
 			}
 			mIsGroupChat = false;
@@ -90,24 +90,24 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	                                static_cast<int>(linphone::ChatRoom::HistoryFilter::InfoNoDevice)
 	                          : static_cast<int>(linphone::ChatRoom::HistoryFilter::ChatMessage);
 
-	auto history = chatRoom->getHistory(0, filter);
-	std::list<std::shared_ptr<linphone::EventLog>> lHistory;
-	for (auto &eventLog : history) {
-		lHistory.push_back(eventLog);
-	}
-	QList<QSharedPointer<EventLogCore>> eventList;
-	for (auto &event : lHistory) {
-		auto eventLogCore = EventLogCore::create(event);
-		eventList.append(eventLogCore);
-		if (auto isMessage = eventLogCore->getChatMessageCore()) {
-			for (auto content : isMessage->getChatMessageContentList()) {
-				if (content->isFile() && !content->isVoiceRecording()) {
-					mFileList.append(content);
-				}
-			}
-		}
-	}
-	resetEventLogList(eventList);
+	// auto history = chatRoom->getHistory(0, filter);
+	// std::list<std::shared_ptr<linphone::EventLog>> lHistory;
+	// for (auto &eventLog : history) {
+	// 	lHistory.push_back(eventLog);
+	// }
+	// QList<QSharedPointer<EventLogCore>> eventList;
+	// for (auto &event : lHistory) {
+	// 	auto eventLogCore = EventLogCore::create(event);
+	// 	eventList.append(eventLogCore);
+	// 	if (auto isMessage = eventLogCore->getChatMessageCore()) {
+	// 		for (auto content : isMessage->getChatMessageContentList()) {
+	// 			if (content->isFile() && !content->isVoiceRecording()) {
+	// 				mFileList.append(content);
+	// 			}
+	// 		}
+	// 	}
+	// }
+	// resetEventLogList(eventList);
 	mIdentifier = Utils::coreStringToAppString(chatRoom->getIdentifier());
 	mChatRoomState = LinphoneEnums::fromLinphone(chatRoom->getState());
 	mIsEncrypted = chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Encrypted);
@@ -122,15 +122,15 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	connect(this, &ChatCore::eventRemoved, this, &ChatCore::lUpdateLastMessage);
 	auto resetFileListLambda = [this] {
 		QList<QSharedPointer<ChatMessageContentCore>> fileList;
-		for (auto &eventLogCore : mEventLogList) {
-			if (auto isMessage = eventLogCore->getChatMessageCore()) {
-				for (auto content : isMessage->getChatMessageContentList()) {
-					if (content->isFile() && !content->isVoiceRecording()) {
-						fileList.append(content);
-					}
-				}
-			}
-		}
+		// for (auto &eventLogCore : mEventLogList) {
+		// 	if (auto isMessage = eventLogCore->getChatMessageCore()) {
+		// 		for (auto content : isMessage->getChatMessageContentList()) {
+		// 			if (content->isFile() && !content->isVoiceRecording()) {
+		// 				fileList.append(content);
+		// 			}
+		// 		}
+		// 	}
+		// }
 		resetFileList(fileList);
 	};
 	connect(this, &ChatCore::eventListChanged, this, resetFileListLambda);
@@ -172,7 +172,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatCore::lLeave, [this]() { mChatModelConnection->invokeToModel([this]() { mChatModel->leave(); }); });
 	mChatModelConnection->makeConnectToModel(&ChatModel::historyDeleted, [this]() {
 		mChatModelConnection->invokeToCore([this]() {
-			clearEventLogList();
+			emit eventListCleared();
 			//: Deleted
 			Utils::showInformationPopup(tr("info_toast_deleted_title"),
 			                            //: Message history has been deleted
@@ -221,7 +221,8 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 				    avatarUri = ToolModel::getDisplayName(peer->getAddress()->clone());
 				    if (linParticipants.size() == 1) {
 					    auto peerAddress = peer->getAddress();
-					    if (peerAddress) mPeerAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
+					    if (peerAddress)
+						    mParticipantAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
 				    }
 			    }
 			    mChatModelConnection->invokeToCore([this, title, avatarUri]() {
@@ -242,7 +243,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		    qDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
 		    auto event = EventLogCore::create(eventLog);
 		    if (event->isHandled()) {
-			    mChatModelConnection->invokeToCore([this, event]() { appendEventLogToEventLogList(event); });
+			    mChatModelConnection->invokeToCore([this, event]() { emit eventsInserted({event}); });
 		    }
 		    mChatModelConnection->invokeToCore([this, event]() { emit lUpdateLastUpdatedTime(); });
 	    });
@@ -259,7 +260,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 			    list.push_back(event);
 		    }
 		    mChatModelConnection->invokeToCore([this, list]() {
-			    appendEventLogsToEventLogList(list);
+			    emit eventsInserted(list);
 			    emit lUpdateUnreadCount();
 			    emit lUpdateLastUpdatedTime();
 		    });
@@ -309,7 +310,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatModel::chatMessageSending, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                           const std::shared_ptr<const linphone::EventLog> &eventLog) {
 		    auto event = EventLogCore::create(eventLog);
-		    mChatModelConnection->invokeToCore([this, event]() { appendEventLogToEventLogList(event); });
+		    mChatModelConnection->invokeToCore([this, event]() { emit eventsInserted({event}); });
 	    });
 	mChatModelConnection->makeConnectToCore(
 	    &ChatCore::lCompose, [this]() { mChatModelConnection->invokeToModel([this]() { mChatModel->compose(); }); });
@@ -405,7 +406,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	});
 
 	mCoreModelConnection = SafeConnection<ChatCore, CoreModel>::create(me, CoreModel::getInstance());
-	if (!ToolModel::findFriendByAddress(mPeerAddress))
+	if (!ToolModel::findFriendByAddress(mParticipantAddress))
 		mCoreModelConnection->makeConnectToModel(&CoreModel::friendCreated,
 		                                         [this](std::shared_ptr<linphone::Friend> f) { updateInfo(f); });
 	mCoreModelConnection->makeConnectToModel(&CoreModel::friendUpdated,
@@ -459,8 +460,8 @@ QString ChatCore::getIdentifier() const {
 	return mIdentifier;
 }
 
-QString ChatCore::getPeerAddress() const {
-	return mPeerAddress;
+QString ChatCore::getParticipantAddress() const {
+	return mParticipantAddress;
 }
 
 QString ChatCore::getChatRoomAddress() const {
@@ -530,72 +531,6 @@ void ChatCore::setUnreadMessagesCount(int count) {
 		mUnreadMessagesCount = count;
 		emit unreadMessagesCountChanged(count);
 	}
-}
-
-QList<QSharedPointer<EventLogCore>> ChatCore::getEventLogList() const {
-	return mEventLogList;
-}
-
-void ChatCore::resetEventLogList(QList<QSharedPointer<EventLogCore>> list) {
-	for (auto &e : mEventLogList) {
-		disconnect(e.get());
-	}
-	for (auto &e : list) {
-		if (auto message = e->getChatMessageCore()) {
-			connect(message.get(), &ChatMessageCore::isReadChanged, this, [this] { emit lUpdateUnreadCount(); });
-		}
-	}
-	mEventLogList = list;
-	emit eventListChanged();
-}
-
-void ChatCore::appendEventLogsToEventLogList(QList<QSharedPointer<EventLogCore>> list) {
-	int nbAdded = 0;
-	for (auto &e : list) {
-		auto it = std::find_if(mEventLogList.begin(), mEventLogList.end(), [e](QSharedPointer<EventLogCore> event) {
-			return e->getEventLogId() == event->getEventLogId();
-		});
-		if (it == mEventLogList.end()) {
-			if (auto message = e->getChatMessageCore())
-				connect(message.get(), &ChatMessageCore::isReadChanged, this, [this] { emit lUpdateUnreadCount(); });
-			mEventLogList.append(e);
-			++nbAdded;
-		}
-	}
-	if (nbAdded > 0) emit eventsInserted(list);
-}
-
-void ChatCore::appendEventLogToEventLogList(QSharedPointer<EventLogCore> e) {
-	if (mEventLogList.contains(e)) return;
-	auto it = std::find_if(mEventLogList.begin(), mEventLogList.end(), [e](QSharedPointer<EventLogCore> event) {
-		return e->getEventLogId() == event->getEventLogId();
-	});
-	if (it == mEventLogList.end()) {
-		if (auto message = e->getChatMessageCore())
-			connect(message.get(), &ChatMessageCore::isReadChanged, this, [this] { emit lUpdateUnreadCount(); });
-		mEventLogList.append(e);
-		emit eventsInserted({e});
-	}
-}
-
-void ChatCore::removeEventLogsFromEventLogList(QList<QSharedPointer<EventLogCore>> list) {
-	int nbRemoved = 0;
-	for (auto &e : list) {
-		if (mEventLogList.contains(e)) {
-			if (auto message = e->getChatMessageCore()) disconnect(message.get());
-			mEventLogList.removeAll(e);
-			++nbRemoved;
-		}
-	}
-	if (nbRemoved > 0) emit eventRemoved();
-}
-
-void ChatCore::clearEventLogList() {
-	for (auto &e : mEventLogList) {
-		disconnect(e.get());
-	}
-	mEventLogList.clear();
-	emit eventListChanged();
 }
 
 QString ChatCore::getComposingName() const {
@@ -723,7 +658,7 @@ QSharedPointer<AccountCore> ChatCore::getLocalAccount() const {
 
 void ChatCore::updateInfo(const std::shared_ptr<linphone::Friend> &updatedFriend, bool isRemoval) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto fAddress = ToolModel::interpretUrl(mPeerAddress);
+	auto fAddress = ToolModel::interpretUrl(mParticipantAddress);
 	bool isThisFriend = mFriendModel && updatedFriend == mFriendModel->getFriend();
 	if (!isThisFriend)
 		for (auto f : updatedFriend->getAddresses()) {
@@ -753,7 +688,8 @@ void ChatCore::updateInfo(const std::shared_ptr<linphone::Friend> &updatedFriend
 					mAvatarUri = ToolModel::getDisplayName(peer->getAddress()->clone());
 					if (participants.size() == 1) {
 						auto peerAddress = peer->getAddress();
-						if (peerAddress) mPeerAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
+						if (peerAddress)
+							mParticipantAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
 					}
 				}
 			} else if (mChatModel->hasCapability((int)linphone::ChatRoom::Capabilities::Conference)) {

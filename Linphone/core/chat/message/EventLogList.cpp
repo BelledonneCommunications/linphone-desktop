@@ -59,9 +59,21 @@ QSharedPointer<ChatCore> EventLogList::getChatCore() const {
 	return mChatCore;
 }
 
+void EventLogList::disconnectItem(const QSharedPointer<EventLogCore> &item) {
+	auto message = item->getChatMessageCore();
+	if (message) {
+		disconnect(message.get(), &ChatMessageCore::isReadChanged, this, nullptr);
+		disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);
+		disconnect(message.get(), &ChatMessageCore::ephemeralDurationChanged, this, nullptr);
+	}
+}
+
 void EventLogList::connectItem(const QSharedPointer<EventLogCore> &item) {
 	auto message = item->getChatMessageCore();
 	if (message) {
+		connect(message.get(), &ChatMessageCore::isReadChanged, this, [this] {
+			if (mChatCore) emit mChatCore->lUpdateUnreadCount();
+		});
 		connect(message.get(), &ChatMessageCore::deleted, this, [this, item] {
 			if (mChatCore) emit mChatCore->lUpdateLastMessage();
 			remove(item);
@@ -83,6 +95,7 @@ void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 		mChatCore = core;
 		if (mChatCore) {
 			connect(mChatCore.get(), &ChatCore::eventListChanged, this, &EventLogList::lUpdate);
+			connect(mChatCore.get(), &ChatCore::eventListCleared, this, [this] { resetData(); });
 			connect(mChatCore.get(), &ChatCore::eventsInserted, this, [this](QList<QSharedPointer<EventLogCore>> list) {
 				auto eventsList = getSharedList<EventLogCore>();
 				for (auto &event : list) {
@@ -98,8 +111,8 @@ void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 				}
 			});
 		}
-		emit eventChanged();
 		lUpdate();
+		emit chatGuiChanged();
 	}
 }
 
@@ -150,22 +163,45 @@ void EventLogList::findChatMessageWithFilter(QString filter,
 }
 
 void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
-	connect(this, &EventLogList::lUpdate, this, [this]() {
-		resetData();
-		emit listAboutToBeReset();
-		for (auto &event : getSharedList<EventLogCore>()) {
-			auto message = event->getChatMessageCore();
-			if (message) {
-				disconnect(message.get(), &ChatMessageCore::ephemeralDurationChanged, this, nullptr);
-				disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);
+	mCoreModelConnection = SafeConnection<EventLogList, CoreModel>::create(me, CoreModel::getInstance());
+
+	mCoreModelConnection->makeConnectToCore(&EventLogList::lUpdate, [this]() {
+		mustBeInMainThread(log().arg(Q_FUNC_INFO));
+		beginResetModel();
+		mList.clear();
+		if (!mChatCore) {
+			endResetModel();
+			return;
+		}
+		auto chatModel = mChatCore->getModel();
+		if (!chatModel) {
+			endResetModel();
+			return;
+		}
+		mCoreModelConnection->invokeToModel([this, chatModel]() {
+			mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+			auto linphoneLogs = chatModel->getHistory();
+			QList<QSharedPointer<EventLogCore>> *events = new QList<QSharedPointer<EventLogCore>>();
+			for (auto it : linphoneLogs) {
+				auto model = EventLogCore::create(it);
+				events->push_back(model);
 			}
-		}
-		if (!mChatCore) return;
-		auto events = mChatCore->getEventLogList();
-		for (auto &event : events) {
-			connectItem(event);
-		}
-		resetData<EventLogCore>(events);
+			mCoreModelConnection->invokeToCore([this, events] {
+				for (auto &event : getSharedList<EventLogCore>()) {
+					auto message = event->getChatMessageCore();
+					if (message) {
+						disconnect(message.get(), &ChatMessageCore::ephemeralDurationChanged, this, nullptr);
+						disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);
+					}
+				}
+				for (auto &event : *events) {
+					connectItem(event);
+				}
+				for (auto i : *events)
+					mList << i.template objectCast<QObject>();
+				endResetModel();
+			});
+		});
 	});
 
 	connect(this, &EventLogList::filterChanged, [this](QString filter) {

@@ -160,6 +160,7 @@ ListView {
 	
 	delegate: FocusScope {
 		id: itemDelegate
+		visible: !mainItem.loading
         height: Math.round(63 * DefaultStyle.dp) + (!isFirst && dateDay.visible ? topOffset : 0)
 		width: mainItem.width
 		enabled: !isCanceled && haveModel

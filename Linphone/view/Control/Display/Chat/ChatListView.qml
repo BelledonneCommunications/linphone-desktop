@@ -18,16 +18,19 @@ ListView {
     property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
 
     property ChatGui currentChatGui: model.getAt(currentIndex) || null
+    property ChatGui chatToSelect: null
+    onChatToSelectChanged: {
+        var index = chatProxy.findChatIndex(chatToSelect)
+        if (index != -1) {
+            currentIndex = index
+            chatToSelect = null
+        }
+    }
+
     onChatClicked: (chat) => {selectChat(chat)}
 
-    signal resultsReceived()
     signal markAllAsRead()
     signal chatClicked(ChatGui chat)
-
-    onResultsReceived: {
-        loading = false
-        // contentY = 0
-    }
 
     model: ChatProxy {
         id: chatProxy
@@ -41,7 +44,10 @@ ListView {
                                 2 * mainItem.height / (Math.round(56 * DefaultStyle.dp)))
         displayItemsStep: 3 * initialDisplayItems / 2
         onModelReset: {
-            mainItem.resultsReceived()
+            loading = false
+            if (mainItem.chatToSelect) {
+                selectChat(mainItem.chatToSelect)
+            }
         }
         onModelAboutToBeReset: {
             loading = true
@@ -160,6 +166,7 @@ ListView {
     }
 
     delegate: FocusScope {
+        visible: !mainItem.loading
         width: mainItem.width
         height: Math.round(63 * DefaultStyle.dp)
         Connections {

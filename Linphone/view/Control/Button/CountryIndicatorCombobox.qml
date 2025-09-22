@@ -81,10 +81,7 @@ ColumnLayout {
 				anchors.left: selectedItemFlag.right
 				anchors.verticalCenter: parent.verticalCenter 
 				elide: Text.ElideRight
-				font {
-                    pixelSize: Typography.p1.pixelSize
-                    weight: Typography.p1.weight
-				}
+				font: Typography.p1
 			}
 		}
 		

@@ -32,6 +32,7 @@ DEFINE_ABSTRACT_OBJECT(ChatMessageFileList)
 
 QSharedPointer<ChatMessageFileList> ChatMessageFileList::create() {
 	auto model = QSharedPointer<ChatMessageFileList>(new ChatMessageFileList(), &QObject::deleteLater);
+	model->setSelf(model);
 	model->moveToThread(App::getInstance()->thread());
 	return model;
 }
@@ -46,21 +47,74 @@ ChatMessageFileList::~ChatMessageFileList() {
 	mList.clear();
 }
 
+void ChatMessageFileList::setSelf(QSharedPointer<ChatMessageFileList> me) {
+	mCoreModelConnection = SafeConnection<ChatMessageFileList, CoreModel>::create(me, CoreModel::getInstance());
+	mCoreModelConnection->makeConnectToCore(&ChatMessageFileList::lUpdate, [this]() {
+		mustBeInMainThread(log().arg(Q_FUNC_INFO));
+		beginResetModel();
+		mList.clear();
+		if (!mChat) {
+			endResetModel();
+			return;
+		}
+		auto chatModel = mChat->getModel();
+		if (!chatModel) {
+			endResetModel();
+			return;
+		}
+		mCoreModelConnection->invokeToModel([this, chatModel]() {
+			mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+			std::list<std::shared_ptr<linphone::Content>> medias;
+			std::list<std::shared_ptr<linphone::Content>> docs;
+			QList<QSharedPointer<ChatMessageContentCore>> *contents =
+			    new QList<QSharedPointer<ChatMessageContentCore>>();
+			if (mFilterType == (int)FilterContentType::Medias) {
+				medias = chatModel->getSharedMedias();
+			} else if (mFilterType == (int)FilterContentType::Documents) {
+				docs = chatModel->getSharedDocuments();
+			} else {
+				medias = chatModel->getSharedMedias();
+				docs = chatModel->getSharedDocuments();
+			}
+			for (auto it : medias) {
+				auto model = ChatMessageContentCore::create(it, nullptr);
+				contents->push_back(model);
+			}
+			for (auto it : docs) {
+				auto model = ChatMessageContentCore::create(it, nullptr);
+				contents->push_back(model);
+			}
+			mCoreModelConnection->invokeToCore([this, contents] {
+				for (auto i : *contents)
+					mList << i.template objectCast<QObject>();
+				endResetModel();
+			});
+		});
+	});
+}
+
 QSharedPointer<ChatCore> ChatMessageFileList::getChatCore() const {
 	return mChat;
 }
 
 void ChatMessageFileList::setChatCore(QSharedPointer<ChatCore> chatCore) {
 	if (mChat != chatCore) {
-		if (mChat) disconnect(mChat.get());
+		// if (mChat) disconnect(mChat.get());
 		mChat = chatCore;
-		auto lUpdate = [this] {
-			auto fileList = mChat->getFileList();
-			resetData<ChatMessageContentCore>(fileList);
-		};
-		if (mChat) connect(mChat.get(), &ChatCore::fileListChanged, this, lUpdate);
+		// if (mChat) connect(mChat.get(), &ChatCore::fileListChanged, this, lUpdate);
 		lUpdate();
 		emit chatChanged();
+	}
+}
+
+int ChatMessageFileList::getFilterType() const {
+	return mFilterType;
+}
+
+void ChatMessageFileList::setFilterType(int filterType) {
+	if (mFilterType != filterType) {
+		mFilterType = filterType;
+		lUpdate();
 	}
 }
 

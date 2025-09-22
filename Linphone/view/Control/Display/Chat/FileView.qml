@@ -72,7 +72,17 @@ Item {
 				fillMode: Image.PreserveAspectFit
 			}
 			Image {
-				visible: thumbnailSource.isImage
+				anchors.fill: image
+				z: image.z + 1
+				visible: image.status == Image.Error || image.status == Image.Null
+				source: AppIcons.fileImage
+				sourceSize.width: mainItem.width
+				sourceSize.height: mainItem.height
+				fillMode: Image.PreserveAspectFit
+			}
+			Image {
+				id: image
+				visible: thumbnailSource.isImage && status !== Image.Loading
 				mipmap: false//SettingsModel.mipmapEnabled
 				source: mainItem.thumbnail
 				sourceSize.width: mainItem.width
@@ -80,15 +90,6 @@ Item {
 				autoTransform: true
 				fillMode: Image.PreserveAspectCrop
 				anchors.fill: parent
-				Image {
-					anchors.fill: parent
-					z: parent.z + 1
-					visible: parent.status !== Image.Ready 
-					source: AppIcons.fileImage
-					sourceSize.width: mainItem.width
-					sourceSize.height: mainItem.height
-					fillMode: Image.PreserveAspectFit
-				}
 			}
 			Rectangle {
 				visible: thumbnailSource.isVideo

@@ -60,16 +60,22 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 
 	mCoreModelConnection->makeConnectToCore(&ConferenceInfoList::lUpdate, [this]() {
 		mCoreModelConnection->invokeToModel([this]() {
-			QList<QSharedPointer<ConferenceInfoCore>> *items = new QList<QSharedPointer<ConferenceInfoCore>>();
 			mustBeInLinphoneThread(getClassName());
+			beginResetModel();
+			mList.clear();
+			QList<QSharedPointer<ConferenceInfoCore>> *items = new QList<QSharedPointer<ConferenceInfoCore>>();
 			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 			setAccountConnected(defaultAccount && defaultAccount->getState() == linphone::RegistrationState::Ok);
 			if (!defaultAccount || !mAccountConnected) {
+				endResetModel();
 				return;
 			}
 			std::list<std::shared_ptr<linphone::ConferenceInfo>> conferenceInfos =
 			    defaultAccount->getConferenceInformationList();
-			if (conferenceInfos.empty()) return;
+			if (conferenceInfos.empty()) {
+				endResetModel();
+				return;
+			}
 			items->push_back(nullptr); // Add Dummy conference for today
 			for (auto conferenceInfo : conferenceInfos) {
 				if (conferenceInfo->getState() == linphone::ConferenceInfo::State::Cancelled) {
@@ -86,8 +92,9 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 				mustBeInMainThread(getClassName());
 				for (auto &item : *items) {
 					connectItem(item);
+					mList << item.template objectCast<QObject>();
 				}
-				resetData(*items);
+				endResetModel();
 				delete items;
 			});
 		});

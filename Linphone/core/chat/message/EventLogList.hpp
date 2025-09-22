@@ -46,6 +46,7 @@ public:
 	void setChatGui(ChatGui *chat);
 
 	void connectItem(const QSharedPointer<EventLogCore> &item);
+	void disconnectItem(const QSharedPointer<EventLogCore> &item);
 
 	int findFirstUnreadIndex();
 
@@ -61,15 +62,16 @@ public:
 signals:
 	void lUpdate();
 	void filterChanged(QString filter);
-	void eventChanged();
 	void eventInserted(int index, EventLogGui *message);
 	void messageWithFilterFound(int index);
 	void listAboutToBeReset();
+	void chatGuiChanged();
 
 private:
 	QString mFilter;
 	QSharedPointer<ChatCore> mChatCore;
-	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mModelConnection;
+	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
+	QSharedPointer<SafeConnection<EventLogList, CoreModel>> mCoreModelConnection;
 	DECLARE_ABSTRACT_OBJECT
 };
 

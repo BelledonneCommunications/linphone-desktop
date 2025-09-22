@@ -46,7 +46,10 @@ public:
 	bool hasCapability(int capability) const;
 	int getUnreadMessagesCount() const;
 	void markAsRead();
-	std::list<std::shared_ptr<linphone::ChatMessage>> getHistory() const;
+	std::list<std::shared_ptr<linphone::Content>> getSharedMedias() const;
+	std::list<std::shared_ptr<linphone::Content>> getSharedDocuments() const;
+	std::list<std::shared_ptr<linphone::EventLog>> getHistory() const;
+	std::list<std::shared_ptr<linphone::ChatMessage>> getChatMessageHistory() const;
 	QString getIdentifier() const;
 	void deleteHistory();
 	void deleteMessage(std::shared_ptr<linphone::ChatMessage> message);

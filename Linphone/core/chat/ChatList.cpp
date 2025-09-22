@@ -81,8 +81,8 @@ void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
 void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	mModelConnection = SafeConnection<ChatList, CoreModel>::create(me, CoreModel::getInstance());
 	mModelConnection->makeConnectToCore(&ChatList::lUpdate, [this]() {
-		clearData();
 		beginResetModel();
+		mList.clear();
 		mModelConnection->invokeToModel([this]() {
 			mustBeInLinphoneThread(getClassName());
 			// Avoid copy to lambdas
@@ -95,6 +95,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 				chats->push_back(model);
 			}
 			mModelConnection->invokeToCore([this, chats]() {
+				mustBeInMainThread(getClassName());
 				for (auto &chat : getSharedList<ChatCore>()) {
 					if (chat) {
 						disconnect(chat.get(), &ChatCore::deleted, this, nullptr);
@@ -106,7 +107,6 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 				for (auto &chat : *chats) {
 					connectItem(chat);
 				}
-				mustBeInMainThread(getClassName());
 				add(*chats);
 				endResetModel();
 				delete chats;
@@ -117,27 +117,16 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	mModelConnection->makeConnectToModel(
 	    &CoreModel::defaultAccountChanged,
 	    [this](std::shared_ptr<linphone::Core> core, std::shared_ptr<linphone::Account> account) { lUpdate(); });
+
 	auto addChatToList = [this](const std::shared_ptr<linphone::Core> &core,
 	                            const std::shared_ptr<linphone::ChatRoom> &room,
 	                            const std::shared_ptr<linphone::ChatMessage> &message) {
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 		if (!message) return;
-		auto receiverAddress = message->getToAddress();
-		if (!receiverAddress) {
-			qWarning() << log().arg("Receiver account has no address, return");
+		if (room->getAccount() != core->getDefaultAccount()) {
+			qWarning() << log().arg("Chat room does not refer to current account, return");
 			return;
 		}
-		auto defaultAddress = core->getDefaultAccount()->getContactAddress();
-		if (defaultAddress && !defaultAddress->weakEqual(receiverAddress)) {
-			qDebug() << log().arg("Receiver account is not the default one, do not add chat to list");
-			return;
-		}
-		auto senderAddress = message->getFromAddress();
-		if (defaultAddress && defaultAddress->weakEqual(senderAddress)) {
-			qDebug() << log().arg("Sender account is the default one, do not add chat to list");
-			return;
-		}
-
 		auto chatCore = ChatCore::create(room);
 		mModelConnection->invokeToCore([this, chatCore] {
 			auto chatList = getSharedList<ChatCore>();
@@ -191,8 +180,7 @@ int ChatList::findChatIndex(ChatGui *chatGui) {
 	return it == chatList.end() ? -1 : std::distance(chatList.begin(), it);
 }
 
-void ChatList::addChatInList(ChatGui *chatGui) {
-	auto chatCore = chatGui->mCore;
+void ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
 	auto chatList = getSharedList<ChatCore>();
 	auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
 		return item && chatCore && item->getModel() && chatCore->getModel() &&

@@ -641,7 +641,7 @@ Item {
                                 }
                                 function onOpenChatRequested(chat) {
                                     console.log("open chat requested, open", chat.core.title)
-                                    chatPage.selectedChatGui = chat
+                                    chatPage.openChatRequested(chat)
                                 }
                             }
                         }

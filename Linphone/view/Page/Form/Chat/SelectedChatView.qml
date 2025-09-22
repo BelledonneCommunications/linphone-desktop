@@ -63,10 +63,6 @@ FocusScope {
         anchors.fill: parent
         spacing: 0
 
-        //onEventChanged: {
-            // TODO : call when all messages read after scroll to unread feature available
-            // if (chat) chat.core.lMarkAsRead()
-        //}
         MainRightPanel {
             id: splitPanel
             Layout.fillWidth: true

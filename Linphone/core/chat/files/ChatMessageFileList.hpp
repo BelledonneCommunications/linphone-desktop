@@ -32,20 +32,29 @@
 class ChatMessageFileList : public ListProxy, public AbstractObject {
 	Q_OBJECT
 public:
+	enum class FilterContentType { All = 0, Medias = 1, Documents = 2 };
 	static QSharedPointer<ChatMessageFileList> create();
 	ChatMessageFileList(QObject *parent = Q_NULLPTR);
 	~ChatMessageFileList();
 
+	void setSelf(QSharedPointer<ChatMessageFileList> me);
+
 	QSharedPointer<ChatCore> getChatCore() const;
 	void setChatCore(QSharedPointer<ChatCore> chatCore);
+	int getFilterType() const;
+	void setFilterType(int filterType);
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 signals:
 	void chatChanged();
+	void lUpdate();
+	void filterTypeChanged();
 
 private:
+	int mFilterType;
 	QSharedPointer<ChatCore> mChat;
+	QSharedPointer<SafeConnection<ChatMessageFileList, CoreModel>> mCoreModelConnection;
 	DECLARE_ABSTRACT_OBJECT
 };
 

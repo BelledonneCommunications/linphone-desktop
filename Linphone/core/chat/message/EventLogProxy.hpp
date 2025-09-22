@@ -31,7 +31,7 @@ class ChatGui;
 
 class EventLogProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
-	Q_PROPERTY(ChatGui *chatGui READ getChatGui WRITE setChatGui NOTIFY eventChanged)
+	Q_PROPERTY(ChatGui *chatGui READ getChatGui WRITE setChatGui NOTIFY chatGuiChanged)
 
 public:
 	DECLARE_SORTFILTER_CLASS()
@@ -52,10 +52,10 @@ public:
 	Q_INVOKABLE void findIndexCorrespondingToFilter(int startIndex, bool forward = true, bool isFirstResearch = true);
 
 signals:
-	void eventChanged();
 	void eventInserted(int index, EventLogGui *message);
 	void indexWithFilterFound(int index);
 	void listAboutToBeReset();
+	void chatGuiChanged();
 
 protected:
 	QSharedPointer<EventLogList> mList;

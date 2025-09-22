@@ -42,7 +42,7 @@ class ChatCore : public QObject, public AbstractObject {
 public:
 	Q_PROPERTY(QString title READ getTitle WRITE setTitle NOTIFY titleChanged)
 	Q_PROPERTY(QString identifier READ getIdentifier CONSTANT)
-	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
+	Q_PROPERTY(QString peerAddress READ getParticipantAddress CONSTANT)
 	Q_PROPERTY(QString chatRoomAddress READ getChatRoomAddress CONSTANT)
 	Q_PROPERTY(QString avatarUri READ getAvatarUri WRITE setAvatarUri NOTIFY avatarUriChanged)
 	Q_PROPERTY(QDateTime lastUpdatedTime READ getLastUpdatedTime WRITE setLastUpdatedTime NOTIFY lastUpdatedTimeChanged)
@@ -118,7 +118,7 @@ public:
 	void setUnreadMessagesCount(int count);
 
 	QString getChatRoomAddress() const;
-	QString getPeerAddress() const;
+	QString getParticipantAddress() const;
 
 	bool getMeAdmin() const;
 	void setMeAdmin(bool admin);
@@ -127,12 +127,11 @@ public:
 	void setIsSecured(bool secured);
 	bool computeSecuredStatus() const;
 
-	QList<QSharedPointer<EventLogCore>> getEventLogList() const;
-	void resetEventLogList(QList<QSharedPointer<EventLogCore>> list);
-	void appendEventLogToEventLogList(QSharedPointer<EventLogCore> event);
-	void appendEventLogsToEventLogList(QList<QSharedPointer<EventLogCore>> list);
-	void removeEventLogsFromEventLogList(QList<QSharedPointer<EventLogCore>> list);
-	void clearEventLogList();
+	// void resetEventLogList(QList<QSharedPointer<EventLogCore>> list);
+	// void appendEventLogToEventLogList(QSharedPointer<EventLogCore> event);
+	// void appendEventLogsToEventLogList(QList<QSharedPointer<EventLogCore>> list);
+	// void removeEventLogsFromEventLogList(QList<QSharedPointer<EventLogCore>> list);
+	// void clearEventLogList();
 
 	QString getAvatarUri() const;
 	void setAvatarUri(QString avatarUri);
@@ -163,6 +162,7 @@ signals:
 	void titleChanged(QString title);
 	void unreadMessagesCountChanged(int count);
 	void eventListChanged();
+	void eventListCleared();
 	void eventsInserted(QList<QSharedPointer<EventLogCore>> list);
 	void eventRemoved();
 	void avatarUriChanged();
@@ -203,7 +203,7 @@ signals:
 private:
 	QString id;
 	QDateTime mLastUpdatedTime;
-	QString mPeerAddress;
+	QString mParticipantAddress;
 	QString mChatRoomAddress;
 	QString mTitle;
 	QString mIdentifier;
@@ -229,7 +229,6 @@ private:
 	LinphoneEnums::ChatRoomState mChatRoomState;
 	std::shared_ptr<ChatModel> mChatModel;
 	QSharedPointer<ChatMessageCore> mLastMessage;
-	QList<QSharedPointer<EventLogCore>> mEventLogList;
 	QSharedPointer<AccountCore> mLocalAccount;
 	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;

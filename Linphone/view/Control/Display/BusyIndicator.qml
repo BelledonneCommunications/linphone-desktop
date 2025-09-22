@@ -13,6 +13,8 @@ Item {
 	height: busyIndicator.height
 	Control.BusyIndicator {
 		id: busyIndicator
+		width: Math.round(60 * DefaultStyle.dp)
+		height: width
 		running: mainItem.visible
 		anchors.centerIn: mainItem
 		contentItem: EffectImage {

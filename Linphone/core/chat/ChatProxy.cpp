@@ -69,8 +69,8 @@ int ChatProxy::findChatIndex(ChatGui *chatGui) {
 
 void ChatProxy::addChatInList(ChatGui *chatGui) {
 	auto chatList = getListModel<ChatList>();
-	if (chatList) {
-		chatList->addChatInList(chatGui);
+	if (chatList && chatGui) {
+		chatList->addChatInList(chatGui->mCore);
 	}
 }
 
