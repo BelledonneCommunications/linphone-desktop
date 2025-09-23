@@ -48,7 +48,7 @@ ConferenceCore::ConferenceCore(const std::shared_ptr<linphone::Conference> &conf
 	mIsScreenSharingEnabled = mConferenceModel->isScreenSharingEnabled();
 	mIsRecording = conference->isRecording();
 	auto me = conference->getMe();
-	auto confAddress = conference->getConferenceAddress()->clone();
+	auto confAddress = conference->getConferenceAddress();
 	if (confAddress) {
 		mConfUri = Utils::coreStringToAppString(confAddress->asStringUriOnly());
 	}

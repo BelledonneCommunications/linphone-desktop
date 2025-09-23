@@ -125,7 +125,7 @@ void AccountModel::setPictureUri(QString uri) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit pictureUriChanged(uri);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::onDefaultAccountChanged() {
@@ -182,7 +182,7 @@ void AccountModel::setDisplayName(QString displayName) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit displayNameChanged(displayName);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::setDialPlan(int index) {
@@ -261,8 +261,8 @@ linphone::TransportType AccountModel::getTransport() const {
 
 void AccountModel::setTransport(linphone::TransportType value, bool save) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto params = mMonitor->getParams()->clone();
-	if (params->getServerAddress()) {
+	if (mMonitor->getParams()->getServerAddress()) {
+		auto params = mMonitor->getParams()->clone();
 		auto addressClone = params->getServerAddress()->clone();
 		addressClone->setTransport(value);
 		params->setServerAddress(addressClone);

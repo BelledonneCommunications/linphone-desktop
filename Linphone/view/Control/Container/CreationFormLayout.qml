@@ -19,6 +19,7 @@ FocusScope {
 	clip: true
     property alias topContent: topLayout.data
     property bool topLayoutVisible: topLayout.children.length > 0
+    property int searchBarRightMaring: Math.round(39 * DefaultStyle.dp)
 
 	ColumnLayout {
 		anchors.fill: parent
@@ -36,7 +37,7 @@ FocusScope {
                 id: searchBar
                 Layout.alignment: Qt.AlignTop
                 Layout.fillWidth: true
-                // Layout.rightMargin: Math.round(39 * DefaultStyle.dp)
+                Layout.rightMargin: mainItem.searchBarRightMaring
                 focus: true
                 color: mainItem.searchBarColor
                 borderColor: mainItem.searchBarBorderColor

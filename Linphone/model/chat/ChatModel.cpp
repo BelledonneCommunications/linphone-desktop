@@ -84,13 +84,13 @@ QString ChatModel::getIdentifier() const {
 
 QString ChatModel::getTitle() {
 	if (mMonitor->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)) {
-		return ToolModel::getDisplayName(mMonitor->getPeerAddress()->clone());
+		return ToolModel::getDisplayName(mMonitor->getPeerAddress());
 	} else {
 		if (mMonitor->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
 			auto participants = mMonitor->getParticipants();
 			if (participants.size() > 0) {
 				auto peer = participants.front();
-				return peer ? ToolModel::getDisplayName(peer->getAddress()->clone()) : "";
+				return peer ? ToolModel::getDisplayName(peer->getAddress()) : "";
 			} else {
 				return "";
 			}

@@ -342,8 +342,8 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 
 		auto getMessage = [this, &remoteAddress, &txt](const shared_ptr<linphone::ChatMessage> &message) {
 			if (message->isRead()) return;
-			auto remoteAddr = message->getFromAddress()->clone();
-			remoteAddr->clean();
+			auto remoteAddr = message->getFromAddress();
+			// remoteAddr->clean();
 			remoteAddress = Utils::coreStringToAppString(remoteAddr->asStringUriOnly());
 			auto fileContent = message->getFileTransferInformation();
 			if (!fileContent) {

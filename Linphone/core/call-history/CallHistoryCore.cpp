@@ -46,8 +46,7 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 	mustBeInLinphoneThread(getClassName());
 	mCallHistoryModel = std::make_shared<CallHistoryModel>(callLog);
 
-	auto addr = callLog->getRemoteAddress()->clone();
-	addr->clean();
+	auto addr = callLog->getRemoteAddress();
 	mStatus = LinphoneEnums::fromLinphone(callLog->getStatus());
 	mDate = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
 	mIsOutgoing = callLog->getDir() == linphone::Call::Dir::Outgoing;
@@ -129,14 +128,14 @@ void CallHistoryCore::setSelf(QSharedPointer<CallHistoryCore> me) {
 	mCoreModelConnection->makeConnectToModel(&CoreModel::friendRemoved, &CallHistoryCore::onRemoved);
 	// Update display name when display name has been requested from magic search cause not found in linphone friends
 	// (required to get the right display name if ldap friends cleared)
-	mCoreModelConnection->makeConnectToModel(&CoreModel::magicSearchResultReceived, [this, remoteAddress = mRemoteAddress] {
-		auto displayName = ToolModel::getDisplayName(remoteAddress);
-					mCoreModelConnection->invokeToCore([this, displayName]() {
-			mDisplayName = displayName;
-			emit displayNameChanged();
-		});
-	});
-
+	mCoreModelConnection->makeConnectToModel(&CoreModel::magicSearchResultReceived,
+	                                         [this, remoteAddress = mRemoteAddress] {
+		                                         auto displayName = ToolModel::getDisplayName(remoteAddress);
+		                                         mCoreModelConnection->invokeToCore([this, displayName]() {
+			                                         mDisplayName = displayName;
+			                                         emit displayNameChanged();
+		                                         });
+	                                         });
 }
 
 ConferenceInfoGui *CallHistoryCore::getConferenceInfoGui() const {

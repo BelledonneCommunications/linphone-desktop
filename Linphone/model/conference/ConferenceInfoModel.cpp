@@ -110,7 +110,7 @@ linphone::ConferenceInfo::State ConferenceInfoModel::getState() const {
 
 QString ConferenceInfoModel::getOrganizerName() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto organizer = mConferenceInfo->getOrganizer()->clone();
+	auto organizer = mConferenceInfo->getOrganizer();
 	return ToolModel::getDisplayName(organizer);
 }
 

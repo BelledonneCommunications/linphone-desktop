@@ -119,12 +119,12 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	mIsOutgoing = chatmessage->isOutgoing();
 	mIsRemoteMessage = !chatmessage->isOutgoing();
 	mPeerAddress = Utils::coreStringToAppString(chatmessage->getPeerAddress()->asStringUriOnly());
-	mPeerName = ToolModel::getDisplayName(chatmessage->getPeerAddress()->clone());
-	auto fromAddress = chatmessage->getFromAddress()->clone();
-	fromAddress->clean();
+	mPeerName = ToolModel::getDisplayName(chatmessage->getPeerAddress());
+	auto fromAddress = chatmessage->getFromAddress();
+	// fromAddress->clean();
 	mFromAddress = Utils::coreStringToAppString(fromAddress->asStringUriOnly());
-	mFromName = ToolModel::getDisplayName(chatmessage->getFromAddress()->clone());
-	mToName = ToolModel::getDisplayName(chatmessage->getToAddress()->clone());
+	mFromName = ToolModel::getDisplayName(chatmessage->getFromAddress());
+	mToName = ToolModel::getDisplayName(chatmessage->getToAddress());
 
 	auto chatroom = chatmessage->getChatRoom();
 	mIsFromChatGroup = chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference) &&
@@ -188,7 +188,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 		auto replymessage = chatmessage->getReplyMessage();
 		if (replymessage) {
 			mReplyText = ToolModel::getMessageFromContent(replymessage->getContents());
-			if (mIsFromChatGroup) mRepliedToName = ToolModel::getDisplayName(replymessage->getFromAddress()->clone());
+			if (mIsFromChatGroup) mRepliedToName = ToolModel::getDisplayName(replymessage->getFromAddress());
 		}
 	}
 	mImdnStatusList = computeDeliveryStatus(chatmessage);

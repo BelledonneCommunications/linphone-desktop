@@ -55,10 +55,7 @@ int AbstractEventCountNotifier::getCurrentEventCount() const {
 	else {
 		auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 		if (currentAccount) {
-			auto linphoneChatRooms = currentAccount->filterChatRooms("");
-			for (const auto &chatRoom : linphoneChatRooms) {
-				count += chatRoom->getUnreadMessagesCount();
-			}
+			count += currentAccount->getUnreadChatMessageCount();
 		}
 		return count;
 	}

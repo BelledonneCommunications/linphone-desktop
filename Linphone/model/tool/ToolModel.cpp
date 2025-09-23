@@ -81,7 +81,7 @@ std::shared_ptr<linphone::AudioDevice> ToolModel::findAudioDevice(const QString 
 	return nullptr;
 }
 
-QString ToolModel::getDisplayName(const std::shared_ptr<linphone::Address> &address) {
+QString ToolModel::getDisplayName(const std::shared_ptr<const linphone::Address> &address) {
 	QString displayName;
 	if (address) {
 		auto linFriend = findFriendByAddress(address);
@@ -195,9 +195,9 @@ QString ToolModel::encodeTextToQmlRichFormat(const QString &text,
 						if (it != participants.end()) {
 							auto foundParticipant = *it;
 							// participants.at(std::distance(participants.begin(), it));
-							auto address = foundParticipant->getAddress()->clone();
+							auto address = foundParticipant->getAddress();
 							auto isFriend = findFriendByAddress(address);
-							address->clean();
+							// address->clean();
 							auto addressString = Utils::coreStringToAppString(address->asStringUriOnly());
 							if (isFriend)
 								part = "@" + Utils::coreStringToAppString(isFriend->getAddress()->getDisplayName());
@@ -221,17 +221,15 @@ QString ToolModel::encodeTextToQmlRichFormat(const QString &text,
 }
 
 std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &address) {
-	auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
-	if (!defaultFriendList) return nullptr;
 	auto linphoneAddr = ToolModel::interpretUrl(address);
 	if (linphoneAddr) return ToolModel::findFriendByAddress(linphoneAddr);
 	else return nullptr;
 }
 
 std::shared_ptr<linphone::Friend>
-ToolModel::findFriendByAddress(const std::shared_ptr<linphone::Address> &linphoneAddr) {
+ToolModel::findFriendByAddress(const std::shared_ptr<const linphone::Address> &linphoneAddr) {
 	auto friendsManager = FriendsManager::getInstance();
-	linphoneAddr->clean();
+	// linphoneAddr->clean();
 	QString key = Utils::coreStringToAppString(linphoneAddr->asStringUriOnly());
 	if (friendsManager->isInKnownFriends(key)) {
 		// qDebug() << key << "have been found in known friend, return it";
@@ -598,7 +596,7 @@ ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_p
 	auto core = call ? call->getCore() : CoreModel::getInstance()->getCore();
 	auto localAddress = call ? call->getCallLog()->getLocalAddress() : nullptr;
 	if (!remoteAddress && call) remoteAddress = call->getRemoteAddress()->clone();
-	remoteAddress->clean();
+	// remoteAddress->clean();
 	auto account = findAccount(localAddress);
 	if (!account) account = core->getDefaultAccount();
 	if (!account) qWarning() << "failed to get account, return";

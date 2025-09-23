@@ -52,8 +52,8 @@ ParticipantCore::ParticipantCore(const std::shared_ptr<linphone::Participant> &p
 		mIsMe = ToolModel::isMe(mSipAddress);
 		mCreationTime = QDateTime::fromSecsSinceEpoch(participant->getCreationTime());
 		mDisplayName = Utils::coreStringToAppString(participantAddress->getDisplayName());
-		if (mDisplayName.isEmpty()) mDisplayName = ToolModel::getDisplayName(participantAddress->clone());
-		auto isFriend = ToolModel::findFriendByAddress(participantAddress->clone());
+		if (mDisplayName.isEmpty()) mDisplayName = ToolModel::getDisplayName(participantAddress);
+		auto isFriend = ToolModel::findFriendByAddress(participantAddress);
 		mSecurityLevel =
 		    isFriend ? LinphoneEnums::fromLinphone(isFriend->getSecurityLevel()) : LinphoneEnums::SecurityLevel::None;
 		for (auto &device : participant->getDevices()) {

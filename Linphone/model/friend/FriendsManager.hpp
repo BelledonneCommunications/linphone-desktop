@@ -21,12 +21,12 @@
 #ifndef FRIENDS_MANAGER_H_
 #define FRIENDS_MANAGER_H_
 
+#include "tool/AbstractObject.hpp"
 #include <QObject>
 #include <QSharedPointer>
 #include <QThread>
 #include <QVariantMap>
 #include <linphone++/linphone.hh>
-#include "tool/AbstractObject.hpp"
 
 class FriendsManager : public QObject, public AbstractObject {
 	Q_OBJECT
@@ -41,19 +41,19 @@ public:
 	QVariantMap getUnknownFriends() const;
 	QStringList getOtherAddresses() const;
 
-	std::shared_ptr<linphone::Friend> getKnownFriendAtKey(const QString& key);
-	std::shared_ptr<linphone::Friend> getUnknownFriendAtKey(const QString& key);
+	std::shared_ptr<linphone::Friend> getKnownFriendAtKey(const QString &key);
+	std::shared_ptr<linphone::Friend> getUnknownFriendAtKey(const QString &key);
 
-	bool isInKnownFriends(const QString& key);
-	bool isInUnknownFriends(const QString& key);
-	bool isInOtherAddresses(const QString& key);
+	bool isInKnownFriends(const QString &key);
+	bool isInUnknownFriends(const QString &key);
+	bool isInOtherAddresses(const QString &key);
 
-	void appendKnownFriend(std::shared_ptr<linphone::Address> address, std::shared_ptr<linphone::Friend> f);
-	void appendUnknownFriend(std::shared_ptr<linphone::Address> address, std::shared_ptr<linphone::Friend> f);
+	void appendKnownFriend(std::shared_ptr<const linphone::Address> address, std::shared_ptr<linphone::Friend> f);
+	void appendUnknownFriend(std::shared_ptr<const linphone::Address> address, std::shared_ptr<linphone::Friend> f);
 	void appendOtherAddress(QString address);
 
-	void removeUnknownFriend(const QString& key);
-	void removeOtherAddress(const QString& key);
+	void removeUnknownFriend(const QString &key);
+	void removeOtherAddress(const QString &key);
 
 private:
 	static std::shared_ptr<FriendsManager> gFriendsManager;

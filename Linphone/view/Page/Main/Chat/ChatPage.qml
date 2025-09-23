@@ -260,6 +260,7 @@ AbstractMainPage {
                     id: newChatForm
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    Layout.rightMargin: Math.round(8 * DefaultStyle.dp)
                     Layout.topMargin: Math.round(18 * DefaultStyle.dp)
                     onGroupCreationRequested: {
                         console.log("groupe call requetsed")

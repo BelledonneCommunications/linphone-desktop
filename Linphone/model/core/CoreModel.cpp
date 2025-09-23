@@ -70,15 +70,6 @@ std::shared_ptr<CoreModel> CoreModel::create(const QString &configPath, QThread 
 }
 
 void CoreModel::start() {
-	mIterateTimer = new QTimer(this);
-	mIterateTimer->setInterval(30);
-	connect(mIterateTimer, &QTimer::timeout, [this]() {
-		static int iterateCount = 0;
-		if (iterateCount != 0) lCritical() << log().arg("Multi Iterate ! ");
-		++iterateCount;
-		mCore->iterate();
-		--iterateCount;
-	});
 	setPathBeforeCreation();
 	mCore =
 	    linphone::Factory::get()->createCore(Utils::appStringToCoreString(Paths::getConfigFilePath(mConfigPath)),
@@ -122,6 +113,11 @@ void CoreModel::start() {
 	mCore->enableFriendListSubscription(true);
 	if (mCore->getLogCollectionUploadServerUrl().empty())
 		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
+
+	mIterateTimer = new QTimer(this);
+	mIterateTimer->setInterval(20);
+	connect(mIterateTimer, &QTimer::timeout, [this]() { mCore->iterate(); });
+
 	mIterateTimer->start();
 
 	auto linphoneSearch = mCore->createMagicSearch();

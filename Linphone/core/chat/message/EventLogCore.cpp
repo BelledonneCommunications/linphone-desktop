@@ -100,7 +100,7 @@ void EventLogCore::computeEvent(const std::shared_ptr<const linphone::EventLog> 
 	mImportant = false;
 	mEphemeralRelated = false;
 
-	auto participantAddress = eventLog->getParticipantAddress() ? eventLog->getParticipantAddress()->clone() : nullptr;
+	auto participantAddress = eventLog->getParticipantAddress() ? eventLog->getParticipantAddress() : nullptr;
 
 	switch (eventLog->getType()) {
 		case linphone::EventLog::Type::ConferenceCreated:
@@ -121,7 +121,7 @@ void EventLogCore::computeEvent(const std::shared_ptr<const linphone::EventLog> 
 		case linphone::EventLog::Type::ConferenceSecurityEvent: {
 			if (eventLog->getSecurityEventType() == linphone::EventLog::SecurityEventType::SecurityLevelDowngraded) {
 				auto faultyParticipant = eventLog->getSecurityEventFaultyDeviceAddress()
-				                             ? eventLog->getSecurityEventFaultyDeviceAddress()->clone()
+				                             ? eventLog->getSecurityEventFaultyDeviceAddress()
 				                             : nullptr;
 				if (faultyParticipant)
 					mEventDetails = tr("conference_security_event").arg(ToolModel::getDisplayName(faultyParticipant));

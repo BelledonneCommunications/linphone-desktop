@@ -45,8 +45,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	mustBeInLinphoneThread(getClassName());
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mLastUpdatedTime = QDateTime::fromSecsSinceEpoch(chatRoom->getLastUpdateTime());
-	auto chatRoomAddress = chatRoom->getPeerAddress()->clone();
-	chatRoomAddress->clean();
+	auto chatRoomAddress = chatRoom->getPeerAddress();
 	mChatRoomAddress = Utils::coreStringToAppString(chatRoomAddress->asStringUriOnly());
 	if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)) {
 		mTitle = ToolModel::getDisplayName(chatRoomAddress);
@@ -61,8 +60,8 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 		if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
 			if (participants.size() > 0) {
 				auto peer = participants.front();
-				if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress()->clone());
-				mAvatarUri = ToolModel::getDisplayName(peer->getAddress()->clone());
+				if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress());
+				mAvatarUri = ToolModel::getDisplayName(peer->getAddress());
 				if (participants.size() == 1) {
 					auto peerAddress = peer->getAddress();
 					if (peerAddress) mParticipantAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
@@ -217,8 +216,8 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 			    auto linParticipants = chatRoom->getParticipants();
 			    if (linParticipants.size() > 0) {
 				    auto peer = linParticipants.front();
-				    if (peer) title = ToolModel::getDisplayName(peer->getAddress()->clone());
-				    avatarUri = ToolModel::getDisplayName(peer->getAddress()->clone());
+				    if (peer) title = ToolModel::getDisplayName(peer->getAddress());
+				    avatarUri = ToolModel::getDisplayName(peer->getAddress());
 				    if (linParticipants.size() == 1) {
 					    auto peerAddress = peer->getAddress();
 					    if (peerAddress)
@@ -319,9 +318,9 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	           const std::shared_ptr<const linphone::Address> &remoteAddress, bool isComposing) {
 		    if (mChatModel->getMonitor() != chatRoom) return;
-		    QString name = isComposing ? ToolModel::getDisplayName(remoteAddress->clone()) : QString();
-		    auto remoteAddr = remoteAddress->clone();
-		    remoteAddr->clean();
+		    QString name = isComposing ? ToolModel::getDisplayName(remoteAddress) : QString();
+		    auto remoteAddr = remoteAddress;
+		    // remoteAddr->clean();
 		    mChatModelConnection->invokeToCore(
 		        [this, name, address = Utils::coreStringToAppString(remoteAddr->asStringUriOnly())]() {
 			        setComposingName(name);
@@ -673,7 +672,7 @@ void ChatCore::updateInfo(const std::shared_ptr<linphone::Friend> &updatedFriend
 		}
 		int capabilities = mChatModel->getCapabilities();
 		auto chatroom = mChatModel->getMonitor();
-		auto chatRoomAddress = chatroom->getPeerAddress()->clone();
+		auto chatRoomAddress = chatroom->getPeerAddress();
 		if (mChatModel->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)) {
 			mTitle = ToolModel::getDisplayName(chatRoomAddress);
 			mAvatarUri = ToolModel::getDisplayName(chatRoomAddress);
@@ -684,8 +683,8 @@ void ChatCore::updateInfo(const std::shared_ptr<linphone::Friend> &updatedFriend
 				auto participants = chatroom->getParticipants();
 				if (participants.size() > 0) {
 					auto peer = participants.front();
-					if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress()->clone());
-					mAvatarUri = ToolModel::getDisplayName(peer->getAddress()->clone());
+					if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress());
+					mAvatarUri = ToolModel::getDisplayName(peer->getAddress());
 					if (participants.size() == 1) {
 						auto peerAddress = peer->getAddress();
 						if (peerAddress)

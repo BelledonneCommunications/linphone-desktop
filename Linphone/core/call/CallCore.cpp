@@ -115,8 +115,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mRemoteVideoEnabled =
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
 	mState = LinphoneEnums::fromLinphone(call->getState());
-	auto remoteAddress = call->getCallLog()->getRemoteAddress()->clone();
-	remoteAddress->clean();
+	auto remoteAddress = call->getCallLog()->getRemoteAddress();
 	mRemoteAddress = Utils::coreStringToAppString(remoteAddress->asStringUriOnly());
 	mRemoteUsername = Utils::coreStringToAppString(remoteAddress->getUsername());
 	auto linphoneFriend = ToolModel::findFriendByAddress(remoteAddress);

@@ -122,7 +122,7 @@ bool FriendsManager::isInOtherAddresses(const QString &key) {
 	return mOtherAddresses.contains(key);
 }
 
-void FriendsManager::appendKnownFriend(std::shared_ptr<linphone::Address> address,
+void FriendsManager::appendKnownFriend(std::shared_ptr<const linphone::Address> address,
                                        std::shared_ptr<linphone::Friend> f) {
 	auto key = Utils::coreStringToAppString(address->asStringUriOnly());
 	if (mKnownFriends.contains(key)) {
@@ -132,7 +132,7 @@ void FriendsManager::appendKnownFriend(std::shared_ptr<linphone::Address> addres
 	mKnownFriends.insert(key, QVariant::fromValue(f));
 }
 
-void FriendsManager::appendUnknownFriend(std::shared_ptr<linphone::Address> address,
+void FriendsManager::appendUnknownFriend(std::shared_ptr<const linphone::Address> address,
                                          std::shared_ptr<linphone::Friend> f) {
 	auto key = Utils::coreStringToAppString(address->asStringUriOnly());
 	if (mUnknownFriends.contains(key)) {

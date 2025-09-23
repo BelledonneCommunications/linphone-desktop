@@ -47,7 +47,7 @@ public:
 	static bool isLocal(const std::shared_ptr<linphone::Conference> &conference,
 	                    const std::shared_ptr<const linphone::ParticipantDevice> &device);
 
-	static QString getDisplayName(const std::shared_ptr<linphone::Address> &address);
+	static QString getDisplayName(const std::shared_ptr<const linphone::Address> &address);
 	static QString getDisplayName(QString address);
 
 	static QString encodeTextToQmlRichFormat(const QString &text,
@@ -56,7 +56,7 @@ public:
 
 	static std::shared_ptr<linphone::Friend> findFriendByAddress(const QString &address);
 	static std::shared_ptr<linphone::Friend>
-	findFriendByAddress(const std::shared_ptr<linphone::Address> &linphoneAddr);
+	findFriendByAddress(const std::shared_ptr<const linphone::Address> &linphoneAddr);
 
 	static bool createCall(const QString &sipAddress,
 	                       const QVariantMap &options = {},

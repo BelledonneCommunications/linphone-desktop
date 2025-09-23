@@ -726,6 +726,7 @@ AbstractWindow {
                         displayCurrentCalls: true
                         searchBarColor: DefaultStyle.grey_0
                         searchBarBorderColor: DefaultStyle.grey_200
+                        searchBarRightMaring: 0
                         onContactClicked: contact => {
                                             var callsWin = UtilsCpp.getCallsWindow()
                                             if (contact)
