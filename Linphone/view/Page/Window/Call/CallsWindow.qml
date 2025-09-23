@@ -1265,7 +1265,7 @@ AbstractWindow {
                         background: Rectangle {
                             anchors.fill: parent
                             radius: Math.round(71 * DefaultStyle.dp)
-                            color: parent.enabled ? parent.checked ? DefaultStyle.success_500main : parent.pressed ? DefaultStyle.main2_400 : DefaultStyle.grey_500 : DefaultStyle.grey_600
+                            color: parent.enabled ? parent.checked ? DefaultStyle.success_500main : parent.pressed || parent.hovered ? DefaultStyle.main2_400 : DefaultStyle.grey_500 : DefaultStyle.grey_600
                         }
                         enabled: mainWindow.conference
                                  || mainWindow.callState != LinphoneEnums.CallState.PausedByRemote

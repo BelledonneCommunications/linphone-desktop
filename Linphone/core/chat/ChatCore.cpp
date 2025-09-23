@@ -60,10 +60,10 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 		if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
 			if (participants.size() > 0) {
 				auto peer = participants.front();
-				if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress());
-				mAvatarUri = ToolModel::getDisplayName(peer->getAddress());
+				auto peerAddress = peer->getAddress();
+				if (peer) mTitle = ToolModel::getDisplayName(peerAddress);
+				mAvatarUri = ToolModel::getDisplayName(peerAddress);
 				if (participants.size() == 1) {
-					auto peerAddress = peer->getAddress();
 					if (peerAddress) mParticipantAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
 				}
 			}

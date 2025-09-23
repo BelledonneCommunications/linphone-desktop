@@ -130,10 +130,9 @@ ListView {
             spacing: Math.round(10 * DefaultStyle.dp)
             Avatar {
                 id: historyAvatar
-                property var contactObj: UtilsCpp.findFriendByAddress(
-                                             modelData.core.remoteAddress)
+                property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.remoteAddress)
                 contact: contactObj?.value || null
-                _address: modelData.core.remoteAddress
+                displayNameVal: modelData.core.displayName
                 secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
                 width: Math.round(45 * DefaultStyle.dp)
                 height: Math.round(45 * DefaultStyle.dp)
@@ -149,7 +148,7 @@ ListView {
                     id: friendAddress
                     Layout.fillWidth: true
                     maximumLineCount: 1
-                    text: historyAvatar.displayNameVal
+                    text: modelData.core.displayName
                     font {
                         pixelSize: Typography.p1.pixelSize
                         weight: Typography.p1.weight
