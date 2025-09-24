@@ -13,8 +13,7 @@ ColumnLayout {
 
 	id: mainItem
 	property ChatGui chatGui
-	property var chatCore: chatGui.core
-	property int selectedLifetime: chatCore.ephemeralLifetime
+	property int selectedLifetime: chatGui.core.ephemeralLifetime
 	spacing: Math.round(5 * DefaultStyle.dp)
 	signal done()
 
@@ -48,8 +47,8 @@ ColumnLayout {
 			style: ButtonStyle.noBackground
 			icon.source: AppIcons.leftArrow
 			onClicked: {
-				if (chatCore.ephemeralLifetime != selectedLifetime)
-					chatCore.ephemeralLifetime = selectedLifetime
+				if (chatGui.core.ephemeralLifetime != selectedLifetime)
+					chatGui.core.ephemeralLifetime = selectedLifetime
 				mainItem.done()
 			}
 		}

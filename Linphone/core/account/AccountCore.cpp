@@ -260,15 +260,6 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lRefreshNotifications, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { mAccountModel->refreshUnreadNotifications(); });
 	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::unreadCallNotificationsChanged, [this]() {
-		mAccountModelConnection->invokeToModel([this]() { CoreModel::getInstance()->unreadNotificationsChanged(); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::unreadMessageNotificationsChanged, [this]() {
-		mAccountModelConnection->invokeToModel([this]() { CoreModel::getInstance()->unreadNotificationsChanged(); });
-	});
-	mAccountModelConnection->makeConnectToCore(&AccountCore::unreadNotificationsChanged, [this]() {
-		mAccountModelConnection->invokeToModel([this]() { CoreModel::getInstance()->unreadNotificationsChanged(); });
-	});
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetDisplayName, [this](QString displayName) {
 		mAccountModelConnection->invokeToModel([this, displayName]() { mAccountModel->setDisplayName(displayName); });
 	});

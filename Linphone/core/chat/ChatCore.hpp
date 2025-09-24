@@ -161,10 +161,8 @@ signals:
 	void lastMessageChanged();
 	void titleChanged(QString title);
 	void unreadMessagesCountChanged(int count);
-	void eventListChanged();
 	void eventListCleared();
 	void eventsInserted(QList<QSharedPointer<EventLogCore>> list);
-	void eventRemoved();
 	void avatarUriChanged();
 	void deleted();
 	void composingUserChanged();

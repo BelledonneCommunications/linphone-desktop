@@ -75,14 +75,13 @@ void ChatProxy::addChatInList(ChatGui *chatGui) {
 }
 
 bool ChatProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-	//	auto l = getItemAtSource<ChatList, ChatCore>(sourceRow);
-	//	return l != nullptr;
 	return true;
 }
 
 bool ChatProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	if (!mFilterText.isEmpty()) return false;
 	auto l = getItemAtSource<ChatList, ChatCore>(sourceLeft.row());
 	auto r = getItemAtSource<ChatList, ChatCore>(sourceRight.row());
 	if (l && r) return l->getLastUpdatedTime() >= r->getLastUpdatedTime();
-	else return true;
+	return false;
 }

@@ -132,7 +132,6 @@ AbstractMainPage {
 		anchors.bottomMargin: Math.round(30 * DefaultStyle.dp)
 		height: parent.height - anchors.topMargin
 		anchors.horizontalCenter: parent.horizontalCenter
-		contentHeight: overridenRightPanelStackView.currentItem ? overridenRightPanelStackView.currentItem.childrenRect.height : 0
 		contentWidth: width
 		clip: true
 		Control.ScrollBar.vertical: ScrollBar {
@@ -141,7 +140,7 @@ AbstractMainPage {
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
 		}
-		contentChildren: ColumnLayout {
+		ColumnLayout {
 			anchors.fill: parent
 			anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
 			width: Math.round(393 * DefaultStyle.dp)
@@ -149,7 +148,7 @@ AbstractMainPage {
 				id: overridenRightPanelStackView
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				height: currentItem ? currentItem.height : 0
+				Layout.preferredHeight: currentItem ? currentItem.childrenRect.height : 0
 			}
 		}
 	}
@@ -551,6 +550,7 @@ AbstractMainPage {
 			ColumnLayout {
 				id: addParticipantsLayout
 				spacing: Math.round(18 * DefaultStyle.dp)
+				anchors.rightMargin: Math.round(8 * DefaultStyle.dp)
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.top: parent.top
@@ -626,13 +626,15 @@ AbstractMainPage {
 		id: meetingDetail
 		FocusScope{
 			width: overridenRightPanelStackView.width
+			height: meetingDetailsLayout.childrenRect.height
 			ColumnLayout {
 				id: meetingDetailsLayout
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.top: parent.top
+				// anchors.fill: parent
 				visible: mainItem.selectedConference
-                spacing: Math.round(25 * DefaultStyle.dp)
+                spacing: Math.round(16 * DefaultStyle.dp)
 				Section {
 					visible: mainItem.selectedConference
 					Layout.fillWidth: true
@@ -752,7 +754,6 @@ AbstractMainPage {
 								KeyNavigation.right: linkButton
 								KeyNavigation.up: deletePopup
 								KeyNavigation.down: joinButton
-								Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
 								onClicked: {
 									var success = UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri)
                                     if (success) UtilsCpp.showInformationPopup(qsTr("saved"),
@@ -848,9 +849,8 @@ AbstractMainPage {
 				}
 				Section {
 					visible: participantList.count > 0
-					Layout.fillWidth: true
 					content: RowLayout {
-						Layout.preferredHeight: participantList.height
+						Layout.preferredHeight: participantList.contentHeight
                         width: Math.round(393 * DefaultStyle.dp)
                         spacing: Math.round(8 * DefaultStyle.dp)
 						EffectImage {
@@ -863,7 +863,7 @@ AbstractMainPage {
 						}
 						ListView {
 							id: participantList
-                            Layout.preferredHeight: Math.min(Math.round(184 * DefaultStyle.dp), contentHeight)
+                            Layout.preferredHeight: contentHeight
 							Layout.fillWidth: true
 							model: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.participants : []
 							clip: true
@@ -928,7 +928,6 @@ AbstractMainPage {
 						UtilsCpp.smartShowWindow(callsWindow)
 					}
 				}
-				Item { Layout.fillHeight: true}
 			}
 		}
 	}

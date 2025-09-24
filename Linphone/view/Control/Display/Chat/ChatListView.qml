@@ -28,6 +28,9 @@ ListView {
     }
 
     onChatClicked: (chat) => {selectChat(chat)}
+    onCountChanged: {
+        selectChat(currentChatGui)
+    }
 
     signal markAllAsRead()
     signal chatClicked(ChatGui chat)
@@ -38,10 +41,7 @@ ListView {
             loading = true
         }
         filterText: mainItem.searchText
-        onFilterTextChanged: maxDisplayItems = initialDisplayItems
-        initialDisplayItems: Math.max(
-                                20,
-                                2 * mainItem.height / (Math.round(56 * DefaultStyle.dp)))
+        initialDisplayItems: Math.max(20, 2 * mainItem.height / (Math.round(56 * DefaultStyle.dp)))
         displayItemsStep: 3 * initialDisplayItems / 2
         onModelReset: {
             loading = false
@@ -205,7 +205,6 @@ ListView {
                     font {
                         pixelSize: Typography.p1.pixelSize
                         weight: unreadCount.unread > 0 ? Typography.p2.weight : Typography.p1.weight
-                        capitalization: Font.Capitalize
                     }
                 }
                 

@@ -89,24 +89,6 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	                                static_cast<int>(linphone::ChatRoom::HistoryFilter::InfoNoDevice)
 	                          : static_cast<int>(linphone::ChatRoom::HistoryFilter::ChatMessage);
 
-	// auto history = chatRoom->getHistory(0, filter);
-	// std::list<std::shared_ptr<linphone::EventLog>> lHistory;
-	// for (auto &eventLog : history) {
-	// 	lHistory.push_back(eventLog);
-	// }
-	// QList<QSharedPointer<EventLogCore>> eventList;
-	// for (auto &event : lHistory) {
-	// 	auto eventLogCore = EventLogCore::create(event);
-	// 	eventList.append(eventLogCore);
-	// 	if (auto isMessage = eventLogCore->getChatMessageCore()) {
-	// 		for (auto content : isMessage->getChatMessageContentList()) {
-	// 			if (content->isFile() && !content->isVoiceRecording()) {
-	// 				mFileList.append(content);
-	// 			}
-	// 		}
-	// 	}
-	// }
-	// resetEventLogList(eventList);
 	mIdentifier = Utils::coreStringToAppString(chatRoom->getIdentifier());
 	mChatRoomState = LinphoneEnums::fromLinphone(chatRoom->getState());
 	mIsEncrypted = chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Encrypted);
@@ -116,25 +98,9 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	    localAccount && localAccount->getParams() &&
 	    localAccount->getParams()->getInstantMessagingEncryptionMandatory();
 	mIsReadOnly = chatRoom->isReadOnly() || (!mIsEncrypted && associatedAccountHasIMEncryptionMandatory);
-	connect(this, &ChatCore::eventListChanged, this, &ChatCore::lUpdateLastMessage);
+
 	connect(this, &ChatCore::eventsInserted, this, &ChatCore::lUpdateLastMessage);
-	connect(this, &ChatCore::eventRemoved, this, &ChatCore::lUpdateLastMessage);
-	auto resetFileListLambda = [this] {
-		QList<QSharedPointer<ChatMessageContentCore>> fileList;
-		// for (auto &eventLogCore : mEventLogList) {
-		// 	if (auto isMessage = eventLogCore->getChatMessageCore()) {
-		// 		for (auto content : isMessage->getChatMessageContentList()) {
-		// 			if (content->isFile() && !content->isVoiceRecording()) {
-		// 				fileList.append(content);
-		// 			}
-		// 		}
-		// 	}
-		// }
-		resetFileList(fileList);
-	};
-	connect(this, &ChatCore::eventListChanged, this, resetFileListLambda);
-	connect(this, &ChatCore::eventsInserted, this, resetFileListLambda);
-	connect(this, &ChatCore::eventRemoved, this, resetFileListLambda);
+
 	mEphemeralEnabled = chatRoom->ephemeralEnabled();
 	mEphemeralLifetime = chatRoom->ephemeralEnabled() ? chatRoom->getEphemeralLifetime() : 0;
 	mIsMuted = chatRoom->getMuted();
@@ -674,26 +640,33 @@ void ChatCore::updateInfo(const std::shared_ptr<linphone::Friend> &updatedFriend
 		auto chatroom = mChatModel->getMonitor();
 		auto chatRoomAddress = chatroom->getPeerAddress();
 		if (mChatModel->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)) {
-			mTitle = ToolModel::getDisplayName(chatRoomAddress);
-			mAvatarUri = ToolModel::getDisplayName(chatRoomAddress);
-			emit titleChanged(mTitle);
-			emit avatarUriChanged();
+			auto title = ToolModel::getDisplayName(chatRoomAddress);
+			auto avatarUri = ToolModel::getDisplayName(chatRoomAddress);
+			mChatModelConnection->invokeToCore([this, title, avatarUri] {
+				setTitle(title);
+				setAvatarUri(avatarUri);
+			});
 		} else {
 			if (mChatModel->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
 				auto participants = chatroom->getParticipants();
 				if (participants.size() > 0) {
 					auto peer = participants.front();
-					if (peer) mTitle = ToolModel::getDisplayName(peer->getAddress());
-					mAvatarUri = ToolModel::getDisplayName(peer->getAddress());
-					if (participants.size() == 1) {
-						auto peerAddress = peer->getAddress();
-						if (peerAddress)
-							mParticipantAddress = Utils::coreStringToAppString(peerAddress->asStringUriOnly());
+					if (peer) {
+						auto title = ToolModel::getDisplayName(peer->getAddress());
+						auto avatarUri = ToolModel::getDisplayName(peer->getAddress());
+						mChatModelConnection->invokeToCore([this, title, avatarUri] {
+							setTitle(title);
+							setAvatarUri(avatarUri);
+						});
 					}
 				}
 			} else if (mChatModel->hasCapability((int)linphone::ChatRoom::Capabilities::Conference)) {
-				mTitle = Utils::coreStringToAppString(chatroom->getSubject());
-				mAvatarUri = Utils::coreStringToAppString(chatroom->getSubject());
+				auto title = Utils::coreStringToAppString(chatroom->getSubject());
+				auto avatarUri = Utils::coreStringToAppString(chatroom->getSubject());
+				mChatModelConnection->invokeToCore([this, title, avatarUri] {
+					setTitle(title);
+					setAvatarUri(avatarUri);
+				});
 			}
 		}
 	}

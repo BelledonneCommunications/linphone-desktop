@@ -68,10 +68,13 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 					        params->enableChat(true);
 					        params->enableGroup(false);
 					        params->setAccount(mConferenceSchedulerModel->getMonitor()->getAccount());
-					        // set to basic cause FlexisipChat force to set a subject
-					        params->getChatParams()->setBackend(linphone::ChatRoom::Backend::Basic);
-					        // Lime si chiffré, si non None
-					        params->getChatParams()->setEncryptionBackend(linphone::ChatRoom::EncryptionBackend::None);
+					        params->setSubject("Meeting invitation"); // won't be used but necessary to send in a
+					                                                  // secured chatroom
+					        auto chatParams = params->getChatParams();
+					        if (!chatParams) return;
+					        chatParams->setEphemeralLifetime(0);
+					        chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
+					        params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
 					        mConferenceSchedulerModel->getMonitor()->sendInvitations(params);
 				        }
 				        emit schedulerStateChanged(state);

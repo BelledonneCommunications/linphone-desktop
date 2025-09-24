@@ -74,7 +74,6 @@ ColumnLayout {
 					font {
                         pixelSize: Typography.p1.pixelSize
                         weight: Typography.p1.weight
-						capitalization: Font.Capitalize
 					}
 				}
 				Text {

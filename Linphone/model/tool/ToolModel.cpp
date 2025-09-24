@@ -91,8 +91,21 @@ QString ToolModel::getDisplayName(const std::shared_ptr<const linphone::Address>
 		if (displayName.isEmpty()) {
 			displayName = Utils::coreStringToAppString(address->getDisplayName());
 			if (displayName.isEmpty()) {
-				displayName = Utils::coreStringToAppString(address->getUsername());
-				displayName.replace('.', ' ');
+				auto accounts = CoreModel::getInstance()->getCore()->getAccountList();
+				auto found = std::find_if(accounts.begin(), accounts.end(),
+				                          [address](std::shared_ptr<linphone::Account> account) {
+					                          return address->weakEqual(account->getParams()->getIdentityAddress());
+				                          });
+				if (found != accounts.end()) {
+					displayName =
+					    Utils::coreStringToAppString(found->get()->getParams()->getIdentityAddress()->getDisplayName());
+				}
+				if (displayName.isEmpty()) {
+					displayName = Utils::coreStringToAppString(address->getUsername());
+					if (displayName.isEmpty()) {
+						return Utils::coreStringToAppString(address->asStringUriOnly());
+					}
+				}
 			}
 		}
 		// TODO

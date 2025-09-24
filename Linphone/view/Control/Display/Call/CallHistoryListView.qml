@@ -145,14 +145,12 @@ ListView {
                 Layout.fillWidth: true
                 spacing: Math.round(5 * DefaultStyle.dp)
                 Text {
-                    id: friendAddress
                     Layout.fillWidth: true
                     maximumLineCount: 1
                     text: modelData.core.displayName
                     font {
                         pixelSize: Typography.p1.pixelSize
                         weight: Typography.p1.weight
-                        capitalization: Font.Capitalize
                     }
                 }
                 RowLayout {
