@@ -14,12 +14,12 @@ Item {
 	property alias call: allDevices.currentCall
 	property ConferenceGui conference: call && call.core.conference || null
 	property var callState: call && call.core.state || undefined
-	onCallStateChanged: if (callState === LinphoneEnums.CallState.End || callState === LinphoneEnums.CallState.Released) preview.visible = false
 	property string localAddress: call 
 		? call.conference
 			? call.conference.core.me.core.sipAddress
 			: call.core.localAddress
 		: ""
+	property bool sideStickersVisible: sideStickers.visible
 	
 	// currently speaking address (for hiding in list view)
 	property string activeSpeakerAddress
@@ -83,50 +83,6 @@ Item {
 					Component.onCompleted: console.log(qmlName + " is " +($modelData ? $modelData.core.address : "-"))
 				}
 			}
-		}
-	}
-	Sticker {
-		id: preview
-		qmlName: 'P'
-		previewEnabled: true
-        visible: !sideStickers.visible && mainItem.callState !== LinphoneEnums.CallState.OutgoingProgress
-        && mainItem.callState !== LinphoneEnums.CallState.OutgoingRinging
-        && mainItem.callState !== LinphoneEnums.CallState.OutgoingInit
-		onVisibleChanged: console.log(visible + " : " +allDevices.count)
-        height: Math.round(180 * DefaultStyle.dp)
-        width: Math.round(300 * DefaultStyle.dp)
-		anchors.right: mainItem.right
-		anchors.bottom: mainItem.bottom
-        anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
-        anchors.bottomMargin: Math.round(10 * DefaultStyle.dp)
-		videoEnabled: preview.visible && mainItem.call && mainItem.call.core.localVideoEnabled
-		onVideoEnabledChanged: console.log("P : " +videoEnabled + " / " +visible +" / " +mainItem.call)
-		property var accountObj: UtilsCpp.findLocalAccountByAddress(mainItem.localAddress)
-        account: accountObj && accountObj.value || null
-		call: mainItem.call
-		displayAll: false
-		displayPresence: false
-
-		MovableMouseArea {
-			id: previewMouseArea
-			anchors.fill: parent
-			movableArea: mainItem
-            margin: Math.round(10 * DefaultStyle.dp)
-			function resetPosition(){
-				preview.anchors.right = mainItem.right
-				preview.anchors.bottom = mainItem.bottom
-				preview.anchors.rightMargin = previewMouseArea.margin
-				preview.anchors.bottomMargin = previewMouseArea.margin
-			}
-			onVisibleChanged: if(!visible){
-				resetPosition()
-			}
-			drag.target: preview
-			onDraggingChanged: if(dragging) {
-				preview.anchors.right = undefined
-				preview.anchors.bottom = undefined
-			}
-			onRequestResetPosition: resetPosition()
 		}
 	}
 }

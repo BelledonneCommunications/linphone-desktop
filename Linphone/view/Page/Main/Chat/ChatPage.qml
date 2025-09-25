@@ -195,7 +195,6 @@ AbstractMainPage {
                             Connections {
                                 target: mainItem
                                 function onSelectedChatGuiChanged() {
-                                    console.log("selected chat gui changed")
                                     chatListView.selectChat(mainItem.selectedChatGui)
                                 }
                                 function onOpenChatRequested(chat) {

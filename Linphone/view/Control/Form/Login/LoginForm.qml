@@ -68,7 +68,6 @@ ColumnLayout {
                     text: qsTr("assistant_account_login")
 					horizontalAlignment: Text.AlignHCenter
 					verticalAlignment: Text.AlignVCenter
-
 					font {
                         pixelSize: Typography.b1.pixelSize
                         weight: Typography.b1.weight
@@ -80,6 +79,7 @@ ColumnLayout {
 					implicitHeight: parent.height
 					Layout.alignment: Qt.AlignCenter
 					indicatorColor: DefaultStyle.grey_0
+					indicatorWidth: Math.round(25 * DefaultStyle.dp)
 				}
 				Connections {
 					target: LoginPageCpp

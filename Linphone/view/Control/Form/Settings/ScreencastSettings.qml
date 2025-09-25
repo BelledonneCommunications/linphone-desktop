@@ -100,21 +100,27 @@ ColumnLayout {
 		}
 	}
 	StackLayout {
+		id: stacklayout
 		currentIndex: bar.currentIndex
-		height: currentIndex === 0 ? screensLayout.contentHeight : windowsLayout.contentHeight
-		onHeightChanged: console.log("stacklayout height =====", height)
 		ListView{
 			id: screensLayout
             spacing: Math.round(16 * DefaultStyle.dp)
 			clip: true
 			Layout.fillWidth: true
-			height: contentHeight
+			height: visible ? contentHeight : 0
+			currentIndex: -1
+			onCurrentIndexChanged: {
+				mainItem.desc.core.screenSharingIndex = currentIndex
+			}
 			//property int selectedIndex
 			model: ScreenProxy{
 				id: screensList
 				mode: ScreenList.SCREENS
 			}
-			onVisibleChanged: if(visible) screensList.update()
+			onVisibleChanged: {
+				if(visible) screensList.update()
+				else currentIndex = -1
+			}
 			delegate: ScreenPreviewLayout {
 				horizontalMargin: Math.round((28 - 20 ) * DefaultStyle.dp) // 20 coming from CallsWindow panel
 				width: screensLayout.width
@@ -122,7 +128,6 @@ ColumnLayout {
 				screenIndex: index
 				onClicked: {//screensLayout.selectedIndex = index
 					screensLayout.currentIndex = index
-					mainItem.desc.core.screenSharingIndex = index
 					if( mainItem.conference.core.isLocalScreenSharing)
 						mainItem.call.core.videoSourceDescriptor = mainItem.desc
 				}
@@ -133,14 +138,20 @@ ColumnLayout {
 		GridView{
 			id: windowsLayout
 			//property int selectedIndex
-			Layout.preferredHeight: contentHeight
+			Layout.preferredHeight: visible ? contentHeight : 0
 			Layout.fillWidth: true
 			model: ScreenProxy{
 				id: windowsList
 				mode: ScreenList.WINDOWS
 			}
 			currentIndex: -1
-			onVisibleChanged: if(visible) windowsList.update()
+			onCurrentIndexChanged: {
+				mainItem.desc.core.windowId = model.getAt(currentIndex)? model.getAt(currentIndex).windowId : -1
+			}
+			onVisibleChanged: {
+				if(visible) windowsList.update()
+				else currentIndex = -1
+			}
 			cellWidth: width / 2
             cellHeight: Math.round((112 + 15) * DefaultStyle.dp)
 			clip: true
@@ -154,7 +165,6 @@ ColumnLayout {
 					screenIndex: index
 					onClicked: {
 						windowsLayout.currentIndex = index
-						mainItem.desc.core.windowId = $modelData.windowId
 						if( mainItem.conference.core.isLocalScreenSharing)
 								mainItem.call.core.videoSourceDescriptor = mainItem.desc
 					}

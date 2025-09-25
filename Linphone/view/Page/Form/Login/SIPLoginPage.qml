@@ -302,6 +302,7 @@ LoginLayout {
 								implicitHeight: parent.height
 								Layout.alignment: Qt.AlignCenter
 								indicatorColor: DefaultStyle.grey_0
+								indicatorWidth: Math.round(25 * DefaultStyle.dp)
 							}
 							Connections {
 								target: LoginPageCpp

@@ -175,6 +175,13 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 					}
 				});
 			});
+			mConfInfoModelConnection->makeConnectToCore(&ConferenceInfoCore::lCancelCreation, [this]() {
+				mConfInfoModelConnection->invokeToModel([this] {
+					if (mConferenceInfoModel) {
+						mConferenceInfoModel->setConferenceScheduler(nullptr);
+					}
+				});
+			});
 			mConfInfoModelConnection->makeConnectToCore(&ConferenceInfoCore::lDeleteConferenceInfo, [this]() {
 				mConfInfoModelConnection->invokeToModel([this] { mConferenceInfoModel->deleteConferenceInfo(); });
 			});
@@ -628,12 +635,6 @@ void ConferenceInfoCore::undo() {
 				conf->deleteLater();
 			});
 		});
-	}
-}
-
-void ConferenceInfoCore::cancelCreation() {
-	if (mConferenceInfoModel) {
-		mConferenceInfoModel->setConferenceScheduler(nullptr);
 	}
 }
 

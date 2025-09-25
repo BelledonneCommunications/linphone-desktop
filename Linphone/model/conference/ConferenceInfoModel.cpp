@@ -82,6 +82,8 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 			connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::invitationsSent, this,
 			        &ConferenceInfoModel::invitationsSent);
 			mConferenceSchedulerModel->setSelf(mConferenceSchedulerModel);
+		} else {
+			deleteConferenceInfo();
 		}
 	}
 }

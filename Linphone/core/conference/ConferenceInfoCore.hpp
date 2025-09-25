@@ -130,7 +130,6 @@ public:
 
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
-	Q_INVOKABLE void cancelCreation();
 
 	virtual void onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> &failedInvitations);
 
@@ -160,6 +159,7 @@ signals:
 	void invitationsSent();
 	void removed(ConferenceInfoCore *confInfo);
 
+	void lCancelCreation();
 	void lCancelConferenceInfo();
 	void lDeleteConferenceInfo(); // Remove completly this conference info from DB
 

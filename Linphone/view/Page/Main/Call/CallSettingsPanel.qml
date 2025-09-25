@@ -148,7 +148,6 @@ Control.Page {
 			contentItem: Loader {
 				id: contentLoader
 				width: contentcontrol.width - contentControl.rightPadding
-				onHeightChanged: console.log("height current item in loader", height, contentControl.height, scrollview.height)
 			}
 		}
 	}

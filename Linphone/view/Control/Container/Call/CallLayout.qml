@@ -16,6 +16,7 @@ Item {
 	property bool callTerminatedByUser: false
 	property bool callStarted: call? call.core.isStarted : false
 	readonly property var callState: call?.core.state
+	onCallStateChanged: if (callState === LinphoneEnums.CallState.End || callState === LinphoneEnums.CallState.Released) preview.visible = false
 	property int conferenceLayout: call ? call.core.conferenceVideoLayout : LinphoneEnums.ConferenceLayout.ActiveSpeaker
 	property int participantDeviceCount: conference ? conference.core.participantDeviceCount : -1
 	onParticipantDeviceCountChanged: {
@@ -77,6 +78,51 @@ Item {
 			: activeSpeakerComponent
 	}
 
+	Sticker {
+		id: preview
+		qmlName: 'P'
+		previewEnabled: true
+        visible: (callLayout.sourceComponent === activeSpeakerComponent || callLayout.sourceComponent === waitingForOthersComponent)
+		&& mainItem.callState !== LinphoneEnums.CallState.OutgoingProgress
+        && mainItem.callState !== LinphoneEnums.CallState.OutgoingRinging
+        && mainItem.callState !== LinphoneEnums.CallState.OutgoingInit
+        height: Math.round(180 * DefaultStyle.dp)
+        width: Math.round(300 * DefaultStyle.dp)
+		anchors.right: mainItem.right
+		anchors.bottom: mainItem.bottom
+        anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
+        anchors.bottomMargin: Math.round(10 * DefaultStyle.dp)
+		videoEnabled: preview.visible && mainItem.call && mainItem.call.core.localVideoEnabled
+		onVideoEnabledChanged: console.log("P : " +videoEnabled + " / " +visible +" / " +mainItem.call)
+		property var accountObj: UtilsCpp.findLocalAccountByAddress(mainItem.localAddress)
+        account: accountObj && accountObj.value || null
+		call: mainItem.call
+		displayAll: false
+		displayPresence: false
+
+		MovableMouseArea {
+			id: previewMouseArea
+			anchors.fill: parent
+			movableArea: mainItem
+            margin: Math.round(10 * DefaultStyle.dp)
+			function resetPosition(){
+				preview.anchors.right = mainItem.right
+				preview.anchors.bottom = mainItem.bottom
+				preview.anchors.rightMargin = previewMouseArea.margin
+				preview.anchors.bottomMargin = previewMouseArea.margin
+			}
+			onVisibleChanged: if(!visible){
+				resetPosition()
+			}
+			drag.target: preview
+			onDraggingChanged: if(dragging) {
+				preview.anchors.right = undefined
+				preview.anchors.bottom = undefined
+			}
+			onRequestResetPosition: resetPosition()
+		}
+	}
+
 	Component {
 		id: waitingForOthersComponent
 		Rectangle {
@@ -127,9 +173,17 @@ Item {
 	Component{
 		id: activeSpeakerComponent
 		ActiveSpeakerLayout{
+			id: activeSpeaker
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			call: mainItem.call
+
+			Binding {
+				target: preview
+				property: "visible"
+				when: activeSpeaker.sideStickersVisible
+				value: false
+			}
 		}
 	}
 	Component{

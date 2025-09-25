@@ -546,7 +546,13 @@ AbstractWindow {
                 }
 
                 Control.Control {
-                    visible: mainWindow.call ? !!mainWindow.conference ? mainWindow.conference.core.isRecording : (mainWindow.call.core.recording || mainWindow.call.core.remoteRecording) : false
+                    id: screenSharingOrRecordBanner
+                    property var isScreenSharing: mainWindow.conference && mainWindow.conference.core.isLocalScreenSharing 
+                    visible: mainWindow.call
+                        ? !!mainWindow.conference 
+                            ? mainWindow.conference.core.isRecording || isScreenSharing//mainWindow.conference.core.isLocalScreenSharing
+                            : (mainWindow.call.core.recording || mainWindow.call.core.remoteRecording) 
+                        : false
                     anchors.centerIn: parent
                     leftPadding: Math.round(14 * DefaultStyle.dp)
                     rightPadding: Math.round(14 * DefaultStyle.dp)
@@ -562,36 +568,51 @@ AbstractWindow {
                         RowLayout {
                             spacing: Math.round(15 * DefaultStyle.dp)
                             EffectImage {
-                                imageSource: AppIcons.recordFill
-                                colorizationColor: DefaultStyle.danger_500main
+                                imageSource: screenSharingOrRecordBanner.isScreenSharing
+                                    ? AppIcons.screencast
+                                    : AppIcons.recordFill
+                                colorizationColor: screenSharingOrRecordBanner.isScreenSharing
+                                    ? DefaultStyle.grey_0
+                                    : DefaultStyle.danger_500main
                                 Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
                                 Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
                             }
                             Text {
-                                color: DefaultStyle.danger_500main
-                                font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                                color: screenSharingOrRecordBanner.isScreenSharing
+                                    ? DefaultStyle.grey_0
+                                    : DefaultStyle.danger_500main
+                                font: Typography.b1
                                 text: mainWindow.call
-                                    ? mainWindow.call.core.recording
-                                        ? mainWindow.conference
-                                          //: "Vous enregistrez la réunion"
-                                            ? qsTr("conference_user_is_recording")
-                                              //: "Vous enregistrez l'appel"
-                                            : qsTr("call_user_is_recording")
-                                        : mainWindow.conference
-                                            //: "Un participant enregistre la réunion"
-                                            ? qsTr("conference_remote_is_recording")
-                                            //: "%1 enregistre l'appel"
-                                            : qsTr("call_remote_recording").arg(mainWindow.call.core.remoteName)
-                                    : ""
+                                        ? screenSharingOrRecordBanner.isScreenSharing
+                                            //: "You are sharing your screen"
+                                            ? qsTr("conference_user_is_sharing_screen")
+                                            : mainWindow.call.core.recording
+                                                ? mainWindow.conference
+                                                    //: "You are recording the meeting"
+                                                    ? qsTr("conference_user_is_recording")
+                                                    //: "You are recording the call"
+                                                    : qsTr("call_user_is_recording")
+                                                : mainWindow.conference
+                                                    //: "Someone is recording the meeting"
+                                                    ? qsTr("conference_remote_is_recording")
+                                                    //: "%1 is recording the call"
+                                                    : qsTr("call_remote_recording").arg(mainWindow.call.core.remoteName)
+                                        : ""
                             }
                         }
-                        BigButton {
+                        MediumButton {
                             visible: mainWindow.call
-                                     && mainWindow.call.core.recording
-                            //: "Arrêter l'enregistrement"
-                            text: qsTr("call_stop_recording")
+                                     && mainWindow.call.core.recording || screenSharingOrRecordBanner.isScreenSharing
+                            //: "Stop recording"
+                            text: screenSharingOrRecordBanner.isScreenSharing
+                            ? qsTr("call_stop_recording")
+                            //: "Stop sharing"
+                            : qsTr("call_stop_screen_sharing")
                             style: ButtonStyle.main
-                            onPressed: mainWindow.call.core.lStopRecording()
+                            onPressed: {
+                                if (screenSharingOrRecordBanner.isScreenSharing) mainWindow.conference.core.lToggleScreenSharing()
+                                else mainWindow.call.core.lStopRecording()
+                            }
                         }
                     }
                 }
@@ -719,9 +740,9 @@ AbstractWindow {
                         width: parent.width
                         height: rightPanel.contentItemHeight
                         Keys.onEscapePressed: event => {
-                                                rightPanel.visible = false
-                                                event.accepted = true
-                                            }
+                            rightPanel.visible = false
+                            event.accepted = true
+                        }
                         groupCallVisible: false
                         displayCurrentCalls: true
                         searchBarColor: DefaultStyle.grey_0
@@ -976,7 +997,6 @@ AbstractWindow {
                 Control.Control {
                     objectName: "screencastPanel"
                     width: parent.width
-                    height: contentChildren.height
                     Keys.onEscapePressed: event => {
                         rightPanel.visible = false
                         event.accepted = true
@@ -986,6 +1006,7 @@ AbstractWindow {
                         anchors.topMargin: Math.round(16 * DefaultStyle.dp)
                         width: parent.width
                         call: mainWindow.call
+                        onIsLocalScreenSharingChanged: if (isLocalScreenSharing) rightPanel.visible = false
                     }
                 }
             }

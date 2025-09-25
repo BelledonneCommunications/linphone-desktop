@@ -499,6 +499,7 @@ FocusScope {
                     chat: mainItem.chat
                     selectedFilesCount: contents.count
                     emojiPicker: emojiPickerPopup
+                    callOngoing: mainItem.call != null
                     onChatChanged: {
                         if (chat) messageSender.text = mainItem.chat.core.sendingText
                     }

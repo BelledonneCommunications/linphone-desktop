@@ -22,6 +22,9 @@ Control.Control {
 	property bool isEphemeral : false
 	property bool emojiVisible: false
 
+	// disable record button if call ongoing
+	property bool callOngoing: false
+
     property ChatGui chat
 	
 	// ---------------------------------------------------------------------------
@@ -73,11 +76,6 @@ Control.Control {
 		Component {
 			id: textAreaComp
 			RowLayout {
-				// disable record button if call ongoing
-				CallProxy {
-					id: callsModel
-					sourceModel: AppCpp.calls
-				}
 				spacing: Math.round(16 * DefaultStyle.dp)
 				BigButton {
 					id: emojiPickerButton
@@ -183,11 +181,11 @@ Control.Control {
 							spacing: 0
 							BigButton {
 								id: recordButton
-								enabled: !callsModel.currentCall
 								ToolTip.visible: !enabled && hovered
 								//: Cannot record a message while a call is ongoing
 								ToolTip.text: qsTr("cannot_record_while_in_call_tooltip")
-								visible: sendingTextArea.text.length === 0 && mainItem.selectedFilesCount === 0
+								enabled: !mainItem.callOngoing
+								visible: !mainItem.callOngoing && sendingTextArea.text.length === 0 && mainItem.selectedFilesCount === 0
 								style: ButtonStyle.noBackground
 								hoverEnabled: true
 								icon.source: AppIcons.microphone
