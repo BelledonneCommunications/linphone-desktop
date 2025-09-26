@@ -94,6 +94,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 					connectItem(item);
 					mList << item.template objectCast<QObject>();
 				}
+				updateHaveCurrentDate();
 				endResetModel();
 				delete items;
 			});

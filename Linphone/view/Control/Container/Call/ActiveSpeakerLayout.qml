@@ -25,10 +25,10 @@ Item {
 	property string activeSpeakerAddress
 
 	property ParticipantDeviceProxy participantDevices : ParticipantDeviceProxy {
-			id: allDevices
-			qmlName: "AS"
-			onCountChanged: console.log("Device count changed : " +count)
-			Component.onCompleted: console.log("Loaded : " +allDevices)
+		id: allDevices
+		qmlName: "AS"
+		onCountChanged: console.log("Device count changed : " +count)
+		Component.onCompleted: console.log("Loaded : " +allDevices)
 	}
 
 	RowLayout{

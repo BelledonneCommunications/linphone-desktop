@@ -184,7 +184,7 @@ ListView {
             Avatar {
                 property var contactObj: modelData ? UtilsCpp.findFriendByAddress(modelData.core.peerAddress) : null
                 contact: contactObj?.value || null
-                displayNameVal: modelData.core.avatarUri
+                displayNameVal: modelData && modelData.core.avatarUri || ""
                 secured: modelData?.core.isSecured || false
                 Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)

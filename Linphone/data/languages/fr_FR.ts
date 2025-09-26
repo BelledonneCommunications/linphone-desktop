@@ -874,42 +874,42 @@
 <context>
     <name>CallLayout</name>
     <message>
-        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="58"/>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="69"/>
         <source>meeting_event_conference_destroyed</source>
         <extracomment>&quot;Vous avez quitté la conférence&quot;</extracomment>
         <translation>Vous avez quitté la conférence</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="61"/>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="72"/>
         <source>call_ended_by_user</source>
         <extracomment>&quot;Vous avez terminé l&apos;appel&quot;</extracomment>
         <translation>Vous avez terminé l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="64"/>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="75"/>
         <source>call_ended_by_remote</source>
         <extracomment>&quot;Votre correspondant a terminé l&apos;appel&quot;</extracomment>
         <translation>Votre correspondant a terminé l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="138"/>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="151"/>
         <source>conference_call_empty</source>
         <extracomment>&quot;En attente d&apos;autres participants…&quot;</extracomment>
         <translation>En attente d&apos;autres participants…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="156"/>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="169"/>
         <source>conference_share_link_title</source>
         <extracomment>&quot;Partager le lien&quot;</extracomment>
         <translation>Partager le lien</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="162"/>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="175"/>
         <source>copied</source>
         <translation>Copié</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="164"/>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="177"/>
         <source>information_popup_meeting_address_copied_to_clipboard</source>
         <extracomment>Le lien de la réunion a été copié dans le presse-papier</extracomment>
         <translation>Le lien de la réunion a été copié dans le presse-papier</translation>
@@ -2247,22 +2247,35 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <translation>Créer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="314"/>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="318"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="306"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="324"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="328"/>
         <source>information_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="316"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="308"/>
+        <source>information_popup_chat_creation_failed_message</source>
+        <extracomment>&quot;La création a échoué&quot;</extracomment>
+        <translation>La création a échoué</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="326"/>
         <source>group_chat_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné au groupe</extracomment>
         <translation>Un nom doit être donné au groupe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="320"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="330"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
         <translation>Vous n&apos;êtes pas connecté</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="334"/>
+        <source>chat_creation_in_progress</source>
+        <extracomment>Creation de la conversation en cours …</extracomment>
+        <translation>Création de la conversation en cours…</translation>
     </message>
 </context>
 <context>
@@ -4930,13 +4943,13 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <translation>Écran %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="183"/>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="178"/>
         <source>stop</source>
         <extracomment>&quot;Stop</extracomment>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="185"/>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="180"/>
         <source>share</source>
         <extracomment>&quot;Partager&quot;</extracomment>
         <translation>Partager</translation>

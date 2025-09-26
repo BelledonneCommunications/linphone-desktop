@@ -109,10 +109,6 @@ ColumnLayout {
 			Layout.fillWidth: true
 			height: visible ? contentHeight : 0
 			currentIndex: -1
-			onCurrentIndexChanged: {
-				mainItem.desc.core.screenSharingIndex = currentIndex
-			}
-			//property int selectedIndex
 			model: ScreenProxy{
 				id: screensList
 				mode: ScreenList.SCREENS
@@ -128,8 +124,9 @@ ColumnLayout {
 				screenIndex: index
 				onClicked: {//screensLayout.selectedIndex = index
 					screensLayout.currentIndex = index
+					mainItem.desc.core.screenSharingIndex = index
 					if( mainItem.conference.core.isLocalScreenSharing)
-						mainItem.call.core.videoSourceDescriptor = mainItem.desc
+							mainItem.call.core.videoSourceDescriptor = mainItem.desc
 				}
 				selected: mainItem.desc.core.screenSharingIndex === index
 			}
@@ -145,9 +142,6 @@ ColumnLayout {
 				mode: ScreenList.WINDOWS
 			}
 			currentIndex: -1
-			onCurrentIndexChanged: {
-				mainItem.desc.core.windowId = model.getAt(currentIndex)? model.getAt(currentIndex).windowId : -1
-			}
 			onVisibleChanged: {
 				if(visible) windowsList.update()
 				else currentIndex = -1
@@ -165,8 +159,9 @@ ColumnLayout {
 					screenIndex: index
 					onClicked: {
 						windowsLayout.currentIndex = index
+						mainItem.desc.core.windowId = $modelData.windowId
 						if( mainItem.conference.core.isLocalScreenSharing)
-								mainItem.call.core.videoSourceDescriptor = mainItem.desc
+							mainItem.call.core.videoSourceDescriptor = mainItem.desc
 					}
 					selected: mainItem.desc.core.windowId == $modelData.windowId
 				}

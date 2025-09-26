@@ -19,6 +19,7 @@ Item {
 	onCallStateChanged: if (callState === LinphoneEnums.CallState.End || callState === LinphoneEnums.CallState.Released) preview.visible = false
 	property int conferenceLayout: call ? call.core.conferenceVideoLayout : LinphoneEnums.ConferenceLayout.ActiveSpeaker
 	property int participantDeviceCount: conference ? conference.core.participantDeviceCount : -1
+	property int lastConfLayoutBeforeSharing: -1
 	onParticipantDeviceCountChanged: {
 		setConferenceLayout()
 	}
@@ -33,10 +34,21 @@ Item {
 		function onIsScreenSharingEnabledChanged() {
 			setConferenceLayout()
 		}
+		function onIsLocalScreenSharingChanged() {
+			if (mainItem.conference.core.isLocalScreenSharing) {
+				mainItem.lastConfLayoutBeforeSharing = mainItem.conferenceLayout
+			}
+			setConferenceLayout()
+		}
 	}
 
 	function setConferenceLayout() {
 		callLayout.sourceComponent = undefined	// unload old view before opening the new view to avoid conflicts in Video UI.
+		// If stop sharing screen, reset conference layout to the previous one
+		if (mainItem.conference && !mainItem.conference.core.isLocalScreenSharing && mainItem.lastConfLayoutBeforeSharing !== -1) {
+			mainItem.conferenceLayout = mainItem.lastConfLayoutBeforeSharing
+			mainItem.lastConfLayoutBeforeSharing = -1
+		}
 		callLayout.sourceComponent = conference
 			? conference.core.isScreenSharingEnabled || (mainItem.conferenceLayout == LinphoneEnums.ConferenceLayout.ActiveSpeaker && participantDeviceCount > 1)
 				? activeSpeakerComponent
@@ -86,6 +98,8 @@ Item {
 		&& mainItem.callState !== LinphoneEnums.CallState.OutgoingProgress
         && mainItem.callState !== LinphoneEnums.CallState.OutgoingRinging
         && mainItem.callState !== LinphoneEnums.CallState.OutgoingInit
+		&& !mainItem.conference?.core.isScreenSharingEnabled
+		&& mainItem.participantDeviceCount <= 2
         height: Math.round(180 * DefaultStyle.dp)
         width: Math.round(300 * DefaultStyle.dp)
 		anchors.right: mainItem.right
@@ -178,12 +192,6 @@ Item {
 			Layout.fillHeight: true
 			call: mainItem.call
 
-			Binding {
-				target: preview
-				property: "visible"
-				when: activeSpeaker.sideStickersVisible
-				value: false
-			}
 		}
 	}
 	Component{

@@ -297,7 +297,14 @@ AbstractMainPage {
                 target: groupChat?.core || null
                 function onChatRoomStateChanged() {
                     if (chatCreationLayout.groupChat.core.state === LinphoneEnums.ChatRoomState.Created) {
+                        mainWindow.closeLoadingPopup()
                         mainItem.selectedChatGui = chatCreationLayout.groupChat
+                    } else if (chatCreationLayout.groupChat.core.state === LinphoneEnums.ChatRoomState.CreationFailed) {
+                        mainWindow.closeLoadingPopup()
+                        mainWindow.showInformationPopup(qsTr("information_popup_error_title"),
+                                                        //: "La création a échoué"
+                                                        qsTr("information_popup_chat_creation_failed_message"), false)
+                        chatCreationLayout.groupChat.core.lDelete()
                     }
                 }
             }
@@ -309,6 +316,7 @@ AbstractMainPage {
                 listStackView.pop()
                 listStackView.currentItem?.forceActiveFocus()
             }
+
             onGroupCreationRequested: {
                 if (groupName.text.length === 0) {
                     UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
@@ -320,6 +328,10 @@ AbstractMainPage {
                                 qsTr("group_call_error_not_connected"), false)
                 } else {
                     console.log("create group chat")
+                    //: Creation de la conversation en cours …
+                    mainWindow.showLoadingPopup(qsTr("chat_creation_in_progress"), true, function () {
+                        if (chatCreationLayout.groupChat) chatCreationLayout.groupChat.core.lDelete()
+                    })
                     chatCreationLayout.groupChatObj = UtilsCpp.createGroupChat(chatCreationLayout.groupName.text, addParticipantsLayout.selectedParticipants)
                 }
             }
@@ -344,7 +356,7 @@ AbstractMainPage {
             }
             SelectedChatView {
                 id: selectedChatView
-                visible: chat && (chat.core.isBasic || chat.core.conferenceJoined)
+                visible: chat != undefined //&& (chat.core.isBasic || chat.core.conferenceJoined)
                 anchors.fill: parent
                 chat: mainItem.selectedChatGui ? mainItem.selectedChatGui : null
                 onChatChanged: {
