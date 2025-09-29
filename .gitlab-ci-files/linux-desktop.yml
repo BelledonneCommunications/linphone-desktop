@@ -2,7 +2,7 @@
 # BUILD
 #################################################
 
-.build_all_linux_script: &build_all_linux_script |
+.common_linux: &common_linux |
   cmake --version
   export CC=$CC
   export CXX=$CXX
@@ -11,20 +11,69 @@
   echo $CMAKE_GENERATOR
   echo $DEFAULT_LINUX_CMAKE_OPTIONS
   echo $CMAKE_SANITIZER_OPTIONS
-  cd build
-  eval "$(qtchooser -qt=$QT_LINUX_VER -print-env)"
+  eval "$(qtchooser -qt=$QT_LINUX_VER-${QT_OPEN_SOURCE_DIRECTORY:-proprietary} -print-env)"
   export PATH=${QTTOOLDIR}:$PATH
   export Qt6_DIR=${QTLIBDIR}/cmake/Qt6
   echo "Using Qt $QT_LINUX_VER at ${QTLIBDIR}"
+  cd build
+
+.build_all_linux_script: &build_all_linux_script |
   cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE -DLINPHONEAPP_APPLICATION_NAME="$APPLICATION_NAME" -DLINPHONEAPP_EXECUABLE_NAME="$EXECUTABLE_NAME" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
   cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
-  
+
+.common_signed_linux: &common_signed_linux |
+  echo "$GPG_SIGNING_PUB" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
+  gpg --import file.key
+  rm -f file.key
+  echo "$GPG_SIGNING_KEY" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
+  base64 -w 0 file.key | base64 -d | gpg --import --no-tty --batch --yes
+  rm -f file.key
+
+.deploy_linux: &deploy_linux |
+   rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
+   |-
+    if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
+      rsync -rlv build/OUTPUT/Packages/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+      rsync -rlv build/OUTPUT/Packages/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+    fi
+
 .linux-desktop:
   stage: build
   extends: .linux-prepare
   script:
+    - *common_linux
     - *build_all_linux_script
   artifacts:
     paths:
       - build/OUTPUT
     expire_in: 1 week
+
+.linux-sign-build:
+  extends: .linux-desktop
+  variables:
+    CMAKE_OPTIONS: -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=OFF
+    APPIMAGETOOL_SIGN_PASSPHRASE: $GPG_SIGNING_PASS
+  script:
+    - *common_signed_linux
+    - *common_linux
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE -DLINPHONEAPP_APPLICATION_NAME="$APPLICATION_NAME" -DLINPHONEAPP_EXECUABLE_NAME="$EXECUTABLE_NAME" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS
+    - cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
+
+.linux-sign-package:
+  stage: package
+  extends: .linux-desktop
+  variables:
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$LINUX_PLATFORM/$APP_FOLDER -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=OFF
+    APPIMAGETOOL_SIGN_PASSPHRASE: $GPG_SIGNING_PASS
+  script:
+    - *common_signed_linux
+    - *common_linux
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE -DLINPHONEAPP_APPLICATION_NAME="$APPLICATION_NAME" -DLINPHONEAPP_EXECUTABLE_NAME="$EXECUTABLE_NAME" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS
+    - cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
+
+
+.linux-deploy:
+  stage: deploy
+  tags: [ "deploy" ]
+  script:
+    - *deploy_linux
