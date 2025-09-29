@@ -53,41 +53,17 @@ ubuntu2204-ninja-clang-small:
   allow_failure: true
   extends: ubuntu2204-ninja-clang
 
-ubuntu2204-makefile-gcc:
+ubuntu2204-makefile-gcc-signed:
   rules:
     - !reference [.rules-merge-request-manual, rules]
     - if: $NIGHTLY_MASTER
     - if: $DEPLOY_PLUGINS
   variables:
-    CMAKE_OPTIONS: -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     CMAKE_GENERATOR: Unix Makefiles
     CC: gcc
     CXX: g++
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
-    APPIMAGETOOL_SIGN_PASSPHRASE: $GPG_SIGNING_PASS
-  script:
-    - echo "$GPG_SIGNING_PUB" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
-    - gpg --import file.key
-    - rm -f file.key
-    - echo "$GPG_SIGNING_KEY" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
-    - base64 -w 0 file.key | base64 -d | gpg --import --no-tty --batch --yes
-    - rm -f file.key
-    - cmake --version
-    - export CC=$CC
-    - export CXX=$CXX
-    - mkdir -p build/OUTPUT
-    - echo $CI_BUILD_TYPE
-    - echo $CMAKE_GENERATOR
-    - echo $DEFAULT_LINUX_CMAKE_OPTIONS
-    - echo $CMAKE_SANITIZER_OPTIONS
-    - eval "$(qtchooser -qt=$QT_LINUX_VER -print-env)"
-    - export PATH=${QTTOOLDIR}:$PATH
-    - export Qt6_DIR=${QTLIBDIR}/cmake/Qt6
-    - echo "Using Qt $QT_LINUX_VER at ${QTLIBDIR}"
-    - cd build
-    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE -DLINPHONEAPP_APPLICATION_NAME="$APPLICATION_NAME" -DLINPHONEAPP_EXECUABLE_NAME="$EXECUTABLE_NAME" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS
-    - cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
-  extends: .linux-desktop
+  extends: .linux-sign-build
   <<: *docker_image_platform_and_runner_tag
 
 #################################################
@@ -95,7 +71,6 @@ ubuntu2204-makefile-gcc:
 #################################################
 
 ubuntu2204-makefile-gcc-package:
-  stage: package
   tags: [ "docker" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-ubuntu-22-04-lts:$UBUNTU_2204_IMAGE_VERSION
   needs: []
@@ -105,67 +80,32 @@ ubuntu2204-makefile-gcc-package:
     - if: $PACKAGE_LINUX
     - if: $DEPLOY_LINUX
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$LINUX_PLATFORM/$APP_FOLDER -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     CMAKE_GENERATOR: Unix Makefiles
     CC: gcc
     CXX: g++
-    APPIMAGETOOL_SIGN_PASSPHRASE: $GPG_SIGNING_PASS
-  extends: .linux-desktop
-  script:
-    - echo "$GPG_SIGNING_PUB" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
-    - gpg --import file.key
-    - rm -f file.key
-    - echo "$GPG_SIGNING_KEY" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
-    - base64 -w 0 file.key | base64 -d | gpg --import --no-tty --batch --yes
-    - rm -f file.key
-    - cmake --version
-    - export CC=$CC
-    - export CXX=$CXX
-    - mkdir -p build/OUTPUT
-    - echo $CI_BUILD_TYPE
-    - echo $CMAKE_GENERATOR
-    - echo $DEFAULT_LINUX_CMAKE_OPTIONS
-    - echo $CMAKE_SANITIZER_OPTIONS
-    - eval "$(qtchooser -qt=$QT_LINUX_VER -print-env)"
-    - export PATH=${QTTOOLDIR}:$PATH
-    - cd build
-    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE -DLINPHONEAPP_APPLICATION_NAME="$APPLICATION_NAME" -DLINPHONEAPP_EXECUTABLE_NAME="$EXECUTABLE_NAME" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS
-    - cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
-  artifacts:
-    paths:
-      - build/OUTPUT/*
-    expire_in: 1 week
+  extends: .linux-sign-package
 
 #################################################
 # Deploy - Nightly
 #################################################
 
 ubuntu2204-makefile-gcc-deploy:
- stage: deploy
- tags: [ "deploy" ]
- needs:
-   - ubuntu2204-makefile-gcc-package
- only:
+  extends: .linux-deploy
+  needs:
+    - ubuntu2204-makefile-gcc-package
+  only:
     variables:
       - $NIGHTLY_MASTER
       - $DEPLOY_LINUX
- script:
-   - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
-   - |-
-     if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
-       rsync -rlv build/OUTPUT/Packages/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
-       rsync -rlv build/OUTPUT/Packages/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
-     fi
-
 
 ubuntu2204-makefile-gcc-plugins-deploy:
- stage: deploy
- tags: [ "deploy" ]
- needs:
-   - ubuntu2204-makefile-gcc
- only:
+  stage: deploy
+  tags: [ "deploy" ]
+  needs:
+    - ubuntu2204-makefile-gcc
+  only:
     variables:
       - $DEPLOY_PLUGINS
- script:
-   - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER/plugins/
+  script:
+    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER/plugins/
 
