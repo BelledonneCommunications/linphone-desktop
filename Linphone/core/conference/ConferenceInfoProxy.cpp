@@ -76,6 +76,7 @@ bool ConferenceInfoProxy::SortFilterList::filterAcceptsRow(int sourceRow, const 
 	auto list = qobject_cast<ConferenceInfoList *>(sourceModel());
 	auto ciCore = list->getAt<ConferenceInfoCore>(sourceRow);
 	if (ciCore) {
+		if (ciCore->getDuration() == 0) return false;
 		bool searchTextInSubject = false;
 		bool searchTextInParticipant = false;
 		if (ciCore->getSubject().contains(mFilterText, Qt::CaseInsensitive)) searchTextInSubject = true;

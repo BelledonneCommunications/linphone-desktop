@@ -818,7 +818,6 @@ AbstractMainPage {
 							Layout.fillWidth: true
 							font {
                                 pixelSize: Math.round(14 * DefaultStyle.dp)
-								capitalization: Font.Capitalize
 							}
 						}
 					}

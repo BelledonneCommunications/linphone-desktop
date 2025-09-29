@@ -255,7 +255,7 @@ QVariantList SettingsModel::getCaptureDevices() const {
 	shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
 	QVariantList list;
 
-	for (const auto &device : core->getAudioDevices()) {
+	for (const auto &device : core->getExtendedAudioDevices()) {
 		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityRecord)) {
 			list << ToolModel::createVariant(device);
 		} else if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityAll)) {
@@ -270,7 +270,7 @@ QVariantList SettingsModel::getPlaybackDevices() const {
 	shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
 	QVariantList list;
 
-	for (const auto &device : core->getAudioDevices()) {
+	for (const auto &device : core->getExtendedAudioDevices()) {
 		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityPlay)) {
 			list << ToolModel::createVariant(device);
 		} else if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityAll)) {
@@ -286,7 +286,7 @@ QVariantList SettingsModel::getRingerDevices() const {
 	shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
 	QVariantList list;
 
-	for (const auto &device : core->getAudioDevices()) {
+	for (const auto &device : core->getExtendedAudioDevices()) {
 		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityPlay))
 			list << ToolModel::createVariant(device);
 	}

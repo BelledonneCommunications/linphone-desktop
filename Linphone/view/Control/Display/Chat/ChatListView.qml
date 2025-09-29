@@ -389,7 +389,7 @@ ListView {
                     }
                     ColumnLayout {
                         spacing: parent.spacing
-                        visible: modelData && !modelData.core.isReadOnly && modelData.core.isGroupChat
+                        visible: modelData && !modelData.core.isReadOnly && modelData.core.isGroupChat || false
                         Rectangle {
                             Layout.fillWidth: true
                             Layout.preferredHeight: Math.min(1, Math.round(1 * DefaultStyle.dp))

@@ -78,10 +78,10 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			}
 			items->push_back(nullptr); // Add Dummy conference for today
 			for (auto conferenceInfo : conferenceInfos) {
-				if (conferenceInfo->getState() == linphone::ConferenceInfo::State::Cancelled) {
-					auto myAddress = defaultAccount->getParams()->getIdentityAddress();
-					if (!myAddress || myAddress->weakEqual(conferenceInfo->getOrganizer())) continue;
-				}
+				// if (conferenceInfo->getState() == linphone::ConferenceInfo::State::Cancelled) {
+				// 	auto myAddress = defaultAccount->getParams()->getIdentityAddress();
+				// 	if (!myAddress || myAddress->weakEqual(conferenceInfo->getOrganizer())) continue;
+				// }
 				auto confInfoCore = build(conferenceInfo);
 				// Cancelled conference organized ourself me must be hidden
 				if (confInfoCore) {

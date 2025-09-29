@@ -348,6 +348,7 @@ QString Utils::formatElapsedTime(int seconds, bool dotsSeparator) {
 }
 
 QString Utils::formatDate(QDateTime date, bool includeTime, bool includeDateIfToday, QString format) {
+	if (!date.isValid()) return QString();
 	date = getOffsettedUTC(date);
 	QString dateDay;
 	//: "Aujourd'hui"

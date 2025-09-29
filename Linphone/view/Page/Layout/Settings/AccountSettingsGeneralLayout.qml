@@ -258,7 +258,7 @@ AbstractSettingsLayout {
                     Component.onCompleted: loading = true
 					model: AccountDeviceProxy {
 						id: accountDeviceProxy
-						account: model
+						account: mainItem.model
                         onDevicesSet: devices.loading = false;
                         onRequestError: (errorMessage) => {
                             devices.loading = false;
@@ -329,6 +329,7 @@ AbstractSettingsLayout {
 									font: Typography.p2
 								}
 								EffectImage {
+									visible: dateText.lastDate != ""
                                     Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
                                     Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
 									imageSource: AppIcons.calendarBlank
@@ -336,11 +337,17 @@ AbstractSettingsLayout {
 									fillMode: Image.PreserveAspectFit
 								}
 								Text {
-									text: UtilsCpp.formatDate(modelData.core.lastUpdateTimestamp,false)
+									id: dateText
+									property string lastDate: UtilsCpp.formatDate(modelData.core.lastUpdateTimestamp,false)
+									text: lastDate != ""
+										? lastDate
+										//: "No information"
+										: qsTr("device_last_updated_time_no_info")
 									color: DefaultStyle.main2_600
 									font: Typography.p1
 								}
 								EffectImage {
+									visible: dateText.lastDate != ""
                                     Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
                                     Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
 									imageSource: AppIcons.clock
@@ -348,6 +355,7 @@ AbstractSettingsLayout {
 									fillMode: Image.PreserveAspectFit
 								}
 								Text {
+									visible: dateText.lastDate != ""
 									text: UtilsCpp.formatTime(modelData.core.lastUpdateTimestamp)
 									color: DefaultStyle.main2_600
 									font: Typography.p1
