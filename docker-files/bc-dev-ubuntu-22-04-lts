@@ -95,8 +95,8 @@ RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt/opensou
 
 RUN sudo chown -R bc:bc /opt/Qt/
 
-RUN qtchooser -install $QT_VERSION /opt/Qt/opensource/$QT_VERSION/gcc_64/bin/qmake
-RUN qtchooser -install $QT6_VERSION /opt/Qt/opensource/$QT6_VERSION/gcc_64/bin/qmake
+RUN qtchooser -install "$QT_VERSION-opensource" /opt/Qt/opensource/$QT_VERSION/gcc_64/bin/qmake
+RUN qtchooser -install "$QT6_VERSION-opensource" /opt/Qt/opensource/$QT6_VERSION/gcc_64/bin/qmake
 
 # Download QT official installer for proprietary versions
 # -O : name the destination file after the remote file name, in the current directory
@@ -149,9 +149,19 @@ RUN /opt/Qt/proprietary/MaintenanceTool \
   --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
   install qt.qt6.683.linux_gcc_64 qt.qt6.683.addons.qtnetworkauth qt.qt6.683.addons.qtquick3d qt.qt6.683.addons.qtmultimedia qt.qt6.683.addons.qt5compat qt.qt6.683.addons.qtshadertools
 
-RUN qtchooser -install 5.15.19 /opt/Qt/proprietary/5.15.19/gcc_64/bin/qmake
-RUN qtchooser -install 5.15.14 /opt/Qt/proprietary/5.15.14/gcc_64/bin/qmake
-RUN qtchooser -install 6.8.1 /opt/Qt/proprietary/6.8.1/gcc_64/bin/qmake
-RUN qtchooser -install 6.8.3 /opt/Qt/proprietary/6.8.3/gcc_64/bin/qmake
+# # Install Qt 6.9.1 proprietary
+RUN /opt/Qt/proprietary/MaintenanceTool \
+  --accept-licenses \
+  --accept-obligations \
+  --confirm-command \
+  --root "/opt/Qt/proprietary" \
+  --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
+  install qt.qt6.691.linux_gcc_64 qt.qt6.691.addons.qtnetworkauth qt.qt6.691.addons.qtquick3d qt.qt6.691.addons.qtmultimedia qt.qt6.691.addons.qt5compat qt.qt6.691.addons.qtshadertools
+
+RUN qtchooser -install 5.15.19-proprietary /opt/Qt/proprietary/5.15.19/gcc_64/bin/qmake
+RUN qtchooser -install 5.15.14-proprietary /opt/Qt/proprietary/5.15.14/gcc_64/bin/qmake
+RUN qtchooser -install 6.8.1-proprietary /opt/Qt/proprietary/6.8.1/gcc_64/bin/qmake
+RUN qtchooser -install 6.8.3-proprietary /opt/Qt/proprietary/6.8.3/gcc_64/bin/qmake
+RUN qtchooser -install 6.9.1-proprietary /opt/Qt/proprietary/6.9.1/gcc_64/bin/qmake
 
 cmd bash
