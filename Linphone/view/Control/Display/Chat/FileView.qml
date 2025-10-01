@@ -26,8 +26,6 @@ Item {
 	property bool isImage: UtilsCpp.isImage(filePath)
 	property bool isPdf: UtilsCpp.isPdf(filePath)
 	property bool isThumbnail: isVideo || isImage || isPdf
-	property int overriddenWidth
-	property int overriddenHeight
 	// property to change default view display
 	property bool showAsSquare: true
 	// default image
@@ -40,6 +38,7 @@ Item {
 					? AppIcons.fileText
 					: AppIcons.file
 		: ''
+	property var thumbnailFillMode: Image.PreserveAspectCrop
 	
 	Connections {
 		enabled: contentGui
@@ -60,12 +59,9 @@ Item {
 		id: thumbnailImage
 		Item {
 			id: thumbnailSource
-			property bool isVideo: UtilsCpp.isVideo(mainItem.filePath)
-			property bool isImage: UtilsCpp.isImage(mainItem.filePath)
-			property bool isPdf: UtilsCpp.isPdf(mainItem.filePath)
 			Image {
 				anchors.fill: parent
-				visible: thumbnailSource.isPdf
+				visible: mainItem.isPdf
 				source: AppIcons.filePdf
 				sourceSize.width: mainItem.width
 				sourceSize.height: mainItem.height
@@ -82,24 +78,24 @@ Item {
 			}
 			Image {
 				id: image
-				visible: thumbnailSource.isImage && status !== Image.Loading
+				visible: mainItem.isImage && status !== Image.Loading
 				mipmap: false//SettingsModel.mipmapEnabled
 				source: mainItem.thumbnail
 				sourceSize.width: mainItem.width
 				sourceSize.height: mainItem.height
 				autoTransform: true
-				fillMode: Image.PreserveAspectCrop
 				anchors.fill: parent
+				fillMode: mainItem.thumbnailFillMode
 			}
 			Rectangle {
-				visible: thumbnailSource.isVideo
+				visible: mainItem.isVideo
 				color: DefaultStyle.grey_1000
 				anchors.fill: parent
 				Video {
 					id: videoThumbnail
 					anchors.fill: parent
 					position: 100
-					source: "file:///" + mainItem.filePath
+					source: mainItem.isVideo ? "file:///" + mainItem.filePath : ""
 					fillMode: playbackState === MediaPlayer.PlayingState ? VideoOutput.PreserveAspectFit : VideoOutput.PreserveAspectCrop
 					MouseArea {
 						propagateComposedEvents: false

@@ -45,6 +45,8 @@ public:
 	ChatMessageGui *getChatMessageGui();
 	void setChatMessageGui(ChatMessageGui *chat);
 
+	Q_INVOKABLE ChatMessageContentGui *getChatMessageContentAtIndex(int i);
+
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
 	Q_INVOKABLE void addFiles(const QStringList &paths);

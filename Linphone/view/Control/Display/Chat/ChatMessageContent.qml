@@ -3,6 +3,7 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
+import UtilsCpp
 
 // =============================================================================
 // Simple content display without reply and forward. These modules need to be splitted because of cyclic dependencies.
@@ -29,12 +30,17 @@ ColumnLayout {
 	
 	spacing: Math.round(5 * DefaultStyle.dp)
 	property int padding: Math.round(10 * DefaultStyle.dp)
+
+	property ChatMessageContentProxy filescontentProxy: ChatMessageContentProxy {
+		filterType: ChatMessageContentProxy.FilterContentType.File
+		chatMessageGui: mainItem.chatMessageGui
+	}
 	
 	// VOICE MESSAGES
 	Repeater {
 		id: messagesVoicesList
 		visible: count > 0
-		model: ChatMessageContentProxy{
+		model: ChatMessageContentProxy {
 			filterType: ChatMessageContentProxy.FilterContentType.Voice
 			chatMessageGui: mainItem.chatMessageGui
 		}
@@ -70,15 +76,39 @@ ColumnLayout {
 			onMouseEvent: (event) => mainItem.mouseEvent(event)
 		}
 	}
+	// SINGLE FILE
+	ImageFileView {
+		id: singleImageFile
+		visible: mainItem.filescontentProxy.count === 1 && source !== "" && UtilsCpp.isImage(contentGui.core.filePath)
+		contentGui: mainItem.filescontentProxy.count === 1
+			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
+			: null
+		width: Math.round(285 * DefaultStyle.dp)
+		Layout.alignment: Qt.AlignHCenter
+		fillMode: Image.PreserveAspectFit
+	}
+	AnimatedImageFileView {
+		id: singleAnimatedImageFile
+		visible: mainItem.filescontentProxy.count === 1 && source !== "" && UtilsCpp.isAnimatedImage(contentGui.core.filePath)
+		contentGui: mainItem.filescontentProxy.count === 1
+			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
+			: null
+		Layout.preferredWidth: Math.round(285 * DefaultStyle.dp)
+		Layout.preferredHeight: paintedHeight
+		Layout.alignment: Qt.AlignHCenter
+		fillMode: Image.PreserveAspectFit
+	}
 	// FILES
 	ChatFilesGridLayout {
 		id: messageFilesList
-		visible: itemCount > 0
-		Layout.fillWidth: true
+		visible: mainItem.filescontentProxy.count > 0 
+		&& !singleImageFile.visible 
+		&& !singleAnimatedImageFile.visible
+		Layout.fillWidth: visible
+		Layout.fillHeight: visible
 		maxWidth: Math.round(115*3 * DefaultStyle.dp)
-		Layout.fillHeight: true
-		// Layout.preferredHeight: contentHeight
-		chatMessageGui: mainItem.chatMessageGui
+		// Layout.fillHeight: true
+		proxyModel: visible ? mainItem.filescontentProxy : null
 		// onIsHoveringFileChanged: mainItem.isFileHoveringChanged(isHoveringFile)
 		// borderWidth: mainItem.fileBorderWidth
 		// property int availableSection: mainItem.availableWidth / mainItem.filesBestWidth

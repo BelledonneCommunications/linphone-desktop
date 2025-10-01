@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQml.Models
+import QtQuick.Controls.Basic as Control
 
 import Linphone
 import UtilsCpp
@@ -8,7 +9,7 @@ import UtilsCpp
 // =============================================================================
 GridLayout {
 	id: mainItem
-	property ChatMessageGui chatMessageGui: null
+	property ChatMessageContentProxy proxyModel
 	property bool isHoveringFile: false
 	property int itemCount: delModel.count
 	property int itemWidth: Math.round(95 * DefaultStyle.dp)
@@ -40,15 +41,10 @@ GridLayout {
 
 		return bestCols;
 	}
-	
+
 	Repeater {
 		id: delModel
-		model: ChatMessageContentProxy {
-			id: contentProxy
-			filterType: ChatMessageContentProxy.FilterContentType.File
-			chatMessageGui: mainItem.chatMessageGui
-		}
-	
+		model: mainItem.proxyModel
 		delegate: FileView {
 			id: avatarCell
 			contentGui: modelData

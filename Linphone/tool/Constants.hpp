@@ -114,8 +114,8 @@ public:
 	// Max image size in bytes. (1Mb)
 	static constexpr qint64 MaxImageSize = 1024000;    // In Bytes.
 	static constexpr qint64 FileSizeLimit = 524288000; // In Bytes.
-	static constexpr int ThumbnailImageFileWidth = 100;
-	static constexpr int ThumbnailImageFileHeight = 100;
+	static constexpr int ThumbnailImageFileWidth = 285;
+	static constexpr int ThumbnailImageFileHeight = 345;
 
 	//--------------------------------------------------------------------------------
 	//								LINPHONE

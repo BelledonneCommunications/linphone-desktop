@@ -57,16 +57,16 @@ void ChatMessageContentProxy::setChatMessageGui(ChatMessageGui *chat) {
 	getListModel<ChatMessageContentList>()->setChatMessageGui(chat);
 }
 
-// ChatMessageGui *ChatMessageContentProxy::getChatMessageAtIndex(int i) {
-// 	auto model = getListModel<ChatMessageContentList>();
-// 	auto sourceIndex = mapToSource(index(i, 0)).row();
-// 	if (model) {
-// 		auto chat = model->getAt<ChatMessageCore>(sourceIndex);
-// 		if (chat) return new ChatMessageGui(chat);
-// 		else return nullptr;
-// 	}
-// 	return nullptr;
-// }
+ChatMessageContentGui *ChatMessageContentProxy::getChatMessageContentAtIndex(int i) {
+	auto model = getListModel<ChatMessageContentList>();
+	auto sourceIndex = mapToSource(index(i, 0)).row();
+	if (model) {
+		auto chat = model->getAt<ChatMessageContentCore>(sourceIndex);
+		if (chat) return new ChatMessageContentGui(chat);
+		else return nullptr;
+	}
+	return nullptr;
+}
 
 void ChatMessageContentProxy::addFiles(const QStringList &paths) {
 	auto model = getListModel<ChatMessageContentList>();
@@ -99,8 +99,5 @@ bool ChatMessageContentProxy::SortFilterList::filterAcceptsRow(int sourceRow, co
 
 bool ChatMessageContentProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft,
                                                        const QModelIndex &sourceRight) const {
-	auto l = getItemAtSource<ChatMessageContentList, ChatMessageCore>(sourceLeft.row());
-	auto r = getItemAtSource<ChatMessageContentList, ChatMessageCore>(sourceRight.row());
-	if (l && r) return l->getTimestamp() <= r->getTimestamp();
-	else return true;
+	return true;
 }
