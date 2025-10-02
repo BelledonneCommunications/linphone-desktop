@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
+import QtMultimedia
+
 import Linphone
 import UtilsCpp
 
@@ -98,12 +100,27 @@ ColumnLayout {
 		Layout.alignment: Qt.AlignHCenter
 		fillMode: Image.PreserveAspectFit
 	}
+	VideoFileView {
+		id: singleVideoFile
+		visible: mainItem.filescontentProxy.count === 1 && UtilsCpp.isVideo(contentGui.core.filePath)
+		contentGui: mainItem.filescontentProxy.count === 1
+			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
+			: null
+		width: Math.round(285 * DefaultStyle.dp)
+		height: Math.round(285 * DefaultStyle.dp)
+		Layout.preferredWidth: videoOutput.contentRect.width
+		Layout.preferredHeight: videoOutput.contentRect.height
+		Layout.alignment: Qt.AlignHCenter
+		fillMode: VideoOutput.PreserveAspectFit
+	}
+
 	// FILES
 	ChatFilesGridLayout {
 		id: messageFilesList
 		visible: mainItem.filescontentProxy.count > 0 
 		&& !singleImageFile.visible 
 		&& !singleAnimatedImageFile.visible
+		&& !singleVideoFile.visible
 		Layout.fillWidth: visible
 		Layout.fillHeight: visible
 		maxWidth: Math.round(115*3 * DefaultStyle.dp)

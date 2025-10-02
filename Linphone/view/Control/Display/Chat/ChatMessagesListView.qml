@@ -93,13 +93,16 @@ ListView {
                 markIndexAsRead(index)
             }
         }
-        onModelAboutToBeReset: loading = true
-        onModelReset: Qt.callLater(function() {
+        onModelAboutToBeReset: {
+            loading = true
+        }
+        onModelReset: {
             loading = false
             var index = eventLogProxy.findFirstUnreadIndex()
             positionViewAtIndex(index, ListView.Beginning)
             eventLogProxy.markIndexAsRead(index)
-        })
+        }
+        onChatGuiChanged: forceLayout()
         onIndexWithFilterFound: (index) => {
             if (index !== -1) {
                 currentIndex = index

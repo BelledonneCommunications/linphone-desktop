@@ -48,6 +48,8 @@ public:
 	void connectItem(const QSharedPointer<EventLogCore> &item);
 	void disconnectItem(const QSharedPointer<EventLogCore> &item);
 
+	void setIsUpdating(bool updating);
+
 	int findFirstUnreadIndex();
 
 	void findChatMessageWithFilter(QString filter,
@@ -66,12 +68,14 @@ signals:
 	void messageWithFilterFound(int index);
 	void listAboutToBeReset();
 	void chatGuiChanged();
+	void isUpdatingChanged();
 
 private:
 	QString mFilter;
 	QSharedPointer<ChatCore> mChatCore;
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
 	QSharedPointer<SafeConnection<EventLogList, CoreModel>> mCoreModelConnection;
+	bool mIsUpdating = false;
 	DECLARE_ABSTRACT_OBJECT
 };
 

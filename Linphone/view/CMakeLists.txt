@@ -69,6 +69,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Chat/FileView.qml
 	view/Control/Display/Chat/ImageFileView.qml
 	view/Control/Display/Chat/AnimatedImageFileView.qml
+	view/Control/Display/Chat/VideoFileView.qml
 	view/Control/Display/Contact/Avatar.qml
 	view/Control/Display/Contact/Contact.qml
 	view/Control/Display/Contact/Presence.qml

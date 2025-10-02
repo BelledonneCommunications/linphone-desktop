@@ -81,31 +81,53 @@ void EventLogList::connectItem(const QSharedPointer<EventLogCore> &item) {
 	}
 }
 
+void EventLogList::setIsUpdating(bool updating) {
+	if (mIsUpdating != updating) {
+		mIsUpdating = updating;
+		emit isUpdatingChanged();
+	}
+}
+
 void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
-	if (mChatCore != core) {
-		if (mChatCore) {
-			disconnect(mChatCore.get(), &ChatCore::eventsInserted, this, nullptr);
+	auto updateChatCore = [this](QSharedPointer<ChatCore> core) {
+		if (mChatCore != core) {
+			if (mChatCore) {
+				disconnect(mChatCore.get(), &ChatCore::eventsInserted, this, nullptr);
+				disconnect(mChatCore.get(), &ChatCore::eventListCleared, this, nullptr);
+			}
+			mChatCore = core;
+			if (mChatCore) {
+				connect(mChatCore.get(), &ChatCore::eventListCleared, this, [this] { resetData(); });
+				connect(mChatCore.get(), &ChatCore::eventsInserted, this,
+				        [this](QList<QSharedPointer<EventLogCore>> list) {
+					        auto eventsList = getSharedList<EventLogCore>();
+					        for (auto &event : list) {
+						        auto it = std::find_if(
+						            eventsList.begin(), eventsList.end(),
+						            [event](const QSharedPointer<EventLogCore> item) { return item == event; });
+						        if (it == eventsList.end()) {
+							        connectItem(event);
+							        add(event);
+							        int index;
+							        get(event.get(), &index);
+							        emit eventInserted(index, new EventLogGui(event));
+						        }
+					        }
+				        });
+			}
+			lUpdate();
+			emit chatGuiChanged();
 		}
-		mChatCore = core;
-		if (mChatCore) {
-			connect(mChatCore.get(), &ChatCore::eventListCleared, this, [this] { resetData(); });
-			connect(mChatCore.get(), &ChatCore::eventsInserted, this, [this](QList<QSharedPointer<EventLogCore>> list) {
-				auto eventsList = getSharedList<EventLogCore>();
-				for (auto &event : list) {
-					auto it = std::find_if(eventsList.begin(), eventsList.end(),
-					                       [event](const QSharedPointer<EventLogCore> item) { return item == event; });
-					if (it == eventsList.end()) {
-						connectItem(event);
-						add(event);
-						int index;
-						get(event.get(), &index);
-						emit eventInserted(index, new EventLogGui(event));
-					}
-				}
-			});
-		}
-		lUpdate();
-		emit chatGuiChanged();
+	};
+	if (mIsUpdating) {
+		connect(this, &EventLogList::isUpdatingChanged, this, [this, core, updateChatCore] {
+			if (!mIsUpdating) {
+				updateChatCore(core);
+				disconnect(this, &EventLogList::isUpdatingChanged, this, nullptr);
+			}
+		});
+	} else {
+		updateChatCore(core);
 	}
 }
 
@@ -160,15 +182,19 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 
 	mCoreModelConnection->makeConnectToCore(&EventLogList::lUpdate, [this]() {
 		mustBeInMainThread(log().arg(Q_FUNC_INFO));
+		if (mChatCore) qDebug() << "reset messages model for chat core" << mChatCore << mChatCore->getTitle();
+		setIsUpdating(true);
 		beginResetModel();
 		mList.clear();
 		if (!mChatCore) {
 			endResetModel();
+			setIsUpdating(false);
 			return;
 		}
 		auto chatModel = mChatCore->getModel();
 		if (!chatModel) {
 			endResetModel();
+			setIsUpdating(false);
 			return;
 		}
 		mCoreModelConnection->invokeToModel([this, chatModel]() {
@@ -193,6 +219,7 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 				for (auto i : *events)
 					mList << i.template objectCast<QObject>();
 				endResetModel();
+				setIsUpdating(false);
 			});
 		});
 	});

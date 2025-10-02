@@ -12,7 +12,7 @@ MessageInfosLayout {
 	tabbarModel: chatMessageGui ? chatMessageGui.core.imdnStatusListAsString : []
 	listModel: ImdnStatusProxy {
 		imdnStatusList: chatMessageGui ? chatMessageGui.core.imdnStatusList : []
-		filter: chatMessageGui && chatMessageGui.core.imdnStatusAsSingletons[mainItem.tabbar.currentIndex]?.state || ""
+		filter: chatMessageGui && chatMessageGui.core.imdnStatusAsSingletons[mainItem.tabbar.currentIndex]?.state || LinphoneEnums.ChatMessageState.StateIdle
 	}
 
 	listView.delegate: Item {
