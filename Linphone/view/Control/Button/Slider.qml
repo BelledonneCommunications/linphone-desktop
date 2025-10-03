@@ -27,8 +27,8 @@ Control.Slider {
 				height: parent.height
 				gradient: Gradient {
 					orientation: Gradient.Horizontal
-					GradientStop { position: 0.0; color: "#FF9E79" }
-					GradientStop { position: 1.0; color: "#FE5E00" }
+					GradientStop { position: 0.0; color: DefaultStyle.main1_300 }
+					GradientStop { position: 1.0; color: DefaultStyle.main1_500_main }
 				}
                 radius: Math.round(40 * DefaultStyle.dp)
 			}

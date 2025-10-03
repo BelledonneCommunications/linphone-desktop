@@ -213,6 +213,8 @@ public:
 	DECLARE_GETSET(bool, disableCallForward, DisableCallForward)
 	DECLARE_GETSET(QString, callForwardToAddress, CallForwardToAddress)
 	DECLARE_GETSET(QString, chatNotificationSoundPath, ChatNotificationSoundPath)
+	DECLARE_GETSET(QString, themeMainColor, ThemeMainColor)
+	DECLARE_GETSET(QString, themeAboutPictureUrl, ThemeAboutPictureUrl)
 
 signals:
 	void logsUploadUrlChanged();

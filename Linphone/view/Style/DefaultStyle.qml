@@ -1,14 +1,18 @@
 pragma Singleton
 import QtQuick
 import Linphone
+import SettingsCpp
 
 QtObject {
-    property color main1_100: "#FFEACB"
-    property color main1_200: "#FFD098"
-    property color main1_300: "#FFB266"
-    property color main1_500_main: "#FE5E00"
-    property color main1_600: "#DA4400"
-    property color main1_700: "#B72D00"
+
+    property var currentTheme: Themes.themes[SettingsCpp.themeMainColor]
+
+    property color main1_100: currentTheme.main100
+    property color main1_200: currentTheme.main200
+    property color main1_300: currentTheme.main300
+    property color main1_500_main: currentTheme.main500
+    property color main1_600: currentTheme.main600
+    property color main1_700: currentTheme.main700
 
     property color main2_0: "#FAFEFF"
     property color main2_100: "#EEF6F8"

@@ -140,6 +140,9 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(DisableCommandLine, settingsModel)
 	INIT_CORE_MEMBER(DisableCallForward, settingsModel)
 	INIT_CORE_MEMBER(CallForwardToAddress, settingsModel)
+
+	INIT_CORE_MEMBER(ThemeMainColor, settingsModel)
+	INIT_CORE_MEMBER(ThemeAboutPictureUrl, settingsModel)
 }
 
 SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
@@ -452,6 +455,10 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                           disableCallForward, DisableCallForward)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
 	                           callForwardToAddress, CallForwardToAddress)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
+	                           themeAboutPictureUrl, ThemeAboutPictureUrl)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
+	                           themeMainColor, ThemeMainColor)
 
 	auto coreModelConnection = SafeConnection<SettingsCore, CoreModel>::create(me, CoreModel::getInstance());
 

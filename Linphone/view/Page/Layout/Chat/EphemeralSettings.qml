@@ -99,7 +99,8 @@ ColumnLayout {
 				delegate: ColumnLayout {
 					Layout.fillWidth: true
 					Layout.leftMargin: Math.round(8 * DefaultStyle.dp)
-					Control.RadioButton {
+					RadioButton {
+						color: DefaultStyle.main1_500_main
 						enabled: modelData.disabled !== true
 						opacity: modelData.disabled !== true ? 1.0 : 0.5
 						checked: modelData.lifetime === mainItem.selectedLifetime
@@ -110,19 +111,12 @@ ColumnLayout {
 							text: modelData.title
 							color: DefaultStyle.main2_600
 							font: Typography.p1
-							leftPadding: Math.round(8 * DefaultStyle.dp)
+							leftPadding: Math.round(20 * DefaultStyle.dp)
 							wrapMode: Text.NoWrap
 							elide: Text.ElideRight
 							anchors.left: ico.right
 						}
-						indicator: Image {
-							id: ico
-							source: parent.checked ? AppIcons.radioOn : AppIcons.radioOff
-							width: Math.round(24 * DefaultStyle.dp)
-							height: Math.round(24 * DefaultStyle.dp)
-							fillMode: Image.PreserveAspectFit
-							anchors.verticalCenter: parent.verticalCenter
-						}
+
 					}
 					Rectangle {
 						//visible: index < (model.count - 1)

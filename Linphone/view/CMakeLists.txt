@@ -194,6 +194,7 @@ list(APPEND _LINPHONEAPP_QML_SINGLETONS
 	view/Style/DefaultStyle.qml
 	view/Style/FileViewStyle.qml
 	view/Style/Typography.qml
+	view/Style/Themes.qml
 )
 
 set(_LINPHONEAPP_QML_FILES ${_LINPHONEAPP_QML_FILES} PARENT_SCOPE)

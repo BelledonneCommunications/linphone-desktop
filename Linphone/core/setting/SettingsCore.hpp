@@ -252,6 +252,9 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(QString, callForwardToAddress, CallForwardToAddress)
 	DECLARE_CORE_GET_CONSTANT(QFont, emojiFont, EmojiFont)
 	DECLARE_CORE_GET_CONSTANT(QFont, textMessageFont, TextMessageFont)
+	// Theme
+	DECLARE_CORE_GETSET_MEMBER(QString, themeMainColor, ThemeMainColor)
+	DECLARE_CORE_GETSET_MEMBER(QString, themeAboutPictureUrl, ThemeAboutPictureUrl)
 
 signals:
 

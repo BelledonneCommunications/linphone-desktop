@@ -897,6 +897,9 @@ void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(usernameOnlyForCardDAVLookupsInCalls, UsernameOnlyForCardDAVLookupsInCalls)
 	DEFINE_NOTIFY_CONFIG_READY(commandLine, CommandLine)
 	DEFINE_NOTIFY_CONFIG_READY(disableCommandLine, DisableCommandLine)
+	DEFINE_NOTIFY_CONFIG_READY(themeMainColor, ThemeMainColor)
+	DEFINE_NOTIFY_CONFIG_READY(themeAboutPictureUrl, ThemeAboutPictureUrl)
+
 }
 
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", false)
@@ -1042,4 +1045,14 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 					 		DisableCallForward,
 							"disable_call_forward",
 							true)
+DEFINE_GETSET_CONFIG_STRING(SettingsModel,
+							themeMainColor,
+							ThemeMainColor,
+							"theme_main_color",
+							"orange")
+DEFINE_GETSET_CONFIG_STRING(SettingsModel,
+							themeAboutPictureUrl,
+							ThemeAboutPictureUrl,
+							"theme_about_picture_url",
+							"")
     // clang-format on
