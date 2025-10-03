@@ -6,6 +6,7 @@ import Linphone
 import UtilsCpp 1.0
 import ConstantsCpp 1.0
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import SettingsCpp
 
 AbstractMainPage {
 
@@ -44,10 +45,26 @@ AbstractMainPage {
 				Layout.fillWidth: true
 			}
 		}
+		Image {
+			id: aboutImage
+			Layout.fillWidth: true
+			Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
+			Layout.leftMargin: leftPanel.sideMargin
+			Layout.rightMargin: leftPanel.sideMargin
+			Layout.topMargin: Math.round(41 * DefaultStyle.dp)
+			fillMode: Image.PreserveAspectFit
+			source: SettingsCpp.themeAboutPictureUrl
+			visible: source !== "" && status === Image.Ready
+			onStatusChanged: {
+				if (status === Image.Error) {
+					visible = false
+				}
+			}
+		}
 		Text {
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-            Layout.topMargin: Math.round(41 * DefaultStyle.dp)
+            Layout.topMargin: Math.round((aboutImage.visible ? 41 : 24) * DefaultStyle.dp)
 			Layout.fillWidth: true
             //: "À propos de %1"
             text: qsTr("help_about_title").arg(applicationName)
