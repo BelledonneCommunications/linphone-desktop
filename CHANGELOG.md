@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 5.3.1 - undefined
+## 5.3.1 - 2025-10-07
 
 ### Fixed
 - Publish presence indicator synchronized on default account.
@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Timezones in recordings date times.
 
 ### Changed
-- SDK Updated to 5.4.41
+- Update SDK to 5.4.47
 
 ## 5.3.0 - 2025-08-21
 
