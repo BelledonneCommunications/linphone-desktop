@@ -11,7 +11,7 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 Rectangle {
 	id: mainItem
-	color: "transparent"//DefaultStyle.grey_1000
+	color: DefaultStyle.grey_1000
 	property ChatMessageContentGui contentGui
 	property string filePath: contentGui && contentGui.core.filePath
 	property var fillMode: playbackState === MediaPlayer.PlayingState ? VideoOutput.PreserveAspectFit : VideoOutput.PreserveAspectCrop

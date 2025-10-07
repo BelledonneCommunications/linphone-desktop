@@ -317,7 +317,8 @@ Control.Control {
                                                         : ""
                                     BusyIndicator {
                                         anchors.fill: parent
-                                        z: parent.z + 1
+                                        Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
+                                        Layout.preferredHeight: visible ? 14 * DefaultStyle.dp : 0
                                         visible: mainItem.msgState === LinphoneEnums.ChatMessageState.StateIdle
                                             || mainItem.msgState === LinphoneEnums.ChatMessageState.StateInProgress
                                             || mainItem.msgState === LinphoneEnums.ChatMessageState.StateFileTransferInProgress

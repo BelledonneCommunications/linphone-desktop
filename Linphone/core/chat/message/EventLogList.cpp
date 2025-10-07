@@ -136,6 +136,41 @@ void EventLogList::setChatGui(ChatGui *chat) {
 	setChatCore(chatCore);
 }
 
+void EventLogList::setDisplayItemsStep(int displayItemsStep) {
+	if (mDisplayItemsStep != displayItemsStep) {
+		mDisplayItemsStep = displayItemsStep;
+		emit displayItemsStepChanged();
+	}
+}
+
+void EventLogList::displayMore() {
+	if (!mChatCore) return;
+	auto chatModel = mChatCore->getModel();
+	if (!chatModel) return;
+	mCoreModelConnection->invokeToModel([this, chatModel]() {
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		int maxSize = chatModel->getHistorySizeEvents();
+		int totalItemsCount = mList.count();
+		auto newCount = std::min(totalItemsCount + mDisplayItemsStep, maxSize);
+		if (newCount <= totalItemsCount) {
+			return;
+		}
+		auto linphoneLogs = chatModel->getHistoryRange(totalItemsCount, newCount);
+		QList<QSharedPointer<EventLogCore>> *events = new QList<QSharedPointer<EventLogCore>>();
+		for (auto it : linphoneLogs) {
+			auto model = EventLogCore::create(it);
+			events->push_back(model);
+		}
+		mCoreModelConnection->invokeToCore([this, events, newCount] {
+			int currentCount = mList.count();
+			for (auto &event : *events) {
+				connectItem(event);
+				add(event);
+			}
+		});
+	});
+}
+
 int EventLogList::findFirstUnreadIndex() {
 	auto eventList = getSharedList<EventLogCore>();
 	auto it = std::find_if(eventList.begin(), eventList.end(), [](const QSharedPointer<EventLogCore> item) {
@@ -199,7 +234,8 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 		}
 		mCoreModelConnection->invokeToModel([this, chatModel]() {
 			mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-			auto linphoneLogs = chatModel->getHistory();
+			qDebug() << "update history till" << mDisplayItemsStep;
+			auto linphoneLogs = chatModel->getHistoryRange(0, mDisplayItemsStep);
 			QList<QSharedPointer<EventLogCore>> *events = new QList<QSharedPointer<EventLogCore>>();
 			for (auto it : linphoneLogs) {
 				auto model = EventLogCore::create(it);

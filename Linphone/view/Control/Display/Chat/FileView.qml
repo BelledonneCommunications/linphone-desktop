@@ -70,7 +70,7 @@ Item {
 			Image {
 				anchors.fill: image
 				z: image.z + 1
-				visible: image.status == Image.Error || image.status == Image.Null
+				visible: image.status == Image.Error || image.status == Image.Null || image.frameCount === 0
 				source: AppIcons.fileImage
 				sourceSize.width: mainItem.width
 				sourceSize.height: mainItem.height

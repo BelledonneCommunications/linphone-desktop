@@ -453,7 +453,6 @@ ListView {
             id: mouseArea
             hoverEnabled: true
             anchors.fill: parent
-            focus: true
             acceptedButtons: Qt.RightButton | Qt.LeftButton
             onContainsMouseChanged: {
                 if (containsMouse)

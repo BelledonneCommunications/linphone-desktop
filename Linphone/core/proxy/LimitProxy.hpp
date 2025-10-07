@@ -45,7 +45,7 @@ public:
 	// Helper for setting the limit with sorted/filtered list
 	void setSourceModels(SortFilterProxy *firstList);
 
-	Q_INVOKABLE void displayMore();
+	Q_INVOKABLE virtual void displayMore();
 	Q_INVOKABLE QVariant getAt(const int &index) const;
 	Q_INVOKABLE QVariantList getAll() const;
 	virtual int getCount() const;

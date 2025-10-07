@@ -52,6 +52,9 @@ public:
 
 	int findFirstUnreadIndex();
 
+	void displayMore();
+	void setDisplayItemsStep(int displayItemsStep);
+
 	void findChatMessageWithFilter(QString filter,
 	                               QSharedPointer<EventLogCore> startEvent,
 	                               bool forward = true,
@@ -69,6 +72,7 @@ signals:
 	void listAboutToBeReset();
 	void chatGuiChanged();
 	void isUpdatingChanged();
+	void displayItemsStepChanged();
 
 private:
 	QString mFilter;
@@ -76,6 +80,7 @@ private:
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
 	QSharedPointer<SafeConnection<EventLogList, CoreModel>> mCoreModelConnection;
 	bool mIsUpdating = false;
+	int mDisplayItemsStep = 0;
 	DECLARE_ABSTRACT_OBJECT
 };
 

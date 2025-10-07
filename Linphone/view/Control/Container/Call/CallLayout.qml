@@ -20,6 +20,11 @@ Item {
 	property int conferenceLayout: call ? call.core.conferenceVideoLayout : LinphoneEnums.ConferenceLayout.ActiveSpeaker
 	property int participantDeviceCount: conference ? conference.core.participantDeviceCount : -1
 	property int lastConfLayoutBeforeSharing: -1
+	property string localAddress: call 
+		? call.conference
+			? call.conference.core.me.core.sipAddress
+			: call.core.localAddress
+		: ""
 	onParticipantDeviceCountChanged: {
 		setConferenceLayout()
 	}

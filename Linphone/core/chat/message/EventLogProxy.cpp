@@ -43,6 +43,8 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 	if (newEventLogList) {
 		connect(newEventLogList, &EventLogList::listAboutToBeReset, this, &EventLogProxy::listAboutToBeReset);
 		connect(newEventLogList, &EventLogList::chatGuiChanged, this, &EventLogProxy::chatGuiChanged);
+		connect(this, &EventLogProxy::displayItemsStepChanged, newEventLogList,
+		        [this, newEventLogList] { newEventLogList->setDisplayItemsStep(mDisplayItemsStep); });
 		connect(newEventLogList, &EventLogList::eventInserted, this,
 		        [this, newEventLogList](int index, EventLogGui *event) {
 			        invalidate();
@@ -88,6 +90,13 @@ EventLogGui *EventLogProxy::getEventAtIndex(int i) {
 
 QSharedPointer<EventLogCore> EventLogProxy::getEventCoreAtIndex(int i) {
 	return getItemAt<SortFilterList, EventLogList, EventLogCore>(i);
+}
+
+void EventLogProxy::displayMore() {
+	auto model = getListModel<EventLogList>();
+	if (model) {
+		model->displayMore();
+	}
 }
 
 void EventLogProxy::loadUntil(int index) {

@@ -48,11 +48,6 @@ ListView {
             eventLogProxy.markIndexAsRead(index)
         })
     }
-    
-    onChatChanged: {
-        lastItemVisible = false
-        forceActiveFocus()
-    }
 
     Button {
         visible: !mainItem.lastItemVisible
@@ -77,15 +72,15 @@ ListView {
         chat.core.lMarkAsRead()
     }
     onAtYBeginningChanged: if (atYBeginning) {
-        if (eventLogProxy.haveMore)
-            eventLogProxy.displayMore()
+        eventLogProxy.displayMore()
     }
 
     model: EventLogProxy {
         id: eventLogProxy
         chatGui: mainItem.chat
         filterText: mainItem.filterText
-        initialDisplayItems: 10
+        initialDisplayItems: 20
+        displayItemsStep: 20
         onEventInserted: (index, gui) => {
             if (!mainItem.visible) return
             if(mainItem.lastItemVisible) {

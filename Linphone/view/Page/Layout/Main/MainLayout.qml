@@ -471,7 +471,10 @@ Item {
                                         icon.height: Math.round(32 * DefaultStyle.dp)
                                         text: qsTr("settings_title")
                                         icon.source: AppIcons.settings
-                                        onClicked: openContextualMenuComponent(settingsPageComponent)
+                                        onClicked: {
+                                            var page = settingsPageComponent.createObject(parent);
+                                            openContextualMenuComponent(page)
+                                        }
                                         KeyNavigation.up: visibleChildren.length
                                                           != 0 ? settingsMenuButton.getPreviousItem(
                                                                      2) : null
@@ -503,8 +506,10 @@ Item {
                                         //: "Aide"
                                         text: qsTr("help_title")
                                         icon.source: AppIcons.question
-                                        onClicked: openContextualMenuComponent(
-                                                       helpPageComponent)
+                                        onClicked: {
+                                            var page = helpPageComponent.createObject(parent);
+                                            openContextualMenuComponent(page)
+                                        }
                                         KeyNavigation.up: visibleChildren.length
                                                           != 0 ? settingsMenuButton.getPreviousItem(
                                                                      4) : null

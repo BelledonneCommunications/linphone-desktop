@@ -24,7 +24,7 @@ AbstractSettingsMenu {
         //: "Affichage"
         //{title: qsTr("settings_user_interface_title"), layout: "DisplaySettingsLayout"},
         //: "Security"
-        {title: qsTr("settings_security_title"), layout: "SecuritySettingsLayout"},
+        // {title: qsTr("settings_security_title"), layout: "SecuritySettingsLayout"},
         //: "Réseau"
         {title: qsTr("settings_network_title"), layout: "NetworkSettingsLayout"},
         //: "Paramètres avancés"

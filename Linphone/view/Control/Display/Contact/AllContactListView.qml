@@ -147,7 +147,6 @@ Flickable {
         }
     }
     onSearchTextChanged: {
-        console.log("search texte changed, loading…")
         loading = true
     }
 

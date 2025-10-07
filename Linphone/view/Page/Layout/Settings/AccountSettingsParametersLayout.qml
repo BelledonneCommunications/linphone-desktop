@@ -68,8 +68,9 @@ AbstractSettingsLayout {
                 toValidate: true
 
                 Connections {
+                    enabled: account
                     target: account.core
-                    function onMwiServerAddressAddressChanged() {
+                    function onMwiServerAddressChanged() {
                         if (mwiServerAddressField.text != mwiServerAddressField.propertyOwnerGui.core[mwiServerAddressField.propertyName]) 
                             mwiServerAddressField.text = mwiServerAddressField.propertyOwnerGui.core[mwiServerAddressField.propertyName]
                     }
@@ -80,14 +81,14 @@ AbstractSettingsLayout {
                 propertyName: "voicemailAddress"
                 propertyOwnerGui: account
                 //: "URI de messagerie vocale"
-
                 title: qsTr("account_settings_voicemail_uri_title")
                 Layout.fillWidth: true
                 toValidate: true
 
                 Connections {
+                    enabled: account
                     target: account.core
-                    function onVoicemailAddressAddressChanged() {
+                    function onVoicemailAddressChanged() {
                         if (voicemailAddressField.text != voicemailAddressField.propertyOwnerGui.core[voicemailAddressField.propertyName]) 
                             voicemailAddressField.text = voicemailAddressField.propertyOwnerGui.core[voicemailAddressField.propertyName]
                     }

@@ -61,11 +61,11 @@ std::list<std::shared_ptr<linphone::Content>> ChatModel::getSharedDocuments() co
 }
 
 std::list<std::shared_ptr<linphone::EventLog>> ChatModel::getHistory() const {
-	int filter = mMonitor->hasCapability((int)linphone::ChatRoom::Capabilities::Conference)
-	                 ? static_cast<int>(linphone::ChatRoom::HistoryFilter::ChatMessage) |
-	                       static_cast<int>(linphone::ChatRoom::HistoryFilter::InfoNoDevice)
-	                 : static_cast<int>(linphone::ChatRoom::HistoryFilter::ChatMessage);
-	return mMonitor->getHistory(0, filter);
+	return mMonitor->getHistoryEvents(0);
+}
+
+std::list<std::shared_ptr<linphone::EventLog>> ChatModel::getHistoryRange(int begin, int end) {
+	return mMonitor->getHistoryRangeEvents(begin, end);
 }
 
 std::list<std::shared_ptr<linphone::ChatMessage>> ChatModel::getChatMessageHistory() const {
@@ -76,6 +76,10 @@ std::list<std::shared_ptr<linphone::ChatMessage>> ChatModel::getChatMessageHisto
 		if (chatMessage) res.push_back(chatMessage);
 	}
 	return res;
+}
+
+int ChatModel::getHistorySizeEvents() {
+	return mMonitor->getHistoryEventsSize();
 }
 
 QString ChatModel::getIdentifier() const {
@@ -123,9 +127,6 @@ int ChatModel::getUnreadMessagesCount() const {
 
 void ChatModel::markAsRead() {
 	mMonitor->markAsRead();
-	for (auto &message : getChatMessageHistory()) {
-		message->markAsRead();
-	}
 	emit messagesRead();
 }
 

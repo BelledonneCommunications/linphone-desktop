@@ -44,6 +44,7 @@ public:
 
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
+	Q_INVOKABLE void displayMore() override;
 	Q_INVOKABLE void loadUntil(int index);
 	Q_INVOKABLE EventLogGui *getEventAtIndex(int i);
 	QSharedPointer<EventLogCore> getEventCoreAtIndex(int i);
