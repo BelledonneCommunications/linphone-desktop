@@ -81,6 +81,15 @@
     </message>
 </context>
 <context>
+    <name>AccountListView</name>
+    <message>
+        <location filename="../../view/Page/Main/Account/AccountListView.qml" line="87"/>
+        <source>drawer_menu_add_account</source>
+        <extracomment>&quot;Ajouter un compte&quot;</extracomment>
+        <translation>Add an account</translation>
+    </message>
+</context>    
+<context>
     <name>AccountManager</name>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="86"/>
