@@ -58,9 +58,9 @@ public:
 	    QString mwiServerAddress READ getMwiServerAddress WRITE setMwiServerAddress NOTIFY mwiServerAddressChanged)
 	Q_PROPERTY(QStringList transports READ getTransports CONSTANT)
 	Q_PROPERTY(QString transport READ getTransport WRITE setTransport NOTIFY transportChanged)
-	Q_PROPERTY(QString serverAddress READ getServerAddress WRITE setServerAddress NOTIFY serverAddressChanged)
-	Q_PROPERTY(bool outboundProxyEnabled READ getOutboundProxyEnabled WRITE setOutboundProxyEnabled NOTIFY
-	               outboundProxyEnabledChanged)
+	Q_PROPERTY(QString registrarUri READ getRegistrarUri WRITE setRegistrarUri NOTIFY registrarUriChanged)
+	Q_PROPERTY(
+	    QString outboundProxyUri READ getOutboundProxyUri WRITE setOutboundProxyUri NOTIFY outboundProxyUriChanged)
 	Q_PROPERTY(QString stunServer READ getStunServer WRITE setStunServer NOTIFY stunServerChanged)
 	Q_PROPERTY(bool iceEnabled READ getIceEnabled WRITE setIceEnabled NOTIFY iceEnabledChanged)
 	Q_PROPERTY(bool avpfEnabled READ getAvpfEnabled WRITE setAvpfEnabled NOTIFY avpfEnabledChanged)
@@ -132,8 +132,8 @@ public:
 	QString getMwiServerAddress();
 	QString getTransport();
 	QStringList getTransports();
-	QString getServerAddress();
-	bool getOutboundProxyEnabled();
+	QString getRegistrarUri();
+	QString getOutboundProxyUri();
 	QString getStunServer();
 	bool getIceEnabled();
 	bool getAvpfEnabled();
@@ -146,8 +146,8 @@ public:
 
 	void setMwiServerAddress(QString value);
 	void setTransport(QString value);
-	void setServerAddress(QString value);
-	void setOutboundProxyEnabled(bool value);
+	void setRegistrarUri(QString value);
+	void setOutboundProxyUri(QString value);
 	void setStunServer(QString value);
 	void setIceEnabled(bool value);
 	void setAvpfEnabled(bool value);
@@ -165,8 +165,8 @@ public:
 	void onMwiServerAddressChanged(QString value);
 	void onVoicemailAddressChanged(QString value);
 	void onTransportChanged(QString value);
-	void onServerAddressChanged(QString value);
-	void onOutboundProxyEnabledChanged(bool value);
+	void onRegistrarUriChanged(QString value);
+	void onOutboundProxyUriChanged(QString value);
 	void onStunServerChanged(QString value);
 	void onIceEnabledChanged(bool value);
 	void onAvpfEnabledChanged(bool value);
@@ -206,8 +206,8 @@ signals:
 	void notificationsAllowedChanged();
 	void mwiServerAddressChanged();
 	void transportChanged();
-	void serverAddressChanged();
-	void outboundProxyEnabledChanged();
+	void registrarUriChanged();
+	void outboundProxyUriChanged();
 	void stunServerChanged();
 	void iceEnabledChanged();
 	void avpfEnabledChanged();
@@ -257,8 +257,8 @@ private:
 	QString mMwiServerAddress;
 	QString mTransport;
 	QStringList mTransports;
-	QString mServerAddress;
-	bool mOutboundProxyEnabled;
+	QString mRegistrarUri;
+	QString mOutboundProxyUri;
 	QString mStunServer;
 	bool mIceEnabled;
 	bool mAvpfEnabled;

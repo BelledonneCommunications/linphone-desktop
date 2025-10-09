@@ -59,8 +59,10 @@ public:
 	void setMwiServerAddress(QString value);
 	linphone::TransportType getTransport() const;
 	void setTransport(linphone::TransportType value, bool save);
-	QString getServerAddress() const;
-	void setServerAddress(QString value, linphone::TransportType transport, bool save);
+	QString getRegistrarUri() const;
+	void setRegistrarUri(QString value);
+	QString getOutboundProxyUri() const;
+	void setOutboundProxyUri(QString value);
 	bool getOutboundProxyEnabled() const;
 	void setOutboundProxyEnabled(bool value);
 	QString getStunServer() const;
@@ -107,7 +109,8 @@ signals:
 	void notificationsAllowedChanged(bool value);
 	void mwiServerAddressChanged(QString value);
 	void transportChanged(linphone::TransportType value);
-	void serverAddressChanged(QString value);
+	void registrarUriChanged(QString value);
+	void outboundProxyUriChanged(QString value);
 	void outboundProxyEnabledChanged(bool value);
 	void stunServerChanged(QString value);
 	void iceEnabledChanged(bool value);

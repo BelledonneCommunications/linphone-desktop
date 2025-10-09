@@ -347,7 +347,7 @@ LoginLayout {
 								}
 								console.debug("[SIPLoginPage] User: Log in")
 								LoginPageCpp.login(usernameEdit.text, passwordEdit.text, displayName.text, domainEdit.text, 
-								transportCbox.currentValue, serverAddressEdit.text, connectionIdEdit.text);
+								transportCbox.currentValue, registrarUriEdit.text, outboundProxyUriEdit.text, connectionIdEdit.text);
 								connectionButton.enabled = false
 								connectionButtonContent.currentIndex = 1
 							}
@@ -370,25 +370,39 @@ LoginLayout {
 					ColumnLayout {
 						spacing: Math.round(10 * DefaultStyle.dp)
 						FormItemLayout {
-							id: serverAddress
-							//: "Proxy server URL"
+							id: outboundProxyUri
+							//: "Outbound SIP Proxy URI"
 							label: qsTr("login_proxy_server_url")
+							//: "If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it."
+							tooltip: qsTr("login_proxy_server_url_tooltip")
 							Layout.fillWidth: true
 							contentItem: TextField {
-								id: serverAddressEdit
+								id: outboundProxyUriEdit
 								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+								KeyNavigation.down: registrarUriEdit
+							}
+						}
+						FormItemLayout {
+							id: registrarUri
+							//: "Registrar URI"
+							label: qsTr("login_registrar_uri")
+							Layout.fillWidth: true
+							contentItem: TextField {
+								id: registrarUriEdit
+								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+								KeyNavigation.up: outboundProxyUriEdit
 								KeyNavigation.down: connectionIdEdit
 							}
 						}
 						FormItemLayout {
 							id: connectionId
-							//: "Connexion ID (if different)"
+							//: "Authentication ID (if different)"
 							label: qsTr("login_id")
 							Layout.fillWidth: true
 							contentItem: TextField {
 								id: connectionIdEdit
 								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
-								KeyNavigation.up: serverAddressEdit
+								KeyNavigation.up: registrarUriEdit
 							}
 						}
 					}

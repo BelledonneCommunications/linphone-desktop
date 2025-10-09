@@ -67,14 +67,19 @@ Item {
 				sourceSize.height: mainItem.height
 				fillMode: Image.PreserveAspectFit
 			}
-			Image {
-				anchors.fill: image
-				z: image.z + 1
-				visible: image.status == Image.Error || image.status == Image.Null || image.frameCount === 0
-				source: AppIcons.fileImage
-				sourceSize.width: mainItem.width
-				sourceSize.height: mainItem.height
-				fillMode: Image.PreserveAspectFit
+			Rectangle {
+				anchors.fill: parent
+				color: DefaultStyle.main1_200
+				opacity: 0.5
+				Image {
+					anchors.fill: image
+					z: parent.z + 1
+					visible: image.status == Image.Error || image.status == Image.Null || !UtilsCpp.fileExists(mainItem.filePath)
+					source: AppIcons.fileImage
+					sourceSize.width: mainItem.width
+					sourceSize.height: mainItem.height
+					fillMode: Image.PreserveAspectFit
+				}
 			}
 			Image {
 				id: image

@@ -65,9 +65,11 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	            << "TLS"
 	            << "DTLS";
 	mTransport = LinphoneEnums::toString(LinphoneEnums::fromLinphone(params->getTransport()));
-	mServerAddress =
+	mRegistrarUri =
 	    params->getServerAddress() ? Utils::coreStringToAppString(params->getServerAddress()->asString()) : "";
-	mOutboundProxyEnabled = params->outboundProxyEnabled();
+	auto routesAddresses = params->getRoutesAddresses();
+	mOutboundProxyUri =
+	    routesAddresses.empty() ? "" : Utils::coreStringToAppString(routesAddresses.front()->asString());
 	auto policy = params->getNatPolicy() ? params->getNatPolicy() : account->getCore()->createNatPolicy();
 	mStunServer = Utils::coreStringToAppString(policy->getStunServer());
 	mIceEnabled = policy->iceEnabled();
@@ -136,8 +138,8 @@ AccountCore::AccountCore(const AccountCore &accountCore) {
 	mVoicemailAddress = accountCore.mVoicemailAddress;
 	mTransport = accountCore.mTransport;
 	mTransports = accountCore.mTransports;
-	mServerAddress = accountCore.mServerAddress;
-	mOutboundProxyEnabled = accountCore.mOutboundProxyEnabled;
+	mRegistrarUri = accountCore.mRegistrarUri;
+	mOutboundProxyUri = accountCore.mOutboundProxyUri;
 	mStunServer = accountCore.mStunServer;
 	mIceEnabled = accountCore.mIceEnabled;
 	mAvpfEnabled = accountCore.mAvpfEnabled;
@@ -201,11 +203,11 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 		mAccountModelConnection->invokeToCore(
 		    [this, value]() { onTransportChanged(LinphoneEnums::toString(LinphoneEnums::fromLinphone(value))); });
 	});
-	mAccountModelConnection->makeConnectToModel(&AccountModel::serverAddressChanged, [this](QString value) {
-		mAccountModelConnection->invokeToCore([this, value]() { onServerAddressChanged(value); });
+	mAccountModelConnection->makeConnectToModel(&AccountModel::registrarUriChanged, [this](QString value) {
+		mAccountModelConnection->invokeToCore([this, value]() { onRegistrarUriChanged(value); });
 	});
-	mAccountModelConnection->makeConnectToModel(&AccountModel::outboundProxyEnabledChanged, [this](bool value) {
-		mAccountModelConnection->invokeToCore([this, value]() { onOutboundProxyEnabledChanged(value); });
+	mAccountModelConnection->makeConnectToModel(&AccountModel::outboundProxyUriChanged, [this](QString value) {
+		mAccountModelConnection->invokeToCore([this, value]() { onOutboundProxyUriChanged(value); });
 	});
 	mAccountModelConnection->makeConnectToModel(&AccountModel::stunServerChanged, [this](QString value) {
 		mAccountModelConnection->invokeToCore([this, value]() { onStunServerChanged(value); });
@@ -307,8 +309,8 @@ void AccountCore::reset(const AccountCore &accountCore) {
 	setMwiServerAddress(accountCore.mMwiServerAddress);
 	setVoicemailAddress(accountCore.mVoicemailAddress);
 	setTransport(accountCore.mTransport);
-	setServerAddress(accountCore.mServerAddress);
-	setOutboundProxyEnabled(accountCore.mOutboundProxyEnabled);
+	setRegistrarUri(accountCore.mRegistrarUri);
+	setOutboundProxyUri(accountCore.mOutboundProxyUri);
 	setStunServer(accountCore.mStunServer);
 	setIceEnabled(accountCore.mIceEnabled);
 	setAvpfEnabled(accountCore.mAvpfEnabled);
@@ -524,12 +526,12 @@ QString AccountCore::getTransport() {
 	return mTransport;
 }
 
-QString AccountCore::getServerAddress() {
-	return mServerAddress;
+QString AccountCore::getRegistrarUri() {
+	return mRegistrarUri;
 }
 
-bool AccountCore::getOutboundProxyEnabled() {
-	return mOutboundProxyEnabled;
+QString AccountCore::getOutboundProxyUri() {
+	return mOutboundProxyUri;
 }
 
 QString AccountCore::getStunServer() {
@@ -582,32 +584,24 @@ void AccountCore::setVoicemailAddress(QString value) {
 
 void AccountCore::setTransport(QString value) {
 	if (mTransport != value) {
-		mAccountModelConnection->invokeToModel([this, value] {
-			mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
-			LinphoneEnums::TransportType transport;
-			LinphoneEnums::fromString(value, &transport);
-			mAccountModel->setTransport(LinphoneEnums::toLinphone(transport), false);
-		});
+		mTransport = value;
+		emit transportChanged();
 		setIsSaved(false);
 	}
 }
 
-void AccountCore::setServerAddress(QString value) {
-	if (mServerAddress != value) {
-		mAccountModelConnection->invokeToModel([this, value, transportString = mTransport] {
-			LinphoneEnums::TransportType transport;
-			LinphoneEnums::fromString(transportString, &transport);
-			mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
-			mAccountModel->setServerAddress(value, LinphoneEnums::toLinphone(transport), false);
-		});
+void AccountCore::setRegistrarUri(QString value) {
+	if (mRegistrarUri != value) {
+		mRegistrarUri = value;
+		emit registrarUriChanged();
 		setIsSaved(false);
 	}
 }
 
-void AccountCore::setOutboundProxyEnabled(bool value) {
-	if (mOutboundProxyEnabled != value) {
-		mOutboundProxyEnabled = value;
-		emit outboundProxyEnabledChanged();
+void AccountCore::setOutboundProxyUri(QString value) {
+	if (mOutboundProxyUri != value) {
+		mOutboundProxyUri = value;
+		emit outboundProxyUriChanged();
 		setIsSaved(false);
 	}
 }
@@ -715,19 +709,20 @@ void AccountCore::onTransportChanged(QString value) {
 	}
 }
 
-void AccountCore::onServerAddressChanged(QString value) {
-	if (value != mServerAddress) {
-		mServerAddress = value;
-		emit serverAddressChanged();
+void AccountCore::onRegistrarUriChanged(QString value) {
+	if (value != mRegistrarUri) {
+		mRegistrarUri = value;
+		emit registrarUriChanged();
 	}
 }
 
-void AccountCore::onOutboundProxyEnabledChanged(bool value) {
-	if (value != mOutboundProxyEnabled) {
-		mOutboundProxyEnabled = value;
-		emit outboundProxyEnabledChanged();
+void AccountCore::onOutboundProxyUriChanged(QString value) {
+	if (value != mOutboundProxyUri) {
+		mOutboundProxyUri = value;
+		emit outboundProxyUriChanged();
 	}
 }
+
 void AccountCore::onStunServerChanged(QString value) {
 	if (value != mStunServer) {
 		mStunServer = value;
@@ -793,8 +788,8 @@ void AccountCore::writeIntoModel(std::shared_ptr<AccountModel> model) const {
 	LinphoneEnums::TransportType transport;
 	LinphoneEnums::fromString(mTransport, &transport);
 	model->setTransport(LinphoneEnums::toLinphone(transport), true);
-	model->setServerAddress(mServerAddress, LinphoneEnums::toLinphone(transport), true);
-	model->setOutboundProxyEnabled(mOutboundProxyEnabled);
+	model->setRegistrarUri(mRegistrarUri);
+	model->setOutboundProxyUri(mOutboundProxyUri);
 	model->setStunServer(mStunServer);
 	model->setIceEnabled(mIceEnabled);
 	model->setAvpfEnabled(mAvpfEnabled);
@@ -810,19 +805,19 @@ void AccountCore::writeFromModel(const std::shared_ptr<AccountModel> &model) {
 	mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
 	setUnreadCallNotifications(model->getMissedCallsCount());
 	setUnreadMessageNotifications(model->getUnreadMessagesCount());
-	setMwiServerAddress(model->getMwiServerAddress());
-	setTransport(LinphoneEnums::toString(LinphoneEnums::fromLinphone(model->getTransport())));
-	setServerAddress(model->getServerAddress());
-	setOutboundProxyEnabled(model->getOutboundProxyEnabled());
-	setStunServer(model->getStunServer());
-	setIceEnabled(model->getIceEnabled());
-	setAvpfEnabled(model->getAvpfEnabled());
-	setBundleModeEnabled(model->getBundleModeEnabled());
-	setExpire(model->getExpire());
-	setConferenceFactoryAddress(model->getConferenceFactoryAddress());
-	setAudioVideoConferenceFactoryAddress(model->getAudioVideoConferenceFactoryAddress());
-	setLimeServerUrl(model->getLimeServerUrl());
-	setVoicemailAddress(model->getVoicemailAddress());
+	onMwiServerAddressChanged(model->getMwiServerAddress());
+	onTransportChanged(LinphoneEnums::toString(LinphoneEnums::fromLinphone(model->getTransport())));
+	onRegistrarUriChanged(model->getRegistrarUri());
+	onOutboundProxyUriChanged(model->getOutboundProxyUri());
+	onStunServerChanged(model->getStunServer());
+	onIceEnabledChanged(model->getIceEnabled());
+	onAvpfEnabledChanged(model->getAvpfEnabled());
+	onBundleModeEnabledChanged(model->getBundleModeEnabled());
+	onExpireChanged(model->getExpire());
+	onConferenceFactoryAddressChanged(model->getConferenceFactoryAddress());
+	onAudioVideoConferenceFactoryAddressChanged(model->getAudioVideoConferenceFactoryAddress());
+	onLimeServerUrlChanged(model->getLimeServerUrl());
+	onVoicemailAddressChanged(model->getVoicemailAddress());
 }
 
 void AccountCore::save() {

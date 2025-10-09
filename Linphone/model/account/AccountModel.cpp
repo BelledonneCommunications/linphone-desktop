@@ -268,31 +268,51 @@ void AccountModel::setTransport(linphone::TransportType value, bool save) {
 		params->setServerAddress(addressClone);
 		if (save) mMonitor->setParams(params);
 		emit transportChanged(value);
-		emit serverAddressChanged(Utils::coreStringToAppString(addressClone->asString()));
+		emit registrarUriChanged(Utils::coreStringToAppString(addressClone->asString()));
 	}
 }
 
-QString AccountModel::getServerAddress() const {
+QString AccountModel::getRegistrarUri() const {
 	if (mMonitor->getParams()->getServerAddress())
 		return Utils::coreStringToAppString(mMonitor->getParams()->getServerAddress()->asString());
 	else return "";
 }
 
-void AccountModel::setServerAddress(QString value, linphone::TransportType transport, bool save) {
+void AccountModel::setRegistrarUri(QString value) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = mMonitor->getParams()->clone();
 	auto address = CoreModel::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(value), false);
 	if (address) {
-		if (save) address->setTransport(transport);
 		params->setServerAddress(address);
-		if (save) mMonitor->setParams(params);
-		emit serverAddressChanged(value);
+		mMonitor->setParams(params);
+		emit registrarUriChanged(value);
 		emit transportChanged(address->getTransport());
 	} else {
 		//: "Unable to set server address, failed creating address from %1"
 		emit setValueFailed(tr("set_server_address_failed_error_message").arg(value));
 		qWarning() << "Unable to set ServerAddress, failed creating address from" << value;
 	}
+	emit registrarUriChanged(Utils::coreStringToAppString(address->asString()));
+}
+
+QString AccountModel::getOutboundProxyUri() const {
+	auto routeAddresses = mMonitor->getParams()->getRoutesAddresses();
+	auto outbound =
+	    routeAddresses.empty() ? QString() : Utils::coreStringToAppString(routeAddresses.front()->asString());
+	return outbound;
+}
+
+void AccountModel::setOutboundProxyUri(QString value) {
+	auto linOutboundProxyAddress = ToolModel::interpretUrl(value);
+	if (!linOutboundProxyAddress) {
+		//: Unable to set outbound proxy uri, failed creating address from %1
+		emit setValueFailed(tr("set_outbound_proxy_uri_failed_error_message").arg(value));
+		return;
+	}
+	auto params = mMonitor->getParams()->clone();
+	params->setRoutesAddresses({linOutboundProxyAddress});
+
+	emit outboundProxyUriChanged(value);
 }
 
 bool AccountModel::getOutboundProxyEnabled() const {

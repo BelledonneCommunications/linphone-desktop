@@ -42,7 +42,8 @@ public:
 	           QString domain = QString(),
 	           linphone::TransportType transportType = linphone::TransportType::Tls,
 	           QString *errorMessage = nullptr,
-	           QString serverAddress = QString(),
+	           QString registrarUri = QString(),
+	           QString outboundProxyAddress = QString(),
 	           QString connectionId = QString());
 
 	std::shared_ptr<linphone::Account> createAccount(const QString &assistantFile);

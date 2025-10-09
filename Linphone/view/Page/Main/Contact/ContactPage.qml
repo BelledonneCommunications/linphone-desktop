@@ -178,7 +178,7 @@ FriendGui{
         content: RowLayout {
             spacing: Math.round(50 * DefaultStyle.dp)
             Avatar {
-                _address: "sip:a.c@sip.linphone.org"
+                displayNameVal: "A C"
                 Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
             }
@@ -189,7 +189,7 @@ FriendGui{
                 Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
             }
             Avatar {
-                _address: "sip:a.c@sip.linphone.org"
+                displayNameVal: "A C"
                 secured: true
                 Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
                 Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)

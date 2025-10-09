@@ -49,6 +49,7 @@ QtObject {
 	property string chatTeardropTextSelected: "image://internal/chat-teardrop-text-fill.svg"
 	property string usersThree: "image://internal/users-three.svg"
 	property string usersThreeSelected: "image://internal/users-three-fill.svg"
+	property string usersThreeFilled: "image://internal/users-three-filled.svg"
 	property string userPlus: "image://internal/user-plus.svg"
 	property string noItemImage: "image://internal/noItemImage.svg"
 	property string verticalDots: "image://internal/dots-three-vertical.svg"

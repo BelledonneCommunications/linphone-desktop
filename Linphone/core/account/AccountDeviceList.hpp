@@ -21,9 +21,9 @@
 #ifndef ACCOUNT_DEVICE_LIST_H_
 #define ACCOUNT_DEVICE_LIST_H_
 
-#include "../proxy/ListProxy.hpp"
 #include "AccountDeviceCore.hpp"
 #include "core/account/AccountGui.hpp"
+#include "core/proxy/ListProxy.hpp"
 #include "model/account/AccountManagerServicesModel.hpp"
 #include "tool/AbstractObject.hpp"
 #include "tool/thread/SafeConnection.hpp"

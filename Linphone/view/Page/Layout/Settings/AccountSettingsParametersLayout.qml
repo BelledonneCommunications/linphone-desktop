@@ -6,10 +6,13 @@ import QtQuick.Dialogs
 import Linphone
 import SettingsCpp 1.0
 import UtilsCpp
+import ConstantsCpp
 
 AbstractSettingsLayout {
     id: mainItem
     width: parent?.width
+    property bool registrarUriIsValid
+    property bool outboundProxyIsValid
     contentModel: [{
             "title": qsTr("settings_title"),
             "subTitle": "",
@@ -23,7 +26,15 @@ AbstractSettingsLayout {
     property alias account: mainItem.model
 
     onSave: {
-        account.core.save()
+        if (!registrarUriIsValid || !outboundProxyIsValid) {
+            var message = !registrarUriIsValid
+            //: Registrar uri is invalid. Please make sure it matches the following format : sip:<host>:<port>;transport=<transport> (:<port> is optional)
+            ? qsTr("info_popup_invalid_registrar_uri_message")
+            //: Outbound proxy uri is invalid. Please make sure it matches the following format : sip:<host>:<port>;transport=<transport> (:<port> is optional)
+            : qsTr("info_popup_invalid_outbound_proxy_message")
+            mainWindow.showInformationPopup(qsTr("info_popup_error_title"), message, false)
+        }
+        else account.core.save()
     }
     onUndo: account.core.undo()
     Connections {
@@ -110,26 +121,33 @@ AbstractSettingsLayout {
                 color: DefaultStyle.main2_600
                 font: Typography.p2l
             }
-            ComboSetting {
+            DecoratedTextField {
                 Layout.fillWidth: true
-                Layout.topMargin: Math.round(-15 * DefaultStyle.dp)
-                entries: account.core.transports
-                propertyName: "transport"
+                //:"Registrar URI"
+                title: qsTr("account_settings_registrar_uri_title")
+                propertyName: "registrarUri"
                 propertyOwnerGui: account
+                toValidate: true
+                isValid: function(text) {
+                    var valid = text === "" || UtilsCpp.stringMatchFormat(text, ConstantsCpp.uriRegExp)
+                    mainItem.registrarUriIsValid = valid
+                    return valid
+                }
             }
             DecoratedTextField {
                 Layout.fillWidth: true
-                //:"URL du serveur mandataire"
+                //:"Outbound SIP Proxy URI"
                 title: qsTr("account_settings_sip_proxy_url_title")
-                propertyName: "serverAddress"
+                propertyName: "outboundProxyUri"
                 propertyOwnerGui: account
                 toValidate: true
-            }
-            SwitchSetting {
-                //: "Serveur mandataire sortant"
-                titleText: qsTr("account_settings_outbound_proxy_title")
-                propertyName: "outboundProxyEnabled"
-                propertyOwnerGui: account
+                //: "If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it."
+                tooltip: qsTr("login_proxy_server_url_tooltip")
+                isValid: function(text) {
+                    var isValid = text === "" || UtilsCpp.stringMatchFormat(text, ConstantsCpp.uriRegExp)
+                    mainItem.outboundProxyIsValid = isValid
+                    return isValid
+                }
             }
             DecoratedTextField {
                 Layout.fillWidth: true

@@ -65,7 +65,8 @@ void LoginPage::login(const QString &username,
                       QString displayName,
                       QString domain,
                       LinphoneEnums::TransportType transportType,
-                      QString serverAddress,
+                      QString registrarUri,
+                      QString outboundProxyAddress,
                       QString connectionId) {
 	setErrorMessage("");
 	App::postModelAsync([=]() {
@@ -114,7 +115,7 @@ void LoginPage::login(const QString &username,
 
 		QString error;
 		if (!accountManager->login(username, password, displayName, domain, LinphoneEnums::toLinphone(transportType),
-		                           &error, serverAddress, connectionId)) {
+		                           &error, registrarUri, outboundProxyAddress, connectionId)) {
 			setErrorMessage(error);
 			emit accountManager->registrationStateChanged(linphone::RegistrationState::None, linphone::Reason::None);
 		}

@@ -69,11 +69,19 @@ FocusScope {
                     contentItem: RowLayout {
                         spacing: Math.round(16 * DefaultStyle.dp)
                         anchors.verticalCenter: parent.verticalCenter
-                        Image {
-                            source: AppIcons.groupCall
-                            Layout.preferredWidth: Math.round(44 * DefaultStyle.dp)
-                            sourceSize.width: Math.round(44 * DefaultStyle.dp)
-                            fillMode: Image.PreserveAspectFit
+                        Rectangle {
+                            width: Math.round(44 * DefaultStyle.dp)
+                            height: width
+                            radius: width / 2
+                            color: DefaultStyle.main1_500_main
+                            EffectImage {
+                                imageSource: AppIcons.usersThreeFilled
+                                anchors.centerIn: parent
+                                width: Math.round(24 * DefaultStyle.dp)
+                                height: width
+                                fillMode: Image.PreserveAspectFit
+                                colorizationColor: DefaultStyle.grey_0
+                            }
                         }
                         Text {
                             text: mainItem.startGroupButtonText

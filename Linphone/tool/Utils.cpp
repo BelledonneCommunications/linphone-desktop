@@ -2242,6 +2242,10 @@ bool Utils::isAnimatedImage(const QString &path) {
 	return reader.canRead() && reader.supportsAnimation() && reader.imageCount() > 1;
 }
 
+bool Utils::fileExists(const QString &path) {
+	return QFileInfo::exists(path);
+}
+
 bool Utils::canHaveThumbnail(const QString &path) {
 	if (path.isEmpty()) return false;
 	return isImage(path) || isAnimatedImage(path) /*|| isPdf(path)*/ || isVideo(path);
@@ -2274,4 +2278,10 @@ QString Utils::getEphemeralFormatedTime(int selectedTime) {
 	else if (selectedTime == 259200) return tr("nDay", "", 3).arg(3);
 	else if (selectedTime == 604800) return tr("nWeek", "", 1).arg(1);
 	else return tr("nSeconds", "", selectedTime).arg(selectedTime);
+}
+
+bool Utils::stringMatchFormat(QString toMatch, QRegularExpression regExp) {
+	if (!regExp.isValid()) return false;
+	auto match = regExp.match(toMatch);
+	return match.hasMatch();
 }

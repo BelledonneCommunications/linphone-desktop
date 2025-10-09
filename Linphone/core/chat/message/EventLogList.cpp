@@ -163,9 +163,9 @@ void EventLogList::displayMore() {
 		}
 		mCoreModelConnection->invokeToCore([this, events, newCount] {
 			int currentCount = mList.count();
-			for (auto &event : *events) {
-				connectItem(event);
-				add(event);
+			for (auto it = events->end() - 1; it >= events->begin(); --it) {
+				connectItem(*it);
+				prepend(*it);
 			}
 		});
 	});

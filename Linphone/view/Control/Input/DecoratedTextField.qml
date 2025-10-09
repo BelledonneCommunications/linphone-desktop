@@ -19,6 +19,8 @@ FormItemLayout {
 	property bool canBeEmpty: true
 	property bool toValidate: false
 	property alias text: textField.text
+	
+	property var value: propertyOwnerGui ? propertyOwnerGui.core[propertyName] : propertyOwner[propertyName]
 
 	function value() {
 		return propertyOwnerGui ? propertyOwnerGui.core[propertyName] : propertyOwner[propertyName]

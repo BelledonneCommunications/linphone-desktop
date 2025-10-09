@@ -60,7 +60,8 @@ bool AccountManager::login(QString username,
                            QString domain,
                            linphone::TransportType transportType,
                            QString *errorMessage,
-                           QString serverAddress,
+                           QString registrarUri,
+                           QString outboundProxyAddress,
                            QString connectionId) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
@@ -89,9 +90,13 @@ bool AccountManager::login(QString username,
 	}
 
 	if (!displayName.isEmpty()) identity->setDisplayName(Utils::appStringToCoreString(displayName));
-	if (!serverAddress.isEmpty()) {
-		auto linServerAddress = ToolModel::interpretUrl(serverAddress);
-		params->setServerAddress(linServerAddress);
+	if (!registrarUri.isEmpty()) {
+		auto linRegistrarUri = ToolModel::interpretUrl(registrarUri);
+		params->setServerAddress(linRegistrarUri);
+	}
+	if (!outboundProxyAddress.isEmpty()) {
+		auto linOutboundProxyAddress = ToolModel::interpretUrl(outboundProxyAddress);
+		params->setRoutesAddresses({linOutboundProxyAddress});
 	}
 	if (!domain.isEmpty()) {
 		identity->setDomain(Utils::appStringToCoreString(domain));

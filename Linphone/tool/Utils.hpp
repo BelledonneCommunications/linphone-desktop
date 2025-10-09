@@ -166,6 +166,7 @@ public:
 	Q_INVOKABLE static bool isVideo(const QString &path);
 	static QString getSafeFilePath(const QString &filePath, bool *soFarSoGood);
 	Q_INVOKABLE static bool isAnimatedImage(const QString &path);
+	Q_INVOKABLE static bool fileExists(const QString &path);
 	Q_INVOKABLE static bool canHaveThumbnail(const QString &path);
 	Q_INVOKABLE static bool isImage(const QString &path);
 	Q_INVOKABLE static bool isPdf(const QString &path);
@@ -185,6 +186,8 @@ public:
 
 	Q_INVOKABLE static void sendVoiceRecordingMessage(RecorderGui *recorderGui, ChatGui *chatGui);
 	Q_INVOKABLE static QString getEphemeralFormatedTime(int selectedTime);
+
+	Q_INVOKABLE static bool stringMatchFormat(QString toMatch, QRegularExpression regExp);
 
 	//	QDir findDirectoryByName(QString startPath, QString name);
 

@@ -23,6 +23,7 @@
 
 #include <QDir>
 #include <QObject>
+#include <QRegularExpression>
 #include <QString>
 
 #include "config.h"
@@ -102,6 +103,11 @@ public:
 	Q_PROPERTY(QString DefaultLocale MEMBER DefaultLocale CONSTANT)
 	Q_PROPERTY(int maxMosaicParticipants MEMBER MaxMosaicParticipants CONSTANT)
 	Q_PROPERTY(QStringList reactionsList READ getReactionsList CONSTANT)
+	Q_PROPERTY(QRegularExpression uriRegExp MEMBER mUriRegExp CONSTANT)
+
+	// Uri regexp
+	QRegularExpression mUriRegExp = QRegularExpression(
+	    "(sip|sips):[[:alnum:]]+[.]*[[[:alnum:]]+[.]*[[:alnum:]]+]*:?[0-9]*?;transport=(tls|tcp|udp|dtls)");
 
 	// For Webviews
 	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";

@@ -42,7 +42,8 @@ public:
 	                       QString displayName = QString(),
 	                       QString domain = QString(),
 	                       LinphoneEnums::TransportType transportType = LinphoneEnums::TransportType::Tls,
-	                       QString serverAddress = QString(),
+	                       QString registrarUri = QString(),
+	                       QString outboundProxyAddress = QString(),
 	                       QString connectionId = QString());
 
 	linphone::RegistrationState getRegistrationState() const;

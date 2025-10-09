@@ -21,8 +21,8 @@ Button {
     topPadding: 0
     bottomPadding: 0
     icon.source: AppIcons.verticalDots
-    icon.width: Math.round(24 * DefaultStyle.dp)
-    icon.height: Math.round(24 * DefaultStyle.dp)
+    icon.width: width
+    icon.height: width
     function close() {
         popup.close()
     }
