@@ -20,7 +20,6 @@
 #
 ################################################################################
 
-cmake_minimum_required(VERSION 3.1)
 project(LINPHONE_PACKAGE) # Dummy project.
 if(ENABLE_BUILD_VERBOSE)
 	message("Linphone-packages paths : ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}")

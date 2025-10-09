@@ -25,9 +25,11 @@ Avatar {
 										  : null
 	property var _username: conferenceInfoModel
 							? conferenceInfoModel.subject
-							: _sipAddressObserver
-								? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress)
-								: ''
+							: participantDeviceModel
+							    ? participantDeviceModel.displayName
+							    : _sipAddressObserver
+								    ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress)
+								    : ''
 	property bool isPaused: (call && (call.status === CallModel.CallStatusPaused)) || (participantDeviceModel && participantDeviceModel.isPaused) || false
 	
 	Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.

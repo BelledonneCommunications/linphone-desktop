@@ -77,7 +77,10 @@ QString ParticipantDeviceModel::getName() const{
 }
 
 QString ParticipantDeviceModel::getDisplayName() const{
-	return mParticipantDevice ? Utils::getDisplayName(mParticipantDevice->getAddress()) : "";
+	auto name = mParticipantDevice ?  Utils::getDisplayName(mParticipantDevice->getAddress()) : "";
+	if(name.isEmpty())
+		name = mParticipantDevice ? Utils::coreStringToAppString(mParticipantDevice->getName().c_str()) : "";
+	return name;
 }
 
 int ParticipantDeviceModel::getSecurityLevel() const{
