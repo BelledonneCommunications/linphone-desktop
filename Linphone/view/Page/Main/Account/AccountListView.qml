@@ -83,7 +83,8 @@ Item {
 			icon.source: AppIcons.plusCircle
             icon.width: Math.round(32 * DefaultStyle.dp)
             icon.height: Math.round(32 * DefaultStyle.dp)
-			text: 'Ajouter un compte'
+			//: "Ajouter un compte"
+            text: qsTr("drawer_menu_add_account")
 		}
 	}
 }
