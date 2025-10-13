@@ -68,6 +68,18 @@ std::list<std::shared_ptr<linphone::EventLog>> ChatModel::getHistoryRange(int be
 	return mMonitor->getHistoryRangeEvents(begin, end);
 }
 
+std::list<std::shared_ptr<linphone::EventLog>>
+ChatModel::getHistoryRangeBetween(const std::shared_ptr<linphone::EventLog> firstEvent,
+                                  const std::shared_ptr<linphone::EventLog> lastEvent,
+                                  int filters) {
+	return mMonitor->getHistoryRangeBetween(firstEvent, lastEvent, filters);
+}
+
+std::list<std::shared_ptr<linphone::EventLog>>
+ChatModel::getHistoryRangeNear(int before, int after, const std::shared_ptr<linphone::EventLog> event, int filters) {
+	return mMonitor->getHistoryRangeNear(before, after, event, filters);
+}
+
 std::list<std::shared_ptr<linphone::ChatMessage>> ChatModel::getChatMessageHistory() const {
 	auto history = mMonitor->getHistory(0, (int)linphone::ChatRoom::HistoryFilter::ChatMessage);
 	std::list<std::shared_ptr<linphone::ChatMessage>> res;

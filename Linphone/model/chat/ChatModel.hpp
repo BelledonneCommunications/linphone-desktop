@@ -50,6 +50,12 @@ public:
 	std::list<std::shared_ptr<linphone::Content>> getSharedDocuments() const;
 	std::list<std::shared_ptr<linphone::EventLog>> getHistory() const;
 	std::list<std::shared_ptr<linphone::EventLog>> getHistoryRange(int begin, int end);
+	std::list<std::shared_ptr<linphone::EventLog>>
+	getHistoryRangeBetween(const std::shared_ptr<linphone::EventLog> firstEvent,
+	                       const std::shared_ptr<linphone::EventLog> lastEvent,
+	                       int filters);
+	std::list<std::shared_ptr<linphone::EventLog>>
+	getHistoryRangeNear(int before, int after, const std::shared_ptr<linphone::EventLog> firstEvent, int filters);
 	std::list<std::shared_ptr<linphone::ChatMessage>> getChatMessageHistory() const;
 	int getHistorySizeEvents();
 	QString getIdentifier() const;

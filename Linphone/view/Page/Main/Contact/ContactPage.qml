@@ -606,7 +606,7 @@ FriendGui{
                             }
                         }
                         ContactDetailLayout {
-                            visible: !SettingsCpp.disableChatFeature
+                            visible: false//!SettingsCpp.disableChatFeature
                             //: "Medias"
                             label: qsTr("contact_details_medias_title")
                             Layout.fillWidth: true

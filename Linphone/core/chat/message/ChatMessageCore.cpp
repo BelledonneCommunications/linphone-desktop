@@ -267,7 +267,6 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	mChatMessageModelConnection->makeConnectToModel(
 	    &ChatMessageModel::msgStateChanged,
 	    [this](const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state) {
-		    if (mChatMessageModel->getMonitor() != message) return;
 		    auto imdnStatusList = computeDeliveryStatus(message);
 		    auto msgState = LinphoneEnums::fromLinphone(state);
 		    mChatMessageModelConnection->invokeToCore([this, msgState, imdnStatusList] {

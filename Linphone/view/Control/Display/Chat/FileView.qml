@@ -72,7 +72,7 @@ Item {
 				color: DefaultStyle.main1_200
 				opacity: 0.5
 				Image {
-					anchors.fill: image
+					anchors.fill: parent
 					z: parent.z + 1
 					visible: image.status == Image.Error || image.status == Image.Null || !UtilsCpp.fileExists(mainItem.filePath)
 					source: AppIcons.fileImage

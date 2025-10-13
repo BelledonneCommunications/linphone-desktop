@@ -299,6 +299,7 @@ Control.Control {
                                     }
                                 }
                                 EffectImage {
+                                    // Imdn status icon
                                     visible: !mainItem.isRemoteMessage
                                     Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
                                     Layout.preferredHeight: visible ? 14 * DefaultStyle.dp : 0

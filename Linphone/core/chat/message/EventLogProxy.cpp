@@ -48,29 +48,31 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 		connect(newEventLogList, &EventLogList::eventInserted, this,
 		        [this, newEventLogList](int index, EventLogGui *event) {
 			        invalidate();
+			        int proxyIndex = -1;
 			        if (index != -1) {
-				        index = dynamic_cast<SortFilterList *>(sourceModel())
-				                    ->mapFromSource(newEventLogList->index(index, 0))
-				                    .row();
-				        if (mMaxDisplayItems <= index) setMaxDisplayItems(index + mDisplayItemsStep);
+				        proxyIndex = dynamic_cast<SortFilterList *>(sourceModel())
+				                         ->mapFromSource(newEventLogList->index(index, 0))
+				                         .row();
 			        }
-			        loadUntil(index);
-			        emit eventInserted(index, event);
+			        loadUntil(proxyIndex);
+			        emit eventInserted(proxyIndex, event);
 		        });
-		connect(newEventLogList, &EventLogList::messageWithFilterFound, this, [this, newEventLogList](int index) {
-			if (index != -1) {
+		connect(newEventLogList, &EventLogList::messageWithFilterFound, this, [this, newEventLogList](int i) {
+			connect(this, &EventLogProxy::layoutChanged, newEventLogList, [this, i, newEventLogList] {
+				disconnect(this, &EventLogProxy::layoutChanged, newEventLogList, nullptr);
 				auto model = getListModel<EventLogList>();
-				mLastSearchStart = model->getAt<EventLogCore>(index);
-				index = dynamic_cast<SortFilterList *>(sourceModel())
-				            ->mapFromSource(newEventLogList->index(index, 0))
-				            .row();
-				loadUntil(index);
-			}
-			emit indexWithFilterFound(index);
+				int proxyIndex =
+				    dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(newEventLogList->index(i, 0)).row();
+				if (i != -1) {
+					loadUntil(proxyIndex);
+				}
+				emit indexWithFilterFound(proxyIndex);
+			});
+			invalidate();
 		});
 	}
 	setSourceModels(new SortFilterList(model, Qt::DescendingOrder));
-	sort(0);
+	sort(0, Qt::DescendingOrder);
 }
 
 ChatGui *EventLogProxy::getChatGui() {
@@ -144,5 +146,8 @@ bool EventLogProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModel
 }
 
 bool EventLogProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	auto l = getItemAtSource<EventLogList, EventLogCore>(sourceLeft.row());
+	auto r = getItemAtSource<EventLogList, EventLogCore>(sourceRight.row());
+	if (l && r) return l->getTimestamp() <= r->getTimestamp();
 	return true;
 }
