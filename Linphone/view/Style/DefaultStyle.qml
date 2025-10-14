@@ -15,7 +15,7 @@ QtObject {
     property color main1_600: currentTheme.main600
     property color main1_700: currentTheme.main700
 
-    property color main2_000: "#FAFEFF"
+    property color main2_0: "#FAFEFF"
     property color main2_100: "#EEF6F8"
     property color main2_200: "#DFECF2"
     property color main2_300: "#C0D1D9"
@@ -38,6 +38,7 @@ QtObject {
     property color grey_1000: "#000000"
 
     property color warning_600: "#DBB820"
+    property color warning_700: "#AF9308"
     property color danger_500_main: "#DD5F5F"
     property color warning_500_main: "#FFDC2E"
     property color danger_700: "#9E3548"

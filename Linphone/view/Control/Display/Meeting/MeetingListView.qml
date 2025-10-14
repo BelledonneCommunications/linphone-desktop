@@ -8,6 +8,7 @@ import QtQml
 import UtilsCpp
 
 import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ListView {
 	id: mainItem
@@ -24,6 +25,8 @@ ListView {
 	
     spacing: Math.round(8 * DefaultStyle.dp)
 	highlightFollowsCurrentItem: false
+
+	signal meetingDeletionRequested(ConferenceInfoGui confInfo, bool canCancel)
 	
 	function selectIndex(index){
 		mainItem.currentIndex = index
@@ -163,7 +166,7 @@ ListView {
 		visible: !mainItem.loading
         height: Math.round(63 * DefaultStyle.dp) + (!isFirst && dateDay.visible ? topOffset : 0)
 		width: mainItem.width
-		enabled: !isCanceled && haveModel
+		enabled: haveModel
 		
 		property var itemGui: $modelData
 		// Do not use itemAtIndex because of caching items. Using getAt ensure to have a GUI
@@ -307,12 +310,42 @@ ListView {
 					}
 				}
 				MouseArea {
+					id: mouseArea
 					hoverEnabled: mainItem.hoverEnabled
 					anchors.fill: parent
-					cursorShape: Qt.PointingHandCursor
+					cursorShape: itemDelegate.isCanceled ? Qt.ArrowCursor : Qt.PointingHandCursor
 					visible: itemDelegate.haveModel
-					onClicked: {
-						mainItem.selectIndex(index)
+					acceptedButtons: Qt.LeftButton | Qt.RightButton
+					onClicked: (mouse) => {
+						console.log("clicked", mouse.button)
+						if (mouse.button === Qt.RightButton) {
+							console.log("open popup")
+							deletePopup.x = mouse.x
+							deletePopup.y = mouse.y
+							deletePopup.open()
+						}
+						else if (!itemDelegate.isCanceled) mainItem.selectIndex(index)
+					}
+					Popup {
+						id: deletePopup
+						parent: mouseArea
+        				padding: Utils.getSizeWithScreenRatio(10)
+        				closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside | Popup.CloseOnEscape
+						contentItem: IconLabelButton {
+							style: ButtonStyle.hoveredBackgroundRed
+							property var isMeObj: UtilsCpp.isMe(itemDelegate.itemGui?.core?.organizerAddress)
+							property bool canCancel: isMeObj && isMeObj.value && itemDelegate.itemGui?.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
+							icon.source: AppIcons.trashCan
+							//: "Supprimer la réunion"
+							text: qsTr("meeting_info_delete")
+							
+							onClicked: {
+								if (itemDelegate.itemGui) {
+									mainItem.meetingDeletionRequested(itemDelegate.itemGui, canCancel)
+									deletePopup.close()
+								}
+							}
+						}
 					}
 				}
 			}

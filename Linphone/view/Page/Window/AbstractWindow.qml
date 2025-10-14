@@ -51,96 +51,92 @@ ApplicationWindow {
         }
     }
 
-    Popup {
-        id: startCallPopup
-        property FriendGui contact
-        property bool videoEnabled
-        // if currentCall, transfer call to contact
-        property CallGui currentCall
-        onContactChanged: {
-            console.log("contact changed", contact)
-        }
-        underlineColor: DefaultStyle.main1_500_main
-        anchors.centerIn: parent
-        width: Math.round(370 * DefaultStyle.dp)
-        modal: true
-        leftPadding: Math.round(15 * DefaultStyle.dp)
-        rightPadding: Math.round(15 * DefaultStyle.dp)
-        topPadding: Math.round(20 * DefaultStyle.dp)
-        bottomPadding: Math.round(25 * DefaultStyle.dp)
-        contentItem: ColumnLayout {
-            spacing: Math.round(16 * DefaultStyle.dp)
-            RowLayout {
-                spacing: Math.round(5 * DefaultStyle.dp)
-                width: startCallPopup.width
-                Text {
-                    //: "Choisissez un numéro ou adresse SIP"
-                    text: qsTr("contact_dialog_pick_phone_number_or_sip_address_title")
-                    wrapMode: Text.Wrap
+    Component {
+        id: addressChooserPopupComp
+        Popup {
+            id: addressChooserPopup
+            property FriendGui contact
+            signal addressChosen(string address)
+            underlineColor: DefaultStyle.main1_500_main
+            anchors.centerIn: parent
+            width: Math.round(370 * DefaultStyle.dp)
+            modal: true
+            leftPadding: Math.round(15 * DefaultStyle.dp)
+            rightPadding: Math.round(15 * DefaultStyle.dp)
+            topPadding: Math.round(20 * DefaultStyle.dp)
+            bottomPadding: Math.round(25 * DefaultStyle.dp)
+            contentItem: ColumnLayout {
+                spacing: Math.round(16 * DefaultStyle.dp)
+                RowLayout {
+                    spacing: Math.round(5 * DefaultStyle.dp)
+                    width: addressChooserPopup.width
+                    Text {
+                        //: "Choisissez un numéro ou adresse SIP"
+                        text: qsTr("contact_dialog_pick_phone_number_or_sip_address_title")
+                        wrapMode: Text.Wrap
+                        Layout.fillWidth: true
+                        font {
+                            pixelSize: Typography.h4.pixelSize
+                            weight: Typography.h4.weight
+                        }
+                    }
+                    RoundButton {
+                        Layout.alignment: Qt.AlignVCenter
+                        style: ButtonStyle.noBackground
+                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                        icon.source:AppIcons.closeX
+                        onClicked: addressChooserPopup.close()
+                    }
+                }
+                ListView {
+                    id: popuplist
+                    model: VariantList {
+                        model: addressChooserPopup.contact && addressChooserPopup.contact.core.allAddresses || []
+                    }
                     Layout.fillWidth: true
-                    font {
-                        pixelSize: Typography.h4.pixelSize
-                        weight: Typography.h4.weight
-                    }
-                }
-                RoundButton {
-                    Layout.alignment: Qt.AlignVCenter
-                    style: ButtonStyle.noBackground
-                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                    icon.source:AppIcons.closeX
-                    onClicked: startCallPopup.close()
-                }
-            }
-            ListView {
-                id: popuplist
-                model: VariantList {
-                    model: startCallPopup.contact && startCallPopup.contact.core.allAddresses || []
-                }
-                Layout.fillWidth: true
-                Layout.preferredHeight: contentHeight
-                spacing: Math.round(10 * DefaultStyle.dp)
-                delegate: Item {
-                    width: popuplist.width
-                    height: Math.round(56 * DefaultStyle.dp)
-                    ColumnLayout {
+                    Layout.preferredHeight: contentHeight
+                    spacing: Math.round(10 * DefaultStyle.dp)
+                    delegate: Item {
                         width: popuplist.width
-                        anchors.verticalCenter: parent.verticalCenter
-                        spacing: Math.round(10 * DefaultStyle.dp)
+                        height: Math.round(56 * DefaultStyle.dp)
                         ColumnLayout {
-                            spacing: Math.round(7 * DefaultStyle.dp)
-                            Text {
-                                Layout.leftMargin: Math.round(5 * DefaultStyle.dp)
-                                text: modelData.label + " :"
-                                font {
-                                    pixelSize: Typography.p2.pixelSize
-                                    weight: Typography.p2.weight
+                            width: popuplist.width
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: Math.round(10 * DefaultStyle.dp)
+                            ColumnLayout {
+                                spacing: Math.round(7 * DefaultStyle.dp)
+                                Text {
+                                    Layout.leftMargin: Math.round(5 * DefaultStyle.dp)
+                                    text: modelData.label + " :"
+                                    font {
+                                        pixelSize: Typography.p2.pixelSize
+                                        weight: Typography.p2.weight
+                                    }
+                                }
+                                Text {
+                                    Layout.leftMargin: Math.round(5 * DefaultStyle.dp)
+                                    text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(modelData.address) : modelData.address
+                                    font {
+                                        pixelSize: Typography.p1.pixelSize
+                                        weight: Typography.p1.weight
+                                    }
                                 }
                             }
-                            Text {
-                                Layout.leftMargin: Math.round(5 * DefaultStyle.dp)
-                                text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(modelData.address) : modelData.address
-                                font {
-                                    pixelSize: Typography.p1.pixelSize
-                                    weight: Typography.p1.weight
-                                }
+                            Rectangle {
+                                visible: index != popuplist.model.count - 1
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+                                color: DefaultStyle.main2_200
                             }
                         }
-                        Rectangle {
-                            visible: index != popuplist.model.count - 1
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
-                            color: DefaultStyle.main2_200
-                        }
-                    }
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-                        onClicked: {
-                            if (startCallPopup.currentCall) startCallPopup.currentCall.core.lTransferCall(modelData.address)
-                            else UtilsCpp.createCall(modelData.address, {'localVideoEnabled': startCallPopup.videoEnabled})
-                            startCallPopup.close()
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+                            onClicked: {
+                                addressChooserPopup.addressChosen(modelData.address)
+                            }
                         }
                     }
                 }
@@ -150,13 +146,17 @@ ApplicationWindow {
 
     function startCallWithContact(contact, videoEnabled, parentItem) {
         if (parentItem == undefined) parentItem = mainWindow.contentItem
-        startCallPopup.parent = parentItem
         if (contact) {
             console.log("START CALL WITH", contact.core.fullName, "addresses count", contact.core.allAddresses.length)
             if (contact.core.allAddresses.length > 1) {
-                startCallPopup.contact = contact
-                startCallPopup.videoEnabled = videoEnabled
-                startCallPopup.open()
+                var addressPopup = addressChooserPopupComp.createObject()
+                addressPopup.parent = parentItem
+                addressPopup.contact = contact
+                addressPopup.addressChosen.connect(function(address) {
+                    UtilsCpp.createCall(address, {'localVideoEnabled': videoEnabled})
+                    addressPopup.close()
+                })
+                addressPopup.open()
 
             } else {
                 var addressToCall = contact.core.defaultAddress.length === 0
@@ -169,16 +169,41 @@ ApplicationWindow {
         }
     }
 
+    function sendMessageToContact(contact, parentItem) {
+        if (parentItem == undefined) parentItem = mainWindow.contentItem
+        if (contact) {
+            console.log("SEND MESSAGE TO", contact.core.fullName, "addresses count", contact.core.allAddresses.length)
+            if (contact.core.allAddresses.length > 1) {
+                var addressPopup = addressChooserPopupComp.createObject()
+                addressPopup.parent = parentItem
+                addressPopup.contact = contact
+                addressPopup.addressChosen.connect(function(address) {
+                    displayChatPage(address)
+                    addressPopup.close()
+                })
+                addressPopup.open()
+
+            } else {
+                displayChatPage(contact.core.defaultAddress)
+                if (addressToCall.length != 0) UtilsCpp.createCall(addressToCall, {'localVideoEnabled':videoEnabled})
+            }
+        }
+    }
+
     function transferCallToContact(call, contact, parentItem) {
         if (!call || !contact) return
         if (parentItem == undefined) parentItem = mainWindow.contentItem
-        startCallPopup.parent = parentItem
         if (contact) {
             console.log("[AbstractWindow] Transfer call to", contact.core.fullName, "addresses count", contact.core.allAddresses.length, call)
             if (contact.core.allAddresses.length > 1) {
-                startCallPopup.contact = contact
-                startCallPopup.currentCall = call
-                startCallPopup.open()
+                var addressPopup = addressChooserPopupComp.createObject()
+                addressPopup.parent = parentItem
+                addressPopup.contact = contact
+                addressPopup.addressChosen.connect(function(address) {
+                    call.core.lTransferCall(address)
+                    addressPopup.close()
+                })
+                addressPopup.open()
 
             } else {
                 var addressToCall = contact.core.defaultAddress.length === 0

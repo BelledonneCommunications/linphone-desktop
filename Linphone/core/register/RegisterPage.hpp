@@ -39,8 +39,9 @@ public:
 
 	Q_INVOKABLE void registerNewAccount(const QString &username,
 	                                    const QString &password,
-	                                    const QString &email,
-	                                    const QString &phoneNumber);
+	                                    const QString &email = QString(),
+	                                    const QString &countryCallingCode = QString(),
+	                                    const QString &phoneNumber = QString());
 	Q_INVOKABLE void
 	linkNewAccountUsingCode(const QString &code, bool registerWithEmail, const QString &sipIdentityAddress);
 

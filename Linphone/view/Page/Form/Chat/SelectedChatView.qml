@@ -102,14 +102,23 @@ FocusScope {
                                 capitalization: Font.Capitalize
                             }
                         }
-                        EffectImage {
+                        RowLayout {
                             visible: mainItem.chat != undefined && mainItem.chat.core.isBasic
-                            Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
-                            Layout.preferredHeight: 14 * DefaultStyle.dp
-                            colorizationColor: DefaultStyle.warning_500_main
-                            imageSource: AppIcons.lockSimpleOpen
+                            spacing: Math.round(8 * DefaultStyle.dp)
+                            EffectImage {
+                                Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
+                                Layout.preferredHeight: 14 * DefaultStyle.dp
+                                colorizationColor: DefaultStyle.warning_700
+                                imageSource: AppIcons.lockSimpleOpen
+                            }
+                            Text {
+                                Layout.fillWidth: true
+                                color: DefaultStyle.warning_700
+                                //: This conversation is not encrypted !
+                                text: qsTr("unencrypted_conversation_warning")
+                                font: Typography.p2
+                            }
                         }
-                        Layout.fillWidth: true
                         EffectImage {
                             visible: mainItem.chat?.core.muted || false
                             Layout.preferredWidth: 20 * DefaultStyle.dp

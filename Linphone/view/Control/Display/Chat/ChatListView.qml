@@ -319,7 +319,7 @@ ListView {
 						visible: modelData != undefined && modelData?.core.isBasic
                         Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
                         Layout.preferredHeight: 14 * DefaultStyle.dp
-                        colorizationColor: DefaultStyle.warning_500_main
+                        colorizationColor: DefaultStyle.warning_700
                         imageSource: AppIcons.lockSimpleOpen
                     }
                     EffectImage {

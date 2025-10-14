@@ -38,15 +38,18 @@ RegisterPage::~RegisterPage() {
 void RegisterPage::registerNewAccount(const QString &username,
                                       const QString &password,
                                       const QString &email,
+                                      const QString &countryCallingCode,
                                       const QString &phoneNumber) {
+
 	App::postModelAsync([=]() {
 		// Create on Model thread.
-		// registrationFailed(error); });
 		AccountManager::RegisterType registerType;
 		QString address;
 		if (email.isEmpty()) {
 			registerType = AccountManager::RegisterType::PhoneNumber;
-			address = phoneNumber;
+			auto dialPlan = linphone::DialPlan::byCcc(Utils::appStringToCoreString(countryCallingCode));
+			auto formattedPhoneNumber = dialPlan->formatPhoneNumber(Utils::appStringToCoreString(phoneNumber), false);
+			address = Utils::coreStringToAppString(formattedPhoneNumber);
 		} else {
 			registerType = AccountManager::RegisterType::Email;
 			address = email;

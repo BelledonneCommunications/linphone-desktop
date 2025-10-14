@@ -29,6 +29,8 @@
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
+#include <QQuickWindow>
+
 DEFINE_ABSTRACT_OBJECT(ChatCore)
 
 /***********************************************************************/
@@ -232,7 +234,16 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    });
 
 	mChatModelConnection->makeConnectToCore(&ChatCore::lMarkAsRead, [this]() {
-		mChatModelConnection->invokeToModel([this]() { mChatModel->markAsRead(); });
+		auto mainWindow = Utils::getMainWindow();
+		if (mainWindow->isActive()) mChatModelConnection->invokeToModel([this]() { mChatModel->markAsRead(); });
+		else {
+			connect(mainWindow, &QQuickWindow::activeChanged, this, [this, mainWindow] {
+				if (mainWindow->isActive()) {
+					disconnect(mainWindow, &QQuickWindow::activeChanged, this, nullptr);
+					mChatModelConnection->invokeToModel([this, mainWindow] { mChatModel->markAsRead(); });
+				}
+			});
+		}
 	});
 	mChatModelConnection->makeConnectToModel(&ChatModel::messagesRead, [this]() {
 		auto unread = mChatModel->getUnreadMessagesCount();

@@ -277,7 +277,7 @@ Control.Control {
 	Rectangle {
 		id: hoverContent
 		anchors.fill: parent
-		color: DefaultStyle.main2_000
+		color: DefaultStyle.main2_0
 		visible: false
 		radius: Math.round(20 * DefaultStyle.dp)
 

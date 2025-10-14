@@ -233,8 +233,7 @@ void Utils::closeCallsWindow() {
 }
 
 QQuickWindow *Utils::getMainWindow() {
-	auto win = App::getInstance()->getMainWindow();
-	return win;
+	return App::getInstance()->getMainWindow();
 }
 
 QQuickWindow *Utils::getLastActiveWindow() {

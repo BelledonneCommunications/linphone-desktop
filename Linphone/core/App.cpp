@@ -1045,7 +1045,7 @@ void App::setCallsWindowProperty(const char *id, QVariant property) {
 }
 
 void App::closeCallsWindow() {
-	if (mCallsWindow) {
+	if (mCallsWindow && mCallList && !mCallList->getHaveCall()) {
 		mCallsWindow->close();
 		mCallsWindow->deleteLater();
 		mCallsWindow = nullptr;

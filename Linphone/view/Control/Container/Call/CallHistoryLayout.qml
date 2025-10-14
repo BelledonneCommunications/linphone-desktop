@@ -149,8 +149,12 @@ ColumnLayout {
 			button.onClicked: {
 				console.debug("[CallHistoryLayout.qml] Open conversation")
 				if (mainItem.specificAddress === "") {
-					mainWindow.displayChatPage(mainItem.contact.core.defaultAddress)
-				} else mainWindow.displayChatPage(mainItem.specificAddress)
+					mainWindow.sendMessageToContact(mainItem.contact)
+				}
+				else {
+					console.log("specific address", mainItem.specificAddress)
+					mainWindow.displayChatPage(mainItem.specificAddress)
+				}
 			}
         }
         LabelButton {

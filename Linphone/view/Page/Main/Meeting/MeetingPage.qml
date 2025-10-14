@@ -81,6 +81,7 @@ AbstractMainPage {
 
 	Dialog {
 		id: cancelAndDeleteConfDialog
+		property ConferenceInfoGui confInfoToDelete
 		property bool cancel: false
 		signal cancelRequested()
         // width: Math.round(278 * DefaultStyle.dp)
@@ -88,6 +89,13 @@ AbstractMainPage {
         text: cancel ? qsTr("meeting_schedule_cancel_dialog_message")
                        //: Souhaitez-vous supprimer cette réunion ?
                      : qsTr("meeting_schedule_delete_dialog_message")
+
+		onCancelRequested: {
+			confInfoToDelete.core.lCancelConferenceInfo()
+		}
+		onAccepted: {
+			confInfoToDelete.core.lDeleteConferenceInfo()
+		}
 		buttons: [
 			BigButton {
 				visible: cancelAndDeleteConfDialog.cancel
@@ -260,6 +268,11 @@ AbstractMainPage {
 					}
 					onSelectedConferenceChanged: {
 						mainItem.selectedConference = selectedConference
+					}
+					onMeetingDeletionRequested: (confInfo, canCancel) => {
+						cancelAndDeleteConfDialog.confInfoToDelete = confInfo
+						cancelAndDeleteConfDialog.cancel = canCancel
+						cancelAndDeleteConfDialog.open()
 					}
 					
 					Keys.onPressed: (event) => {
@@ -691,19 +704,10 @@ AbstractMainPage {
 								
 								onClicked: {
 									if (mainItem.selectedConference) {
+										cancelAndDeleteConfDialog.confInfoToDelete = mainItem.selectedConference
 										cancelAndDeleteConfDialog.cancel = canCancel
 										cancelAndDeleteConfDialog.open()
-										// mainItem.contactDeletionRequested(mainItem.selectedConference)
 										deletePopup.close()
-									}
-								}
-								Connections {
-									target: cancelAndDeleteConfDialog
-									function onCancelRequested() {
-										mainItem.selectedConference.core.lCancelConferenceInfo()
-									}
-									function onAccepted() {
-										mainItem.selectedConference.core.lDeleteConferenceInfo()
 									}
 								}
 							}

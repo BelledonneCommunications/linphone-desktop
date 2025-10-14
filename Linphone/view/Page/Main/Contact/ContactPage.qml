@@ -411,7 +411,7 @@ FriendGui{
                         button.icon.height: Math.round(24 * DefaultStyle.dp)
                         button.onClicked: {
                             console.debug("[ContactLayout.qml] Open conversation")
-                            mainWindow.displayChatPage(contactDetail.contact.core.defaultAddress)
+                            mainWindow.sendMessageToContact(contactDetail.contact)
                         }
                     }
                     LabelButton {

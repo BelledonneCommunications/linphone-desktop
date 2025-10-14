@@ -22,6 +22,8 @@
 #include "core/App.hpp"
 #include "model/tool/ToolModel.hpp"
 
+#include <QQuickWindow>
+
 DEFINE_ABSTRACT_OBJECT(ChatMessageCore)
 
 /***********************************************************************/
@@ -213,7 +215,17 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 		});
 	});
 	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lMarkAsRead, [this] {
-		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->markAsRead(); });
+		auto mainWindow = Utils::getMainWindow();
+		if (mainWindow->isActive())
+			mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->markAsRead(); });
+		else {
+			connect(mainWindow, &QQuickWindow::activeChanged, this, [this, mainWindow] {
+				if (mainWindow->isActive()) {
+					disconnect(mainWindow, &QQuickWindow::activeChanged, this, nullptr);
+					mChatMessageModelConnection->invokeToModel([this, mainWindow] { mChatMessageModel->markAsRead(); });
+				}
+			});
+		}
 	});
 	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageRead, [this]() {
 		mChatMessageModelConnection->invokeToCore([this] { setIsRead(true); });

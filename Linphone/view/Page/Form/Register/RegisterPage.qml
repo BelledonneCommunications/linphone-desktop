@@ -321,9 +321,9 @@ LoginLayout {
 								console.log("[RegisterPage] User: Call register")
 								mainItem.browserValidationRequested()
 								if (bar.currentIndex === 0)
-									RegisterPageCpp.registerNewAccount(usernameInput.text, pwdInput.text, "", phoneNumberInput.completePhoneNumber)
+									RegisterPageCpp.registerNewAccount(usernameInput.text, pwdInput.text, "", phoneNumberInput.countryCode, phoneNumberInput.phoneNumber)
 								else
-									RegisterPageCpp.registerNewAccount(usernameInput.text, pwdInput.text, emailInput.text, "")
+									RegisterPageCpp.registerNewAccount(usernameInput.text, pwdInput.text, emailInput.text)
 							}
 						}
 					}

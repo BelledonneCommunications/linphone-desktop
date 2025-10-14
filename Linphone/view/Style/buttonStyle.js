@@ -21,7 +21,7 @@
 	}
 	var mainLightBorder =  Object.assign({
 			borderColor : {
-				keybaordFocused: Linphone.DefaultStyle.main2_000
+				keybaordFocused: Linphone.DefaultStyle.main2_0
 			}
 		}, main)
 
@@ -116,7 +116,7 @@
 	}
 	var phoneRedLightBorder =  Object.assign({
 			borderColor : {
-				keybaordFocused: Linphone.DefaultStyle.main2_000
+				keybaordFocused: Linphone.DefaultStyle.main2_0
 			}
 		}, phoneRed)
 
@@ -151,7 +151,7 @@
 			pressed: Linphone.DefaultStyle.grey_0
 		},
 		borderColor: {
-			keybaordFocused: Linphone.DefaultStyle.main2_000
+			keybaordFocused: Linphone.DefaultStyle.main2_0
 		},
 		image: {
 			normal: Linphone.DefaultStyle.grey_0,
@@ -205,7 +205,7 @@
 	}
 	var noBackgroundLightBorder =  Object.assign({
 			borderColor : {
-				keybaordFocused: Linphone.DefaultStyle.main2_000
+				keybaordFocused: Linphone.DefaultStyle.main2_0
 			}
 		}, noBackground)
 

@@ -120,13 +120,11 @@ Control.Button {
 		text: mainItem.text
 		textFormat: mainItem.textFormat
 		maximumLineCount: 1
-        color: mainItem.checkable && mainItem.checked
-            ? mainItem.checkedColor || mainItem.pressedColor
-            : mainItem.pressed
-                ? mainItem.pressedTextColor
-                : mainItem.hovered
-                    ? mainItem.hoveredTextColor
-                    : mainItem.textColor
+        color: mainItem.checkable && mainItem.checked || mainItem.pressed
+			? mainItem.pressedTextColor
+			: mainItem.hovered
+				? mainItem.hoveredTextColor
+				: mainItem.textColor
 		font {
 			pixelSize: mainItem.textSize
 			weight: mainItem.textWeight

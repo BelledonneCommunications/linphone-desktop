@@ -16,6 +16,7 @@ ListView {
     property int lastIndexFoundWithFilter: -1
     property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
     property bool loading: false
+    property bool isEncrypted: chat && chat.core.isEncrypted
 
     verticalLayoutDirection: ListView.BottomToTop
     signal showReactionsForMessageRequested(ChatMessageGui chatMessage)
@@ -127,7 +128,7 @@ ListView {
     }
 
     footer: Item {
-        visible: mainItem.chat && !mainItem.loading && mainItem.chat.core.isEncrypted && !eventLogProxy.haveMore
+        visible: mainItem.chat && !mainItem.loading
         height: visible ? headerMessage.height + headerMessage.topMargin + headerMessage.bottomMargin : Math.round(30 * DefaultStyle.dp)
         width: headerMessage.width
         anchors.horizontalCenter: parent.horizontalCenter
@@ -149,24 +150,30 @@ ListView {
                 EffectImage {
                     Layout.preferredWidth: Math.round(23 * DefaultStyle.dp)
                     Layout.preferredHeight: Math.round(23 * DefaultStyle.dp)
-                    imageSource: AppIcons.lockSimple
-                    colorizationColor: DefaultStyle.info_500_main
+                    imageSource: mainItem.isEncrypted ? AppIcons.lockSimple : AppIcons.lockSimpleOpen
+                    colorizationColor: mainItem.isEncrypted ? DefaultStyle.info_500_main : DefaultStyle.warning_700
                 }
                 ColumnLayout {
                     spacing: Math.round(2 * DefaultStyle.dp)
                     Text {
-                        //: End to end encrypted chat
-                        text: qsTr("chat_message_list_encrypted_header_title")
+                        text: mainItem.isEncrypted
+                            //: End to end encrypted chat
+                            ? qsTr("chat_message_list_encrypted_header_title")
+                            //: This conversation is not encrypted !
+                            : qsTr("unencrypted_conversation_warning")
                         Layout.fillWidth: true
-                        color: DefaultStyle.info_500_main
+                        color: mainItem.isEncrypted ? DefaultStyle.info_500_main : DefaultStyle.warning_700
                         font {
                             pixelSize: Typography.p2.pixelSize
                             weight: Typography.p2.weight
                         }
                     }
                     Text {
-                        //: Les messages de cette conversation sont chiffrés de bout \n en bout. Seul votre correspondant peut les déchiffrer.
-                        text: qsTr("chat_message_list_encrypted_header_message")
+                        text: mainItem.isEncrypted
+                            //: Messages in this conversation are e2e encrypted. \n Only your correspondent can decrypt them.
+                            ? qsTr("chat_message_list_encrypted_header_message")
+                            //: Messages are not end to end encrypted, \n may sure you don't share any sensitive information !
+                            : qsTr("chat_message_list_not_encrypted_header_message")
                         Layout.fillWidth: true
                         color: DefaultStyle.grey_400
                         font {
@@ -178,7 +185,7 @@ ListView {
             }
         }
     }
-    footerPositioning: ListView.PullBackFooter
+    footerPositioning: mainItem.contentHeight > mainItem.height ? ListView.InlineFooter : ListView.PullBackFooter
     headerPositioning: ListView.OverlayHeader
     header: Control.Control {
         visible: composeLayout.composingName !== "" && composeLayout.composingName !== undefined

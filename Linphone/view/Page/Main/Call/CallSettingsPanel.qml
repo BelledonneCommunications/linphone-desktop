@@ -153,7 +153,7 @@ Control.Page {
 			padding: 0
 			contentItem: Loader {
 				id: contentLoader
-				width: contentcontrol.width - contentControl.rightPadding
+				width: contentControl.width - contentControl.rightPadding
 			}
 		}
 	}

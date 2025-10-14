@@ -119,7 +119,7 @@ Item {
 						width: Math.round(24 * DefaultStyle.dp)
 						height: Math.round(24 * DefaultStyle.dp)
 						imageSource: AppIcons.playFill
-						colorizationColor: DefaultStyle.main2_000
+						colorizationColor: DefaultStyle.main2_0
 					}
 					Text {
 						z: parent.z + 1

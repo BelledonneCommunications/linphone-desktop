@@ -57,7 +57,7 @@ public:
 	std::list<std::shared_ptr<linphone::EventLog>>
 	getHistoryRangeNear(int before, int after, const std::shared_ptr<linphone::EventLog> firstEvent, int filters);
 	std::list<std::shared_ptr<linphone::ChatMessage>> getChatMessageHistory() const;
-	int getHistorySizeEvents();
+	int getHistorySizeEvents() const;
 	QString getIdentifier() const;
 	void deleteHistory();
 	void deleteMessage(std::shared_ptr<linphone::ChatMessage> message);

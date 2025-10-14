@@ -218,6 +218,8 @@ AbstractWindow {
         onHaveCallChanged: {
             if (!haveCall) {
                 mainWindow.callEnded()
+            } else {
+                bottomButtonsLayout.setButtonsEnabled(true)
             }
         }
     }
@@ -1277,7 +1279,7 @@ AbstractWindow {
                 }
                 function setButtonsEnabled(enabled) {
                     for (var i = 0; i < children.length; ++i) {
-                        children[i].enabled = false
+                        children[i].enabled = enabled
                     }
                 }
 

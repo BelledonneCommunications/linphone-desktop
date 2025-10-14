@@ -54,8 +54,8 @@ ParticipantCore::ParticipantCore(const std::shared_ptr<linphone::Participant> &p
 		mDisplayName = Utils::coreStringToAppString(participantAddress->getDisplayName());
 		if (mDisplayName.isEmpty()) mDisplayName = ToolModel::getDisplayName(participantAddress);
 		auto isFriend = ToolModel::findFriendByAddress(participantAddress);
-		mSecurityLevel =
-		    isFriend ? LinphoneEnums::fromLinphone(isFriend->getSecurityLevel()) : LinphoneEnums::SecurityLevel::None;
+		if (isFriend && isFriend->getCore()) mSecurityLevel = LinphoneEnums::fromLinphone(isFriend->getSecurityLevel());
+		else mSecurityLevel = LinphoneEnums::SecurityLevel::None;
 		for (auto &device : participant->getDevices()) {
 			auto name = Utils::coreStringToAppString(device->getName());
 			auto address = Utils::coreStringToAppString(device->getAddress()->asStringUriOnly());

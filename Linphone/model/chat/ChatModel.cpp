@@ -36,8 +36,8 @@ ChatModel::ChatModel(const std::shared_ptr<linphone::ChatRoom> &chatroom, QObjec
 	mustBeInLinphoneThread(getClassName());
 	auto coreModel = CoreModel::getInstance();
 	if (coreModel)
-		connect(coreModel.get(), &CoreModel::messageReadInChatRoom, this,
-		        [this](std::shared_ptr<linphone::ChatRoom> chatroom) {
+		connect(coreModel.get(), &CoreModel::chatRoomRead, this,
+		        [this](const std::shared_ptr<linphone::Core> &core, std::shared_ptr<linphone::ChatRoom> chatroom) {
 			        if (chatroom == mMonitor) emit messagesRead();
 		        });
 }
@@ -90,7 +90,7 @@ std::list<std::shared_ptr<linphone::ChatMessage>> ChatModel::getChatMessageHisto
 	return res;
 }
 
-int ChatModel::getHistorySizeEvents() {
+int ChatModel::getHistorySizeEvents() const {
 	return mMonitor->getHistoryEventsSize();
 }
 
