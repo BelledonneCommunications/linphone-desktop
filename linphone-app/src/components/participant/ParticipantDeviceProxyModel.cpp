@@ -51,7 +51,7 @@ bool ParticipantDeviceProxyModel::lessThan (const QModelIndex &left, const QMode
   const ParticipantDeviceModel *deviceA = sourceModel()->data(left).value<ParticipantDeviceModel *>();
   const ParticipantDeviceModel *deviceB = sourceModel()->data(right).value<ParticipantDeviceModel *>();
   // 'me' at end (for grid).
-	return deviceB->isLocal() || !deviceA->isLocal() && deviceB->isMe() || left.row() < right.row();
+	return deviceB->isLocal() || !deviceA->isLocal() && deviceB->isMe() || !deviceA->isLocal() && !deviceB->isMe() && left.row() < right.row();
 }
 //---------------------------------------------------------------------------------
 
