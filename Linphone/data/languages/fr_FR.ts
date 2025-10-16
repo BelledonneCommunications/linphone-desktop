@@ -2666,13 +2666,13 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="322"/>
         <source>sip_address_number_accessible_name</source>
         <extracomment>&quot;SIP address number %1&quot;</extracomment>
-        <translation>Adresse SIP numéro</translation>
+        <translation>Adresse SIP numéro %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="337"/>
         <source>remove_sip_address_accessible_name</source>
         <extracomment>&quot;Remove SIP address %1&quot;</extracomment>
-        <translation>Retirer l&apos;adresse SIP</translation>
+        <translation>Retirer l&apos;adresse SIP %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="367"/>
@@ -2690,7 +2690,7 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="418"/>
         <source>remove_phone_number_accessible_name</source>
         <extracomment>Remove phone number %1</extracomment>
-        <translation>Retirer le numéro de téléphone</translation>
+        <translation>Retirer le numéro de téléphone %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="448"/>
@@ -2917,7 +2917,7 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="360"/>
         <source>shrink_accessible_name</source>
         <extracomment>Shrink %1</extracomment>
-        <translation>Réduire</translation>
+        <translation>Réduire %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="249"/>
@@ -2929,7 +2929,7 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="346"/>
         <source>more_info_accessible_name</source>
         <extracomment>More info %1</extracomment>
-        <translation>Plus d&apos;information</translation>
+        <translation>Plus d&apos;information %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="382"/>
@@ -4669,7 +4669,7 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="241"/>
         <source>choose_something_accessible_name</source>
         <extracomment>Choose %1</extracomment>
-        <translation>Sélection</translation>
+        <translation>Sélection %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="80"/>
@@ -4936,7 +4936,7 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="58"/>
         <source>prefix_phone_number_accessible_name</source>
         <extracomment>%1 prefix</extracomment>
-        <translation></translation>
+        <translation>%1 préfix</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="76"/>
