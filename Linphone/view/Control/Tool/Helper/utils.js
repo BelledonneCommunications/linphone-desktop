@@ -143,11 +143,8 @@ function getTopParent (object, useFakeParent) {
 
 // Check that an item is descendant of another one
 function isDescendant(child, parent) {
-  console.debug("---")
-  console.debug(child)
   var current = child.parent
   while (current) {
-  console.debug(current)
     if (current === parent)
       return true
     current = current.parent
@@ -177,7 +174,6 @@ function getLastFocussableItemInItem(item) {
     current = next;
     next = current.nextItemInFocusChain();
   } while(isDescendant(next, item) && next.visible)
-  console.log("find last content", current)
   return current;
 }
 

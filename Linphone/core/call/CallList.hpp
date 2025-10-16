@@ -55,6 +55,8 @@ public:
 	// At the moment, it select the last call in the list.
 	QSharedPointer<CallCore> getNextCall();
 
+	QSharedPointer<CallCore> getFirstIncommingPendingCall();
+
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 signals:
 	void lUpdate();

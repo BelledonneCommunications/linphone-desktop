@@ -100,6 +100,7 @@
 #include "tool/Utils.hpp"
 #include "tool/accessibility/AccessibilityHelper.hpp"
 #include "tool/accessibility/FocusHelper.hpp"
+#include "tool/accessibility/KeyboardShortcuts.hpp"
 #include "tool/native/DesktopTools.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/EmojiProvider.hpp"
@@ -643,6 +644,10 @@ void App::initCore() {
 							            tr("info_popup_configuration_failed_message").arg(message), false);
 						        });
 					        }
+
+					        //---------------------------------------------------------------------------------------------
+					        lDebug() << log().arg("Creating KeyboardShortcuts");
+					        KeyboardShortcuts::create(getMainWindow());
 				        }
 			        },
 			        Qt::QueuedConnection);

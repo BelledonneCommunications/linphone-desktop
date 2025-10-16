@@ -188,6 +188,15 @@ QSharedPointer<CallCore> CallList::getNextCall() {
 	return nullptr;
 }
 
+QSharedPointer<CallCore> CallList::getFirstIncommingPendingCall() {
+	auto callList = getSharedList<CallCore>();
+	auto it = std::find_if(callList.begin(), callList.end(), [](const QSharedPointer<CallCore> call) {
+		return call->getState() == LinphoneEnums::CallState::IncomingReceived;
+	});
+	if (it == callList.end()) return nullptr;
+	return *it;
+}
+
 void CallList::onStateChanged() {
 	auto call = dynamic_cast<CallCore *>(sender());
 	switch (call->getState()) {
