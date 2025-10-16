@@ -46,6 +46,7 @@ public:
 
 	static const std::string UiSection;
 	static const std::string AppSection;
+	static const std::string CardDAVSection;
 	std::shared_ptr<linphone::Config> mConfig;
 
 	bool getVfsEnabled() const;
@@ -109,6 +110,9 @@ public:
 
 	bool getCreateEndToEndEncryptedMeetingsAndGroupCalls() const;
 	void setCreateEndToEndEncryptedMeetingsAndGroupCalls(bool endtoend);
+
+	int getCardDAVMinCharResearch() const;
+	void setCardDAVMinCharResearch(int min);
 
 	QVariantMap getRingerDevice() const;
 	void setRingerDevice(QVariantMap device);
@@ -246,6 +250,8 @@ signals:
 	void mediaEncryptionChanged();
 	void mediaEncryptionMandatoryChanged();
 	void createEndToEndEncryptedMeetingsAndGroupCallsChanged(bool endtoend);
+
+	void cardDAVMinCharResearchChanged(int min);
 
 	void echoCancellationEnabledChanged(bool enabled);
 	void automaticallyRecordCallsEnabledChanged(bool enabled);

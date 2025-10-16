@@ -215,6 +215,9 @@ public:
 	bool showAccountDevices() const;
 	void setShowAccountDevices(bool show);
 
+	bool getCardDAVMinCharForResearch() const;
+	void setCardDAVMinCharForResearch(int min);
+
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
 
@@ -281,6 +284,9 @@ signals:
 	void ringerDevicesChanged(const QVariantList &devices);
 	void conferenceLayoutsChanged(const QVariantList &layouts);
 	void mediaEncryptionsChanged(const QVariantList &encryptions);
+
+	void cardDAVMinCharForResearchChanged(int min);
+	void cardDAVAddressBookSynchronized();
 
 	void lSetCaptureDevice(QVariantMap device);
 	void captureDeviceChanged(const QVariantMap &device);
@@ -391,6 +397,9 @@ private:
 	// Account
 	QString mDefaultDomain;
 	bool mShowAccountDevices = false;
+
+	// CardDAV
+	int mCardDAVMinCharForResearch = 0;
 
 	DECLARE_ABSTRACT_OBJECT
 };

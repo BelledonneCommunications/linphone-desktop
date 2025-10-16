@@ -207,6 +207,7 @@ private:
 	QSharedPointer<SafeConnection<App, CliModel>> mCliModelConnection;
 	bool mAutoStart = false;
 	bool mCoreStarted = false;
+	bool mIsRestarting = false;
 	QLocale mLocale = QLocale::system();
 	DefaultTranslatorCore *mTranslatorCore = nullptr;
 	DefaultTranslatorCore *mDefaultTranslatorCore = nullptr;

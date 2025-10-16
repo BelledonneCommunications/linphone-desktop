@@ -118,9 +118,13 @@ ListView {
 	
 	Connections {
 		target: SettingsCpp
-		onLdapConfigChanged: {
+		function onLdapConfigChanged() {
 			if (SettingsCpp.syncLdapContacts)
 				magicSearchProxy.forceUpdate()
+		}
+		function onCardDAVAddressBookSynchronized() {
+			console.log("card dav synchro update")
+			magicSearchProxy.forceUpdate()
 		}
 	}
 	// Workaround: itemAtIndex and count are decorellated and are not enough to know when the ListView has load all its children.

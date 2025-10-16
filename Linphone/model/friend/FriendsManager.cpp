@@ -74,6 +74,7 @@ FriendsManager::FriendsManager(QObject *parent) : QObject(parent) {
 }
 
 FriendsManager::~FriendsManager() {
+	clearMaps();
 }
 
 std::shared_ptr<FriendsManager> FriendsManager::create(QObject *parent) {
@@ -96,6 +97,12 @@ QVariantMap FriendsManager::getUnknownFriends() const {
 
 QStringList FriendsManager::getOtherAddresses() const {
 	return mOtherAddresses;
+}
+
+void FriendsManager::clearMaps() {
+	mKnownFriends.clear();
+	mUnknownFriends.clear();
+	mOtherAddresses.clear();
 }
 
 std::shared_ptr<linphone::Friend> FriendsManager::getKnownFriendAtKey(const QString &key) {

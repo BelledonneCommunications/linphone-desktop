@@ -100,7 +100,7 @@ void CarddavModel::onSyncStatusChanged(const std::shared_ptr<linphone::FriendLis
 	if (status == linphone::FriendList::SyncStatus::Successful) {
 		lInfo() << log().arg("Successfully synchronized:") << mCarddavFriendList->getUri();
 		setMonitor(nullptr);
-		if (mStoreNewFriendsInIt) SettingsModel::setCardDAVListForNewFriends(friendList->getDisplayName());
+		SettingsModel::setCardDAVListForNewFriends(mStoreNewFriendsInIt ? friendList->getDisplayName() : "");
 		emit saved(true);
 	}
 	if (status == linphone::FriendList::SyncStatus::Failure) {

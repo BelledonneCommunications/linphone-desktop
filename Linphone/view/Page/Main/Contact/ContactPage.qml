@@ -298,9 +298,8 @@ FriendGui{
                                  | LinphoneEnums.MagicSearchSource.RemoteCardDAV
                     onHighlightedContactChanged: mainItem.selectedContact = highlightedContact
                     onContactDeletionRequested: contact => {
-                                                    mainItem.deleteContact(
-                                                        contact)
-                                                }
+                        mainItem.deleteContact(contact)
+                    }
                     onLoadingChanged: {
                         if (!loading && initialFriendToDisplay.length !== 0) {
                             Qt.callLater(function () {

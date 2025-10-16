@@ -392,6 +392,11 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		mSettingsModelConnection->invokeToCore([this, value]() { setDndEnabled(value); });
 	});
 
+	// CardDAV
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::cardDAVMinCharResearchChanged, [this](int min) {
+		mSettingsModelConnection->invokeToCore([this, min]() { setCardDAVMinCharForResearch(min); });
+	});
+
 	auto settingsModel = SettingsModel::getInstance();
 
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
@@ -547,6 +552,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setAutoStart(settingsCore.mAutoStart);
 	setExitOnClose(settingsCore.mExitOnClose);
 	setSyncLdapContacts(settingsCore.mSyncLdapContacts);
+	setCardDAVMinCharForResearch(settingsCore.mCardDAVMinCharForResearch);
 	setIpv6Enabled(settingsCore.mIpv6Enabled);
 	setConfigLocale(settingsCore.mConfigLocale);
 	setDownloadFolder(settingsCore.mDownloadFolder);
@@ -1004,6 +1010,17 @@ bool SettingsCore::getSyncLdapContacts() const {
 	return mSyncLdapContacts;
 }
 
+bool SettingsCore::getCardDAVMinCharForResearch() const {
+	return mCardDAVMinCharForResearch;
+}
+
+void SettingsCore::setCardDAVMinCharForResearch(int min) {
+	if (mCardDAVMinCharForResearch != min) {
+		mCardDAVMinCharForResearch = min;
+		emit cardDAVMinCharForResearchChanged(mCardDAVMinCharForResearch);
+	}
+}
+
 QString SettingsCore::getConfigLocale() const {
 	return mConfigLocale;
 }
@@ -1148,6 +1165,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mAutoStart = model->getAutoStart();
 	mExitOnClose = model->getExitOnClose();
 	mSyncLdapContacts = model->getSyncLdapContacts();
+	mCardDAVMinCharForResearch = model->getCardDAVMinCharResearch();
 	mIpv6Enabled = model->getIpv6Enabled();
 	mConfigLocale = model->getConfigLocale();
 	mDownloadFolder = model->getDownloadFolder();

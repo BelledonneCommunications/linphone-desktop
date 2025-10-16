@@ -50,8 +50,10 @@ void MagicSearchModel::search(QString filter,
 		if (((sourceFlags & (int)LinphoneEnums::MagicSearchSource::LdapServers) > 0) &&
 		    !SettingsModel::getInstance()->getSyncLdapContacts())
 			sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::LdapServers;
-		if (((sourceFlags & (int)LinphoneEnums::MagicSearchSource::RemoteCardDAV) > 0))
+		if (((sourceFlags & (int)LinphoneEnums::MagicSearchSource::RemoteCardDAV) > 0) &&
+		    SettingsModel::getInstance()->getCardDAVMinCharResearch() > 0) {
 			sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::RemoteCardDAV;
+		}
 		// For complete search, we search only on local contacts.
 		// sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::CallLogs;
 		// sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::ChatRooms;
@@ -104,7 +106,7 @@ void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::M
 			//		         << (fList ? fList->getDisplayName().c_str() : "NoList") << result->getSourceFlags() << " /
 			//"
 			//		         << (f ? f.get() : nullptr);
-			bool isLdap = (result->getSourceFlags() & (int)linphone::MagicSearch::Source::LdapServers) != 0;
+			bool isLdap = result->hasSourceFlag(linphone::MagicSearch::Source::LdapServers) != 0;
 			// Do not add it into ldap_friends if it already exists in app_friends.
 			if (isLdap && (!fList || fList->getDisplayName() !=
 			                             "app_friends")) { // Double check because of SDK merging that lead to

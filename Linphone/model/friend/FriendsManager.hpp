@@ -41,6 +41,8 @@ public:
 	QVariantMap getUnknownFriends() const;
 	QStringList getOtherAddresses() const;
 
+	void clearMaps();
+
 	std::shared_ptr<linphone::Friend> getKnownFriendAtKey(const QString &key);
 	std::shared_ptr<linphone::Friend> getUnknownFriendAtKey(const QString &key);
 

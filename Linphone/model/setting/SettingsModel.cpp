@@ -34,6 +34,7 @@ using namespace std;
 
 const std::string SettingsModel::UiSection("ui");
 const std::string SettingsModel::AppSection("app");
+const std::string SettingsModel::CardDAVSection("carddav_0");
 std::shared_ptr<SettingsModel> SettingsModel::gSettingsModel;
 
 SettingsModel::SettingsModel() {
@@ -696,6 +697,19 @@ void SettingsModel::setCardDAVListForNewFriends(std::string name) {
 		auto config = core->getConfig();
 		config->setString(UiSection, "friend_list_to_store_newly_created_contacts", name);
 	}
+}
+
+// CardDAV min characters for research
+
+int SettingsModel::getCardDAVMinCharResearch() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return mConfig->getInt(SettingsModel::CardDAVSection, "min_characters", 0);
+}
+
+void SettingsModel::setCardDAVMinCharResearch(int min) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mConfig->setInt(SettingsModel::CardDAVSection, "min_characters", min);
+	emit cardDAVMinCharResearchChanged(min);
 }
 
 // =============================================================================

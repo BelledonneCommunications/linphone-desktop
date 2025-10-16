@@ -93,6 +93,7 @@
 #include "core/translator/DefaultTranslatorCore.hpp"
 #include "core/variant/VariantList.hpp"
 #include "core/videoSource/VideoSourceDescriptorGui.hpp"
+#include "model/friend/FriendsManager.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Constants.hpp"
@@ -635,7 +636,8 @@ void App::initCore() {
 					        } else lInfo() << log().arg("Stay minimized");
 					        firstOpen = false;
 					        lInfo() << log().arg("Checking remote provisioning");
-					        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed) {
+					        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed &&
+					            mIsRestarting) {
 						        QMetaObject::invokeMethod(thread(), [this]() {
 							        auto message = CoreModel::getInstance()->mConfigMessage;
 							        //: not reachable
@@ -648,6 +650,7 @@ void App::initCore() {
 							            tr("info_popup_configuration_failed_message").arg(message), false);
 						        });
 					        }
+					        mIsRestarting = false;
 
 					        //---------------------------------------------------------------------------------------------
 					        lDebug() << log().arg("Creating KeyboardShortcuts");
@@ -883,8 +886,10 @@ void App::clean() {
 }
 void App::restart() {
 	mCoreModelConnection->invokeToModel([this]() {
+		FriendsManager::getInstance()->clearMaps();
 		CoreModel::getInstance()->getCore()->stop();
 		mCoreModelConnection->invokeToCore([this]() {
+			mIsRestarting = true;
 			closeCallsWindow();
 			setMainWindow(nullptr);
 			mEngine->clearComponentCache();
