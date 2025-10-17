@@ -300,9 +300,10 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	auto model = CallCore::create(call);
 	auto gui = new CallGui(model);
 	gui->moveToThread(App::getInstance()->thread());
-	QString displayName = call->getCallLog() && call->getCallLog()->getConferenceInfo()
-	                          ? Utils::coreStringToAppString(call->getCallLog()->getConferenceInfo()->getSubject())
-	                          : Utils::coreStringToAppString(call->getRemoteAddress()->getDisplayName());
+	auto callLog = call->getCallLog();
+	auto displayName = callLog && callLog->getConferenceInfo()
+	                       ? Utils::coreStringToAppString(callLog->getConferenceInfo()->getSubject())
+	                       : ToolModel::getDisplayName(call->getRemoteAddress());
 
 	// Accessibility alert
 	//: New call from %1

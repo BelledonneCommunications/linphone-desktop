@@ -15,9 +15,6 @@ Control.Switch {
         pixelSize: Typography.p1.pixelSize
         weight: Typography.p1.weight
     }
-    // Size properties
-    implicitHeight: Utils.getSizeWithScreenRatio(20)
-    implicitWidth: Math.round(implicitHeight * 1.6)
     // Border properties
     property color borderColor: "transparent"
     property color keyboardFocusedBorderColor: DefaultStyle.main2_900
@@ -28,8 +25,9 @@ Control.Switch {
         id: indicatorItem
         x: mainItem.leftPadding
         y: parent.height / 2 - height / 2
-        height: mainItem.height
-        width: mainItem.width
+        // Size properties
+        implicitHeight: Utils.getSizeWithScreenRatio(20)
+        implicitWidth: Math.round(implicitHeight * 1.6)
         Rectangle {
             id: indicatorBackground
             anchors.fill: parent

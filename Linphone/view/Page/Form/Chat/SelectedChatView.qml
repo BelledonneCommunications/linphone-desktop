@@ -112,6 +112,9 @@ FocusScope {
                                 imageSource: AppIcons.lockSimpleOpen
                             }
                             Text {
+                                // hiding text if in call cause te view
+                                // has smaller width
+                                visible: !mainItem.call
                                 Layout.fillWidth: true
                                 color: DefaultStyle.warning_700
                                 //: This conversation is not encrypted !
@@ -132,6 +135,7 @@ FocusScope {
                     RowLayout {
                         spacing: Math.round(16 * DefaultStyle.dp)
                         RoundButton {
+                            visible: !mainItem.call
                             style: ButtonStyle.noBackground
                             icon.source: AppIcons.phone
                             onPressed: {
@@ -157,11 +161,12 @@ FocusScope {
                         RoundButton {
                             style: ButtonStyle.noBackground
                             icon.source: AppIcons.videoCamera
-                            visible: !mainItem.chat?.core.isGroupChat || false
+                            visible: !mainItem.chat?.core.isGroupChat && !mainItem.call
                             onPressed: mainItem.oneOneCall(true)
                         }
                         RoundButton {
                             id: detailsPanelButton
+                            visible: !mainItem.call
                             style: ButtonStyle.noBackground
                             checkable: true
                             checkedImageColor: DefaultStyle.main1_500_main
