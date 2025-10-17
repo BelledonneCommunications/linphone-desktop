@@ -61,6 +61,11 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 				auto model = AccountCore::create(it);
 				if (it == defaultAccount) defaultAccountCore = model;
 				accounts->push_back(model);
+				connect(model.get(), &AccountCore::unreadNotificationsChanged, this,
+				        [this] { emit unreadNotificationsChanged(); });
+				connect(model.get(), &AccountCore::removed, this, [this, model]() {
+					disconnect(model.get(), &AccountCore::unreadNotificationsChanged, this, nullptr);
+				});
 			}
 			mModelConnection->invokeToCore([this, accounts, defaultAccountCore, isInitialization]() {
 				mustBeInMainThread(getClassName());
@@ -74,6 +79,8 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 				}
 				delete accounts;
 			});
+			// Update notification count at startup
+			if (isInitialization) emit unreadNotificationsChanged();
 		});
 	});
 	mModelConnection->makeConnectToModel(

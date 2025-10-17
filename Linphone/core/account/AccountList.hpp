@@ -58,6 +58,7 @@ signals:
 	void haveAccountChanged();
 	void defaultAccountChanged();
 	void initializedChanged(bool init);
+	void unreadNotificationsChanged();
 
 private:
 	bool mHaveAccount = false;

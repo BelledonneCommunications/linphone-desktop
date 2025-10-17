@@ -586,6 +586,14 @@ void App::initCore() {
 				    mAccountList->setInitialized(false);
 				    mAccountList->lUpdate(true);
 			    }
+			    // Update global unread Notifications when an account updates his unread Notifications
+			    connect(mAccountList.get(), &AccountList::unreadNotificationsChanged, this, [this]() {
+				    lDebug() << "unreadNotificationsChanged of AccountList";
+				    mCoreModelConnection->invokeToModel([this] {
+					    int n = mEventCountNotifier->getCurrentEventCount();
+					    mCoreModelConnection->invokeToCore([this, n] { mEventCountNotifier->notifyEventCount(n); });
+				    });
+			    });
 			    if (!mCallList) setCallList(CallList::create());
 			    else mCallList->lUpdate();
 			    if (!mSettings) {
