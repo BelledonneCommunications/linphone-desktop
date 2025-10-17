@@ -319,6 +319,10 @@ App::App(int &argc, char *argv[])
 	});
 	mEventCountNotifier = new EventCountNotifier(this);
 	mDateUpdateTimer.start();
+
+#ifdef Q_OS_LINUX
+	exportDesktopFile();
+#endif
 }
 
 App::~App() {
