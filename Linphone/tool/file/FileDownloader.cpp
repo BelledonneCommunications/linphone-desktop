@@ -26,6 +26,8 @@
 
 #include "FileDownloader.hpp"
 
+DEFINE_ABSTRACT_OBJECT(FileDownloader)
+
 // =============================================================================
 
 static QString getDownloadFilePath(const QString &folder, const QUrl &url, const bool &overwrite) {
@@ -63,7 +65,7 @@ static bool isHttpRedirect(QNetworkReply *reply) {
 
 void FileDownloader::download() {
 	if (mDownloading) {
-		qWarning() << "Unable to download file. Already downloading!";
+		lWarning() << log().arg("Unable to download file. Already downloading!");
 		return;
 	}
 	setDownloading(true);
@@ -102,7 +104,8 @@ bool FileDownloader::remove() {
 }
 
 void FileDownloader::emitOutputError() {
-	qWarning() << QStringLiteral("Could not write into `%1` (%2).")
+	lWarning() << log()
+	                  .arg("Could not write into `%1` (%2).")
 	                  .arg(mDestinationFile.fileName())
 	                  .arg(mDestinationFile.errorString());
 	mNetworkReply->abort();
@@ -123,18 +126,18 @@ void FileDownloader::handleDownloadFinished() {
 	if (mNetworkReply->error() != QNetworkReply::NoError) return;
 
 	if (isHttpRedirect(mNetworkReply)) {
-		qWarning() << QStringLiteral("Request was redirected.");
+		lWarning() << log().arg("Request was redirected.");
 		mDestinationFile.remove();
 		cleanDownloadEnd();
 		emit downloadFailed();
 	} else {
-		qInfo() << QStringLiteral("Download of %1 finished to %2").arg(mUrl.toString(), mDestinationFile.fileName());
+		lInfo() << log().arg("Download of %1 finished to %2").arg(mUrl.toString(), mDestinationFile.fileName());
 		mDestinationFile.close();
 		cleanDownloadEnd();
 		QString fileChecksum = Utils::getFileChecksum(mDestinationFile.fileName());
 		if (mCheckSum.isEmpty() || fileChecksum == mCheckSum) emit downloadFinished(mDestinationFile.fileName());
 		else {
-			qCritical() << "File cannot be downloaded : Bad checksum " << fileChecksum;
+			lCritical() << log().arg("File cannot be downloaded : Bad checksum ") << fileChecksum;
 			mDestinationFile.remove();
 			emit downloadFailed();
 		}
@@ -143,8 +146,7 @@ void FileDownloader::handleDownloadFinished() {
 
 void FileDownloader::handleError(QNetworkReply::NetworkError code) {
 	if (code != QNetworkReply::OperationCanceledError)
-		qWarning()
-		    << QStringLiteral("Download of %1 failed: %2").arg(mUrl.toString()).arg(mNetworkReply->errorString());
+		lWarning() << log().arg("Download of %1 failed: %2").arg(mUrl.toString()).arg(mNetworkReply->errorString());
 	mDestinationFile.remove();
 
 	cleanDownloadEnd();
@@ -155,7 +157,7 @@ void FileDownloader::handleError(QNetworkReply::NetworkError code) {
 void FileDownloader::handleSslErrors(const QList<QSslError> &sslErrors) {
 #if QT_CONFIG(ssl)
 	for (const QSslError &error : sslErrors)
-		qWarning() << QStringLiteral("SSL error: %1").arg(error.errorString());
+		lWarning() << log().arg("SSL error: %1").arg(error.errorString());
 #else
 	Q_UNUSED(sslErrors);
 #endif
@@ -163,7 +165,7 @@ void FileDownloader::handleSslErrors(const QList<QSslError> &sslErrors) {
 
 void FileDownloader::handleTimeout() {
 	if (mReadBytes == mTimeoutReadBytes) {
-		qWarning() << QStringLiteral("Download of %1 failed: timeout.").arg(mUrl.toString());
+		lWarning() << log().arg("Download of %1 failed: timeout.").arg(mUrl.toString());
 		mNetworkReply->abort();
 	} else mTimeoutReadBytes = mReadBytes;
 }
@@ -181,15 +183,16 @@ QUrl FileDownloader::getUrl() const {
 
 void FileDownloader::setUrl(const QUrl &url) {
 	if (mDownloading) {
-		qWarning() << QStringLiteral("Unable to set url, a file is downloading.");
+		lWarning() << log().arg("Unable to set url, a file is downloading.");
 		return;
 	}
 
 	if (mUrl != url) {
 		mUrl = url;
 		if (!QSslSocket::supportsSsl() && mUrl.scheme() == "https") {
-			qWarning() << "Https has been requested but SSL is not supported. Fallback to http. Install manually "
-			              "OpenSSL libraries in your PATH.";
+			lWarning() << log().arg(
+			    "Https has been requested but SSL is not supported. Fallback to http. Install manually "
+			    "OpenSSL libraries in your PATH.");
 			mUrl.setScheme("http");
 		}
 		emit urlChanged(mUrl);
@@ -202,7 +205,7 @@ QString FileDownloader::getDownloadFolder() const {
 
 void FileDownloader::setDownloadFolder(const QString &downloadFolder) {
 	if (mDownloading) {
-		qWarning() << QStringLiteral("Unable to set download folder, a file is downloading.");
+		lWarning() << log().arg("Unable to set download folder, a file is downloading.");
 		return;
 	}
 
@@ -224,7 +227,7 @@ QString
 FileDownloader::synchronousDownload(const QUrl &url, const QString &destinationFolder, const bool &overwriteFile) {
 	QString filePath;
 	FileDownloader downloader;
-	if (url.isRelative()) qWarning() << "FileDownloader: The specified URL is not valid";
+	if (url.isRelative()) lWarning() << QStringLiteral("FileDownloader: The specified URL is not valid");
 	else {
 		bool isOver = false;
 		bool *pIsOver = &isOver;
@@ -238,7 +241,7 @@ FileDownloader::synchronousDownload(const QUrl &url, const QString &destinationF
 			filePath = downloader.getDestinationFileName();
 			if (!QFile::exists(filePath)) {
 				filePath = "";
-				qWarning() << "FileDownloader: Cannot download the specified file";
+				lWarning() << QStringLiteral("FileDownloader: Cannot download the specified file");
 			}
 		}
 	}

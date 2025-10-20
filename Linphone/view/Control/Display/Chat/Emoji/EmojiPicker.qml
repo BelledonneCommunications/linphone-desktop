@@ -157,6 +157,7 @@ ColumnLayout {
         id: list
         width: mainItem.width
         height: Math.round(250 * DefaultStyle.dp)
+        Layout.fillWidth: true
         Layout.fillHeight: true
         model: mainItem.categories
         spacing: Math.round(30 * DefaultStyle.dp)

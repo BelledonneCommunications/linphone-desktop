@@ -164,7 +164,7 @@ static inline QString getAppRootCaFilePath() {
 	if (Paths::filePathExists(rootca)) { // Packaged
 		return rootca;
 	} else {
-		qDebug() << "Root ca path does not exist. Create it";
+		lInfo() << "Root ca path does not exist. Create it";
 		QFileInfo rootcaInfo(rootca);
 		if (!rootcaInfo.absoluteDir().exists()) {
 			QDir dataDir(getAppPackageDataDirPath());

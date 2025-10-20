@@ -59,7 +59,11 @@ void MagicSearchModel::search(QString filter,
 		// sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::ChatRooms;
 		// sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::ConferencesInfo;
 	}
-	qInfo() << log().arg("Searching ") << filter << " from " << sourceFlags << " with limit " << maxResults;
+	if (((sourceFlags & (int)LinphoneEnums::MagicSearchSource::RemoteCardDAV) > 0) &&
+	    SettingsModel::getInstance()->getCardDAVMinCharResearch() > filter.size()) {
+		sourceFlags &= ~(int)LinphoneEnums::MagicSearchSource::RemoteCardDAV;
+	}
+	lInfo() << log().arg("Searching ") << filter << " from " << sourceFlags << " with limit " << maxResults;
 	mMonitor->getContactsListAsync(filter != "*" ? Utils::appStringToCoreString(filter) : "", "", sourceFlags,
 	                               LinphoneEnums::toLinphone(aggregation));
 }
@@ -80,7 +84,7 @@ void MagicSearchModel::setMaxResults(int maxResults) {
 
 void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> &magicSearch) {
 	auto results = magicSearch->getLastSearch();
-	qInfo() << log().arg("SDK send callback: onSearchResultsReceived : %1 results.").arg(results.size());
+	lInfo() << log().arg("SDK send callback: onSearchResultsReceived : %1 results.").arg(results.size());
 	auto appFriends = ToolModel::getAppFriendList();
 	auto ldapFriends = ToolModel::getLdapFriendList();
 	emit searchResultsReceived(results);

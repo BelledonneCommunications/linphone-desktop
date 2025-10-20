@@ -156,18 +156,18 @@ void SettingsModel::startCaptureGraph() {
 	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo
 	// calibrations in call.
 	if (!getIsInCall() && !mSimpleCaptureGraph) {
-		qDebug() << log().arg("Starting capture graph [%1]").arg(mCaptureGraphListenerCount);
+		lDebug() << log().arg("Starting capture graph [%1]").arg(mCaptureGraphListenerCount);
 		createCaptureGraph();
-	} else qDebug() << log().arg("Adding capture graph reference [%1]").arg(mCaptureGraphListenerCount);
+	} else lDebug() << log().arg("Adding capture graph reference [%1]").arg(mCaptureGraphListenerCount);
 	++mCaptureGraphListenerCount;
 }
 void SettingsModel::stopCaptureGraph() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (--mCaptureGraphListenerCount == 0) {
-		qDebug() << log().arg("Stopping capture graph [%1]").arg(mCaptureGraphListenerCount);
+		lDebug() << log().arg("Stopping capture graph [%1]").arg(mCaptureGraphListenerCount);
 		deleteCaptureGraph();
 	} else if (mCaptureGraphListenerCount > 0)
-		qDebug() << log().arg("Removing capture graph reference [%1]").arg(mCaptureGraphListenerCount);
+		lDebug() << log().arg("Removing capture graph reference [%1]").arg(mCaptureGraphListenerCount);
 	else qCritical() << log().arg("Removing too much capture graph reference [%1]").arg(mCaptureGraphListenerCount);
 }
 

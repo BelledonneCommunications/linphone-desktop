@@ -104,27 +104,27 @@ ColumnLayout {
 			}
 		}
 	}
+	MediumButton {
+		visible: mainItem.isConference && !SettingsCpp.disableMeetingsFeature
+		Layout.alignment: Qt.AlignHCenter
+		//: "Rejoindre la réunion"
+		text: qsTr("meeting_info_join_title")
+		style: ButtonStyle.grey
+		onClicked: {
+			if (mainItem.conferenceInfo) {
+				var callsWindow = UtilsCpp.getCallsWindow()
+				callsWindow.setupConference(mainItem.conferenceInfo)
+				UtilsCpp.smartShowWindow(callsWindow)
+			}
+		}
+	}
 	RowLayout {
 		Layout.alignment: Qt.AlignHCenter
         spacing: Math.round(72 * DefaultStyle.dp)
 		Layout.fillWidth: true
 		Layout.preferredHeight: childrenRect.height
-		MediumButton {
-			visible: mainItem.isConference && !SettingsCpp.disableMeetingsFeature
-			Layout.alignment: Qt.AlignHCenter
-            //: "Rejoindre la réunion"
-            text: qsTr("meeting_info_join_title")
-			style: ButtonStyle.grey
-			onClicked: {
-				if (mainItem.conferenceInfo) {
-					var callsWindow = UtilsCpp.getCallsWindow()
-					callsWindow.setupConference(mainItem.conferenceInfo)
-					UtilsCpp.smartShowWindow(callsWindow)
-				}
-			}
-		}
+		visible: !mainItem.isConference
 		LabelButton {
-			visible: !mainItem.isConference
             width: Math.round(56 * DefaultStyle.dp)
             height: Math.round(56 * DefaultStyle.dp)
             button.icon.width: Math.round(24 * DefaultStyle.dp)
@@ -138,7 +138,7 @@ ColumnLayout {
 			}
 		}
 		LabelButton {
-			visible: !mainItem.isConference && !SettingsCpp.disableChatFeature
+			visible: !SettingsCpp.disableChatFeature
             width: Math.round(56 * DefaultStyle.dp)
             height: Math.round(56 * DefaultStyle.dp)
             button.icon.width: Math.round(24 * DefaultStyle.dp)
@@ -158,7 +158,7 @@ ColumnLayout {
 			}
         }
         LabelButton {
-            visible: !mainItem.isConference && SettingsCpp.videoEnabled
+            visible: SettingsCpp.videoEnabled
             width: Math.round(56 * DefaultStyle.dp)
             height: Math.round(56 * DefaultStyle.dp)
             button.icon.width: Math.round(24 * DefaultStyle.dp)

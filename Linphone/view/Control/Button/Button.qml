@@ -56,7 +56,7 @@ Control.Button {
 	property var checkedImageColor: style?.image?.checked || Qt.darker(contentImageColor, 1.1)
 	property var pressedImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.1)
 	icon.source: style?.iconSource || ""
-	property color colorizationColor:  mainItem.checkable && mainItem.checked ? mainItem.checkedImageColor || mainItem.checkedColor || mainItem.pressedColor : mainItem.pressed ? mainItem.pressedImageColor : mainItem.hovered ? mainItem.hoveredImageColor : mainItem.contentImageColor
+	property color colorizationColor:  mainItem.checkable && mainItem.checked ? mainItem.checkedImageColor : mainItem.pressed ? mainItem.pressedImageColor : mainItem.hovered ? mainItem.hoveredImageColor : mainItem.contentImageColor
 	// Size properties
 	spacing: Utils.getSizeWithScreenRatio(5)
     property real radius: Math.ceil(height / 2)

@@ -97,7 +97,7 @@ void CallModel::setPaused(bool paused) {
 void CallModel::transferTo(const std::shared_ptr<linphone::Address> &address) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (mMonitor->transferTo(address) == -1)
-		qWarning() << log()
+		lWarning() << log()
 		                  .arg(QStringLiteral("Unable to transfer: `%1`."))
 		                  .arg(Utils::coreStringToAppString(address->asStringUriOnly()));
 }
@@ -105,7 +105,7 @@ void CallModel::transferTo(const std::shared_ptr<linphone::Address> &address) {
 void CallModel::transferToAnother(const std::shared_ptr<linphone::Call> &call) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (mMonitor->transferToAnother(call) == -1)
-		qWarning() << log()
+		lWarning() << log()
 		                  .arg(QStringLiteral("Unable to transfer: `%1`."))
 		                  .arg(Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly()));
 }
@@ -331,14 +331,14 @@ void CallModel::setVideoSourceDescriptorModel(std::shared_ptr<VideoSourceDescrip
 
 void CallModel::sendDtmf(const QString &dtmf) {
 	const char key = dtmf.constData()[0].toLatin1();
-	qInfo() << QStringLiteral("Send dtmf: `%1`.").arg(key);
+	lInfo() << log().arg("Send dtmf: `%1`.").arg(key);
 	if (mMonitor) mMonitor->sendDtmf(key);
 	CoreModel::getInstance()->getCore()->playDtmf(key, gDtmfSoundDelay);
 }
 
 void CallModel::updateCallErrorFromReason(linphone::Reason reason) {
 	QString error;
-	qDebug() << "call Error reason" << (int)reason;
+	lDebug() << log().arg("call Error reason") << (int)reason;
 	switch (reason) {
 		case linphone::Reason::None:
 			error = "";
@@ -391,7 +391,7 @@ void CallModel::updateCallErrorFromReason(linphone::Reason reason) {
 			break;
 	}
 
-	if (!error.isEmpty()) qInfo() << QStringLiteral("Call terminated with error (%1):").arg(error) << this;
+	if (!error.isEmpty()) lInfo() << log().arg("Call terminated with error (%1):").arg(error) << this;
 	emit errorMessageChanged(error);
 }
 

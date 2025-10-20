@@ -105,7 +105,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	    &CoreModel::conferenceInfoReceived,
 	    [this](const std::shared_ptr<linphone::Core> &core,
 	           const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
-		    lDebug() << log().arg("conference info received") << conferenceInfo->getSubject();
+		    lInfo() << log().arg("conference info received") << conferenceInfo->getSubject();
 		    // We must refresh all the conference infos cause we are not able to determine
 		    // which account is concerned by the signal if multiple accounts are connected
 		    emit lUpdate();

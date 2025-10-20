@@ -435,10 +435,10 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	mCliModelConnection->makeConnectToCore(&App::receivedMessage, [this](int, const QByteArray &byteArray) {
 		QString command(byteArray);
 		if (command.isEmpty()) {
-			lDebug() << log().arg("Check with CliModel for commands");
+			lInfo() << log().arg("Check with CliModel for commands");
 			mCliModelConnection->invokeToModel([]() { CliModel::getInstance()->runProcess(); });
 		} else {
-			qInfo() << QStringLiteral("Received command from other application: `%1`.").arg(command);
+			lInfo() << log().arg("Received command from other application: `%1`.").arg(command);
 			mCliModelConnection->invokeToModel([command]() { CliModel::getInstance()->executeCommand(command); });
 		}
 	});

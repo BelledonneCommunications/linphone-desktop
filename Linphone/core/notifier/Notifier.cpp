@@ -282,8 +282,8 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 		auto accountModel = Utils::makeQObject_ptr<AccountModel>(account);
 		accountModel->setSelf(accountModel);
 		if (!accountModel->getNotificationsAllowed()) {
-			qInfo()
-			    << "Notifications have been disabled for this account - not creating a notification for incoming call";
+			lInfo() << log().arg(
+			    "Notifications have been disabled for this account - not creating a notification for incoming call");
 			if (accountModel->forwardToVoiceMailInDndPresence()) {
 				lInfo() << log().arg("Transferring call to voicemail");
 				auto voicemailAddress = linphone::Factory::get()->createAddress(
@@ -341,8 +341,9 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 			auto accountModel = Utils::makeQObject_ptr<AccountModel>(receiverAccount);
 			accountModel->setSelf(accountModel);
 			if (!accountModel->getNotificationsAllowed()) {
-				qInfo() << "Notifications have been disabled for this account - not creating a notification for "
-				           "incoming message";
+				lInfo() << log().arg(
+				    "Notifications have been disabled for this account - not creating a notification for "
+				    "incoming message");
 				return;
 			}
 		}

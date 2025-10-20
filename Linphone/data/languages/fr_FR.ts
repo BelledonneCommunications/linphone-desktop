@@ -39,45 +39,45 @@
 <context>
     <name>AccountCore</name>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="435"/>
+        <location filename="../../core/account/AccountCore.cpp" line="446"/>
         <source>drawer_menu_account_connection_status_connected</source>
         <extracomment>&quot;Connecté&quot;</extracomment>
         <translation>Connecté</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="438"/>
+        <location filename="../../core/account/AccountCore.cpp" line="449"/>
         <source>drawer_menu_account_connection_status_refreshing</source>
         <translation>En cours de rafraîchissement…</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="441"/>
+        <location filename="../../core/account/AccountCore.cpp" line="452"/>
         <source>drawer_menu_account_connection_status_progress</source>
         <translation>Connexion…</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="444"/>
+        <location filename="../../core/account/AccountCore.cpp" line="455"/>
         <source>drawer_menu_account_connection_status_failed</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="448"/>
+        <location filename="../../core/account/AccountCore.cpp" line="459"/>
         <source>drawer_menu_account_connection_status_cleared</source>
         <translation>Désactivé</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="482"/>
+        <location filename="../../core/account/AccountCore.cpp" line="493"/>
         <source>manage_account_status_connected_summary</source>
         <extracomment>&quot;Vous êtes en ligne et joignable.&quot;</extracomment>
         <translation>Vous êtes en ligne et joignable.</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="485"/>
+        <location filename="../../core/account/AccountCore.cpp" line="496"/>
         <source>manage_account_status_failed_summary</source>
         <extracomment>&quot;Erreur de connexion, vérifiez vos paramètres.&quot;</extracomment>
         <translation>Erreur de connexion, vérifiez vos paramètres.</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="489"/>
+        <location filename="../../core/account/AccountCore.cpp" line="500"/>
         <source>manage_account_status_cleared_summary</source>
         <extracomment>&quot;Compte désactivé, vous ne recevrez ni appel ni message.&quot;</extracomment>
         <translation>Compte désactivé, vous ne recevrez ni appel ni message.</translation>
@@ -429,11 +429,6 @@
         <translation>Si ce champ est rempli, l’outbound proxy sera activé automatiquement. Laissez-le vide pour le désactiver.</translation>
     </message>
     <message>
-        <source>account_settings_outbound_proxy_title</source>
-        <extracomment>&quot;Outbound proxy enabled&quot;</extracomment>
-        <translation type="vanished">Serveur mandataire sortant</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="157"/>
         <source>account_settings_stun_server_url_title</source>
         <extracomment>&quot;Adresse du serveur STUN&quot;</extracomment>
@@ -634,103 +629,102 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../../core/App.cpp" line="357"/>
+        <location filename="../../core/App.cpp" line="356"/>
         <source>remote_provisioning_dialog</source>
         <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
         <translation>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="394"/>
-        <location filename="../../core/App.cpp" line="648"/>
+        <location filename="../../core/App.cpp" line="393"/>
+        <location filename="../../core/App.cpp" line="658"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="395"/>
-        <location filename="../../core/App.cpp" line="650"/>
+        <location filename="../../core/App.cpp" line="394"/>
+        <location filename="../../core/App.cpp" line="660"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation>La configuration distante a échoué : %1</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="644"/>
+        <location filename="../../core/App.cpp" line="654"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation>indisponible</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="916"/>
+        <location filename="../../core/App.cpp" line="926"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>A free and open source SIP video-phone.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="918"/>
+        <location filename="../../core/App.cpp" line="928"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Send an order to the application towards a command line</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="922"/>
+        <location filename="../../core/App.cpp" line="932"/>
         <source>command_line_option_show_help</source>
         <translation>Show this help</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="927"/>
+        <location filename="../../core/App.cpp" line="937"/>
         <source>command_line_option_show_app_version</source>
         <translation>Afficher la version de l&apos;application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="935"/>
+        <location filename="../../core/App.cpp" line="945"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="937"/>
+        <location filename="../../core/App.cpp" line="947"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, path or file</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="942"/>
+        <location filename="../../core/App.cpp" line="952"/>
         <source>command_line_option_minimized</source>
         <translation>Minimiser</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="945"/>
+        <location filename="../../core/App.cpp" line="955"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Log to stdout some debug information while running</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="948"/>
+        <location filename="../../core/App.cpp" line="958"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1318"/>
+        <location filename="../../core/App.cpp" line="1329"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Cacher</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1318"/>
+        <location filename="../../core/App.cpp" line="1329"/>
         <source>show_action</source>
         <translation>Afficher</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1333"/>
+        <location filename="../../core/App.cpp" line="1344"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1337"/>
+        <location filename="../../core/App.cpp" line="1448"/>
         <source>mark_all_read_action</source>
-        <extracomment>&quot;Mark all as read&quot;</extracomment>
-        <translation>Marquer tout comme lu</translation>
+        <translation>Mark all as read</translation>
     </message>
 </context>
 <context>
@@ -926,7 +920,7 @@
 <context>
     <name>CallHistoryLayout</name>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="116"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="111"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
         <translation>Rejoindre la réunion</translation>
@@ -1004,51 +998,76 @@
     </message>
 </context>
 <context>
+    <name>CallList</name>
+    <message>
+        <location filename="../../core/call/CallList.cpp" line="104"/>
+        <source>remote_group_call</source>
+        <extracomment>Remote group call</extracomment>
+        <translation>Appel de groupe distant</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallList.cpp" line="106"/>
+        <source>local_group_call</source>
+        <translation>Appel de groupe local</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallList.cpp" line="111"/>
+        <source>info_popup_error_title</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallList.cpp" line="113"/>
+        <source>info_popup_merge_calls_failed_message</source>
+        <extracomment>Failed to merge calls !</extracomment>
+        <translation>La fusion des appels a échoué !</translation>
+    </message>
+</context>
+<context>
     <name>CallListView</name>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="55"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="59"/>
         <source>meeting</source>
         <extracomment>&quot;Réunion</extracomment>
         <translation>Réunion</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="57"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="61"/>
         <source>call</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Appel</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="62"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="66"/>
         <source>paused_call_or_meeting</source>
         <extracomment>&quot;%1 en pause&quot;</extracomment>
         <translation>%1 en pause</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="64"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="68"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
         <translation>%1 en cours</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="84"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="88"/>
         <source>transfer_call_name_accessible_name</source>
         <extracomment>Transfer call %1</extracomment>
         <translation>Transférer l&apos;appel %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="112"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="116"/>
         <source>resume_call_name_accessible_name</source>
         <extracomment>Resume %1 call</extracomment>
         <translation>Reprendre l&apos;appel %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="114"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="118"/>
         <source>pause_call_name_accessible_name</source>
         <extracomment>Pause %1 call</extracomment>
         <translation>Mettre l&apos;appel %1 en pause</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="137"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="141"/>
         <source>end_call_name_accessible_name</source>
         <extracomment>End %1 call</extracomment>
         <translation>Terminer l&apos;appel %1</translation>
@@ -1994,13 +2013,13 @@
 <context>
     <name>ChatDroppableTextArea</name>
     <message>
-        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="152"/>
+        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="154"/>
         <source>chat_view_send_area_placeholder_text</source>
         <extracomment>Say something… : placeholder text for sending message text area</extracomment>
         <translation>Dites quelque chose…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="187"/>
+        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="190"/>
         <source>cannot_record_while_in_call_tooltip</source>
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
         <translation>Impossible d&apos;enregistrer un message vocal pendant un appel</translation>
@@ -2223,13 +2242,13 @@ Error</extracomment>
 <context>
     <name>ChatMessageContentModel</name>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="104"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="105"/>
         <source>popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="107"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="108"/>
         <source>popup_download_error_message</source>
         <extracomment>This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it</extracomment>
         <translation>Ce fichier a déjà été téléchargé et n&apos;est plus sur le serveur. Votre correspondant devra vous le renvoyer si vous voulez y avoir accès.</translation>
@@ -4771,36 +4790,36 @@ Expiration : %1</translation>
 <context>
     <name>Notifier</name>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="309"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="310"/>
         <source>new_call_alert_accessible_name</source>
         <extracomment>New call from %1</extracomment>
         <translation>Nouvel appel de %1</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="361"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="363"/>
         <source>new_voice_message</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
         <translation>Message vocal reçu !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="362"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="364"/>
         <source>new_file_message</source>
         <translation>Fichier reçu !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="365"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="367"/>
         <source>new_conference_invitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
         <translation>Nouvelle invitation à une conférence !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="385"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="387"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>Nouveaux messages reçus !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="392"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="394"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Nouveau message sur la conversation %1</translation>
@@ -4820,102 +4839,102 @@ Expiration : %1</translation>
         <translation>Timeout : non authentifié</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="123"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="125"/>
         <source>oidc_authentication_granted_message</source>
         <extracomment>Authentication granted</extracomment>
         <translation>Authentification accordée</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="130"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="132"/>
         <source>oidc_authentication_not_authenticated_message</source>
         <extracomment>Not authenticated</extracomment>
         <translation>Non authentifié</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="136"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="138"/>
         <source>oidc_authentication_refresh_message</source>
         <extracomment>Refreshing token</extracomment>
         <translation>Token en cours de rafraîchissement</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="141"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="143"/>
         <source>oidc_authentication_temporary_credentials_message</source>
         <extracomment>Temporary credentials received</extracomment>
         <translation>Identifiants temporaires reçus</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="159"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="161"/>
         <source>oidc_authentication_network_error</source>
         <extracomment>Network error</extracomment>
         <translation>Erreur réseau</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="163"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="165"/>
         <source>oidc_authentication_server_error</source>
         <extracomment>Server error</extracomment>
         <translation>Erreur de serveur</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="167"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="169"/>
         <source>oidc_authentication_token_not_found_error</source>
         <extracomment>OAuth token not found</extracomment>
         <translation>Token OAuth non trouvé</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="171"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="173"/>
         <source>oidc_authentication_token_secret_not_found_error</source>
         <extracomment>OAuth token secret not found</extracomment>
         <translation>Token OAuth secret non trouvé</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="175"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="177"/>
         <source>oidc_authentication_callback_not_verified_error</source>
         <extracomment>OAuth callback not verified</extracomment>
         <translation>Retour OAuth non vérifié</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="186"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="188"/>
         <source>oidc_authentication_request_auth_message</source>
         <extracomment>Requesting authorization from browser</extracomment>
         <translation>En attente d&apos;autorisation du navigateur</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="217"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="219"/>
         <source>oidc_authentication_no_token_found_error</source>
         <translation>Token non trouvé</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="230"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="232"/>
         <source>oidc_authentication_request_token_message</source>
         <extracomment>Requesting access token</extracomment>
         <translation>En attente du token d&apos;accès</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="235"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="237"/>
         <source>oidc_authentication_refresh_token_message</source>
         <extracomment>Refreshing access token</extracomment>
         <translation>Token en cours de rafraîchissement</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="240"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="242"/>
         <source>oidc_authentication_request_authorization_message</source>
         <extracomment>Requesting authorization</extracomment>
         <translation>Autorisation en cours</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="245"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="247"/>
         <source>oidc_authentication_request_temporary_credentials_message</source>
         <extracomment>Requesting temporary credentials</extracomment>
         <translation>En attente d&apos;identifiants temporaires</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="272"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="274"/>
         <source>oidc_authentication_no_auth_found_in_config_error</source>
         <extracomment>No authorization endpoint found in OpenID configuration</extracomment>
         <translation>Pas d&apos;autorisation trouvé dans la configuration OpenID</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="287"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="289"/>
         <source>oidc_authentication_no_token_found_in_config_error</source>
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
         <translation>Pas de token trouvé dans la configuration OpenID</translation>
@@ -5575,37 +5594,37 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <translation>Démarrer un appel de groupe ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="118"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="121"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
         <translation>Cette conversation n&apos;est pas chiffrée !</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="436"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="407"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
         <translation>Réponse à %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="637"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="607"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation>Médias partagés</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="639"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="609"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation>Documents partagés</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="668"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="638"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
         <translation>Transférer à…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="702"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="672"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Conversations</translation>
@@ -5657,11 +5676,6 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <source>settings_meetings_title</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
         <translation>Réunions</translation>
-    </message>
-    <message>
-        <source>settings_security_title</source>
-        <extracomment>&quot;Affichage&quot; &quot;Security&quot;</extracomment>
-        <translation type="vanished">Sécurité / Chiffrement</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="29"/>
@@ -5744,38 +5758,38 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <translation>Impossible de créer l&apos;appel de groupe, le compte par défaut n&apos;est pas défini</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="408"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="413"/>
         <source>group_call_error_participants_invite</source>
         <translation>Impossible d&apos;inviter les participants à l&apos;appel de groupe</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="412"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="417"/>
         <source>group_call_error_creation</source>
         <translation>L&apos;appel de groupe n&apos;a pas pu être créé</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="512"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="517"/>
         <source>voice_recording_duration</source>
         <extracomment>&quot;Voice recording (%1)&quot; : %1 is the duration formated in mm:ss</extracomment>
         <translation>Message vocal (%1)</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="585"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="591"/>
         <source>unknown_audio_device_name</source>
         <translation>Appareil inconnu</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="520"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="525"/>
         <source>conference_invitation</source>
         <translation>Invitation à une réunion</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="524"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="529"/>
         <source>conference_invitation_cancelled</source>
         <translation>Annulation d&apos;une réunion</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="522"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="527"/>
         <source>conference_invitation_updated</source>
         <translation>Modification d&apos;une réunion</translation>
     </message>

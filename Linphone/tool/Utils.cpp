@@ -178,7 +178,7 @@ void Utils::createCall(const QString &sipAddress,
 	if (mediaEncryption == LinphoneEnums::MediaEncryption::None)
 		mediaEncryption =
 		    App::getInstance()->getSettings()->getMediaEncryption()["id"].value<LinphoneEnums::MediaEncryption>();
-	lDebug() << "[Utils] create call with uri :" << sipAddress << mediaEncryption;
+	lInfo() << "[Utils] create call with uri :" << sipAddress << mediaEncryption;
 	App::postModelAsync([sipAddress, options, mediaEncryption, prepareTransfertAddress, headers]() {
 		QString errorMessage;
 		bool success = ToolModel::createCall(sipAddress, options, prepareTransfertAddress, headers,
@@ -1586,15 +1586,15 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 			auto chatCore = ChatCore::create(linphoneChatRoom);
 			return QVariant::fromValue(new ChatGui(chatCore));
 		} else {
-			qDebug() << "Did not find existing chat room, create one";
+			lInfo() << "[Utils] Did not find existing chat room, create one";
 			linphoneChatRoom = ToolModel::createCurrentCallChat(callModel);
 			if (linphoneChatRoom != nullptr) {
-				qDebug() << "Chatroom created with" << callModel->getRemoteAddress()->asStringUriOnly();
+				lInfo() << "[Utils] Chatroom created with" << callModel->getRemoteAddress()->asStringUriOnly();
 				auto id = linphoneChatRoom->getIdentifier();
 				auto chatCore = ChatCore::create(linphoneChatRoom);
 				return QVariant::fromValue(new ChatGui(chatCore));
 			} else {
-				qWarning() << "Failed to create 1-1 conversation with"
+				lWarning() << "[Utils] Failed to create 1-1 conversation with"
 				           << callModel->getRemoteAddress()->asStringUriOnly() << "!";
 				data->mConnection->invokeToCore([] {
 					//: Error
@@ -1623,14 +1623,14 @@ VariantObject *Utils::getChatForAddress(QString address) {
 			auto chatCore = ChatCore::create(linphoneChatRoom);
 			return QVariant::fromValue(new ChatGui(chatCore));
 		} else {
-			qDebug() << "Did not find existing chat room, create one";
+			lInfo() << "[Utils] Did not find existing chat room, create one";
 			linphoneChatRoom = ToolModel::createChatForAddress(linAddr);
 			if (linphoneChatRoom != nullptr) {
-				qDebug() << "Chatroom created with" << linAddr->asStringUriOnly();
+				lInfo() << "[Utils] Chatroom created with" << linAddr->asStringUriOnly();
 				auto chatCore = ChatCore::create(linphoneChatRoom);
 				return QVariant::fromValue(new ChatGui(chatCore));
 			} else {
-				qWarning() << "Failed to create 1-1 conversation with" << linAddr->asStringUriOnly() << "!";
+				lWarning() << "[Utils] Failed to create 1-1 conversation with" << linAddr->asStringUriOnly() << "!";
 				//: Failed to create 1-1 conversation with %1 !
 				data->mConnection->invokeToCore([] {
 					showInformationPopup(tr("information_popup_error_title"),

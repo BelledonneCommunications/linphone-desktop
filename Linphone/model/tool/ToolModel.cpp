@@ -373,7 +373,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 	*/
 }
 
-bool ToolModel::createGroupCall(QString subject, const std::list<QString> &participantAddresses, QString *message) {
+std::shared_ptr<linphone::Conference> ToolModel::createConference(QString subject, QString *message) {
 	auto core = CoreModel::getInstance()->getCore();
 	auto conferenceParams = core->createConferenceParams(nullptr);
 	conferenceParams->enableVideo(true);
@@ -381,7 +381,7 @@ bool ToolModel::createGroupCall(QString subject, const std::list<QString> &parti
 	if (!account) {
 		qWarning() << "No default account found, can't create group call";
 		*message = tr("group_call_error_no_account");
-		return false;
+		return nullptr;
 	}
 	conferenceParams->setAccount(account);
 	conferenceParams->setSubject(Utils::appStringToCoreString(subject));
@@ -392,8 +392,13 @@ bool ToolModel::createGroupCall(QString subject, const std::list<QString> &parti
 
 	conferenceParams->enableChat(true);
 
-	auto conference = core->createConferenceWithParams(conferenceParams);
+	return core->createConferenceWithParams(conferenceParams);
+}
+
+bool ToolModel::createGroupCall(QString subject, const std::list<QString> &participantAddresses, QString *message) {
+	auto conference = createConference(subject, message);
 	if (conference) {
+		auto core = CoreModel::getInstance()->getCore();
 		auto callParams = core->createCallParams(nullptr);
 		callParams->enableVideo(true);
 		callParams->setVideoDirection(linphone::MediaDirection::RecvOnly);
@@ -409,7 +414,7 @@ bool ToolModel::createGroupCall(QString subject, const std::list<QString> &parti
 		}
 	} else {
 		qWarning() << "Could not create group call";
-		*message = tr("group_call_error_creation");
+		if (message->isEmpty()) *message = tr("group_call_error_creation");
 	}
 	return conference != nullptr;
 }
@@ -534,7 +539,7 @@ QString ToolModel::getMessageFromContent(std::list<std::shared_ptr<linphone::Con
 void ToolModel::loadDownloadedCodecs() {
 	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-	qInfo() << QStringLiteral("Loading downloaded codecs in folder %1…").arg(Paths::getCodecsDirPath());
+	lInfo() << QStringLiteral("[ToolModel] Loading downloaded codecs in folder %1…").arg(Paths::getCodecsDirPath());
 	QDirIterator it(Paths::getCodecsDirPath());
 	while (it.hasNext()) {
 		QFileInfo info(it.next());
@@ -543,9 +548,10 @@ void ToolModel::loadDownloadedCodecs() {
 			qInfo() << QStringLiteral("Loading `%1` symbols…").arg(filename);
 			auto library = QLibrary(info.filePath());
 			if (!library.load()) // lib.load())
-				qWarning() << QStringLiteral("Failed to load `%1` symbols.").arg(filename) << library.errorString();
-			else qInfo() << QStringLiteral("Loaded `%1` symbols…").arg(filename);
-		} else qWarning() << QStringLiteral("Found codec file `%1` that is not a library").arg(filename);
+				lWarning() << QStringLiteral("[ToolModel] Failed to load `%1` symbols.").arg(filename)
+				           << library.errorString();
+			else lInfo() << QStringLiteral("[ToolModel] Loaded `%1` symbols…").arg(filename);
+		} else lWarning() << QStringLiteral("[ToolModel] Found codec file `%1` that is not a library").arg(filename);
 	}
 	CoreModel::getInstance()->getCore()->reloadMsPlugins("");
 	qInfo() << QStringLiteral("Finished loading downloaded codecs.");
@@ -664,11 +670,11 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::lookupCurrentCallChat(std::shared
 		auto localAddress = call->getCallLog()->getLocalAddress();
 		std::list<std::shared_ptr<linphone::Address>> participants;
 		participants.push_back(remoteaddress->clone());
-		qDebug() << "Looking for chat with local address" << localAddress->asStringUriOnly() << "and participant"
-		         << remoteaddress->asStringUriOnly();
+		lInfo() << "[ToolModel] Looking for chat with local address" << localAddress->asStringUriOnly()
+		        << "and participant" << remoteaddress->asStringUriOnly();
 		auto existingChat = core->searchChatRoom(params, localAddress, nullptr, participants);
-		if (existingChat) qDebug() << "Found existing chat";
-		else qDebug() << "Did not find existing chat";
+		if (existingChat) lInfo() << "[ToolModel] Found existing chat";
+		else lInfo() << "[ToolModel] Did not find existing chat";
 		return existingChat;
 	}
 }
@@ -708,11 +714,11 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::lookupChatForAddress(std::shared_
 	remoteAddress->clean();
 	participants.push_back(remoteAddress);
 
-	qDebug() << "Looking for chat with local address" << localAddress->asStringUriOnly() << "and participant"
-	         << remoteAddress->asStringUriOnly();
+	lInfo() << "Looking for chat with local address" << localAddress->asStringUriOnly() << "and participant"
+	        << remoteAddress->asStringUriOnly();
 	auto existingChat = core->searchChatRoom(params, localAddress, nullptr, participants);
-	if (existingChat) qDebug() << "Found existing chat";
-	else qDebug() << "Did not find existing chat";
+	if (existingChat) lInfo() << "Found existing chat";
+	else lInfo() << "Did not find existing chat";
 	return existingChat;
 }
 

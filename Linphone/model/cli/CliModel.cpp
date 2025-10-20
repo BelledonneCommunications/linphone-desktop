@@ -93,7 +93,7 @@ QString CliModel::parseFunctionName(const QString &command, bool isOptional) {
 	// mRegExpFunctionName.indexIn(command.toLower());
 	// if (mRegExpFunctionName.pos(1) == -1) {
 	if (!match.hasMatch()) {
-		if (!isOptional) qWarning() << QStringLiteral("Unable to parse function name of command: `%1`.").arg(command);
+		if (!isOptional) lWarning() << QStringLiteral("Unable to parse function name of command: `%1`.").arg(command);
 		return QString("");
 	}
 
@@ -102,7 +102,7 @@ QString CliModel::parseFunctionName(const QString &command, bool isOptional) {
 
 	const QString functionName = texts[1];
 	if (!mCommands.contains(functionName)) {
-		if (!isOptional) qWarning() << QStringLiteral("This command doesn't exist: `%1`.").arg(functionName);
+		if (!isOptional) lWarning() << QStringLiteral("This command doesn't exist: `%1`.").arg(functionName);
 		return QString("");
 	}
 
@@ -344,7 +344,7 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 	const QString &functionName = parseFunctionName(command, false);
 	const QString configURI = QString(EXECUTABLE_NAME).toLower() + "-config";
 	if (!functionName.isEmpty()) { // It is a CLI
-		qInfo() << QStringLiteral("Detecting cli command: `%1`…").arg(command);
+		lInfo() << log().arg("Detecting cli command: `%1`…").arg(command);
 		QHash<QString, QString> args = parseArgs(command);
 		QHash<QString, QString> argsToProcess;
 		for (auto it = args.begin(); it != args.end(); ++it) {
@@ -410,7 +410,7 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 				address = linphone::Factory::get()->createAddress(
 				    Utils::appStringToCoreString(transformedCommand)); // Test if command is an address
 			// if (format) *format = UriFormat;
-			qInfo() << QStringLiteral("Detecting URI command: `%1`…").arg(command);
+			lInfo() << log().arg("Detecting URI command: `%1`…").arg(command);
 			QString functionName;
 			if (address) {
 				functionName = Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
@@ -429,10 +429,10 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 			}
 			functionName = functionName.toLower();
 			if (functionName.isEmpty()) {
-				qWarning() << QStringLiteral("There is no method set in `%1`.").arg(command);
+				lWarning() << log().arg("There is no method set in `%1`.").arg(command);
 				return;
 			} else if (!mCommands.contains(functionName)) {
-				qWarning() << QStringLiteral("This command doesn't exist: `%1`.").arg(functionName);
+				lWarning() << log().arg("This command doesn't exist: `%1`.").arg(functionName);
 				return;
 			}
 			QHash<QString, QString> headers;

@@ -70,7 +70,7 @@ void KeyboardShortcuts::onAcceptCallShortcut() {
 	auto callList = App::getInstance()->getCallList();
 	auto currentPendingCall = callList->getFirstIncommingPendingCall();
 	if (!currentPendingCall.isNull()) {
-		lDebug() << "Accept call with shortcut :" << currentPendingCall;
+		lInfo() << "Accept call with shortcut :" << currentPendingCall;
 		auto gui = new CallGui(currentPendingCall);
 		Utils::openCallsWindow(gui);
 		currentPendingCall->lAccept(false);
@@ -82,7 +82,7 @@ void KeyboardShortcuts::onDeclineCallShortcut() {
 	auto callList = App::getInstance()->getCallList();
 	auto currentPendingCall = callList->getFirstIncommingPendingCall();
 	if (!currentPendingCall.isNull()) {
-		lDebug() << "Dcline call with shortcut :" << currentPendingCall;
+		lInfo() << "Decline call with shortcut :" << currentPendingCall;
 		currentPendingCall->lDecline();
 	}
 }

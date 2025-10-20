@@ -82,7 +82,7 @@ bool SoundPlayerModel::play(QString source, bool fromStart) {
 	if (source == "") return false;
 	if (fromStart) stop();
 	if (!open(source)) {
-		qWarning() << QStringLiteral("Unable to open: `%1`").arg(source);
+		lWarning() << QStringLiteral("[SoundPlayerModel] %1 Unable to open: `%2`").arg(Q_FUNC_INFO).arg(source);
 		//: Unable to open: `%1`
 		emit errorChanged(QString("sound_player_open_error").arg(source));
 		return false;
@@ -102,7 +102,7 @@ bool SoundPlayerModel::play(QString source, bool fromStart) {
 
 void SoundPlayerModel::seek(QString source, int offset) {
 	if (!open(source)) {
-		qWarning() << QStringLiteral("Unable to open: `%1`").arg(source);
+		lWarning() << QStringLiteral("[SoundPlayerModel] %1 Unable to open: `%2`").arg(Q_FUNC_INFO).arg(source);
 		//: Unable to open: `%1`
 		emit errorChanged(QString("sound_player_open_error").arg(source));
 		return;

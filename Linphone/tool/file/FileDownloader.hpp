@@ -21,6 +21,8 @@
 #ifndef FILE_DOWNLOADER_H_
 #define FILE_DOWNLOADER_H_
 
+#include "tool/AbstractObject.hpp"
+
 #include <QObject>
 #include <QThread>
 #include <QtNetwork>
@@ -29,7 +31,7 @@
 
 class QSslError;
 
-class FileDownloader : public QObject {
+class FileDownloader : public QObject, public AbstractObject {
 	Q_OBJECT;
 
 	// TODO: Add an error property to use in UI.
@@ -121,6 +123,8 @@ private:
 	QTimer mTimeout;
 
 	static constexpr int DefaultTimeout = 5000;
+
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif // FILE_DOWNLOADER_H_

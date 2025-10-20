@@ -85,7 +85,7 @@ void ChatMessageContentModel::downloadFile(const QString &name) {
 		case linphone::ChatMessage::State::FileTransferInProgress:
 			return;
 		default:
-			qWarning() << QStringLiteral("Wrong message state when requesting downloading, state=.")
+			lWarning() << QStringLiteral("Wrong message state when requesting downloading, state=.")
 			           << LinphoneEnums::fromLinphone(mChatMessageModel->getState());
 	}
 	bool soFarSoGood;
@@ -93,12 +93,13 @@ void ChatMessageContentModel::downloadFile(const QString &name) {
 	    QStringLiteral("%1%2").arg(App::getInstance()->getSettings()->getDownloadFolder()).arg(name), &soFarSoGood);
 
 	if (!soFarSoGood) {
-		qWarning() << QStringLiteral("Unable to create safe file path for: %1.").arg(name);
+		lWarning() << QStringLiteral("Unable to create safe file path for: %1.").arg(name);
 		return;
 	}
 	mContent->setFilePath(Utils::appStringToCoreString(safeFilePath));
 
 	if (!mContent->isFileTransfer()) {
+		lWarning() << QStringLiteral("file transfer is not available");
 		Utils::showInformationPopup(
 		    //: Error
 		    tr("popup_error_title"),
@@ -107,7 +108,7 @@ void ChatMessageContentModel::downloadFile(const QString &name) {
 		    tr("popup_download_error_message"), false);
 	} else {
 		if (!mChatMessageModel->getMonitor()->downloadContent(mContent))
-			qWarning() << QStringLiteral("Unable to download file of entry %1.").arg(name);
+			lWarning() << QStringLiteral("Unable to download file of entry %1.").arg(name);
 	}
 }
 

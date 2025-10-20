@@ -52,7 +52,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	qDebug() << "OIDC Redirect URI Port set to [" << port << "]";
 	auto replyHandler = new OAuthHttpServerReplyHandler(port, this);
 	if (!replyHandler->isListening()) {
-		qWarning() << "OAuthHttpServerReplyHandler is not listening on port" << port;
+		lWarning() << log().arg("OAuthHttpServerReplyHandler is not listening on port") << port;
 		emit requestFailed(tr("OAuthHttpServerReplyHandler is not listening"));
 		emit finished();
 		return;
@@ -99,7 +99,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	mTimeout.setInterval(1000 * 60 * 2); // 2minutes
 
 	connect(&mTimeout, &QTimer::timeout, [this]() {
-		qWarning() << log().arg("Timeout reached for OpenID connection.");
+		lWarning() << log().arg("Timeout reached for OpenID connection.");
 		dynamic_cast<OAuthHttpServerReplyHandler *>(mOidc.replyHandler())->close();
 		CoreModel::getInstance()->getCore()->abortAuthentication(mAuthInfo);
 		//: Timeout: Not authenticated
@@ -108,11 +108,13 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	});
 	connect(mOidc.networkAccessManager(), &QNetworkAccessManager::authenticationRequired,
 	        [=](QNetworkReply *reply, QAuthenticator *authenticator) {
-		        lDebug() << "authenticationRequired  url [" << reply->url() << "]";
+		        lInfo() << "authenticationRequired  url [" << reply->url() << "]";
 		        if (mOidc.clientIdentifierSharedKey().isEmpty() == false) {
 			        authenticator->setUser(mOidc.clientIdentifier());
 			        authenticator->setPassword(mOidc.clientIdentifierSharedKey());
-		        } else lWarning() << "client secret not found for client id [" << mOidc.clientIdentifier() << "]";
+		        } else
+			        lWarning() << log().arg("client secret not found for client id [") << mOidc.clientIdentifier()
+			                   << "]";
 	        });
 
 	connect(&mOidc, &QOAuth2AuthorizationCodeFlow::statusChanged, [=](QAbstractOAuth::Status status) {
@@ -152,7 +154,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 		const QMetaObject metaObject = QAbstractOAuth::staticMetaObject;
 		int index = metaObject.indexOfEnumerator("Error");
 		QMetaEnum metaEnum = metaObject.enumerator(index);
-		qWarning() << "RequestFailed:" << metaEnum.valueToKey(static_cast<int>(error));
+		lWarning() << log().arg("RequestFailed:") << metaEnum.valueToKey(static_cast<int>(error));
 		switch (error) {
 			case QAbstractOAuth::Error::NetworkError:
 				//: Network error
@@ -213,7 +215,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 
 		        } else {
 			        mIdToken.clear();
-			        qWarning() << "No ID Token or Access Token found in the tokens.";
+			        lWarning() << "No ID Token or Access Token found in the tokens.";
 			        emit requestFailed(tr("oidc_authentication_no_token_found_error"));
 			        emit finished();
 		        }
@@ -267,7 +269,7 @@ void OIDCModel::openIdConfigReceived() {
 	if (rootArray.contains("authorization_endpoint")) {
 		mOidc.setAuthorizationUrl(QUrl(rootArray["authorization_endpoint"].toString()));
 	} else {
-		qWarning() << "No authorization endpoint found in OpenID configuration";
+		lWarning() << log().arg("No authorization endpoint found in OpenID configuration");
 		//: No authorization endpoint found in OpenID configuration
 		emit requestFailed(tr("oidc_authentication_no_auth_found_in_config_error"));
 		emit finished();
@@ -282,7 +284,7 @@ void OIDCModel::openIdConfigReceived() {
 		mAuthInfo->setTokenEndpointUri(
 		    Utils::appStringToCoreString(QUrl(rootArray["token_endpoint"].toString()).toString()));
 	} else {
-		qWarning() << "No token endpoint found in OpenID configuration";
+		lWarning() << log().arg("No token endpoint found in OpenID configuration");
 		//: No token endpoint found in OpenID configuration
 		emit requestFailed(tr("oidc_authentication_no_token_found_in_config_error"));
 		emit finished();
@@ -307,7 +309,7 @@ void OIDCModel::setBearers() {
 		mAuthInfo->setRefreshToken(refreshBearer);
 
 	} else {
-		qWarning() << "No refresh token found";
+		lWarning() << log().arg("No refresh token found");
 	}
 	CoreModel::getInstance()->getCore()->addAuthInfo(mAuthInfo);
 	emit CoreModel::getInstance()->bearerAccountAdded();

@@ -140,7 +140,7 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 					    emit resultsProcessed();
 				    });
 			    });
-			qDebug() << log().arg("Initialized");
+			lDebug() << log().arg("Initialized");
 			emit initialized();
 		});
 	});
@@ -157,7 +157,7 @@ void MagicSearchList::setResults(const QList<QSharedPointer<FriendCore>> &contac
 		if (!isFriendCore) continue;
 		disconnect(isFriendCore.get());
 	}
-	qDebug() << log().arg("SetResults: %1").arg(contacts.size());
+	lDebug() << log().arg("SetResults: %1").arg(contacts.size());
 	resetData<FriendCore>(contacts);
 	for (auto it : contacts) {
 		connectContact(it.get());

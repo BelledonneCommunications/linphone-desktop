@@ -183,20 +183,20 @@ void ConferenceModel::onActiveSpeakerParticipantDevice(
 
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<linphone::Conference> &conference,
                                          const std::shared_ptr<linphone::Participant> &participant) {
-	lDebug() << "onParticipant Added" << participant->getAddress()->asStringUriOnly();
+	lInfo() << "onParticipant Added" << participant->getAddress()->asStringUriOnly();
 	emit participantAdded(participant);
 	emit participantDeviceCountChanged(conference, getParticipantDeviceCount());
 }
 void ConferenceModel::onParticipantRemoved(const std::shared_ptr<linphone::Conference> &conference,
                                            const std::shared_ptr<const linphone::Participant> &participant) {
-	lDebug() << "onParticipant Removed" << participant->getAddress()->asStringUriOnly();
+	lInfo() << "onParticipant Removed" << participant->getAddress()->asStringUriOnly();
 	emit participantRemoved(participant);
 	emit participantDeviceCountChanged(conference, getParticipantDeviceCount());
 }
 void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> &conference,
                                                const std::shared_ptr<linphone::ParticipantDevice> &participantDevice) {
-	lDebug() << "onParticipantDeviceAdded";
-	lDebug() << "Me devices : " << conference->getMe()->getDevices().size();
+	lInfo() << "onParticipantDeviceAdded";
+	lInfo() << "Me devices : " << conference->getMe()->getDevices().size();
 	if (conference->getMe()->getDevices().size() > 1)
 		for (auto d : conference->getMe()->getDevices())
 			lDebug() << "\t--> " << d->getAddress()->asString().c_str();
@@ -222,23 +222,23 @@ void ConferenceModel::onParticipantDeviceStateChanged(const std::shared_ptr<linp
 }
 void ConferenceModel::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::Conference> &conference,
                                                       const std::shared_ptr<const linphone::Participant> &participant) {
-	lDebug() << "onParticipantAdminStatusChanged";
+	lInfo() << "onParticipantAdminStatusChanged";
 	emit participantAdminStatusChanged(participant);
 }
 void ConferenceModel::onParticipantDeviceMediaCapabilityChanged(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-	lDebug() << "onParticipantDeviceMediaCapabilityChanged: "
-	         << (int)participantDevice->getStreamCapability(linphone::StreamType::Video)
-	         << ". Device: " << participantDevice->getAddress()->asString().c_str();
+	lInfo() << "onParticipantDeviceMediaCapabilityChanged: "
+	        << (int)participantDevice->getStreamCapability(linphone::StreamType::Video)
+	        << ". Device: " << participantDevice->getAddress()->asString().c_str();
 	emit participantDeviceMediaCapabilityChanged(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceMediaAvailabilityChanged(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-	lDebug() << "onParticipantDeviceMediaAvailabilityChanged: "
-	         << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video)
-	         << ". Device: " << participantDevice->getAddress()->asString().c_str();
+	lInfo() << "onParticipantDeviceMediaAvailabilityChanged: "
+	        << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video)
+	        << ". Device: " << participantDevice->getAddress()->asString().c_str();
 	emit participantDeviceMediaAvailabilityChanged(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceIsSpeakingChanged(
@@ -254,8 +254,8 @@ void ConferenceModel::onParticipantDeviceScreenSharingChanged(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &device,
     bool enabled) {
-	qDebug() << "onParticipantDeviceScreenSharingChanged: " << device->getAddress()->asString().c_str()
-	         << ". Enabled:" << enabled;
+	lInfo() << log().arg("onParticipantDeviceScreenSharingChanged: ") << device->getAddress()->asString().c_str()
+	        << ". Enabled:" << enabled;
 	emit participantDeviceScreenSharingChanged(device, enabled);
 	if (ToolModel::isLocal(mMonitor, device)) {
 		emit isLocalScreenSharingChanged(enabled);
@@ -265,7 +265,7 @@ void ConferenceModel::onParticipantDeviceScreenSharingChanged(
 
 void ConferenceModel::onStateChanged(const std::shared_ptr<linphone::Conference> &conference,
                                      linphone::Conference::State newState) {
-	lDebug() << log().arg("onStateChanged:") << (int)newState;
+	lInfo() << log().arg("onStateChanged:") << (int)newState;
 	if (newState == linphone::Conference::State::Created) {
 		emit participantDeviceCountChanged(conference, mMonitor->getParticipantDeviceList().size());
 		if (mMonitor->getScreenSharingParticipant()) emit isScreenSharingEnabledChanged(true);
@@ -275,7 +275,7 @@ void ConferenceModel::onStateChanged(const std::shared_ptr<linphone::Conference>
 }
 void ConferenceModel::onSubjectChanged(const std::shared_ptr<linphone::Conference> &conference,
                                        const std::string &subject) {
-	lDebug() << "onSubjectChanged";
+	lInfo() << "onSubjectChanged";
 	emit subjectChanged(subject);
 }
 void ConferenceModel::onAudioDeviceChanged(const std::shared_ptr<linphone::Conference> &conference,
@@ -286,7 +286,7 @@ void ConferenceModel::onAudioDeviceChanged(const std::shared_ptr<linphone::Confe
 void ConferenceModel::onIsScreenSharingEnabledChanged() {
 	auto call = mMonitor->getCall();
 	std::shared_ptr<linphone::CallParams> params = CoreModel::getInstance()->getCore()->createCallParams(call);
-	lDebug() << log().arg("Old Layout=%1").arg((int)params->getConferenceVideoLayout());
+	lInfo() << log().arg("Old Layout=%1").arg((int)params->getConferenceVideoLayout());
 	if (params->getConferenceVideoLayout() == linphone::Conference::Layout::Grid && params->videoEnabled()) {
 		params->setConferenceVideoLayout(linphone::Conference::Layout::ActiveSpeaker);
 	}

@@ -21,6 +21,8 @@
 #ifndef FILE_EXTRACTOR_H_
 #define FILE_EXTRACTOR_H_
 
+#include "tool/AbstractObject.hpp"
+
 #include <QFile>
 
 // =============================================================================
@@ -28,7 +30,7 @@
 class QTimer;
 
 // Supports only bzip file.
-class FileExtractor : public QObject {
+class FileExtractor : public QObject, public AbstractObject {
 
 	Q_OBJECT;
 
@@ -99,6 +101,8 @@ private:
 	qint64 mTotalBytes = 0;
 
 	QTimer *mTimer = nullptr;
+
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif // FILE_EXTRACTOR_H_

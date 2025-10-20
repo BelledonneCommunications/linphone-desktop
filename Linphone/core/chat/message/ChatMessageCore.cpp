@@ -323,16 +323,16 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	mChatMessageModelConnection->makeConnectToModel(
 	    &ChatMessageModel::fileTransferRecv,
 	    [this](const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &content,
-	           const std::shared_ptr<const linphone::Buffer> &buffer) { qDebug() << "transfer received"; });
+	           const std::shared_ptr<const linphone::Buffer> &buffer) { lInfo() << log().arg("transfer received"); });
 	mChatMessageModelConnection->makeConnectToModel(
 	    &ChatMessageModel::fileTransferSend,
 	    [this](const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &content,
-	           size_t offset, size_t size) { qDebug() << "transfer send"; });
+	           size_t offset, size_t size) { lInfo() << log().arg("transfer send"); });
 	mChatMessageModelConnection->makeConnectToModel(
 	    &ChatMessageModel::fileTransferSendChunk,
 	    [this](const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &content,
 	           size_t offset, size_t size,
-	           const std::shared_ptr<linphone::Buffer> &buffer) { qDebug() << "transfer send chunk"; });
+	           const std::shared_ptr<linphone::Buffer> &buffer) { lInfo() << log().arg("transfer send chunk"); });
 	mChatMessageModelConnection->makeConnectToModel(
 	    &ChatMessageModel::participantImdnStateChanged,
 	    [this](const std::shared_ptr<linphone::ChatMessage> &message,

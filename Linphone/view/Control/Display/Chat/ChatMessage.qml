@@ -27,9 +27,9 @@ Control.Control {
     property var msgState: chatMessage ? chatMessage.core.messageState : LinphoneEnums.ChatMessageState.StateIdle
     hoverEnabled: true
     property bool linkHovered: false
-    property real maxWidth: parent?.width || Math.round(300 * DefaultStyle.dp)
+    property real maxWidth: parent?.width || Utils.getSizeWithScreenRatio(300)
 
-    leftPadding: isRemoteMessage ? Math.round(5 * DefaultStyle.dp) : 0
+    leftPadding: isRemoteMessage ? Utils.getSizeWithScreenRatio(5) : 0
 
     signal messageDeletionRequested()
 	signal isFileHoveringChanged(bool isFileHovering)
@@ -63,11 +63,11 @@ Control.Control {
 	}
 
     contentItem: ColumnLayout {
-        spacing: Math.round(5 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(5)
         Text {
             id: fromNameText
             Layout.alignment: Qt.AlignTop
-            Layout.leftMargin: mainItem.isFromChatGroup ? Math.round(9 * DefaultStyle.dp) + avatar.width : 0
+            Layout.leftMargin: mainItem.isFromChatGroup ? Utils.getSizeWithScreenRatio(9) + avatar.width : 0
             visible: mainItem.isFromChatGroup && mainItem.isRemoteMessage && mainItem.isFirstMessage && !replyLayout.visible
             maximumLineCount: 1
             width: implicitWidth
@@ -81,15 +81,15 @@ Control.Control {
         }
         RowLayout {
             id: forwardLayout
-            spacing: Math.round(8 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(8)
             visible: mainItem.isForward
-            Layout.leftMargin: mainItem.isFromChatGroup ? Math.round(9 * DefaultStyle.dp) + avatar.width : 0
+            Layout.leftMargin: mainItem.isFromChatGroup ? Utils.getSizeWithScreenRatio(9) + avatar.width : 0
             Layout.alignment: mainItem.isRemoteMessage ? Qt.AlignLeft: Qt.AlignRight
             EffectImage {
                 imageSource: AppIcons.forward
                 colorizationColor: DefaultStyle.main2_500_main
-                Layout.preferredWidth: Math.round(12 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(12 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(12)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(12)
             }
             Text {
                 //: Forwarded
@@ -104,20 +104,20 @@ Control.Control {
         RowLayout {
             id: replyLayout
             visible: mainItem.isReply
-            Layout.leftMargin: mainItem.isFromChatGroup ? Math.round(9 * DefaultStyle.dp) + avatar.width : 0
+            Layout.leftMargin: mainItem.isFromChatGroup ? Utils.getSizeWithScreenRatio(9) + avatar.width : 0
             layoutDirection: mainItem.isRemoteMessage ? Qt.LeftToRight : Qt.RightToLeft
             ColumnLayout {
-                spacing: Math.round(5 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(5)
                 RowLayout {
                     id: replyLabel
-                    spacing: Math.round(8 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(8)
                     Layout.fillWidth: false
                     Layout.alignment: mainItem.isRemoteMessage ? Qt.AlignLeft : Qt.AlignRight
                     EffectImage {
                         imageSource: AppIcons.reply
                         colorizationColor: DefaultStyle.main2_500_main
-                        Layout.preferredWidth: Math.round(12 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(12 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(12)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(12)
                     }
                     Text {
                         Layout.alignment: mainItem.isRemoteMessage ? Qt.AlignLeft: Qt.AlignRight
@@ -143,16 +143,16 @@ Control.Control {
                     id: replyMessage
                     visible: mainItem.replyText !== ""
                     Layout.alignment: mainItem.isRemoteMessage ? Qt.AlignLeft : Qt.AlignRight
-                    spacing: Math.round(5 * DefaultStyle.dp)
-                    topPadding: Math.round(12 * DefaultStyle.dp)
-                    bottomPadding: Math.round(19 * DefaultStyle.dp)
-                    leftPadding: Math.round(18 * DefaultStyle.dp)
-                    rightPadding: Math.round(18 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(5)
+                    topPadding: Utils.getSizeWithScreenRatio(12)
+                    bottomPadding: Utils.getSizeWithScreenRatio(19)
+                    leftPadding: Utils.getSizeWithScreenRatio(18)
+                    rightPadding: Utils.getSizeWithScreenRatio(18)
                     Layout.preferredWidth: Math.min(implicitWidth, mainItem.maxWidth - avatar.implicitWidth)
                     background: Rectangle {
                         anchors.fill: parent
                         color: DefaultStyle.grey_200
-                        radius: Math.round(16 * DefaultStyle.dp)
+                        radius: Utils.getSizeWithScreenRatio(16)
                     }
                     contentItem: Text {
                         Layout.fillWidth: true
@@ -172,30 +172,30 @@ Control.Control {
             z: replyLayout.z + 1
             spacing: 0
             layoutDirection: mainItem.isRemoteMessage ? Qt.LeftToRight : Qt.RightToLeft
-            Layout.topMargin: replyMessage.visible ? Math.round(-20 * DefaultStyle.dp) : 0
+            Layout.topMargin: replyMessage.visible ? Utils.getSizeWithScreenRatio(-20) : 0
 
             Avatar {
                 id: avatar
                 visible: mainItem.isFromChatGroup && mainItem.isRemoteMessage
-                Layout.preferredWidth: mainItem.isRemoteMessage ? 26 * DefaultStyle.dp : 0
-                Layout.preferredHeight: 26 * DefaultStyle.dp
+                Layout.preferredWidth: mainItem.isRemoteMessage ? 26 : 0
+                Layout.preferredHeight: 26
                 Layout.alignment: Qt.AlignTop
                 _address: chatMessage ? chatMessage.core.fromAddress : ""
             }
             Item {
                 id: bubbleContainer
-                // Layout.topMargin: isFirstMessage ? 16 * DefaultStyle.dp : 0
-                Layout.leftMargin: mainItem.isFromChatGroup ? Math.round(9 * DefaultStyle.dp) : 0
+                // Layout.topMargin: isFirstMessage ? 16 : 0
+                Layout.leftMargin: mainItem.isFromChatGroup ? Utils.getSizeWithScreenRatio(9) : 0
                 Layout.preferredHeight: childrenRect.height
                 Layout.preferredWidth: childrenRect.width
 
                 Control.Control {
                     id: chatBubble
-                    spacing: Math.round(2 * DefaultStyle.dp)
-                    topPadding: Math.round(12 * DefaultStyle.dp)
-                    bottomPadding: Math.round(6 * DefaultStyle.dp)
-                    leftPadding: Math.round(18 * DefaultStyle.dp)
-                    rightPadding: Math.round(18 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(2)
+                    topPadding: Utils.getSizeWithScreenRatio(12)
+                    bottomPadding: Utils.getSizeWithScreenRatio(6)
+                    leftPadding: Utils.getSizeWithScreenRatio(18)
+                    rightPadding: Utils.getSizeWithScreenRatio(18)
                     width: Math.min(implicitWidth, mainItem.maxWidth - avatar.implicitWidth)
 
                     MouseArea { // Default mouse area. Each sub bubble can control the mouse and pass on to the main mouse handler. Child bubble mouse area must cover the entire bubble.
@@ -211,31 +211,31 @@ Control.Control {
                         Rectangle {
                             anchors.fill: parent
                             color: mainItem.backgroundColor
-                            radius: Math.round(16 * DefaultStyle.dp)
+                            radius: Utils.getSizeWithScreenRatio(16)
                         }
                         Rectangle {
                             visible: mainItem.isFirstMessage && mainItem.isRemoteMessage
                             anchors.top: parent.top
                             anchors.left: parent.left
-                            width: Math.round(parent.width / 4)
-                            height: Math.round(parent.height / 4)
+                            width: Utils.getSizeWithScreenRatio(parent.width / 4)
+                            height: Utils.getSizeWithScreenRatio(parent.height / 4)
                             color: mainItem.backgroundColor
                         }
                         Rectangle {
                             visible: mainItem.isFirstMessage && !mainItem.isRemoteMessage
                             anchors.bottom: parent.bottom
                             anchors.right: parent.right
-                            width: Math.round(parent.width / 4)
-                            height: Math.round(parent.height / 4)
+                            width: Utils.getSizeWithScreenRatio(parent.width / 4)
+                            height: Utils.getSizeWithScreenRatio(parent.height / 4)
                             color: mainItem.backgroundColor
                         }
                         Rectangle {
                             id: highlightRectangle
                             anchors.fill: parent
-                            radius: Math.round(16 * DefaultStyle.dp)
+                            radius: Utils.getSizeWithScreenRatio(16)
                             color: Qt.lighter(mainItem.backgroundColor, 2)
                             border.color: mainItem.backgroundColor
-                            border.width: Math.round(2 * DefaultStyle.dp)
+                            border.width: Utils.getSizeWithScreenRatio(2)
                             opacity: 0
                             Behavior on opacity {
                                 NumberAnimation {
@@ -246,7 +246,7 @@ Control.Control {
                         }
                     }
                     contentItem: ColumnLayout {
-                        spacing: Math.round(5 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(5)
                         ChatMessageContent {
                             id: chatBubbleContent
                             Layout.fillWidth: true
@@ -263,9 +263,9 @@ Control.Control {
                             Layout.preferredHeight: childrenRect.height
                             Layout.alignment: mainItem.isRemoteMessage ? Qt.AlignLeft : Qt.AlignRight
                             layoutDirection: mainItem.isRemoteMessage ? Qt.RightToLeft : Qt.LeftToRight
-                            spacing: Math.round(7 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(7)
                             RowLayout {
-                                spacing: Math.round(3 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(3)
                                 Layout.preferredHeight: childrenRect.height
                                 Text {
                                     id: ephemeralTime
@@ -281,12 +281,12 @@ Control.Control {
                                     visible: mainItem.chatMessage.core.isEphemeral
                                     imageSource: AppIcons.clockCountDown
                                     colorizationColor: DefaultStyle.main2_500_main
-                                    Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
-                                    Layout.preferredHeight: visible ? 14 * DefaultStyle.dp : 0
+                                    Layout.preferredWidth: visible ? 14 : 0
+                                    Layout.preferredHeight: visible ? 14 : 0
                                 }
                             }
                             RowLayout {
-                                spacing: mainItem.isRemoteMessage ? 0 : Math.round(5 * DefaultStyle.dp)
+                                spacing: mainItem.isRemoteMessage ? 0 : Utils.getSizeWithScreenRatio(5)
                                 Layout.alignment: Qt.AlignVCenter
                                 Layout.preferredHeight: childrenRect.height
                                 Text {
@@ -301,8 +301,8 @@ Control.Control {
                                 EffectImage {
                                     // Imdn status icon
                                     visible: !mainItem.isRemoteMessage
-                                    Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
-                                    Layout.preferredHeight: visible ? 14 * DefaultStyle.dp : 0
+                                    Layout.preferredWidth: visible ? 14 : 0
+                                    Layout.preferredHeight: visible ? 14 : 0
                                     Layout.alignment: Qt.AlignVCenter
                                     colorizationColor: DefaultStyle.main1_500_main
                                     imageSource: mainItem.msgState === LinphoneEnums.ChatMessageState.StateDelivered
@@ -318,8 +318,8 @@ Control.Control {
                                                         : ""
                                     BusyIndicator {
                                         anchors.fill: parent
-                                        Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
-                                        Layout.preferredHeight: visible ? 14 * DefaultStyle.dp : 0
+                                        Layout.preferredWidth: visible ? 14 : 0
+                                        Layout.preferredHeight: visible ? 14 : 0
                                         visible: mainItem.msgState === LinphoneEnums.ChatMessageState.StateIdle
                                             || mainItem.msgState === LinphoneEnums.ChatMessageState.StateInProgress
                                             || mainItem.msgState === LinphoneEnums.ChatMessageState.StateFileTransferInProgress
@@ -346,30 +346,30 @@ Control.Control {
                         value: chatBubble.right
                     }
                     onClicked: mainItem.showReactionsForMessageRequested()
-                    anchors.topMargin: Math.round(-6 * DefaultStyle.dp)
-                    topPadding: Math.round(8 * DefaultStyle.dp)
-                    bottomPadding: Math.round(8 * DefaultStyle.dp)
-                    leftPadding: Math.round(8 * DefaultStyle.dp)
-                    rightPadding: Math.round(8 * DefaultStyle.dp)
+                    anchors.topMargin: Utils.getSizeWithScreenRatio(-6)
+                    topPadding: Utils.getSizeWithScreenRatio(8)
+                    bottomPadding: Utils.getSizeWithScreenRatio(8)
+                    leftPadding: Utils.getSizeWithScreenRatio(8)
+                    rightPadding: Utils.getSizeWithScreenRatio(8)
                     background: Rectangle {
                         color: DefaultStyle.grey_100
                         border.color: DefaultStyle.grey_0
-                        border.width: Math.round(2 * DefaultStyle.dp)
-                        radius: Math.round(20 * DefaultStyle.dp)
+                        border.width: Utils.getSizeWithScreenRatio(2)
+                        radius: Utils.getSizeWithScreenRatio(20)
                     }
                     contentItem: RowLayout {
-                        spacing: Math.round(6 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(6)
                         Repeater {
                             id: reactionList
                             model: mainItem.chatMessage ? mainItem.chatMessage.core.reactionsSingleton : []
                             delegate: RowLayout {
-                                spacing: Math.round(3 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(3)
                                 Text {
                                     text: UtilsCpp.encodeEmojiToQmlRichFormat(modelData.body)
                                     textFormat: Text.RichText
                                     font {
-                                        pixelSize: Math.round(15 * DefaultStyle.dp)
-                                        weight: Math.round(400 * DefaultStyle.dp)
+                                        pixelSize: Utils.getSizeWithScreenRatio(15)
+                                        weight: Utils.getSizeWithScreenRatio(400)
                                     }
                                 }
                                 Text {
@@ -389,11 +389,11 @@ Control.Control {
             RowLayout {
                 id: actionsLayout
                 visible: mainItem.hovered || optionsMenu.hovered || optionsMenu.popup.opened || emojiButton.hovered || emojiButton.popup.opened
-                Layout.leftMargin: Math.round(8 * DefaultStyle.dp)
-                Layout.rightMargin: Math.round(8 * DefaultStyle.dp)
+                Layout.leftMargin: Utils.getSizeWithScreenRatio(8)
+                Layout.rightMargin: Utils.getSizeWithScreenRatio(8)
                 Layout.alignment: Qt.AlignVCenter
                 // Layout.fillWidth: true
-                spacing: Math.round(7 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(7)
                 layoutDirection: mainItem.isRemoteMessage ? Qt.LeftToRight : Qt.RightToLeft
                 PopupButton {
                     id: optionsMenu
@@ -406,7 +406,7 @@ Control.Control {
                             text: qsTr("chat_message_reception_info")
                             icon.source: AppIcons.chatTeardropText
                             Layout.fillWidth: true
-                            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
                             onClicked: {
                                 mainItem.showImdnStatusForMessageRequested()
                                 optionsMenu.close()
@@ -418,7 +418,7 @@ Control.Control {
                             text: qsTr("chat_message_reply")
                             icon.source: AppIcons.reply
                             Layout.fillWidth: true
-                            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
                             onClicked: {
                                 mainItem.replyToMessageRequested()
                                 optionsMenu.close()
@@ -432,9 +432,9 @@ Control.Control {
                                 //: "Copy"
                                 : qsTr("chat_message_copy")
                             icon.source: AppIcons.copy
-                            // spacing: Math.round(10 * DefaultStyle.dp)
+                            // spacing: Utils.getSizeWithScreenRatio(10)
                             Layout.fillWidth: true
-                            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
                             onClicked: {
                                 var success = UtilsCpp.copyToClipboard(chatBubbleContent.selectedText != "" ? chatBubbleContent.selectedText : mainItem.chatMessage.core.text)
                                 //: Copied
@@ -450,7 +450,7 @@ Control.Control {
                             text: qsTr("chat_message_forward")
                             icon.source: AppIcons.forward
                             Layout.fillWidth: true
-                            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
                             onClicked: {
                                 mainItem.forwardMessageRequested()
                                 optionsMenu.close()
@@ -458,7 +458,7 @@ Control.Control {
                         }
                         Rectangle {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: Math.min(1, Math.round(1 * DefaultStyle.dp))
+                            Layout.preferredHeight: Math.min(1, Utils.getSizeWithScreenRatio(1))
                             color: DefaultStyle.main2_400
                         }
                         IconLabelButton {
@@ -466,9 +466,9 @@ Control.Control {
                             //: "Delete"
                             text: qsTr("chat_message_delete")
                             icon.source: AppIcons.trashCan
-                            // spacing: Math.round(10 * DefaultStyle.dp)
+                            // spacing: Utils.getSizeWithScreenRatio(10)
                             Layout.fillWidth: true
-                            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
                             onClicked: {
                                 mainItem.messageDeletionRequested()
                                 optionsMenu.close()
@@ -504,8 +504,8 @@ Control.Control {
                         PopupButton {
                             id: emojiPickerButton
                             icon.source: AppIcons.plusCircle
-                            popup.width: Math.round(393 * DefaultStyle.dp)
-                            popup.height: Math.round(291 * DefaultStyle.dp)
+                            popup.width: Utils.getSizeWithScreenRatio(393)
+                            popup.height: Utils.getSizeWithScreenRatio(291)
                             popup.contentItem: EmojiPicker {
                                 id: emojiPicker
                                 onEmojiClicked: (emoji) => {

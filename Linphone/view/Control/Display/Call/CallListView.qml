@@ -4,6 +4,7 @@ import QtQuick.Effects
 
 import Linphone
 import QtQml
+import SettingsCpp
 import UtilsCpp 1.0
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
@@ -29,7 +30,11 @@ ListView {
 		width: mainItem.width
         height: Math.round(45 * DefaultStyle.dp)
 		property var remoteNameObj: UtilsCpp.getDisplayName(modelData.core.remoteAddress)
-		property var callName : modelData.core.isConference ? modelData.core.conference.core.subject : remoteNameObj ? remoteNameObj.value : ""
+		property var callName : (modelData && !SettingsCpp.disableMeetingsFeature && modelData.core.isConference) 
+			? modelData.core.conference.core.subject 
+			: remoteNameObj
+				? remoteNameObj.value 
+				: ""
 		Avatar {
 			id: delegateAvatar
             Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
@@ -43,7 +48,6 @@ ListView {
 			spacing: 0
 			Text {
 				id: delegateName
-				property var remoteNameObj: UtilsCpp.getDisplayName(modelData.core.remoteAddress)
 				text: callInformationItem.callName
                 font.pixelSize: Math.round(14 * DefaultStyle.dp)
 				Layout.fillWidth: true

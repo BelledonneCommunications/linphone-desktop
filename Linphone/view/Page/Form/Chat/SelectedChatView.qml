@@ -295,40 +295,6 @@ FocusScope {
                                 contentLoader.panelType = SelectedChatView.PanelType.ForwardToList
                                 detailsPanel.visible = true
                             }
-
-                            Popup {
-                                id: emojiPickerPopup
-                                y: Math.round(chatMessagesListView.y + chatMessagesListView.height - height - 8*DefaultStyle.dp)
-                                x: Math.round(chatMessagesListView.x + 8*DefaultStyle.dp)
-                                width: Math.round(393 * DefaultStyle.dp)
-                                height: Math.round(291 * DefaultStyle.dp)
-                                visible: false
-                                modal: true
-                                dim: false
-                                closePolicy: Popup.CloseOnReleaseOutside
-                                padding: 10 * DefaultStyle.dp
-                                background: Item {
-                                    anchors.fill: parent
-                                    Rectangle {
-                                        id: buttonBackground
-                                        anchors.fill: parent
-                                        color: DefaultStyle.grey_0
-                                        radius: Math.round(20 * DefaultStyle.dp)
-                                    }
-                                    MultiEffect {
-                                        anchors.fill: buttonBackground
-                                        source: buttonBackground
-                                        shadowEnabled: true
-                                        shadowColor: DefaultStyle.grey_1000
-                                        shadowBlur: 0.1
-                                        shadowOpacity: 0.5
-                                    }
-                                }
-                                contentItem: EmojiPicker {
-                                    id: emojiPicker
-                                    editor: messageSender.textArea
-                                }
-                            }
                         }
                         ScrollBar {
                             id: scrollbar
@@ -512,7 +478,6 @@ FocusScope {
                     Control.SplitView.minimumHeight: mainItem.chat?.core.isReadOnly ? 0 : Math.round(79 * DefaultStyle.dp)
                     chat: mainItem.chat
                     selectedFilesCount: contents.count
-                    emojiPicker: emojiPickerPopup
                     callOngoing: mainItem.call != null
                     onChatChanged: {
                         if (chat) messageSender.text = mainItem.chat.core.sendingText

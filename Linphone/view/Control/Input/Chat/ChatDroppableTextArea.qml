@@ -16,7 +16,6 @@ Control.Control {
 	property var textArea
 	property int selectedFilesCount: 0
 	// property alias cursorPosition: sendingTextArea.cursorPosition
-	property Popup emojiPicker
 	
 	property bool dropEnabled: true
 	property bool isEphemeral : false
@@ -77,14 +76,14 @@ Control.Control {
 			id: textAreaComp
 			RowLayout {
 				spacing: Math.round(16 * DefaultStyle.dp)
-				BigButton {
+				PopupButton {
 					id: emojiPickerButton
 					style: ButtonStyle.noBackground
-					checked: mainItem.emojiPicker?.visible || false
 					icon.source: checked ? AppIcons.closeX : AppIcons.smiley
-					onPressed: {
-						if (!checked) mainItem.emojiPicker.open()
-						else mainItem.emojiPicker.close()
+					popup.width: Math.round(393 * DefaultStyle.dp)
+					popup.height: Math.round(291 * DefaultStyle.dp)
+					popup.contentItem: EmojiPicker {
+						editor: sendingTextArea
 					}
 				}
 				BigButton {
@@ -121,7 +120,9 @@ Control.Control {
 							id: sendingAreaFlickable
 							Layout.preferredHeight: Math.min(Math.round(100 * DefaultStyle.dp), contentHeight)
 							Layout.fillHeight: true
+							width: sendingControl.width - sendingControl.leftPadding - sendingControl.rightPadding
 							Layout.fillWidth: true
+							Layout.alignment: Qt.AlignCenter
 							contentHeight: sendingTextArea.contentHeight
 							contentWidth: width
 
@@ -138,8 +139,9 @@ Control.Control {
 
 							TextArea {
 								id: sendingTextArea
+							// RectangleTest{anchors.fill: parent}
 								width: sendingAreaFlickable.width
-								height: sendingAreaFlickable.height
+								height: implicitHeight// sendingAreaFlickable.height
 								textFormat: TextEdit.AutoText
 								onTextChanged: {
 									mainItem.text = text
@@ -180,6 +182,7 @@ Control.Control {
 						RowLayout {
 							id: stackButton
 							spacing: 0
+							Layout.preferredHeight: Math.max(recordButton.height, sendMessageButton.height)
 							BigButton {
 								id: recordButton
 								ToolTip.visible: !enabled && hovered
@@ -196,6 +199,7 @@ Control.Control {
 							}
 							BigButton {
 								id: sendMessageButton
+								Layout.preferredHeight: height
 								visible: sendingTextArea.text.length !== 0 || mainItem.selectedFilesCount > 0
 								style: ButtonStyle.noBackgroundOrange
 								icon.source: AppIcons.paperPlaneRight

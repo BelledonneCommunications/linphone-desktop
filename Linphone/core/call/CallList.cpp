@@ -22,6 +22,7 @@
 #include "CallCore.hpp"
 #include "CallGui.hpp"
 #include "core/App.hpp"
+#include "model/tool/ToolModel.hpp"
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
 
@@ -96,34 +97,26 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 			bool enablingVideo = false;
 			if (currentCall) enablingVideo = currentCall->getCurrentParams()->videoEnabled();
 			if (!conference) {
-				auto parameters = core->createConferenceParams(conference);
 				auto audioVideoConfFactoryUri =
 				    core->getDefaultAccount()->getParams()->getAudioVideoConferenceFactoryAddress();
-				if (audioVideoConfFactoryUri) {
-					parameters->setConferenceFactoryAddress(audioVideoConfFactoryUri);
-					parameters->setSubject("Meeting");
+				QString subject = audioVideoConfFactoryUri
+				                      //: Remote group call
+				                      ? tr("remote_group_call")
+				                      //: "Local group call"
+				                      : tr("local_group_call");
+				auto conference = ToolModel::createConference(subject, nullptr);
+				if (!conference) {
+					lWarning() << log().arg("Failed to merge calls");
+					mModelConnection->invokeToCore([] {
+						Utils::showInformationPopup(tr("info_popup_error_title"),
+						                            //: Failed to merge calls !
+						                            tr("info_popup_merge_calls_failed_message"), false);
+					});
+					return;
 				} else {
-					parameters->setSubject("Local meeting");
-				}
-				parameters->enableVideo(enablingVideo);
-				conference = core->createConferenceWithParams(parameters);
-			}
-
-			std::list<std::shared_ptr<linphone::Address>> allLinphoneAddresses;
-			std::list<std::shared_ptr<linphone::Address>> newCalls;
-			std::list<std::shared_ptr<linphone::Call>> runningCallsToAdd;
-
-			for (auto call : currentCalls) {
-				if (!call->getConference()) {
-					runningCallsToAdd.push_back(call);
+					conference->addParticipants(currentCalls);
 				}
 			}
-
-			// 1) Add running calls
-			if (runningCallsToAdd.size() > 0) {
-				conference->addParticipants(runningCallsToAdd);
-			}
-
 			// emit lUpdate();
 		});
 	});

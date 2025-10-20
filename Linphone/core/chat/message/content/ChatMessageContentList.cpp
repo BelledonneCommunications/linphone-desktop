@@ -139,7 +139,7 @@ void ChatMessageContentList::addFiles(const QStringList &paths) {
 			qint64 fileSize = file.size();
 			if (fileSize > Constants::FileSizeLimit) {
 				++nbTooBig;
-				qWarning() << QString("Unable to send file. (Size limit=%1)").arg(Constants::FileSizeLimit);
+				lWarning() << log().arg("Unable to send file. (Size limit=%1)").arg(Constants::FileSizeLimit);
 				continue;
 			}
 			auto name = file.fileName().toStdString();
@@ -149,7 +149,7 @@ void ChatMessageContentList::addFiles(const QStringList &paths) {
 			if (mimeType.length() != 2) {
 				++nbMimeError;
 				lastMimeError = path;
-				qWarning() << QString("Unable to get supported mime type for: `%1`.").arg(path);
+				lWarning() << log().arg("Unable to get supported mime type for: `%1`.").arg(path);
 				continue;
 			}
 			content->setType(Utils::appStringToCoreString(mimeType[0]));

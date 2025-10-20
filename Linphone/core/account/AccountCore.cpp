@@ -60,7 +60,10 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mRegisterEnabled = params->registerEnabled();
 	mMwiServerAddress =
 	    params->getMwiServerAddress() ? Utils::coreStringToAppString(params->getMwiServerAddress()->asString()) : "";
-	mTransports << "UDP" << "TCP" << "TLS" << "DTLS";
+	mTransports << "UDP"
+	            << "TCP"
+	            << "TLS"
+	            << "DTLS";
 	mTransport = LinphoneEnums::toString(LinphoneEnums::fromLinphone(params->getTransport()));
 	mRegistrarUri =
 	    params->getServerAddress() ? Utils::coreStringToAppString(params->getServerAddress()->asString()) : "";
@@ -384,7 +387,7 @@ void AccountCore::onRegistrationStateChanged(const std::shared_ptr<linphone::Acc
                                              linphone::RegistrationState state,
                                              const std::string &message) {
 	mRegistrationState = LinphoneEnums::fromLinphone(state);
-	lDebug() << log().arg(Q_FUNC_INFO) << mRegistrationState;
+	qDebug() << log().arg(Q_FUNC_INFO) << mRegistrationState;
 	emit registrationStateChanged(Utils::coreStringToAppString(message));
 }
 

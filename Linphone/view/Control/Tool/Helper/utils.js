@@ -874,5 +874,7 @@ function getSizeWithScreenRatio(size){
   if (size == 0) {
 		return size;
 	}
-	return Math.max(Math.round(size * Linphone.DefaultStyle.dp), 1);
+	return size > 0 
+    ? Math.max(Math.round(size * Linphone.DefaultStyle.dp), 1)
+    : Math.min(Math.round(size * Linphone.DefaultStyle.dp), -1);
 }

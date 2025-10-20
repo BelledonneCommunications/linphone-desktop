@@ -29,6 +29,8 @@
 #include "tool/Constants.hpp"
 #include "tool/Utils.hpp"
 
+DEFINE_ABSTRACT_OBJECT(FileExtractor)
+
 // =============================================================================
 
 using namespace std;
@@ -41,7 +43,7 @@ FileExtractor::~FileExtractor() {
 
 void FileExtractor::extract() {
 	if (mExtracting) {
-		qWarning() << "Unable to extract file. Already extracting!";
+		lWarning() << log().arg("Unable to extract file. Already extracting!");
 		return;
 	}
 	setExtracting(true);
@@ -117,7 +119,7 @@ QString FileExtractor::getFile() const {
 
 void FileExtractor::setFile(const QString &file) {
 	if (mExtracting) {
-		qWarning() << QStringLiteral("Unable to set file, a file is extracting.");
+		lWarning() << log().arg("Unable to set file, a file is extracting.");
 		return;
 	}
 	if (mFile != file) {
@@ -132,7 +134,7 @@ QString FileExtractor::getExtractFolder() const {
 
 void FileExtractor::setExtractFolder(const QString &extractFolder) {
 	if (mExtracting) {
-		qWarning() << QStringLiteral("Unable to set extract folder, a file is extracting.");
+		lWarning() << log().arg("Unable to set extract folder, a file is extracting.");
 		return;
 	}
 	if (mExtractFolder != extractFolder) {
