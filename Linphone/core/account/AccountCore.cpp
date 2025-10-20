@@ -256,6 +256,14 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lResetMissedCalls, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { mAccountModel->resetMissedCallsCount(); });
 	});
+	mAccountModelConnection->makeConnectToCore(&AccountCore::lResetUnreadMessages, [this]() {
+		mAccountModelConnection->invokeToModel([this]() {
+			auto chatRooms = mAccountModel->getChatRooms();
+			for (auto const &chatRoom : chatRooms) {
+				chatRoom->markAsRead();
+			}
+		});
+	});
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lRefreshNotifications, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { mAccountModel->refreshUnreadNotifications(); });
 	});

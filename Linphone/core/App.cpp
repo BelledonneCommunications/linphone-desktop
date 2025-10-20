@@ -22,7 +22,6 @@
 
 #include "App.hpp"
 
-#include <QAction>
 #include <QCoreApplication>
 #include <QDirIterator>
 #include <QFileSelector>
@@ -631,12 +630,15 @@ void App::initCore() {
 					        }
 					        auto window = qobject_cast<QQuickWindow *>(obj);
 					        setMainWindow(window);
-#ifndef __APPLE__
+#if defined(__APPLE__)
+					        setMacOSDockActions();
+#else
 					        // Enable TrayIconSystem.
 					        if (!QSystemTrayIcon::isSystemTrayAvailable())
 						        qWarning("System tray not found on this system.");
 					        else setSysTrayIcon();
-#endif // ifndef __APPLE__
+#endif // if defined(__APPLE__)
+
 					        static bool firstOpen = true;
 					        if (!firstOpen || !mParser->isSet("minimized")) {
 						        lDebug() << log().arg("Openning window");
@@ -1310,6 +1312,7 @@ bool App::event(QEvent *event) {
 //-----------------------------------------------------------
 
 void App::setSysTrayIcon() {
+	qDebug() << "setSysTrayIcon";
 	QQuickWindow *root = getMainWindow();
 	QSystemTrayIcon *systemTrayIcon =
 	    (mSystemTrayIcon ? mSystemTrayIcon
@@ -1341,6 +1344,9 @@ void App::setSysTrayIcon() {
 	QAction *quitAction = new QAction(tr("quit_action"), root);
 	root->connect(quitAction, &QAction::triggered, this, &App::quit);
 
+	//: "Mark all as read"
+	QAction *markAllReadAction = createMarkAsReadAction(root);
+
 	// trayIcon: Left click actions.
 	QMenu *menu = mSystemTrayIcon ? mSystemTrayIcon->contextMenu() : new QMenu();
 	menu->clear();
@@ -1350,6 +1356,7 @@ void App::setSysTrayIcon() {
 		menu->addAction(restoreAction);
 		menu->addSeparator();
 	}
+	menu->addAction(markAllReadAction);
 	menu->addAction(quitAction);
 	if (!mSystemTrayIcon) {
 		systemTrayIcon->setContextMenu(menu); // This is a Qt bug. We cannot call setContextMenu more than once. So
@@ -1368,6 +1375,24 @@ void App::setSysTrayIcon() {
 	if (!mSystemTrayIcon) mSystemTrayIcon = systemTrayIcon;
 	if (!QSystemTrayIcon::isSystemTrayAvailable()) qInfo() << "System tray is not available";
 }
+
+//-----------------------------------------------------------
+//		MacOS dock menu actions
+//-----------------------------------------------------------
+
+#ifdef __APPLE__
+/**
+ * Set more actions to the MacOS Dock actions
+ * WARNING: call this function only on macOS
+ */
+void App::setMacOSDockActions() {
+	QMenu *menu = new QMenu();
+	QQuickWindow *root = getMainWindow();
+	QAction *markAllReadAction = createMarkAsReadAction(root);
+	menu->addAction(markAllReadAction);
+	menu->setAsDockMenu();
+}
+#endif
 
 //-----------------------------------------------------------
 //		Locale TODO - App only in French now.
@@ -1417,4 +1442,15 @@ float App::getScreenRatio() const {
 
 void App::setScreenRatio(float ratio) {
 	mScreenRatio = ratio;
+}
+
+QAction *App::createMarkAsReadAction(QQuickWindow *window) {
+	QAction *markAllReadAction = new QAction(tr("mark_all_read_action"), window);
+	window->connect(markAllReadAction, &QAction::triggered, this, [this] {
+		lDebug() << "Mark all as read";
+		emit mAccountList->lResetMissedCalls();
+		emit mAccountList->lResetUnreadMessages();
+		mCoreModelConnection->invokeToModel([this]() { CoreModel::getInstance()->unreadNotificationsChanged(); });
+	});
+	return markAllReadAction;
 }

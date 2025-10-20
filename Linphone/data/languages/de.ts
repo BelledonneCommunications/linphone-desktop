@@ -634,97 +634,103 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../../core/App.cpp" line="351"/>
+        <location filename="../../core/App.cpp" line="357"/>
         <source>remote_provisioning_dialog</source>
         <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
         <translation>Möchten Sie die Remote-Konfiguration von dieser Adresse herunterladen und anwenden?</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="388"/>
-        <location filename="../../core/App.cpp" line="641"/>
+        <location filename="../../core/App.cpp" line="394"/>
+        <location filename="../../core/App.cpp" line="648"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="389"/>
-        <location filename="../../core/App.cpp" line="643"/>
+        <location filename="../../core/App.cpp" line="395"/>
+        <location filename="../../core/App.cpp" line="650"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="637"/>
+        <location filename="../../core/App.cpp" line="644"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="902"/>
+        <location filename="../../core/App.cpp" line="916"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>Ein kostenloses Open-Source SIP Video-Telefon.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="904"/>
+        <location filename="../../core/App.cpp" line="918"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Kommandozeilen-Befehl an die Anwendung schicken</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="908"/>
+        <location filename="../../core/App.cpp" line="922"/>
         <source>command_line_option_show_help</source>
         <translation>Zeige Hilfe</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="913"/>
+        <location filename="../../core/App.cpp" line="927"/>
         <source>command_line_option_show_app_version</source>
         <translation type="unfinished">Zeige App-Version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="921"/>
+        <location filename="../../core/App.cpp" line="935"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Abzurufende Linphone-Konfigurationsdatei angeben. Sie wird mit der aktuellen Konfiguration zusammengeführt.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="923"/>
+        <location filename="../../core/App.cpp" line="937"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, Pfad oder Datei</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="928"/>
+        <location filename="../../core/App.cpp" line="942"/>
         <source>command_line_option_minimized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="931"/>
+        <location filename="../../core/App.cpp" line="945"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Debug-Informationen auf der Standardausgabe ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="934"/>
+        <location filename="../../core/App.cpp" line="948"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Nur Anwendungs-Logs ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1304"/>
+        <location filename="../../core/App.cpp" line="1318"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Ausblenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1304"/>
+        <location filename="../../core/App.cpp" line="1318"/>
         <source>show_action</source>
         <translation>Zeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1319"/>
+        <location filename="../../core/App.cpp" line="1333"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Beenden</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1337"/>
+        <source>mark_all_read_action</source>
+        <extracomment>&quot;Mark all as read&quot;</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2830,13 +2836,13 @@ Error</extracomment>
 <context>
     <name>ContactListView</name>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="179"/>
+        <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="183"/>
         <source>shrink_accessible_name</source>
         <extracomment>Shrink %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="181"/>
+        <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="185"/>
         <source>expand_accessible_name</source>
         <extracomment>Expand %1</extracomment>
         <translation type="unfinished"></translation>
@@ -2980,26 +2986,26 @@ Error</extracomment>
         <translation>Zurzeit keine Kontakte</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="346"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="345"/>
         <source>more_info_accessible_name</source>
         <extracomment>More info %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="362"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="361"/>
         <source>expand_accessible_name</source>
         <extracomment>Expand %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="360"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="359"/>
         <source>shrink_accessible_name</source>
         <extracomment>Shrink %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="382"/>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="738"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="381"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="737"/>
         <source>contact_details_edit</source>
         <extracomment>Edit
 ----------
@@ -3007,19 +3013,19 @@ Error</extracomment>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="396"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="395"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Anrufen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="407"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="406"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
         <translation>Nachricht</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="421"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="420"/>
         <source>contact_video_call_action</source>
         <extracomment>&quot;Appel vidéo&quot;</extracomment>
         <translation>Videoanruf</translation>
@@ -3045,133 +3051,133 @@ Error</extracomment>
         <translation type="vanished">Offline</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="469"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="468"/>
         <source>contact_details_numbers_and_addresses_title</source>
         <extracomment>&quot;Coordonnées&quot;</extracomment>
         <translation>Kontaktinformationen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="525"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="524"/>
         <source>call_adress_accessible_name</source>
         <extracomment>Call address %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="558"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="557"/>
         <source>contact_details_company_name</source>
         <extracomment>&quot;Société :&quot;</extracomment>
         <translation>Unternehmen :</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="579"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="578"/>
         <source>contact_details_job_title</source>
         <extracomment>&quot;Poste :&quot;</extracomment>
         <translation>Beruf :</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="601"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="600"/>
         <source>contact_details_medias_title</source>
         <extracomment>&quot;Medias&quot;</extracomment>
         <translation>Medien</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="614"/>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="632"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="613"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="631"/>
         <source>contact_details_medias_subtitle</source>
         <extracomment>&quot;Afficher les medias partagés&quot;</extracomment>
         <translation>Geteilte Medien anzeigen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="638"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="637"/>
         <source>contact_details_trust_title</source>
         <extracomment>&quot;Confiance&quot;</extracomment>
         <translation>Vertrauen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="645"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="644"/>
         <source>contact_dialog_devices_trust_title</source>
         <extracomment>&quot;Niveau de confiance - Appareils vérifiés&quot;</extracomment>
         <translation>Vertrauenslevel - Verifizierte Geräte</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="654"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="653"/>
         <source>contact_details_no_device_found</source>
         <extracomment>&quot;Aucun appareil&quot;</extracomment>
         <translation>Kein Gerät</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="679"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="678"/>
         <source>contact_device_without_name</source>
         <extracomment>&quot;Appareil inconnu&quot;</extracomment>
         <translation>Unbekanntes Gerät</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="700"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="699"/>
         <source>contact_make_call_check_device_trust</source>
         <extracomment>&quot;Vérifier&quot;</extracomment>
         <translation>Überprüfen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="702"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="701"/>
         <source>verify_device_accessible_name</source>
         <extracomment>Verify %1 device</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="728"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="727"/>
         <source>contact_details_actions_title</source>
         <extracomment>&quot;Autres actions&quot;</extracomment>
         <translation>Weitere Aktionen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="758"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="757"/>
         <source>contact_details_remove_from_favourites</source>
         <extracomment>&quot;Retirer des favoris&quot;</extracomment>
         <translation>Aus Favoriten entfernen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="760"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="759"/>
         <source>contact_details_add_to_favourites</source>
         <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
         <translation>Zu Favoriten hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="777"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="776"/>
         <source>contact_details_share</source>
         <extracomment>&quot;Partager&quot;</extracomment>
         <translation>Teilen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="788"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="787"/>
         <source>information_popup_error_title</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="790"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="789"/>
         <source>contact_details_share_error_mesage</source>
         <extracomment>&quot;La création du fichier vcard a échoué&quot;</extracomment>
         <translation>VCard-Erstellung fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="795"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="794"/>
         <source>contact_details_share_success_title</source>
         <extracomment>&quot;VCard créée&quot;</extracomment>
         <translation>VCard erstellt</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="797"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="796"/>
         <source>contact_details_share_success_mesage</source>
         <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
         <translation>VCard wurde in %1 gespeichert</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="800"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="799"/>
         <source>contact_details_share_email_title</source>
         <extracomment>&quot;Partage de contact&quot;</extracomment>
         <translation>Kontakt teilen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="841"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="840"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer ce contact&quot;</extracomment>
         <translation>Kontakt löschen</translation>
@@ -7409,7 +7415,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 <context>
     <name>utils</name>
     <message numerus="yes">
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="494"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="490"/>
         <source>formatYears</source>
         <extracomment>&apos;%1 year&apos;</extracomment>
         <translation>
@@ -7418,7 +7424,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="498"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="494"/>
         <source>formatMonths</source>
         <extracomment>&apos;%1 month&apos;</extracomment>
         <translation>
@@ -7427,7 +7433,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="502"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="498"/>
         <source>formatWeeks</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
         <translation>
@@ -7436,7 +7442,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="506"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="502"/>
         <source>formatDays</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
         <translation>
@@ -7445,7 +7451,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="512"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="508"/>
         <source>formatHours</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation>
@@ -7454,7 +7460,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="514"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="510"/>
         <source>formatMinutes</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation>
@@ -7463,7 +7469,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="516"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="512"/>
         <source>formatSeconds</source>
         <extracomment>&apos;%1 second&apos;</extracomment>
         <translation>
@@ -7472,62 +7478,62 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         </translation>
     </message>
     <message>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="733"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="729"/>
         <source>codec_install</source>
         <extracomment>&quot;Installation de codec&quot;</extracomment>
         <translation>Codec-Installation</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="735"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="731"/>
         <source>download_codec</source>
         <extracomment>&quot;Télécharger le codec %1 (%2) ?&quot;</extracomment>
         <translation>Codec %1 (%2) herunterladen?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="742"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="738"/>
         <source>information_popup_success_title</source>
         <extracomment>&quot;Succès&quot;</extracomment>
         <translation>Erfolg</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="744"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="740"/>
         <source>information_popup_codec_install_success_text</source>
         <extracomment>&quot;Le codec a été installé avec succès.&quot;</extracomment>
         <translation>Der Codec wurde erfolgreich installiert.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="748"/>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="757"/>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="765"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="744"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="753"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="761"/>
         <source>information_popup_error_title</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="750"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="746"/>
         <source>information_popup_codec_install_error_text</source>
         <extracomment>&quot;Le codec n&apos;a pas pu être installé.&quot;</extracomment>
         <translation>Der Codec konnte nicht installiert werden.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="759"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="755"/>
         <source>information_popup_codec_save_error_text</source>
         <extracomment>&quot;Le codec n&apos;a pas pu être sauvegardé.&quot;</extracomment>
         <translation>Der Codec konnte nicht gespeichert werden.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="767"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="763"/>
         <source>information_popup_codec_download_error_text</source>
         <extracomment>&quot;Le codec n&apos;a pas pu être téléchargé.&quot;</extracomment>
         <translation>Der Codec konnte nicht heruntergeladen werden.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="773"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="769"/>
         <source>loading_popup_codec_install_progress</source>
         <extracomment>&quot;Téléchargement en cours …&quot;</extracomment>
         <translation>Download läuft …</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Tool/Helper/utils.js" line="808"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="804"/>
         <source>okButton</source>
         <translation>Ok</translation>
     </message>

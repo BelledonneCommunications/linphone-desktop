@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QAction>
 #include <QCommandLineParser>
 #include <QQmlApplicationEngine>
 #include <QSharedPointer>
@@ -189,6 +190,8 @@ signals:
 
 private:
 	void createCommandParser();
+	QAction *createMarkAsReadAction(QQuickWindow *window);
+	void setMacOSDockActions(); // Should only be called on MacOS
 	void setAutoStart(bool enabled);
 	void setLocale(QString configLocale);
 

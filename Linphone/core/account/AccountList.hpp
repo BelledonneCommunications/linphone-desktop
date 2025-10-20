@@ -51,6 +51,8 @@ public:
 
 	bool isInitialized() const;
 	void setInitialized(bool init);
+	void lResetMissedCalls();    // Reset missed calls of all accounts
+	void lResetUnreadMessages(); // Reset unread messages of all accounts
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 signals:

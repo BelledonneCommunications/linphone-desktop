@@ -603,3 +603,7 @@ bool AccountModel::forwardToVoiceMailInDndPresence() {
 	auto core = CoreModel::getInstance()->getCore();
 	return core->getConfig()->getBool(accountSection, "forward_to_voicemail_in_dnd_presence", false);
 }
+
+std::list<std::shared_ptr<linphone::ChatRoom>> AccountModel::getChatRooms() {
+	return mMonitor->getChatRooms();
+}

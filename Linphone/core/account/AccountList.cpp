@@ -170,6 +170,18 @@ void AccountList::setInitialized(bool init) {
 	}
 }
 
+void AccountList::lResetMissedCalls() {
+	for (auto &accountCore : getSharedList<AccountCore>()) {
+		accountCore->lResetMissedCalls();
+	}
+}
+
+void AccountList::lResetUnreadMessages() {
+	for (auto &accountCore : getSharedList<AccountCore>()) {
+		emit accountCore->lResetUnreadMessages();
+	}
+}
+
 QVariant AccountList::data(const QModelIndex &index, int role) const {
 	int row = index.row();
 	if (!index.isValid() || row < 0 || row >= mList.count()) return QVariant();

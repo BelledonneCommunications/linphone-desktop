@@ -90,6 +90,7 @@ public:
 	void setPresence(LinphoneEnums::Presence presence, bool userInitiated, bool resetToAuto, QString presenceNote);
 	std::string configAccountSection();
 	bool forwardToVoiceMailInDndPresence();
+	std::list<std::shared_ptr<linphone::ChatRoom>> getChatRooms();
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
