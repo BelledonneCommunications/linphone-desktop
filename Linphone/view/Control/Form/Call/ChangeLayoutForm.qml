@@ -3,6 +3,7 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import Linphone
 import SettingsCpp 1.0
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 FocusScope {
 	id: mainItem
@@ -12,11 +13,11 @@ FocusScope {
 
 	ColumnLayout {
 		anchors.fill: parent
-        anchors.topMargin: Math.round(16 * DefaultStyle.dp)
-        anchors.bottomMargin: Math.round(16 * DefaultStyle.dp)
-        anchors.leftMargin: Math.round(17 * DefaultStyle.dp)
-        anchors.rightMargin: Math.round(17 * DefaultStyle.dp)
-        spacing: Math.round(12 * DefaultStyle.dp)
+        anchors.topMargin: Utils.getSizeWithScreenRatio(16)
+        anchors.bottomMargin: Utils.getSizeWithScreenRatio(16)
+        anchors.leftMargin: Utils.getSizeWithScreenRatio(17)
+        anchors.rightMargin: Utils.getSizeWithScreenRatio(17)
+        spacing: Utils.getSizeWithScreenRatio(12)
 
 		RoundedPane {
 			Layout.fillWidth: true
@@ -32,9 +33,9 @@ FocusScope {
 						id: radiobutton
 						checkOnClick: false
 						color: DefaultStyle.main1_500_main
-                        indicatorSize: Math.round(20 * DefaultStyle.dp)
+                        indicatorSize: Utils.getSizeWithScreenRatio(20)
 						leftPadding: indicator.width + spacing
-                        spacing: Math.round(8 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(8)
 						checkable: false	// Qt Documentation is wrong: It is true by default. We don't want to change the checked state if the layout change is not effective.
 						checked: index == 0
 									? mainItem.conferenceLayout === LinphoneEnums.ConferenceLayout.Grid
@@ -44,11 +45,11 @@ FocusScope {
 						onClicked: mainItem.changeLayoutRequested(index)
 
 						contentItem: RowLayout {
-                            spacing: Math.round(5 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(5)
 							EffectImage {
 								id: radioButtonImg
-                                Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(32)
 								imageSource: modelData.imgUrl
 								colorizationColor: DefaultStyle.main2_500_main
 							}
@@ -56,7 +57,7 @@ FocusScope {
 								text: modelData.text
 								color: DefaultStyle.main2_500_main
 								verticalAlignment: Text.AlignVCenter
-                                font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                                font.pixelSize: Utils.getSizeWithScreenRatio(14)
 								Layout.fillWidth: true
 							}
 						}

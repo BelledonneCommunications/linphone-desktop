@@ -3,15 +3,16 @@ import QtQuick.Layouts
 import Linphone
 import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
 
 Notification {
 	id: mainItem
-    radius: Math.round(10 * DefaultStyle.dp)
+    radius: Utils.getSizeWithScreenRatio(10)
 	backgroundColor: DefaultStyle.grey_600
 	backgroundOpacity: 0.8
-    overriddenWidth: Math.round(400 * DefaultStyle.dp)
+    overriddenWidth: Utils.getSizeWithScreenRatio(400)
 	overriddenHeight: content.height
 	
 	readonly property var call: notificationData && notificationData.call
@@ -32,41 +33,41 @@ Notification {
 	Popup {
 		id: content
 		visible: mainItem.visible
-        leftPadding: Math.round(32 * DefaultStyle.dp)
-        rightPadding: Math.round(32 * DefaultStyle.dp)
-        topPadding: Math.round(9 * DefaultStyle.dp)
-        bottomPadding: Math.round(18 * DefaultStyle.dp)
+        leftPadding: Utils.getSizeWithScreenRatio(32)
+        rightPadding: Utils.getSizeWithScreenRatio(32)
+        topPadding: Utils.getSizeWithScreenRatio(9)
+        bottomPadding: Utils.getSizeWithScreenRatio(18)
 		anchors.centerIn: parent
 		background: Item{}
 		contentItem: ColumnLayout {
 			anchors.verticalCenter: parent.verticalCenter
-            spacing: Math.round(9 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(9)
 			RowLayout {
-                spacing: Math.round(4 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(4)
 				Layout.alignment: Qt.AlignHCenter
 				Image {
-                    Layout.preferredWidth: Math.round(12 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(12 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(12)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(12)
 					source: AppIcons.logo
 				}
 				Text {
 					text: "Linphone"
 					color: DefaultStyle.grey_0
 					font {
-                        pixelSize: Math.round(12 * DefaultStyle.dp)
+                        pixelSize: Utils.getSizeWithScreenRatio(12)
                         weight: Typography.b3.weight
 						capitalization: Font.Capitalize
 					}
 				}
 			}
 			ColumnLayout {
-                spacing: Math.round(17 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(17)
 				ColumnLayout {
-                    spacing: Math.round(14 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(14)
 					Layout.alignment: Qt.AlignHCenter
 					Avatar {
-                        Layout.preferredWidth: Math.round(60 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(60 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(60)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(60)
 						Layout.alignment: Qt.AlignHCenter
 						call: mainItem.call
 						displayNameVal: mainItem.displayName
@@ -84,7 +85,7 @@ Notification {
 							maximumLineCount: 1
 							color: DefaultStyle.grey_0
 							font {
-                                pixelSize: Math.round(20 * DefaultStyle.dp)
+                                pixelSize: Utils.getSizeWithScreenRatio(20)
                                 weight: Typography.b3.weight
 								capitalization: Font.Capitalize
 							}
@@ -95,8 +96,8 @@ Notification {
 							Layout.alignment: Qt.AlignHCenter
 							color: DefaultStyle.grey_0
 							font {
-                                pixelSize: Math.round(14 * DefaultStyle.dp)
-                                weight: Math.round(500 * DefaultStyle.dp)
+                                pixelSize: Utils.getSizeWithScreenRatio(14)
+                                weight: Utils.getSizeWithScreenRatio(500)
 							}
 						}
 					}
@@ -104,19 +105,19 @@ Notification {
 				RowLayout {
 					Layout.alignment: Qt.AlignHCenter
 					Layout.fillWidth: true
-                    spacing: Math.round(26 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(26)
 					Button {
-                        spacing: Math.round(6 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(6)
 						style: ButtonStyle.phoneGreen
-                        Layout.preferredWidth: Math.round(118 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(118)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(32)
 						asynchronous: false
-                        icon.width: Math.round(19 * DefaultStyle.dp)
-                        icon.height: Math.round(19 * DefaultStyle.dp)
+                        icon.width: Utils.getSizeWithScreenRatio(19)
+                        icon.height: Utils.getSizeWithScreenRatio(19)
                         //: "Accepter"
                         text: qsTr("dialog_accept")
-                        textSize: Math.round(14 * DefaultStyle.dp)
-                        textWeight: Math.round(500 * DefaultStyle.dp)
+                        textSize: Utils.getSizeWithScreenRatio(14)
+                        textWeight: Utils.getSizeWithScreenRatio(500)
 						onClicked: {
 							console.debug("[NotificationReceivedCall] Accept click")
 							UtilsCpp.openCallsWindow(mainItem.call)
@@ -124,17 +125,17 @@ Notification {
 						}
 					}
 					Button {
-                        spacing: Math.round(6 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(6)
 						style: ButtonStyle.phoneRed
-                        Layout.preferredWidth: Math.round(118 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(118)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(32)
 						asynchronous: false
-                        icon.width: Math.round(19 * DefaultStyle.dp)
-                        icon.height: Math.round(19 * DefaultStyle.dp)
+                        icon.width: Utils.getSizeWithScreenRatio(19)
+                        icon.height: Utils.getSizeWithScreenRatio(19)
                         //: "Refuser
                         text: qsTr("dialog_deny")
-                        textSize: Math.round(14 * DefaultStyle.dp)
-                        textWeight: Math.round(500 * DefaultStyle.dp)
+                        textSize: Utils.getSizeWithScreenRatio(14)
+                        textWeight: Utils.getSizeWithScreenRatio(500)
 						onClicked: {
 							console.debug("[NotificationReceivedCall] Decline click")
 							mainItem.call.core.lDecline()

@@ -6,15 +6,16 @@ import Qt.labs.qmlmodels
 import Linphone
 import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
     id: mainItem
-    spacing: Math.round(4 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(4)
     property ChatGui chat
     property color backgroundColor
     property bool lastItemVisible: false
     property int lastIndexFoundWithFilter: -1
-    property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
+    property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
     property bool loading: false
     property bool isEncrypted: chat && chat.core.isEncrypted
 
@@ -53,15 +54,15 @@ ListView {
     Button {
         visible: !mainItem.lastItemVisible
         icon.source: AppIcons.downArrow
-        leftPadding: Math.round(16 * DefaultStyle.dp)
-        rightPadding: Math.round(16 * DefaultStyle.dp)
-        topPadding: Math.round(16 * DefaultStyle.dp)
-        bottomPadding: Math.round(16 * DefaultStyle.dp)
+        leftPadding: Utils.getSizeWithScreenRatio(16)
+        rightPadding: Utils.getSizeWithScreenRatio(16)
+        topPadding: Utils.getSizeWithScreenRatio(16)
+        bottomPadding: Utils.getSizeWithScreenRatio(16)
         anchors.bottom: parent.bottom
         style: ButtonStyle.main
         anchors.right: parent.right
-        anchors.bottomMargin: Math.round(18 * DefaultStyle.dp)
-        anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
+        anchors.bottomMargin: Utils.getSizeWithScreenRatio(18)
+        anchors.rightMargin: Utils.getSizeWithScreenRatio(18)
         onClicked: {
             var index = eventLogProxy.findFirstUnreadIndex()
             mainItem.positionViewAtIndex(index, ListView.Beginning)
@@ -129,32 +130,32 @@ ListView {
 
     footer: Item {
         visible: mainItem.chat && !mainItem.loading
-        height: visible ? headerMessage.height + headerMessage.topMargin + headerMessage.bottomMargin : Math.round(30 * DefaultStyle.dp)
+        height: visible ? (headerMessage.height + headerMessage.topMargin + headerMessage.bottomMargin) : Utils.getSizeWithScreenRatio(30)
         width: headerMessage.width
         anchors.horizontalCenter: parent.horizontalCenter
         Control.Control {
             id: headerMessage
-            property int topMargin: mainItem.contentHeight > mainItem.height ? Math.round(30 * DefaultStyle.dp) : Math.round(50 * DefaultStyle.dp)
-            property int bottomMargin: Math.round(30 * DefaultStyle.dp)
+            property int topMargin: Utils.getSizeWithScreenRatio(mainItem.contentHeight > mainItem.height ? 30 : 50)
+            property int bottomMargin: Utils.getSizeWithScreenRatio(30)
             anchors.topMargin: topMargin
             anchors.bottomMargin: bottomMargin
             anchors.top: parent.top
-            padding: Math.round(10 * DefaultStyle.dp)
+            padding: Utils.getSizeWithScreenRatio(10)
             background: Rectangle {
                 color: "transparent"
                 border.color: DefaultStyle.main2_200
-                border.width: Math.round(2 * DefaultStyle.dp)
-                radius: Math.round(10 * DefaultStyle.dp)
+                border.width: Utils.getSizeWithScreenRatio(2)
+                radius: Utils.getSizeWithScreenRatio(10)
             }
             contentItem: RowLayout {
                 EffectImage {
-                    Layout.preferredWidth: Math.round(23 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(23 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(23)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(23)
                     imageSource: mainItem.isEncrypted ? AppIcons.lockSimple : AppIcons.lockSimpleOpen
                     colorizationColor: mainItem.isEncrypted ? DefaultStyle.info_500_main : DefaultStyle.warning_700
                 }
                 ColumnLayout {
-                    spacing: Math.round(2 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(2)
                     Text {
                         text: mainItem.isEncrypted
                             //: End to end encrypted chat
@@ -192,8 +193,8 @@ ListView {
         width: mainItem.width
         // height: visible ? contentItem.implicitHeight + topPadding + bottomPadding : 0
         z: mainItem.z + 2
-        topPadding: Math.round(5 * DefaultStyle.dp)
-        bottomPadding: Math.round(5 * DefaultStyle.dp)
+        topPadding: Utils.getSizeWithScreenRatio(5)
+        bottomPadding: Utils.getSizeWithScreenRatio(5)
         background: Rectangle {
             anchors.fill: parent
             color: mainItem.backgroundColor
@@ -202,8 +203,8 @@ ListView {
             id: composeLayout
             property var composingName: mainItem.chat?.core.composingName
             Avatar {
-                Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
                 _address: mainItem.chat?.core.composingAddress
             }
             Text {
@@ -303,11 +304,11 @@ ListView {
                 }
                 property bool showTopMargin: !header.visible && index == 0
                 width: mainItem.width
-                height: (showTopMargin ? 30 * DefaultStyle.dp : 0) + eventItem.implicitHeight
+                height: (showTopMargin ? Utils.getSizeWithScreenRatio(30) : 0) + eventItem.implicitHeight
                 Event {
                     id: eventItem
                     anchors.top: parent.top
-                    anchors.topMargin: showTopMargin ? 30 : 0 * DefaultStyle.dp
+                    anchors.topMargin: showTopMargin ? Utils.getSizeWithScreenRatio(30) : 0
                     width: parent.width
                     eventLogGui: modelData
                 }
@@ -328,12 +329,12 @@ ListView {
                 }
                 property bool showTopMargin: !header.visible && index == 0
                 width: mainItem.width
-                //height: 40 * DefaultStyle.dp
-                height: (showTopMargin ? 30 : 0 * DefaultStyle.dp) + ephemeralEventItem.height
+                //height: Utils.getSizeWithScreenRatio(40)
+                height: (showTopMargin ? Utils.getSizeWithScreenRatio(30) : 0) + ephemeralEventItem.height
                 EphemeralEvent {
                     id: ephemeralEventItem
                     anchors.top: parent.top
-                    anchors.topMargin: showTopMargin ? 30 : 0 * DefaultStyle.dp
+                    anchors.topMargin: showTopMargin ? Utils.getSizeWithScreenRatio(30) : 0
                     eventLogGui: modelData
                 }
             }

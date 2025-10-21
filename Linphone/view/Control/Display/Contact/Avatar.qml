@@ -6,6 +6,7 @@ import QtQuick.Effects
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // Fill contact, account or call
 // Initials will be displayed if there isn't any avatar.
@@ -93,7 +94,7 @@ Loader{
 					z: 1
 					color: "transparent"
 					border {
-                        width: Math.round(2 * DefaultStyle.dp)
+                        width: Utils.getSizeWithScreenRatio(2)
 						color: mainItem.secured ? DefaultStyle.info_500_main : DefaultStyle.danger_500_main
 					}
 					EffectImage {

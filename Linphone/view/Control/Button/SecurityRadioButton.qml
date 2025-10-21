@@ -2,7 +2,8 @@ import QtQuick
 import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import Linphone
-  
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 Control.RadioButton {
 	id: mainItem
 	property string title
@@ -21,18 +22,18 @@ Control.RadioButton {
 	background: Rectangle {
 		color: DefaultStyle.grey_100
 		border.color: mainItem.checked ? mainItem.color : "transparent"
-        radius: Math.round(20 * DefaultStyle.dp)
+        radius: Utils.getSizeWithScreenRatio(20)
 	}
 
 	indicator: RowLayout {
 		anchors.left: parent.left
-        anchors.leftMargin: Math.round(13 * DefaultStyle.dp)
+        anchors.leftMargin: Utils.getSizeWithScreenRatio(13)
 		anchors.top: parent.top
-        anchors.topMargin: Math.round(8 * DefaultStyle.dp)
-        spacing: Math.round(4 * DefaultStyle.dp)
+        anchors.topMargin: Utils.getSizeWithScreenRatio(8)
+        spacing: Utils.getSizeWithScreenRatio(4)
 		Rectangle {
-            implicitWidth: Math.round(16 * DefaultStyle.dp)
-            implicitHeight: Math.round(16 * DefaultStyle.dp)
+            implicitWidth: Utils.getSizeWithScreenRatio(16)
+            implicitHeight: Utils.getSizeWithScreenRatio(16)
 			radius: implicitWidth/2
 			border.color: mainItem.color
 
@@ -51,7 +52,7 @@ Control.RadioButton {
 			text: mainItem.title
 			font.bold: true
 			color: DefaultStyle.grey_900
-            font.pixelSize: Math.round(16 * DefaultStyle.dp)
+            font.pixelSize: Utils.getSizeWithScreenRatio(16)
 		}
 		Button {
 			padding: 0
@@ -59,12 +60,12 @@ Control.RadioButton {
 				visible: false
 			}
 			icon.source: AppIcons.info
-            Layout.preferredWidth: Math.round(2 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(2 * DefaultStyle.dp)
-            width: Math.round(2 * DefaultStyle.dp)
-            height: Math.round(2 * DefaultStyle.dp)
-            icon.width: Math.round(2 * DefaultStyle.dp)
-            icon.height: Math.round(2 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(2)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(2)
+            width: Utils.getSizeWithScreenRatio(2)
+            height: Utils.getSizeWithScreenRatio(2)
+            icon.width: Utils.getSizeWithScreenRatio(2)
+            icon.height: Utils.getSizeWithScreenRatio(2)
 		}
 	}
 	
@@ -73,27 +74,27 @@ Control.RadioButton {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-        anchors.leftMargin: Math.round(13 * DefaultStyle.dp)
+        anchors.leftMargin: Utils.getSizeWithScreenRatio(13)
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-            Layout.bottomMargin: Math.round(10 * DefaultStyle.dp)
-            Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
+            Layout.bottomMargin: Utils.getSizeWithScreenRatio(10)
+            Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
 			Layout.alignment: Qt.AlignVCenter
 			Text {
 				id: innerText
 				verticalAlignment: Text.AlignVCenter
-                Layout.preferredWidth: Math.round(220 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
-                font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(220)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(100)
+                font.pixelSize: Utils.getSizeWithScreenRatio(14)
 				text: mainItem.contentText
 				Layout.fillHeight: true
 			}
 			Image {
 				id: image
 				Layout.fillHeight: true
-                Layout.preferredWidth: Math.round(100 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(100)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(100)
 				fillMode: Image.PreserveAspectFit
 				source: mainItem.imgUrl
 			}

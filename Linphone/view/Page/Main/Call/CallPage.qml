@@ -228,13 +228,13 @@ AbstractMainPage {
 					Layout.topMargin: Utils.getSizeWithScreenRatio(18)
 					Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
 					color: "transparent"
-					radius: 25 * DefaultStyle.dp
+					radius: Utils.getSizeWithScreenRatio(25)
 					border.color: DefaultStyle.warning_500_main
-					border.width: 2 * DefaultStyle.dp
+					border.width: Utils.getSizeWithScreenRatio(2)
 
 					RowLayout {
 						anchors.centerIn: parent
-						spacing: 10 * DefaultStyle.dp
+						spacing: Utils.getSizeWithScreenRatio(10)
 						EffectImage {
 							fillMode: Image.PreserveAspectFit
 							imageSource: AppIcons.callForward

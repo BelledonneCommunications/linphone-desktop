@@ -9,6 +9,7 @@ import Linphone
 import UtilsCpp
 
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
 
@@ -74,7 +75,7 @@ ProgressBar {
 				GradientStop { position: 0.0; color: "#FF9E79" }
 				GradientStop { position: 1.0; color: "#FE5E00" }
 			}
-			radius: Math.round(70 * DefaultStyle.dp)
+			radius: Utils.getSizeWithScreenRatio(70)
 		}
 		Rectangle {
 			id: mask
@@ -115,10 +116,10 @@ ProgressBar {
 		RoundButton {
 			z: parent.z + 1
 			anchors.left: parent.left
-			anchors.leftMargin: Math.round(9 * DefaultStyle.dp)
+			anchors.leftMargin: Utils.getSizeWithScreenRatio(9)
 			anchors.verticalCenter: parent.verticalCenter
-			icon.width: Math.round(14 * DefaultStyle.dp)
-			icon.height: Math.round(14 * DefaultStyle.dp)
+			icon.width: Utils.getSizeWithScreenRatio(14)
+			icon.height: Utils.getSizeWithScreenRatio(14)
 			icon.source: animationTest.running
 				? mainItem.recording
 					? AppIcons.stopFill
@@ -131,25 +132,25 @@ ProgressBar {
 		}
 		Control.Control {
 			anchors.right: parent.right
-			anchors.rightMargin: Math.round(9 * DefaultStyle.dp)
+			anchors.rightMargin: Utils.getSizeWithScreenRatio(9)
 			anchors.verticalCenter: parent.verticalCenter
-			leftPadding: Math.round(18 * DefaultStyle.dp)
-			rightPadding: Math.round(18 * DefaultStyle.dp)
-			topPadding: Math.round(5 * DefaultStyle.dp)
-			bottomPadding: Math.round(5 * DefaultStyle.dp)
+			leftPadding: Utils.getSizeWithScreenRatio(18)
+			rightPadding: Utils.getSizeWithScreenRatio(18)
+			topPadding: Utils.getSizeWithScreenRatio(5)
+			bottomPadding: Utils.getSizeWithScreenRatio(5)
 			background: Rectangle {
 				anchors.fill: parent
 				color: DefaultStyle.grey_0
-				radius: Math.round(50 * DefaultStyle.dp)
+				radius: Utils.getSizeWithScreenRatio(50)
 			}
 			contentItem: RowLayout {
-				spacing: mainItem.recording ? Math.round(5 * DefaultStyle.dp) : 0
+				spacing: mainItem.recording ? Utils.getSizeWithScreenRatio(5) : 0
 				EffectImage {
 					visible: mainItem.recording
 					colorizationColor: DefaultStyle.danger_500_main
 					imageSource: AppIcons.recordFill
-					Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
-					Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
+					Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
+					Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
 				}
 				Text {
 					id: durationText

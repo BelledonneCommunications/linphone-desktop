@@ -1,10 +1,11 @@
 import QtQuick
 import Linphone
-import UtilsCpp 1.0
-  
+import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 ComboBox {
 	id: mainItem
-	indicatorRightMargin: Math.round(10 * DefaultStyle.dp)
+	indicatorRightMargin: Utils.getSizeWithScreenRatio(10)
 	property var selectedDateTime
 	onSelectedDateTimeChanged: {
 		if (minTime != undefined) {
@@ -22,10 +23,10 @@ ComboBox {
 	property alias contentText: input
 	property var minTime
 	property var maxTime
-    popup.width: Math.round(73 * DefaultStyle.dp)
+    popup.width: Utils.getSizeWithScreenRatio(73)
 	listView.model: 48
-    listView.height: Math.min(Math.round(204 * DefaultStyle.dp), listView.contentHeight)
-    popup.height: Math.min(Math.round(204 * DefaultStyle.dp), listView.contentHeight)
+    listView.height: Math.min(Utils.getSizeWithScreenRatio(204), listView.contentHeight)
+    popup.height: Math.min(Utils.getSizeWithScreenRatio(204), listView.contentHeight)
 	editable: true
 	popup.closePolicy: Popup.PressOutsideParent | Popup.CloseOnPressOutside
 	onCurrentTextChanged: input.text = currentText
@@ -74,7 +75,7 @@ ComboBox {
 		text: Qt.formatDateTime(currentDateTime, "hh:mm")
 		width: mainItem.width
 		visible: mainItem.minTime == undefined || UtilsCpp.timeOffset(mainItem.minTime, currentDateTime) > 0
-        height: visible ? Math.round(25 * DefaultStyle.dp) : 0
+        height: visible ? Utils.getSizeWithScreenRatio(25) : 0
 		verticalAlignment: TextInput.AlignVCenter
 		horizontalAlignment: TextInput.AlignHCenter
 		font {

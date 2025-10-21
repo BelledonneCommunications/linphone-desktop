@@ -5,6 +5,7 @@ import QtQuick.Effects
 import Linphone
 import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 FocusScope {
 	id: mainItem
@@ -90,8 +91,8 @@ FocusScope {
 	Layout.GridLayout {
 		id: numPadGrid
 		columns: 3
-        columnSpacing: Math.round(40 * DefaultStyle.dp)
-        rowSpacing: Math.round(10 * DefaultStyle.dp)
+        columnSpacing: Utils.getSizeWithScreenRatio(40)
+        rowSpacing: Utils.getSizeWithScreenRatio(10)
 		function getButtonAt(index){
 			index = (index+15) % 15
 			if(index >= 0){
@@ -113,8 +114,8 @@ FocusScope {
 				id: numPadButton
 				Layout.Layout.alignment: Qt.AlignHCenter
 				required property int index
-                implicitWidth: Math.round(60 * DefaultStyle.dp)
-                implicitHeight: Math.round(60 * DefaultStyle.dp)
+                implicitWidth: Utils.getSizeWithScreenRatio(60)
+                implicitHeight: Utils.getSizeWithScreenRatio(60)
 				onClicked: {
 					mainItem.buttonPressed(text)
 				}
@@ -123,10 +124,10 @@ FocusScope {
 				KeyNavigation.up: numPadGrid.getButtonAt(index - 3)
 				KeyNavigation.down: numPadGrid.getButtonAt(index + 3)
 				style: ButtonStyle.numericPad
-                radius: Math.round(71 * DefaultStyle.dp)
+                radius: Utils.getSizeWithScreenRatio(71)
 				text: index + 1
-                textSize: Math.round(32 * DefaultStyle.dp)
-                textWeight: Math.round(400 * DefaultStyle.dp)
+                textSize: Utils.getSizeWithScreenRatio(32)
+                textWeight: Utils.getSizeWithScreenRatio(400)
 			}
 		}
 		Repeater {
@@ -139,8 +140,8 @@ FocusScope {
 			BigButton {
 				id: digitButton
 				Layout.Layout.alignment: Qt.AlignHCenter
-                implicitWidth: Math.round(60 * DefaultStyle.dp)
-                implicitHeight: Math.round(60 * DefaultStyle.dp)
+                implicitWidth: Utils.getSizeWithScreenRatio(60)
+                implicitHeight: Utils.getSizeWithScreenRatio(60)
 				
 				onClicked: mainItem.buttonPressed(pressText.text)
 				onPressAndHold: mainItem.buttonPressed(longPressText.text)
@@ -149,7 +150,7 @@ FocusScope {
 				KeyNavigation.right: numPadGrid.getButtonAt((index + 1)+9)
 				KeyNavigation.up: numPadGrid.getButtonAt((index - 3)+9)
 				KeyNavigation.down: numPadGrid.getButtonAt((index + 3)+9)
-                radius: Math.round(71 * DefaultStyle.dp)
+                radius: Utils.getSizeWithScreenRatio(71)
 				style: ButtonStyle.numericPad
 
 				contentItem: Item {
@@ -163,7 +164,7 @@ FocusScope {
 						horizontalAlignment: Text.AlignHCenter
 						Component.onCompleted: {if (modelData.longPressText === undefined) anchors.centerIn= parent}
 						text: modelData.pressText
-                        font.pixelSize: Math.round(32 * DefaultStyle.dp)
+                        font.pixelSize: Utils.getSizeWithScreenRatio(32)
 					}
 					Text {
 						id: longPressText
@@ -175,7 +176,7 @@ FocusScope {
 						horizontalAlignment: Text.AlignHCenter
 						visible: modelData.longPressText ? modelData.longPressText.length > 0 : false
 						text: modelData.longPressText ? modelData.longPressText : ""
-                        font.pixelSize: Math.round(22 * DefaultStyle.dp)
+                        font.pixelSize: Utils.getSizeWithScreenRatio(22)
 					}
 				}
 			}
@@ -187,12 +188,12 @@ FocusScope {
 		Button {
 			id: launchCallButton
 			visible: mainItem.lastRowVisible
-            implicitWidth: Math.round(75 * DefaultStyle.dp)
-            implicitHeight: Math.round(55 * DefaultStyle.dp)
+            implicitWidth: Utils.getSizeWithScreenRatio(75)
+            implicitHeight: Utils.getSizeWithScreenRatio(55)
 			Layout.Layout.alignment: Qt.AlignHCenter
-            icon.width: Math.round(32 * DefaultStyle.dp)
-            icon.height: Math.round(32 * DefaultStyle.dp)
-            radius: Math.round(71 * DefaultStyle.dp)
+            icon.width: Utils.getSizeWithScreenRatio(32)
+            icon.height: Utils.getSizeWithScreenRatio(32)
+            radius: Utils.getSizeWithScreenRatio(71)
 			style: ButtonStyle.phoneGreen
 			
 			onClicked: mainItem.launchCall()
@@ -205,17 +206,17 @@ FocusScope {
 		Button {
 			id: eraseButton
 			visible: mainItem.lastRowVisible
-            leftPadding: Math.round(5 * DefaultStyle.dp)
-            rightPadding: Math.round(5 * DefaultStyle.dp)
-            topPadding: Math.round(5 * DefaultStyle.dp)
-            bottomPadding: Math.round(5 * DefaultStyle.dp)
+            leftPadding: Utils.getSizeWithScreenRatio(5)
+            rightPadding: Utils.getSizeWithScreenRatio(5)
+            topPadding: Utils.getSizeWithScreenRatio(5)
+            bottomPadding: Utils.getSizeWithScreenRatio(5)
 			Layout.Layout.alignment: Qt.AlignHCenter
 			icon.source: AppIcons.backspaceFill
 			style: ButtonStyle.noBackground
-            icon.width: Math.round(38 * DefaultStyle.dp)
-            icon.height: Math.round(38 * DefaultStyle.dp)
-            Layout.Layout.preferredWidth: Math.round(38 * DefaultStyle.dp)
-            Layout.Layout.preferredHeight: Math.round(38 * DefaultStyle.dp)
+            icon.width: Utils.getSizeWithScreenRatio(38)
+            icon.height: Utils.getSizeWithScreenRatio(38)
+            Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(38)
+            Layout.Layout.preferredHeight: Utils.getSizeWithScreenRatio(38)
 			
 			onClicked: mainItem.wipe()
 			

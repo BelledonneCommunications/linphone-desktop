@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import SettingsCpp 1.0
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 AbstractSettingsLayout {
 	width: parent?.width
@@ -22,7 +23,7 @@ AbstractSettingsLayout {
 	Component {
 		id: content
 		ColumnLayout {
-            spacing: Math.round(40 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(40)
 			SwitchSetting {
                 //: "Chiffrer tous les fichiers"
                 titleText: qsTr("settings_security_enable_vfs_title")

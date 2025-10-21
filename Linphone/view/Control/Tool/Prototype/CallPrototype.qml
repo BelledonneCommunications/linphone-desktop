@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // Snippet
 Window {
@@ -129,7 +130,7 @@ Window {
 				TextField {
 					id: usernameToCall
 					label: "Username to call"
-                    Layout.preferredWidth: Math.round(250 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(250)
 				}
 				Button{
 					text: 'Call'

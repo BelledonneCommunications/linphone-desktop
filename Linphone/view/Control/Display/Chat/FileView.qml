@@ -116,8 +116,8 @@ Item {
 					EffectImage {
 						anchors.centerIn: parent
 						visible: videoThumbnail.playbackState !== MediaPlayer.PlayingState
-						width: Math.round(24 * DefaultStyle.dp)
-						height: Math.round(24 * DefaultStyle.dp)
+						width: Utils.getSizeWithScreenRatio(24)
+						height: Utils.getSizeWithScreenRatio(24)
 						imageSource: AppIcons.playFill
 						colorizationColor: DefaultStyle.main2_0
 					}
@@ -126,8 +126,8 @@ Item {
 						property int timeDisplayed: videoThumbnail.playbackState === MediaPlayer.PlayingState ? videoThumbnail.position : videoThumbnail.duration
 						anchors.bottom: parent.bottom
 						anchors.left: parent.left
-						anchors.bottomMargin: Math.round(6 * DefaultStyle.dp)
-						anchors.leftMargin: Math.round(6 * DefaultStyle.dp)
+						anchors.bottomMargin: Utils.getSizeWithScreenRatio(6)
+						anchors.leftMargin: Utils.getSizeWithScreenRatio(6)
 						text: UtilsCpp.formatDuration(timeDisplayed)
 						color: DefaultStyle.grey_0
 						font {
@@ -156,10 +156,10 @@ Item {
 	Component {
 		id: defaultSquareView
 		Control.Control {
-			leftPadding: Math.round(4 * DefaultStyle.dp)
-			rightPadding: Math.round(4 * DefaultStyle.dp)
-			topPadding: Math.round(23 * DefaultStyle.dp)
-			bottomPadding: Math.round(4 * DefaultStyle.dp)
+			leftPadding: Utils.getSizeWithScreenRatio(4)
+			rightPadding: Utils.getSizeWithScreenRatio(4)
+			topPadding: Utils.getSizeWithScreenRatio(23)
+			bottomPadding: Utils.getSizeWithScreenRatio(4)
 			hoverEnabled: false
 
 			background: Rectangle {
@@ -172,12 +172,12 @@ Item {
 					anchors.top: parent.top
 					anchors.left: parent.left
 					anchors.right: parent.right
-					height: Math.round(23 * DefaultStyle.dp)
+					height: Utils.getSizeWithScreenRatio(23)
 					EffectImage {
 						anchors.centerIn: parent
 						imageSource: mainItem.imageSource
-						imageWidth: Math.round(14 * DefaultStyle.dp)
-						imageHeight: Math.round(14 * DefaultStyle.dp)
+						imageWidth: Utils.getSizeWithScreenRatio(14)
+						imageHeight: Utils.getSizeWithScreenRatio(14)
 						colorizationColor: DefaultStyle.main2_600
 					}
 				}
@@ -234,8 +234,8 @@ Item {
 					visible: thumbnailProvider.state === 'hovered' && mainItem.contentGui && (/*!mainItem.isOutgoing &&*/ !mainItem.contentGui.core.wasDownloaded)
 					anchors.centerIn: parent
 					imageSource: AppIcons.download
-					width: Math.round(24 * DefaultStyle.dp)
-					height: Math.round(24 * DefaultStyle.dp)
+					width: Utils.getSizeWithScreenRatio(24)
+					height: Utils.getSizeWithScreenRatio(24)
 					colorizationColor: DefaultStyle.main2_600
 				}
 			}
@@ -244,20 +244,20 @@ Item {
 	Component {
 		id: defaultView
 		Control.Control {
-			rightPadding: Math.round(17*DefaultStyle.dp)
+			rightPadding: Utils.getSizeWithScreenRatio(17)
 
 			background: Rectangle {
 				id: bg
 				color: DefaultStyle.grey_100
 				width: mainItem.width
 				height: mainItem.height
-				radius: Math.round(10 * DefaultStyle.dp)
+				radius: Utils.getSizeWithScreenRatio(10)
 			}
 			contentItem: RowLayout {
-				spacing: Math.round(16 * DefaultStyle.dp)
+				spacing: Utils.getSizeWithScreenRatio(16)
 				Rectangle {
 					color: DefaultStyle.main2_200
-					width: Math.round(58 * DefaultStyle.dp)
+					width: Utils.getSizeWithScreenRatio(58)
 					height: bg.height
 					radius: bg.radius
 					Rectangle {
@@ -272,13 +272,13 @@ Item {
 						z: parent.z + 1
 						anchors.centerIn: parent
 						imageSource: defaultViewStack.imageSource
-						width: Math.round(22 * DefaultStyle.dp)
+						width: Utils.getSizeWithScreenRatio(22)
 						height: width
 						colorizationColor: DefaultStyle.main2_600
 					}
 				}
 				ColumnLayout {
-					spacing: Math.round(1 * DefaultStyle.dp)
+					spacing: Utils.getSizeWithScreenRatio(1)
 					Text {
 						text: mainItem.name
 						Layout.fillWidth: true

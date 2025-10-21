@@ -3,7 +3,8 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
 	id: mainItem
@@ -17,10 +18,10 @@ ColumnLayout {
 		id: rightPanelHeader
 		Layout.fillWidth: true
 		z: rightPanelContent.z + 1
-		topPadding: Math.round(30 * DefaultStyle.dp)
-		bottomPadding: Math.round(24 * DefaultStyle.dp)
-		leftPadding: Math.round(32 * DefaultStyle.dp)
-		rightPadding: Math.round(32 * DefaultStyle.dp)
+		topPadding: Utils.getSizeWithScreenRatio(30)
+		bottomPadding: Utils.getSizeWithScreenRatio(24)
+		leftPadding: Utils.getSizeWithScreenRatio(32)
+		rightPadding: Utils.getSizeWithScreenRatio(32)
 
 		background: Item {
 			anchors.fill: parent
@@ -36,7 +37,7 @@ ColumnLayout {
 				shadowColor: DefaultStyle.grey_1000
 				shadowBlur: 1
 				shadowOpacity: 0.05
-				shadowVerticalOffset: Math.round(10 * DefaultStyle.dp)
+				shadowVerticalOffset: Utils.getSizeWithScreenRatio(10)
 			}
 		}
 	}

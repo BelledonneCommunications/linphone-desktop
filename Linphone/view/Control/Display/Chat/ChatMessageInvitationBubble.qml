@@ -12,7 +12,7 @@ ColumnLayout {
 	spacing: 0
 
 	id: mainItem
-	width: 490 * DefaultStyle.dp
+	width: Utils.getSizeWithScreenRatio(490)
 
 	property ConferenceInfoGui conferenceInfoGui
 	property var conferenceInfo: conferenceInfoGui?.core
@@ -43,16 +43,16 @@ ColumnLayout {
 
 	Control.Control {
 		id: infoControl
-		topPadding: Math.round(16 * DefaultStyle.dp)
-		leftPadding: Math.round(16 * DefaultStyle.dp)
-		rightPadding: Math.round(16 * DefaultStyle.dp)
-		bottomPadding: Math.round(16 * DefaultStyle.dp)
+		topPadding: Utils.getSizeWithScreenRatio(16)
+		leftPadding: Utils.getSizeWithScreenRatio(16)
+		rightPadding: Utils.getSizeWithScreenRatio(16)
+		bottomPadding: Utils.getSizeWithScreenRatio(16)
 		Layout.fillWidth: true
 
 		background: Rectangle {
 			anchors.fill: parent
 			color: DefaultStyle.grey_100
-			radius: 10 * DefaultStyle.dp // rounded all, but only top visible
+			radius: Utils.getSizeWithScreenRatio(10) // rounded all, but only top visible
 		}
 		contentItem: ColumnLayout {
 			Text {
@@ -77,21 +77,21 @@ ColumnLayout {
 
 			RowLayout {
 				Layout.fillWidth: true
-				spacing: Math.round(10 * DefaultStyle.dp)
+				spacing: Utils.getSizeWithScreenRatio(10)
 
 				Control.Control {
 					id: dayRect
 					Layout.alignment: Qt.AlignTop
-					topPadding: Math.round(4 * DefaultStyle.dp)
-					bottomPadding: Math.round(6 * DefaultStyle.dp)
-					leftPadding: Math.round(13 * DefaultStyle.dp)
-					rightPadding: Math.round(13 * DefaultStyle.dp)
+					topPadding: Utils.getSizeWithScreenRatio(4)
+					bottomPadding: Utils.getSizeWithScreenRatio(6)
+					leftPadding: Utils.getSizeWithScreenRatio(13)
+					rightPadding: Utils.getSizeWithScreenRatio(13)
 
 					background: Item {
 						Rectangle {
 							id: dayRectBg
 							anchors.fill: parent
-							radius: 10 * DefaultStyle.dp
+							radius: Utils.getSizeWithScreenRatio(10)
 							color: DefaultStyle.grey_0
 						}
 						MultiEffect {
@@ -103,7 +103,7 @@ ColumnLayout {
 						}
 					}
 					contentItem: ColumnLayout {
-						spacing: 2 * DefaultStyle.dp
+						spacing: Utils.getSizeWithScreenRatio(2)
 
 						Text {
 							Layout.fillWidth: true
@@ -120,8 +120,8 @@ ColumnLayout {
 						}
 
 						Rectangle {
-							width: 23 * DefaultStyle.dp
-							height: 23 * DefaultStyle.dp
+							width: Utils.getSizeWithScreenRatio(23)
+							height: Utils.getSizeWithScreenRatio(23)
 							radius: width / 2
 							color: DefaultStyle.main1_500_main
 							// anchors.horizontalCenter: parent.horizontalCenter
@@ -138,14 +138,14 @@ ColumnLayout {
 
 				// Info
 				ColumnLayout {
-					spacing: -2 * DefaultStyle.dp
+					spacing: Utils.getSizeWithScreenRatio(-2)
 					RowLayout {
-						spacing: 8 * DefaultStyle.dp
+						spacing: Utils.getSizeWithScreenRatio(8)
 						EffectImage {
 							imageSource: AppIcons.videoconference
 							colorizationColor: DefaultStyle.main2_600
-							Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-							Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+							Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+							Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 						}
 
 						Text {
@@ -189,26 +189,26 @@ ColumnLayout {
 	Rectangle {
 		visible: conferenceInfo.description.length > 0 || conferenceInfo.participantCount > 0
 		Layout.fillWidth: true
-		height: 10 * DefaultStyle.dp
+		height: Utils.getSizeWithScreenRatio(10)
 		color: DefaultStyle.grey_100
-		Layout.topMargin: -10 * DefaultStyle.dp
+		Layout.topMargin: Utils.getSizeWithScreenRatio(-10)
 		z: infoControl.z + 1
 	}
 	Rectangle {
 		visible: conferenceInfo.description.length > 0 || conferenceInfo.participantCount > 0
 		Layout.fillWidth: true
-		height: 10 * DefaultStyle.dp
+		height: Utils.getSizeWithScreenRatio(10)
 		color: DefaultStyle.grey_0
-		Layout.bottomMargin: -10 * DefaultStyle.dp
+		Layout.bottomMargin: Utils.getSizeWithScreenRatio(-10)
 		z: infoControl.z + 1
 	}
 
 	Control.Control {
 		visible: conferenceInfo.description.length > 0 || conferenceInfo.participantCount > 0
-		topPadding: Math.round(16 * DefaultStyle.dp) // only 6 because the rectangle linking the 2 controls is size 10
-		leftPadding: Math.round(16 * DefaultStyle.dp)
-		rightPadding: Math.round(16 * DefaultStyle.dp)
-		bottomPadding: Math.round(16 * DefaultStyle.dp)
+		topPadding: Utils.getSizeWithScreenRatio(16) // only 6 because the rectangle linking the 2 controls is size 10
+		leftPadding: Utils.getSizeWithScreenRatio(16)
+		rightPadding: Utils.getSizeWithScreenRatio(16)
+		bottomPadding: Utils.getSizeWithScreenRatio(16)
 		Layout.fillWidth: true
 
 		MouseArea {
@@ -221,11 +221,11 @@ ColumnLayout {
 		background: Rectangle {
 			anchors.fill: parent
 			color: DefaultStyle.grey_0
-			radius: 10 * DefaultStyle.dp
+			radius: Utils.getSizeWithScreenRatio(10)
 		}
 		
 		contentItem: ColumnLayout {
-			spacing: 10 * DefaultStyle.dp
+			spacing: Utils.getSizeWithScreenRatio(10)
 
 			ColumnLayout {
 				spacing: 0
@@ -263,13 +263,13 @@ ColumnLayout {
 			RowLayout {
 				visible: conferenceInfo.participantCount > 0
 				Layout.fillHeight: true
-				Layout.preferredHeight: 30 * DefaultStyle.dp
-				spacing: 10 * DefaultStyle.dp
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
+				spacing: Utils.getSizeWithScreenRatio(10)
 				EffectImage {
 					imageSource: AppIcons.usersTwo
 					colorizationColor: DefaultStyle.main2_600
-					Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
-					Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
+					Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
+					Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
 				}
 				Text {
 					//: %n participant(s)

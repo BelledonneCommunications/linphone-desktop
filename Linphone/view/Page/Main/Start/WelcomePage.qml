@@ -4,6 +4,7 @@ import QtQuick.Controls.Basic as Control
 
 import Linphone
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 LoginLayout {
 	id: mainItem
@@ -15,18 +16,18 @@ LoginLayout {
             //: "Bienvenue"
             text: qsTr("welcome_page_title")
 			Layout.alignment: Qt.AlignVCenter
-            Layout.leftMargin: Math.round(132 * DefaultStyle.dp)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(132)
 			color: DefaultStyle.main2_800
 			font {
-                pixelSize: Math.round(96 * DefaultStyle.dp)
+                pixelSize: Utils.getSizeWithScreenRatio(96)
                 weight: Typography.h4.weight
             }
 			scaleLettersFactor: 1.1
 		},
 		Text {
 			Layout.alignment: Qt.AlignBottom
-            Layout.leftMargin: Math.round(29 * DefaultStyle.dp)
-            Layout.bottomMargin: Math.round(19 * DefaultStyle.dp)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(29)
+            Layout.bottomMargin: Utils.getSizeWithScreenRatio(19)
 			color: DefaultStyle.main2_800
             //: "sur %1"
             text: qsTr("welcome_page_subtitle").arg(applicationName)
@@ -42,7 +43,7 @@ LoginLayout {
 		SmallButton {
 			visible: carousel.currentIndex < (carousel.itemsCount - 1)
 			flat: true
-            Layout.rightMargin: Math.round(50 * DefaultStyle.dp)
+            Layout.rightMargin: Utils.getSizeWithScreenRatio(50)
 			Layout.alignment: Qt.AlignVCenter | Layout.AlignRight
 			style: ButtonStyle.noBackground
             //: "Passer"
@@ -55,26 +56,26 @@ LoginLayout {
 		}
 	]
 	centerContent: ColumnLayout {
-        spacing: Math.round(76 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(76)
 		anchors.left: parent.left
 		anchors.top: parent.top
-        anchors.leftMargin: Math.round(308 * DefaultStyle.dp)
-        anchors.topMargin: Math.round(166 * DefaultStyle.dp)
+        anchors.leftMargin: Utils.getSizeWithScreenRatio(308)
+        anchors.topMargin: Utils.getSizeWithScreenRatio(166)
 
 		RowLayout {
 			id: carouselLayout
-            spacing: Math.round(76 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(76)
 			Image {
 				id: carouselImg
-                // Layout.rightMargin: Math.round(40 * DefaultStyle.dp)
-                Layout.preferredWidth: Math.round(153.22 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(155.9 * DefaultStyle.dp)
+                // Layout.rightMargin: Utils.getSizeWithScreenRatio(40)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(153)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(156)
 				fillMode: Image.PreserveAspectFit
 				source: carousel.currentIndex == 0 ? AppIcons.welcomeLinphoneLogo : carousel.currentIndex == 1 ? AppIcons.welcomeLock : AppIcons.welcomeOpenSource
 			}
 			Carousel {
 				id: carousel
-                Layout.leftMargin: Math.round(75.78 * DefaultStyle.dp)
+                Layout.leftMargin: Utils.getSizeWithScreenRatio(76)
 				itemsCount: slideRepeater.count
 				itemsList: Repeater {
 					id: slideRepeater
@@ -91,7 +92,7 @@ LoginLayout {
                             text: qsTr("welcome_page_3_message")}
 					]
 					ColumnLayout {
-                        spacing: Math.round(10 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(10)
 						Text {
 							id: title
 							text: modelData.title
@@ -102,7 +103,7 @@ LoginLayout {
 						}
 						Text {
 							id: txt
-                            Layout.maximumWidth: Math.round(361 * DefaultStyle.dp)
+                            Layout.maximumWidth: Utils.getSizeWithScreenRatio(361)
                             wrapMode: Text.WordWrap
                             font {
                                 pixelSize: Typography.p1.pixelSize
@@ -116,7 +117,7 @@ LoginLayout {
 		}
 
 		BigButton {
-            Layout.leftMargin: Math.round(509 * DefaultStyle.dp)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(509)
             style: ButtonStyle.main
             //: "Suivant"
             text: carousel.currentIndex < (carousel.itemsCount - 1) ? qsTr("next")

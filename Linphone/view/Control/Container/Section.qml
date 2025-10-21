@@ -2,28 +2,30 @@ import QtQuick
 import QtQuick.Layouts
 
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 /*
 Layout with line separator used in several views
 */
 
 ColumnLayout {
-    spacing: Math.round(15 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(15)
 	property alias content: contentLayout.data
 	property alias contentLayout: contentLayout
-    implicitHeight: contentLayout.implicitHeight + Math.max(Math.round(1 * DefaultStyle.dp), 1) + spacing
+    implicitHeight: contentLayout.implicitHeight + Utils.getSizeWithScreenRatio(1) + spacing
 	ColumnLayout {
 		id: contentLayout
-        spacing: Math.round(8 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(8)
 		// width: parent.width
 		// Layout.fillWidth: true
 		// Layout.preferredHeight: childrenRect.height
 		// Layout.preferredWidth: parent.width
-        // Layout.leftMargin: Math.round(8 * DefaultStyle.dp)
+        // Layout.leftMargin: Utils.getSizeWithScreenRatio(8)
 	}
 	Rectangle {
 		color: DefaultStyle.main2_200
 		Layout.fillWidth: true 
-        Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+        Layout.preferredHeight: Utils.getSizeWithScreenRatio(1)
 		width: parent.width
 	}
 }

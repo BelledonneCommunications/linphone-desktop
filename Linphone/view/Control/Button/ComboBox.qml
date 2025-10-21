@@ -149,7 +149,7 @@ Control.ComboBox {
         y: mainItem.height - 1
         width: mainItem.width
         implicitHeight: Math.min(contentItem.implicitHeight, mainWindow.height)
-        padding: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+        padding: Utils.getSizeWithScreenRatio(1)
 
         onOpened: {
             listView.positionViewAtIndex(listView.currentIndex, ListView.Center);
@@ -168,7 +168,7 @@ Control.ComboBox {
             highlight: Rectangle {
                 width: listView.width
                 color: DefaultStyle.main2_200
-                radius: Math.round(15 * DefaultStyle.dp)
+                radius: Utils.getSizeWithScreenRatio(15)
                 y: listView.currentItem ? listView.currentItem.y : 0
             }
 
@@ -190,10 +190,10 @@ Control.ComboBox {
                     anchors.fill: parent
                     EffectImage {
                         id: delegateImg
-                        Layout.preferredWidth: visible ? Math.round(20 * DefaultStyle.dp) : 0
-                        Layout.leftMargin: Math.round(10 * DefaultStyle.dp)
+                        Layout.preferredWidth: visible ? Utils.getSizeWithScreenRatio(20) : 0
+                        Layout.leftMargin: Utils.getSizeWithScreenRatio(10)
                         visible: imageSource != ""
-                        imageWidth: Math.round(20 * DefaultStyle.dp)
+                        imageWidth: Utils.getSizeWithScreenRatio(20)
                         imageSource: typeof (modelData) != "undefined" && modelData.img ? modelData.img : ""
                         fillMode: Image.PreserveAspectFit
                     }
@@ -201,7 +201,7 @@ Control.ComboBox {
                     Text {
                         id: flagItem
                         Layout.preferredWidth: implicitWidth
-                        Layout.leftMargin: delegateImg.visible ? 0 : Math.round(5 * DefaultStyle.dp)
+                        Layout.leftMargin: delegateImg.visible ? 0 : Utils.getSizeWithScreenRatio(5)
                         Layout.alignment: Qt.AlignCenter
                         visible: mainItem.flagRole
                         font {
@@ -213,8 +213,8 @@ Control.ComboBox {
                     }
                     Text {
                         Layout.fillWidth: true
-                        Layout.leftMargin: delegateImg.visible ? 0 : flagItem.visble ? Utils.getSizeWithScreenRatio(5) : Utils.getSizeWithScreenRatio(25)
-                        Layout.rightMargin: Math.round(20 * DefaultStyle.dp)
+                        Layout.leftMargin: delegateImg.visible ? 0 : Utils.getSizeWithScreenRatio(flagItem.visble ? 5 : 25)
+                        Layout.rightMargin: Utils.getSizeWithScreenRatio(20)
                         Layout.alignment: Qt.AlignCenter
                         text: typeof (modelData) != "undefined" ? mainItem.textRole ? modelData[mainItem.textRole] : modelData.text ? modelData.text : modelData : $modelData ? mainItem.textRole ? $modelData[mainItem.textRole] : $modelData : ""
                         elide: Text.ElideRight

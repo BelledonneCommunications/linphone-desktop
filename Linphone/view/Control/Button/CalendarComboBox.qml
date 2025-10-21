@@ -4,6 +4,7 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ComboBox {
 	id: mainItem
@@ -15,24 +16,24 @@ ComboBox {
 		id: contentText
         text: UtilsCpp.formatDate(calendar.selectedDate, false, true, "ddd d, MMMM")
 		anchors.fill: parent
-        anchors.leftMargin: Math.round(15 * DefaultStyle.dp)
+        anchors.leftMargin: Utils.getSizeWithScreenRatio(15)
 		anchors.verticalCenter: parent.verticalCenter
 		verticalAlignment: Text.AlignVCenter
 		font {
-            pixelSize: Math.round(14 * DefaultStyle.dp)
-            weight: Math.min(Math.round(700 * DefaultStyle.dp), 1000)
+            pixelSize: Utils.getSizeWithScreenRatio(14)
+            weight: Math.min(Utils.getSizeWithScreenRatio(700), 1000)
 		}
 	}
 	popup: Control.Popup {
 		id: popupItem
 		y: mainItem.height
-        width: Math.round(321 * DefaultStyle.dp)
-        height: Math.round(270 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(321)
+        height: Utils.getSizeWithScreenRatio(270)
 		closePolicy: Popup.NoAutoClose
-        topPadding: Math.round(25 * DefaultStyle.dp)
-        bottomPadding: Math.round(24 * DefaultStyle.dp)
-        leftPadding: Math.round(21 * DefaultStyle.dp)
-        rightPadding: Math.round(19 * DefaultStyle.dp)
+        topPadding: Utils.getSizeWithScreenRatio(25)
+        bottomPadding: Utils.getSizeWithScreenRatio(24)
+        leftPadding: Utils.getSizeWithScreenRatio(21)
+        rightPadding: Utils.getSizeWithScreenRatio(19)
 		onOpened: calendar.forceActiveFocus()
 		background: Item {
 			anchors.fill: parent
@@ -40,7 +41,7 @@ ComboBox {
 				id: calendarBg
 				anchors.fill: parent
 				color: DefaultStyle.grey_0
-                radius: Math.round(16 * DefaultStyle.dp)
+                radius: Utils.getSizeWithScreenRatio(16)
 				border.color: DefaultStyle.main1_500_main
 				border.width: calendar.activeFocus? 1 : 0
 			}

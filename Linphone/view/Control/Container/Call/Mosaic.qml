@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import QtQml.Models
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
 ColumnLayout {
@@ -56,7 +57,7 @@ ColumnLayout {
 	
 	GridView{
 		id: grid
-        property real margin: Math.round(10 * DefaultStyle.dp)
+        property real margin: Utils.getSizeWithScreenRatio(10)
 		property int itemCount: model.count ? model.count :( model.length ? model.length : 0)
 		property int columns: 1
 		property int rows: 1

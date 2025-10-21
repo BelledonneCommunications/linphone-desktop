@@ -12,7 +12,7 @@ RowLayout {
 	property var propertyOwner
 	property var propertyOwnerGui
 	property bool enabled: true
-    spacing : Math.round(20 * DefaultStyle.dp)
+    spacing : Utils.getSizeWithScreenRatio(20)
 	signal checkedChanged(bool checked)
 
 	function setChecked(value) {
@@ -20,8 +20,8 @@ RowLayout {
 	}
 
 	ColumnLayout {
-        Layout.minimumHeight: Math.round(32 * DefaultStyle.dp)
-        spacing: Math.round(4 * DefaultStyle.dp)
+        Layout.minimumHeight: Utils.getSizeWithScreenRatio(32)
+        spacing: Utils.getSizeWithScreenRatio(4)
 		Text {
 			text: titleText
 			font: Typography.p2l

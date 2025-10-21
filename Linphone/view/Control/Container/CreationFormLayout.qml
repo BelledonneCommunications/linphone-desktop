@@ -72,17 +72,17 @@ FocusScope {
                     }
                     Accessible.name: mainItem.startGroupButtonText
                     contentItem: RowLayout {
-                        spacing: Math.round(16 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(16)
                         anchors.verticalCenter: parent.verticalCenter
                         Rectangle {
-                            width: Math.round(44 * DefaultStyle.dp)
+                            width: Utils.getSizeWithScreenRatio(44)
                             height: width
                             radius: width / 2
                             color: DefaultStyle.main1_500_main
                             EffectImage {
                                 imageSource: AppIcons.usersThreeFilled
                                 anchors.centerIn: parent
-                                width: Math.round(24 * DefaultStyle.dp)
+                                width: Utils.getSizeWithScreenRatio(24)
                                 height: width
                                 fillMode: Image.PreserveAspectFit
                                 colorizationColor: DefaultStyle.grey_0

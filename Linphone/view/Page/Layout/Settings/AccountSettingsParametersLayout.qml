@@ -7,6 +7,7 @@ import Linphone
 import SettingsCpp 1.0
 import UtilsCpp
 import ConstantsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 AbstractSettingsLayout {
     id: mainItem
@@ -65,7 +66,7 @@ AbstractSettingsLayout {
         ColumnLayout {
             id: column
             Layout.fillWidth: true
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
             DecoratedTextField {
                 id: mwiServerAddressField
                 propertyName: "mwiServerAddress"
@@ -114,7 +115,7 @@ AbstractSettingsLayout {
         id: advancedParametersComponent
         ColumnLayout {
             Layout.fillWidth: true
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
             Text {
                 //: "Transport"
                 text: qsTr("account_settings_transport_title")

@@ -22,30 +22,30 @@ Control.Page {
 	signal returnRequested()
 	signal validateRequested()
 
-    topPadding: Math.round(20 * DefaultStyle.dp)
-    bottomPadding: Math.round(20 * DefaultStyle.dp)
-    leftPadding: Math.round(17 * DefaultStyle.dp)
-    rightPadding: Math.round(5 * DefaultStyle.dp)
+    topPadding: Utils.getSizeWithScreenRatio(20)
+    bottomPadding: Utils.getSizeWithScreenRatio(20)
+    leftPadding: Utils.getSizeWithScreenRatio(17)
+    rightPadding: Utils.getSizeWithScreenRatio(5)
 
 	background: Rectangle {
 		width: mainItem.width
 		height: mainItem.height
 		color: DefaultStyle.grey_100
-        radius: Math.round(15 * DefaultStyle.dp)
+        radius: Utils.getSizeWithScreenRatio(15)
 	}
 	
 	header: Control.Control {
 		id: pageHeader
 		width: mainItem.width
-        height: Math.round(67 * DefaultStyle.dp)
-        leftPadding: Math.round(10 * DefaultStyle.dp)
-        rightPadding: Math.round(10 * DefaultStyle.dp)
+        height: Utils.getSizeWithScreenRatio(67)
+        leftPadding: Utils.getSizeWithScreenRatio(10)
+        rightPadding: Utils.getSizeWithScreenRatio(10)
 		background: Rectangle {
 			id: headerBackground
 			width: pageHeader.width
 			height: pageHeader.height
 			color: DefaultStyle.grey_0
-            radius: Math.round(15 * DefaultStyle.dp)
+            radius: Utils.getSizeWithScreenRatio(15)
 			Rectangle {
 				y: pageHeader.height/2
 				height: pageHeader.height/2
@@ -56,7 +56,7 @@ Control.Page {
 			id: headerStack
 			RowLayout {
 				Layout.alignment: Qt.AlignVCenter
-                spacing: Math.round(10 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(10)
 				Text {
 					text: mainItem.headerTitleText
 					Layout.fillWidth: true
@@ -87,12 +87,12 @@ Control.Page {
 			}
 			RowLayout {
 				Layout.alignment: Qt.AlignVCenter
-                spacing: Math.round(10 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(10)
 				Button {
 					style: ButtonStyle.noBackgroundOrange
 					icon.source: AppIcons.leftArrow
-                    icon.width: Math.round(24 * DefaultStyle.dp)
-                    icon.height: Math.round(24 * DefaultStyle.dp)
+                    icon.width: Utils.getSizeWithScreenRatio(24)
+                    icon.height: Utils.getSizeWithScreenRatio(24)
 					onClicked: mainItem.returnRequested()
 				}
 				ColumnLayout {
@@ -114,8 +114,8 @@ Control.Page {
 						text: mainItem.headerSubtitleText
 						color: DefaultStyle.main2_500_main
 						font {
-                            pixelSize: Math.round(12 * DefaultStyle.dp)
-                            weight: Math.round(300 * DefaultStyle.dp)
+                            pixelSize: Utils.getSizeWithScreenRatio(12)
+                            weight: Utils.getSizeWithScreenRatio(300)
 						}
 					}
 				}
@@ -145,7 +145,7 @@ Control.Page {
 	    Control.ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 		Control.Control {
 			id: contentControl
-			rightPadding: Math.round(scrollbar.width + 10 * DefaultStyle.dp)
+			rightPadding: scrollbar.width + Utils.getSizeWithScreenRatio(10)
 			anchors.left: scrollview.left
 			anchors.right: scrollview.right
 			width: scrollview.width

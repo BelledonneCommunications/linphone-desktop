@@ -64,23 +64,23 @@ ColumnLayout {
     }
     RowLayout {
         id: categoriesRow
-        Layout.preferredWidth: parent.width - Math.round(15 * DefaultStyle.dp)
-        Layout.preferredHeight: Math.round(35 * DefaultStyle.dp)
-        Layout.leftMargin: Math.round(5 * DefaultStyle.dp)
+        Layout.preferredWidth: parent.width - Utils.getSizeWithScreenRatio(15)
+        Layout.preferredHeight: Utils.getSizeWithScreenRatio(35)
+        Layout.leftMargin: Utils.getSizeWithScreenRatio(5)
         Layout.alignment: Qt.AlignCenter
-        spacing: searchField.widthSize > 0 ? Math.round(7 * DefaultStyle.dp) : Math.round(17 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(searchField.widthSize > 0 ? 7 : 17)
         clip: true
         Image {
             id: searchIcon
             source: "image://emoji/icons/search.svg"
-            sourceSize: Qt.size(Math.round(21 * DefaultStyle.dp), Math.round(21 * DefaultStyle.dp))
+            sourceSize: Qt.size(Utils.getSizeWithScreenRatio(21),Utils.getSizeWithScreenRatio(21))
             visible: !mainItem.searchMode
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
                     mainItem.searchMode = true
-                    searchField.widthSize = categoriesRow.width - Math.round(25 * DefaultStyle.dp)
+                    searchField.widthSize = categoriesRow.width - Utils.getSizeWithScreenRatio(25)
                     list.model = 1
                     searchField.focus = true
                 }
@@ -89,7 +89,7 @@ ColumnLayout {
         Image {
             id: closeIcon
             source: "image://emoji/icons/close.svg"
-            sourceSize: Qt.size(Math.round(21 * DefaultStyle.dp), Math.round(21 * DefaultStyle.dp))
+            sourceSize: Qt.size(Utils.getSizeWithScreenRatio(21),Utils.getSizeWithScreenRatio(21))
             visible: mainItem.searchMode
             MouseArea {
                 anchors.fill: parent
@@ -106,7 +106,7 @@ ColumnLayout {
             id: searchField
             property int widthSize: 0
             Layout.preferredWidth: widthSize
-            Layout.preferredHeight: Math.round(28 * DefaultStyle.dp)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
             visible: widthSize > 0 ? true : false
             placeholderText: 'Search Emoji'
             Behavior on widthSize {
@@ -115,7 +115,7 @@ ColumnLayout {
                 }
             }
             background: Rectangle {
-                radius: Math.round(10 * DefaultStyle.dp)
+                radius: Utils.getSizeWithScreenRatio(10)
                 border.color: DefaultStyle.main1_500_main
             }
             onTextChanged: {
@@ -134,7 +134,7 @@ ColumnLayout {
             delegate: Image {
                 id: icon
                 source: "image://emoji/icons/" + cateIcons.blackSvg[index]
-                sourceSize: Qt.size(Math.round(20 * DefaultStyle.dp), Math.round(20 * DefaultStyle.dp))
+                sourceSize: Qt.size(Utils.getSizeWithScreenRatio(20),Utils.getSizeWithScreenRatio(20))
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
@@ -156,46 +156,46 @@ ColumnLayout {
     ListView {
         id: list
         width: mainItem.width
-        height: Math.round(250 * DefaultStyle.dp)
+        height: Utils.getSizeWithScreenRatio(250)
         Layout.fillWidth: true
         Layout.fillHeight: true
         model: mainItem.categories
-        spacing: Math.round(30 * DefaultStyle.dp)
-        topMargin: Math.round(7 * DefaultStyle.dp)
-        bottomMargin: Math.round(7 * DefaultStyle.dp)
-        leftMargin: Math.round(12 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(30)
+        topMargin: Utils.getSizeWithScreenRatio(7)
+        bottomMargin: Utils.getSizeWithScreenRatio(7)
+        leftMargin: Utils.getSizeWithScreenRatio(12)
         clip: true
         delegate: GridLayout {
             id: grid
             property string category: mainItem.searchMode ? 'Search Result' : modelData
-            property int columnCount: Math.round(list.width / 50 * DefaultStyle.dp)
+            property int columnCount: Math.round(list.width / Utils.getSizeWithScreenRatio(50))
             property int sc: grid.category === 'People & Body' ? mainItem.skinColor : -1
             columns: columnCount
             width: list.width
-            columnSpacing: Math.round(5 * DefaultStyle.dp)
+            columnSpacing: Utils.getSizeWithScreenRatio(5)
             Text {
                 Layout.fillWidth: true
-                Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
                 text: grid.category
                 color: Qt.rgba(0, 0, 0, 0.5)
-                font.pixelSize: Math.round(15 * DefaultStyle.dp)
+                font.pixelSize: Utils.getSizeWithScreenRatio(15)
                 horizontalAlignment: Text.AlignLeft
-                leftPadding: Math.round(6 * DefaultStyle.dp)
+                leftPadding: Utils.getSizeWithScreenRatio(6)
                 Layout.columnSpan: grid.columnCount != 0 ? grid.columnCount : 1
-                Layout.bottomMargin: Math.round(8 * DefaultStyle.dp)
+                Layout.bottomMargin: Utils.getSizeWithScreenRatio(8)
             }
             Repeater {
                 model: mainItem.searchMode ? mainItem.searchModel : mainItem.model.count(grid.category)
                 delegate: Rectangle  {
                     property alias es: emojiSvg
-                    Layout.preferredWidth: Math.round(40 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(40 * DefaultStyle.dp)
-                    radius: Math.round(40 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(40)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(40)
+                    radius: Utils.getSizeWithScreenRatio(40)
                     color: mouseArea.containsMouse ? '#e6e6e6' : '#ffffff'
                     Image {
                         id: emojiSvg
                         source: mainItem.searchMode ? path : mainItem.model.path(grid.category, index, grid.sc)
-                        sourceSize: Qt.size(Math.round(30 * DefaultStyle.dp), Math.round(30 * DefaultStyle.dp))
+                        sourceSize: Qt.size(Utils.getSizeWithScreenRatio(30),Utils.getSizeWithScreenRatio(30))
                         anchors.centerIn: parent
                         asynchronous: true
                     }
@@ -224,7 +224,7 @@ ColumnLayout {
         }
     }
     RowLayout {
-        Layout.preferredHeight: Math.round(35 * DefaultStyle.dp)
+        Layout.preferredHeight: Utils.getSizeWithScreenRatio(35)
         Layout.alignment: Qt.AlignCenter
         spacing: 10
         Repeater {
@@ -234,10 +234,10 @@ ColumnLayout {
             model: 6
             delegate: Rectangle {
                 id: colorRect
-                Layout.preferredWidth: Math.round(30 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
-                Layout.bottomMargin: Math.round(3 * DefaultStyle.dp)
-                radius: Math.round(30 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
+                Layout.bottomMargin: Utils.getSizeWithScreenRatio(3)
+                radius: Utils.getSizeWithScreenRatio(30)
                 scale: 0.65
                 color: skinColors.colors[index]
                 Behavior on scale {

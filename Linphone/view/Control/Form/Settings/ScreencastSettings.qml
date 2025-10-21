@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp 1.0
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
 	id: mainItem
@@ -14,21 +15,21 @@ ColumnLayout {
 	property bool isLocalScreenSharing : conference?.core.isLocalScreenSharing || false
 	property bool screenSharingAvailable: !!conference && (!conference.core.isScreenSharingEnabled || isLocalScreenSharing)
 
-    spacing: Math.round(12 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(12)
 
 	onIsLocalScreenSharingChanged:  {if(isLocalScreenSharing) mainItem.call.core.videoSourceDescriptor = mainItem.desc }
 	Text {
 		Layout.fillWidth: true
         //: "Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants"
         text: qsTr("screencast_settings_choose_window_text")
-        font.pixelSize: Math.round(14 * DefaultStyle.dp)
+        font.pixelSize: Utils.getSizeWithScreenRatio(14)
 		color: DefaultStyle.main2_500_main
 	}
 	TabBar {
 		Layout.fillWidth: true
 		id: bar
-    	spacing: Math.round(40 * DefaultStyle.dp)
-        pixelSize: Math.round(16 * DefaultStyle.dp)
+    	spacing: Utils.getSizeWithScreenRatio(40)
+        pixelSize: Utils.getSizeWithScreenRatio(16)
         //: "Ecran entier"
         model: [qsTr("screencast_settings_all_screen_label"),
             //: "Fenêtre"
@@ -42,18 +43,18 @@ ColumnLayout {
 		property bool selected: false
 		property bool displayScreen:  true
         property real horizontalMargin: 0
-        leftPadding: Math.round(18 * DefaultStyle.dp)
-        rightPadding: Math.round(18 * DefaultStyle.dp)
-        topPadding: Math.round(13 * DefaultStyle.dp)
-        bottomPadding: Math.round(13 * DefaultStyle.dp)
+        leftPadding: Utils.getSizeWithScreenRatio(18)
+        rightPadding: Utils.getSizeWithScreenRatio(18)
+        topPadding: Utils.getSizeWithScreenRatio(13)
+        bottomPadding: Utils.getSizeWithScreenRatio(13)
 		background: Rectangle {
 			anchors.fill: parent
 			anchors.leftMargin: screenPreview.horizontalMargin
 			anchors.rightMargin: screenPreview.horizontalMargin
 			color: screenPreview.selected ? DefaultStyle.main2_100 : DefaultStyle.grey_0
-            border.width: Math.round(2 * DefaultStyle.dp)
+            border.width: Utils.getSizeWithScreenRatio(2)
 			border.color: screenPreview.selected ? DefaultStyle.main2_400 : DefaultStyle.main2_200
-            radius: Math.round(10 * DefaultStyle.dp)
+            radius: Utils.getSizeWithScreenRatio(10)
 			MouseArea {
 				anchors.fill: parent
 				onClicked: {
@@ -68,7 +69,7 @@ ColumnLayout {
 				Layout.fillHeight: true
 				Image {
 					anchors.centerIn: parent
-                    //Layout.preferredHeight: Math.round(170 * DefaultStyle.dp)
+                    //Layout.preferredHeight: Utils.getSizeWithScreenRatio(170)
 					source: $modelData?.windowId ? "image://window/"+ $modelData.windowId :  "image://screen/"+ $modelData.screenIndex
 					sourceSize.width: parent.width
 					sourceSize.height: parent.height
@@ -76,11 +77,11 @@ ColumnLayout {
 				}
 			}
 			RowLayout{
-                Layout.topMargin: Math.round(6 * DefaultStyle.dp)
-                spacing: Math.round(5 * DefaultStyle.dp)
+                Layout.topMargin: Utils.getSizeWithScreenRatio(6)
+                spacing: Utils.getSizeWithScreenRatio(5)
 				Image{
-                    Layout.preferredHeight: Math.round(15 * DefaultStyle.dp)
-                    Layout.preferredWidth: Math.round(15 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(15)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(15)
 					visible: !!$modelData?.windowId
 					source: visible ? "image://window_icon/"+ $modelData.windowId : ''
 					sourceSize.width: width
@@ -92,7 +93,7 @@ ColumnLayout {
                     //: "Ecran %1"
                     text: !!$modelData?.windowId ? $modelData.name : qsTr("screencast_settings_screen").arg(screenIndex+1)
 					horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: Math.round((displayScreen ? 14 : 10) * DefaultStyle.dp)
+                    font.pixelSize: Utils.getSizeWithScreenRatio(displayScreen ? 14 : 10)
 					elide: Text.ElideRight
 					maximumLineCount: 1
 				}
@@ -104,7 +105,7 @@ ColumnLayout {
 		currentIndex: bar.currentIndex
 		ListView{
 			id: screensLayout
-            spacing: Math.round(16 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(16)
 			clip: true
 			Layout.fillWidth: true
 			height: visible ? contentHeight : 0
@@ -118,9 +119,9 @@ ColumnLayout {
 				else currentIndex = -1
 			}
 			delegate: ScreenPreviewLayout {
-				horizontalMargin: Math.round((28 - 20 ) * DefaultStyle.dp) // 20 coming from CallsWindow panel
+				horizontalMargin: Utils.getSizeWithScreenRatio(28 - 20 ) // 20 coming from CallsWindow panel
 				width: screensLayout.width
-				height: Math.round(219 * DefaultStyle.dp)
+				height: Utils.getSizeWithScreenRatio(219)
 				screenIndex: index
 				onClicked: {//screensLayout.selectedIndex = index
 					screensLayout.currentIndex = index
@@ -147,14 +148,14 @@ ColumnLayout {
 				else currentIndex = -1
 			}
 			cellWidth: width / 2
-            cellHeight: Math.round((112 + 15) * DefaultStyle.dp)
+            cellHeight: Utils.getSizeWithScreenRatio(112 + 15)
 			clip: true
 			delegate: Item {
 				width: windowsLayout.cellWidth
 				height: windowsLayout.cellHeight
 				ScreenPreviewLayout {
 					anchors.fill: parent
-					anchors.margins:  Math.round(7 * DefaultStyle.dp)
+					anchors.margins: Utils.getSizeWithScreenRatio(7)
 					displayScreen: false
 					screenIndex: index
 					onClicked: {

@@ -4,6 +4,7 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
 	id: labelButton
@@ -11,18 +12,18 @@ ColumnLayout {
 	property alias button: button
 	property alias text: text
 	property string label
-	spacing: Math.round(8 * DefaultStyle.dp)
+	spacing: Utils.getSizeWithScreenRatio(8)
 	Button {
 		id: button
 		Layout.alignment: Qt.AlignHCenter
-		Layout.preferredWidth: Math.round(56 * DefaultStyle.dp)
-		Layout.preferredHeight: Math.round(56 * DefaultStyle.dp)
-		topPadding: Math.round(16 * DefaultStyle.dp)
-		bottomPadding: Math.round(16 * DefaultStyle.dp)
-		leftPadding: Math.round(16 * DefaultStyle.dp)
-		rightPadding: Math.round(16 * DefaultStyle.dp)
+		Layout.preferredWidth: Utils.getSizeWithScreenRatio(56)
+		Layout.preferredHeight: Utils.getSizeWithScreenRatio(56)
+		topPadding: Utils.getSizeWithScreenRatio(16)
+		bottomPadding: Utils.getSizeWithScreenRatio(16)
+		leftPadding: Utils.getSizeWithScreenRatio(16)
+		rightPadding: Utils.getSizeWithScreenRatio(16)
 		contentImageColor: DefaultStyle.main2_600
-		radius: Math.round(40 * DefaultStyle.dp)
+		radius: Utils.getSizeWithScreenRatio(40)
 		style: ButtonStyle.grey
 		Accessible.name: labelButton.label
 	}

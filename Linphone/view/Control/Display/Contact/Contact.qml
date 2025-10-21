@@ -120,8 +120,8 @@ Control.Control{
 					color: DefaultStyle.grey_0
 					minimumPixelSize: 5
 					fontSizeMode: Text.Fit
-                    font.pixelSize: Math.round(11 *  DefaultStyle.dp)
-                    font.weight: Math.round(700 *  DefaultStyle.dp)
+                    font.pixelSize: Utils.getSizeWithScreenRatio(11)
+                    font.weight: Utils.getSizeWithScreenRatio(700)
 					text: mainItem.account.core.unreadNotifications >= 100 ? '99+' : mainItem.account.core.unreadNotifications
 				}
 			}

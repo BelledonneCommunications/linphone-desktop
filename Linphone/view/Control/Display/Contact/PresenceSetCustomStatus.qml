@@ -4,10 +4,11 @@ import QtQuick.Layouts
 import Linphone
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Column {
 	id: mainItem
-	spacing: 20 * DefaultStyle.dp
+	spacing: Utils.getSizeWithScreenRatio(20)
 	anchors.centerIn: parent
 	property var accountCore
 	signal isSet
@@ -21,15 +22,15 @@ Column {
 
 	Rectangle {
 		width: parent.width
-		height: 150 * DefaultStyle.dp
+		height: Utils.getSizeWithScreenRatio(150)
 		color: "transparent"
 		border.color: DefaultStyle.main1_500_main
-		border.width: 1 * DefaultStyle.dp
-		radius: 8 * DefaultStyle.dp
+		border.width: Utils.getSizeWithScreenRatio(1)
+		radius: Utils.getSizeWithScreenRatio(8)
 
 		ColumnLayout {
 			anchors.fill: parent
-			anchors.margins: 10 * DefaultStyle.dp
+			anchors.margins: Utils.getSizeWithScreenRatio(10)
 			TextEdit {
 				id: statusMessage
 				wrapMode: TextEdit.Wrap
@@ -62,7 +63,7 @@ Column {
 	}
 
 	Row {
-		spacing: 10 * DefaultStyle.dp
+		spacing: Utils.getSizeWithScreenRatio(10)
 		anchors.right: parent.right
 
 		SmallButton {

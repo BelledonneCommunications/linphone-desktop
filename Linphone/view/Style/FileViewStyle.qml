@@ -2,6 +2,7 @@ pragma Singleton
 import QtQml
 
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
 
@@ -16,13 +17,13 @@ QtObject {
 	property int width: 100
 	
 	property QtObject name: QtObject{
-		property int pointSize: Math.round(DefaultStyle.dp * 7)
+		property int pointSize: Utils.getSizeWithScreenRatio(7)
 	}
 	
 	property QtObject download: QtObject{
 		property string icon: AppIcons.download
 		property int height: 20
-		property int pointSize: Math.round(DefaultStyle.dp * 8)
+		property int pointSize: Utils.getSizeWithScreenRatio(8)
 		property int iconSize: 30
 	}
 	property QtObject thumbnailVideoIcon: QtObject {
@@ -41,7 +42,7 @@ QtObject {
 		property string imageIcon: AppIcons.fileImage
 		property int iconSize: 60
 		property int internalSize: 37
-		property int radius: Math.round(5 * DefaultStyle.dp)
+		property int radius: Utils.getSizeWithScreenRatio(5)
 		
 		property QtObject background: QtObject {
 			property var color: DefaultStyle.grey_0
@@ -50,7 +51,7 @@ QtObject {
 		
 		property QtObject text: QtObject {
 			property var color: DefaultStyle.grey_0
-			property int pointSize: Math.round(DefaultStyle.dp * 9)
+			property int pointSize: Utils.getSizeWithScreenRatio(9)
 		}
 	}
 	

@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Effects
 import UtilsCpp
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 FormItemLayout {
 	id: mainItem
@@ -39,7 +40,7 @@ FormItemLayout {
 	
 	contentItem: TextField {
 		id: textField
-        Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+        Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 		placeholderText: useTitleAsPlaceHolder ? mainItem.title : mainItem.placeHolder
 		initialText: (mainItem.propertyOwnerGui ? mainItem.propertyOwnerGui.core[mainItem.propertyName] : mainItem.propertyOwner[mainItem.propertyName]) || ''
 		customWidth: mainItem.parent.width

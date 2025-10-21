@@ -8,6 +8,7 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
 	id: mainItem
@@ -30,8 +31,8 @@ ColumnLayout {
 		contact: mainItem.contact
 		displayNameVal: mainItem.chatCore.avatarUri
 		secured: mainItem.chatGui && mainItem.chatGui.core.isSecured
-		Layout.preferredWidth: Math.round(100 * DefaultStyle.dp)
-		Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
+		Layout.preferredWidth: Utils.getSizeWithScreenRatio(100)
+		Layout.preferredHeight: Utils.getSizeWithScreenRatio(100)
 		PopupButton {
 			id: debugButton
 			z: parent.z + 1
@@ -77,17 +78,17 @@ ColumnLayout {
 			
 			Item {
 				visible: titleMainItem.canEditSubject
-				Layout.preferredWidth: Math.round(18 * DefaultStyle.dp)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(18)
 			}
 
 			Rectangle {
 				color: "transparent"
 				border.color: titleMainItem.isEditingSubject ? DefaultStyle.main1_500_main : "transparent"
 				border.width: 1
-				radius: Math.round(4 * DefaultStyle.dp)
-				Layout.preferredWidth: Math.round(150 * DefaultStyle.dp)
+				radius: Utils.getSizeWithScreenRatio(4)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(150)
 				Layout.preferredHeight: title.contentHeight
-				anchors.margins: Math.round(2 * DefaultStyle.dp)
+				anchors.margins: Utils.getSizeWithScreenRatio(2)
 
 				TextEdit {
 					id: title
@@ -111,8 +112,8 @@ ColumnLayout {
 			Item {
 				visible: titleMainItem.canEditSubject
 				Layout.alignment: Qt.AlignVCenter
-				Layout.preferredWidth: Math.round(18 * DefaultStyle.dp)
-				Layout.preferredHeight: Math.round(18 * DefaultStyle.dp)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(18)
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(18)
 
 				EffectImage {
 					anchors.fill: parent
@@ -148,7 +149,7 @@ ColumnLayout {
 	Loader {
 		id: titleLayout
 		Layout.alignment: Qt.AlignHCenter
-		Layout.topMargin: Math.round(11 * DefaultStyle.dp)
+		Layout.topMargin: Utils.getSizeWithScreenRatio(11)
 		sourceComponent: mainItem.isGroup ? groupTitleContent : oneOneTitleContent
 	}
 	
@@ -157,7 +158,7 @@ ColumnLayout {
 		color: DefaultStyle.main2_700
 		text: mainItem.chatCore.peerAddress
 		Layout.alignment: Qt.AlignHCenter
-		Layout.topMargin: Math.round(5 * DefaultStyle.dp)
+		Layout.topMargin: Utils.getSizeWithScreenRatio(5)
 	}
 	
 	Text {
@@ -166,24 +167,24 @@ ColumnLayout {
 		color: mainItem.contact ? mainItem.contact.core.presenceColor : "transparent"
 		text: mainItem.contact ? mainItem.contact.core.presenceStatus : ""
 		Layout.alignment: Qt.AlignHCenter
-		Layout.topMargin: Math.round(5 * DefaultStyle.dp)
+		Layout.topMargin: Utils.getSizeWithScreenRatio(5)
 	}
 	
 	RowLayout {
-		spacing: Math.round(10 * DefaultStyle.dp)
+		spacing: Utils.getSizeWithScreenRatio(10)
 		Layout.alignment: Qt.AlignHCenter
-		Layout.topMargin: Math.round(30 * DefaultStyle.dp)
-		Layout.preferredHeight: Math.round(110 * DefaultStyle.dp)
-		Layout.minimumHeight: Math.round(110 * DefaultStyle.dp)
+		Layout.topMargin: Utils.getSizeWithScreenRatio(30)
+		Layout.preferredHeight: Utils.getSizeWithScreenRatio(110)
+		Layout.minimumHeight: Utils.getSizeWithScreenRatio(110)
 		LabelButton {
 			text.Layout.fillWidth: true
 			text.horizontalAlignment: Text.AlignHCenter
 			text.wrapMode: Text.Wrap
 			Layout.alignment: Qt.AlignTop
-			Layout.preferredWidth: Math.round(130 * DefaultStyle.dp)
-			Layout.maximumWidth: Math.round(130 * DefaultStyle.dp)
-			button.icon.width: Math.round(24 * DefaultStyle.dp)
-			button.icon.height: Math.round(24 * DefaultStyle.dp)
+			Layout.preferredWidth: Utils.getSizeWithScreenRatio(130)
+			Layout.maximumWidth: Utils.getSizeWithScreenRatio(130)
+			button.icon.width: Utils.getSizeWithScreenRatio(24)
+			button.icon.height: Utils.getSizeWithScreenRatio(24)
 			button.icon.source: AppIcons.phone
 			//: "Appel"
 			label: qsTr("one_one_infos_call")
@@ -194,10 +195,10 @@ ColumnLayout {
 			text.horizontalAlignment: Text.AlignHCenter
 			text.wrapMode: Text.Wrap
 			Layout.alignment: Qt.AlignTop
-			Layout.preferredWidth: Math.round(130 * DefaultStyle.dp)
-			Layout.maximumWidth: Math.round(130 * DefaultStyle.dp)
-			button.icon.width: Math.round(24 * DefaultStyle.dp)
-			button.icon.height: Math.round(24 * DefaultStyle.dp)
+			Layout.preferredWidth: Utils.getSizeWithScreenRatio(130)
+			Layout.maximumWidth: Utils.getSizeWithScreenRatio(130)
+			button.icon.width: Utils.getSizeWithScreenRatio(24)
+			button.icon.height: Utils.getSizeWithScreenRatio(24)
 			button.icon.source: mainItem.chatCore.muted ? AppIcons.bell : AppIcons.bellSlash
 			//: "Sourdine"
 			label: mainItem.chatCore.muted ? qsTr("one_one_infos_unmute") : qsTr("one_one_infos_mute")
@@ -211,10 +212,10 @@ ColumnLayout {
 			text.horizontalAlignment: Text.AlignHCenter
 			text.wrapMode: Text.Wrap
 			Layout.alignment: Qt.AlignTop
-			Layout.preferredWidth: Math.round(130 * DefaultStyle.dp)
-			Layout.maximumWidth: Math.round(130 * DefaultStyle.dp)
-			button.icon.width: Math.round(24 * DefaultStyle.dp)
-			button.icon.height: Math.round(24 * DefaultStyle.dp)
+			Layout.preferredWidth: Utils.getSizeWithScreenRatio(130)
+			Layout.maximumWidth: Utils.getSizeWithScreenRatio(130)
+			button.icon.width: Utils.getSizeWithScreenRatio(24)
+			button.icon.height: Utils.getSizeWithScreenRatio(24)
 			button.icon.source: mainItem.isGroup 
 				? AppIcons.videoconference
 				: mainItem.isAppFriend
@@ -245,9 +246,9 @@ ColumnLayout {
 		id: scrollView
 		Layout.fillHeight: true
 		Layout.fillWidth: true
-		Layout.topMargin: Math.round(30 * DefaultStyle.dp)
+		Layout.topMargin: Utils.getSizeWithScreenRatio(30)
 		clip: true
-		Layout.leftMargin: Math.round(15 * DefaultStyle.dp)
+		Layout.leftMargin: Utils.getSizeWithScreenRatio(15)
 
 		Control.ScrollBar.vertical: ScrollBar {
 			id: scrollbar
@@ -259,7 +260,7 @@ ColumnLayout {
 		
 		ColumnLayout {
 			spacing: 0
-			width: scrollView.width - scrollbar.width - Math.round(5 * DefaultStyle.dp)
+			width: scrollView.width - scrollbar.width - Utils.getSizeWithScreenRatio(5)
 			
 			Loader {
 				id: participantLoader
@@ -282,7 +283,7 @@ ColumnLayout {
 			}
 
 			ChatInfoActionsGroup {
-				Layout.topMargin: Math.round(30 * DefaultStyle.dp)
+				Layout.topMargin: Utils.getSizeWithScreenRatio(30)
 				//: Medias & documents
 				title: qsTr("group_infos_media_docs")
 				entries: [
@@ -312,7 +313,7 @@ ColumnLayout {
 			}
 		
 			ChatInfoActionsGroup {
-				Layout.topMargin: Math.round(17 * DefaultStyle.dp)
+				Layout.topMargin: Utils.getSizeWithScreenRatio(17)
 				//: Other actions
 				title: qsTr("group_infos_other_actions")
 				entries: mainItem.isGroup
@@ -405,6 +406,6 @@ ColumnLayout {
 
 	Item {
 		Layout.fillHeight: true
-		Layout.preferredHeight: Math.round(50 * DefaultStyle.dp)
+		Layout.preferredHeight: Utils.getSizeWithScreenRatio(50)
 	}
 }

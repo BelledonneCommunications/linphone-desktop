@@ -3,14 +3,15 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Button {
 	id: mainItem
-    icon.width: Math.round(24 * DefaultStyle.dp)
-    icon.height: Math.round(24 * DefaultStyle.dp)
+    icon.width: Utils.getSizeWithScreenRatio(24)
+    icon.height: Utils.getSizeWithScreenRatio(24)
     textSize: Typography.p1.pixelSize
     textWeight: Typography.p1.weight
-    radius: Math.round(5 * DefaultStyle.dp)
+    radius: Utils.getSizeWithScreenRatio(5)
 	shadowEnabled: mainItem.activeFocus || hovered
 	style: ButtonStyle.hoveredBackground
 

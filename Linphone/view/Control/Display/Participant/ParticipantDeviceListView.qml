@@ -2,7 +2,8 @@ import QtQuick
 import QtQuick.Layouts
 
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
 	id: mainItem
@@ -10,8 +11,8 @@ ListView {
 	height: contentHeight
 	visible: contentHeight > 0
 	clip: true
-    rightMargin: Math.round(5 * DefaultStyle.dp)
-    spacing: Math.round(5 * DefaultStyle.dp)
+    rightMargin: Utils.getSizeWithScreenRatio(5)
+    spacing: Utils.getSizeWithScreenRatio(5)
 
 	property string searchBarText
 
@@ -31,28 +32,28 @@ ListView {
 	}
 
 	delegate: Item {
-        height: Math.round(56 * DefaultStyle.dp)
+        height: Utils.getSizeWithScreenRatio(56)
 		width: mainItem.width
 		
 		RowLayout {
 			id: participantDelegate
 			anchors.left: parent.left
-            anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
+            anchors.leftMargin: Utils.getSizeWithScreenRatio(10)
 			anchors.right: parent.right
-            anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
+            anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
 			anchors.verticalCenter: parent.verticalCenter
-            spacing: Math.round(10 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(10)
 			z: 1
 			Avatar {
-                Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
 				_address: modelData.core.address
 				secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 				shadowEnabled: false
 			}
 			Text {
 				text: modelData.core.displayName
-                font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                font.pixelSize: Utils.getSizeWithScreenRatio(14)
 				font.capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
 				maximumLineCount: 1
 				Layout.fillWidth: true

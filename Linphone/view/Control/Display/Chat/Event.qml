@@ -2,10 +2,11 @@ import QtQuick
 import QtQuick.Layouts
 import Linphone
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 RowLayout {
 	id: mainLayout
-	height: 40 * DefaultStyle.dp
+	height: Utils.getSizeWithScreenRatio(40)
 	visible: eventLogCore.handled
 	property EventLogGui eventLogGui
 	property var eventLogCore: eventLogGui.core
@@ -17,8 +18,8 @@ RowLayout {
 	}
 
 	ColumnLayout {
-		Layout.rightMargin: 20 * DefaultStyle.dp
-		Layout.leftMargin: 20 * DefaultStyle.dp
+		Layout.rightMargin: Utils.getSizeWithScreenRatio(20)
+		Layout.leftMargin: Utils.getSizeWithScreenRatio(20)
 		Layout.alignment: Qt.AlignVCenter
 
 		Text {

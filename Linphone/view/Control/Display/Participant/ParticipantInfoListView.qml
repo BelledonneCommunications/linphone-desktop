@@ -3,11 +3,12 @@ import QtQuick.Layouts
 
 import Linphone
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
 	id: mainItem
 	clip: true
-    spacing: Math.round(5 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(5)
 
 	property bool hoverEnabled: true
 	property bool displayNameCapitalization: true
@@ -26,22 +27,22 @@ ListView {
 
 	delegate: Item {
 		id: participantDelegate
-		height: Math.round(56 * DefaultStyle.dp)
+		height: Utils.getSizeWithScreenRatio(56)
 		width: mainItem.width//mainItem.width
 		RowLayout {
 			anchors.fill: parent
-			anchors.leftMargin: Math.round(18 * DefaultStyle.dp)
-			anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
-			spacing: Math.round(10 * DefaultStyle.dp)
+			anchors.leftMargin: Utils.getSizeWithScreenRatio(18)
+			anchors.rightMargin: Utils.getSizeWithScreenRatio(18)
+			spacing: Utils.getSizeWithScreenRatio(10)
 			Avatar {
-				Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-				Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
 				_address: modelData.core.sipAddress
 				shadowEnabled: false
 			}
 			Text {
 				text: modelData.core.displayName
-				font.pixelSize: Math.round(14 * DefaultStyle.dp)
+				font.pixelSize: Utils.getSizeWithScreenRatio(14)
 				font.capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
 				maximumLineCount: 1
 				Layout.fillWidth: true

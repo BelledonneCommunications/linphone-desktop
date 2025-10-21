@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import SettingsCpp 1.0
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 AbstractSettingsLayout {
 	id: mainItem
@@ -67,7 +68,7 @@ AbstractSettingsLayout {
     Component {
         id: parametersComponent
         ColumnLayout {
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
             SwitchSetting {
                 //: "Forward calls"
                 titleText: qsTr("settings_call_forward_activate_title")
@@ -89,7 +90,7 @@ AbstractSettingsLayout {
 				id: forwardDestination
 				visible: mainItem.enableCallForward
 				Layout.fillWidth: true
-				Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 				model: [
 						{text: qsTr("settings_call_forward_to_voicemail")},
 						{text: qsTr("settings_call_forward_to_sipaddress")}

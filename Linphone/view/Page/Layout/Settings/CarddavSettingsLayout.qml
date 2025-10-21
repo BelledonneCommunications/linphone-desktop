@@ -7,6 +7,7 @@ import Linphone
 import SettingsCpp 1.0
 import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 AbstractSettingsLayout {
 	id: mainItem
@@ -48,12 +49,12 @@ AbstractSettingsLayout {
 	Component {
 		id: topBar
 		RowLayout {
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
 			BigButton {
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.trashCan
-                icon.width: Math.round(32 * DefaultStyle.dp)
-                icon.height: Math.round(32 * DefaultStyle.dp)
+                icon.width: Utils.getSizeWithScreenRatio(32)
+                icon.height: Utils.getSizeWithScreenRatio(32)
 				visible: !isNew
 				onClicked: {
 					var mainWin = UtilsCpp.getMainWindow()
@@ -77,10 +78,10 @@ AbstractSettingsLayout {
 		id: cardDavParametersComponent
 		ColumnLayout {
 			Layout.fillWidth: true
-            spacing: Math.round(20 * DefaultStyle.dp)
-            Layout.rightMargin: Math.round(44 * DefaultStyle.dp)
-            Layout.topMargin: Math.round(20 * DefaultStyle.dp)
-            Layout.leftMargin: Math.round(64 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
+            Layout.rightMargin: Utils.getSizeWithScreenRatio(44)
+            Layout.topMargin: Utils.getSizeWithScreenRatio(20)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(64)
 			DecoratedTextField {
 				propertyName: "displayName"
 				propertyOwnerGui: carddavGui

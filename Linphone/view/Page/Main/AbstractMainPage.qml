@@ -9,6 +9,7 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 FocusScope {
 	id: mainItem
@@ -25,16 +26,16 @@ FocusScope {
 	// Control.SplitView {
 	// 	id: splitView
 	// 	anchors.fill: parent
-    // 	anchors.topMargin: Math.round(10 * DefaultStyle.dp)
+    // 	anchors.topMargin: Utils.getSizeWithScreenRatio(10)
 
 	// 	handle: Rectangle {
-    // 		implicitWidth: Math.round(8 * DefaultStyle.dp)
+    // 		implicitWidth: Utils.getSizeWithScreenRatio(8)
 	// 		color: Control.SplitHandle.hovered ? DefaultStyle.grey_200 : DefaultStyle.grey_100
 	// 	}
 	// 	ColumnLayout {
 	// 		id: leftPanel
-    // 		Control.SplitView.preferredWidth: Math.round(350 * DefaultStyle.dp)
-    // 		Control.SplitView.minimumWidth: Math.round(350 * DefaultStyle.dp)
+    // 		Control.SplitView.preferredWidth: Utils.getSizeWithScreenRatio(350)
+    // 		Control.SplitView.minimumWidth: Utils.getSizeWithScreenRatio(350)
 	// 	}
 	// 	Rectangle {
 	// 		id: rightPanel
@@ -56,23 +57,23 @@ FocusScope {
 	// 						Layout.fillWidth: true
 	// 					}
 	// 					ColumnLayout {
-    // 						spacing: Math.round(30 * DefaultStyle.dp)
+    // 						spacing: Utils.getSizeWithScreenRatio(30)
 	// 						Item {
 	// 							Layout.fillHeight: true
 	// 						}
 	// 						Image {
 	// 							Layout.alignment: Qt.AlignHCenter
 	// 							source: AppIcons.noItemImage
-    // 							Layout.preferredWidth: Math.round(359 * DefaultStyle.dp)
-    // 							Layout.preferredHeight: Math.round(314 * DefaultStyle.dp)
+    // 							Layout.preferredWidth: Utils.getSizeWithScreenRatio(359)
+    // 							Layout.preferredHeight: Utils.getSizeWithScreenRatio(314)
 	// 							fillMode: Image.PreserveAspectFit
 	// 						}
 	// 						Text {
 	// 							text: mainItem.emptyListText
 	// 							Layout.alignment: Qt.AlignHCenter
 	// 							font {
-    // 								pixelSize: Math.round(22 * DefaultStyle.dp)
-    // 								weight: Math.round(800 * DefaultStyle.dp)
+    // 								pixelSize: Utils.getSizeWithScreenRatio(22)
+    // 								weight: Utils.getSizeWithScreenRatio(800)
 	// 							}
 	// 						}
 	// 						Button {
@@ -82,8 +83,8 @@ FocusScope {
 	// 								EffectImage {
 	// 									colorizationColor: DefaultStyle.grey_0
 	// 									source: mainItem.newItemIconSource
-    // 									width: Math.round(24 * DefaultStyle.dp)
-    // 									height: Math.round(24 * DefaultStyle.dp)
+    // 									width: Utils.getSizeWithScreenRatio(24)
+    // 									height: Utils.getSizeWithScreenRatio(24)
 	// 									fillMode: Image.PreserveAspectFit
 	// 								}
 	// 								Text {
@@ -91,8 +92,8 @@ FocusScope {
 	// 									wrapMode: Text.WordWrap
 	// 									color: DefaultStyle.grey_0
 	// 									font {
-    // 										weight: Math.round(600 * DefaultStyle.dp)
-    // 										pixelSize: Math.round(18 * DefaultStyle.dp)
+    // 										weight: Utils.getSizeWithScreenRatio(600)
+    // 										pixelSize: Utils.getSizeWithScreenRatio(18)
 	// 										family: DefaultStyle.defaultFont
 	// 									}
 	// 								}
@@ -123,13 +124,13 @@ FocusScope {
 		spacing: 0
 		ColumnLayout {
 			id: leftPanel
-            Layout.preferredWidth: Math.round(404 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(404)
 			Layout.fillWidth:false
 			spacing:0
 		}
 		Rectangle {
 			Layout.fillHeight: true
-            Layout.preferredWidth: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(1)
 			color: DefaultStyle.main2_200
 		}
 		Rectangle {
@@ -151,15 +152,15 @@ FocusScope {
 							Layout.fillWidth: true
 						}
 						ColumnLayout {
-                            spacing: Math.round(30 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(30)
 							Item {
 								Layout.fillHeight: true
 							}
 							Image {
 								Layout.alignment: Qt.AlignHCenter
 								source: AppIcons.noItemImage
-                                Layout.preferredWidth: Math.round(359 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(314 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(359)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(314)
 								fillMode: Image.PreserveAspectFit
 							}
 							Text {
@@ -175,7 +176,7 @@ FocusScope {
 								icon.source: mainItem.newItemIconSource
 								style: ButtonStyle.main
 								text: mainItem.noItemButtonText
-                                spacing: Math.round(8 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(8)
 								onPressed: mainItem.noItemButtonPressed()
 							}
 							Item {

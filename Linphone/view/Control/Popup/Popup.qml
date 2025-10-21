@@ -3,12 +3,13 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import Linphone
 import CustomControls 1.0
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Control.Popup{
 	id: mainItem
 	padding: 0
 	property color underlineColor : DefaultStyle.main1_500_main
-    property real radius: Math.round(16 * DefaultStyle.dp)
+    property real radius: Utils.getSizeWithScreenRatio(16)
 	property bool hovered: mouseArea.containsMouse
 	property bool keyboardFocus: FocusHelper.keyboardFocus
 
@@ -16,7 +17,7 @@ Control.Popup{
 		Rectangle {
 			visible: mainItem.underlineColor != undefined
 			width: mainItem.width
-            height: mainItem.height + Math.round(2 * DefaultStyle.dp)
+            height: mainItem.height +Utils.getSizeWithScreenRatio(2)
 			color: mainItem.underlineColor
 			radius: mainItem.radius
 		}

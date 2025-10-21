@@ -458,7 +458,7 @@ Control.Control {
                         }
                         Rectangle {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: Math.min(1, Utils.getSizeWithScreenRatio(1))
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(1)
                             color: DefaultStyle.main2_400
                         }
                         IconLabelButton {

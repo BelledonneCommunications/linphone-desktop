@@ -9,7 +9,7 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 Control.TextField {
     id: mainItem
     property var customWidth
-    width: Math.round((customWidth ? customWidth - 1 : 360) * DefaultStyle.dp)
+    width: Utils.getSizeWithScreenRatio(customWidth ? customWidth - 1 : 360)
     height: Utils.getSizeWithScreenRatio(49)
     leftPadding: Utils.getSizeWithScreenRatio(15)
     rightPadding: eyeButton.visible
@@ -136,7 +136,7 @@ Control.TextField {
     cursorDelegate: Rectangle {
         id: cursor
         color: DefaultStyle.main1_500_main
-        width: Math.max(Utils.getSizeWithScreenRatio(1), 1)
+        width: Utils.getSizeWithScreenRatio(1)
         anchors.verticalCenter: mainItem.verticalCenter
 
         SequentialAnimation {

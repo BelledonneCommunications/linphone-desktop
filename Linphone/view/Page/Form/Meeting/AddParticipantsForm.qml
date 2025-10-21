@@ -34,7 +34,7 @@ FocusScope {
             Layout.preferredHeight: contentHeight
             Layout.maximumHeight: mainItem.height / 3
             width: mainItem.width
-            cellWidth: Math.round((50 + 18) * DefaultStyle.dp)
+            cellWidth: Utils.getSizeWithScreenRatio((50 + 18))
             cellHeight: Utils.getSizeWithScreenRatio(80)
             // columnCount: Math.floor(width/cellWidth)
             model: mainItem.selectedParticipants

@@ -63,18 +63,18 @@ PopupButton {
                 colorizationColor: DefaultStyle.main2_600
                 Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
-                Layout.rightMargin: 8 * DefaultStyle.dp
+                Layout.rightMargin: Utils.getSizeWithScreenRatio(8)
             }
         }
     }
     popup.contentItem: Rectangle {
         implicitWidth: Utils.getSizeWithScreenRatio(280)
-        implicitHeight: 20 * DefaultStyle.dp + (setCustomStatus.visible ? 240 * DefaultStyle.dp : setPresence.implicitHeight)
+        implicitHeight: Utils.getSizeWithScreenRatio(20) + (setCustomStatus.visible ? Utils.getSizeWithScreenRatio(240) : setPresence.implicitHeight)
         Presence {
             id: setPresence
             visible: !presenceAndRegistrationItem.editCustomStatus
             anchors.fill: parent
-            anchors.margins: 20 * DefaultStyle.dp
+            anchors.margins: Utils.getSizeWithScreenRatio(20)
             accountCore: mainItem.account.core
             onSetCustomStatusClicked: {
                 presenceAndRegistrationItem.editCustomStatus = true
@@ -85,7 +85,7 @@ PopupButton {
             id: setCustomStatus
             visible: presenceAndRegistrationItem.editCustomStatus
             anchors.fill: parent
-            anchors.margins: 20 * DefaultStyle.dp
+            anchors.margins: Utils.getSizeWithScreenRatio(20)
             accountCore: mainItem.account.core
             onVisibleChanged: {
                 if (!visible) {

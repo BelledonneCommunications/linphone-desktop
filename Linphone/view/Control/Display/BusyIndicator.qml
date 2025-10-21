@@ -3,6 +3,7 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Item {
 	id: mainItem
@@ -13,7 +14,7 @@ Item {
 	height: busyIndicator.height
 	Control.BusyIndicator {
 		id: busyIndicator
-		width: Math.round(60 * DefaultStyle.dp)
+		width: Utils.getSizeWithScreenRatio(60)
 		height: width
 		running: mainItem.visible
 		anchors.centerIn: mainItem

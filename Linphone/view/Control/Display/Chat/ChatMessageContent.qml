@@ -6,6 +6,7 @@ import QtMultimedia
 
 import Linphone
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
 // Simple content display without reply and forward. These modules need to be splitted because of cyclic dependencies.
@@ -30,8 +31,8 @@ ColumnLayout {
 	
 	property int fileBorderWidth : 0
 	
-	spacing: Math.round(5 * DefaultStyle.dp)
-	property int padding: Math.round(10 * DefaultStyle.dp)
+	spacing: Utils.getSizeWithScreenRatio(5)
+	property int padding: Utils.getSizeWithScreenRatio(10)
 
 	property ChatMessageContentProxy filescontentProxy: ChatMessageContentProxy {
 		filterType: ChatMessageContentProxy.FilterContentType.File
@@ -49,8 +50,8 @@ ColumnLayout {
 		delegate: ChatAudioContent {
 			id: audioContent
 			// Layout.fillWidth: true
-			width: Math.round(269 * DefaultStyle.dp)
-			height: Math.round(48 * DefaultStyle.dp)
+			width: Utils.getSizeWithScreenRatio(269)
+			height: Utils.getSizeWithScreenRatio(48)
 			Layout.preferredHeight: height
 			chatMessageContentGui: modelData
 			onEndOfFileReached: mainItem.endOfVoiceRecordingReached()
@@ -73,7 +74,7 @@ ColumnLayout {
 			chatMessageGui: mainItem.chatMessageGui
 		}
 		delegate: ChatMessageInvitationBubble {
-			Layout.preferredWidth: 490 * DefaultStyle.dp
+			Layout.preferredWidth: Utils.getSizeWithScreenRatio(490)
 			conferenceInfoGui: modelData.core.conferenceInfo
 			onMouseEvent: (event) => mainItem.mouseEvent(event)
 		}
@@ -85,7 +86,7 @@ ColumnLayout {
 		contentGui: mainItem.filescontentProxy.count === 1
 			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
 			: null
-		width: Math.round(285 * DefaultStyle.dp)
+		width: Utils.getSizeWithScreenRatio(285)
 		Layout.alignment: Qt.AlignHCenter
 		fillMode: Image.PreserveAspectFit
 	}
@@ -95,7 +96,7 @@ ColumnLayout {
 		contentGui: mainItem.filescontentProxy.count === 1
 			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
 			: null
-		Layout.preferredWidth: Math.round(285 * DefaultStyle.dp)
+		Layout.preferredWidth: Utils.getSizeWithScreenRatio(285)
 		Layout.preferredHeight: paintedHeight
 		Layout.alignment: Qt.AlignHCenter
 		fillMode: Image.PreserveAspectFit
@@ -106,8 +107,8 @@ ColumnLayout {
 		contentGui: mainItem.filescontentProxy.count === 1
 			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
 			: null
-		width: Math.round(285 * DefaultStyle.dp)
-		height: Math.round(285 * DefaultStyle.dp)
+		width: Utils.getSizeWithScreenRatio(285)
+		height: Utils.getSizeWithScreenRatio(285)
 		Layout.preferredWidth: videoOutput.contentRect.width
 		Layout.preferredHeight: videoOutput.contentRect.height
 		Layout.alignment: Qt.AlignHCenter
@@ -123,7 +124,7 @@ ColumnLayout {
 		&& !singleVideoFile.visible
 		Layout.fillWidth: visible
 		Layout.fillHeight: visible
-		maxWidth: Math.round(115*3 * DefaultStyle.dp)
+		maxWidth: Utils.getSizeWithScreenRatio(115*3)
 		// Layout.fillHeight: true
 		proxyModel: visible ? mainItem.filescontentProxy : null
 		// onIsHoveringFileChanged: mainItem.isFileHoveringChanged(isHoveringFile)

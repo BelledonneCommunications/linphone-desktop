@@ -6,10 +6,11 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
 	id: mainItem
-    spacing: Math.round(30 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(30)
 
 	property var callHistoryGui
 
@@ -33,16 +34,16 @@ ColumnLayout {
 	property alias detailContent: detailControl.data
 
 	ColumnLayout {
-        spacing: Math.round(13 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(13)
 		Item {
-            Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 			Layout.preferredHeight: detailAvatar.height
 			Layout.alignment: Qt.AlignHCenter
 			Avatar {
 				id: detailAvatar
 				anchors.horizontalCenter: parent.horizontalCenter
-                width: Math.round(100 * DefaultStyle.dp)
-                height: Math.round(100 * DefaultStyle.dp)
+                width: Utils.getSizeWithScreenRatio(100)
+                height: Utils.getSizeWithScreenRatio(100)
 				contact: mainItem.contact || null
 				isConference: !!mainItem.conferenceInfo
 				displayNameVal: mainItem.contactName
@@ -52,18 +53,18 @@ ColumnLayout {
 				id: rightButton
 				anchors.right: parent.right
 				anchors.verticalCenter: detailAvatar.verticalCenter
-                anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
-                width: Math.round(30 * DefaultStyle.dp)
-                height: Math.round(30 * DefaultStyle.dp)
+                anchors.rightMargin: Utils.getSizeWithScreenRatio(20)
+                width: Utils.getSizeWithScreenRatio(30)
+                height: Utils.getSizeWithScreenRatio(30)
 			}
 		}
 		ColumnLayout {
 			Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
-            spacing: Math.round(5 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+            spacing: Utils.getSizeWithScreenRatio(5)
 
 			ColumnLayout {
-                spacing: Math.round(2 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(2)
 				Text {
 					Layout.preferredWidth: implicitWidth
 					Layout.alignment: Qt.AlignHCenter
@@ -85,8 +86,8 @@ ColumnLayout {
 					elide: Text.ElideMiddle
 					maximumLineCount: 1
 					font {
-                        pixelSize: Math.round(12 * DefaultStyle.dp)
-                        weight: Math.round(300 * DefaultStyle.dp)
+                        pixelSize: Utils.getSizeWithScreenRatio(12)
+                        weight: Utils.getSizeWithScreenRatio(300)
 					}
 				}
 			}
@@ -98,8 +99,8 @@ ColumnLayout {
 				text: contact ? contact.core.presenceStatus : ""
 				color: contact ? contact.core.presenceColor : 'transparent'
 				font {
-                    pixelSize: Math.round(12 * DefaultStyle.dp)
-                    weight: Math.round(300 * DefaultStyle.dp)
+                    pixelSize: Utils.getSizeWithScreenRatio(12)
+                    weight: Utils.getSizeWithScreenRatio(300)
 				}
 			}
 		}
@@ -120,15 +121,15 @@ ColumnLayout {
 	}
 	RowLayout {
 		Layout.alignment: Qt.AlignHCenter
-        spacing: Math.round(72 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(72)
 		Layout.fillWidth: true
 		Layout.preferredHeight: childrenRect.height
 		visible: !mainItem.isConference
 		LabelButton {
-            width: Math.round(56 * DefaultStyle.dp)
-            height: Math.round(56 * DefaultStyle.dp)
-            button.icon.width: Math.round(24 * DefaultStyle.dp)
-            button.icon.height: Math.round(24 * DefaultStyle.dp)
+            width: Utils.getSizeWithScreenRatio(56)
+            height: Utils.getSizeWithScreenRatio(56)
+            button.icon.width: Utils.getSizeWithScreenRatio(24)
+            button.icon.height: Utils.getSizeWithScreenRatio(24)
 			button.icon.source: AppIcons.phone
             //: "Appel"
             label: qsTr("contact_call_action")
@@ -139,10 +140,10 @@ ColumnLayout {
 		}
 		LabelButton {
 			visible: !SettingsCpp.disableChatFeature
-            width: Math.round(56 * DefaultStyle.dp)
-            height: Math.round(56 * DefaultStyle.dp)
-            button.icon.width: Math.round(24 * DefaultStyle.dp)
-            button.icon.height: Math.round(24 * DefaultStyle.dp)
+            width: Utils.getSizeWithScreenRatio(56)
+            height: Utils.getSizeWithScreenRatio(56)
+            button.icon.width: Utils.getSizeWithScreenRatio(24)
+            button.icon.height: Utils.getSizeWithScreenRatio(24)
             button.icon.source: AppIcons.chatTeardropText
             //: "Message"
             label: qsTr("contact_message_action")
@@ -159,10 +160,10 @@ ColumnLayout {
         }
         LabelButton {
             visible: SettingsCpp.videoEnabled
-            width: Math.round(56 * DefaultStyle.dp)
-            height: Math.round(56 * DefaultStyle.dp)
-            button.icon.width: Math.round(24 * DefaultStyle.dp)
-            button.icon.height: Math.round(24 * DefaultStyle.dp)
+            width: Utils.getSizeWithScreenRatio(56)
+            height: Utils.getSizeWithScreenRatio(56)
+            button.icon.width: Utils.getSizeWithScreenRatio(24)
+            button.icon.height: Utils.getSizeWithScreenRatio(24)
             button.icon.source: AppIcons.videoCamera
             //: "Appel Video"
             label: qsTr("contact_video_call_action")
@@ -178,6 +179,6 @@ ColumnLayout {
 		Layout.fillHeight: true
 
 		Layout.alignment: Qt.AlignHCenter
-        Layout.topMargin: Math.round(30 * DefaultStyle.dp)
+        Layout.topMargin: Utils.getSizeWithScreenRatio(30)
 	}
 }

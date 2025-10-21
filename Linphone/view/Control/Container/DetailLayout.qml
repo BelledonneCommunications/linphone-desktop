@@ -6,16 +6,17 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
     id: mainItem
-    spacing: Math.round(15 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(15)
     property string label
     property var icon
     property alias content: contentControl.contentItem
     signal titleIconClicked
     RowLayout {
-        spacing: Math.round(10 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(10)
         Text {
             text: mainItem.label
             color: DefaultStyle.main1_500_main
@@ -46,9 +47,9 @@ ColumnLayout {
         id: contentControl
         visible: expandButton.checked
         Layout.fillWidth: true
-        leftPadding: Math.round(20 * DefaultStyle.dp)
-        rightPadding: Math.round(20 * DefaultStyle.dp)
-        topPadding: Math.round(17 * DefaultStyle.dp)
-        bottomPadding: Math.round(17 * DefaultStyle.dp)
+        leftPadding: Utils.getSizeWithScreenRatio(20)
+        rightPadding: Utils.getSizeWithScreenRatio(20)
+        topPadding: Utils.getSizeWithScreenRatio(17)
+        bottomPadding: Utils.getSizeWithScreenRatio(17)
     }
 }

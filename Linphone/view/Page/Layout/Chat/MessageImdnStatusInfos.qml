@@ -3,10 +3,11 @@ import QtQuick
 import QtQuick.Layouts
 import Linphone
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 MessageInfosLayout {
 	id: mainItem
-	spacing: Math.round(25 * DefaultStyle.dp)
+	spacing: Utils.getSizeWithScreenRatio(25)
 	//: Message status
 	title: qsTr("message_details_status_title")
 	tabbarModel: chatMessageGui ? chatMessageGui.core.imdnStatusListAsString : []
@@ -28,13 +29,13 @@ MessageInfosLayout {
 		RowLayout {
 			id: delegateIn
 			anchors.fill: parent
-			spacing: Math.round(16 * DefaultStyle.dp)
+			spacing: Utils.getSizeWithScreenRatio(16)
 			Avatar {
 				Layout.alignment: Qt.AlignHCenter
 				contact: listDelegate.contact
 				_address: modelData.address
-				Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-				Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
 			}
 			ColumnLayout {
 				spacing: 0

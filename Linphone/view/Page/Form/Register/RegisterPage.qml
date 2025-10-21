@@ -69,7 +69,7 @@ LoginLayout {
 		},
 		RowLayout {
             spacing: Utils.getSizeWithScreenRatio(20)
-            Layout.rightMargin: Math.round(Math.max(10 * DefaultStyle.dp,(51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp))
+            Layout.rightMargin: Math.max(Utils.getSizeWithScreenRatio(10), Utils.getSizeWithScreenRatio(51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))))
 			Text {
                 Layout.rightMargin: Utils.getSizeWithScreenRatio(15)
 				color: DefaultStyle.main2_700
@@ -102,7 +102,7 @@ LoginLayout {
 				Layout.fillWidth: true
 				id: bar
     			spacing: Utils.getSizeWithScreenRatio(40)
-                Layout.rightMargin: Math.round(Math.max(5 * DefaultStyle.dp,(127 - ((127/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp))
+                Layout.rightMargin: Math.max(Utils.getSizeWithScreenRatio(5), Utils.getSizeWithScreenRatio(127 - ((127/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))))
                 // "S'inscrire avec un numéro de téléphone"
                 model: [qsTr("assistant_account_register_with_phone_number"),
                     // "S'inscrire avec un email"
@@ -122,7 +122,7 @@ LoginLayout {
 					interactive: true
 					visible: parent.contentHeight > parent.height
 					policy: Control.ScrollBar.AsNeeded
-					anchors.rightMargin: 8 * DefaultStyle.dp
+					anchors.rightMargin: Utils.getSizeWithScreenRatio(8)
 					anchors.right: parent.right
 				}
 

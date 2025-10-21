@@ -25,7 +25,7 @@ FocusScope {
 	// Text properties
 	property string placeholderText: ""
 	property color placeholderTextColor: DefaultStyle.main2_400									
-    property real textInputWidth: Math.round(350 * DefaultStyle.dp)
+    property real textInputWidth: Utils.getSizeWithScreenRatio(350)
 	property string text: textField.searchText
 	
 	signal openNumericPadRequested()// Useful for redirection before displaying numeric pad.
@@ -45,12 +45,12 @@ FocusScope {
 
 
 	implicitWidth: mainItem.textInputWidth
-    implicitHeight: Math.round(50 * DefaultStyle.dp)
+    implicitHeight: Utils.getSizeWithScreenRatio(50)
 	
 	Rectangle{
 		id: backgroundItem
 		anchors.fill: parent
-        radius: Math.round(28 * DefaultStyle.dp)
+        radius: Utils.getSizeWithScreenRatio(28)
 		color: DefaultStyle.grey_100
 		border.color: textField.keyboardFocus ? mainItem.keyboardFocusedBorderColor : textField.activeFocus ? mainItem.focusedBorderColor : mainItem.borderColor
 		border.width: textField.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth
@@ -61,15 +61,15 @@ FocusScope {
 		colorizationColor: DefaultStyle.main2_500_main
 		anchors.left: parent.left
 		anchors.verticalCenter: parent.verticalCenter
-        anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
+        anchors.leftMargin: Utils.getSizeWithScreenRatio(10)
 		imageSource: AppIcons.magnifier
-        width: Math.round(20 * DefaultStyle.dp)
-        height: Math.round(20 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(20)
+        height: Utils.getSizeWithScreenRatio(20)
 	}
 	Control.TextField {
 		id: textField
 		anchors.left: magnifier.visible ? magnifier.right : parent.left
-        anchors.leftMargin: magnifier.visible ? 0 : Math.round(10 * DefaultStyle.dp)
+        anchors.leftMargin: magnifier.visible ? 0 : Utils.getSizeWithScreenRatio(10)
 		anchors.right: clearTextButton.left
 		anchors.verticalCenter: parent.verticalCenter
 		property bool keyboardFocus: FocusHelper.keyboardFocus
@@ -96,7 +96,7 @@ FocusScope {
 		cursorDelegate: Rectangle {
 			visible: textField.cursorVisible
 			color: DefaultStyle.main2_500_main
-            width: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+            width: Utils.getSizeWithScreenRatio(1)
 		}
 		Timer{
 			id: delayTimer
@@ -113,13 +113,13 @@ FocusScope {
 		icon.source: AppIcons.dialer
 		contentImageColor: checked ? DefaultStyle.main1_500_main : DefaultStyle.main2_600 
 		hoveredImageColor: contentImageColor
-        width: Math.round(30 * DefaultStyle.dp)
-        height: Math.round(30* DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(30)
+        height: Utils.getSizeWithScreenRatio(30)
 		icon.width: Utils.getSizeWithScreenRatio(24)
 		icon.height: Utils.getSizeWithScreenRatio(24)
 		anchors.verticalCenter: parent.verticalCenter 
 		anchors.right: parent.right
-        anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
+        anchors.rightMargin: Utils.getSizeWithScreenRatio(20)
 		//: "Open dialer"
 		Accessible.name: qsTr("open_dialer_acccessibility_label")
 		onClicked: {
@@ -132,14 +132,14 @@ FocusScope {
 	Button {
 		id: clearTextButton
 		visible: textField.text.length > 0 && mainItem.enabled
-        width: Math.round(24 * DefaultStyle.dp)
-        height: Math.round(24 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(24)
+        height: Utils.getSizeWithScreenRatio(24)
 		style: ButtonStyle.noBackground
 		icon.source: AppIcons.closeX
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
-        anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
+        anchors.rightMargin: Utils.getSizeWithScreenRatio(20)
 		//: "Clear text input"
 		Accessible.name: qsTr("clear_text_input_acccessibility_label")
 		onClicked: {

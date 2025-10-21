@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import SettingsCpp 1.0
 import UtilsCpp
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 AbstractSettingsLayout {
 	id: mainItem
@@ -27,7 +28,7 @@ AbstractSettingsLayout {
 	Component {
 		id: confDisplayParametersComponent
 		ColumnLayout {
-            spacing: Math.round(5 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(5)
 			Text {
                 //: "Mode d’affichage par défaut"
                 text: qsTr("settings_meetings_default_layout_title")
@@ -46,7 +47,7 @@ AbstractSettingsLayout {
 			}
 			ComboSetting {
 				Layout.fillWidth: true
-                Layout.topMargin: Math.round(12 * DefaultStyle.dp)
+                Layout.topMargin: Utils.getSizeWithScreenRatio(12)
 				Layout.preferredWidth: parent.width
 				entries: SettingsCpp.conferenceLayouts
 				propertyName: "conferenceLayout"

@@ -7,13 +7,14 @@ import UtilsCpp
 import SettingsCpp
 import DesktopToolsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ApplicationWindow {
     id: mainWindow
     x: 0
     y: 0
-    width: Math.min(Math.round(1512 * DefaultStyle.dp), Screen.desktopAvailableWidth)
-    height: Math.min(Math.round(982 * DefaultStyle.dp), Screen.desktopAvailableHeight)
+    width: Math.min(Utils.getSizeWithScreenRatio(1512), Screen.desktopAvailableWidth)
+    height: Math.min(Utils.getSizeWithScreenRatio(982), Screen.desktopAvailableHeight)
 
     onActiveChanged: UtilsCpp.setLastActiveWindow(this)
 
@@ -47,7 +48,7 @@ ApplicationWindow {
             // For C++, requestDialog need to be call directly
             onAccepted: requestDialog ? requestDialog.result(1) : callback(1)
             onRejected: requestDialog ? requestDialog.result(0) : callback(0)
-            width: title.length === 0 ? Math.round(278 * DefaultStyle.dp) : Math.round(637 * DefaultStyle.dp)
+            width: Utils.getSizeWithScreenRatio(title.length === 0 ? 278 : 637)
         }
     }
 
@@ -59,16 +60,16 @@ ApplicationWindow {
             signal addressChosen(string address)
             underlineColor: DefaultStyle.main1_500_main
             anchors.centerIn: parent
-            width: Math.round(370 * DefaultStyle.dp)
+            width: Utils.getSizeWithScreenRatio(370)
             modal: true
-            leftPadding: Math.round(15 * DefaultStyle.dp)
-            rightPadding: Math.round(15 * DefaultStyle.dp)
-            topPadding: Math.round(20 * DefaultStyle.dp)
-            bottomPadding: Math.round(25 * DefaultStyle.dp)
+            leftPadding: Utils.getSizeWithScreenRatio(15)
+            rightPadding: Utils.getSizeWithScreenRatio(15)
+            topPadding: Utils.getSizeWithScreenRatio(20)
+            bottomPadding: Utils.getSizeWithScreenRatio(25)
             contentItem: ColumnLayout {
-                spacing: Math.round(16 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(16)
                 RowLayout {
-                    spacing: Math.round(5 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(5)
                     width: addressChooserPopup.width
                     Text {
                         //: "Choisissez un numéro ou adresse SIP"
@@ -83,8 +84,8 @@ ApplicationWindow {
                     RoundButton {
                         Layout.alignment: Qt.AlignVCenter
                         style: ButtonStyle.noBackground
-                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
                         icon.source:AppIcons.closeX
                         onClicked: addressChooserPopup.close()
                     }
@@ -96,18 +97,18 @@ ApplicationWindow {
                     }
                     Layout.fillWidth: true
                     Layout.preferredHeight: contentHeight
-                    spacing: Math.round(10 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(10)
                     delegate: Item {
                         width: popuplist.width
-                        height: Math.round(56 * DefaultStyle.dp)
+                        height: Utils.getSizeWithScreenRatio(56)
                         ColumnLayout {
                             width: popuplist.width
                             anchors.verticalCenter: parent.verticalCenter
-                            spacing: Math.round(10 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(10)
                             ColumnLayout {
-                                spacing: Math.round(7 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(7)
                                 Text {
-                                    Layout.leftMargin: Math.round(5 * DefaultStyle.dp)
+                                    Layout.leftMargin: Utils.getSizeWithScreenRatio(5)
                                     text: modelData.label + " :"
                                     font {
                                         pixelSize: Typography.p2.pixelSize
@@ -115,7 +116,7 @@ ApplicationWindow {
                                     }
                                 }
                                 Text {
-                                    Layout.leftMargin: Math.round(5 * DefaultStyle.dp)
+                                    Layout.leftMargin: Utils.getSizeWithScreenRatio(5)
                                     text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(modelData.address) : modelData.address
                                     font {
                                         pixelSize: Typography.p1.pixelSize
@@ -126,7 +127,7 @@ ApplicationWindow {
                             Rectangle {
                                 visible: index != popuplist.model.count - 1
                                 Layout.fillWidth: true
-                                Layout.preferredHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(1)
                                 color: DefaultStyle.main2_200
                             }
                         }
@@ -263,7 +264,7 @@ ApplicationWindow {
         property real nextY: mainWindow.height
         property list<InformationPopup> popupList
         property int popupCount: popupList.length
-        spacing: Math.round(15 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(15)
         onPopupCountChanged: {
             nextY = mainWindow.height
             for(var i = 0; i < popupCount; ++i) {
@@ -282,9 +283,9 @@ ApplicationWindow {
         modal: true
         closePolicy: Popup.NoAutoClose
         anchors.centerIn: parent
-        padding: Math.round(20 * DefaultStyle.dp)
+        padding: Utils.getSizeWithScreenRatio(20)
         underlineColor: DefaultStyle.main1_500_main
-        radius: Math.round(15 * DefaultStyle.dp)
+        radius: Utils.getSizeWithScreenRatio(15)
     }
     FPSCounter{
         anchors.top: parent.top
@@ -297,7 +298,7 @@ ApplicationWindow {
             id: fpsText
             font.bold: true
             font.italic: true
-            font.pixelSize: Math.round(14 * DefaultStyle.dp)
+            font.pixelSize: Utils.getSizeWithScreenRatio(14)
             // "%1 FPS"
             text: qsTr("fps_counter").arg(parent.fps)
             color: parent.fps < 30 ? DefaultStyle.danger_500_main : DefaultStyle.main2_900

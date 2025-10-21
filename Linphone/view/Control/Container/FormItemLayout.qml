@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import Linphone
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 FocusScope{
 	id: mainItem
@@ -40,11 +41,11 @@ FocusScope{
 
 	ColumnLayout {
 		id: layout
-        spacing: Math.round(5 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(5)
 		anchors.left: parent.left
 		anchors.right: parent.right
 		RowLayout {
-        	spacing: Math.round(8 * DefaultStyle.dp)
+        	spacing: Utils.getSizeWithScreenRatio(8)
 			Text {
 				visible: label.length > 0
 				verticalAlignment: Text.AlignVCenter
@@ -63,8 +64,8 @@ FocusScope{
 			Item{Layout.fillWidth: true}
 			PopupButton {
 				visible: mainItem.tooltip !== ""
-				Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-				Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.info
 				popUpTitle: mainItem.label

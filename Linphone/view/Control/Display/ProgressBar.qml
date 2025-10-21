@@ -1,11 +1,12 @@
 import QtQuick
 import QtQuick.Controls.Basic as Control
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Control.ProgressBar {
 	id: mainItem
 
-    padding: Math.round(3 * DefaultStyle.dp)
+    padding: Utils.getSizeWithScreenRatio(3)
 	
 	property color backgroundColor: DefaultStyle.main2_100
 	property color innerColor: DefaultStyle.info_500_main
@@ -19,15 +20,15 @@ Control.ProgressBar {
         id: textSize
         text: mainItem.innerText
         font {
-            pixelSize: Math.round(10 * DefaultStyle.dp)
-            weight: Math.round(700 * DefaultStyle.dp)
+            pixelSize: Utils.getSizeWithScreenRatio(10)
+            weight: Utils.getSizeWithScreenRatio(700)
 			bold: true
         }
     }
 
 	background: Rectangle {
 		color: mainItem.backgroundColor
-        radius: Math.round(50 * DefaultStyle.dp)
+        radius: Utils.getSizeWithScreenRatio(50)
 		anchors.fill: mainItem
 		width: mainItem.width
 		height: mainItem.height
@@ -37,7 +38,7 @@ Control.ProgressBar {
 		Rectangle {
 			id: bar
 			color: mainItem.innerColor
-            radius: Math.round(50 * DefaultStyle.dp)
+            radius: Utils.getSizeWithScreenRatio(50)
 			width: mainItem.barWidth
 			height: parent.height
 		}
@@ -51,8 +52,8 @@ Control.ProgressBar {
 			color: mainItem.innerTextColor
 			maximumLineCount: 1
 			font {
-                pixelSize: Math.round(10 * DefaultStyle.dp)
-                weight: Math.round(700 * DefaultStyle.dp)
+                pixelSize: Utils.getSizeWithScreenRatio(10)
+                weight: Utils.getSizeWithScreenRatio(700)
             }
 		}
 	}

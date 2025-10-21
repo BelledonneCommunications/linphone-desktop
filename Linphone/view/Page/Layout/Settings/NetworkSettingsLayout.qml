@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import SettingsCpp 1.0
 import Linphone
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 AbstractSettingsLayout {
 	width: parent?.width
@@ -24,7 +25,7 @@ AbstractSettingsLayout {
 	Component {
 		id: content
 		ColumnLayout {
-            spacing: Math.round(40 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(40)
 			SwitchSetting {
 				Layout.fillWidth: true
                 //: "Autoriser l'IPv6"

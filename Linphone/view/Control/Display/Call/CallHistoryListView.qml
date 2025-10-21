@@ -32,9 +32,7 @@ ListView {
         onListAboutToBeReset: loading = true
         filterText: mainItem.searchText
         onFilterTextChanged: maxDisplayItems = initialDisplayItems
-        initialDisplayItems: Math.max(
-                                 20,
-                                 2 * mainItem.height / (Utils.getSizeWithScreenRatio(56)))
+        initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(56)))
         displayItemsStep: 3 * initialDisplayItems / 2
         onModelReset: {
             mainItem.resultsReceived()

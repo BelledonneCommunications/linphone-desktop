@@ -1,10 +1,11 @@
 import QtQuick
 import QtQuick.Controls.Basic as Control
 import Linphone
-  
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 Control.TextField {
 	id: mainItem
-    property real inputSize: Math.round(100 * DefaultStyle.dp)
+    property real inputSize: Utils.getSizeWithScreenRatio(100)
 	color: activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.main2_500_main
 	validator: IntValidator{bottom: 0; top: 9}
 
@@ -24,7 +25,7 @@ Control.TextField {
 	// horizontalAlignment: Control.TextField.AlignHCenter
 	font.family: DefaultStyle.defaultFont
 	font.pixelSize: inputSize / 2
-    font.weight: Math.round(300 * DefaultStyle.dp)
+    font.weight: Utils.getSizeWithScreenRatio(300)
 
 	background: Item {
 		anchors.fill: parent
@@ -32,7 +33,7 @@ Control.TextField {
 		// height: mainItem.inputSize
 		Rectangle {
 			id: background
-            border.width: Math.round(Math.max(DefaultStyle.dp), 1)
+            border.width: Utils.getSizeWithScreenRatio(1)
 			border.color: mainItem.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.main2_500_main
 			radius: mainItem.inputSize * 0.15
 			width: mainItem.inputSize * 0.9
@@ -42,11 +43,11 @@ Control.TextField {
 			id: indicator
 			visible: mainItem.activeFocus
 			color: DefaultStyle.main1_500_main
-            height : Math.max(1, Math.round(1 * DefaultStyle.dp))
+            height : Utils.getSizeWithScreenRatio(1)
 			width: mainItem.inputSize * 0.67
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.bottom: parent.bottom
-            anchors.bottomMargin: Math.round((mainItem.inputSize / 8) * DefaultStyle.dp)
+            anchors.bottomMargin: Utils.getSizeWithScreenRatio(mainItem.inputSize / 8)
 		}
 	}
 }

@@ -9,7 +9,7 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 AbstractWindow {
 	id: mainWindow
-    // height: Math.round(982 * DefaultStyle.dp)
+    // height: Utils.getSizeWithScreenRatio(982)
     title: applicationName
 	// TODO : handle this bool when security mode is implemented
 	property bool firstConnection: true
@@ -21,8 +21,8 @@ AbstractWindow {
     }
 
 	color: DefaultStyle.grey_0
-    minimumWidth: Math.round(1020 * DefaultStyle.dp)
-    minimumHeight: Math.round(700 * DefaultStyle.dp)
+    minimumWidth: Utils.getSizeWithScreenRatio(1020)
+    minimumHeight: Utils.getSizeWithScreenRatio(700)
 
 	signal callCreated()
 	property var accountProxy
@@ -31,7 +31,7 @@ AbstractWindow {
 	flags: Qt.Window
 	// menuBar: Rectangle {
 	// 	width: parent.width
-    // 	height: Math.round(40 * DefaultStyle.dp)
+    // 	height: Utils.getSizeWithScreenRatio(40)
 	// 	color: DefaultStyle.grey_100
 	// }
 
@@ -165,10 +165,10 @@ AbstractWindow {
 			Image {
 				anchors.centerIn: parent
 				source: AppIcons.splashscreenLogo
-                sourceSize.width: Math.round(395 * DefaultStyle.dp)
-                sourceSize.height: Math.round(395 * DefaultStyle.dp)
-                width: Math.round(395 * DefaultStyle.dp)
-                height: Math.round(395 * DefaultStyle.dp)
+                sourceSize.width: Utils.getSizeWithScreenRatio(395)
+                sourceSize.height: Utils.getSizeWithScreenRatio(395)
+                width: Utils.getSizeWithScreenRatio(395)
+                height: Utils.getSizeWithScreenRatio(395)
 			}
 		}
 	}

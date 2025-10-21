@@ -8,6 +8,7 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
 
@@ -26,7 +27,7 @@ ColumnLayout {
 			font: Typography.h4
 			color: DefaultStyle.main2_600
 			text: title
-			Layout.topMargin: Math.round(5 * DefaultStyle.dp)
+			Layout.topMargin: Utils.getSizeWithScreenRatio(5)
 		}
 		Item{Layout.fillWidth: true}
 		BigButton {
@@ -41,30 +42,30 @@ ColumnLayout {
 	Control.Control {
 		visible: expandButton.checked
 		Layout.fillWidth: true
-		Layout.topMargin: Math.round(9 * DefaultStyle.dp)
-		height: Math.min(contentColumn.implicitHeight, Math.round(90 * DefaultStyle.dp))
-		bottomPadding: Math.round(15 * DefaultStyle.dp)
+		Layout.topMargin: Utils.getSizeWithScreenRatio(9)
+		height: Math.min(contentColumn.implicitHeight,Utils.getSizeWithScreenRatio(90))
+		bottomPadding: Utils.getSizeWithScreenRatio(15)
 
 		background: Rectangle {
 			color: DefaultStyle.grey_100
-			radius: Math.round(15 * DefaultStyle.dp)
+			radius: Utils.getSizeWithScreenRatio(15)
 		}
 
 		contentItem: ColumnLayout {
 			id: contentColumn
-			spacing: Math.round(16 * DefaultStyle.dp)
+			spacing: Utils.getSizeWithScreenRatio(16)
 			
 			Item {
-				Layout.topMargin: Math.round(7 * DefaultStyle.dp)
+				Layout.topMargin: Utils.getSizeWithScreenRatio(7)
 			}
 
 			Repeater {
 				model: participants
 				delegate: RowLayout {
 					width: parent.width
-					Layout.leftMargin: Math.round(17 * DefaultStyle.dp)
-					Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
-					spacing: Math.round(10 * DefaultStyle.dp)
+					Layout.leftMargin: Utils.getSizeWithScreenRatio(17)
+					Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
+					spacing: Utils.getSizeWithScreenRatio(10)
 					property var participantGui: modelData
 					property var participantCore: participantGui.core
 					property var contactObj: UtilsCpp.findFriendByAddress(participantCore.sipAddress)
@@ -72,15 +73,15 @@ ColumnLayout {
 					Avatar {
 						contact: contactObj?.value || null
 						displayNameVal: participantCore.displayName
-						Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-						Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+						Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+						Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
 					}
 					ColumnLayout {
 						Layout.fillWidth: true
-						Layout.preferredHeight: Math.round(56 * DefaultStyle.dp)
+						Layout.preferredHeight: Utils.getSizeWithScreenRatio(56)
 
 						ColumnLayout {
-							spacing: Math.round(2 * DefaultStyle.dp)
+							spacing: Utils.getSizeWithScreenRatio(2)
 							Layout.alignment: Qt.AlignVCenter
 
 							Text {
@@ -127,8 +128,8 @@ ColumnLayout {
 									icon.source: (contact && contact.core && contact.core.isAppFriend)
 										? AppIcons.adressBook
 										: AppIcons.plusCircle
-									icon.width: Math.round(32 * DefaultStyle.dp)
-									icon.height: Math.round(32 * DefaultStyle.dp)
+									icon.width: Utils.getSizeWithScreenRatio(32)
+									icon.height: Utils.getSizeWithScreenRatio(32)
 									onClicked: {
 										detailOptions.close()
 										if (contact && contact.core.isAppFriend)
@@ -142,8 +143,8 @@ ColumnLayout {
 									Layout.fillWidth: true
 									text: participantCore.isAdmin ? qsTr("group_infos_remove_admin_rights") : qsTr("group_infos_give_admin_rights")
 									icon.source: AppIcons.profile
-									icon.width: Math.round(32 * DefaultStyle.dp)
-									icon.height: Math.round(32 * DefaultStyle.dp)
+									icon.width: Utils.getSizeWithScreenRatio(32)
+									icon.height: Utils.getSizeWithScreenRatio(32)
 									onClicked: {
 										detailOptions.close()
 										mainItem.chatCore.lToggleParticipantAdminStatusAtIndex(index)
@@ -154,8 +155,8 @@ ColumnLayout {
 									Layout.fillWidth: true
 									text: qsTr("group_infos_copy_sip_address")
 									icon.source: AppIcons.copy
-									icon.width: Math.round(32 * DefaultStyle.dp)
-									icon.height: Math.round(32 * DefaultStyle.dp)
+									icon.width: Utils.getSizeWithScreenRatio(32)
+									icon.height: Utils.getSizeWithScreenRatio(32)
 									onClicked: {
 										detailOptions.close()
 										UtilsCpp.copyToClipboard(participantCore.sipAddress)
@@ -165,17 +166,17 @@ ColumnLayout {
 									visible: mainItem.isGroupEditable()
 									color: DefaultStyle.main2_200
 									Layout.fillWidth: true
-									height: Math.round(1 * DefaultStyle.dp)
-									width: parent.width - Math.round(30 * DefaultStyle.dp)
-									Layout.leftMargin: Math.round(17 * DefaultStyle.dp)
+									height: Utils.getSizeWithScreenRatio(1)
+									width: parent.width - Utils.getSizeWithScreenRatio(30)
+									Layout.leftMargin: Utils.getSizeWithScreenRatio(17)
 								}
 								IconLabelButton {
 									visible: mainItem.isGroupEditable()
 									Layout.fillWidth: true
 									text: qsTr("group_infos_remove_participant")
 									icon.source: AppIcons.trashCan
-									icon.width: Math.round(32 * DefaultStyle.dp)
-									icon.height: Math.round(32 * DefaultStyle.dp)
+									icon.width: Utils.getSizeWithScreenRatio(32)
+									icon.height: Utils.getSizeWithScreenRatio(32)
 									style: ButtonStyle.hoveredBackgroundRed
 									onClicked: {
 										detailOptions.close()
@@ -199,10 +200,10 @@ ColumnLayout {
 			MediumButton {
 				id: manageParticipants
 				visible: mainItem.isGroupEditable()
-				height: Math.round(40 * DefaultStyle.dp)
+				height: Utils.getSizeWithScreenRatio(40)
 				icon.source: AppIcons.plusCircle
-				icon.width: Math.round(16 * DefaultStyle.dp)
-				icon.height: Math.round(16 * DefaultStyle.dp)
+				icon.width: Utils.getSizeWithScreenRatio(16)
+				icon.height: Utils.getSizeWithScreenRatio(16)
 				//: "Gérer des participants"
 				text: qsTr("group_infos_manage_participants_title")
 				style: ButtonStyle.secondary

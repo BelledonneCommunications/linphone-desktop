@@ -4,6 +4,7 @@ import QtQml.Models
 
 import Linphone
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
 
@@ -32,8 +33,8 @@ Mosaic {
 				if(index < 0) cameraView.enabled = false	// this is a delegate destruction. We need to stop camera before Qt change its currentDevice (and then, let CameraView to delete wrong renderer)
 			}
 			
-            height: grid.cellHeight - Math.round(10 * DefaultStyle.dp)
-            width: grid.cellWidth - Math.round(10 * DefaultStyle.dp)
+            height: grid.cellHeight - Utils.getSizeWithScreenRatio(10)
+            width: grid.cellWidth - Utils.getSizeWithScreenRatio(10)
 			Sticker {
 				id: cameraView
 				previewEnabled: index == 0

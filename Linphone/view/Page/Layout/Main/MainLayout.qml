@@ -252,7 +252,7 @@ Item {
                             y: magicSearchBar.height
                             //                            closePolicy: Popup.CloseOnEscape
                             topPadding: Utils.getSizeWithScreenRatio(20)
-                            bottomPadding: Math.round((contactList.haveContacts ? 20 : 10) * DefaultStyle.dp)
+                            bottomPadding: Utils.getSizeWithScreenRatio(contactList.haveContacts ? 20 : 10)
                             rightPadding: Utils.getSizeWithScreenRatio(8)
                             leftPadding: Utils.getSizeWithScreenRatio(20)
                             visible: magicSearchBar.text.length != 0
@@ -541,7 +541,7 @@ Item {
                                     }
                                     Rectangle {
                                         Layout.fillWidth: true
-                                        Layout.preferredHeight: Math.max(Utils.getSizeWithScreenRatio(1), 1)
+                                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(1)
                                         visible: addAccountButton.visible
                                         color: DefaultStyle.main2_400
                                     }

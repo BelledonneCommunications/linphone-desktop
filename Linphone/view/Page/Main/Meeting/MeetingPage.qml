@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // TODO : spacing
 AbstractMainPage {
@@ -74,7 +75,7 @@ AbstractMainPage {
 		id: leftPanelStackView
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-        Layout.leftMargin: Math.round(45 * DefaultStyle.dp)
+        Layout.leftMargin: Utils.getSizeWithScreenRatio(45)
 		initialItem: listLayout
 		clip: true
 	}
@@ -84,7 +85,7 @@ AbstractMainPage {
 		property ConferenceInfoGui confInfoToDelete
 		property bool cancel: false
 		signal cancelRequested()
-        // width: Math.round(278 * DefaultStyle.dp)
+        // width: Utils.getSizeWithScreenRatio(278)
         //: "Souhaitez-vous annuler et supprimer cette réunion ?"
         text: cancel ? qsTr("meeting_schedule_cancel_dialog_message")
                        //: Souhaitez-vous supprimer cette réunion ?
@@ -133,11 +134,11 @@ AbstractMainPage {
 
 	Control.ScrollView {
 		id: overridenRightPanel
-		width: Math.round((393 + 10) * DefaultStyle.dp)
+		width: Utils.getSizeWithScreenRatio(393 + 10)
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
-		anchors.topMargin: Math.round(58 * DefaultStyle.dp)
-		anchors.bottomMargin: Math.round(30 * DefaultStyle.dp)
+		anchors.topMargin: Utils.getSizeWithScreenRatio(58)
+		anchors.bottomMargin: Utils.getSizeWithScreenRatio(30)
 		height: parent.height - anchors.topMargin
 		anchors.horizontalCenter: parent.horizontalCenter
 		contentWidth: width
@@ -150,8 +151,8 @@ AbstractMainPage {
 		}
 		ColumnLayout {
 			anchors.fill: parent
-			anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
-			width: Math.round(393 * DefaultStyle.dp)
+			anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
+			width: Utils.getSizeWithScreenRatio(393)
 			Control.StackView {
 				id: overridenRightPanelStackView
 				Layout.fillWidth: true
@@ -177,7 +178,7 @@ AbstractMainPage {
 				anchors.fill: parent
 				spacing: 0
 				RowLayout {
-                    Layout.rightMargin: Math.round(38 * DefaultStyle.dp)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(38)
 					Layout.alignment: Qt.AlignTop
 					Layout.fillWidth: true
 					spacing: 0					
@@ -194,10 +195,10 @@ AbstractMainPage {
 						id: newConfButton
 						style: ButtonStyle.noBackground
 						icon.source: AppIcons.plusCircle
-                        Layout.preferredWidth: Math.round(28 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(28 * DefaultStyle.dp)
-                        icon.width: Math.round(28 * DefaultStyle.dp)
-                        icon.height: Math.round(28 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
+                        icon.width: Utils.getSizeWithScreenRatio(28)
+                        icon.height: Utils.getSizeWithScreenRatio(28)
 						KeyNavigation.down: scrollToCurrentDateButton
 						onClicked: {
 							mainItem.editConference()
@@ -206,15 +207,15 @@ AbstractMainPage {
 				}
 				RowLayout {
 					visible: conferenceList.count !== 0 || searchBar.text.length !== 0
-					spacing: Math.round(11 * DefaultStyle.dp)
-					Layout.topMargin: Math.round(18 * DefaultStyle.dp)
-					Layout.rightMargin: Math.round(38 * DefaultStyle.dp)
+					spacing: Utils.getSizeWithScreenRatio(11)
+					Layout.topMargin: Utils.getSizeWithScreenRatio(18)
+					Layout.rightMargin: Utils.getSizeWithScreenRatio(38)
 					KeyNavigation.up: newConfButton
 					KeyNavigation.down: searchBar
 					Button {
 						id: scrollToCurrentDateButton
-						Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
-						Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
+						Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
+						Layout.preferredHeight: Utils.getSizeWithScreenRatio(32)
 						icon.source: AppIcons.calendar
 						style: ButtonStyle.noBackground
 						onClicked: conferenceList.scrollToCurrentDate()
@@ -236,7 +237,7 @@ AbstractMainPage {
 				}
 				Text {
 					visible: conferenceList.count === 0 && !conferenceList.loading
-                    Layout.topMargin: Math.round(137 * DefaultStyle.dp)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(137)
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignHCenter
                     //: "Aucun résultat…"
@@ -251,7 +252,7 @@ AbstractMainPage {
 				MeetingListView {
 					id: conferenceList
 					// Remove 24 from first section padding because we cannot know that it is the first section. 24 is the margins between sections.
-                    Layout.topMargin: Math.round(38 * DefaultStyle.dp) - Math.round(24 * DefaultStyle.dp)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(38 - 24)
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					
@@ -296,18 +297,18 @@ AbstractMainPage {
 			objectName: "createConf"
 			property ConferenceInfoGui conferenceInfoGui
 			ColumnLayout {
-                spacing: Math.round(33 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(33)
 				anchors.fill: parent
 				RowLayout {
-                    spacing: Math.round(5 * DefaultStyle.dp)
-					Layout.rightMargin: Math.round(35 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(5)
+					Layout.rightMargin: Utils.getSizeWithScreenRatio(35)
 					Button {
 						id: backButton
 						style: ButtonStyle.noBackground
 						icon.source: AppIcons.leftArrow
 						focus: true
-                        icon.width: Math.round(24 * DefaultStyle.dp)
-                        icon.height: Math.round(24 * DefaultStyle.dp)
+                        icon.width: Utils.getSizeWithScreenRatio(24)
+                        icon.height: Utils.getSizeWithScreenRatio(24)
 						KeyNavigation.right: createButton
 						KeyNavigation.down: meetingSetup
 						onClicked: {
@@ -362,7 +363,7 @@ AbstractMainPage {
 						anchors.top: parent.top
 						anchors.bottom: parent.bottom
 						anchors.right: parent.right
-						anchors.rightMargin: Math.round(8 * DefaultStyle.dp)
+						anchors.rightMargin: Utils.getSizeWithScreenRatio(8)
 					}
 					MeetingForm {
 						id: meetingSetup
@@ -370,7 +371,7 @@ AbstractMainPage {
 						isCreation: true
 						anchors.left: parent.left
 						anchors.right: parent.right
-						anchors.rightMargin: Math.round(35 * DefaultStyle.dp)
+						anchors.rightMargin: Utils.getSizeWithScreenRatio(35)
 						Connections {
 							target: meetingSetup.conferenceInfoGui ? meetingSetup.conferenceInfoGui.core : null
 							function onConferenceSchedulerStateChanged() {
@@ -436,13 +437,13 @@ AbstractMainPage {
 				Section {
                     Layout.fillWidth: true
 					content: RowLayout {
-                        spacing: Math.round(16 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(16)
 						Layout.preferredWidth: overridenRightPanelStackView.width
 						Button {
 							id: backButton
 							icon.source: AppIcons.leftArrow
-                            icon.width: Math.round(24 * DefaultStyle.dp)
-                            icon.height: Math.round(24 * DefaultStyle.dp)
+                            icon.width: Utils.getSizeWithScreenRatio(24)
+                            icon.height: Utils.getSizeWithScreenRatio(24)
 							style: ButtonStyle.noBackground
 							KeyNavigation.left: saveButton
 							KeyNavigation.right: titleText
@@ -454,12 +455,12 @@ AbstractMainPage {
 							}
 						}
 						RowLayout {
-                            spacing: Math.round(8 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(8)
 							EffectImage{
 								imageSource: AppIcons.usersThree
 								colorizationColor: DefaultStyle.main2_600
-                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 							}
 							TextInput {
 								id: titleText
@@ -467,7 +468,7 @@ AbstractMainPage {
 								color: DefaultStyle.main2_600
 								clip: true
 								font {
-                                    pixelSize: Math.round(20 * DefaultStyle.dp)
+                                    pixelSize: Utils.getSizeWithScreenRatio(20)
                                     weight: Typography.h4.weight
 								}
 								KeyNavigation.left: backButton
@@ -562,8 +563,8 @@ AbstractMainPage {
 			property ConferenceInfoGui conferenceInfoGui
 			ColumnLayout {
 				id: addParticipantsLayout
-				spacing: Math.round(18 * DefaultStyle.dp)
-				anchors.rightMargin: Math.round(8 * DefaultStyle.dp)
+				spacing: Utils.getSizeWithScreenRatio(18)
+				anchors.rightMargin: Utils.getSizeWithScreenRatio(8)
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.top: parent.top
@@ -572,16 +573,16 @@ AbstractMainPage {
 					id: title
 					Layout.fillWidth: true
 					Layout.preferredHeight: childrenRect.height
-					spacing: Math.round(4 * DefaultStyle.dp)
+					spacing: Utils.getSizeWithScreenRatio(4)
 					RowLayout {
 						id: addParticipantsButtons
-						spacing: Math.round(10 * DefaultStyle.dp)
+						spacing: Utils.getSizeWithScreenRatio(10)
 						Button {
 							id: addParticipantsBackButton
 							style: ButtonStyle.noBackgroundOrange
 							icon.source: AppIcons.leftArrow
-							icon.width: Math.round(24 * DefaultStyle.dp)
-							icon.height: Math.round(24 * DefaultStyle.dp)
+							icon.width: Utils.getSizeWithScreenRatio(24)
+							icon.height: Utils.getSizeWithScreenRatio(24)
 							KeyNavigation.right: addButton
 							KeyNavigation.down: addParticipantLayout
 							onClicked: container.pop()
@@ -592,7 +593,7 @@ AbstractMainPage {
 							color: DefaultStyle.main1_500_main
 							maximumLineCount: 1
 							font {
-								pixelSize: Math.round(18 * DefaultStyle.dp)
+								pixelSize: Utils.getSizeWithScreenRatio(18)
 								weight: Typography.h4.weight
 							}
 							Layout.fillWidth: true
@@ -617,8 +618,8 @@ AbstractMainPage {
 						Layout.leftMargin: addParticipantsBackButton.width + addParticipantsButtons.spacing
 						maximumLineCount: 1
 						font {
-							pixelSize: Math.round(12 * DefaultStyle.dp)
-							weight: Math.round(300 * DefaultStyle.dp)
+							pixelSize: Utils.getSizeWithScreenRatio(12)
+							weight: Utils.getSizeWithScreenRatio(300)
 						}
 						Layout.fillWidth: true
 					}
@@ -647,24 +648,24 @@ AbstractMainPage {
 				anchors.top: parent.top
 				// anchors.fill: parent
 				visible: mainItem.selectedConference
-                spacing: Math.round(16 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(16)
 				Section {
 					visible: mainItem.selectedConference
 					Layout.fillWidth: true
 					content: RowLayout {
-                        spacing: Math.round(8 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(8)
 						EffectImage {
 							imageSource: AppIcons.usersThree
 							colorizationColor: DefaultStyle.main2_600
-                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 						}
 						Text {
 							Layout.fillWidth: true
 							text: mainItem.selectedConference && mainItem.selectedConference.core? mainItem.selectedConference.core.subject : ""
 							maximumLineCount: 1
 							font {
-                                pixelSize: Math.round(20 * DefaultStyle.dp)
+                                pixelSize: Utils.getSizeWithScreenRatio(20)
                                 weight: Typography.h4.weight
 							}
 						}
@@ -681,13 +682,13 @@ AbstractMainPage {
 							KeyNavigation.right: deletePopup
 							KeyNavigation.up: joinButton
 							KeyNavigation.down: shareNetworkButton
-							Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+							Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
 							onClicked: mainItem.editConference(mainItem.selectedConference)
 						}
 						PopupButton {
 							id: deletePopup
-                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 							contentImageColor: DefaultStyle.main1_500_main
 							KeyNavigation.left: editButton.visible ? editButton : leftPanelStackView.currentItem
 							KeyNavigation.right: leftPanelStackView.currentItem
@@ -716,14 +717,14 @@ AbstractMainPage {
 				}
 				Section {
 					content: ColumnLayout {
-                        spacing: Math.round(15 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(15)
 						width: parent.width
 						RowLayout {
-                            spacing: Math.round(8 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(8)
 							Layout.fillWidth: true
 							EffectImage {
-                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 								colorizationColor: DefaultStyle.main2_600
 								imageSource: AppIcons.videoCamera
 							}
@@ -767,10 +768,10 @@ AbstractMainPage {
 							}
 						}
 						RowLayout {
-                            spacing: Math.round(8 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(8)
 							EffectImage {
-                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 								imageSource: AppIcons.clock
 								colorizationColor: DefaultStyle.main2_600
 							}
@@ -782,16 +783,16 @@ AbstractMainPage {
 										+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
 										: ''
 								font {
-                                    pixelSize: Math.round(14 * DefaultStyle.dp)
+                                    pixelSize: Utils.getSizeWithScreenRatio(14)
 									capitalization: Font.Capitalize
 								}
 							}
 						}
 						RowLayout {
-                            spacing: Math.round(8 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(8)
 							EffectImage {
-                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 								imageSource: AppIcons.globe
 								colorizationColor: DefaultStyle.main2_600
 							}
@@ -800,7 +801,7 @@ AbstractMainPage {
                                 //: "Fuseau horaire"
                                 text: "%1: %2".arg(qsTr("meeting_schedule_timezone_title")).arg(mainItem.selectedConference && mainItem.selectedConference.core ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
 								font {
-                                    pixelSize: Math.round(14 * DefaultStyle.dp)
+                                    pixelSize: Utils.getSizeWithScreenRatio(14)
 									capitalization: Font.Capitalize
 								}
 							}
@@ -810,10 +811,10 @@ AbstractMainPage {
 				Section {
 					visible: mainItem.selectedConference && mainItem.selectedConference.core?.description.length != 0
 					content: RowLayout {
-                        spacing: Math.round(8 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(8)
 						EffectImage {
-                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 							imageSource: AppIcons.note
 							colorizationColor: DefaultStyle.main2_600
 						}
@@ -821,30 +822,30 @@ AbstractMainPage {
 							text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.description : ""
 							Layout.fillWidth: true
 							font {
-                                pixelSize: Math.round(14 * DefaultStyle.dp)
+                                pixelSize: Utils.getSizeWithScreenRatio(14)
 							}
 						}
 					}
 				}
 				Section {
 					content: RowLayout {
-                        spacing: Math.round(8 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(8)
 						EffectImage {
-                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 							imageSource: AppIcons.userRectangle
 							colorizationColor: DefaultStyle.main2_600
 						}
 						Avatar {
-                            Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
 							_address: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerAddress : ""
 							secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 						}
 						Text {
 							text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerName : ""
 							font {
-                                pixelSize: Math.round(14 * DefaultStyle.dp)
+                                pixelSize: Utils.getSizeWithScreenRatio(14)
 								capitalization: Font.Capitalize
 							}
 						}
@@ -854,13 +855,13 @@ AbstractMainPage {
 					visible: participantList.count > 0
 					content: RowLayout {
 						Layout.preferredHeight: participantList.contentHeight
-                        width: Math.round(393 * DefaultStyle.dp)
-                        spacing: Math.round(8 * DefaultStyle.dp)
+                        width: Utils.getSizeWithScreenRatio(393)
+                        spacing: Utils.getSizeWithScreenRatio(8)
 						EffectImage {
-                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 							Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                            Layout.topMargin: Math.round(20 * DefaultStyle.dp)
+                            Layout.topMargin: Utils.getSizeWithScreenRatio(20)
 							imageSource: AppIcons.usersTwo
 							colorizationColor: DefaultStyle.main2_600
 						}
@@ -878,11 +879,11 @@ AbstractMainPage {
 								visible: participantList.height < participantList.contentHeight
 							}
 							delegate: RowLayout {
-                                height: Math.round(56 * DefaultStyle.dp)
-								width: participantList.width - participantScrollBar.width - Math.round(5 * DefaultStyle.dp)
+                                height: Utils.getSizeWithScreenRatio(56)
+								width: participantList.width - participantScrollBar.width - Utils.getSizeWithScreenRatio(5)
 								Avatar {
-                                    Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                                    Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+                                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
 									_address: modelData.address
 									secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 									shadowEnabled: false
@@ -893,7 +894,7 @@ AbstractMainPage {
 									maximumLineCount: 1
 									Layout.fillWidth: true
 									font {
-                                        pixelSize: Math.round(14 * DefaultStyle.dp)
+                                        pixelSize: Utils.getSizeWithScreenRatio(14)
 										capitalization: Font.Capitalize
 									}
 								}
@@ -903,8 +904,8 @@ AbstractMainPage {
 									visible: mainItem.selectedConference && mainItem.selectedConference.core?.organizerAddress === modelData.address
 									color: DefaultStyle.main2_400
 									font {
-                                        pixelSize: Math.round(12 * DefaultStyle.dp)
-                                        weight: Math.round(300 * DefaultStyle.dp)
+                                        pixelSize: Utils.getSizeWithScreenRatio(12)
+                                        weight: Utils.getSizeWithScreenRatio(300)
 									}
 								}
 							}
@@ -916,7 +917,7 @@ AbstractMainPage {
 					visible: mainItem.selectedConference && mainItem.selectedConference.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
 					Layout.fillWidth: true
 					Layout.preferredHeight: implicitHeight
-					Layout.bottomMargin: Math.round(5 * DefaultStyle.dp)
+					Layout.bottomMargin: Utils.getSizeWithScreenRatio(5)
                     //: "Rejoindre la réunion"
                     text: qsTr("meeting_info_join_title")
 					focus: true

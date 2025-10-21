@@ -48,7 +48,7 @@ AbstractSettingsLayout {
     Component {
         id: genericParametersComponent
         ColumnLayout {
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
             SwitchSetting {
                 //: "Annulateur d'écho"
                 titleText: qsTr("settings_calls_echo_canceller_title")
@@ -99,7 +99,7 @@ AbstractSettingsLayout {
 						Layout.fillWidth: true
 					}
 					RowLayout {
-						spacing: Math.round(3 * DefaultStyle.dp)
+						spacing: Utils.getSizeWithScreenRatio(3)
 						Text {
 							//: Current ringtone :
 							text: qsTr("settings_calls_current_ringtone_filename")
@@ -141,7 +141,7 @@ AbstractSettingsLayout {
 		MultimediaSettings {
 			ringerDevicesVisible: true
 			backgroundVisible: false
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
 		}
 	}
 }

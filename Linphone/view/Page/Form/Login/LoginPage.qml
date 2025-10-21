@@ -55,7 +55,7 @@ LoginLayout {
 		RowLayout {
 			visible: !SettingsCpp.assistantHideCreateAccount
             spacing: Utils.getSizeWithScreenRatio(20)
-            Layout.rightMargin: Math.round(Math.max(10 * DefaultStyle.dp, (51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp))
+            Layout.rightMargin: Math.max(Utils.getSizeWithScreenRatio(10), Utils.getSizeWithScreenRatio(51 - ((51/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))))
 
 			Text {
                 Layout.rightMargin: Utils.getSizeWithScreenRatio(15)

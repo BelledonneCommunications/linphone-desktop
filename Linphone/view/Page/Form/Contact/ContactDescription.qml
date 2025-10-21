@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout{
 	id: mainItem
@@ -33,8 +34,8 @@ ColumnLayout{
 		Layout.fillWidth: true
 		verticalAlignment: (topTextItem.visible?Text.AlignTop:Text.AlignVCenter)
 		visible: text != ''
-        font.weight: Math.round(300 * DefaultStyle.dp)
-        font.pixelSize: Math.round(12 * DefaultStyle.dp)
+        font.weight: Utils.getSizeWithScreenRatio(300)
+        font.pixelSize: Utils.getSizeWithScreenRatio(12)
 		color: DefaultStyle.main2_400
 		text: mainItem.bottomText
 		maximumLineCount: 1

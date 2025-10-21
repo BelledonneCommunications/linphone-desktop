@@ -3,15 +3,16 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
-  
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 Button {
 	id: mainItem
 	textSize: Typography.p1s.pixelSize
 	textWeight: Typography.p1s.weight
-    padding: Math.round(16 * DefaultStyle.dp)
+    padding: Utils.getSizeWithScreenRatio(16)
     // icon.width: width
     // icon.height: width
     radius: width * 2
-    // width: Math.round(24 * DefaultStyle.dp)
+    // width: Utils.getSizeWithScreenRatio(24)
     height: width
 }

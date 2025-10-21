@@ -2,13 +2,14 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 MouseArea {
 	id: mainItem
 	property string iconSource
 	property string title
 	property string subTitle
-    property real iconSize: (32 * DefaultStyle.dp)
+    property real iconSize: Utils.getSizeWithScreenRatio(32)
 	property bool shadowEnabled: containsMouse || activeFocus
 	hoverEnabled: true
 	width: content.implicitWidth
@@ -36,7 +37,7 @@ MouseArea {
 		ColumnLayout {
 			width: implicitWidth
 			height: implicitHeight
-            Layout.leftMargin: (16 * DefaultStyle.dp)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
 			Text {
 				Layout.fillWidth: true
 				text: mainItem.title

@@ -1,9 +1,10 @@
 import QtQuick
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Item {
 	id: mainItem
-    property real borderWidth: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+    property real borderWidth: Utils.getSizeWithScreenRatio(1)
 	property alias borderGradient: border.gradient
 	property alias gradient: fill.gradient
 	property alias color: fill.color

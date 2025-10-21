@@ -1,16 +1,17 @@
 import QtQuick
 import QtQuick.Effects
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Control.Control {
 	id: mainItem
-    // width: Math.round(269 * DefaultStyle.dp)
+    // width: Utils.getSizeWithScreenRatio(269)
 	y: -height
 	z: 1
-    topPadding: Math.round(8 * DefaultStyle.dp)
-    bottomPadding: Math.round(8 * DefaultStyle.dp)
-    leftPadding: Math.round(37 * DefaultStyle.dp)
-    rightPadding: Math.round(37 * DefaultStyle.dp)
+    topPadding: Utils.getSizeWithScreenRatio(8)
+    bottomPadding: Utils.getSizeWithScreenRatio(8)
+    leftPadding: Utils.getSizeWithScreenRatio(37)
+    rightPadding: Utils.getSizeWithScreenRatio(37)
 	anchors.horizontalCenter: parent.horizontalCenter
 	clip: true
 
@@ -41,15 +42,15 @@ Control.Control {
 		anchors.fill: parent
 		color: DefaultStyle.grey_0
 		border.color: mainItem.contentColor
-        border.width:  Math.max(Math.round(1 * DefaultStyle.dp), 1)
-        radius: Math.round(50 * DefaultStyle.dp)
+        border.width:  Utils.getSizeWithScreenRatio(1)
+        radius: Utils.getSizeWithScreenRatio(50)
 	}
 	contentItem: RowLayout {
 		Image {
 			visible: mainItem.imageSource != undefined
 			source: mainItem.imageSource
-            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 			fillMode: Image.PreserveAspectFit
 			Layout.fillWidth: true
 		}
@@ -58,7 +59,7 @@ Control.Control {
 			text: mainItem.text
 			Layout.fillWidth: true
 			font {
-                pixelSize: Math.round(14 * DefaultStyle.dp)
+                pixelSize: Utils.getSizeWithScreenRatio(14)
 			}
 		}
 	}

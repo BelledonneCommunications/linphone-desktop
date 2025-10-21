@@ -7,6 +7,8 @@ import Linphone
 import EnumsToStringCpp 1.0
 import UtilsCpp 1.0
 import SettingsCpp 1.0
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 // =============================================================================
 
 Item {
@@ -67,7 +69,7 @@ Item {
 		id: callTerminatedText
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.top: parent.top
-        anchors.topMargin: Math.round(25 * DefaultStyle.dp)
+        anchors.topMargin: Utils.getSizeWithScreenRatio(25)
 		z: 1
 		visible: mainItem.callState === LinphoneEnums.CallState.End || mainItem.callState === LinphoneEnums.CallState.Error || mainItem.callState === LinphoneEnums.CallState.Released
 		text: mainItem.conference
@@ -82,8 +84,8 @@ Item {
 						: call && call.core.lastErrorMessage || ""
 		color: DefaultStyle.grey_0
 		font {
-            pixelSize: Math.round(22 * DefaultStyle.dp)
-            weight: Math.round(300 * DefaultStyle.dp)
+            pixelSize: Utils.getSizeWithScreenRatio(22)
+            weight: Utils.getSizeWithScreenRatio(300)
 		}
 	}
 	
@@ -105,12 +107,12 @@ Item {
         && mainItem.callState !== LinphoneEnums.CallState.OutgoingInit
 		&& !mainItem.conference?.core.isScreenSharingEnabled
 		&& mainItem.participantDeviceCount <= 2
-        height: Math.round(180 * DefaultStyle.dp)
-        width: Math.round(300 * DefaultStyle.dp)
+        height: Utils.getSizeWithScreenRatio(180)
+        width: Utils.getSizeWithScreenRatio(300)
 		anchors.right: mainItem.right
 		anchors.bottom: mainItem.bottom
-        anchors.rightMargin: Math.round(20 * DefaultStyle.dp)
-        anchors.bottomMargin: Math.round(10 * DefaultStyle.dp)
+        anchors.rightMargin: Utils.getSizeWithScreenRatio(20)
+        anchors.bottomMargin: Utils.getSizeWithScreenRatio(10)
 		videoEnabled: preview.visible && mainItem.call && mainItem.call.core.localVideoEnabled
 		onVideoEnabledChanged: console.log("P : " +videoEnabled + " / " +visible +" / " +mainItem.call)
 		property var accountObj: UtilsCpp.findLocalAccountByAddress(mainItem.localAddress)
@@ -123,7 +125,7 @@ Item {
 			id: previewMouseArea
 			anchors.fill: parent
 			movableArea: mainItem
-            margin: Math.round(10 * DefaultStyle.dp)
+            margin: Utils.getSizeWithScreenRatio(10)
 			function resetPosition(){
 				preview.anchors.right = mainItem.right
 				preview.anchors.bottom = mainItem.bottom
@@ -146,22 +148,22 @@ Item {
 		id: waitingForOthersComponent
 		Rectangle {
 			color: DefaultStyle.grey_600
-            radius: Math.round(15 * DefaultStyle.dp)
+            radius: Utils.getSizeWithScreenRatio(15)
 			ColumnLayout {
 				anchors.centerIn: parent
-                spacing: Math.round(22 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(22)
 				width: waitText.implicitWidth
 				Text {
 					id: waitText
                     //: "En attente d'autres participants…"
                     text: qsTr("conference_call_empty")
-                    Layout.preferredHeight: Math.round(67 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(67)
 					Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
 					color: DefaultStyle.grey_0
 					font {
-                        pixelSize: Math.round(30 * DefaultStyle.dp)
-                        weight: Math.round(300 * DefaultStyle.dp)
+                        pixelSize: Utils.getSizeWithScreenRatio(30)
+                        weight: Utils.getSizeWithScreenRatio(300)
 					}
 				}
 				Item {

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Effects
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
 
@@ -11,8 +12,8 @@ DesktopPopup {
 	property var notificationData: ({
 										timelineModel : null
 									})
-    property real overriddenHeight: Math.round(120 * DefaultStyle.dp)
-    property real overriddenWidth: Math.round(300 * DefaultStyle.dp)
+    property real overriddenHeight: Utils.getSizeWithScreenRatio(120)
+    property real overriddenWidth: Utils.getSizeWithScreenRatio(300)
 	property double radius: 0
 	property color backgroundColor: DefaultStyle.grey_0
 	property double backgroundOpacity: 1
@@ -56,7 +57,7 @@ DesktopPopup {
 				opacity: mainItem.backgroundOpacity
 				// border {
 				// 	color: DefaultStyle.grey_400
-                // 	width: Math.round(1 * DefaultStyle.dp)
+                // 	width: Utils.getSizeWithScreenRatio(1)
 				// }
 			}
 			MultiEffect {

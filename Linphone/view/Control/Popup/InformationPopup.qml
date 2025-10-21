@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic
 import Linphone
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Popup {
 	id: mainItem
@@ -18,9 +19,9 @@ Popup {
 	closePolicy: Popup.NoAutoClose
 	x : parent.x + parent.width - width
 	// y : parent.y + parent.height - height
-    rightMargin: Math.round(20 * DefaultStyle.dp)
-    bottomMargin: Math.round(20 * DefaultStyle.dp)
-    padding: Math.round(20 * DefaultStyle.dp)
+    rightMargin: Utils.getSizeWithScreenRatio(20)
+    bottomMargin: Utils.getSizeWithScreenRatio(20)
+    padding: Utils.getSizeWithScreenRatio(20)
 	underlineColor: mainItem.isSuccess ? DefaultStyle.success_500_main : DefaultStyle.danger_500_main
 	radius: 0
 	focus: true
@@ -37,24 +38,24 @@ Popup {
 		} 
 	}
 	contentItem: RowLayout {
-        spacing: Math.round(24 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(24)
 		Accessible.role: Accessible.AlertMessage
 		Accessible.name: "%1, %2".arg(mainItem.title).arg(mainItem.description)
 		EffectImage {
 			imageSource: mainItem.isSuccess ? AppIcons.smiley : AppIcons.smileySad
 			colorizationColor: mainItem.isSuccess ? DefaultStyle.success_500_main : DefaultStyle.danger_500_main
-            Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
-            width: Math.round(32 * DefaultStyle.dp)
-            height: Math.round(32 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(32)
+            width: Utils.getSizeWithScreenRatio(32)
+            height: Utils.getSizeWithScreenRatio(32)
 		}
 		Rectangle {
-            Layout.preferredWidth: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(1)
 			Layout.preferredHeight: parent.height
 			color: DefaultStyle.main2_200
 		}
 		ColumnLayout {
-            spacing: Math.round(2 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(2)
 			RowLayout {
 				spacing: 0
 				Text {
@@ -67,10 +68,10 @@ Popup {
 					}
 				}
 				Button {
-                    Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
-                    icon.width: Math.round(20 * DefaultStyle.dp)
-                    icon.height: Math.round(20 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
+                    icon.width: Utils.getSizeWithScreenRatio(20)
+                    icon.height: Utils.getSizeWithScreenRatio(20)
 					Layout.alignment: Qt.AlignTop | Qt.AlignRight
 					visible: mainItem.hovered || hovered
 					style: ButtonStyle.noBackground
@@ -81,13 +82,13 @@ Popup {
 			Text {
 				Layout.alignment: Qt.AlignHCenter
 				Layout.fillWidth: true
-                Layout.maximumWidth: Math.round(300 * DefaultStyle.dp)
+                Layout.maximumWidth: Utils.getSizeWithScreenRatio(300)
 				text: mainItem.description
 				wrapMode: Text.WordWrap
 				color: DefaultStyle.main2_500_main
 				font {
-                    pixelSize: Math.round(12 * DefaultStyle.dp)
-                    weight: Math.round(300 * DefaultStyle.dp)
+                    pixelSize: Utils.getSizeWithScreenRatio(12)
+                    weight: Utils.getSizeWithScreenRatio(300)
 				}
 			}
 		}

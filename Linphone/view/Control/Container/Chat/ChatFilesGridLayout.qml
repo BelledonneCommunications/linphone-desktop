@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 
 import Linphone
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
 GridLayout {
@@ -12,10 +13,10 @@ GridLayout {
 	property ChatMessageContentProxy proxyModel
 	property bool isHoveringFile: false
 	property int itemCount: delModel.count
-	property int itemWidth: Math.round(95 * DefaultStyle.dp)
+	property int itemWidth: Utils.getSizeWithScreenRatio(95)
 	// cellWidth: 
-	// cellHeight: Math.round(105 * DefaultStyle.dp)
-	property real maxWidth: 3 * 105 * DefaultStyle.dp
+	// cellHeight: Utils.getSizeWithScreenRatio(105)
+	property real maxWidth: Utils.getSizeWithScreenRatio(3 * 105)
 	columns: optimalColumns
 	
 

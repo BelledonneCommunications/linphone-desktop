@@ -13,8 +13,8 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 AbstractWindow {
     id: mainWindow
     flags: Qt.Window
-    minimumWidth: Math.round(1020 * DefaultStyle.dp)
-    minimumHeight: Math.round(700 * DefaultStyle.dp)
+    minimumWidth: Utils.getSizeWithScreenRatio(1020)
+    minimumHeight: Utils.getSizeWithScreenRatio(700)
 
     // modality: Qt.WindowModal
     property CallGui call
@@ -200,7 +200,7 @@ AbstractWindow {
             mainWindow.callTerminatedByUser = true
             call.core.lTerminateAllCalls()
         }
-        width: Math.round(278 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(278)
         //: "Terminer tous les appels en cours ?"
         title: qsTr("call_close_window_dialog_title")
         //: "La fenêtre est sur le point d'être fermée. Cela terminera tous les appels en cours."
@@ -237,12 +237,12 @@ AbstractWindow {
         background: Rectangle {
             anchors.fill: parent
             color: bottomButton.enabled ? disabledIcon ? DefaultStyle.grey_500 : bottomButton.pressed || bottomButton.checked ? DefaultStyle.main2_400 : DefaultStyle.grey_500 : DefaultStyle.grey_600
-            radius: Math.round(71 * DefaultStyle.dp)
+            radius: Utils.getSizeWithScreenRatio(71)
         }
         icon.source: disabledIcon
                      && bottomButton.checked ? disabledIcon : enabledIcon
-        icon.width: Math.round(32 * DefaultStyle.dp)
-        icon.height: Math.round(32 * DefaultStyle.dp)
+        icon.width: Utils.getSizeWithScreenRatio(32)
+        icon.height: Utils.getSizeWithScreenRatio(32)
         contentImageColor: DefaultStyle.grey_0
     }
     ZrtpAuthenticationDialog {
@@ -260,13 +260,13 @@ AbstractWindow {
     }
     Control.Control {
         id: zrtpValidationToast
-        // width: Math.round(269 * DefaultStyle.dp)
+        // width: Utils.getSizeWithScreenRatio(269)
         y: -height * 2
         z: 1
-        topPadding: Math.round(8 * DefaultStyle.dp)
-        bottomPadding: Math.round(8 * DefaultStyle.dp)
-        leftPadding: Math.round(50 * DefaultStyle.dp)
-        rightPadding: Math.round(50 * DefaultStyle.dp)
+        topPadding: Utils.getSizeWithScreenRatio(8)
+        bottomPadding: Utils.getSizeWithScreenRatio(8)
+        leftPadding: Utils.getSizeWithScreenRatio(50)
+        rightPadding: Utils.getSizeWithScreenRatio(50)
         anchors.horizontalCenter: parent.horizontalCenter
         clip: true
         function open() {
@@ -284,15 +284,15 @@ AbstractWindow {
             anchors.fill: parent
             color: DefaultStyle.grey_0
             border.color: DefaultStyle.info_500_main
-            border.width: Math.max(Math.round(1 * DefaultStyle.dp), 1)
-            radius: Math.round(50 * DefaultStyle.dp)
+            border.width: Utils.getSizeWithScreenRatio(1)
+            radius: Utils.getSizeWithScreenRatio(50)
         }
         contentItem: RowLayout {
             // anchors.centerIn: parent
             Image {
                 source: AppIcons.trusted
-                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
                 fillMode: Image.PreserveAspectFit
                 Layout.fillWidth: true
             }
@@ -302,7 +302,7 @@ AbstractWindow {
                 text: qsTr("call_can_be_trusted_toast")
                 Layout.fillWidth: true
                 font {
-                    pixelSize: Math.round(14 * DefaultStyle.dp)
+                    pixelSize: Utils.getSizeWithScreenRatio(14)
                 }
             }
         }
@@ -319,26 +319,26 @@ AbstractWindow {
 
         ColumnLayout {
             anchors.fill: parent
-            spacing: Math.round(10 * DefaultStyle.dp)
-            anchors.bottomMargin: Math.round(10 * DefaultStyle.dp)
-            anchors.topMargin: Math.round(10 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(10)
+            anchors.bottomMargin: Utils.getSizeWithScreenRatio(10)
+            anchors.topMargin: Utils.getSizeWithScreenRatio(10)
             Item {
                 id: headerItem
-                Layout.margins: Math.round(10 * DefaultStyle.dp)
-                Layout.leftMargin: Math.round(20 * DefaultStyle.dp)
+                Layout.margins: Utils.getSizeWithScreenRatio(10)
+                Layout.leftMargin: Utils.getSizeWithScreenRatio(20)
                 Layout.fillWidth: true
-                Layout.minimumHeight: Math.round(25 * DefaultStyle.dp)
+                Layout.minimumHeight: Utils.getSizeWithScreenRatio(25)
                 RowLayout {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    spacing: Math.round(10 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(10)
                     RowLayout {
-                        spacing: Math.round(10 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(10)
                         EffectImage {
                             id: callStatusIcon
-                            Layout.preferredWidth: Math.round(30 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
                             // TODO : change with broadcast or meeting icon when available
                             imageSource: !mainWindow.call ? AppIcons.meeting : (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released) ? AppIcons.endCall : (mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote) ? AppIcons.pause : mainWindow.conference ? AppIcons.usersThree : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? AppIcons.arrowUpRight : AppIcons.arrowDownLeft
                             colorizationColor: !mainWindow.call
@@ -358,9 +358,9 @@ AbstractWindow {
                             }
                         }
                         ColumnLayout {
-                            spacing: Math.round(6 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(6)
                             RowLayout {
-                                spacing: Math.round(10 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(10)
                                 Text {
                                     id: callStatusText
                                     property string remoteName: mainWindow.call ? qsTr("call_dir").arg(EnumsToStringCpp.dirToString(mainWindow.call.core.dir)) : ""
@@ -400,9 +400,9 @@ AbstractWindow {
                                                  || mainWindow.callState
                                                  === LinphoneEnums.CallState.StreamsRunning)
                                     Layout.fillHeight: true
-                                    Layout.topMargin: Math.round(10 * DefaultStyle.dp)
-                                    Layout.bottomMargin: Math.round(2 * DefaultStyle.dp)
-                                    Layout.preferredWidth: Math.round(2 * DefaultStyle.dp)
+                                    Layout.topMargin: Utils.getSizeWithScreenRatio(10)
+                                    Layout.bottomMargin: Utils.getSizeWithScreenRatio(2)
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(2)
                                     color: DefaultStyle.grey_0
                                 }
                                 Text {
@@ -418,7 +418,7 @@ AbstractWindow {
                                              === LinphoneEnums.CallState.StreamsRunning
                                 }
                                 Text {
-                                    Layout.leftMargin: Math.round(14 * DefaultStyle.dp)
+                                    Layout.leftMargin: Utils.getSizeWithScreenRatio(14)
                                     id: conferenceDate
                                     text: mainWindow.conferenceInfo ? mainWindow.conferenceInfo.core.getStartEndDateString() : ""
                                     color: DefaultStyle.grey_0
@@ -431,7 +431,7 @@ AbstractWindow {
                             }
                             RowLayout {
                                 id: securityStateLayout
-                                spacing: Math.round(5 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(5)
                                 visible: false
                                 Connections {
                                     target: mainWindow
@@ -449,13 +449,13 @@ AbstractWindow {
                                 BusyIndicator {
                                     //: Waiting for encryption
                                     visible: encryptionStatusText.text === qsTr("call_waiting_for_encryption_info")
-                                    Layout.preferredWidth: Math.round(15 * DefaultStyle.dp)
-                                    Layout.preferredHeight: Math.round(15 * DefaultStyle.dp)
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(15)
+                                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(15)
                                     indicatorColor: DefaultStyle.grey_0
                                 }
                                 EffectImage {
-                                    Layout.preferredWidth: Math.round(15 * DefaultStyle.dp)
-                                    Layout.preferredHeight: Math.round(15 * DefaultStyle.dp)
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(15)
+                                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(15)
                                     colorizationColor: mainWindow.call 
                                         ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp 
                                             ? DefaultStyle.info_500_main 
@@ -505,8 +505,8 @@ AbstractWindow {
                                                 : DefaultStyle.grey_0
                                             : DefaultStyle.grey_0
                                     font {
-                                        pixelSize: Math.round(12 * DefaultStyle.dp)
-                                        weight: Math.round(400 * DefaultStyle.dp)
+                                        pixelSize: Utils.getSizeWithScreenRatio(12)
+                                        weight: Utils.getSizeWithScreenRatio(400)
                                     }
                                     MouseArea {
                                         anchors.fill: parent
@@ -538,11 +538,11 @@ AbstractWindow {
                     Button{
                         id: openStatisticPanelButton
                         property int quality: mainWindow.call ? mainWindow.call.core.quality : 0
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
-                        Layout.preferredWidth: Math.round(40 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(40 * DefaultStyle.dp)
-                        Layout.rightMargin: Math.round(30 * DefaultStyle.dp)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(40)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(40)
+                        Layout.rightMargin: Utils.getSizeWithScreenRatio(30)
                         icon.source: quality >= 4 ? AppIcons.cellSignalFull : quality >= 3 ? AppIcons.cellSignalMedium : quality >= 2 ? AppIcons.cellSignalLow : AppIcons.cellSignalNone
                         colorizationColor: DefaultStyle.grey_0
                         style: ButtonStyle.noBackgroundLightBorder
@@ -572,19 +572,19 @@ AbstractWindow {
                             : (mainWindow.call.core.recording || mainWindow.call.core.remoteRecording) 
                         : false
                     anchors.centerIn: parent
-                    leftPadding: Math.round(14 * DefaultStyle.dp)
-                    rightPadding: Math.round(14 * DefaultStyle.dp)
-                    topPadding: Math.round(6 * DefaultStyle.dp)
-                    bottomPadding: Math.round(6 * DefaultStyle.dp)
+                    leftPadding: Utils.getSizeWithScreenRatio(14)
+                    rightPadding: Utils.getSizeWithScreenRatio(14)
+                    topPadding: Utils.getSizeWithScreenRatio(6)
+                    bottomPadding: Utils.getSizeWithScreenRatio(6)
                     background: Rectangle {
                         anchors.fill: parent
                         color: DefaultStyle.grey_500
-                        radius: Math.round(10 * DefaultStyle.dp)
+                        radius: Utils.getSizeWithScreenRatio(10)
                     }
                     contentItem: RowLayout {
-                        spacing: Math.round(85 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(85)
                         RowLayout {
-                            spacing: Math.round(15 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(15)
                             EffectImage {
                                 imageSource: screenSharingOrRecordBanner.isScreenSharing
                                     ? AppIcons.screencast
@@ -592,8 +592,8 @@ AbstractWindow {
                                 colorizationColor: screenSharingOrRecordBanner.isScreenSharing
                                     ? DefaultStyle.grey_0
                                     : DefaultStyle.danger_500_main
-                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
                             }
                             Text {
                                 color: screenSharingOrRecordBanner.isScreenSharing
@@ -645,7 +645,7 @@ AbstractWindow {
             RowLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                spacing: Math.round(23 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(23)
                 Control.StackView {
                     id: middleItemStackView
                     initialItem: inCallItem
@@ -655,9 +655,9 @@ AbstractWindow {
                 CallSettingsPanel {
                     id: rightPanel
                     Layout.fillHeight: true
-                    Layout.rightMargin: Math.round(20 * DefaultStyle.dp)
-                    Layout.preferredWidth: Math.round(393 * DefaultStyle.dp)
-                    Layout.topMargin: Math.round(10 * DefaultStyle.dp)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(20)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(393)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(10)
                     property int currentIndex: 0
                     visible: false
                     onVisibleChanged: if(!visible) contentLoader.sourceComponent = null
@@ -749,7 +749,7 @@ AbstractWindow {
 
                     // Binding on rightPadding {
                     //     when: rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName == "participantListView"
-                    //     value: Math.round(10 * DefaultStyle.dp)
+                    //     value: Utils.getSizeWithScreenRatio(10)
                     //     restoreMode: Binding.RestoreBindingOrValue
                     // }
 
@@ -814,10 +814,10 @@ AbstractWindow {
                             roundedBottom: true
                             lastRowVisible: false
                             visible: false
-                            leftPadding: Math.round(40 * DefaultStyle.dp)
-                            rightPadding: Math.round(40 * DefaultStyle.dp)
-                            topPadding: Math.round(41 * DefaultStyle.dp)
-                            bottomPadding: Math.round(18 * DefaultStyle.dp)
+                            leftPadding: Utils.getSizeWithScreenRatio(40)
+                            rightPadding: Utils.getSizeWithScreenRatio(40)
+                            topPadding: Utils.getSizeWithScreenRatio(41)
+                            bottomPadding: Utils.getSizeWithScreenRatio(18)
                             Component.onCompleted: parent.height = height
                         }
                     }
@@ -854,10 +854,10 @@ AbstractWindow {
                             parent: numericPadContainer
                             roundedBottom: true
                             visible: newCallForm.searchBar.numericPadButton.checked
-                            leftPadding: Math.round(40 * DefaultStyle.dp)
-                            rightPadding: Math.round(40 * DefaultStyle.dp)
-                            topPadding: Math.round(41 * DefaultStyle.dp)
-                            bottomPadding: Math.round(18 * DefaultStyle.dp)
+                            leftPadding: Utils.getSizeWithScreenRatio(40)
+                            rightPadding: Utils.getSizeWithScreenRatio(40)
+                            topPadding: Utils.getSizeWithScreenRatio(41)
+                            bottomPadding: Utils.getSizeWithScreenRatio(18)
                             onLaunchCall: {
                                 rightPanel.visible = false
                                 UtilsCpp.createCall(newCallForm.searchBar.text)
@@ -882,11 +882,11 @@ AbstractWindow {
                         height: rightPanel.contentItemHeight
                         ColumnLayout {
                             anchors.fill: parent
-                            spacing: Math.round(41 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(41)
                             Item{Layout.fillHeight: true}
                             SearchBar {
                                 id: searchBar
-                                height: Math.round(45 * DefaultStyle.dp)
+                                height: Utils.getSizeWithScreenRatio(45)
                                 magnifierVisible: false
                                 color: DefaultStyle.grey_0
                                 borderColor: DefaultStyle.grey_200
@@ -898,7 +898,7 @@ AbstractWindow {
                             NumericPad {
                                 id: numPad
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-                                Layout.bottomMargin: Math.round(18 * DefaultStyle.dp)
+                                Layout.bottomMargin: Utils.getSizeWithScreenRatio(18)
                                 currentCall: callsModel.currentCall
                                 lastRowVisible: false
                                 onLaunchCall: {
@@ -941,11 +941,11 @@ AbstractWindow {
                             id: popupbutton
                             popup.contentItem: IconLabelButton {
                                 icon.source: AppIcons.arrowsMerge
-                                icon.width: Math.round(32 * DefaultStyle.dp)
-                                icon.height: Math.round(32 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(32)
+                                icon.height: Utils.getSizeWithScreenRatio(32)
                                 //: call_action_merge_calls
                                 text: qsTr("Merger tous les appels")
-                                textSize: Math.round(14 * DefaultStyle.dp)
+                                textSize: Utils.getSizeWithScreenRatio(14)
                                 onClicked: {
                                     callsModel.lMergeAll()
                                     popupbutton.close()
@@ -957,15 +957,15 @@ AbstractWindow {
                         Layout.fillWidth: true
                         Layout.maximumHeight: rightPanel.height
                         visible: callList.contentHeight > 0
-                        leftPadding: Math.round(16 * DefaultStyle.dp)
-                        rightPadding: Math.round(6 * DefaultStyle.dp)
-                        topPadding: Math.round(15 * DefaultStyle.dp)
-                        bottomPadding: Math.round(16 * DefaultStyle.dp)
+                        leftPadding: Utils.getSizeWithScreenRatio(16)
+                        rightPadding: Utils.getSizeWithScreenRatio(6)
+                        topPadding: Utils.getSizeWithScreenRatio(15)
+                        bottomPadding: Utils.getSizeWithScreenRatio(16)
 
-                        Layout.topMargin: Math.round(15 * DefaultStyle.dp)
-                        Layout.bottomMargin: Math.round(16 * DefaultStyle.dp)
-                        Layout.leftMargin: Math.round(16 * DefaultStyle.dp)
-                        Layout.rightMargin: Math.round(16 * DefaultStyle.dp)
+                        Layout.topMargin: Utils.getSizeWithScreenRatio(15)
+                        Layout.bottomMargin: Utils.getSizeWithScreenRatio(16)
+                        Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
+                        Layout.rightMargin: Utils.getSizeWithScreenRatio(16)
 
                         contentItem: CallListView {
                             id: callList
@@ -1036,7 +1036,7 @@ AbstractWindow {
                     }
                     contentItem: ScreencastSettings {
                         id: screencastsettings
-                        anchors.topMargin: Math.round(16 * DefaultStyle.dp)
+                        anchors.topMargin: Utils.getSizeWithScreenRatio(16)
                         width: parent.width
                         call: mainWindow.call
                         onIsLocalScreenSharingChanged: if (isLocalScreenSharing) rightPanel.visible = false
@@ -1057,9 +1057,9 @@ AbstractWindow {
                         width: parent.width
                         height: rightPanel.contentItemHeight
                         // anchors.fill: parent
-                        // anchors.bottomMargin: Math.round(16 * DefaultStyle.dp)
-                        // anchors.leftMargin: Math.round(17 * DefaultStyle.dp)
-                        // anchors.rightMargin: Math.round(17 * DefaultStyle.dp)
+                        // anchors.bottomMargin: Utils.getSizeWithScreenRatio(16)
+                        // anchors.leftMargin: Utils.getSizeWithScreenRatio(17)
+                        // anchors.rightMargin: Utils.getSizeWithScreenRatio(17)
                         initialItem: participantListComp
                         onCurrentItemChanged: rightPanel.headerStack.currentIndex = currentItem.Control.StackView.index
                         property list<string> selectedParticipants
@@ -1232,9 +1232,9 @@ AbstractWindow {
                     sourceComponent: Item {
                         CallLayout {
                             anchors.fill: parent
-                            anchors.leftMargin: Math.round(20 * DefaultStyle.dp)
-                            anchors.rightMargin: rightPanel.visible ? 0 : Math.round(10 * DefaultStyle.dp) // Grid and AS have 10 in right margin (so apply -10 here)
-                            anchors.topMargin: Math.round(10 * DefaultStyle.dp)
+                            anchors.leftMargin: Utils.getSizeWithScreenRatio(20)
+                            anchors.rightMargin: rightPanel.visible ? 0 : Utils.getSizeWithScreenRatio(10) // Grid and AS have 10 in right margin (so apply -10 here)
+                            anchors.topMargin: Utils.getSizeWithScreenRatio(10)
                             call: mainWindow.call
                             callTerminatedByUser: mainWindow.callTerminatedByUser
                         }
@@ -1249,7 +1249,7 @@ AbstractWindow {
             RowLayout {
                 id: bottomButtonsLayout
                 Layout.alignment: Qt.AlignHCenter
-                spacing: Math.round(58 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(58)
                 visible: middleItemStackView.currentItem.objectName == "inCallItem"
                 property bool moreOptionsButtonVisibility: true
 
@@ -1287,14 +1287,14 @@ AbstractWindow {
                 BigButton {
                     id: endCallButton
                     Layout.row: 0
-                    icon.width: Math.round(32 * DefaultStyle.dp)
-                    icon.height: Math.round(32 * DefaultStyle.dp)
+                    icon.width: Utils.getSizeWithScreenRatio(32)
+                    icon.height: Utils.getSizeWithScreenRatio(32)
                     //: "Terminer l'appel"
                     ToolTip.text: qsTr("call_action_end_call")
                     Accessible.name: qsTr("call_action_end_call")
-                    Layout.preferredWidth: Math.round(75 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                    radius: Math.round(71 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(75)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                    radius: Utils.getSizeWithScreenRatio(71)
                     style: ButtonStyle.phoneRedLightBorder
                     Layout.column: mainWindow.startingCall ? 0 : bottomButtonsLayout.columns - 1
                     KeyNavigation.tab: mainWindow.startingCall ? (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : openStatisticPanelButton
@@ -1313,15 +1313,15 @@ AbstractWindow {
                     visible: false
                     Layout.row: 0
                     Layout.column: 1
-                    spacing: Math.round(10 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(10)
 
                     // Pause call button
                     CheckableButton {
                         id: pauseButton
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                         //: "Reprendre l'appel"
                         ToolTip.text: checked ? qsTr("call_action_resume_call")
                                                 //: "Mettre l'appel en pause"
@@ -1352,10 +1352,10 @@ AbstractWindow {
                         id: transferCallButton
                         visible: !mainWindow.conference
                         icon.source: AppIcons.transferCall
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                         contentImageColor: DefaultStyle.grey_0
                         //: "Transférer l'appel"
                         ToolTip.text: qsTr("call_action_transfer_call")
@@ -1376,10 +1376,10 @@ AbstractWindow {
                         id: newCallButton
                         checkable: true
                         icon.source: AppIcons.newCall
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                         //: "Initier un nouvel appel"
                         ToolTip.text: qsTr("call_action_start_new_call_hint")
                         Accessible.name: qsTr("call_action_start_new_call_hint")
@@ -1397,12 +1397,12 @@ AbstractWindow {
                     // Call list button
                     CheckableButton {
                         id: callListButton
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         checkable: true
                         icon.source: AppIcons.callList
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                         //: "Afficher la liste d'appels"
                         ToolTip.text: qsTr("call_display_call_list_hint")
                         Accessible.name: qsTr("call_display_call_list_hint")
@@ -1425,7 +1425,7 @@ AbstractWindow {
                     id: controlCallButtons
                     Layout.row: 0
                     Layout.column: mainWindow.startingCall ? bottomButtonsLayout.columns - 1 : 0
-                    spacing: Math.round(10 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(10)
 
                     // Video camera button
                     CheckableButton {
@@ -1442,10 +1442,10 @@ AbstractWindow {
                         ToolTip.text: mainWindow.localVideoEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
                         Accessible.name: mainWindow.localVideoEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
                         checked: !mainWindow.localVideoEnabled
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                         onClicked: mainWindow.call.core.lSetLocalVideoEnabled(
                                        !mainWindow.call.core.localVideoEnabled)
                     }
@@ -1462,10 +1462,10 @@ AbstractWindow {
                             : qsTr("call_deactivate_microphone")
                         Accessible.name: mainWindow.call && mainWindow.call.core.microphoneMuted ? qsTr("call_activate_microphone") : qsTr("call_deactivate_microphone")
                         checked: mainWindow.call && mainWindow.call.core.microphoneMuted
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                         onClicked: mainWindow.call.core.lSetMicrophoneMuted(
                                        !mainWindow.call.core.microphoneMuted)
                         KeyNavigation.backtab: videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : nextItemInFocusChain(false)
@@ -1479,10 +1479,10 @@ AbstractWindow {
                         //: Partager l'écran…
                         ToolTip.text: qsTr("call_share_screen_hint")
                         Accessible.name: qsTr("call_share_screen_hint")
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                         onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
@@ -1500,10 +1500,10 @@ AbstractWindow {
                         //: Open chat…
                         ToolTip.text: qsTr("call_open_chat_hint")
                         Accessible.name: qsTr("call_open_chat_hint")
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                         onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
@@ -1523,10 +1523,10 @@ AbstractWindow {
                         //: "Lever la main"
                         ToolTip.text: qsTr("call_rise_hand_hint")
                         Accessible.name: qsTr("call_rise_hand_hint")
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                     }
 
                     // Reaction button
@@ -1537,10 +1537,10 @@ AbstractWindow {
                         //: "Envoyer une réaction"
                         ToolTip.text: qsTr("call_send_reaction_hint")
                         Accessible.name: qsTr("call_send_reaction_hint")
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                     }
 
                     // Participant list button
@@ -1551,10 +1551,10 @@ AbstractWindow {
                         Accessible.name: qsTr("call_manage_participants_hint")
                         visible: mainWindow.conference
                         iconUrl: AppIcons.usersTwo
-                        Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                         onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
@@ -1571,15 +1571,15 @@ AbstractWindow {
                         //: "Plus d'options…"
                         ToolTip.text: qsTr("call_more_options_hint")
                         popUpTitle: qsTr("call_more_options_hint")
-                        implicitWidth: Math.round(55 * DefaultStyle.dp)
-                        implicitHeight: Math.round(55 * DefaultStyle.dp)
-                        popup.topPadding: Math.round(20 * DefaultStyle.dp)
-                        popup.bottomPadding: Math.round(20 * DefaultStyle.dp)
-                        popup.leftPadding: Math.round(10 * DefaultStyle.dp)
-                        popup.rightPadding: Math.round(10 * DefaultStyle.dp)
+                        implicitWidth: Utils.getSizeWithScreenRatio(55)
+                        implicitHeight: Utils.getSizeWithScreenRatio(55)
+                        popup.topPadding: Utils.getSizeWithScreenRatio(20)
+                        popup.bottomPadding: Utils.getSizeWithScreenRatio(20)
+                        popup.leftPadding: Utils.getSizeWithScreenRatio(10)
+                        popup.rightPadding: Utils.getSizeWithScreenRatio(10)
                         style: ButtonStyle.checkable
-                        icon.width: Math.round(32 * DefaultStyle.dp)
-                        icon.height: Math.round(32 * DefaultStyle.dp)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
                         KeyNavigation.tab: connectedCallButtons.visible ? pauseButton : nextItemInFocusChain()
                         visible: bottomButtonsLayout.moreOptionsButtonVisibility
 
@@ -1592,14 +1592,14 @@ AbstractWindow {
                         }
                         popup.contentItem: ColumnLayout {
                             id: optionsList
-                            spacing: Math.round(5 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(5)
 
                             IconLabelButton {
                                 Layout.fillWidth: true
                                 visible: mainWindow.conference
                                 icon.source: AppIcons.layout
-                                icon.width: Math.round(32 * DefaultStyle.dp)
-                                icon.height: Math.round(32 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(32)
+                                icon.height: Utils.getSizeWithScreenRatio(32)
                                 //: "Modifier la disposition"
                                 text: qsTr("call_action_change_conference_layout")
                                 style: ButtonStyle.noBackground
@@ -1616,8 +1616,8 @@ AbstractWindow {
                                 icon.source: AppIcons.fullscreen
                                 //: "Mode Plein écran"
                                 text: qsTr("call_action_full_screen")
-                                icon.width: Math.round(32 * DefaultStyle.dp)
-                                icon.height: Math.round(32 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(32)
+                                icon.height: Utils.getSizeWithScreenRatio(32)
                                 checkable: true
                                 style: ButtonStyle.noBackground
                                 Binding on checked {
@@ -1638,8 +1638,8 @@ AbstractWindow {
                                 Layout.fillWidth: true
                                 icon.source: AppIcons.dialer
                                 text: qsTr("call_action_show_dialer")
-                                icon.width: Math.round(32 * DefaultStyle.dp)
-                                icon.height: Math.round(32 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(32)
+                                icon.height: Utils.getSizeWithScreenRatio(32)
                                 style: ButtonStyle.noBackground
                                 onClicked: {
                                     rightPanel.visible = true
@@ -1653,8 +1653,8 @@ AbstractWindow {
                                 Layout.fillWidth: true
                                 checkable: true
                                 style: ButtonStyle.noBackground
-                                icon.width: Math.round(32 * DefaultStyle.dp)
-                                icon.height: Math.round(32 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(32)
+                                icon.height: Utils.getSizeWithScreenRatio(32)
                                 visible: mainWindow.call
                                          && !mainWindow.conference
                                          && !SettingsCpp.disableCallRecordings
@@ -1689,8 +1689,8 @@ AbstractWindow {
                                 Layout.fillWidth: true
                                 checkable: true
                                 style: ButtonStyle.noBackground
-                                icon.width: Math.round(32 * DefaultStyle.dp)
-                                icon.height: Math.round(32 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(32)
+                                icon.height: Utils.getSizeWithScreenRatio(32)
                                 icon.source: !mainWindow.call
                                              || mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
                                 contentImageColor: mainWindow.call
@@ -1715,8 +1715,8 @@ AbstractWindow {
                             IconLabelButton {
                                 Layout.fillWidth: true
                                 icon.source: AppIcons.settings
-                                icon.width: Math.round(32 * DefaultStyle.dp)
-                                icon.height: Math.round(32 * DefaultStyle.dp)
+                                icon.width: Utils.getSizeWithScreenRatio(32)
+                                icon.height: Utils.getSizeWithScreenRatio(32)
                                 //: "Paramètres"
                                 text: qsTr("call_action_go_to_settings")
                                 style: ButtonStyle.noBackground

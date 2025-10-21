@@ -7,6 +7,7 @@ import Linphone
 import SettingsCpp 1.0
 import UtilsCpp 1.0
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 AbstractSettingsLayout {
 	Layout.fillWidth: true
@@ -74,7 +75,7 @@ AbstractSettingsLayout {
 	Component {
 		id: logContent
 		ColumnLayout {
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
 			SwitchSetting {
                 //: "Activer les traces de débogage"
                 titleText: qsTr("settings_debug_enable_logs_title")
@@ -88,7 +89,7 @@ AbstractSettingsLayout {
 				propertyOwner: SettingsCpp
 			}
 			RowLayout {
-                spacing: Math.round(20 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(20)
 				Layout.alignment: Qt.AlignRight
 				MediumButton {
 					style: ButtonStyle.tertiary
@@ -116,15 +117,15 @@ AbstractSettingsLayout {
 	Component {
 	id: versionContent
 		ColumnLayout {
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
 			RowLayout {
 				EffectImage {
 					imageSource: AppIcons.appWindow
 					colorizationColor: DefaultStyle.main1_500_main
-                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                    imageWidth: Math.round(24 * DefaultStyle.dp)
-                    imageHeight: Math.round(24 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                    imageWidth: Utils.getSizeWithScreenRatio(24)
+                    imageHeight: Utils.getSizeWithScreenRatio(24)
 					Layout.alignment: Qt.AlignTop
 				}
 				ColumnLayout {
@@ -150,10 +151,10 @@ AbstractSettingsLayout {
 				EffectImage {
 					imageSource: AppIcons.resourcePackage
 					colorizationColor: DefaultStyle.main1_500_main
-                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                    imageWidth: Math.round(24 * DefaultStyle.dp)
-                    imageHeight: Math.round(24 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                    imageWidth: Utils.getSizeWithScreenRatio(24)
+                    imageHeight: Utils.getSizeWithScreenRatio(24)
 					Layout.alignment: Qt.AlignTop
 				}
 				ColumnLayout {

@@ -8,6 +8,7 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 FocusScope {
     id: mainItem
@@ -70,27 +71,27 @@ FocusScope {
             panelColor: DefaultStyle.grey_0
             header.visible: !mainItem.call
             clip: true
-            header.leftPadding: Math.round(32 * DefaultStyle.dp)
-            header.rightPadding: Math.round(32 * DefaultStyle.dp)
-            header.topPadding: Math.round(6 * DefaultStyle.dp)
-            header.bottomPadding: searchBarLayout.visible ? Math.round(3 * DefaultStyle.dp) : Math.round(6 * DefaultStyle.dp)
+            header.leftPadding: Utils.getSizeWithScreenRatio(32)
+            header.rightPadding: Utils.getSizeWithScreenRatio(32)
+            header.topPadding: Utils.getSizeWithScreenRatio(6)
+            header.bottomPadding: Utils.getSizeWithScreenRatio(searchBarLayout.visible ? 3 : 6)
 
             header.contentItem: ColumnLayout {
                 Layout.fillWidth: true
-                Layout.leftMargin: mainItem.call ? 0 : Math.round(31 * DefaultStyle.dp)
-                Layout.rightMargin: Math.round(41 * DefaultStyle.dp)
-                spacing: searchBarLayout.visible ? Math.round(9 * DefaultStyle.dp) : 0
+                Layout.leftMargin: mainItem.call ? 0 : Utils.getSizeWithScreenRatio(31)
+                Layout.rightMargin: Utils.getSizeWithScreenRatio(41)
+                spacing: searchBarLayout.visible ? Utils.getSizeWithScreenRatio(9) : 0
                 RowLayout {
                     RowLayout {
                         id: chatHeader
-                        spacing: Math.round(12 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(12)
                         Avatar {
                             property var contactObj: mainItem.chat ? UtilsCpp.findFriendByAddress(mainItem.chat?.core.peerAddress) : null
                             contact: contactObj?.value || null
                             displayNameVal: mainItem.chat?.core.avatarUri
                             secured: mainItem.chat && mainItem.chat.core.isSecured
-                            Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
                         }
                         Text {
                             text: mainItem.chat?.core.title || ""
@@ -98,16 +99,16 @@ FocusScope {
                             maximumLineCount: 1
                             font {
                                 pixelSize: Typography.h4.pixelSize
-                                weight: Math.round(400 * DefaultStyle.dp)
+                                weight: Utils.getSizeWithScreenRatio(400)
                                 capitalization: Font.Capitalize
                             }
                         }
                         RowLayout {
                             visible: mainItem.chat != undefined && mainItem.chat.core.isBasic
-                            spacing: Math.round(8 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(8)
                             EffectImage {
-                                Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
-                                Layout.preferredHeight: 14 * DefaultStyle.dp
+                                Layout.preferredWidth: visible ? Utils.getSizeWithScreenRatio(14) : 0
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
                                 colorizationColor: DefaultStyle.warning_700
                                 imageSource: AppIcons.lockSimpleOpen
                             }
@@ -124,16 +125,16 @@ FocusScope {
                         }
                         EffectImage {
                             visible: mainItem.chat?.core.muted || false
-                            Layout.preferredWidth: 20 * DefaultStyle.dp
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
                             Layout.alignment: Qt.AlignVCenter
-                            Layout.preferredHeight: 20 * DefaultStyle.dp
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
                             colorizationColor: DefaultStyle.main1_500_main
                             imageSource: AppIcons.bellSlash
                         }
                     }
                     Item{Layout.fillWidth: true}
                     RowLayout {
-                        spacing: Math.round(16 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(16)
                         RoundButton {
                             visible: !mainItem.call
                             style: ButtonStyle.noBackground
@@ -185,8 +186,8 @@ FocusScope {
                         if(!visible) chatMessagesSearchBar.clearText()
                         else chatMessagesSearchBar.forceActiveFocus()
                     }
-                    spacing: Math.round(50 * DefaultStyle.dp)
-                    height: Math.round(65 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(50)
+                    height: Utils.getSizeWithScreenRatio(65)
                     Connections {
                         target: mainItem
                         function onChatChanged() {searchBarLayout.visible = false}
@@ -194,7 +195,7 @@ FocusScope {
                     SearchBar {
                         id: chatMessagesSearchBar
                         Layout.fillWidth: true
-                        Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
+                        Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
                         property ChatMessageGui messageFound
                         delaySearch: false
                         Keys.onPressed: (event) => {
@@ -217,7 +218,7 @@ FocusScope {
                         }
                     }
                     RowLayout {
-                        spacing: Math.round(10 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(10)
                         RoundButton {
                             icon.source: AppIcons.upArrow
                             style: ButtonStyle.noBackground
@@ -241,7 +242,7 @@ FocusScope {
                     }
                     RoundButton {
                         icon.source: AppIcons.closeX
-                        Layout.rightMargin: Math.round(20 * DefaultStyle.dp)
+                        Layout.rightMargin: Utils.getSizeWithScreenRatio(20)
                         onClicked: {
                             chatMessagesListView.filterText = ""
                             searchBarLayout.visible = false
@@ -257,7 +258,7 @@ FocusScope {
                 handle: Rectangle {
                     visible: !mainItem.chat?.core.isReadOnly
                     enabled: visible
-                    implicitHeight: Math.round(8 * DefaultStyle.dp)
+                    implicitHeight: Utils.getSizeWithScreenRatio(8)
                     color: Control.SplitHandle.hovered ? DefaultStyle.grey_200 : DefaultStyle.grey_100
                 }
                 ColumnLayout {
@@ -273,8 +274,8 @@ FocusScope {
                             width: parent.width - anchors.leftMargin - anchors.rightMargin
                             chat: mainItem.chat
                             anchors.fill: parent
-                            anchors.leftMargin: Math.round(18 * DefaultStyle.dp)
-                            anchors.rightMargin: Math.round(18 * DefaultStyle.dp)
+                            anchors.leftMargin: Utils.getSizeWithScreenRatio(18)
+                            anchors.rightMargin: Utils.getSizeWithScreenRatio(18)
                             Control.ScrollBar.vertical: scrollbar
                             onShowReactionsForMessageRequested: (chatMessage) => {
                                 mainItem.chatMessage = chatMessage
@@ -303,13 +304,13 @@ FocusScope {
                             anchors.top: chatMessagesListView.top
                             anchors.bottom: chatMessagesListView.bottom
                             anchors.right: parent.right
-                            anchors.rightMargin: Math.round(5 * DefaultStyle.dp)
+                            anchors.rightMargin: Utils.getSizeWithScreenRatio(5)
                             policy: Control.ScrollBar.AsNeeded
                         }
                         Control.Control {
                             id: participantListPopup
                             width: parent.width
-                            height: Math.min(participantInfoList.height, Math.round(200 * DefaultStyle.dp))
+                            height: Math.min(participantInfoList.height, Utils.getSizeWithScreenRatio(200))
                             visible: false
                             anchors.bottom: chatMessagesListView.bottom
                             anchors.left: chatMessagesListView.left
@@ -323,7 +324,7 @@ FocusScope {
                                     anchors.left: parent.left
                                     anchors.right: parent.right
                                     anchors.top: parent.top
-                                    radius: Math.round(20 * DefaultStyle.dp)
+                                    radius: Utils.getSizeWithScreenRatio(20)
                                     height: parent.height
                                 }
                                 MultiEffect {
@@ -360,10 +361,10 @@ FocusScope {
                         visible: selectedFiles.count > 0 || mainItem.replyingToMessage
                         Layout.fillWidth: true
                         Layout.preferredHeight: implicitHeight
-                        topPadding: Math.round(12 * DefaultStyle.dp)
-                        bottomPadding: Math.round(12 * DefaultStyle.dp)
-                        leftPadding: Math.round(19 * DefaultStyle.dp)
-                        rightPadding: Math.round(19 * DefaultStyle.dp)
+                        topPadding: Utils.getSizeWithScreenRatio(12)
+                        bottomPadding: Utils.getSizeWithScreenRatio(12)
+                        leftPadding: Utils.getSizeWithScreenRatio(19)
+                        rightPadding: Utils.getSizeWithScreenRatio(19)
                         
                         Button {
                             anchors.top: parent.top
@@ -382,7 +383,7 @@ FocusScope {
                             Rectangle {
                                 color: DefaultStyle.grey_0
                                 border.color: DefaultStyle.main2_100
-                                border.width: Math.round(2 * DefaultStyle.dp)
+                                border.width: Utils.getSizeWithScreenRatio(2)
                                 height: parent.height / 2
                                 anchors.top: parent.top
                                 anchors.left: parent.left
@@ -396,7 +397,7 @@ FocusScope {
                             }
                         }
                         contentItem: ColumnLayout {
-                            spacing: Math.round(5 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(5)
                             ColumnLayout {
                                 id: replyLayout
                                 spacing: 0
@@ -425,38 +426,38 @@ FocusScope {
                                 Layout.fillWidth: true
                                 visible: replyLayout.visible && selectedFiles.visible
                                 color: DefaultStyle.main2_300
-                                Layout.preferredHeight: Math.max(1, Math.round(1 * DefaultStyle.dp))
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(1)
                             }
                             ListView {
                                 id: selectedFiles
                                 orientation: ListView.Horizontal
                                 visible: count > 0
-                                spacing: Math.round(16 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(16)
                                 Layout.fillWidth: true
-                                Layout.preferredHeight: Math.round(104 * DefaultStyle.dp)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(104)
                                 model: ChatMessageContentProxy {
                                     id: contents
                                     filterType: ChatMessageContentProxy.FilterContentType.File
                                 }
                                 delegate: Item {
-                                    width: Math.round(80 * DefaultStyle.dp)
-                                    height: Math.round(80 * DefaultStyle.dp)
+                                    width: Utils.getSizeWithScreenRatio(80)
+                                    height: Utils.getSizeWithScreenRatio(80)
                                     FileView {
                                         contentGui: modelData
                                         anchors.left: parent.left
                                         anchors.bottom: parent.bottom
-                                        width: Math.round(69 * DefaultStyle.dp)
-                                        height: Math.round(69 * DefaultStyle.dp)
+                                        width: Utils.getSizeWithScreenRatio(69)
+                                        height: Utils.getSizeWithScreenRatio(69)
                                     }
                                     RoundButton {
                                         icon.source: AppIcons.closeX
-                                        icon.width: Math.round(12 * DefaultStyle.dp)
-                                        icon.height: Math.round(12 * DefaultStyle.dp)
+                                        icon.width: Utils.getSizeWithScreenRatio(12)
+                                        icon.height: Utils.getSizeWithScreenRatio(12)
                                         anchors.top: parent.top
                                         anchors.right: parent.right
                                         style: ButtonStyle.numericPad
                                         shadowEnabled: true
-                                        padding: Math.round(3 * DefaultStyle.dp)
+                                        padding: Utils.getSizeWithScreenRatio(3)
                                         onClicked: contents.removeContent(modelData)
                                     }
                                 }
@@ -475,7 +476,7 @@ FocusScope {
                 ChatDroppableTextArea {
                     id: messageSender
                     Control.SplitView.preferredHeight: mainItem.chat?.core.isReadOnly ? 0 : height
-                    Control.SplitView.minimumHeight: mainItem.chat?.core.isReadOnly ? 0 : Math.round(79 * DefaultStyle.dp)
+                    Control.SplitView.minimumHeight: mainItem.chat?.core.isReadOnly ? 0 : Utils.getSizeWithScreenRatio(79)
                     chat: mainItem.chat
                     selectedFilesCount: contents.count
                     callOngoing: mainItem.call != null
@@ -511,14 +512,14 @@ FocusScope {
         Rectangle {
             visible: detailsPanel.visible
             color: DefaultStyle.main2_200
-            Layout.preferredWidth: Math.round(1 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(1)
             Layout.fillHeight: true
         }
         Control.Control {
             id: detailsPanel
             visible: false
             Layout.fillHeight: true
-            Layout.preferredWidth: Math.round(387 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(387)
             onVisibleChanged: if(!visible) {
                 contentLoader.panelType = SelectedChatView.PanelType.None
             }
@@ -533,8 +534,8 @@ FocusScope {
                 property int panelType: SelectedChatView.PanelType.None
                 // anchors.top: parent.top
                 anchors.fill: parent
-                anchors.topMargin: Math.round(39 * DefaultStyle.dp)
-                anchors.rightMargin: Math.round(15 * DefaultStyle.dp)
+                anchors.topMargin: Utils.getSizeWithScreenRatio(39)
+                anchors.rightMargin: Utils.getSizeWithScreenRatio(15)
                 sourceComponent: panelType === SelectedChatView.PanelType.EphemeralSettings
                     ? ephemeralSettingsComponent
                     : panelType === SelectedChatView.PanelType.MessageReactions
@@ -643,7 +644,7 @@ FocusScope {
                         mainItem.chatMessage = null
                     }
                     content: ColumnLayout {
-                        spacing: Math.round(31 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(31)
                         SearchBar {
                             id: forwardSearchBar
                             Layout.fillWidth: true
@@ -655,7 +656,7 @@ FocusScope {
                             // width: parent.width
                             // Control.ScrollBar.vertical: ScrollBar {
                             //     id: scrollbar
-                            //     topPadding: Math.round(24 * DefaultStyle.dp) // Avoid to be on top of collapse button
+                            //     topPadding: Utils.getSizeWithScreenRatio(24) // Avoid to be on top of collapse button
                             //     active: true
                             //     interactive: true
                             //     visible: parent.contentHeight > parent.height
@@ -664,8 +665,8 @@ FocusScope {
                             ColumnLayout {
                                 anchors.left: parent.left
                                 anchors.right: parent.right
-                                spacing: Math.round(8 * DefaultStyle.dp)
-                                // width: parent.width //- scrollbar.width - Math.round(5 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(8)
+                                // width: parent.width //- scrollbar.width - Utils.getSizeWithScreenRatio(5)
                                 RowLayout {
                                     Text {
                                         //: Conversations

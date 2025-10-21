@@ -15,14 +15,14 @@ LoginLayout {
 	
 	titleContent: [
 		RowLayout {
-            Layout.leftMargin: Math.round(119 * DefaultStyle.dp)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(119)
 			visible: !SettingsCpp.assistantHideThirdPartyAccount
-            spacing: Math.round(21 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(21)
 			Button {
 				id: backButton
 				visible: mainItem.showBackButton 
-                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
 				onClicked: {
@@ -35,8 +35,8 @@ LoginLayout {
 			EffectImage {
 				fillMode: Image.PreserveAspectFit
 				imageSource: AppIcons.profile
-                Layout.preferredHeight: Math.round(34 * DefaultStyle.dp)
-                Layout.preferredWidth: Math.round(34 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(34)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
@@ -54,10 +54,10 @@ LoginLayout {
 		},
 		RowLayout {
 			visible: !SettingsCpp.assistantHideCreateAccount
-            Layout.rightMargin: Math.round(51 * DefaultStyle.dp)
-            spacing: Math.round(20 * DefaultStyle.dp)
+            Layout.rightMargin: Utils.getSizeWithScreenRatio(51)
+            spacing: Utils.getSizeWithScreenRatio(20)
 			Text {
-                Layout.rightMargin: Math.round(15 * DefaultStyle.dp)
+                Layout.rightMargin: Utils.getSizeWithScreenRatio(15)
                 //: Pas encore de compte ?
                 text: qsTr("assistant_no_account_yet")
 				font {
@@ -81,7 +81,7 @@ LoginLayout {
 	Component {
 		id: firstItem
 		Flickable {
-			width: Math.round(361 * DefaultStyle.dp)
+			width: Utils.getSizeWithScreenRatio(361)
 			contentWidth: content.implicitWidth
 			contentHeight: content.implicitHeight
 			clip: true
@@ -93,11 +93,11 @@ LoginLayout {
                 id: content
                 // rightMargin is negative margin
                 width: parent.width - scrollbar.width*2
-                spacing: Math.round(85 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(85)
 				ColumnLayout {
 					spacing: 0
 					ColumnLayout {
-                        spacing: Math.round(28 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(28)
 						Text {
 							Layout.fillWidth: true
 							Layout.preferredWidth: rootStackView.width
@@ -113,7 +113,7 @@ LoginLayout {
 					SmallButton {
 						id: openLinkButton
 						Layout.alignment: Qt.AlignCenter
-                        Layout.topMargin: Math.round(18 * DefaultStyle.dp)
+                        Layout.topMargin: Utils.getSizeWithScreenRatio(18)
 						text: "linphone.org/contact"
 						style: ButtonStyle.secondary
 						onClicked: {
@@ -124,7 +124,7 @@ LoginLayout {
 					}
 				}
 				ColumnLayout {
-                    spacing: Math.round(20 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(20)
 					BigButton {
 						id: createAccountButton
 						style: ButtonStyle.secondary
@@ -160,7 +160,7 @@ LoginLayout {
 		id: secondItem
 		Flickable {
             id: formFlickable
-			width: Math.round(770 * DefaultStyle.dp)
+			width: Utils.getSizeWithScreenRatio(770)
 			contentWidth: content.implicitWidth
 			contentHeight: content.implicitHeight
 			clip: true
@@ -171,19 +171,19 @@ LoginLayout {
 			RowLayout {
 				id: content
 				width: formFlickable.width - scrollbar.width*2
-				spacing: Math.round(50 * DefaultStyle.dp)
+				spacing: Utils.getSizeWithScreenRatio(50)
 				ColumnLayout {
-					spacing: Math.round(2 * DefaultStyle.dp)
-					Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+					spacing: Utils.getSizeWithScreenRatio(2)
+					Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 					Layout.fillHeight: true
 					ColumnLayout {
-						spacing: Math.round(22 * DefaultStyle.dp)
+						spacing: Utils.getSizeWithScreenRatio(22)
 						// alignment item
 						Item {
 							Layout.preferredHeight: advancedParametersTitle.implicitHeight
 						}
 						ColumnLayout {
-							spacing: Math.round(10 * DefaultStyle.dp)
+							spacing: Utils.getSizeWithScreenRatio(10)
 							FormItemLayout {
 								id: username
 								//: "Nom d'utilisateur"
@@ -194,7 +194,7 @@ LoginLayout {
 								contentItem: TextField {
 									id: usernameEdit
 									isError: username.errorTextVisible || (LoginPageCpp.badIds && errorText.isVisible)
-									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+									Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 									KeyNavigation.down: passwordEdit
 									//: "%1 mandatory"
 									Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("username"))
@@ -210,7 +210,7 @@ LoginLayout {
 									id: passwordEdit
 									isError: password.errorTextVisible || (LoginPageCpp.badIds && errorText.isVisible)
 									hidden: true
-									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+									Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 									KeyNavigation.up: usernameEdit
 									KeyNavigation.down: domainEdit
 									Accessible.name: qsTr("password")
@@ -227,7 +227,7 @@ LoginLayout {
 									id: domainEdit
 									isError: domain.errorTextVisible
 									initialText: SettingsCpp.assistantThirdPartySipAccountDomain
-									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+									Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 									KeyNavigation.up: passwordEdit
 									KeyNavigation.down: displayName
 									//: "%1 mandatory"
@@ -246,7 +246,7 @@ LoginLayout {
 								Layout.fillWidth: true
 								contentItem: TextField {
 									id: displayName
-									Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+									Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 									KeyNavigation.up: domainEdit
 									KeyNavigation.down: transportCbox
 									Accessible.name: qsTr("sip_address_display_name")
@@ -258,8 +258,8 @@ LoginLayout {
 								Layout.fillWidth: true
 								contentItem: ComboBox {
 									id: transportCbox
-									height: Math.round(49 * DefaultStyle.dp)
-									width: Math.round(360 * DefaultStyle.dp)
+									height: Utils.getSizeWithScreenRatio(49)
+									width: Utils.getSizeWithScreenRatio(360)
 									textRole: "text"
 									valueRole: "value"
 									model: [
@@ -292,7 +292,7 @@ LoginLayout {
 
 					BigButton {
 						id: connectionButton
-						Layout.topMargin: Math.round(15 * DefaultStyle.dp)
+						Layout.topMargin: Utils.getSizeWithScreenRatio(15)
 						style: ButtonStyle.main
 						property Item tabTarget
 						Accessible.name: qsTr("assistant_account_login")
@@ -315,7 +315,7 @@ LoginLayout {
 								implicitHeight: parent.height
 								Layout.alignment: Qt.AlignCenter
 								indicatorColor: DefaultStyle.grey_0
-								indicatorWidth: Math.round(25 * DefaultStyle.dp)
+								indicatorWidth: Utils.getSizeWithScreenRatio(25)
 							}
 							Connections {
 								target: LoginPageCpp
@@ -373,9 +373,9 @@ LoginLayout {
 					}
 				}
 				ColumnLayout {
-					Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+					Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 					Layout.fillHeight: true
-					spacing: Math.round(22 * DefaultStyle.dp)
+					spacing: Utils.getSizeWithScreenRatio(22)
 					Text {
 						id: advancedParametersTitle
 						//: Advanced parameters
@@ -383,7 +383,7 @@ LoginLayout {
 						font: Typography.h3m
 					}
 					ColumnLayout {
-						spacing: Math.round(10 * DefaultStyle.dp)
+						spacing: Utils.getSizeWithScreenRatio(10)
 						FormItemLayout {
 							id: outboundProxyUri
 							//: "Outbound SIP Proxy URI"
@@ -393,7 +393,7 @@ LoginLayout {
 							Layout.fillWidth: true
 							contentItem: TextField {
 								id: outboundProxyUriEdit
-								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+								Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 								Accessible.name: qsTr("login_proxy_server_url")
 								KeyNavigation.up: transportCbox
 								KeyNavigation.down: registrarUriEdit
@@ -406,7 +406,7 @@ LoginLayout {
 							Layout.fillWidth: true
 							contentItem: TextField {
 								id: registrarUriEdit
-								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+								Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 								Accessible.name: qsTr("login_registrar_uri")
 								KeyNavigation.up: outboundProxyUriEdit
 								KeyNavigation.down: connectionIdEdit
@@ -419,7 +419,7 @@ LoginLayout {
 							Layout.fillWidth: true
 							contentItem: TextField {
 								id: connectionIdEdit
-								Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+								Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 								KeyNavigation.up: registrarUriEdit
 								Accessible.name: qsTr("login_id")
 							}
@@ -444,9 +444,9 @@ LoginLayout {
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
-			// Layout.leftMargin: Math.round(119 * DefaultStyle.dp)
-			// anchors.leftMargin: Math.round(119 * DefaultStyle.dp)
-			// anchors.rightMargin: -8 * DefaultStyle.dp
+			// Layout.leftMargin: Utils.getSizeWithScreenRatio(119)
+			// anchors.leftMargin: Utils.getSizeWithScreenRatio(119)
+			// anchors.rightMargin: - Utils.getSizeWithScreenRatio(8)
 		},
 		Control.StackView {
 			id: rootStackView
@@ -454,24 +454,24 @@ LoginLayout {
 			anchors.left: parent.left
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
-			anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
+			anchors.leftMargin: Utils.getSizeWithScreenRatio(127)
 			width: currentItem ? currentItem.width : 0
 		},
         // Item {
 		// 	id: sipItem
-		// 	// spacing: Math.round(8 * Defaultstyle.dp)
+		// 	// spacing: Utils.getSizeWithScreenRatio(8)
         //     anchors.fill: parent
-        //     anchors.rightMargin: Math.round(50 * DefaultStyle.dp) + image.width
+        //     anchors.rightMargin: Utils.getSizeWithScreenRatio(50) + image.width
         // },
 		Image {
 			id: image
 			z: -1
 			anchors.top: parent.top
 			anchors.right: parent.right
-            anchors.topMargin: Math.round(129 * DefaultStyle.dp)
-            anchors.rightMargin: Math.round(127 * DefaultStyle.dp)
-            width: Math.round(395 * DefaultStyle.dp)
-            height: Math.round(350 * DefaultStyle.dp)
+            anchors.topMargin: Utils.getSizeWithScreenRatio(129)
+            anchors.rightMargin: Utils.getSizeWithScreenRatio(127)
+            width: Utils.getSizeWithScreenRatio(395)
+            height: Utils.getSizeWithScreenRatio(350)
 			fillMode: Image.PreserveAspectFit
 			source: AppIcons.loginImage
 		}

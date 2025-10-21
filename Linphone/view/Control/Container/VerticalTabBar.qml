@@ -50,7 +50,7 @@ Control.TabBar {
 			horizontalAlignment: Text.AlignHCenter
 			color: DefaultStyle.grey_0
 			fontSizeMode: Text.Fit
-            font.pixelSize: Math.round(15 *  DefaultStyle.dp)
+            font.pixelSize: Utils.getSizeWithScreenRatio(15)
 			text: parent.unread > 100 ? '99+' : parent.unread
 		}
 	}
@@ -136,7 +136,7 @@ Control.TabBar {
 			contentItem: ColumnLayout {
 				EffectImage {
 					id: buttonIcon
-					property real buttonSize: mainItem.currentIndex !== index && tabButton.hovered ? Utils.getSizeWithScreenRatio(26) : Utils.getSizeWithScreenRatio(24)
+					property real buttonSize: Utils.getSizeWithScreenRatio(mainItem.currentIndex !== index && tabButton.hovered ? 26 : 24)
 					imageSource: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
 					Layout.preferredWidth: buttonSize
 					Layout.preferredHeight: buttonSize

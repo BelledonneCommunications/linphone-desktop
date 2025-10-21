@@ -46,10 +46,10 @@ Flickable {
     property bool haveContacts: count > 0
     property real sectionsPixelSize: Typography.h4.pixelSize
     property real sectionsWeight: Typography.h4.weight
-    property real sectionsSpacing: Math.round(18 * DefaultStyle.dp)
-    property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
+    property real sectionsSpacing: Utils.getSizeWithScreenRatio(18)
+    property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
 
-    property real itemsRightMargin: Math.round(39 * DefaultStyle.dp)
+    property real itemsRightMargin: Utils.getSizeWithScreenRatio(39)
     property int count: contactsList.count + suggestionsList.count + favoritesList.count
 
     contentHeight: contentsLayout.height
@@ -233,7 +233,7 @@ Flickable {
     Control.ScrollBar.vertical: ScrollBar {
         id: scrollbar
         z: 1
-        topPadding: Math.round(24 * DefaultStyle.dp) // Avoid to be on top of collapse button
+        topPadding: Utils.getSizeWithScreenRatio(24) // Avoid to be on top of collapse button
         active: true
         interactive: true
         visible: mainItem.contentHeight > mainItem.height
@@ -243,7 +243,7 @@ Flickable {
     ColumnLayout {
         id: contentsLayout
         width: mainItem.width
-        spacing: 0 //Math.round(20 * DefaultStyle.dp)
+        spacing: 0
 
         BusyIndicator {
             id: busyIndicator
@@ -307,7 +307,7 @@ Flickable {
             visible: contentHeight > 0
             Layout.fillWidth: true
             Layout.preferredHeight: implicitHeight
-            Layout.topMargin: favoritesList.height > 0 ? Math.round(4 * DefaultStyle.dp) : 0
+            Layout.topMargin: favoritesList.height > 0 ? Utils.getSizeWithScreenRatio(4) : 0
             interactive: false
             highlightText: mainItem.highlightText
             showActions: mainItem.showActions
@@ -345,13 +345,11 @@ Flickable {
                             | (mainItem.searchText != '*'
                                && mainItem.searchText != ''
                                || SettingsCpp.syncLdapContacts ? MagicSearchProxy.FilteringTypes.Ldap | MagicSearchProxy.FilteringTypes.CardDAV : 0)
-                initialDisplayItems: Math.max(
-                                         20,
-                                         2 * mainItem.height / (Math.round(63 * DefaultStyle.dp)))
+                initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(63)))
                 displayItemsStep: 3 * initialDisplayItems / 2
-                onLocalFriendCreated: index => {
-                                          contactsList.selectIndex(index)
-                                      }
+                onLocalFriendCreated: (index) => {
+                    contactsList.selectIndex(index)
+                }
             }
         }
         ContactListView {
@@ -359,8 +357,7 @@ Flickable {
             visible: contentHeight > 0
             Layout.fillWidth: true
             Layout.preferredHeight: implicitHeight
-            Layout.topMargin: contactsList.height + favoritesList.height
-                              > 0 ? Math.round(4 * DefaultStyle.dp) : 0
+            Layout.topMargin: (contactsList.height + favoritesList.height) > 0 ? Utils.getSizeWithScreenRatio(4) : 0
             interactive: false
             showInitials: false
             highlightText: mainItem.highlightText
@@ -395,11 +392,9 @@ Flickable {
                 id: suggestionsProxy
                 parentProxy: mainItem.mainModel
                 filterType: mainItem.hideSuggestions ? MagicSearchProxy.FilteringTypes.None : MagicSearchProxy.FilteringTypes.Other
-                initialDisplayItems: contactsProxy.haveMore
-                                     && contactsList.expanded ? 0 : Math.max(
-                                                                    20,
-                                                                    2 * mainItem.height
-                                                                    / (Math.round(63 * DefaultStyle.dp)))
+                initialDisplayItems: contactsProxy.haveMore && contactsList.expanded 
+                    ? 0 
+                    : Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(63)))
                 onInitialDisplayItemsChanged: maxDisplayItems = initialDisplayItems
                 displayItemsStep: 3 * initialDisplayItems / 2
                 onModelReset: maxDisplayItems = initialDisplayItems

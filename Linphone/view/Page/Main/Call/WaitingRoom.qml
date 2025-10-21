@@ -6,6 +6,7 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 RowLayout {
 	id: mainItem
@@ -19,15 +20,15 @@ RowLayout {
 	RowLayout {
 		Layout.fillWidth: false
 		Layout.fillHeight: false
-        spacing: Math.round(100 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(100)
 		Layout.alignment: Qt.AlignCenter
 		ColumnLayout {
-            spacing: Math.round(31 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(31)
 			Sticker {
 				id: preview
 				previewEnabled: true
-                Layout.preferredHeight: Math.round(330 * DefaultStyle.dp)
-                Layout.preferredWidth: Math.round(558 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(330)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(558)
 				qmlName: "WP"
 				displayAll: false
 				displayPresence: false
@@ -40,47 +41,47 @@ RowLayout {
 			}
             RowLayout {
                 Layout.alignment: Qt.AlignHCenter
-                spacing: Math.round(16 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(16)
                 CheckableButton {
                     id: videoButton
                     visible: SettingsCpp.videoEnabled
                     iconUrl: AppIcons.videoCamera
                     checkedIconUrl: AppIcons.videoCameraSlash
                     checked: !mainItem.localVideoEnabled
-                    Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                    icon.width: Math.round(32 * DefaultStyle.dp)
-                    icon.height: Math.round(32 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                    icon.width: Utils.getSizeWithScreenRatio(32)
+                    icon.height: Utils.getSizeWithScreenRatio(32)
                     onClicked: mainItem.localVideoEnabled = !mainItem.localVideoEnabled
                 }
                 CheckableButton {
                     id: microButton
                     iconUrl: AppIcons.microphone
                     checkedIconUrl: AppIcons.microphoneSlash
-                    Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                    icon.width: Math.round(32 * DefaultStyle.dp)
-                    icon.height: Math.round(32 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                    icon.width: Utils.getSizeWithScreenRatio(32)
+                    icon.height: Utils.getSizeWithScreenRatio(32)
                     onCheckedChanged: mainItem.microEnabled = !mainItem.microEnabled
                 }
                 CheckableButton {
                     id: settingsButton
                     visible: stackLayout.currentIndex === 0
                     icon.source: AppIcons.verticalDots
-                    Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                    icon.width: Math.round(24 * DefaultStyle.dp)
-                    icon.height: Math.round(24 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                    icon.width: Utils.getSizeWithScreenRatio(24)
+                    icon.height: Utils.getSizeWithScreenRatio(24)
                 }
                 CheckableButton {
                     id: speakerButton
                     visible: stackLayout.currentIndex === 1
                     iconUrl: AppIcons.speaker
                     checkedIconUrl: AppIcons.speakerSlash
-                    Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
-                    icon.width: Math.round(32 * DefaultStyle.dp)
-                    icon.height: Math.round(32 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                    icon.width: Utils.getSizeWithScreenRatio(32)
+                    icon.height: Utils.getSizeWithScreenRatio(32)
                 }
             }
         }
@@ -88,9 +89,9 @@ RowLayout {
 			id: stackLayout
 			currentIndex: 0
 			ColumnLayout {
-                spacing: Math.round(93 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(93)
 				ColumnLayout {
-                    Layout.topMargin: Math.round(54 * DefaultStyle.dp)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(54)
 					spacing: 0
 					Text {
 						Layout.fillWidth: true
@@ -98,8 +99,8 @@ RowLayout {
                         text: qsTr("meeting_waiting_room_title")
 						color: DefaultStyle.grey_0
 						font {
-                            pixelSize: Math.round(30 * DefaultStyle.dp)
-                            weight: Math.round(300 * DefaultStyle.dp)
+                            pixelSize: Utils.getSizeWithScreenRatio(30)
+                            weight: Utils.getSizeWithScreenRatio(300)
 						}
 					}
 					Text {
@@ -107,15 +108,15 @@ RowLayout {
 						text: mainItem.conferenceInfo && mainItem.conferenceInfo.core.subject
 						color: DefaultStyle.grey_0
 						font {
-                            pixelSize: Math.round(30 * DefaultStyle.dp)
-                            weight: Math.round(300 * DefaultStyle.dp)
+                            pixelSize: Utils.getSizeWithScreenRatio(30)
+                            weight: Utils.getSizeWithScreenRatio(300)
 						}
 					}
 				}
 				ColumnLayout {
-                    spacing: Math.round(5 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(5)
 					BigButton {
-                        Layout.preferredWidth: Math.round(292 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(292)
                         //: "Rejoindre"
                         text: qsTr("meeting_waiting_room_join")
 						style: ButtonStyle.main
@@ -126,7 +127,7 @@ RowLayout {
 						}
 					}
 					BigButton {
-                        Layout.preferredWidth: Math.round(292 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(292)
 						style: ButtonStyle.secondary
                         text: qsTr("cancel")
 						onClicked: {
@@ -136,17 +137,17 @@ RowLayout {
 				}
 			}
 			ColumnLayout {
-                spacing: Math.round(37 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(37)
 				ColumnLayout {
-                    spacing: Math.round(13 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(13)
 					Text {
 						Layout.fillWidth: true
                         //: "Connexion à la réunion"
                         text: qsTr("meeting_waiting_room_joining_title")
 						color: DefaultStyle.grey_0
 						font {
-                            pixelSize: Math.round(30 * DefaultStyle.dp)
-                            weight: Math.round(300 * DefaultStyle.dp)
+                            pixelSize: Utils.getSizeWithScreenRatio(30)
+                            weight: Utils.getSizeWithScreenRatio(300)
 						}
 					}
 					Text {
@@ -163,11 +164,11 @@ RowLayout {
 				BusyIndicator {
 					indicatorColor: DefaultStyle.main1_500_main
 					Layout.alignment: Qt.AlignHCenter
-                    Layout.preferredWidth: Math.round(48 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(48 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(48)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(48)
 				}
 				BigButton {
-                    Layout.preferredWidth: Math.round(292 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(292)
 					Layout.alignment: Qt.AlignHCenter
 					style: ButtonStyle.main
 					//: Cancel

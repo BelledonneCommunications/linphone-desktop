@@ -1,6 +1,7 @@
 import QtQuick as Quick
 import QtQuick.Layouts
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Quick.Text {
 	id: mainItem
@@ -8,7 +9,7 @@ Quick.Text {
 	width: txtMeter.advanceWidth
 	font {
 		family: DefaultStyle.defaultFont
-        pixelSize: Math.round(10 * DefaultStyle.dp)
+        pixelSize: Utils.getSizeWithScreenRatio(10)
         weight: Typography.p1.weight
 	}
 	color: DefaultStyle.main2_600

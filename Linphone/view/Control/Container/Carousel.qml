@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 
 import Linphone
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
 	id: mainItem
@@ -12,7 +13,7 @@ ColumnLayout {
 	required property int itemsCount
 	property int currentIndex: carouselStackLayout.currentIndex
 	property var currentItem: carouselButton.itemAt(currentIndex)
-    spacing: Math.round(61 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(61)
 
 	function goToSlide(index) {
 		carouselStackLayout.goToSlideAtIndex(index)
@@ -67,9 +68,9 @@ ColumnLayout {
 	Item {
 		Rectangle {
 			id: currentIndicator
-            width: Math.round(13 * DefaultStyle.dp)
-            height: Math.round(8 * DefaultStyle.dp)
-            radius: Math.round(30 * DefaultStyle.dp)
+            width: Utils.getSizeWithScreenRatio(13)
+            height: Utils.getSizeWithScreenRatio(8)
+            radius: Utils.getSizeWithScreenRatio(30)
 			color: DefaultStyle.main1_500_main
 			z: 1
 			x: mainItem.currentIndex >= 0 && mainItem.currentItem ? mainItem.currentItem.x - width/2 + mainItem.currentItem.width/2 : 0
@@ -77,21 +78,21 @@ ColumnLayout {
 		}
 		RowLayout {
 			id: carouselButtonsLayout
-            spacing: Math.round(7.5 * DefaultStyle.dp)
-            anchors.leftMargin: Math.round(2.5 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(7.5)
+            anchors.leftMargin: Utils.getSizeWithScreenRatio(2.5)
 			Repeater {
 				id: carouselButton
 				model: mainItem.itemsCount
 				delegate: Button {
-                    Layout.preferredWidth: Math.round(8 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(8 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(8)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(8)
 					topPadding: 0
 					bottomPadding: 0
 					leftPadding: 0
 					rightPadding: 0
 					background: Rectangle {
 						color: DefaultStyle.main2_200
-                        radius: Math.round(30 * DefaultStyle.dp)
+                        radius: Utils.getSizeWithScreenRatio(30)
 						anchors.fill: parent
 					}
 					onClicked: {

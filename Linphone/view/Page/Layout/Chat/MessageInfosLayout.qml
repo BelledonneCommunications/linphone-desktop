@@ -8,6 +8,7 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
 	id: mainItem
@@ -22,7 +23,7 @@ ColumnLayout {
 	property var parentView
 	property alias content: contentLayout.children
 
-	spacing: Math.round(25 * DefaultStyle.dp)
+	spacing: Utils.getSizeWithScreenRatio(25)
 
 	signal goBackRequested()
 
@@ -40,9 +41,9 @@ ColumnLayout {
 
 	ColumnLayout {
 		id: contentLayout
-		Layout.leftMargin: Math.round(16 * DefaultStyle.dp)
-		Layout.rightMargin: Math.round(16 * DefaultStyle.dp)
-		spacing: Math.round(21 * DefaultStyle.dp)
+		Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
+		Layout.rightMargin: Utils.getSizeWithScreenRatio(16)
+		spacing: Utils.getSizeWithScreenRatio(21)
 		TabBar {
 			id: tabbar
 			visible: mainItem.tabbarModel !== undefined
@@ -51,7 +52,7 @@ ColumnLayout {
             model: mainItem.tabbarModel
 			pixelSize: Typography.h4.pixelSize
 			textWeight: Typography.h4.weight
-			spacing: Math.round(10 * DefaultStyle.dp)
+			spacing: Utils.getSizeWithScreenRatio(10)
 		}
 
 		ListView {
@@ -59,7 +60,7 @@ ColumnLayout {
 			visible: mainItem.listModel !== undefined
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			spacing: Math.round(11 * DefaultStyle.dp)
+			spacing: Utils.getSizeWithScreenRatio(11)
 			model: mainItem.listModel
 		}
 	}

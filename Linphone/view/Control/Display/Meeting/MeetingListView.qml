@@ -18,12 +18,12 @@ ListView {
 	property ConferenceInfoGui selectedConference
 	property bool _moveToIndex: false
     property bool loading: false
-    property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
+    property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
 
 	clip: true
 	cacheBuffer: height/2
 	
-    spacing: Math.round(8 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(8)
 	highlightFollowsCurrentItem: false
 
 	signal meetingDeletionRequested(ConferenceInfoGui confInfo, bool canCancel)
@@ -93,13 +93,13 @@ ListView {
 	}
 	
 	// Let some space for better UI
-	footer: Item{height: Math.round(38 * DefaultStyle.dp)}
+	footer: Item{height: Utils.getSizeWithScreenRatio(38)}
 
 	model: ConferenceInfoProxy {
 		id: confInfoProxy
 		filterText: searchBarText
 		filterType: ConferenceInfoProxy.None
-        initialDisplayItems: Math.max(20, 2 * mainItem.height / (Math.round(63 * DefaultStyle.dp)))
+        initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(63)))
 		displayItemsStep: initialDisplayItems/2
 		Component.onCompleted: {
             mainItem.loading = !confInfoProxy.accountConnected
@@ -137,7 +137,7 @@ ListView {
 	
 	ScrollBar.vertical: ScrollBar {
 		id: scrollbar
-        rightPadding: Math.round(8 * DefaultStyle.dp)
+        rightPadding: Utils.getSizeWithScreenRatio(8)
 		
 		active: true
 		interactive: true
@@ -147,14 +147,14 @@ ListView {
 	section {
 		criteria: ViewSection.FullString
 		delegate: Text {
-            topPadding: Math.round(24 * DefaultStyle.dp)
-            bottomPadding: Math.round(16 * DefaultStyle.dp)
+            topPadding: Utils.getSizeWithScreenRatio(24)
+            bottomPadding: Utils.getSizeWithScreenRatio(16)
 			text: section
-            height: Math.round(29 * DefaultStyle.dp) + topPadding + bottomPadding
+            height: Utils.getSizeWithScreenRatio(29) + topPadding + bottomPadding
 			wrapMode: Text.NoWrap
 			font {
-                pixelSize: Math.round(20 * DefaultStyle.dp)
-                weight: Math.round(800 * DefaultStyle.dp)
+                pixelSize: Utils.getSizeWithScreenRatio(20)
+                weight: Utils.getSizeWithScreenRatio(800)
 				capitalization: Font.Capitalize
 			}
 		}
@@ -164,7 +164,7 @@ ListView {
 	delegate: FocusScope {
 		id: itemDelegate
 		visible: !mainItem.loading
-        height: Math.round(63 * DefaultStyle.dp) + (!isFirst && dateDay.visible ? topOffset : 0)
+        height: Utils.getSizeWithScreenRatio(63) + (!isFirst && dateDay.visible ? topOffset : 0)
 		width: mainItem.width
 		enabled: haveModel
 		
@@ -176,7 +176,7 @@ ListView {
 		property string dateString:  UtilsCpp.toDateString(dateTime)
 		property string previousDateString: previousConfInfoGui ? UtilsCpp.toDateString(previousConfInfoGui.core ? previousConfInfoGui.core.dateTime : UtilsCpp.getCurrentDateTime()) : ''
 		property bool isFirst : ListView.previousSection !== ListView.section
-        property real topOffset: (dateDay.visible && !isFirst? Math.round(8 * DefaultStyle.dp) : 0)
+        property real topOffset: (dateDay.visible && !isFirst) ? Utils.getSizeWithScreenRatio(8) : 0
 		property var endDateTime: itemGui.core ? itemGui.core.endDateTime : UtilsCpp.getCurrentDateTime()
 		property bool haveModel: itemGui.core ? itemGui.core.haveModel : false
 		property bool isCanceled: itemGui.core ? itemGui.core.state === LinphoneEnums.ConferenceInfoState.Cancelled : false
@@ -188,19 +188,19 @@ ListView {
 			anchors.topMargin: !itemDelegate.isFirst && dateDay.visible ? itemDelegate.topOffset : 0
 			spacing: 0
 			Item{
-                Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
 				visible: !dateDay.visible
 			}
 			ColumnLayout {
 				id: dateDay
 				Layout.fillWidth: false
-                Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
-                Layout.minimumWidth: Math.round(32 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(51 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
+                Layout.minimumWidth: Utils.getSizeWithScreenRatio(32)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(51)
 				visible: previousDateString.length == 0 || previousDateString != dateString
 				spacing: 0
 				Text {
-                    Layout.preferredHeight: Math.round(19 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(19)
 					Layout.alignment: Qt.AlignCenter
 					text: day.substring(0,3) + '.'
 					color: DefaultStyle.main2_500_main
@@ -214,8 +214,8 @@ ListView {
 				}
 				Rectangle {
 					id: dayNum
-                    Layout.preferredWidth: Math.round(32 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(32 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(32)
 					Layout.alignment: Qt.AlignCenter
 					radius: height/2
 					property var isCurrentDay: UtilsCpp.isCurrentDay(dateTime)
@@ -230,40 +230,40 @@ ListView {
 						color: dayNum.isCurrentDay ? DefaultStyle.grey_0 : DefaultStyle.main2_500_main
 						wrapMode: Text.NoWrap
 						font {
-                            pixelSize: Math.round(20 * DefaultStyle.dp)
-                            weight: Math.round(800 * DefaultStyle.dp)
+                            pixelSize: Utils.getSizeWithScreenRatio(20)
+                            weight: Utils.getSizeWithScreenRatio(800)
 						}
 					}
 				}
 				Item{Layout.fillHeight:true;Layout.fillWidth: true}
 			}
 			Item {
-                Layout.preferredWidth: Math.round(265 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(63 * DefaultStyle.dp)
-                Layout.leftMargin: Math.round(23 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(265)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(63)
+                Layout.leftMargin: Utils.getSizeWithScreenRatio(23)
 				Rectangle {
 					id: conferenceInfoDelegate
 					anchors.fill: parent
 					anchors.rightMargin: 5	// margin to avoid clipping shadows at right
-                    radius: Math.round(10 * DefaultStyle.dp)
+                    radius: Utils.getSizeWithScreenRatio(10)
 					visible: itemDelegate.haveModel || itemDelegate.activeFocus
 					color: itemDelegate.isSelected ? DefaultStyle.main2_200 : DefaultStyle.grey_0 // mainItem.currentIndex === index
 					ColumnLayout {
 						anchors.fill: parent
 						anchors.left: parent.left
-                        anchors.leftMargin: Math.round(16 * DefaultStyle.dp)
-                        anchors.rightMargin: Math.round(16 * DefaultStyle.dp)
-                        anchors.topMargin: Math.round(10 * DefaultStyle.dp)
-                        anchors.bottomMargin: Math.round(10 * DefaultStyle.dp)
-                        spacing: Math.round(2 * DefaultStyle.dp)
+                        anchors.leftMargin: Utils.getSizeWithScreenRatio(16)
+                        anchors.rightMargin: Utils.getSizeWithScreenRatio(16)
+                        anchors.topMargin: Utils.getSizeWithScreenRatio(10)
+                        anchors.bottomMargin: Utils.getSizeWithScreenRatio(10)
+                        spacing: Utils.getSizeWithScreenRatio(2)
 						visible: itemDelegate.haveModel
 						RowLayout {
-                            spacing: Math.round(8 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(8)
 							EffectImage {
 								imageSource: AppIcons.usersThree
 								colorizationColor: DefaultStyle.main2_600
-                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 							}
 							Text {
 								text: itemGui.core? itemGui.core.subject : ""
@@ -296,14 +296,14 @@ ListView {
 				}
 				Text {
 					anchors.fill: parent
-                    anchors.rightMargin: Math.round(5 * DefaultStyle.dp) // margin to avoid clipping shadows at right
-                    anchors.leftMargin: Math.round(16 * DefaultStyle.dp)
+                    anchors.rightMargin: Utils.getSizeWithScreenRatio(5) // margin to avoid clipping shadows at right
+                    anchors.leftMargin: Utils.getSizeWithScreenRatio(16)
 					verticalAlignment: Text.AlignVCenter
 					visible: !itemDelegate.haveModel
                     //: "Aucune réunion aujourd'hui"
                     text: qsTr("meetings_list_no_meeting_for_today")
 					lineHeightMode: Text.FixedHeight
-                    lineHeight: Math.round(18 * DefaultStyle.dp)
+                    lineHeight: Utils.getSizeWithScreenRatio(18)
 					font {
                         pixelSize: Typography.p2.pixelSize
                         weight: Typography.p2.weight

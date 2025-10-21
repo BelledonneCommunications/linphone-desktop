@@ -8,16 +8,17 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
-	
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 Rectangle {
 	id: mainItem
 	property ChatGui chatGui
 	property var chatCore: chatGui.core
 	Layout.fillHeight: true
 	Layout.fillWidth: true
-	Layout.topMargin: Math.round(9 * DefaultStyle.dp)
-	Layout.leftMargin: Math.round(17 * DefaultStyle.dp)
-	Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
+	Layout.topMargin: Utils.getSizeWithScreenRatio(9)
+	Layout.leftMargin: Utils.getSizeWithScreenRatio(17)
+	Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
 	color: DefaultStyle.grey_0
 	height: participantAddColumn.implicitHeight
 	signal done()
@@ -25,12 +26,12 @@ Rectangle {
 	ColumnLayout {
 		id: participantAddColumn
 		anchors.fill: parent
-		anchors.leftMargin: Math.round(17 * DefaultStyle.dp)
-		anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
-		anchors.topMargin: Math.round(17 * DefaultStyle.dp)
-		spacing: Math.round(5 * DefaultStyle.dp)
+		anchors.leftMargin: Utils.getSizeWithScreenRatio(17)
+		anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
+		anchors.topMargin: Utils.getSizeWithScreenRatio(17)
+		spacing: Utils.getSizeWithScreenRatio(5)
 		RowLayout {
-			spacing: Math.round(5 * DefaultStyle.dp)
+			spacing: Utils.getSizeWithScreenRatio(5)
 			BigButton {
 				id: manageParticipantsBackButton
 				style: ButtonStyle.noBackground
@@ -52,8 +53,8 @@ Rectangle {
 			id: manageParticipantsLayout
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			Layout.topMargin: Math.round(9 * DefaultStyle.dp)
-			Layout.bottomMargin: Math.round(17 * DefaultStyle.dp)
+			Layout.topMargin: Utils.getSizeWithScreenRatio(9)
+			Layout.bottomMargin: Utils.getSizeWithScreenRatio(17)
 			Layout.alignment: Qt.AlignVCenter
 			selectedParticipants: mainItem.chatCore.participantsAddresses
 			focus: true

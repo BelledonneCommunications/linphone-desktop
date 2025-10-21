@@ -3,15 +3,16 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
 	id: mainItem
 	visible: contentHeight > 0
 	clip: true
-    rightMargin: Math.round(5 * DefaultStyle.dp)
-    spacing: Math.round(8 * DefaultStyle.dp)
+    rightMargin: Utils.getSizeWithScreenRatio(5)
+    spacing: Utils.getSizeWithScreenRatio(8)
 
 	property string searchBarText
 
@@ -43,25 +44,25 @@ ListView {
 	}
 
 	delegate: Item {
-        height: Math.round(56 * DefaultStyle.dp)
+        height: Utils.getSizeWithScreenRatio(56)
 		width: mainItem.width
 		
 		RowLayout {
 			id: participantDelegate
 			anchors.fill: parent
-			anchors.rightMargin: (scrollbar.width + 5 * DefaultStyle.dp)
-            spacing: Math.round(10 * DefaultStyle.dp)
+			anchors.rightMargin: (scrollbar.width + Utils.getSizeWithScreenRatio(5))
+            spacing: Utils.getSizeWithScreenRatio(10)
 			z: 1
 			Avatar {
-                Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
 				_address: modelData.core.sipAddress
 				secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 				shadowEnabled: false
 			}
 			Text {
 				text: modelData.core.displayName
-                font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                font.pixelSize: Utils.getSizeWithScreenRatio(14)
 				font.capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
 				maximumLineCount: 1
 				Layout.fillWidth: true
@@ -71,9 +72,9 @@ ListView {
 				Layout.alignment: Qt.AlignRight
 				property bool isMe: modelData.core.isMe
 				onIsMeChanged: if (isMe) mainItem.me = modelData
-                spacing: Math.round(26 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(26)
 				RowLayout {
-                	spacing: Math.round(10 * DefaultStyle.dp)
+                	spacing: Utils.getSizeWithScreenRatio(10)
 					Text {
 						visible: mainItem.isMeAdmin || modelData.core.isAdmin
 						Layout.alignment: Qt.AlignRight
@@ -81,8 +82,8 @@ ListView {
 						text: qsTr("meeting_participant_is_admin_label")
 						color: DefaultStyle.main2_400
 						font {
-							pixelSize: Math.round(12 * DefaultStyle.dp)
-							weight: Math.round(300 * DefaultStyle.dp)
+							pixelSize: Utils.getSizeWithScreenRatio(12)
+							weight: Utils.getSizeWithScreenRatio(300)
 						}
 					}
 					Switch {
@@ -94,13 +95,13 @@ ListView {
 				}
 				SmallButton {
 					opacity: mainItem.isMeAdmin && !modelData.core.isMe ? 1 : 0
-                    Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
 					color: DefaultStyle.main2_100
-    				leftPadding: Math.round(3 * DefaultStyle.dp)
-    				rightPadding: Math.round(3 * DefaultStyle.dp)
-    				topPadding: Math.round(3 * DefaultStyle.dp)
-    				bottomPadding: Math.round(3 * DefaultStyle.dp)
+    				leftPadding: Utils.getSizeWithScreenRatio(3)
+    				rightPadding: Utils.getSizeWithScreenRatio(3)
+    				topPadding: Utils.getSizeWithScreenRatio(3)
+    				bottomPadding: Utils.getSizeWithScreenRatio(3)
 					style: ButtonStyle.hoveredBackground
 					icon.source: AppIcons.closeX
 					onClicked: participantModel.removeParticipant(modelData.core)

@@ -4,18 +4,19 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Popup {
 	id: mainItem
 	modal: true
 	anchors.centerIn: parent
 	closePolicy: Control.Popup.NoAutoClose
-    leftPadding: title.length === 0 ? Math.round(10 * DefaultStyle.dp) : Math.round(33 * DefaultStyle.dp)
-    rightPadding: title.length === 0 ? Math.round(10 * DefaultStyle.dp) : Math.round(33 * DefaultStyle.dp)
-    topPadding: title.length === 0 ? Math.round(10 * DefaultStyle.dp) : Math.round(37 * DefaultStyle.dp)
-    bottomPadding: title.length === 0 ? Math.round(10 * DefaultStyle.dp) : Math.round(37 * DefaultStyle.dp)
+    leftPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 33)
+    rightPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 33)
+    topPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 37)
+    bottomPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 37)
 	underlineColor: DefaultStyle.main1_500_main
-    radius: title.length === 0 ? Math.round(16 * DefaultStyle.dp) : 0
+    radius: title.length === 0 ? Utils.getSizeWithScreenRatio(16) : 0
 	property string title
 	property var titleColor: DefaultStyle.main1_500_main
 	property string text
@@ -51,7 +52,7 @@ Popup {
 		ColumnLayout {
 			id: child
 			anchors.fill: parent
-            spacing: Math.round(15 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(15)
 			
 			Text{
 				id: titleText
@@ -90,7 +91,7 @@ Popup {
 				id: detailsText
 				visible: text.length != 0
 				Layout.fillWidth: true
-                //Layout.preferredWidth: Math.round(278 * DefaultStyle.dp)
+                //Layout.preferredWidth: Utils.getSizeWithScreenRatio(278)
 				Layout.alignment: Qt.AlignCenter
 				text: mainItem.details
 				font {
@@ -111,7 +112,7 @@ Popup {
 			RowLayout {
 				id: buttonsLayout
 				Layout.alignment: Qt.AlignBottom | ( titleText.visible ? Qt.AlignRight : Qt.AlignHCenter)
-                spacing: titleText.visible ? Math.round(20 * DefaultStyle.dp) : Math.round(10 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(titleText.visible ? 20 : 10)
 	
 				// Default buttons only visible if no other children
 				// have been set

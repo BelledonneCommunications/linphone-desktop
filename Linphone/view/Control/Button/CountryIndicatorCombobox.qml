@@ -3,7 +3,8 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import QtQuick.Effects
 import Linphone
-  
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 Control.ComboBox {
 	id: mainItem
 	property string defaultCallingCode: ""
@@ -16,7 +17,7 @@ Control.ComboBox {
 	}
 	background: Rectangle {
 		anchors.fill: parent
-		radius: Math.round(63 * DefaultStyle.dp)
+		radius: Utils.getSizeWithScreenRatio(63)
 		color: mainItem.enableBackgroundColor ? DefaultStyle.grey_100 : "transparent"
 		border.color: mainItem.enableBackgroundColors 
 					? (mainItem.errorMessage.length > 0 
@@ -28,11 +29,11 @@ Control.ComboBox {
 	}
 	contentItem: RowLayout {
 		readonly property var currentItem: combobox.model.getAt(combobox.currentIndex)
-		spacing: 0// Math.round(5 * DefaultStyle.dp)
+		spacing: 0
 		Text {
 			id: selectedItemFlag
 			visible: text.length > 0
-			font.pixelSize: Math.round(21 * DefaultStyle.dp)
+			font.pixelSize: Utils.getSizeWithScreenRatio(21)
 			text: parent.currentItem ? parent.currentItem.flag : ""
 			font.family: DefaultStyle.flagFont
 		}
@@ -41,7 +42,7 @@ Control.ComboBox {
 		// 	visible: false
 		// 	layer.enabled: true
 		// 	anchors.centerIn: selectedItemFlag
-		// 	radius: Math.round(600 * DefaultStyle.dp)
+		// 	radius: Utils.getSizeWithScreenRatio(600)
 		// 	width: selectedItemFlag.width/2
 		// 	height: selectedItemFlag.height/2
 		// }
@@ -68,11 +69,11 @@ Control.ComboBox {
 		id: indicImage
 		z: 1
 		anchors.right: parent.right
-		anchors.rightMargin: Math.round(15 * DefaultStyle.dp)
+		anchors.rightMargin: Utils.getSizeWithScreenRatio(15)
 		anchors.verticalCenter: parent.verticalCenter
 		imageSource: AppIcons.downArrow
-		width: Math.round(15 * DefaultStyle.dp)
-		height: Math.round(15 * DefaultStyle.dp)
+		width: Utils.getSizeWithScreenRatio(15)
+		height: Utils.getSizeWithScreenRatio(15)
 		fillMode: Image.PreserveAspectFit
 		colorizationColor: mainItem.indicatorColor
 	}
@@ -80,8 +81,8 @@ Control.ComboBox {
 	popup: Control.Popup {
 		id: listPopup
 		y: combobox.height - 1
-		width: Math.round(311 * DefaultStyle.dp)
-		height: Math.round(250 * DefaultStyle.dp)
+		width: Utils.getSizeWithScreenRatio(311)
+		height: Utils.getSizeWithScreenRatio(250)
 
 		contentItem: ListView {
 			id: listView
@@ -92,14 +93,14 @@ Control.ComboBox {
 			keyNavigationEnabled: true
 			keyNavigationWraps: true
 			maximumFlickVelocity: 1500
-			spacing: Math.round(10 * DefaultStyle.dp)
+			spacing: Utils.getSizeWithScreenRatio(10)
 			highlight: Rectangle {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				width: listView.width
 				height: listView.height
 				color: DefaultStyle.main2_300
-				// radius: Math.round(15 * DefaultStyle.dp)
+				// radius: Utils.getSizeWithScreenRatio(15)
 			}
 
 			delegate: Item {
@@ -108,15 +109,15 @@ Control.ComboBox {
 				RowLayout {
 					id: contentLayout
 					anchors.fill: parent
-					anchors.leftMargin: Math.round(20 * DefaultStyle.dp)
-					spacing: Math.round(5 * DefaultStyle.dp)
+					anchors.leftMargin: Utils.getSizeWithScreenRatio(20)
+					spacing: Utils.getSizeWithScreenRatio(5)
 					
 					Text {
 						id: delegateImg
 						visible: text.length > 0
 						text: $modelData.flag
 						font {
-							pixelSize: Math.round(28 * DefaultStyle.dp)
+							pixelSize: Utils.getSizeWithScreenRatio(28)
 							family: DefaultStyle.flagFont
 						}
 					}
@@ -134,7 +135,7 @@ Control.ComboBox {
 
 					Rectangle {
 						id: separator
-						width: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+						width: Utils.getSizeWithScreenRatio(1)
 						height: combobox.height / 2
 						color: DefaultStyle.main2_500_main
 					}
@@ -158,7 +159,7 @@ Control.ComboBox {
 					Rectangle {
 						anchors.fill: parent
 						opacity: 0.1
-						radius: Math.round(15 * DefaultStyle.dp)
+						radius: Utils.getSizeWithScreenRatio(15)
 						color: DefaultStyle.main2_500_main
 						visible: parent.containsMouse
 					}
@@ -180,7 +181,7 @@ Control.ComboBox {
 			Rectangle {
 				id: popupBg
 				anchors.fill: parent
-				radius: Math.round(15 * DefaultStyle.dp)
+				radius: Utils.getSizeWithScreenRatio(15)
 				color: DefaultStyle.grey_100
 			}
 			MultiEffect {

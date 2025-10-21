@@ -6,6 +6,7 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 FocusScope {
 	id: mainItem
@@ -16,7 +17,7 @@ FocusScope {
 
 	ColumnLayout {
 		id: formLayout
-        spacing: Math.round(16 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(16)
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.top: parent.top
@@ -29,14 +30,14 @@ FocusScope {
 
 		RowLayout {
 			visible: mainItem.isCreation && !SettingsCpp.disableBroadcastFeature
-            Layout.topMargin: Math.round(20 * DefaultStyle.dp)
-            Layout.bottomMargin: Math.round(20 * DefaultStyle.dp)
-            spacing: Math.round(18 * DefaultStyle.dp)
+            Layout.topMargin: Utils.getSizeWithScreenRatio(20)
+            Layout.bottomMargin: Utils.getSizeWithScreenRatio(20)
+            spacing: Utils.getSizeWithScreenRatio(18)
 			CheckableButton {
-                Layout.preferredWidth: Math.round(151 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(151)
 				icon.source: AppIcons.usersThree
-                icon.width: Math.round(24 * DefaultStyle.dp)
-                icon.height: Math.round(24 * DefaultStyle.dp)
+                icon.width: Utils.getSizeWithScreenRatio(24)
+                icon.height: Utils.getSizeWithScreenRatio(24)
 				enabled: false
                 //: "Réunion"
                 text: qsTr("meeting_schedule_meeting_label")
@@ -45,11 +46,11 @@ FocusScope {
 				style: ButtonStyle.secondary
 			}
 			CheckableButton {
-                Layout.preferredWidth: Math.round(151 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(151)
 				enabled: false
 				icon.source: AppIcons.slide
-                icon.width: Math.round(24 * DefaultStyle.dp)
-                icon.height: Math.round(24 * DefaultStyle.dp)
+                icon.width: Utils.getSizeWithScreenRatio(24)
+                icon.height: Utils.getSizeWithScreenRatio(24)
                 //: "Webinar"
                 text: qsTr("meeting_schedule_broadcast_label")
 				autoExclusive: true
@@ -60,14 +61,14 @@ FocusScope {
 			visible: mainItem.isCreation
 			spacing: formLayout.spacing
 			content: RowLayout {
-                spacing: Math.round(8 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(8)
 				EffectImage {
 					imageSource: AppIcons.usersThree
 					colorizationColor: DefaultStyle.main2_600
-                    width: Math.round(24 * DefaultStyle.dp)
-                    height: Math.round(24 * DefaultStyle.dp)
-                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                    width: Utils.getSizeWithScreenRatio(24)
+                    height: Utils.getSizeWithScreenRatio(24)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 				}
 				TextInput {
 					id: confTitle
@@ -79,7 +80,7 @@ FocusScope {
 					text: conferenceInfoGui.core.subject ? conferenceInfoGui.core.subject : ""
 					color: DefaultStyle.main2_600
 					font {
-                        pixelSize: Math.round(20 * DefaultStyle.dp)
+                        pixelSize: Utils.getSizeWithScreenRatio(20)
                         weight: Typography.h3.weight
 					}
 					focus: true
@@ -100,16 +101,16 @@ FocusScope {
 					EffectImage {
 						imageSource: AppIcons.clock
 						colorizationColor: DefaultStyle.main2_600
-                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 					}
 					CalendarComboBox {
 						id: startDate
 						background.visible: mainItem.isCreation
 						indicator.visible: mainItem.isCreation
-                        contentText.font.weight: Math.min(Math.round((isCreation ? 700 : 400) * DefaultStyle.dp), 1000)
+                        contentText.font.weight: Math.min(Utils.getSizeWithScreenRatio(isCreation ? 700 : 400), 1000)
 						Layout.fillWidth: true
-                        Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 						KeyNavigation.up: confTitle
 						KeyNavigation.down: startHour
 						onSelectedDateChanged: {
@@ -123,17 +124,17 @@ FocusScope {
 				},
 				RowLayout {
 					Item {
-                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 					}
 					RowLayout {
 						TimeComboBox {
 							id: startHour
 							// indicator.visible: mainItem.isCreation
-                            Layout.preferredWidth: Math.round(94 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(94)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 							background.visible: mainItem.isCreation
-                            contentText.font.weight: Math.min(Math.round((isCreation ? 700 : 400) * DefaultStyle.dp), 1000)
+                            contentText.font.weight: Math.min(Utils.getSizeWithScreenRatio(isCreation ? 700 : 400), 1000)
 							KeyNavigation.up: startDate
 							KeyNavigation.down: timeZoneCbox
 							KeyNavigation.left: endHour
@@ -150,10 +151,10 @@ FocusScope {
 						TimeComboBox {
 							id: endHour
 							// indicator.visible: mainItem.isCreation
-                            Layout.preferredWidth: Math.round(94 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(94)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 							background.visible: mainItem.isCreation
-                            contentText.font.weight: Math.min(Math.round((isCreation ? 700 : 400) * DefaultStyle.dp), 1000)
+                            contentText.font.weight: Math.min(Utils.getSizeWithScreenRatio(isCreation ? 700 : 400), 1000)
 							onSelectedDateTimeChanged: mainItem.conferenceInfoGui.core.endDateTime = selectedDateTime
 							KeyNavigation.up: startDate
 							KeyNavigation.down: timeZoneCbox
@@ -179,10 +180,10 @@ FocusScope {
 				ComboBox {
 					id: timeZoneCbox
 					Layout.fillWidth: true
-                    Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 					hoverEnabled: true
 					oneLine: true
-                    listView.implicitHeight: Math.round(250 * DefaultStyle.dp)
+                    listView.implicitHeight: Utils.getSizeWithScreenRatio(250)
 					constantImageSource: AppIcons.globe
                     weight: Typography.p2l.weight
 					leftMargin: 0
@@ -206,20 +207,20 @@ FocusScope {
 		Section {
 			spacing: formLayout.spacing
 			content: RowLayout {
-                spacing: Math.round(8 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(8)
 				EffectImage {
 					imageSource: AppIcons.note
 					colorizationColor: DefaultStyle.main2_600
-                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 				}
 				TextArea {
 					id: descriptionEdit
 					Layout.fillWidth: true
-                    Layout.preferredWidth: Math.round(275 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(275)
 					Layout.preferredHeight: contentHeight
-                    leftPadding: Math.round(8 * DefaultStyle.dp)
-                    rightPadding: Math.round(8 * DefaultStyle.dp)
+                    leftPadding: Utils.getSizeWithScreenRatio(8)
+                    rightPadding: Utils.getSizeWithScreenRatio(8)
                     //: "Ajouter une description"
                     placeholderText: qsTr("meeting_schedule_description_hint")
 					placeholderTextColor: DefaultStyle.main2_600
@@ -243,7 +244,7 @@ FocusScope {
 					background: Rectangle {
 						anchors.fill: parent
 						color: descriptionEdit.hovered || descriptionEdit.activeFocus ? DefaultStyle.grey_100 : "transparent"
-                        radius: Math.round(4 * DefaultStyle.dp)
+                        radius: Utils.getSizeWithScreenRatio(4)
 					}
 				}
 			}
@@ -254,20 +255,20 @@ FocusScope {
 				Button {
 					id: addParticipantsButton
 					Layout.fillWidth: true
-                    Layout.preferredHeight: Math.round(30 * DefaultStyle.dp)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 					leftPadding: 0
 					background: Rectangle {
 						anchors.fill: parent
 						color: addParticipantsButton.hovered || addParticipantsButton.activeFocus ? DefaultStyle.grey_100 : "transparent"
-                        radius: Math.round(4 * DefaultStyle.dp)
+                        radius: Utils.getSizeWithScreenRatio(4)
 					}
 					contentItem: RowLayout {
-                        spacing: Math.round(8 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(8)
 						EffectImage {
 							imageSource: AppIcons.usersThree
 							colorizationColor: DefaultStyle.main2_600
-                            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 						}
 						Text {
 							Layout.fillWidth: true
@@ -285,7 +286,7 @@ FocusScope {
 					id: participantList
 					Layout.fillWidth: true
 					Layout.preferredHeight: contentHeight
-                    Layout.maximumHeight: Math.round(250 * DefaultStyle.dp)
+                    Layout.maximumHeight: Utils.getSizeWithScreenRatio(250)
 					clip: true
 					model: mainItem.conferenceInfoGui.core.participants
 					Control.ScrollBar.vertical: ScrollBar {
@@ -296,14 +297,14 @@ FocusScope {
 						visible: participantList.height < participantList.contentHeight
 					}
 					delegate: Item {
-                        height: Math.round(56 * DefaultStyle.dp)
+                        height: Utils.getSizeWithScreenRatio(56)
 						width: participantList.width - participantScrollBar.width
 						RowLayout {
 							anchors.fill: parent
-                            spacing: Math.round(16 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(16)
 							Avatar {
-                                Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
 								_address: modelData.address
 								secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 								shadowEnabled: false
@@ -311,18 +312,18 @@ FocusScope {
 							Text {
 								property var displayNameObj: UtilsCpp.getDisplayName(modelData.address)
 								text: displayNameObj?.value || ""
-                                font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                                font.pixelSize: Utils.getSizeWithScreenRatio(14)
 								font.capitalization: Font.Capitalize
 							}
 							Item {
 								Layout.fillWidth: true
 							}
 							Button {
-                                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                                icon.width: Math.round(24 * DefaultStyle.dp)
-                                icon.height: Math.round(24 * DefaultStyle.dp)
-                                Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                                icon.width: Utils.getSizeWithScreenRatio(24)
+                                icon.height: Utils.getSizeWithScreenRatio(24)
+                                Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
 								icon.source: AppIcons.closeX
 								style: ButtonStyle.noBackgroundOrange
 								onClicked: mainItem.conferenceInfoGui.core.removeParticipant(index)
@@ -341,7 +342,7 @@ FocusScope {
 		}
 		Item {
 			Layout.fillHeight: true
-            Layout.minimumHeight: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+            Layout.minimumHeight: Utils.getSizeWithScreenRatio(1)
 		}
 	}
 }

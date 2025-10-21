@@ -7,6 +7,7 @@ import Linphone
 import ConstantsCpp 1.0
 import UtilsCpp 1.0
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
 	id: mainItem
@@ -40,10 +41,10 @@ ListView {
 		ColumnLayout {
 			anchors.fill: parent
 			property int currentMonth: model.month
-            spacing: Math.round(18 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(18)
 			RowLayout {
 				Layout.fillWidth: true
-                spacing: Math.round(38 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(38)
 				Text {
 					text: UtilsCpp.toDateMonthAndYearString(new Date(model.year, model.month, 15))// 15 because of timezones that can change the date for localeString
 					font {
@@ -57,8 +58,8 @@ ListView {
 				}
 				Button {
 					id: previousButton
-                    Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
 					icon.width: width
 					icon.height: height
 					style: ButtonStyle.noBackground
@@ -67,8 +68,8 @@ ListView {
 				}
 				Button {
 					id: nextButton
-                    Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
 					icon.width: width
 					icon.height: height
 					style: ButtonStyle.noBackground
@@ -78,7 +79,7 @@ ListView {
 			}
 	
 			ColumnLayout {
-                spacing: Math.round(12 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(12)
 				Control.DayOfWeekRow {
 					locale: monthGrid.locale
 					Layout.column: 1
@@ -89,8 +90,8 @@ ListView {
 						horizontalAlignment: Text.AlignHCenter
 						verticalAlignment: Text.AlignVCenter
 						font {
-                            pixelSize: Math.round(12 * DefaultStyle.dp)
-                            weight: Math.round(300 * DefaultStyle.dp)
+                            pixelSize: Utils.getSizeWithScreenRatio(12)
+                            weight: Utils.getSizeWithScreenRatio(300)
 						}
 					}
 				}
@@ -146,9 +147,9 @@ ListView {
 						
 						Rectangle {
 							anchors.centerIn: parent
-                            width: Math.round(30 * DefaultStyle.dp)
-                            height: Math.round(30 * DefaultStyle.dp)
-                            radius: Math.round(50 * DefaultStyle.dp)
+                            width: Utils.getSizeWithScreenRatio(30)
+                            height: Utils.getSizeWithScreenRatio(30)
+                            radius: Utils.getSizeWithScreenRatio(50)
 							color: isSelectedDay ? DefaultStyle.main1_500_main : "transparent"
 							border.width: focusDay.activeFocus || hoveringArea.containsMouse ? 1 : 0
 							
@@ -164,8 +165,8 @@ ListView {
 										? DefaultStyle.main2_700
 										: DefaultStyle.main2_400
 							font {
-                                pixelSize: Math.round(12 * DefaultStyle.dp)
-                                weight: Math.round(300 * DefaultStyle.dp)
+                                pixelSize: Utils.getSizeWithScreenRatio(12)
+                                weight: Utils.getSizeWithScreenRatio(300)
 							}
 						}
 					}

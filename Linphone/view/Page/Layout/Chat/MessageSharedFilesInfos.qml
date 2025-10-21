@@ -3,10 +3,11 @@ import QtQuick
 import QtQuick.Layouts
 import Linphone
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 MessageInfosLayout {
 	id: mainItem
-	spacing: Math.round(25 * DefaultStyle.dp)
+	spacing: Utils.getSizeWithScreenRatio(25)
 	property ChatGui chatGui
 	property int filter
 	tabbar.visible: false
@@ -17,8 +18,8 @@ MessageInfosLayout {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			Layout.preferredHeight: contentHeight
-			cellWidth: mainItem.filter === ChatMessageFileProxy.FilterContentType.Documents ? width : width / 4
-			cellHeight: mainItem.filter === ChatMessageFileProxy.FilterContentType.Documents ? Math.round(69 * DefaultStyle.dp) : width / 4
+			cellWidth: mainItem.filter === ChatMessageFileProxy.FilterContentType.Documents ? width : Math.round(width / 4)
+			cellHeight: mainItem.filter === ChatMessageFileProxy.FilterContentType.Documents ? Utils.getSizeWithScreenRatio(69) : Math.round(width / 4)
 			property bool loading: true
 			model: ChatMessageFileProxy {
 				chat: mainItem.chatGui
@@ -43,8 +44,8 @@ MessageInfosLayout {
 			delegate: FileView {
 				contentGui: modelData
 				showAsSquare: false
-				width: gridView.cellWidth - Math.round(2 * DefaultStyle.dp)
-				height: gridView.cellHeight - Math.round(2 * DefaultStyle.dp)
+				width: gridView.cellWidth - Utils.getSizeWithScreenRatio(2)
+				height: gridView.cellHeight - Utils.getSizeWithScreenRatio(2)
 			}
 		},
 		Item{Layout.fillHeight: true}

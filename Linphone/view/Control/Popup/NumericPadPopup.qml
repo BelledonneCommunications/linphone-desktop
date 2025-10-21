@@ -5,14 +5,15 @@ import QtQuick.Effects
 import Linphone
 import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Control.Popup {
 	id: mainItem
 	closePolicy: Control.Popup.CloseOnEscape
-    leftPadding: Math.round(72 * DefaultStyle.dp)
-    rightPadding: Math.round(72 * DefaultStyle.dp)
-    topPadding: Math.round(41 * DefaultStyle.dp)
-    bottomPadding: Math.round(18 * DefaultStyle.dp)
+    leftPadding: Utils.getSizeWithScreenRatio(72)
+    rightPadding: Utils.getSizeWithScreenRatio(72)
+    topPadding: Utils.getSizeWithScreenRatio(41)
+    bottomPadding: Utils.getSizeWithScreenRatio(18)
 	property bool closeButtonVisible: true
 	property bool roundedBottom: false
 	property bool lastRowVisible: true
@@ -29,7 +30,7 @@ Control.Popup {
 			width: parent.width
 			height: parent.height
 			color: DefaultStyle.grey_100
-            radius: Math.round(20 * DefaultStyle.dp)
+            radius: Utils.getSizeWithScreenRatio(20)
 		}
 		MultiEffect {
 			id: effect
@@ -57,11 +58,11 @@ Control.Popup {
 			visible: mainItem.closeButtonVisible
 			anchors.top: parent.top
 			anchors.right: parent.right
-            anchors.topMargin: Math.round(10 * DefaultStyle.dp)
-            anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
+            anchors.topMargin: Utils.getSizeWithScreenRatio(10)
+            anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
 			icon.source: AppIcons.closeX
-            icon.width: Math.round(24 * DefaultStyle.dp)
-            icon.height: Math.round(24 * DefaultStyle.dp)
+            icon.width: Utils.getSizeWithScreenRatio(24)
+            icon.height: Utils.getSizeWithScreenRatio(24)
 			style: ButtonStyle.noBackground
 			onClicked: mainItem.close()
 		}

@@ -5,6 +5,7 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // Display a sticker from a call or from an account.
 // The Avatar is shown while the camera become available.
@@ -25,7 +26,7 @@ Item {
 	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking || false
 	property alias displayPresence: avatar.displayPresence
 	property color color: DefaultStyle.grey_600
-    property real radius: Math.round(15 * DefaultStyle.dp)
+    property real radius: Utils.getSizeWithScreenRatio(15)
 	property bool remoteIsPaused: participantDevice
 		? participantDevice.core.isPaused
 		: previewEnabled
@@ -74,7 +75,7 @@ Item {
 		radius: mainItem.radius
 		anchors.fill: parent
 		border.color: DefaultStyle.main2_200
-        border.width: mainItem.displayBorder ? Math.round(3 * DefaultStyle.dp) : 0
+        border.width: mainItem.displayBorder ? Utils.getSizeWithScreenRatio(3) : 0
         property real minSize: Math.min(height, width)
 		Item {
 			id: noCameraLayout
@@ -82,7 +83,7 @@ Item {
 			visible: !cameraLoader.active || cameraLoader.status != Loader.Ready || !cameraLoader.item.isReady
 			ColumnLayout {
 				anchors.top: parent.top
-                anchors.topMargin: Math.round(81 * DefaultStyle.dp)
+                anchors.topMargin: Utils.getSizeWithScreenRatio(81)
 				anchors.horizontalCenter: parent.horizontalCenter
 				// Layout.alignment: Qt.AlignHCenter |Qt.AlignTop
 				spacing: 0
@@ -94,8 +95,8 @@ Item {
 				BusyIndicator {
 					indicatorColor: DefaultStyle.main2_100
 					Layout.alignment: Qt.AlignHCenter
-                    indicatorHeight: Math.round(42 * DefaultStyle.dp)
-                    indicatorWidth: Math.round(42 * DefaultStyle.dp)
+                    indicatorHeight: Utils.getSizeWithScreenRatio(42)
+                    indicatorWidth: Utils.getSizeWithScreenRatio(42)
 				}
 			}
 			Item{
@@ -104,7 +105,7 @@ Item {
 				anchors.centerIn: parent
 				height: mainItem.conference 
 					? background.minSize * 142 / 372
-                    : Math.round(120 * DefaultStyle.dp)
+                    : Utils.getSizeWithScreenRatio(120)
 				width: height
 				Avatar{
 					id: avatar
@@ -122,30 +123,30 @@ Item {
 					spacing: 0
 					visible: mainItem.participantDevice && (mainItem.participantDevice.core.state == LinphoneEnums.ParticipantDeviceState.Joining || mainItem.participantDevice.core.state == LinphoneEnums.ParticipantDeviceState.Alerting) || false
 					BusyIndicator {
-                        Layout.preferredHeight: Math.round(42 * DefaultStyle.dp)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(42)
 						indicatorColor: DefaultStyle.main2_100
 						Layout.alignment: Qt.AlignHCenter
-                        indicatorHeight: Math.round(42 * DefaultStyle.dp)
-                        indicatorWidth: Math.round(42 * DefaultStyle.dp)
+                        indicatorHeight: Utils.getSizeWithScreenRatio(42)
+                        indicatorWidth: Utils.getSizeWithScreenRatio(42)
 					}
 					Text {
-                        Layout.preferredHeight: Math.round(27 * DefaultStyle.dp)
-                        Layout.topMargin: Math.round(15 * DefaultStyle.dp) // (84-27)-42
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(27)
+                        Layout.topMargin: Utils.getSizeWithScreenRatio(15) // (84-27)-42
                         //: "rejoint…"
                         text: qsTr("conference_participant_joining_text")
 						color: DefaultStyle.grey_0
 						Layout.alignment: Qt.AlignHCenter
 						horizontalAlignment: Text.AlignHCenter
 						font {
-                            pixelSize: Math.round(20 * DefaultStyle.dp)
-                            weight: Math.round(500 * DefaultStyle.dp)
+                            pixelSize: Utils.getSizeWithScreenRatio(20)
+                            weight: Utils.getSizeWithScreenRatio(500)
 						}
 					}
 				}
 			}
 			ColumnLayout {
 				anchors.centerIn: parent
-                spacing: Math.round(12 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(12)
 				visible: mainItem.remoteIsPaused
 				EffectImage {
 					imageSource: AppIcons.pause
@@ -160,8 +161,8 @@ Item {
                     //: "En pause"
                     text: qsTr("conference_participant_paused_text")
 					font {
-                        pixelSize: Math.round(20 * DefaultStyle.dp)
-                        weight: Math.round(500 * DefaultStyle.dp)
+                        pixelSize: Utils.getSizeWithScreenRatio(20)
+                        weight: Utils.getSizeWithScreenRatio(500)
 					}
 				}
 			}
@@ -169,7 +170,7 @@ Item {
 				spacing: 0
 				visible: mainItem.displayAll && !mainItem.remoteIsPaused && !mainItem.conference
 				anchors.top: centerItem.bottom
-                anchors.topMargin: Math.round(21 * DefaultStyle.dp)
+                anchors.topMargin: Utils.getSizeWithScreenRatio(21)
 				anchors.left: parent.left
 				anchors.right: parent.right
 
@@ -179,8 +180,8 @@ Item {
 					text: mainItem.displayName
 					color: DefaultStyle.grey_0
 					font {
-                        pixelSize: Math.round(22 * DefaultStyle.dp)
-                        weight: Math.round(300 * DefaultStyle.dp)
+                        pixelSize: Utils.getSizeWithScreenRatio(22)
+                        weight: Utils.getSizeWithScreenRatio(300)
 						capitalization: Font.Capitalize
 					}
 				}
@@ -191,8 +192,8 @@ Item {
 					text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(_text) : _text
 					color: DefaultStyle.grey_0
 					font {
-                        pixelSize: Math.round(14 * DefaultStyle.dp)
-                        weight: Math.round(300 * DefaultStyle.dp)
+                        pixelSize: Utils.getSizeWithScreenRatio(14)
+                        weight: Utils.getSizeWithScreenRatio(300)
 					}
 				}
 			}
@@ -255,9 +256,9 @@ Item {
 			anchors.left: parent.left
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
-            anchors.leftMargin: Math.round(10 * DefaultStyle.dp)
-            anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
-            anchors.bottomMargin: Math.round(10 * DefaultStyle.dp)
+            anchors.leftMargin: Utils.getSizeWithScreenRatio(10)
+            anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
+            anchors.bottomMargin: Utils.getSizeWithScreenRatio(10)
 			width: implicitWidth
 			maximumLineCount: 1
 			property string _text: mainItem.displayName != ''
@@ -268,8 +269,8 @@ Item {
 			text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(_text) : _text
 			color: DefaultStyle.grey_0
 			font {
-                pixelSize: Math.round(14 * DefaultStyle.dp)
-                weight: Math.round(500 * DefaultStyle.dp)
+                pixelSize: Utils.getSizeWithScreenRatio(14)
+                weight: Utils.getSizeWithScreenRatio(500)
 			}
 		}
 	}
@@ -286,22 +287,22 @@ Item {
 	RowLayout{
 		anchors.right: parent.right
 		anchors.top: parent.top
-        anchors.rightMargin: Math.round(8 * DefaultStyle.dp)
-        anchors.topMargin: Math.round(8 * DefaultStyle.dp)
+        anchors.rightMargin: Utils.getSizeWithScreenRatio(8)
+        anchors.topMargin: Utils.getSizeWithScreenRatio(8)
 		
-        height: Math.round(18 * DefaultStyle.dp)
+        height: Utils.getSizeWithScreenRatio(18)
 		spacing: 0
 		Rectangle {
 			id: muteIcon
-            Layout.preferredWidth: Math.min(mainItem.width / 16, Math.round(20 * DefaultStyle.dp))
-            Layout.preferredHeight: Math.min(mainItem.width / 16, Math.round(20 * DefaultStyle.dp))
+            Layout.preferredWidth: Math.min(Math.round(mainItem.width / 16), Utils.getSizeWithScreenRatio(20))
+            Layout.preferredHeight: Math.min(Math.round(mainItem.width / 16), Utils.getSizeWithScreenRatio(20))
 			visible: mainItem.mutedStatus
 			color: DefaultStyle.grey_0
 			radius: width /2
 			EffectImage {
 				anchors.centerIn: parent
-                imageWidth: Math.min(mainItem.width / 16, Math.round(20 * DefaultStyle.dp))
-                imageHeight: Math.min(mainItem.width / 16, Math.round(20 * DefaultStyle.dp))
+                imageWidth: Math.min(Math.round(mainItem.width / 16),Utils.getSizeWithScreenRatio(20))
+                imageHeight: Math.min(Math.round(mainItem.width / 16),Utils.getSizeWithScreenRatio(20))
 				imageSource: AppIcons.microphoneSlash
 				colorizationColor: DefaultStyle.main2_500_main
 			}

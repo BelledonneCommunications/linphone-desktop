@@ -173,7 +173,7 @@ MainRightPanel {
 		]
 		content: Flickable {
 			id: editionLayout
-            contentWidth: Math.round(Math.min(parent.width, 421 * DefaultStyle.dp))
+            contentWidth: Math.min(parent.width, Utils.getSizeWithScreenRatio(421))
             width: parent.width
 			contentY: 0
 

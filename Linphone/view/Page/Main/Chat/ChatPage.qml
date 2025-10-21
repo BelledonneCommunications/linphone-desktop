@@ -64,7 +64,7 @@ AbstractMainPage {
 
     Dialog {
         id: deleteChatPopup
-        width: Math.round(637 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(637)
         //: Supprimer la conversation ?
         title: qsTr("chat_dialog_delete_chat_title")
         //: "La conversation et tous ses messages seront supprimés."
@@ -75,7 +75,7 @@ AbstractMainPage {
         id: listStackView
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.leftMargin: Math.round(45 * DefaultStyle.dp)
+        Layout.leftMargin: Utils.getSizeWithScreenRatio(45)
         clip: true
         initialItem: chatListItem
         focus: true
@@ -93,7 +93,7 @@ AbstractMainPage {
                 anchors.fill: parent
                 spacing: 0
                 RowLayout {
-                    spacing: Math.round(16 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(16)
                     Text {
                         Layout.fillWidth: true
                         //: "Conversations"
@@ -107,8 +107,8 @@ AbstractMainPage {
                     }
                     PopupButton {
                         id: chatListMenu
-                        width: Math.round(24 * DefaultStyle.dp)
-                        height: Math.round(24 * DefaultStyle.dp)
+                        width: Utils.getSizeWithScreenRatio(24)
+                        height: Utils.getSizeWithScreenRatio(24)
                         focus: true
                         popup.x: 0
                         KeyNavigation.right: newChatButton
@@ -131,11 +131,11 @@ AbstractMainPage {
                         id: newChatButton
                         style: ButtonStyle.noBackground
                         icon.source: AppIcons.plusCircle
-                        Layout.preferredWidth: Math.round(28 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(28 * DefaultStyle.dp)
-                        Layout.rightMargin: Math.round(39 * DefaultStyle.dp)
-                        icon.width: Math.round(28 * DefaultStyle.dp)
-                        icon.height: Math.round(28 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
+                        Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+                        icon.width: Utils.getSizeWithScreenRatio(28)
+                        icon.height: Utils.getSizeWithScreenRatio(28)
                         KeyNavigation.down: searchBar
                         onClicked: {
                             console.debug("[ChatPage]User: create new chat")
@@ -146,8 +146,8 @@ AbstractMainPage {
                 SearchBar {
                     id: searchBar
                     Layout.fillWidth: true
-                    Layout.topMargin: Math.round(18 * DefaultStyle.dp)
-                    Layout.rightMargin: Math.round(39 * DefaultStyle.dp)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(18)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                     //: "Rechercher une conversation"
                     placeholderText: qsTr("chat_search_in_history")
                     visible: chatListView.count !== 0 || text.length !== 0
@@ -166,11 +166,11 @@ AbstractMainPage {
                     Layout.fillHeight: true
                     ColumnLayout {
                         anchors.fill: parent
-                        anchors.rightMargin: Math.round(39 * DefaultStyle.dp)
+                        anchors.rightMargin: Utils.getSizeWithScreenRatio(39)
                         Text {
                             visible: chatListView.count === 0 && chatListView.loading === false
                             Layout.alignment: Qt.AlignHCenter
-                            Layout.topMargin: Math.round(137 * DefaultStyle.dp)
+                            Layout.topMargin: Utils.getSizeWithScreenRatio(137)
                             //: "Aucun résultat…"
                             text: searchBar.text.length != 0 ? qsTr("list_filter_no_result_found")
                                                                 //: "Aucune conversation dans votre historique"
@@ -184,7 +184,7 @@ AbstractMainPage {
                             id: chatListView
                             Layout.fillWidth: true
                             Layout.fillHeight: true
-                            Layout.topMargin: Math.round(39 * DefaultStyle.dp)
+                            Layout.topMargin: Utils.getSizeWithScreenRatio(39)
                             searchBar: searchBar
                             Control.ScrollBar.vertical: scrollbar
 
@@ -210,7 +210,7 @@ AbstractMainPage {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.right: parent.right
-                        anchors.rightMargin: Math.round(8 * DefaultStyle.dp)
+                        anchors.rightMargin: Utils.getSizeWithScreenRatio(8)
                         policy: Control.ScrollBar.AsNeeded
                     }
                 }
@@ -228,10 +228,10 @@ AbstractMainPage {
                 anchors.fill: parent
                 spacing: 0
                 RowLayout {
-                    spacing: Math.round(10 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(10)
                     Button {
-                        Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                        Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
                         style: ButtonStyle.noBackground
                         icon.source: AppIcons.leftArrow
                         focus: true
@@ -259,8 +259,8 @@ AbstractMainPage {
                     id: newChatForm
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    Layout.rightMargin: Math.round(8 * DefaultStyle.dp)
-                    Layout.topMargin: Math.round(18 * DefaultStyle.dp)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(8)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(18)
                     onGroupCreationRequested: {
                         console.log("groupe call requetsed")
                         listStackView.push(groupChatItem)
@@ -350,8 +350,8 @@ AbstractMainPage {
             BusyIndicator {
                 anchors.centerIn: parent
                 visible: selectedChatView.chat && !selectedChatView.visible
-                indicatorHeight: visible ? Math.round(60 * DefaultStyle.dp) : 0
-                indicatorWidth: Math.round(60 * DefaultStyle.dp)
+                indicatorHeight: visible ? Utils.getSizeWithScreenRatio(60) : 0
+                indicatorWidth: Utils.getSizeWithScreenRatio(60)
                 indicatorColor: DefaultStyle.main1_500_main
             }
             SelectedChatView {

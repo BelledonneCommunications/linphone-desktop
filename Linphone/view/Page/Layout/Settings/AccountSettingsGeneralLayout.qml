@@ -7,6 +7,7 @@ import Linphone
 import SettingsCpp
 import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 AbstractSettingsLayout {
 	id: mainItem
@@ -40,21 +41,21 @@ AbstractSettingsLayout {
 		id: accountParametersComponent
 		ColumnLayout {
 			Layout.fillWidth: true
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
 			Avatar {
 				id: avatar
 				account: model
 				displayPresence: false
-                Layout.preferredWidth: Math.round(100 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(100)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(100)
 				Layout.alignment: Qt.AlignHCenter
 			}
 			IconLabelButton {
 				visible: model.core.pictureUri.length === 0
 				Layout.preferredWidth: width
 				icon.source: AppIcons.camera
-                icon.width: Math.round(17 * DefaultStyle.dp)
-                icon.height: Math.round(17 * DefaultStyle.dp)
+                icon.width: Utils.getSizeWithScreenRatio(17)
+                icon.height: Utils.getSizeWithScreenRatio(17)
                 //: "Ajouter une image"
                 text: qsTr("manage_account_add_picture")
 				style: ButtonStyle.noBackground
@@ -64,12 +65,12 @@ AbstractSettingsLayout {
 			RowLayout {
 				visible: model.core.pictureUri.length > 0
 				Layout.alignment: Qt.AlignHCenter
-                spacing: Math.round(5 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(5)
 				IconLabelButton {
 					Layout.preferredWidth: width
 					icon.source: AppIcons.pencil
-                    icon.width: Math.round(17 * DefaultStyle.dp)
-                    icon.height: Math.round(17 * DefaultStyle.dp)
+                    icon.width: Utils.getSizeWithScreenRatio(17)
+                    icon.height: Utils.getSizeWithScreenRatio(17)
                     //: "Modifier l'image"
                     text: qsTr("manage_account_edit_picture")
 					style: ButtonStyle.noBackground
@@ -78,8 +79,8 @@ AbstractSettingsLayout {
 				IconLabelButton {
 					Layout.preferredWidth: width
 					icon.source: AppIcons.trashCan
-                    icon.width: Math.round(17 * DefaultStyle.dp)
-                    icon.height: Math.round(17 * DefaultStyle.dp)
+                    icon.width: Utils.getSizeWithScreenRatio(17)
+                    icon.height: Utils.getSizeWithScreenRatio(17)
                     //: "Supprimer l'image"
                     text: qsTr("manage_account_remove_picture")
 					style: ButtonStyle.noBackground
@@ -99,7 +100,7 @@ AbstractSettingsLayout {
 			}
 			RowLayout {
 				Layout.fillWidth: true
-                spacing: Math.round(5 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(5)
 				Text {
 					Layout.alignment: Qt.AlignLeft
                     text: "%1 :".arg(qsTr("sip_address"))
@@ -123,7 +124,7 @@ AbstractSettingsLayout {
 				}
 			}
 			ColumnLayout {
-                spacing: Math.round(5 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(5)
 				Layout.alignment: Qt.AlignLeft
 				Text {
                     //: "Nom d'affichage
@@ -141,7 +142,7 @@ AbstractSettingsLayout {
 			TextField {
 				Layout.alignment: Qt.AlignLeft
 				Layout.fillWidth: true
-                Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 				initialText: model.core.displayName
 				backgroundColor: DefaultStyle.grey_100
 				onEditingFinished: {
@@ -157,7 +158,7 @@ AbstractSettingsLayout {
 			}
 			ComboSetting {
 				Layout.fillWidth: true
-                Layout.topMargin: -Math.round(15 * DefaultStyle.dp)
+                Layout.topMargin: Utils.getSizeWithScreenRatio(15)
 				entries: account.core.dialPlans
 				propertyName: "dialPlan"
 				propertyOwnerGui: account
@@ -172,9 +173,9 @@ AbstractSettingsLayout {
 			}
 			RowLayout {
 				id:mainItem
-                spacing : Math.round(20 * DefaultStyle.dp)
+                spacing : Utils.getSizeWithScreenRatio(20)
 				ColumnLayout {
-                    spacing : Math.round(5 * DefaultStyle.dp)
+                    spacing : Utils.getSizeWithScreenRatio(5)
 					Text {
                         //: "Déconnecter mon compte"
                         text: qsTr("manage_account_delete")
@@ -198,7 +199,7 @@ AbstractSettingsLayout {
 				BigButton {
 					style: ButtonStyle.noBackgroundRed
 					Layout.alignment: Qt.AlignRight
-                    Layout.rightMargin: Math.round(5 * DefaultStyle.dp)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(5)
 					icon.source: AppIcons.trashCan
 					onClicked: {
 						var mainWin = UtilsCpp.getMainWindow()
@@ -228,25 +229,25 @@ AbstractSettingsLayout {
 		RoundedPane {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-            // Layout.minimumHeight: account.core.devices.length * Math.round(133 * DefaultStyle.dp) + (account.core.devices.length - 1) * Math.round(15 * DefaultStyle.dp) +  2 * Math.round(21 * DefaultStyle.dp)
-            Layout.rightMargin: Math.round(30 * DefaultStyle.dp)
-            Layout.topMargin: Math.round(20 * DefaultStyle.dp)
-            Layout.bottomMargin: Math.round(4 * DefaultStyle.dp)
-            Layout.leftMargin: Math.round(44 * DefaultStyle.dp)
-            topPadding: Math.round(21 * DefaultStyle.dp)
-            bottomPadding: Math.round(21 * DefaultStyle.dp)
-            leftPadding: Math.round(17 * DefaultStyle.dp)
-            rightPadding: Math.round(17 * DefaultStyle.dp)
+            // Layout.minimumHeight: account.core.devices.length *Utils.getSizeWithScreenRatio(133) + (account.core.devices.length - 1) *Utils.getSizeWithScreenRatio(15) +  2 *Utils.getSizeWithScreenRatio(21)
+            Layout.rightMargin: Utils.getSizeWithScreenRatio(30)
+            Layout.topMargin: Utils.getSizeWithScreenRatio(20)
+            Layout.bottomMargin: Utils.getSizeWithScreenRatio(4)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(44)
+            topPadding: Utils.getSizeWithScreenRatio(21)
+            bottomPadding: Utils.getSizeWithScreenRatio(21)
+            leftPadding: Utils.getSizeWithScreenRatio(17)
+            rightPadding: Utils.getSizeWithScreenRatio(17)
 			background: Rectangle {
 				anchors.fill: parent
 				color: DefaultStyle.grey_100
-                radius: Math.round(15 * DefaultStyle.dp)
+                radius: Utils.getSizeWithScreenRatio(15)
 			}
 			contentItem: ColumnLayout {
-                spacing: Math.round(15 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(15)
                 BusyIndicator {
-                    Layout.preferredWidth: Math.round(60 * DefaultStyle.dp)
-                    Layout.preferredHeight: Math.round(60 * DefaultStyle.dp)
+                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(60)
+                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(60)
                     Layout.alignment: Qt.AlignHCenter
                     visible: devices.loading
                 }
@@ -268,24 +269,24 @@ AbstractSettingsLayout {
 					}
                     Control.Control {
 						Layout.fillWidth: true
-                        height: Math.round(133 * DefaultStyle.dp)
-                        topPadding: Math.round(26 * DefaultStyle.dp)
-                        bottomPadding: Math.round(26 * DefaultStyle.dp)
-                        rightPadding: Math.round(36 * DefaultStyle.dp)
-                        leftPadding: Math.round(33 * DefaultStyle.dp)
+                        height: Utils.getSizeWithScreenRatio(133)
+                        topPadding: Utils.getSizeWithScreenRatio(26)
+                        bottomPadding: Utils.getSizeWithScreenRatio(26)
+                        rightPadding: Utils.getSizeWithScreenRatio(36)
+                        leftPadding: Utils.getSizeWithScreenRatio(33)
 						background: Rectangle {
 							anchors.fill: parent
 							color: DefaultStyle.grey_0
-                            radius: Math.round(10 * DefaultStyle.dp)
+                            radius: Utils.getSizeWithScreenRatio(10)
 						}
 						contentItem: ColumnLayout {
 							width: parent.width
-                            spacing: Math.round(20 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(20)
 							RowLayout {
-                                spacing: Math.round(5 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(5)
 								EffectImage {
-                                    Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-                                    Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 									fillMode: Image.PreserveAspectFit
 									colorizationColor: DefaultStyle.main2_600
 									imageSource: modelData.core.userAgent.toLowerCase().includes('ios') | modelData.core.userAgent.toLowerCase().includes('android') ? AppIcons.mobile : AppIcons.desktop
@@ -303,8 +304,8 @@ AbstractSettingsLayout {
                                     //: "Supprimer"
                                     text: qsTr("manage_account_device_remove")
 									icon.source: AppIcons.trashCan
-                                    icon.width: Math.round(16 * DefaultStyle.dp)
-                                    icon.height: Math.round(16 * DefaultStyle.dp)
+                                    icon.width: Utils.getSizeWithScreenRatio(16)
+                                    icon.height: Utils.getSizeWithScreenRatio(16)
 									style: ButtonStyle.tertiary
 									onClicked: {
 										var mainWin = UtilsCpp.getMainWindow()
@@ -321,7 +322,7 @@ AbstractSettingsLayout {
 								}
 							}
 							RowLayout {
-                                spacing: Math.round(5 * DefaultStyle.dp)
+                                spacing: Utils.getSizeWithScreenRatio(5)
 								Text {
                                     //: "Dernière connexion:"
                                     text: qsTr("manage_account_device_last_connection")
@@ -330,8 +331,8 @@ AbstractSettingsLayout {
 								}
 								EffectImage {
 									visible: dateText.lastDate != ""
-                                    Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
-                                    Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
+                                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
 									imageSource: AppIcons.calendarBlank
 									colorizationColor: DefaultStyle.main2_600
 									fillMode: Image.PreserveAspectFit
@@ -348,8 +349,8 @@ AbstractSettingsLayout {
 								}
 								EffectImage {
 									visible: dateText.lastDate != ""
-                                    Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
-                                    Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
+                                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
 									imageSource: AppIcons.clock
 									colorizationColor: DefaultStyle.main2_600
 									fillMode: Image.PreserveAspectFit

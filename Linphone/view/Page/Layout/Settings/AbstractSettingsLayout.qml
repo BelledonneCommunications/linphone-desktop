@@ -95,7 +95,7 @@ Rectangle {
 			}
 			Rectangle {
 				Layout.fillWidth: true
-                height: Math.max(Utils.getSizeWithScreenRatio(1), 1)
+                height: Utils.getSizeWithScreenRatio(1)
 				color: DefaultStyle.main2_500_main
 			}
 		}
@@ -141,10 +141,10 @@ Rectangle {
 				width: contentListView.width
 				Rectangle {
 					visible: index !== 0
-                    Layout.topMargin: Math.round((modelData.hideTopSeparator ? 0 : 16) * DefaultStyle.dp)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(modelData.hideTopSeparator ? 0 : 16)
                     Layout.bottomMargin: Utils.getSizeWithScreenRatio(16)
 					Layout.fillWidth: true
-                    height: Math.max(Utils.getSizeWithScreenRatio(1), 1)
+                    height: Utils.getSizeWithScreenRatio(1)
 					color: modelData.hideTopSeparator ? 'transparent' : DefaultStyle.main2_500_main
 				}
 				GridLayout {
@@ -152,7 +152,7 @@ Rectangle {
 					columns: mainItem.useVerticalLayout ? 1 : 2
 					Layout.fillWidth: true
 					// Layout.preferredWidth: parent.width
-                    rowSpacing: Math.round((modelData.title.length > 0 || modelData.subTitle.length > 0 ? 20 : 0) * DefaultStyle.dp)
+                    rowSpacing: modelData.title.length > 0 || modelData.subTitle.length > 0 ? Utils.getSizeWithScreenRatio(20) : 0
                     columnSpacing: Utils.getSizeWithScreenRatio(47)
 					ColumnLayout {
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(341)
@@ -179,10 +179,10 @@ Rectangle {
 						}
 					}
 					RowLayout {
-                        Layout.topMargin: Math.round((modelData.hideTopMargin ? 0 : (mainItem.useVerticalLayout ? 10 : 21)) * DefaultStyle.dp)
+                        Layout.topMargin: modelData.hideTopMargin ? 0 : Utils.getSizeWithScreenRatio(mainItem.useVerticalLayout ? 10 : 21)
                         Layout.bottomMargin: Utils.getSizeWithScreenRatio(21)
                         Layout.leftMargin: mainItem.useVerticalLayout ? 0 : Utils.getSizeWithScreenRatio(17)
-                        Layout.preferredWidth: Math.round((modelData.customWidth > 0 ? modelData.customWidth : 545) * DefaultStyle.dp)
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(modelData.customWidth > 0 ? modelData.customWidth : 545)
 						Layout.alignment: Qt.AlignRight
 						Loader {
 							id: contentLoader
@@ -190,7 +190,7 @@ Rectangle {
 							sourceComponent: modelData.contentComponent
 						}
 						Item {
-                            Layout.preferredWidth: Math.round((modelData.customRightMargin > 0 ? modelData.customRightMargin : 17) * DefaultStyle.dp)
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(modelData.customRightMargin > 0 ? modelData.customRightMargin : 17)
 						}
 					}
 				}

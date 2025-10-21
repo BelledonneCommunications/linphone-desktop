@@ -7,6 +7,8 @@ import Linphone
 import EnumsToStringCpp
 import UtilsCpp
 import SettingsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 // =============================================================================
 
 Item {
@@ -33,8 +35,8 @@ Item {
 
 	RowLayout{
 		anchors.fill: parent
-        anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
-        spacing: Math.round(16 * DefaultStyle.dp)
+        anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
+        spacing: Utils.getSizeWithScreenRatio(16)
 		Sticker {
 			id: activeSpeakerSticker
 			Layout.fillWidth: true
@@ -58,23 +60,23 @@ Item {
 		ListView{
 			id: sideStickers
 			Layout.fillHeight: true
-            Layout.preferredWidth: Math.round(300 * DefaultStyle.dp)
-            Layout.rightMargin: Math.round(10 * DefaultStyle.dp)
-            Layout.bottomMargin: Math.round(10 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(300)
+            Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
+            Layout.bottomMargin: Utils.getSizeWithScreenRatio(10)
 			visible: allDevices.count > 2 || !!mainItem.conference?.core.isScreenSharingEnabled
-            //spacing: Math.round(15 * DefaultStyle.dp)	// bugged? First item has twice margins
+            //spacing: Utils.getSizeWithScreenRatio(15)	// bugged? First item has twice margins
 			model: allDevices
 			snapMode: ListView.SnapOneItem
 			clip: true
 			delegate: Item{	// Spacing workaround
 				visible: $modelData && mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
 										&& ($modelData.core.address != activeSpeakerAddress || mainItem.conference?.core.isScreenSharingEnabled) || false
-                height: visible ? Math.round((180 + 15) * DefaultStyle.dp) : 0
-                width: Math.round(300 * DefaultStyle.dp)
+                height: visible ? Utils.getSizeWithScreenRatio(180 + 15) : 0
+                width: Utils.getSizeWithScreenRatio(300)
 				Sticker {
 					previewEnabled: index == 0	// before anchors for priority initialization
 					anchors.fill: parent
-                    anchors.bottomMargin: Math.round(15 * DefaultStyle.dp)// Spacing
+                    anchors.bottomMargin: Utils.getSizeWithScreenRatio(15)// Spacing
 					qmlName: 'S_'+index
 					visible: parent.visible
 					participantDevice: $modelData

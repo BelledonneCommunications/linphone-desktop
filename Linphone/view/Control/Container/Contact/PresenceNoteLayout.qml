@@ -6,32 +6,33 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Rectangle {
     id: mainItem
     property var friendCore
     color: DefaultStyle.grey_0
-    radius: 20 * DefaultStyle.dp
+    radius: Utils.getSizeWithScreenRatio(20)
     border.color: DefaultStyle.main2_200
-    border.width: 2 * DefaultStyle.dp
+    border.width: Utils.getSizeWithScreenRatio(2)
 
     ColumnLayout {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        anchors.leftMargin: 16 * DefaultStyle.dp
-        anchors.rightMargin: 16 * DefaultStyle.dp
-        spacing: 8 * DefaultStyle.dp
+        anchors.leftMargin: Utils.getSizeWithScreenRatio(16)
+        anchors.rightMargin: Utils.getSizeWithScreenRatio(16)
+        spacing: Utils.getSizeWithScreenRatio(8)
 
         RowLayout {
-            spacing: 6 * DefaultStyle.dp
+            spacing: Utils.getSizeWithScreenRatio(6)
 
             EffectImage {
                 fillMode: Image.PreserveAspectFit
                 imageSource: AppIcons.presenceNote
                 colorizationColor: DefaultStyle.main2_600
-                Layout.preferredHeight: Math.round(17 * DefaultStyle.dp)
-                Layout.preferredWidth: Math.round(17 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(17)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(17)
             }
 
             Text {

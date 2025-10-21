@@ -8,6 +8,7 @@ import Linphone
 import UtilsCpp
 import SettingsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
 
@@ -18,17 +19,17 @@ ColumnLayout {
         font: Typography.h4
         color: DefaultStyle.main2_600
         text: title
-        Layout.topMargin: Math.round(5 * DefaultStyle.dp)
+        Layout.topMargin: Utils.getSizeWithScreenRatio(5)
     }
 
     Control.Control {
         Layout.fillWidth: true
         Layout.preferredHeight: implicitHeight
-        Layout.topMargin: Math.round(9 * DefaultStyle.dp)
+        Layout.topMargin: Utils.getSizeWithScreenRatio(9)
         background: Rectangle {
             anchors.fill: parent
             color: DefaultStyle.grey_100
-            radius: Math.round(15 * DefaultStyle.dp)
+            radius: Utils.getSizeWithScreenRatio(15)
         }
 
         contentItem: ColumnLayout {
@@ -45,21 +46,21 @@ ColumnLayout {
 
                     Item {
                         Layout.fillWidth: true
-                        Layout.preferredHeight: visible ? Math.round(56 * DefaultStyle.dp) : 0
+                        Layout.preferredHeight: visible ? Utils.getSizeWithScreenRatio(56) : 0
                         visible: modelData.visible
 
                         RowLayout {
                             anchors.fill: parent
-                            spacing: Math.round(8 * DefaultStyle.dp)
-                            anchors.leftMargin: Math.round(17 * DefaultStyle.dp)
-                            anchors.rightMargin: Math.round(10 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(8)
+                            anchors.leftMargin: Utils.getSizeWithScreenRatio(17)
+                            anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
 
                             EffectImage {
                                 fillMode: Image.PreserveAspectFit
                                 imageSource: modelData.icon
                                 colorizationColor: modelData.color
-                                Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
-                                Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
                             }
 
                             Text {
@@ -75,8 +76,8 @@ ColumnLayout {
                                 fillMode: Image.PreserveAspectFit
                                 imageSource: AppIcons.rightArrow
                                 colorizationColor: modelData.color
-                                Layout.preferredHeight: Math.round(20 * DefaultStyle.dp)
-                                Layout.preferredWidth: Math.round(20 * DefaultStyle.dp)
+                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
                             }
                         }
 
@@ -93,9 +94,9 @@ ColumnLayout {
                     Rectangle {
                         visible: index < entries.length - 1
                         color: DefaultStyle.main2_200
-                        height: Math.round(1 * DefaultStyle.dp)
-                        width: parent.width - Math.round(30 * DefaultStyle.dp)
-                        Layout.leftMargin: Math.round(17 * DefaultStyle.dp)
+                        height: Utils.getSizeWithScreenRatio(1)
+                        width: parent.width - Utils.getSizeWithScreenRatio(30)
+                        Layout.leftMargin: Utils.getSizeWithScreenRatio(17)
                     }
                 }
             }

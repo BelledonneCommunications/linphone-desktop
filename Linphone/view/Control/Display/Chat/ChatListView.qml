@@ -15,7 +15,7 @@ ListView {
     property SearchBar searchBar
     property bool loading: false
     property string searchText: searchBar?.text
-    property real busyIndicatorSize: Math.round(60 * DefaultStyle.dp)
+    property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
 
     property ChatGui currentChatGui: model.getAt(currentIndex) || null
     property ChatGui chatToSelect: null
@@ -41,7 +41,7 @@ ListView {
             loading = true
         }
         filterText: mainItem.searchText
-        initialDisplayItems: Math.max(20, 2 * mainItem.height / (Math.round(56 * DefaultStyle.dp)))
+        initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(56)))
         displayItemsStep: 3 * initialDisplayItems / 2
         onModelReset: {
             loading = false
@@ -62,7 +62,7 @@ ListView {
         }
     }
     // flickDeceleration: 10000
-    spacing: Math.round(10 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(10)
 
     function selectChat(chatGui) {
         var index = chatProxy.findChatIndex(chatGui)
@@ -134,8 +134,8 @@ ListView {
     component UnreadNotification: Item {
         id: unreadNotif
         property int unread: 0
-        width: Math.round(14 * DefaultStyle.dp)
-        height: Math.round(14 * DefaultStyle.dp)
+        width: Utils.getSizeWithScreenRatio(14)
+        height: Utils.getSizeWithScreenRatio(14)
         visible: unread > 0
         Rectangle {
             id: background
@@ -148,7 +148,7 @@ ListView {
                 horizontalAlignment: Text.AlignHCenter
                 color: DefaultStyle.grey_0
                 fontSizeMode: Text.Fit
-                font.pixelSize: Math.round(10 * DefaultStyle.dp)
+                font.pixelSize: Utils.getSizeWithScreenRatio(10)
                 text: parent.unreadNotif > 100 ? '99+' : unreadNotif.unread
             }
         }
@@ -168,7 +168,7 @@ ListView {
     delegate: FocusScope {
         visible: !mainItem.loading
         width: mainItem.width
-        height: Math.round(63 * DefaultStyle.dp)
+        height: Utils.getSizeWithScreenRatio(63)
         Connections {
             target: mainItem
             function onMarkAllAsRead() {modelData.core.lMarkAsRead()}
@@ -176,18 +176,18 @@ ListView {
         RowLayout {
             z: 1
             anchors.fill: parent
-            anchors.leftMargin: Math.round(11 * DefaultStyle.dp)
-            anchors.rightMargin: Math.round(11 * DefaultStyle.dp)
-            anchors.topMargin: Math.round(9 * DefaultStyle.dp)
-            anchors.bottomMargin: Math.round(9 * DefaultStyle.dp)
-            spacing: Math.round(10 * DefaultStyle.dp)
+            anchors.leftMargin: Utils.getSizeWithScreenRatio(11)
+            anchors.rightMargin: Utils.getSizeWithScreenRatio(11)
+            anchors.topMargin: Utils.getSizeWithScreenRatio(9)
+            anchors.bottomMargin: Utils.getSizeWithScreenRatio(9)
+            spacing: Utils.getSizeWithScreenRatio(10)
             Avatar {
                 property var contactObj: modelData ? UtilsCpp.findFriendByAddress(modelData.core.peerAddress) : null
                 contact: contactObj?.value || null
                 displayNameVal: modelData && modelData.core.avatarUri || ""
                 secured: modelData?.core.isSecured || false
-                Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-                Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
                 // isConference: modelData.core.isConference
                 shadowEnabled: false
                 asynchronous: false
@@ -195,7 +195,7 @@ ListView {
             ColumnLayout {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
-                spacing: Math.round(5 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(5)
                 Text {
                     id: friendAddress
                     Layout.fillWidth: true
@@ -209,7 +209,7 @@ ListView {
                 }
                 
                 RowLayout {
-                	spacing: Math.round(5 * DefaultStyle.dp)
+                	spacing: Utils.getSizeWithScreenRatio(5)
 					Layout.fillWidth: true
 					
 					EffectImage {
@@ -217,8 +217,8 @@ ListView {
 						fillMode: Image.PreserveAspectFit
 						imageSource: AppIcons.reply
                         colorizationColor: DefaultStyle.main2_500
-						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
-						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+						Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
+						Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
 					}
 					
 					EffectImage {
@@ -226,8 +226,8 @@ ListView {
 						fillMode: Image.PreserveAspectFit
 						imageSource: AppIcons.forward
 						colorizationColor: DefaultStyle.main2_500
-						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
-						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+						Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
+						Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
 					}
 					
 					EffectImage {
@@ -235,8 +235,8 @@ ListView {
 						fillMode: Image.PreserveAspectFit
 						imageSource: AppIcons.paperclip
 						colorizationColor: DefaultStyle.main2_500
-						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
-						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+						Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
+						Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
 					}
 					
 					EffectImage {
@@ -244,8 +244,8 @@ ListView {
 						fillMode: Image.PreserveAspectFit
 						imageSource: AppIcons.waveform
 						colorizationColor: DefaultStyle.main2_500
-						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
-						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+						Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
+						Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
 					}
 					
 					EffectImage {
@@ -253,8 +253,8 @@ ListView {
 						fillMode: Image.PreserveAspectFit
 						imageSource: AppIcons.calendarBlank
 						colorizationColor: DefaultStyle.main2_500
-						Layout.preferredHeight: Math.round(14 * DefaultStyle.dp)
-						Layout.preferredWidth: Math.round(14 * DefaultStyle.dp)
+						Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
+						Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
 					}
 					
 					Text {
@@ -306,26 +306,26 @@ ListView {
                 }
 
                 RowLayout {
-                    spacing: Math.round(10 * DefaultStyle.dp)
+                    spacing: Utils.getSizeWithScreenRatio(10)
                     Item {Layout.fillWidth: true}
 					EffectImage {
 						visible: modelData?.core.ephemeralEnabled || false
-                        Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
-                        Layout.preferredHeight: 14 * DefaultStyle.dp
+                        Layout.preferredWidth: visible ? Utils.getSizeWithScreenRatio(14) : 0
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
                         colorizationColor: DefaultStyle.main2_400
                         imageSource: AppIcons.clockCountDown
                     }
 					EffectImage {
 						visible: modelData != undefined && modelData?.core.isBasic
-                        Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
-                        Layout.preferredHeight: 14 * DefaultStyle.dp
+                        Layout.preferredWidth: visible ? Utils.getSizeWithScreenRatio(14) : 0
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
                         colorizationColor: DefaultStyle.warning_700
                         imageSource: AppIcons.lockSimpleOpen
                     }
                     EffectImage {
 						visible: modelData != undefined && modelData?.core.muted
-                        Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
-                        Layout.preferredHeight: 14 * DefaultStyle.dp
+                        Layout.preferredWidth: visible ? Utils.getSizeWithScreenRatio(14) : 0
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
                         colorizationColor: DefaultStyle.main2_400
                         imageSource: AppIcons.bellSlash
                     }
@@ -336,8 +336,8 @@ ListView {
                     EffectImage {
                         visible: modelData?.core.lastMessage && modelData?.core.lastMessageState !== LinphoneEnums.ChatMessageState.StateIdle
                         && !modelData.core.lastMessage.core.isRemoteMessage || false
-                        Layout.preferredWidth: visible ? 14 * DefaultStyle.dp : 0
-                        Layout.preferredHeight: 14 * DefaultStyle.dp
+                        Layout.preferredWidth: visible ? Utils.getSizeWithScreenRatio(14) : 0
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
                         colorizationColor: DefaultStyle.main1_500_main
                         imageSource: modelData
                             ? modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateDelivered
@@ -357,7 +357,7 @@ ListView {
                 id: chatroomPopup
                 // z: 1
                 popup.x: 0
-                popup.padding: Math.round(10 * DefaultStyle.dp)
+                popup.padding: Utils.getSizeWithScreenRatio(10)
                 visible: mouseArea.containsMouse || hovered || popup.opened
                 enabled: visible
                 popup.contentItem: ColumnLayout {
@@ -369,7 +369,7 @@ ListView {
                                 : qsTr("chat_room_mute")
                             : ""
 						icon.source: modelData ? modelData.core.muted ? AppIcons.bell : AppIcons.bellSlash : ""
-                        spacing: Math.round(10 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(10)
                         Layout.fillWidth: true
                         onClicked:  {
 							modelData.core.muted = !modelData.core.muted
@@ -380,7 +380,7 @@ ListView {
                         //: "Mark as read"
                         text: qsTr("chat_room_mark_as_read")
                         icon.source: AppIcons.checks
-                        spacing: Math.round(10 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(10)
                         Layout.fillWidth: true
                         onClicked: {
                             modelData.core.lMarkAsRead()
@@ -392,14 +392,14 @@ ListView {
                         visible: modelData && !modelData.core.isReadOnly && modelData.core.isGroupChat || false
                         Rectangle {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: Math.min(1, Math.round(1 * DefaultStyle.dp))
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(1)
                             color: DefaultStyle.main2_400
                         }
                         IconLabelButton {
                             //: "leave"
                             text: qsTr("chat_room_leave")
                             icon.source: AppIcons.trashCan
-                            spacing: Math.round(10 * DefaultStyle.dp)
+                            spacing: Utils.getSizeWithScreenRatio(10)
                             Layout.fillWidth: true
                             onClicked: {
                                 //: leave the conversation ?
@@ -420,7 +420,7 @@ ListView {
                     Rectangle {
                         visible: deleteButton.visible
                         Layout.fillWidth: true
-                        Layout.preferredHeight: Math.min(1, Math.round(1 * DefaultStyle.dp))
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(1)
                         color: DefaultStyle.main2_400
                     }
                     IconLabelButton {
@@ -428,7 +428,7 @@ ListView {
                         //: "Delete"
                         text: qsTr("chat_room_delete")
                         icon.source: AppIcons.trashCan
-                        spacing: Math.round(10 * DefaultStyle.dp)
+                        spacing: Utils.getSizeWithScreenRatio(10)
                         Layout.fillWidth: true
                         onClicked: {
                             //: Delete the conversation ?
@@ -463,7 +463,7 @@ ListView {
             Rectangle {
                 anchors.fill: parent
                 opacity: 0.7
-                radius: Math.round(8 * DefaultStyle.dp)
+                radius: Utils.getSizeWithScreenRatio(8)
                 color: mainItem.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
                 visible: mainItem.lastMouseContainsIndex === index || mainItem.currentIndex === index
             }

@@ -3,7 +3,8 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import Linphone
 import CustomControls 1.0
-  
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 ColumnLayout {
 	id: mainItem
 
@@ -19,7 +20,7 @@ ColumnLayout {
 	property string defaultCallingCode
 	property bool keyboardFocus: FocusHelper.keyboardFocus
 
-	spacing: Math.round(5 * DefaultStyle.dp)
+	spacing: Utils.getSizeWithScreenRatio(5)
 
 	Text {
 		visible: label.length > 0
@@ -34,12 +35,12 @@ ColumnLayout {
 
 	Control.Control {
 		Layout.preferredWidth: mainItem.width
-		Layout.preferredHeight: Math.round(49 * DefaultStyle.dp)
-		leftPadding: Math.round(16 * DefaultStyle.dp)
+		Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
+		leftPadding: Utils.getSizeWithScreenRatio(16)
 		background: Rectangle {
 			id: contentBackground
 			anchors.fill: parent
-            radius: Math.round(63 * DefaultStyle.dp)
+            radius: Utils.getSizeWithScreenRatio(63)
 			color: DefaultStyle.grey_100
 			border.color: mainItem.errorMessage.length > 0 
 							? DefaultStyle.danger_500_main 
@@ -50,7 +51,7 @@ ColumnLayout {
 		contentItem: RowLayout {
 			CountryIndicatorCombobox {
 				id: combobox
-				implicitWidth: Math.round(110 * DefaultStyle.dp)
+				implicitWidth: Utils.getSizeWithScreenRatio(110)
 				Layout.fillHeight: true
 				defaultCallingCode: mainItem.defaultCallingCode
 				property bool keyboardFocus: FocusHelper.keyboardFocus
@@ -58,10 +59,10 @@ ColumnLayout {
 				Accessible.name: qsTr("prefix_phone_number_accessible_name").arg(mainItem.Accessible.name)
 			}
 			Rectangle {
-				Layout.preferredWidth: Math.max(Math.round(1 * DefaultStyle.dp), 1)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(1)
 				Layout.fillHeight: true
-				Layout.topMargin: Math.round(10 * DefaultStyle.dp)
-				Layout.bottomMargin: Math.round(10 * DefaultStyle.dp)
+				Layout.topMargin: Utils.getSizeWithScreenRatio(10)
+				Layout.bottomMargin: Utils.getSizeWithScreenRatio(10)
 				color: DefaultStyle.main2_600
 			}
 			TextField {
@@ -80,7 +81,7 @@ ColumnLayout {
 	TemporaryText {
 		id: errorText
 		Layout.fillWidth: true
-		Layout.topMargin: Math.round(-3 * DefaultStyle.dp)
+		Layout.topMargin: Utils.getSizeWithScreenRatio(-3)
 		// visible: mainItem.enableErrorText
 		text: mainItem.errorMessage
 		color: DefaultStyle.danger_500_main
@@ -88,7 +89,7 @@ ColumnLayout {
 		elide: Text.ElideRight
 		wrapMode: Text.Wrap
 		font {
-			pixelSize: Math.round(13 * DefaultStyle.dp)
+			pixelSize: Utils.getSizeWithScreenRatio(13)
 			family: DefaultStyle.defaultFont
 			bold: true
 		}

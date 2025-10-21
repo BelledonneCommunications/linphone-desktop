@@ -7,6 +7,7 @@ import QtQml
 import SettingsCpp
 import UtilsCpp 1.0
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
 	id: mainItem
@@ -15,7 +16,7 @@ ListView {
 		sourceModel: AppCpp.calls
     }
 	implicitHeight: contentHeight
-    spacing: Math.round(15 * DefaultStyle.dp)
+    spacing: Utils.getSizeWithScreenRatio(15)
 	clip: true
 	onCountChanged: forceLayout()
 
@@ -26,9 +27,9 @@ ListView {
 
 	delegate: RowLayout {
 		id: callInformationItem
-        spacing: Math.round(8 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(8)
 		width: mainItem.width
-        height: Math.round(45 * DefaultStyle.dp)
+        height: Utils.getSizeWithScreenRatio(45)
 		property var remoteNameObj: UtilsCpp.getDisplayName(modelData.core.remoteAddress)
 		property var callName : (modelData && !SettingsCpp.disableMeetingsFeature && modelData.core.isConference) 
 			? modelData.core.conference.core.subject 
@@ -37,8 +38,8 @@ ListView {
 				: ""
 		Avatar {
 			id: delegateAvatar
-            Layout.preferredWidth: Math.round(45 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(45 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
 			_address: modelData.core.remoteAddress
 			secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 			isConference: modelData.core.isConference
@@ -49,7 +50,7 @@ ListView {
 			Text {
 				id: delegateName
 				text: callInformationItem.callName
-                font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                font.pixelSize: Utils.getSizeWithScreenRatio(14)
 				Layout.fillWidth: true
 				maximumLineCount: 1
 			}
@@ -59,7 +60,7 @@ ListView {
                 property string type: modelData.core.isConference ? qsTr("meeting")
                                                                     //: "Appel"
                                                                   : qsTr("call")
-                Layout.rightMargin: Math.round(2 * DefaultStyle.dp)
+                Layout.rightMargin: Utils.getSizeWithScreenRatio(2)
 				text: modelData.core.state === LinphoneEnums.CallState.Paused
 				|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
                 //: "%1 en pause"
@@ -67,16 +68,16 @@ ListView {
                       //: "%1 en cours"
                     : qsTr("ongoing_call_or_meeting").arg(type)
 				font {
-                    pixelSize: Math.round(12 * DefaultStyle.dp)
-                    weight: Math.round(300 * DefaultStyle.dp)
+                    pixelSize: Utils.getSizeWithScreenRatio(12)
+                    weight: Utils.getSizeWithScreenRatio(300)
 				}
 			}
 		}
 		Item{Layout.fillWidth: true}
 		Button {
 			id: transferButton
-            Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 			Layout.alignment: Qt.AlignVCenter
             visible: mainItem.isTransferList && (mainItem.currentRemoteAddress !== modelData.core.remoteAddress)
 			icon.source: AppIcons.transferCall
@@ -90,21 +91,21 @@ ListView {
 		Button {
 			id: pausingButton
 			enabled: !(modelData.core.state === LinphoneEnums.CallState.PausedByRemote)
-            Layout.preferredWidth: Math.round(28 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(28 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
 			Layout.alignment: Qt.AlignVCenter
-            leftPadding: Math.round(5 * DefaultStyle.dp)
-            rightPadding: Math.round(5 * DefaultStyle.dp)
-            topPadding: Math.round(5 * DefaultStyle.dp)
-            bottomPadding: Math.round(5 * DefaultStyle.dp)
+            leftPadding: Utils.getSizeWithScreenRatio(5)
+            rightPadding: Utils.getSizeWithScreenRatio(5)
+            topPadding: Utils.getSizeWithScreenRatio(5)
+            bottomPadding: Utils.getSizeWithScreenRatio(5)
 			property bool pausedByUser: modelData.core.state === LinphoneEnums.CallState.Paused
 			color: pausedByUser ? DefaultStyle.success_500_main : DefaultStyle.grey_500
 			contentImageColor: DefaultStyle.grey_0
 			KeyNavigation.right: endCallButton
 			KeyNavigation.left: endCallButton
 			icon.source: pausedByUser ? AppIcons.play : AppIcons.pause
-            icon.width: Math.round(18 * DefaultStyle.dp)
-            icon.height: Math.round(18 * DefaultStyle.dp)
+            icon.width: Utils.getSizeWithScreenRatio(18)
+            icon.height: Utils.getSizeWithScreenRatio(18)
 			onClicked: modelData.core.lSetPaused(!modelData.core.paused)
 			TextMetrics {
 				id: pauseMeter
@@ -120,14 +121,14 @@ ListView {
 		}
 		SmallButton {
 			id: endCallButton
-            Layout.preferredWidth: Math.round(38 * DefaultStyle.dp)
-            Layout.preferredHeight: Math.round(28 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(38)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
 			style: ButtonStyle.phoneRed
 			KeyNavigation.left: pausingButton
 			KeyNavigation.right: pausingButton
 			contentImageColor: DefaultStyle.grey_0
-            icon.width: Math.round(18 * DefaultStyle.dp)
-            icon.height: Math.round(18 * DefaultStyle.dp)
+            icon.width: Utils.getSizeWithScreenRatio(18)
+            icon.height: Utils.getSizeWithScreenRatio(18)
 			onClicked: {
 				mainWindow.callTerminatedByUser = true
 				mainWindow.endCall(modelData)

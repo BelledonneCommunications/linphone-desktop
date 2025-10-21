@@ -128,8 +128,8 @@ Rectangle {
         spacing: 0
         RowLayout {
 			Layout.fillWidth: true
-            Layout.topMargin: Math.round(Math.max(5 * DefaultStyle.dp,(25 - ((25/(DefaultStyle.defaultHeight - mainWindow.minimumHeight))*(DefaultStyle.defaultHeight-mainWindow.height))) * DefaultStyle.dp))
-            Layout.rightMargin: Math.round(Math.max(5 * DefaultStyle.dp,(42 - ((42/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))) * DefaultStyle.dp))
+            Layout.topMargin: Math.max(Utils.getSizeWithScreenRatio(5), Utils.getSizeWithScreenRatio(25 - ((25/(DefaultStyle.defaultHeight - mainWindow.minimumHeight))*(DefaultStyle.defaultHeight-mainWindow.height))))
+            Layout.rightMargin: Math.max(Utils.getSizeWithScreenRatio(5), Utils.getSizeWithScreenRatio(42 - ((42/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))))
 			spacing: 0
 			Item {
 				Layout.fillWidth: true
@@ -150,14 +150,14 @@ Rectangle {
 		RowLayout {
 			id: titleLayout
 			Layout.fillWidth: true
-            Layout.topMargin: Math.round(Math.max(10 * DefaultStyle.dp,(40 - ((40/(DefaultStyle.defaultHeight - mainWindow.minimumHeight))*(DefaultStyle.defaultHeight-mainWindow.height))) * DefaultStyle.dp))
+            Layout.topMargin: Math.max(Utils.getSizeWithScreenRatio(10), Utils.getSizeWithScreenRatio(40 - ((40/(DefaultStyle.defaultHeight - mainWindow.minimumHeight))*(DefaultStyle.defaultHeight-mainWindow.height))))
 			spacing: 0
 		}
 		Item {
 			id: centerLayout
 			Layout.fillHeight: true
 			Layout.fillWidth: true
-            Layout.topMargin: Math.round(Math.max(15 * DefaultStyle.dp,(70 - ((70/(DefaultStyle.defaultHeight - mainWindow.minimumHeight))*(DefaultStyle.defaultHeight-mainWindow.height))) * DefaultStyle.dp))
+            Layout.topMargin: Math.max(Utils.getSizeWithScreenRatio(15), Utils.getSizeWithScreenRatio(70 - ((70/(DefaultStyle.defaultHeight - mainWindow.minimumHeight))*(DefaultStyle.defaultHeight-mainWindow.height))))
             Layout.alignment: Qt.AlignBottom
 
 		}

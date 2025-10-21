@@ -3,10 +3,12 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
-import UtilsCpp 1.0
-import ConstantsCpp 1.0
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import UtilsCpp
+import ConstantsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 
 AbstractMainPage {
 
@@ -19,18 +21,18 @@ AbstractMainPage {
 		id: leftPanel
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-        property real sideMargin: Math.round(45 * DefaultStyle.dp)
-        spacing: Math.round(5 * DefaultStyle.dp)
+        property real sideMargin: Utils.getSizeWithScreenRatio(45)
+        spacing: Utils.getSizeWithScreenRatio(5)
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-            spacing: Math.round(5 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(5)
 			Button {
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
-                icon.width: Math.round(24 * DefaultStyle.dp)
-                icon.height: Math.round(24 * DefaultStyle.dp)
+                icon.width: Utils.getSizeWithScreenRatio(24)
+                icon.height: Utils.getSizeWithScreenRatio(24)
 				onClicked: {
 					mainItem.goBack()
 				}
@@ -48,10 +50,10 @@ AbstractMainPage {
 		Image {
 			id: aboutImage
 			Layout.fillWidth: true
-			Layout.preferredHeight: Math.round(100 * DefaultStyle.dp)
+			Layout.preferredHeight: Utils.getSizeWithScreenRatio(100)
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			Layout.topMargin: Math.round(41 * DefaultStyle.dp)
+			Layout.topMargin: Utils.getSizeWithScreenRatio(41)
 			fillMode: Image.PreserveAspectFit
 			source: SettingsCpp.themeAboutPictureUrl
 			visible: source !== "" && status === Image.Ready
@@ -64,7 +66,7 @@ AbstractMainPage {
 		Text {
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-            Layout.topMargin: Math.round((aboutImage.visible ? 41 : 24) * DefaultStyle.dp)
+            Layout.topMargin: Utils.getSizeWithScreenRatio(aboutImage.visible ? 41 : 24)
 			Layout.fillWidth: true
             //: "À propos de %1"
             text: qsTr("help_about_title").arg(applicationName)
@@ -75,8 +77,8 @@ AbstractMainPage {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-            Layout.topMargin: Math.round(24 * DefaultStyle.dp)
-            spacing: Math.round(32 * DefaultStyle.dp)
+            Layout.topMargin: Utils.getSizeWithScreenRatio(24)
+            spacing: Utils.getSizeWithScreenRatio(32)
 			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.detective
@@ -122,7 +124,7 @@ AbstractMainPage {
 		Text {
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-            Layout.topMargin: Math.round(32 * DefaultStyle.dp)
+            Layout.topMargin: Utils.getSizeWithScreenRatio(32)
 			Layout.fillWidth: true
             //: "À propos de %1"
             text: qsTr("help_about_title").arg(applicationName)
@@ -134,7 +136,7 @@ AbstractMainPage {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-            Layout.topMargin: Math.round(24 * DefaultStyle.dp)
+            Layout.topMargin: Utils.getSizeWithScreenRatio(24)
 			iconSource: AppIcons.debug
             //: "Dépannage"
             title: qsTr("help_troubleshooting_title")

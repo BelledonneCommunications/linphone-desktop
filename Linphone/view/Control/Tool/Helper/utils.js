@@ -871,10 +871,9 @@ function codepointFromFilename(filename) {
 // -----------------------------------------------------------------------------
 
 function getSizeWithScreenRatio(size){
-  if (size == 0) {
-		return size;
-	}
-	return size > 0 
-    ? Math.max(Math.round(size * Linphone.DefaultStyle.dp), 1)
-    : Math.min(Math.round(size * Linphone.DefaultStyle.dp), -1);
+	return (size == 0)
+    ? 0
+    : size > 0 
+      ? Math.max(Math.round(size * Linphone.DefaultStyle.dp), 1)
+      : Math.min(Math.round(size * Linphone.DefaultStyle.dp), -1);
 }

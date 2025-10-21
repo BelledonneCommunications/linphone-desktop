@@ -58,10 +58,10 @@ Control.Control {
 
 	// width: mainItem.implicitWidth
 	// height: mainItem.height
-	leftPadding: Math.round(15 * DefaultStyle.dp)
-	rightPadding: Math.round(15 * DefaultStyle.dp)
-	topPadding: Math.round(16 * DefaultStyle.dp)
-	bottomPadding: Math.round(16 * DefaultStyle.dp)
+	leftPadding: Utils.getSizeWithScreenRatio(15)
+	rightPadding: Utils.getSizeWithScreenRatio(15)
+	topPadding: Utils.getSizeWithScreenRatio(16)
+	bottomPadding: Utils.getSizeWithScreenRatio(16)
 	background: Rectangle {
 		anchors.fill: parent
 		color: DefaultStyle.grey_100
@@ -75,13 +75,13 @@ Control.Control {
 		Component {
 			id: textAreaComp
 			RowLayout {
-				spacing: Math.round(16 * DefaultStyle.dp)
+				spacing: Utils.getSizeWithScreenRatio(16)
 				PopupButton {
 					id: emojiPickerButton
 					style: ButtonStyle.noBackground
 					icon.source: checked ? AppIcons.closeX : AppIcons.smiley
-					popup.width: Math.round(393 * DefaultStyle.dp)
-					popup.height: Math.round(291 * DefaultStyle.dp)
+					popup.width: Utils.getSizeWithScreenRatio(393)
+					popup.height: Utils.getSizeWithScreenRatio(291)
 					popup.contentItem: EmojiPicker {
 						editor: sendingTextArea
 					}
@@ -100,14 +100,14 @@ Control.Control {
 					}
 					Layout.fillWidth: true
 					Layout.alignment: Qt.AlignCenter
-					leftPadding: Math.round(24 * DefaultStyle.dp)
-					rightPadding: Math.round(20 * DefaultStyle.dp)
-					topPadding: Math.round(12 * DefaultStyle.dp)
-					bottomPadding: Math.round(12 * DefaultStyle.dp)
+					leftPadding: Utils.getSizeWithScreenRatio(24)
+					rightPadding: Utils.getSizeWithScreenRatio(20)
+					topPadding: Utils.getSizeWithScreenRatio(12)
+					bottomPadding: Utils.getSizeWithScreenRatio(12)
 					background: Rectangle {
 						id: inputBackground
 						anchors.fill: parent
-						radius: Math.round(35 * DefaultStyle.dp)
+						radius: Utils.getSizeWithScreenRatio(35)
 						color: DefaultStyle.grey_0
 						MouseArea {
 							anchors.fill: parent
@@ -118,7 +118,7 @@ Control.Control {
 					contentItem: RowLayout {
 						Flickable {
 							id: sendingAreaFlickable
-							Layout.preferredHeight: Math.min(Math.round(100 * DefaultStyle.dp), contentHeight)
+							Layout.preferredHeight: Math.min(Utils.getSizeWithScreenRatio(100), contentHeight)
 							Layout.fillHeight: true
 							width: sendingControl.width - sendingControl.leftPadding - sendingControl.rightPadding
 							Layout.fillWidth: true
@@ -215,15 +215,15 @@ Control.Control {
 		Component {
 			id: voiceMessageRecordComp
 			RowLayout {
-				spacing: Math.round(16 * DefaultStyle.dp)
+				spacing: Utils.getSizeWithScreenRatio(16)
 				RoundButton {
 					style: ButtonStyle.player
 					shadowEnabled: true
-					padding: Math.round(4 * DefaultStyle.dp)
-					icon.width: Math.round(22 * DefaultStyle.dp)
-					icon.height: Math.round(22 * DefaultStyle.dp)
+					padding: Utils.getSizeWithScreenRatio(4)
+					icon.width: Utils.getSizeWithScreenRatio(22)
+					icon.height: Utils.getSizeWithScreenRatio(22)
 					icon.source: AppIcons.closeX
-					width: Math.round(30 * DefaultStyle.dp)
+					width: Utils.getSizeWithScreenRatio(30)
 					Layout.preferredWidth: width
 					Layout.preferredHeight: height
 					onClicked: {
@@ -238,7 +238,7 @@ Control.Control {
 					}
 					recording: true
 					Layout.fillWidth: true
-					Layout.preferredHeight: Math.round(48 * DefaultStyle.dp)
+					Layout.preferredHeight: Utils.getSizeWithScreenRatio(48)
 					chatMessageContentGui: chatMessage ? chatMessage.core.getVoiceRecordingContent() : null
 					onVoiceRecordingMessageCreationRequested: (recorderGui) => {
 						chatMessageObj = UtilsCpp.createVoiceRecordingMessage(recorderGui, mainItem.chat)
@@ -248,8 +248,8 @@ Control.Control {
 					id: sendButton
 					style: ButtonStyle.noBackgroundOrange
 					icon.source: AppIcons.paperPlaneRight
-					icon.width: Math.round(22 * DefaultStyle.dp)
-					icon.height: Math.round(22 * DefaultStyle.dp)
+					icon.width: Utils.getSizeWithScreenRatio(22)
+					icon.height: Utils.getSizeWithScreenRatio(22)
 					// Layout.preferredWidth: icon.width
 					// Layout.preferredHeight: icon.height
 					property bool sendVoiceRecordingOnCreated: false
@@ -283,13 +283,13 @@ Control.Control {
 		anchors.fill: parent
 		color: DefaultStyle.main2_0
 		visible: false
-		radius: Math.round(20 * DefaultStyle.dp)
+		radius: Utils.getSizeWithScreenRatio(20)
 
 		EffectImage {
 			anchors.centerIn: parent
 			imageSource: AppIcons.filePlus
-			width: Math.round(37 * DefaultStyle.dp)
-			height: Math.round(37 * DefaultStyle.dp)
+			width: Utils.getSizeWithScreenRatio(37)
+			height: Utils.getSizeWithScreenRatio(37)
 			colorizationColor: DefaultStyle.main2_500_main
 		}
 

@@ -60,7 +60,7 @@ AbstractSettingsLayout {
 	Component {
 		id: systemComponent
 		ColumnLayout {
-            spacing: Math.round(40 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(40)
 			SwitchSetting {
 				Layout.fillWidth: true
                 //: Auto start %1
@@ -77,7 +77,7 @@ AbstractSettingsLayout {
 	Component {
 		id: remoteProvisioningComponent
 		ColumnLayout {
-            spacing: Math.round(6 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(6)
 			DecoratedTextField {
 				Layout.fillWidth: true
 				id: configUri
@@ -86,7 +86,7 @@ AbstractSettingsLayout {
 				toValidate: true
 			}
 			SmallButton {
-                Layout.topMargin: -Math.round(20 * DefaultStyle.dp)
+                Layout.topMargin: Utils.getSizeWithScreenRatio(-20)
 				Layout.alignment: Qt.AlignRight
                 //: Download and apply
                 text: qsTr("settings_advanced_download_apply_remote_provisioning")
@@ -108,9 +108,9 @@ AbstractSettingsLayout {
 	Component {
 		id: securityComponent
 		ColumnLayout {
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
 			ColumnLayout {
-                spacing: Math.round(5 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(5)
 				Text {
                     //: Media encryption
                     text: qsTr("settings_advanced_media_encryption_title")
@@ -155,13 +155,13 @@ AbstractSettingsLayout {
 			ListView {
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
-                spacing: Math.round(20 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(20)
 				model: PayloadTypeProxy {
 					filterType: PayloadTypeProxy.Audio | PayloadTypeProxy.NotDownloadable
 				}
 				delegate: SwitchSetting {
 					width: parent.width
-                    height: Math.round(32 * DefaultStyle.dp)
+                    height: Utils.getSizeWithScreenRatio(32)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.clockRate + " Hz"
 					propertyName: "enabled"
@@ -177,18 +177,18 @@ AbstractSettingsLayout {
 	Component {
 		id: videoCodecsComponent
 		ColumnLayout {
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
 			ListView {
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
-                spacing: Math.round(20 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(20)
 				model: PayloadTypeProxy {
 					id: videoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.NotDownloadable
 				}
 				delegate: SwitchSetting {
 					width: parent.width
-                    height: Math.round(32 * DefaultStyle.dp)
+                    height: Utils.getSizeWithScreenRatio(32)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
 					propertyName: "enabled"
@@ -198,14 +198,14 @@ AbstractSettingsLayout {
 			ListView {
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
-                spacing: Math.round(20 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(20)
 				model: PayloadTypeProxy {
 					id: downloadableVideoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.Downloadable
 				}
 				delegate: SwitchSetting {
 					width: parent.width
-                    height: Math.round(32 * DefaultStyle.dp)
+                    height: Utils.getSizeWithScreenRatio(32)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
 					onCheckedChanged: Utils.openCodecOnlineInstallerDialog(
@@ -232,7 +232,7 @@ AbstractSettingsLayout {
 	Component {
 		id: hideFpsComponent
 		ColumnLayout {
-            spacing: Math.round(40 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(40)
 			SwitchSetting {
                 //:"Cacher les FPS"
                 titleText:qsTr("settings_advanced_hide_fps_title")

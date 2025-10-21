@@ -40,8 +40,8 @@ Rectangle {
 			property int timeDisplayed: mediaPlayer.playbackState === MediaPlayer.PlayingState ? mediaPlayer.position : mediaPlayer.duration
 			anchors.bottom: parent.bottom
 			anchors.left: parent.left
-			anchors.bottomMargin: Math.round(6 * DefaultStyle.dp)
-			anchors.leftMargin: Math.round(6 * DefaultStyle.dp)
+			anchors.bottomMargin: Utils.getSizeWithScreenRatio(6)
+			anchors.leftMargin: Utils.getSizeWithScreenRatio(6)
 			text: UtilsCpp.formatDuration(timeDisplayed)
 			color: DefaultStyle.grey_0
 			font {
@@ -64,8 +64,8 @@ Rectangle {
 	EffectImage {
 		anchors.centerIn: parent
 		visible: mediaPlayer.playbackState !== MediaPlayer.PlayingState
-		width: Math.round(24 * DefaultStyle.dp)
-		height: Math.round(24 * DefaultStyle.dp)
+		width: Utils.getSizeWithScreenRatio(24)
+		height: Utils.getSizeWithScreenRatio(24)
 		imageSource: AppIcons.playFill
 		colorizationColor: DefaultStyle.main2_0
 	}

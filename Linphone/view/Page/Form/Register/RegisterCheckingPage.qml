@@ -4,6 +4,7 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 LoginLayout {
 	id: mainItem
@@ -17,11 +18,11 @@ LoginLayout {
 	onCtrlIsPressedChanged: console.log("ctrl is pressed", ctrlIsPressed)
 	titleContent: [
 		RowLayout {
-            spacing: Math.round(21 * DefaultStyle.dp)
-            Layout.leftMargin: Math.round(119 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(21)
+            Layout.leftMargin: Utils.getSizeWithScreenRatio(119)
 			Button {
-                Layout.preferredHeight: Math.round(24 * DefaultStyle.dp)
-                Layout.preferredWidth: Math.round(24 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
 				onClicked: {
@@ -32,8 +33,8 @@ LoginLayout {
 			EffectImage {
 				fillMode: Image.PreserveAspectFit
 				imageSource: AppIcons.profile
-                Layout.preferredHeight: Math.round(34 * DefaultStyle.dp)
-                Layout.preferredWidth: Math.round(34 * DefaultStyle.dp)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(34)
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
@@ -62,8 +63,8 @@ LoginLayout {
 		ColumnLayout {
 			anchors.left: parent.left
 			anchors.top: parent.top
-            anchors.leftMargin: Math.round(127 * DefaultStyle.dp)
-            spacing: Math.round(104 * DefaultStyle.dp)
+            anchors.leftMargin: Utils.getSizeWithScreenRatio(127)
+            spacing: Utils.getSizeWithScreenRatio(104)
 			Text {
 				font {
 					bold: true
@@ -78,7 +79,7 @@ LoginLayout {
 				}
 			}
 			RowLayout {
-                spacing: Math.round(45 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(45)
 				Repeater {
 					model: 4
 					id: repeater
@@ -143,7 +144,7 @@ LoginLayout {
 				}
 			}
 			RowLayout {
-                spacing: Math.round(20 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(20)
 				Text {
                     //: "Vous n'avez pas reçu le code ?"
                     text: qsTr("assistant_account_creation_confirmation_did_not_receive_code")
@@ -164,10 +165,10 @@ LoginLayout {
 		Image {
 			anchors.top: parent.top
 			anchors.right: parent.right
-            anchors.topMargin: Math.round(140 * DefaultStyle.dp)
-            anchors.rightMargin: Math.round(97 * DefaultStyle.dp)
-            width: Math.round(477 * DefaultStyle.dp)
-            height: Math.round(345 * DefaultStyle.dp)
+            anchors.topMargin: Utils.getSizeWithScreenRatio(140)
+            anchors.rightMargin: Utils.getSizeWithScreenRatio(97)
+            width: Utils.getSizeWithScreenRatio(477)
+            height: Utils.getSizeWithScreenRatio(345)
 			fillMode: Image.PreserveAspectFit
 			source: AppIcons.verif_page_image
 		}

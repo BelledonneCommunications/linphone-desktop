@@ -5,15 +5,16 @@ import QtQuick.Effects
 import Linphone
 import UtilsCpp 1.0
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
 Dialog {
 	id: mainItem
-    width: Math.round(436 * DefaultStyle.dp)
-    rightPadding: Math.round(0 * DefaultStyle.dp)
-    leftPadding: Math.round(0 * DefaultStyle.dp)
-    topPadding: Math.round(85 * DefaultStyle.dp) + Math.round(24 * DefaultStyle.dp)
-    bottomPadding: Math.round(24 * DefaultStyle.dp)
+    width: Utils.getSizeWithScreenRatio(436)
+    rightPadding: Utils.getSizeWithScreenRatio(0)
+    leftPadding: Utils.getSizeWithScreenRatio(0)
+    topPadding: Utils.getSizeWithScreenRatio(85 + 24)
+    bottomPadding: Utils.getSizeWithScreenRatio(24)
 	modal: true
 	closePolicy: Popup.NoAutoClose
 
@@ -39,10 +40,10 @@ Dialog {
 			radius: mainItem.radius
 			Layout.ColumnLayout {
 				anchors.top: parent.top
-                anchors.topMargin: Math.round(18 * DefaultStyle.dp)
+                anchors.topMargin: Utils.getSizeWithScreenRatio(18)
 				anchors.horizontalCenter: parent.horizontalCenter
 				Item {
-                    // spacing: Math.round(14 * DefaultStyle.dp)
+                    // spacing: Utils.getSizeWithScreenRatio(14)
 					Layout.Layout.preferredWidth: childrenRect.width
 					Layout.Layout.preferredHeight: childrenRect.height
 					Layout.Layout.fillWidth: true
@@ -50,19 +51,19 @@ Dialog {
 						id: trustShield
 						anchors.centerIn: parent
 						source: AppIcons.trustedWhite
-                        sourceSize.width: Math.round(24 * DefaultStyle.dp)
-                        sourceSize.height: Math.round(24 * DefaultStyle.dp)
-                        width: Math.round(24 * DefaultStyle.dp)
-                        height: Math.round(24 * DefaultStyle.dp)
+                        sourceSize.width: Utils.getSizeWithScreenRatio(24)
+                        sourceSize.height: Utils.getSizeWithScreenRatio(24)
+                        width: Utils.getSizeWithScreenRatio(24)
+                        height: Utils.getSizeWithScreenRatio(24)
 					}
 					EffectImage {
 						anchors.left: trustShield.right
-                        anchors.leftMargin: Math.round(14 * DefaultStyle.dp)
+                        anchors.leftMargin: Utils.getSizeWithScreenRatio(14)
 						visible: mainItem.securityError
 						imageSource: AppIcons.shieldWarning
 						colorizationColor: DefaultStyle.main2_700
-                        width: Math.round(24 * DefaultStyle.dp)
-                        height: Math.round(24 * DefaultStyle.dp)
+                        width: Utils.getSizeWithScreenRatio(24)
+                        height: Utils.getSizeWithScreenRatio(24)
 					}
 				}
 				Text {
@@ -81,8 +82,8 @@ Dialog {
 				visible: !mainItem.securityError
 				anchors.top: parent.top
 				anchors.right: parent.right
-                anchors.topMargin: Math.round(10 * DefaultStyle.dp)
-                anchors.rightMargin: Math.round(17 * DefaultStyle.dp)
+                anchors.topMargin: Utils.getSizeWithScreenRatio(10)
+                anchors.rightMargin: Utils.getSizeWithScreenRatio(17)
 				style: ButtonStyle.noBackground
                 //: "Passer"
                 text: qsTr("call_zrtp_sas_validation_skip")
@@ -99,9 +100,9 @@ Dialog {
 		Rectangle {
 			z: 1
 			width: mainItem.width
-            height: parent.height - Math.round(85 * DefaultStyle.dp)
+            height: Math.round(parent.height - Utils.getSizeWithScreenRatio(85))
 			x: parent.x
-            y: parent.y + Math.round(85 * DefaultStyle.dp)
+            y: Math.round(parent.y + Utils.getSizeWithScreenRatio(85))
 			color: DefaultStyle.grey_0
 			radius: mainItem.radius
 		}
@@ -118,14 +119,14 @@ Dialog {
 	content: [
 		Layout.ColumnLayout {
 			visible: !mainItem.securityError
-            spacing: Math.round(20 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(20)
 			Layout.Layout.alignment: Qt.AlignHCenter
 			Layout.Layout.fillWidth: true
 			Layout.ColumnLayout {
-                spacing: Math.round(10 * DefaultStyle.dp)
+                spacing: Utils.getSizeWithScreenRatio(10)
 				Layout.Layout.alignment: Qt.AlignHCenter
 				Text {
-                    Layout.Layout.preferredWidth: Math.round(343 * DefaultStyle.dp)
+                    Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(343)
 					Layout.Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
 					text: !mainItem.isTokenVerified && mainItem.isCaseMismatch
@@ -134,7 +135,7 @@ Dialog {
                     //: "Pour garantir le chiffrement, nous avons besoin d’authentifier l’appareil de votre correspondant. Veuillez échanger vos codes : "
                     : qsTr("call_dialog_zrtp_validate_trust_message")
 					wrapMode: Text.WordWrap
-                    font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                    font.pixelSize: Utils.getSizeWithScreenRatio(14)
 				}
 				Layout.ColumnLayout {
 					spacing: 0
@@ -144,7 +145,7 @@ Dialog {
                         text: qsTr("call_dialog_zrtp_validate_trust_local_code_label")
 						horizontalAlignment: Text.AlignHCenter
 						Layout.Layout.alignment: Qt.AlignHCenter
-                        font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                        font.pixelSize: Utils.getSizeWithScreenRatio(14)
 					}
 					Text {
 						text: mainItem.call && mainItem.call.core.localToken || ""
@@ -160,18 +161,18 @@ Dialog {
 			Rectangle {
 				color: "transparent"
 				border.color: DefaultStyle.main2_200
-                border.width: Math.max(1, Math.round(1 * DefaultStyle.dp))
-                radius: Math.round(15 * DefaultStyle.dp)
-                Layout.Layout.preferredWidth: Math.round(292 * DefaultStyle.dp)
-                Layout.Layout.preferredHeight: Math.round(233 * DefaultStyle.dp)
+                border.width: Utils.getSizeWithScreenRatio(1)
+                radius: Utils.getSizeWithScreenRatio(15)
+                Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(292)
+                Layout.Layout.preferredHeight: Utils.getSizeWithScreenRatio(233)
 				Layout.Layout.alignment: Qt.AlignHCenter
 				Layout.ColumnLayout {
 					anchors.fill: parent
-                    anchors.topMargin: Math.round(10 * DefaultStyle.dp)
+                    anchors.topMargin: Utils.getSizeWithScreenRatio(10)
 					Text {
                         //: "Code correspondant :"
                         text: qsTr("call_dialog_zrtp_validate_trust_remote_code_label")
-                        font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                        font.pixelSize: Utils.getSizeWithScreenRatio(14)
 						Layout.Layout.alignment: Qt.AlignHCenter
 					}
 					Layout.GridLayout {
@@ -179,23 +180,23 @@ Dialog {
 						Layout.Layout.alignment: Qt.AlignHCenter
 						rows: 2
 						columns: 2
-                        rowSpacing: Math.round(32 * DefaultStyle.dp)
-                        columnSpacing: Math.round(32 * DefaultStyle.dp)
+                        rowSpacing: Utils.getSizeWithScreenRatio(32)
+                        columnSpacing: Utils.getSizeWithScreenRatio(32)
 						property var correctIndex
 						property var modelList
 						Repeater {
 							model: mainItem.call && mainItem.call.core.remoteTokens || ""
 							Button {
-                                Layout.Layout.preferredWidth: Math.round(70 * DefaultStyle.dp)
-                                Layout.Layout.preferredHeight: Math.round(70 * DefaultStyle.dp)
-                                width: Math.round(70 * DefaultStyle.dp)
-                                height: Math.round(70 * DefaultStyle.dp)
+                                Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(70)
+                                Layout.Layout.preferredHeight: Utils.getSizeWithScreenRatio(70)
+                                width: Utils.getSizeWithScreenRatio(70)
+                                height: Utils.getSizeWithScreenRatio(70)
 								color: DefaultStyle.grey_0
-                                textSize: Math.round(32 * DefaultStyle.dp)
-                                textWeight: Math.round(400 * DefaultStyle.dp)
+                                textSize: Utils.getSizeWithScreenRatio(32)
+                                textWeight: Utils.getSizeWithScreenRatio(400)
 								text: modelData
                                 shadowEnabled: true
-                                radius: Math.round(71 * DefaultStyle.dp)
+                                radius: Utils.getSizeWithScreenRatio(71)
 								textColor: DefaultStyle.main2_600
 								onClicked: {
 									console.log("CHECK TOKEN", modelData)
@@ -212,26 +213,26 @@ Dialog {
 			spacing: 0
 
 			Text {
-                width: Math.round(303 * DefaultStyle.dp)
-                // Layout.Layout.preferredWidth: Math.round(343 * DefaultStyle.dp)
+                width: Utils.getSizeWithScreenRatio(303)
+                // Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(343)
 				Layout.Layout.alignment: Qt.AlignHCenter
 				Layout.Layout.fillWidth: true
 				horizontalAlignment: Text.AlignHCenter
                 //: "Le code fourni ne correspond pas."
                 text: qsTr("call_dialog_zrtp_validate_trust_letters_do_not_match_text")
 				wrapMode: Text.WordWrap
-                font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                font.pixelSize: Utils.getSizeWithScreenRatio(14)
 			}
 			Text {
-                width: Math.round(303 * DefaultStyle.dp)
-                // Layout.Layout.preferredWidth: Math.round(343 * DefaultStyle.dp)
+                width: Utils.getSizeWithScreenRatio(303)
+                // Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(343)
 				Layout.Layout.alignment: Qt.AlignHCenter
 				Layout.Layout.fillWidth: true
 				horizontalAlignment: Text.AlignHCenter
                 //: "La confidentialité de votre appel peut être compromise !"
                 text: qsTr("call_dialog_zrtp_security_alert_message")
 				wrapMode: Text.WordWrap
-                font.pixelSize: Math.round(14 * DefaultStyle.dp)
+                font.pixelSize: Utils.getSizeWithScreenRatio(14)
 			}
 		}
 	]
@@ -240,7 +241,7 @@ Dialog {
 		Layout.Layout.alignment: Qt.AlignHCenter
 		MediumButton {
 			Layout.Layout.alignment: Qt.AlignHCenter
-            Layout.Layout.preferredWidth: Math.round(247 * DefaultStyle.dp)
+            Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(247)
             //: "Aucune correspondance"
             text: qsTr("call_dialog_zrtp_validate_trust_letters_do_not_match")
 			color: DefaultStyle.grey_0
@@ -252,12 +253,12 @@ Dialog {
 			}
 		}
 		MediumButton {
-            Layout.Layout.preferredWidth: Math.round(247 * DefaultStyle.dp)
+            Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(247)
 			Layout.Layout.alignment: Qt.AlignHCenter
 			visible: mainItem.securityError
 			style: ButtonStyle.phoneRed
 			onClicked: mainItem.call.core.lTerminate()
-            spacing: Math.round(15 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(15)
             //: "Raccrocher"
             text: qsTr("call_action_hang_up")
 		}

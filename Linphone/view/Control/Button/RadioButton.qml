@@ -3,7 +3,8 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import QtQuick.Effects
 import Linphone
-  
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 Control.RadioButton {
 	id: mainItem
 	property string title
@@ -11,7 +12,7 @@ Control.RadioButton {
 	property string imgUrl
 	property bool checkOnClick: true
 	property color color
-    property real indicatorSize: Math.round(16 * DefaultStyle.dp)
+    property real indicatorSize: Utils.getSizeWithScreenRatio(16)
 	property bool shadowEnabled: mainItem.activeFocus || mainItem.hovered
 	//onClicked: if (checkOnClick && !mainItem.checked) mainItem.toggle()
 
@@ -23,7 +24,7 @@ Control.RadioButton {
 		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 	}
 
-	indicator: Item{
+	indicator: Item {
 		implicitWidth: mainItem.indicatorSize
 		implicitHeight: mainItem.indicatorSize
 		anchors.verticalCenter: mainItem.verticalCenter
@@ -33,7 +34,7 @@ Control.RadioButton {
 			radius: mainItem.indicatorSize/2
 			color: "transparent"
 			border.color: mainItem.color
-            border.width: Math.round(2 * DefaultStyle.dp)
+            border.width: Utils.getSizeWithScreenRatio(2)
 			Rectangle {
 				width: parent.width/2
 				height: parent.height/2

@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 LoginLayout {
 	id: mainItem
@@ -13,8 +14,8 @@ LoginLayout {
 			fillMode: Image.PreserveAspectFit
 			imageSource: AppIcons.profile
 			colorizationColor: DefaultStyle.main2_600
-            Layout.preferredHeight: Math.round(34 * DefaultStyle.dp)
-            Layout.preferredWidth: Math.round(34 * DefaultStyle.dp)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(34)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)
 		}
 		ColumnLayout {
 			Text {
@@ -38,12 +39,12 @@ LoginLayout {
 	}
 
 	centerContent: ColumnLayout {
-        spacing: Math.round(80 * DefaultStyle.dp)
+        spacing: Utils.getSizeWithScreenRatio(80)
 		RowLayout {
 			id: radioButtonsLayout
 			Layout.fillWidth: true
 			Layout.alignment: Qt.AlignHCenter
-            spacing: Math.round(70 * DefaultStyle.dp)
+            spacing: Utils.getSizeWithScreenRatio(70)
 			Repeater {
 				model: [
                     //: "Chiffrement de bout en bout"
@@ -71,7 +72,7 @@ LoginLayout {
 			id: continueButton
 			property int selectedIndex: 0
 			Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: Math.round(360 * DefaultStyle.dp)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
             //: "Continuer"
             text: qsTr("dialog_continue")
 			style: ButtonStyle.main

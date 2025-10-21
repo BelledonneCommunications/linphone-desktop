@@ -3,6 +3,7 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import Linphone
 import UtilsCpp
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 TextEdit {
 	id: mainItem
@@ -14,8 +15,8 @@ TextEdit {
 	property alias background: background.data
 	property bool hoverEnabled: true
 	property bool hovered: mouseArea.hoverEnabled && mouseArea.containsMouse
-    topPadding: Math.round(5 * DefaultStyle.dp)
-    bottomPadding: Math.round(5 * DefaultStyle.dp)
+    topPadding: Utils.getSizeWithScreenRatio(5)
+    bottomPadding: Utils.getSizeWithScreenRatio(5)
 	activeFocusOnTab: true
 	KeyNavigation.priority: KeyNavigation.BeforeItem	
 
