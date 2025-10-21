@@ -21,7 +21,7 @@ ComboBox {
 		verticalAlignment: Text.AlignVCenter
 		font {
             pixelSize: Utils.getSizeWithScreenRatio(14)
-            weight: Math.min(Utils.getSizeWithScreenRatio(700), 1000)
+            weight: Font.Bold
 		}
 	}
 	popup: Control.Popup {

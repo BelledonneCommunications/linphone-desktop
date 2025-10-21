@@ -96,8 +96,12 @@ AbstractMainPage {
             ColumnLayout {
                 anchors.fill: parent
                 spacing: 0
-                RowLayout {
-                    spacing: Utils.getSizeWithScreenRatio(16)
+                FlexboxLayout {
+                    direction: FlexboxLayout.Row
+                    gap: Utils.getSizeWithScreenRatio(16)
+                    alignItems: FlexboxLayout.AlignCenter
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+                    Layout.fillHeight: false
                     Text {
                         Layout.fillWidth: true
                         //: "Conversations"
@@ -105,9 +109,6 @@ AbstractMainPage {
                         color: DefaultStyle.main2_700
                         font.pixelSize: Typography.h2.pixelSize
                         font.weight: Typography.h2.weight
-                    }
-                    Item {
-                        Layout.fillWidth: true
                     }
                     PopupButton {
                         id: chatListMenu
@@ -137,7 +138,6 @@ AbstractMainPage {
                         icon.source: AppIcons.plusCircle
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
-                        Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                         icon.width: Utils.getSizeWithScreenRatio(28)
                         icon.height: Utils.getSizeWithScreenRatio(28)
                         KeyNavigation.down: searchBar

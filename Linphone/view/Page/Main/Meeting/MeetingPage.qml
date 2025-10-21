@@ -177,11 +177,13 @@ AbstractMainPage {
 			ColumnLayout {
 				anchors.fill: parent
 				spacing: 0
-				RowLayout {
-                    Layout.rightMargin: Utils.getSizeWithScreenRatio(38)
+				FlexboxLayout {
+                    direction: FlexboxLayout.Row
+                    gap: Utils.getSizeWithScreenRatio(16)
+                    alignItems: FlexboxLayout.AlignCenter
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
 					Layout.alignment: Qt.AlignTop
-					Layout.fillWidth: true
-					spacing: 0					
+                    Layout.fillHeight: false
 					Text {
 						Layout.fillWidth: true
                         //: Réunions
@@ -190,7 +192,6 @@ AbstractMainPage {
                         font.pixelSize: Typography.h2.pixelSize
                         font.weight: Typography.h2.weight
 					}
-					Item{Layout.fillWidth: true}
 					Button {
 						id: newConfButton
 						style: ButtonStyle.noBackground
