@@ -51,12 +51,18 @@ Control.Button {
 	property real borderWidth: Utils.getSizeWithScreenRatio(1)
 	property real keyboardFocusedBorderWidth: Utils.getSizeWithScreenRatio(3)
 	// Image properties
-	property var contentImageColor: style?.image?.normal || DefaultStyle.main2_600
-	property var hoveredImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.05)
-	property var checkedImageColor: style?.image?.checked || Qt.darker(contentImageColor, 1.1)
-	property var pressedImageColor: style?.image?.pressed || Qt.darker(contentImageColor, 1.1)
+	property var contentImageColor: style?.image? style.image.normal : DefaultStyle.main2_600
+	property var hoveredImageColor: style?.image? style.image.pressed : Qt.darker(contentImageColor, 1.05)
+	property var checkedImageColor: style?.image? style.image.checked : Qt.darker(contentImageColor, 1.1)
+	property var pressedImageColor: style?.image? style.image.pressed : Qt.darker(contentImageColor, 1.1)
 	icon.source: style?.iconSource || ""
-	property color colorizationColor:  mainItem.checkable && mainItem.checked ? mainItem.checkedImageColor : mainItem.pressed ? mainItem.pressedImageColor : mainItem.hovered ? mainItem.hoveredImageColor : mainItem.contentImageColor
+	property color colorizationColor:  checkable && checked 
+		? checkedImageColor
+		: pressed 
+			? pressedImageColor 
+			: hovered 
+				? hoveredImageColor 
+				: contentImageColor
 	// Size properties
 	spacing: Utils.getSizeWithScreenRatio(5)
     property real radius: Math.ceil(height / 2)

@@ -142,7 +142,7 @@ Control.Control {
 							// RectangleTest{anchors.fill: parent}
 								width: sendingAreaFlickable.width
 								height: implicitHeight// sendingAreaFlickable.height
-								textFormat: TextEdit.AutoText
+								textFormat: TextEdit.PlainText
 								onTextChanged: {
 									mainItem.text = text
 								}

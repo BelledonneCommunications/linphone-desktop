@@ -59,6 +59,16 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	mCoreModelConnection = SafeConnection<ConferenceInfoList, CoreModel>::create(me, CoreModel::getInstance());
 
 	mCoreModelConnection->makeConnectToCore(&ConferenceInfoList::lUpdate, [this]() {
+		if (mIsUpdating) {
+			connect(this, &ConferenceInfoList::isUpdatingChanged, this, [this] {
+				if (!mIsUpdating) {
+					disconnect(this, &ConferenceInfoList::isUpdatingChanged, this, nullptr);
+					lUpdate();
+				}
+			});
+			return;
+		}
+		setIsUpdating(true);
 		mCoreModelConnection->invokeToModel([this]() {
 			mustBeInLinphoneThread(getClassName());
 			beginResetModel();
@@ -68,12 +78,14 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			setAccountConnected(defaultAccount && defaultAccount->getState() == linphone::RegistrationState::Ok);
 			if (!defaultAccount || !mAccountConnected) {
 				endResetModel();
+				setIsUpdating(false);
 				return;
 			}
 			std::list<std::shared_ptr<linphone::ConferenceInfo>> conferenceInfos =
 			    defaultAccount->getConferenceInformationList();
 			if (conferenceInfos.empty()) {
 				endResetModel();
+				setIsUpdating(false);
 				return;
 			}
 			items->push_back(nullptr); // Add Dummy conference for today
@@ -96,6 +108,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 				}
 				updateHaveCurrentDate();
 				endResetModel();
+				setIsUpdating(false);
 				delete items;
 			});
 		});
@@ -138,9 +151,12 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 		auto accountCore = defaultAccount ? AccountCore::create(defaultAccount) : nullptr;
 		mCoreModelConnection->invokeToCore([this, accountCore] {
 			mCurrentAccountCore = accountCore;
-			if (mCurrentAccountCore)
+			if (mCurrentAccountCore) {
 				connect(mCurrentAccountCore.get(), &AccountCore::registrationStateChanged, this,
 				        [this] { emit lUpdate(); });
+				connect(mCurrentAccountCore.get(), &AccountCore::conferenceInformationUpdated, this,
+				        [this] { emit lUpdate(); });
+			}
 		});
 	});
 	emit lUpdate();

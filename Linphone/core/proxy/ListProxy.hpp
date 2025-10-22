@@ -93,6 +93,17 @@ public:
 		endResetModel();
 	}
 
+	// This can be used to wait for the list
+	// to be updated before updating it again
+	// (when multiple calls of lUpdate, if beginResetModel has been called, wait
+	// for endResetModel to be called to call lUpdate again)
+	void setIsUpdating(bool updating) {
+		if (mIsUpdating != updating) {
+			mIsUpdating = updating;
+			emit isUpdatingChanged();
+		}
+	}
+
 	template <class T>
 	void resetData(QList<QSharedPointer<T>> items) {
 		beginResetModel();
@@ -138,6 +149,12 @@ public:
 		QModelIndex modelIndex = createIndex(index, 0);
 		emit dataChanged(modelIndex, modelIndex);
 	}
+
+signals:
+	void isUpdatingChanged();
+
+protected:
+	bool mIsUpdating = false;
 };
 
 #endif

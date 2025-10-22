@@ -48,8 +48,6 @@ public:
 	void connectItem(const QSharedPointer<EventLogCore> &item);
 	void disconnectItem(const QSharedPointer<EventLogCore> &item);
 
-	void setIsUpdating(bool updating);
-
 	void loadMessagesUpTo(std::shared_ptr<linphone::EventLog> event);
 
 	void setLastFoundResult(const QSharedPointer<EventLogCore> &eventLog);
@@ -75,7 +73,6 @@ signals:
 	void messageWithFilterFound(int index);
 	void listAboutToBeReset();
 	void chatGuiChanged();
-	void isUpdatingChanged();
 	void displayItemsStepChanged();
 	void messagesLoadedUpTo(std::shared_ptr<linphone::EventLog> event);
 
@@ -84,7 +81,6 @@ private:
 	QSharedPointer<ChatCore> mChatCore;
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
 	QSharedPointer<SafeConnection<EventLogList, CoreModel>> mCoreModelConnection;
-	bool mIsUpdating = false;
 	int mDisplayItemsStep = 0;
 	int mItemsToLoadBeforeSearchResult = 3;
 	QSharedPointer<EventLogCore> mLastFoundResult;

@@ -41,6 +41,10 @@ AbstractMainPage {
                 if (listStackView.depth === 0 || listStackView.currentItem.objectName !== "chatListItem") listStackView.push(chatListItem)
             }
         }
+        AppCpp.currentChat = visible ? selectedChatGui : null
+    }
+    onVisibleChanged: {
+        AppCpp.currentChat = visible ? selectedChatGui : null
     }
 
     rightPanelStackView.initialItem: currentChatComp

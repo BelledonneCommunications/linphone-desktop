@@ -280,7 +280,6 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	auto account = ToolModel::findAccount(call->getToAddress());
 	if (account) {
 		auto accountModel = Utils::makeQObject_ptr<AccountModel>(account);
-		accountModel->setSelf(accountModel);
 		if (!accountModel->getNotificationsAllowed()) {
 			lInfo() << log().arg(
 			    "Notifications have been disabled for this account - not creating a notification for incoming call");
@@ -295,6 +294,7 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 			}
 			return;
 		}
+		accountModel->deleteLater();
 	}
 
 	auto model = CallCore::create(call);
@@ -329,6 +329,7 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 	QString remoteAddress;
 
 	if (messages.size() > 0) {
+
 		shared_ptr<linphone::ChatMessage> message = messages.front();
 		auto receiverAccount = ToolModel::findAccount(message->getToAddress());
 		if (receiverAccount) {
@@ -339,13 +340,13 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 				return;
 			}
 			auto accountModel = Utils::makeQObject_ptr<AccountModel>(receiverAccount);
-			accountModel->setSelf(accountModel);
 			if (!accountModel->getNotificationsAllowed()) {
 				lInfo() << log().arg(
 				    "Notifications have been disabled for this account - not creating a notification for "
 				    "incoming message");
 				return;
 			}
+			accountModel->deleteLater();
 		}
 
 		auto getMessage = [this, &remoteAddress, &txt](const shared_ptr<linphone::ChatMessage> &message) {
@@ -387,14 +388,33 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 				txt = tr("new_chat_room_messages");
 		}
 
-		auto chatCore = ChatCore::create(room);
+		// Play noitification sound
+		auto settings = SettingsModel::getInstance();
+		if (settings && !settings->dndEnabled()) {
+			CoreModel::getInstance()->getCore()->playLocal(
+			    Utils::appStringToCoreString(settings->getChatNotificationSoundPath()));
+		}
 
-		// Accessibility alert
-		//: New message on chatroom %1
-		AccessibilityHelper::announceMessage(tr("new_message_alert_accessible_name").arg(chatCore->getTitle()));
+		// If chat currently displayed, do not display notification
+		auto currentlyDisplayedChat = App::getInstance()->getCurrentChat();
+		auto mainWin = App::getInstance()->getMainWindow();
+		if (currentlyDisplayedChat && mainWin->isActive()) {
+			auto linphoneCurrent = currentlyDisplayedChat->mCore->getModel()->getMonitor();
+			if (linphoneCurrent->getIdentifier() == room->getIdentifier()) {
+				lInfo() << log().arg("Chat is currently displayed in the view, do not show notification");
+				return;
+			}
+		}
+
+		auto chatCore = ChatCore::create(room);
 
 		App::postCoreAsync([this, txt, chatCore, remoteAddress]() {
 			mustBeInMainThread(getClassName());
+
+			// Accessibility alert
+			//: New message on chatroom %1
+			AccessibilityHelper::announceMessage(tr("new_message_alert_accessible_name").arg(chatCore->getTitle()));
+
 			QVariantMap map;
 			map["message"] = txt;
 			map["remoteAddress"] = remoteAddress;
@@ -405,11 +425,6 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 			map["chat"] = QVariant::fromValue(chatCore ? new ChatGui(chatCore) : nullptr);
 			CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
 		});
-		auto settings = SettingsModel::getInstance();
-		if (settings && !settings->dndEnabled()) {
-			CoreModel::getInstance()->getCore()->playLocal(
-			    Utils::appStringToCoreString(settings->getChatNotificationSoundPath()));
-		}
 	}
 }
 /*

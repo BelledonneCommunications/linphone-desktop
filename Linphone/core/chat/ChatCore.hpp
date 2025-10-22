@@ -150,7 +150,7 @@ public:
 	QVariantList getParticipantsGui() const;
 	QStringList getParticipantsAddresses() const;
 
-	QSharedPointer<AccountCore> getLocalAccount() const;
+	QString getLocalAddress() const;
 
 	void updateInfo(const std::shared_ptr<linphone::Friend> &updatedFriend, bool isRemoval = false);
 
@@ -210,6 +210,7 @@ private:
 	int mUnreadMessagesCount;
 	QString mComposingName;
 	QString mComposingAddress;
+	QString mLocalAddress;
 	bool mIsGroupChat = false;
 	bool mIsEncrypted = false;
 	bool mIsReadOnly = false;
@@ -227,7 +228,6 @@ private:
 	LinphoneEnums::ChatRoomState mChatRoomState;
 	std::shared_ptr<ChatModel> mChatModel;
 	QSharedPointer<ChatMessageCore> mLastMessage;
-	QSharedPointer<AccountCore> mLocalAccount;
 	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
 	QSharedPointer<SafeConnection<ChatCore, CoreModel>> mCoreModelConnection;

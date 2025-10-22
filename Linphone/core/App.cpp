@@ -451,7 +451,7 @@ App *App::getInstance() {
 	return dynamic_cast<App *>(QApplication::instance());
 }
 
-QThread *App::getLinphoneThread() {
+Thread *App::getLinphoneThread() {
 	return App::getInstance()->mLinphoneThread;
 }
 
@@ -1434,6 +1434,17 @@ QString App::getSdkVersion() {
 #else
 	return tr('unknown');
 #endif
+}
+
+ChatGui *App::getCurrentChat() const {
+	return mCurrentChat;
+}
+
+void App::setCurrentChat(ChatGui *chat) {
+	if (chat != mCurrentChat) {
+		mCurrentChat = chat;
+		emit currentChatChanged();
+	}
 }
 
 float App::getScreenRatio() const {

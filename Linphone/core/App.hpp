@@ -25,6 +25,7 @@
 
 #include "core/account/AccountProxy.hpp"
 #include "core/call/CallProxy.hpp"
+#include "core/chat/ChatGui.hpp"
 #include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "model/cli/CliModel.hpp"
@@ -32,6 +33,7 @@
 #include "tool/AbstractObject.hpp"
 
 class CallGui;
+class ChatGui;
 class Thread;
 class Notifier;
 class QQuickWindow;
@@ -46,13 +48,14 @@ class App : public SingleApplication, public AbstractObject {
 	Q_PROPERTY(QString shortApplicationVersion READ getShortApplicationVersion CONSTANT)
 	Q_PROPERTY(QString gitBranchName READ getGitBranchName CONSTANT)
 	Q_PROPERTY(QString sdkVersion READ getSdkVersion CONSTANT)
+	Q_PROPERTY(ChatGui *currentChat READ getCurrentChat WRITE setCurrentChat NOTIFY currentChatChanged)
 
 public:
 	App(int &argc, char *argv[]);
 	~App();
 	void setSelf(QSharedPointer<App>(me));
 	static App *getInstance();
-	static QThread *getLinphoneThread();
+	static Thread *getLinphoneThread();
 	Notifier *getNotifier() const;
 
 	EventCountNotifier *getEventCountNotifier();
@@ -162,6 +165,9 @@ public:
 	QString getGitBranchName();
 	QString getSdkVersion();
 
+	ChatGui *getCurrentChat() const;
+	void setCurrentChat(ChatGui *chat);
+
 	float getScreenRatio() const;
 	Q_INVOKABLE void setScreenRatio(float ratio);
 
@@ -186,6 +192,7 @@ signals:
 	void defaultAccountChanged();
 	void callsChanged();
 	void currentDateChanged();
+	void currentChatChanged();
 	// void executeCommand(QString command);
 
 private:
@@ -203,6 +210,9 @@ private:
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;
 	QQuickWindow *mLastActiveWindow = nullptr;
+	// Holds the current chat displayed in the view
+	// to know if we need to display the notification
+	ChatGui *mCurrentChat = nullptr;
 	QSharedPointer<SettingsCore> mSettings;
 	QSharedPointer<AccountList> mAccountList;
 	QSharedPointer<CallList> mCallList;
