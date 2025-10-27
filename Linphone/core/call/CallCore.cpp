@@ -204,15 +204,15 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToModel(
 	    &CallModel::recordingChanged, [this](const std::shared_ptr<linphone::Call> &call, bool recording) {
-		    mCallModelConnection->invokeToCore([this, recording]() {
+		    auto recordFile = QString::fromStdString(mCallModel->getRecordFile());
+		    mCallModelConnection->invokeToCore([this, recording, recordFile]() {
 			    setRecording(recording);
 			    if (recording == false) {
 				    //: "Enregistrement terminé"
 				    Utils::showInformationPopup(tr("call_record_end_message"),
 				                                //: "L'appel a été enregistré dans le fichier : %1"
-				                                tr("call_record_saved_in_file_message")
-				                                    .arg(QString::fromStdString(mCallModel->getRecordFile())),
-				                                true, App::getInstance()->getCallsWindow());
+				                                tr("call_record_saved_in_file_message").arg(recordFile), true,
+				                                App::getInstance()->getCallsWindow());
 			    }
 		    });
 	    });

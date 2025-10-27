@@ -216,7 +216,10 @@ QString CoreModel::getFetchConfig(QString filePath, bool *error) {
 			if (!filePath.isEmpty()) filePath = "file://" + filePath;
 		}
 		if (filePath.isEmpty()) {
-			qWarning() << "Remote provisionning cannot be retrieved. Command have been cleaned";
+			qWarning() << "Remote provisioning cannot be retrieved. Command have been cleaned";
+			Utils::showInformationPopup(tr("info_popup_error_title"),
+			                            //: "Remote provisioning cannot be retrieved"
+			                            tr("fetching_config_failed_error_message"), false);
 			*error = true;
 		}
 	}

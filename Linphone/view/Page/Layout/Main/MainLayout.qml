@@ -494,7 +494,7 @@ Item {
                                     IconLabelButton {
                                         id: recordsButton
                                         Layout.fillWidth: true
-                                        visible: !SettingsCpp.disableCallRecordings
+                                        visible: false// !SettingsCpp.disableCallRecordings
                                         icon.width: Utils.getSizeWithScreenRatio(32)
                                         icon.height: Utils.getSizeWithScreenRatio(32)
                                         //: "Enregistrements"

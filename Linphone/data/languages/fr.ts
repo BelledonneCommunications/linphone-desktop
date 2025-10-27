@@ -768,13 +768,13 @@
 <context>
     <name>CallCore</name>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="211"/>
+        <location filename="../../core/call/CallCore.cpp" line="212"/>
         <source>call_record_end_message</source>
         <extracomment>&quot;Enregistrement terminé&quot;</extracomment>
         <translation>Enregistrement terminé</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="213"/>
+        <location filename="../../core/call/CallCore.cpp" line="214"/>
         <source>call_record_saved_in_file_message</source>
         <extracomment>&quot;L&apos;appel a été enregistré dans le fichier : %1&quot;</extracomment>
         <translation>L&apos;appel a été enregistré dans le fichier : %1</translation>
@@ -3347,6 +3347,20 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <source>one_one_infos_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation>Tous les messages seront supprimés. Souhaitez-vous continuer ?</translation>
+    </message>
+</context>
+<context>
+    <name>CoreModel</name>
+    <message>
+        <location filename="../../model/core/CoreModel.cpp" line="220"/>
+        <source>info_popup_error_title</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <location filename="../../model/core/CoreModel.cpp" line="222"/>
+        <source>fetching_config_failed_error_message</source>
+        <extracomment>&quot;Remote provisioning cannot be retrieved&quot;</extracomment>
+        <translation>La configuration distante n&apos;a pas pu être récupérée</translation>
     </message>
 </context>
 <context>

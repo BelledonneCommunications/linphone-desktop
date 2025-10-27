@@ -773,13 +773,13 @@
 <context>
     <name>CallCore</name>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="211"/>
+        <location filename="../../core/call/CallCore.cpp" line="212"/>
         <source>call_record_end_message</source>
         <extracomment>&quot;Enregistrement terminé&quot;</extracomment>
         <translation>Aufnahme beendet</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="213"/>
+        <location filename="../../core/call/CallCore.cpp" line="214"/>
         <source>call_record_saved_in_file_message</source>
         <extracomment>&quot;L&apos;appel a été enregistré dans le fichier : %1&quot;</extracomment>
         <translation>Die Aufnahme wurde in der folgenden Datei gespeichert: %1</translation>
@@ -3443,6 +3443,20 @@ Error</extracomment>
         <source>one_one_infos_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation type="unfinished">Alle Nachrichten werden aus dem Chat entfernt. Möchten Sie fortfahren?</translation>
+    </message>
+</context>
+<context>
+    <name>CoreModel</name>
+    <message>
+        <location filename="../../model/core/CoreModel.cpp" line="220"/>
+        <source>info_popup_error_title</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
+    <message>
+        <location filename="../../model/core/CoreModel.cpp" line="222"/>
+        <source>fetching_config_failed_error_message</source>
+        <extracomment>&quot;Remote provisioning cannot be retrieved&quot;</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
