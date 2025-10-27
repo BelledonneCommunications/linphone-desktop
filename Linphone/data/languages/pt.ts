@@ -7,7 +7,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="84"/>
         <source>save</source>
         <extracomment>&quot;Enregistrer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Salvar</translation>
     </message>
 </context>
 <context>
@@ -16,12 +16,12 @@
         <location filename="../../view/Page/Window/AbstractWindow.qml" line="78"/>
         <source>contact_dialog_pick_phone_number_or_sip_address_title</source>
         <extracomment>&quot;Choisissez un numéro ou adresse SIP&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Escolha um número ou endereço SIP</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/AbstractWindow.qml" line="277"/>
         <source>fps_counter</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 FPS</translation>
     </message>
 </context>
 <context>
@@ -30,45 +30,45 @@
         <location filename="../../core/account/AccountCore.cpp" line="407"/>
         <source>drawer_menu_account_connection_status_connected</source>
         <extracomment>&quot;Connecté&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conectado</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="410"/>
         <source>drawer_menu_account_connection_status_refreshing</source>
-        <translation type="unfinished"></translation>
+        <translation>Atualizando…</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="413"/>
         <source>drawer_menu_account_connection_status_progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectando…</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="416"/>
         <source>drawer_menu_account_connection_status_failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="420"/>
         <source>drawer_menu_account_connection_status_cleared</source>
-        <translation type="unfinished"></translation>
+        <translation>Desabilitado</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="430"/>
         <source>manage_account_status_connected_summary</source>
         <extracomment>&quot;Vous êtes en ligne et joignable.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Você está online e alcançável.</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="433"/>
         <source>manage_account_status_failed_summary</source>
         <extracomment>&quot;Erreur de connexion, vérifiez vos paramètres.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erro de conexão, verifique suas configurações.</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="437"/>
         <source>manage_account_status_cleared_summary</source>
         <extracomment>&quot;Compte désactivé, vous ne recevrez ni appel ni message.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conta desabilitada, você não irá receber ligações ou mensagens.</translation>
     </message>
 </context>
 <context>
@@ -77,7 +77,7 @@
         <location filename="../../core/account/AccountDeviceList.cpp" line="158"/>
         <source>manage_account_no_device_found_error_message</source>
         <extracomment>&quot;Erreur lors de la récupération des appareils&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erro ao recuperar dispositivos</translation>
     </message>
 </context>
 <context>
@@ -86,43 +86,43 @@
         <location filename="../../model/account/AccountManager.cpp" line="84"/>
         <source>assistant_account_login_already_connected_error</source>
         <extracomment>&quot;Le compte est déjà connecté&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A conta já está conectada</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="98"/>
         <source>assistant_account_login_proxy_address_error</source>
         <extracomment>&quot;Impossible de créer l&apos;adresse proxy. Merci de vérifier le nom de domaine.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Impossível criar endereço proxy. Por favor verifique o nome do domínio.</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="113"/>
         <source>assistant_account_login_address_configuration_error</source>
         <extracomment>&quot;Impossible de configurer l&apos;adresse : `%1`.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Impossível configurar o endereço: `%1`.</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="119"/>
         <source>assistant_account_login_params_configuration_error</source>
         <extracomment>&quot;Impossible de configurer les paramètres du compte.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Impossível configurar os parâmetros da conta.</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="142"/>
         <source>assistant_account_login_forbidden_error</source>
         <extracomment>&quot;Le couple identifiant mot de passe ne correspond pas&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Usuário e a senha não correspondem</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="144"/>
         <source>assistant_account_login_error</source>
         <extracomment>&quot;Erreur durant la connexion&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erro durante a conexão</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="157"/>
         <source>assistant_account_add_error</source>
         <extracomment>&quot;Impossible d&apos;ajouter le compte.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Impossível adicionar conta.</translation>
     </message>
 </context>
 <context>
@@ -131,112 +131,112 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="19"/>
         <source>manage_account_details_title</source>
         <extracomment>&quot;Détails&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Detalhes</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="21"/>
         <source>manage_account_details_subtitle</source>
         <extracomment>Éditer les informations de votre compte.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Edite as informações de sua conta.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="27"/>
         <source>manage_account_devices_title</source>
         <extracomment>&quot;Vos appareils&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Seus dispositivos</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="29"/>
         <source>manage_account_devices_subtitle</source>
         <extracomment>&quot;La liste des appareils connectés à votre compte. Vous pouvez retirer les appareils que vous n’utilisez plus.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A lista de dispositivos conectados em sua conta. Você pode remover dispositivos fora de uso.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="59"/>
         <source>manage_account_add_picture</source>
         <extracomment>&quot;Ajouter une image&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Adicione uma imagem</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="74"/>
         <source>manage_account_edit_picture</source>
         <extracomment>&quot;Modifier l&apos;image&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Edite sua imagem</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="84"/>
         <source>manage_account_remove_picture</source>
         <extracomment>&quot;Supprimer l&apos;image&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Apague a imagem</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="105"/>
         <source>sip_address</source>
-        <translation type="unfinished"></translation>
+        <translation>Endereço SIP</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="130"/>
         <source>sip_address_display_name</source>
         <extracomment>&quot;Nom d&apos;affichage</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome de exibição</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="136"/>
         <source>sip_address_display_name_explaination</source>
         <extracomment>&quot;Le nom qui sera affiché à vos correspondants lors de vos échanges.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>O nome exibido para seus contatos.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="154"/>
         <source>manage_account_international_prefix</source>
         <extracomment>Indicatif international*</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Código internacional*</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="180"/>
         <source>manage_account_delete</source>
         <extracomment>&quot;Déconnecter mon compte&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Desconecte minha conta</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="188"/>
         <source>manage_account_delete_message</source>
-        <translation type="unfinished"></translation>
+        <translation>Sua conta será desconectada deste cliente Linphone, mas você permanecerá conectado em outros aplicativos</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="207"/>
         <source>manage_account_dialog_remove_account_title</source>
         <extracomment>&quot;Se déconnecter du compte ?&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sair da sua conta?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="209"/>
         <source>manage_account_dialog_remove_account_message</source>
         <extracomment>Si vous souhaitez supprimer définitivement votre compte rendez-vous sur : https://sip.linphone.org</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Se você deseja apagar sua conta permanentemente, acesse: https://sip.linphone.org</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="266"/>
         <source>error</source>
         <extracomment>Erreur</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="304"/>
         <source>manage_account_device_remove</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Apagar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="313"/>
         <source>manage_account_device_remove_confirm_dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Apagar %1?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="327"/>
         <source>manage_account_device_last_connection</source>
         <extracomment>&quot;Dernière connexion:&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Última conexão:</translation>
     </message>
 </context>
 <context>
@@ -245,42 +245,42 @@
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="13"/>
         <source>drawer_menu_manage_account</source>
         <extracomment>&quot;Mon compte&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Minha conta</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="18"/>
         <source>settings_general_title</source>
         <extracomment>&quot;Général&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Geral</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="20"/>
         <source>settings_account_title</source>
         <extracomment>&quot;Paramètres de compte&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Parâmetros de conta</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="28"/>
         <source>contact_editor_popup_abort_confirmation_title</source>
         <extracomment>&quot;Modifications non enregistrées&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modificações não salvas</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="30"/>
         <source>contact_editor_popup_abort_confirmation_message</source>
         <extracomment>&quot;Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Você tem modificações que não foram salvas. Se você deixar esta página, suas modificações serão perdidas. Você gostaria de salvar suas modificações antes de continuar?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="41"/>
         <source>contact_editor_dialog_abort_confirmation_do_not_save</source>
         <extracomment>&quot;Ne pas enregistrer&quot; &quot;Enregistrer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Não gravar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="41"/>
         <source>contact_editor_dialog_abort_confirmation_save</source>
-        <translation type="unfinished"></translation>
+        <translation>Gravar</translation>
     </message>
 </context>
 <context>
@@ -288,100 +288,100 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="14"/>
         <source>settings_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="18"/>
         <source>settings_account_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Parâmetros de conta</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="34"/>
         <source>information_popup_success_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Sucesso</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="36"/>
         <source>contact_editor_saved_changes_toast</source>
         <extracomment>&quot;Modifications sauvegardés&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modificações gravadas</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="53"/>
         <source>account_settings_mwi_uri_title</source>
         <extracomment>&quot;URI du serveur de messagerie vocale&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI do servidor de correio de voz</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="65"/>
         <source>account_settings_voicemail_uri_title</source>
         <extracomment>&quot;URI de messagerie vocale&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI Correio de voz</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="81"/>
         <source>account_settings_transport_title</source>
         <extracomment>&quot;Transport&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Transporte</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="95"/>
         <source>account_settings_sip_proxy_url_title</source>
-        <translation type="unfinished"></translation>
+        <translation>URL do servidor proxy</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="102"/>
         <source>account_settings_outbound_proxy_title</source>
         <extracomment>&quot;Serveur mandataire sortant&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Servidor proxy de saída</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="111"/>
         <source>account_settings_stun_server_url_title</source>
         <extracomment>&quot;Adresse du serveur STUN&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Endereço do servidor STUN</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="116"/>
         <source>account_settings_enable_ice_title</source>
         <extracomment>&quot;Activer ICE&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar ICE</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="122"/>
         <source>account_settings_avpf_title</source>
         <extracomment>&quot;AVPF&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>AVPF</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="128"/>
         <source>account_settings_bundle_mode_title</source>
         <extracomment>&quot;Mode bundle&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modo bundle</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="137"/>
         <source>account_settings_expire_title</source>
         <extracomment>&quot;Expiration (en seconde)&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Expiração (em segundos)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="147"/>
         <source>account_settings_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de conversations&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI do servidor de conferência</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="156"/>
         <source>account_settings_audio_video_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de réunions&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI do servidor de conferência em vídeo</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="163"/>
         <source>account_settings_lime_server_url_title</source>
         <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URL do servidor Lime</translation>
     </message>
 </context>
 <context>
@@ -390,18 +390,18 @@
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="13"/>
         <source>search_bar_search_contacts_placeholder</source>
         <extracomment>&quot;Rechercher des contacts&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Localizar contatos</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="111"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun contact&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum resultado encontrado…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="111"/>
         <source>contact_list_empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum contato neste momento</translation>
     </message>
 </context>
 <context>
@@ -410,83 +410,83 @@
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="16"/>
         <source>settings_system_title</source>
         <extracomment>System</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="22"/>
         <source>settings_remote_provisioning_title</source>
         <extracomment>Remote provisioning</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Provisionamento remoto</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="29"/>
         <source>settings_security_title</source>
         <extracomment>Security / Encryption</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Segurança / Criptografia</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="35"/>
         <source>settings_advanced_audio_codecs_title</source>
         <extracomment>Audio codecs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Codecs de áudio</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="41"/>
         <source>settings_advanced_video_codecs_title</source>
         <extracomment>Video codecs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Codecs de vídeo</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="67"/>
         <source>settings_advanced_auto_start_title</source>
         <extracomment>Auto start %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Auto iniciar %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="85"/>
         <source>settings_advanced_remote_provisioning_url</source>
         <extracomment>Remote provisioning URL</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URL para provisionamento remoto</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="92"/>
         <source>settings_advanced_download_apply_remote_provisioning</source>
         <extracomment>Download and apply</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fazer o download e aplicar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="100"/>
         <source>information_popup_error_title</source>
         <extracomment>Invalid URL format</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="100"/>
         <source>settings_advanced_invalid_url_message</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato de URL inválido</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="114"/>
         <source>settings_advanced_media_encryption_title</source>
         <extracomment>Media encryption</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Criptografia de mídia</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="132"/>
         <source>settings_advanced_media_encryption_mandatory_title</source>
         <extracomment>Media encryption mandatory</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Criptografia de mídia mandatória</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="139"/>
         <source>settings_advanced_create_endtoend_encrypted_meetings_title</source>
         <extracomment>Create end to end encrypted meetings and group calls</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Criar reuniões e ligações em grupo usando criptografia fim a fim</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="235"/>
         <source>settings_advanced_hide_fps_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Esconder FPS</translation>
     </message>
 </context>
 <context>
@@ -495,19 +495,19 @@
         <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="277"/>
         <source>car_favorites_contacts_title</source>
         <extracomment>&quot;Favoris&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Favoritos</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="324"/>
         <source>generic_address_picker_contacts_list_title</source>
         <extracomment>&apos;Contacts&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Contatos</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="376"/>
         <source>generic_address_picker_suggestions_list_title</source>
         <extracomment>&quot;Suggestions&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sugestões</translation>
     </message>
 </context>
 <context>
@@ -516,74 +516,91 @@
         <location filename="../../core/App.cpp" line="325"/>
         <source>remote_provisioning_dialog</source>
         <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Você quer fazer o download e aplicar o provisionamento remoto deste endereço?</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="776"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Um cliente SIP para vídeo chamada livre e de código aberto.</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="778"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Enviar uma ordem para o aplicativo por meio da linha de comando</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="781"/>
         <source>command_line_option_show_help</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar esta ajuda</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="786"/>
         <source>command_line_option_show_app_version</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar versão da aplicação</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="792"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o arquivo de configuração do Linphone a ser obtido. Ele será mesclado com a configuração atual.</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="795"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URL, caminho ou arquivo</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="799"/>
         <source>command_line_option_minimized</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimizar</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="802"/>
         <source>command_line_option_log_to_stdout</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrar no stdout algumas informações de depuração durante a execução</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="805"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir somente logs do aplicativo</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="1165"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>esconder</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="1165"/>
         <source>show_action</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="1180"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="439"/>
+        <location filename="../../core/App.cpp" line="573"/>
+        <source>info_popup_error_title</source>
+        <translation>Erro</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="440"/>
+        <location filename="../../core/App.cpp" line="575"/>
+        <source>info_popup_configuration_failed_message</source>
+        <translation>O provisionamento remoto falhou: %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="569"/>
+        <source>configuration_error_detail</source>
+        <translation>Não alcançável</translation>
     </message>
 </context>
 <context>
@@ -592,36 +609,36 @@
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="49"/>
         <source>account_settings_dialog_invalid_password_title</source>
         <extracomment>&quot;Authentification requise&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Autenticação necessária</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="58"/>
         <source>account_settings_dialog_invalid_password_message</source>
         <extracomment>La connexion a échoué pour le compte %1. Vous pouvez renseigner votre mot de passe à nouveau ou bien vérifier les options de configuration de votre compte.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Falha no login da conta %1. Você pode digitar sua senha novamente ou verificar as configurações da sua conta.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="68"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation>Senha</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="86"/>
         <source>cancel</source>
         <extracomment>&quot;Annuler</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="96"/>
         <source>assistant_account_login</source>
         <extracomment>Connexion</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conexão</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="104"/>
         <source>assistant_account_login_missing_password</source>
         <extracomment>Veuillez saisir un mot de passe</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, digite uma senha</translation>
     </message>
 </context>
 <context>
@@ -630,76 +647,76 @@
         <location filename="../../core/call/CallCore.cpp" line="212"/>
         <source>call_record_end_message</source>
         <extracomment>&quot;Enregistrement terminé&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gravação encerrada</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="214"/>
         <source>call_record_saved_in_file_message</source>
         <extracomment>&quot;L&apos;appel a été enregistré dans le fichier : %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A gravação foi salva no arquivo: %1</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="392"/>
         <location filename="../../core/call/CallCore.cpp" line="417"/>
         <source>call_stats_codec_label</source>
         <extracomment>&quot;Codec: %1 / %2 kHz&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Codec: %1 / %2 kHz</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="396"/>
         <location filename="../../core/call/CallCore.cpp" line="420"/>
         <source>call_stats_bandwidth_label</source>
         <extracomment>&quot;Bande passante : %1 %2 kbits/s %3 %4 kbits/s&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Largura de banda : %1 %2 kbits/s %3 %4 kbits/s</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="402"/>
         <location filename="../../core/call/CallCore.cpp" line="425"/>
         <source>call_stats_loss_rate_label</source>
         <extracomment>&quot;Taux de perte: %1% %2%&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Taxa de perda: %1% %2%</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="407"/>
         <source>call_stats_jitter_buffer_label</source>
         <extracomment>&quot;Tampon de gigue: %1 ms&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Buffer de jitter: %1 ms</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="434"/>
         <source>call_stats_resolution_label</source>
         <extracomment>&quot;Définition vidéo : %1 %2 %3 %4&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Resolução de vídeo: %1 %2 %3 %4</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="440"/>
         <source>call_stats_fps_label</source>
         <extracomment>&quot;FPS : %1 %2 %3 %4&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>FPS : %1 %2 %3 %4</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="653"/>
         <source>media_encryption_dtls</source>
         <extracomment>DTLS</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>DTLS</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="656"/>
         <source>media_encryption_none</source>
         <extracomment>None</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="659"/>
         <source>media_encryption_srtp</source>
         <extracomment>SRTP</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SRTP</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="662"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ZRTP pós-quântico</translation>
     </message>
 </context>
 <context>
@@ -708,49 +725,49 @@
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="131"/>
         <source>contact_presence_status_online</source>
         <extracomment>&quot;En ligne&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Online</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="134"/>
         <source>contact_presence_status_busy</source>
         <extracomment>&quot;Occupé&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ocupado</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="137"/>
         <source>contact_presence_status_do_not_disturb</source>
         <extracomment>&quot;Ne pas déranger&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Não perturbe</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="139"/>
         <source>contact_presence_status_offline</source>
         <extracomment>&quot;Hors ligne&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Offline</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="163"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Participar da reunião</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="181"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamar</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="195"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mensagem</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="206"/>
         <source>contact_video_call_action</source>
         <extracomment>&quot;Appel Video&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Video chamada</translation>
     </message>
 </context>
 <context>
@@ -759,42 +776,42 @@
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="57"/>
         <source>meeting_event_conference_destroyed</source>
         <extracomment>&quot;Vous avez quitté la conférence&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Você saiu da reunião</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="60"/>
         <source>call_ended_by_user</source>
         <extracomment>&quot;Vous avez terminé l&apos;appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Você encerrou a chamada</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="63"/>
         <source>call_ended_by_remote</source>
         <extracomment>&quot;Votre correspondant a terminé l&apos;appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Seu chamador encerrou a chamada</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="92"/>
         <source>conference_call_empty</source>
         <extracomment>&quot;En attente d&apos;autres participants…&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Esperando por outros participantes…</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="110"/>
         <source>conference_share_link_title</source>
         <extracomment>&quot;Partager le lien&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Compartilhar link</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="116"/>
         <source>copied</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiado</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="118"/>
         <source>information_popup_meeting_address_copied_to_clipboard</source>
         <extracomment>Le lien de la réunion a été copié dans le presse-papier</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>O link da reunião foi copiado para a área de transferência</translation>
     </message>
 </context>
 <context>
@@ -803,25 +820,25 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="53"/>
         <source>meeting</source>
         <extracomment>&quot;Réunion</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reunião</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="55"/>
         <source>call</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamar</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="60"/>
         <source>paused_call_or_meeting</source>
         <extracomment>&quot;%1 en pause&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 em pausa</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="62"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 em andamento</translation>
     </message>
 </context>
 <context>
@@ -830,25 +847,25 @@
         <location filename="../../model/call/CallModel.cpp" line="338"/>
         <source>call_error_user_declined_toast</source>
         <extracomment>&quot;Le correspondant a décliné l&apos;appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ligação recusada pelo usuário</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="342"/>
         <source>call_error_user_not_found_toast</source>
         <extracomment>&quot;Le correspondant n&apos;a pas été trouvé&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Usuário não encontrado</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="346"/>
         <source>call_error_user_busy_toast</source>
         <extracomment>&quot;Le correspondant est occupé&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>O usuário está ocupado</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="350"/>
         <source>call_error_incompatible_media_params_toast</source>
         <extracomment>&quot;Le correspondant ne peut accepter votre appel.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>O usuário não pode aceitar sua ligação</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="354"/>
@@ -905,150 +922,150 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="96"/>
         <source>history_dialog_delete_call_logs_message</source>
         <extracomment>&quot;L&apos;ensemble de votre historique d&apos;appels avec ce correspondant sera définitivement supprimé.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Histórico de ligações com esse usuário será permanentemente deletado.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="147"/>
         <source>call_history_call_list_title</source>
         <extracomment>&quot;Appels&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ligações</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="168"/>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="594"/>
         <source>menu_delete_history</source>
         <extracomment>&quot;Supprimer l&apos;historique&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Deletar histórico</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="208"/>
         <source>call_search_in_history</source>
         <extracomment>&quot;Rechercher un appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Encontrar chamada</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="235"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum resultado encontrado…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="237"/>
         <source>history_list_empty_history</source>
         <extracomment>&quot;Aucun appel dans votre historique&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sem ligação no histórico</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="314"/>
         <source>call_action_start_new_call</source>
         <extracomment>&quot;Nouvel appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nova chamada</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="381"/>
         <source>call_start_group_call_title</source>
         <extracomment>&quot;Appel de groupe&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamada em grupo</translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="392"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>1 participante selecionado</numerusform>
+            <numerusform>%n participantes selecionados</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="407"/>
         <source>call_action_start_group_call</source>
         <extracomment>&quot;Lancer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="425"/>
         <source>history_group_call_start_dialog_subject_hint</source>
         <extracomment>&quot;Nom du groupe&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome do grupo</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="434"/>
         <source>required</source>
         <extracomment>&quot;Requis&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Obrigatório</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="456"/>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="460"/>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="570"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="458"/>
         <source>group_call_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné à l&apos;appel de groupe</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Um nome deve ser fornecido para a chamada</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="462"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Você não está conectado</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="532"/>
         <source>menu_see_existing_contact</source>
         <extracomment>&quot;Voir le contact&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar contato</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="534"/>
         <source>menu_add_address_to_contacts</source>
         <extracomment>&quot;Ajouter aux contacts&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar aos contatos</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="552"/>
         <source>menu_copy_sip_address</source>
         <extracomment>&quot;Copier l&apos;adresse SIP&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Copiar endereço SIP</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="564"/>
         <source>sip_address_copied_to_clipboard_toast</source>
         <extracomment>Adresse copiée</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Endereço SIP copiado</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="566"/>
         <source>sip_address_copied_to_clipboard_message</source>
         <extracomment>L&apos;adresse a été copié dans le presse_papiers</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>O endereço foi copiado para a área de transferência</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="572"/>
         <source>sip_address_copy_to_clipboard_error</source>
         <extracomment>&quot;Erreur lors de la copie de l&apos;adresse&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erro ao copiar o endereço</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="670"/>
         <source>notification_missed_call_title</source>
         <extracomment>&quot;Appel manqué&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamada perdida</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="673"/>
         <source>call_outgoing</source>
         <extracomment>&quot;Appel sortant&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamada de saída</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="675"/>
         <source>call_audio_incoming</source>
         <extracomment>&quot;Appel entrant&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamada recebida</translation>
     </message>
 </context>
 <context>
@@ -1057,49 +1074,49 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="20"/>
         <source>settings_call_devices_title</source>
         <extracomment>&quot;Périphériques&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="22"/>
         <source>settings_call_devices_subtitle</source>
         <extracomment>&quot;Vous pouvez modifier les périphériques de sortie audio, le microphone et la caméra de capture.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Você pode alterar os dispositivos de saída de áudio, microfone e câmera.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="43"/>
         <source>settings_calls_echo_canceller_title</source>
         <extracomment>&quot;Annulateur d&apos;écho&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cancelamento de eco</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="45"/>
         <source>settings_calls_echo_canceller_subtitle</source>
         <extracomment>&quot;Évite que de l&apos;écho soit entendu par votre correspondant&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Impede que o eco seja ouvido pelo seu correspondente</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="52"/>
         <source>settings_calls_auto_record_title</source>
         <extracomment>&quot;Activer l’enregistrement automatique des appels&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar gravação automática de chamadas</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="59"/>
         <source>settings_call_enable_tones_title</source>
         <extracomment>Tonalités</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tons</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="61"/>
         <source>settings_call_enable_tones_subtitle</source>
         <extracomment>Activer les tonalités</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar tons</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="67"/>
         <source>settings_calls_enable_video_title</source>
         <extracomment>&quot;Autoriser la vidéo&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar video</translation>
     </message>
 </context>
 <context>
@@ -1108,13 +1125,13 @@
         <location filename="../../view/Control/Display/Call/CallStatistics.qml" line="29"/>
         <source>call_stats_audio_title</source>
         <extracomment>&quot;Audio&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallStatistics.qml" line="91"/>
         <source>call_stats_video_title</source>
         <extracomment>&quot;Vidéo&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vídeo</translation>
     </message>
 </context>
 <context>
@@ -1123,25 +1140,25 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="55"/>
         <source>call_transfer_in_progress_toast</source>
         <extracomment>&quot;Transfert en cours, veuillez patienter&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Transferência em progresso, aguarde</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="64"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="134"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="66"/>
         <source>call_transfer_failed_toast</source>
         <extracomment>&quot;Le transfert d&apos;appel a échoué&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A transferência falhou</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="136"/>
         <source>conference_error_empty_uri</source>
         <extracomment>&quot;La conférence n&apos;a pas pu démarrer en raison d&apos;une erreur d&apos;uri.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A reunião não pôde começar devido a um erro de URI.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="192"/>
@@ -5388,20 +5405,20 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="699"/>
         <source>information_popup_success_title</source>
         <extracomment>&quot;Succès&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sucesso</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="701"/>
         <source>information_popup_codec_install_success_text</source>
         <extracomment>&quot;Le codec a été installé avec succès.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>O codec foi instalado com sucesso.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="705"/>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="714"/>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="722"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="707"/>
@@ -5430,7 +5447,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="765"/>
         <source>okButton</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
 </context>
 </TS>

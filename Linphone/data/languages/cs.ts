@@ -585,6 +585,23 @@
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Ukončit</translation>
     </message>
+    <message>
+        <location filename="../../core/App.cpp" line="439"/>
+        <location filename="../../core/App.cpp" line="573"/>
+        <source>info_popup_error_title</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="440"/>
+        <location filename="../../core/App.cpp" line="575"/>
+        <source>info_popup_configuration_failed_message</source>
+        <translation>Vzdálené nastavení selhalo : %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="569"/>
+        <source>configuration_error_detail</source>
+        <translation>nedostupné</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationDialog</name>
@@ -3435,6 +3452,11 @@
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
         <translation>V konfiguraci OpenID nebyl nalezen žádný koncový bod tokenu</translation>
     </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="232"/>
+        <source>oidc_authentication_no_token_found_error</source>
+        <translation>Žádný token nenalezen</translation>
+    </message>
 </context>
 <context>
     <name>ParticipantListView</name>
@@ -3750,6 +3772,21 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <extracomment>&quot;Veuillez saisir un nom de domaine</extracomment>
         <translation>Zadejte prosím doménu</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="374"/>
+        <source>login_proxy_server_url</source>
+        <translation>URL proxy serveru</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="385"/>
+        <source>login_id</source>
+        <translation>Connection ID (pokud se liší)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="366"/>
+        <source>login_advanced_parameters_label</source>
+        <translation>Rozšířené parametry</translation>
+    </message>
 </context>
 <context>
     <name>ScreencastSettings</name>
@@ -3917,6 +3954,11 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <source>contact_editor_dialog_abort_confirmation_save</source>
         <extracomment>&quot;Enregistrer&quot;</extracomment>
         <translation>Uložit</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="25"/>
+        <source>settings_security_title</source>
+        <translation>Zabezpečení</translation>
     </message>
 </context>
 <context>

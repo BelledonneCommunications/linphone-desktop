@@ -585,6 +585,23 @@
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Itxi</translation>
     </message>
+    <message>
+        <location filename="../../core/App.cpp" line="439"/>
+        <location filename="../../core/App.cpp" line="573"/>
+        <source>info_popup_error_title</source>
+        <translation>Errorea</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="569"/>
+        <source>configuration_error_detail</source>
+        <translation>ez dago eskuragarri</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="440"/>
+        <location filename="../../core/App.cpp" line="575"/>
+        <source>info_popup_configuration_failed_message</source>
+        <translation>Urruneko hornidurak huts egin du: %1</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationDialog</name>
@@ -598,7 +615,7 @@
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="58"/>
         <source>account_settings_dialog_invalid_password_message</source>
         <extracomment>La connexion a échoué pour le compte %1. Vous pouvez renseigner votre mot de passe à nouveau ou bien vérifier les options de configuration de votre compte.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 kontuaren saioa hasteak huts egin du. Pasahitza berriro sartu edo kontuaren ezarpenak egiaztatu ditzakezu.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="68"/>
@@ -643,7 +660,7 @@
         <location filename="../../core/call/CallCore.cpp" line="417"/>
         <source>call_stats_codec_label</source>
         <extracomment>&quot;Codec: %1 / %2 kHz&quot;</extracomment>
-        <translation>Codec: %1 / %2 kHz</translation>
+        <translation>Kodeka: %1 / %2 kHz</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="396"/>
@@ -699,7 +716,7 @@
         <location filename="../../core/call/CallCore.cpp" line="662"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
-        <translation>Post quantum ZRTP</translation>
+        <translation>ZRTP Post quantum-a</translation>
     </message>
 </context>
 <context>
@@ -2321,7 +2338,7 @@
         <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="27"/>
         <source>dialog_confirm</source>
         <extracomment>&quot;Confirmer&quot;</extracomment>
-        <translation>Onartu</translation>
+        <translation>Konfirmatu</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="26"/>
@@ -2444,7 +2461,7 @@
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="69"/>
         <source>help_about_privacy_policy_subtitle</source>
         <extracomment>Quelles informations %1 collecte et utilise</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zer informazio biltzen eta erabiltzen du %1-(e)k</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="79"/>
@@ -2462,7 +2479,7 @@
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="98"/>
         <source>help_about_contribute_translations_title</source>
         <extracomment>&quot;Contribuer à la traduction de %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Lagundu %1 itzultzen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="123"/>
@@ -2498,7 +2515,7 @@
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="35"/>
         <source>settings_contacts_ldap_error_toast</source>
         <extracomment>&quot;Une erreur s&apos;est produite, la configuration LDAP n&apos;a pas été sauvegardée !&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Errore bat gertatu da, LDAP konfigurazioa ez da gorde!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="33"/>
@@ -2539,7 +2556,7 @@
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="111"/>
         <source>settings_contacts_ldap_search_base_title</source>
         <extracomment>&quot;Base de recherche (ne peut être vide)&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ikerketa oinarria (ezin da hutsik egon)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="119"/>
@@ -2569,7 +2586,7 @@
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="154"/>
         <source>settings_contacts_ldap_min_characters_title</source>
         <extracomment>&quot;Nombre minimum de caractères pour la requête&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kontsultarako gutxieneko karaktere kopurua</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="163"/>
@@ -2750,7 +2767,7 @@
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="140"/>
         <source>validate</source>
         <extracomment>&quot;Valider&quot;</extracomment>
-        <translation>Onartu</translation>
+        <translation>Konfirmatu</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="152"/>
@@ -2906,7 +2923,7 @@
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="64"/>
         <source>call_transfer_successful_toast_message</source>
         <extracomment>&quot;Votre correspondant a été transféré au contact sélectionné&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zure korrespontsala hautatutako kontaktuari transferitu zaio</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="110"/>
@@ -2967,7 +2984,7 @@
         <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="51"/>
         <source>meeting_schedule_broadcast_label</source>
         <extracomment>&quot;Webinar&quot;</extracomment>
-        <translation>Webinar</translation>
+        <translation>Webinar-a</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="71"/>
@@ -3110,14 +3127,14 @@
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="419"/>
         <source>meeting_schedule_mandatory_field_not_filled_toast</source>
         <extracomment>Veuillez saisir un titre et sélectionner au moins un participant</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mesedez, bete izenburua eta hautatu gutxienez parte-hartzaile bat</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="279"/>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="422"/>
         <source>meeting_schedule_duration_error_toast</source>
         <extracomment>&quot;La fin de la conférence doit être plus récente que son début&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Konferentziaren amaiera hasiera baino berriago izan behar da</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="283"/>
@@ -3160,7 +3177,7 @@
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="468"/>
         <source>meeting_schedule_edit_in_progress</source>
         <extracomment>&quot;Modification de la réunion en cours…&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bileraren eguneraketa martxan…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="472"/>
@@ -3198,13 +3215,13 @@
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="690"/>
         <source>meeting_address_copied_to_clipboard_toast</source>
         <extracomment>&quot;Adresse de la réunion copiée&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bileraren URIa kopiatu da</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="725"/>
         <source>meeting_schedule_timezone_title</source>
         <extracomment>&quot;Fuseau horaire&quot;</extracomment>
-        <translation>Timezone</translation>
+        <translation>Timezone-a</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="818"/>
@@ -3237,7 +3254,7 @@
         <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="41"/>
         <source>settings_meetings_default_layout_subtitle</source>
         <extracomment>&quot;Le mode d’affichage des participants en réunions&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nola agertzen diren parte-hartzaileak bileretan</translation>
     </message>
 </context>
 <context>
@@ -3279,7 +3296,7 @@
         <location filename="../../view/Page/Layout/Settings/NetworkSettingsLayout.qml" line="31"/>
         <source>settings_network_allow_ipv6</source>
         <extracomment>&quot;Autoriser l&apos;IPv6&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gaitu IPv6</translation>
     </message>
 </context>
 <context>
@@ -3288,7 +3305,7 @@
         <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="32"/>
         <source>call_transfer_active_calls_label</source>
         <extracomment>&quot;Appels en cours&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Deia martxan</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="70"/>
@@ -3328,7 +3345,7 @@
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="56"/>
         <source>OAuthHttpServerReplyHandler is not listening</source>
-        <translation type="unfinished"></translation>
+        <translation>OAuthHttpServerReplyHandler-ek ez du entzuten</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="100"/>
@@ -3358,7 +3375,7 @@
         <location filename="../../model/auth/OIDCModel.cpp" line="131"/>
         <source>oidc_authentication_temporary_credentials_message</source>
         <extracomment>Temporary credentials received</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aldi baterako kredentzialak jasota</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="149"/>
@@ -3388,13 +3405,13 @@
         <location filename="../../model/auth/OIDCModel.cpp" line="165"/>
         <source>oidc_authentication_callback_not_verified_error</source>
         <extracomment>OAuth callback not verified</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>OAuth-en atzera-deia ez da egiaztatu</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="176"/>
         <source>oidc_authentication_request_auth_message</source>
         <extracomment>Requesting authorization from browser</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nabigatzaileari baimena eskatzen</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="196"/>
@@ -3418,19 +3435,19 @@
         <location filename="../../model/auth/OIDCModel.cpp" line="211"/>
         <source>oidc_authentication_request_temporary_credentials_message</source>
         <extracomment>Requesting temporary credentials</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aldi baterako egiaztagiriak eskatzen</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="238"/>
         <source>oidc_authentication_no_auth_found_in_config_error</source>
         <extracomment>No authorization endpoint found in OpenID configuration</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ez da autorizazio endpoint-ik aurkitu OpenID konfigurazioan</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="249"/>
         <source>oidc_authentication_no_token_found_in_config_error</source>
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ez da token endpointik aurkitu OpenID konfigurazioan</translation>
     </message>
 </context>
 <context>
@@ -3469,7 +3486,7 @@
         <location filename="../../tool/LinphoneEnums.cpp" line="67"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
-        <translation>Post quantum ZRTP</translation>
+        <translation>ZRTP Post quantum-a</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="182"/>
@@ -3520,7 +3537,7 @@
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="47"/>
         <source>confirm_register_title</source>
         <extracomment>&quot;Inscription | Confirmer votre %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erregistratu | Berretsi zure %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="77"/>
@@ -3601,7 +3618,7 @@
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="256"/>
         <source>assistant_dialog_cgu_and_privacy_policy_message</source>
         <extracomment>&quot;J&apos;accepte les %1 et la %2&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 eta %2 onartzen ditut</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="258"/>
@@ -3679,7 +3696,11 @@
 Ces fonctionnalités seront masquées si vous utilisez un compte SIP tiers.
 
 Pour les activer dans un projet commercial, merci de nous contacter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezaugarri batzuk, hala nola talde-txatak, bideokonferentziak, etab. %1 kontua eskatzen dute.
+
+Ezaugarri horiek ezkutatu egingo dira hirugarrenen SIP kontu bat erabiltzen baduzu.
+
+Proiektu komertzial batean gaitzeko, jarri gurekin harremanetan.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="153"/>
@@ -3750,7 +3771,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="23"/>
         <source>screencast_settings_choose_window_text</source>
         <extracomment>&quot;Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mesedez, aukeratu beste parte-hartzaileekin partekatu nahi duzun pantaila edo leihoa.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="32"/>
@@ -3801,7 +3822,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="50"/>
         <source>manage_account_e2e_encrypted_mode_default_title</source>
         <extracomment>&quot;Chiffrement de bout en bout&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Puntutik punturako enkriptazioa</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="52"/>
@@ -3911,6 +3932,11 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <extracomment>&quot;Enregistrer&quot;</extracomment>
         <translation>Gorde</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="25"/>
+        <source>settings_security_title</source>
+        <translation>Segurtasuna</translation>
+    </message>
 </context>
 <context>
     <name>Sticker</name>
@@ -3933,22 +3959,22 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../model/tool/ToolModel.cpp" line="195"/>
         <source>call_error_uninterpretable_sip_address</source>
         <extracomment>&quot;The calling address is not an interpretable SIP address : %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Deiaren helbidea ez da SIP helbide interpretagarria: %1</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="267"/>
         <source>group_call_error_no_account</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da defektuzko konturik aurkitu, ezin da talde-deia sortu</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="292"/>
         <source>group_call_error_participants_invite</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezin izan dira parte-hartzaileak talde-deialdira gonbidatu</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="296"/>
         <source>group_call_error_creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezin izan da taldeko deia sortu</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="440"/>
@@ -4099,7 +4125,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="87"/>
         <source>welcome_page_2_message</source>
         <extracomment>&quot;Vos communications sont en sécurité grâce aux &lt;br&gt;&lt;b&gt;Chiffrement de bout en bout&lt;/b&gt;.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Komunikazioak seguruak dira &lt;br&gt;&lt;b&gt;Muturretik muturrerako enkriptatzeari&lt;/b&gt; esker.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="89"/>
@@ -4111,7 +4137,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="91"/>
         <source>welcome_page_3_message</source>
         <extracomment>&quot;Une application open source et un &lt;b&gt;service gratuit&lt;/b&gt; &lt;br&gt;depuis &lt;b&gt;2001&lt;/b&gt;&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kode irekiko aplikazio bat eta &lt;b&gt;doako zerbitzu bat&lt;/b&gt; &lt;br&gt;&lt;b&gt;2001etik&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="122"/>
@@ -4132,7 +4158,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="70"/>
         <source>call_dialog_zrtp_validate_trust_title</source>
         <extracomment>Vérification de sécurité</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Segurtasun-kontrola</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="88"/>
@@ -4144,13 +4170,13 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="133"/>
         <source>call_dialog_zrtp_validate_trust_warning_message</source>
         <extracomment>&quot;Pour garantir le chiffrement, nous avons besoin de réauthentifier l’appareil de votre correspondant. Echangez vos codes :&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Enkriptatzea bermatzeko, zure kontaktuaren gailua berriro autentifikatu behar dugu. Trukatu zure kodeak:</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="135"/>
         <source>call_dialog_zrtp_validate_trust_message</source>
         <extracomment>&quot;Pour garantir le chiffrement, nous avons besoin d’authentifier l’appareil de votre correspondant. Veuillez échanger vos codes : &quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Enkriptatzea bermatzeko, zure kontaktuaren gailua autentifikatu behar dugu. Mesedez, trukatu zure kodeak:</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="144"/>
@@ -4162,31 +4188,31 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="173"/>
         <source>call_dialog_zrtp_validate_trust_remote_code_label</source>
         <extracomment>&quot;Code correspondant :&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dagokion kodea:</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="220"/>
         <source>call_dialog_zrtp_validate_trust_letters_do_not_match_text</source>
         <extracomment>&quot;Le code fourni ne correspond pas.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Emandako kodea ez dator bat.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="231"/>
         <source>call_dialog_zrtp_security_alert_message</source>
         <extracomment>&quot;La confidentialité de votre appel peut être compromise !&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zure deiaren konfidentzialtasuna arriskuan jar daiteke!</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="244"/>
         <source>call_dialog_zrtp_validate_trust_letters_do_not_match</source>
         <extracomment>&quot;Aucune correspondance&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ez dago bategiterik</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="261"/>
         <source>call_action_hang_up</source>
         <extracomment>&quot;Raccrocher&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Eskegi</translation>
     </message>
 </context>
 <context>
@@ -4209,7 +4235,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="549"/>
         <source>AmericanSamoa</source>
-        <translation type="unfinished"></translation>
+        <translation>Samoa amerikarra</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="553"/>
@@ -4319,7 +4345,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="617"/>
         <source>BosniaAndHerzegowina</source>
-        <translation type="unfinished"></translation>
+        <translation>Bosnia eta Wina</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="622"/>
@@ -4344,7 +4370,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="634"/>
         <source>BurkinaFaso</source>
-        <translation type="unfinished"></translation>
+        <translation>Burkina Faso</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="638"/>
@@ -4369,17 +4395,17 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="650"/>
         <source>CapeVerde</source>
-        <translation type="unfinished"></translation>
+        <translation>Cabo Verde</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="653"/>
         <source>CaymanIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Cayman uharteak</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="657"/>
         <source>CentralAfricanRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>Afrika Erdiko Errepublika</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="662"/>
@@ -4409,22 +4435,22 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="677"/>
         <source>PeoplesRepublicOfCongo</source>
-        <translation type="unfinished"></translation>
+        <translation>Kongoko Herri Errepublika</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="687"/>
         <source>CookIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Cook uharteak</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="691"/>
         <source>CostaRica</source>
-        <translation type="unfinished"></translation>
+        <translation>Costa Rica</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="694"/>
         <source>IvoryCoast</source>
-        <translation type="unfinished"></translation>
+        <translation>Boli Kosta</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="697"/>
@@ -4444,7 +4470,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="706"/>
         <source>CzechRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>Txekiar Errepublika</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="710"/>
@@ -4464,7 +4490,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="719"/>
         <source>DominicanRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>Dominikar Errepublika</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="723"/>
@@ -4479,12 +4505,12 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="729"/>
         <source>ElSalvador</source>
-        <translation type="unfinished"></translation>
+        <translation>El Salvador</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="732"/>
         <source>EquatorialGuinea</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekuatore Ginea</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="736"/>
@@ -4504,12 +4530,12 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="745"/>
         <source>FalklandIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Falkland uharteak</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="749"/>
         <source>FaroeIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Faroe uharteak</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="753"/>
@@ -4529,12 +4555,12 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="762"/>
         <source>FrenchGuiana</source>
-        <translation type="unfinished"></translation>
+        <translation>Guyana Frantsesa</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="766"/>
         <source>FrenchPolynesia</source>
-        <translation type="unfinished"></translation>
+        <translation>Polinesia Frantsesa</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="770"/>
@@ -4624,12 +4650,12 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="682"/>
         <source>DemocraticRepublicOfCongo</source>
-        <translation type="unfinished"></translation>
+        <translation>Kongoko Errepublika Demokratikoa</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="822"/>
         <source>HongKong</source>
-        <translation type="unfinished"></translation>
+        <translation>Hong Kong</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="825"/>
@@ -4709,12 +4735,12 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="870"/>
         <source>DemocraticRepublicOfKorea</source>
-        <translation type="unfinished"></translation>
+        <translation>Koreako Errepublika Demokratikoa</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="875"/>
         <source>RepublicOfKorea</source>
-        <translation type="unfinished"></translation>
+        <translation>Koreako Errepublika</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="879"/>
@@ -4814,7 +4840,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="937"/>
         <source>MarshallIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Marshall Islands</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="941"/>
@@ -4894,7 +4920,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="986"/>
         <source>NauruCountry</source>
-        <translation type="unfinished"></translation>
+        <translation>Nauru Herrialdea</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="990"/>
@@ -4939,12 +4965,12 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="1016"/>
         <source>NorfolkIsland</source>
-        <translation type="unfinished"></translation>
+        <translation>Norfolk uhartea</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1020"/>
         <source>NorthernMarianaIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Iparraldeko Mariana uharteak</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1025"/>
@@ -4969,7 +4995,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="1037"/>
         <source>PalestinianTerritories</source>
-        <translation type="unfinished"></translation>
+        <translation>Palestina</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1042"/>
@@ -5009,7 +5035,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="1065"/>
         <source>PuertoRico</source>
-        <translation type="unfinished"></translation>
+        <translation>Puerto Rico</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1068"/>
@@ -5019,7 +5045,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="1071"/>
         <source>Reunion</source>
-        <translation>Bilera</translation>
+        <translation>Batzar</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1074"/>
@@ -5059,7 +5085,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="1100"/>
         <source>SaintVincentAndTheGrenadines</source>
-        <translation type="unfinished"></translation>
+        <translation>Saint-Vincent eta Grenadinak</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1105"/>
@@ -5074,7 +5100,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="1111"/>
         <source>SaoTomeAndPrincipe</source>
-        <translation type="unfinished"></translation>
+        <translation>Sao Tome eta Principe</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1115"/>
@@ -5289,7 +5315,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="1253"/>
         <source>WallisAndFutunaIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Wallis eta Futuna uharteak</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1258"/>
@@ -5313,27 +5339,27 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="451"/>
         <source>formatYears</source>
         <extracomment>&apos;%1 year&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>urte bat</numerusform>
+            <numerusform>%1 urte</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Control/Tool/Helper/utils.js" line="455"/>
         <source>formatMonths</source>
         <extracomment>&apos;%1 month&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>hilabete bat</numerusform>
+            <numerusform>% hilabete</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Control/Tool/Helper/utils.js" line="459"/>
         <source>formatWeeks</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>aste bat</numerusform>
+            <numerusform>%1 aste</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -5349,40 +5375,40 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="469"/>
         <source>formatHours</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>ordu bat</numerusform>
+            <numerusform>%1 ordu</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Control/Tool/Helper/utils.js" line="471"/>
         <source>formatMinutes</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>minutu bat</numerusform>
+            <numerusform>%1 minutu</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Control/Tool/Helper/utils.js" line="473"/>
         <source>formatSeconds</source>
         <extracomment>&apos;%1 second&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>segundu bat</numerusform>
+            <numerusform>%1 segundu</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="690"/>
         <source>codec_install</source>
         <extracomment>&quot;Installation de codec&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kodek instalazioa</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="692"/>
         <source>download_codec</source>
         <extracomment>&quot;Télécharger le codec %1 (%2) ?&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Deskargatu %1 kodeka (%2)?</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="699"/>
@@ -5394,7 +5420,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="701"/>
         <source>information_popup_codec_install_success_text</source>
         <extracomment>&quot;Le codec a été installé avec succès.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kodeka behar bezala instalatu da.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="705"/>
@@ -5407,25 +5433,25 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="707"/>
         <source>information_popup_codec_install_error_text</source>
         <extracomment>&quot;Le codec n&apos;a pas pu être installé.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ezin izan da kodeka instalatu.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="716"/>
         <source>information_popup_codec_save_error_text</source>
         <extracomment>&quot;Le codec n&apos;a pas pu être sauvegardé.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ezin izan da kodeka gorde.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="724"/>
         <source>information_popup_codec_download_error_text</source>
         <extracomment>&quot;Le codec n&apos;a pas pu être téléchargé.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ezin izan da kodeka deskargatu.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="730"/>
         <source>loading_popup_codec_install_progress</source>
         <extracomment>&quot;Téléchargement en cours …&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Deskargatzen…</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="765"/>
