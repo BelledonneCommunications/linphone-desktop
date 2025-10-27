@@ -56,7 +56,7 @@ void CallModel::accept(bool withVideo) {
 	params->setRecordFile(
 	    Paths::getCapturesDirPath()
 	        .append(Utils::generateSavedFilename(QString::fromStdString(mMonitor->getToAddress()->getUsername()), ""))
-	        .append(".smff")
+	        .append(".mkv")
 	        .toStdString());
 	// Answer with local call address.
 	auto localAddress = mMonitor->getCallLog()->getLocalAddress();

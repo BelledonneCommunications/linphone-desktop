@@ -214,7 +214,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 		params->setRecordFile(
 		    Paths::getCapturesDirPath()
 		        .append(Utils::generateSavedFilename(QString::fromStdString(address->getUsername()), ""))
-		        .append(".smff")
+		        .append(".mkv")
 		        .toStdString());
 	}
 
