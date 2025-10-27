@@ -471,9 +471,9 @@ Item {
                                     IconLabelButton {
                                         id: recordsButton
                                         Layout.fillWidth: true
-                                        visible: !SettingsCpp.disableCallRecordings
-                                        icon.width: Math.round(32 * DefaultStyle.dp)
-                                        icon.height: Math.round(32 * DefaultStyle.dp)
+                                        visible: false// !SettingsCpp.disableCallRecordings
+                                        icon.width: Utils.getSizeWithScreenRatio(32)
+                                        icon.height: Utils.getSizeWithScreenRatio(32)
                                         //: "Enregistrements"
                                         text: qsTr("recordings_title")
                                         icon.source: AppIcons.micro
