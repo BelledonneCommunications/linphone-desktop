@@ -37,13 +37,14 @@ ChatProxy::~ChatProxy() {
 void ChatProxy::setSourceModel(QAbstractItemModel *model) {
 	auto oldChatList = getListModel<ChatList>();
 	if (oldChatList) {
-		disconnect(oldChatList);
+		disconnect(this, &ChatProxy::filterTextChanged, oldChatList, nullptr);
+		disconnect(oldChatList, &ChatList::chatAdded, this, nullptr);
+		disconnect(oldChatList, &ChatList::dataChanged, this, nullptr);
 	}
 	auto newChatList = dynamic_cast<ChatList *>(model);
 	if (newChatList) {
 		connect(this, &ChatProxy::filterTextChanged, newChatList,
 		        [this, newChatList] { emit newChatList->filterChanged(getFilterText()); });
-		connect(newChatList, &ChatList::chatRemoved, this, &ChatProxy::chatRemoved);
 		connect(newChatList, &ChatList::chatAdded, this, [this] { invalidate(); });
 		connect(newChatList, &ChatList::dataChanged, this, [this] { invalidate(); });
 	}

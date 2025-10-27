@@ -197,7 +197,8 @@ void ChatMessageContentList::setSelf(QSharedPointer<ChatMessageContentList> me) 
 
 	mModelConnection->makeConnectToCore(&ChatMessageContentList::lUpdate, [this]() {
 		for (auto &content : getSharedList<ChatMessageContentCore>()) {
-			if (content) disconnect(content.get());
+			if (content) disconnect(content.get(), &ChatMessageContentCore::wasDownloadedChanged, this, nullptr);
+			if (content) disconnect(content.get(), &ChatMessageContentCore::thumbnailChanged, this, nullptr);
 		}
 		if (!mChatMessageCore) return;
 		auto contents = mChatMessageCore->getChatMessageContentList();

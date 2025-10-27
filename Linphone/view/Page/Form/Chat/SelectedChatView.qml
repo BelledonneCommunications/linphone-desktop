@@ -100,7 +100,6 @@ FocusScope {
                             font {
                                 pixelSize: Typography.h4.pixelSize
                                 weight: Utils.getSizeWithScreenRatio(400)
-                                capitalization: Font.Capitalize
                             }
                         }
                         RowLayout {
@@ -310,7 +309,7 @@ FocusScope {
                         Control.Control {
                             id: participantListPopup
                             width: parent.width
-                            height: Math.min(participantInfoList.height, Utils.getSizeWithScreenRatio(200))
+                            height: visible ? Math.min(participantInfoList.height, Utils.getSizeWithScreenRatio(200)) : 0
                             visible: false
                             anchors.bottom: chatMessagesListView.bottom
                             anchors.left: chatMessagesListView.left

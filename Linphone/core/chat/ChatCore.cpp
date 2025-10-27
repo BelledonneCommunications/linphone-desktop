@@ -207,7 +207,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatModel::newEvent, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                 const std::shared_ptr<const linphone::EventLog> &eventLog) {
 		    if (mChatModel->getMonitor() != chatRoom) return;
-		    qDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
+		    lDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
 		    auto event = EventLogCore::create(eventLog);
 		    if (event->isHandled()) {
 			    mChatModelConnection->invokeToCore([this, event]() { emit eventsInserted({event}); });
@@ -220,7 +220,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatModel::chatMessagesReceived, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                             const std::list<std::shared_ptr<linphone::EventLog>> &eventsLog) {
 		    if (mChatModel->getMonitor() != chatRoom) return;
-		    qDebug() << "CHAT MESSAGE RECEIVED IN CHATROOM" << mChatModel->getTitle();
+		    lDebug() << "CHAT MESSAGE RECEIVED IN CHATROOM" << mChatModel->getTitle();
 		    QList<QSharedPointer<EventLogCore>> list;
 		    for (auto &e : eventsLog) {
 			    auto event = EventLogCore::create(e);
@@ -491,7 +491,7 @@ ChatMessageGui *ChatCore::getLastMessage() const {
 
 void ChatCore::setLastMessage(QSharedPointer<ChatMessageCore> lastMessage) {
 	if (mLastMessage != lastMessage) {
-		disconnect(mLastMessage.get());
+		if (mLastMessage) disconnect(mLastMessage.get(), &ChatMessageCore::messageStateChanged, this, nullptr);
 		mLastMessage = lastMessage;
 		connect(mLastMessage.get(), &ChatMessageCore::messageStateChanged, this, &ChatCore::lastMessageChanged);
 		emit lastMessageChanged();
@@ -542,10 +542,6 @@ void ChatCore::resetFileList(QList<QSharedPointer<ChatMessageContentCore>> list)
 
 std::shared_ptr<ChatModel> ChatCore::getModel() const {
 	return mChatModel;
-}
-
-QSharedPointer<SafeConnection<ChatCore, ChatModel>> ChatCore::getChatModelConnection() const {
-	return mChatModelConnection;
 }
 
 bool ChatCore::isMuted() const {

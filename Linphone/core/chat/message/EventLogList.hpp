@@ -79,7 +79,6 @@ signals:
 private:
 	QString mFilter;
 	QSharedPointer<ChatCore> mChatCore;
-	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
 	QSharedPointer<SafeConnection<EventLogList, CoreModel>> mCoreModelConnection;
 	int mDisplayItemsStep = 0;
 	int mItemsToLoadBeforeSearchResult = 3;

@@ -90,5 +90,6 @@ void SortFilterProxy::remove(int index, int count) {
 }
 
 void SortFilterProxy::invalidateFilter() {
-	QSortFilterProxyModel::invalidateFilter();
+	// TODO : replace by begin/endFilterChanged when ci uses Qt6.10
+	invalidate();
 }

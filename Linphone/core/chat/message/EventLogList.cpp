@@ -64,7 +64,6 @@ void EventLogList::disconnectItem(const QSharedPointer<EventLogCore> &item) {
 	if (message) {
 		disconnect(message.get(), &ChatMessageCore::isReadChanged, this, nullptr);
 		disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);
-		disconnect(message.get(), &ChatMessageCore::ephemeralDurationChanged, this, nullptr);
 	}
 }
 
@@ -277,6 +276,9 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 		}
 		setIsUpdating(true);
 		beginResetModel();
+		for (auto &event : getSharedList<EventLogCore>()) {
+			disconnectItem(event);
+		}
 		mList.clear();
 		if (!mChatCore) {
 			endResetModel();
@@ -298,13 +300,6 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 				events->push_back(model);
 			}
 			mCoreModelConnection->invokeToCore([this, events] {
-				for (auto &event : getSharedList<EventLogCore>()) {
-					auto message = event->getChatMessageCore();
-					if (message) {
-						disconnect(message.get(), &ChatMessageCore::ephemeralDurationChanged, this, nullptr);
-						disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);
-					}
-				}
 				for (auto &event : *events) {
 					connectItem(event);
 					mList.append(event);

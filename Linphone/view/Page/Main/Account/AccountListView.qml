@@ -32,7 +32,7 @@ ColumnLayout{
 	property var popupId
 	Component{
 		id: contactDelegate
-		Contact{
+		Contact {
 			id: contactItem
 			Layout.preferredWidth: mainItem.childrenWidth
 			account: modelData

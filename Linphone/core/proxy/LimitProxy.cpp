@@ -43,7 +43,7 @@ void LimitProxy::setSourceModels(SortFilterProxy *firstList) {
 	if (secondList) {
 		connect(secondList, &QAbstractItemModel::rowsInserted, this, &LimitProxy::onAdded);
 		connect(secondList, &QAbstractItemModel::rowsRemoved, this, &LimitProxy::onRemoved);
-		connect(secondList, &QAbstractItemModel::modelReset, this, &LimitProxy::invalidateRowsFilter);
+		connect(secondList, &QAbstractItemModel::modelReset, this, &LimitProxy::invalidate);
 	}
 	connect(firstList, &SortFilterProxy::filterTextChanged, this, &LimitProxy::filterTextChanged);
 	connect(firstList, &SortFilterProxy::filterTypeChanged, this, &LimitProxy::filterTypeChanged);
@@ -60,8 +60,8 @@ void LimitProxy::setSourceModels(SortFilterProxy *firstList) {
 
 /*
 void LimitProxy::setSourceModels(SortFilterProxy *firstList, QAbstractItemModel *secondList) {
-    connect(secondList, &QAbstractItemModel::rowsInserted, this, &LimitProxy::invalidateFilter);
-    connect(secondList, &QAbstractItemModel::rowsRemoved, this, &LimitProxy::invalidateFilter);
+    connect(secondList, &QAbstractItemModel::rowsInserted, this, &LimitProxy::invalidate);
+    connect(secondList, &QAbstractItemModel::rowsRemoved, this, &LimitProxy::invalidate);
     connect(firstList, &SortFilterProxy::filterTextChanged, this, &LimitProxy::filterTextChanged);
     setSourceModel(firstList);
 }*/
@@ -119,7 +119,7 @@ void LimitProxy::setMaxDisplayItems(int maxItems) {
 		emit maxDisplayItemsChanged();
 
 		if (model && getDisplayCount(modelCount) != oldCount) {
-			invalidateFilter();
+			invalidate();
 		}
 	}
 }
@@ -178,6 +178,6 @@ void LimitProxy::onAdded() {
 void LimitProxy::onRemoved() {
 	int count = sourceModel()->rowCount();
 	if (mMaxDisplayItems > 0 && mMaxDisplayItems <= count) {
-		invalidateFilter();
+		invalidate();
 	}
 }

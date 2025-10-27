@@ -48,7 +48,6 @@ public:
 signals:
 	void lUpdate();
 	void filterChanged(QString filter);
-	void chatRemoved(ChatGui *chat);
 	void chatAdded();
 	void chatUpdated();
 

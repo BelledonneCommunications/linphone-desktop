@@ -52,10 +52,10 @@ ListView {
         onModelAboutToBeReset: {
             loading = true
         }
-        onChatRemoved: {
-            var currentChat = model.getAt(currentIndex)
+        onRowsRemoved: {
+            var index = mainItem.currentIndex
             mainItem.currentIndex = -1
-            selectChat(currentChat)
+            mainItem.currentIndex = index
         }
         onLayoutChanged: {
             selectChat(mainItem.currentChatGui)

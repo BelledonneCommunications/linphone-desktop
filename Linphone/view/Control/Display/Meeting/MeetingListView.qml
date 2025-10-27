@@ -317,9 +317,7 @@ ListView {
 					visible: itemDelegate.haveModel
 					acceptedButtons: Qt.LeftButton | Qt.RightButton
 					onClicked: (mouse) => {
-						console.log("clicked", mouse.button)
 						if (mouse.button === Qt.RightButton) {
-							console.log("open popup")
 							deletePopup.x = mouse.x
 							deletePopup.y = mouse.y
 							deletePopup.open()

@@ -120,6 +120,9 @@ LinphoneEnums::ChatMessageState LinphoneEnums::fromLinphone(const linphone::Chat
 
 QString LinphoneEnums::toString(const LinphoneEnums::ChatMessageState &data) {
 	switch (data) {
+		case LinphoneEnums::ChatMessageState::StateIdle:
+			//: "idle"
+			return QObject::tr("message_state_idle");
 		case LinphoneEnums::ChatMessageState::StateInProgress:
 			//: "delivery in progress"
 			return QObject::tr("message_state_in_progress");

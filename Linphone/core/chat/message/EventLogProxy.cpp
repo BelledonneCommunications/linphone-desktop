@@ -37,7 +37,11 @@ EventLogProxy::~EventLogProxy() {
 void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 	auto oldEventLogList = getListModel<EventLogList>();
 	if (oldEventLogList) {
-		disconnect(oldEventLogList);
+		disconnect(oldEventLogList, &EventLogList::listAboutToBeReset, this, nullptr);
+		disconnect(oldEventLogList, &EventLogList::chatGuiChanged, this, nullptr);
+		disconnect(oldEventLogList, &EventLogList::displayItemsStepChanged, this, nullptr);
+		disconnect(oldEventLogList, &EventLogList::eventInserted, this, nullptr);
+		disconnect(oldEventLogList, &EventLogList::messageWithFilterFound, this, nullptr);
 	}
 	auto newEventLogList = dynamic_cast<EventLogList *>(model);
 	if (newEventLogList) {

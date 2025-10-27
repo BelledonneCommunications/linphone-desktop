@@ -142,7 +142,6 @@ public:
 	void setComposingAddress(QString composingAddress);
 
 	std::shared_ptr<ChatModel> getModel() const;
-	QSharedPointer<SafeConnection<ChatCore, ChatModel>> getChatModelConnection() const;
 
 	void setParticipants(QList<QSharedPointer<ParticipantCore>> participants);
 	QList<QSharedPointer<ParticipantCore>> buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom) const;
