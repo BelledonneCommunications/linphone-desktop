@@ -127,7 +127,7 @@ add_subdirectory(core)
 
 set(LANGUAGES_DIRECTORY "data/languages")
 set(I18N_FILENAME i18n.qrc)
-set(LANGUAGES en fr_FR de)
+set(LANGUAGES en fr de)
 
 # Add languages support.
 add_subdirectory("${LANGUAGES_DIRECTORY}" "data/languages")

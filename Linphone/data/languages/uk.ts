@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.1" language="uk">
 <context>
     <name>AbstractSettingsLayout</name>
     <message>
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="67"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation>Retour</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="86"/>
         <source>save</source>
         <extracomment>&quot;Enregistrer&quot;</extracomment>
-        <translation>Enregistrer</translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="90"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation>Sauvegarder les paramètres %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -28,7 +28,7 @@
         <location filename="../../view/Page/Window/AbstractWindow.qml" line="75"/>
         <source>contact_dialog_pick_phone_number_or_sip_address_title</source>
         <extracomment>&quot;Choisissez un numéro ou adresse SIP&quot;</extracomment>
-        <translation>Choisissez un numéro ou adresse SIP</translation>
+        <translation>Оберіть номер SIP або адресу</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/AbstractWindow.qml" line="302"/>
@@ -42,45 +42,45 @@
         <location filename="../../core/account/AccountCore.cpp" line="446"/>
         <source>drawer_menu_account_connection_status_connected</source>
         <extracomment>&quot;Connecté&quot;</extracomment>
-        <translation>Connecté</translation>
+        <translation>Підключено</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="449"/>
         <source>drawer_menu_account_connection_status_refreshing</source>
-        <translation>En cours de rafraîchissement…</translation>
+        <translation>Оновлюється…</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="452"/>
         <source>drawer_menu_account_connection_status_progress</source>
-        <translation>Connexion…</translation>
+        <translation>Підключення…</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="455"/>
         <source>drawer_menu_account_connection_status_failed</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="459"/>
         <source>drawer_menu_account_connection_status_cleared</source>
-        <translation>Désactivé</translation>
+        <translation>Вимкнено</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="493"/>
         <source>manage_account_status_connected_summary</source>
         <extracomment>&quot;Vous êtes en ligne et joignable.&quot;</extracomment>
-        <translation>Vous êtes en ligne et joignable.</translation>
+        <translation>Ви в мережі та доступні.</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="496"/>
         <source>manage_account_status_failed_summary</source>
         <extracomment>&quot;Erreur de connexion, vérifiez vos paramètres.&quot;</extracomment>
-        <translation>Erreur de connexion, vérifiez vos paramètres.</translation>
+        <translation>Помилка підключення, перевірте налаштування.</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="500"/>
         <source>manage_account_status_cleared_summary</source>
         <extracomment>&quot;Compte désactivé, vous ne recevrez ni appel ni message.&quot;</extracomment>
-        <translation>Compte désactivé, vous ne recevrez ni appel ni message.</translation>
+        <translation>Обліковий запис вимкнено, ви не отримуватимете дзвінків чи повідомлень.</translation>
     </message>
 </context>
 <context>
@@ -89,7 +89,7 @@
         <location filename="../../core/account/AccountDeviceList.cpp" line="156"/>
         <source>manage_account_no_device_found_error_message</source>
         <extracomment>&quot;Erreur lors de la récupération des appareils&quot;</extracomment>
-        <translation>Erreur lors de la récupération des appareils</translation>
+        <translation>Помилка отримання пристроїв</translation>
     </message>
 </context>
 <context>
@@ -98,7 +98,7 @@
         <location filename="../../view/Page/Main/Account/AccountListView.qml" line="89"/>
         <source>add_an_account</source>
         <extracomment>Add an account</extracomment>
-        <translation>Ajouter un compte</translation>
+        <translation>Додати обліковий запис</translation>
     </message>
 </context>
 <context>
@@ -107,43 +107,43 @@
         <location filename="../../model/account/AccountManager.cpp" line="87"/>
         <source>assistant_account_login_already_connected_error</source>
         <extracomment>&quot;The account is already connected&quot;</extracomment>
-        <translation>Le compte est déjà connecté</translation>
+        <translation>Обліковий запис підключено</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="109"/>
         <source>assistant_account_login_proxy_address_error</source>
         <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
-        <translation>Impossible de créer l&apos;adresse proxy. Merci de vérifier le nom de domaine.</translation>
+        <translation>Не вдалося створити проксі-адресу. Перевірте доменне ім&apos;я.</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="122"/>
         <source>assistant_account_login_address_configuration_error</source>
         <extracomment>&quot;Unable to configure address: `%1`.&quot;</extracomment>
-        <translation>Impossible de configurer l&apos;adresse : `%1`.</translation>
+        <translation>Не вдалося налаштувати адресу: `%1`.</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="129"/>
         <source>assistant_account_login_params_configuration_error</source>
         <extracomment>&quot;Unable to configure account settings.&quot;</extracomment>
-        <translation>Impossible de configurer les paramètres du compte.</translation>
+        <translation>Не вдається налаштувати параметри облікового запису.</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="153"/>
         <source>assistant_account_login_forbidden_error</source>
         <extracomment>&quot;Username and password do not match&quot;</extracomment>
-        <translation>Le couple identifiant mot de passe ne correspond pas</translation>
+        <translation>Ім&apos;я користувача та пароль не збігаються</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="155"/>
         <source>assistant_account_login_error</source>
         <extracomment>&quot;Error during connection, please verify your parameters&quot;</extracomment>
-        <translation>Erreur durant la connexion, veuillez vérifier vos paramètres</translation>
+        <translation>Помилка під час підключення</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="168"/>
         <source>assistant_account_add_error</source>
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
-        <translation>Impossible d&apos;ajouter le compte.</translation>
+        <translation>Не вдалося додати обліковий запис.</translation>
     </message>
 </context>
 <context>
@@ -152,37 +152,37 @@
         <location filename="../../model/account/AccountModel.cpp" line="253"/>
         <source>set_mwi_server_address_failed_error_message</source>
         <extracomment>&quot;Unable to set voicemail server address, failed creating address from %1&quot; : %1 is address</extracomment>
-        <translation>Impossible de définir l&apos;adresse du serveur de messagerie vocale depuis l&apos;adresse %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="292"/>
         <source>set_server_address_failed_error_message</source>
         <extracomment>&quot;Unable to set server address, failed creating address from %1&quot;</extracomment>
-        <translation>Impossible de définir l&apos;adresse du serveur depuis l&apos;adresse %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="309"/>
         <source>set_outbound_proxy_uri_failed_error_message</source>
         <extracomment>Unable to set outbound proxy uri, failed creating address from %1</extracomment>
-        <translation>Impossible de définir l&apos;adresse du proxy sip sortant depuis l&apos;adresse %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="418"/>
         <source>set_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the conversation server address, failed creating address from %1&quot;</extracomment>
-        <translation>Impossible de définir l&apos;uri du serveur de conversations depuis l&apos;adresse %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="440"/>
         <source>set_audio_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the meeting server address, failed creating address from %1&quot;</extracomment>
-        <translation>Impossible de définir l&apos;uri du serveur de réunions depuis l&apos;adresse %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="487"/>
         <source>set_voicemail_address_failed_error_message</source>
         <extracomment>Unable to set voicemail address, failed creating address from %1</extracomment>
-        <translation>Impossible de définir l&apos;adresse de messagerie vocale depuis l&apos;adresse %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -191,118 +191,118 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="19"/>
         <source>manage_account_details_title</source>
         <extracomment>&quot;Détails&quot;</extracomment>
-        <translation>Détails</translation>
+        <translation>Подробиці</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="21"/>
         <source>manage_account_details_subtitle</source>
         <extracomment>Éditer les informations de votre compte.</extracomment>
-        <translation>Éditer les informations de votre compte.</translation>
+        <translation>Відредагуйте інформацію свого облікового запису.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="27"/>
         <source>manage_account_devices_title</source>
         <extracomment>&quot;Vos appareils&quot;</extracomment>
-        <translation>Vos appareils</translation>
+        <translation>Ваші пристрої</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="29"/>
         <source>manage_account_devices_subtitle</source>
         <extracomment>&quot;La liste des appareils connectés à votre compte. Vous pouvez retirer les appareils que vous n’utilisez plus.&quot;</extracomment>
-        <translation>La liste des appareils connectés à votre compte. Vous pouvez retirer les appareils que vous n’utilisez plus.</translation>
+        <translation>Список пристроїв, підключених до вашого облікового запису. Ви можете видалити пристрої, які більше не використовуєте.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="59"/>
         <source>manage_account_add_picture</source>
         <extracomment>&quot;Ajouter une image&quot;</extracomment>
-        <translation>Ajouter une image</translation>
+        <translation>Додати зображення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="74"/>
         <source>manage_account_edit_picture</source>
         <extracomment>&quot;Modifier l&apos;image&quot;</extracomment>
-        <translation>Modifier l&apos;image</translation>
+        <translation>Редагувати зображення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="84"/>
         <source>manage_account_remove_picture</source>
         <extracomment>&quot;Supprimer l&apos;image&quot;</extracomment>
-        <translation>Supprimer l&apos;image</translation>
+        <translation>Видалити зображення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="105"/>
         <source>sip_address</source>
-        <translation>Adresse SIP</translation>
+        <translation>SIP-адреса</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="130"/>
         <source>sip_address_display_name</source>
         <extracomment>&quot;Nom d&apos;affichage</extracomment>
-        <translation>Nom d&apos;affichage</translation>
+        <translation>Ім&apos;я для відображення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="136"/>
         <source>sip_address_display_name_explaination</source>
         <extracomment>&quot;Le nom qui sera affiché à vos correspondants lors de vos échanges.&quot;</extracomment>
-        <translation>Le nom qui sera affiché à vos correspondants lors de vos échanges.</translation>
+        <translation>Ім&apos;я, яке відображається вашим контактам під час обміну повідомленнями.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="154"/>
         <source>manage_account_international_prefix</source>
         <extracomment>Indicatif international*</extracomment>
-        <translation>Indicatif international*</translation>
+        <translation>Міжнародний код*</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="180"/>
         <source>manage_account_delete</source>
         <extracomment>&quot;Déconnecter mon compte&quot;</extracomment>
-        <translation>Déconnecter mon compte</translation>
+        <translation>Відключити мій обліковий запис</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="188"/>
         <source>manage_account_delete_message</source>
-        <translation>Votre compte sera retiré de ce client linphone, mais vous restez connecté sur vos autres clients</translation>
+        <translation>Ваш обліковий запис буде видалено з цього клієнта Linphone, але ви залишитеся підключеними в інших клієнтах.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="207"/>
         <source>manage_account_dialog_remove_account_title</source>
         <extracomment>&quot;Se déconnecter du compte ?&quot;</extracomment>
-        <translation>Se déconnecter du compte ?</translation>
+        <translation>Вийти з облікового запису?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="209"/>
         <source>manage_account_dialog_remove_account_message</source>
         <extracomment>Si vous souhaitez supprimer définitivement votre compte rendez-vous sur : https://sip.linphone.org</extracomment>
-        <translation>Si vous souhaitez supprimer définitivement votre compte rendez-vous sur : https://sip.linphone.org</translation>
+        <translation>Якщо ви хочете остаточно видалити свій обліковий запис, перейдіть за посиланням: https://sip.linphone.org</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="266"/>
         <source>error</source>
         <extracomment>Erreur</extracomment>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="304"/>
         <source>manage_account_device_remove</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation>Supprimer</translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="313"/>
         <source>manage_account_device_remove_confirm_dialog</source>
-        <translation>Supprimer %1 ?</translation>
+        <translation>Видалити %1?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="327"/>
         <source>manage_account_device_last_connection</source>
         <extracomment>&quot;Dernière connexion:&quot;</extracomment>
-        <translation>Dernière connexion:</translation>
+        <translation>Останній вхід:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="345"/>
         <source>device_last_updated_time_no_info</source>
         <extracomment>&quot;No information&quot;</extracomment>
-        <translation>Pas d&apos;information</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -311,42 +311,42 @@
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="13"/>
         <source>drawer_menu_manage_account</source>
         <extracomment>&quot;Mon compte&quot;</extracomment>
-        <translation>Mon compte</translation>
+        <translation>Мій обліковий запис</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="18"/>
         <source>settings_general_title</source>
         <extracomment>&quot;Général&quot;</extracomment>
-        <translation>Général</translation>
+        <translation>Загальні</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="20"/>
         <source>settings_account_title</source>
         <extracomment>&quot;Paramètres de compte&quot;</extracomment>
-        <translation>Paramètres de compte</translation>
+        <translation>Налаштування облікового запису</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="28"/>
         <source>contact_editor_popup_abort_confirmation_title</source>
         <extracomment>&quot;Modifications non enregistrées&quot;</extracomment>
-        <translation>Modifications non enregistrées</translation>
+        <translation>Незбережені зміни</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="30"/>
         <source>contact_editor_popup_abort_confirmation_message</source>
         <extracomment>&quot;Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?&quot;</extracomment>
-        <translation>Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</translation>
+        <translation>У вас є незбережені зміни. Якщо ви залишите цю сторінку, ваші зміни будуть втрачені. Бажаєте зберегти зміни, перш ніж продовжити?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="41"/>
         <source>contact_editor_dialog_abort_confirmation_do_not_save</source>
         <extracomment>&quot;Ne pas enregistrer&quot; &quot;Enregistrer&quot;</extracomment>
-        <translation>Ne pas enregistrer</translation>
+        <translation>Не зберігати</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="41"/>
         <source>contact_editor_dialog_abort_confirmation_save</source>
-        <translation>Enregistrer</translation>
+        <translation>Зберегти</translation>
     </message>
 </context>
 <context>
@@ -354,91 +354,91 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="17"/>
         <source>settings_title</source>
-        <translation>Paramètres</translation>
+        <translation>Налаштування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="21"/>
         <source>settings_account_title</source>
-        <translation>Paramètres de compte</translation>
+        <translation>Налаштування облікового запису</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="32"/>
         <source>info_popup_invalid_registrar_uri_message</source>
         <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation>La registrar URI est invalide. Veuillez vous assurer qu&apos;elle respecte le format suivant : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; est facultatif)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="34"/>
         <source>info_popup_invalid_outbound_proxy_message</source>
         <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation>L&apos;uri du proxy sip sortant est invalide. Veuillez vous assurer qu&apos;elle respecte le format suivant : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; est facultatif)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="35"/>
         <source>info_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="45"/>
         <source>information_popup_success_title</source>
-        <translation>Succès</translation>
+        <translation>Успіх</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="47"/>
         <source>contact_editor_saved_changes_toast</source>
         <extracomment>&quot;Modifications sauvegardés&quot;</extracomment>
-        <translation>Modifications sauvegardés</translation>
+        <translation>Зміни збережено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="54"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="74"/>
         <source>account_settings_mwi_uri_title</source>
         <extracomment>&quot;URI du serveur de messagerie vocale&quot;</extracomment>
-        <translation>URI du serveur de messagerie vocale</translation>
+        <translation>URI сервера голосової пошти</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="95"/>
         <source>account_settings_voicemail_uri_title</source>
         <extracomment>&quot;URI de messagerie vocale&quot;</extracomment>
-        <translation>URI de messagerie vocale</translation>
+        <translation>URI голосової пошти</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="120"/>
         <source>account_settings_transport_title</source>
         <extracomment>&quot;Transport&quot;</extracomment>
-        <translation>Transport</translation>
+        <translation>Транспорт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="127"/>
         <source>account_settings_registrar_uri_title</source>
-        <translation>Registrar URI</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="140"/>
         <source>account_settings_sip_proxy_url_title</source>
-        <translation>URL du proxy SIP sortant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="145"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
-        <translation>Si ce champ est rempli, l’outbound proxy sera activé automatiquement. Laissez-le vide pour le désactiver.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="157"/>
         <source>account_settings_stun_server_url_title</source>
         <extracomment>&quot;Adresse du serveur STUN&quot;</extracomment>
-        <translation>Adresse du serveur STUN</translation>
+        <translation>Адреса STUN-сервера</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="162"/>
         <source>account_settings_enable_ice_title</source>
         <extracomment>&quot;Activer ICE&quot;</extracomment>
-        <translation>Activer ICE</translation>
+        <translation>Увімкнути ICE</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="168"/>
@@ -450,31 +450,31 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="174"/>
         <source>account_settings_bundle_mode_title</source>
         <extracomment>&quot;Mode bundle&quot;</extracomment>
-        <translation>Mode bundle</translation>
+        <translation>Режим об&apos;єднання</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="183"/>
         <source>account_settings_expire_title</source>
         <extracomment>&quot;Expiration (en seconde)&quot;</extracomment>
-        <translation>Expiration (en seconde)</translation>
+        <translation>Термін дії (у секундах)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="194"/>
         <source>account_settings_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de conversations&quot;</extracomment>
-        <translation>URI du serveur de conversations</translation>
+        <translation>URI конференцій</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="211"/>
         <source>account_settings_audio_video_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de réunions&quot;</extracomment>
-        <translation>URI du serveur de réunions</translation>
+        <translation>URI відеоконференцій</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="225"/>
         <source>account_settings_lime_server_url_title</source>
         <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
-        <translation>URL du serveur d’échange de clés de chiffrement</translation>
+        <translation>URL-адреса сервера Lime</translation>
     </message>
 </context>
 <context>
@@ -483,34 +483,35 @@
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="14"/>
         <source>search_bar_search_contacts_placeholder</source>
         <extracomment>&quot;Rechercher des contacts&quot;</extracomment>
-        <translation>Rechercher des contacts</translation>
+        <translation>Знайти контакти</translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="56"/>
         <source>add_participant_selected_count</source>
         <comment>0</comment>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation>
-            <numerusform>%1 participant sélectionné</numerusform>
-            <numerusform>%1 participants sélectionnés</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="95"/>
         <source>remove_participant_accessible_name</source>
         <extracomment>Remove participant %1</extracomment>
-        <translation>Retirer le participant %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="151"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun contact&quot;</extracomment>
-        <translation>Aucun résultat…</translation>
+        <translation>Результатів не знайдено…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="151"/>
         <source>contact_list_empty</source>
-        <translation>Aucun contact</translation>
+        <translation>Контакти відсутні</translation>
     </message>
 </context>
 <context>
@@ -519,90 +520,90 @@
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="16"/>
         <source>settings_system_title</source>
         <extracomment>System</extracomment>
-        <translation>Système</translation>
+        <translation>Система</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="22"/>
         <source>settings_remote_provisioning_title</source>
         <extracomment>Remote provisioning</extracomment>
-        <translation>Configuration distante</translation>
+        <translation>Віддалене налаштування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="29"/>
         <source>settings_security_title</source>
         <extracomment>Security / Encryption</extracomment>
-        <translation>Sécurité / Chiffrement</translation>
+        <translation>Безпека / Шифрування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="35"/>
         <source>settings_advanced_audio_codecs_title</source>
         <extracomment>Audio codecs</extracomment>
-        <translation>Codecs audio</translation>
+        <translation>Аудіокодеки</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="41"/>
         <source>settings_advanced_video_codecs_title</source>
         <extracomment>Video codecs</extracomment>
-        <translation>Codecs vidéo</translation>
+        <translation>Відеокодеки</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="67"/>
         <source>settings_advanced_auto_start_title</source>
         <extracomment>Auto start %1</extracomment>
-        <translation>Démarrer automatiquement %1</translation>
+        <translation>Авто старт %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="85"/>
         <source>settings_advanced_remote_provisioning_url</source>
         <extracomment>Remote provisioning URL</extracomment>
-        <translation>URL de configuration distante</translation>
+        <translation>URL-адреса віддаленого налаштування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="92"/>
         <source>settings_advanced_download_apply_remote_provisioning</source>
         <extracomment>Download and apply</extracomment>
-        <translation>Télécharger et appliquer</translation>
+        <translation>Завантажити та застосувати</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="100"/>
         <source>information_popup_error_title</source>
         <extracomment>Invalid URL format</extracomment>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="100"/>
         <source>settings_advanced_invalid_url_message</source>
-        <translation>Format d&apos;url invalide</translation>
+        <translation>Недійсний формат URL-адреси</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="103"/>
         <source>download_apply_remote_provisioning_accessible_name</source>
         <extracomment>&quot;Download and apply remote provisioning&quot;</extracomment>
-        <translation>Télécharger et appliquer la configuration distante</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="116"/>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="129"/>
         <source>settings_advanced_media_encryption_title</source>
         <extracomment>Media encryption</extracomment>
-        <translation>Chiffrement du média</translation>
+        <translation>Шифрування медіа</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="135"/>
         <source>settings_advanced_media_encryption_mandatory_title</source>
         <extracomment>Media encryption mandatory</extracomment>
-        <translation>Chiffrement du média obligatoire</translation>
+        <translation>Обов&apos;язкове шифрування медіа</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="142"/>
         <source>settings_advanced_create_endtoend_encrypted_meetings_title</source>
         <extracomment>Create end to end encrypted meetings and group calls</extracomment>
-        <translation>Créer des appels de groupe et conférences chiffré(e)s de bout en bout</translation>
+        <translation>Створюйте наскрізні зашифровані зустрічі та групові дзвінки</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="238"/>
         <source>settings_advanced_hide_fps_title</source>
-        <translation>Cacher les FPS</translation>
+        <translation>Приховати FPS</translation>
     </message>
 </context>
 <context>
@@ -611,19 +612,19 @@
         <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="275"/>
         <source>car_favorites_contacts_title</source>
         <extracomment>&quot;Favoris&quot;</extracomment>
-        <translation>Favoris</translation>
+        <translation>Обрані</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="322"/>
         <source>generic_address_picker_contacts_list_title</source>
         <extracomment>&apos;Contacts&apos;</extracomment>
-        <translation>Contacts</translation>
+        <translation>Контакти</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="375"/>
         <source>generic_address_picker_suggestions_list_title</source>
         <extracomment>&quot;Suggestions&quot;</extracomment>
-        <translation>Suggestions</translation>
+        <translation>Пропозиції</translation>
     </message>
 </context>
 <context>
@@ -632,99 +633,99 @@
         <location filename="../../core/App.cpp" line="356"/>
         <source>remote_provisioning_dialog</source>
         <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
-        <translation>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</translation>
+        <translation>Ви хочете завантажити та застосувати віддалене налаштування з цієї адреси?</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="393"/>
         <location filename="../../core/App.cpp" line="658"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="394"/>
         <location filename="../../core/App.cpp" line="660"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
-        <translation>La configuration distante a échoué : %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="654"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
-        <translation>indisponible</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="926"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
-        <translation>A free and open source SIP video-phone.</translation>
+        <translation>Безплатний та з відкритим вихідним кодом застосунок для спілкування.</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="928"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
-        <translation>Send an order to the application towards a command line</translation>
+        <translation>Надіслати команду до програми через командний рядок</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="932"/>
         <source>command_line_option_show_help</source>
-        <translation>Show this help</translation>
+        <translation>Показати цю довідку</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="937"/>
         <source>command_line_option_show_app_version</source>
-        <translation>Afficher la version de l&apos;application</translation>
+        <translation>Показати версію застосунку</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="945"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
-        <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
+        <translation>Вкажіть файл конфігурації linphone, який потрібно отримати. Він буде об&apos;єднаний з поточною конфігурацією.</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="947"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
-        <translation>URL, path or file</translation>
+        <translation>URL-адреса, шлях або файл</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="952"/>
         <source>command_line_option_minimized</source>
-        <translation>Minimiser</translation>
+        <translation>Мінімізувати</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="955"/>
         <source>command_line_option_log_to_stdout</source>
-        <translation>Log to stdout some debug information while running</translation>
+        <translation>Виводити додаткову налагоджувальну інформацію в лог файли</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="958"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
-        <translation>Print only logs from the application</translation>
+        <translation>Відображати лише логи від застосунку</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="1329"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
-        <translation>Cacher</translation>
+        <translation>Сховати</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="1329"/>
         <source>show_action</source>
-        <translation>Afficher</translation>
+        <translation>Відобразити</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="1344"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
-        <translation>Quitter</translation>
+        <translation>Вийти</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="1448"/>
         <source>mark_all_read_action</source>
-        <translation>Mark all as read</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -733,36 +734,36 @@
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="49"/>
         <source>account_settings_dialog_invalid_password_title</source>
         <extracomment>&quot;Authentification requise&quot;</extracomment>
-        <translation>Authentification requise</translation>
+        <translation>Потрібна автентифікація</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="58"/>
         <source>account_settings_dialog_invalid_password_message</source>
         <extracomment>La connexion a échoué pour le compte %1. Vous pouvez renseigner votre mot de passe à nouveau ou bien vérifier les options de configuration de votre compte.</extracomment>
-        <translation>La connexion a échoué pour le compte %1. Vous pouvez renseigner votre mot de passe à nouveau ou bien vérifier les options de configuration de votre compte.</translation>
+        <translation>Не вдалося увійти в обліковий запис %1. Ви можете ввести пароль ще раз або перевірити налаштування облікового запису.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="68"/>
         <source>password</source>
-        <translation>Mot de passe</translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="85"/>
         <source>cancel</source>
         <extracomment>&quot;Annuler</extracomment>
-        <translation>Annuler</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="95"/>
         <source>assistant_account_login</source>
         <extracomment>Connexion</extracomment>
-        <translation>Connexion</translation>
+        <translation>Підключення</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="103"/>
         <source>assistant_account_login_missing_password</source>
         <extracomment>Veuillez saisir un mot de passe</extracomment>
-        <translation>Veuillez saisir un mot de passe</translation>
+        <translation>Будь ласка, введіть пароль</translation>
     </message>
 </context>
 <context>
@@ -771,46 +772,46 @@
         <location filename="../../core/call/CallCore.cpp" line="211"/>
         <source>call_record_end_message</source>
         <extracomment>&quot;Enregistrement terminé&quot;</extracomment>
-        <translation>Enregistrement terminé</translation>
+        <translation>Запис завершено</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="213"/>
         <source>call_record_saved_in_file_message</source>
         <extracomment>&quot;L&apos;appel a été enregistré dans le fichier : %1&quot;</extracomment>
-        <translation>L&apos;appel a été enregistré dans le fichier : %1</translation>
+        <translation>Запис збережено у файл: %1</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="393"/>
         <location filename="../../core/call/CallCore.cpp" line="418"/>
         <source>call_stats_codec_label</source>
         <extracomment>&quot;Codec: %1 / %2 kHz&quot;</extracomment>
-        <translation>Codec: %1 / %2 kHz</translation>
+        <translation>Кодек: %1 / %2 kHz</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="397"/>
         <location filename="../../core/call/CallCore.cpp" line="421"/>
         <source>call_stats_bandwidth_label</source>
         <extracomment>&quot;Bande passante : %1 %2 kbits/s %3 %4 kbits/s&quot;</extracomment>
-        <translation>Bande passante : %1 %2 kbits/s %3 %4 kbits/s</translation>
+        <translation>Пропускна спроможність: %1 %2 kbits/s %3 %4 kbits/s</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="403"/>
         <location filename="../../core/call/CallCore.cpp" line="426"/>
         <source>call_stats_loss_rate_label</source>
         <extracomment>&quot;Taux de perte: %1% %2%&quot;</extracomment>
-        <translation>Taux de perte: %1% %2%</translation>
+        <translation>Коефіцієнт втрат: %1% %2%</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="408"/>
         <source>call_stats_jitter_buffer_label</source>
         <extracomment>&quot;Tampon de gigue: %1 ms&quot;</extracomment>
-        <translation>Tampon de gigue: %1 ms</translation>
+        <translation>Jitter буфер: %1 ms</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="435"/>
         <source>call_stats_resolution_label</source>
         <extracomment>&quot;Définition vidéo : %1 %2 %3 %4&quot;</extracomment>
-        <translation>Définition vidéo : %1 %2 %3 %4</translation>
+        <translation>Роздільна здатність відео: %1 %2 %3 %4</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="441"/>
@@ -828,7 +829,7 @@
         <location filename="../../core/call/CallCore.cpp" line="657"/>
         <source>media_encryption_none</source>
         <extracomment>None</extracomment>
-        <translation>None</translation>
+        <translation>Немає</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="660"/>
@@ -840,81 +841,81 @@
         <location filename="../../core/call/CallCore.cpp" line="663"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
-        <translation>ZRTP - Post quantique</translation>
+        <translation>Постквантовий ZRTP</translation>
     </message>
 </context>
 <context>
     <name>CallForwardSettingsLayout</name>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
-        <source>settings_call_forward_activation_success</source>
-        <translation>Transfert d&apos;appel activé vers : %1</translation>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="73"/>
+        <source>settings_call_forward_activate_title</source>
+        <extracomment>&quot;Forward calls&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="75"/>
+        <source>settings_call_forward_activate_subtitle</source>
+        <extracomment>&quot;Enable call forwarding to voicemail or sip address&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="82"/>
+        <source>settings_call_forward_destination_choose</source>
+        <extracomment>Forward to destination</extracomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="94"/>
         <source>settings_call_forward_to_voicemail</source>
-        <translation>Boîte vocale</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
-        <source>settings_call_forward_deactivation_success</source>
-        <translation>Transfert d&apos;appel désactivé</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="45"/>
-        <source>settings_call_forward_address_timeout</source>
-        <translation>Impossible d&apos;établir le transfert d&apos;appel, la requête a expiré</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="51"/>
-        <source>settings_call_forward_address_cannot_be_empty</source>
-        <translation>Une adresse ou un numéro de téléphone est nécessaire</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
-        <source>settings_call_forward_address_progress_disabling</source>
-        <translation>Désactiver le transfert d&apos;appel</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
-        <source>settings_call_forward_address_progress_enabling</source>
-        <translation>Activer le transfert d&apos;appel pour : </translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="73"/>
-        <source>settings_call_forward_activate_title</source>
-        <extracomment>&quot;Forward calls&quot;</extracomment>
-        <translation>Transférer les appels</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="75"/>
-        <source>settings_call_forward_activate_subtitle</source>
-        <extracomment>&quot;Enable call forwarding to voicemail or sip address&quot;</extracomment>
-        <translation>Transférer les appels vers une boîte vocale ou un numéro / une adresse SIP</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="82"/>
-        <source>settings_call_forward_destination_choose</source>
-        <extracomment>Forward to destination</extracomment>
-        <translation>Transférer les appels vers :</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="95"/>
         <source>settings_call_forward_to_sipaddress</source>
-        <translation>Adresse SIP</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="132"/>
         <source>settings_call_forward_sipaddress_title</source>
         <extracomment>SIP Address</extracomment>
-        <translation>Addresse SIP</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="133"/>
         <source>settings_call_forward_sipaddress_placeholder</source>
-        <translation>John.doe</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="51"/>
+        <source>settings_call_forward_address_cannot_be_empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="45"/>
+        <source>settings_call_forward_address_timeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
+        <source>settings_call_forward_address_progress_disabling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
+        <source>settings_call_forward_address_progress_enabling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
+        <source>settings_call_forward_activation_success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
+        <source>settings_call_forward_deactivation_success</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -923,25 +924,25 @@
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="111"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
-        <translation>Rejoindre la réunion</translation>
+        <translation>Приєднатись до наради</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="134"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation>Appel</translation>
+        <translation>Виклик</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="148"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
-        <translation>Message</translation>
+        <translation>Повідомлення</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="168"/>
         <source>contact_video_call_action</source>
         <extracomment>&quot;Appel Video&quot;</extracomment>
-        <translation>Appel Vidéo</translation>
+        <translation>Відеодзвінок</translation>
     </message>
 </context>
 <context>
@@ -950,7 +951,7 @@
         <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="207"/>
         <source>call_name_accessible_button</source>
         <extracomment>Call %1</extracomment>
-        <translation>Appeler %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -959,42 +960,42 @@
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="75"/>
         <source>meeting_event_conference_destroyed</source>
         <extracomment>&quot;Vous avez quitté la conférence&quot;</extracomment>
-        <translation>Vous avez quitté la conférence</translation>
+        <translation>Ви залишили нараду</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="78"/>
         <source>call_ended_by_user</source>
         <extracomment>&quot;Vous avez terminé l&apos;appel&quot;</extracomment>
-        <translation>Vous avez terminé l&apos;appel</translation>
+        <translation>Дзвінок завершено</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="81"/>
         <source>call_ended_by_remote</source>
         <extracomment>&quot;Votre correspondant a terminé l&apos;appel&quot;</extracomment>
-        <translation>Votre correspondant a terminé l&apos;appel</translation>
+        <translation>Ваш співрозмовник завершив дзвінок</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="157"/>
         <source>conference_call_empty</source>
         <extracomment>&quot;En attente d&apos;autres participants…&quot;</extracomment>
-        <translation>En attente d&apos;autres participants…</translation>
+        <translation>Чекаємо на інших учасників…</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="175"/>
         <source>conference_share_link_title</source>
         <extracomment>&quot;Partager le lien&quot;</extracomment>
-        <translation>Partager le lien</translation>
+        <translation>Поділитися посиланням</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="181"/>
         <source>copied</source>
-        <translation>Copié</translation>
+        <translation>Скопійовано</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallLayout.qml" line="183"/>
         <source>information_popup_meeting_address_copied_to_clipboard</source>
         <extracomment>Le lien de la réunion a été copié dans le presse-papier</extracomment>
-        <translation>Le lien de la réunion a été copié dans le presse-papier</translation>
+        <translation>Посилання на нараду скопійовано в буфер обміну</translation>
     </message>
 </context>
 <context>
@@ -1003,23 +1004,23 @@
         <location filename="../../core/call/CallList.cpp" line="104"/>
         <source>remote_group_call</source>
         <extracomment>Remote group call</extracomment>
-        <translation>Appel de groupe distant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="106"/>
         <source>local_group_call</source>
-        <translation>Appel de groupe local</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="111"/>
         <source>info_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="113"/>
         <source>info_popup_merge_calls_failed_message</source>
         <extracomment>Failed to merge calls !</extracomment>
-        <translation>La fusion des appels a échoué !</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1028,49 +1029,49 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="59"/>
         <source>meeting</source>
         <extracomment>&quot;Réunion</extracomment>
-        <translation>Réunion</translation>
+        <translation>Нарада</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="61"/>
         <source>call</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation>Appel</translation>
+        <translation>Виклик</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="66"/>
         <source>paused_call_or_meeting</source>
         <extracomment>&quot;%1 en pause&quot;</extracomment>
-        <translation>%1 en pause</translation>
+        <translation>%1 призупинено</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="68"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation>%1 en cours</translation>
+        <translation>Поточний виклик %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="88"/>
         <source>transfer_call_name_accessible_name</source>
         <extracomment>Transfer call %1</extracomment>
-        <translation>Transférer l&apos;appel %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="116"/>
         <source>resume_call_name_accessible_name</source>
         <extracomment>Resume %1 call</extracomment>
-        <translation>Reprendre l&apos;appel %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="118"/>
         <source>pause_call_name_accessible_name</source>
         <extracomment>Pause %1 call</extracomment>
-        <translation>Mettre l&apos;appel %1 en pause</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="141"/>
         <source>end_call_name_accessible_name</source>
         <extracomment>End %1 call</extracomment>
-        <translation>Terminer l&apos;appel %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1079,261 +1080,261 @@
         <location filename="../../model/call/CallModel.cpp" line="348"/>
         <source>call_error_no_response_toast</source>
         <extracomment>&quot;No response&quot;</extracomment>
-        <translation>Pas de réponse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="352"/>
         <source>call_error_forbidden_resource_toast</source>
         <extracomment>&quot;403 : Forbidden resource&quot;</extracomment>
-        <translation>403 : Forbidden resource</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="356"/>
         <source>call_error_not_answered_toast</source>
         <extracomment>&quot;Request timeout&quot;</extracomment>
-        <translation>La requête a expiré</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="360"/>
         <source>call_error_user_declined_toast</source>
         <extracomment>&quot;User declined the call&quot;</extracomment>
-        <translation>Le correspondant a décliné l&apos;appel</translation>
+        <translation>Дзвінок відхилено</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="364"/>
         <source>call_error_user_not_found_toast</source>
         <extracomment>&quot;User was not found&quot;</extracomment>
-        <translation>Le correspondant n&apos;a pas été trouvé</translation>
+        <translation>Користувача не знайдено</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="368"/>
         <source>call_error_user_busy_toast</source>
         <extracomment>&quot;User is busy&quot;</extracomment>
-        <translation>Le correspondant est occupé</translation>
+        <translation>Користувач зайнятий</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="372"/>
         <source>call_error_incompatible_media_params_toast</source>
         <extracomment>&quot;User can&amp;apos;t accept your call&quot;</extracomment>
-        <translation>Le correspondant ne peut accepter votre appel</translation>
+        <translation>Користувач не може прийняти ваш дзвінок</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="376"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Unavailable service or network error&quot;</extracomment>
-        <translation>Service indisponible ou erreur réseau</translation>
+        <translation>Недоступний сервіс або помилка мережі</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="380"/>
         <source>call_error_do_not_disturb_toast</source>
         <extracomment>&quot;Le correspondant ne peut être dérangé&quot;</extracomment>
-        <translation>Le correspondant ne peut être dérangé</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="384"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporarily unavailable&quot;</extracomment>
-        <translation>Temporairement indisponible</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="388"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server tiemout&quot;</extracomment>
-        <translation>Délai d&apos;attente du serveur dépassé</translation>
+        <translation>Час очікування сервера</translation>
     </message>
 </context>
 <context>
     <name>CallPage</name>
     <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="246"/>
+        <source>call_forward_to_address_info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="246"/>
+        <source>call_forward_to_address_info_voicemail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="14"/>
         <source>history_call_start_title</source>
         <extracomment>&quot;Nouvel appel&quot;</extracomment>
-        <translation>Nouvel appel</translation>
+        <translation>Новий виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="16"/>
         <source>call_history_empty_title</source>
         <extracomment>&quot;Historique d&apos;appel vide&quot;</extracomment>
-        <translation>Historique d&apos;appel vide</translation>
+        <translation>Очистити історію дзвінків</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="86"/>
         <source>history_dialog_delete_all_call_logs_title</source>
         <extracomment>Supprimer l&apos;historique d&apos;appels ?</extracomment>
-        <translation>Supprimer l&apos;historique d&apos;appels ?</translation>
+        <translation>Видалити історію дзвінків?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="88"/>
         <source>history_dialog_delete_all_call_logs_message</source>
         <extracomment>&quot;L&apos;ensemble de votre historique d&apos;appels sera définitivement supprimé.&quot;</extracomment>
-        <translation>L&apos;ensemble de votre historique d&apos;appels sera définitivement supprimé.</translation>
+        <translation>Історію дзвінків буде видалено назавжди.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="94"/>
         <source>history_dialog_delete_call_logs_title</source>
         <extracomment>Supprimer l&apos;historique d&apos;appels ?</extracomment>
-        <translation>Supprimer l&apos;historique d&apos;appels ?</translation>
+        <translation>Видалити історію дзвінків?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="96"/>
         <source>history_dialog_delete_call_logs_message</source>
         <extracomment>&quot;L&apos;ensemble de votre historique d&apos;appels avec ce correspondant sera définitivement supprimé.&quot;</extracomment>
-        <translation>L&apos;ensemble de votre historique d&apos;appels avec ce correspondant sera définitivement supprimé.</translation>
+        <translation>Історію дзвінків від цього користувача буде видалено назавжди.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="147"/>
         <source>call_history_call_list_title</source>
         <extracomment>&quot;Appels&quot;</extracomment>
-        <translation>Appels</translation>
+        <translation>Виклики</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="459"/>
         <source>call_history_options_accessible_name</source>
-        <translation>Options de l&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="170"/>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="551"/>
         <source>menu_delete_history</source>
         <extracomment>&quot;Supprimer l&apos;historique&quot;</extracomment>
-        <translation>Supprimer l&apos;historique</translation>
+        <translation>Видалити історію</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="164"/>
         <source>call_history_list_options_accessible_name</source>
         <extracomment>Call history options</extracomment>
-        <translation>Options de la liste de l&apos;historique d&apos;appel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="199"/>
         <source>create_new_call_accessible_name</source>
         <extracomment>Create new call</extracomment>
-        <translation>Créer un nouvel appel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="212"/>
         <source>call_search_in_history</source>
         <extracomment>&quot;Rechercher un appel&quot;</extracomment>
-        <translation>Rechercher un appel</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="246"/>
-        <source>call_forward_to_address_info</source>
-        <translation>Transférer l&apos;appel à :</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="246"/>
-        <source>call_forward_to_address_info_voicemail</source>
-        <translation>Boîte vocale</translation>
+        <translation>Знайти дзвінок</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="275"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
-        <translation>Aucun résultat…</translation>
+        <translation>Результатів не знайдено…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="277"/>
         <source>history_list_empty_history</source>
         <extracomment>&quot;Aucun appel dans votre historique&quot;</extracomment>
-        <translation>Aucun appel dans votre historique</translation>
+        <translation>Немає дзвінків в історії</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="354"/>
         <source>return_to_call_history_accessible_name</source>
         <extracomment>Return to call history</extracomment>
-        <translation>Retourner à l&apos;historique d&apos;appels</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="365"/>
         <source>call_action_start_new_call</source>
         <extracomment>&quot;Nouvel appel&quot;</extracomment>
-        <translation>Nouvel appel</translation>
+        <translation>Новий виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="406"/>
         <source>call_start_group_call_title</source>
         <extracomment>&quot;Appel de groupe&quot;</extracomment>
-        <translation>Appel de groupe</translation>
+        <translation>Груповий виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="408"/>
         <source>call_action_start_group_call</source>
         <extracomment>&quot;Lancer&quot;</extracomment>
-        <translation>Lancer</translation>
+        <translation>Старт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="418"/>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="422"/>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="520"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="420"/>
         <source>group_call_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné à l&apos;appel de groupe</extracomment>
-        <translation>Un nom doit être donné à l&apos;appel de groupe</translation>
+        <translation>Для виклику необхідно вказати ім&apos;я</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="424"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
-        <translation>Vous n&apos;etes pas connecté</translation>
+        <translation>Ви не підключені</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="478"/>
         <source>menu_see_existing_contact</source>
         <extracomment>&quot;Show contact&quot;</extracomment>
-        <translation>Voir le contact</translation>
+        <translation>Відобразити контакт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="480"/>
         <source>menu_add_address_to_contacts</source>
         <extracomment>&quot;Add to contacts&quot;</extracomment>
-        <translation>Ajouter aux contacts</translation>
+        <translation>Додати до контактів</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="502"/>
         <source>menu_copy_sip_address</source>
         <extracomment>&quot;Copier l&apos;adresse SIP&quot;</extracomment>
-        <translation>Copier l&apos;adresse SIP</translation>
+        <translation>Копіювати SIP-адресу</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="514"/>
         <source>sip_address_copied_to_clipboard_toast</source>
         <extracomment>Adresse copiée</extracomment>
-        <translation>Adresse copiée</translation>
+        <translation>SIP-адресу скопійовано</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="516"/>
         <source>sip_address_copied_to_clipboard_message</source>
         <extracomment>L&apos;adresse a été copié dans le presse_papiers</extracomment>
-        <translation>L&apos;adresse a été copié dans le presse-papiers</translation>
+        <translation>Адресу скопійовано в буфер обміну</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="522"/>
         <source>sip_address_copy_to_clipboard_error</source>
         <extracomment>&quot;Erreur lors de la copie de l&apos;adresse&quot;</extracomment>
-        <translation>Erreur lors de la copie de l&apos;adresse</translation>
+        <translation>Помилка копіювання адреси</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="642"/>
         <source>notification_missed_call_title</source>
         <extracomment>&quot;Appel manqué&quot;</extracomment>
-        <translation>Appel manqué</translation>
+        <translation>Пропущено дзвінок</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="645"/>
         <source>call_outgoing</source>
         <extracomment>&quot;Appel sortant&quot;</extracomment>
-        <translation>Appel sortant</translation>
+        <translation>Вихідний дзвінок</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="647"/>
         <source>call_audio_incoming</source>
         <extracomment>&quot;Appel entrant&quot;</extracomment>
-        <translation>Appel entrant</translation>
+        <translation>Вихідний виклик</translation>
     </message>
 </context>
 <context>
@@ -1342,78 +1343,78 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="23"/>
         <source>settings_call_devices_title</source>
         <extracomment>&quot;Périphériques&quot;</extracomment>
-        <translation>Périphériques</translation>
+        <translation>Пристрої</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="25"/>
         <source>settings_call_devices_subtitle</source>
         <extracomment>&quot;Vous pouvez modifier les périphériques de sortie audio, le microphone et la caméra de capture.&quot;</extracomment>
-        <translation>Vous pouvez modifier les périphériques de sortie audio, le microphone et la caméra de capture.</translation>
+        <translation>Ви можете змінити аудіовихідні пристрої, мікрофон та камеру.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="54"/>
         <source>settings_calls_echo_canceller_title</source>
         <extracomment>&quot;Annulateur d&apos;écho&quot;</extracomment>
-        <translation>Annulateur d&apos;écho</translation>
+        <translation>Придушення луни</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="56"/>
         <source>settings_calls_echo_canceller_subtitle</source>
         <extracomment>&quot;Évite que de l&apos;écho soit entendu par votre correspondant&quot;</extracomment>
-        <translation>Évite que de l&apos;écho soit entendu par votre correspondant</translation>
+        <translation>Запобігання луни</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="63"/>
         <source>settings_calls_auto_record_title</source>
         <extracomment>&quot;Activer l’enregistrement automatique des appels&quot;</extracomment>
-        <translation>Activer l’enregistrement automatique des appels</translation>
+        <translation>Увімкнути автоматичний запис дзвінків</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="70"/>
         <source>settings_call_enable_tones_title</source>
         <extracomment>Tonalités</extracomment>
-        <translation>Tonalités</translation>
+        <translation>Тони</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="72"/>
         <source>settings_call_enable_tones_subtitle</source>
         <extracomment>Activer les tonalités</extracomment>
-        <translation>Activer les tonalités</translation>
+        <translation>Увімкнути тони</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="78"/>
         <source>settings_calls_enable_video_title</source>
         <extracomment>&quot;Autoriser la vidéo&quot;</extracomment>
-        <translation>Autoriser la vidéo</translation>
+        <translation>Увімкнути відео</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="88"/>
         <source>settings_calls_command_line_title</source>
         <extracomment>Command line</extracomment>
-        <translation>Redirection vers outil externe lors d&apos;un appel entrant.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="89"/>
         <source>settings_calls_command_line_title_place_holder</source>
-        <translation>commande &quot;https://exemple.com/?numero=$1&amp;nom=$2&quot;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="97"/>
         <source>settings_calls_change_ringtone_title</source>
         <extracomment>&quot;Change ringtone&quot;</extracomment>
-        <translation>Changer la sonnerie</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="105"/>
         <source>settings_calls_current_ringtone_filename</source>
         <extracomment>Current ringtone :</extracomment>
-        <translation>Sonnerie actuelle :</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="130"/>
         <source>choose_ringtone_file_accessible_name</source>
         <extracomment>Choose ringtone file</extracomment>
-        <translation>Choisir le ficher de sonnerie</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1422,7 +1423,7 @@
         <location filename="../../view/Page/Main/Call/CallSettingsPanel.qml" line="84"/>
         <source>close_name_panel_accessible_button</source>
         <extracomment>Close %1 panel</extracomment>
-        <translation>Fermer le panneau %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1431,13 +1432,13 @@
         <location filename="../../view/Control/Display/Call/CallStatistics.qml" line="29"/>
         <source>call_stats_audio_title</source>
         <extracomment>&quot;Audio&quot;</extracomment>
-        <translation>Audio</translation>
+        <translation>Аудіо</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallStatistics.qml" line="91"/>
         <source>call_stats_video_title</source>
         <extracomment>&quot;Vidéo&quot;</extracomment>
-        <translation>Vidéo</translation>
+        <translation>Відео</translation>
     </message>
 </context>
 <context>
@@ -1446,221 +1447,221 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="68"/>
         <source>call_transfer_in_progress_toast</source>
         <extracomment>&quot;Transfert en cours, veuillez patienter&quot;</extracomment>
-        <translation>Transfert en cours, veuillez patienter</translation>
+        <translation>Триває перенаправлення, будь ласка, зачекайте</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="77"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="147"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="79"/>
         <source>call_transfer_failed_toast</source>
         <extracomment>&quot;Le transfert d&apos;appel a échoué&quot;</extracomment>
-        <translation>Le transfert d&apos;appel a échoué</translation>
+        <translation>Перенаправлення не вдалося</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="149"/>
         <source>conference_error_empty_uri</source>
         <extracomment>&quot;La conférence n&apos;a pas pu démarrer en raison d&apos;une erreur d&apos;uri.&quot;</extracomment>
-        <translation>La conférence n&apos;a pas pu démarrer en raison d&apos;une erreur d&apos;uri.</translation>
+        <translation>Зустріч не можу розпочатись через помилку URI.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="205"/>
         <source>call_close_window_dialog_title</source>
         <extracomment>&quot;Terminer tous les appels en cours ?&quot;</extracomment>
-        <translation>Terminer tous les appels en cours ?</translation>
+        <translation>Завершити всі поточні дзвінки?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="207"/>
         <source>call_close_window_dialog_message</source>
         <extracomment>&quot;La fenêtre est sur le point d&apos;être fermée. Cela terminera tous les appels en cours.&quot;</extracomment>
-        <translation>La fenêtre est sur le point d&apos;être fermée. Cela terminera tous les appels en cours.</translation>
+        <translation>Вікно ось-ось закриється. Це завершить усі поточні дзвінки.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="302"/>
         <source>call_can_be_trusted_toast</source>
         <extracomment>&quot;Appareil authentifié&quot;</extracomment>
-        <translation>Appareil authentifié</translation>
+        <translation>Пристрій довірений</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="366"/>
         <source>call_dir</source>
-        <translation>Appel %1</translation>
+        <translation>%1 виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="377"/>
         <source>call_ended</source>
         <extracomment>Appel terminé</extracomment>
-        <translation>Appel terminé</translation>
+        <translation>Виклик завершено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="381"/>
         <source>conference_paused</source>
         <extracomment>Meeting paused</extracomment>
-        <translation>Réunion mise en pause</translation>
+        <translation>Нараду призупинено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="386"/>
         <source>call_paused</source>
         <extracomment>Call paused</extracomment>
-        <translation>Appel mis en pause</translation>
+        <translation>Виклик призупинено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="482"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="486"/>
         <source>call_srtp_point_to_point_encrypted</source>
         <extracomment>Appel chiffré de point à point</extracomment>
-        <translation>Appel chiffré de point à point</translation>
+        <translation>Дзвінок захищено наскрізним шифруванням</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="490"/>
         <source>call_zrtp_sas_validation_required</source>
         <extracomment>Vérification nécessaire</extracomment>
-        <translation>Vérification nécessaire</translation>
+        <translation>Потрібна перевірка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="492"/>
         <source>call_zrtp_end_to_end_encrypted</source>
         <extracomment>Appel chiffré de bout en bout</extracomment>
-        <translation>Appel chiffré de bout en bout</translation>
+        <translation>Наскрізне шифрування дзвінків</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="495"/>
         <source>call_not_encrypted</source>
         <extracomment>&quot;Appel non chiffré&quot;</extracomment>
-        <translation>Appel non chiffré</translation>
+        <translation>Незашифрований дзвінок</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="451"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="496"/>
         <source>call_waiting_for_encryption_info</source>
         <extracomment>Waiting for encryption</extracomment>
-        <translation>En attente de chiffrement</translation>
+        <translation>Очікування шифрування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="384"/>
         <source>call_paused_by_remote</source>
         <extracomment>Call paused by remote</extracomment>
-        <translation>Appel mis en pause par votre correspondant</translation>
+        <translation>Виклик призупинено співрозмовником</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="610"/>
         <source>conference_user_is_recording</source>
         <extracomment>&quot;You are recording the meeting&quot;</extracomment>
-        <translation>Vous enregistrez la réunion</translation>
+        <translation>Ви записуєте нараду</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="612"/>
         <source>call_user_is_recording</source>
         <extracomment>&quot;You are recording the call&quot;</extracomment>
-        <translation>Vous enregistrez l&apos;appel</translation>
+        <translation>Ви записуєте виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="615"/>
         <source>conference_remote_is_recording</source>
         <extracomment>&quot;Someone is recording the meeting&quot;</extracomment>
-        <translation>Un participant enregistre la réunion</translation>
+        <translation>Хтось записує нараду</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="617"/>
         <source>call_remote_recording</source>
         <extracomment>&quot;%1 is recording the call&quot;</extracomment>
-        <translation>%1 enregistre l&apos;appel</translation>
+        <translation>%1 записує виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="629"/>
         <source>call_stop_recording</source>
         <extracomment>&quot;Stop recording&quot;</extracomment>
-        <translation>Arrêter l&apos;enregistrement</translation>
+        <translation>Зупинити запис</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="669"/>
         <source>add</source>
-        <translation>Ajouter</translation>
+        <translation>Додати</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="694"/>
         <source>call_transfer_current_call_title</source>
         <extracomment>&quot;Transférer %1 à…&quot;</extracomment>
-        <translation>Transférer %1 à…</translation>
+        <translation>Перенаправити %1 на…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="788"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="800"/>
         <source>call_transfer_confirm_dialog_tittle</source>
         <extracomment>&quot;Confirmer le transfert&quot;</extracomment>
-        <translation>Confirmer le transfert</translation>
+        <translation>Підтвердити перенаправлення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="790"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="801"/>
         <source>call_transfer_confirm_dialog_message</source>
         <extracomment>&quot;Vous allez transférer %1 à %2.&quot;</extracomment>
-        <translation>Vous allez transférer %1 à %2.</translation>
+        <translation>Ви збираєтеся перенаправити %1 до %2.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="698"/>
         <source>call_action_start_new_call</source>
         <extracomment>&quot;Nouvel appel&quot;</extracomment>
-        <translation>Nouvel appel</translation>
+        <translation>Новий виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="702"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1640"/>
         <source>call_action_show_dialer</source>
         <extracomment>&quot;Pavé numérique&quot;</extracomment>
-        <translation>Pavé numérique</translation>
+        <translation>Номеронабирач</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="706"/>
         <source>call_action_change_layout</source>
         <extracomment>&quot;Modifier la disposition&quot;</extracomment>
-        <translation>Modifier la disposition</translation>
+        <translation>Змінити формат</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="710"/>
         <source>call_action_go_to_calls_list</source>
         <extracomment>&quot;Liste d&apos;appel&quot;</extracomment>
-        <translation>Liste d&apos;appel</translation>
+        <translation>Список викликів</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="947"/>
         <source>Merger tous les appels</source>
         <extracomment>call_action_merge_calls</extracomment>
-        <translation>Merger tous les appels</translation>
+        <translation>Об&apos;єднати всі дзвінки</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="717"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1721"/>
         <source>call_action_go_to_settings</source>
         <extracomment>&quot;Paramètres&quot;</extracomment>
-        <translation>Paramètres</translation>
+        <translation>Налаштування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="721"/>
         <source>conference_action_screen_sharing</source>
         <extracomment>&quot;Partage de votre écran&quot;</extracomment>
-        <translation>Partage de votre écran</translation>
+        <translation>Поділитися своїм екраном</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1089"/>
         <source>conference_share_link_title</source>
         <extracomment>Partager le lien de la réunion</extracomment>
-        <translation>Partager le lien de la réunion</translation>
+        <translation>Поділитися посиланням на нараду</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1093"/>
         <source>copied</source>
         <extracomment>Copié</extracomment>
-        <translation>Copié</translation>
+        <translation>Скопійовано</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1095"/>
         <source>information_popup_meeting_address_copied_to_clipboard</source>
         <extracomment>Le lien de la réunion a été copié dans le presse-papier</extracomment>
-        <translation>Le lien de la réunion a été copié dans le presse-papier</translation>
+        <translation>Посилання на зустріч скопійовано в буфер обміну</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1104"/>
@@ -1668,209 +1669,210 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1114"/>
         <source>conference_participants_list_title</source>
         <extracomment>&quot;Participants (%1)&quot;</extracomment>
-        <translation>Participants (%1)</translation>
+        <translation>Учасники (%1)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1135"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1143"/>
         <source>group_call_participant_selected</source>
-        <translation>
-            <numerusform>%1 participant sélectionné</numerusform>
-            <numerusform>%1 participants sélectionnés</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1142"/>
         <source>meeting_schedule_add_participants_title</source>
-        <translation>Ajouter des participants</translation>
+        <translation>Додати учасників</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="725"/>
         <source>call_encryption_title</source>
         <extracomment>Chiffrement</extracomment>
-        <translation>Chiffrement</translation>
+        <translation>Шифрування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="549"/>
         <source>open_statistic_panel_accessible_name</source>
-        <translation>Ouvrir le panneau de statistiques</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="606"/>
         <source>conference_user_is_sharing_screen</source>
         <extracomment>&quot;You are sharing your screen&quot;</extracomment>
-        <translation>Vous partagez votre écran</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="627"/>
         <source>call_stop_screen_sharing</source>
         <extracomment>&quot;Stop sharing&quot;</extracomment>
-        <translation>Arrêter le partage</translation>
+        <translation>Стоп</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="634"/>
         <source>stop_recording_accessible_name</source>
         <extracomment>Stop recording</extracomment>
-        <translation>Arrêter l&apos;enregistrement</translation>
+        <translation>Зупинити запис</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="632"/>
         <source>stop_screen_sharing_accessible_name</source>
         <extracomment>&quot;Stop screen sharing&quot;</extracomment>
-        <translation>Arrêter le partage d&apos;écran</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="729"/>
         <source>call_stats_title</source>
         <extracomment>Statistiques</extracomment>
-        <translation>Statistiques</translation>
+        <translation>Статистика</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1293"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1294"/>
         <source>call_action_end_call</source>
         <extracomment>&quot;Terminer l&apos;appel&quot;</extracomment>
-        <translation>Terminer l&apos;appel</translation>
+        <translation>Завершити виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1326"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1329"/>
         <source>call_action_resume_call</source>
         <extracomment>&quot;Reprendre l&apos;appel&quot;</extracomment>
-        <translation>Reprendre l&apos;appel</translation>
+        <translation>Відновити виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1328"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1329"/>
         <source>call_action_pause_call</source>
         <extracomment>&quot;Mettre l&apos;appel en pause&quot;</extracomment>
-        <translation>Mettre l&apos;appel en pause</translation>
+        <translation>Призупинити виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1361"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1362"/>
         <source>call_action_transfer_call</source>
         <extracomment>&quot;Transférer l&apos;appel&quot;</extracomment>
-        <translation>Transférer l&apos;appel</translation>
+        <translation>Перенаправити виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1384"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1385"/>
         <source>call_action_start_new_call_hint</source>
         <extracomment>&quot;Initier un nouvel appel&quot;</extracomment>
-        <translation>Initier un nouvel appel</translation>
+        <translation>Розпочати новий виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1407"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1408"/>
         <source>call_display_call_list_hint</source>
         <extracomment>&quot;Afficher la liste d&apos;appels&quot;</extracomment>
-        <translation>Afficher la liste d&apos;appels</translation>
+        <translation>Переглянути список викликів</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1442"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1443"/>
         <source>call_deactivate_video_hint</source>
         <extracomment>&quot;Désactiver la vidéo&quot; &quot;Activer la vidéo&quot;</extracomment>
-        <translation>Désactiver la vidéo</translation>
+        <translation>Вимкнути відео</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1442"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1443"/>
         <source>call_activate_video_hint</source>
-        <translation>Activer la vidéo</translation>
+        <translation>Увімкнути відео</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1460"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1463"/>
         <source>call_activate_microphone</source>
         <extracomment>&quot;Activer le micro&quot;</extracomment>
-        <translation>Activer le micro</translation>
+        <translation>Активувати мікрофон</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1462"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1463"/>
         <source>call_deactivate_microphone</source>
         <extracomment>&quot;Désactiver le micro&quot;</extracomment>
-        <translation>Désactiver le micro</translation>
+        <translation>Вимкнути мікрофон</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1480"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1481"/>
         <source>call_share_screen_hint</source>
         <extracomment>Partager l&apos;écran…</extracomment>
-        <translation>Partager l&apos;écran…</translation>
+        <translation>Поділитися екраном…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1501"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1502"/>
         <source>call_open_chat_hint</source>
         <extracomment>Open chat…</extracomment>
-        <translation>Ouvrir le chat…</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1524"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1525"/>
         <source>call_rise_hand_hint</source>
         <extracomment>&quot;Lever la main&quot;</extracomment>
-        <translation>Lever la main</translation>
+        <translation>Підняти руку</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1538"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1539"/>
         <source>call_send_reaction_hint</source>
         <extracomment>&quot;Envoyer une réaction&quot;</extracomment>
-        <translation>Envoyer une réaction</translation>
+        <translation>Надіслати реакцію</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1550"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1551"/>
         <source>call_manage_participants_hint</source>
         <extracomment>&quot;Gérer les participants&quot;</extracomment>
-        <translation>Gérer les participants</translation>
+        <translation>Керування учасниками</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1572"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1573"/>
         <source>call_more_options_hint</source>
         <extracomment>&quot;Plus d&apos;options…&quot;</extracomment>
-        <translation>Plus d&apos;options…</translation>
+        <translation>Більше налаштувань…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1604"/>
         <source>call_action_change_conference_layout</source>
         <extracomment>&quot;Modifier la disposition&quot;</extracomment>
-        <translation>Modifier la disposition</translation>
+        <translation>Змінити формат</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1618"/>
         <source>call_action_full_screen</source>
         <extracomment>&quot;Mode Plein écran&quot;</extracomment>
-        <translation>Mode Plein écran</translation>
+        <translation>Повноекранний режим</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1671"/>
         <source>call_action_stop_recording</source>
         <extracomment>&quot;Terminer l&apos;enregistrement&quot;</extracomment>
-        <translation>Terminer l&apos;enregistrement</translation>
+        <translation>Закінчити запис</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1673"/>
         <source>call_action_record</source>
         <extracomment>&quot;Enregistrer l&apos;appel&quot;</extracomment>
-        <translation>Enregistrer l&apos;appel</translation>
+        <translation>Запис дзвінка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1701"/>
         <source>call_activate_speaker_hint</source>
         <extracomment>&quot;Activer le son&quot;</extracomment>
-        <translation>Activer le son</translation>
+        <translation>Активувати динамік</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1703"/>
         <source>call_deactivate_speaker_hint</source>
         <extracomment>&quot;Désactiver le son&quot;</extracomment>
-        <translation>Désactiver le son</translation>
+        <translation>Вимкнути динамік</translation>
     </message>
 </context>
 <context>
@@ -1879,86 +1881,86 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="17"/>
         <source>settings_contacts_carddav_title</source>
         <extracomment>Carnet d&apos;adresse CardDAV</extracomment>
-        <translation>Carnet  d&apos;adresse CardDAV</translation>
+        <translation>Адресна книга CardDAV</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="19"/>
         <source>settings_contacts_carddav_subtitle</source>
         <extracomment>&quot;Ajouter un carnet d’adresse CardDAV pour synchroniser vos contacts Linphone avec un carnet d’adresse tiers.&quot;</extracomment>
-        <translation>Ajouter un carnet d’adresse CardDAV pour synchroniser vos contacts Linphone avec un carnet d’adresse tiers.</translation>
+        <translation>Додайте адресну книгу CardDAV, щоб синхронізувати контакти Linphone із адресною книгою стороннього виробника.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="30"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="32"/>
         <source>settings_contacts_carddav_popup_invalid_error</source>
         <extracomment>&quot;Vérifiez que toutes les informations ont été saisies.&quot;</extracomment>
-        <translation>Vérifiez que toutes les informations ont été saisies.</translation>
+        <translation>Перевірте, чи введено всю інформацію.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="39"/>
         <source>information_popup_synchronization_success_title</source>
-        <translation>Succès</translation>
+        <translation>Успіх</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="41"/>
         <source>settings_contacts_carddav_synchronization_success_message</source>
         <extracomment>&quot;Le carnet d&apos;adresse CardDAV est synchronisé.&quot;</extracomment>
-        <translation>Le carnet d&apos;adresse CardDAV est synchronisé.</translation>
+        <translation>Адресна книга CardDAV синхронізована.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="43"/>
         <source>settings_contacts_carddav_popup_synchronization_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="45"/>
         <source>settings_contacts_carddav_popup_synchronization_error_message</source>
         <extracomment>&quot;Erreur de synchronisation!&quot;</extracomment>
-        <translation>Erreur de synchronisation!</translation>
+        <translation>Помилка синхронізації!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="62"/>
         <source>settings_contacts_delete_carddav_server_title</source>
         <extracomment>&quot;Supprimer le carnet d&apos;adresse CardDAV ?&quot;</extracomment>
-        <translation>Supprimer le carnet d&apos;adresse CardDAV ?</translation>
+        <translation>Видалити адресну книгу CardDAV?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="88"/>
         <source>sip_address_display_name</source>
         <extracomment>Nom d&apos;affichage</extracomment>
-        <translation>Nom d&apos;affichage</translation>
+        <translation>Ім&apos;я для відображення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="97"/>
         <source>settings_contacts_carddav_server_url_title</source>
         <extracomment>&quot;URL du serveur&quot;</extracomment>
-        <translation>URL du serveur</translation>
+        <translation>URL-адреса сервера</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="105"/>
         <source>username</source>
-        <translation>Nom d&apos;utilisateur</translation>
+        <translation>Ім&apos;я користувача</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="113"/>
         <source>password</source>
-        <translation>Mot de passe</translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="121"/>
         <source>settings_contacts_carddav_realm_title</source>
         <extracomment>Domaine d’authentification</extracomment>
-        <translation>Domaine d’authentification</translation>
+        <translation>Аутентифікація</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="127"/>
         <source>settings_contacts_carddav_use_as_default_title</source>
         <extracomment>&quot;Stocker ici les contacts nouvellement crées&quot;</extracomment>
-        <translation>Stocker ici les contacts nouvellement crées</translation>
+        <translation>Зберігати тут щойно створені контакти</translation>
     </message>
 </context>
 <context>
@@ -1966,17 +1968,17 @@
     <message>
         <location filename="../../view/Control/Form/Call/ChangeLayoutForm.qml" line="27"/>
         <source>conference_layout_grid</source>
-        <translation>Mosaïque</translation>
+        <translation>Сітка</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Call/ChangeLayoutForm.qml" line="28"/>
         <source>conference_layout_active_speaker</source>
-        <translation>Intervenant actif</translation>
+        <translation>Активний динамік</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Call/ChangeLayoutForm.qml" line="29"/>
         <source>conference_layout_audio_only</source>
-        <translation>Audio uniquement</translation>
+        <translation>Тільки аудіо</translation>
     </message>
 </context>
 <context>
@@ -1986,13 +1988,13 @@
         <location filename="../../view/Control/Display/Chat/ChatAudioContent.qml" line="78"/>
         <source>information_popup_error_title</source>
         <extracomment>Error</extracomment>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatAudioContent.qml" line="38"/>
         <source>information_popup_voice_message_error_message</source>
         <extracomment>Failed to create voice message : error in recorder</extracomment>
-        <translation>Impossible de créer le message vocal : erreur avec l&apos;enregistreur</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2001,13 +2003,13 @@
         <location filename="../../core/chat/ChatCore.cpp" line="144"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
-        <translation>Supprimé</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/ChatCore.cpp" line="146"/>
         <source>info_toast_deleted_message_history</source>
         <extracomment>Message history has been deleted</extracomment>
-        <translation>L&apos;historique des messages a été supprimé</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2016,13 +2018,13 @@
         <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="154"/>
         <source>chat_view_send_area_placeholder_text</source>
         <extracomment>Say something… : placeholder text for sending message text area</extracomment>
-        <translation>Dites quelque chose…</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="190"/>
         <source>cannot_record_while_in_call_tooltip</source>
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
-        <translation>Impossible d&apos;enregistrer un message vocal pendant un appel</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2031,65 +2033,65 @@
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="285"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
-        <translation>%1 est en train d&apos;écrire…</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="287"/>
         <source>chat_message_draft_sending_text</source>
-        <translation>Brouillon : %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="429"/>
         <source>chat_room_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
-        <translation>Supprimer</translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="369"/>
         <source>chat_room_mute</source>
-        <translation>Mettre en sourdine</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="368"/>
         <source>chat_room_unmute</source>
         <extracomment>&quot;Mute&quot;</extracomment>
-        <translation>Enlever la sourdine </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="381"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
-        <translation>Marquer comme lu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="400"/>
         <source>chat_room_leave</source>
         <extracomment>&quot;leave&quot;</extracomment>
-        <translation>Quitter la conversation</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="406"/>
         <source>chat_list_leave_chat_popup_title</source>
         <extracomment>leave the conversation ?</extracomment>
-        <translation>Quitter la conversation ?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="408"/>
         <source>chat_list_leave_chat_popup_message</source>
         <extracomment>You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?</extracomment>
-        <translation>Vous ne pourrez plus envoyer ou recevoir de messages dans cette conversation. Souhaitez-vous continuer ?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="435"/>
         <source>chat_list_delete_chat_popup_title</source>
         <extracomment>Delete the conversation ?</extracomment>
-        <translation>Supprimer la conversation ?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="437"/>
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
-        <translation>La conversation et tous ses messages seront supprimés. Souhaitez-vous continuer ?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2098,79 +2100,79 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="431"/>
         <source>chat_message_copy_selection</source>
         <extracomment>&quot;Copy selection&quot;</extracomment>
-        <translation>Copier la sélection</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="433"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
-        <translation>Copier</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="441"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
-        <translation>Copié</translation>
+        <translation>Скопійовано</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="443"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
-        <translation>dans le presse-papiers</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="129"/>
         <source>chat_message_remote_replied</source>
         <extracomment>%1 replied</extracomment>
-        <translation>%1 a répondu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="96"/>
         <source>chat_message_forwarded</source>
         <extracomment>Forwarded</extracomment>
-        <translation>Transféré</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="127"/>
         <source>chat_message_remote_replied_to</source>
         <extracomment>%1 replied to %2</extracomment>
-        <translation>%1 a répondu à %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="132"/>
         <source>chat_message_user_replied_to</source>
         <extracomment>You replied to %1</extracomment>
-        <translation>Vous avez répondu à %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="134"/>
         <source>chat_message_user_replied</source>
         <extracomment>You replied</extracomment>
-        <translation>Vous avez répondu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="406"/>
         <source>chat_message_reception_info</source>
         <extracomment>&quot;Reception info&quot;</extracomment>
-        <translation>Info de réception</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="418"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
-        <translation>Répondre</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="450"/>
         <source>chat_message_forward</source>
         <extracomment>Forward</extracomment>
-        <translation>Transférer</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="467"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
-        <translation>Supprimer</translation>
+        <translation>Видалити</translation>
     </message>
 </context>
 <context>
@@ -2179,13 +2181,13 @@
         <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="127"/>
         <source>popup_error_title</source>
         <extracomment>Error</extracomment>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="129"/>
         <source>popup_open_file_error_does_not_exist_message</source>
         <extracomment>Could not open file : unknown path %1</extracomment>
-        <translation>Impossible d&apos;ouvrir le fichier : chemin inconnu (%1)</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2199,44 +2201,45 @@
         <extracomment>Error adding file
 ----------
 Error</extracomment>
-        <translation>Erreur lors de l&apos;ajout de fichier</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="121"/>
         <source>popup_error_path_does_not_exist_message</source>
         <extracomment>File was not found: %1</extracomment>
-        <translation>Le fichier n&apos;a pas été trouvé : %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="123"/>
         <source>popup_error_nb_files_not_found_message</source>
-        <translation>%1 fichiers n&apos;ont pas été trouvés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="130"/>
         <source>popup_error_max_files_count_message</source>
         <extracomment>You can send 12 files maximum at a time. %n files were ignored</extracomment>
-        <translation>
-            <numerusform>Vous pouvez envoyer 12 fichiers maximum. Un fichier a été ignoré.</numerusform>
-            <numerusform>Vous pouvez envoyer 12 fichiers maximum. %n fichiers ont été ignorés.</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="167"/>
         <source>popup_error_file_too_big_message</source>
         <extracomment>%n files were ignored cause they exceed the maximum size. (Size limit=%2)</extracomment>
-        <translation>%n fichiers ont été ignorés car ils dépassent la taille maximale autorisée. (Taille max : %2)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="176"/>
         <source>popup_error_unsupported_files_message</source>
-        <translation>Impossible de trouver un type MIME pris en charge pour %1 fichiers.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="174"/>
         <source>popup_error_unsupported_file_message</source>
         <extracomment>Unable to get supported mime type for: `%1`.</extracomment>
-        <translation>Impossible de trouver un type MIME pris en charge pour : &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2245,13 +2248,13 @@ Error</extracomment>
         <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="105"/>
         <source>popup_error_title</source>
         <extracomment>Error</extracomment>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="108"/>
         <source>popup_download_error_message</source>
         <extracomment>This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it</extracomment>
-        <translation>Ce fichier a déjà été téléchargé et n&apos;est plus sur le serveur. Votre correspondant devra vous le renvoyer si vous voulez y avoir accès.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2260,19 +2263,19 @@ Error</extracomment>
         <location filename="../../core/chat/message/ChatMessageCore.cpp" line="155"/>
         <source>all_reactions_label</source>
         <extracomment>&quot;Reactions&quot;: all reactions for one message label</extracomment>
-        <translation>Réactions</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/ChatMessageCore.cpp" line="211"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
-        <translation>Supprimé</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/ChatMessageCore.cpp" line="213"/>
         <source>info_toast_deleted_message</source>
         <extracomment>The message has been deleted</extracomment>
-        <translation>Le message a été supprimé</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2280,49 +2283,50 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="40"/>
         <source>ics_bubble_meeting_from</source>
-        <translation>de </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="41"/>
         <source>ics_bubble_meeting_to</source>
-        <translation> à </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="63"/>
         <source>ics_bubble_meeting_modified</source>
         <extracomment>Meeting has been updated</extracomment>
-        <translation>La réunion a été modifiée</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="66"/>
         <source>ics_bubble_meeting_cancelled</source>
         <extracomment>Meeting has been canceled</extracomment>
-        <translation>La réunion a été annulée</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="171"/>
         <source></source>
-        <translation>de %1 à %2 (UTC%3)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="234"/>
         <source>ics_bubble_description_title</source>
         <extracomment>Description</extracomment>
-        <translation>Description</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="286"/>
         <source>ics_bubble_join</source>
         <extracomment>&quot;Rejoindre&quot;</extracomment>
-        <translation>Rejoindre</translation>
+        <translation>Приєднатися</translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="276"/>
         <source>ics_bubble_participants</source>
         <extracomment>%n participant(s)</extracomment>
-        <translation>
-            <numerusform>%1 participant</numerusform>
-            <numerusform>%1 participants</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -2333,59 +2337,57 @@ Error</extracomment>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="122"/>
         <source>popup_info_find_message_title</source>
         <extracomment>Find message</extracomment>
-        <translation>Trouver un message</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="124"/>
         <source>info_popup_no_result_message</source>
         <extracomment>No result found</extracomment>
-        <translation>Aucun résultat trouvé</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="116"/>
         <source>info_popup_first_result_message</source>
         <extracomment>First result reached</extracomment>
-        <translation>Premier résultat atteint</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="114"/>
         <source>info_popup_last_result_message</source>
         <extracomment>Last result reached</extracomment>
-        <translation>Dernier résultat atteint</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="161"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
-        <translation>Conversation chiffrée de bout en bout</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="163"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
-        <translation>Cette conversation n&apos;est pas chiffrée !</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="174"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Messages in this conversation are e2e encrypted. 
  Only your correspondent can decrypt them.</extracomment>
-        <translation>Les messages de cette conversation sont chiffrés de bout
-en bout. Seul votre correspondant peut les déchiffrer.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="176"/>
         <source>chat_message_list_not_encrypted_header_message</source>
         <extracomment>Messages are not end to end encrypted, 
  may sure you don&apos;t share any sensitive information !</extracomment>
-        <translation>Les messages ne sont pas chiffrés de bout en bout,
-        assurez-vous de ne pas partager d’informations sensibles !</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="216"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
-        <translation>%1 est en train d&apos;écrire…</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2394,104 +2396,104 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="14"/>
         <source>chat_start_title</source>
         <extracomment>&quot;Nouvelle conversation&quot;</extracomment>
-        <translation>Nouvelle conversation</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="16"/>
         <source>chat_empty_title</source>
         <extracomment>&quot;Aucune conversation&quot;</extracomment>
-        <translation>Aucune conversation</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="69"/>
         <source>chat_dialog_delete_chat_title</source>
         <extracomment>Supprimer la conversation ?</extracomment>
-        <translation>Supprimer la conversation ?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="71"/>
         <source>chat_dialog_delete_chat_message</source>
         <extracomment>&quot;La conversation et tous ses messages seront supprimés.&quot;</extracomment>
-        <translation>La conversation et tous ses messages seront supprimés.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="100"/>
         <source>chat_list_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation>Conversations</translation>
+        <translation>Розмови</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="121"/>
         <source>menu_mark_all_as_read</source>
         <extracomment>&quot;mark all as read&quot;</extracomment>
-        <translation>Tout marquer comme lu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="152"/>
         <source>chat_search_in_history</source>
         <extracomment>&quot;Rechercher une conversation&quot;</extracomment>
-        <translation>Rechercher une conversation</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="175"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
-        <translation>Aucun résultat…</translation>
+        <translation>Без результату…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="177"/>
         <source>chat_list_empty_history</source>
         <extracomment>&quot;Aucune conversation dans votre historique&quot;</extracomment>
-        <translation>Aucune conversation dans votre historique</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="249"/>
         <source>chat_action_start_new_chat</source>
         <extracomment>&quot;New chat&quot;</extracomment>
-        <translation>Nouvelle conversation</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="286"/>
         <source>chat_start_group_chat_title</source>
         <extracomment>&quot;Nouveau groupe&quot;</extracomment>
-        <translation>Nouveau groupe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="288"/>
         <source>chat_action_start_group_chat</source>
         <extracomment>&quot;Créer&quot;</extracomment>
-        <translation>Créer</translation>
+        <translation>Створити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="304"/>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="322"/>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="326"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="306"/>
         <source>information_popup_chat_creation_failed_message</source>
         <extracomment>&quot;La création a échoué&quot;</extracomment>
-        <translation>La création a échoué</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="324"/>
         <source>group_chat_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné au groupe</extracomment>
-        <translation>Un nom doit être donné au groupe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="328"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
-        <translation>Vous n&apos;êtes pas connecté</translation>
+        <translation>Ви не підключені</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="332"/>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
-        <translation>Création de la conversation en cours…</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2500,19 +2502,19 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="14"/>
         <source>settings_chat_attached_files_title</source>
         <extracomment>Attached files</extracomment>
-        <translation>Fichiers joints</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="25"/>
         <source>settings_chat_attached_files_auto_download_title</source>
         <extracomment>&quot;Automatic download&quot;</extracomment>
-        <translation>Téléchargement automatique</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="27"/>
         <source>settings_chat_attached_files_auto_download_subtitle</source>
         <extracomment>&quot;Automatically download transferred or received files in conversations&quot;</extracomment>
-        <translation>Télécharger automatiquement les fichiers échangés dans les conversations</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2520,32 +2522,32 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="39"/>
         <source>show_function_description</source>
-        <translation>Afficher</translation>
+        <translation>Відобразити</translation>
     </message>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="40"/>
         <source>fetch_config_function_description</source>
-        <translation>Récupérer une configuration</translation>
+        <translation>Отримання конфігурації</translation>
     </message>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="41"/>
         <source>call_function_description</source>
-        <translation>Appeler</translation>
+        <translation>Виклик</translation>
     </message>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="42"/>
         <source>bye_function_description</source>
-        <translation>Raccrocher</translation>
+        <translation>Завершити</translation>
     </message>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="43"/>
         <source>accept_function_description</source>
-        <translation>Accepter</translation>
+        <translation>Прийняти</translation>
     </message>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="44"/>
         <source>decline_function_description</source>
-        <translation>Décliner</translation>
+        <translation>Відхилити</translation>
     </message>
 </context>
 <context>
@@ -2554,13 +2556,13 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../core/conference/ConferenceInfoCore.cpp" line="578"/>
         <source>information_popup_error_title</source>
         <extracomment>&quot;Erreur&quot;</extracomment>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../core/conference/ConferenceInfoCore.cpp" line="580"/>
         <source>information_popup_disconnected_account_message</source>
         <extracomment>&quot;Votre compte est déconnecté&quot;</extracomment>
-        <translation>Votre compte est déconnecté</translation>
+        <translation>Ваш обліковий запис відключено</translation>
     </message>
 </context>
 <context>
@@ -2569,19 +2571,19 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="150"/>
         <source>information_popup_error_title</source>
         <extracomment>Erreur</extracomment>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="152"/>
         <source>information_popup_voicemail_address_undefined_message</source>
         <extracomment>L&apos;URI de messagerie vocale n&apos;est pas définie.</extracomment>
-        <translation>L&apos;URI de messagerie vocale n&apos;est pas définie.</translation>
+        <translation>URI голосової пошти не визначено.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="166"/>
         <source>account_settings_name_accessible_name</source>
         <extracomment>Account settings of %1</extracomment>
-        <translation>Paramaètres de compte de %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2590,145 +2592,145 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="26"/>
         <source>contact_editor_title</source>
         <extracomment>&quot;Modifier contact&quot;</extracomment>
-        <translation>Modifier contact</translation>
+        <translation>Редагувати контакт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="28"/>
         <source>save</source>
         <extracomment>&quot;Enregistrer</extracomment>
-        <translation>Enregistrer</translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="42"/>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="65"/>
         <source>contact_editor_dialog_cancel_change_message</source>
         <extracomment>&quot;Les changements seront annulés. Souhaitez-vous continuer ?&quot;</extracomment>
-        <translation>Les changements seront annulés. Souhaitez-vous continuer ?</translation>
+        <translation>Зміни будуть скасовані. Продовжити?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="62"/>
         <source>close_accessible_name</source>
         <extracomment>Close %n</extracomment>
-        <translation>Fermer %n</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="94"/>
         <source>contact_editor_mandatory_first_name_or_company_not_filled</source>
         <extracomment>&quot;Veuillez saisir un prénom ou un nom d&apos;entreprise&quot;</extracomment>
-        <translation>Veuillez saisir un prénom ou un nom d&apos;entreprise</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="98"/>
         <source>contact_editor_mandatory_address_or_number_not_filled</source>
         <extracomment>&quot;Veuillez saisir une adresse ou un numéro de téléphone&quot;</extracomment>
-        <translation>Veuillez saisir une adresse ou un numéro de téléphone</translation>
+        <translation>Будь ласка, введіть SIP-адресу або номер телефону</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="115"/>
         <source>contact_editor_add_image_label</source>
         <extracomment>&quot;Ajouter une image&quot;</extracomment>
-        <translation>Ajouter une image</translation>
+        <translation>Додати зображення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="133"/>
         <source>contact_details_edit</source>
         <extracomment>&quot;Modifier&quot;</extracomment>
-        <translation>Modifier</translation>
+        <translation>Редагувати</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="142"/>
         <source>edit_contact_image_accessible_name</source>
         <extracomment>&quot;Edit contact image&quot;</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="160"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation>Supprimer</translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="169"/>
         <source>delete_contact_image_accessible_name</source>
         <extracomment>&quot;Delete contact image&quot;</extracomment>
-        <translation>Supprimer l&apos;image du contact</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="221"/>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="233"/>
         <source>contact_editor_first_name</source>
         <extracomment>&quot;Prénom&quot;</extracomment>
-        <translation>Prénom</translation>
+        <translation>Ім&apos;я</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="238"/>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="247"/>
         <source>contact_editor_last_name</source>
         <extracomment>&quot;Nom&quot;</extracomment>
-        <translation>Nom</translation>
+        <translation>Прізвище</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="252"/>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="261"/>
         <source>contact_editor_company</source>
         <extracomment>&quot;Entreprise&quot;</extracomment>
-        <translation>Entreprise</translation>
+        <translation>Компанія</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="266"/>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="280"/>
         <source>contact_editor_job_title</source>
         <extracomment>&quot;Fonction&quot;</extracomment>
-        <translation>Fonction</translation>
+        <translation>Посада</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="312"/>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="344"/>
         <source>sip_address</source>
-        <translation>Adresse SIP</translation>
+        <translation>SIP-адреса</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="322"/>
         <source>sip_address_number_accessible_name</source>
         <extracomment>&quot;SIP address number %1&quot;</extracomment>
-        <translation>Adresse SIP numéro %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="337"/>
         <source>remove_sip_address_accessible_name</source>
         <extracomment>&quot;Remove SIP address %1&quot;</extracomment>
-        <translation>Retirer l&apos;adresse SIP %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="367"/>
         <source>new_sip_address_accessible_name</source>
         <extracomment>&quot;New SIP address&quot;</extracomment>
-        <translation>Nouvelle adresse SIP</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="403"/>
         <source>phone_number_number_accessible_name</source>
         <extracomment>&quot;Phone number number %1&quot;</extracomment>
-        <translation>Numéro de téléphone numéro</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="418"/>
         <source>remove_phone_number_accessible_name</source>
         <extracomment>Remove phone number %1</extracomment>
-        <translation>Retirer le numéro de téléphone %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="448"/>
         <source>new_phone_number_accessible_name</source>
         <extracomment>&quot;New phone number&quot;</extracomment>
-        <translation>Nouveau numéro de téléphone</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="400"/>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="426"/>
         <source>phone</source>
         <extracomment>&quot;Téléphone&quot;</extracomment>
-        <translation>Téléphone</translation>
+        <translation>Телефон</translation>
     </message>
 </context>
 <context>
@@ -2737,53 +2739,53 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="199"/>
         <source>contact_details_remove_from_favourites</source>
         <extracomment>&quot;Enlever des favoris&quot;</extracomment>
-        <translation>Enlever des favoris</translation>
+        <translation>Видалити з обраних</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="201"/>
         <source>contact_details_add_to_favourites</source>
         <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
-        <translation>Ajouter aux favoris</translation>
+        <translation>Додати в обрані</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="215"/>
         <source>Partager</source>
-        <translation>Partager</translation>
+        <translation>Поділитись</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="228"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="230"/>
         <source>information_popup_vcard_creation_error</source>
         <extracomment>La création du fichier vcard a échoué</extracomment>
-        <translation>La création du fichier vcard a échoué</translation>
+        <translation>Не вдалося створити VCard</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="234"/>
         <source>information_popup_vcard_creation_title</source>
         <extracomment>VCard créée</extracomment>
-        <translation>VCard créée</translation>
+        <translation>VCard створено</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="236"/>
         <source>information_popup_vcard_creation_success</source>
         <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
-        <translation>VCard du contact enregistrée dans %1</translation>
+        <translation>VCard збережено в %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="238"/>
         <source>contact_sharing_email_title</source>
         <extracomment>Partage de contact</extracomment>
-        <translation>Partage de contact</translation>
+        <translation>Поділитись контактом</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="244"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation>Supprimer</translation>
+        <translation>Видалити</translation>
     </message>
 </context>
 <context>
@@ -2792,13 +2794,13 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="183"/>
         <source>shrink_accessible_name</source>
         <extracomment>Shrink %1</extracomment>
-        <translation>Réduire %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="185"/>
         <source>expand_accessible_name</source>
         <extracomment>Expand %1</extracomment>
-        <translation>Étendre %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2807,154 +2809,154 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="14"/>
         <source>contacts_add</source>
         <extracomment>&quot;Ajouter un contact&quot;</extracomment>
-        <translation>Ajouter un contact</translation>
+        <translation>Додати контакт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="16"/>
         <source>contacts_list_empty</source>
         <extracomment>&quot;Aucun contact pour le moment&quot;</extracomment>
-        <translation>Aucun contact pour le moment</translation>
+        <translation>Контакти відсутні</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="74"/>
         <source>contact_new_title</source>
         <extracomment>&quot;Nouveau contact&quot;</extracomment>
-        <translation>Nouveau contact</translation>
+        <translation>Новий контакт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="76"/>
         <source>create</source>
-        <translation>Créer</translation>
+        <translation>Створити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="84"/>
         <source>contact_edit_title</source>
         <extracomment>&quot;Modifier contact&quot;</extracomment>
-        <translation>Modifier contact</translation>
+        <translation>Редагувати контакт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="85"/>
         <source>save</source>
-        <translation>Enregistrer</translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="99"/>
         <source>contact_dialog_delete_title</source>
         <extracomment>Supprimer %1 ?&quot;</extracomment>
-        <translation>Supprimer %1 ?</translation>
+        <translation>Видалити %1?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="101"/>
         <source>contact_dialog_delete_message</source>
         <extracomment>Ce contact sera définitivement supprimé.</extracomment>
-        <translation>Ce contact sera définitivement supprimé.</translation>
+        <translation>Цей контакт буде видалено назавжди.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="108"/>
         <source>contact_deleted_toast</source>
         <extracomment>&quot;Contact supprimé&quot;</extracomment>
-        <translation>Contact supprimé</translation>
+        <translation>Контакт видалено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="110"/>
         <source>contact_deleted_message</source>
         <extracomment>&quot;%1 a été supprimé&quot;</extracomment>
-        <translation>%1 a été supprimé</translation>
+        <translation>%1 видалено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="126"/>
         <source>contact_dialog_devices_trust_popup_title</source>
         <extracomment>&quot;Augmenter la confiance&quot;</extracomment>
-        <translation>Augmenter la confiance</translation>
+        <translation>Підвищити рівень довіри</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="128"/>
         <source>contact_dialog_devices_trust_popup_message</source>
         <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.&lt;br&gt;&lt;br&gt;Vous êtes sur le point d’appeler “%1” voulez vous continuer ?&quot;</extracomment>
-        <translation>Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.&lt;br&gt;&lt;br&gt;Vous êtes sur le point d’appeler “%1” voulez vous continuer ?</translation>
+        <translation>Щоб підвищити рівень довіри, вам потрібно зателефонувати на пристрої вашого контакту та підтвердити код.&lt;br&gt;&lt;br&gt;Ви збираєтеся зателефонувати &quot;%1&quot;. Бажаєте продовжити?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="137"/>
         <source>popup_do_not_show_again</source>
         <extracomment>Ne plus afficher</extracomment>
-        <translation>Ne plus afficher</translation>
+        <translation>Не відображати знову</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="152"/>
         <source>cancel</source>
-        <translation>Annuler</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="158"/>
         <source>dialog_call</source>
         <extracomment>&quot;Appeler&quot;</extracomment>
-        <translation>Appeler</translation>
+        <translation>Виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="175"/>
         <source>contact_dialog_devices_trust_help_title</source>
         <extracomment>&quot;Niveau de confiance&quot;</extracomment>
-        <translation>Niveau de confiance</translation>
+        <translation>Рівень довіри</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="177"/>
         <source>contact_dialog_devices_trust_help_message</source>
         <extracomment>&quot;Vérifiez les appareils de votre contact pour confirmer que vos communications seront sécurisées et sans compromission. &lt;br&gt;Quand tous seront vérifiés, vous atteindrez le niveau de confiance maximal.&quot;</extracomment>
-        <translation>Vérifiez les appareils de votre contact pour confirmer que vos communications seront sécurisées et sans compromission. &lt;br&gt;Quand tous seront vérifiés, vous atteindrez le niveau de confiance maximal.</translation>
+        <translation>Перевірте пристрої вашого контакту, щоб переконатися, що ваш зв’язок буде безпечним та безкомпромісним. Після перевірки всіх пристроїв ви досягнете максимального рівня довіри.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="200"/>
         <source>dialog_ok</source>
         <extracomment>&quot;Ok&quot;</extracomment>
-        <translation>Ok</translation>
+        <translation>Ок</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="226"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
-        <translation>Contacts</translation>
+        <translation>Контакти</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="268"/>
         <source>search_bar_look_for_contact_text</source>
         <extracomment>Rechercher un contact</extracomment>
-        <translation>Rechercher un contact</translation>
+        <translation>Знайти контакт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="280"/>
         <source>list_filter_no_result_found</source>
         <extracomment>Aucun résultat…</extracomment>
-        <translation>Aucun résultat…</translation>
+        <translation>Без результату…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="282"/>
         <source>contact_list_empty</source>
         <extracomment>Aucun contact pour le moment</extracomment>
-        <translation>Aucun contact pour le moment</translation>
+        <translation>Контакти відсутні</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="361"/>
         <source>expand_accessible_name</source>
         <extracomment>Expand %1</extracomment>
-        <translation>Étendre %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="359"/>
         <source>shrink_accessible_name</source>
         <extracomment>Shrink %1</extracomment>
-        <translation>Réduire %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="249"/>
         <source>create_contact_accessible_name</source>
         <extracomment>Create new contact</extracomment>
-        <translation>Créer un nouveau contact</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="345"/>
         <source>more_info_accessible_name</source>
         <extracomment>More info %1</extracomment>
-        <translation>Plus d&apos;information %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="381"/>
@@ -2963,157 +2965,157 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <extracomment>Edit
 ----------
 &quot;Éditer&quot;</extracomment>
-        <translation>Éditer</translation>
+        <translation>Редагувати</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="395"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation>Appel</translation>
+        <translation>Виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="406"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
-        <translation>Message</translation>
+        <translation>Повідомлення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="420"/>
         <source>contact_video_call_action</source>
         <extracomment>&quot;Appel vidéo&quot;</extracomment>
-        <translation>Appel vidéo</translation>
+        <translation>Відеодзвінок</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="468"/>
         <source>contact_details_numbers_and_addresses_title</source>
         <extracomment>&quot;Coordonnées&quot;</extracomment>
-        <translation>Coordonnées</translation>
+        <translation>Детальніше</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="524"/>
         <source>call_adress_accessible_name</source>
         <extracomment>Call address %1</extracomment>
-        <translation>Appeller l&apos;adresse %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="557"/>
         <source>contact_details_company_name</source>
         <extracomment>&quot;Société :&quot;</extracomment>
-        <translation>Société :</translation>
+        <translation>Компанія:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="578"/>
         <source>contact_details_job_title</source>
         <extracomment>&quot;Poste :&quot;</extracomment>
-        <translation>Poste :</translation>
+        <translation>Посада:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="600"/>
         <source>contact_details_medias_title</source>
         <extracomment>&quot;Medias&quot;</extracomment>
-        <translation>Medias</translation>
+        <translation>Медіа</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="613"/>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="631"/>
         <source>contact_details_medias_subtitle</source>
         <extracomment>&quot;Afficher les medias partagés&quot;</extracomment>
-        <translation>Afficher les medias partagés</translation>
+        <translation>Показати спільні медіафайли</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="637"/>
         <source>contact_details_trust_title</source>
         <extracomment>&quot;Confiance&quot;</extracomment>
-        <translation>Confiance</translation>
+        <translation>Довіра</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="644"/>
         <source>contact_dialog_devices_trust_title</source>
         <extracomment>&quot;Niveau de confiance - Appareils vérifiés&quot;</extracomment>
-        <translation>Niveau de confiance - Appareils vérifiés</translation>
+        <translation>Рівень довіри – перевірені пристрої</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="653"/>
         <source>contact_details_no_device_found</source>
         <extracomment>&quot;Aucun appareil&quot;</extracomment>
-        <translation>Aucun appareil</translation>
+        <translation>Немає пристрою</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="678"/>
         <source>contact_device_without_name</source>
         <extracomment>&quot;Appareil inconnu&quot;</extracomment>
-        <translation>Appareil inconnu</translation>
+        <translation>Невідомий пристрій</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="699"/>
         <source>contact_make_call_check_device_trust</source>
         <extracomment>&quot;Vérifier&quot;</extracomment>
-        <translation>Vérifier</translation>
+        <translation>Перевірити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="701"/>
         <source>verify_device_accessible_name</source>
         <extracomment>Verify %1 device</extracomment>
-        <translation>Vérifier l&apos;appareil %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="727"/>
         <source>contact_details_actions_title</source>
         <extracomment>&quot;Autres actions&quot;</extracomment>
-        <translation>Autres actions</translation>
+        <translation>Інші дії</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="757"/>
         <source>contact_details_remove_from_favourites</source>
         <extracomment>&quot;Retirer des favoris&quot;</extracomment>
-        <translation>Retirer des favoris</translation>
+        <translation>Видалити з обраних</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="759"/>
         <source>contact_details_add_to_favourites</source>
         <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
-        <translation>Ajouter aux favoris</translation>
+        <translation>Додати в обрані</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="776"/>
         <source>contact_details_share</source>
         <extracomment>&quot;Partager&quot;</extracomment>
-        <translation>Partager</translation>
+        <translation>Поділитись</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="787"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="789"/>
         <source>contact_details_share_error_mesage</source>
         <extracomment>&quot;La création du fichier vcard a échoué&quot;</extracomment>
-        <translation>La création du fichier vcard a échoué</translation>
+        <translation>Не вдалося створити VCard</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="794"/>
         <source>contact_details_share_success_title</source>
         <extracomment>&quot;VCard créée&quot;</extracomment>
-        <translation>VCard créée</translation>
+        <translation>VCard створено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="796"/>
         <source>contact_details_share_success_mesage</source>
         <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
-        <translation>VCard du contact enregistrée dans %1</translation>
+        <translation>VCard збережено в %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="799"/>
         <source>contact_details_share_email_title</source>
         <extracomment>&quot;Partage de contact&quot;</extracomment>
-        <translation>Partage de contact</translation>
+        <translation>Поділитись контактом</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="840"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer ce contact&quot;</extracomment>
-        <translation>Supprimer ce contact</translation>
+        <translation>Видалити контакт</translation>
     </message>
 </context>
 <context>
@@ -3122,71 +3124,71 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="14"/>
         <source>settings_contacts_ldap_title</source>
         <extracomment>Annuaires LDAP</extracomment>
-        <translation>Annuaires LDAP</translation>
+        <translation>LDAP-сервери</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="16"/>
         <source>settings_contacts_ldap_subtitle</source>
         <extracomment>&quot;Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la barre de recherche.&quot;</extracomment>
-        <translation>Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la barre de recherche.</translation>
+        <translation>Додайте свої LDAP-сервери, щоб мати змогу шукати в пошуку.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="21"/>
         <source>settings_contacts_carddav_title</source>
-        <translation>Carnet  d&apos;adresse CardDAV</translation>
+        <translation>Адресна книга CardDAV</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="22"/>
         <source>settings_contacts_carddav_subtitle</source>
-        <translation>Ajouter un carnet d’adresse CardDAV pour synchroniser vos contacts Linphone avec un carnet d’adresse tiers.</translation>
+        <translation>Додайте адресну книгу CardDAV, щоб синхронізувати контакти Linphone із адресною книгою стороннього виробника.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="42"/>
         <source>settings_contacts_add_ldap_server_title</source>
         <extracomment>&quot;Ajouter un annuaire LDAP&quot;</extracomment>
-        <translation>Ajouter un annuaire LDAP</translation>
+        <translation>Додати LDAP-сервер</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="44"/>
         <source>settings_contacts_edit_ldap_server_title</source>
         <extracomment>&quot;Modifier un annuaire LDAP&quot;</extracomment>
-        <translation>Modifier un annuaire LDAP</translation>
+        <translation>Редагувати LDAP-сервер</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="46"/>
         <source>edit_ldap_server_accessible_name</source>
         <extracomment>&quot;Editer le serveur LDAP %1&quot;</extracomment>
-        <translation>Editer le serveur LDAP %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="48"/>
         <source>use_ldap_server_accessible_name</source>
         <extracomment>&quot;Utiliser le serveur LDAP %1&quot;</extracomment>
-        <translation>Utiliser le serveur LDAP %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="73"/>
         <source>settings_contacts_add_carddav_server_title</source>
         <extracomment>&quot;Ajouter un carnet d&apos;adresse CardDAV&quot;</extracomment>
-        <translation>Ajouter un carnet d&apos;adresse CardDAV</translation>
+        <translation>Додати адресну книгу CardDAV</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="75"/>
         <source>settings_contacts_edit_carddav_server_title</source>
         <extracomment>&quot;Modifier un carnet d&apos;adresse CardDAV&quot;</extracomment>
-        <translation>Modifier un carnet d&apos;adresse CardDAV</translation>
+        <translation>Редагувати адресну книгу CardDAV</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="77"/>
         <source>edit_cardav_server_accessible_name</source>
         <extracomment>&quot;Editer le carnet d&apos;adresses CardDAV %1&quot;</extracomment>
-        <translation>Editer le carnet dl&apos;adresses CardDAV %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="79"/>
         <source>use_cardav_server_accessible_name</source>
         <extracomment>&quot;Utiliser le d&apos;adresses CardDAV %1&quot;</extracomment>
-        <translation>Utiliser le carnet dl&apos;adresses CardDAV %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3194,19 +3196,19 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsProviderLayout.qml" line="99"/>
         <source>information_popup_success_title</source>
-        <translation>Succès</translation>
+        <translation>Успіх</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsProviderLayout.qml" line="101"/>
         <source>information_popup_changes_saved</source>
         <extracomment>&quot;Les changements ont été sauvegardés&quot;</extracomment>
-        <translation>Les changements ont été sauvegardés</translation>
+        <translation>Зміни збережено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsProviderLayout.qml" line="123"/>
         <source>add</source>
         <extracomment>&quot;Ajouter&quot;</extracomment>
-        <translation>Ajouter</translation>
+        <translation>Додати</translation>
     </message>
 </context>
 <context>
@@ -3215,138 +3217,138 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="189"/>
         <source>one_one_infos_call</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation>Appel</translation>
+        <translation>Виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="203"/>
         <source>one_one_infos_unmute</source>
         <extracomment>&quot;Sourdine&quot;</extracomment>
-        <translation>Réactiver les notifications</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="203"/>
         <source>one_one_infos_mute</source>
-        <translation>Sourdine</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="270"/>
         <source>group_infos_participants</source>
-        <translation>Participants (%1)</translation>
+        <translation>Учасники (%1)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="287"/>
         <source>group_infos_media_docs</source>
         <extracomment>Medias &amp; documents</extracomment>
-        <translation>Medias &amp; documents</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="293"/>
         <source>group_infos_shared_medias</source>
         <extracomment>Shared medias</extracomment>
-        <translation>Médias partagés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="304"/>
         <source>group_infos_shared_docs</source>
         <extracomment>Shared documents</extracomment>
-        <translation>Documents partagés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="317"/>
         <source>group_infos_other_actions</source>
         <extracomment>Other actions</extracomment>
-        <translation>Autres actions</translation>
+        <translation>Інші дії</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="323"/>
         <source>group_infos_ephemerals</source>
-        <translation>Messages éphémères : </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="323"/>
         <source>group_infos_enable_ephemerals</source>
-        <translation>Activer les messages éphémères</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="225"/>
         <source>group_infos_meeting</source>
         <extracomment>Schedule a meeting</extracomment>
-        <translation>Programmer une réunion</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="334"/>
         <source>group_infos_leave_room</source>
         <extracomment>Leave chat room</extracomment>
-        <translation>Quitter la conversation</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="339"/>
         <source>group_infos_leave_room_toast_title</source>
         <extracomment>Leave Chat Room ?</extracomment>
-        <translation>Quitter la conversation ?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="341"/>
         <source>group_infos_leave_room_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
-        <translation>Vous ne recevrez ni pourrez envoyer des messages dans cette conversation, quitter ?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="354"/>
         <source>group_infos_delete_history</source>
         <extracomment>Delete history</extracomment>
-        <translation>Supprimer l&apos;historique</translation>
+        <translation>Видалити історію</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="359"/>
         <source>group_infos_delete_history_toast_title</source>
         <extracomment>Delete history ?</extracomment>
-        <translation>Supprimer l&apos;historique ?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="361"/>
         <source>group_infos_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
-        <translation>Tous les messages seront supprimés. Souhaitez-vous continuer ?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="228"/>
         <source>one_one_infos_open_contact</source>
         <extracomment>Show contact</extracomment>
-        <translation>Voir le contact</translation>
+        <translation>Відобразити контакт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="230"/>
         <source>one_one_infos_create_contact</source>
         <extracomment>Create contact</extracomment>
-        <translation>Créer un contact</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="375"/>
         <source>one_one_infos_ephemerals</source>
-        <translation>Messages éphémères : </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="375"/>
         <source>one_one_infos_enable_ephemerals</source>
-        <translation>Activer les messages éphémères</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="385"/>
         <source>one_one_infos_delete_history</source>
-        <translation>Supprimer l&apos;historique</translation>
+        <translation>Видалити історію</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="390"/>
         <source>one_one_infos_delete_history_toast_title</source>
         <extracomment>Delete history ?</extracomment>
-        <translation>Supprimer l&apos;historique ?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="392"/>
         <source>one_one_infos_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
-        <translation>Tous les messages seront supprimés. Souhaitez-vous continuer ?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3355,7 +3357,7 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Control/Container/CreationFormLayout.qml" line="46"/>
         <source>search_bar_look_for_contact_text</source>
         <extracomment>&quot;Rechercher un contact&quot;</extracomment>
-        <translation>Rechercher un contact</translation>
+        <translation>Знайти контакт</translation>
     </message>
 </context>
 <context>
@@ -3364,19 +3366,19 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="32"/>
         <source>settings_debug_clean_logs_message</source>
         <extracomment>&quot;Les traces de débogage seront supprimées. Souhaitez-vous continuer ?&quot;</extracomment>
-        <translation>Les traces de débogage seront supprimées. Souhaitez-vous continuer ?</translation>
+        <translation>Трасування налагодження будуть видалені. Продовжити?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="43"/>
         <source>settings_debug_share_logs_message</source>
         <extracomment>&quot;Les traces de débogage ont été téléversées. Comment souhaitez-vous partager le lien ? &quot;</extracomment>
-        <translation>Les traces de débogage ont été téléversées. Comment souhaitez-vous partager le lien ? </translation>
+        <translation>Трасування налагодження завантажено. Як поділитися посиланням?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="47"/>
         <source>settings_debug_clipboard</source>
         <extracomment>&quot;Presse-papier&quot;</extracomment>
-        <translation>Presse-papier</translation>
+        <translation>Буфер обміну</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="56"/>
@@ -3388,68 +3390,68 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="62"/>
         <source>debug_settings_trace</source>
         <extracomment>&quot;Traces %1&quot;</extracomment>
-        <translation>Traces %1</translation>
+        <translation>%1 трасувань</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="68"/>
         <source>information_popup_email_sharing_failed</source>
         <extracomment>&quot;Le partage par mail a échoué. Veuillez envoyer le lien %1 directement à l&apos;adresse %2.&quot;</extracomment>
-        <translation>Le partage par mail a échoué. Veuillez envoyer le lien %1 directement à l&apos;adresse %2.</translation>
+        <translation>Не вдалося надіслати електронною поштою. Будь ласка, надішліть посилання %1 безпосередньо %2.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="66"/>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="189"/>
         <source>information_popup_error_title</source>
         <extracomment>Une erreur est survenue.</extracomment>
-        <translation>Une erreur est survenue.</translation>
+        <translation>Сталася помилка.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="80"/>
         <source>settings_debug_enable_logs_title</source>
         <extracomment>&quot;Activer les traces de débogage&quot;</extracomment>
-        <translation>Activer les traces de débogage</translation>
+        <translation>Увімкнути трасування налагодження</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="86"/>
         <source>settings_debug_enable_full_logs_title</source>
         <extracomment>&quot;Activer les traces de débogage intégrales&quot;</extracomment>
-        <translation>Activer les traces de débogage intégrales</translation>
+        <translation>Увімкнути повне логування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="96"/>
         <source>settings_debug_delete_logs_title</source>
         <extracomment>&quot;Supprimer les traces&quot;</extracomment>
-        <translation>Supprimer les traces</translation>
+        <translation>Видалити трасування налагодження</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="104"/>
         <source>settings_debug_share_logs_title</source>
         <extracomment>&quot;Partager les traces&quot;</extracomment>
-        <translation>Partager les traces</translation>
+        <translation>Спільний доступ до трас налагодження</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="108"/>
         <source>settings_debug_share_logs_loading_message</source>
         <extracomment>&quot;Téléversement des traces en cours …&quot;</extracomment>
-        <translation>Téléversement des traces en cours…</translation>
+        <translation>Завантаження трасування…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="133"/>
         <source>settings_debug_app_version_title</source>
         <extracomment>&quot;Version de l&apos;application&quot;</extracomment>
-        <translation>Version de l&apos;application</translation>
+        <translation>Версія застосунку</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="162"/>
         <source>settings_debug_sdk_version_title</source>
         <extracomment>&quot;Version du SDK&quot;</extracomment>
-        <translation>Version du SDK</translation>
+        <translation>Версія SDK</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="191"/>
         <source>settings_debug_share_logs_error</source>
         <extracomment>&quot;Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1&quot;</extracomment>
-        <translation>Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1</translation>
+        <translation>Не вдалося завантажити трасування. Ви можете поділитися файлами трасування безпосередньо з каталогу: %1</translation>
     </message>
 </context>
 <context>
@@ -3458,13 +3460,13 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Control/Input/DecoratedTextField.qml" line="56"/>
         <source>textfield_error_message_cannot_be_empty</source>
         <extracomment>&quot;ne peut être vide&quot;</extracomment>
-        <translation>ne peut être vide</translation>
+        <translation>не може бути порожнім</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/DecoratedTextField.qml" line="59"/>
         <source>textfield_error_message_unknown_format</source>
         <extracomment>&quot;Format non reconnu&quot;</extracomment>
-        <translation>Format non reconnu</translation>
+        <translation>Невідомий формат</translation>
     </message>
 </context>
 <context>
@@ -3474,14 +3476,14 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="27"/>
         <source>dialog_confirm</source>
         <extracomment>&quot;Confirmer&quot;</extracomment>
-        <translation>Confirmer</translation>
+        <translation>Підтвердити</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="26"/>
         <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="28"/>
         <source>dialog_cancel</source>
         <extracomment>&quot;Annuler&quot;</extracomment>
-        <translation>Annuler</translation>
+        <translation>Скасувати</translation>
     </message>
 </context>
 <context>
@@ -3490,49 +3492,49 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="22"/>
         <source>call_stats_media_encryption_title</source>
         <extracomment>&quot;Encryption :&quot;</extracomment>
-        <translation>Chiffrement :</translation>
+        <translation>Шифрування:</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="35"/>
         <source>call_stats_media_encryption</source>
         <extracomment>Media encryption : %1</extracomment>
-        <translation>Chiffrement du média : %1</translation>
+        <translation>Шифрування медіа: %1%2</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="46"/>
         <source>call_stats_zrtp_cipher_algo</source>
         <extracomment>&quot;Algorithme de chiffrement : %1&quot;</extracomment>
-        <translation>Algorithme de chiffrement : %1</translation>
+        <translation>Алгоритм шифрування: %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="55"/>
         <source>call_stats_zrtp_key_agreement_algo</source>
         <extracomment>&quot;Algorithme d&apos;accord de clé : %1&quot;</extracomment>
-        <translation>Algorithme d&apos;accord de clé : %1</translation>
+        <translation>Алгоритм узгодження ключів: %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="64"/>
         <source>call_stats_zrtp_hash_algo</source>
         <extracomment>&quot;Algorithme de hachage : %1&quot;</extracomment>
-        <translation>Algorithme de hachage : %1</translation>
+        <translation>Алгоритм хешування: %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="73"/>
         <source>call_stats_zrtp_auth_tag_algo</source>
         <extracomment>&quot;Algorithme d&apos;authentification : %1&quot;</extracomment>
-        <translation>Algorithme d&apos;authentification : %1</translation>
+        <translation>Алгоритм автентифікації: %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="82"/>
         <source>call_stats_zrtp_sas_algo</source>
         <extracomment>&quot;Algorithme SAS : %1&quot;</extracomment>
-        <translation>Algorithme SAS : %1</translation>
+        <translation>Алгоритм SAS: %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="98"/>
         <source>call_zrtp_validation_button_label</source>
         <extracomment>&quot;Validation chiffrement&quot;</extracomment>
-        <translation>Validation chiffrement</translation>
+        <translation>Перевірка шифрування</translation>
     </message>
 </context>
 <context>
@@ -3540,42 +3542,42 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="57"/>
         <source>title</source>
-        <translation>Messages éphémères</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="76"/>
         <source>explanations</source>
-        <translation>En activant les messages éphémères dans cette discussion, les messages envoyés seront automatiquement détruits après le délai défini.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="21"/>
         <source>one_minute</source>
-        <translation>1 minute</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="22"/>
         <source>one_hour</source>
-        <translation>1 heure</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="23"/>
         <source>one_day</source>
-        <translation>1 jour</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="24"/>
         <source>one_week</source>
-        <translation>1 semaine</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="25"/>
         <source>disabled</source>
-        <translation>Désactivé</translation>
+        <translation>Вимкнено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="34"/>
         <source>custom</source>
-        <translation>Personnalisé: </translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3583,60 +3585,58 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="107"/>
         <source>conference_created_event</source>
-        <translation>Vous avez rejoint le groupe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="110"/>
         <source>conference_created_terminated</source>
-        <translation>Vous avez quitté le groupe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="114"/>
         <source>conference_participant_added_event</source>
-        <translation>%1 a rejoint le groupe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="118"/>
         <source>conference_participant_removed_event</source>
-        <translation>%1 ne fait plus partie du groupe</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="155"/>
+        <source>conference_participant_set_admin_event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="159"/>
+        <source>conference_participant_unset_admin_event</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="127"/>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="129"/>
         <source>conference_security_event</source>
-        <translation>Niveau de sécurité dégradé par %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="136"/>
         <source>conference_ephemeral_message_enabled_event</source>
-        <translation>Messages éphémères activés
-Expiration : %1</translation>
-    </message>
-    <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="142"/>
-        <source>conference_ephemeral_message_lifetime_changed_event</source>
-        <translation>Messages éphémères mis à jour
-Expiration : %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="147"/>
         <source>conference_ephemeral_message_disabled_event</source>
-        <translation>Messages éphémères désactivés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="151"/>
         <source>conference_subject_changed_event</source>
-        <translation>Nouveau sujet : %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="159"/>
-        <source>conference_participant_unset_admin_event</source>
-        <translation>%1 n&apos;est plus admin</translation>
-    </message>
-    <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="155"/>
-        <source>conference_participant_set_admin_event</source>
-        <translation>%1 est maintenant admin</translation>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="142"/>
+        <source>conference_ephemeral_message_lifetime_changed_event</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3649,7 +3649,7 @@ Expiration : %1</translation>
         <location filename="../../core/friend/FriendCore.cpp" line="590"/>
         <source>sip_address</source>
         <extracomment>&quot;Adresse SIP&quot;</extracomment>
-        <translation>Adresse SIP</translation>
+        <translation>SIP-адреса</translation>
     </message>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="33"/>
@@ -3657,18 +3657,18 @@ Expiration : %1</translation>
         <location filename="../../core/friend/FriendCore.cpp" line="197"/>
         <source>device_id</source>
         <extracomment>&quot;Téléphone&quot;</extracomment>
-        <translation>Téléphone</translation>
+        <translation>Телефон</translation>
     </message>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="421"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="423"/>
         <source>information_popup_invalid_address_message</source>
         <extracomment>&quot;Adresse invalide&quot;</extracomment>
-        <translation>Adresse invalide</translation>
+        <translation>Недійсна адреса</translation>
     </message>
 </context>
 <context>
@@ -3677,54 +3677,54 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="207"/>
         <source>group_infos_manage_participants_title</source>
         <extracomment>&quot;Gérer des participants&quot;</extracomment>
-        <translation>Gérer les participants</translation>
+        <translation>Керування учасниками</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="94"/>
         <source>group_infos_participant_is_admin</source>
-        <translation>Admin</translation>
+        <translation>Адміністратор</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="124"/>
         <source>menu_see_existing_contact</source>
         <extracomment>&quot;Show contact&quot;</extracomment>
-        <translation>Voir le contact</translation>
+        <translation>Відобразити контакт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="126"/>
         <source>menu_add_address_to_contacts</source>
         <extracomment>&quot;Add to contacts&quot;</extracomment>
-        <translation>Ajouter aux contacts</translation>
+        <translation>Додати до контактів</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="143"/>
         <source>group_infos_give_admin_rights</source>
-        <translation>Donner les droits admins</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="143"/>
         <source>group_infos_remove_admin_rights</source>
-        <translation>Retirer les droits admins</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="155"/>
         <source>group_infos_copy_sip_address</source>
-        <translation>Copier l’adresse SIP</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="175"/>
         <source>group_infos_remove_participant</source>
-        <translation>Retirer le participant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="182"/>
         <source>group_infos_remove_participants_toast_title</source>
-        <translation>Retirer le participant ?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="183"/>
         <source>group_infos_remove_participants_toast_message</source>
-        <translation>La participant sere retiré de la conversation</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3733,20 +3733,20 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="39"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation>Retour</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="76"/>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="95"/>
         <source>group_start_dialog_subject_hint</source>
         <extracomment>&quot;Nom du groupe&quot;</extracomment>
-        <translation>Nom du groupe</translation>
+        <translation>Назва групи</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="85"/>
         <source>required</source>
         <extracomment>&quot;Requis&quot;</extracomment>
-        <translation>Requis</translation>
+        <translation>Обов&apos;язково</translation>
     </message>
 </context>
 <context>
@@ -3755,50 +3755,50 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="40"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
-        <translation>Aide</translation>
+        <translation>Допомога</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="70"/>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="128"/>
         <source>help_about_title</source>
         <extracomment>&quot;À propos de %1&quot;</extracomment>
-        <translation>À propos de %1</translation>
+        <translation>Про %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="84"/>
         <source>help_about_privacy_policy_title</source>
         <extracomment>&quot;Règles de confidentialité&quot;</extracomment>
-        <translation>Règles de confidentialité</translation>
+        <translation>Політика конфіденційності</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="86"/>
         <source>help_about_privacy_policy_subtitle</source>
         <extracomment>Quelles informations %1 collecte et utilise</extracomment>
-        <translation>Quelles informations %1 collecte et utilise</translation>
+        <translation>Яку інформацію збирає та використовує %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="96"/>
         <source>help_about_version_title</source>
         <extracomment>&quot;Version&quot;</extracomment>
-        <translation>Version</translation>
+        <translation>Версія</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="104"/>
         <source>help_about_gpl_licence_title</source>
         <extracomment>&quot;Licences GPLv3&quot;</extracomment>
-        <translation>Licences GPLv3</translation>
+        <translation>Ліцензії GPLv3</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="115"/>
         <source>help_about_contribute_translations_title</source>
         <extracomment>&quot;Contribuer à la traduction de %1&quot;</extracomment>
-        <translation>Contribuer à la traduction de %1</translation>
+        <translation>Зробити внесок у переклад %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="140"/>
         <source>help_troubleshooting_title</source>
         <extracomment>&quot;Dépannage&quot;</extracomment>
-        <translation>Dépannage</translation>
+        <translation>Усунення несправностей</translation>
     </message>
 </context>
 <context>
@@ -3806,130 +3806,130 @@ Expiration : %1</translation>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="17"/>
         <source>settings_contacts_ldap_title</source>
-        <translation>Annuaires LDAP</translation>
+        <translation>LDAP-сервери</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="18"/>
         <source>settings_contacts_ldap_subtitle</source>
-        <translation>Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la magic search bar.</translation>
+        <translation>Додайте свої LDAP-сервери, щоб мати змогу шукати в пошуку.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="30"/>
         <source>information_popup_success_title</source>
-        <translation>Succès</translation>
+        <translation>Успіх</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="32"/>
         <source>settings_contacts_ldap_success_toast</source>
         <extracomment>&quot;L&apos;annuaire LDAP a été sauvegardé&quot;</extracomment>
-        <translation>L&apos;annuaire LDAP a été sauvegardé</translation>
+        <translation>LDAP-сервер збережено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="36"/>
         <source>settings_contacts_ldap_error_toast</source>
         <extracomment>&quot;Une erreur s&apos;est produite, la configuration LDAP n&apos;a pas été sauvegardée !&quot;</extracomment>
-        <translation>Erreur</translation>
+        <translation>Сталася помилка, конфігурацію LDAP не збережено!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="34"/>
         <source>information_popup_error_title</source>
-        <translation>Une erreur s&apos;est produite, la configuration LDAP n&apos;a pas été sauvegardée !</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="56"/>
         <source>settings_contacts_ldap_delete_confirmation_message</source>
         <extracomment>&quot;Supprimer l&apos;annuaire LDAP ?&quot;</extracomment>
-        <translation>Supprimer l&apos;annuaire LDAP ?</translation>
+        <translation>Видалити LDAP-сервер?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="67"/>
         <source>delete_ldap_server_accessible_name</source>
         <extracomment>Delete LDAP server</extracomment>
-        <translation>Supprimer le serveur LDAP</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="85"/>
         <source>settings_contacts_ldap_server_url_title</source>
         <extracomment>&quot;URL du serveur (ne peut être vide)&quot;</extracomment>
-        <translation>URL du serveur (ne peut être vide)</translation>
+        <translation>URL-адреса сервера (не може бути порожньою)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="93"/>
         <source>settings_contacts_ldap_bind_dn_title</source>
         <extracomment>&quot;Bind DN&quot;</extracomment>
-        <translation>Bind DN</translation>
+        <translation>Пов&apos;язаний DN</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="102"/>
         <source>settings_contacts_ldap_password_title</source>
         <extracomment>&quot;Mot de passe&quot;</extracomment>
-        <translation>Mot de passe</translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="108"/>
         <source>settings_contacts_ldap_use_tls_title</source>
         <extracomment>&quot;Utiliser TLS&quot;</extracomment>
-        <translation>Utiliser TLS</translation>
+        <translation>Використовувати TLS</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="116"/>
         <source>settings_contacts_ldap_search_base_title</source>
         <extracomment>&quot;Base de recherche (ne peut être vide)&quot;</extracomment>
-        <translation>Base de recherche (ne peut être vide)</translation>
+        <translation>Дослідницька база (не може бути порожньою)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="124"/>
         <source>settings_contacts_ldap_search_filter_title</source>
         <extracomment>&quot;Filtre&quot;</extracomment>
-        <translation>Filtre</translation>
+        <translation>Фільтр</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="133"/>
         <source>settings_contacts_ldap_max_results_title</source>
         <extracomment>&quot;Nombre maximum de résultats&quot;</extracomment>
-        <translation>Nombre maximum de résultats</translation>
+        <translation>Максимальні результати</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="142"/>
         <source>settings_contacts_ldap_request_delay_title</source>
         <extracomment>&quot;Délai entre 2 requêtes (en millisecondes)&quot;</extracomment>
-        <translation>Délai entre 2 requêtes (en millisecondes)</translation>
+        <translation>Затримка між двома запитами (у мілісекундах)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="150"/>
         <source>settings_contacts_ldap_request_timeout_title</source>
         <extracomment>&quot;Durée maximun (en secondes)&quot;</extracomment>
-        <translation>Durée maximun (en secondes)</translation>
+        <translation>Тайм-аут (у секундах)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="159"/>
         <source>settings_contacts_ldap_min_characters_title</source>
         <extracomment>&quot;Nombre minimum de caractères pour la requête&quot;</extracomment>
-        <translation>Nombre minimum de caractères pour la requête</translation>
+        <translation>Мінімальна кількість символів для запиту</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="168"/>
         <source>settings_contacts_ldap_name_attributes_title</source>
         <extracomment>&quot;Attributs de nom&quot;</extracomment>
-        <translation>Attributs de nom</translation>
+        <translation>Атрибути назви</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="176"/>
         <source>settings_contacts_ldap_sip_attributes_title</source>
         <extracomment>&quot;Attributs SIP&quot;</extracomment>
-        <translation>Attributs SIP</translation>
+        <translation>Атрибути SIP</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="184"/>
         <source>settings_contacts_ldap_sip_domain_title</source>
         <extracomment>&quot;Domaine SIP&quot;</extracomment>
-        <translation>Domaine SIP</translation>
+        <translation>SIP-домен</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="190"/>
         <source>settings_contacts_ldap_debug_title</source>
         <extracomment>&quot;Débogage&quot;</extracomment>
-        <translation>Débogage</translation>
+        <translation>Налагодження</translation>
     </message>
 </context>
 <context>
@@ -3937,7 +3937,7 @@ Expiration : %1</translation>
     <message>
         <location filename="../../view/Control/Popup/Loading/LoadingPopup.qml" line="39"/>
         <source>cancel</source>
-        <translation>Annuler</translation>
+        <translation>Скасувати</translation>
     </message>
 </context>
 <context>
@@ -3947,45 +3947,45 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="27"/>
         <source>username</source>
         <extracomment>Nom d&apos;utilisateur : username</extracomment>
-        <translation>Nom d&apos;utilisateur</translation>
+        <translation>Ім&apos;я користувача</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="36"/>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="46"/>
         <source>password</source>
         <extracomment>Mot de passe</extracomment>
-        <translation>Mot de passe</translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="27"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 requit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="69"/>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="75"/>
         <source>assistant_account_login</source>
         <extracomment>&quot;Connexion&quot;</extracomment>
-        <translation>Connexion</translation>
+        <translation>Підключення</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="114"/>
         <source>assistant_account_login_missing_username</source>
         <extracomment>&quot;Veuillez saisir un nom d&apos;utilisateur&quot;</extracomment>
-        <translation>Veuillez saisir un nom d&apos;utilisateur</translation>
+        <translation>Будь ласка, введіть ім&apos;я користувача</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="117"/>
         <source>assistant_account_login_missing_password</source>
         <extracomment>&quot;Veuillez saisir un mot de passe&quot;</extracomment>
-        <translation>Veuillez saisir un mot de passe</translation>
+        <translation>Будь ласка, введіть пароль</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="131"/>
         <source>assistant_forgotten_password</source>
         <extracomment>&quot;Mot de passe oublié ?&quot;</extracomment>
-        <translation>Mot de passe oublié ?</translation>
+        <translation>Забули пароль?</translation>
     </message>
 </context>
 <context>
@@ -3995,31 +3995,31 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="141"/>
         <source>help_about_title</source>
         <extracomment>À propos de %1</extracomment>
-        <translation>À propos de %1</translation>
+        <translation>Про %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="87"/>
         <source>help_about_privacy_policy_title</source>
         <extracomment>&quot;Politique de confidentialité&quot;</extracomment>
-        <translation>Politique de confidentialité</translation>
+        <translation>Політика конфіденційності</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="89"/>
         <source>help_about_privacy_policy_link</source>
         <extracomment>&quot;Visiter notre potilique de confidentialité&quot;</extracomment>
-        <translation>Visiter notre potilique de confidentialité</translation>
+        <translation>Перегляньте нашу політику конфіденційності</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="96"/>
         <source>help_about_version_title</source>
         <extracomment>&quot;Version&quot;</extracomment>
-        <translation>Version</translation>
+        <translation>Версія</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="102"/>
         <source>help_about_licence_title</source>
         <extracomment>&quot;Licence&quot;</extracomment>
-        <translation>Licence</translation>
+        <translation>Ліцензія</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="108"/>
@@ -4031,7 +4031,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="119"/>
         <source>close</source>
         <extracomment>&quot;Fermer&quot;</extracomment>
-        <translation>Fermer</translation>
+        <translation>Закрити</translation>
     </message>
 </context>
 <context>
@@ -4040,71 +4040,71 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="31"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation>Retour</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="45"/>
         <source>assistant_account_login</source>
         <extracomment>Connexion</extracomment>
-        <translation>Connexion</translation>
+        <translation>Підключення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="63"/>
         <source>assistant_no_account_yet</source>
         <extracomment>&quot;Pas encore de compte ?&quot;</extracomment>
-        <translation>Pas encore de compte ?</translation>
+        <translation>Ще немає облікового запису?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="71"/>
         <source>assistant_account_register</source>
         <extracomment>&quot;S&apos;inscrire&quot;</extracomment>
-        <translation>S&apos;inscrire</translation>
+        <translation>Зареєструватися</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="97"/>
         <source>assistant_login_third_party_sip_account_title</source>
         <extracomment>&quot;Compte SIP tiers&quot;</extracomment>
-        <translation>Compte SIP tiers</translation>
+        <translation>Сторонній обліковий запис SIP</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="106"/>
         <source>assistant_login_remote_provisioning</source>
         <extracomment>&quot;Configuration distante&quot;</extracomment>
-        <translation>Configuration distante</translation>
+        <translation>Віддалене налаштування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="134"/>
         <source>assistant_login_download_remote_config</source>
         <extracomment>&quot;Télécharger une configuration distante&quot;</extracomment>
-        <translation>Télécharger une configuration distante</translation>
+        <translation>Завантажити віддалену конфігурацію</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="136"/>
         <source>assistant_login_remote_provisioning_url</source>
         <extracomment>&apos;Veuillez entrer le lien de configuration qui vous a été fourni :&apos;</extracomment>
-        <translation>Veuillez entrer le lien de configuration qui vous a été fourni :</translation>
+        <translation>Будь ласка, введіть надане вам посилання для налаштування:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="138"/>
         <source>cancel</source>
-        <translation>Annuler</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="143"/>
         <source>validate</source>
         <extracomment>&quot;Valider&quot;</extracomment>
-        <translation>Valider</translation>
+        <translation>Підтвердити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="155"/>
         <source>settings_advanced_remote_provisioning_url</source>
         <extracomment>&apos;Lien de configuration distante&apos;</extracomment>
-        <translation>Lien de configuration distante</translation>
+        <translation>Посилання для віддаленого налаштування</translation>
     </message>
     <message>
         <location filename="../../core/login/LoginPage.cpp" line="86"/>
         <source>default_account_connection_state_error_toast</source>
-        <translation>Erreur durant la connexion</translation>
+        <translation>Помилка під час підключення</translation>
     </message>
 </context>
 <context>
@@ -4112,7 +4112,7 @@ Expiration : %1</translation>
     <message>
         <location filename="../../core/search/MagicSearchList.cpp" line="132"/>
         <source>device_id</source>
-        <translation>Téléphone</translation>
+        <translation>Телефон</translation>
     </message>
 </context>
 <context>
@@ -4121,144 +4121,144 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="142"/>
         <source>bottom_navigation_calls_label</source>
         <extracomment>&quot;Appels&quot;</extracomment>
-        <translation>Appels</translation>
+        <translation>Виклики</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="144"/>
         <source>open_calls_page_accessible_name</source>
         <extracomment>&quot;Open calls page&quot;</extracomment>
-        <translation>Ouvrir la page des appels</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="150"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
-        <translation>Contacts</translation>
+        <translation>Контакти</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="152"/>
         <source>open_contacts_page_accessible_name</source>
         <extracomment>&quot;Open contacts page&quot;</extracomment>
-        <translation>Ouvrir la page des contacts</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="158"/>
         <source>bottom_navigation_conversations_label</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation>Conversations</translation>
+        <translation>Розмови</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="160"/>
         <source>open_conversations_page_accessible_name</source>
         <extracomment>&quot;Open conversations page&quot;</extracomment>
-        <translation>Ouvrir la page des conversations</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="167"/>
         <source>bottom_navigation_meetings_label</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
-        <translation>Réunions</translation>
+        <translation>Наради</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="169"/>
         <source>open_contact_page_accessible_name</source>
         <extracomment>&quot;Open meetings page&quot;</extracomment>
-        <translation>Ouvrir la page des réunions</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="219"/>
         <source>searchbar_placeholder_text</source>
         <extracomment>&quot;Rechercher un contact, appeler %1&quot;</extracomment>
-        <translation>Rechercher un contact, appeler %1</translation>
+        <translation>Знайти контакт, зателефонувати %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="221"/>
         <source>searchbar_placeholder_text_chat_feature_enabled</source>
         <extracomment>&quot;ou envoyer un message …&quot;</extracomment>
-        <translation>ou envoyer un message …</translation>
+        <translation>або надішліть повідомлення…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="307"/>
         <source>do_not_disturb_accessible_name</source>
         <extracomment>&quot;Do not disturb&quot;</extracomment>
-        <translation>Ne pas déranger</translation>
+        <translation>Не турбувати</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="325"/>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="468"/>
         <source>contact_presence_status_disable_do_not_disturb</source>
         <extracomment>&quot;Désactiver ne pas déranger&quot;</extracomment>
-        <translation>Désactiver ne pas déranger</translation>
+        <translation>Вимкнути режим «Не турбувати»</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="379"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="381"/>
         <source>no_voicemail_uri_error_message</source>
         <extracomment>&quot;L&apos;URI de messagerie vocale n&apos;est pas définie.&quot;</extracomment>
-        <translation>L&apos;URI de messagerie vocale n&apos;est pas définie.</translation>
+        <translation>URI голосової пошти не визначено.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="394"/>
         <source>account_list_accessible_name</source>
         <extracomment>&quot;Account list&quot;</extracomment>
-        <translation>liste des comptes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="432"/>
         <source>application_options_accessible_name</source>
         <extracomment>&quot;Application options&quot;</extracomment>
-        <translation>Options de l&apos;application</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="457"/>
         <source>drawer_menu_manage_account</source>
         <extracomment>Mon compte</extracomment>
-        <translation>Mon compte</translation>
+        <translation>Мій обліковий запис</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="470"/>
         <source>contact_presence_status_enable_do_not_disturb</source>
         <extracomment>&quot;Activer ne pas déranger&quot;</extracomment>
-        <translation>Activer ne pas déranger</translation>
+        <translation>Увімкнути режим «Не турбувати»</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="485"/>
         <source>settings_title</source>
-        <translation>Paramètres</translation>
+        <translation>Налаштування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="501"/>
         <source>recordings_title</source>
         <extracomment>&quot;Enregistrements&quot;</extracomment>
-        <translation>Enregistrements</translation>
+        <translation>Записи</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="512"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
-        <translation>Aide</translation>
+        <translation>Допомога</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="527"/>
         <source>help_quit_title</source>
         <extracomment>&quot;Quitter l&apos;application&quot;</extracomment>
-        <translation>Quitter l&apos;application</translation>
+        <translation>Закрити застосунок</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="532"/>
         <source>quit_app_question</source>
         <extracomment>&quot;Quitter %1 ?&quot;</extracomment>
-        <translation>Quitter %1 ?</translation>
+        <translation>Закрити %1?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="555"/>
         <source>drawer_menu_add_account</source>
         <extracomment>&quot;Ajouter un compte&quot;</extracomment>
-        <translation>Ajouter un compte</translation>
+        <translation>Додати обліковий запис</translation>
     </message>
 </context>
 <context>
@@ -4267,77 +4267,77 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="41"/>
         <source>information_popup_connexion_succeed_title</source>
         <extracomment>&quot;Connexion réussie&quot;</extracomment>
-        <translation>Connexion réussie</translation>
+        <translation>Підключення успішне</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="43"/>
         <source>information_popup_connexion_succeed_message</source>
         <extracomment>&quot;Vous êtes connecté en mode %1&quot;</extracomment>
-        <translation>Vous êtes connecté en mode %1</translation>
+        <translation>Ви увійшли в режим %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="45"/>
         <source>interoperable</source>
         <extracomment>interopérable</extracomment>
-        <translation>interopérable</translation>
+        <translation>сумісним</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="74"/>
         <source>call_transfer_successful_toast_title</source>
         <extracomment>&quot;Appel transféré&quot;</extracomment>
-        <translation>Appel transféré</translation>
+        <translation>Переадресація виклику</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="76"/>
         <source>call_transfer_successful_toast_message</source>
         <extracomment>&quot;Votre correspondant a été transféré au contact sélectionné&quot;</extracomment>
-        <translation>Votre correspondant a été transféré au contact sélectionné</translation>
+        <translation>Вашого співрозмовника перенаправлено до обраного контакту</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="128"/>
         <source>information_popup_success_title</source>
-        <translation>Enregistré</translation>
+        <translation>Збережено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="130"/>
         <source>information_popup_changes_saved</source>
         <extracomment>&quot;Les changements ont été sauvegardés&quot;</extracomment>
-        <translation>Les changements ont été sauvegardés</translation>
+        <translation>Зміни збережено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="215"/>
         <source>captcha_validation_loading_message</source>
         <extracomment>&quot;Veuillez valider le captcha sur la page web&quot;</extracomment>
-        <translation>Veuillez valider le captcha sur la page web</translation>
+        <translation>Будь ласка, підтвердьте капчу на веб-сторінці</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="223"/>
         <source>assistant_register_error_title</source>
         <extracomment>&quot;Erreur lors de la création&quot;</extracomment>
-        <translation>Erreur lors de la création</translation>
+        <translation>Помилка під час створення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="242"/>
         <source>assistant_register_success_title</source>
         <extracomment>&quot;Compte créé&quot;</extracomment>
-        <translation>Compte créé</translation>
+        <translation>Обліковий запис створено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="244"/>
         <source>assistant_register_success_message</source>
         <extracomment>&quot;Le compte a été créé. Vous pouvez maintenant vous connecter&quot;</extracomment>
-        <translation>Le compte a été créé. Vous pouvez maintenant vous connecter</translation>
+        <translation>Обліковий запис створено. Тепер ви можете увійти.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="248"/>
         <source>assistant_register_error_code</source>
         <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
-        <translation>Erreur dans le code de validation</translation>
+        <translation>Помилка в коді перевірки</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="249"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
 </context>
 <context>
@@ -4345,7 +4345,7 @@ Expiration : %1</translation>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="44"/>
         <source>group_infos_manage_participants</source>
-        <translation>Participants</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4354,37 +4354,37 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="42"/>
         <source>meeting_schedule_meeting_label</source>
         <extracomment>&quot;Réunion&quot;</extracomment>
-        <translation>Réunion</translation>
+        <translation>Нарада</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="54"/>
         <source>meeting_schedule_broadcast_label</source>
         <extracomment>&quot;Webinar&quot;</extracomment>
-        <translation>Webinar</translation>
+        <translation>Вебінар</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="77"/>
         <source>meeting_schedule_subject_hint</source>
         <extracomment>&quot;Ajouter un titre&quot;</extracomment>
-        <translation>Ajouter un titre</translation>
+        <translation>Додати заголовок</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="224"/>
         <source>meeting_schedule_description_hint</source>
         <extracomment>&quot;Ajouter une description&quot;</extracomment>
-        <translation>Ajouter une description</translation>
+        <translation>Додати опис</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="275"/>
         <source>meeting_schedule_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
-        <translation>Ajouter des participants</translation>
+        <translation>Додати учасників</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="337"/>
         <source>meeting_schedule_send_invitations_title</source>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
-        <translation>Envoyer une invitation aux participants</translation>
+        <translation>Надіслати запрошення учасникам</translation>
     </message>
 </context>
 <context>
@@ -4393,19 +4393,19 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="280"/>
         <source>meeting_info_cancelled</source>
         <extracomment>&quot;Réunion annulée&quot;</extracomment>
-        <translation>Réunion annulée</translation>
+        <translation>Нараду скасовано</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="304"/>
         <source>meetings_list_no_meeting_for_today</source>
         <extracomment>&quot;Aucune réunion aujourd&apos;hui&quot;</extracomment>
-        <translation>Aucune réunion aujourd&apos;hui</translation>
+        <translation>Наради на сьогодні відсутні</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="340"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
-        <translation>Supprimer la réunion</translation>
+        <translation>Видалити нараду</translation>
     </message>
 </context>
 <context>
@@ -4414,85 +4414,85 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="18"/>
         <source>meetings_add</source>
         <extracomment>&quot;Créer une réunion&quot;</extracomment>
-        <translation>Créer une réunion</translation>
+        <translation>Створити нараду</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="20"/>
         <source>meetings_list_empty</source>
         <extracomment>&quot;Aucune réunion&quot;</extracomment>
-        <translation>Aucune réunion</translation>
+        <translation>Нарада відсутня</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="89"/>
         <source>meeting_schedule_cancel_dialog_message</source>
         <extracomment>&quot;Souhaitez-vous annuler et supprimer cette réunion ?&quot;</extracomment>
-        <translation>Souhaitez-vous annuler et supprimer cette réunion ?</translation>
+        <translation>Ви хочете скасувати та видалити цю нараду?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="91"/>
         <source>meeting_schedule_delete_dialog_message</source>
         <extracomment>Souhaitez-vous supprimer cette réunion ?</extracomment>
-        <translation>Souhaitez-vous supprimer cette réunion ?</translation>
+        <translation>Ви хочете видалити цю нараду?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="104"/>
         <source>meeting_schedule_cancel_and_delete_action</source>
         <extracomment>&quot;Annuler et supprimer&quot;</extracomment>
-        <translation>Annuler et supprimer</translation>
+        <translation>Скасувати та видалити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="113"/>
         <source>meeting_schedule_delete_only_action</source>
         <extracomment>&quot;Supprimer seulement&quot;</extracomment>
-        <translation>Supprimer seulement</translation>
+        <translation>Тільки видалити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="115"/>
         <source>meeting_schedule_delete_action</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation>Supprimer</translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="124"/>
         <source>back_action</source>
         <extracomment>Retour</extracomment>
-        <translation>Retour</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="187"/>
         <source>meetings_list_title</source>
         <extracomment>Réunions</extracomment>
-        <translation>Réunions</translation>
+        <translation>Наради</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="226"/>
         <source>meetings_search_hint</source>
         <extracomment>&quot;Rechercher une réunion&quot;</extracomment>
-        <translation>Rechercher une réunion</translation>
+        <translation>Знайти нараду</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="243"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
-        <translation>Aucun résultat…</translation>
+        <translation>Без результату…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="245"/>
         <source>meetings_empty_list</source>
         <extracomment>&quot;Aucune réunion&quot;</extracomment>
-        <translation>Aucune réunion</translation>
+        <translation>Нарада відсутня</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="320"/>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="381"/>
         <source>meeting_schedule_title</source>
         <extracomment>&quot;Nouvelle réunion&quot;</extracomment>
-        <translation>Nouvelle réunion</translation>
+        <translation>Нова нарада</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="331"/>
         <source>create</source>
-        <translation>Créer</translation>
+        <translation>Створити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="338"/>
@@ -4502,120 +4502,121 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="497"/>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="545"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="340"/>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="495"/>
         <source>meeting_schedule_mandatory_field_not_filled_toast</source>
         <extracomment>Veuillez saisir un titre et sélectionner au moins un participant</extracomment>
-        <translation>Veuillez saisir un titre et sélectionner au moins un participant</translation>
+        <translation>Будь ласка, введіть назву та оберіть хоча б одного учасника</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="344"/>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="498"/>
         <source>meeting_schedule_duration_error_toast</source>
         <extracomment>&quot;La fin de la conférence doit être plus récente que son début&quot;</extracomment>
-        <translation>La fin de la conférence doit être plus récente que son début</translation>
+        <translation>Кінець конференції має бути нещодавнішим за її початок</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="348"/>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="388"/>
         <source>meeting_schedule_creation_in_progress</source>
         <extracomment>&quot;Création de la réunion en cours …&quot;</extracomment>
-        <translation>Création de la réunion en cours…</translation>
+        <translation>Створення триває…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="383"/>
         <source>meeting_info_created_toast</source>
         <extracomment>&quot;Réunion planifiée avec succès&quot;</extracomment>
-        <translation>Réunion planifiée avec succès</translation>
+        <translation>Нараду успішно створено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="395"/>
         <source>meeting_failed_to_schedule_toast</source>
         <extracomment>&quot;Échec de création de la réunion !&quot;</extracomment>
-        <translation>Échec de création de la réunion !</translation>
+        <translation>Не вдалося створити нараду!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="487"/>
         <source>save</source>
-        <translation>Enregistrer</translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="536"/>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="763"/>
         <source>saved</source>
         <extracomment>&quot;Enregistré&quot;</extracomment>
-        <translation>Enregistré</translation>
+        <translation>Збережено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="538"/>
         <source>meeting_info_updated_toast</source>
         <extracomment>&quot;Réunion mise à jour&quot;</extracomment>
-        <translation>Réunion mise à jour</translation>
+        <translation>Нараду оновлено</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="543"/>
         <source>meeting_schedule_edit_in_progress</source>
         <extracomment>&quot;Modification de la réunion en cours…&quot;</extracomment>
-        <translation>Modification de la réunion en cours…</translation>
+        <translation>Триває оновлення інформації про нараду…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="547"/>
         <source>meeting_failed_to_edit_toast</source>
         <extracomment>&quot;Échec de la modification de la réunion !&quot;</extracomment>
-        <translation>Échec de la modification de la réunion !</translation>
+        <translation>Не вдалося оновити нараду!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="591"/>
         <source>meeting_schedule_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
-        <translation>Ajouter des participants</translation>
+        <translation>Додати учасників</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="605"/>
         <source>meeting_schedule_add_participants_apply</source>
-        <translation>Appliquer</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="615"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation>
-            <numerusform>%1 participant sélectionné</numerusform>
-            <numerusform>%1 participants sélectionnés</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="703"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
-        <translation>Supprimer la réunion</translation>
+        <translation>Видалити нараду</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="765"/>
         <source>meeting_address_copied_to_clipboard_toast</source>
         <extracomment>&quot;Adresse de la réunion copiée&quot;</extracomment>
-        <translation>Adresse de la réunion copiée</translation>
+        <translation>URI наради скопійовано</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="801"/>
         <source>meeting_schedule_timezone_title</source>
         <extracomment>&quot;Fuseau horaire&quot;</extracomment>
-        <translation>Fuseau horaire</translation>
+        <translation>Часовий пояс</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="902"/>
         <source>meeting_info_organizer_label</source>
         <extracomment>&quot;Organisateur&quot;</extracomment>
-        <translation>Organisateur</translation>
+        <translation>Організатор</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="921"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
-        <translation>Rejoindre la réunion</translation>
+        <translation>Приєднатись до наради</translation>
     </message>
 </context>
 <context>
@@ -4624,19 +4625,19 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="15"/>
         <source>settings_meetings_display_title</source>
         <extracomment>&quot;Affichage&quot;</extracomment>
-        <translation>Affichage</translation>
+        <translation>Відображення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="33"/>
         <source>settings_meetings_default_layout_title</source>
         <extracomment>&quot;Mode d’affichage par défaut&quot;</extracomment>
-        <translation>Mode d’affichage par défaut</translation>
+        <translation>Режим відображення за замовчуванням</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="41"/>
         <source>settings_meetings_default_layout_subtitle</source>
         <extracomment>&quot;Le mode d’affichage des participants en réunions&quot;</extracomment>
-        <translation>Le mode d’affichage des participants en réunions</translation>
+        <translation>Як відображаються учасники на нарадах</translation>
     </message>
 </context>
 <context>
@@ -4645,7 +4646,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Chat/MessageImdnStatusInfos.qml" line="11"/>
         <source>message_details_status_title</source>
         <extracomment>Message status</extracomment>
-        <translation>Statut du message</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4654,13 +4655,13 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Chat/MessageReactionsInfos.qml" line="12"/>
         <source>message_details_reactions_title</source>
         <extracomment>Reactions</extracomment>
-        <translation>Réactions</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/MessageReactionsInfos.qml" line="55"/>
         <source>click_to_delete_reaction_info</source>
         <extracomment>Click to delete</extracomment>
-        <translation>Appuyez pour supprimer</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4669,13 +4670,13 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Chat/MessageSharedFilesInfos.qml" line="39"/>
         <source>no_shared_medias</source>
         <extracomment>No media</extracomment>
-        <translation>Aucun média</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/MessageSharedFilesInfos.qml" line="41"/>
         <source>no_shared_documents</source>
         <extracomment>No document</extracomment>
-        <translation>Aucun document</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4685,7 +4686,7 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="60"/>
         <source>multimedia_settings_ringer_title</source>
         <extracomment>Ringtone - Incoming calls</extracomment>
-        <translation>Sonnerie - Appels entrants</translation>
+        <translation>Мелодія дзвінка - Вхідні виклики</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="60"/>
@@ -4694,7 +4695,7 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="241"/>
         <source>choose_something_accessible_name</source>
         <extracomment>Choose %1</extracomment>
-        <translation>Sélection %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="80"/>
@@ -4702,14 +4703,14 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="114"/>
         <source>multimedia_settings_speaker_title</source>
         <extracomment>&quot;Haut-parleurs&quot;</extracomment>
-        <translation>Haut-parleurs</translation>
+        <translation>Динаміки</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="114"/>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="165"/>
         <source>device_volume_accessible_name</source>
         <extracomment>%1 volume</extracomment>
-        <translation>%1 volume</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="131"/>
@@ -4717,14 +4718,14 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="165"/>
         <source>multimedia_settings_microphone_title</source>
         <extracomment>&quot;Microphone&quot;</extracomment>
-        <translation>Microphone</translation>
+        <translation>Мікрофон</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="221"/>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="241"/>
         <source>multimedia_settings_camera_title</source>
         <extracomment>&quot;Caméra&quot;</extracomment>
-        <translation>Caméra</translation>
+        <translation>Камера</translation>
     </message>
 </context>
 <context>
@@ -4733,13 +4734,13 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Settings/NetworkSettingsLayout.qml" line="14"/>
         <source>settings_network_title</source>
         <extracomment>&quot;Réseau&quot;</extracomment>
-        <translation>Réseau</translation>
+        <translation>Мережа</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/NetworkSettingsLayout.qml" line="31"/>
         <source>settings_network_allow_ipv6</source>
         <extracomment>&quot;Autoriser l&apos;IPv6&quot;</extracomment>
-        <translation>Autoriser l&apos;IPv6</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4748,13 +4749,13 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="23"/>
         <source>call_transfer_active_calls_label</source>
         <extracomment>&quot;Appels en cours&quot;</extracomment>
-        <translation>Appels en cours</translation>
+        <translation>Поточний виклик</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="17"/>
         <source>call_start_group_call_title</source>
         <extracomment>Appel de groupe</extracomment>
-        <translation>Appel de groupe</translation>
+        <translation>Груповий виклик</translation>
     </message>
 </context>
 <context>
@@ -4763,7 +4764,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Chat/NewChatForm.qml" line="14"/>
         <source>chat_start_group_chat_title</source>
         <extracomment>Nouveau groupe</extracomment>
-        <translation>Nouveau groupe</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4772,19 +4773,19 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="94"/>
         <source>call_audio_incoming</source>
         <extracomment>&quot;Appel entrant&quot;</extracomment>
-        <translation>Appel entrant</translation>
+        <translation>Вихідний виклик</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="117"/>
         <source>dialog_accept</source>
         <extracomment>&quot;Accepter&quot;</extracomment>
-        <translation>Accepter</translation>
+        <translation>Прийняти</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="135"/>
         <source>dialog_deny</source>
         <extracomment>&quot;Refuser</extracomment>
-        <translation>Refuser</translation>
+        <translation>Відхилити</translation>
     </message>
 </context>
 <context>
@@ -4793,36 +4794,36 @@ Expiration : %1</translation>
         <location filename="../../core/notifier/Notifier.cpp" line="310"/>
         <source>new_call_alert_accessible_name</source>
         <extracomment>New call from %1</extracomment>
-        <translation>Nouvel appel de %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="363"/>
         <source>new_voice_message</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
-        <translation>Message vocal reçu !</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="364"/>
         <source>new_file_message</source>
-        <translation>Fichier reçu !</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="367"/>
         <source>new_conference_invitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
-        <translation>Nouvelle invitation à une conférence !</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="387"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
-        <translation>Nouveaux messages reçus !</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="394"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
-        <translation>Nouveau message sur la conversation %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4830,114 +4831,114 @@ Expiration : %1</translation>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="56"/>
         <source>OAuthHttpServerReplyHandler is not listening</source>
-        <translation>OAuthHttpServerReplyHandler n&apos;est pas disponible</translation>
+        <translation>Обробник відповідей HTTP-сервера OAuth не активний</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="106"/>
         <source>oidc_authentication_timeout_message</source>
         <extracomment>Timeout: Not authenticated</extracomment>
-        <translation>Timeout : non authentifié</translation>
+        <translation>Тайм-аут: Не автентифіковано</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="125"/>
         <source>oidc_authentication_granted_message</source>
         <extracomment>Authentication granted</extracomment>
-        <translation>Authentification accordée</translation>
+        <translation>Автентифікацію пройдена</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="132"/>
         <source>oidc_authentication_not_authenticated_message</source>
         <extracomment>Not authenticated</extracomment>
-        <translation>Non authentifié</translation>
+        <translation>Не автентифіковано</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="138"/>
         <source>oidc_authentication_refresh_message</source>
         <extracomment>Refreshing token</extracomment>
-        <translation>Token en cours de rafraîchissement</translation>
+        <translation>Оновлення токена</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="143"/>
         <source>oidc_authentication_temporary_credentials_message</source>
         <extracomment>Temporary credentials received</extracomment>
-        <translation>Identifiants temporaires reçus</translation>
+        <translation>Отримано тимчасові облікові дані</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="161"/>
         <source>oidc_authentication_network_error</source>
         <extracomment>Network error</extracomment>
-        <translation>Erreur réseau</translation>
+        <translation>Помилка мережі</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="165"/>
         <source>oidc_authentication_server_error</source>
         <extracomment>Server error</extracomment>
-        <translation>Erreur de serveur</translation>
+        <translation>Помилка сервера</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="169"/>
         <source>oidc_authentication_token_not_found_error</source>
         <extracomment>OAuth token not found</extracomment>
-        <translation>Token OAuth non trouvé</translation>
+        <translation>OAuth токен не знайдено</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="173"/>
         <source>oidc_authentication_token_secret_not_found_error</source>
         <extracomment>OAuth token secret not found</extracomment>
-        <translation>Token OAuth secret non trouvé</translation>
+        <translation>OAuth секретний токен не знайдено</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="177"/>
         <source>oidc_authentication_callback_not_verified_error</source>
         <extracomment>OAuth callback not verified</extracomment>
-        <translation>Retour OAuth non vérifié</translation>
+        <translation>Зворотний OAuth виклик не перевірено</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="188"/>
         <source>oidc_authentication_request_auth_message</source>
         <extracomment>Requesting authorization from browser</extracomment>
-        <translation>En attente d&apos;autorisation du navigateur</translation>
+        <translation>Запит авторизації з браузера</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="219"/>
         <source>oidc_authentication_no_token_found_error</source>
-        <translation>Token non trouvé</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="232"/>
         <source>oidc_authentication_request_token_message</source>
         <extracomment>Requesting access token</extracomment>
-        <translation>En attente du token d&apos;accès</translation>
+        <translation>Запит токена доступу</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="237"/>
         <source>oidc_authentication_refresh_token_message</source>
         <extracomment>Refreshing access token</extracomment>
-        <translation>Token en cours de rafraîchissement</translation>
+        <translation>Оновлення токена доступу</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="242"/>
         <source>oidc_authentication_request_authorization_message</source>
         <extracomment>Requesting authorization</extracomment>
-        <translation>Autorisation en cours</translation>
+        <translation>Запит на авторизацію</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="247"/>
         <source>oidc_authentication_request_temporary_credentials_message</source>
         <extracomment>Requesting temporary credentials</extracomment>
-        <translation>En attente d&apos;identifiants temporaires</translation>
+        <translation>Запит тимчасових облікових даних</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="274"/>
         <source>oidc_authentication_no_auth_found_in_config_error</source>
         <extracomment>No authorization endpoint found in OpenID configuration</extracomment>
-        <translation>Pas d&apos;autorisation trouvé dans la configuration OpenID</translation>
+        <translation>У конфігурації OpenID не знайдено кінцевої точки авторизації</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="289"/>
         <source>oidc_authentication_no_token_found_in_config_error</source>
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
-        <translation>Pas de token trouvé dans la configuration OpenID</translation>
+        <translation>У конфігурації OpenID не знайдено кінцевої точки токена</translation>
     </message>
 </context>
 <context>
@@ -4946,13 +4947,13 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Display/Participant/ParticipantListView.qml" line="81"/>
         <source>meeting_participant_is_admin_label</source>
         <extracomment>&quot;Admin&quot;</extracomment>
-        <translation>Admin</translation>
+        <translation>Адміністратор</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Participant/ParticipantListView.qml" line="121"/>
         <source>meeting_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
-        <translation>Ajouter des participants</translation>
+        <translation>Додати учасників</translation>
     </message>
 </context>
 <context>
@@ -4961,13 +4962,13 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="58"/>
         <source>prefix_phone_number_accessible_name</source>
         <extracomment>%1 prefix</extracomment>
-        <translation>%1 préfix</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="76"/>
         <source>number_phone_number_accessible_name</source>
         <extracomment>%1 number</extracomment>
-        <translation>%1 indicatif téléphonique</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4976,13 +4977,13 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Button/PopupButton.qml" line="17"/>
         <source>close_popup_panel_accessible_name</source>
         <extracomment>&quot;Close %1 popup&quot;</extracomment>
-        <translation>Femer la %1 popup</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
         <source>open_popup_panel_accessible_name</source>
         <extracomment>&quot;Open %1&quot; popup</extracomment>
-        <translation>Ouvrir la %1 popup</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4990,27 +4991,27 @@ Expiration : %1</translation>
     <message>
         <location filename="../../view/Control/Display/Contact/Presence.qml" line="30"/>
         <source>contact_presence_reset_status</source>
-        <translation>Réinitialiser le statut</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Display/Contact/Presence.qml" line="56"/>
-        <source>contact_presence_custom_status</source>
-        <translation>Statut personnalisé</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Presence.qml" line="67"/>
         <source>contact_presence_button_set_custom_status</source>
-        <translation>Définir</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Presence.qml" line="81"/>
         <source>contact_presence_button_edit_custom_status</source>
-        <translation>Editer</translation>
+        <translation>Редагувати</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Presence.qml" line="89"/>
         <source>contact_presence_button_delete_custom_status</source>
-        <translation>Supprimer</translation>
+        <translation>Видалити</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Presence.qml" line="56"/>
+        <source>contact_presence_custom_status</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5018,7 +5019,7 @@ Expiration : %1</translation>
     <message>
         <location filename="../../view/Control/Container/Contact/PresenceNoteLayout.qml" line="40"/>
         <source>contact_presence_note_title</source>
-        <translation>Message personnalisé</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5026,12 +5027,12 @@ Expiration : %1</translation>
     <message>
         <location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml" line="16"/>
         <source>contact_presence_button_set_custom_status_title</source>
-        <translation>Définir un statut personnalisé</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml" line="70"/>
         <source>contact_presence_button_save_custom_status</source>
-        <translation>Enregistrer</translation>
+        <translation>Зберегти</translation>
     </message>
 </context>
 <context>
@@ -5044,7 +5045,7 @@ Expiration : %1</translation>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="64"/>
         <source>media_encryption_none</source>
-        <translation>None</translation>
+        <translation>Немає</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="66"/>
@@ -5055,97 +5056,97 @@ Expiration : %1</translation>
         <location filename="../../tool/LinphoneEnums.cpp" line="69"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
-        <translation>ZRTP - Post quantique</translation>
+        <translation>Постквантовий ZRTP</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="125"/>
         <source>message_state_in_progress</source>
         <extracomment>&quot;delivery in progress&quot;</extracomment>
-        <translation>envoi en cours</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="128"/>
         <source>message_state_delivered</source>
         <extracomment>sent</extracomment>
-        <translation>envoyé</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="131"/>
         <source>message_state_not_delivered</source>
         <extracomment>error</extracomment>
-        <translation>en erreur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="134"/>
         <source>message_state_file_transfer_error</source>
         <extracomment>cannot get file from server</extracomment>
-        <translation>impossible de récupérer le fichier depuis le serveur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="137"/>
         <source>message_state_file_transfer_done</source>
         <extracomment>file transfer has been completed successfully</extracomment>
-        <translation>fichier transféré avec succès</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="140"/>
         <source>message_state_delivered_to_user</source>
         <extracomment>received</extracomment>
-        <translation>reçu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="143"/>
         <source>message_state_displayed</source>
         <extracomment>read</extracomment>
-        <translation>lu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="146"/>
         <source>message_state_file_transfer__in_progress</source>
         <extracomment>file transfer in progress</extracomment>
-        <translation>transfert du fichier en cours</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="149"/>
         <source>message_state_pending_delivery</source>
         <extracomment>pending delivery</extracomment>
-        <translation>envoi en attente</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="152"/>
         <source>message_state_file_transfer_cancelling</source>
         <extracomment>file transfer canceled</extracomment>
-        <translation>transfert du fichier annulé</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="221"/>
         <source>incoming</source>
         <extracomment>&quot;Entrant&quot;</extracomment>
-        <translation>Entrant</translation>
+        <translation>Вхідний</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="224"/>
         <source>outgoing</source>
         <extracomment>&quot;Sortant&quot;</extracomment>
-        <translation>Sortant</translation>
+        <translation>Вихідний</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="250"/>
         <source>conference_layout_active_speaker</source>
         <extracomment>&quot;Participant actif&quot;</extracomment>
-        <translation>Intervenant actif</translation>
+        <translation>Активний динамік</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="252"/>
         <source>conference_layout_grid</source>
         <extracomment>&quot;Mosaïque&quot;</extracomment>
-        <translation>Mosaïque</translation>
+        <translation>Сітка</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="254"/>
         <source>conference_layout_audio_only</source>
         <extracomment>&quot;Audio uniquement&quot;</extracomment>
-        <translation>Audio uniquement</translation>
+        <translation>Тільки аудіо</translation>
     </message>
 </context>
 <context>
@@ -5160,31 +5161,31 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="45"/>
         <source>phone_number</source>
         <extracomment>&quot;numéro de téléphone&quot;</extracomment>
-        <translation>numéro de téléphone</translation>
+        <translation>номер телефону</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="47"/>
         <source>confirm_register_title</source>
         <extracomment>&quot;Inscription | Confirmer votre %1&quot;</extracomment>
-        <translation>Inscription | Confirmer votre %1</translation>
+        <translation>Зареєструватися | Підтвердити свій %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="77"/>
         <source>assistant_account_creation_confirmation_explanation</source>
         <extracomment>Nous vous avons envoyé un code de vérification sur votre %1 %2&lt;br&gt; Merci de le saisir ci-dessous</extracomment>
-        <translation>Nous vous avons envoyé un code de vérification sur votre %1 %2&lt;br&gt; Merci de le saisir ci-dessous</translation>
+        <translation>Ми надіслали вам код підтвердження на ваш %1 %2&lt;br&gt; Будь ласка, введіть його нижче</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="149"/>
         <source>assistant_account_creation_confirmation_did_not_receive_code</source>
         <extracomment>&quot;Vous n&apos;avez pas reçu le code ?&quot;</extracomment>
-        <translation>Vous n&apos;avez pas reçu le code ?</translation>
+        <translation>Не отримали код?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="157"/>
         <source>assistant_account_creation_confirmation_resend_code</source>
         <extracomment>&quot;Renvoyer un code&quot;</extracomment>
-        <translation>Renvoyer un code</translation>
+        <translation>Надіслати код повторно</translation>
     </message>
 </context>
 <context>
@@ -5193,39 +5194,39 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="46"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation>Retour</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="58"/>
         <source>assistant_account_register</source>
         <extracomment>&quot;Inscription</extracomment>
-        <translation>Inscription</translation>
+        <translation>Зареєструватися</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="77"/>
         <source>assistant_already_have_an_account</source>
-        <translation>Déjà un compte ?</translation>
+        <translation>Вже маєте обліковий запис?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="85"/>
         <source>assistant_account_login</source>
-        <translation>Connexion</translation>
+        <translation>Підключення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="107"/>
         <source>assistant_account_register_with_phone_number</source>
-        <translation>S&apos;inscrire avec un numéro de téléphone</translation>
+        <translation>Зареєструватися за допомогою номера телефону</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="109"/>
         <source>assistant_account_register_with_email</source>
-        <translation>S&apos;inscrire avec un email</translation>
+        <translation>Зареєструватися за допомогою електронної пошти</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="142"/>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="150"/>
         <source>username</source>
-        <translation>Nom d&apos;utilisateur</translation>
+        <translation>Ім&apos;я користувача</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="150"/>
@@ -5235,12 +5236,12 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="234"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 requit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="160"/>
         <source>domain</source>
-        <translation>Domaine</translation>
+        <translation>Домен</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="177"/>
@@ -5248,7 +5249,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="183"/>
         <source>phone_number</source>
         <extracomment>&quot;Numéro de téléphone&quot;</extracomment>
-        <translation>Numéro de téléphone</translation>
+        <translation>Номер телефону</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="189"/>
@@ -5260,68 +5261,68 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="210"/>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="219"/>
         <source>password</source>
-        <translation>Mot de passe</translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="225"/>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="234"/>
         <source>assistant_account_register_password_confirmation</source>
         <extracomment>&quot;Confirmation mot de passe&quot;</extracomment>
-        <translation>Confirmation mot de passe</translation>
+        <translation>Підтвердження пароля</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="269"/>
         <source>assistant_dialog_cgu_and_privacy_policy_message</source>
         <extracomment>&quot;J&apos;accepte les %1 et la %2&quot;</extracomment>
-        <translation>J&apos;accepte les %1 et la %2</translation>
+        <translation>Я приймаю %1 та %2</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="271"/>
         <source>assistant_dialog_general_terms_label</source>
         <extracomment>&quot;conditions d&apos;utilisation&quot;</extracomment>
-        <translation>conditions d&apos;utilisation</translation>
+        <translation>умови використання</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="273"/>
         <source>assistant_dialog_privacy_policy_label</source>
         <extracomment>&quot;politique de confidentialité&quot;</extracomment>
-        <translation>politique de confidentialité</translation>
+        <translation>політика конфіденційності</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="298"/>
         <source>assistant_account_create</source>
         <extracomment>&quot;Créer&quot;</extracomment>
-        <translation>Créer</translation>
+        <translation>Створити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="303"/>
         <source>assistant_account_create_missing_username_error</source>
         <extracomment>&quot;Veuillez entrer un nom d&apos;utilisateur&quot;</extracomment>
-        <translation>Veuillez entrer un nom d&apos;utilisateur</translation>
+        <translation>Будь ласка, введіть ім&apos;я користувача</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="307"/>
         <source>assistant_account_create_missing_password_error</source>
         <extracomment>&quot;Veuillez entrer un mot de passe&quot;</extracomment>
-        <translation>Veuillez entrer un mot de passe</translation>
+        <translation>Будь ласка, введіть пароль</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="311"/>
         <source>assistant_account_create_confirm_password_error</source>
         <extracomment>&quot;Les mots de passe sont différents&quot;</extracomment>
-        <translation>Les mots de passe sont différents</translation>
+        <translation>Паролі не збігаються</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="315"/>
         <source>assistant_account_create_missing_number_error</source>
         <extracomment>&quot;Veuillez entrer un numéro de téléphone&quot;</extracomment>
-        <translation>Veuillez entrer un numéro de téléphone</translation>
+        <translation>Будь ласка, введіть номер телефону</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="319"/>
         <source>assistant_account_create_missing_email_error</source>
         <extracomment>&quot;Veuillez entrer un email&quot;</extracomment>
-        <translation>Veuillez entrer un email</translation>
+        <translation>Будь ласка, введіть email</translation>
     </message>
 </context>
 <context>
@@ -5330,25 +5331,25 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="33"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation>Retour</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="44"/>
         <source>assistant_login_third_party_sip_account_title</source>
         <extracomment>Compte SIP tiers</extracomment>
-        <translation>Compte SIP tiers</translation>
+        <translation>Сторонній обліковий запис SIP</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="62"/>
         <source>assistant_no_account_yet</source>
         <extracomment>Pas encore de compte ?</extracomment>
-        <translation>Pas encore de compte ?</translation>
+        <translation>Ще немає облікового запису?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="71"/>
         <source>assistant_account_register</source>
         <extracomment>S&apos;inscrire</extracomment>
-        <translation>S&apos;inscrire</translation>
+        <translation>Зареєструватися</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="110"/>
@@ -5357,119 +5358,119 @@ Expiration : %1</translation>
 Ces fonctionnalités seront masquées si vous utilisez un compte SIP tiers.
 
 Pour les activer dans un projet commercial, merci de nous contacter.</source>
-        <translation>Certaines fonctionnalités telles que les conversations de groupe, les vidéo-conférences, etc… nécessitent un compte %1.
+        <translation>Деякі функції, такі як групові чати, відеоконференції тощо, вимагають облікового запису %1.
 
-Ces fonctionnalités seront masquées si vous utilisez un compte SIP tiers.
+Ці функції будуть приховані, якщо ви використовуєте сторонній обліковий запис SIP.
 
-Pour les activer dans un projet commercial, merci de nous contacter.</translation>
+Щоб увімкнути їх у комерційному проєкті, зв’яжіться з нами.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="133"/>
         <source>assistant_third_party_sip_account_create_linphone_account</source>
         <extracomment>&quot;Créer un compte linphone&quot;</extracomment>
-        <translation>Créer un compte linphone</translation>
+        <translation>Створити обліковий запис Linphone</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="145"/>
         <source>assistant_third_party_sip_account_warning_ok</source>
         <extracomment>&quot;Je comprends&quot;</extracomment>
-        <translation>Je comprends</translation>
+        <translation>Я розумію</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="190"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="200"/>
         <source>username</source>
         <extracomment>&quot;Nom d&apos;utilisateur&quot;</extracomment>
-        <translation>Nom d&apos;utilisateur</translation>
+        <translation>Ім&apos;я користувача</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="200"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="234"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 requit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="205"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="216"/>
         <source>password</source>
-        <translation>Mot de passe</translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="222"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="234"/>
         <source>sip_address_domain</source>
         <extracomment>&quot;Domaine&quot;</extracomment>
-        <translation>Domaine</translation>
+        <translation>Домен</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="245"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="252"/>
         <source>sip_address_display_name</source>
         <extracomment>Nom d&apos;affichage</extracomment>
-        <translation>Nom d&apos;affichage</translation>
+        <translation>Ім&apos;я для відображення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="257"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="276"/>
         <source>transport</source>
         <extracomment>&quot;Transport&quot;</extracomment>
-        <translation>Transport</translation>
+        <translation>Транспорт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="298"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="303"/>
         <source>assistant_account_login</source>
-        <translation>Connexion</translation>
+        <translation>Підключення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="354"/>
         <source>assistant_account_login_missing_username</source>
-        <translation>Veuillez saisir un nom d&apos;utilisateur</translation>
+        <translation>Будь ласка, введіть ім&apos;я користувача</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="356"/>
         <source>assistant_account_login_missing_password</source>
-        <translation>Veuillez saisir un mot de passe</translation>
+        <translation>Будь ласка, введіть пароль</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="359"/>
         <source>assistant_account_login_missing_domain</source>
         <extracomment>&quot;Veuillez saisir un nom de domaine</extracomment>
-        <translation>Veuillez saisir un nom de domaine</translation>
+        <translation>Будь ласка, введіть домен</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="382"/>
         <source>login_advanced_parameters_label</source>
         <extracomment>Advanced parameters</extracomment>
-        <translation>Paramètres avancés</translation>
+        <translation>Додаткові налаштування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="390"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="397"/>
         <source>login_proxy_server_url</source>
         <extracomment>&quot;Outbound SIP Proxy URI&quot;</extracomment>
-        <translation>URI du proxy SIP sortant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="392"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
-        <translation>Si ce champ est rempli, l’outbound proxy sera activé automatiquement. Laissez-le vide pour le désactiver.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="405"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="410"/>
         <source>login_registrar_uri</source>
         <extracomment>&quot;Registrar URI&quot;</extracomment>
-        <translation>Registrar URI</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="418"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="424"/>
         <source>login_id</source>
         <extracomment>&quot;Authentication ID (if different)&quot;</extracomment>
-        <translation>Identifiant de connexion (si différent)</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5478,37 +5479,37 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="23"/>
         <source>screencast_settings_choose_window_text</source>
         <extracomment>&quot;Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants&quot;</extracomment>
-        <translation>Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants</translation>
+        <translation>Будь ласка, виберіть екран або вікно, яким ви хочете поділитися з іншими учасниками.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="33"/>
         <source>screencast_settings_all_screen_label</source>
         <extracomment>&quot;Ecran entier&quot;</extracomment>
-        <translation>Écran entier</translation>
+        <translation>Повний екран</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="35"/>
         <source>screencast_settings_one_window_label</source>
         <extracomment>&quot;Fenêtre&quot;</extracomment>
-        <translation>Fenêtre</translation>
+        <translation>Вікно</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="93"/>
         <source>screencast_settings_screen</source>
         <extracomment>&quot;Ecran %1&quot;</extracomment>
-        <translation>Écran %1</translation>
+        <translation>Екран %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="178"/>
         <source>stop</source>
         <extracomment>&quot;Stop</extracomment>
-        <translation>Stop</translation>
+        <translation>Стоп</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="180"/>
         <source>share</source>
         <extracomment>&quot;Partager&quot;</extracomment>
-        <translation>Partager</translation>
+        <translation>Поділитись</translation>
     </message>
 </context>
 <context>
@@ -5517,13 +5518,13 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../view/Control/Input/SearchBar.qml" line="124"/>
         <source>open_dialer_acccessibility_label</source>
         <extracomment>&quot;Open dialer&quot;</extracomment>
-        <translation>Ouvrir le numéroteur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/SearchBar.qml" line="144"/>
         <source>clear_text_input_acccessibility_label</source>
         <extracomment>&quot;Clear text input&quot;</extracomment>
-        <translation>Supprimer le texte saisi</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5532,43 +5533,43 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="22"/>
         <source>manage_account_choose_mode_title</source>
         <extracomment>&quot;Choisir votre mode&quot;</extracomment>
-        <translation>Choisir votre mode</translation>
+        <translation>Оберіть режим</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="30"/>
         <source>manage_account_choose_mode_message</source>
         <extracomment>&quot;Vous pourrez changer de mode plus tard.&quot;</extracomment>
-        <translation>Vous pourrez changer de mode plus tard.</translation>
+        <translation>Ви зможете змінити режим пізніше.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="50"/>
         <source>manage_account_e2e_encrypted_mode_default_title</source>
         <extracomment>&quot;Chiffrement de bout en bout&quot;</extracomment>
-        <translation>Chiffrement de bout en bout</translation>
+        <translation>Наскрізне шифрування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="52"/>
         <source>manage_account_e2e_encrypted_mode_default_summary</source>
         <extracomment>&quot;Ce mode vous garanti la confidentialité de tous vos échanges. Notre technologie de chiffrement de bout en bout assure un niveau de sécurité maximal pour tous vos échanges.&quot;</extracomment>
-        <translation>Ce mode vous garanti la confidentialité de tous vos échanges. Notre technologie de chiffrement de bout en bout assure un niveau de sécurité maximal pour tous vos échanges.</translation>
+        <translation>Цей режим гарантує конфіденційність усіх ваших повідомлень. Наша технологія наскрізного шифрування забезпечує максимальну безпеку усього вашого спілкування.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="54"/>
         <source>manage_account_e2e_encrypted_mode_interoperable_title</source>
         <extracomment>&quot;Interoperable&quot;</extracomment>
-        <translation>Interopérable</translation>
+        <translation>Сумісний</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="56"/>
         <source>manage_account_e2e_encrypted_mode_interoperable_summary</source>
         <extracomment>&quot;Ce mode vous permet de profiter de toute les fonctionnalités de Linphone, toute en restant interopérable avec n’importe qu’elle autre service SIP.&quot;</extracomment>
-        <translation>Ce mode vous permet de profiter de toute les fonctionnalités de Linphone, toute en restant interopérable avec n’importe qu’elle autre service SIP.</translation>
+        <translation>Цей режим дозволяє вам користуватися всіма функціями Linphone, залишаючись сумісним з будь-яким іншим SIP-сервісом.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="76"/>
         <source>dialog_continue</source>
         <extracomment>&quot;Continuer&quot;</extracomment>
-        <translation>Continuer</translation>
+        <translation>Продовжити</translation>
     </message>
 </context>
 <context>
@@ -5577,13 +5578,13 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../view/Page/Layout/Settings/SecuritySettingsLayout.qml" line="28"/>
         <source>settings_security_enable_vfs_title</source>
         <extracomment>&quot;Chiffrer tous les fichiers&quot;</extracomment>
-        <translation>Chiffrer tous les fichiers</translation>
+        <translation>Зашифрувати усі файли</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/SecuritySettingsLayout.qml" line="30"/>
         <source>settings_security_enable_vfs_subtitle</source>
         <extracomment>&quot;Attention, vous ne pourrez pas revenir en arrière !&quot;</extracomment>
-        <translation>Attention, vous ne pourrez pas revenir en arrière !</translation>
+        <translation>Увага: після увімкнення його не можна вимкнути!</translation>
     </message>
 </context>
 <context>
@@ -5591,43 +5592,43 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="37"/>
         <source>chat_view_group_call_toast_message</source>
-        <translation>Démarrer un appel de groupe ?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="121"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
-        <translation>Cette conversation n&apos;est pas chiffrée !</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="407"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
-        <translation>Réponse à %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="607"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
-        <translation>Médias partagés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="609"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
-        <translation>Documents partagés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="638"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
-        <translation>Transférer à…</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="672"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
-        <translation>Conversations</translation>
+        <translation>Розмови</translation>
     </message>
 </context>
 <context>
@@ -5636,7 +5637,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../view/Control/Display/Settings/SettingsMenuItem.qml" line="22"/>
         <source>setting_tab_accessible_name</source>
         <extracomment>%1 settings</extracomment>
-        <translation>%1 paramètres</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5645,73 +5646,73 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="12"/>
         <source>settings_title</source>
         <extracomment>&quot;Paramètres&quot;</extracomment>
-        <translation>Paramètres</translation>
+        <translation>Налаштування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="15"/>
         <source>settings_calls_title</source>
         <extracomment>&quot;Appels&quot;</extracomment>
-        <translation>Appels</translation>
+        <translation>Виклики</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="17"/>
         <source>settings_call_forward</source>
         <extracomment>&quot;Transfert d&apos;appel&quot;</extracomment>
-        <translation>Transfert d&apos;appel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="19"/>
         <source>settings_conversations_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation>Conversations</translation>
+        <translation>Розмови</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="21"/>
         <source>settings_contacts_title</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
-        <translation>Contacts</translation>
+        <translation>Контакти</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="23"/>
         <source>settings_meetings_title</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
-        <translation>Réunions</translation>
+        <translation>Наради</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="29"/>
         <source>settings_network_title</source>
         <extracomment>&quot;Affichage&quot; &quot;Security&quot; &quot;Réseau&quot;</extracomment>
-        <translation>Réseau</translation>
+        <translation>Мережа</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="31"/>
         <source>settings_advanced_title</source>
         <extracomment>&quot;Paramètres avancés&quot;</extracomment>
-        <translation>Paramètres avancés</translation>
+        <translation>Додаткові налаштування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="36"/>
         <source>contact_editor_popup_abort_confirmation_title</source>
         <extracomment>Modifications non enregistrées</extracomment>
-        <translation>Modifications non enregistrées</translation>
+        <translation>Незбережені зміни</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="38"/>
         <source>contact_editor_popup_abort_confirmation_message</source>
         <extracomment>Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</extracomment>
-        <translation>Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</translation>
+        <translation>У вас є незбережені зміни. Якщо ви залишите цю сторінку, ваші зміни будуть втрачені. Бажаєте зберегти зміни, перш ніж продовжити?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="48"/>
         <source>contact_editor_dialog_abort_confirmation_do_not_save</source>
         <extracomment>&quot;Ne pas enregistrer&quot;</extracomment>
-        <translation>Ne pas enregistrer</translation>
+        <translation>Не зберігати</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="50"/>
         <source>contact_editor_dialog_abort_confirmation_save</source>
         <extracomment>&quot;Enregistrer&quot;</extracomment>
-        <translation>Enregistrer</translation>
+        <translation>Зберегти</translation>
     </message>
 </context>
 <context>
@@ -5720,13 +5721,13 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../view/Control/Display/Sticker.qml" line="135"/>
         <source>conference_participant_joining_text</source>
         <extracomment>&quot;rejoint…&quot;</extracomment>
-        <translation>rejoint…</translation>
+        <translation>приєднуються…</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Sticker.qml" line="161"/>
         <source>conference_participant_paused_text</source>
         <extracomment>&quot;En pause&quot;</extracomment>
-        <translation>En pause</translation>
+        <translation>Призупинено</translation>
     </message>
 </context>
 <context>
@@ -5735,13 +5736,13 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../view/Control/Input/TextField.qml" line="208"/>
         <source>show_accessible_name</source>
         <extracomment>Show %1</extracomment>
-        <translation>Afficher %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/TextField.qml" line="206"/>
         <source>hide_accessible_name</source>
         <extracomment>Hide %1</extracomment>
-        <translation>Cacher %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5750,123 +5751,164 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../model/tool/ToolModel.cpp" line="311"/>
         <source>call_error_uninterpretable_sip_address</source>
         <extracomment>&quot;The calling address is not an interpretable SIP address : %1</extracomment>
-        <translation>L&apos;adresse n&apos;est pas interprétable comme une adresse SIP</translation>
+        <translation>Адреса виклику не є інтерпретованою SIP-адресою: %1</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="383"/>
         <source>group_call_error_no_account</source>
-        <translation>Impossible de créer l&apos;appel de groupe, le compte par défaut n&apos;est pas défini</translation>
+        <translation>Не знайдено облікового запису за замовчуванням, не вдається створити груповий виклик</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="413"/>
         <source>group_call_error_participants_invite</source>
-        <translation>Impossible d&apos;inviter les participants à l&apos;appel de groupe</translation>
+        <translation>Не вдалося запросити учасників до групового виклику</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="417"/>
         <source>group_call_error_creation</source>
-        <translation>L&apos;appel de groupe n&apos;a pas pu être créé</translation>
+        <translation>Не вдалося створити груповий виклик</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="517"/>
         <source>voice_recording_duration</source>
         <extracomment>&quot;Voice recording (%1)&quot; : %1 is the duration formated in mm:ss</extracomment>
-        <translation>Message vocal (%1)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="591"/>
         <source>unknown_audio_device_name</source>
-        <translation>Appareil inconnu</translation>
+        <translation>Невідома назва пристрою</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="525"/>
         <source>conference_invitation</source>
-        <translation>Invitation à une réunion</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="529"/>
         <source>conference_invitation_cancelled</source>
-        <translation>Annulation d&apos;une réunion</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="527"/>
         <source>conference_invitation_updated</source>
-        <translation>Modification d&apos;une réunion</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Utils</name>
     <message numerus="yes">
+        <location filename="../../tool/Utils.cpp" line="2279"/>
+        <source>nSeconds</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="2274"/>
         <source>nMinute</source>
-        <translation>
-            <numerusform>%1 minute</numerusform>
-            <numerusform>%1 minutes</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2088"/>
+        <source>chat_message_forward_error</source>
+        <extracomment>Cannot forward an invalid message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2094"/>
+        <source>info_popup_forward_message_error</source>
+        <extracomment>Could not forward message : %1</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2109"/>
+        <source>info_popup_send_forward_message_error_message</source>
+        <extracomment>Failed to create forward message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2120"/>
+        <source>chat_message_reply_error</source>
+        <extracomment>Cannot reply to invalid message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2126"/>
+        <source>info_popup_reply_message_error</source>
+        <extracomment>Could not send reply message : %1</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2153"/>
+        <source>info_popup_send_reply_message_error_message</source>
+        <extracomment>Failed to create reply message</extracomment>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="2275"/>
         <source>nHour</source>
-        <translation>
-            <numerusform>%1 heure</numerusform>
-            <numerusform>%1 heures</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="2276"/>
         <location filename="../../tool/Utils.cpp" line="2277"/>
         <source>nDay</source>
-        <translation>
-            <numerusform>%1 jour</numerusform>
-            <numerusform>%1 jours</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="2278"/>
         <source>nWeek</source>
-        <translation>
-            <numerusform>%1 semaine</numerusform>
-            <numerusform>%1 semaines</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2279"/>
-        <source>nSeconds</source>
-        <translation>
-            <numerusform>%1 seconde</numerusform>
-            <numerusform>%1 secondes</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1844"/>
         <source>contact_presence_status_available</source>
-        <translation>Disponible</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1850"/>
         <source>contact_presence_status_busy</source>
-        <translation>Occupé</translation>
+        <translation>Зайнятий</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1853"/>
         <source>contact_presence_status_do_not_disturb</source>
-        <translation>Ne pas déranger</translation>
+        <translation>Не турбувати</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1856"/>
         <source>contact_presence_status_offline</source>
-        <translation>Hors ligne</translation>
+        <translation>Не в мережі</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1847"/>
         <source>contact_presence_status_away</source>
-        <translation>Inactif/Absent</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="188"/>
         <source>information_popup_call_not_created_message</source>
         <extracomment>&quot;L&apos;appel n&apos;a pas pu être créé&quot;</extracomment>
-        <translation>L&apos;appel n&apos;a pas pu être créé</translation>
+        <translation>Не вдалося створити виклик</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="189"/>
@@ -5877,20 +5919,21 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <extracomment>Error
 ----------
 Failed to create 1-1 conversation with %1 !</extracomment>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="199"/>
         <source>information_popup_group_call_not_created_message</source>
-        <translation>L&apos;appel de groupe n&apos;a pas pu être créé</translation>
+        <translation>Не вдалося створити груповий виклик</translation>
     </message>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="319"/>
         <source>number_of_years</source>
         <extracomment>%n an(s)</extracomment>
         <translation>
-            <numerusform>un an</numerusform>
-            <numerusform>%1 ans</numerusform>
+            <numerusform>%1 рік</numerusform>
+            <numerusform>%1 роки</numerusform>
+            <numerusform>%1 років</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -5898,8 +5941,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>number_of_month</source>
         <extracomment>&quot;%n mois&quot;</extracomment>
         <translation>
-            <numerusform>un mois</numerusform>
-            <numerusform>%1 mois</numerusform>
+            <numerusform>%1 місяць</numerusform>
+            <numerusform>%1 місяці</numerusform>
+            <numerusform>%1 місяців</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -5907,8 +5951,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>number_of_weeks</source>
         <extracomment>%n semaine(s)</extracomment>
         <translation>
-            <numerusform>une semaine</numerusform>
-            <numerusform>%1 semaines</numerusform>
+            <numerusform>%1 тиждень</numerusform>
+            <numerusform>%1 тижні</numerusform>
+            <numerusform>%1 тижнів</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -5916,35 +5961,37 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>number_of_days</source>
         <extracomment>%n jour(s)</extracomment>
         <translation>
-            <numerusform>un jour</numerusform>
-            <numerusform>%1 jours</numerusform>
+            <numerusform>%1 день</numerusform>
+            <numerusform>%1 дні</numerusform>
+            <numerusform>%1 днів</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="354"/>
         <source>today</source>
         <extracomment>&quot;Aujourd&apos;hui&quot;</extracomment>
-        <translation>Aujourd&apos;hui</translation>
+        <translation>Сьогодні</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="356"/>
         <source>yesterday</source>
         <extracomment>&quot;Hier</extracomment>
-        <translation>Hier</translation>
+        <translation>Вчора</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="381"/>
         <source>duration_tomorrow</source>
         <extracomment>Tomorrow</extracomment>
-        <translation>Demain</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="384"/>
         <source>duration_number_of_days</source>
         <extracomment>%1 jour(s)</extracomment>
-        <translation>
-            <numerusform>%n jour</numerusform>
-            <numerusform>%n jours</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -5958,26 +6005,20 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../tool/Utils.cpp" line="1637"/>
         <source>information_popup_chatroom_creation_error_message</source>
         <extracomment>Failed to create 1-1 conversation with %1 !</extracomment>
-        <translation>Erreur lors de la création de la conversation avec %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2185"/>
         <source>recorder_error</source>
         <extracomment>Error with the recorder</extracomment>
-        <translation>Erreur avec l&apos;enregistreur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2090"/>
         <location filename="../../tool/Utils.cpp" line="2122"/>
         <location filename="../../tool/Utils.cpp" line="2187"/>
         <source>chat_error</source>
-        <translation>Erreur dans le chat</translation>
-    </message>
-    <message>
-        <location filename="../../tool/Utils.cpp" line="2088"/>
-        <source>chat_message_forward_error</source>
-        <extracomment>Cannot forward an invalid message</extracomment>
-        <translation>Impossible de transférer : message invalide</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2092"/>
@@ -5988,49 +6029,19 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../tool/Utils.cpp" line="2203"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
-        <translation>Erreur</translation>
-    </message>
-    <message>
-        <location filename="../../tool/Utils.cpp" line="2094"/>
-        <source>info_popup_forward_message_error</source>
-        <extracomment>Could not forward message : %1</extracomment>
-        <translation>Impossible de transférer le message : %1</translation>
-    </message>
-    <message>
-        <location filename="../../tool/Utils.cpp" line="2109"/>
-        <source>info_popup_send_forward_message_error_message</source>
-        <extracomment>Failed to create forward message</extracomment>
-        <translation>Impossible de créer le message</translation>
-    </message>
-    <message>
-        <location filename="../../tool/Utils.cpp" line="2120"/>
-        <source>chat_message_reply_error</source>
-        <extracomment>Cannot reply to invalid message</extracomment>
-        <translation>Impossible de répondre : message invalide</translation>
-    </message>
-    <message>
-        <location filename="../../tool/Utils.cpp" line="2126"/>
-        <source>info_popup_reply_message_error</source>
-        <extracomment>Could not send reply message : %1</extracomment>
-        <translation>Impossible d&apos;envoyer la réponse : %1</translation>
-    </message>
-    <message>
-        <location filename="../../tool/Utils.cpp" line="2153"/>
-        <source>info_popup_send_reply_message_error_message</source>
-        <extracomment>Failed to create reply message</extracomment>
-        <translation>Impossible de créer le message</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2191"/>
         <source>info_popup_send_voice_message_error_message</source>
         <extracomment>Could not send voice message : %1</extracomment>
-        <translation>Impossible d&apos;envoyer le message vocal : %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2205"/>
         <source>info_popup_send_voice_message_sending_error_message</source>
         <extracomment>Failed to create message from record</extracomment>
-        <translation>Impossible de créer le message vocal</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6039,32 +6050,32 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="98"/>
         <source>meeting_waiting_room_title</source>
         <extracomment>Participer à :</extracomment>
-        <translation>Participer à :</translation>
+        <translation>Приєднатися:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="120"/>
         <source>meeting_waiting_room_join</source>
         <extracomment>&quot;Rejoindre&quot;</extracomment>
-        <translation>Rejoindre</translation>
+        <translation>Приєднатися</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="131"/>
         <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="174"/>
         <source>cancel</source>
         <extracomment>Cancel</extracomment>
-        <translation>Annuler</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="145"/>
         <source>meeting_waiting_room_joining_title</source>
         <extracomment>&quot;Connexion à la réunion&quot;</extracomment>
-        <translation>Connexion à la réunion</translation>
+        <translation>Приєднання до наради</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="155"/>
         <source>meeting_waiting_room_joining_subtitle</source>
         <extracomment>&quot;Vous allez rejoindre la réunion dans quelques instants…&quot;</extracomment>
-        <translation>Vous allez rejoindre la réunion dans quelques instants…</translation>
+        <translation>Ви приєднаєтесь до наради за кілька хвилин...</translation>
     </message>
 </context>
 <context>
@@ -6073,61 +6084,61 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="16"/>
         <source>welcome_page_title</source>
         <extracomment>&quot;Bienvenue&quot;</extracomment>
-        <translation>Bienvenue</translation>
+        <translation>Ласкаво просимо</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="32"/>
         <source>welcome_page_subtitle</source>
         <extracomment>&quot;sur %1&quot;</extracomment>
-        <translation>sur %1</translation>
+        <translation>на %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="49"/>
         <source>welcome_carousel_skip</source>
         <extracomment>&quot;Passer&quot;</extracomment>
-        <translation>Passer</translation>
+        <translation>Пропустити</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="83"/>
         <source>welcome_page_1_message</source>
         <extracomment>&quot;Une application de communication &lt;b&gt;sécurisée&lt;/b&gt;,&lt;br&gt; &lt;b&gt;open source&lt;/b&gt; et &lt;b&gt;française&lt;/b&gt;.&quot;</extracomment>
-        <translation>Une application de communication &lt;b&gt;sécurisée&lt;/b&gt;,&lt;br&gt; &lt;b&gt;open source&lt;/b&gt; et &lt;b&gt;française&lt;/b&gt;.</translation>
+        <translation>&lt;b&gt;Захищений&lt;/b&gt;, &lt;b&gt;відкритий код&lt;/b&gt; та &lt;b&gt;французький&lt;/b&gt; застосунок для спілкування.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="85"/>
         <source>welcome_page_2_title</source>
         <extracomment>&quot;Sécurisé&quot;</extracomment>
-        <translation>Sécurisé</translation>
+        <translation>Захищений</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="87"/>
         <source>welcome_page_2_message</source>
         <extracomment>&quot;Vos communications sont en sécurité grâce aux &lt;br&gt;&lt;b&gt;Chiffrement de bout en bout&lt;/b&gt;.&quot;</extracomment>
-        <translation>Vos communications sont en sécurité grâce aux &lt;br&gt;&lt;b&gt;Chiffrement de bout en bout&lt;/b&gt;.</translation>
+        <translation>Ваше спілкування убезпечене завдяки &lt;br&gt;&lt;b&gt;наскрізному шифруванню&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="89"/>
         <source>welcome_page_3_title</source>
         <extracomment>&quot;Open Source&quot;</extracomment>
-        <translation>Open Source</translation>
+        <translation>Відкритий код</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="91"/>
         <source>welcome_page_3_message</source>
         <extracomment>&quot;Une application open source et un &lt;b&gt;service gratuit&lt;/b&gt; &lt;br&gt;depuis &lt;b&gt;2001&lt;/b&gt;&quot;</extracomment>
-        <translation>Une application open source et un &lt;b&gt;service gratuit&lt;/b&gt; &lt;br&gt;depuis &lt;b&gt;2001&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Безкоштовний&lt;/b&gt; застосунок з відкритим кодом&lt;br&gt;з &lt;b&gt;2001 року&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="122"/>
         <source>next</source>
         <extracomment>&quot;Suivant&quot;</extracomment>
-        <translation>Suivant</translation>
+        <translation>Наступний</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="124"/>
         <source>start</source>
         <extracomment>&quot;Commencer&quot;</extracomment>
-        <translation>Commencer</translation>
+        <translation>Старт</translation>
     </message>
 </context>
 <context>
@@ -6136,61 +6147,61 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="70"/>
         <source>call_dialog_zrtp_validate_trust_title</source>
         <extracomment>Vérification de sécurité</extracomment>
-        <translation>Vérification de sécurité</translation>
+        <translation>Перевірка безпеки</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="88"/>
         <source>call_zrtp_sas_validation_skip</source>
         <extracomment>&quot;Passer&quot;</extracomment>
-        <translation>Passer</translation>
+        <translation>Пропустити</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="133"/>
         <source>call_dialog_zrtp_validate_trust_warning_message</source>
         <extracomment>&quot;Pour garantir le chiffrement, nous avons besoin de réauthentifier l’appareil de votre correspondant. Echangez vos codes :&quot;</extracomment>
-        <translation>Pour garantir le chiffrement, nous avons besoin de réauthentifier l’appareil de votre correspondant. Echangez vos codes :</translation>
+        <translation>Щоб забезпечити шифрування, нам потрібно повторно автентифікувати пристрій вашого контакту. Обміняйтесь кодами:</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="135"/>
         <source>call_dialog_zrtp_validate_trust_message</source>
         <extracomment>&quot;Pour garantir le chiffrement, nous avons besoin d’authentifier l’appareil de votre correspondant. Veuillez échanger vos codes : &quot;</extracomment>
-        <translation>Pour garantir le chiffrement, nous avons besoin d’authentifier l’appareil de votre correspondant. Veuillez échanger vos codes : </translation>
+        <translation>Щоб забезпечити шифрування, нам потрібно автентифікувати пристрій вашого контакту. Будь ласка, обміняйтесь кодами:</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="144"/>
         <source>call_dialog_zrtp_validate_trust_local_code_label</source>
         <extracomment>&quot;Votre code :&quot;</extracomment>
-        <translation>Votre code :</translation>
+        <translation>Ваш код:</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="173"/>
         <source>call_dialog_zrtp_validate_trust_remote_code_label</source>
         <extracomment>&quot;Code correspondant :&quot;</extracomment>
-        <translation>Code correspondant :</translation>
+        <translation>Відповідний код:</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="221"/>
         <source>call_dialog_zrtp_validate_trust_letters_do_not_match_text</source>
         <extracomment>&quot;Le code fourni ne correspond pas.&quot;</extracomment>
-        <translation>Le code fourni ne correspond pas.</translation>
+        <translation>Наданий код не збігається.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="232"/>
         <source>call_dialog_zrtp_security_alert_message</source>
         <extracomment>&quot;La confidentialité de votre appel peut être compromise !&quot;</extracomment>
-        <translation>La confidentialité de votre appel peut être compromise !</translation>
+        <translation>Конфіденційність вашого дзвінка може бути порушена!</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="245"/>
         <source>call_dialog_zrtp_validate_trust_letters_do_not_match</source>
         <extracomment>&quot;Aucune correspondance&quot;</extracomment>
-        <translation>Aucune correspondance</translation>
+        <translation>Немає збігу</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="262"/>
         <source>call_action_hang_up</source>
         <extracomment>&quot;Raccrocher&quot;</extracomment>
-        <translation>Raccrocher</translation>
+        <translation>Завершити</translation>
     </message>
 </context>
 <context>
@@ -6198,1117 +6209,1117 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../tool/Utils.cpp" line="616"/>
         <source>Afghanistan</source>
-        <translation>Afghanistan</translation>
+        <translation>Афганістан</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="620"/>
         <source>Albania</source>
-        <translation>Albanie</translation>
+        <translation>Албанія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="623"/>
         <source>Algeria</source>
-        <translation>Algérie</translation>
+        <translation>Алжир</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="626"/>
         <source>AmericanSamoa</source>
-        <translation>Samoa américaines</translation>
+        <translation>Американське Самоа</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="630"/>
         <source>Andorra</source>
-        <translation>Andorre</translation>
+        <translation>Андорра</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="633"/>
         <source>Angola</source>
-        <translation>Angola</translation>
+        <translation>Ангола</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="636"/>
         <source>Anguilla</source>
-        <translation>Anguilla</translation>
+        <translation>Ангілья</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="639"/>
         <source>AntiguaAndBarbuda</source>
-        <translation>Antigua-et-Barbuda</translation>
+        <translation>Антигуа і Барбуда</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="643"/>
         <source>Argentina</source>
-        <translation>Argentine</translation>
+        <translation>Аргентина</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="646"/>
         <source>Armenia</source>
-        <translation>Arménie</translation>
+        <translation>Вірменія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="649"/>
         <source>Aruba</source>
-        <translation>Aruba</translation>
+        <translation>Аруба</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="652"/>
         <source>Australia</source>
-        <translation>Australie</translation>
+        <translation>Австралія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="655"/>
         <source>Austria</source>
-        <translation>Autriche</translation>
+        <translation>Австрія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="658"/>
         <source>Azerbaijan</source>
-        <translation>Azerbaïdjan</translation>
+        <translation>Азербайджан</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="661"/>
         <source>Bahamas</source>
-        <translation>Bahamas</translation>
+        <translation>Багами</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="664"/>
         <source>Bahrain</source>
-        <translation>Bahreïn</translation>
+        <translation>Бахрейн</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="667"/>
         <source>Bangladesh</source>
-        <translation>Bangladesh</translation>
+        <translation>Бангладеш</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="670"/>
         <source>Barbados</source>
-        <translation>Barbade</translation>
+        <translation>Барбадос</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="673"/>
         <source>Belarus</source>
-        <translation>Biélorussie</translation>
+        <translation>білорусь</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="676"/>
         <source>Belgium</source>
-        <translation>Belgique</translation>
+        <translation>Бельгія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="679"/>
         <source>Belize</source>
-        <translation>Belize</translation>
+        <translation>Беліз</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="682"/>
         <source>Benin</source>
-        <translation>Bénin</translation>
+        <translation>Бенін</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="685"/>
         <source>Bermuda</source>
-        <translation>Bermudes</translation>
+        <translation>Бермудські острови</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="688"/>
         <source>Bhutan</source>
-        <translation>Bhoutan</translation>
+        <translation>Бутан</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="691"/>
         <source>Bolivia</source>
-        <translation>Bolivie</translation>
+        <translation>Болівія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="694"/>
         <source>BosniaAndHerzegowina</source>
-        <translation>Bosnie-Herzégovine</translation>
+        <translation>Боснія та Герцеговина</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="699"/>
         <source>Botswana</source>
-        <translation>Botswana</translation>
+        <translation>Ботсвана</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="702"/>
         <source>Brazil</source>
-        <translation>Brésil</translation>
+        <translation>Бразилія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="705"/>
         <source>Brunei</source>
-        <translation>Brunéi</translation>
+        <translation>Бруней</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="708"/>
         <source>Bulgaria</source>
-        <translation>Bulgarie</translation>
+        <translation>Болгарія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="711"/>
         <source>BurkinaFaso</source>
-        <translation>Burkina Faso</translation>
+        <translation>Буркіна-Фасо</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="715"/>
         <source>Burundi</source>
-        <translation>Burundi</translation>
+        <translation>Бурунді</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="718"/>
         <source>Cambodia</source>
-        <translation>Cambodge</translation>
+        <translation>Камбоджа</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="721"/>
         <source>Cameroon</source>
-        <translation>Cameroun</translation>
+        <translation>Камерун</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="724"/>
         <source>Canada</source>
-        <translation>Canada</translation>
+        <translation>Канада</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="727"/>
         <source>CapeVerde</source>
-        <translation>Cap-Vert</translation>
+        <translation>Кабо-Верде</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="730"/>
         <source>CaymanIslands</source>
-        <translation>Îles Caïmans</translation>
+        <translation>Кайманові острови</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="734"/>
         <source>CentralAfricanRepublic</source>
-        <translation>République centrafricaine</translation>
+        <translation>Центральноафриканська Республіка</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="739"/>
         <source>Chad</source>
-        <translation>Tchad</translation>
+        <translation>Чад</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="742"/>
         <source>Chile</source>
-        <translation>Chili</translation>
+        <translation>Чилі</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="745"/>
         <source>China</source>
-        <translation>Chine</translation>
+        <translation>Китай</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="748"/>
         <source>Colombia</source>
-        <translation>Colombie</translation>
+        <translation>Колумбія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="751"/>
         <source>Comoros</source>
-        <translation>Comores</translation>
+        <translation>Коморські Острови</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="754"/>
         <source>PeoplesRepublicOfCongo</source>
-        <translation>République populaire du Congo</translation>
+        <translation>Народна Республіка Конго</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="764"/>
         <source>CookIslands</source>
-        <translation>Îles Cook</translation>
+        <translation>Острови Кука</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="768"/>
         <source>CostaRica</source>
-        <translation>Costa Rica</translation>
+        <translation>Коста-Рика</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="771"/>
         <source>IvoryCoast</source>
-        <translation>Côte d&apos;Ivoire</translation>
+        <translation>Кот-д&apos;Івуар</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="774"/>
         <source>Croatia</source>
-        <translation>Croatie</translation>
+        <translation>Хорватія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="777"/>
         <source>Cuba</source>
-        <translation>Cuba</translation>
+        <translation>Куба</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="780"/>
         <source>Cyprus</source>
-        <translation>Chypre</translation>
+        <translation>Кіпр</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="783"/>
         <source>CzechRepublic</source>
-        <translation>République Tchèque</translation>
+        <translation>Чеська Республіка</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="787"/>
         <source>Denmark</source>
-        <translation>Danemark</translation>
+        <translation>Данія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="790"/>
         <source>Djibouti</source>
-        <translation>Djibouti</translation>
+        <translation>Джибуті</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="793"/>
         <source>Dominica</source>
-        <translation>Dominique</translation>
+        <translation>Домініка</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="796"/>
         <source>DominicanRepublic</source>
-        <translation>République dominicaine</translation>
+        <translation>Домініканська Республіка</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="800"/>
         <source>Ecuador</source>
-        <translation>Équateur</translation>
+        <translation>Еквадор</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="803"/>
         <source>Egypt</source>
-        <translation>Égypte</translation>
+        <translation>Єгипет</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="806"/>
         <source>ElSalvador</source>
-        <translation>El Salvador</translation>
+        <translation>Сальвадор</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="809"/>
         <source>EquatorialGuinea</source>
-        <translation>Guinée équatoriale</translation>
+        <translation>Екваторіальна Гвінея</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="813"/>
         <source>Eritrea</source>
-        <translation>Érythrée</translation>
+        <translation>Еритрея</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="816"/>
         <source>Estonia</source>
-        <translation>Estonie</translation>
+        <translation>Естонія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="819"/>
         <source>Ethiopia</source>
-        <translation>Éthiopie</translation>
+        <translation>Ефіопія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="822"/>
         <source>FalklandIslands</source>
-        <translation>Îles Falkland</translation>
+        <translation>Фолклендські острови</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="826"/>
         <source>FaroeIslands</source>
-        <translation>Îles Féroé</translation>
+        <translation>Фарерські острови</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="830"/>
         <source>Fiji</source>
-        <translation>Fidji</translation>
+        <translation>Фіджі</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="833"/>
         <source>Finland</source>
-        <translation>Finlande</translation>
+        <translation>Фінляндія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="836"/>
         <source>France</source>
-        <translation>France</translation>
+        <translation>Франція</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="839"/>
         <source>FrenchGuiana</source>
-        <translation>Guyane française</translation>
+        <translation>Французька Гвіана</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="843"/>
         <source>FrenchPolynesia</source>
-        <translation>Polynésie française</translation>
+        <translation>Французька Полінезія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="847"/>
         <source>Gabon</source>
-        <translation>Gabon</translation>
+        <translation>Габон</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="850"/>
         <source>Gambia</source>
-        <translation>Gambie</translation>
+        <translation>Гамбія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="853"/>
         <source>Georgia</source>
-        <translation>Géorgie</translation>
+        <translation>Грузія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="856"/>
         <source>Germany</source>
-        <translation>Allemagne</translation>
+        <translation>Німеччина</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="859"/>
         <source>Ghana</source>
-        <translation>Ghana</translation>
+        <translation>Гана</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="862"/>
         <source>Gibraltar</source>
-        <translation>Gibraltar</translation>
+        <translation>Гібралтар</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="865"/>
         <source>Greece</source>
-        <translation>Grèce</translation>
+        <translation>Греція</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="868"/>
         <source>Greenland</source>
-        <translation>Groenland</translation>
+        <translation>Гренландія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="871"/>
         <source>Grenada</source>
-        <translation>Grenade</translation>
+        <translation>Гренада</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="874"/>
         <source>Guadeloupe</source>
-        <translation>Guadeloupe</translation>
+        <translation>Гваделупа</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="877"/>
         <source>Guam</source>
-        <translation>Guam</translation>
+        <translation>Гуам</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="880"/>
         <source>Guatemala</source>
-        <translation>Guatemala</translation>
+        <translation>Гватемала</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="883"/>
         <source>Guinea</source>
-        <translation>Guinée</translation>
+        <translation>Гвінея</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="886"/>
         <source>GuineaBissau</source>
-        <translation>Guinée-Bissau</translation>
+        <translation>Гвінея-Бісау</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="890"/>
         <source>Guyana</source>
-        <translation>Guyana</translation>
+        <translation>Гайана</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="893"/>
         <source>Haiti</source>
-        <translation>Haïti</translation>
+        <translation>Гаїті</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="896"/>
         <source>Honduras</source>
-        <translation>Honduras</translation>
+        <translation>Гондурас</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="759"/>
         <source>DemocraticRepublicOfCongo</source>
-        <translation>République démocratique du Congo</translation>
+        <translation>Демократична Республіка Конго</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="899"/>
         <source>HongKong</source>
-        <translation>Hong Kong</translation>
+        <translation>Гонконг</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="902"/>
         <source>Hungary</source>
-        <translation>Hongrie</translation>
+        <translation>Угорщина</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="905"/>
         <source>Iceland</source>
-        <translation>Islande</translation>
+        <translation>Ісландія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="908"/>
         <source>India</source>
-        <translation>Inde</translation>
+        <translation>Індія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="911"/>
         <source>Indonesia</source>
-        <translation>Indonésie</translation>
+        <translation>Індонезія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="914"/>
         <source>Iran</source>
-        <translation>Iran</translation>
+        <translation>Іран</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="917"/>
         <source>Iraq</source>
-        <translation>Irak</translation>
+        <translation>Ірак</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="920"/>
         <source>Ireland</source>
-        <translation>Irlande</translation>
+        <translation>Ірландія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="923"/>
         <source>Israel</source>
-        <translation>Israël</translation>
+        <translation>Ізраїль</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="926"/>
         <source>Italy</source>
-        <translation>Italie</translation>
+        <translation>Італія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="929"/>
         <source>Jamaica</source>
-        <translation>Jamaïque</translation>
+        <translation>Ямайка</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="932"/>
         <source>Japan</source>
-        <translation>Japon</translation>
+        <translation>Японія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="935"/>
         <source>Jordan</source>
-        <translation>Jordanie</translation>
+        <translation>Йорданія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="938"/>
         <source>Kazakhstan</source>
-        <translation>Kazakhstan</translation>
+        <translation>Казахстан</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="941"/>
         <source>Kenya</source>
-        <translation>Kenya</translation>
+        <translation>Кенія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="944"/>
         <source>Kiribati</source>
-        <translation>Kiribati</translation>
+        <translation>Кірибаті</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="947"/>
         <source>DemocraticRepublicOfKorea</source>
-        <translation>Corée du Nord</translation>
+        <translation>Демократична Республіка Корея</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="952"/>
         <source>RepublicOfKorea</source>
-        <translation>Corée du Sud</translation>
+        <translation>Республіка Корея</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="956"/>
         <source>Kuwait</source>
-        <translation>Koweït</translation>
+        <translation>Кувейт</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="959"/>
         <source>Kyrgyzstan</source>
-        <translation>Kirghizistan</translation>
+        <translation>Киргизстан</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="962"/>
         <source>Laos</source>
-        <translation>Laos</translation>
+        <translation>Лаос</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="965"/>
         <source>Latvia</source>
-        <translation>Lettonie</translation>
+        <translation>Латвія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="968"/>
         <source>Lebanon</source>
-        <translation>Liban</translation>
+        <translation>Ліван</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="971"/>
         <source>Lesotho</source>
-        <translation>Lesotho</translation>
+        <translation>Лесото</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="974"/>
         <source>Liberia</source>
-        <translation>Libéria</translation>
+        <translation>Ліберія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="977"/>
         <source>Libya</source>
-        <translation>Libye</translation>
+        <translation>Лівія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="980"/>
         <source>Liechtenstein</source>
-        <translation>Liechtenstein</translation>
+        <translation>Ліхтенштейн</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="984"/>
         <source>Lithuania</source>
-        <translation>Lituanie</translation>
+        <translation>Литва</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="987"/>
         <source>Luxembourg</source>
-        <translation>Luxembourg</translation>
+        <translation>Люксембург</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="990"/>
         <source>Macau</source>
-        <translation>Macao</translation>
+        <translation>Макао</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="993"/>
         <source>Macedonia</source>
-        <translation>Macédoine</translation>
+        <translation>Македонія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="996"/>
         <source>Madagascar</source>
-        <translation>Madagascar</translation>
+        <translation>Мадагаскар</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="999"/>
         <source>Malawi</source>
-        <translation>Malawi</translation>
+        <translation>Малаві</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1002"/>
         <source>Malaysia</source>
-        <translation>Malaisie</translation>
+        <translation>Малайзія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1005"/>
         <source>Maldives</source>
-        <translation>Maldives</translation>
+        <translation>Мальдіви</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1008"/>
         <source>Mali</source>
-        <translation>Mali</translation>
+        <translation>Малі</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1011"/>
         <source>Malta</source>
-        <translation>Malte</translation>
+        <translation>Мальта</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1014"/>
         <source>MarshallIslands</source>
-        <translation>Îles Marshall</translation>
+        <translation>Маршаллові острови</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1018"/>
         <source>Martinique</source>
-        <translation>Martinique</translation>
+        <translation>Мартиніка</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1021"/>
         <source>Mauritania</source>
-        <translation>Mauritanie</translation>
+        <translation>Мавританія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1024"/>
         <source>Mauritius</source>
-        <translation>Maurice</translation>
+        <translation>Маврикій</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1027"/>
         <source>Mayotte</source>
-        <translation>Mayotte</translation>
+        <translation>Майотта</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1030"/>
         <source>Mexico</source>
-        <translation>Mexique</translation>
+        <translation>Мексика</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1033"/>
         <source>Micronesia</source>
-        <translation>Micronésie</translation>
+        <translation>Мікронезія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1036"/>
         <source>Moldova</source>
-        <translation>Moldavie</translation>
+        <translation>Молдова</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1039"/>
         <source>Monaco</source>
-        <translation>Monaco</translation>
+        <translation>Монако</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1042"/>
         <source>Mongolia</source>
-        <translation>Mongolie</translation>
+        <translation>Монголія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1045"/>
         <source>Montenegro</source>
-        <translation>Montenegro</translation>
+        <translation>Чорногорія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1048"/>
         <source>Montserrat</source>
-        <translation>Montserrat</translation>
+        <translation>Монтсеррат</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1051"/>
         <source>Morocco</source>
-        <translation>Maroc</translation>
+        <translation>Марокко</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1054"/>
         <source>Mozambique</source>
-        <translation>Mozambique</translation>
+        <translation>Мозамбік</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1057"/>
         <source>Myanmar</source>
-        <translation>Myanmar</translation>
+        <translation>М&apos;янма</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1060"/>
         <source>Namibia</source>
-        <translation>Namibie</translation>
+        <translation>Намібія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1063"/>
         <source>NauruCountry</source>
-        <translation>Nauru</translation>
+        <translation>Країна Науру</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1067"/>
         <source>Nepal</source>
-        <translation>Népal</translation>
+        <translation>Непал</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1070"/>
         <source>Netherlands</source>
-        <translation>Pays-Bas</translation>
+        <translation>Нідерланди</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1074"/>
         <source>NewCaledonia</source>
-        <translation>Nouvelle-Calédonie</translation>
+        <translation>Нова Каледонія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1078"/>
         <source>NewZealand</source>
-        <translation>Nouvelle-Zélande</translation>
+        <translation>Нова Зеландія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1081"/>
         <source>Nicaragua</source>
-        <translation>Nicaragua</translation>
+        <translation>Нікарагуа</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1084"/>
         <source>Niger</source>
-        <translation>Niger</translation>
+        <translation>Нігер</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1087"/>
         <source>Nigeria</source>
-        <translation>Nigeria</translation>
+        <translation>Нігерія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1090"/>
         <source>Niue</source>
-        <translation>Niué</translation>
+        <translation>Ніуе</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1093"/>
         <source>NorfolkIsland</source>
-        <translation>Île Norfolk</translation>
+        <translation>Острів Норфолк</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1097"/>
         <source>NorthernMarianaIslands</source>
-        <translation>Îles Mariannes du Nord</translation>
+        <translation>Північні Маріанські острови</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1102"/>
         <source>Norway</source>
-        <translation>Norvège</translation>
+        <translation>Норвегія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1105"/>
         <source>Oman</source>
-        <translation>Oman</translation>
+        <translation>Оман</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1108"/>
         <source>Pakistan</source>
-        <translation>Pakistan</translation>
+        <translation>Пакистан</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1111"/>
         <source>Palau</source>
-        <translation>Palaos</translation>
+        <translation>Палау</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1114"/>
         <source>PalestinianTerritories</source>
-        <translation>Palestine</translation>
+        <translation>Палестинські території</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1119"/>
         <source>Panama</source>
-        <translation>Panama</translation>
+        <translation>Панама</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1122"/>
         <source>PapuaNewGuinea</source>
-        <translation>Papouasie-Nouvelle-Guinée</translation>
+        <translation>Папуа-Нова Гвінея</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1126"/>
         <source>Paraguay</source>
-        <translation>Paraguay</translation>
+        <translation>Парагвай</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1129"/>
         <source>Peru</source>
-        <translation>Pérou</translation>
+        <translation>Перу</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1132"/>
         <source>Philippines</source>
-        <translation>Philippines</translation>
+        <translation>Філіппіни</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1136"/>
         <source>Poland</source>
-        <translation>Pologne</translation>
+        <translation>Польща</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1139"/>
         <source>Portugal</source>
-        <translation>Portugal</translation>
+        <translation>Португалія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1142"/>
         <source>PuertoRico</source>
-        <translation>Porto Rico</translation>
+        <translation>Пуерто-Рико</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1145"/>
         <source>Qatar</source>
-        <translation>Qatar</translation>
+        <translation>Катар</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1148"/>
         <source>Reunion</source>
-        <translation>La Réunion</translation>
+        <translation>Реюніон</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1151"/>
         <source>Romania</source>
-        <translation>Roumanie</translation>
+        <translation>Румунія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1154"/>
         <source>RussianFederation</source>
-        <translation>Russie</translation>
+        <translation>росія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1158"/>
         <source>Rwanda</source>
-        <translation>Rwanda</translation>
+        <translation>Руанда</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1161"/>
         <source>SaintHelena</source>
-        <translation>Sainte-Hélène</translation>
+        <translation>Свята Єлена</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1165"/>
         <source>SaintKittsAndNevis</source>
-        <translation>Saint-Christophe-et-Niévès</translation>
+        <translation>Сент-Кітс-і-Невіс</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1169"/>
         <source>SaintLucia</source>
-        <translation>Sainte-Lucie</translation>
+        <translation>Сент-Люсія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1172"/>
         <source>SaintPierreAndMiquelon</source>
-        <translation>Saint-Pierre-et-Miquelon</translation>
+        <translation>Сен-П&apos;єр і Мікелон</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1177"/>
         <source>SaintVincentAndTheGrenadines</source>
-        <translation>Saint-Vincent et les Grenadines</translation>
+        <translation>Сен-Вінсент і Гренадини</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1182"/>
         <source>Samoa</source>
-        <translation>Samoa</translation>
+        <translation>Самоа</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1185"/>
         <source>SanMarino</source>
-        <translation>Saint-Marin</translation>
+        <translation>Сан-Марино</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1188"/>
         <source>SaoTomeAndPrincipe</source>
-        <translation>Sao Tomé-et-Principe</translation>
+        <translation>Сан-Томе і Прінсіпі</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1192"/>
         <source>SaudiArabia</source>
-        <translation>Arabie saoudite</translation>
+        <translation>Саудівська Аравія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1196"/>
         <source>Senegal</source>
-        <translation>Sénégal</translation>
+        <translation>Сенегал</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1199"/>
         <source>Serbia</source>
-        <translation>Serbie</translation>
+        <translation>Сербія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1202"/>
         <source>Seychelles</source>
-        <translation>Seychelles</translation>
+        <translation>Сейшельські острови</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1205"/>
         <source>SierraLeone</source>
-        <translation>Sierra Leone</translation>
+        <translation>Сьєрра-Леоне</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1209"/>
         <source>Singapore</source>
-        <translation>Singapour</translation>
+        <translation>Сінгапур</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1212"/>
         <source>Slovakia</source>
-        <translation>Slovaquie</translation>
+        <translation>Словаччина</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1215"/>
         <source>Slovenia</source>
-        <translation>Slovénie</translation>
+        <translation>Словенія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1218"/>
         <source>SolomonIslands</source>
-        <translation>Îles Salomon</translation>
+        <translation>Соломонові острови</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1222"/>
         <source>Somalia</source>
-        <translation>Somalie</translation>
+        <translation>Сомалі</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1225"/>
         <source>SouthAfrica</source>
-        <translation>Afrique du Sud</translation>
+        <translation>Південна Африка</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1229"/>
         <source>Spain</source>
-        <translation>Espagne</translation>
+        <translation>Іспанія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1232"/>
         <source>SriLanka</source>
-        <translation>Sri Lanka</translation>
+        <translation>Шрі-Ланка</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1235"/>
         <source>Sudan</source>
-        <translation>Soudan</translation>
+        <translation>Судан</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1238"/>
         <source>Suriname</source>
-        <translation>Suriname</translation>
+        <translation>Суринам</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1241"/>
         <source>Swaziland</source>
-        <translation>Eswatini</translation>
+        <translation>Свазіленд</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1244"/>
         <source>Sweden</source>
-        <translation>Suède</translation>
+        <translation>Швеція</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1247"/>
         <source>Switzerland</source>
-        <translation>Suisse</translation>
+        <translation>Швейцарія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1251"/>
         <source>Syria</source>
-        <translation>Syrie</translation>
+        <translation>Сирія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1254"/>
         <source>Taiwan</source>
-        <translation>Taïwan</translation>
+        <translation>Тайвань</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1257"/>
         <source>Tajikistan</source>
-        <translation>Tadjikistan</translation>
+        <translation>Таджикистан</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1260"/>
         <source>Tanzania</source>
-        <translation>Tanzanie</translation>
+        <translation>Танзанія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1263"/>
         <source>Thailand</source>
-        <translation>Thaïlande</translation>
+        <translation>Таїланд</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1266"/>
         <source>Togo</source>
-        <translation>Togo</translation>
+        <translation>Того</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1269"/>
         <source>Tokelau</source>
-        <translation>Tokelau</translation>
+        <translation>Токелау</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1272"/>
         <source>Tonga</source>
-        <translation>Tonga</translation>
+        <translation>Тонга</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1275"/>
         <source>TrinidadAndTobago</source>
-        <translation>Trinité-et-Tobago</translation>
+        <translation>Тринідад і Тобаго</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1279"/>
         <source>Tunisia</source>
-        <translation>Tunisie</translation>
+        <translation>Туніс</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1282"/>
         <source>Turkey</source>
-        <translation>Turquie</translation>
+        <translation>Туреччина</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1285"/>
         <source>Turkmenistan</source>
-        <translation>Turkménistan</translation>
+        <translation>Туркменістан</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1289"/>
         <source>TurksAndCaicosIslands</source>
-        <translation>Îles Turks et Caïques</translation>
+        <translation>Острови Теркс і Кайкос</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1294"/>
         <source>Tuvalu</source>
-        <translation>Tuvalu</translation>
+        <translation>Тувалу</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1297"/>
         <source>Uganda</source>
-        <translation>Ouganda</translation>
+        <translation>Уганда</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1300"/>
         <source>Ukraine</source>
-        <translation>Ukraine</translation>
+        <translation>Україна</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1303"/>
         <source>UnitedArabEmirates</source>
-        <translation>Émirats arabes unis</translation>
+        <translation>Об&apos;єднані Арабські Емірати</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1307"/>
         <source>UnitedKingdom</source>
-        <translation>Royaume-Uni</translation>
+        <translation>Сполучене Королівство Великобританії</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1311"/>
         <source>UnitedStates</source>
-        <translation>États-Unis</translation>
+        <translation>США</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1315"/>
         <source>Uruguay</source>
-        <translation>Uruguay</translation>
+        <translation>Уругвай</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1318"/>
         <source>Uzbekistan</source>
-        <translation>Ouzbékistan</translation>
+        <translation>Узбекистан</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1321"/>
         <source>Vanuatu</source>
-        <translation>Vanuatu</translation>
+        <translation>Вануату</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1324"/>
         <source>Venezuela</source>
-        <translation>Venezuela</translation>
+        <translation>Венесуела</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1327"/>
         <source>Vietnam</source>
-        <translation>Vietnam</translation>
+        <translation>В&apos;єтнам</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1330"/>
         <source>WallisAndFutunaIslands</source>
-        <translation>Wallis et Futuna</translation>
+        <translation>Острови Уолліс і Футуна</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1335"/>
         <source>Yemen</source>
-        <translation>Yémen</translation>
+        <translation>Ємен</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1338"/>
         <source>Zambia</source>
-        <translation>Zambie</translation>
+        <translation>Замбія</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1341"/>
         <source>Zimbabwe</source>
-        <translation>Zimbabwe</translation>
+        <translation>Зімбабве</translation>
     </message>
 </context>
 <context>
@@ -7318,8 +7329,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>formatYears</source>
         <extracomment>&apos;%1 year&apos;</extracomment>
         <translation>
-            <numerusform>un an</numerusform>
-            <numerusform>%1 ans</numerusform>
+            <numerusform>%1 рік</numerusform>
+            <numerusform>%1 роки</numerusform>
+            <numerusform>%1 років</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -7327,8 +7339,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>formatMonths</source>
         <extracomment>&apos;%1 month&apos;</extracomment>
         <translation>
-            <numerusform>un mois</numerusform>
-            <numerusform>%1 mois</numerusform>
+            <numerusform>%1 місяць</numerusform>
+            <numerusform>%1 місяці</numerusform>
+            <numerusform>%1 місяців</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -7336,8 +7349,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>formatWeeks</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
         <translation>
-            <numerusform>une semaine</numerusform>
-            <numerusform>%1 semaines</numerusform>
+            <numerusform>%1 тиждень</numerusform>
+            <numerusform>%1 тижні</numerusform>
+            <numerusform>%1 тижнів</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -7345,8 +7359,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>formatDays</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
         <translation>
-            <numerusform>un jour</numerusform>
-            <numerusform>%1 jours</numerusform>
+            <numerusform>%1 день</numerusform>
+            <numerusform>%1 дні</numerusform>
+            <numerusform>%1 днів</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -7354,8 +7369,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>formatHours</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation>
-            <numerusform>une heure</numerusform>
-            <numerusform>%1 heures</numerusform>
+            <numerusform>%1 година</numerusform>
+            <numerusform>%1 години</numerusform>
+            <numerusform>%1 годин</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -7363,8 +7379,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>formatMinutes</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation>
-            <numerusform>une minute</numerusform>
-            <numerusform>%1 minutes</numerusform>
+            <numerusform>%1 хвилина</numerusform>
+            <numerusform>%1 хвилини</numerusform>
+            <numerusform>%1 хвилин</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -7372,69 +7389,70 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>formatSeconds</source>
         <extracomment>&apos;%1 second&apos;</extracomment>
         <translation>
-            <numerusform>une seconde</numerusform>
-            <numerusform>%1 secondes</numerusform>
+            <numerusform>%1 секунда</numerusform>
+            <numerusform>%1 секунди</numerusform>
+            <numerusform>%1 секунд</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="729"/>
         <source>codec_install</source>
         <extracomment>&quot;Installation de codec&quot;</extracomment>
-        <translation>Installation de codec</translation>
+        <translation>Встановлення кодеків</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="731"/>
         <source>download_codec</source>
         <extracomment>&quot;Télécharger le codec %1 (%2) ?&quot;</extracomment>
-        <translation>Télécharger le codec %1 (%2) ?</translation>
+        <translation>Завантажити кодек %1 (%2) ?</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="738"/>
         <source>information_popup_success_title</source>
         <extracomment>&quot;Succès&quot;</extracomment>
-        <translation>Succès</translation>
+        <translation>Успіх</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="740"/>
         <source>information_popup_codec_install_success_text</source>
         <extracomment>&quot;Le codec a été installé avec succès.&quot;</extracomment>
-        <translation>Le codec a été installé avec succès.</translation>
+        <translation>Кодек успішно встановлено.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="744"/>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="753"/>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="761"/>
         <source>information_popup_error_title</source>
-        <translation>Erreur</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="746"/>
         <source>information_popup_codec_install_error_text</source>
         <extracomment>&quot;Le codec n&apos;a pas pu être installé.&quot;</extracomment>
-        <translation>Le codec n&apos;a pas pu être installé.</translation>
+        <translation>Кодек не вдалося встановити.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="755"/>
         <source>information_popup_codec_save_error_text</source>
         <extracomment>&quot;Le codec n&apos;a pas pu être sauvegardé.&quot;</extracomment>
-        <translation>Le codec n&apos;a pas pu être sauvegardé.</translation>
+        <translation>Кодек не вдалося зберегти.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="763"/>
         <source>information_popup_codec_download_error_text</source>
         <extracomment>&quot;Le codec n&apos;a pas pu être téléchargé.&quot;</extracomment>
-        <translation>Le codec n&apos;a pas pu être téléchargé.</translation>
+        <translation>Кодек не вдалося завантажити.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="769"/>
         <source>loading_popup_codec_install_progress</source>
         <extracomment>&quot;Téléchargement en cours …&quot;</extracomment>
-        <translation>Téléchargement en cours…</translation>
+        <translation>Триває завантаження…</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="804"/>
         <source>okButton</source>
-        <translation>Ok</translation>
+        <translation>Ок</translation>
     </message>
 </context>
 </TS>
