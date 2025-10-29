@@ -63,9 +63,10 @@ int SortFilterProxy::getFilterType() const {
 
 void SortFilterProxy::setFilterType(int filterType) {
 	if (getFilterType() != filterType) {
+		beginFilterChange();
 		mFilterType = filterType;
+		endFilterChange();
 		emit filterTypeChanged(filterType);
-		invalidate();
 	}
 }
 
@@ -75,8 +76,9 @@ QString SortFilterProxy::getFilterText() const {
 
 void SortFilterProxy::setFilterText(const QString &filter) {
 	if (mFilterText != filter) {
+		beginFilterChange();
 		mFilterText = filter;
-		invalidateFilter();
+		endFilterChange();
 		emit filterTextChanged();
 	}
 }
@@ -90,6 +92,6 @@ void SortFilterProxy::remove(int index, int count) {
 }
 
 void SortFilterProxy::invalidateFilter() {
-	// TODO : replace by begin/endFilterChanged when ci uses Qt6.10
-	invalidate();
+	QSortFilterProxyModel::beginFilterChange();
+	QSortFilterProxyModel::endFilterChange();
 }

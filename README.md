@@ -28,7 +28,7 @@ Linphone is dual licensed, and is available either :
 As linphone-desktop depends on [Linphone SDK](https://gitlab.linphone.org/BC/public/linphone-sdk), you need to install to Build dependencies common to all target platforms of this project: [The Linphone SDK depdencies](https://gitlab.linphone.org/BC/public/linphone-sdk#common-to-all-target-platforms) 
 
 
-For Desktop : you will need QT6 (6.9.0 or newer_). `C++17` support is required!. You have two way to install it :
+For Desktop : you will need QT6 (_6.10.0 or newer_). `C++17` support is required!. You have two way to install it :
 - Using the [official QT installer](https://www.qt.io/download-thank-you)
 - Using an alternative installer like [aqtinstall](https://github.com/miurahr/aqtinstall)
 
@@ -41,8 +41,8 @@ The following QT optional modules are required: qt5compat, qtmultimedia qtnetwor
 2. You have to set the environment variable `Qt6_DIR` to point to the path containing the cmake folders of Qt6, and the `PATH` to the Qt6 `bin`. Example:
 
 ```bash
-export Qt6_DIR="~/Qt/6.5.3/gcc_64/lib/cmake/Qt6"
-export PATH="~/Qt/6.5.3/gcc_64/bin/:$PATH"
+export Qt6_DIR="~/Qt/6.10.0/gcc_64/lib/cmake/Qt6"
+export PATH="~/Qt/6.10.0/gcc_64/bin/:$PATH"
 ```
 
 
