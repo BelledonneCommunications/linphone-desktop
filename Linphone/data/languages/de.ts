@@ -925,26 +925,6 @@
 <context>
     <name>CallHistoryLayout</name>
     <message>
-        <source>contact_presence_status_online</source>
-        <extracomment>&quot;En ligne&quot;</extracomment>
-        <translation type="vanished">Online</translation>
-    </message>
-    <message>
-        <source>contact_presence_status_busy</source>
-        <extracomment>&quot;Occupé&quot;</extracomment>
-        <translation type="vanished">Beschäftigt</translation>
-    </message>
-    <message>
-        <source>contact_presence_status_do_not_disturb</source>
-        <extracomment>&quot;Ne pas déranger&quot;</extracomment>
-        <translation type="vanished">Nicht stören</translation>
-    </message>
-    <message>
-        <source>contact_presence_status_offline</source>
-        <extracomment>&quot;Hors ligne&quot;</extracomment>
-        <translation type="vanished">Offline</translation>
-    </message>
-    <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="112"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
@@ -6077,12 +6057,12 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../tool/Utils.cpp" line="1844"/>
         <source>contact_presence_status_available</source>
-        <translation type="unfinished"></translation>
+        <translation>Verfügbar </translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1847"/>
         <source>contact_presence_status_away</source>
-        <translation type="unfinished"></translation>
+        <translation>Abwesend</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1850"/>

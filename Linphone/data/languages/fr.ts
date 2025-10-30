@@ -724,7 +724,7 @@
     <message>
         <location filename="../../core/App.cpp" line="1459"/>
         <source>mark_all_read_action</source>
-        <translation>Mark all as read</translation>
+        <translation>Marquer tout comme lu</translation>
     </message>
 </context>
 <context>
