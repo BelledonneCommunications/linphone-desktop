@@ -3,7 +3,6 @@ import QtQuick.Controls as Control
 import QtQuick.Layouts
 import QtQuick.Shapes
 import QtQuick.Effects
-import Qt5Compat.GraphicalEffects
 
 import Linphone
 import UtilsCpp
@@ -94,12 +93,19 @@ ProgressBar {
 				opacity: 0.5
 			}
 		}
-		OpacityMask {
+		ShaderEffect {
+			id: opacityEffect
 			anchors.fill: progressRectangle
-			source: progressRectangle
-			maskSource: mask
+			property var source: ShaderEffectSource
+			{
+				sourceItem: progressRectangle
+			}
+			property var maskSource: ShaderEffectSource
+			{
+				sourceItem: mask
+			}
+			fragmentShader: 'qrc:/data/shaders/opacityMask.frag.qsb'
 		}
-
 		MouseArea {
 			id: progression
 			anchors.fill: parent
