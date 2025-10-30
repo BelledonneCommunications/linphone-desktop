@@ -22,7 +22,7 @@ set(APP_TARGETS ${LinphoneCxx_TARGET}
 				${LibLinphone_TARGET})#Liblinphone
 
 set(QT_DEFAULT_MAJOR_VERSION 6)
-set(QT_PACKAGES Quick Qml Widgets Svg Multimedia Test NetworkAuth Concurrent Core5Compat)# Search Core at first for initialize Qt scripts for next find_packages.
+set(QT_PACKAGES Quick Qml Widgets Svg Multimedia Test NetworkAuth Concurrent)# Search Core at first for initialize Qt scripts for next find_packages.
 if (UNIX AND NOT APPLE)
 	list(APPEND QT_PACKAGES DBus)
 endif()

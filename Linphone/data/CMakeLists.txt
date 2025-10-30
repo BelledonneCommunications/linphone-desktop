@@ -2,6 +2,7 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	data/assistant/create-app-sip-account.rc
 	data/assistant/use-other-sip-account.rc
 	data/shaders/roundEffect.frag.qsb
+	data/shaders/opacityMask.frag.qsb
 	data/emoji/emoji.json
 )
 
