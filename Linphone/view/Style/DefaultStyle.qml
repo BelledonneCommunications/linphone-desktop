@@ -51,8 +51,8 @@ QtObject {
     property color vue_meter_light_green: "#6FF88D"
     property color vue_meter_dark_green: "#00D916"
 
-    property real defaultHeight: 1080.0
-    property real defaultWidth: 1920.0
+    property real defaultHeight: 1007.0
+    property real defaultWidth: 1512.0
     property real maxDp: 0.98
     property real dp: Math.min((Screen.width/Screen.height)/(defaultWidth/defaultHeight), maxDp)
 

@@ -165,6 +165,7 @@ public:
 	QString getGitBranchName();
 	QString getSdkVersion();
 
+	Q_INVOKABLE void checkForUpdate(bool requestedByUser = false);
 	ChatGui *getCurrentChat() const;
 	void setCurrentChat(ChatGui *chat);
 

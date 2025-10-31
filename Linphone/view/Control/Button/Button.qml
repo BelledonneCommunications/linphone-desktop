@@ -139,6 +139,12 @@ Control.Button {
 			underline: mainItem.underline
 			bold: (mainItem.style === ButtonStyle.noBackground || mainItem.style === ButtonStyle.noBackgroundRed) && (mainItem.hovered || mainItem.pressed)
 		}
+		ToolTip {
+			parent: mainItem
+			text: mainItem.text
+			visible: mainItem.hovered && (buttonText.implicitWidth > buttonText.width)
+			delay: 500
+		}
 		TextMetrics {
 			id: textMetrics
 			text: mainItem.text

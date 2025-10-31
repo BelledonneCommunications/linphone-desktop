@@ -218,6 +218,7 @@ public:
 	bool getCardDAVMinCharForResearch() const;
 	void setCardDAVMinCharForResearch(int min);
 
+	bool isCheckForUpdateAvailable() const;
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
 
@@ -400,6 +401,9 @@ private:
 
 	// CardDAV
 	int mCardDAVMinCharForResearch = 0;
+
+	// Check update
+	bool mIsCheckForUpdateAvailable = false;
 
 	DECLARE_ABSTRACT_OBJECT
 };

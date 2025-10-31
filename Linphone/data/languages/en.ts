@@ -636,93 +636,134 @@
     </message>
     <message>
         <location filename="../../core/App.cpp" line="393"/>
-        <location filename="../../core/App.cpp" line="658"/>
+        <location filename="../../core/App.cpp" line="443"/>
+        <location filename="../../core/App.cpp" line="695"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Error</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="394"/>
-        <location filename="../../core/App.cpp" line="660"/>
+        <location filename="../../core/App.cpp" line="697"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation>Remote provisioning failed : %1</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="654"/>
+        <location filename="../../core/App.cpp" line="446"/>
+        <source>info_popup_error_checking_update</source>
+        <extracomment>An error occured while trying to check update. Please try again later or contact support team.</extracomment>
+        <translation>An error occured while trying to check update. Please try again later or contact support team.</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="452"/>
+        <source>info_popup_new_version_download_label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="455"/>
+        <source>info_popup_new_version_available_title</source>
+        <extracomment>New version available !</extracomment>
+        <translation>New version available !</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="457"/>
+        <source>info_popup_new_version_available_message</source>
+        <extracomment>A new version of Linphone (%1) is available. %2</extracomment>
+        <translation>A new version of Linphone (%1) is available at %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="463"/>
+        <source>info_popup_version_up_to_date_title</source>
+        <translation>Up to date</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="465"/>
+        <source>info_popup_version_up_to_date_message</source>
+        <extracomment>Your version is up to date</extracomment>
+        <translation>Up to date Your version is up to date</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="691"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation>not reachable</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="926"/>
+        <location filename="../../core/App.cpp" line="964"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>A free and open source SIP video-phone.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="928"/>
+        <location filename="../../core/App.cpp" line="966"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Send an order to the application towards a command line</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="932"/>
+        <location filename="../../core/App.cpp" line="970"/>
         <source>command_line_option_show_help</source>
         <translation>Show this help</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="937"/>
+        <location filename="../../core/App.cpp" line="975"/>
         <source>command_line_option_show_app_version</source>
         <translation>Show app version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="945"/>
+        <location filename="../../core/App.cpp" line="983"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="947"/>
+        <location filename="../../core/App.cpp" line="985"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, path or file</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="952"/>
+        <location filename="../../core/App.cpp" line="990"/>
         <source>command_line_option_minimized</source>
         <translation>Minimize</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="955"/>
+        <location filename="../../core/App.cpp" line="993"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Log to stdout some debug information while running</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="958"/>
+        <location filename="../../core/App.cpp" line="996"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1329"/>
+        <location filename="../../core/App.cpp" line="1367"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1329"/>
+        <location filename="../../core/App.cpp" line="1367"/>
         <source>show_action</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1344"/>
+        <location filename="../../core/App.cpp" line="1382"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1459"/>
+        <location filename="../../core/App.cpp" line="1400"/>
+        <source>check_for_update</source>
+        <extracomment>Check for update</extracomment>
+        <translation>Check for update</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1514"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>
@@ -1998,13 +2039,13 @@
 <context>
     <name>ChatCore</name>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="144"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="145"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation>Deleted</translation>
     </message>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="146"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="147"/>
         <source>info_toast_deleted_message_history</source>
         <extracomment>Message history has been deleted</extracomment>
         <translation>Message history has been deleted</translation>
@@ -3795,50 +3836,56 @@ Expiration : %1</translation>
 <context>
     <name>HelpPage</name>
     <message>
-        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="42"/>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="43"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="72"/>
-        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="130"/>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="73"/>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="142"/>
         <source>help_about_title</source>
         <extracomment>&quot;À propos de %1&quot;</extracomment>
         <translation>About %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="86"/>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="87"/>
         <source>help_about_privacy_policy_title</source>
         <extracomment>&quot;Règles de confidentialité&quot;</extracomment>
         <translation>Privacy Policy</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="88"/>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="89"/>
         <source>help_about_privacy_policy_subtitle</source>
         <extracomment>Quelles informations %1 collecte et utilise</extracomment>
         <translation>What information does %1 collect and use</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="98"/>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="101"/>
         <source>help_about_version_title</source>
         <extracomment>&quot;Version&quot;</extracomment>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="106"/>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="110"/>
+        <source>help_check_for_update_button_label</source>
+        <extracomment>Check update</extracomment>
+        <translation>Check for update</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="118"/>
         <source>help_about_gpl_licence_title</source>
         <extracomment>&quot;Licences GPLv3&quot;</extracomment>
         <translation>GPLv3 licences</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="117"/>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="129"/>
         <source>help_about_contribute_translations_title</source>
         <extracomment>&quot;Contribuer à la traduction de %1&quot;</extracomment>
         <translation>Contribute to the translation of %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="142"/>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="154"/>
         <source>help_troubleshooting_title</source>
         <extracomment>&quot;Dépannage&quot;</extracomment>
         <translation>Troubleshooting</translation>

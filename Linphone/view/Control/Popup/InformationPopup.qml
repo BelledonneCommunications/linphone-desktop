@@ -86,6 +86,7 @@ Popup {
 				text: mainItem.description
 				wrapMode: Text.WordWrap
 				color: DefaultStyle.main2_500_main
+				onLinkActivated: Qt.openUrlExternally(link)
 				font {
                     pixelSize: Utils.getSizeWithScreenRatio(12)
                     weight: Utils.getSizeWithScreenRatio(300)

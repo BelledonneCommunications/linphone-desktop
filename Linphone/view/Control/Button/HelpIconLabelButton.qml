@@ -36,10 +36,12 @@ MouseArea {
 		}
 		ColumnLayout {
 			width: implicitWidth
+			Layout.preferredWidth: width
 			height: implicitHeight
             Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
 			Text {
 				Layout.fillWidth: true
+				maximumLineCount: 1
 				text: mainItem.title
 				color: DefaultStyle.main2_600
 				font: Typography.p2
@@ -49,6 +51,7 @@ MouseArea {
 			Text {
 				Layout.alignment: Qt.AlignTop
 				verticalAlignment: Text.AlignTop
+				maximumLineCount: 2
 				Layout.fillWidth: true
 				text: mainItem.subTitle
 				color: DefaultStyle.main2_500_main

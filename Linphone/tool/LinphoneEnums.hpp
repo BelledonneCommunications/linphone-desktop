@@ -399,6 +399,9 @@ LinphoneEnums::VideoSourceScreenSharingType fromLinphone(const linphone::VideoSo
 enum class PlaybackState { PlayingState = 0, PausedState = 1, StoppedState = 2, ErrorState = 3 };
 Q_ENUM_NS(PlaybackState);
 
+enum class VersionCheckType { Release = 0, Nightly = 1, Custom = 2 };
+Q_ENUM_NS(VersionCheckType)
+
 } // namespace LinphoneEnums
 /*
 Q_DECLARE_METATYPE(LinphoneEnums::CallState)

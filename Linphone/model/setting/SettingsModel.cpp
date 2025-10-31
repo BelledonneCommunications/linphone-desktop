@@ -855,6 +855,40 @@ bool SettingsModel::getDisableMeetingsFeature() const {
 	return !!mConfig->getInt(UiSection, "disable_meetings_feature", 0);
 }
 
+bool SettingsModel::isCheckForUpdateAvailable() const {
+#ifdef ENABLE_UPDATE_CHECK
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool SettingsModel::isCheckForUpdateEnabled() const {
+	return !!mConfig->getInt(UiSection, "check_for_update_enabled", isCheckForUpdateAvailable());
+}
+
+void SettingsModel::setCheckForUpdateEnabled(bool enable) {
+	mConfig->setInt(UiSection, "check_for_update_enabled", enable);
+	emit checkForUpdateEnabledChanged();
+}
+
+QString SettingsModel::getVersionCheckUrl() {
+	auto url = mConfig->getString("misc", "version_check_url_root", "");
+	if (url == "") {
+		url = Constants::VersionCheckReleaseUrl;
+		if (url != "") mConfig->setString("misc", "version_check_url_root", url);
+	}
+	return Utils::coreStringToAppString(url);
+}
+
+void SettingsModel::setVersionCheckUrl(const QString &url) {
+	if (url != getVersionCheckUrl()) {
+		// Do not trim the url before because we want to update GUI from potential auto fix.
+		mConfig->setString("misc", "version_check_url_root", Utils::appStringToCoreString(url.trimmed()));
+		emit versionCheckUrlChanged();
+	}
+}
+
 void SettingsModel::setChatNotificationSoundPath(const QString &path) {
 	QString cleanedPath = QDir::cleanPath(path);
 	mConfig->setString(UiSection, "chat_sound_notification_file", Utils::appStringToCoreString(cleanedPath));

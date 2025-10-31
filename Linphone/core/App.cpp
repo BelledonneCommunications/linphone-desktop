@@ -430,6 +430,43 @@ void App::setSelf(QSharedPointer<App>(me)) {
 		});
 	});
 
+	// Check update
+	mCoreModelConnection->makeConnectToModel(
+	    &CoreModel::versionUpdateCheckResultReceived,
+	    [this](const std::shared_ptr<linphone::Core> &core, linphone::VersionUpdateCheckResult result,
+	           const std::string &version, const std::string &url, bool checkRequestedByUser) {
+		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		    mCoreModelConnection->invokeToCore([this, result, version, url, checkRequestedByUser] {
+			    switch (result) {
+				    case linphone::VersionUpdateCheckResult::Error:
+					    if (checkRequestedByUser)
+						    Utils::showInformationPopup(tr("info_popup_error_title"),
+						                                //: An error occured while trying to check update. Please
+						                                //: try again later or contact support team.
+						                                tr("info_popup_error_checking_update"), false);
+					    break;
+				    case linphone::VersionUpdateCheckResult::NewVersionAvailable: {
+					    QString downloadLink =
+					        QStringLiteral("<a href='%1'><font color='DefaultStyle.main2_600'>%2</a>")
+					            .arg(url)
+					            .arg(tr("info_popup_new_version_download_label"));
+					    Utils::showInformationPopup(
+					        //: New version available !
+					        tr("info_popup_new_version_available_title"),
+					        //: A new version of Linphone (%1) is available. %2
+					        tr("info_popup_new_version_available_message").arg(version).arg(downloadLink));
+					    break;
+				    }
+				    case linphone::VersionUpdateCheckResult::UpToDate:
+					    if (checkRequestedByUser)
+						    //: Up to date
+						    Utils::showInformationPopup(tr("info_popup_version_up_to_date_title"),
+						                                //: Your version is up to date
+						                                tr("info_popup_version_up_to_date_message"));
+			    }
+		    });
+	    });
+
 	//---------------------------------------------------------------------------------------------
 	mCliModelConnection = SafeConnection<App, CliModel>::create(me, CliModel::getInstance());
 	mCliModelConnection->makeConnectToCore(&App::receivedMessage, [this](int, const QByteArray &byteArray) {
@@ -660,6 +697,7 @@ void App::initCore() {
 							            tr("info_popup_configuration_failed_message").arg(message), false);
 						        });
 					        }
+					        checkForUpdate();
 					        mIsRestarting = false;
 
 					        //---------------------------------------------------------------------------------------------
@@ -1357,6 +1395,12 @@ void App::setSysTrayIcon() {
 		menu->addSeparator();
 	}
 	menu->addAction(markAllReadAction);
+	//: Check for update
+	if (mSettings->isCheckForUpdateAvailable()) {
+		QAction *checkForUpdateAction = new QAction(tr("check_for_update"), root);
+		root->connect(checkForUpdateAction, &QAction::triggered, this, [this] { checkForUpdate(); });
+		menu->addAction(checkForUpdateAction);
+	}
 	menu->addAction(quitAction);
 	if (!mSystemTrayIcon) {
 		systemTrayIcon->setContextMenu(menu); // This is a Qt bug. We cannot call setContextMenu more than once. So
@@ -1434,6 +1478,17 @@ QString App::getSdkVersion() {
 #else
 	return tr('unknown');
 #endif
+}
+
+void App::checkForUpdate(bool requestedByUser) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	if (CoreModel::getInstance() && mCoreModelConnection) {
+		mCoreModelConnection->invokeToModel([this, requestedByUser] {
+			mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+			CoreModel::getInstance()->checkForUpdate(Utils::appStringToCoreString(applicationVersion()),
+			                                         requestedByUser);
+		});
+	}
 }
 
 ChatGui *App::getCurrentChat() const {

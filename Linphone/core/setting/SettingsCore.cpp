@@ -107,6 +107,9 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	mEmojiFont = settingsModel->getEmojiFont();
 	mTextMessageFont = settingsModel->getTextMessageFont();
 
+	// Check for update
+	mIsCheckForUpdateAvailable = settingsModel->isCheckForUpdateAvailable();
+
 	// Ui
 	INIT_CORE_MEMBER(DisableChatFeature, settingsModel)
 	INIT_CORE_MEMBER(DisableMeetingsFeature, settingsModel)
@@ -1143,6 +1146,9 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mLogsFolder = model->getLogsFolder();
 	mLogsEmail = model->getLogsEmail();
 
+	// Check update
+	mIsCheckForUpdateAvailable = model->isCheckForUpdateAvailable();
+
 	// UI
 	mDisableChatFeature = model->getDisableChatFeature();
 	mDisableMeetingsFeature = model->getDisableMeetingsFeature();
@@ -1169,6 +1175,10 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mIpv6Enabled = model->getIpv6Enabled();
 	mConfigLocale = model->getConfigLocale();
 	mDownloadFolder = model->getDownloadFolder();
+}
+
+bool SettingsCore::isCheckForUpdateAvailable() const {
+	return mIsCheckForUpdateAvailable;
 }
 
 void SettingsCore::save() {

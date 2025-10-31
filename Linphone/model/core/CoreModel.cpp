@@ -368,6 +368,17 @@ void CoreModel::searchInMagicSearch(QString filter,
 	mMagicSearch->search(filter, sourceFlags, aggregation, maxResults);
 }
 
+void CoreModel::checkForUpdate(const std::string &applicationVersion, bool requestedByUser) {
+	mCheckVersionRequestedByUser = requestedByUser;
+	if (SettingsModel::getInstance()->isCheckForUpdateEnabled()) {
+		CoreModel::getInstance()->getCore()->checkForUpdate(applicationVersion);
+	}
+}
+
+bool CoreModel::isCheckVersionRequestedByUser() const {
+	return mCheckVersionRequestedByUser;
+}
+
 //---------------------------------------------------------------------------------------------------------------------------
 
 void CoreModel::onAccountAdded(const std::shared_ptr<linphone::Core> &core,
@@ -585,7 +596,7 @@ void CoreModel::onVersionUpdateCheckResultReceived(const std::shared_ptr<linphon
                                                    linphone::VersionUpdateCheckResult result,
                                                    const std::string &version,
                                                    const std::string &url) {
-	emit versionUpdateCheckResultReceived(core, result, version, url);
+	emit versionUpdateCheckResultReceived(core, result, version, url, mCheckVersionRequestedByUser);
 }
 
 void CoreModel::onFriendListRemoved(const std::shared_ptr<linphone::Core> &core,
