@@ -203,10 +203,11 @@ MainRightPanel {
 				sig.connect(f)
 			}
 
-			ScrollBar.vertical: Control.ScrollBar {
+			ScrollBar.vertical: ScrollBar {
 				anchors.right: parent.right
+				visible: editionLayout.contentHeight > editionLayout.height
 			}
-			ScrollBar.horizontal: Control.ScrollBar {
+			ScrollBar.horizontal: ScrollBar {
 			}
 			ColumnLayout {
                 spacing: Utils.getSizeWithScreenRatio(20)
