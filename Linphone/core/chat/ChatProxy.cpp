@@ -83,6 +83,6 @@ bool ChatProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QM
 	if (!mFilterText.isEmpty()) return false;
 	auto l = getItemAtSource<ChatList, ChatCore>(sourceLeft.row());
 	auto r = getItemAtSource<ChatList, ChatCore>(sourceRight.row());
-	if (l && r) return l->getLastUpdatedTime() >= r->getLastUpdatedTime();
+	if (l && r) return l->getLastUpdatedTime() > r->getLastUpdatedTime();
 	return false;
 }

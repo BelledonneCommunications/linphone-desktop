@@ -150,7 +150,7 @@ bool ConferenceInfoProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft
 	auto nowDate = QDate::currentDate();
 	if (!l || !r) { // sort on date
 		auto rdate = r ? r->getDateTimeUtc().date() : QDate::currentDate();
-		return !l ? nowDate <= r->getDateTimeUtc().date() : l->getDateTimeUtc().date() < nowDate;
+		return !l ? nowDate < r->getDateTimeUtc().date() : l->getDateTimeUtc().date() < nowDate;
 	} else {
 		return l->getDateTimeUtc() < r->getDateTimeUtc();
 	}
