@@ -28,7 +28,7 @@ Linphone is dual licensed, and is available either :
 As linphone-desktop depends on [Linphone SDK](https://gitlab.linphone.org/BC/public/linphone-sdk), you need to install to Build dependencies common to all target platforms of this project: [The Linphone SDK depdencies](https://gitlab.linphone.org/BC/public/linphone-sdk#common-to-all-target-platforms) 
 
 
-For Desktop : you will need QT6 (_6.5.3 or newer_). `C++17` support is required!. You have two way to install it :
+For Desktop : you will need QT6 (6.9.0 or newer_). `C++17` support is required!. You have two way to install it :
 - Using the [official QT installer](https://www.qt.io/download-thank-you)
 - Using an alternative installer like [aqtinstall](https://github.com/miurahr/aqtinstall)
 
