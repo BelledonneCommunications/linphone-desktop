@@ -21,8 +21,6 @@ Image {
 	id: mainItem
 	property ChatMessageContentGui contentGui
 
-	RectangleTest{anchors.fill: parent}
-
 	mipmap: false//SettingsModel.mipmapEnabled
 	autoTransform: true
 	fillMode: Image.PreserveAspectFit

@@ -2039,13 +2039,13 @@
 <context>
     <name>ChatCore</name>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="145"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="144"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation>Deleted</translation>
     </message>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="147"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="146"/>
         <source>info_toast_deleted_message_history</source>
         <extracomment>Message history has been deleted</extracomment>
         <translation>Message history has been deleted</translation>
@@ -2724,78 +2724,78 @@ Only your correspondent can decrypt them.</translation>
         <translation>Delete contact image</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="221"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="233"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="222"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="234"/>
         <source>contact_editor_first_name</source>
         <extracomment>&quot;Prénom&quot;</extracomment>
         <translation>First name</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="238"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="247"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="239"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="248"/>
         <source>contact_editor_last_name</source>
         <extracomment>&quot;Nom&quot;</extracomment>
         <translation>Last name</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="252"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="261"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="253"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="262"/>
         <source>contact_editor_company</source>
         <extracomment>&quot;Entreprise&quot;</extracomment>
         <translation>Company</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="266"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="280"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="267"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="281"/>
         <source>contact_editor_job_title</source>
         <extracomment>&quot;Fonction&quot;</extracomment>
         <translation>Job</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="312"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="344"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="313"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="345"/>
         <source>sip_address</source>
         <translation>SIP address</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="322"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="323"/>
         <source>sip_address_number_accessible_name</source>
         <extracomment>&quot;SIP address number %1&quot;</extracomment>
         <translation>SIP address number %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="337"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="338"/>
         <source>remove_sip_address_accessible_name</source>
         <extracomment>&quot;Remove SIP address %1&quot;</extracomment>
         <translation>Remove SIP address %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="367"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="368"/>
         <source>new_sip_address_accessible_name</source>
         <extracomment>&quot;New SIP address&quot;</extracomment>
         <translation>New SIP address</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="403"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="404"/>
         <source>phone_number_number_accessible_name</source>
         <extracomment>&quot;Phone number number %1&quot;</extracomment>
         <translation>Phone number number %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="418"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="419"/>
         <source>remove_phone_number_accessible_name</source>
         <extracomment>Remove phone number %1</extracomment>
         <translation>Remove phone number %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="448"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="449"/>
         <source>new_phone_number_accessible_name</source>
         <extracomment>&quot;New phone number&quot;</extracomment>
         <translation>New phone number</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="400"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="426"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="401"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="427"/>
         <source>phone</source>
         <extracomment>&quot;Téléphone&quot;</extracomment>
         <translation>Phone</translation>
@@ -3422,12 +3422,12 @@ Only your correspondent can decrypt them.</translation>
 <context>
     <name>CoreModel</name>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="220"/>
+        <location filename="../../model/core/CoreModel.cpp" line="224"/>
         <source>info_popup_error_title</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="222"/>
+        <location filename="../../model/core/CoreModel.cpp" line="226"/>
         <source>fetching_config_failed_error_message</source>
         <extracomment>&quot;Remote provisioning cannot be retrieved&quot;</extracomment>
         <translation>Remote provisioning cannot be retrieved</translation>
@@ -5541,28 +5541,28 @@ To enable them in a commercial project, please contact us.</translation>
         <translation>Advanced parameters</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="390"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="397"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="415"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="422"/>
         <source>login_proxy_server_url</source>
         <extracomment>&quot;Outbound SIP Proxy URI&quot;</extracomment>
         <translation>Outbound SIP Proxy URI</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="392"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="417"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
         <translation>If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="405"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="410"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="402"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="407"/>
         <source>login_registrar_uri</source>
         <extracomment>&quot;Registrar URI&quot;</extracomment>
         <translation>Registrar URI</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="418"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="424"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="390"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="396"/>
         <source>login_id</source>
         <extracomment>&quot;Authentication ID (if different)&quot;</extracomment>
         <translation>Authentication ID (if different)</translation>
@@ -5849,43 +5849,43 @@ To enable them in a commercial project, please contact us.</translation>
         <translation>The calling address is not an interpretable SIP address : %1</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="383"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="385"/>
         <source>group_call_error_no_account</source>
         <translation>No default account found, can&apos;t create group call</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="413"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="415"/>
         <source>group_call_error_participants_invite</source>
         <translation>Couldn&apos;t invite participants to group call</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="417"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="419"/>
         <source>group_call_error_creation</source>
         <translation>Group call couldn&apos;t be created</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="517"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="519"/>
         <source>voice_recording_duration</source>
         <extracomment>&quot;Voice recording (%1)&quot; : %1 is the duration formated in mm:ss</extracomment>
         <translation>Voice recording (%1)</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="591"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="593"/>
         <source>unknown_audio_device_name</source>
         <translation>Unknown device name</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="525"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="527"/>
         <source>conference_invitation</source>
         <translation>Meeting invitation</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="529"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="531"/>
         <source>conference_invitation_cancelled</source>
         <translation>Meeting cancellation</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="527"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="529"/>
         <source>conference_invitation_updated</source>
         <translation>Meeting modification</translation>
     </message>
