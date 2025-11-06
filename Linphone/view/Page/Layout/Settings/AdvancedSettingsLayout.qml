@@ -137,6 +137,7 @@ AbstractSettingsLayout {
 				propertyOwner: SettingsCpp
 			}
 			SwitchSetting {
+				visible: false
 				Layout.fillWidth: true
                 //: Create end to end encrypted meetings and group calls
                 titleText: qsTr("settings_advanced_create_endtoend_encrypted_meetings_title")

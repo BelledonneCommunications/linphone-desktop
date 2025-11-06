@@ -102,17 +102,6 @@ Item {
 					position: 100
 					source: mainItem.isVideo ? "file:///" + mainItem.filePath : ""
 					fillMode: playbackState === MediaPlayer.PlayingState ? VideoOutput.PreserveAspectFit : VideoOutput.PreserveAspectCrop
-					MouseArea {
-						propagateComposedEvents: false
-						enabled: videoThumbnail.visible
-						anchors.fill: parent
-						hoverEnabled: false
-						acceptedButtons: Qt.LeftButton
-						onClicked: (mouse) => {
-							mouse.accepted = true
-							videoThumbnail.playbackState === MediaPlayer.PlayingState ? videoThumbnail.pause() : videoThumbnail.play()
-						}
-					}
 					EffectImage {
 						anchors.centerIn: parent
 						visible: videoThumbnail.playbackState !== MediaPlayer.PlayingState

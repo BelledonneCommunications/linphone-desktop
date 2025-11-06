@@ -17,6 +17,7 @@ Rectangle {
 	property var fillMode: playbackState === MediaPlayer.PlayingState ? VideoOutput.PreserveAspectFit : VideoOutput.PreserveAspectCrop
 	property alias videoOutput: output
 	property string source: mediaPlayer.source
+
 	MediaPlayer {
 		id: mediaPlayer
 		source: UtilsCpp.isVideo(mainItem.filePath) ? "file:///" + mainItem.filePath : ""
@@ -54,11 +55,18 @@ Rectangle {
 		propagateComposedEvents: false
 		enabled: mainItem.visible
 		anchors.fill: parent
-		hoverEnabled: false
+		hoverEnabled: true
 		acceptedButtons: Qt.LeftButton
-		onClicked: (mouse) => {
+		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+		// Changing cursor in MouseArea seems not to work with the Loader
+		// Use override cursor for this case
+		onContainsMouseChanged: {
+			if (containsMouse) UtilsCpp.setGlobalCursor(Qt.PointingHandCursor)
+			else UtilsCpp.restoreGlobalCursor()
+		}
+		onPressed: (mouse) => {
 			mouse.accepted = true
-			mediaPlayer.playbackState === MediaPlayer.PlayingState ? mediaPlayer.pause() : mediaPlayer.play()
+			mainItem.contentGui.core.lOpenFile()
 		}
 	}
 	EffectImage {
