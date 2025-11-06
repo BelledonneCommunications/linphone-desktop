@@ -28,17 +28,16 @@ LdapModel::LdapModel(const std::shared_ptr<linphone::RemoteContactDirectory> &ld
 	mustBeInLinphoneThread(getClassName());
 	if (ldap) {
 		mLdap = ldap;
-		mLdapParamsClone = mLdap->getLdapParams();
+		mLdapParamsClone = mLdap->getLdapRemoteContactDirectory();
 	} else {
 		mLdapParamsClone = CoreModel::getInstance()->getCore()->createLdapParams();
-		mLdapParamsClone->setDelay(2000);
 		mLdapParamsClone->enableTls(true);
-		mLdapParamsClone->setEnabled(true);
-
 		mLdap = CoreModel::getInstance()->getCore()->createLdapRemoteContactDirectory(mLdapParamsClone);
+		mLdap->setDelay(2000);
 		mLdap->setTimeout(5);
 		mLdap->setLimit(50);
 		mLdap->setMinCharacters(0); // Needs to be 0 if Contacts list should be synchronized with LDAP AB
+		mLdap->enable(true);
 	}
 }
 
@@ -65,7 +64,7 @@ void LdapModel::save() {
 	mLdap->setMinCharacters(oldMinChars);
 	core->addRemoteContactDirectory(mLdap);
 	lDebug() << log().arg("LDAP Server saved");
-	mLdapParamsClone = mLdap->getLdapParams();
+	mLdapParamsClone = mLdap->getLdapRemoteContactDirectory();
 	// Clean cache to take account new searches
 	auto ldapFriendList = core->getFriendListByName("ldap_friends");
 	if (ldapFriendList) core->removeFriendList(ldapFriendList);
@@ -92,7 +91,7 @@ void LdapModel::setDebug(const bool &data) {
 	}
 }
 
-DEFINE_GETSET(LdapModel, bool, enabled, Enabled, mLdapParamsClone)
+DEFINE_GETSET_ENABLE(LdapModel, enabled, Enabled, mLdap)
 DEFINE_GETSET_MODEL_STRING(LdapModel, serverUrl, ServerUrl, mLdap)
 DEFINE_GETSET_MODEL_STRING(LdapModel, bindDn, BindDn, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, password, Password, mLdapParamsClone)
@@ -107,7 +106,7 @@ DEFINE_GETSET_MODEL_STRING(LdapModel, baseObject, BaseObject, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, filter, Filter, mLdapParamsClone)
 DEFINE_GETSET(LdapModel, int, limit, Limit, mLdap)
 DEFINE_GETSET(LdapModel, int, timeout, Timeout, mLdap)
-DEFINE_GETSET(LdapModel, int, delay, Delay, mLdapParamsClone)
+DEFINE_GETSET(LdapModel, int, delay, Delay, mLdap)
 DEFINE_GETSET(LdapModel, int, minCharacters, MinCharacters, mLdap)
 DEFINE_GETSET_MODEL_STRING(LdapModel, nameAttribute, NameAttribute, mLdapParamsClone)
 DEFINE_GETSET_MODEL_STRING(LdapModel, sipAttribute, SipAttribute, mLdapParamsClone)

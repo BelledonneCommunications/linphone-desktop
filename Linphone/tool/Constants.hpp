@@ -142,7 +142,6 @@ public:
 	static constexpr char PathFiles[] = "/files/";
 	static constexpr char PathCaptures[] = "/" EXECUTABLE_NAME "/captures/";
 	static constexpr char PathCodecs[] = "/codecs/";
-	static constexpr char PathData[] = "/" EXECUTABLE_NAME;
 	static constexpr char PathTools[] = "/tools/";
 	static constexpr char PathLogs[] = "/logs/";
 	static constexpr char PathVCards[] = "/vcards/";
@@ -152,7 +151,6 @@ public:
 	static constexpr char PathPlugins[] = "/plugins/";
 #endif
 	static constexpr char PathPluginsApp[] = "app/";
-	static constexpr char PathSounds[] = "/sounds/linphone";
 	static constexpr char PathUserCertificates[] = "/usr-crt/";
 
 	static constexpr char PathCallHistoryList[] = "/call-history.db";

@@ -41,7 +41,7 @@ public:
 	LimitProxy(QObject *parent = nullptr);
 	virtual ~LimitProxy();
 	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-
+	virtual void invalidateFilter();
 	// Helper for setting the limit with sorted/filtered list
 	void setSourceModels(SortFilterProxy *firstList);
 

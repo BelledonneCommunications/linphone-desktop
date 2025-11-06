@@ -27,8 +27,13 @@
 
 namespace Paths {
 bool filePathExists(const QString &path, const bool isWritable = false);
+//bool convertToRelativePath(const QString &path, QString *relativePath);
+
+// Return true if paths are different and point to the same file
+bool isSameRelativeFile(const QString &filePath, const QString &relativeFilePath);
 
 QString getAppLocalDirPath();
+QString getAppRootCaFilePath();
 QString getAssistantConfigDirPath();
 QString getAvatarsDirPath();
 QString getVCardsPath();
@@ -44,14 +49,11 @@ QString getFriendsListFilePath();
 QString getLimeDatabasePath();
 QString getLogsDirPath();
 QString getMessageHistoryFilePath();
-QString getPackageDataDirPath();
 QString getPackageMsPluginsDirPath();
 QString getPackagePluginsAppDirPath();
-QString getPackageSoundsResourcesDirPath();
 QString getPackageTopDirPath();
 QString getPluginsAppDirPath();
 QStringList getPluginsAppFolders();
-QString getRootCaFilePath();
 QString getToolsDirPath();
 QString getUserCertificatesDirPath();
 QString getZrtpDataFilePath();

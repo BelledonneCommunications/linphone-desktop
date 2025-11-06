@@ -57,7 +57,6 @@ constexpr char Constants::PathAssistantConfig[];
 constexpr char Constants::PathAvatars[];
 constexpr char Constants::PathCaptures[];
 constexpr char Constants::PathCodecs[];
-constexpr char Constants::PathData[];
 constexpr char Constants::PathTools[];
 constexpr char Constants::PathLogs[];
 #ifdef APPLE
@@ -66,7 +65,6 @@ constexpr char Constants::PathPlugins[];
 constexpr char Constants::PathPlugins[];
 #endif
 constexpr char Constants::PathPluginsApp[];
-constexpr char Constants::PathSounds[];
 constexpr char Constants::PathUserCertificates[];
 
 constexpr char Constants::PathCallHistoryList[];

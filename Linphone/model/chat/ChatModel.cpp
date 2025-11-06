@@ -212,7 +212,7 @@ ChatModel::searchMessageByText(QString text, std::shared_ptr<const linphone::Eve
 }
 
 void ChatModel::compose() {
-	mMonitor->compose();
+	mMonitor->composeTextMessage();
 }
 
 linphone::ChatRoom::State ChatModel::getState() const {

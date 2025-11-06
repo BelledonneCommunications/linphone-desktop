@@ -92,11 +92,11 @@
 
 .windows-vs2022:
   extends: .windows-vs
-  tags: [ "windows-powershell-vs-17-2022" ]
+  tags: [ "windows-powershell-vs-17-2022-flat" ]
 
 .windows-codesigning:
   extends: .prepare
-  tags: [ "windows-powershell-vs-17-2022-apps" ]
+  tags: [ "windows-powershell-vs-17-2022-apps-flat" ]
 
 .windows-msbuild-variables:
   variables:
@@ -232,7 +232,7 @@ win64-codesigning:
 
 .win64-upload:
   stage: deploy
-  tags: [ "windows-powershell" ]
+  tags: [ "windows-powershell-flat" ]
   rules:
     - if: $NIGHTLY_MASTER
     - if: $DEPLOY_WINDOWS
@@ -250,7 +250,7 @@ win64-ninja-vs2022-upload:
 
 .win64-plugins-upload:
   stage: deploy
-  tags: [ "windows" ]
+  tags: [ "windows-flat" ]
   rules:
     - if: $DEPLOY_PLUGINS
   script:

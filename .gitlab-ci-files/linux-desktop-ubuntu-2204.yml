@@ -1,5 +1,5 @@
 .factorize_ubuntu2204: &docker_image_platform_and_runner_tag
-  tags: [ "docker" ]
+  tags: [ "docker-flat" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-ubuntu-22-04-lts:$UBUNTU_2204_IMAGE_VERSION
 
 ubuntu2204-ninja-gcc:
@@ -71,7 +71,7 @@ ubuntu2204-makefile-gcc-signed:
 #################################################
 
 ubuntu2204-makefile-gcc-package:
-  tags: [ "docker" ]
+  tags: [ "docker-flat" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-ubuntu-22-04-lts:$UBUNTU_2204_IMAGE_VERSION
   needs: []
   rules:
@@ -100,7 +100,7 @@ ubuntu2204-makefile-gcc-deploy:
 
 ubuntu2204-makefile-gcc-plugins-deploy:
   stage: deploy
-  tags: [ "deploy" ]
+  tags: [ "deploy-flat" ]
   needs:
     - ubuntu2204-makefile-gcc
   only:

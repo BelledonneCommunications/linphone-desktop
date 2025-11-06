@@ -115,6 +115,7 @@ static inline QDir getAppPackageDir() {
 }
 
 static inline QString getAppPackageDataDirPath() {
+	QDir executableDir(QCoreApplication::applicationDirPath());
 	QDir dir = getAppPackageDir();
 #ifdef __APPLE__
 	if (!dir.cd("Resources")) {
@@ -126,17 +127,21 @@ static inline QString getAppPackageDataDirPath() {
 		dir.mkdir("share");
 		dir.cd("share");
 	}
-	return dir.absolutePath();
+	lInfo() << executableDir.absolutePath() << " VS " << dir.absolutePath() << " == " << executableDir.relativeFilePath(dir.absolutePath());
+	return executableDir.relativeFilePath(dir.absolutePath());
 }
 
 static inline QString getAppPackageMsPluginsDirPath() {
+	QDir executableDir(QCoreApplication::applicationDirPath());
 	QDir dir = getAppPackageDir();
 	dir.cd(MSPLUGINS_DIR);
-	return dir.absolutePath();
+	return executableDir.relativeFilePath(dir.absolutePath());
 }
 
 static inline QString getAppPackagePluginsDirPath() {
-	return getAppPackageDir().absolutePath() + Constants::PathPlugins;
+	QDir executableDir(QCoreApplication::applicationDirPath());
+	QDir packageDir = getAppPackageDir();
+	return executableDir.relativeFilePath( packageDir.absolutePath() + Constants::PathPlugins);
 }
 
 static inline QString getAppAssistantConfigDirPath() {
@@ -159,29 +164,6 @@ static inline QString getAppFriendsFilePath() {
 	return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + Constants::PathFriendsList;
 }
 
-static inline QString getAppRootCaFilePath() {
-	QString rootca = getAppPackageDataDirPath() + Constants::PathRootCa;
-	if (Paths::filePathExists(rootca)) { // Packaged
-		return rootca;
-	} else {
-		lInfo() << "Root ca path does not exist. Create it";
-		QFileInfo rootcaInfo(rootca);
-		if (!rootcaInfo.absoluteDir().exists()) {
-			QDir dataDir(getAppPackageDataDirPath());
-			if (!dataDir.mkpath(Constants::PathRootCa)) {
-				lCritical() << "ERROR : COULD NOT CREATE DIRECTORY WITH PATH" << Constants::PathRootCa;
-				return "";
-			}
-		}
-		QFile rootCaFile(rootca);
-		if (rootCaFile.open(QIODevice::ReadWrite)) return rootca;
-		else {
-			lCritical() << "ERROR : COULD NOT CREATE ROOTCA WITH PATH" << rootca;
-		}
-	}
-	return "";
-}
-
 static inline QString getAppMessageHistoryFilePath() {
 	return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + Constants::PathMessageHistoryList;
 }
@@ -198,7 +180,9 @@ bool Paths::filePathExists(const QString &path, const bool isWritable) {
 	QFile file(path);
 	return file.exists();
 }
-
+bool Paths::isSameRelativeFile(const QString &filePath, const QString &relativeFilePath) {
+	return filePath != relativeFilePath && QFileInfo(relativeFilePath) == QFileInfo(filePath);
+}
 // -----------------------------------------------------------------------------
 
 QString Paths::getAppLocalDirPath() {
@@ -283,13 +267,14 @@ QString Paths::getLogsDirPath() {
 	                          Constants::PathLogs);
 }
 
+QString Paths::getAppRootCaFilePath() {
+	// Hardcoded because it comes from linphone and is not customizable.
+	return getReadableFilePath(getAppPackageDataDirPath() + "/linphone/rootca.pem");
+}
+
 QString Paths::getMessageHistoryFilePath() {
 	return getReadableFilePath(
 	    getAppMessageHistoryFilePath()); // No need to ensure that the file exists as this DB is deprecated
-}
-
-QString Paths::getPackageDataDirPath() {
-	return getReadableDirPath(getAppPackageDataDirPath() + Constants::PathData);
 }
 
 QString Paths::getPackageMsPluginsDirPath() {
@@ -298,10 +283,6 @@ QString Paths::getPackageMsPluginsDirPath() {
 
 QString Paths::getPackagePluginsAppDirPath() {
 	return getReadableDirPath(getAppPackagePluginsDirPath() + Constants::PathPluginsApp);
-}
-
-QString Paths::getPackageSoundsResourcesDirPath() {
-	return getReadableDirPath(getAppPackageDataDirPath() + Constants::PathSounds);
 }
 
 QString Paths::getPackageTopDirPath() {
@@ -317,10 +298,6 @@ QStringList Paths::getPluginsAppFolders() {
 	pluginPaths << Paths::getPluginsAppDirPath();
 	pluginPaths << Paths::getPackagePluginsAppDirPath();
 	return pluginPaths;
-}
-
-QString Paths::getRootCaFilePath() {
-	return getReadableFilePath(getAppRootCaFilePath());
 }
 
 QString Paths::getToolsDirPath() {

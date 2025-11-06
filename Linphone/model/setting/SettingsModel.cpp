@@ -395,14 +395,22 @@ void SettingsModel::setPlaybackDevice(const QVariantMap &device) {
 
 QVariantMap SettingsModel::getRingerDevice() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto id = Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getRingerDevice());
-	auto audioDevice = ToolModel::findAudioDevice(id, linphone::AudioDevice::Capabilities::CapabilityPlay);
-	return ToolModel::createVariant(audioDevice);
+	for (const auto &device : CoreModel::getInstance()->getCore()->getExtendedAudioDevices()) {
+		if (device->getUseForRinging())
+			return ToolModel::createVariant(device);
+	}
+	return ToolModel::createVariant(nullptr);
 }
 
 void SettingsModel::setRingerDevice(QVariantMap device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	CoreModel::getInstance()->getCore()->setRingerDevice(Utils::appStringToCoreString(device["id"].toString()));
+	for (const auto &ldevice : CoreModel::getInstance()->getCore()->getExtendedAudioDevices()) {
+		auto id = Utils::appStringToCoreString(device["id"].toString());
+		if (ldevice->getId() == id) {
+			ldevice->setUseForRinging(true);
+		}else
+			ldevice->setUseForRinging(false);
+	}
 	emit ringerDeviceChanged(device);
 }
 

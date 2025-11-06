@@ -37,13 +37,21 @@ LimitProxy::~LimitProxy() {
 bool LimitProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	return mMaxDisplayItems == -1 || sourceRow < mMaxDisplayItems;
 }
-
+void LimitProxy::invalidateFilter() {
+// TODO for a better filter management by encapsulating filter change between begin/end
+#if QT_VERSION < QT_VERSION_CHECK(6, 10, 0)
+	QSortFilterProxyModel::invalidateFilter();
+#else
+	QSortFilterProxyModel::beginFilterChange();
+	QSortFilterProxyModel::endFilterChange();
+#endif
+}
 void LimitProxy::setSourceModels(SortFilterProxy *firstList) {
 	auto secondList = firstList->sourceModel();
 	if (secondList) {
 		connect(secondList, &QAbstractItemModel::rowsInserted, this, &LimitProxy::onAdded);
 		connect(secondList, &QAbstractItemModel::rowsRemoved, this, &LimitProxy::onRemoved);
-		connect(secondList, &QAbstractItemModel::modelReset, this, &LimitProxy::invalidateRowsFilter);
+		connect(secondList, &QAbstractItemModel::modelReset, this, &LimitProxy::invalidate);
 	}
 	connect(firstList, &SortFilterProxy::filterTextChanged, this, &LimitProxy::filterTextChanged);
 	connect(firstList, &SortFilterProxy::filterTypeChanged, this, &LimitProxy::filterTypeChanged);

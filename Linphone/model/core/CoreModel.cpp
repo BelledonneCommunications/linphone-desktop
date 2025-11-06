@@ -171,8 +171,6 @@ void CoreModel::setPathBeforeCreation() {
 	std::shared_ptr<linphone::Factory> factory = linphone::Factory::get();
 	SET_FACTORY_PATH(Msplugins, Paths::getPackageMsPluginsDirPath());
 	SET_FACTORY_PATH(TopResources, Paths::getPackageTopDirPath());
-	SET_FACTORY_PATH(SoundResources, Paths::getPackageSoundsResourcesDirPath());
-	SET_FACTORY_PATH(DataResources, Paths::getPackageDataDirPath());
 	SET_FACTORY_PATH(Data, Paths::getAppLocalDirPath());
 	SET_FACTORY_PATH(Download, Paths::getDownloadDirPath());
 	SET_FACTORY_PATH(Config, Paths::getConfigDirPath(true));
@@ -199,8 +197,13 @@ void CoreModel::setPathAfterStart() {
 		mCore->setUserCertificatesPath(Utils::appStringToCoreString(Paths::getUserCertificatesDirPath()));
 	lInfo() << "[CoreModel] Using UserCertificate path : " << QString::fromStdString(mCore->getUserCertificatesPath());
 	// Use application path if Linphone default is not available
-	if (mCore->getRootCa().empty() || !Paths::filePathExists(Utils::coreStringToAppString(mCore->getRootCa())))
-		mCore->setRootCa(Utils::appStringToCoreString(Paths::getRootCaFilePath()));
+	QString rootCaPath = Utils::coreStringToAppString(mCore->getRootCa());
+	QString relativeRootCa = Paths::getAppRootCaFilePath();
+	lDebug() << "[CoreModel] Getting rootCa paths: " << rootCaPath << " VS " << relativeRootCa;
+	if (!Paths::filePathExists(rootCaPath) || Paths::isSameRelativeFile(rootCaPath, relativeRootCa) ) {
+		lInfo() << "[CoreModel] Reset rootCa path to: " << relativeRootCa;
+		mCore->setRootCa(Utils::appStringToCoreString(relativeRootCa));
+	}
 	lInfo() << "[CoreModel] Using RootCa path : " << QString::fromStdString(mCore->getRootCa());
 }
 

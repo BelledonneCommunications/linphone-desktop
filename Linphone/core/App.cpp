@@ -287,6 +287,7 @@ App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
 	// Do not use APPLICATION_NAME here.
 	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
+	QDir::setCurrent(QCoreApplication::applicationDirPath());// Set working directory as the executable to allow relative paths.
 	QThread::currentThread()->setPriority(QThread::HighPriority);
 	qDebug() << "app thread is" << QThread::currentThread();
 	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
@@ -305,7 +306,7 @@ App::App(int &argc, char *argv[])
 	               .arg(applicationVersion())
 	               .arg(Utils::getOsProduct())
 	               .arg(qVersion());
-
+	lInfo() << "at " << QDir().absolutePath();
 	mCurrentDate = QDate::currentDate();
 	mAutoStart = autoStartEnabled();
 	mDateUpdateTimer.setInterval(60000);

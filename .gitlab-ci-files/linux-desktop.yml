@@ -74,6 +74,6 @@
 
 .linux-deploy:
   stage: deploy
-  tags: [ "deploy" ]
+  tags: [ "deploy-flat" ]
   script:
     - *deploy_linux
