@@ -91,8 +91,8 @@ bool ChatMessageContentModel::downloadFile(const QString &name, QString *error) 
 		default:
 			auto state = LinphoneEnums::fromLinphone(mChatMessageModel->getState());
 			lWarning() << QStringLiteral("Wrong message state when requesting downloading, state=") << state;
-			//: Wrong message state when requesting downloading, state = %1
-			if (error) *error = tr("download_file_error_wrong_state").arg(LinphoneEnums::toString(state));
+			//: Error while trying to download content : %1
+			if (error) *error = tr("download_file_server_error").arg(LinphoneEnums::toString(state));
 			return false;
 	}
 	bool soFarSoGood;
@@ -113,7 +113,13 @@ bool ChatMessageContentModel::downloadFile(const QString &name, QString *error) 
 		//: to get it
 		if (error) *error = tr("download_file_error_file_transfer_unavailable");
 		return false;
+	} else if (mContent->getName().empty()) {
+		lWarning() << QStringLiteral("content name is null, can't download it !");
+		//: Content name is null, can't download it !
+		if (error) *error = tr("download_file_error_null_name");
+		return false;
 	} else {
+		lDebug() << log().arg("download file : %1").arg(name);
 		auto downloaded = mChatMessageModel->getMonitor()->downloadContent(mContent);
 		if (!downloaded && error) {
 			lWarning() << QStringLiteral("Unable to download file of entry %1.").arg(name);

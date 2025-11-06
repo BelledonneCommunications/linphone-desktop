@@ -2240,24 +2240,24 @@
 <context>
     <name>ChatMessageContentCore</name>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="106"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="107"/>
         <source>download_file_default_error</source>
         <extracomment>Error downloading file %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="107"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
         <source>info_popup_error_titile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="138"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="140"/>
         <source>popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="140"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="142"/>
         <source>popup_open_file_error_does_not_exist_message</source>
         <extracomment>Could not open file : unknown path %1</extracomment>
         <translation type="unfinished"></translation>
@@ -2329,8 +2329,8 @@ Error</extracomment>
     </message>
     <message>
         <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="95"/>
-        <source>download_file_error_wrong_state</source>
-        <extracomment>Wrong message state when requesting downloading, state = %1</extracomment>
+        <source>download_file_server_error</source>
+        <extracomment>Error while trying to download content : %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2346,7 +2346,13 @@ Error</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="121"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="119"/>
+        <source>download_file_error_null_name</source>
+        <extracomment>Content name is null, can&apos;t download it !</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="127"/>
         <source>download_file_error_unable_to_download</source>
         <extracomment>Unable to download file of entry %1</extracomment>
         <translation type="unfinished"></translation>
@@ -5646,28 +5652,28 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <translation>Erweiterte Einstellungen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="415"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="422"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="416"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="423"/>
         <source>login_proxy_server_url</source>
         <extracomment>&quot;Outbound SIP Proxy URI&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="417"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="418"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="402"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="407"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="403"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="408"/>
         <source>login_registrar_uri</source>
         <extracomment>&quot;Registrar URI&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="390"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="396"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="395"/>
         <source>login_id</source>
         <extracomment>&quot;Authentication ID (if different)&quot;</extracomment>
         <translation type="unfinished"></translation>

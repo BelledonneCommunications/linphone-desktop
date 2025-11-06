@@ -97,16 +97,16 @@ void ChatMessageContentCore::setSelf(QSharedPointer<ChatMessageContentCore> me) 
 
 	mChatMessageContentModelConnection->makeConnectToCore(&ChatMessageContentCore::lDownloadFile, [this]() {
 		mChatMessageContentModelConnection->invokeToModel([this] {
-			QString error;
-			bool downloaded = mChatMessageContentModel->downloadFile(mName, &error);
+			QString *error = new QString();
+			bool downloaded = mChatMessageContentModel->downloadFile(mName, error);
 			if (!downloaded) {
-				mChatMessageContentModelConnection->invokeToCore([this, &error] {
-					QString message = error;
+				mChatMessageContentModelConnection->invokeToCore([this, error] {
 					//: Error downloading file %1
-					if (error.isEmpty()) error = tr("download_file_default_error").arg(mName);
-					Utils::showInformationPopup(tr("info_popup_error_titile"), message, false);
+					if (error->isEmpty()) *error = tr("download_file_default_error").arg(mName);
+					Utils::showInformationPopup(tr("info_popup_error_titile"), *error, false);
+					delete error;
 				});
-			}
+			} else delete error;
 		});
 	});
 	mChatMessageContentModelConnection->makeConnectToModel(
