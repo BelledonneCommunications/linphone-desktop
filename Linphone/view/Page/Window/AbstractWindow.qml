@@ -16,7 +16,7 @@ ApplicationWindow {
     width: Math.min(Utils.getSizeWithScreenRatio(1512), Screen.desktopAvailableWidth)
     height: Math.min(Utils.getSizeWithScreenRatio(982), Screen.desktopAvailableHeight)
 
-    onActiveChanged: UtilsCpp.setLastActiveWindow(this)
+    onActiveChanged: if (active) UtilsCpp.setLastActiveWindow(this)
 
     property bool isFullscreen: visibility == Window.FullScreen
     onIsFullscreenChanged: DesktopToolsCpp.screenSaverStatus = !isFullscreen
