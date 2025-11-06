@@ -67,20 +67,30 @@ Item {
 				sourceSize.height: mainItem.height
 				fillMode: Image.PreserveAspectFit
 			}
-			Rectangle {
+			Image {
 				anchors.fill: parent
-				color: DefaultStyle.main1_200
-				opacity: 0.5
-				Image {
+				z: image.z + 1
+				visible: image.status == Image.Error || image.status == Image.Null || !UtilsCpp.fileExists(mainItem.filePath)
+				source: AppIcons.fileImage
+				sourceSize.width: mainItem.width
+				sourceSize.height: mainItem.height
+				fillMode: Image.PreserveAspectFit
+			}
+			Item {
+				id: loadingImageItem
+				anchors.fill: parent
+				visible: mainItem.isImage && image.status === Image.Loading
+				Rectangle {
 					anchors.fill: parent
-					z: parent.z + 1
-					visible: image.status == Image.Error || image.status == Image.Null || !UtilsCpp.fileExists(mainItem.filePath)
-					source: AppIcons.fileImage
-					sourceSize.width: mainItem.width
-					sourceSize.height: mainItem.height
-					fillMode: Image.PreserveAspectFit
+					color: DefaultStyle.main1_200
+					opacity: 0.2
+				}
+				BusyIndicator {
+					anchors.centerIn: parent
+					width: Utils.getSizeWithScreenRatio(20)
 				}
 			}
+
 			Image {
 				id: image
 				visible: mainItem.isImage && status !== Image.Loading
