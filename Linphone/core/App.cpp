@@ -267,9 +267,7 @@ void App::setAutoStart(bool enabled) {
 
 void App::setAutoStart(bool enabled) {
 	QSettings settings(AutoStartSettingsFilePath, QSettings::NativeFormat);
-	QString parameters;
-	if (!mSettings->getExitOnClose()) parameters = " --minimized";
-	if (enabled) settings.setValue(EXECUTABLE_NAME, QDir::toNativeSeparators(applicationFilePath()) + parameters);
+	if (enabled) settings.setValue(EXECUTABLE_NAME, QDir::toNativeSeparators(applicationFilePath()));
 	else settings.remove(EXECUTABLE_NAME);
 
 	mAutoStart = enabled;
