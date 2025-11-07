@@ -80,7 +80,7 @@
         <location filename="../../core/account/AccountCore.cpp" line="500"/>
         <source>manage_account_status_cleared_summary</source>
         <extracomment>&quot;Compte désactivé, vous ne recevrez ni appel ni message.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Compte desactivat, no rebràs pas trucades ni missatges.</translation>
     </message>
 </context>
 <context>
@@ -2187,6 +2187,11 @@
         <extracomment>Could not open file : unknown path %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
+        <source>info_popup_error_titile</source>
+        <translation>Error</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentList</name>
@@ -2241,18 +2246,6 @@ Error</extracomment>
 </context>
 <context>
     <name>ChatMessageContentModel</name>
-    <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="105"/>
-        <source>popup_error_title</source>
-        <extracomment>Error</extracomment>
-        <translation>Error</translation>
-    </message>
-    <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="108"/>
-        <source>popup_download_error_message</source>
-        <extracomment>This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ChatMessageCore</name>
@@ -7427,6 +7420,14 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="804"/>
         <source>okButton</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CoreModel</name>
+    <message>
+        <location filename="../../model/core/CoreModel.cpp" line="220"/>
+        <source>info_popup_error_title</source>
+        <translation>Error</translation>
     </message>
 </context>
 </TS>

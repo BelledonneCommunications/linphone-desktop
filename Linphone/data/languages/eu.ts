@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="90"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gorde %1 ezarpenak</translation>
     </message>
 </context>
 <context>
@@ -152,37 +152,37 @@
         <location filename="../../model/account/AccountModel.cpp" line="253"/>
         <source>set_mwi_server_address_failed_error_message</source>
         <extracomment>&quot;Unable to set voicemail server address, failed creating address from %1&quot; : %1 is address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da ahots-postontziaren zerbitzariaren helbidea ezarri, huts egin du %1 (e)tik helbidea sortzean</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="292"/>
         <source>set_server_address_failed_error_message</source>
         <extracomment>&quot;Unable to set server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da zerbitzariaren helbidea ezarri, huts egin du %1(e)tik helbidea sortzean</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="309"/>
         <source>set_outbound_proxy_uri_failed_error_message</source>
         <extracomment>Unable to set outbound proxy uri, failed creating address from %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da irteerako proxy uri-a ezarri, huts egin du %1 (e)tik helbidea sortzean</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="418"/>
         <source>set_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the conversation server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da elkarrizketa-zerbitzariaren helbidea ezarri, huts egin du %1 (e)tik helbidea sortzean</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="440"/>
         <source>set_audio_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the meeting server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da bilera-zerbitzariaren helbidea ezarri, huts egin du %1 (e)tik helbidea sortzean</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="487"/>
         <source>set_voicemail_address_failed_error_message</source>
         <extracomment>Unable to set voicemail address, failed creating address from %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da ahots-postontziaren helbidea ezarri, huts egin du %1 (e)tik helbidea sortzean</translation>
     </message>
 </context>
 <context>
@@ -302,7 +302,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="345"/>
         <source>device_last_updated_time_no_info</source>
         <extracomment>&quot;No information&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ez dago informaziorik</translation>
     </message>
 </context>
 <context>
@@ -415,7 +415,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="127"/>
         <source>account_settings_registrar_uri_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erregistratu URIa</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="140"/>
@@ -426,7 +426,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="145"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Eremu hau betetzen bada, irteerako proxya automatikoki aktibatuko da. Utzi hutsik desaktibatzeko.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="157"/>
@@ -490,16 +490,16 @@
         <source>add_participant_selected_count</source>
         <comment>0</comment>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Partaide %1 aukeratuta</numerusform>
+            <numerusform>%1 partaide aukeratuta</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="95"/>
         <source>remove_participant_accessible_name</source>
         <extracomment>Remove participant %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ezabatu %1 partaidea</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="151"/>
@@ -578,7 +578,7 @@
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="103"/>
         <source>download_apply_remote_provisioning_accessible_name</source>
         <extracomment>&quot;Download and apply remote provisioning&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Deskargatu eta aplikatu urruneko hornikuntza</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="116"/>
@@ -724,7 +724,7 @@
     <message>
         <location filename="../../core/App.cpp" line="1448"/>
         <source>mark_all_read_action</source>
-        <translation type="unfinished"></translation>
+        <translation>Markatu denak irakurrita bezala</translation>
     </message>
 </context>
 <context>
@@ -849,7 +849,7 @@
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="73"/>
         <source>settings_call_forward_activate_title</source>
         <extracomment>&quot;Forward calls&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Deiak desbideratzea</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="75"/>
@@ -2187,6 +2187,11 @@
         <extracomment>Could not open file : unknown path %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
+        <source>info_popup_error_titile</source>
+        <translation>Errorea</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentList</name>
@@ -2241,18 +2246,6 @@ Error</extracomment>
 </context>
 <context>
     <name>ChatMessageContentModel</name>
-    <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="105"/>
-        <source>popup_error_title</source>
-        <extracomment>Error</extracomment>
-        <translation>Errorea</translation>
-    </message>
-    <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="108"/>
-        <source>popup_download_error_message</source>
-        <extracomment>This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ChatMessageCore</name>
@@ -7431,6 +7424,14 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="804"/>
         <source>okButton</source>
         <translation>Ok</translation>
+    </message>
+</context>
+<context>
+    <name>CoreModel</name>
+    <message>
+        <location filename="../../model/core/CoreModel.cpp" line="220"/>
+        <source>info_popup_error_title</source>
+        <translation>Errorea</translation>
     </message>
 </context>
 </TS>

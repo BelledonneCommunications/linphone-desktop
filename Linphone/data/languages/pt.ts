@@ -1121,7 +1121,7 @@
         <location filename="../../model/call/CallModel.cpp" line="376"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Unavailable service or network error&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Serviço indisponível ou erro de rede</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="380"/>
@@ -1668,7 +1668,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1114"/>
         <source>conference_participants_list_title</source>
         <extracomment>&quot;Participants (%1)&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Participantes (%1)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1135"/>
@@ -2187,6 +2187,11 @@
         <extracomment>Could not open file : unknown path %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
+        <source>info_popup_error_titile</source>
+        <translation>Erro</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentList</name>
@@ -2241,18 +2246,6 @@ Error</extracomment>
 </context>
 <context>
     <name>ChatMessageContentModel</name>
-    <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="105"/>
-        <source>popup_error_title</source>
-        <extracomment>Error</extracomment>
-        <translation>Erro</translation>
-    </message>
-    <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="108"/>
-        <source>popup_download_error_message</source>
-        <extracomment>This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ChatMessageCore</name>
@@ -3229,7 +3222,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="270"/>
         <source>group_infos_participants</source>
-        <translation type="unfinished"></translation>
+        <translation>Participantes (%1)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="287"/>
@@ -7427,6 +7420,14 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="804"/>
         <source>okButton</source>
         <translation>Ok</translation>
+    </message>
+</context>
+<context>
+    <name>CoreModel</name>
+    <message>
+        <location filename="../../model/core/CoreModel.cpp" line="220"/>
+        <source>info_popup_error_title</source>
+        <translation>Erro</translation>
     </message>
 </context>
 </TS>

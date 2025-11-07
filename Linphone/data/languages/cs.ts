@@ -7,7 +7,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="67"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Návrat</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="86"/>
@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="90"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Uložit nastavení %1</translation>
     </message>
 </context>
 <context>
@@ -152,37 +152,37 @@
         <location filename="../../model/account/AccountModel.cpp" line="253"/>
         <source>set_mwi_server_address_failed_error_message</source>
         <extracomment>&quot;Unable to set voicemail server address, failed creating address from %1&quot; : %1 is address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze nastavit adresu serveru hlasové schránky, selhalo vytvoření adresy z %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="292"/>
         <source>set_server_address_failed_error_message</source>
         <extracomment>&quot;Unable to set server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze nastavit adresu serveru, selhalo vytvoření adresy z %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="309"/>
         <source>set_outbound_proxy_uri_failed_error_message</source>
         <extracomment>Unable to set outbound proxy uri, failed creating address from %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze nastavit odchozí proxy URI, selhalo vytvoření adresy z %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="418"/>
         <source>set_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the conversation server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze nastavit adresu konverzačního serveru, selhalo vytvoření adresy z %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="440"/>
         <source>set_audio_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the meeting server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze nastavit adresu serveru schůzky, selhalo vytvoření adresy z %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="487"/>
         <source>set_voicemail_address_failed_error_message</source>
         <extracomment>Unable to set voicemail address, failed creating address from %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze nastavit adresu hlasové schránky, selhalo vytvoření adresy z %1</translation>
     </message>
 </context>
 <context>
@@ -302,7 +302,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="345"/>
         <source>device_last_updated_time_no_info</source>
         <extracomment>&quot;No information&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Žádné informace</translation>
     </message>
 </context>
 <context>
@@ -365,13 +365,13 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="32"/>
         <source>info_popup_invalid_registrar_uri_message</source>
         <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Registrační uri je neplatná. Ujistěte se, že odpovídá následujícímu formátu: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="34"/>
         <source>info_popup_invalid_outbound_proxy_message</source>
         <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Uri odchozího proxy serveru je neplatné. Ujistěte se, že odpovídá následujícímu formátu: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="35"/>
@@ -415,18 +415,18 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="127"/>
         <source>account_settings_registrar_uri_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrační URI</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="140"/>
         <source>account_settings_sip_proxy_url_title</source>
-        <translation type="unfinished"></translation>
+        <translation>URI odchozího SIP proxy serveru</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="145"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pokud je toto pole vyplněno, odchozí proxy bude automaticky povolena. Nechte jej prázdné, chcete-li ji zakázat.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="157"/>
@@ -490,17 +490,17 @@
         <source>add_participant_selected_count</source>
         <comment>0</comment>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 vybraný účastník</numerusform>
+            <numerusform>%1 vybraní účastníci</numerusform>
+            <numerusform>%1 vybraných účastníků</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="95"/>
         <source>remove_participant_accessible_name</source>
         <extracomment>Remove participant %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit účastníka %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="151"/>
@@ -579,7 +579,7 @@
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="103"/>
         <source>download_apply_remote_provisioning_accessible_name</source>
         <extracomment>&quot;Download and apply remote provisioning&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Stáhnout a použít nastavení vzdálené konfigurace</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="116"/>
@@ -725,7 +725,12 @@
     <message>
         <location filename="../../core/App.cpp" line="1448"/>
         <source>mark_all_read_action</source>
-        <translation type="unfinished"></translation>
+        <translation>Označit vše jako přečtené</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="452"/>
+        <source>info_popup_new_version_download_label</source>
+        <translation>Žádný token nenalezen</translation>
     </message>
 </context>
 <context>
@@ -850,72 +855,72 @@
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="73"/>
         <source>settings_call_forward_activate_title</source>
         <extracomment>&quot;Forward calls&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přesměrování hovorů</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="75"/>
         <source>settings_call_forward_activate_subtitle</source>
         <extracomment>&quot;Enable call forwarding to voicemail or sip address&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přesměrování hovorů do hlasové schránky nebo na číslo / SIP adresu</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="82"/>
         <source>settings_call_forward_destination_choose</source>
         <extracomment>Forward to destination</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přesměrovat hovor na:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="94"/>
         <source>settings_call_forward_to_voicemail</source>
-        <translation type="unfinished"></translation>
+        <translation>Hlasová schránka</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="95"/>
         <source>settings_call_forward_to_sipaddress</source>
-        <translation type="unfinished"></translation>
+        <translation>Číslo / SIP adresa</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="132"/>
         <source>settings_call_forward_sipaddress_title</source>
         <extracomment>SIP Address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Číslo / SIP adresa:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="133"/>
         <source>settings_call_forward_sipaddress_placeholder</source>
-        <translation type="unfinished"></translation>
+        <translation>John_Doe</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="51"/>
         <source>settings_call_forward_address_cannot_be_empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Číslo nebo SIP adresa je vyžadována</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="45"/>
         <source>settings_call_forward_address_timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze nastavit přesměrování hovoru, vypršel časový limit požadavku</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
         <source>settings_call_forward_address_progress_disabling</source>
-        <translation type="unfinished"></translation>
+        <translation>Vypnutí přesměrování hovoru</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
         <source>settings_call_forward_address_progress_enabling</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapnutí přesměrování hovoru na:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
         <source>settings_call_forward_activation_success</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapnuto přesměrování hovoru na: </translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
         <source>settings_call_forward_deactivation_success</source>
-        <translation type="unfinished"></translation>
+        <translation>Přesměrování hovoru vypnuto</translation>
     </message>
 </context>
 <context>
@@ -951,7 +956,7 @@
         <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="207"/>
         <source>call_name_accessible_button</source>
         <extracomment>Call %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hovor %1</translation>
     </message>
 </context>
 <context>
@@ -1004,12 +1009,12 @@
         <location filename="../../core/call/CallList.cpp" line="104"/>
         <source>remote_group_call</source>
         <extracomment>Remote group call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vzdálený skupinový hovor</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="106"/>
         <source>local_group_call</source>
-        <translation type="unfinished"></translation>
+        <translation>Místní skupinový hovor</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="111"/>
@@ -1020,7 +1025,7 @@
         <location filename="../../core/call/CallList.cpp" line="113"/>
         <source>info_popup_merge_calls_failed_message</source>
         <extracomment>Failed to merge calls !</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se sloučit hovory!</translation>
     </message>
 </context>
 <context>
@@ -1053,25 +1058,25 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="88"/>
         <source>transfer_call_name_accessible_name</source>
         <extracomment>Transfer call %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přepojit hovor %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="116"/>
         <source>resume_call_name_accessible_name</source>
         <extracomment>Resume %1 call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Obnovit hovor %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="118"/>
         <source>pause_call_name_accessible_name</source>
         <extracomment>Pause %1 call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pozastavit hovor %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="141"/>
         <source>end_call_name_accessible_name</source>
         <extracomment>End %1 call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ukončit hovor %1</translation>
     </message>
 </context>
 <context>
@@ -1080,19 +1085,19 @@
         <location filename="../../model/call/CallModel.cpp" line="348"/>
         <source>call_error_no_response_toast</source>
         <extracomment>&quot;No response&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Žádná odpověď</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="352"/>
         <source>call_error_forbidden_resource_toast</source>
         <extracomment>&quot;403 : Forbidden resource&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>403: Zakázaný zdroj</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="356"/>
         <source>call_error_not_answered_toast</source>
         <extracomment>&quot;Request timeout&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Prodleva požadavku</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="360"/>
@@ -1128,13 +1133,13 @@
         <location filename="../../model/call/CallModel.cpp" line="380"/>
         <source>call_error_do_not_disturb_toast</source>
         <extracomment>&quot;Le correspondant ne peut être dérangé&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Uživatel nesmí být rušen</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="384"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporarily unavailable&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dočasně nedostupný</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="388"/>
@@ -1148,12 +1153,12 @@
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="246"/>
         <source>call_forward_to_address_info</source>
-        <translation type="unfinished"></translation>
+        <translation>Přesměrovat hovor na: </translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="246"/>
         <source>call_forward_to_address_info_voicemail</source>
-        <translation type="unfinished"></translation>
+        <translation>Hlasová schránka</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="14"/>
@@ -1200,7 +1205,7 @@
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="459"/>
         <source>call_history_options_accessible_name</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti historie hovorů</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="170"/>
@@ -1213,13 +1218,13 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="164"/>
         <source>call_history_list_options_accessible_name</source>
         <extracomment>Call history options</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti historie hovorů</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="199"/>
         <source>create_new_call_accessible_name</source>
         <extracomment>Create new call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit nový hovor</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="212"/>
@@ -1243,7 +1248,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="354"/>
         <source>return_to_call_history_accessible_name</source>
         <extracomment>Return to call history</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Návrat k historii hovorů</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="365"/>
@@ -1391,30 +1396,30 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="88"/>
         <source>settings_calls_command_line_title</source>
         <extracomment>Command line</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Příkaz v příkazovém řádku spouštěný při příchozím hovoru</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="89"/>
         <source>settings_calls_command_line_title_place_holder</source>
-        <translation type="unfinished"></translation>
+        <translation>příkaz &quot;https://example.com/?phone=$1&amp;displayName=$2&quot;</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="97"/>
         <source>settings_calls_change_ringtone_title</source>
         <extracomment>&quot;Change ringtone&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Změnit vyzváněcí tón</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="105"/>
         <source>settings_calls_current_ringtone_filename</source>
         <extracomment>Current ringtone :</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Současný vyzváněcí tón:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="130"/>
         <source>choose_ringtone_file_accessible_name</source>
         <extracomment>Choose ringtone file</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat soubor vyzváněcího tónu</translation>
     </message>
 </context>
 <context>
@@ -1423,7 +1428,7 @@
         <location filename="../../view/Page/Main/Call/CallSettingsPanel.qml" line="84"/>
         <source>close_name_panel_accessible_button</source>
         <extracomment>Close %1 panel</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít panel %1</translation>
     </message>
 </context>
 <context>
@@ -1675,10 +1680,10 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1135"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1143"/>
         <source>group_call_participant_selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 vybraný účastník</numerusform>
+            <numerusform>%1 vybraní účastníci</numerusform>
+            <numerusform>%1 vybraných účastníků</numerusform>
         </translation>
     </message>
     <message>
@@ -1695,13 +1700,13 @@
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="549"/>
         <source>open_statistic_panel_accessible_name</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít statistický panel</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="606"/>
         <source>conference_user_is_sharing_screen</source>
         <extracomment>&quot;You are sharing your screen&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sdílíte svou obrazovku</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="627"/>
@@ -1719,7 +1724,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="632"/>
         <source>stop_screen_sharing_accessible_name</source>
         <extracomment>&quot;Stop screen sharing&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zastavit sdílení obrazovky</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="729"/>
@@ -1808,7 +1813,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1502"/>
         <source>call_open_chat_hint</source>
         <extracomment>Open chat…</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít konverzaci…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1524"/>
@@ -1994,7 +1999,7 @@
         <location filename="../../view/Control/Display/Chat/ChatAudioContent.qml" line="38"/>
         <source>information_popup_voice_message_error_message</source>
         <extracomment>Failed to create voice message : error in recorder</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se vytvořit hlasovou zprávu: chyba v záznamníku</translation>
     </message>
 </context>
 <context>
@@ -2003,13 +2008,13 @@
         <location filename="../../core/chat/ChatCore.cpp" line="144"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Smazáno</translation>
     </message>
     <message>
         <location filename="../../core/chat/ChatCore.cpp" line="146"/>
         <source>info_toast_deleted_message_history</source>
         <extracomment>Message history has been deleted</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Historie zpráv byla smazána</translation>
     </message>
 </context>
 <context>
@@ -2018,13 +2023,13 @@
         <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="154"/>
         <source>chat_view_send_area_placeholder_text</source>
         <extracomment>Say something… : placeholder text for sending message text area</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Napište něco…</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="190"/>
         <source>cannot_record_while_in_call_tooltip</source>
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze nahrávat zprávu během hovoru</translation>
     </message>
 </context>
 <context>
@@ -2033,12 +2038,12 @@
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="285"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 píše…</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="287"/>
         <source>chat_message_draft_sending_text</source>
-        <translation type="unfinished"></translation>
+        <translation>Koncept: %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="429"/>
@@ -2049,49 +2054,49 @@
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="369"/>
         <source>chat_room_mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Ztlumit</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="368"/>
         <source>chat_room_unmute</source>
         <extracomment>&quot;Mute&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit ztlumení</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="381"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Označit jako přečtené</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="400"/>
         <source>chat_room_leave</source>
         <extracomment>&quot;leave&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Opustit</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="406"/>
         <source>chat_list_leave_chat_popup_title</source>
         <extracomment>leave the conversation ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Opustit konverzaci?</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="408"/>
         <source>chat_list_leave_chat_popup_message</source>
         <extracomment>You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>V této konverzaci již nebudete moci odesílat ani přijímat zprávy. Chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="435"/>
         <source>chat_list_delete_chat_popup_title</source>
         <extracomment>Delete the conversation ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Smazat konverzaci?</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="437"/>
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tato konverzace a všechny její zprávy budou smazány. Chcete pokračovat?</translation>
     </message>
 </context>
 <context>
@@ -2100,13 +2105,13 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="431"/>
         <source>chat_message_copy_selection</source>
         <extracomment>&quot;Copy selection&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovat výběr</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="433"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovat</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="441"/>
@@ -2118,55 +2123,55 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="443"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ve schránce</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="129"/>
         <source>chat_message_remote_replied</source>
         <extracomment>%1 replied</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 odpověděl na</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="96"/>
         <source>chat_message_forwarded</source>
         <extracomment>Forwarded</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přeposláno</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="127"/>
         <source>chat_message_remote_replied_to</source>
         <extracomment>%1 replied to %2</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 odpověděl %2</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="132"/>
         <source>chat_message_user_replied_to</source>
         <extracomment>You replied to %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Odpověděl jste %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="134"/>
         <source>chat_message_user_replied</source>
         <extracomment>You replied</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Odpověděl jste</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="406"/>
         <source>chat_message_reception_info</source>
         <extracomment>&quot;Reception info&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="418"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Odpovědět</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="450"/>
         <source>chat_message_forward</source>
         <extracomment>Forward</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přeposlat</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="467"/>
@@ -2187,7 +2192,12 @@
         <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="129"/>
         <source>popup_open_file_error_does_not_exist_message</source>
         <extracomment>Could not open file : unknown path %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze otevřít soubor: neznámé umístění %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
+        <source>info_popup_error_titile</source>
+        <translation>Chyba</translation>
     </message>
 </context>
 <context>
@@ -2201,61 +2211,49 @@
         <extracomment>Error adding file
 ----------
 Error</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při přidávání souboru</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="121"/>
         <source>popup_error_path_does_not_exist_message</source>
         <extracomment>File was not found: %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Soubor nebyl nalezen: %1</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="123"/>
         <source>popup_error_nb_files_not_found_message</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 souborů nebylo nalezeno</translation>
     </message>
     <message numerus="yes">
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="130"/>
         <source>popup_error_max_files_count_message</source>
         <extracomment>You can send 12 files maximum at a time. %n files were ignored</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Najednou můžete odeslat maximálně 12 souborů. %n soubor byl ignorován</numerusform>
+            <numerusform>Najednou můžete odeslat maximálně 12 souborů. %n soubory byl ignorovány</numerusform>
+            <numerusform>Najednou můžete odeslat maximálně 12 souborů. %n souborů bylo ignorováno</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="167"/>
         <source>popup_error_file_too_big_message</source>
         <extracomment>%n files were ignored cause they exceed the maximum size. (Size limit=%2)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%n souborů bylo ignorováno, protože překročily maximální velikost. (Limit velikosti = %2)</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="176"/>
         <source>popup_error_unsupported_files_message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze získat podporovaný typ MIME pro %1 souborů.</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="174"/>
         <source>popup_error_unsupported_file_message</source>
         <extracomment>Unable to get supported mime type for: `%1`.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze získat podporovaný typ MIME pro: `%1`.</translation>
     </message>
 </context>
 <context>
     <name>ChatMessageContentModel</name>
-    <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="105"/>
-        <source>popup_error_title</source>
-        <extracomment>Error</extracomment>
-        <translation>Chyba</translation>
-    </message>
-    <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="108"/>
-        <source>popup_download_error_message</source>
-        <extracomment>This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ChatMessageCore</name>
@@ -2263,19 +2261,19 @@ Error</extracomment>
         <location filename="../../core/chat/message/ChatMessageCore.cpp" line="155"/>
         <source>all_reactions_label</source>
         <extracomment>&quot;Reactions&quot;: all reactions for one message label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reakce</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/ChatMessageCore.cpp" line="211"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Smazáno</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/ChatMessageCore.cpp" line="213"/>
         <source>info_toast_deleted_message</source>
         <extracomment>The message has been deleted</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zpráva byla smazána</translation>
     </message>
 </context>
 <context>
@@ -2283,35 +2281,35 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="40"/>
         <source>ics_bubble_meeting_from</source>
-        <translation type="unfinished"></translation>
+        <translation>od </translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="41"/>
         <source>ics_bubble_meeting_to</source>
-        <translation type="unfinished"></translation>
+        <translation> pro </translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="63"/>
         <source>ics_bubble_meeting_modified</source>
         <extracomment>Meeting has been updated</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Schůzka byla aktualizována</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="66"/>
         <source>ics_bubble_meeting_cancelled</source>
         <extracomment>Meeting has been canceled</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Schůzka byla zrušena</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="171"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation>od %1 pro %2 (UTC%3)</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="234"/>
         <source>ics_bubble_description_title</source>
         <extracomment>Description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Popis</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="286"/>
@@ -2323,10 +2321,10 @@ Error</extracomment>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="276"/>
         <source>ics_bubble_participants</source>
         <extracomment>%n participant(s)</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 účastník</numerusform>
+            <numerusform>%1 účastníci</numerusform>
+            <numerusform>%1 účastníků</numerusform>
         </translation>
     </message>
 </context>
@@ -2337,57 +2335,59 @@ Error</extracomment>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="122"/>
         <source>popup_info_find_message_title</source>
         <extracomment>Find message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Najít zprávu</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="124"/>
         <source>info_popup_no_result_message</source>
         <extracomment>No result found</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nic nenalezeno</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="116"/>
         <source>info_popup_first_result_message</source>
         <extracomment>First result reached</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nalezen první výsledek</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="114"/>
         <source>info_popup_last_result_message</source>
         <extracomment>Last result reached</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nalezen poslední výsledek</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="161"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chat s koncovým šifrováním</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="163"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tato konverzace není šifrována!</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="174"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Messages in this conversation are e2e encrypted. 
  Only your correspondent can decrypt them.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zprávy v této konverzaci jsou koncově šifrovány.
+Dešifrovat je může pouze váš příjemce.</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="176"/>
         <source>chat_message_list_not_encrypted_header_message</source>
         <extracomment>Messages are not end to end encrypted, 
  may sure you don&apos;t share any sensitive information !</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zprávy nejsou koncově šifrovány, 
+proto nezveřejňujte žádné citlivé informace!</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="216"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 píše…</translation>
     </message>
 </context>
 <context>
@@ -2396,25 +2396,25 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="14"/>
         <source>chat_start_title</source>
         <extracomment>&quot;Nouvelle conversation&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nová konverzace</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="16"/>
         <source>chat_empty_title</source>
         <extracomment>&quot;Aucune conversation&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Žádná konverzace</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="69"/>
         <source>chat_dialog_delete_chat_title</source>
         <extracomment>Supprimer la conversation ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Smazat konverzaci?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="71"/>
         <source>chat_dialog_delete_chat_message</source>
         <extracomment>&quot;La conversation et tous ses messages seront supprimés.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tato konverzace a všechny její zprávy budou smazány.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="100"/>
@@ -2426,13 +2426,13 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="121"/>
         <source>menu_mark_all_as_read</source>
         <extracomment>&quot;mark all as read&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Označit vše jako přečtené</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="152"/>
         <source>chat_search_in_history</source>
         <extracomment>&quot;Rechercher une conversation&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hledat chat</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="175"/>
@@ -2444,19 +2444,19 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="177"/>
         <source>chat_list_empty_history</source>
         <extracomment>&quot;Aucune conversation dans votre historique&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Žádná konverzace v historii</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="249"/>
         <source>chat_action_start_new_chat</source>
         <extracomment>&quot;New chat&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nová konverzace</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="286"/>
         <source>chat_start_group_chat_title</source>
         <extracomment>&quot;Nouveau groupe&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nová skupina</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="288"/>
@@ -2475,13 +2475,13 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="306"/>
         <source>information_popup_chat_creation_failed_message</source>
         <extracomment>&quot;La création a échoué&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vytvoření selhalo</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="324"/>
         <source>group_chat_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné au groupe</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Název pro skupinu musí být nastaven</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="328"/>
@@ -2493,7 +2493,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="332"/>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Probíhá vytváření chatu…</translation>
     </message>
 </context>
 <context>
@@ -2502,19 +2502,19 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="14"/>
         <source>settings_chat_attached_files_title</source>
         <extracomment>Attached files</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Připojené soubory</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="25"/>
         <source>settings_chat_attached_files_auto_download_title</source>
         <extracomment>&quot;Automatic download&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Automatické stahování</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="27"/>
         <source>settings_chat_attached_files_auto_download_subtitle</source>
         <extracomment>&quot;Automatically download transferred or received files in conversations&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Automaticky stahovat přenesené nebo přijaté soubory v konverzacích</translation>
     </message>
 </context>
 <context>
@@ -2583,7 +2583,7 @@ Error</extracomment>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="166"/>
         <source>account_settings_name_accessible_name</source>
         <extracomment>Account settings of %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení účtu %1</translation>
     </message>
 </context>
 <context>
@@ -2611,13 +2611,13 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="62"/>
         <source>close_accessible_name</source>
         <extracomment>Close %n</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="94"/>
         <source>contact_editor_mandatory_first_name_or_company_not_filled</source>
         <extracomment>&quot;Veuillez saisir un prénom ou un nom d&apos;entreprise&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zadejte jméno nebo název společnosti</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="98"/>
@@ -2641,7 +2641,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="142"/>
         <source>edit_contact_image_accessible_name</source>
         <extracomment>&quot;Edit contact image&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Upravit obrázek kontaktu</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="160"/>
@@ -2653,7 +2653,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="169"/>
         <source>delete_contact_image_accessible_name</source>
         <extracomment>&quot;Delete contact image&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Smazat obrázek kontaktu</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="221"/>
@@ -2693,37 +2693,37 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="322"/>
         <source>sip_address_number_accessible_name</source>
         <extracomment>&quot;SIP address number %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Číslo SIP adresy %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="337"/>
         <source>remove_sip_address_accessible_name</source>
         <extracomment>&quot;Remove SIP address %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit SIP adresu %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="367"/>
         <source>new_sip_address_accessible_name</source>
         <extracomment>&quot;New SIP address&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nová SIP adresa</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="403"/>
         <source>phone_number_number_accessible_name</source>
         <extracomment>&quot;Phone number number %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Telefonní číslo %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="418"/>
         <source>remove_phone_number_accessible_name</source>
         <extracomment>Remove phone number %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit telefonní číslo %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="448"/>
         <source>new_phone_number_accessible_name</source>
         <extracomment>&quot;New phone number&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nové telefonní číslo</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="400"/>
@@ -2794,13 +2794,13 @@ Error</extracomment>
         <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="183"/>
         <source>shrink_accessible_name</source>
         <extracomment>Shrink %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zmenšit %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="185"/>
         <source>expand_accessible_name</source>
         <extracomment>Expand %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rozbalit %1</translation>
     </message>
 </context>
 <context>
@@ -2938,25 +2938,25 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="361"/>
         <source>expand_accessible_name</source>
         <extracomment>Expand %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rozbalit %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="359"/>
         <source>shrink_accessible_name</source>
         <extracomment>Shrink %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zmenšit %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="249"/>
         <source>create_contact_accessible_name</source>
         <extracomment>Create new contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit nový kontakt</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="345"/>
         <source>more_info_accessible_name</source>
         <extracomment>More info %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Více informací o %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="381"/>
@@ -2995,7 +2995,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="524"/>
         <source>call_adress_accessible_name</source>
         <extracomment>Call address %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Adresa volání %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="557"/>
@@ -3056,7 +3056,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="701"/>
         <source>verify_device_accessible_name</source>
         <extracomment>Verify %1 device</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ověřte zařízení %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="727"/>
@@ -3158,13 +3158,13 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="46"/>
         <source>edit_ldap_server_accessible_name</source>
         <extracomment>&quot;Editer le serveur LDAP %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Upravit server LDAP %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="48"/>
         <source>use_ldap_server_accessible_name</source>
         <extracomment>&quot;Utiliser le serveur LDAP %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Použít server LDAP %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="73"/>
@@ -3182,13 +3182,13 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="77"/>
         <source>edit_cardav_server_accessible_name</source>
         <extracomment>&quot;Editer le carnet d&apos;adresses CardDAV %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Upravit adresář CardDAV %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="79"/>
         <source>use_cardav_server_accessible_name</source>
         <extracomment>&quot;Utiliser le d&apos;adresses CardDAV %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Použít adresář CardDAV %1</translation>
     </message>
 </context>
 <context>
@@ -3223,12 +3223,12 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="203"/>
         <source>one_one_infos_unmute</source>
         <extracomment>&quot;Sourdine&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit ztlumení</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="203"/>
         <source>one_one_infos_mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Ztlumit</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="270"/>
@@ -3239,19 +3239,19 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="287"/>
         <source>group_infos_media_docs</source>
         <extracomment>Medias &amp; documents</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Média a dokumenty</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="293"/>
         <source>group_infos_shared_medias</source>
         <extracomment>Shared medias</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sdílená média</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="304"/>
         <source>group_infos_shared_docs</source>
         <extracomment>Shared documents</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sdílené dokumenty</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="317"/>
@@ -3262,36 +3262,36 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="323"/>
         <source>group_infos_ephemerals</source>
-        <translation type="unfinished"></translation>
+        <translation>Mizející zprávy: </translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="323"/>
         <source>group_infos_enable_ephemerals</source>
-        <translation type="unfinished"></translation>
+        <translation>Povolit mizející zprávy</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="225"/>
         <source>group_infos_meeting</source>
         <extracomment>Schedule a meeting</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Naplánovat schůzku</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="334"/>
         <source>group_infos_leave_room</source>
         <extracomment>Leave chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Opustit chatovací místnost</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="339"/>
         <source>group_infos_leave_room_toast_title</source>
         <extracomment>Leave Chat Room ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Opustit chatovací místnost?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="341"/>
         <source>group_infos_leave_room_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Z chatovací místnosti budou odstraněny všechny zprávy. Chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="354"/>
@@ -3303,13 +3303,13 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="359"/>
         <source>group_infos_delete_history_toast_title</source>
         <extracomment>Delete history ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Smazat historii?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="361"/>
         <source>group_infos_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Z chatovací místnosti budou odstraněny všechny zprávy. Chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="228"/>
@@ -3321,17 +3321,17 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="230"/>
         <source>one_one_infos_create_contact</source>
         <extracomment>Create contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit kontakt</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="375"/>
         <source>one_one_infos_ephemerals</source>
-        <translation type="unfinished"></translation>
+        <translation>Mizející zprávy: </translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="375"/>
         <source>one_one_infos_enable_ephemerals</source>
-        <translation type="unfinished"></translation>
+        <translation>Povolit mizející zprávy</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="385"/>
@@ -3342,13 +3342,13 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="390"/>
         <source>one_one_infos_delete_history_toast_title</source>
         <extracomment>Delete history ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Smazat historii?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="392"/>
         <source>one_one_infos_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Z chatovací místnosti budou odstraněny všechny zprávy. Chcete pokračovat?</translation>
     </message>
 </context>
 <context>
@@ -3542,32 +3542,32 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="57"/>
         <source>title</source>
-        <translation type="unfinished"></translation>
+        <translation>Mizející zprávy</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="76"/>
         <source>explanations</source>
-        <translation type="unfinished"></translation>
+        <translation>Povolením mizejících zpráv v tomto chatu budou odeslané zprávy po uplynutí nastavené doby automaticky smazány.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="21"/>
         <source>one_minute</source>
-        <translation type="unfinished"></translation>
+        <translation>1 minuta</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="22"/>
         <source>one_hour</source>
-        <translation type="unfinished"></translation>
+        <translation>1 hodina</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="23"/>
         <source>one_day</source>
-        <translation type="unfinished"></translation>
+        <translation>1 den</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="24"/>
         <source>one_week</source>
-        <translation type="unfinished"></translation>
+        <translation>1 týden</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="25"/>
@@ -3577,7 +3577,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="34"/>
         <source>custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastní: </translation>
     </message>
 </context>
 <context>
@@ -3585,58 +3585,60 @@ Error</extracomment>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="107"/>
         <source>conference_created_event</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidal(a) jste se ke skupině</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="110"/>
         <source>conference_created_terminated</source>
-        <translation type="unfinished"></translation>
+        <translation>Opustil(a) jste skupinu</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="114"/>
         <source>conference_participant_added_event</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 se připojil</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="118"/>
         <source>conference_participant_removed_event</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 již nadále není v konverzaci</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="155"/>
         <source>conference_participant_set_admin_event</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 je nyní administrátor</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="159"/>
         <source>conference_participant_unset_admin_event</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 již není administrátor</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="127"/>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="129"/>
         <source>conference_security_event</source>
-        <translation type="unfinished"></translation>
+        <translation>Úroveň zabezpečení snížena %1</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="136"/>
         <source>conference_ephemeral_message_enabled_event</source>
-        <translation type="unfinished"></translation>
+        <translation>Mizející zprávy zapnuty
+Expirace : %1</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="147"/>
         <source>conference_ephemeral_message_disabled_event</source>
-        <translation type="unfinished"></translation>
+        <translation>Mizející zprávy zapnuty</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="151"/>
         <source>conference_subject_changed_event</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový předmět: %1</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="142"/>
         <source>conference_ephemeral_message_lifetime_changed_event</source>
-        <translation type="unfinished"></translation>
+        <translation>Mizející zprávy aktualizovány
+Expirace : %1</translation>
     </message>
 </context>
 <context>
@@ -3699,32 +3701,32 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="143"/>
         <source>group_infos_give_admin_rights</source>
-        <translation type="unfinished"></translation>
+        <translation>Udělit práva administrátora</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="143"/>
         <source>group_infos_remove_admin_rights</source>
-        <translation type="unfinished"></translation>
+        <translation>Odebrat práva administrátora</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="155"/>
         <source>group_infos_copy_sip_address</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovat SIP adresu</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="175"/>
         <source>group_infos_remove_participant</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit účastníka</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="182"/>
         <source>group_infos_remove_participants_toast_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit účastníka?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="183"/>
         <source>group_infos_remove_participants_toast_message</source>
-        <translation type="unfinished"></translation>
+        <translation>Účastník bude odstraněn z chatovací místnosti.</translation>
     </message>
 </context>
 <context>
@@ -3733,7 +3735,7 @@ Error</extracomment>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="39"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Návrat</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="76"/>
@@ -3845,7 +3847,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="67"/>
         <source>delete_ldap_server_accessible_name</source>
         <extracomment>Delete LDAP server</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Smazat LDAP server</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="85"/>
@@ -3960,7 +3962,7 @@ Error</extracomment>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="27"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 vyžadováno</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="69"/>
@@ -4040,7 +4042,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="31"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Návrat</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="45"/>
@@ -4127,7 +4129,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="144"/>
         <source>open_calls_page_accessible_name</source>
         <extracomment>&quot;Open calls page&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít stránku hovorů</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="150"/>
@@ -4139,7 +4141,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="152"/>
         <source>open_contacts_page_accessible_name</source>
         <extracomment>&quot;Open contacts page&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít stránku kontaktů</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="158"/>
@@ -4151,7 +4153,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="160"/>
         <source>open_conversations_page_accessible_name</source>
         <extracomment>&quot;Open conversations page&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít stránku konverzací</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="167"/>
@@ -4163,7 +4165,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="169"/>
         <source>open_contact_page_accessible_name</source>
         <extracomment>&quot;Open meetings page&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít stránku schůzek</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="219"/>
@@ -4205,13 +4207,13 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="394"/>
         <source>account_list_accessible_name</source>
         <extracomment>&quot;Account list&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Seznam účtů</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="432"/>
         <source>application_options_accessible_name</source>
         <extracomment>&quot;Application options&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Volby aplikace</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="457"/>
@@ -4345,7 +4347,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="44"/>
         <source>group_infos_manage_participants</source>
-        <translation type="unfinished"></translation>
+        <translation>Účastníci</translation>
     </message>
 </context>
 <context>
@@ -4576,16 +4578,16 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="605"/>
         <source>meeting_schedule_add_participants_apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít</translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="615"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 vybraný účastník</numerusform>
+            <numerusform>%1 vybraní účastníci</numerusform>
+            <numerusform>%1 vybraných účastníků</numerusform>
         </translation>
     </message>
     <message>
@@ -4646,7 +4648,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/MessageImdnStatusInfos.qml" line="11"/>
         <source>message_details_status_title</source>
         <extracomment>Message status</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Stav zprávy</translation>
     </message>
 </context>
 <context>
@@ -4655,13 +4657,13 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/MessageReactionsInfos.qml" line="12"/>
         <source>message_details_reactions_title</source>
         <extracomment>Reactions</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reakce</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/MessageReactionsInfos.qml" line="55"/>
         <source>click_to_delete_reaction_info</source>
         <extracomment>Click to delete</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kliknutím odstranit</translation>
     </message>
 </context>
 <context>
@@ -4670,13 +4672,13 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/MessageSharedFilesInfos.qml" line="39"/>
         <source>no_shared_medias</source>
         <extracomment>No media</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Žádná média</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/MessageSharedFilesInfos.qml" line="41"/>
         <source>no_shared_documents</source>
         <extracomment>No document</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Žádný dokument</translation>
     </message>
 </context>
 <context>
@@ -4695,7 +4697,7 @@ Error</extracomment>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="241"/>
         <source>choose_something_accessible_name</source>
         <extracomment>Choose %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="80"/>
@@ -4710,7 +4712,7 @@ Error</extracomment>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="165"/>
         <source>device_volume_accessible_name</source>
         <extracomment>%1 volume</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zařízení %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="131"/>
@@ -4740,7 +4742,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Settings/NetworkSettingsLayout.qml" line="31"/>
         <source>settings_network_allow_ipv6</source>
         <extracomment>&quot;Autoriser l&apos;IPv6&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Povolit IPv6</translation>
     </message>
 </context>
 <context>
@@ -4764,7 +4766,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Chat/NewChatForm.qml" line="14"/>
         <source>chat_start_group_chat_title</source>
         <extracomment>Nouveau groupe</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nová skupina</translation>
     </message>
 </context>
 <context>
@@ -4794,36 +4796,36 @@ Error</extracomment>
         <location filename="../../core/notifier/Notifier.cpp" line="310"/>
         <source>new_call_alert_accessible_name</source>
         <extracomment>New call from %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nový hovor od %1</translation>
     </message>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="363"/>
         <source>new_voice_message</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přijata hlasová zpráva!</translation>
     </message>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="364"/>
         <source>new_file_message</source>
-        <translation type="unfinished"></translation>
+        <translation>Přijat soubor!</translation>
     </message>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="367"/>
         <source>new_conference_invitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přijata pozvánka na schůzku!</translation>
     </message>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="387"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přijata nová zpráva!</translation>
     </message>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="394"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nová zpráva v místnosti %1</translation>
     </message>
 </context>
 <context>
@@ -4902,7 +4904,7 @@ Error</extracomment>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="219"/>
         <source>oidc_authentication_no_token_found_error</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádný token nenalezen</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="232"/>
@@ -4962,13 +4964,13 @@ Error</extracomment>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="58"/>
         <source>prefix_phone_number_accessible_name</source>
         <extracomment>%1 prefix</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>prefix %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="76"/>
         <source>number_phone_number_accessible_name</source>
         <extracomment>%1 number</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>číslo %1</translation>
     </message>
 </context>
 <context>
@@ -4977,13 +4979,13 @@ Error</extracomment>
         <location filename="../../view/Control/Button/PopupButton.qml" line="17"/>
         <source>close_popup_panel_accessible_name</source>
         <extracomment>&quot;Close %1 popup&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít %1 oken</translation>
     </message>
     <message>
         <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
         <source>open_popup_panel_accessible_name</source>
         <extracomment>&quot;Open %1&quot; popup</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít %1 oken</translation>
     </message>
 </context>
 <context>
@@ -4991,12 +4993,12 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Display/Contact/Presence.qml" line="30"/>
         <source>contact_presence_reset_status</source>
-        <translation type="unfinished"></translation>
+        <translation>Obnovit stav</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Presence.qml" line="67"/>
         <source>contact_presence_button_set_custom_status</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Presence.qml" line="81"/>
@@ -5011,7 +5013,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Display/Contact/Presence.qml" line="56"/>
         <source>contact_presence_custom_status</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastní stav</translation>
     </message>
 </context>
 <context>
@@ -5019,7 +5021,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Container/Contact/PresenceNoteLayout.qml" line="40"/>
         <source>contact_presence_note_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastní zpráva</translation>
     </message>
 </context>
 <context>
@@ -5027,7 +5029,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml" line="16"/>
         <source>contact_presence_button_set_custom_status_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit vlastní zprávu</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml" line="70"/>
@@ -5062,61 +5064,61 @@ Error</extracomment>
         <location filename="../../tool/LinphoneEnums.cpp" line="125"/>
         <source>message_state_in_progress</source>
         <extracomment>&quot;delivery in progress&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>probíhá doručování</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="128"/>
         <source>message_state_delivered</source>
         <extracomment>sent</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>odesláno</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="131"/>
         <source>message_state_not_delivered</source>
         <extracomment>error</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>chyba</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="134"/>
         <source>message_state_file_transfer_error</source>
         <extracomment>cannot get file from server</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>nelze získat soubor ze serveru</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="137"/>
         <source>message_state_file_transfer_done</source>
         <extracomment>file transfer has been completed successfully</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>přenos souboru byl úspěšně dokončen</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="140"/>
         <source>message_state_delivered_to_user</source>
         <extracomment>received</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>přijato</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="143"/>
         <source>message_state_displayed</source>
         <extracomment>read</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>přečteno</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="146"/>
         <source>message_state_file_transfer__in_progress</source>
         <extracomment>file transfer in progress</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>probíhá přenos souboru</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="149"/>
         <source>message_state_pending_delivery</source>
         <extracomment>pending delivery</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>čekání na doručení</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="152"/>
         <source>message_state_file_transfer_cancelling</source>
         <extracomment>file transfer canceled</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>přenos souboru zrušen</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="221"/>
@@ -5194,7 +5196,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="46"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Návrat</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="58"/>
@@ -5236,7 +5238,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="234"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 vyžadováno</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="160"/>
@@ -5331,7 +5333,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="33"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Návrat</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="44"/>
@@ -5388,7 +5390,7 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="234"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 vyžadováno</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="205"/>
@@ -5450,27 +5452,27 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="397"/>
         <source>login_proxy_server_url</source>
         <extracomment>&quot;Outbound SIP Proxy URI&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI odchozího SIP proxy serveru</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="392"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pokud je toto pole vyplněno, odchozí proxy bude automaticky povolena. Nechte jej prázdné, chcete-li ji zakázat.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="405"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="410"/>
         <source>login_registrar_uri</source>
         <extracomment>&quot;Registrar URI&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Registrační URI</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="418"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="424"/>
         <source>login_id</source>
         <extracomment>&quot;Authentication ID (if different)&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ID pro ověření (je-li odlišné)</translation>
     </message>
 </context>
 <context>
@@ -5518,13 +5520,13 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <location filename="../../view/Control/Input/SearchBar.qml" line="124"/>
         <source>open_dialer_acccessibility_label</source>
         <extracomment>&quot;Open dialer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít číselník</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/SearchBar.qml" line="144"/>
         <source>clear_text_input_acccessibility_label</source>
         <extracomment>&quot;Clear text input&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vymazat text</translation>
     </message>
 </context>
 <context>
@@ -5592,37 +5594,37 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="37"/>
         <source>chat_view_group_call_toast_message</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahájit skupinový hovor?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="121"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tato konverzace není šifrována!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="407"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Odpověď na %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="607"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sdílená média</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="609"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sdílené dokumenty</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="638"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přeposlat na…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="672"/>
@@ -5637,7 +5639,7 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <location filename="../../view/Control/Display/Settings/SettingsMenuItem.qml" line="22"/>
         <source>setting_tab_accessible_name</source>
         <extracomment>%1 settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>nastavení %1</translation>
     </message>
 </context>
 <context>
@@ -5658,7 +5660,7 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="17"/>
         <source>settings_call_forward</source>
         <extracomment>&quot;Transfert d&apos;appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přesměrování hovoru</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="19"/>
@@ -5736,13 +5738,13 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <location filename="../../view/Control/Input/TextField.qml" line="208"/>
         <source>show_accessible_name</source>
         <extracomment>Show %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/TextField.qml" line="206"/>
         <source>hide_accessible_name</source>
         <extracomment>Hide %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skrýt %1</translation>
     </message>
 </context>
 <context>
@@ -5772,7 +5774,7 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <location filename="../../model/tool/ToolModel.cpp" line="517"/>
         <source>voice_recording_duration</source>
         <extracomment>&quot;Voice recording (%1)&quot; : %1 is the duration formated in mm:ss</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hlasový záznam (%1)</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="591"/>
@@ -5782,17 +5784,17 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="525"/>
         <source>conference_invitation</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozvánka na schůzku</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="529"/>
         <source>conference_invitation_cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušení schůzky</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="527"/>
         <source>conference_invitation_updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Změna schůzky</translation>
     </message>
 </context>
 <context>
@@ -5800,89 +5802,89 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="2279"/>
         <source>nSeconds</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 vteřina</numerusform>
+            <numerusform>%1 vteřiny</numerusform>
+            <numerusform>%1 vteřin</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="2274"/>
         <source>nMinute</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 minuta</numerusform>
+            <numerusform>%1 minuty</numerusform>
+            <numerusform>%1 minut</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2088"/>
         <source>chat_message_forward_error</source>
         <extracomment>Cannot forward an invalid message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze přeposlat neplatnou zprávu</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2094"/>
         <source>info_popup_forward_message_error</source>
         <extracomment>Could not forward message : %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze přeposlat zprávu: %1</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2109"/>
         <source>info_popup_send_forward_message_error_message</source>
         <extracomment>Failed to create forward message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se vytvořit přeposlanou zprávu</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2120"/>
         <source>chat_message_reply_error</source>
         <extracomment>Cannot reply to invalid message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze odpovědět na neplatnou zprávu</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2126"/>
         <source>info_popup_reply_message_error</source>
         <extracomment>Could not send reply message : %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze odeslat odpověď: %1</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2153"/>
         <source>info_popup_send_reply_message_error_message</source>
         <extracomment>Failed to create reply message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se vytvořit odpověď</translation>
     </message>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="2275"/>
         <source>nHour</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 hodina</numerusform>
+            <numerusform>%1 hodiny</numerusform>
+            <numerusform>%1 hodin</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="2276"/>
         <location filename="../../tool/Utils.cpp" line="2277"/>
         <source>nDay</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 den</numerusform>
+            <numerusform>%1 dny</numerusform>
+            <numerusform>%1 dnů</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="2278"/>
         <source>nWeek</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 týden</numerusform>
+            <numerusform>%1 týdny</numerusform>
+            <numerusform>%1 týdnů</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1844"/>
         <source>contact_presence_status_available</source>
-        <translation type="unfinished"></translation>
+        <translation>Dostupný</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="1850"/>
@@ -5902,7 +5904,7 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
     <message>
         <location filename="../../tool/Utils.cpp" line="1847"/>
         <source>contact_presence_status_away</source>
-        <translation type="unfinished"></translation>
+        <translation>Nečinný/Pryč</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="188"/>
@@ -5982,16 +5984,16 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../tool/Utils.cpp" line="381"/>
         <source>duration_tomorrow</source>
         <extracomment>Tomorrow</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zítra</translation>
     </message>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="384"/>
         <source>duration_number_of_days</source>
         <extracomment>%1 jour(s)</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n den</numerusform>
+            <numerusform>%n dny</numerusform>
+            <numerusform>%n dnů</numerusform>
         </translation>
     </message>
     <message>
@@ -6005,20 +6007,20 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../tool/Utils.cpp" line="1637"/>
         <source>information_popup_chatroom_creation_error_message</source>
         <extracomment>Failed to create 1-1 conversation with %1 !</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se vytvořit konverzaci 1-1 s %1 !</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2185"/>
         <source>recorder_error</source>
         <extracomment>Error with the recorder</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chyba s rekordérem</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2090"/>
         <location filename="../../tool/Utils.cpp" line="2122"/>
         <location filename="../../tool/Utils.cpp" line="2187"/>
         <source>chat_error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba v chatu</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2092"/>
@@ -6035,13 +6037,13 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../tool/Utils.cpp" line="2191"/>
         <source>info_popup_send_voice_message_error_message</source>
         <extracomment>Could not send voice message : %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze odeslat hlasovou zprávu: %1</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2205"/>
         <source>info_popup_send_voice_message_sending_error_message</source>
         <extracomment>Failed to create message from record</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se vytvořit zprávu ze záznamu</translation>
     </message>
 </context>
 <context>
@@ -7453,6 +7455,19 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="804"/>
         <source>okButton</source>
         <translation>Ok</translation>
+    </message>
+</context>
+<context>
+    <name>CoreModel</name>
+    <message>
+        <location filename="../../model/core/CoreModel.cpp" line="220"/>
+        <source>info_popup_error_title</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../model/core/CoreModel.cpp" line="222"/>
+        <source>fetching_config_failed_error_message</source>
+        <translation>Vzdálené nastavení nelze načíst</translation>
     </message>
 </context>
 </TS>

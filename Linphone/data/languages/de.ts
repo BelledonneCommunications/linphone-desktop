@@ -2248,7 +2248,7 @@
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="106"/>
         <source>info_popup_error_titile</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="138"/>
@@ -3511,7 +3511,7 @@ Error</extracomment>
     <message>
         <location filename="../../model/core/CoreModel.cpp" line="224"/>
         <source>info_popup_error_title</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../../model/core/CoreModel.cpp" line="226"/>
