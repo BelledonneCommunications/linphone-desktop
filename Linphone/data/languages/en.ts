@@ -594,13 +594,13 @@
         <translation>Mandatory media encryption</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="142"/>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="143"/>
         <source>settings_advanced_create_endtoend_encrypted_meetings_title</source>
         <extracomment>Create end to end encrypted meetings and group calls</extracomment>
         <translation>Create end to end encrypted meetings and group calls</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="238"/>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="239"/>
         <source>settings_advanced_hide_fps_title</source>
         <translation>Hide FPS</translation>
     </message>
@@ -629,141 +629,141 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../../core/App.cpp" line="356"/>
+        <location filename="../../core/App.cpp" line="357"/>
         <source>remote_provisioning_dialog</source>
         <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
         <translation>Do you want to download and apply remote provisioning from this address ?</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="393"/>
-        <location filename="../../core/App.cpp" line="443"/>
-        <location filename="../../core/App.cpp" line="695"/>
+        <location filename="../../core/App.cpp" line="394"/>
+        <location filename="../../core/App.cpp" line="444"/>
+        <location filename="../../core/App.cpp" line="697"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="394"/>
-        <location filename="../../core/App.cpp" line="697"/>
+        <location filename="../../core/App.cpp" line="395"/>
+        <location filename="../../core/App.cpp" line="699"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation>Remote provisioning failed : %1</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="446"/>
+        <location filename="../../core/App.cpp" line="447"/>
         <source>info_popup_error_checking_update</source>
         <extracomment>An error occured while trying to check update. Please try again later or contact support team.</extracomment>
         <translation>An error occured while trying to check update. Please try again later or contact support team.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="452"/>
+        <location filename="../../core/App.cpp" line="454"/>
         <source>info_popup_new_version_download_label</source>
-        <translation type="unfinished"></translation>
+        <translation>Download it !</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="455"/>
+        <location filename="../../core/App.cpp" line="457"/>
         <source>info_popup_new_version_available_title</source>
         <extracomment>New version available !</extracomment>
         <translation>New version available !</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="457"/>
+        <location filename="../../core/App.cpp" line="459"/>
         <source>info_popup_new_version_available_message</source>
         <extracomment>A new version of Linphone (%1) is available. %2</extracomment>
         <translation>A new version of Linphone (%1) is available at %1</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="463"/>
+        <location filename="../../core/App.cpp" line="465"/>
         <source>info_popup_version_up_to_date_title</source>
         <translation>Up to date</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="465"/>
+        <location filename="../../core/App.cpp" line="467"/>
         <source>info_popup_version_up_to_date_message</source>
         <extracomment>Your version is up to date</extracomment>
         <translation>Up to date Your version is up to date</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="691"/>
+        <location filename="../../core/App.cpp" line="693"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation>not reachable</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="964"/>
+        <location filename="../../core/App.cpp" line="966"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>A free and open source SIP video-phone.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="966"/>
+        <location filename="../../core/App.cpp" line="968"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Send an order to the application towards a command line</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="970"/>
+        <location filename="../../core/App.cpp" line="972"/>
         <source>command_line_option_show_help</source>
         <translation>Show this help</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="975"/>
+        <location filename="../../core/App.cpp" line="977"/>
         <source>command_line_option_show_app_version</source>
         <translation>Show app version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="983"/>
+        <location filename="../../core/App.cpp" line="985"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="985"/>
+        <location filename="../../core/App.cpp" line="987"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, path or file</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="990"/>
+        <location filename="../../core/App.cpp" line="992"/>
         <source>command_line_option_minimized</source>
         <translation>Minimize</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="993"/>
+        <location filename="../../core/App.cpp" line="995"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Log to stdout some debug information while running</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="996"/>
+        <location filename="../../core/App.cpp" line="998"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1367"/>
+        <location filename="../../core/App.cpp" line="1369"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1367"/>
+        <location filename="../../core/App.cpp" line="1369"/>
         <source>show_action</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1382"/>
+        <location filename="../../core/App.cpp" line="1384"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1400"/>
+        <location filename="../../core/App.cpp" line="1402"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Check for update</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1514"/>
+        <location filename="../../core/App.cpp" line="1520"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>
@@ -2217,24 +2217,24 @@
 <context>
     <name>ChatMessageContentCore</name>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="107"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="105"/>
         <source>download_file_default_error</source>
         <extracomment>Error downloading file %1</extracomment>
         <translation>Error downloading file %1</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="106"/>
         <source>info_popup_error_titile</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="140"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="138"/>
         <source>popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="142"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="140"/>
         <source>popup_open_file_error_does_not_exist_message</source>
         <extracomment>Could not open file : unknown path %1</extracomment>
         <translation>Could not open file : unknown path %1</translation>
@@ -3488,7 +3488,7 @@ Only your correspondent can decrypt them.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="67"/>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="190"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="162"/>
         <source>information_popup_error_title</source>
         <extracomment>Une erreur est survenue.</extracomment>
         <translation>An error has occurred.</translation>
@@ -3524,19 +3524,25 @@ Only your correspondent can decrypt them.</translation>
         <translation>Uploading traces…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="134"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="127"/>
         <source>settings_debug_app_version_title</source>
         <extracomment>&quot;Version de l&apos;application&quot;</extracomment>
         <translation>App version</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="163"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="137"/>
         <source>settings_debug_sdk_version_title</source>
         <extracomment>&quot;Version du SDK&quot;</extracomment>
         <translation>SDK version</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="192"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="148"/>
+        <source>settings_debug_qt_version_title</source>
+        <extracomment>&quot;Qt Version&quot;</extracomment>
+        <translation>Qt Version</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="164"/>
         <source>settings_debug_share_logs_error</source>
         <extracomment>&quot;Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1&quot;</extracomment>
         <translation>Uploading traces failed. You can share trace files directly from the following directory: %1</translation>
@@ -3891,7 +3897,7 @@ Expiration : %1</translation>
         <translation>Contribute to the translation of %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="154"/>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="155"/>
         <source>help_troubleshooting_title</source>
         <extracomment>&quot;Dépannage&quot;</extracomment>
         <translation>Troubleshooting</translation>

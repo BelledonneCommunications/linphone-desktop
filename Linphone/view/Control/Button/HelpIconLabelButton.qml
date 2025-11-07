@@ -3,6 +3,7 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 MouseArea {
 	id: mainItem
@@ -11,6 +12,7 @@ MouseArea {
 	property string subTitle
     property real iconSize: Utils.getSizeWithScreenRatio(32)
 	property bool shadowEnabled: containsMouse || activeFocus
+	property bool arrowImageVisible: false
 	property alias image: image
 	hoverEnabled: true
 	width: content.implicitWidth
@@ -60,6 +62,13 @@ MouseArea {
 				visible: subTitle.length > 0
 				font: Typography.p1
 			}
+		}
+		Item{Layout.fillWidth: true}
+		EffectImage {
+			id: arrowImage
+			visible: mainItem.arrowImageVisible
+			imageSource: AppIcons.rightArrow
+			colorizationColor: DefaultStyle.main2_600
 		}
 	}
 	MultiEffect {

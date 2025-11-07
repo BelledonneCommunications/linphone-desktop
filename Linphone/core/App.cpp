@@ -450,6 +450,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 					    QString downloadLink =
 					        QStringLiteral("<a href='%1'><font color='DefaultStyle.main2_600'>%2</a>")
 					            .arg(url)
+					            //: Download it !
 					            .arg(tr("info_popup_new_version_download_label"));
 					    Utils::showInformationPopup(
 					        //: New version available !

@@ -118,63 +118,35 @@ AbstractSettingsLayout {
 	id: versionContent
 		ColumnLayout {
             spacing: Utils.getSizeWithScreenRatio(20)
-			RowLayout {
-				EffectImage {
-					imageSource: AppIcons.appWindow
-					colorizationColor: DefaultStyle.main1_500_main
-                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-                    imageWidth: Utils.getSizeWithScreenRatio(24)
-                    imageHeight: Utils.getSizeWithScreenRatio(24)
-					Layout.alignment: Qt.AlignTop
-				}
-				ColumnLayout {
-					Text {
-                        //: "Version de l'application"
-                        text: qsTr("settings_debug_app_version_title")
-						font: Typography.p2l
-						wrapMode: Text.WordWrap
-						color: DefaultStyle.main2_600
-						Layout.fillWidth: true
-					}
-					TextEdit {
-						text: AppCpp.applicationVersion + ' ('+ AppCpp.gitBranchName + ')'
-						font: Typography.p1
-						wrapMode: Text.WordWrap
-						color: DefaultStyle.main2_600
-						Layout.fillWidth: true
-						readOnly: true
-					}
-				}
+			HelpIconLabelButton {
+				enabled: false
+				// Layout.preferredWidth: width
+				// Layout.minimumWidth: width
+				iconSize: Utils.getSizeWithScreenRatio(24)
+				//: "Version de l'application"
+				title: qsTr("settings_debug_app_version_title")
+				iconSource: AppIcons.appWindow
+				subTitle: AppCpp.applicationVersion + ' ('+ AppCpp.gitBranchName + ')'
 			}
-			RowLayout {
-				EffectImage {
-					imageSource: AppIcons.resourcePackage
-					colorizationColor: DefaultStyle.main1_500_main
-                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-                    imageWidth: Utils.getSizeWithScreenRatio(24)
-                    imageHeight: Utils.getSizeWithScreenRatio(24)
-					Layout.alignment: Qt.AlignTop
-				}
-				ColumnLayout {
-					Text {
-                        //: "Version du SDK"
-                        text: qsTr("settings_debug_sdk_version_title")
-						font: Typography.p2l
-						wrapMode: Text.WordWrap
-						color: DefaultStyle.main2_600
-						Layout.fillWidth: true
-					}
-					TextEdit {
-						text: AppCpp.sdkVersion
-						font: Typography.p1
-						wrapMode: Text.WordWrap
-						color: DefaultStyle.main2_600
-						Layout.fillWidth: true
-						readOnly: true
-					}
-				}
+			HelpIconLabelButton {
+				enabled: false
+				// Layout.preferredWidth: width
+				// Layout.minimumWidth: width
+				iconSize: Utils.getSizeWithScreenRatio(24)
+				//: "Version du SDK"
+				title: qsTr("settings_debug_sdk_version_title")
+				iconSource: AppIcons.resourcePackage
+				subTitle: AppCpp.sdkVersion
+			}
+			HelpIconLabelButton {
+				enabled: false
+				// Layout.preferredWidth: width
+				// Layout.minimumWidth: width
+				iconSize: Utils.getSizeWithScreenRatio(24)
+				iconSource: AppIcons.qtLogo
+				//: "Qt Version"
+				title: qsTr("settings_debug_qt_version_title")
+				subTitle: AppCpp.qtVersion
 			}
 		}
 	}

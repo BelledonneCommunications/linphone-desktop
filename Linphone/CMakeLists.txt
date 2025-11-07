@@ -98,19 +98,11 @@ endif()
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 
-if(${Qt6_VERSION} VERSION_LESS "6.9.0")
-	message( FATAL_ERROR "Linphone requires Qt6.9.0 or newer. Exiting CMake." )
+if(${Qt6_VERSION} VERSION_LESS "6.10.0")
+	message( FATAL_ERROR "Linphone requires Qt 6.10.0 or newer. Exiting CMake." )
 endif()
 
-if(${Qt6_VERSION} VERSION_LESS "6.3.0")
-	set(CMAKE_AUTOMOC ON)
-	set(CMAKE_AUTORCC ON)
-	set(CMAKE_AUTOUIC ON)
-else()
-	qt6_standard_project_setup()
-endif()
-
-
+qt6_standard_project_setup()
 
 
 ################################################################
