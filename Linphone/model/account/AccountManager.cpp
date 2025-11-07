@@ -19,6 +19,7 @@
  */
 
 #include "AccountManager.hpp"
+#include "tool/accessibility/AccessibilityHelper.hpp"
 
 #include <QDebug>
 #include <QDesktopServices>
@@ -153,6 +154,7 @@ bool AccountManager::login(QString username,
 					        errorMessage = tr("assistant_account_login_forbidden_error");
 				        //: "Error during connection, please verify your parameters"
 				        else errorMessage = tr("assistant_account_login_error");
+				        AccessibilityHelper::announceMessage(errorMessage);
 				        mAccountModel->removeAccount();
 			        } else if (state == linphone::RegistrationState::Ok) {
 				        core->setDefaultAccount(account);

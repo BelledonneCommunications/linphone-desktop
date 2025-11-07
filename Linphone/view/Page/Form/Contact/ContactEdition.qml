@@ -58,7 +58,7 @@ MainRightPanel {
 			icon.source: AppIcons.closeX
 			icon.width: Utils.getSizeWithScreenRatio(24)
 			icon.height: Utils.getSizeWithScreenRatio(24)
-			//: Close %n
+			//: Close %1
 			Accessible.name: qsTr("close_accessible_name").arg(mainItem.title)
 			onClicked: {
 				if (contact.core.isSaved) mainItem.closeEdition('')

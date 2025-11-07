@@ -2594,7 +2594,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="62"/>
         <source>close_accessible_name</source>
-        <extracomment>Close %n</extracomment>
+        <extracomment>Close %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

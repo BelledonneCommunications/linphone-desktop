@@ -2684,8 +2684,8 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="62"/>
         <source>close_accessible_name</source>
-        <extracomment>Close %n</extracomment>
-        <translation>Fermer %n</translation>
+        <extracomment>Close %1</extracomment>
+        <translation>Fermer %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="94"/>

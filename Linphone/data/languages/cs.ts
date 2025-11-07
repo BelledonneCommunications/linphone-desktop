@@ -2610,7 +2610,7 @@ proto nezveřejňujte žádné citlivé informace!</translation>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="62"/>
         <source>close_accessible_name</source>
-        <extracomment>Close %n</extracomment>
+        <extracomment>Close %1</extracomment>
         <translation>Zavřít %1</translation>
     </message>
     <message>
