@@ -3770,55 +3770,55 @@ Expiration : %1</translation>
 <context>
     <name>GroupChatInfoParticipants</name>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="208"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="206"/>
         <source>group_infos_manage_participants_title</source>
         <extracomment>&quot;Gérer des participants&quot;</extracomment>
         <translation>Gérer les participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="95"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="93"/>
         <source>group_infos_participant_is_admin</source>
         <translation>Admin</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="125"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="123"/>
         <source>menu_see_existing_contact</source>
         <extracomment>&quot;Show contact&quot;</extracomment>
         <translation>Voir le contact</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="127"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="125"/>
         <source>menu_add_address_to_contacts</source>
         <extracomment>&quot;Add to contacts&quot;</extracomment>
         <translation>Ajouter aux contacts</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="144"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="142"/>
         <source>group_infos_give_admin_rights</source>
         <translation>Donner les droits admins</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="144"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="142"/>
         <source>group_infos_remove_admin_rights</source>
         <translation>Retirer les droits admins</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="156"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="154"/>
         <source>group_infos_copy_sip_address</source>
         <translation>Copier l’adresse SIP</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="176"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="174"/>
         <source>group_infos_remove_participant</source>
         <translation>Retirer le participant</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="183"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="181"/>
         <source>group_infos_remove_participants_toast_title</source>
         <translation>Retirer le participant ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="184"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="182"/>
         <source>group_infos_remove_participants_toast_message</source>
         <translation>La participant sere retiré de la conversation</translation>
     </message>

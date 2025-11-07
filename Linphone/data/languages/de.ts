@@ -3849,55 +3849,55 @@ Error</extracomment>
 <context>
     <name>GroupChatInfoParticipants</name>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="95"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="93"/>
         <source>group_infos_participant_is_admin</source>
         <translation>Admin</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="208"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="206"/>
         <source>group_infos_manage_participants_title</source>
         <extracomment>&quot;Gérer des participants&quot;</extracomment>
         <translation>Manage Participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="125"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="123"/>
         <source>menu_see_existing_contact</source>
         <extracomment>&quot;Show contact&quot;</extracomment>
         <translation>Kontakt anzeigen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="127"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="125"/>
         <source>menu_add_address_to_contacts</source>
         <extracomment>&quot;Add to contacts&quot;</extracomment>
         <translation>Zu Kontakten hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="144"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="142"/>
         <source>group_infos_give_admin_rights</source>
         <translation>Give admin rights</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="144"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="142"/>
         <source>group_infos_remove_admin_rights</source>
         <translation>Remove admin rights</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="156"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="154"/>
         <source>group_infos_copy_sip_address</source>
         <translation>Copy SIP Address</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="176"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="174"/>
         <source>group_infos_remove_participant</source>
         <translation>Remove participant</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="183"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="181"/>
         <source>group_infos_remove_participants_toast_title</source>
         <translation>Remove participant ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="184"/>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="182"/>
         <source>group_infos_remove_participants_toast_message</source>
         <translation>Participant will be removed from chat room.</translation>
     </message>

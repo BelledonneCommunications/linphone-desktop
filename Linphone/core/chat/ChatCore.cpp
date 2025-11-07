@@ -362,12 +362,16 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		    auto participants = buildParticipants(chatRoom);
 		    mChatModelConnection->invokeToCore([this, participants]() { setParticipants(participants); });
 	    });
-	mChatModelConnection->makeConnectToModel(
-	    &ChatModel::participantAdminStatusChanged, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
-	                                                      const std::shared_ptr<const linphone::EventLog> &eventLog) {
-		    auto participants = buildParticipants(chatRoom);
-		    mChatModelConnection->invokeToCore([this, participants]() { setParticipants(participants); });
-	    });
+	mChatModelConnection->makeConnectToModel(&ChatModel::participantAdminStatusChanged,
+	                                         [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	                                                const std::shared_ptr<const linphone::EventLog> &eventLog) {
+		                                         auto participants = buildParticipants(chatRoom);
+		                                         bool meAdmin = chatRoom->getMe()->isAdmin();
+		                                         mChatModelConnection->invokeToCore([this, participants, meAdmin]() {
+			                                         setParticipants(participants);
+			                                         setMeAdmin(meAdmin);
+		                                         });
+	                                         });
 	mChatModelConnection->makeConnectToCore(&ChatCore::lRemoveParticipantAtIndex, [this](int index) {
 		mChatModelConnection->invokeToModel([this, index]() { mChatModel->removeParticipantAtIndex(index); });
 	});
