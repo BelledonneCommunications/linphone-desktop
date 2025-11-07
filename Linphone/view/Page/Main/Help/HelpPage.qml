@@ -112,6 +112,16 @@ AbstractMainPage {
 				}
 			}
 			HelpIconLabelButton {
+				id: qtVersionButton
+				Layout.preferredWidth: width
+				Layout.minimumWidth: width
+				iconSource: AppIcons.qtLogo
+				//: "Qt Version"
+				title: qsTr("help_about_qt_version_title")
+				subTitle: AppCpp.qtVersion
+				onClicked: {}
+			}
+			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.license
                 //: "Licences GPLv3"

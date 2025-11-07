@@ -11,6 +11,7 @@ MouseArea {
 	property string subTitle
     property real iconSize: Utils.getSizeWithScreenRatio(32)
 	property bool shadowEnabled: containsMouse || activeFocus
+	property alias image: image
 	hoverEnabled: true
 	width: content.implicitWidth
 	height: content.implicitHeight
@@ -27,6 +28,7 @@ MouseArea {
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.fill:parent
 		EffectImage {
+			id: image
 			Layout.preferredWidth: mainItem.iconSize
 			Layout.preferredHeight: mainItem.iconSize
 			width: mainItem.iconSize

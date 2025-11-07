@@ -289,6 +289,7 @@ App::App(int &argc, char *argv[])
 	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
 	QThread::currentThread()->setPriority(QThread::HighPriority);
 	qDebug() << "app thread is" << QThread::currentThread();
+	lDebug() << "Starting app with Qt version" << qVersion();
 	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
 	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
 	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
@@ -1478,6 +1479,10 @@ QString App::getSdkVersion() {
 #else
 	return tr('unknown');
 #endif
+}
+
+QString App::getQtVersion() const {
+	return qVersion();
 }
 
 void App::checkForUpdate(bool requestedByUser) {
