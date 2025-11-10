@@ -60,7 +60,6 @@ project(linphoneqt)
 
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
-include(Linphone/application_info.cmake)
 
 set(CMAKE_CXX_STANDARD 17)
 if(LINPHONEAPP_INSTALL_PREFIX)
@@ -74,6 +73,9 @@ set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 
 set(LINPHONEAPP_APPLICATION_NAME "Linphone6" CACHE STRING "Application name" )
 set(LINPHONEAPP_EXECUTABLE_NAME "linphone6" CACHE STRING "Executable name" )
+
+# Include application_info.cmake here as the LINPHONEAPP_APPLICATION_NAME variable must be known as it is set to the APPLICATION_NAME variable.
+include(Linphone/application_info.cmake)
 
 if( APPLE )
 	set(LINPHONEAPP_MACOS_ARCHS "arm64" CACHE STRING "MacOS architectures to build: comma-separated list of values in [arm64, x86_64]")
