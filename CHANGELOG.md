@@ -9,9 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Avoid mosaic layout when screensharing is enabled.
 - Video conference stabilization.
+- Improve H264 quality.
+- Memory leaks on Windows with video calls.
 
 ### Changed
-- Update SDK to 5.4.50
+- Update SDK to 5.4.58
 
 ## 5.3.1 - 2025-10-07
 
