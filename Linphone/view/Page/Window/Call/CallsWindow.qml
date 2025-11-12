@@ -1039,7 +1039,8 @@ AbstractWindow {
                         anchors.topMargin: Utils.getSizeWithScreenRatio(16)
                         width: parent.width
                         call: mainWindow.call
-                        onIsLocalScreenSharingChanged: if (isLocalScreenSharing) rightPanel.visible = false
+                        // auto close panel just before activating screen sharing
+                        onScreenSharingToggled: if (!isLocalScreenSharing) rightPanel.visible = false
                     }
                 }
             }

@@ -235,13 +235,17 @@ int ConferenceInfoList::getCurrentDateIndex() {
 	return it == confInfoList.end() ? -1 : std::distance(confInfoList.begin(), it);
 }
 
-QSharedPointer<ConferenceInfoCore> ConferenceInfoList::getCurrentDateConfInfo() {
+QSharedPointer<ConferenceInfoCore> ConferenceInfoList::getCurrentDateConfInfo(bool enableCancelledConference) {
 	auto today = QDate::currentDate();
 	auto confInfoList = getSharedList<ConferenceInfoCore>();
 	QList<QSharedPointer<ConferenceInfoCore>>::iterator it;
 	if (mHaveCurrentDate) {
 		it = std::find_if(confInfoList.begin(), confInfoList.end(),
-		                  [today](const QSharedPointer<ConferenceInfoCore> &item) {
+		                  [today, enableCancelledConference](const QSharedPointer<ConferenceInfoCore> &item) {
+			                  if (!item) return false;
+			                  if (!enableCancelledConference &&
+			                      item->getConferenceInfoState() == LinphoneEnums::ConferenceInfoState::Cancelled)
+				                  return false;
 			                  return item && item->getDateTimeUtc().date() == today;
 		                  });
 	} else it = std::find(confInfoList.begin(), confInfoList.end(), nullptr);

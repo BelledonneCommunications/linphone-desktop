@@ -104,43 +104,43 @@
 <context>
     <name>AccountManager</name>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="87"/>
+        <location filename="../../model/account/AccountManager.cpp" line="88"/>
         <source>assistant_account_login_already_connected_error</source>
         <extracomment>&quot;The account is already connected&quot;</extracomment>
         <translation>Le compte est déjà connecté</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="109"/>
+        <location filename="../../model/account/AccountManager.cpp" line="110"/>
         <source>assistant_account_login_proxy_address_error</source>
         <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
         <translation>Impossible de créer l&apos;adresse proxy. Merci de vérifier le nom de domaine.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="122"/>
+        <location filename="../../model/account/AccountManager.cpp" line="123"/>
         <source>assistant_account_login_address_configuration_error</source>
         <extracomment>&quot;Unable to configure address: `%1`.&quot;</extracomment>
         <translation>Impossible de configurer l&apos;adresse : `%1`.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="129"/>
+        <location filename="../../model/account/AccountManager.cpp" line="130"/>
         <source>assistant_account_login_params_configuration_error</source>
         <extracomment>&quot;Unable to configure account settings.&quot;</extracomment>
         <translation>Impossible de configurer les paramètres du compte.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="153"/>
+        <location filename="../../model/account/AccountManager.cpp" line="154"/>
         <source>assistant_account_login_forbidden_error</source>
         <extracomment>&quot;Username and password do not match&quot;</extracomment>
         <translation>Le couple identifiant mot de passe ne correspond pas</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="155"/>
+        <location filename="../../model/account/AccountManager.cpp" line="156"/>
         <source>assistant_account_login_error</source>
         <extracomment>&quot;Error during connection, please verify your parameters&quot;</extracomment>
         <translation>Erreur durant la connexion, veuillez vérifier vos paramètres</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="168"/>
+        <location filename="../../model/account/AccountManager.cpp" line="170"/>
         <source>assistant_account_add_error</source>
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Impossible d&apos;ajouter le compte.</translation>
@@ -629,141 +629,141 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../../core/App.cpp" line="357"/>
+        <location filename="../../core/App.cpp" line="355"/>
         <source>remote_provisioning_dialog</source>
         <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
         <translation>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="394"/>
-        <location filename="../../core/App.cpp" line="444"/>
-        <location filename="../../core/App.cpp" line="697"/>
+        <location filename="../../core/App.cpp" line="392"/>
+        <location filename="../../core/App.cpp" line="442"/>
+        <location filename="../../core/App.cpp" line="695"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="395"/>
-        <location filename="../../core/App.cpp" line="699"/>
+        <location filename="../../core/App.cpp" line="393"/>
+        <location filename="../../core/App.cpp" line="697"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation>La configuration distante a échoué : %1</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="447"/>
+        <location filename="../../core/App.cpp" line="445"/>
         <source>info_popup_error_checking_update</source>
         <extracomment>An error occured while trying to check update. Please try again later or contact support team.</extracomment>
         <translation>Une erreur est survenue lors de la recherche de mise à jour. Merci de réessayer plus tard ou de contacter l&apos;équipe de support.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="454"/>
+        <location filename="../../core/App.cpp" line="452"/>
         <source>info_popup_new_version_download_label</source>
         <translation>Téléchargez-là !</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="457"/>
+        <location filename="../../core/App.cpp" line="455"/>
         <source>info_popup_new_version_available_title</source>
         <extracomment>New version available !</extracomment>
         <translation>Nouvelle version disponible !</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="459"/>
+        <location filename="../../core/App.cpp" line="457"/>
         <source>info_popup_new_version_available_message</source>
         <extracomment>A new version of Linphone (%1) is available. %2</extracomment>
         <translation>Une nouvelle version de Linphone (%1) est disponible. %2</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="465"/>
+        <location filename="../../core/App.cpp" line="463"/>
         <source>info_popup_version_up_to_date_title</source>
         <translation>À jour</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="467"/>
+        <location filename="../../core/App.cpp" line="465"/>
         <source>info_popup_version_up_to_date_message</source>
         <extracomment>Your version is up to date</extracomment>
         <translation>Votre version est à jour</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="693"/>
+        <location filename="../../core/App.cpp" line="691"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation>indisponible</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="966"/>
+        <location filename="../../core/App.cpp" line="964"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>A free and open source SIP video-phone.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="968"/>
+        <location filename="../../core/App.cpp" line="966"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Send an order to the application towards a command line</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="972"/>
+        <location filename="../../core/App.cpp" line="970"/>
         <source>command_line_option_show_help</source>
         <translation>Show this help</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="977"/>
+        <location filename="../../core/App.cpp" line="975"/>
         <source>command_line_option_show_app_version</source>
         <translation>Afficher la version de l&apos;application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="985"/>
+        <location filename="../../core/App.cpp" line="983"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="987"/>
+        <location filename="../../core/App.cpp" line="985"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, path or file</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="992"/>
+        <location filename="../../core/App.cpp" line="990"/>
         <source>command_line_option_minimized</source>
         <translation>Minimiser</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="995"/>
+        <location filename="../../core/App.cpp" line="993"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Log to stdout some debug information while running</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="998"/>
+        <location filename="../../core/App.cpp" line="996"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1369"/>
+        <location filename="../../core/App.cpp" line="1367"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Cacher</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1369"/>
+        <location filename="../../core/App.cpp" line="1367"/>
         <source>show_action</source>
         <translation>Afficher</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1384"/>
+        <location filename="../../core/App.cpp" line="1382"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1402"/>
+        <location filename="../../core/App.cpp" line="1400"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Rechercher une mise à jour</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1520"/>
+        <location filename="../../core/App.cpp" line="1518"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>
@@ -1222,7 +1222,7 @@
         <translation>L&apos;ensemble de votre historique d&apos;appels avec ce correspondant sera définitivement supprimé.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="147"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="151"/>
         <source>call_history_call_list_title</source>
         <extracomment>&quot;Appels&quot;</extracomment>
         <translation>Appels</translation>
@@ -1233,14 +1233,14 @@
         <translation>Options de l&apos;</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="170"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="171"/>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="551"/>
         <source>menu_delete_history</source>
         <extracomment>&quot;Supprimer l&apos;historique&quot;</extracomment>
         <translation>Supprimer l&apos;historique</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="164"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="165"/>
         <source>call_history_list_options_accessible_name</source>
         <extracomment>Call history options</extracomment>
         <translation>Options de la liste de l&apos;historique d&apos;appel</translation>
@@ -1649,7 +1649,7 @@
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="702"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1640"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1641"/>
         <source>call_action_show_dialer</source>
         <extracomment>&quot;Pavé numérique&quot;</extracomment>
         <translation>Pavé numérique</translation>
@@ -1674,7 +1674,7 @@
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="717"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1721"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1722"/>
         <source>call_action_go_to_settings</source>
         <extracomment>&quot;Paramètres&quot;</extracomment>
         <translation>Paramètres</translation>
@@ -1686,34 +1686,34 @@
         <translation>Partage de votre écran</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1089"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1090"/>
         <source>conference_share_link_title</source>
         <extracomment>Partager le lien de la réunion</extracomment>
         <translation>Partager le lien de la réunion</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1093"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1094"/>
         <source>copied</source>
         <extracomment>Copié</extracomment>
         <translation>Copié</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1095"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1096"/>
         <source>information_popup_meeting_address_copied_to_clipboard</source>
         <extracomment>Le lien de la réunion a été copié dans le presse-papier</extracomment>
         <translation>Le lien de la réunion a été copié dans le presse-papier</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1104"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1108"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1114"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1105"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1109"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1115"/>
         <source>conference_participants_list_title</source>
         <extracomment>&quot;Participants (%1)&quot;</extracomment>
         <translation>Participants (%1)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1135"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1143"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1136"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1144"/>
         <source>group_call_participant_selected</source>
         <translation>
             <numerusform>%1 participant sélectionné</numerusform>
@@ -1721,7 +1721,7 @@
         </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1142"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1143"/>
         <source>meeting_schedule_add_participants_title</source>
         <translation>Ajouter des participants</translation>
     </message>
@@ -1767,148 +1767,148 @@
         <translation>Statistiques</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1293"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1294"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1295"/>
         <source>call_action_end_call</source>
         <extracomment>&quot;Terminer l&apos;appel&quot;</extracomment>
         <translation>Terminer l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1326"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1329"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1327"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1330"/>
         <source>call_action_resume_call</source>
         <extracomment>&quot;Reprendre l&apos;appel&quot;</extracomment>
         <translation>Reprendre l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1328"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1329"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1330"/>
         <source>call_action_pause_call</source>
         <extracomment>&quot;Mettre l&apos;appel en pause&quot;</extracomment>
         <translation>Mettre l&apos;appel en pause</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1361"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1362"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1363"/>
         <source>call_action_transfer_call</source>
         <extracomment>&quot;Transférer l&apos;appel&quot;</extracomment>
         <translation>Transférer l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1384"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1385"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1386"/>
         <source>call_action_start_new_call_hint</source>
         <extracomment>&quot;Initier un nouvel appel&quot;</extracomment>
         <translation>Initier un nouvel appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1407"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1408"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1409"/>
         <source>call_display_call_list_hint</source>
         <extracomment>&quot;Afficher la liste d&apos;appels&quot;</extracomment>
         <translation>Afficher la liste d&apos;appels</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1442"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1443"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1444"/>
         <source>call_deactivate_video_hint</source>
         <extracomment>&quot;Désactiver la vidéo&quot; &quot;Activer la vidéo&quot;</extracomment>
         <translation>Désactiver la vidéo</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1442"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1443"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1444"/>
         <source>call_activate_video_hint</source>
         <translation>Activer la vidéo</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1460"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1463"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1461"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1464"/>
         <source>call_activate_microphone</source>
         <extracomment>&quot;Activer le micro&quot;</extracomment>
         <translation>Activer le micro</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1462"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1463"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1464"/>
         <source>call_deactivate_microphone</source>
         <extracomment>&quot;Désactiver le micro&quot;</extracomment>
         <translation>Désactiver le micro</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1480"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1481"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1482"/>
         <source>call_share_screen_hint</source>
         <extracomment>Partager l&apos;écran…</extracomment>
         <translation>Partager l&apos;écran…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1501"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1502"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1503"/>
         <source>call_open_chat_hint</source>
         <extracomment>Open chat…</extracomment>
         <translation>Ouvrir le chat…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1524"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1525"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1526"/>
         <source>call_rise_hand_hint</source>
         <extracomment>&quot;Lever la main&quot;</extracomment>
         <translation>Lever la main</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1538"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1539"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1540"/>
         <source>call_send_reaction_hint</source>
         <extracomment>&quot;Envoyer une réaction&quot;</extracomment>
         <translation>Envoyer une réaction</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1550"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1551"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1552"/>
         <source>call_manage_participants_hint</source>
         <extracomment>&quot;Gérer les participants&quot;</extracomment>
         <translation>Gérer les participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1572"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1573"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1574"/>
         <source>call_more_options_hint</source>
         <extracomment>&quot;Plus d&apos;options…&quot;</extracomment>
         <translation>Plus d&apos;options…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1604"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1605"/>
         <source>call_action_change_conference_layout</source>
         <extracomment>&quot;Modifier la disposition&quot;</extracomment>
         <translation>Modifier la disposition</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1618"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1619"/>
         <source>call_action_full_screen</source>
         <extracomment>&quot;Mode Plein écran&quot;</extracomment>
         <translation>Mode Plein écran</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1671"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1672"/>
         <source>call_action_stop_recording</source>
         <extracomment>&quot;Terminer l&apos;enregistrement&quot;</extracomment>
         <translation>Terminer l&apos;enregistrement</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1673"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1674"/>
         <source>call_action_record</source>
         <extracomment>&quot;Enregistrer l&apos;appel&quot;</extracomment>
         <translation>Enregistrer l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1701"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1702"/>
         <source>call_activate_speaker_hint</source>
         <extracomment>&quot;Activer le son&quot;</extracomment>
         <translation>Activer le son</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1703"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1704"/>
         <source>call_deactivate_speaker_hint</source>
         <extracomment>&quot;Désactiver le son&quot;</extracomment>
         <translation>Désactiver le son</translation>
@@ -1958,8 +1958,8 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="46"/>
         <source>settings_contacts_carddav_popup_synchronization_error_message</source>
-        <extracomment>&quot;Erreur de synchronisation!&quot;</extracomment>
-        <translation>Erreur de synchronisation!</translation>
+        <extracomment>&quot;Erreur de synchronisation : %1&quot;</extracomment>
+        <translation>Erreur de synchronisation : %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="63"/>
@@ -2080,7 +2080,7 @@
         <translation>Brouillon : %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="429"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="430"/>
         <source>chat_room_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Supprimer</translation>
@@ -2097,37 +2097,37 @@
         <translation>Enlever la sourdine </translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="381"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="382"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
         <translation>Marquer comme lu</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="400"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="401"/>
         <source>chat_room_leave</source>
         <extracomment>&quot;leave&quot;</extracomment>
         <translation>Quitter la conversation</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="406"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="407"/>
         <source>chat_list_leave_chat_popup_title</source>
         <extracomment>leave the conversation ?</extracomment>
         <translation>Quitter la conversation ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="408"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="409"/>
         <source>chat_list_leave_chat_popup_message</source>
         <extracomment>You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?</extracomment>
         <translation>Vous ne pourrez plus envoyer ou recevoir de messages dans cette conversation. Souhaitez-vous continuer ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="435"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="436"/>
         <source>chat_list_delete_chat_popup_title</source>
         <extracomment>Delete the conversation ?</extracomment>
         <translation>Supprimer la conversation ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="437"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="438"/>
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation>La conversation et tous ses messages seront supprimés. Souhaitez-vous continuer ?</translation>
@@ -2491,13 +2491,13 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <translation>La conversation et tous ses messages seront supprimés.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="104"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="108"/>
         <source>chat_list_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
         <translation>Conversations</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="125"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="126"/>
         <source>menu_mark_all_as_read</source>
         <extracomment>&quot;mark all as read&quot;</extracomment>
         <translation>Tout marquer comme lu</translation>
@@ -2985,7 +2985,7 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="227"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="230"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
         <translation>Contacts</translation>
@@ -4561,127 +4561,127 @@ Expiration : %1</translation>
         <translation>Retour</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="188"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="190"/>
         <source>meetings_list_title</source>
         <extracomment>Réunions</extracomment>
         <translation>Réunions</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="227"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="228"/>
         <source>meetings_search_hint</source>
         <extracomment>&quot;Rechercher une réunion&quot;</extracomment>
         <translation>Rechercher une réunion</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="244"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="245"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
         <translation>Aucun résultat…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="246"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="247"/>
         <source>meetings_empty_list</source>
         <extracomment>&quot;Aucune réunion&quot;</extracomment>
         <translation>Aucune réunion</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="321"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="382"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="322"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="383"/>
         <source>meeting_schedule_title</source>
         <extracomment>&quot;Nouvelle réunion&quot;</extracomment>
         <translation>Nouvelle réunion</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="332"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="333"/>
         <source>create</source>
         <translation>Créer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="339"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="343"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="394"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="495"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="498"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="546"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="340"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="344"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="395"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="496"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="499"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="547"/>
         <source>information_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="341"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="496"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="342"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="497"/>
         <source>meeting_schedule_mandatory_field_not_filled_toast</source>
         <extracomment>Veuillez saisir un titre et sélectionner au moins un participant</extracomment>
         <translation>Veuillez saisir un titre et sélectionner au moins un participant</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="345"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="499"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="346"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="500"/>
         <source>meeting_schedule_duration_error_toast</source>
         <extracomment>&quot;La fin de la conférence doit être plus récente que son début&quot;</extracomment>
         <translation>La fin de la conférence doit être plus récente que son début</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="349"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="389"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="350"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="390"/>
         <source>meeting_schedule_creation_in_progress</source>
         <extracomment>&quot;Création de la réunion en cours …&quot;</extracomment>
         <translation>Création de la réunion en cours…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="384"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="385"/>
         <source>meeting_info_created_toast</source>
         <extracomment>&quot;Réunion planifiée avec succès&quot;</extracomment>
         <translation>Réunion planifiée avec succès</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="396"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="397"/>
         <source>meeting_failed_to_schedule_toast</source>
         <extracomment>&quot;Échec de création de la réunion !&quot;</extracomment>
         <translation>Échec de création de la réunion !</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="488"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="489"/>
         <source>save</source>
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="537"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="764"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="538"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="765"/>
         <source>saved</source>
         <extracomment>&quot;Enregistré&quot;</extracomment>
         <translation>Enregistré</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="539"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="540"/>
         <source>meeting_info_updated_toast</source>
         <extracomment>&quot;Réunion mise à jour&quot;</extracomment>
         <translation>Réunion mise à jour</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="544"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="545"/>
         <source>meeting_schedule_edit_in_progress</source>
         <extracomment>&quot;Modification de la réunion en cours…&quot;</extracomment>
         <translation>Modification de la réunion en cours…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="548"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="549"/>
         <source>meeting_failed_to_edit_toast</source>
         <extracomment>&quot;Échec de la modification de la réunion !&quot;</extracomment>
         <translation>Échec de la modification de la réunion !</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="592"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="593"/>
         <source>meeting_schedule_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Ajouter des participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="606"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="607"/>
         <source>meeting_schedule_add_participants_apply</source>
         <translation>Appliquer</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="616"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="617"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
         <translation>
@@ -4690,31 +4690,31 @@ Expiration : %1</translation>
         </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="704"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="705"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Supprimer la réunion</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="766"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="767"/>
         <source>meeting_address_copied_to_clipboard_toast</source>
         <extracomment>&quot;Adresse de la réunion copiée&quot;</extracomment>
         <translation>Adresse de la réunion copiée</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="802"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="803"/>
         <source>meeting_schedule_timezone_title</source>
         <extracomment>&quot;Fuseau horaire&quot;</extracomment>
         <translation>Fuseau horaire</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="903"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="904"/>
         <source>meeting_info_organizer_label</source>
         <extracomment>&quot;Organisateur&quot;</extracomment>
         <translation>Organisateur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="922"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="923"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
         <translation>Rejoindre la réunion</translation>
@@ -5583,37 +5583,37 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 <context>
     <name>ScreencastSettings</name>
     <message>
-        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="24"/>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="26"/>
         <source>screencast_settings_choose_window_text</source>
         <extracomment>&quot;Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants&quot;</extracomment>
         <translation>Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="34"/>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="36"/>
         <source>screencast_settings_all_screen_label</source>
         <extracomment>&quot;Ecran entier&quot;</extracomment>
         <translation>Écran entier</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="36"/>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="38"/>
         <source>screencast_settings_one_window_label</source>
         <extracomment>&quot;Fenêtre&quot;</extracomment>
         <translation>Fenêtre</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="94"/>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="96"/>
         <source>screencast_settings_screen</source>
         <extracomment>&quot;Ecran %1&quot;</extracomment>
         <translation>Écran %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="179"/>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="181"/>
         <source>stop</source>
         <extracomment>&quot;Stop</extracomment>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="181"/>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="183"/>
         <source>share</source>
         <extracomment>&quot;Partager&quot;</extracomment>
         <translation>Partager</translation>

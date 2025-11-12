@@ -97,15 +97,16 @@ void CarddavModel::remove() {
 void CarddavModel::onSyncStatusChanged(const std::shared_ptr<linphone::FriendList> &friendList,
                                        linphone::FriendList::SyncStatus status,
                                        const std::string &message) {
+	lInfo() << log().arg("carddav sync status changed :") << message;
 	if (status == linphone::FriendList::SyncStatus::Successful) {
 		lInfo() << log().arg("Successfully synchronized:") << mCarddavFriendList->getUri();
 		setMonitor(nullptr);
 		SettingsModel::setCardDAVListForNewFriends(mStoreNewFriendsInIt ? friendList->getDisplayName() : "");
-		emit saved(true);
+		emit saved(true, Utils::coreStringToAppString(message));
 	}
 	if (status == linphone::FriendList::SyncStatus::Failure) {
 		lWarning() << log().arg("Synchronization failure:") << mCarddavFriendList->getUri();
 		setMonitor(nullptr);
-		emit saved(false);
+		emit saved(false, Utils::coreStringToAppString(message));
 	}
 }

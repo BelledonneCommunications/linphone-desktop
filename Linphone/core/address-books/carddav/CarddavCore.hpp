@@ -50,7 +50,7 @@ public:
 	DECLARE_CORE_MEMBER(bool, storeNewFriendsInIt, StoreNewFriendsInIt)
 
 signals:
-	void saved(bool success);
+	void saved(bool success, QString message);
 
 private:
 	std::shared_ptr<CarddavModel> mCarddavModel;

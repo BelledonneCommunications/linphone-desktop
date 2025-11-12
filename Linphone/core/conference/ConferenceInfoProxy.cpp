@@ -105,7 +105,7 @@ void ConferenceInfoProxy::clear() {
 	mList->clearData();
 }
 
-ConferenceInfoGui *ConferenceInfoProxy::getCurrentDateConfInfo() {
+ConferenceInfoGui *ConferenceInfoProxy::getCurrentDateConfInfo(bool enableCancelledConference) {
 	if (mList) {
 		auto confInfo = mList->getCurrentDateConfInfo();
 		return confInfo ? new ConferenceInfoGui(confInfo) : nullptr;
