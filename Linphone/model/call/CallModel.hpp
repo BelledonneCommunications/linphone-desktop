@@ -82,7 +82,8 @@ public:
 	LinphoneEnums::VideoSourceScreenSharingType getVideoSourceType() const;
 	int getScreenSharingIndex() const;
 	void setVideoSourceDescriptorModel(std::shared_ptr<VideoSourceDescriptorModel> model = nullptr);
-
+	void enableVideo(bool enable);
+	bool videoEnabled() const;
 	static void activateLocalVideo(std::shared_ptr<linphone::CallParams> &params, bool enable);
 
 	void sendDtmf(const QString &dtmf);

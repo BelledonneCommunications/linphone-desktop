@@ -41,7 +41,7 @@ public:
 	~MagicSearchList();
 
 	void setSelf(QSharedPointer<MagicSearchList> me);
-	void connectContact(FriendCore* data);
+	void connectContact(FriendCore *data);
 	void setSearch(const QString &search);
 	void setResults(const QList<QSharedPointer<FriendCore>> &contacts);
 	void add(QSharedPointer<FriendCore> contact);
@@ -54,6 +54,9 @@ public:
 
 	int getMaxResults() const;
 	void setMaxResults(int maxResults);
+
+	bool getShowMe() const;
+	void setShowMe(bool showMe);
 
 	virtual QHash<int, QByteArray> roleNames() const override;
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -68,6 +71,7 @@ signals:
 	void sourceFlagsChanged(int sourceFlags);
 	void aggregationFlagChanged(LinphoneEnums::MagicSearchAggregation flag);
 	void maxResultsChanged(int maxResults);
+	void showMeChanged(bool showMe);
 
 	void friendCreated(int index, FriendGui *data);
 	void friendStarredChanged();
@@ -81,6 +85,7 @@ private:
 	LinphoneEnums::MagicSearchAggregation mAggregationFlag;
 	QString mSearchFilter;
 	int mMaxResults = -1;
+	bool mShowMe = false;
 
 	std::shared_ptr<MagicSearchModel> mMagicSearch;
 	QSharedPointer<SafeConnection<MagicSearchList, MagicSearchModel>> mModelConnection;

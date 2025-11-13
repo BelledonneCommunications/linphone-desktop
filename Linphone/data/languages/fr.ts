@@ -230,76 +230,96 @@
         <translation>Supprimer l&apos;image</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="106"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="107"/>
         <source>sip_address</source>
+        <extracomment>SIP address</extracomment>
         <translation>Adresse SIP</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="131"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
+        <source>copied</source>
+        <extracomment>Copied</extracomment>
+        <translation>Copié</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="129"/>
+        <source>account_settings_sip_address_copied_message</source>
+        <extracomment>Your SIP address has been copied in the clipboard</extracomment>
+        <translation>Votre adresse SIP a été copié dans le presse-papiers</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="133"/>
+        <source>account_settings_sip_address_copied_error_message</source>
+        <extracomment>Error copying your SIP address</extracomment>
+        <translation>Erreur lors de la copie de votre adresse SIP</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="143"/>
         <source>sip_address_display_name</source>
         <extracomment>&quot;Nom d&apos;affichage</extracomment>
         <translation>Nom d&apos;affichage</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="137"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="149"/>
         <source>sip_address_display_name_explaination</source>
         <extracomment>&quot;Le nom qui sera affiché à vos correspondants lors de vos échanges.&quot;</extracomment>
         <translation>Le nom qui sera affiché à vos correspondants lors de vos échanges.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="155"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="167"/>
         <source>manage_account_international_prefix</source>
         <extracomment>Indicatif international*</extracomment>
         <translation>Indicatif international*</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="181"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="193"/>
         <source>manage_account_delete</source>
         <extracomment>&quot;Déconnecter mon compte&quot;</extracomment>
         <translation>Déconnecter mon compte</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="189"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="201"/>
         <source>manage_account_delete_message</source>
         <translation>Votre compte sera retiré de ce client linphone, mais vous restez connecté sur vos autres clients</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="208"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="220"/>
         <source>manage_account_dialog_remove_account_title</source>
         <extracomment>&quot;Se déconnecter du compte ?&quot;</extracomment>
         <translation>Se déconnecter du compte ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="210"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="222"/>
         <source>manage_account_dialog_remove_account_message</source>
         <extracomment>Si vous souhaitez supprimer définitivement votre compte rendez-vous sur : https://sip.linphone.org</extracomment>
         <translation>Si vous souhaitez supprimer définitivement votre compte rendez-vous sur : https://sip.linphone.org</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="267"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="131"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="279"/>
         <source>error</source>
         <extracomment>Erreur</extracomment>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="305"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="317"/>
         <source>manage_account_device_remove</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="314"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="326"/>
         <source>manage_account_device_remove_confirm_dialog</source>
         <translation>Supprimer %1 ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="328"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="340"/>
         <source>manage_account_device_last_connection</source>
         <extracomment>&quot;Dernière connexion:&quot;</extracomment>
         <translation>Dernière connexion:</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="346"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="358"/>
         <source>device_last_updated_time_no_info</source>
         <extracomment>&quot;No information&quot;</extracomment>
         <translation>Pas d&apos;information</translation>
@@ -608,19 +628,19 @@
 <context>
     <name>AllContactListView</name>
     <message>
-        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="275"/>
+        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="276"/>
         <source>car_favorites_contacts_title</source>
         <extracomment>&quot;Favoris&quot;</extracomment>
         <translation>Favoris</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="322"/>
+        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="324"/>
         <source>generic_address_picker_contacts_list_title</source>
         <extracomment>&apos;Contacts&apos;</extracomment>
         <translation>Contacts</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="372"/>
+        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="374"/>
         <source>generic_address_picker_suggestions_list_title</source>
         <extracomment>&quot;Suggestions&quot;</extracomment>
         <translation>Suggestions</translation>
@@ -809,76 +829,76 @@
 <context>
     <name>CallCore</name>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="212"/>
+        <location filename="../../core/call/CallCore.cpp" line="213"/>
         <source>call_record_end_message</source>
         <extracomment>&quot;Enregistrement terminé&quot;</extracomment>
         <translation>Enregistrement terminé</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="214"/>
+        <location filename="../../core/call/CallCore.cpp" line="215"/>
         <source>call_record_saved_in_file_message</source>
         <extracomment>&quot;L&apos;appel a été enregistré dans le fichier : %1&quot;</extracomment>
         <translation>L&apos;appel a été enregistré dans le fichier : %1</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="393"/>
-        <location filename="../../core/call/CallCore.cpp" line="418"/>
+        <location filename="../../core/call/CallCore.cpp" line="396"/>
+        <location filename="../../core/call/CallCore.cpp" line="421"/>
         <source>call_stats_codec_label</source>
         <extracomment>&quot;Codec: %1 / %2 kHz&quot;</extracomment>
         <translation>Codec: %1 / %2 kHz</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="397"/>
-        <location filename="../../core/call/CallCore.cpp" line="421"/>
+        <location filename="../../core/call/CallCore.cpp" line="400"/>
+        <location filename="../../core/call/CallCore.cpp" line="424"/>
         <source>call_stats_bandwidth_label</source>
         <extracomment>&quot;Bande passante : %1 %2 kbits/s %3 %4 kbits/s&quot;</extracomment>
         <translation>Bande passante : %1 %2 kbits/s %3 %4 kbits/s</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="403"/>
-        <location filename="../../core/call/CallCore.cpp" line="426"/>
+        <location filename="../../core/call/CallCore.cpp" line="406"/>
+        <location filename="../../core/call/CallCore.cpp" line="429"/>
         <source>call_stats_loss_rate_label</source>
         <extracomment>&quot;Taux de perte: %1% %2%&quot;</extracomment>
         <translation>Taux de perte: %1% %2%</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="408"/>
+        <location filename="../../core/call/CallCore.cpp" line="411"/>
         <source>call_stats_jitter_buffer_label</source>
         <extracomment>&quot;Tampon de gigue: %1 ms&quot;</extracomment>
         <translation>Tampon de gigue: %1 ms</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="435"/>
+        <location filename="../../core/call/CallCore.cpp" line="438"/>
         <source>call_stats_resolution_label</source>
         <extracomment>&quot;Définition vidéo : %1 %2 %3 %4&quot;</extracomment>
         <translation>Définition vidéo : %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="441"/>
+        <location filename="../../core/call/CallCore.cpp" line="444"/>
         <source>call_stats_fps_label</source>
         <extracomment>&quot;FPS : %1 %2 %3 %4&quot;</extracomment>
         <translation>FPS : %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="654"/>
+        <location filename="../../core/call/CallCore.cpp" line="657"/>
         <source>media_encryption_dtls</source>
         <extracomment>DTLS</extracomment>
         <translation>DTLS</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="657"/>
+        <location filename="../../core/call/CallCore.cpp" line="660"/>
         <source>media_encryption_none</source>
         <extracomment>None</extracomment>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="660"/>
+        <location filename="../../core/call/CallCore.cpp" line="663"/>
         <source>media_encryption_srtp</source>
         <extracomment>SRTP</extracomment>
         <translation>SRTP</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="663"/>
+        <location filename="../../core/call/CallCore.cpp" line="666"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
         <translation>ZRTP - Post quantique</translation>
@@ -1117,67 +1137,67 @@
 <context>
     <name>CallModel</name>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="348"/>
+        <location filename="../../model/call/CallModel.cpp" line="359"/>
         <source>call_error_no_response_toast</source>
         <extracomment>&quot;No response&quot;</extracomment>
         <translation>Pas de réponse</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="352"/>
+        <location filename="../../model/call/CallModel.cpp" line="363"/>
         <source>call_error_forbidden_resource_toast</source>
         <extracomment>&quot;403 : Forbidden resource&quot;</extracomment>
         <translation>403 : Forbidden resource</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="356"/>
+        <location filename="../../model/call/CallModel.cpp" line="367"/>
         <source>call_error_not_answered_toast</source>
         <extracomment>&quot;Request timeout&quot;</extracomment>
         <translation>La requête a expiré</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="360"/>
+        <location filename="../../model/call/CallModel.cpp" line="371"/>
         <source>call_error_user_declined_toast</source>
         <extracomment>&quot;User declined the call&quot;</extracomment>
         <translation>Le correspondant a décliné l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="364"/>
+        <location filename="../../model/call/CallModel.cpp" line="375"/>
         <source>call_error_user_not_found_toast</source>
         <extracomment>&quot;User was not found&quot;</extracomment>
         <translation>Le correspondant n&apos;a pas été trouvé</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="368"/>
+        <location filename="../../model/call/CallModel.cpp" line="379"/>
         <source>call_error_user_busy_toast</source>
         <extracomment>&quot;User is busy&quot;</extracomment>
         <translation>Le correspondant est occupé</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="372"/>
+        <location filename="../../model/call/CallModel.cpp" line="383"/>
         <source>call_error_incompatible_media_params_toast</source>
         <extracomment>&quot;User can&amp;apos;t accept your call&quot;</extracomment>
         <translation>Le correspondant ne peut accepter votre appel</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="376"/>
+        <location filename="../../model/call/CallModel.cpp" line="387"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Unavailable service or network error&quot;</extracomment>
         <translation>Service indisponible ou erreur réseau</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="380"/>
+        <location filename="../../model/call/CallModel.cpp" line="391"/>
         <source>call_error_do_not_disturb_toast</source>
         <extracomment>&quot;Le correspondant ne peut être dérangé&quot;</extracomment>
         <translation>Le correspondant ne peut être dérangé</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="384"/>
+        <location filename="../../model/call/CallModel.cpp" line="395"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporarily unavailable&quot;</extracomment>
         <translation>Temporairement indisponible</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="388"/>
+        <location filename="../../model/call/CallModel.cpp" line="399"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server tiemout&quot;</extracomment>
         <translation>Délai d&apos;attente du serveur dépassé</translation>
@@ -4212,7 +4232,7 @@ Expiration : %1</translation>
 <context>
     <name>MagicSearchList</name>
     <message>
-        <location filename="../../core/search/MagicSearchList.cpp" line="132"/>
+        <location filename="../../core/search/MagicSearchList.cpp" line="143"/>
         <source>device_id</source>
         <translation>Téléphone</translation>
     </message>
@@ -4915,13 +4935,13 @@ Expiration : %1</translation>
         <translation>Nouvelle invitation à une conférence !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="388"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="389"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>Nouveaux messages reçus !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="416"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="417"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Nouveau message sur la conversation %1</translation>

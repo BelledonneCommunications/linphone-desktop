@@ -107,7 +107,8 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mCallModel->setSelf(mCallModel);
 	mDuration = call->getDuration();
 	mIsStarted = mDuration > 0;
-	auto videoDirection = call->getParams()->getVideoDirection();
+	auto callParams = call->getParams();
+	auto videoDirection = callParams->getVideoDirection();
 	mLocalVideoEnabled =
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
 	auto remoteParams = call->getRemoteParams();
@@ -133,7 +134,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mTransferState = LinphoneEnums::fromLinphone(call->getTransferState());
 	mLocalToken = Utils::coreStringToAppString(mCallModel->getLocalAtuhenticationToken());
 	mRemoteTokens = mCallModel->getRemoteAtuhenticationTokens();
-	mEncryption = LinphoneEnums::fromLinphone(call->getParams()->getMediaEncryption());
+	mEncryption = LinphoneEnums::fromLinphone(callParams->getMediaEncryption());
 	auto tokenVerified = call->getAuthenticationTokenVerified();
 	mIsMismatch = call->getZrtpCacheMismatchFlag();
 	mIsSecured = (mEncryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified) ||
@@ -160,7 +161,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mPaused = mState == LinphoneEnums::CallState::Pausing || mState == LinphoneEnums::CallState::Paused ||
 	          mState == LinphoneEnums::CallState::PausedByRemote;
 
-	mRecording = call->getParams() && call->getParams()->isRecording();
+	mRecording = callParams && callParams->isRecording();
 	mRemoteRecording = call->getRemoteParams() && call->getRemoteParams()->isRecording();
 	auto settingsModel = SettingsModel::getInstance();
 	mMicrophoneVolume = call->getRecordVolume();
@@ -344,6 +345,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::conferenceChanged, [this]() {
 		auto conference = mCallModel->getMonitor()->getConference();
+		// Force enable video if in conference to handle screen sharing
+		if (conference && !mCallModel->videoEnabled()) mCallModel->enableVideo(true);
 		QSharedPointer<ConferenceCore> core = conference ? ConferenceCore::create(conference) : nullptr;
 		mCallModelConnection->invokeToCore([this, core]() { setConference(core); });
 	});

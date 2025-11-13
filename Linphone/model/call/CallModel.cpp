@@ -128,6 +128,17 @@ void CallModel::setSpeakerMuted(bool isMuted) {
 	emit speakerMutedChanged(isMuted);
 }
 
+void CallModel::enableVideo(bool enable) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = CoreModel::getInstance()->getCore()->createCallParams(mMonitor);
+	params->enableVideo(enable);
+	mMonitor->update(params);
+}
+
+bool CallModel::videoEnabled() const {
+	return mMonitor->getParams()->videoEnabled();
+}
+
 void CallModel::activateLocalVideo(std::shared_ptr<linphone::CallParams> &params, bool enable) {
 	lInfo() << sLog()
 	               .arg("Updating call with video enabled and media direction set to %1")

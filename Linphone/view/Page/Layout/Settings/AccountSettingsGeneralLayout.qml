@@ -103,6 +103,7 @@ AbstractSettingsLayout {
                 spacing: Utils.getSizeWithScreenRatio(5)
 				Text {
 					Layout.alignment: Qt.AlignLeft
+					//: SIP address
                     text: "%1 :".arg(qsTr("sip_address"))
 					color: DefaultStyle.main2_600
 					font: Typography.p2l
@@ -120,7 +121,18 @@ AbstractSettingsLayout {
 					Layout.alignment: Qt.AlignRight
 					icon.source: AppIcons.copy
 					style: ButtonStyle.noBackground
-					onClicked: UtilsCpp.copyToClipboard(model.core.identityAddress)
+					onClicked: {
+						if (UtilsCpp.copyToClipboard(model.core.identityAddress)) {
+							//: Copied
+							UtilsCpp.showInformationPopup(qsTr("copied"),
+							//: Your SIP address has been copied in the clipboard
+							qsTr("account_settings_sip_address_copied_message"))
+						} else {
+							UtilsCpp.showInformationPopup(qsTr("error"),
+							//: Error copying your SIP address
+							qsTr("account_settings_sip_address_copied_error_message"))
+						}
+					}
 				}
 			}
 			ColumnLayout {

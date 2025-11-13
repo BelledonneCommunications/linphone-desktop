@@ -161,6 +161,7 @@ FocusScope {
                 itemsRightMargin: Utils.getSizeWithScreenRatio(28)
                 multiSelectionEnabled: true
                 showContactMenu: false
+                showMe: false
                 confInfoGui: mainItem.conferenceInfoGui
                 selectedContacts: mainItem.selectedParticipants
                 onSelectedContactsChanged: Qt.callLater(function () {

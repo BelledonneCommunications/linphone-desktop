@@ -369,6 +369,7 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 		};
 
 		if (messages.size() == 1) { // Display only sender on mono message.
+			if (message->isRead()) return;
 			getMessage(message);
 			if (txt.isEmpty()) { // Do not notify message without content
 				qDebug() << "empty notif, return";

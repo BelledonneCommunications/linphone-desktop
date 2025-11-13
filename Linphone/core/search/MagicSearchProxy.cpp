@@ -148,6 +148,14 @@ void MagicSearchProxy::setMaxResults(int flags) {
 	mList->setMaxResults(flags);
 }
 
+bool MagicSearchProxy::getShowMe() const {
+	return mList->getShowMe();
+}
+
+void MagicSearchProxy::setShowMe(bool showMe) {
+	mList->setShowMe(showMe);
+}
+
 MagicSearchProxy *MagicSearchProxy::getParentProxy() const {
 	return mParentProxy;
 }

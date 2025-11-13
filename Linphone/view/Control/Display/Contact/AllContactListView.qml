@@ -18,6 +18,7 @@ Flickable {
     property bool showContactMenu: true // Display the dot menu for contacts.
     property bool showFavorites: true // Display the favorites in the header
     property bool hideSuggestions: false // Hide not stored contacts (not suggestions)
+    property bool showMe: true // Wether to display current account address or not (disabled for adding participants)
     property string highlightText: searchText // Bold characters in Display name.
     property var sourceFlags: LinphoneEnums.MagicSearchSource.All
 
@@ -295,6 +296,7 @@ Flickable {
             property MagicSearchProxy proxy: MagicSearchProxy {
                 id: favoritesProxy
                 parentProxy: mainItem.mainModel
+                showMe: mainItem.showMe
                 filterType: MagicSearchProxy.FilteringTypes.Favorites
             }
             model: mainItem.showFavorites
