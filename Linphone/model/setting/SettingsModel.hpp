@@ -70,6 +70,7 @@ public:
 
 	bool getIsInCall() const;
 	void accessCallSettings();
+	void updateCallSettings();
 	void closeCallSettings();
 
 	void startCaptureGraph();

@@ -81,6 +81,20 @@ SettingsModel::SettingsModel() {
 	QObject::connect(CoreModel::getInstance().get(), &CoreModel::lastCallEnded, this, [this]() {
 		if (mCaptureGraphListenerCount > 0) createCaptureGraph(); // Repair the capture graph
 	});
+	QObject::connect(CoreModel::getInstance().get(), &CoreModel::audioDevicesListUpdated, this,
+	                 [this](const std::shared_ptr<linphone::Core> &core) {
+		                 lInfo() << log().arg("audio device list updated");
+		                 updateCallSettings();
+	                 });
+	QObject::connect(
+	    CoreModel::getInstance().get(), &CoreModel::audioDeviceChanged, this,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::AudioDevice> &device) {
+		    lInfo() << log().arg("audio device changed");
+		    if (device) lInfo() << "device :" << device->getDeviceName();
+		    emit playbackDeviceChanged(getPlaybackDevice());
+		    emit captureDeviceChanged(getCaptureDevice());
+		    emit ringerDeviceChanged(getRingerDevice());
+	    });
 }
 
 SettingsModel::~SettingsModel() {
@@ -173,9 +187,10 @@ void SettingsModel::stopCaptureGraph() {
 
 // Force a call on the 'detect' method of all audio filters, updating new or removed devices
 void SettingsModel::accessCallSettings() {
-	// Audio
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	startCaptureGraph();
+
+	// Audio
 	CoreModel::getInstance()->getCore()->reloadSoundDevices();
 	emit captureDevicesChanged(getCaptureDevices());
 	emit playbackDevicesChanged(getPlaybackDevices());
@@ -188,6 +203,23 @@ void SettingsModel::accessCallSettings() {
 
 	// Video
 	CoreModel::getInstance()->getCore()->reloadVideoDevices();
+	emit videoDevicesChanged(getVideoDevices());
+}
+
+void SettingsModel::updateCallSettings() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+
+	// Audio
+	emit captureDevicesChanged(getCaptureDevices());
+	emit playbackDevicesChanged(getPlaybackDevices());
+	emit playbackDeviceChanged(getPlaybackDevice());
+	emit ringerDevicesChanged(getRingerDevices());
+	emit ringerDeviceChanged(getRingerDevice());
+	emit captureDeviceChanged(getCaptureDevice());
+	emit playbackGainChanged(getPlaybackGain());
+	emit captureGainChanged(getCaptureGain());
+
+	// Video
 	emit videoDevicesChanged(getVideoDevices());
 }
 

@@ -491,6 +491,7 @@ void CallModel::onVideoDisplayErrorOccurred(const std::shared_ptr<linphone::Call
 
 void CallModel::onAudioDeviceChanged(const std::shared_ptr<linphone::Call> &call,
                                      const std::shared_ptr<linphone::AudioDevice> &audioDevice) {
+	lInfo() << log().arg("audio device changed");
 	emit audioDeviceChanged(call, audioDevice);
 }
 

@@ -626,3 +626,12 @@ void CoreModel::onFriendListRemoved(const std::shared_ptr<linphone::Core> &core,
 	}
 */
 }
+
+void CoreModel::onAudioDevicesListUpdated(const std::shared_ptr<linphone::Core> &core) {
+	emit audioDevicesListUpdated(core);
+}
+
+void CoreModel::onAudioDeviceChanged(const std::shared_ptr<linphone::Core> &core,
+                                     const std::shared_ptr<linphone::AudioDevice> &device) {
+	emit audioDeviceChanged(core, device);
+}
