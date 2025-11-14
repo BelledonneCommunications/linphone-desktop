@@ -15,6 +15,7 @@ CreationFormLayout {
 
     //: Appel de groupe
     startGroupButtonText: qsTr("call_start_group_call_title")
+    startGroupButtonVisible: !SettingsCpp.disableMeetingsFeature
 
     topLayoutVisible: mainItem.displayCurrentCalls && callList.count > 0
     topContent: [

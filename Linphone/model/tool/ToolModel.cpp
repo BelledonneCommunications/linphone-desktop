@@ -760,6 +760,7 @@ ToolModel::createGroupChatRoom(QString subject, std::list<std::shared_ptr<linpho
 	auto accountParams = account->getParams();
 
 	auto chatRoom = core->createChatRoom(params, participantsAddresses);
+	if (!chatRoom) lWarning() << ("[ToolModel] Failed to create group chat");
 	return chatRoom;
 }
 

@@ -126,7 +126,7 @@ public:
 	Q_INVOKABLE static int secsTo(const QString &start, const QString &end);
 	Q_INVOKABLE static QDateTime addSecs(QDateTime date, int secs);
 	Q_INVOKABLE static QDateTime addYears(QDateTime date, int years);
-	Q_INVOKABLE static int timeOffset(QDateTime start, QDateTime end);
+	Q_INVOKABLE static int timeOffset(QTime start, QTime end);
 	Q_INVOKABLE static int daysOffset(QDateTime start, QDateTime end);
 	Q_INVOKABLE static VariantObject *interpretUrl(QString uri);
 	Q_INVOKABLE static bool isValidURL(const QString &url);

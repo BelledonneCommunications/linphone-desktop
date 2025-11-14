@@ -42,7 +42,7 @@ public:
 	void connectItem(QSharedPointer<ChatCore> chat);
 
 	int findChatIndex(ChatGui *chat);
-	void addChatInList(QSharedPointer<ChatCore> chatCore);
+	bool addChatInList(QSharedPointer<ChatCore> chatCore);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 signals:
@@ -50,6 +50,9 @@ signals:
 	void filterChanged(QString filter);
 	void chatAdded();
 	void chatUpdated();
+	// emit this signal to force selection when
+	// newly created chat added to the list
+	void chatCreated(ChatGui *chatGui);
 
 private:
 	QString mFilter;

@@ -73,7 +73,10 @@ ListView {
     onAtYEndChanged: if (atYEnd && chat) {
         chat.core.lMarkAsRead()
     }
-    onAtYBeginningChanged: if (atYBeginning) {
+    // Workaround : check if there is already items in the list
+    // so this function is only called when the user actually scroll
+    // the view till the begining
+    onAtYBeginningChanged: if (atYBeginning && count !== 0) {
         eventLogProxy.displayMore()
     }
 

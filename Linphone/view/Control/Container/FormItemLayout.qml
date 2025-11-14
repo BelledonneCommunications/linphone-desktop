@@ -9,6 +9,7 @@ FocusScope{
 	id: mainItem
 	property alias contentItem: contentItem.data
 	property string label: ""
+	property string labelIndication
 	property string tooltip: ""
 	property bool mandatory: false
 
@@ -72,6 +73,12 @@ FocusScope{
 				popup.contentItem: Text {
 					text: mainItem.tooltip
 				}
+			}
+			Text {
+				visible: mainItem.labelIndication !== undefined
+				font.pixelSize: Utils.getSizeWithScreenRatio(12)
+                font.weight: Utils.getSizeWithScreenRatio(300)
+                text: mainItem.labelIndication
 			}
 		}
 	

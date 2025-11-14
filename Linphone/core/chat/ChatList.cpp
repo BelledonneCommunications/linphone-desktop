@@ -167,6 +167,30 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 		    addChatToList(core, room, message);
 	    });
 
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::chatRoomStateChanged,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	           linphone::ChatRoom::State state) {
+		    auto chatRoomAccount = chatRoom->getAccount();
+		    auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+		    if (!chatRoomAccount || !currentAccount || !chatRoomAccount->getParams() || !currentAccount->getParams() ||
+		        !chatRoomAccount->getParams()->getIdentityAddress()->weakEqual(
+		            currentAccount->getParams()->getIdentityAddress())) {
+			    lInfo() << "ChatRoom state of another account changed, return";
+			    return;
+		    }
+		    if (chatRoom->getState() == linphone::ChatRoom::State::Created) {
+			    lInfo() << "ChatRoom created, add it to the list" << chatRoom.get();
+			    auto chatCore = ChatCore::create(chatRoom);
+			    mModelConnection->invokeToCore([this, chatCore] {
+				    if (chatCore) {
+					    bool added = addChatInList(chatCore);
+					    if (added) emit chatCreated(new ChatGui(chatCore));
+				    }
+			    });
+		    }
+	    });
+
 	connect(this, &ChatList::filterChanged, [this](QString filter) {
 		mFilter = filter;
 		lUpdate();
@@ -184,7 +208,8 @@ int ChatList::findChatIndex(ChatGui *chatGui) {
 	return it == chatList.end() ? -1 : std::distance(chatList.begin(), it);
 }
 
-void ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
+bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	auto chatList = getSharedList<ChatCore>();
 	auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
 		return item && chatCore && item->getModel() && chatCore->getModel() &&
@@ -193,8 +218,10 @@ void ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
 	if (it == chatList.end()) {
 		connectItem(chatCore);
 		add(chatCore);
+		return true;
 		emit chatAdded();
 	}
+	return false;
 }
 
 QVariant ChatList::data(const QModelIndex &index, int role) const {

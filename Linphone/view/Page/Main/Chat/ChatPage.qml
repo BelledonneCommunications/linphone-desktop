@@ -198,8 +198,8 @@ AbstractMainPage {
 
                             Connections {
                                 target: mainItem
-                                function onSelectedChatGuiChanged() {
-                                    chatListView.selectChat(mainItem.selectedChatGui)
+                                function onRemoteChatChanged() {
+                                    if (mainItem.remoteChat) chatListView.chatToSelect = mainItem.remoteChat
                                 }
                                 function onOpenChatRequested(chat) {
                                     chatListView.chatToSelect = chat
@@ -322,22 +322,29 @@ AbstractMainPage {
             }
 
             onGroupCreationRequested: {
+                var hasError = false
                 if (groupName.text.length === 0) {
+                    //: "Un nom doit être donné au groupe
+                    groupNameItem.errorMessage = qsTr("group_chat_error_must_have_name")
+                    hasError = true
+                } if (addParticipantsLayout.selectedParticipantsCount === 0) {
                     UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
-                                                    //: "Un nom doit être donné au groupe
-                                                    qsTr("group_chat_error_must_have_name"), false)
-                } else if (!mainItem.isRegistered) {
+                                                    //: "Please select at least one participant
+                                                    qsTr("group_chat_error_no_participant"), false)
+                    hasError = true
+                } if (!mainItem.isRegistered) {
                     UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
                                 //: "Vous n'etes pas connecté"
                                 qsTr("group_call_error_not_connected"), false)
-                } else {
-                    console.log("create group chat")
-                    //: Creation de la conversation en cours …
-                    mainWindow.showLoadingPopup(qsTr("chat_creation_in_progress"), true, function () {
-                        if (chatCreationLayout.groupChat) chatCreationLayout.groupChat.core.lDelete()
-                    })
-                    chatCreationLayout.groupChatObj = UtilsCpp.createGroupChat(chatCreationLayout.groupName.text, addParticipantsLayout.selectedParticipants)
-                }
+                    hasError = true
+                } 
+                if (hasError) return
+                console.log("Create group chat")
+                //: Creation de la conversation en cours …
+                mainWindow.showLoadingPopup(qsTr("chat_creation_in_progress"), true, function () {
+                    if (chatCreationLayout.groupChat) chatCreationLayout.groupChat.core.lDelete()
+                })
+                chatCreationLayout.groupChatObj = UtilsCpp.createGroupChat(chatCreationLayout.groupName.text, addParticipantsLayout.selectedParticipants)
             }
         }
     }

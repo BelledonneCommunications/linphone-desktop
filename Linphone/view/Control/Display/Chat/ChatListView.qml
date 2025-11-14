@@ -60,6 +60,9 @@ ListView {
         onLayoutChanged: {
             selectChat(mainItem.currentChatGui)
         }
+        onChatCreated: (chat) => {
+            selectChat(chat)
+        }
     }
     // flickDeceleration: 10000
     spacing: Utils.getSizeWithScreenRatio(10)
@@ -67,14 +70,6 @@ ListView {
     function selectChat(chatGui) {
         var index = chatProxy.findChatIndex(chatGui)
         mainItem.currentIndex = index
-        // if the chat exists, it may not be displayed
-        // in list if hide_empty_chatrooms is set. Thus, we need
-        // to force adding it in the list so it is displayed
-        if (index === -1 && chatGui) {
-            chatProxy.addChatInList(chatGui)
-            var index = chatProxy.findChatIndex(chatGui)
-            mainItem.currentIndex = index
-        }
     }
 
     Component.onCompleted: cacheBuffer = Math.max(contentHeight, 0) //contentHeight>0 ? contentHeight : 0// cache all items

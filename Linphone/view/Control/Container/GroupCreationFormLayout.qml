@@ -12,6 +12,7 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 FocusScope {
     id: mainItem
     property alias addParticipantsLayout: addParticipantsLayout
+    property alias groupNameItem: groupNameItem
     property alias groupName: groupName
     property string formTitle
     property string createGroupButtonText
@@ -65,34 +66,24 @@ FocusScope {
                 }
             }
         }
-        RowLayout {
-            spacing: 0
+        FormItemLayout {
+            id: groupNameItem
+            enableErrorText: true
+            Layout.fillWidth: true
             Layout.topMargin: Utils.getSizeWithScreenRatio(18)
             Layout.rightMargin: Utils.getSizeWithScreenRatio(38)
-            Text {
-                font.pixelSize: Typography.p2.pixelSize
-                font.weight: Typography.p2.weight
-                //: "Nom du groupe"
-                text: qsTr("group_start_dialog_subject_hint")
-            }
-            Item {
+            //: "Nom du groupe"
+            label: qsTr("group_start_dialog_subject_hint")
+            //: "Requis"
+            labelIndication: qsTr("required")
+            contentItem: TextField {
+                id: groupName
                 Layout.fillWidth: true
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
+                focus: true
+                KeyNavigation.down: addParticipantsLayout //participantList.count > 0 ? participantList : searchbar
+                Accessible.name: qsTr("group_start_dialog_subject_hint")
             }
-            Text {
-                font.pixelSize: Utils.getSizeWithScreenRatio(12)
-                font.weight: Utils.getSizeWithScreenRatio(300)
-                //: "Requis"
-                text: qsTr("required")
-            }
-        }
-        TextField {
-            id: groupName
-            Layout.fillWidth: true
-            Layout.rightMargin: Utils.getSizeWithScreenRatio(38)
-            Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
-            focus: true
-            KeyNavigation.down: addParticipantsLayout //participantList.count > 0 ? participantList : searchbar
-            Accessible.name: qsTr("group_start_dialog_subject_hint")
         }
         AddParticipantsForm {
             id: addParticipantsLayout

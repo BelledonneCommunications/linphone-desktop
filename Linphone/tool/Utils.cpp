@@ -1435,9 +1435,9 @@ QDateTime Utils::addYears(QDateTime date, int years) {
 	return date;
 }
 
-int Utils::timeOffset(QDateTime start, QDateTime end) {
+int Utils::timeOffset(QTime start, QTime end) {
 	int offset = start.secsTo(end);
-	return std::min(offset, INT_MAX);
+	return std::max(std::min(offset, INT_MAX), INT_MIN);
 }
 
 int Utils::daysOffset(QDateTime start, QDateTime end) {

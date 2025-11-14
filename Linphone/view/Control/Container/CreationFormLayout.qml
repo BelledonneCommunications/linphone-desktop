@@ -14,6 +14,7 @@ FocusScope {
 	property color searchBarBorderColor: "transparent"
 	property alias searchBar: searchBar
     property string startGroupButtonText
+    property bool startGroupButtonVisible: true
 	property NumericPadPopup numPadPopup
 	signal groupCreationRequested()
 	signal contactClicked(FriendGui contact)
@@ -52,6 +53,7 @@ FocusScope {
                 spacing: Utils.getSizeWithScreenRatio(32)
                 Button {
                     id: groupCreationButton
+                    visible: mainItem.startGroupButtonVisible
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(320)
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(44)
                     padding: 0
