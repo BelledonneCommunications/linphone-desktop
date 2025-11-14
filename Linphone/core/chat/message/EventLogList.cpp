@@ -156,9 +156,12 @@ void EventLogList::displayMore() {
 			}
 			mCoreModelConnection->invokeToCore([this, events] {
 				int currentCount = mList.count();
-				for (auto it = events->end() - 1; it >= events->begin(); --it) {
-					connectItem(*it);
-					prepend(*it);
+				if (!events->isEmpty()) {
+					for (int i = events->size() - 1; i >= 0; --i) {
+						const auto &ev = events->at(i);
+						connectItem(ev);
+						prepend(ev);
+					}
 				}
 			});
 		});
