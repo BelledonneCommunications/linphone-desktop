@@ -102,7 +102,6 @@ Loader{
 						anchors.bottom: parent.bottom
 						width: parent.width / 4.5
 						height: width
-						asynchronous: true
 						imageSource: mainItem.secured ? AppIcons.trusted : AppIcons.notTrusted
 						fillMode: Image.PreserveAspectFit
 						

@@ -52,14 +52,14 @@ Control.Button {
 	property real keyboardFocusedBorderWidth: Utils.getSizeWithScreenRatio(3)
 	// Image properties
 	property var contentImageColor: style?.image? style.image.normal : DefaultStyle.main2_600
-	property var hoveredImageColor: style?.image? style.image.hovered : Qt.darker(contentImageColor, 1.05)
-	property var checkedImageColor: style?.image? style.image.checked : Qt.darker(contentImageColor, 1.1)
-	property var pressedImageColor: style?.image? style.image.pressed : Qt.darker(contentImageColor, 1.1)
+	property var hoveredImageColor: style && style.image && style.image.hovered ? style.image.hovered : Qt.darker(contentImageColor, 1.05)
+	property var checkedImageColor: style && style.image && style.image.checked ? style.image.checked : Qt.darker(contentImageColor, 1.1)
+	property var pressedImageColor: style && style.image && style.image.pressed ? style.image.pressed : Qt.darker(contentImageColor, 1.1)
 	icon.source: style?.iconSource || ""
 	property color colorizationColor:  checkable && checked 
 		? checkedImageColor
 		: pressed 
-			? pressedImageColor 
+			? pressedImageColor
 			: hovered 
 				? hoveredImageColor 
 				: contentImageColor
@@ -153,7 +153,6 @@ Control.Button {
 	}
 	
 	component ButtonImage: EffectImage {
-        asynchronous: mainItem.asynchronous
 		imageSource: mainItem.icon.source
 		imageWidth: mainItem.icon.width
 		imageHeight: mainItem.icon.height
