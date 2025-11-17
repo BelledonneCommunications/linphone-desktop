@@ -118,6 +118,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 ChatCore::~ChatCore() {
 	lDebug() << "[ChatCore] delete" << this;
 	mustBeInMainThread("~" + getClassName());
+	if (mChatModelConnection) mChatModelConnection->disconnect();
 	emit mChatModel->removeListener();
 }
 

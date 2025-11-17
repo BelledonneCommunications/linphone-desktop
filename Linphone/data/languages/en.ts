@@ -2059,13 +2059,13 @@
 <context>
     <name>ChatCore</name>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="144"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="145"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation>Deleted</translation>
     </message>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="146"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="147"/>
         <source>info_toast_deleted_message_history</source>
         <extracomment>Message history has been deleted</extracomment>
         <translation>Message history has been deleted</translation>
