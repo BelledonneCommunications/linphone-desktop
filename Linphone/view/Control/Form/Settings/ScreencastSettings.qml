@@ -15,8 +15,6 @@ ColumnLayout {
 	property bool isLocalScreenSharing : conference?.core.isLocalScreenSharing || false
 	property bool screenSharingAvailable: !!conference && (!conference.core.isScreenSharingEnabled || isLocalScreenSharing)
 
-	signal screenSharingToggled()
-
     spacing: Utils.getSizeWithScreenRatio(12)
 
 	onIsLocalScreenSharingChanged:  {if(isLocalScreenSharing) mainItem.call.core.videoSourceDescriptor = mainItem.desc }
@@ -175,7 +173,7 @@ ColumnLayout {
 		Layout.preferredHeight: height
 		height: implicitHeight
         visible: mainItem.screenSharingAvailable$
-		enabled: windowsLayout.currentIndex !== -1 || screensLayout.currentIndex !== -1
+		enabled: mainItem.isLocalScreenSharing || windowsLayout.currentIndex !== -1 || screensLayout.currentIndex !== -1
 		text:  mainItem.conference && mainItem.conference.core.isLocalScreenSharing
         //: "Stop
             ? qsTr("stop")
@@ -183,7 +181,6 @@ ColumnLayout {
             : qsTr("share")
 		onClicked: {
 			mainItem.conference.core.lToggleScreenSharing()
-			mainItem.screenSharingToggled()
 		}
 		style: ButtonStyle.main
 	}

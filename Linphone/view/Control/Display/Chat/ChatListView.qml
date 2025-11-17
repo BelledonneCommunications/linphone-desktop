@@ -372,7 +372,7 @@ ListView {
 						}
                     }
                     IconLabelButton {
-                        visible: modelData.core.unreadMessagesCount !== 0
+                        visible: modelData && modelData.core.unreadMessagesCount !== 0 || false
                         //: "Mark as read"
                         text: qsTr("chat_room_mark_as_read")
                         icon.source: AppIcons.checks
