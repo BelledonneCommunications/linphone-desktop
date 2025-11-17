@@ -585,7 +585,7 @@ void AccountModel::setPresence(LinphoneEnums::Presence presence,
 	}
 
 	setNotificationsAllowed(
-	    presence != LinphoneEnums::Presence::DoNotDisturb &&
+	    presence != LinphoneEnums::Presence::Offline && presence != LinphoneEnums::Presence::DoNotDisturb &&
 	    (presence != LinphoneEnums::Presence::Away ||
 	     core->getConfig()->getBool(accountSection, "allow_notifications_in_presence_away", true)) &&
 	    (presence != LinphoneEnums::Presence::Busy ||

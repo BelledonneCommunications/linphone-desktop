@@ -94,6 +94,6 @@ ColumnLayout{
 							!= 0 ? getNextItem(
 										AppCpp.accounts.getCount()) : null
 	}
-	}
+}
 
  
