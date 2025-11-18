@@ -130,7 +130,7 @@ AbstractSettingsLayout {
 						} else {
 							UtilsCpp.showInformationPopup(qsTr("error"),
 							//: Error copying your SIP address
-							qsTr("account_settings_sip_address_copied_error_message"))
+							qsTr("account_settings_sip_address_copied_error_message"), false)
 						}
 					}
 				}

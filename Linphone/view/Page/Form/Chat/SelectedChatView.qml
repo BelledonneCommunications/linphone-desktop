@@ -135,7 +135,7 @@ FocusScope {
                     RowLayout {
                         spacing: Utils.getSizeWithScreenRatio(16)
                         RoundButton {
-                            visible: !mainItem.call
+                            visible: !mainItem.call && !mainItem.chat?.core.isReadOnly
                             style: ButtonStyle.noBackground
                             icon.source: AppIcons.phone
                             onPressed: {

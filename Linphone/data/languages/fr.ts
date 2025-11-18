@@ -2547,50 +2547,50 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <translation>Nouvelle conversation</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="290"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="291"/>
         <source>chat_start_group_chat_title</source>
         <extracomment>&quot;Nouveau groupe&quot;</extracomment>
         <translation>Nouveau groupe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="292"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="293"/>
         <source>chat_action_start_group_chat</source>
         <extracomment>&quot;Créer&quot;</extracomment>
         <translation>Créer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="308"/>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="331"/>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="336"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="309"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="332"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="337"/>
         <source>information_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="310"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="311"/>
         <source>information_popup_chat_creation_failed_message</source>
         <extracomment>&quot;La création a échoué&quot;</extracomment>
         <translation>La création a échoué</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="328"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="329"/>
         <source>group_chat_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné au groupe</extracomment>
         <translation>Un nom doit être donné au groupe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="333"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="334"/>
         <source>group_chat_error_no_participant</source>
         <extracomment>&quot;Please select at least one participant</extracomment>
         <translation>Veuillez sélectionner au moins un participant</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="338"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="339"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
         <translation>Vous n&apos;êtes pas connecté</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="344"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="345"/>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
         <translation>Création de la conversation en cours…</translation>

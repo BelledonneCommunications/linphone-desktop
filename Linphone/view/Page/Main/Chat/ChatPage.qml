@@ -261,6 +261,7 @@ AbstractMainPage {
                 }
                 NewChatForm {
                     id: newChatForm
+                    startGroupButtonVisible: mainItem.account && mainItem.account.core.conferenceFactoryAddress !== ""
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(8)

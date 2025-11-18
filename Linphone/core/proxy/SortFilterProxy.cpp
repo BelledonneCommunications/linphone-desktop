@@ -63,9 +63,14 @@ int SortFilterProxy::getFilterType() const {
 
 void SortFilterProxy::setFilterType(int filterType) {
 	if (getFilterType() != filterType) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
 		beginFilterChange();
 		mFilterType = filterType;
 		endFilterChange();
+#else
+		mFilterType = filterType;
+		invalidateFilter();
+#endif
 		emit filterTypeChanged(filterType);
 	}
 }
@@ -76,9 +81,14 @@ QString SortFilterProxy::getFilterText() const {
 
 void SortFilterProxy::setFilterText(const QString &filter) {
 	if (mFilterText != filter) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
 		beginFilterChange();
 		mFilterText = filter;
 		endFilterChange();
+#else
+		mFilterText = filter;
+		invalidateFilter();
+#endif
 		emit filterTextChanged();
 	}
 }
@@ -92,6 +102,10 @@ void SortFilterProxy::remove(int index, int count) {
 }
 
 void SortFilterProxy::invalidateFilter() {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
 	QSortFilterProxyModel::beginFilterChange();
 	QSortFilterProxyModel::endFilterChange();
+#else
+	invalidateFilter();
+#endif
 }

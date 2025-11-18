@@ -171,6 +171,7 @@ ColumnLayout {
 	}
 	
 	RowLayout {
+		visible: !mainItem.chatCore.isReadOnly
 		spacing: Utils.getSizeWithScreenRatio(10)
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Utils.getSizeWithScreenRatio(30)
