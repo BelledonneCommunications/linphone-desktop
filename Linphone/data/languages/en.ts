@@ -104,43 +104,43 @@
 <context>
     <name>AccountManager</name>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="93"/>
+        <location filename="../../model/account/AccountManager.cpp" line="101"/>
         <source>assistant_account_login_already_connected_error</source>
         <extracomment>&quot;The account is already connected&quot;</extracomment>
         <translation>The account is already connected</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="115"/>
+        <location filename="../../model/account/AccountManager.cpp" line="123"/>
         <source>assistant_account_login_proxy_address_error</source>
         <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
         <translation>Unable to create proxy address. Please check the domain name.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="128"/>
+        <location filename="../../model/account/AccountManager.cpp" line="136"/>
         <source>assistant_account_login_address_configuration_error</source>
         <extracomment>&quot;Unable to configure address: `%1`.&quot;</extracomment>
         <translation>Unable to configure address: `%1`.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="135"/>
+        <location filename="../../model/account/AccountManager.cpp" line="143"/>
         <source>assistant_account_login_params_configuration_error</source>
         <extracomment>&quot;Unable to configure account settings.&quot;</extracomment>
         <translation>Unable to configure account settings.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="159"/>
+        <location filename="../../model/account/AccountManager.cpp" line="167"/>
         <source>assistant_account_login_forbidden_error</source>
         <extracomment>&quot;Username and password do not match&quot;</extracomment>
         <translation>Username and password do not match</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="161"/>
+        <location filename="../../model/account/AccountManager.cpp" line="169"/>
         <source>assistant_account_login_error</source>
         <extracomment>&quot;Error during connection, please verify your parameters&quot;</extracomment>
         <translation>Error during connection</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="175"/>
+        <location filename="../../model/account/AccountManager.cpp" line="183"/>
         <source>assistant_account_add_error</source>
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Unable to add account.</translation>
