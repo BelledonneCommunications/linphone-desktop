@@ -361,7 +361,7 @@ LoginLayout {
 								}
 								console.debug("[SIPLoginPage] User: Log in")
 								LoginPageCpp.login(usernameEdit.text, passwordEdit.text, displayName.text, domainEdit.text, 
-								transportCbox.currentValue, serverAddressEdit.text, connectionIdEdit.text);
+								transportCbox.currentValue, registrarUriEdit.text, outboundProxyUriEdit.text, connectionIdEdit.text);
 								connectionButton.enabled = false
 								connectionButtonContent.currentIndex = 1
 							}
