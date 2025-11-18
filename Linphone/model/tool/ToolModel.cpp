@@ -321,6 +321,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 	}
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	params->enableVideo(localVideoEnabled);
+	params->enableCamera(localVideoEnabled);
 	auto videoDirection = localVideoEnabled ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly;
 	params->setVideoDirection(videoDirection);
 
