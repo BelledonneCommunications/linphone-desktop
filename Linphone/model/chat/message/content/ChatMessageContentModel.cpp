@@ -121,10 +121,10 @@ bool ChatMessageContentModel::downloadFile(const QString &name, QString *error) 
 	} else {
 		lDebug() << log().arg("download file : %1").arg(name);
 		auto downloaded = mChatMessageModel->getMonitor()->downloadContent(mContent);
-		if (!downloaded && error) {
+		if (!downloaded) {
 			lWarning() << QStringLiteral("Unable to download file of entry %1.").arg(name);
 			//: Unable to download file of entry %1
-			*error = tr("download_file_error_unable_to_download").arg(name);
+			if (error) *error = tr("download_file_error_unable_to_download").arg(name);
 		}
 		return downloaded;
 	}

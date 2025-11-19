@@ -32,7 +32,7 @@ For Desktop : you will need QT6 (_6.10.0 or newer_). `C++17` support is required
 - Using the [official QT installer](https://www.qt.io/download-thank-you)
 - Using an alternative installer like [aqtinstall](https://github.com/miurahr/aqtinstall)
 
-The following QT optional modules are required: qt5compat, qtmultimedia qtnetworkauth qtshadertools .
+The following QT optional modules are required: qtmultimedia qtnetworkauth qtshadertools .
 
 ### Set your environment
 

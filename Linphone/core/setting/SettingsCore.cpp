@@ -1038,7 +1038,8 @@ QString SettingsCore::getConfigLocale() const {
 QString SettingsCore::getDownloadFolder() const {
 	auto path = mDownloadFolder;
 	if (mDownloadFolder.isEmpty()) path = Paths::getDownloadDirPath();
-	return QDir::cleanPath(path) + QDir::separator();
+	QString cleanPath = QDir::cleanPath(path);
+	return cleanPath;
 }
 
 void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {

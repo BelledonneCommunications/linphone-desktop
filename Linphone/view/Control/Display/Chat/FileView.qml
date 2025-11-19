@@ -14,7 +14,7 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 Item {
 	id: mainItem
 	property ChatMessageContentGui contentGui
-	property string thumbnail: contentGui && contentGui.core.thumbnail
+	property string thumbnail: contentGui && contentGui.core.thumbnail || ""
 	property string name: contentGui && contentGui.core.name
 	property string filePath: contentGui && contentGui.core.filePath
 	property bool wasDownloaded: contentGui && contentGui.core.wasDownloaded
