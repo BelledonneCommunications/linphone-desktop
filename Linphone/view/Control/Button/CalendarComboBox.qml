@@ -14,7 +14,7 @@ ComboBox {
 	property alias contentText: contentText
 	contentItem: Text {
 		id: contentText
-        text: UtilsCpp.formatDate(calendar.selectedDate, false, true, "ddd d, MMMM")
+		text: calendar.selectedDate ? UtilsCpp.formatDate(calendar.selectedDate, false, true, "ddd d, MMMM") : ""
 		anchors.fill: parent
         anchors.leftMargin: Utils.getSizeWithScreenRatio(15)
 		anchors.verticalCenter: parent.verticalCenter
