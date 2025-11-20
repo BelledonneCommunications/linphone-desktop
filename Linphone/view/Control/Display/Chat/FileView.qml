@@ -19,7 +19,7 @@ Item {
 	property string filePath: contentGui && contentGui.core.filePath
 	property bool wasDownloaded: contentGui && contentGui.core.wasDownloaded
 	property bool isAnimatedImage : contentGui && contentGui.core.wasDownloaded && UtilsCpp.isAnimatedImage(filePath)
-	property bool haveThumbnail: contentGui && UtilsCpp.canHaveThumbnail(filePath)
+	property bool haveThumbnail: contentGui && UtilsCpp.canHaveThumbnail(filePath) && UtilsCpp.fileExists(filePath)
 	property int fileSize: contentGui ? contentGui.core.fileSize : 0
 	property bool isTransferring
 	property bool isVideo: UtilsCpp.isVideo(filePath)
@@ -68,9 +68,10 @@ Item {
 				fillMode: Image.PreserveAspectFit
 			}
 			Image {
+				id: errorImage
 				anchors.fill: parent
 				z: image.z + 1
-				visible: image.status == Image.Error || image.status == Image.Null || !UtilsCpp.fileExists(mainItem.filePath)
+				visible: image.status == Image.Error || image.status == Image.Null
 				source: AppIcons.fileImage
 				sourceSize.width: mainItem.width
 				sourceSize.height: mainItem.height
@@ -79,7 +80,7 @@ Item {
 			Item {
 				id: loadingImageItem
 				anchors.fill: parent
-				visible: mainItem.isImage && image.status === Image.Loading
+				visible: image.status === Image.Loading && !image.visible && !errorImage.visilbe
 				Rectangle {
 					anchors.fill: parent
 					color: DefaultStyle.main1_200

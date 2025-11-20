@@ -46,7 +46,7 @@ ChatMessageContentCore::ChatMessageContentCore(const std::shared_ptr<linphone::C
 				mName = QFileInfo(fileName).baseName();
 			}
 		}
-		mFilePath = Utils::coreStringToAppString(content->getFilePath());
+		mFilePath = QDir::fromNativeSeparators(Utils::coreStringToAppString(content->getFilePath()));
 		mIsFile = content->isFile();
 		mIsFileEncrypted = content->isFileEncrypted();
 		mIsFileTransfer = content->isFileTransfer();
@@ -67,8 +67,8 @@ ChatMessageContentCore::ChatMessageContentCore(const std::shared_ptr<linphone::C
 		mRichFormatText = ToolModel::encodeTextToQmlRichFormat(mUtf8Text, {}, chatRoom);
 		mWasDownloaded = !mFilePath.isEmpty() && QFileInfo(mFilePath).isFile();
 		mThumbnail = mFilePath.isEmpty()
-		                 ? QString()
-		                 : QStringLiteral("image://%1/%2").arg(ThumbnailProvider::ProviderId).arg(mFilePath);
+		                 ? QUrl()
+		                 : QUrl(QString("image://%1/%2").arg(ThumbnailProvider::ProviderId).arg(mFilePath));
 		mChatMessageContentModel = Utils::makeQObject_ptr<ChatMessageContentModel>(content, chatMessageModel);
 	}
 }
@@ -92,7 +92,7 @@ void ChatMessageContentCore::setSelf(QSharedPointer<ChatMessageContentCore> me) 
 	    });
 	mChatMessageContentModelConnection->makeConnectToModel(
 	    &ChatMessageContentModel::thumbnailChanged, [this, updateThumbnailType](QString thumbnail) {
-		    mChatMessageContentModelConnection->invokeToCore([this, thumbnail] { setThumbnail(thumbnail); });
+		    mChatMessageContentModelConnection->invokeToCore([this, thumbnail] { setThumbnail(QUrl(thumbnail)); });
 	    });
 
 	mChatMessageContentModelConnection->makeConnectToCore(&ChatMessageContentCore::lDownloadFile, [this]() {
@@ -250,11 +250,11 @@ bool ChatMessageContentCore::wasDownloaded() const {
 	return mWasDownloaded;
 }
 
-QString ChatMessageContentCore::getThumbnail() const {
+QUrl ChatMessageContentCore::getThumbnail() const {
 	return mThumbnail;
 }
 
-void ChatMessageContentCore::setThumbnail(const QString &data) {
+void ChatMessageContentCore::setThumbnail(const QUrl &data) {
 	if (mThumbnail != data) {
 		mThumbnail = data;
 		emit thumbnailChanged();
