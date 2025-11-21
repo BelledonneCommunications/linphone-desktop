@@ -37,6 +37,7 @@ class ConferenceCore : public QObject, public AbstractObject {
 	Q_OBJECT
 public:
 	Q_PROPERTY(QDateTime startDate READ getStartDate CONSTANT)
+	Q_PROPERTY(bool isChatEnabled READ isChatEnabled CONSTANT)
 	// Q_PROPERTY(ParticipantDeviceList *participantDevices READ getParticipantDeviceList CONSTANT)
 	// Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
 	Q_PROPERTY(bool isReady MEMBER mIsReady WRITE setIsReady NOTIFY isReadyChanged)
@@ -81,6 +82,8 @@ public:
 	void setIsLocalScreenSharing(bool state);
 	void setIsScreenSharingEnabled(bool state);
 
+	bool isChatEnabled() const;
+
 	std::shared_ptr<ConferenceModel> getModel() const;
 
 	//---------------------------------------------------------------------------
@@ -108,6 +111,7 @@ private:
 	bool mIsRecording = false;
 	bool mIsLocalScreenSharing = false;
 	bool mIsScreenSharingEnabled = false;
+	bool mIsChatEnabled = false;
 	QString mSubject;
 	QString mConfUri;
 	QDateTime mStartDate = QDateTime::currentDateTime();

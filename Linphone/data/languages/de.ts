@@ -1692,7 +1692,7 @@
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="702"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1644"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1645"/>
         <source>call_action_show_dialer</source>
         <extracomment>&quot;Pavé numérique&quot;</extracomment>
         <translation>Wähltastatur</translation>
@@ -1717,7 +1717,7 @@
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="717"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1725"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1726"/>
         <source>call_action_go_to_settings</source>
         <extracomment>&quot;Paramètres&quot;</extracomment>
         <translation>Einstellungen</translation>
@@ -1886,72 +1886,72 @@
         <translation>Bildschirm teilen…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1505"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1506"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1507"/>
         <source>call_open_chat_hint</source>
         <extracomment>Open chat…</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1528"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1529"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1530"/>
         <source>call_rise_hand_hint</source>
         <extracomment>&quot;Lever la main&quot;</extracomment>
         <translation>Hand heben</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1542"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1543"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1544"/>
         <source>call_send_reaction_hint</source>
         <extracomment>&quot;Envoyer une réaction&quot;</extracomment>
         <translation>Reaktion senden</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1554"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1555"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1556"/>
         <source>call_manage_participants_hint</source>
         <extracomment>&quot;Gérer les participants&quot;</extracomment>
         <translation>Teilnehmer verwalten</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1576"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1577"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1578"/>
         <source>call_more_options_hint</source>
         <extracomment>&quot;Plus d&apos;options…&quot;</extracomment>
         <translation>Weitere Optionen…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1608"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1609"/>
         <source>call_action_change_conference_layout</source>
         <extracomment>&quot;Modifier la disposition&quot;</extracomment>
         <translation>Layout ändern</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1622"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1623"/>
         <source>call_action_full_screen</source>
         <extracomment>&quot;Mode Plein écran&quot;</extracomment>
         <translation>Vollbildmodus</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1675"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1676"/>
         <source>call_action_stop_recording</source>
         <extracomment>&quot;Terminer l&apos;enregistrement&quot;</extracomment>
         <translation>Aufnahme beenden</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1677"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1678"/>
         <source>call_action_record</source>
         <extracomment>&quot;Enregistrer l&apos;appel&quot;</extracomment>
         <translation>Anruf aufnehmen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1705"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1706"/>
         <source>call_activate_speaker_hint</source>
         <extracomment>&quot;Activer le son&quot;</extracomment>
         <translation type="unfinished">Lautsprecher aktivieren</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1707"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1708"/>
         <source>call_deactivate_speaker_hint</source>
         <extracomment>&quot;Désactiver le son&quot;</extracomment>
         <translation type="unfinished">Lautsprecher stummschalten</translation>
