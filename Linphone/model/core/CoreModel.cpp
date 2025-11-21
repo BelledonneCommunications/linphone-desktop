@@ -374,8 +374,14 @@ void CoreModel::searchInMagicSearch(QString filter,
 
 void CoreModel::checkForUpdate(const std::string &applicationVersion, bool requestedByUser) {
 	mCheckVersionRequestedByUser = requestedByUser;
-	if (SettingsModel::getInstance()->isCheckForUpdateEnabled()) {
-		CoreModel::getInstance()->getCore()->checkForUpdate(applicationVersion);
+	auto settingsModel = SettingsModel::getInstance();
+	if (settingsModel->isCheckForUpdateEnabled()) {
+		if (settingsModel->getVersionCheckUrl().isEmpty())
+			settingsModel->setVersionCheckUrl(Constants::VersionCheckReleaseUrl);
+		lInfo() << log().arg("Checking for update for version") << applicationVersion;
+		getCore()->checkForUpdate(applicationVersion);
+	} else {
+		lWarning() << log().arg("Check for update settings is not set");
 	}
 }
 

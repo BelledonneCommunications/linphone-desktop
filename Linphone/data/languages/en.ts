@@ -783,7 +783,7 @@
         <translation>Check for update</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1518"/>
+        <location filename="../../core/App.cpp" line="1519"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>

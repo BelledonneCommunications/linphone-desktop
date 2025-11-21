@@ -438,11 +438,10 @@ void App::setSelf(QSharedPointer<App>(me)) {
 		    mCoreModelConnection->invokeToCore([this, result, version, url, checkRequestedByUser] {
 			    switch (result) {
 				    case linphone::VersionUpdateCheckResult::Error:
-					    if (checkRequestedByUser)
-						    Utils::showInformationPopup(tr("info_popup_error_title"),
-						                                //: An error occured while trying to check update. Please
-						                                //: try again later or contact support team.
-						                                tr("info_popup_error_checking_update"), false);
+					    Utils::showInformationPopup(tr("info_popup_error_title"),
+					                                //: An error occured while trying to check update. Please
+					                                //: try again later or contact support team.
+					                                tr("info_popup_error_checking_update"), false);
 					    break;
 				    case linphone::VersionUpdateCheckResult::NewVersionAvailable: {
 					    QString downloadLink =
@@ -1398,7 +1397,7 @@ void App::setSysTrayIcon() {
 	//: Check for update
 	if (mSettings->isCheckForUpdateAvailable()) {
 		QAction *checkForUpdateAction = new QAction(tr("check_for_update"), root);
-		root->connect(checkForUpdateAction, &QAction::triggered, this, [this] { checkForUpdate(); });
+		root->connect(checkForUpdateAction, &QAction::triggered, this, [this] { checkForUpdate(true); });
 		menu->addAction(checkForUpdateAction);
 	}
 	menu->addAction(quitAction);
