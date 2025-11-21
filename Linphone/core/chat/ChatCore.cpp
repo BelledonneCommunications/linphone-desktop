@@ -235,13 +235,14 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    });
 
 	mChatModelConnection->makeConnectToCore(&ChatCore::lMarkAsRead, [this]() {
-		auto mainWindow = Utils::getMainWindow();
-		if (mainWindow->isActive()) mChatModelConnection->invokeToModel([this]() { mChatModel->markAsRead(); });
+		auto lastActiveWindow = Utils::getLastActiveWindow();
+		if (lastActiveWindow && lastActiveWindow->isActive())
+			mChatModelConnection->invokeToModel([this]() { mChatModel->markAsRead(); });
 		else {
-			connect(mainWindow, &QQuickWindow::activeChanged, this, [this, mainWindow] {
-				if (mainWindow->isActive()) {
-					disconnect(mainWindow, &QQuickWindow::activeChanged, this, nullptr);
-					mChatModelConnection->invokeToModel([this, mainWindow] { mChatModel->markAsRead(); });
+			connect(lastActiveWindow, &QQuickWindow::activeChanged, this, [this, lastActiveWindow] {
+				if (lastActiveWindow->isActive()) {
+					disconnect(lastActiveWindow, &QQuickWindow::activeChanged, this, nullptr);
+					mChatModelConnection->invokeToModel([this, lastActiveWindow] { mChatModel->markAsRead(); });
 				}
 			});
 		}

@@ -26,6 +26,18 @@ FocusScope {
     signal oneOneCall(bool video)
     signal groupCall()
 
+    onActiveFocusChanged: if(activeFocus) {
+        console.log("selected has active focus, mark as read")
+        chat.core.lMarkAsRead()
+    }
+    MouseArea{
+        anchors.fill: parent
+        onPressed: {
+            console.log("selected chat view pressed")
+            forceActiveFocus()
+        }
+    }
+
     onOneOneCall: {
         if (contact)
             mainWindow.startCallWithContact(contact, video, mainItem)

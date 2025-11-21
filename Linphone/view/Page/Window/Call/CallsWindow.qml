@@ -22,6 +22,10 @@ AbstractWindow {
     property ConferenceGui conference: call && call.core.conference || null
     property bool isConference: call ? call.core.isConference : false
 
+    // Chat related to call
+    property var chatObj: UtilsCpp.getCurrentCallChat(mainWindow.call)
+    property ChatGui chat: chatObj ? chatObj.value : null
+
     property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
     property bool localVideoEnabled: call && call.core.localVideoEnabled
     property bool remoteVideoEnabled: call && call.core.remoteVideoEnabled
@@ -989,6 +993,7 @@ AbstractWindow {
                 Control.Control {
                     objectName: "chatPanel"
                     width: parent.width
+                    Component.onCompleted: chatView.forceActiveFocus()
                     SelectedChatView {
                         id: chatView
                         width: parent.width
@@ -998,8 +1003,7 @@ AbstractWindow {
                             event.accepted = true
                         }
                         call: mainWindow.call
-                        property var chatObj: UtilsCpp.getCurrentCallChat(mainWindow.call)
-                        chat: chatObj ? chatObj.value : null
+                        chat: mainWindow.chat
                     }
                     Connections {
                         target: rightPanel.contentLoader
@@ -1495,6 +1499,7 @@ AbstractWindow {
                                 rightPanel.visible = false
                             }
                         }
+                        
                     }
 
                     // Chat panel button
@@ -1509,6 +1514,11 @@ AbstractWindow {
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         icon.width: Utils.getSizeWithScreenRatio(32)
                         icon.height: Utils.getSizeWithScreenRatio(32)
+                        UnreadNotification {
+                            anchors.top: parent.top
+                            anchors.right: parent.right
+                            unread: mainWindow.chat ? mainWindow.chat.core.unreadMessagesCount : 0
+                        }
                         onToggled: {
                             if (checked) {
                                 rightPanel.visible = true

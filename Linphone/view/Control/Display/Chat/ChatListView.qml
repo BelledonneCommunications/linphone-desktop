@@ -133,40 +133,6 @@ ListView {
     // So we need to use this variable to switch off all hovered items.
     property int lastMouseContainsIndex: -1
 
-    component UnreadNotification: Item {
-        id: unreadNotif
-        property int unread: 0
-        width: Utils.getSizeWithScreenRatio(14)
-        height: Utils.getSizeWithScreenRatio(14)
-        visible: unread > 0
-        Rectangle {
-            id: background
-            anchors.fill: parent
-            radius: width/2
-            color: DefaultStyle.danger_500_main
-            Text{
-                anchors.fill: parent
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                color: DefaultStyle.grey_0
-                fontSizeMode: Text.Fit
-                font.pixelSize: Utils.getSizeWithScreenRatio(10)
-                text: parent.unreadNotif > 100 ? '99+' : unreadNotif.unread
-            }
-        }
-        MultiEffect {
-            id: shadow
-            anchors.fill: background
-            source: background
-            // Crash : https://bugreports.qt.io/browse/QTBUG-124730?
-            shadowEnabled: true
-            shadowColor: DefaultStyle.grey_1000
-            shadowBlur: 1
-            shadowOpacity: 0.15
-            z: unreadNotif.z - 1
-        }
-    }
-
     delegate: FocusScope {
         visible: !mainItem.loading
         width: mainItem.width
@@ -333,6 +299,8 @@ ListView {
                     }
 					UnreadNotification {
                         id: unreadCount
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
                         unread: modelData?.core.unreadMessagesCount || false
                     }
                     EffectImage {

@@ -182,12 +182,11 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 		    if (chatRoom->getState() == linphone::ChatRoom::State::Created) {
 			    lInfo() << "ChatRoom created, add it to the list" << chatRoom.get();
 			    auto chatCore = ChatCore::create(chatRoom);
-			    mModelConnection->invokeToCore([this, chatCore] {
-				    if (chatCore) {
-					    bool added = addChatInList(chatCore);
-					    if (added) emit chatCreated(new ChatGui(chatCore));
-				    }
-			    });
+			    if (chatCore) {
+				    bool added = addChatInList(chatCore);
+				    if (added)
+					    mModelConnection->invokeToCore([this, chatCore] { emit chatCreated(new ChatGui(chatCore)); });
+			    }
 		    }
 	    });
 
