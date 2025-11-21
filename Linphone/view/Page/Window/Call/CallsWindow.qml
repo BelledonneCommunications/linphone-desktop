@@ -38,7 +38,7 @@ AbstractWindow {
         == LinphoneEnums.CallState.OutgoingEarlyMedia
         || mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
     property Item firstButtonInBottomTab : mainWindow.startingCall ? endCallButton : (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton)
-    property Item lastButtonInBottomTab : mainWindow.startingCall ? Utils.getLastFocussableItemInItem(controlCallButtons) : endCallButton
+    property Item lastButtonInBottomTab : mainWindow.startingCall ? Utils.getLastFocusableItemInItem(controlCallButtons) : endCallButton
 
     onCallStateChanged: {
         if (callState === LinphoneEnums.CallState.Connected) {
@@ -738,9 +738,9 @@ AbstractWindow {
                             if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "participantListPanel") participantListButton.checked = false
 
                             // Update tab focus properties
-                            var firstContentFocusableItem = Utils.getFirstFocussableItemInItem(rightPanel.contentLoader.item)
+                            var firstContentFocusableItem = Utils.getFirstFocusableItemInItem(rightPanel.contentLoader.item)
                             rightPanel.firstContentFocusableItem = firstContentFocusableItem ?? mainWindow.firstButtonInBottomTab
-                            var lastContentFocusableItem = Utils.getLastFocussableItemInItem(rightPanel.contentLoader.item)
+                            var lastContentFocusableItem = Utils.getLastFocusableItemInItem(rightPanel.contentLoader.item)
                             if(lastContentFocusableItem != undefined){
                                 lastContentFocusableItem.KeyNavigation.tab = mainWindow.firstButtonInBottomTab
                             }
@@ -1302,7 +1302,7 @@ AbstractWindow {
                     style: ButtonStyle.phoneRedLightBorder
                     Layout.column: mainWindow.startingCall ? 0 : bottomButtonsLayout.columns - 1
                     KeyNavigation.tab: mainWindow.startingCall ? (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : openStatisticPanelButton
-                    KeyNavigation.backtab: mainWindow.startingCall ? rightPanel.visible ? Utils.getLastFocussableItemInItem(rightPanel) : nextItemInFocusChain(false): callListButton
+                    KeyNavigation.backtab: mainWindow.startingCall ? rightPanel.visible ? Utils.getLastFocusableItemInItem(rightPanel) : nextItemInFocusChain(false): callListButton
                     onClicked: {
                         mainWindow.callTerminatedByUser = true
                         mainWindow.endCall(mainWindow.call)
