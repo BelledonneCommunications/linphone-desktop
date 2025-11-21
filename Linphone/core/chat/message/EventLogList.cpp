@@ -81,45 +81,32 @@ void EventLogList::connectItem(const QSharedPointer<EventLogCore> &item) {
 }
 
 void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
-	auto updateChatCore = [this](QSharedPointer<ChatCore> core) {
-		if (mChatCore != core) {
-			if (mChatCore) {
-				disconnect(mChatCore.get(), &ChatCore::eventsInserted, this, nullptr);
-				disconnect(mChatCore.get(), &ChatCore::eventListCleared, this, nullptr);
-			}
-			mChatCore = core;
-			if (mChatCore) {
-				connect(mChatCore.get(), &ChatCore::eventListCleared, this, [this] { resetData(); });
-				connect(mChatCore.get(), &ChatCore::eventsInserted, this,
-				        [this](QList<QSharedPointer<EventLogCore>> list) {
-					        auto eventsList = getSharedList<EventLogCore>();
-					        for (auto &event : list) {
-						        auto it = std::find_if(
-						            eventsList.begin(), eventsList.end(),
-						            [event](const QSharedPointer<EventLogCore> item) { return item == event; });
-						        if (it == eventsList.end()) {
-							        connectItem(event);
-							        add(event);
-							        int index;
-							        get(event.get(), &index);
-							        emit eventInserted(index, new EventLogGui(event));
-						        }
-					        }
-				        });
-			}
-			lUpdate();
-			emit chatGuiChanged();
+	if (mChatCore != core) {
+		if (mChatCore) {
+			disconnect(mChatCore.get(), &ChatCore::eventsInserted, this, nullptr);
+			disconnect(mChatCore.get(), &ChatCore::eventListCleared, this, nullptr);
 		}
-	};
-	if (mIsUpdating) {
-		connect(this, &EventLogList::isUpdatingChanged, this, [this, core, updateChatCore] {
-			if (!mIsUpdating) {
-				updateChatCore(core);
-				disconnect(this, &EventLogList::isUpdatingChanged, this, nullptr);
-			}
-		});
-	} else {
-		updateChatCore(core);
+		mChatCore = core;
+		if (mChatCore) {
+			connect(mChatCore.get(), &ChatCore::eventListCleared, this, [this] { resetData(); });
+			connect(mChatCore.get(), &ChatCore::eventsInserted, this, [this](QList<QSharedPointer<EventLogCore>> list) {
+				auto eventsList = getSharedList<EventLogCore>();
+				for (auto &event : list) {
+					auto it = std::find_if(eventsList.begin(), eventsList.end(),
+					                       [event](const QSharedPointer<EventLogCore> item) { return item == event; });
+					if (it == eventsList.end()) {
+						connectItem(event);
+						add(event);
+						int index;
+						get(event.get(), &index);
+						emit eventInserted(index, new EventLogGui(event));
+					}
+				}
+			});
+		}
+		lUpdate();
+		// setIsUpdating(false);
+		emit chatGuiChanged();
 	}
 }
 

@@ -267,7 +267,7 @@ AbstractMainPage {
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(8)
                     Layout.topMargin: Utils.getSizeWithScreenRatio(18)
                     onGroupCreationRequested: {
-                        console.log("groupe call requetsed")
+                        console.log("groupe call requested")
                         listStackView.push(groupChatItem)
                     }
                     onContactClicked: (contact) => {
@@ -371,9 +371,7 @@ AbstractMainPage {
                 visible: chat != undefined //&& (chat.core.isBasic || chat.core.conferenceJoined)
                 anchors.fill: parent
                 chat: mainItem.selectedChatGui ? mainItem.selectedChatGui : null
-                onChatChanged: {
-                    if (mainItem.selectedChatGui !== chat) mainItem.selectedChatGui = chat
-                }
+
                 // Reset current chat when switching account, otherwise the binding makes
                 // the last chat from last account the current chat for the new default account
                 Connections {
@@ -387,7 +385,7 @@ AbstractMainPage {
                 Connections {
                     target: mainItem
                     function onSelectedChatGuiChanged() {
-                        if (mainItem.selectedChatGui) selectedChatView.chat = mainItem.selectedChatGui
+                        selectedChatView.chat = mainItem.selectedChatGui ? mainItem.selectedChatGui : null
                     }
                 }
                 Binding {

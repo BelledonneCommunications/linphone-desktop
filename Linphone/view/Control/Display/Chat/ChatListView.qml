@@ -18,7 +18,9 @@ ListView {
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
 
     property ChatGui currentChatGui: model.getAt(currentIndex) || null
+    onCurrentChatGuiChanged: positionViewAtIndex(currentIndex, ListView.Center)
     property ChatGui chatToSelect: null
+    property ChatGui chatToSelectLater: null
     onChatToSelectChanged: {
         var index = chatProxy.findChatIndex(chatToSelect)
         if (index != -1) {
@@ -28,10 +30,7 @@ ListView {
     }
 
     onChatClicked: (chat) => {selectChat(chat)}
-    onCountChanged: {
-        selectChat(currentChatGui)
-    }
-
+    
     signal markAllAsRead()
     signal chatClicked(ChatGui chat)
 
@@ -41,14 +40,11 @@ ListView {
             loading = true
         }
         filterText: mainItem.searchText
+        onFilterTextChanged: {
+            chatToSelectLater = currentChatGui
+        }
         initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(56)))
         displayItemsStep: 3 * initialDisplayItems / 2
-        onModelReset: {
-            loading = false
-            if (mainItem.chatToSelect) {
-                selectChat(mainItem.chatToSelect)
-            }
-        }
         onModelAboutToBeReset: {
             loading = true
         }
@@ -58,7 +54,18 @@ ListView {
             mainItem.currentIndex = index
         }
         onLayoutChanged: {
-            selectChat(mainItem.currentChatGui)
+            loading = false
+            if (mainItem.chatToSelectLater) {
+                selectChat(mainItem.chatToSelectLater)
+                mainItem.chatToSelectLater = null
+            }
+            else if (mainItem.chatToSelect) {
+                selectChat(mainItem.chatToSelect)
+                mainItem.chatToSelect = null
+            }
+            else {
+                selectChat(mainItem.currentChatGui)
+            }
         }
         onChatCreated: (chat) => {
             selectChat(chat)
