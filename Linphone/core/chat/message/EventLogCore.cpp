@@ -26,14 +26,16 @@
 
 DEFINE_ABSTRACT_OBJECT(EventLogCore)
 
-QSharedPointer<EventLogCore> EventLogCore::create(const std::shared_ptr<const linphone::EventLog> &eventLog) {
-	auto sharedPointer = QSharedPointer<EventLogCore>(new EventLogCore(eventLog), &QObject::deleteLater);
+QSharedPointer<EventLogCore> EventLogCore::create(const std::shared_ptr<const linphone::EventLog> &eventLog,
+                                                  const std::shared_ptr<linphone::ChatRoom> &chatRoom) {
+	auto sharedPointer = QSharedPointer<EventLogCore>(new EventLogCore(eventLog, chatRoom), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
 	sharedPointer->moveToThread(App::getInstance()->thread());
 	return sharedPointer;
 }
 
-EventLogCore::EventLogCore(const std::shared_ptr<const linphone::EventLog> &eventLog) {
+EventLogCore::EventLogCore(const std::shared_ptr<const linphone::EventLog> &eventLog,
+                           const std::shared_ptr<linphone::ChatRoom> &chatRoom) {
 	mustBeInLinphoneThread(getClassName());
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mEventLogType = LinphoneEnums::fromLinphone(eventLog->getType());
@@ -52,7 +54,7 @@ EventLogCore::EventLogCore(const std::shared_ptr<const linphone::EventLog> &even
 		QString type = QString::fromLatin1(
 		    QMetaEnum::fromType<LinphoneEnums::EventLogType>().valueToKey(static_cast<int>(mEventLogType)));
 		mEventId = type + QString::number(static_cast<qint64>(eventLog->getCreationTime()));
-		computeEvent(eventLog);
+		computeEvent(eventLog, chatRoom);
 	}
 }
 
@@ -94,7 +96,8 @@ std::shared_ptr<EventLogModel> EventLogCore::getModel() const {
 
 // Events (other than ChatMessage and CallLog which are handled in their respective Core)
 
-void EventLogCore::computeEvent(const std::shared_ptr<const linphone::EventLog> &eventLog) {
+void EventLogCore::computeEvent(const std::shared_ptr<const linphone::EventLog> &eventLog,
+                                const std::shared_ptr<linphone::ChatRoom> &chatRoom) {
 	mustBeInLinphoneThread(getClassName());
 	mHandled = true;
 	mImportant = false;
@@ -104,9 +107,15 @@ void EventLogCore::computeEvent(const std::shared_ptr<const linphone::EventLog> 
 
 	switch (eventLog->getType()) {
 		case linphone::EventLog::Type::ConferenceCreated:
+			if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne) &&
+			    !chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference))
+				mHandled = false;
 			mEventDetails = tr("conference_created_event");
 			break;
 		case linphone::EventLog::Type::ConferenceTerminated:
+			if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne) &&
+			    !chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference))
+				mHandled = false;
 			mEventDetails = tr("conference_created_terminated");
 			mImportant = true;
 			break;

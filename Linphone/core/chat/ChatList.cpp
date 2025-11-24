@@ -143,7 +143,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			return;
 		}
 		auto chatCore = ChatCore::create(room);
-		addChatInList(chatCore);
+		mModelConnection->invokeToCore([this, chatCore] { addChatInList(chatCore); });
 	};
 	mModelConnection->makeConnectToModel(&CoreModel::messageReceived,
 	                                     [this, addChatToList](const std::shared_ptr<linphone::Core> &core,
@@ -183,9 +183,10 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			    lInfo() << "ChatRoom created, add it to the list" << chatRoom.get();
 			    auto chatCore = ChatCore::create(chatRoom);
 			    if (chatCore) {
-				    bool added = addChatInList(chatCore);
-				    if (added)
-					    mModelConnection->invokeToCore([this, chatCore] { emit chatCreated(new ChatGui(chatCore)); });
+				    mModelConnection->invokeToCore([this, chatCore] {
+					    bool added = addChatInList(chatCore);
+					    if (added) emit chatCreated(new ChatGui(chatCore));
+				    });
 			    }
 		    }
 	    });

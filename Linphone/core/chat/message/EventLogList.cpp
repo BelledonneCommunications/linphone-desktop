@@ -138,7 +138,7 @@ void EventLogList::displayMore() {
 			auto linphoneLogs = chatModel->getHistoryRange(totalItemsCount, newCount);
 			QList<QSharedPointer<EventLogCore>> *events = new QList<QSharedPointer<EventLogCore>>();
 			for (auto it : linphoneLogs) {
-				auto model = EventLogCore::create(it);
+				auto model = EventLogCore::create(it, chatModel->getMonitor());
 				events->push_back(model);
 			}
 			mCoreModelConnection->invokeToCore([this, events] {
@@ -176,16 +176,17 @@ void EventLogList::loadMessagesUpTo(std::shared_ptr<linphone::EventLog> event) {
 	auto beforeEvents = chatModel->getHistoryRangeNear(mItemsToLoadBeforeSearchResult, 0, event, filters);
 	auto linphoneLogs = chatModel->getHistoryRangeBetween(event, linOldest, filters);
 	QList<QSharedPointer<EventLogCore>> *events = new QList<QSharedPointer<EventLogCore>>();
-	for (auto it : beforeEvents) {
-		auto model = EventLogCore::create(it);
+	const auto &linChatRoom = chatModel->getMonitor();
+	for (const auto &it : beforeEvents) {
+		auto model = EventLogCore::create(it, linChatRoom);
 		events->push_back(model);
 	}
-	for (auto it : linphoneLogs) {
-		auto model = EventLogCore::create(it);
+	for (const auto &it : linphoneLogs) {
+		auto model = EventLogCore::create(it, linChatRoom);
 		events->push_back(model);
 	}
 	mCoreModelConnection->invokeToCore([this, events, event] {
-		for (auto &e : *events) {
+		for (const auto &e : *events) {
 			connectItem(e);
 			add(e);
 		}
@@ -286,7 +287,7 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 			auto linphoneLogs = chatModel->getHistoryRange(0, mDisplayItemsStep);
 			QList<QSharedPointer<EventLogCore>> *events = new QList<QSharedPointer<EventLogCore>>();
 			for (auto it : linphoneLogs) {
-				auto model = EventLogCore::create(it);
+				auto model = EventLogCore::create(it, chatModel->getMonitor());
 				events->push_back(model);
 			}
 			mCoreModelConnection->invokeToCore([this, events] {

@@ -51,8 +51,10 @@ class EventLogCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QDateTime timestamp READ getTimestamp CONSTANT)
 
 public:
-	static QSharedPointer<EventLogCore> create(const std::shared_ptr<const linphone::EventLog> &eventLog);
-	EventLogCore(const std::shared_ptr<const linphone::EventLog> &eventLog);
+	static QSharedPointer<EventLogCore> create(const std::shared_ptr<const linphone::EventLog> &eventLog,
+	                                           const std::shared_ptr<linphone::ChatRoom> &chatRoom);
+	EventLogCore(const std::shared_ptr<const linphone::EventLog> &eventLog,
+	             const std::shared_ptr<linphone::ChatRoom> &chatRoom);
 	~EventLogCore();
 	void setSelf(QSharedPointer<EventLogCore> me);
 	QString getEventLogId();
@@ -87,7 +89,8 @@ private:
 	ChatMessageCore *getChatMessageCorePointer();
 	CallHistoryCore *getCallHistoryCorePointer();
 	std::shared_ptr<EventLogModel> mEventLogModel;
-	void computeEvent(const std::shared_ptr<const linphone::EventLog> &eventLog);
+	void computeEvent(const std::shared_ptr<const linphone::EventLog> &eventLog,
+	                  const std::shared_ptr<linphone::ChatRoom> &chatRoom);
 };
 
 #endif // EventLogCore_H_
