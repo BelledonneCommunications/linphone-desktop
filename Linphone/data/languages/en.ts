@@ -2425,44 +2425,44 @@ Error</extracomment>
 <context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="123"/>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="134"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="107"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="118"/>
         <source>popup_info_find_message_title</source>
         <extracomment>Find message</extracomment>
         <translation>Find message</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="136"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="120"/>
         <source>info_popup_no_result_message</source>
         <extracomment>No result found</extracomment>
         <translation>No result found</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="128"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="112"/>
         <source>info_popup_first_result_message</source>
         <extracomment>First result reached</extracomment>
         <translation>First result reached</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="126"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="110"/>
         <source>info_popup_last_result_message</source>
         <extracomment>Last result reached</extracomment>
         <translation>Last result reached</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="173"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="157"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation>End to end encrypted chat</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="175"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="159"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
         <translation>This conversation is not encrypted !</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="186"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="170"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Messages in this conversation are e2e encrypted. 
  Only your correspondent can decrypt them.</extracomment>
@@ -2470,7 +2470,7 @@ Error</extracomment>
 Only your correspondent can decrypt them.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="188"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="172"/>
         <source>chat_message_list_not_encrypted_header_message</source>
         <extracomment>Messages are not end to end encrypted, 
  may sure you don&apos;t share any sensitive information !</extracomment>
@@ -2478,7 +2478,7 @@ Only your correspondent can decrypt them.</translation>
  may sure you don&apos;t share any sensitive information !</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="228"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="212"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 is writing…</translation>
@@ -3703,59 +3703,59 @@ Only your correspondent can decrypt them.</translation>
 <context>
     <name>EventLogCore</name>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="107"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="113"/>
         <source>conference_created_event</source>
         <translation>You have joined the group</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="110"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="119"/>
         <source>conference_created_terminated</source>
         <translation>You have left the group</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="114"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="123"/>
         <source>conference_participant_added_event</source>
         <translation>%1 has joined</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="118"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="127"/>
         <source>conference_participant_removed_event</source>
         <translation>%1 is no longer in the conversation</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="155"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="164"/>
         <source>conference_participant_set_admin_event</source>
         <translation>%1 is now an admin</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="159"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="168"/>
         <source>conference_participant_unset_admin_event</source>
         <translation>%1 is no longer an admin</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="127"/>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="129"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="136"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="138"/>
         <source>conference_security_event</source>
         <translation>Security level degraded by %1</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="136"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="145"/>
         <source>conference_ephemeral_message_enabled_event</source>
         <translation>Ephemeral messages enabled
 Expiration : %1</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="147"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="156"/>
         <source>conference_ephemeral_message_disabled_event</source>
         <translation>Ephemeral messages disabled</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="151"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="160"/>
         <source>conference_subject_changed_event</source>
         <translation>New subject: %1</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="142"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="151"/>
         <source>conference_ephemeral_message_lifetime_changed_event</source>
         <translation>Ephemeral messages updated
 Expiration : %1</translation>
@@ -5723,42 +5723,42 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>SelectedChatView</name>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="50"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="48"/>
         <source>chat_view_group_call_toast_message</source>
         <translation>Start a group call ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="133"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="131"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
         <translation>This conversation is not encrypted !</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="419"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="417"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
         <translation>Reply to %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="619"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="617"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation>Shared medias</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="621"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="619"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation>Shared documents</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="650"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="648"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
         <translation>Froward to…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="684"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="682"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Conversations</translation>

@@ -26,7 +26,7 @@
 
 DEFINE_ABSTRACT_OBJECT(EventLogProxy)
 
-EventLogProxy::EventLogProxy(QObject *parent) : LimitProxy(parent) {
+EventLogProxy::EventLogProxy(QObject *parent) : QSortFilterProxyModel(parent) {
 	mList = EventLogList::create();
 	setSourceModel(mList.get());
 }
@@ -35,58 +35,41 @@ EventLogProxy::~EventLogProxy() {
 }
 
 void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
-	auto oldEventLogList = getListModel<EventLogList>();
+	auto oldEventLogList = dynamic_cast<EventLogList *>(sourceModel());
 	if (oldEventLogList) {
-		disconnect(oldEventLogList, &EventLogList::listAboutToBeReset, this, nullptr);
-		disconnect(oldEventLogList, &EventLogList::chatGuiChanged, this, nullptr);
 		disconnect(oldEventLogList, &EventLogList::displayItemsStepChanged, this, nullptr);
-		disconnect(oldEventLogList, &EventLogList::eventInserted, this, nullptr);
 		disconnect(oldEventLogList, &EventLogList::messageWithFilterFound, this, nullptr);
+		disconnect(oldEventLogList, &EventLogList::eventInsertedByUser, this, nullptr);
 	}
 	auto newEventLogList = dynamic_cast<EventLogList *>(model);
 	if (newEventLogList) {
-		connect(newEventLogList, &EventLogList::listAboutToBeReset, this, &EventLogProxy::listAboutToBeReset);
-		connect(newEventLogList, &EventLogList::chatGuiChanged, this, &EventLogProxy::chatGuiChanged);
 		connect(this, &EventLogProxy::displayItemsStepChanged, newEventLogList,
 		        [this, newEventLogList] { newEventLogList->setDisplayItemsStep(mDisplayItemsStep); });
-		connect(newEventLogList, &EventLogList::eventInserted, this,
-		        [this, newEventLogList](int index, EventLogGui *event) {
-			        invalidate();
-			        int proxyIndex = -1;
-			        if (index != -1) {
-				        proxyIndex = dynamic_cast<SortFilterList *>(sourceModel())
-				                         ->mapFromSource(newEventLogList->index(index, 0))
-				                         .row();
-			        }
-			        loadUntil(proxyIndex);
-			        emit eventInserted(proxyIndex, event);
-		        });
 		connect(newEventLogList, &EventLogList::messageWithFilterFound, this, [this, newEventLogList](int i) {
-			connect(this, &EventLogProxy::layoutChanged, newEventLogList, [this, i, newEventLogList] {
-				disconnect(this, &EventLogProxy::layoutChanged, newEventLogList, nullptr);
-				auto model = getListModel<EventLogList>();
-				int proxyIndex =
-				    dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(newEventLogList->index(i, 0)).row();
-				if (i != -1) {
-					loadUntil(proxyIndex);
-				}
-				emit indexWithFilterFound(proxyIndex);
-			});
-			invalidate();
+			auto model = dynamic_cast<EventLogList *>(sourceModel());
+			int proxyIndex = mapFromSource(newEventLogList->index(i, 0)).row();
+			if (i != -1) {
+				loadUntil(proxyIndex);
+			}
+			emit indexWithFilterFound(proxyIndex);
+		});
+		connect(newEventLogList, &EventLogList::eventInsertedByUser, this, [this, newEventLogList](int i) {
+			int proxyIndex = mapFromSource(newEventLogList->index(i, 0)).row();
+			emit eventInsertedByUser(proxyIndex);
 		});
 	}
-	setSourceModels(new SortFilterList(model, Qt::DescendingOrder));
-	sort(0, Qt::DescendingOrder);
+	QSortFilterProxyModel::setSourceModel(model);
 }
 
 ChatGui *EventLogProxy::getChatGui() {
-	auto model = getListModel<EventLogList>();
+	auto model = dynamic_cast<EventLogList *>(sourceModel());
 	if (!mChatGui && model) mChatGui = model->getChat();
 	return mChatGui;
 }
 
 void EventLogProxy::setChatGui(ChatGui *chat) {
-	getListModel<EventLogList>()->setChatGui(chat);
+	auto model = dynamic_cast<EventLogList *>(sourceModel());
+	if (model) model->setChatGui(chat);
 }
 
 EventLogGui *EventLogProxy::getEventAtIndex(int i) {
@@ -94,29 +77,86 @@ EventLogGui *EventLogProxy::getEventAtIndex(int i) {
 	return eventCore == nullptr ? nullptr : new EventLogGui(eventCore);
 }
 
+int EventLogProxy::getCount() const {
+	return rowCount();
+}
+
+int EventLogProxy::getInitialDisplayItems() const {
+	return mInitialDisplayItems;
+}
+
+void EventLogProxy::setInitialDisplayItems(int initialItems) {
+	if (mInitialDisplayItems != initialItems) {
+		mInitialDisplayItems = initialItems;
+		if (getMaxDisplayItems() <= mInitialDisplayItems) setMaxDisplayItems(initialItems);
+		if (getDisplayItemsStep() <= 0) setDisplayItemsStep(initialItems);
+		emit initialDisplayItemsChanged();
+	}
+}
+
+int EventLogProxy::getDisplayCount(int listCount, int maxCount) {
+	return maxCount >= 0 ? qMin(listCount, maxCount) : listCount;
+}
+
+int EventLogProxy::getDisplayCount(int listCount) const {
+	return getDisplayCount(listCount, mMaxDisplayItems);
+}
+
 QSharedPointer<EventLogCore> EventLogProxy::getEventCoreAtIndex(int i) {
-	return getItemAt<SortFilterList, EventLogList, EventLogCore>(i);
+	auto model = dynamic_cast<EventLogList *>(sourceModel());
+	if (model) {
+		return model->getAt<EventLogCore>(mapToSource(index(i, 0)).row());
+	}
+	return nullptr;
 }
 
 void EventLogProxy::displayMore() {
-	auto model = getListModel<EventLogList>();
+	auto model = dynamic_cast<EventLogList *>(sourceModel());
 	if (model) {
 		model->displayMore();
 	}
 }
+int EventLogProxy::getMaxDisplayItems() const {
+	return mMaxDisplayItems;
+}
+
+void EventLogProxy::setMaxDisplayItems(int maxItems) {
+	if (mMaxDisplayItems != maxItems) {
+		auto model = sourceModel();
+		int modelCount = model ? model->rowCount() : 0;
+		int oldCount = getDisplayCount(modelCount);
+		mMaxDisplayItems = maxItems;
+		if (getInitialDisplayItems() > mMaxDisplayItems) setInitialDisplayItems(maxItems);
+		if (getDisplayItemsStep() <= 0) setDisplayItemsStep(maxItems);
+		emit maxDisplayItemsChanged();
+
+		if (model && getDisplayCount(modelCount) != oldCount) {
+			invalidate();
+		}
+	}
+}
+
+int EventLogProxy::getDisplayItemsStep() const {
+	return mDisplayItemsStep;
+}
+
+void EventLogProxy::setDisplayItemsStep(int step) {
+	if (step > 0 && mDisplayItemsStep != step) {
+		mDisplayItemsStep = step;
+		emit displayItemsStepChanged();
+	}
+}
 
 void EventLogProxy::loadUntil(int index) {
-	auto confInfoList = getListModel<EventLogList>();
 	if (mMaxDisplayItems < index) setMaxDisplayItems(index + mDisplayItemsStep);
 }
 
 int EventLogProxy::findFirstUnreadIndex() {
-	auto eventLogList = getListModel<EventLogList>();
+	auto eventLogList = dynamic_cast<EventLogList *>(sourceModel());
 	if (eventLogList) {
 		auto listIndex = eventLogList->findFirstUnreadIndex();
 		if (listIndex != -1) {
-			listIndex =
-			    dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(eventLogList->index(listIndex, 0)).row();
+			listIndex = mapFromSource(eventLogList->index(listIndex, 0)).row();
 			if (mMaxDisplayItems <= listIndex) setMaxDisplayItems(listIndex + mDisplayItemsStep);
 			return listIndex;
 		} else {
@@ -126,32 +166,43 @@ int EventLogProxy::findFirstUnreadIndex() {
 	return 0;
 }
 
+QString EventLogProxy::getFilterText() const {
+	return mFilterText;
+}
+
+void EventLogProxy::setFilterText(const QString &filter) {
+	if (mFilterText != filter) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
+		beginFilterChange();
+		mFilterText = filter;
+		endFilterChange();
+#else
+		mFilterText = filter;
+		invalidateFilter();
+#endif
+		emit filterTextChanged();
+	}
+}
+
+QSharedPointer<EventLogCore> EventLogProxy::getAt(int atIndex) const {
+	auto model = dynamic_cast<EventLogList *>(sourceModel());
+	if (model) {
+		return model->getAt<EventLogCore>(mapToSource(index(atIndex, 0)).row());
+	}
+	return nullptr;
+}
+
 void EventLogProxy::markIndexAsRead(int proxyIndex) {
-	auto event = getItemAt<SortFilterList, EventLogList, EventLogCore>(proxyIndex);
+	auto event = getAt(proxyIndex);
 	if (event && event->getChatMessageCore()) event->getChatMessageCore()->lMarkAsRead();
 }
 
 void EventLogProxy::findIndexCorrespondingToFilter(int startIndex, bool forward, bool isFirstResearch) {
 	auto filter = getFilterText();
 	if (filter.isEmpty()) return;
-	auto eventLogList = getListModel<EventLogList>();
+	auto eventLogList = dynamic_cast<EventLogList *>(sourceModel());
 	if (eventLogList) {
-		auto startEvent = mLastSearchStart;
-		if (!startEvent) {
-			startEvent = getItemAt<SortFilterList, EventLogList, EventLogCore>(startIndex);
-		}
-		eventLogList->findChatMessageWithFilter(filter, startEvent, forward, isFirstResearch);
+		auto listIndex = mapToSource(index(startIndex, 0)).row();
+		eventLogList->findChatMessageWithFilter(filter, listIndex, forward, isFirstResearch);
 	}
-}
-
-bool EventLogProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-	auto l = getItemAtSource<EventLogList, EventLogCore>(sourceRow);
-	return l != nullptr;
-}
-
-bool EventLogProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
-	auto l = getItemAtSource<EventLogList, EventLogCore>(sourceLeft.row());
-	auto r = getItemAtSource<EventLogList, EventLogCore>(sourceRight.row());
-	if (l && r) return l->getTimestamp() < r->getTimestamp();
-	return true;
 }
