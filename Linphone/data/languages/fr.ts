@@ -2089,65 +2089,65 @@
 <context>
     <name>ChatListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="253"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="256"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 est en train d&apos;écrire…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="255"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="258"/>
         <source>chat_message_draft_sending_text</source>
         <translation>Brouillon : %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="400"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="403"/>
         <source>chat_room_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="339"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="342"/>
         <source>chat_room_mute</source>
         <translation>Mettre en sourdine</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="338"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="341"/>
         <source>chat_room_unmute</source>
         <extracomment>&quot;Mute&quot;</extracomment>
         <translation>Enlever la sourdine </translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="352"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="355"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
         <translation>Marquer comme lu</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="371"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="374"/>
         <source>chat_room_leave</source>
         <extracomment>&quot;leave&quot;</extracomment>
         <translation>Quitter la conversation</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="377"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="380"/>
         <source>chat_list_leave_chat_popup_title</source>
         <extracomment>leave the conversation ?</extracomment>
         <translation>Quitter la conversation ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="379"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="382"/>
         <source>chat_list_leave_chat_popup_message</source>
         <extracomment>You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?</extracomment>
         <translation>Vous ne pourrez plus envoyer ou recevoir de messages dans cette conversation. Souhaitez-vous continuer ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="406"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="409"/>
         <source>chat_list_delete_chat_popup_title</source>
         <extracomment>Delete the conversation ?</extracomment>
         <translation>Supprimer la conversation ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="408"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="411"/>
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation>La conversation et tous ses messages seront supprimés. Souhaitez-vous continuer ?</translation>
@@ -3703,60 +3703,60 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
 <context>
     <name>EventLogCore</name>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="113"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="115"/>
         <source>conference_created_event</source>
         <translation>Vous avez rejoint le groupe</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="119"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="123"/>
         <source>conference_created_terminated</source>
         <translation>Vous avez quitté le groupe</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="123"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="127"/>
         <source>conference_participant_added_event</source>
         <translation>%1 a rejoint le groupe</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="127"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="131"/>
         <source>conference_participant_removed_event</source>
         <translation>%1 ne fait plus partie du groupe</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="136"/>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="138"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="140"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="142"/>
         <source>conference_security_event</source>
         <translation>Niveau de sécurité dégradé par %1</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="145"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="149"/>
         <source>conference_ephemeral_message_enabled_event</source>
         <translation>Messages éphémères activés
 Expiration : %1</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="151"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="155"/>
         <source>conference_ephemeral_message_lifetime_changed_event</source>
         <translation>Messages éphémères mis à jour
 Expiration : %1</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="156"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="160"/>
         <source>conference_ephemeral_message_disabled_event</source>
         <translation>Messages éphémères désactivés</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="160"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="164"/>
         <source>conference_subject_changed_event</source>
         <translation>Nouveau sujet : %1</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="168"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="172"/>
         <source>conference_participant_unset_admin_event</source>
         <translation>%1 n&apos;est plus admin</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/EventLogCore.cpp" line="164"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="168"/>
         <source>conference_participant_set_admin_event</source>
         <translation>%1 est maintenant admin</translation>
     </message>

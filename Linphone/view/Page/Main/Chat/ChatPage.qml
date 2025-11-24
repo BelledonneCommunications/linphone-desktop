@@ -368,7 +368,7 @@ AbstractMainPage {
             }
             SelectedChatView {
                 id: selectedChatView
-                visible: chat != undefined //&& (chat.core.isBasic || chat.core.conferenceJoined)
+                visible: chat != undefined
                 anchors.fill: parent
                 chat: mainItem.selectedChatGui ? mainItem.selectedChatGui : null
 

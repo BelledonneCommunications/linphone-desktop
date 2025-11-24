@@ -22,11 +22,8 @@ ListView {
     property ChatGui chatToSelect: null
     property ChatGui chatToSelectLater: null
     onChatToSelectChanged: {
-        var index = chatProxy.findChatIndex(chatToSelect)
-        if (index != -1) {
-            currentIndex = index
-            chatToSelect = null
-        }
+        selectChat(chatToSelect, true)
+        chatToSelect = null
     }
 
     onChatClicked: (chat) => {selectChat(chat)}
@@ -74,9 +71,15 @@ ListView {
     // flickDeceleration: 10000
     spacing: Utils.getSizeWithScreenRatio(10)
 
-    function selectChat(chatGui) {
+    function selectChat(chatGui, force) {
         var index = chatProxy.findChatIndex(chatGui)
+        // force adding chat to list if not in list for now
+        if (index === -1 && force === true && chatGui) {
+            chatProxy.addChatInList(chatGui)
+            var index = chatProxy.findChatIndex(chatGui)
+        }
         mainItem.currentIndex = index
+
     }
 
     Component.onCompleted: cacheBuffer = Math.max(contentHeight, 0) //contentHeight>0 ? contentHeight : 0// cache all items
