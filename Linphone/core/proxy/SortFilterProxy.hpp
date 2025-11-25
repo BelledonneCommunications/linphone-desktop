@@ -41,6 +41,7 @@ public:
 	Q_PROPERTY(int filterType READ getFilterType WRITE setFilterType NOTIFY filterTypeChanged)
 	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
 
+	SortFilterProxy();
 	SortFilterProxy(QAbstractItemModel *parent);
 	SortFilterProxy(QAbstractItemModel *parent, Qt::SortOrder order);
 	virtual ~SortFilterProxy();

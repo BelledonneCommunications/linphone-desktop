@@ -25,7 +25,7 @@
 
 DEFINE_ABSTRACT_OBJECT(ChatProxy)
 
-ChatProxy::ChatProxy(QObject *parent) : LimitProxy(parent) {
+ChatProxy::ChatProxy(QObject *parent) {
 	mList = ChatList::create();
 	setSourceModel(mList.get());
 	setDynamicSortFilter(true);
@@ -35,7 +35,7 @@ ChatProxy::~ChatProxy() {
 }
 
 void ChatProxy::setSourceModel(QAbstractItemModel *model) {
-	auto oldChatList = getListModel<ChatList>();
+	auto oldChatList = dynamic_cast<ChatList *>(sourceModel());
 	if (oldChatList) {
 		disconnect(this, &ChatProxy::filterTextChanged, oldChatList, nullptr);
 		disconnect(oldChatList, &ChatList::chatAdded, this, nullptr);
@@ -52,20 +52,16 @@ void ChatProxy::setSourceModel(QAbstractItemModel *model) {
 		});
 		connect(newChatList, &ChatList::dataChanged, this, [this] { invalidate(); });
 	}
-	auto firstList = new SortFilterList(model, Qt::AscendingOrder);
-	firstList->setDynamicSortFilter(true);
-	setSourceModels(firstList);
+	QSortFilterProxyModel::setSourceModel(newChatList);
 	sort(0);
 }
 
 int ChatProxy::findChatIndex(ChatGui *chatGui) {
-	auto chatList = getListModel<ChatList>();
+	auto chatList = dynamic_cast<ChatList *>(sourceModel());
 	if (chatList) {
 		auto listIndex = chatList->findChatIndex(chatGui);
 		if (listIndex != -1) {
-			listIndex =
-			    dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(chatList->index(listIndex, 0)).row();
-			if (mMaxDisplayItems <= listIndex) setMaxDisplayItems(listIndex + mDisplayItemsStep);
+			listIndex = mapFromSource(chatList->index(listIndex, 0)).row();
 			return listIndex;
 		}
 	}
@@ -73,17 +69,13 @@ int ChatProxy::findChatIndex(ChatGui *chatGui) {
 }
 
 void ChatProxy::addChatInList(ChatGui *chatGui) {
-	auto chatList = getListModel<ChatList>();
+	auto chatList = dynamic_cast<ChatList *>(sourceModel());
 	if (chatList && chatGui) {
 		chatList->addChatInList(chatGui->mCore);
 	}
 }
 
-bool ChatProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-	return true;
-}
-
-bool ChatProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+bool ChatProxy::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
 	if (!mFilterText.isEmpty()) return false;
 	auto l = getItemAtSource<ChatList, ChatCore>(sourceLeft.row());
 	auto r = getItemAtSource<ChatList, ChatCore>(sourceRight.row());

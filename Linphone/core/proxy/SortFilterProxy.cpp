@@ -26,6 +26,9 @@ SortFilterProxy::SortFilterProxy(QAbstractItemModel *list) : QSortFilterProxyMod
 	setSourceModel(list);
 }
 
+SortFilterProxy::SortFilterProxy() {
+}
+
 SortFilterProxy::SortFilterProxy(QAbstractItemModel *list, Qt::SortOrder order) : SortFilterProxy(list) {
 	sort(0, order);
 }

@@ -40,10 +40,11 @@ ListView {
         onFilterTextChanged: {
             chatToSelectLater = currentChatGui
         }
-        initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(56)))
-        displayItemsStep: 3 * initialDisplayItems / 2
         onModelAboutToBeReset: {
             loading = true
+        }
+        onModelReset: {
+            loading = false
         }
         onRowsRemoved: {
             var index = mainItem.currentIndex
