@@ -104,7 +104,9 @@ void CallModel::transferTo(const std::shared_ptr<linphone::Address> &address) {
 
 void CallModel::transferToAnother(const std::shared_ptr<linphone::Call> &call) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	if (mMonitor->transferToAnother(call) == -1)
+	if (!call) return;
+	// Transfer paused call to current call
+	if (call->transferToAnother(mMonitor) == -1)
 		lWarning() << log()
 		                  .arg(QStringLiteral("Unable to transfer: `%1`."))
 		                  .arg(Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly()));

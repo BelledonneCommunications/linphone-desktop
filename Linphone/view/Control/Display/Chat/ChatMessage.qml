@@ -254,6 +254,7 @@ Control.Control {
                             chatGui: mainItem.chat
                             searchedTextPart: mainItem.searchedTextPart
                             chatMessageGui: mainItem.chatMessage
+                            maxWidth: mainItem.maxWidth
                             onMouseEvent: (event) => {
                                 mainItem.handleDefaultMouseEvent(event)
                             }

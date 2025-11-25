@@ -546,6 +546,7 @@ void CoreModel::onLogCollectionUploadProgressIndication(const std::shared_ptr<li
 void CoreModel::onMessageReceived(const std::shared_ptr<linphone::Core> &core,
                                   const std::shared_ptr<linphone::ChatRoom> &room,
                                   const std::shared_ptr<linphone::ChatMessage> &message) {
+	if (SettingsModel::getInstance()->getDisableChatFeature()) return;
 	if (message->isOutgoing()) return;
 	emit unreadNotificationsChanged();
 	std::list<std::shared_ptr<linphone::ChatMessage>> messages;
@@ -558,6 +559,7 @@ void CoreModel::onMessageReceived(const std::shared_ptr<linphone::Core> &core,
 void CoreModel::onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
                                    const std::shared_ptr<linphone::ChatRoom> &room,
                                    const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
+	if (SettingsModel::getInstance()->getDisableChatFeature()) return;
 	std::list<std::shared_ptr<linphone::ChatMessage>> finalMessages;
 	for (auto &message : messages) {
 		if (message->isOutgoing()) continue;
@@ -575,6 +577,7 @@ void CoreModel::onNewMessageReaction(const std::shared_ptr<linphone::Core> &core
                                      const std::shared_ptr<linphone::ChatRoom> &chatRoom,
                                      const std::shared_ptr<linphone::ChatMessage> &message,
                                      const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) {
+	if (SettingsModel::getInstance()->getDisableChatFeature()) return;
 	emit newMessageReaction(core, chatRoom, message, reaction);
 }
 void CoreModel::onNotifyPresenceReceivedForUriOrTel(
@@ -595,6 +598,7 @@ void CoreModel::onReactionRemoved(const std::shared_ptr<linphone::Core> &core,
                                   const std::shared_ptr<linphone::ChatRoom> &chatRoom,
                                   const std::shared_ptr<linphone::ChatMessage> &message,
                                   const std::shared_ptr<const linphone::Address> &address) {
+	if (SettingsModel::getInstance()->getDisableChatFeature()) return;
 	emit reactionRemoved(core, chatRoom, message, address);
 }
 void CoreModel::onTransferStateChanged(const std::shared_ptr<linphone::Core> &core,

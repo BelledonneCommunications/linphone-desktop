@@ -786,29 +786,29 @@ AbstractWindow {
                         searchBarBorderColor: DefaultStyle.grey_200
                         searchBarRightMaring: 0
                         onContactClicked: contact => {
-                                            var callsWin = UtilsCpp.getCallsWindow()
-                                            if (contact)
-                                            //: "Confirmer le transfert"
-                                            callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
-                                                                                //: "Vous allez transférer %1 à %2."
-                                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(contact.core.fullName), "",
-                                                function (confirmed) {
-                                                    if (confirmed) {
-                                                        mainWindow.transferCallToContact(mainWindow.call,contact,newCallForm)
-                                                    }
-                                                })
-                                        }
+                            var callsWin = UtilsCpp.getCallsWindow()
+                            if (contact)
+                            //: "Confirmer le transfert"
+                            callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
+                                                                //: "Vous allez transférer %1 à %2."
+                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(contact.core.fullName), "",
+                                function (confirmed) {
+                                    if (confirmed) {
+                                        mainWindow.transferCallToContact(mainWindow.call,contact,newCallForm)
+                                    }
+                                })
+                        }
                         onTransferCallToAnotherRequested: dest => {
-                                                            var callsWin = UtilsCpp.getCallsWindow()
-                                                            console.log("transfer to",dest)
-                                                            callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
-                                                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(dest.core.remoteName),"",
-                                                                    function (confirmed) {
-                                                                    if (confirmed) {
-                                                                        mainWindow.call.core.lTransferCallToAnother(dest.core.remoteAddress)
-                                                                    }
-                                                            })
-                                                        }
+                            var callsWin = UtilsCpp.getCallsWindow()
+                            console.log("transfer to",dest)
+                            callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
+                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(dest.core.remoteName),"",
+                                function (confirmed) {
+                                if (confirmed) {
+                                    mainWindow.call.core.lTransferCallToAnother(dest.core.remoteAddress)
+                                }
+                            })
+                        }
                         numPadPopup: numPadPopup
 
                         NumericPadPopup {

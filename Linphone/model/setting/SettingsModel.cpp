@@ -91,9 +91,9 @@ SettingsModel::SettingsModel() {
 	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::AudioDevice> &device) {
 		    lInfo() << log().arg("audio device changed");
 		    if (device) lInfo() << "device :" << device->getDeviceName();
-		    emit playbackDeviceChanged(getPlaybackDevice());
-		    emit captureDeviceChanged(getCaptureDevice());
-		    emit ringerDeviceChanged(getRingerDevice());
+		    // emit playbackDeviceChanged(getPlaybackDevice());
+		    // emit captureDeviceChanged(getCaptureDevice());
+		    // emit ringerDeviceChanged(getRingerDevice());
 	    });
 }
 

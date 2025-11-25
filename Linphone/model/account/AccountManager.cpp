@@ -65,14 +65,6 @@ bool AccountManager::login(QString username,
                            QString outboundProxyAddress,
                            QString connectionId) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	qDebug() << "login with parameters :";
-	qDebug() << "username" << username;
-	qDebug() << "password" << password;
-	qDebug() << "displayName" << displayName;
-	qDebug() << "domain" << domain;
-	qDebug() << "registrarUri" << registrarUri;
-	qDebug() << "outboundProxyAddress" << outboundProxyAddress;
-	qDebug() << "connectionId" << connectionId;
 	auto core = CoreModel::getInstance()->getCore();
 	auto factory = linphone::Factory::get();
 	QString assistantFile = (!QString::compare(domain, "sip.linphone.org", Qt::CaseInsensitive) || domain.isEmpty())

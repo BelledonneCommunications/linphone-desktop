@@ -55,6 +55,7 @@ Button {
     }
 
     function _getPreviousItem(content, index) {
+        if (!content.visible) return null
         if (content.visibleChildren.length == 0 || !hasFocusableChild(content))
             return null;
         --index;

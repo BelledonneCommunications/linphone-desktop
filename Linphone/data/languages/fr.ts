@@ -104,43 +104,43 @@
 <context>
     <name>AccountManager</name>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="101"/>
+        <location filename="../../model/account/AccountManager.cpp" line="93"/>
         <source>assistant_account_login_already_connected_error</source>
         <extracomment>&quot;The account is already connected&quot;</extracomment>
         <translation>Le compte est déjà connecté</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="123"/>
+        <location filename="../../model/account/AccountManager.cpp" line="115"/>
         <source>assistant_account_login_proxy_address_error</source>
         <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
         <translation>Impossible de créer l&apos;adresse proxy. Merci de vérifier le nom de domaine.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="136"/>
+        <location filename="../../model/account/AccountManager.cpp" line="128"/>
         <source>assistant_account_login_address_configuration_error</source>
         <extracomment>&quot;Unable to configure address: `%1`.&quot;</extracomment>
         <translation>Impossible de configurer l&apos;adresse : `%1`.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="143"/>
+        <location filename="../../model/account/AccountManager.cpp" line="135"/>
         <source>assistant_account_login_params_configuration_error</source>
         <extracomment>&quot;Unable to configure account settings.&quot;</extracomment>
         <translation>Impossible de configurer les paramètres du compte.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="167"/>
+        <location filename="../../model/account/AccountManager.cpp" line="159"/>
         <source>assistant_account_login_forbidden_error</source>
         <extracomment>&quot;Username and password do not match&quot;</extracomment>
         <translation>Le couple identifiant mot de passe ne correspond pas</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="169"/>
+        <location filename="../../model/account/AccountManager.cpp" line="161"/>
         <source>assistant_account_login_error</source>
         <extracomment>&quot;Error during connection, please verify your parameters&quot;</extracomment>
         <translation>Erreur durant la connexion, veuillez vérifier vos paramètres</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="183"/>
+        <location filename="../../model/account/AccountManager.cpp" line="175"/>
         <source>assistant_account_add_error</source>
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Impossible d&apos;ajouter le compte.</translation>
@@ -1137,67 +1137,67 @@
 <context>
     <name>CallModel</name>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="359"/>
+        <location filename="../../model/call/CallModel.cpp" line="361"/>
         <source>call_error_no_response_toast</source>
         <extracomment>&quot;No response&quot;</extracomment>
         <translation>Pas de réponse</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="363"/>
+        <location filename="../../model/call/CallModel.cpp" line="365"/>
         <source>call_error_forbidden_resource_toast</source>
         <extracomment>&quot;403 : Forbidden resource&quot;</extracomment>
         <translation>403 : Forbidden resource</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="367"/>
+        <location filename="../../model/call/CallModel.cpp" line="369"/>
         <source>call_error_not_answered_toast</source>
         <extracomment>&quot;Request timeout&quot;</extracomment>
         <translation>La requête a expiré</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="371"/>
+        <location filename="../../model/call/CallModel.cpp" line="373"/>
         <source>call_error_user_declined_toast</source>
         <extracomment>&quot;User declined the call&quot;</extracomment>
         <translation>Le correspondant a décliné l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="375"/>
+        <location filename="../../model/call/CallModel.cpp" line="377"/>
         <source>call_error_user_not_found_toast</source>
         <extracomment>&quot;User was not found&quot;</extracomment>
         <translation>Le correspondant n&apos;a pas été trouvé</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="379"/>
+        <location filename="../../model/call/CallModel.cpp" line="381"/>
         <source>call_error_user_busy_toast</source>
         <extracomment>&quot;User is busy&quot;</extracomment>
         <translation>Le correspondant est occupé</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="383"/>
+        <location filename="../../model/call/CallModel.cpp" line="385"/>
         <source>call_error_incompatible_media_params_toast</source>
         <extracomment>&quot;User can&amp;apos;t accept your call&quot;</extracomment>
         <translation>Le correspondant ne peut accepter votre appel</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="387"/>
+        <location filename="../../model/call/CallModel.cpp" line="389"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Unavailable service or network error&quot;</extracomment>
         <translation>Service indisponible ou erreur réseau</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="391"/>
+        <location filename="../../model/call/CallModel.cpp" line="393"/>
         <source>call_error_do_not_disturb_toast</source>
         <extracomment>&quot;Le correspondant ne peut être dérangé&quot;</extracomment>
         <translation>Le correspondant ne peut être dérangé</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="395"/>
+        <location filename="../../model/call/CallModel.cpp" line="397"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporarily unavailable&quot;</extracomment>
         <translation>Temporairement indisponible</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="399"/>
+        <location filename="../../model/call/CallModel.cpp" line="401"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server tiemout&quot;</extracomment>
         <translation>Délai d&apos;attente du serveur dépassé</translation>
@@ -2156,25 +2156,25 @@
 <context>
     <name>ChatMessage</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="431"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="432"/>
         <source>chat_message_copy_selection</source>
         <extracomment>&quot;Copy selection&quot;</extracomment>
         <translation>Copier la sélection</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="433"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="434"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
         <translation>Copier</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="441"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="442"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
         <translation>Copié</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="443"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="444"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
         <translation>dans le presse-papiers</translation>
@@ -2210,25 +2210,25 @@
         <translation>Vous avez répondu</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="406"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="407"/>
         <source>chat_message_reception_info</source>
         <extracomment>&quot;Reception info&quot;</extracomment>
         <translation>Info de réception</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="418"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="419"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
         <translation>Répondre</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="450"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="451"/>
         <source>chat_message_forward</source>
         <extracomment>Forward</extracomment>
         <translation>Transférer</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="467"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="468"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Supprimer</translation>
@@ -2541,56 +2541,56 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <translation>Aucune conversation dans votre historique</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="255"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="253"/>
         <source>chat_action_start_new_chat</source>
         <extracomment>&quot;New chat&quot;</extracomment>
         <translation>Nouvelle conversation</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="293"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="291"/>
         <source>chat_start_group_chat_title</source>
         <extracomment>&quot;Nouveau groupe&quot;</extracomment>
         <translation>Nouveau groupe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="295"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="293"/>
         <source>chat_action_start_group_chat</source>
         <extracomment>&quot;Créer&quot;</extracomment>
         <translation>Créer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="311"/>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="334"/>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="339"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="309"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="332"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="337"/>
         <source>information_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="313"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="311"/>
         <source>information_popup_chat_creation_failed_message</source>
         <extracomment>&quot;La création a échoué&quot;</extracomment>
         <translation>La création a échoué</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="331"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="329"/>
         <source>group_chat_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné au groupe</extracomment>
         <translation>Un nom doit être donné au groupe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="336"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="334"/>
         <source>group_chat_error_no_participant</source>
         <extracomment>&quot;Please select at least one participant</extracomment>
         <translation>Veuillez sélectionner au moins un participant</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="341"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="339"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
         <translation>Vous n&apos;êtes pas connecté</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="347"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="345"/>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
         <translation>Création de la conversation en cours…</translation>
@@ -4918,36 +4918,36 @@ Expiration : %1</translation>
 <context>
     <name>Notifier</name>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="310"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="307"/>
         <source>new_call_alert_accessible_name</source>
         <extracomment>New call from %1</extracomment>
         <translation>Nouvel appel de %1</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="364"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="361"/>
         <source>new_voice_message</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
         <translation>Message vocal reçu !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="365"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="362"/>
         <source>new_file_message</source>
         <translation>Fichier reçu !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="368"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="365"/>
         <source>new_conference_invitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
         <translation>Nouvelle invitation à une conférence !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="389"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="386"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>Nouveaux messages reçus !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="417"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="414"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Nouveau message sur la conversation %1</translation>

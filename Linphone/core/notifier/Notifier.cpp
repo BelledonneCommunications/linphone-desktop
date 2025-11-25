@@ -288,9 +288,6 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 				auto voicemailAddress = linphone::Factory::get()->createAddress(
 				    Utils::appStringToCoreString(accountModel->getVoicemailAddress()));
 				if (voicemailAddress) call->transferTo(voicemailAddress);
-			} else {
-				lInfo() << log().arg("Declining call.");
-				call->decline(linphone::Reason::Busy);
 			}
 			return;
 		}

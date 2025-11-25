@@ -30,9 +30,9 @@ ColumnLayout {
 	property string searchedTextPart
 	
 	property int fileBorderWidth : 0
+	property int maxWidth
 	
 	spacing: Utils.getSizeWithScreenRatio(5)
-	property int padding: Utils.getSizeWithScreenRatio(10)
 
 	property ChatMessageContentProxy filescontentProxy: ChatMessageContentProxy {
 		filterType: ChatMessageContentProxy.FilterContentType.File
@@ -86,7 +86,7 @@ ColumnLayout {
 		contentGui: mainItem.filescontentProxy.count === 1
 			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
 			: null
-		width: Utils.getSizeWithScreenRatio(285)
+		Layout.fillWidth: true
 		Layout.alignment: Qt.AlignHCenter
 		fillMode: Image.PreserveAspectFit
 	}
@@ -96,7 +96,7 @@ ColumnLayout {
 		contentGui: mainItem.filescontentProxy.count === 1
 			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
 			: null
-		Layout.preferredWidth: Utils.getSizeWithScreenRatio(285)
+		Layout.fillWidth: true
 		Layout.preferredHeight: paintedHeight
 		Layout.alignment: Qt.AlignHCenter
 		fillMode: Image.PreserveAspectFit
@@ -107,8 +107,9 @@ ColumnLayout {
 		contentGui: mainItem.filescontentProxy.count === 1
 			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
 			: null
-		width: Utils.getSizeWithScreenRatio(285)
-		height: Utils.getSizeWithScreenRatio(285)
+		Layout.fillWidth: true
+		width: Math.min(Utils.getSizeWithScreenRatio(285), mainItem.maxWidth)
+		height: Math.min(Utils.getSizeWithScreenRatio(285), mainItem.maxWidth)
 		Layout.preferredWidth: videoOutput.contentRect.width
 		Layout.preferredHeight: videoOutput.contentRect.height
 		Layout.alignment: Qt.AlignHCenter
