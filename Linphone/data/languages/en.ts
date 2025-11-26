@@ -4924,30 +4924,30 @@ Expiration : %1</translation>
         <translation>New call from %1</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="361"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="362"/>
         <source>new_voice_message</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
         <translation>Voice message received!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="362"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="363"/>
         <source>new_file_message</source>
         <translation>File received!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="365"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="366"/>
         <source>new_conference_invitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
         <translation>Conference invitation received !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="386"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="387"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>New messages received !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="414"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="415"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>New message on chatroom %1</translation>

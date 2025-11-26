@@ -130,7 +130,7 @@ Notifier::~Notifier() {
 bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap data) {
 	mMutex->lock();
 	// Q_ASSERT(mInstancesNumber <= MaxNotificationsNumber);
-	if (mInstancesNumber == MaxNotificationsNumber) { // Check existing instances.
+	if (mInstancesNumber >= MaxNotificationsNumber) { // Check existing instances.
 		qWarning() << QStringLiteral("Unable to create another notification.");
 		mMutex->unlock();
 		return false;
@@ -332,7 +332,8 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 		if (receiverAccount) {
 			auto senderAccount = ToolModel::findAccount(message->getFromAddress());
 			auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
-			if (senderAccount && senderAccount->getContactAddress()->weakEqual(currentAccount->getContactAddress())) {
+			if (senderAccount && senderAccount->getContactAddress() && currentAccount->getContactAddress() &&
+			    senderAccount->getContactAddress()->weakEqual(currentAccount->getContactAddress())) {
 				qDebug() << "sender is current account, return";
 				return;
 			}
