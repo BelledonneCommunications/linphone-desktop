@@ -292,7 +292,6 @@ void AccountModel::setRegistrarUri(QString value) {
 		emit setValueFailed(tr("set_server_address_failed_error_message").arg(value));
 		qWarning() << "Unable to set ServerAddress, failed creating address from" << value;
 	}
-	emit registrarUriChanged(Utils::coreStringToAppString(address->asString()));
 }
 
 QString AccountModel::getOutboundProxyUri() const {
@@ -308,11 +307,11 @@ void AccountModel::setOutboundProxyUri(QString value) {
 		//: Unable to set outbound proxy uri, failed creating address from %1
 		emit setValueFailed(tr("set_outbound_proxy_uri_failed_error_message").arg(value));
 		return;
+	} else {
+		auto params = mMonitor->getParams()->clone();
+		params->setRoutesAddresses({linOutboundProxyAddress});
+		emit outboundProxyUriChanged(value);
 	}
-	auto params = mMonitor->getParams()->clone();
-	params->setRoutesAddresses({linOutboundProxyAddress});
-
-	emit outboundProxyUriChanged(value);
 }
 
 bool AccountModel::getOutboundProxyEnabled() const {
