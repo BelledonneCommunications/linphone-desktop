@@ -405,8 +405,12 @@ void App::setSelf(QSharedPointer<App>(me)) {
 				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
 				    // There is an account added by a remote provisioning, force switching to main  page
 				    // because the account may not be connected already
-				    QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
-				                              Q_ARG(QVariant, accountConnected));
+				    // if (accountConnected)
+				    if (mPossiblyLookForAddedAccount) {
+					    QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
+					                              Q_ARG(QVariant, accountConnected));
+				    }
+				    mPossiblyLookForAddedAccount = false;
 			    });
 		    }
 	    });
@@ -682,19 +686,22 @@ void App::initCore() {
 					        } else lInfo() << log().arg("Stay minimized");
 					        firstOpen = false;
 					        lInfo() << log().arg("Checking remote provisioning");
-					        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed &&
-					            mIsRestarting) {
-						        QMetaObject::invokeMethod(thread(), [this]() {
-							        auto message = CoreModel::getInstance()->mConfigMessage;
-							        //: not reachable
-							        if (message.isEmpty()) message = tr("configuration_error_detail");
-							        mustBeInMainThread(log().arg(Q_FUNC_INFO));
-							        //: Error
-							        Utils::showInformationPopup(
-							            tr("info_popup_error_title"),
-							            //: Remote provisioning failed : %1
-							            tr("info_popup_configuration_failed_message").arg(message), false);
-						        });
+					        if (mIsRestarting) {
+						        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed) {
+							        QMetaObject::invokeMethod(thread(), [this]() {
+								        auto message = CoreModel::getInstance()->mConfigMessage;
+								        //: not reachable
+								        if (message.isEmpty()) message = tr("configuration_error_detail");
+								        mustBeInMainThread(log().arg(Q_FUNC_INFO));
+								        //: Error
+								        Utils::showInformationPopup(
+								            tr("info_popup_error_title"),
+								            //: Remote provisioning failed : %1
+								            tr("info_popup_configuration_failed_message").arg(message), false);
+							        });
+						        } else {
+							        mPossiblyLookForAddedAccount = true;
+						        }
 					        }
 					        checkForUpdate();
 					        mIsRestarting = false;
