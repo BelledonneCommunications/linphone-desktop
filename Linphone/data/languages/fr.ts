@@ -2086,65 +2086,65 @@
 <context>
     <name>ChatListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="257"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="264"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 est en train d&apos;écrire…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="259"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="266"/>
         <source>chat_message_draft_sending_text</source>
         <translation>Brouillon : %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="404"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="411"/>
         <source>chat_room_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="343"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="350"/>
         <source>chat_room_mute</source>
         <translation>Mettre en sourdine</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="342"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="349"/>
         <source>chat_room_unmute</source>
         <extracomment>&quot;Mute&quot;</extracomment>
         <translation>Enlever la sourdine </translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="356"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="363"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
         <translation>Marquer comme lu</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="375"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="382"/>
         <source>chat_room_leave</source>
         <extracomment>&quot;leave&quot;</extracomment>
         <translation>Quitter la conversation</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="381"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="388"/>
         <source>chat_list_leave_chat_popup_title</source>
         <extracomment>leave the conversation ?</extracomment>
         <translation>Quitter la conversation ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="383"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="390"/>
         <source>chat_list_leave_chat_popup_message</source>
         <extracomment>You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?</extracomment>
         <translation>Vous ne pourrez plus envoyer ou recevoir de messages dans cette conversation. Souhaitez-vous continuer ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="410"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="417"/>
         <source>chat_list_delete_chat_popup_title</source>
         <extracomment>Delete the conversation ?</extracomment>
         <translation>Supprimer la conversation ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="412"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="419"/>
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation>La conversation et tous ses messages seront supprimés. Souhaitez-vous continuer ?</translation>
@@ -2496,98 +2496,115 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <translation>Aucune conversation</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="73"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="46"/>
+        <source>info_popup_error_title</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="48"/>
+        <source>info_popup_chatroom_creation_failed</source>
+        <extracomment>Chat room creation failed !</extracomment>
+        <translation>La création de la conversation a échoué !</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="42"/>
+        <source>loading_popup_chatroom_creation_pending_message</source>
+        <extracomment>Chat room is being created...</extracomment>
+        <translation>Création de la conversation en cours...</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="96"/>
         <source>chat_dialog_delete_chat_title</source>
         <extracomment>Supprimer la conversation ?</extracomment>
         <translation>Supprimer la conversation ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="75"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="98"/>
         <source>chat_dialog_delete_chat_message</source>
         <extracomment>&quot;La conversation et tous ses messages seront supprimés.&quot;</extracomment>
         <translation>La conversation et tous ses messages seront supprimés.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="108"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="131"/>
         <source>chat_list_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
         <translation>Conversations</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="126"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="149"/>
         <source>menu_mark_all_as_read</source>
         <extracomment>&quot;mark all as read&quot;</extracomment>
         <translation>Tout marquer comme lu</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="156"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="179"/>
         <source>chat_search_in_history</source>
         <extracomment>&quot;Rechercher une conversation&quot;</extracomment>
         <translation>Rechercher une conversation</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="179"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="202"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
         <translation>Aucun résultat…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="181"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="204"/>
         <source>chat_list_empty_history</source>
         <extracomment>&quot;Aucune conversation dans votre historique&quot;</extracomment>
         <translation>Aucune conversation dans votre historique</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="253"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="273"/>
         <source>chat_action_start_new_chat</source>
         <extracomment>&quot;New chat&quot;</extracomment>
         <translation>Nouvelle conversation</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="291"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="311"/>
         <source>chat_start_group_chat_title</source>
         <extracomment>&quot;Nouveau groupe&quot;</extracomment>
         <translation>Nouveau groupe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="293"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="313"/>
         <source>chat_action_start_group_chat</source>
         <extracomment>&quot;Créer&quot;</extracomment>
         <translation>Créer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="309"/>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="332"/>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="337"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="329"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="352"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="357"/>
         <source>information_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="311"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="331"/>
         <source>information_popup_chat_creation_failed_message</source>
         <extracomment>&quot;La création a échoué&quot;</extracomment>
         <translation>La création a échoué</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="329"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="349"/>
         <source>group_chat_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné au groupe</extracomment>
         <translation>Un nom doit être donné au groupe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="334"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="354"/>
         <source>group_chat_error_no_participant</source>
         <extracomment>&quot;Please select at least one participant</extracomment>
         <translation>Veuillez sélectionner au moins un participant</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="339"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="359"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
         <translation>Vous n&apos;êtes pas connecté</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="345"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="365"/>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
         <translation>Création de la conversation en cours…</translation>
@@ -4060,7 +4077,7 @@ Expiration : %1</translation>
 <context>
     <name>LoadingPopup</name>
     <message>
-        <location filename="../../view/Control/Popup/Loading/LoadingPopup.qml" line="40"/>
+        <location filename="../../view/Control/Popup/Loading/LoadingPopup.qml" line="42"/>
         <source>cancel</source>
         <translation>Annuler</translation>
     </message>

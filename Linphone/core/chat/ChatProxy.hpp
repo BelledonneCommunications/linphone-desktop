@@ -40,7 +40,7 @@ public:
 	bool lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const override;
 
 	Q_INVOKABLE int findChatIndex(ChatGui *chatGui);
-	Q_INVOKABLE void addChatInList(ChatGui *chatGui);
+	Q_INVOKABLE bool addChatInList(ChatGui *chatGui);
 signals:
 	void chatCreated(ChatGui *chatGui);
 

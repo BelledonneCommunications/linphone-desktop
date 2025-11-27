@@ -68,11 +68,12 @@ int ChatProxy::findChatIndex(ChatGui *chatGui) {
 	return -1;
 }
 
-void ChatProxy::addChatInList(ChatGui *chatGui) {
+bool ChatProxy::addChatInList(ChatGui *chatGui) {
 	auto chatList = dynamic_cast<ChatList *>(sourceModel());
 	if (chatList && chatGui) {
-		chatList->addChatInList(chatGui->mCore);
+		return chatList->addChatInList(chatGui->mCore);
 	}
+	return false;
 }
 
 bool ChatProxy::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {

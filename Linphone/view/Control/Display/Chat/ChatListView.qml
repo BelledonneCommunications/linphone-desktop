@@ -18,12 +18,19 @@ ListView {
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
 
     property ChatGui currentChatGui: model.getAt(currentIndex) || null
+    onCurrentIndexChanged: console.log("current index changed", currentIndex)
     onCurrentChatGuiChanged: positionViewAtIndex(currentIndex, ListView.Center)
     property ChatGui chatToSelect: null
     property ChatGui chatToSelectLater: null
     onChatToSelectChanged: {
-        selectChat(chatToSelect, true)
-        chatToSelect = null
+        if (chatToSelect) {
+            console.log("chat to select changed, select", (chatToSelect ? chatToSelect.core.title : "NULL"))
+            // first clear the chatToSelect property in case we need to
+            // force adding the chat to the list and the layout changes
+            var toselect = chatToSelect
+            chatToSelect = null
+            selectChat(toselect, true)
+        }
     }
 
     onChatClicked: (chat) => {selectChat(chat)}
@@ -76,11 +83,11 @@ ListView {
         var index = chatProxy.findChatIndex(chatGui)
         // force adding chat to list if not in list for now
         if (index === -1 && force === true && chatGui) {
-            chatProxy.addChatInList(chatGui)
-            var index = chatProxy.findChatIndex(chatGui)
+            if (chatProxy.addChatInList(chatGui)) {
+                var index = chatProxy.findChatIndex(chatGui)
+            }
         }
         mainItem.currentIndex = index
-
     }
 
     Component.onCompleted: cacheBuffer = Math.max(contentHeight, 0) //contentHeight>0 ? contentHeight : 0// cache all items

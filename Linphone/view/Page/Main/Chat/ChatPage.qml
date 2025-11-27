@@ -30,8 +30,32 @@ AbstractMainPage {
     onRemoteAddressChanged: console.log("ChatPage : remote address changed :", remoteAddress)
     property var remoteChatObj: UtilsCpp.getChatForAddress(remoteAddress)
     property var remoteChat: remoteChatObj ? remoteChatObj.value : null
+
+    signal openChatRequested(ChatGui chat)
+
+    Connections {
+        enabled: remoteChat !== null
+        target: remoteChat ? remoteChat.core : null
+        function onChatRoomStateChanged() {
+            if (remoteChat.core.state === LinphoneEnums.ChatRoomState.CreationPending) {
+                //: Chat room is being created...
+                mainWindow.showLoadingPopup(qsTr("loading_popup_chatroom_creation_pending_message"))
+            } else {
+                mainWindow.closeLoadingPopup()
+                if (remoteChat.core.state === LinphoneEnums.ChatRoomState.CreationFailed) {
+                    UtilsCpp.showInformationPopup(qsTr("info_popup_error_title"),
+                                                    //: Chat room creation failed !
+                                                    qsTr("info_popup_chatroom_creation_failed"), false)
+                } else if (remoteChat.core.state === LinphoneEnums.ChatRoomState.Created) {
+                    openChatRequested(remoteChat)
+                }
+            }
+        }
+    }
     onRemoteChatChanged: {
-        if (remoteChat) selectedChatGui = remoteChat
+        if (remoteChat && remoteChat.core.state === LinphoneEnums.ChatRoomState.Created) {
+            openChatRequested(remoteChat)
+        }
     }
 
     onSelectedChatGuiChanged: {
@@ -64,7 +88,6 @@ AbstractMainPage {
                 && listStackView.currentItem.objectName != "newChatItem")
             listStackView.push(newChatItem)
     }
-    signal openChatRequested(ChatGui chat)
 
     Dialog {
         id: deleteChatPopup
@@ -198,9 +221,6 @@ AbstractMainPage {
 
                             Connections {
                                 target: mainItem
-                                function onRemoteChatChanged() {
-                                    if (mainItem.remoteChat) chatListView.chatToSelect = mainItem.remoteChat
-                                }
                                 function onOpenChatRequested(chat) {
                                     chatListView.chatToSelect = chat
                                 }
