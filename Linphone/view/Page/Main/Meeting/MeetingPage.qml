@@ -910,7 +910,7 @@ AbstractMainPage {
 					KeyNavigation.right: leftPanelStackView.currentItem
 					onClicked: {
 						console.log(mainItem.selectedConference.core.uri)
-						var callsWindow = UtilsCpp.getCallsWindow()
+						var callsWindow = UtilsCpp.getOrCreateCallsWindow()
 						callsWindow.setupConference(mainItem.selectedConference)
 						UtilsCpp.smartShowWindow(callsWindow)
 					}

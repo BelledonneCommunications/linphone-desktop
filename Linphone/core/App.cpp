@@ -335,7 +335,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 		                                         auto callCore = CallCore::create(call);
 		                                         mCoreModelConnection->invokeToCore([this, callCore] {
 			                                         auto callGui = new CallGui(callCore);
-			                                         auto win = getCallsWindow(QVariant::fromValue(callGui));
+			                                         auto win = getOrCreateCallsWindow(QVariant::fromValue(callGui));
 			                                         Utils::smartShowWindow(win);
 			                                         auto mainwin = getMainWindow();
 			                                         QMetaObject::invokeMethod(mainwin, "callCreated");
@@ -1068,7 +1068,39 @@ bool App::notify(QObject *receiver, QEvent *event) {
 	return done;
 }
 
-QQuickWindow *App::getCallsWindow(QVariant callGui) {
+void App::handleAppActivity() {
+	auto handle = [this](AccountGui *currentAcount) {
+		auto accountCore = currentAcount->mCore;
+		Q_ASSERT(accountCore);
+		auto accountPresence = accountCore->getPresence();
+		if ((mMainWindow && mMainWindow->isActive() || (mCallsWindow && mCallsWindow->isActive())) &&
+		    accountPresence == LinphoneEnums::Presence::Away)
+			accountCore->lSetPresence(LinphoneEnums::Presence::Online);
+		if (((!mMainWindow || !mMainWindow->isActive()) && (!mCallsWindow || !mCallsWindow->isActive())) &&
+		    accountPresence == LinphoneEnums::Presence::Online)
+			accountCore->lSetPresence(LinphoneEnums::Presence::Away);
+	};
+	if (mAccountList) {
+		if (mAccountList->getDefaultAccount()) {
+			handle(mAccountList->getDefaultAccount());
+		} else {
+			connect(
+			    mAccountList.get(), &AccountList::defaultAccountChanged, this,
+			    [this, handle] {
+				    if (mAccountList->getDefaultAccount()) {
+					    handle(mAccountList->getDefaultAccount());
+				    }
+			    },
+			    Qt::SingleShotConnection);
+		}
+	}
+}
+
+QQuickWindow *App::getCallsWindow() {
+	return mCallsWindow;
+}
+
+QQuickWindow *App::getOrCreateCallsWindow(QVariant callGui) {
 	mustBeInMainThread(getClassName());
 	if (!mCallsWindow) {
 		const QUrl callUrl("qrc:/qt/qml/Linphone/view/Page/Window/Call/CallsWindow.qml");
@@ -1103,6 +1135,7 @@ QQuickWindow *App::getCallsWindow(QVariant callGui) {
 		}
 		// window->setParent(mMainWindow);
 		mCallsWindow = window;
+		connect(mCallsWindow, &QQuickWindow::activeChanged, this, &App::handleAppActivity);
 	}
 	if (!callGui.isNull() && callGui.isValid()) mCallsWindow->setProperty("call", callGui);
 	return mCallsWindow;
@@ -1125,8 +1158,11 @@ QQuickWindow *App::getMainWindow() const {
 }
 
 void App::setMainWindow(QQuickWindow *data) {
+	if (mMainWindow) disconnect(mMainWindow, &QQuickWindow::activeChanged, this, nullptr);
 	if (mMainWindow != data) {
 		mMainWindow = data;
+		connect(mMainWindow, &QQuickWindow::activeChanged, this, &App::handleAppActivity);
+		handleAppActivity();
 		emit mainWindowChanged();
 	}
 }

@@ -102,18 +102,15 @@ ListView {
         initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(63)))
 		displayItemsStep: initialDisplayItems/2
 		Component.onCompleted: {
-            mainItem.loading = !confInfoProxy.accountConnected
+            mainItem.loading = false
         }
 		onModelAboutToBeReset: {
             mainItem.loading = true
         }
 		onModelReset: {
-			mainItem.loading = !confInfoProxy.accountConnected
+			mainItem.loading = false
 			selectData(getCurrentDateConfInfo())
 		}
-		onAccountConnectedChanged: (connected) => {
-            mainItem.loading = !connected
-        }
 		function selectData(confInfoGui){
 			mainItem.currentIndex = loadUntil(confInfoGui)
 		}

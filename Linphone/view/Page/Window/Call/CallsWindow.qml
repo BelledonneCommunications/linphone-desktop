@@ -65,7 +65,7 @@ AbstractWindow {
     onTransferStateChanged: {
         console.log("Transfer state:", transferState)
         if (mainWindow.transferState === LinphoneEnums.CallState.OutgoingInit) {
-            var callsWin = UtilsCpp.getCallsWindow()
+            var callsWin = UtilsCpp.getOrCreateCallsWindow()
             if (!callsWin)
                 return
             //: "Transfert en cours, veuillez patienter"
@@ -74,7 +74,7 @@ AbstractWindow {
                    || mainWindow.transferState === LinphoneEnums.CallState.End
                    || mainWindow.transferState === LinphoneEnums.CallState.Released
                    || mainWindow.transferState === LinphoneEnums.CallState.Connected) {
-            var callsWin = UtilsCpp.getCallsWindow()
+            var callsWin = UtilsCpp.getOrCreateCallsWindow()
             callsWin.closeLoadingPopup()
             if (transferState === LinphoneEnums.CallState.Error)
                 UtilsCpp.showInformationPopup(
@@ -786,7 +786,7 @@ AbstractWindow {
                         searchBarBorderColor: DefaultStyle.grey_200
                         searchBarRightMaring: 0
                         onContactClicked: contact => {
-                            var callsWin = UtilsCpp.getCallsWindow()
+                            var callsWin = UtilsCpp.getOrCreateCallsWindow()
                             if (contact)
                             //: "Confirmer le transfert"
                             callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
@@ -799,7 +799,7 @@ AbstractWindow {
                                 })
                         }
                         onTransferCallToAnotherRequested: dest => {
-                            var callsWin = UtilsCpp.getCallsWindow()
+                            var callsWin = UtilsCpp.getOrCreateCallsWindow()
                             console.log("transfer to",dest)
                             callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
                                                                 qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(dest.core.remoteName),"",

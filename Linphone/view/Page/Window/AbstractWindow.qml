@@ -16,7 +16,9 @@ ApplicationWindow {
     width: Math.min(Utils.getSizeWithScreenRatio(1512), Screen.desktopAvailableWidth)
     height: Math.min(Utils.getSizeWithScreenRatio(982), Screen.desktopAvailableHeight)
 
-    onActiveChanged: if (active) UtilsCpp.setLastActiveWindow(this)
+    onActiveChanged: {
+        if (active) UtilsCpp.setLastActiveWindow(this)
+    }
     Component.onDestruction: if (UtilsCpp.getLastActiveWindow() === this) UtilsCpp.setLastActiveWindow(null)
 
     property bool isFullscreen: visibility == Window.FullScreen

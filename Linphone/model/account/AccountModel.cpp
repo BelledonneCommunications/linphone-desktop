@@ -274,7 +274,7 @@ void AccountModel::setTransport(linphone::TransportType value, bool save) {
 
 QString AccountModel::getRegistrarUri() const {
 	if (mMonitor->getParams()->getServerAddress())
-		return Utils::coreStringToAppString(mMonitor->getParams()->getServerAddress()->asString());
+		return Utils::coreStringToAppString(mMonitor->getParams()->getServerAddress()->asStringUriOnly());
 	else return "";
 }
 
@@ -297,7 +297,7 @@ void AccountModel::setRegistrarUri(QString value) {
 QString AccountModel::getOutboundProxyUri() const {
 	auto routeAddresses = mMonitor->getParams()->getRoutesAddresses();
 	auto outbound =
-	    routeAddresses.empty() ? QString() : Utils::coreStringToAppString(routeAddresses.front()->asString());
+	    routeAddresses.empty() ? QString() : Utils::coreStringToAppString(routeAddresses.front()->asStringUriOnly());
 	return outbound;
 }
 
@@ -399,7 +399,7 @@ void AccountModel::setExpire(int value) {
 
 QString AccountModel::getConferenceFactoryAddress() const {
 	auto confAddress = mMonitor->getParams()->getConferenceFactoryAddress();
-	return confAddress ? Utils::coreStringToAppString(confAddress->asString()) : QString();
+	return confAddress ? Utils::coreStringToAppString(confAddress->asStringUriOnly()) : QString();
 }
 
 void AccountModel::setConferenceFactoryAddress(QString value) {
@@ -421,7 +421,7 @@ void AccountModel::setConferenceFactoryAddress(QString value) {
 
 QString AccountModel::getAudioVideoConferenceFactoryAddress() const {
 	auto confAddress = mMonitor->getParams()->getAudioVideoConferenceFactoryAddress();
-	return confAddress ? Utils::coreStringToAppString(confAddress->asString()) : QString();
+	return confAddress ? Utils::coreStringToAppString(confAddress->asStringUriOnly()) : QString();
 }
 
 void AccountModel::setAudioVideoConferenceFactoryAddress(QString value) {
@@ -490,7 +490,7 @@ void AccountModel::setVoicemailAddress(QString value) {
 
 QString AccountModel::getVoicemailAddress() const {
 	auto addr = mMonitor->getParams()->getVoicemailAddress();
-	return addr ? Utils::coreStringToAppString(addr->asString()) : "";
+	return addr ? Utils::coreStringToAppString(addr->asStringUriOnly()) : "";
 }
 
 // UserData (see hpp for explanations)

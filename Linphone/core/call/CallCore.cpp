@@ -213,7 +213,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 				    Utils::showInformationPopup(tr("call_record_end_message"),
 				                                //: "L'appel a été enregistré dans le fichier : %1"
 				                                tr("call_record_saved_in_file_message").arg(recordFile), true,
-				                                App::getInstance()->getCallsWindow());
+				                                App::getInstance()->getOrCreateCallsWindow());
 			    }
 		    });
 	    });

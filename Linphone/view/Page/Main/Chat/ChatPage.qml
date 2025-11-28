@@ -81,7 +81,8 @@ AbstractMainPage {
 
     showDefaultItem: listStackView.currentItem
                      && listStackView.currentItem.objectName == "chatListItem"
-                     && listStackView.currentItem.listView.count === 0 || false
+                     && listStackView.currentItem.listView.count === 0
+                     && !listStackView.currentItem.listView.loading || false
 
     function goToNewChat() {
         if (listStackView.currentItem

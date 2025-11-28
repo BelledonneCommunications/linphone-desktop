@@ -84,7 +84,7 @@ public:
 	                                             const QString &description,
 	                                             bool isSuccess = true,
 	                                             QQuickWindow *window = nullptr);
-	Q_INVOKABLE static QQuickWindow *getCallsWindow(CallGui *callGui = nullptr);
+	Q_INVOKABLE static QQuickWindow *getOrCreateCallsWindow(CallGui *callGui = nullptr);
 	Q_INVOKABLE static void closeCallsWindow();
 	Q_INVOKABLE static VariantObject *haveAccount();
 	Q_INVOKABLE static void smartShowWindow(QQuickWindow *window);

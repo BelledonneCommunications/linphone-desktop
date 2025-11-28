@@ -286,7 +286,7 @@ ColumnLayout {
 					text: qsTr("ics_bubble_join")
 					visible: !SettingsCpp.disableMeetingsFeature && conferenceInfo.state != LinphoneEnums.ConferenceInfoState.Cancelled
 					onClicked: {
-						var callsWindow = UtilsCpp.getCallsWindow()
+						var callsWindow = UtilsCpp.getOrCreateCallsWindow()
 						callsWindow.setupConference(mainItem.conferenceInfoGui)
 						UtilsCpp.smartShowWindow(callsWindow)
 					}

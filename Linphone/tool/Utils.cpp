@@ -209,22 +209,22 @@ void Utils::createGroupCall(QString subject, const std::list<QString> &participa
 // Comment on annule ? Si on ferme la fenêtre ça va finir l'appel en cours
 void Utils::setupConference(ConferenceInfoGui *confGui) {
 	if (!confGui) return;
-	auto window = App::getInstance()->getCallsWindow(QVariant());
+	auto window = App::getInstance()->getOrCreateCallsWindow(QVariant());
 	window->setProperty("conferenceInfo", QVariant::fromValue(confGui));
 	window->show();
 }
 
 void Utils::openCallsWindow(CallGui *call) {
 	if (call) {
-		auto window = App::getInstance()->getCallsWindow(QVariant::fromValue(call));
+		auto window = App::getInstance()->getOrCreateCallsWindow(QVariant::fromValue(call));
 		window->show();
 		window->raise();
 	}
 }
 
-QQuickWindow *Utils::getCallsWindow(CallGui *callGui) {
+QQuickWindow *Utils::getOrCreateCallsWindow(CallGui *callGui) {
 	auto app = App::getInstance();
-	auto window = app->getCallsWindow(QVariant::fromValue(callGui));
+	auto window = app->getOrCreateCallsWindow(QVariant::fromValue(callGui));
 	return window;
 }
 
@@ -1604,7 +1604,7 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 					showInformationPopup(tr("information_popup_error_title"),
 					                     //: Failed to create 1-1 conversation with %1 !
 					                     tr("information_popup_chatroom_creation_error_message"), false,
-					                     getCallsWindow());
+					                     getOrCreateCallsWindow());
 				});
 				return QVariant();
 			}
@@ -1638,7 +1638,7 @@ VariantObject *Utils::getChatForAddress(QString address) {
 				data->mConnection->invokeToCore([] {
 					showInformationPopup(tr("information_popup_error_title"),
 					                     tr("information_popup_chatroom_creation_error_message"), false,
-					                     getCallsWindow());
+					                     getOrCreateCallsWindow());
 				});
 				return QVariant();
 			}
