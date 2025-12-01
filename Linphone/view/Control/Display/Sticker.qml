@@ -58,7 +58,7 @@ Item {
 	property var contact: contactObj && contactObj.value || null
 	
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null
-    property bool videoEnabled: (previewEnabled && call && call.core.localVideoEnabled)
+    property bool videoEnabled: (previewEnabled && call && call.core.cameraEnabled)
         || (!previewEnabled && call && call.core.remoteVideoEnabled)
         || (participantDevice && participantDevice.core.videoEnabled)
 	property string qmlName

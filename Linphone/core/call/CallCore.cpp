@@ -111,6 +111,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	auto videoDirection = callParams->getVideoDirection();
 	mLocalVideoEnabled =
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
+	mCameraEnabled = callParams->cameraEnabled();
 	auto remoteParams = call->getRemoteParams();
 	videoDirection = remoteParams ? remoteParams->getVideoDirection() : linphone::MediaDirection::Inactive;
 	mRemoteVideoEnabled =
@@ -194,8 +195,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::speakerMutedChanged, [this](bool isMuted) {
 		mCallModelConnection->invokeToCore([this, isMuted]() { setSpeakerMuted(isMuted); });
 	});
-	mCallModelConnection->makeConnectToCore(&CallCore::lSetLocalVideoEnabled, [this](bool enabled) {
-		mCallModelConnection->invokeToModel([this, enabled]() { mCallModel->setLocalVideoEnabled(enabled); });
+	mCallModelConnection->makeConnectToCore(&CallCore::lSetCameraEnabled, [this](bool enabled) {
+		mCallModelConnection->invokeToModel([this, enabled]() { mCallModel->setCameraEnabled(enabled); });
 	});
 	mCallModelConnection->makeConnectToCore(&CallCore::lStartRecording, [this]() {
 		mCallModelConnection->invokeToModel([this]() { mCallModel->startRecording(); });
@@ -244,6 +245,9 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	                                         });
 	mCallModelConnection->makeConnectToModel(&CallModel::localVideoEnabledChanged, [this](bool enabled) {
 		mCallModelConnection->invokeToCore([this, enabled]() { setLocalVideoEnabled(enabled); });
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::cameraEnabledChanged, [this](bool enabled) {
+		mCallModelConnection->invokeToCore([this, enabled]() { setCameraEnabled(enabled); });
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::durationChanged, [this](int duration) {
 		mCallModelConnection->invokeToCore([this, duration]() { setDuration(duration); });
@@ -558,6 +562,18 @@ void CallCore::setLocalVideoEnabled(bool enabled) {
 		mLocalVideoEnabled = enabled;
 		lDebug() << "LocalVideoEnabled: " << mLocalVideoEnabled;
 		emit localVideoEnabledChanged();
+	}
+}
+
+bool CallCore::getCameraEnabled() const {
+	return mCameraEnabled;
+}
+
+void CallCore::setCameraEnabled(bool enabled) {
+	if (mCameraEnabled != enabled) {
+		mCameraEnabled = enabled;
+		lDebug() << "CameraEnabled: " << mCameraEnabled;
+		emit cameraEnabledChanged();
 	}
 }
 

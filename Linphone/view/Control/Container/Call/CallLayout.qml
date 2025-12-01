@@ -113,8 +113,7 @@ Item {
 		anchors.bottom: mainItem.bottom
         anchors.rightMargin: Utils.getSizeWithScreenRatio(20)
         anchors.bottomMargin: Utils.getSizeWithScreenRatio(10)
-		videoEnabled: preview.visible && mainItem.call && mainItem.call.core.localVideoEnabled
-		onVideoEnabledChanged: console.log("P : " +videoEnabled + " / " +visible +" / " +mainItem.call)
+		onVideoEnabledChanged: console.log("Preview : " +videoEnabled + " / " +visible +" / " +mainItem.call)
 		property var accountObj: UtilsCpp.findLocalAccountByAddress(mainItem.localAddress)
         account: accountObj && accountObj.value || null
 		call: mainItem.call

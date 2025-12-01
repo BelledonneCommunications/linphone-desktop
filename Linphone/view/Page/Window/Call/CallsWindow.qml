@@ -27,7 +27,7 @@ AbstractWindow {
     property ChatGui chat: chatObj ? chatObj.value : null
 
     property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
-    property bool localVideoEnabled: call && call.core.localVideoEnabled
+    property bool cameraEnabled: call && call.core.cameraEnabled
     property bool remoteVideoEnabled: call && call.core.remoteVideoEnabled
 
     property bool callTerminatedByUser: false
@@ -1447,14 +1447,14 @@ AbstractWindow {
                         checkedIconUrl: AppIcons.videoCameraSlash
                         //: "Désactiver la vidéo"
                         //: "Activer la vidéo"
-                        ToolTip.text: mainWindow.localVideoEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
-                        Accessible.name: mainWindow.localVideoEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
-                        checked: !mainWindow.localVideoEnabled
+                        ToolTip.text: mainWindow.cameraEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
+                        Accessible.name: mainWindow.cameraEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
+                        checked: !mainWindow.cameraEnabled
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         icon.width: Utils.getSizeWithScreenRatio(32)
                         icon.height: Utils.getSizeWithScreenRatio(32)
-                        onClicked: mainWindow.call.core.lSetLocalVideoEnabled(!mainWindow.call.core.localVideoEnabled)
+                        onClicked: mainWindow.call.core.lSetCameraEnabled(!mainWindow.call.core.cameraEnabled)
                     }
 
                     // Audio microphone button
