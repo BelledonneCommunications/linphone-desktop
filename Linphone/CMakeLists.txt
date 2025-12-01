@@ -170,6 +170,12 @@ qt6_add_qml_module(Linphone
     RESOURCES data/fonts.qrc
 )
 
+if (WIN32)
+	if(MSVC AND (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
+		install(FILES "$<TARGET_PDB_FILE:${TARGET_NAME}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
+	endif()
+endif()
+
 qt6_add_resources(Linphone "resources" PREFIX "/" FILES ${_LINPHONEAPP_RC_FILES})
 set_property(TARGET Linphone PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
 
@@ -195,6 +201,7 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 if(MSVC)
 	set_target_properties(${TARGET_NAME} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
 endif()
+set_target_properties(${TARGET_NAME} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 if(WIN32)
 	if(ENABLE_SCREENSHARING)

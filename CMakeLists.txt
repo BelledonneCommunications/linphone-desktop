@@ -71,8 +71,8 @@ endif()
 
 set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 
-set(LINPHONEAPP_APPLICATION_NAME "Linphone6" CACHE STRING "Application name" )
-set(LINPHONEAPP_EXECUTABLE_NAME "linphone6" CACHE STRING "Executable name" )
+set(LINPHONEAPP_APPLICATION_NAME "Linphone" CACHE STRING "Application name" )
+set(LINPHONEAPP_EXECUTABLE_NAME "linphone" CACHE STRING "Executable name" )
 
 # Include application_info.cmake here as the LINPHONEAPP_APPLICATION_NAME variable must be known as it is set to the APPLICATION_NAME variable.
 include(Linphone/application_info.cmake)
