@@ -23,7 +23,7 @@ AbstractWindow {
     property bool isConference: call ? call.core.isConference : false
 
     // Chat related to call
-    property var chatObj: UtilsCpp.getCurrentCallChat(mainWindow.call)
+    property var chatObj
     property ChatGui chat: chatObj ? chatObj.value : null
 
     property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
@@ -1454,8 +1454,7 @@ AbstractWindow {
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         icon.width: Utils.getSizeWithScreenRatio(32)
                         icon.height: Utils.getSizeWithScreenRatio(32)
-                        onClicked: mainWindow.call.core.lSetLocalVideoEnabled(
-                                       !mainWindow.call.core.localVideoEnabled)
+                        onClicked: mainWindow.call.core.lSetLocalVideoEnabled(!mainWindow.call.core.localVideoEnabled)
                     }
 
                     // Audio microphone button
@@ -1522,6 +1521,7 @@ AbstractWindow {
                         onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
+                                mainWindow.chatObj = UtilsCpp.getCurrentCallChat(mainWindow.call)
                                 rightPanel.replace(chatPanel)
                             } else {
                                 rightPanel.visible = false
