@@ -630,6 +630,8 @@ ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_p
 	//: Dummy subject
 	params->setSubject("Dummy subject");
 	params->setAccount(account);
+	params->enableAudio(false);
+	params->enableVideo(false);
 
 	auto chatParams = params->getChatParams();
 	if (!chatParams) {
