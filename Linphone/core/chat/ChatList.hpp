@@ -50,9 +50,6 @@ signals:
 	void filterChanged(QString filter);
 	void chatAdded();
 	void chatUpdated();
-	// emit this signal to force selection when
-	// newly created chat added to the list
-	void chatCreated(ChatGui *chatGui);
 
 private:
 	QString mFilter;

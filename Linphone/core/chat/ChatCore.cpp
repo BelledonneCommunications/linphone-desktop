@@ -163,14 +163,13 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	mChatModelConnection->makeConnectToCore(&ChatCore::lDelete, [this]() {
 		mChatModelConnection->invokeToModel([this]() { mChatModel->deleteChatRoom(); });
 	});
-	mChatModelConnection->makeConnectToModel(
-	    &ChatModel::deleted, [this]() { mChatModelConnection->invokeToCore([this]() { emit deleted(); }); });
 
 	mChatModelConnection->makeConnectToModel(
 	    &ChatModel::stateChanged,
 	    [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom, linphone::ChatRoom::State newState) {
 		    auto state = LinphoneEnums::fromLinphone(newState);
 		    bool isReadOnly = chatRoom->isReadOnly();
+		    if (newState == linphone::ChatRoom::State::Deleted) emit deleted();
 		    mChatModelConnection->invokeToCore([this, state, isReadOnly]() {
 			    setChatRoomState(state);
 			    setIsReadOnly(isReadOnly);

@@ -41,8 +41,6 @@ public:
 
 	Q_INVOKABLE int findChatIndex(ChatGui *chatGui);
 	Q_INVOKABLE bool addChatInList(ChatGui *chatGui);
-signals:
-	void chatCreated(ChatGui *chatGui);
 
 protected:
 	QSharedPointer<ChatList> mList;

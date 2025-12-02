@@ -2099,65 +2099,65 @@
 <context>
     <name>ChatListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="264"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="253"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="266"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="255"/>
         <source>chat_message_draft_sending_text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="411"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="400"/>
         <source>chat_room_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="350"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="339"/>
         <source>chat_room_mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="349"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="338"/>
         <source>chat_room_unmute</source>
         <extracomment>&quot;Mute&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="363"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="352"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="382"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="371"/>
         <source>chat_room_leave</source>
         <extracomment>&quot;leave&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="388"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="377"/>
         <source>chat_list_leave_chat_popup_title</source>
         <extracomment>leave the conversation ?</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="390"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="379"/>
         <source>chat_list_leave_chat_popup_message</source>
         <extracomment>You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="417"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="406"/>
         <source>chat_list_delete_chat_popup_title</source>
         <extracomment>Delete the conversation ?</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="419"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="408"/>
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation type="unfinished"></translation>
@@ -2723,19 +2723,19 @@ Error</extracomment>
         <translation type="vanished">Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="150"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="164"/>
         <source>information_popup_error_title</source>
         <extracomment>Erreur</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="152"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="166"/>
         <source>information_popup_voicemail_address_undefined_message</source>
         <extracomment>L&apos;URI de messagerie vocale n&apos;est pas définie.</extracomment>
         <translation>Die Voicemail-URI ist nicht definiert.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="166"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="180"/>
         <source>account_settings_name_accessible_name</source>
         <extracomment>Account settings of %1</extracomment>
         <translation type="unfinished"></translation>

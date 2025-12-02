@@ -54,13 +54,15 @@ ChatList::~ChatList() {
 }
 
 void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
-	connect(chat.get(), &ChatCore::deleted, this, [this, chat] {
-		disconnect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, nullptr);
-		disconnect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, nullptr);
-		disconnect(chat.get(), &ChatCore::lastMessageChanged, this, nullptr);
-		disconnect(chat.get(), &ChatCore::deleted, this, nullptr);
-		remove(chat);
-	});
+	connect(
+	    chat.get(), &ChatCore::deleted, this,
+	    [this, chat] {
+		    disconnect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, nullptr);
+		    disconnect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, nullptr);
+		    disconnect(chat.get(), &ChatCore::lastMessageChanged, this, nullptr);
+		    remove(chat);
+	    },
+	    Qt::SingleShotConnection);
 	auto dataChange = [this, chat] {
 		int i = -1;
 		get(chat.get(), &i);
@@ -167,30 +169,6 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 		    addChatToList(core, room, message);
 	    });
 
-	mModelConnection->makeConnectToModel(
-	    &CoreModel::chatRoomStateChanged,
-	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::ChatRoom> &chatRoom,
-	           linphone::ChatRoom::State state) {
-		    auto chatRoomAccount = chatRoom->getAccount();
-		    auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
-		    if (!chatRoomAccount || !currentAccount || !chatRoomAccount->getParams() || !currentAccount->getParams() ||
-		        !chatRoomAccount->getParams()->getIdentityAddress()->weakEqual(
-		            currentAccount->getParams()->getIdentityAddress())) {
-			    lInfo() << "ChatRoom state of another account changed, return";
-			    return;
-		    }
-		    if (chatRoom->getState() == linphone::ChatRoom::State::Created) {
-			    lInfo() << "ChatRoom created, add it to the list" << chatRoom.get();
-			    auto chatCore = ChatCore::create(chatRoom);
-			    if (chatCore) {
-				    mModelConnection->invokeToCore([this, chatCore] {
-					    bool added = addChatInList(chatCore);
-					    if (added) emit chatCreated(new ChatGui(chatCore));
-				    });
-			    }
-		    }
-	    });
-
 	connect(this, &ChatList::filterChanged, [this](QString filter) {
 		mFilter = filter;
 		lUpdate();
@@ -212,8 +190,7 @@ bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	auto chatList = getSharedList<ChatCore>();
 	auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
-		return item && chatCore && item->getModel() && chatCore->getModel() &&
-		       item->getModel()->getMonitor() == chatCore->getModel()->getMonitor();
+		return item && chatCore && item->getIdentifier() == chatCore->getIdentifier();
 	});
 	if (it == chatList.end()) {
 		connectItem(chatCore);

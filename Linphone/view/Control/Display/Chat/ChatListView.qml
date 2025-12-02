@@ -18,13 +18,11 @@ ListView {
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
 
     property ChatGui currentChatGui: model.getAt(currentIndex) || null
-    onCurrentIndexChanged: console.log("current index changed", currentIndex)
     onCurrentChatGuiChanged: positionViewAtIndex(currentIndex, ListView.Center)
     property ChatGui chatToSelect: null
     property ChatGui chatToSelectLater: null
     onChatToSelectChanged: {
         if (chatToSelect) {
-            console.log("chat to select changed, select", (chatToSelect ? chatToSelect.core.title : "NULL"))
             // first clear the chatToSelect property in case we need to
             // force adding the chat to the list and the layout changes
             var toselect = chatToSelect
@@ -72,9 +70,6 @@ ListView {
                 selectChat(mainItem.currentChatGui)
             }
         }
-        onChatCreated: (chat) => {
-            selectChat(chat)
-        }
     }
     // flickDeceleration: 10000
     spacing: Utils.getSizeWithScreenRatio(10)
@@ -99,12 +94,6 @@ ListView {
 
     onActiveFocusChanged: if (activeFocus && currentIndex < 0 && count > 0)
                               currentIndex = 0
-
-    onAtYEndChanged: {
-        if (atYEnd && count > 0) {
-            chatProxy.displayMore()
-        }
-    }
 
 //----------------------------------------------------------------
     function moveToCurrentItem() {
