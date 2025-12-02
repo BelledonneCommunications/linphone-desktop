@@ -95,7 +95,21 @@ Control.Control{
 				}
 			}
 		}
-		ContactStatusPopup{}
+		Item {
+			Layout.minimumWidth: Utils.getSizeWithScreenRatio(86)
+    		Layout.maximumWidth: Utils.getSizeWithScreenRatio(150)
+			width: contactStatusPopup.width
+			height: contactStatusPopup.height
+			ContactStatusPopup{
+				id: contactStatusPopup
+			}
+			MouseArea {
+				anchors.fill: contactStatusPopup
+				enabled: !contactStatusPopup.enabled
+				cursorShape: Qt.PointingHandCursor
+				onClicked: mainItem.account.core.lSetRegisterEnabled(true)
+			}
+		}
 		Item{
             Layout.preferredWidth: Utils.getSizeWithScreenRatio(26)
             Layout.preferredHeight: Utils.getSizeWithScreenRatio(26)
