@@ -1069,9 +1069,8 @@ bool App::notify(QObject *receiver, QEvent *event) {
 }
 
 void App::handleAppActivity() {
-	auto handle = [this](AccountGui *currentAcount) {
-		auto accountCore = currentAcount->mCore;
-		Q_ASSERT(accountCore);
+	auto handle = [this](QSharedPointer<AccountCore> accountCore) {
+		if (!accountCore) return;
 		auto accountPresence = accountCore->getPresence();
 		if ((mMainWindow && mMainWindow->isActive() || (mCallsWindow && mCallsWindow->isActive())) &&
 		    accountPresence == LinphoneEnums::Presence::Away)
@@ -1081,18 +1080,18 @@ void App::handleAppActivity() {
 			accountCore->lSetPresence(LinphoneEnums::Presence::Away);
 	};
 	if (mAccountList) {
-		if (mAccountList->getDefaultAccount()) {
-			handle(mAccountList->getDefaultAccount());
-		} else {
-			connect(
-			    mAccountList.get(), &AccountList::defaultAccountChanged, this,
-			    [this, handle] {
-				    if (mAccountList->getDefaultAccount()) {
-					    handle(mAccountList->getDefaultAccount());
-				    }
-			    },
-			    Qt::SingleShotConnection);
-		}
+		for (auto &account : mAccountList->getSharedList<AccountCore>())
+			handle(account);
+	} else {
+		connect(
+		    this, &App::accountsChanged, this,
+		    [this, &handle] {
+			    if (mAccountList) {
+				    for (auto &account : mAccountList->getSharedList<AccountCore>())
+					    handle(account);
+			    }
+		    },
+		    Qt::SingleShotConnection);
 	}
 }
 
