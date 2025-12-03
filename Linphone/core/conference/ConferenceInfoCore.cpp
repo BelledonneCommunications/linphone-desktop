@@ -601,6 +601,9 @@ void ConferenceInfoCore::save() {
 			} else lCritical() << "No default account";
 			// Add text capability for chat in conf
 			linphoneConf->setCapability(linphone::StreamType::Text, true);
+			if (SettingsModel::getInstance()->getCreateEndToEndEncryptedMeetingsAndGroupCalls())
+				linphoneConf->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
+			else linphoneConf->setSecurityLevel(linphone::Conference::SecurityLevel::PointToPoint);
 			auto confInfoModel = Utils::makeQObject_ptr<ConferenceInfoModel>(linphoneConf);
 			auto confSchedulerModel = confInfoModel->getConferenceScheduler();
 			if (!confSchedulerModel) {
