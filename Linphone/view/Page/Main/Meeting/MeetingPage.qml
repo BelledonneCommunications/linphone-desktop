@@ -738,7 +738,7 @@ AbstractMainPage {
 								KeyNavigation.left: linkButton
 								KeyNavigation.right: linkButton
 								KeyNavigation.up: deletePopup
-								KeyNavigation.down: joinButton
+								KeyNavigation.down: calendarPlusButton
 								onClicked: {
 									var success = UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri)
 									if (success) UtilsCpp.showInformationPopup(qsTr("saved"),
@@ -765,6 +765,18 @@ AbstractMainPage {
 								font {
 									pixelSize: Utils.getSizeWithScreenRatio(14)
 									capitalization: Font.Capitalize
+								}
+							}
+							RoundButton {
+								id: calendarPlusButton
+								style: ButtonStyle.noBackground
+								icon.source: AppIcons.calendarPlus
+								KeyNavigation.left: calendarPlusButton
+								KeyNavigation.right: calendarPlusButton
+								KeyNavigation.up: shareNetworkButton
+								KeyNavigation.down: joinButton
+								onClicked: {
+									mainItem.selectedConference.core.exportConferenceToICS()
 								}
 							}
 						}

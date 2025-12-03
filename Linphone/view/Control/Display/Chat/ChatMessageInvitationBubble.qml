@@ -158,10 +158,21 @@ ColumnLayout {
 						}
 					}
 
-					Text {
-						text: conferenceInfo.dateTime.toLocaleString(Qt.locale(), "dddd d MMMM yyyy")
-						font: Typography.p4
-						color: DefaultStyle.main2_500_main
+					RowLayout {
+						spacing: Utils.getSizeWithScreenRatio(8)
+						Text {
+							text: conferenceInfo.dateTime.toLocaleString(Qt.locale(), "dddd d MMMM yyyy")
+							font: Typography.p4
+							color: DefaultStyle.main2_500_main
+						}
+						RoundButton {
+							id: calendarPlusButton
+							style: ButtonStyle.noBackground
+							icon.source: AppIcons.calendarPlus
+							onClicked: {
+								conferenceInfo.exportConferenceToICS()
+							}
+						}
 					}
 					Text {
 						//: from %1 to %2 (UTC%3)

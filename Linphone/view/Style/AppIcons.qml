@@ -160,4 +160,5 @@ QtObject {
 	property string ephemeralSettings: "image://internal/ephemeral-settings.svg"
 	property string hourglass: "image://internal/hourglass-simple.svg"
 	property string qtLogo: "image://internal/qt-logo.png"
+	property string calendarPlus: "image://internal/calendar-plus.svg"
 }

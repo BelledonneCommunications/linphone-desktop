@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -135,6 +135,8 @@ public:
 
 	Q_INVOKABLE bool isAllDayConf() const;
 
+	Q_INVOKABLE void exportConferenceToICS() const;
+
 signals:
 	void dateTimeChanged();
 	void endDateTimeChanged();
@@ -177,6 +179,7 @@ private:
 	QString mSubject;
 	QString mDescription;
 	QString mUri;
+	QString mIcalendarString;
 	QVariantList mParticipants;
 	QSharedPointer<TimeZoneModel> mTimeZoneModel;
 	LinphoneEnums::ConferenceSchedulerState mConferenceSchedulerState;

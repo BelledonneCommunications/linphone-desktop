@@ -21,11 +21,14 @@
 #include "ConferenceInfoCore.hpp"
 
 #include "core/App.hpp"
+#include "core/path/Paths.hpp"
 #include "core/proxy/ListProxy.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/thread/SafeConnection.hpp"
+
+#include <QDesktopServices>
 
 DEFINE_ABSTRACT_OBJECT(ConferenceInfoCore)
 
@@ -69,6 +72,7 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		mUri = address && address->isValid() && !address->getDomain().empty()
 		           ? Utils::coreStringToAppString(address->asStringUriOnly())
 		           : "";
+		mIcalendarString = Utils::coreStringToAppString(conferenceInfo->getIcalendarString());
 		mDateTime = QDateTime::fromMSecsSinceEpoch(conferenceInfo->getDateTime() * 1000);
 		mDuration = conferenceInfo->getDuration();
 		mEndDateTime = mDateTime.addSecs(mDuration * 60);
@@ -123,6 +127,7 @@ ConferenceInfoCore::ConferenceInfoCore(const ConferenceInfoCore &conferenceInfoC
 	mIsEnded = conferenceInfoCore.mIsEnded;
 	mInviteEnabled = conferenceInfoCore.mInviteEnabled;
 	mConferenceInfoState = conferenceInfoCore.mConferenceInfoState;
+	mIcalendarString = conferenceInfoCore.mIcalendarString;
 }
 
 ConferenceInfoCore::~ConferenceInfoCore() {
@@ -652,4 +657,15 @@ void ConferenceInfoCore::onInvitationsSent(const std::list<std::shared_ptr<linph
 bool ConferenceInfoCore::isAllDayConf() const {
 	return mDateTime.time().hour() == 0 && mDateTime.time().minute() == 0 && mEndDateTime.time().hour() == 23 &&
 	       mEndDateTime.time().minute() == 59;
+}
+
+void ConferenceInfoCore::exportConferenceToICS() const {
+	QString filePath(Paths::getAppLocalDirPath() + "conference.ics");
+	QFile file(filePath);
+	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+		QTextStream out(&file);
+		out << mIcalendarString;
+		file.close();
+	}
+	QDesktopServices::openUrl(QUrl::fromLocalFile(filePath));
 }
