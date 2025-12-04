@@ -91,6 +91,8 @@ public:
 	std::string configAccountSection();
 	bool forwardToVoiceMailInDndPresence();
 	std::list<std::shared_ptr<linphone::ChatRoom>> getChatRooms();
+	QString getCcmpServerUrl() const;
+	void setCcmpServerUrl(QString value);
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
@@ -126,6 +128,7 @@ signals:
 	void showMwiChanged(bool show);
 	void voicemailAddressChanged(QString value);
 	void presenceChanged(LinphoneEnums::Presence presence, bool userInitiated);
+	void ccmpServerUrlChanged(QString value);
 
 	void setValueFailed(const QString &errorMessage);
 

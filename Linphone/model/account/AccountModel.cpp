@@ -606,3 +606,15 @@ bool AccountModel::forwardToVoiceMailInDndPresence() {
 std::list<std::shared_ptr<linphone::ChatRoom>> AccountModel::getChatRooms() {
 	return mMonitor->getChatRooms();
 }
+
+QString AccountModel::getCcmpServerUrl() const {
+	return Utils::coreStringToAppString(mMonitor->getParams()->getCcmpServerUrl());
+}
+
+void AccountModel::setCcmpServerUrl(QString value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	params->setCcmpServerUrl(Utils::appStringToCoreString(value));
+	mMonitor->setParams(params);
+	emit ccmpServerUrlChanged(value);
+}

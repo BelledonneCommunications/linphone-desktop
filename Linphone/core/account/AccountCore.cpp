@@ -84,6 +84,7 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	        ? Utils::coreStringToAppString(params->getAudioVideoConferenceFactoryAddress()->asString())
 	        : "";
 	mLimeServerUrl = Utils::coreStringToAppString(params->getLimeServerUrl());
+	mCcmpServerUrl = Utils::coreStringToAppString(params->getCcmpServerUrl());
 
 	// Add listener
 	mAccountModel = Utils::makeQObject_ptr<AccountModel>(account); // OK
@@ -148,6 +149,7 @@ AccountCore::AccountCore(const AccountCore &accountCore) {
 	mConferenceFactoryAddress = accountCore.mConferenceFactoryAddress;
 	mAudioVideoConferenceFactoryAddress = accountCore.mAudioVideoConferenceFactoryAddress;
 	mLimeServerUrl = accountCore.mLimeServerUrl;
+	mCcmpServerUrl = accountCore.mCcmpServerUrl;
 }
 
 void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
@@ -236,6 +238,10 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToModel(&AccountModel::limeServerUrlChanged, [this](QString value) {
 		mAccountModelConnection->invokeToCore([this, value]() { onLimeServerUrlChanged(value); });
 	});
+	mAccountModelConnection->makeConnectToModel(&AccountModel::ccmpServerUrlChanged, [this](QString value) {
+		mAccountModelConnection->invokeToCore([this, value]() { onCcmpServerUrlChanged(value); });
+	});
+
 	mAccountModelConnection->makeConnectToModel(
 	    &AccountModel::removed, [this]() { mAccountModelConnection->invokeToCore([this]() { emit removed(); }); });
 
@@ -327,6 +333,7 @@ void AccountCore::reset(const AccountCore &accountCore) {
 	setConferenceFactoryAddress(accountCore.mConferenceFactoryAddress);
 	setAudioVideoConferenceFactoryAddress(accountCore.mAudioVideoConferenceFactoryAddress);
 	setLimeServerUrl(accountCore.mLimeServerUrl);
+	setCcmpServerUrl(accountCore.mCcmpServerUrl);
 }
 
 const std::shared_ptr<AccountModel> &AccountCore::getModel() const {
@@ -574,6 +581,10 @@ QString AccountCore::getLimeServerUrl() {
 	return mLimeServerUrl;
 }
 
+QString AccountCore::getCcmpServerUrl() {
+	return mCcmpServerUrl;
+}
+
 void AccountCore::setMwiServerAddress(QString value) {
 	if (mMwiServerAddress != value) {
 		mMwiServerAddress = value;
@@ -674,6 +685,14 @@ void AccountCore::setLimeServerUrl(QString value) {
 	if (mLimeServerUrl != value) {
 		mLimeServerUrl = value;
 		emit limeServerUrlChanged();
+		setIsSaved(false);
+	}
+}
+
+void AccountCore::setCcmpServerUrl(QString value) {
+	if (mCcmpServerUrl != value) {
+		mCcmpServerUrl = value;
+		emit ccmpServerUrlChanged();
 		setIsSaved(false);
 	}
 }
@@ -790,6 +809,13 @@ void AccountCore::onLimeServerUrlChanged(QString value) {
 	}
 }
 
+void AccountCore::onCcmpServerUrlChanged(QString value) {
+	if (value != mCcmpServerUrl) {
+		mCcmpServerUrl = value;
+		emit ccmpServerUrlChanged();
+	}
+}
+
 void AccountCore::writeIntoModel(std::shared_ptr<AccountModel> model) const {
 	mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
 	model->setMwiServerAddress(mMwiServerAddress);
@@ -806,6 +832,7 @@ void AccountCore::writeIntoModel(std::shared_ptr<AccountModel> model) const {
 	model->setConferenceFactoryAddress(mConferenceFactoryAddress);
 	model->setAudioVideoConferenceFactoryAddress(mAudioVideoConferenceFactoryAddress);
 	model->setLimeServerUrl(mLimeServerUrl);
+	model->setCcmpServerUrl(mCcmpServerUrl);
 	model->setVoicemailAddress(mVoicemailAddress);
 }
 
@@ -825,6 +852,7 @@ void AccountCore::writeFromModel(const std::shared_ptr<AccountModel> &model) {
 	onConferenceFactoryAddressChanged(model->getConferenceFactoryAddress());
 	onAudioVideoConferenceFactoryAddressChanged(model->getAudioVideoConferenceFactoryAddress());
 	onLimeServerUrlChanged(model->getLimeServerUrl());
+	onCcmpServerUrlChanged(model->getCcmpServerUrl());
 	onVoicemailAddressChanged(model->getVoicemailAddress());
 }
 

@@ -84,6 +84,7 @@ public:
 	Q_PROPERTY(LinphoneEnums::Presence explicitPresence MEMBER mExplicitPresence NOTIFY presenceChanged)
 	Q_PROPERTY(QString presenceNote READ getPresenceNote WRITE setPresenceNote NOTIFY presenceChanged)
 	Q_PROPERTY(int maxPresenceNoteSize MEMBER mMaxPresenceNoteSize CONSTANT)
+	Q_PROPERTY(QString ccmpServerUrl READ getCcmpServerUrl WRITE setCcmpServerUrl NOTIFY ccmpServerUrlChanged)
 
 	DECLARE_CORE_GET(int, voicemailCount, VoicemailCount)
 	static QSharedPointer<AccountCore> create(const std::shared_ptr<linphone::Account> &account);
@@ -143,6 +144,7 @@ public:
 	QString getAudioVideoConferenceFactoryAddress();
 	QString getLimeServerUrl();
 	QString getVoicemailAddress();
+	QString getCcmpServerUrl();
 
 	void setMwiServerAddress(QString value);
 	void setTransport(QString value);
@@ -157,6 +159,7 @@ public:
 	void setAudioVideoConferenceFactoryAddress(QString value);
 	void setLimeServerUrl(QString value);
 	void setVoicemailAddress(QString value);
+	void setCcmpServerUrl(QString value);
 
 	bool isSaved() const;
 	void setIsSaved(bool saved);
@@ -175,6 +178,7 @@ public:
 	void onConferenceFactoryAddressChanged(QString value);
 	void onAudioVideoConferenceFactoryAddressChanged(QString value);
 	void onLimeServerUrlChanged(QString value);
+	void onCcmpServerUrlChanged(QString value);
 
 	DECLARE_CORE_GET(bool, showMwi, ShowMwi)
 
@@ -220,6 +224,7 @@ signals:
 	void isSavedChanged();
 	void voicemailAddressChanged();
 	void presenceChanged();
+	void ccmpServerUrlChanged();
 
 	void setValueFailed(const QString &error);
 
@@ -268,6 +273,7 @@ private:
 	QString mAudioVideoConferenceFactoryAddress;
 	QString mLimeServerUrl;
 	QString mVoicemailAddress;
+	QString mCcmpServerUrl;
 	LinphoneEnums::Presence mPresence = LinphoneEnums::Presence::Undefined;
 	LinphoneEnums::Presence mExplicitPresence;
 	QString mPresenceNote;

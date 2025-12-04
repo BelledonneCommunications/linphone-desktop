@@ -207,6 +207,14 @@ AbstractSettingsLayout {
                 propertyOwnerGui: account
                 toValidate: true
             }
+            DecoratedTextField {
+                Layout.fillWidth: true
+                //: "URL du serveur CCMP"
+                title: qsTr("account_settings_ccmp_server_url_title")
+                propertyName: "ccmpServerUrl"
+                propertyOwnerGui: account
+                toValidate: true
+            }
         }
     }
 }

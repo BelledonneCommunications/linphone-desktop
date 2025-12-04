@@ -493,6 +493,12 @@
         <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
         <translation>Lime server URL</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml"/>
+		<source>account_settings_ccmp_server_url_title</source>
+		<extracomment>&quot;URL du serveur CCMP&quot;</extracomment>
+		<translation>CCMP server URL</translation>
+	</message>
 </context>
 <context>
     <name>AddParticipantsForm</name>
