@@ -226,6 +226,8 @@ AbstractMainPage {
 					Layout.topMargin: Utils.getSizeWithScreenRatio(38 - 24)
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					focusPolicy: Qt.ClickFocus
+					focus: true
 
 					searchBarText: searchBar.text
 

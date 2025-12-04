@@ -4716,98 +4716,98 @@ Ablauf: %1</translation>
         <translation>Keine Besprechungen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="292"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="353"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="294"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="355"/>
         <source>meeting_schedule_title</source>
         <extracomment>&quot;Nouvelle réunion&quot;</extracomment>
         <translation>Neue Besprechung</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="303"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="305"/>
         <source>create</source>
         <translation>Erstellen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="310"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="314"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="365"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="468"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="471"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="519"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="312"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="316"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="367"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="470"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="473"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="521"/>
         <source>information_popup_error_title</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="312"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="469"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="314"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="471"/>
         <source>meeting_schedule_mandatory_field_not_filled_toast</source>
         <extracomment>Veuillez saisir un titre et sélectionner au moins un participant</extracomment>
         <translation>Bitte Titel bestimmen und mindestens einen Teilnehmer auswählen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="316"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="472"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="318"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="474"/>
         <source>meeting_schedule_duration_error_toast</source>
         <extracomment>&quot;La fin de la conférence doit être plus récente que son début&quot;</extracomment>
         <translation>Das Ende der Besprechung muss nach dem Beginn liegen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="320"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="360"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="322"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="362"/>
         <source>meeting_schedule_creation_in_progress</source>
         <extracomment>&quot;Création de la réunion en cours …&quot;</extracomment>
         <translation>Besprechung wird erstellt…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="355"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="357"/>
         <source>meeting_info_created_toast</source>
         <extracomment>&quot;Réunion planifiée avec succès&quot;</extracomment>
         <translation>Besprechung erfolgreich erstellt</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="367"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="369"/>
         <source>meeting_failed_to_schedule_toast</source>
         <extracomment>&quot;Échec de création de la réunion !&quot;</extracomment>
         <translation>Besprechung konnte nicht erstellt werden!</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="461"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="463"/>
         <source>save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="510"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="744"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="512"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="746"/>
         <source>saved</source>
         <extracomment>&quot;Enregistré&quot;</extracomment>
         <translation>Gespeichert</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="512"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="514"/>
         <source>meeting_info_updated_toast</source>
         <extracomment>&quot;Réunion mise à jour&quot;</extracomment>
         <translation>Besprechung geändert</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="517"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="519"/>
         <source>meeting_schedule_edit_in_progress</source>
         <extracomment>&quot;Modification de la réunion en cours…&quot;</extracomment>
         <translation>Bersprechung wird geändert…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="521"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="523"/>
         <source>meeting_failed_to_edit_toast</source>
         <extracomment>&quot;Échec de la modification de la réunion !&quot;</extracomment>
         <translation>Besprechung konnte nicht geändert werden!</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="569"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="571"/>
         <source>meeting_schedule_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Teilnehmer hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="583"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="585"/>
         <source>meeting_schedule_add_participants_apply</source>
         <translation>Anwenden</translation>
     </message>
@@ -4816,7 +4816,7 @@ Ablauf: %1</translation>
         <translation type="vanished">Hinzufügen</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="593"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="595"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
         <translation>
@@ -4825,31 +4825,31 @@ Ablauf: %1</translation>
         </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="683"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="685"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Besprechung löschen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="746"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="748"/>
         <source>meeting_address_copied_to_clipboard_toast</source>
         <extracomment>&quot;Adresse de la réunion copiée&quot;</extracomment>
         <translation>Besprechungs-URI kopiert</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="782"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="784"/>
         <source>meeting_schedule_timezone_title</source>
         <extracomment>&quot;Fuseau horaire&quot;</extracomment>
         <translation>Zeitzone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="888"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="890"/>
         <source>meeting_info_organizer_label</source>
         <extracomment>&quot;Organisateur&quot;</extracomment>
         <translation>Organisator</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="905"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="907"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
         <translation>Besprechung beitreten</translation>
