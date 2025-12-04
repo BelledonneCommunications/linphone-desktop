@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Linphone VERSION 6.1.0 LANGUAGES CXX)
+project(Linphone VERSION 6.2.0 LANGUAGES CXX)
 
 ################################################################
 #						PACKAGES
