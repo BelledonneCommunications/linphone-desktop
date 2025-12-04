@@ -47,7 +47,7 @@ public:
 	bool getAccountConnected() const;
 
 	Q_INVOKABLE void clear();
-	Q_INVOKABLE ConferenceInfoGui *getCurrentDateConfInfo();
+	Q_INVOKABLE ConferenceInfoGui *getCurrentDateConfInfo(bool enableCancelledConference = false);
 	Q_INVOKABLE int loadUntil(ConferenceInfoGui *confInfo);
 	int loadUntil(QSharedPointer<ConferenceInfoCore> data);
 signals:

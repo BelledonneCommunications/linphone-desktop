@@ -173,13 +173,15 @@ ColumnLayout {
 		Layout.preferredHeight: height
 		height: implicitHeight
         visible: mainItem.screenSharingAvailable$
-		enabled: windowsLayout.currentIndex !== -1 || screensLayout.currentIndex !== -1
+		enabled: mainItem.isLocalScreenSharing || windowsLayout.currentIndex !== -1 || screensLayout.currentIndex !== -1
 		text:  mainItem.conference && mainItem.conference.core.isLocalScreenSharing
         //: "Stop
             ? qsTr("stop")
         //: "Partager"
             : qsTr("share")
-		onClicked: mainItem.conference.core.lToggleScreenSharing()
+		onClicked: {
+			mainItem.conference.core.lToggleScreenSharing()
+		}
 		style: ButtonStyle.main
 	}
 }

@@ -27,34 +27,23 @@ AbstractSettingsLayout {
     property alias account: mainItem.model
 
     onSave: {
-        if (!registrarUriIsValid || !outboundProxyIsValid) {
-            var message = !registrarUriIsValid
-            //: Registrar uri is invalid. Please make sure it matches the following format : sip:<host>:<port>;transport=<transport> (:<port> is optional)
-            ? qsTr("info_popup_invalid_registrar_uri_message")
-            //: Outbound proxy uri is invalid. Please make sure it matches the following format : sip:<host>:<port>;transport=<transport> (:<port> is optional)
-            : qsTr("info_popup_invalid_outbound_proxy_message")
-            mainWindow.showInformationPopup(qsTr("info_popup_error_title"), message, false)
-        }
-        else account.core.save()
+        account.core.save()
     }
     onUndo: account.core.undo()
     Connections {
         target: account.core
         function onIsSavedChanged() {
+            console.log("saved changed", account.core.isSaved)
             if (account.core.isSaved) {
-                UtilsCpp.showInformationPopup(
-                            qsTr("information_popup_success_title"),
+                UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"),
                             //: "Modifications sauvegardés"
-                            qsTr("contact_editor_saved_changes_toast"), true,
-                            mainWindow)
+                            qsTr("contact_editor_saved_changes_toast"), true, mainWindow)
             }
         }
         function onSetValueFailed(error) {
             if (error) {
                 UtilsCpp.showInformationPopup(
-                            qsTr("information_popup_error_title"),
-                            error, false,
-                            mainWindow)
+                            qsTr("information_popup_error_title"), error, false, mainWindow)
             }
         }
     }
@@ -129,11 +118,6 @@ AbstractSettingsLayout {
                 propertyName: "registrarUri"
                 propertyOwnerGui: account
                 toValidate: true
-                isValid: function(text) {
-                    var valid = text === "" || UtilsCpp.stringMatchFormat(text, ConstantsCpp.uriRegExp)
-                    mainItem.registrarUriIsValid = valid
-                    return valid
-                }
             }
             DecoratedTextField {
                 Layout.fillWidth: true
@@ -141,14 +125,9 @@ AbstractSettingsLayout {
                 title: qsTr("account_settings_sip_proxy_url_title")
                 propertyName: "outboundProxyUri"
                 propertyOwnerGui: account
-                toValidate: true
                 //: "If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it."
                 tooltip: qsTr("login_proxy_server_url_tooltip")
-                isValid: function(text) {
-                    var isValid = text === "" || UtilsCpp.stringMatchFormat(text, ConstantsCpp.uriRegExp)
-                    mainItem.outboundProxyIsValid = isValid
-                    return isValid
-                }
+                toValidate: true
             }
             DecoratedTextField {
                 Layout.fillWidth: true

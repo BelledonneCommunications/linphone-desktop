@@ -64,7 +64,6 @@ public:
 	Q_PROPERTY(
 	    int ephemeralLifetime READ getEphemeralLifetime WRITE lSetEphemeralLifetime NOTIFY ephemeralLifetimeChanged)
 	Q_PROPERTY(bool muted READ isMuted WRITE lSetMuted NOTIFY mutedChanged)
-	Q_PROPERTY(bool conferenceJoined MEMBER mConferenceJoined NOTIFY conferenceJoined)
 	Q_PROPERTY(bool meAdmin READ getMeAdmin WRITE setMeAdmin NOTIFY meAdminChanged)
 	Q_PROPERTY(QVariantList participants READ getParticipantsGui NOTIFY participantsChanged)
 	Q_PROPERTY(QStringList participantsAddresses READ getParticipantsAddresses WRITE lSetParticipantsAddresses NOTIFY
@@ -142,7 +141,6 @@ public:
 	void setComposingAddress(QString composingAddress);
 
 	std::shared_ptr<ChatModel> getModel() const;
-	QSharedPointer<SafeConnection<ChatCore, ChatModel>> getChatModelConnection() const;
 
 	void setParticipants(QList<QSharedPointer<ParticipantCore>> participants);
 	QList<QSharedPointer<ParticipantCore>> buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom) const;

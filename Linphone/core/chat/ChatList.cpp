@@ -54,13 +54,15 @@ ChatList::~ChatList() {
 }
 
 void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
-	connect(chat.get(), &ChatCore::deleted, this, [this, chat] {
-		disconnect(chat.get());
-		remove(chat);
-		// We cannot use countChanged here because it is called before mList
-		// really has removed the item, then emit specific signal
-		emit chatRemoved(chat ? new ChatGui(chat) : nullptr);
-	});
+	connect(
+	    chat.get(), &ChatCore::deleted, this,
+	    [this, chat] {
+		    disconnect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, nullptr);
+		    disconnect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, nullptr);
+		    disconnect(chat.get(), &ChatCore::lastMessageChanged, this, nullptr);
+		    remove(chat);
+	    },
+	    Qt::SingleShotConnection);
 	auto dataChange = [this, chat] {
 		int i = -1;
 		get(chat.get(), &i);
@@ -94,7 +96,6 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 		mModelConnection->invokeToModel([this]() {
 			mustBeInLinphoneThread(getClassName());
 			beginResetModel();
-			mList.clear();
 			// Avoid copy to lambdas
 			QList<QSharedPointer<ChatCore>> *chats = new QList<QSharedPointer<ChatCore>>();
 			auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
@@ -118,6 +119,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 						disconnect(chat.get(), &ChatCore::lastMessageChanged, this, nullptr);
 					}
 				}
+				mList.clear();
 				for (auto &chat : *chats) {
 					connectItem(chat);
 				}
@@ -143,18 +145,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			return;
 		}
 		auto chatCore = ChatCore::create(room);
-		mModelConnection->invokeToCore([this, chatCore] {
-			auto chatList = getSharedList<ChatCore>();
-			auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
-				return item && chatCore && item->getModel() && chatCore->getModel() &&
-				       item->getModel()->getMonitor() == chatCore->getModel()->getMonitor();
-			});
-			if (it == chatList.end()) {
-				connectItem(chatCore);
-				add(chatCore);
-				emit chatAdded();
-			}
-		});
+		mModelConnection->invokeToCore([this, chatCore] { addChatInList(chatCore); });
 	};
 	mModelConnection->makeConnectToModel(&CoreModel::messageReceived,
 	                                     [this, addChatToList](const std::shared_ptr<linphone::Core> &core,
@@ -195,17 +186,19 @@ int ChatList::findChatIndex(ChatGui *chatGui) {
 	return it == chatList.end() ? -1 : std::distance(chatList.begin(), it);
 }
 
-void ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
+bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	auto chatList = getSharedList<ChatCore>();
 	auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
-		return item && chatCore && item->getModel() && chatCore->getModel() &&
-		       item->getModel()->getMonitor() == chatCore->getModel()->getMonitor();
+		return item && chatCore && item->getIdentifier() == chatCore->getIdentifier();
 	});
 	if (it == chatList.end()) {
 		connectItem(chatCore);
 		add(chatCore);
 		emit chatAdded();
+		return true;
 	}
+	return false;
 }
 
 QVariant ChatList::data(const QModelIndex &index, int role) const {

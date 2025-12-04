@@ -205,7 +205,7 @@ ListView {
                 Accessible.name: qsTr("call_name_accessible_button").arg(historyAvatar.displayNameVal)
                 onClicked: {
                     if (modelData.core.isConference) {
-                        var callsWindow = UtilsCpp.getCallsWindow()
+                        var callsWindow = UtilsCpp.getOrCreateCallsWindow()
                         callsWindow.setupConference(
                                     modelData.core.conferenceInfo)
                         UtilsCpp.smartShowWindow(callsWindow)

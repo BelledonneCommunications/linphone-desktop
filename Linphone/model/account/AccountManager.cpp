@@ -19,6 +19,7 @@
  */
 
 #include "AccountManager.hpp"
+#include "tool/accessibility/AccessibilityHelper.hpp"
 
 #include <QDebug>
 #include <QDesktopServices>
@@ -66,7 +67,7 @@ bool AccountManager::login(QString username,
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	auto factory = linphone::Factory::get();
-	QString assistantFile = (!QString::compare(domain, "sip.linphone.org") || domain.isEmpty())
+	QString assistantFile = (!QString::compare(domain, "sip.linphone.org", Qt::CaseInsensitive) || domain.isEmpty())
 	                            ? "use-app-sip-account.rc"
 	                            : "use-other-sip-account.rc";
 	auto account = createAccount(assistantFile);
@@ -81,8 +82,13 @@ bool AccountManager::login(QString username,
 	auto otherAccounts = core->getAccountList();
 	for (auto otherAccount : otherAccounts) {
 		auto otherParams = otherAccount->getParams();
-		if (otherParams->getIdentityAddress()->getUsername() == Utils::appStringToCoreString(username) &&
-		    otherParams->getDomain() == Utils::appStringToCoreString(domain)) {
+		if (domain.isEmpty()) {
+			lDebug() << "domain is empty, setting \"sip.linphone.org\" by default";
+			domain = "sip.linphone.org";
+		}
+		if (!QString::compare(Utils::coreStringToAppString(otherParams->getIdentityAddress()->getUsername()), username,
+		                      Qt::CaseInsensitive) &&
+		    !QString::compare(Utils::coreStringToAppString(otherParams->getDomain()), domain, Qt::CaseInsensitive)) {
 			//: "The account is already connected"
 			*errorMessage = tr("assistant_account_login_already_connected_error");
 			return false;
@@ -153,6 +159,7 @@ bool AccountManager::login(QString username,
 					        errorMessage = tr("assistant_account_login_forbidden_error");
 				        //: "Error during connection, please verify your parameters"
 				        else errorMessage = tr("assistant_account_login_error");
+				        AccessibilityHelper::announceMessage(errorMessage);
 				        mAccountModel->removeAccount();
 			        } else if (state == linphone::RegistrationState::Ok) {
 				        core->setDefaultAccount(account);

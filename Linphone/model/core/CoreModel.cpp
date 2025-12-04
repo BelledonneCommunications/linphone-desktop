@@ -114,6 +114,10 @@ void CoreModel::start() {
 	if (mCore->getLogCollectionUploadServerUrl().empty())
 		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
 
+	/// These 2 API should not be used as they manage internal gains insterad of those of the soundcard.
+	// Use playback/capture gain from capture graph and call only
+	mCore->setMicGainDb(0.0);
+	mCore->setPlaybackGainDb(0.0);
 	mIterateTimer = new QTimer(this);
 	mIterateTimer->setInterval(20);
 	connect(mIterateTimer, &QTimer::timeout, [this]() { mCore->iterate(); });
@@ -200,7 +204,7 @@ void CoreModel::setPathAfterStart() {
 	QString rootCaPath = Utils::coreStringToAppString(mCore->getRootCa());
 	QString relativeRootCa = Paths::getAppRootCaFilePath();
 	lDebug() << "[CoreModel] Getting rootCa paths: " << rootCaPath << " VS " << relativeRootCa;
-	if (!Paths::filePathExists(rootCaPath) || Paths::isSameRelativeFile(rootCaPath, relativeRootCa) ) {
+	if (!Paths::filePathExists(rootCaPath) || Paths::isSameRelativeFile(rootCaPath, relativeRootCa)) {
 		lInfo() << "[CoreModel] Reset rootCa path to: " << relativeRootCa;
 		mCore->setRootCa(Utils::appStringToCoreString(relativeRootCa));
 	}
@@ -219,7 +223,10 @@ QString CoreModel::getFetchConfig(QString filePath, bool *error) {
 			if (!filePath.isEmpty()) filePath = "file://" + filePath;
 		}
 		if (filePath.isEmpty()) {
-			qWarning() << "Remote provisionning cannot be retrieved. Command have been cleaned";
+			qWarning() << "Remote provisioning cannot be retrieved. Command have been cleaned";
+			Utils::showInformationPopup(tr("info_popup_error_title"),
+			                            //: "Remote provisioning cannot be retrieved"
+			                            tr("fetching_config_failed_error_message"), false);
 			*error = true;
 		}
 	}
@@ -366,6 +373,23 @@ void CoreModel::searchInMagicSearch(QString filter,
                                     LinphoneEnums::MagicSearchAggregation aggregation,
                                     int maxResults) {
 	mMagicSearch->search(filter, sourceFlags, aggregation, maxResults);
+}
+
+void CoreModel::checkForUpdate(const std::string &applicationVersion, bool requestedByUser) {
+	mCheckVersionRequestedByUser = requestedByUser;
+	auto settingsModel = SettingsModel::getInstance();
+	if (settingsModel->isCheckForUpdateEnabled()) {
+		if (settingsModel->getVersionCheckUrl().isEmpty())
+			settingsModel->setVersionCheckUrl(Constants::VersionCheckReleaseUrl);
+		lInfo() << log().arg("Checking for update for version") << applicationVersion;
+		getCore()->checkForUpdate(applicationVersion);
+	} else {
+		lWarning() << log().arg("Check for update settings is not set");
+	}
+}
+
+bool CoreModel::isCheckVersionRequestedByUser() const {
+	return mCheckVersionRequestedByUser;
 }
 
 //---------------------------------------------------------------------------------------------------------------------------
@@ -525,6 +549,7 @@ void CoreModel::onLogCollectionUploadProgressIndication(const std::shared_ptr<li
 void CoreModel::onMessageReceived(const std::shared_ptr<linphone::Core> &core,
                                   const std::shared_ptr<linphone::ChatRoom> &room,
                                   const std::shared_ptr<linphone::ChatMessage> &message) {
+	if (SettingsModel::getInstance()->getDisableChatFeature()) return;
 	if (message->isOutgoing()) return;
 	emit unreadNotificationsChanged();
 	std::list<std::shared_ptr<linphone::ChatMessage>> messages;
@@ -537,6 +562,7 @@ void CoreModel::onMessageReceived(const std::shared_ptr<linphone::Core> &core,
 void CoreModel::onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
                                    const std::shared_ptr<linphone::ChatRoom> &room,
                                    const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
+	if (SettingsModel::getInstance()->getDisableChatFeature()) return;
 	std::list<std::shared_ptr<linphone::ChatMessage>> finalMessages;
 	for (auto &message : messages) {
 		if (message->isOutgoing()) continue;
@@ -554,6 +580,7 @@ void CoreModel::onNewMessageReaction(const std::shared_ptr<linphone::Core> &core
                                      const std::shared_ptr<linphone::ChatRoom> &chatRoom,
                                      const std::shared_ptr<linphone::ChatMessage> &message,
                                      const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) {
+	if (SettingsModel::getInstance()->getDisableChatFeature()) return;
 	emit newMessageReaction(core, chatRoom, message, reaction);
 }
 void CoreModel::onNotifyPresenceReceivedForUriOrTel(
@@ -574,6 +601,7 @@ void CoreModel::onReactionRemoved(const std::shared_ptr<linphone::Core> &core,
                                   const std::shared_ptr<linphone::ChatRoom> &chatRoom,
                                   const std::shared_ptr<linphone::ChatMessage> &message,
                                   const std::shared_ptr<const linphone::Address> &address) {
+	if (SettingsModel::getInstance()->getDisableChatFeature()) return;
 	emit reactionRemoved(core, chatRoom, message, address);
 }
 void CoreModel::onTransferStateChanged(const std::shared_ptr<linphone::Core> &core,
@@ -585,7 +613,7 @@ void CoreModel::onVersionUpdateCheckResultReceived(const std::shared_ptr<linphon
                                                    linphone::VersionUpdateCheckResult result,
                                                    const std::string &version,
                                                    const std::string &url) {
-	emit versionUpdateCheckResultReceived(core, result, version, url);
+	emit versionUpdateCheckResultReceived(core, result, version, url, mCheckVersionRequestedByUser);
 }
 
 void CoreModel::onFriendListRemoved(const std::shared_ptr<linphone::Core> &core,
@@ -610,4 +638,13 @@ void CoreModel::onFriendListRemoved(const std::shared_ptr<linphone::Core> &core,
 	    emit friendRemoved(f);
 	}
 */
+}
+
+void CoreModel::onAudioDevicesListUpdated(const std::shared_ptr<linphone::Core> &core) {
+	emit audioDevicesListUpdated(core);
+}
+
+void CoreModel::onAudioDeviceChanged(const std::shared_ptr<linphone::Core> &core,
+                                     const std::shared_ptr<linphone::AudioDevice> &device) {
+	emit audioDeviceChanged(core, device);
 }

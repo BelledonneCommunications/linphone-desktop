@@ -94,18 +94,29 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 			    [this](const std::list<std::shared_ptr<linphone::SearchResult>> &results) {
 				    auto *contacts = new QList<QSharedPointer<FriendCore>>();
 				    auto ldapContacts = ToolModel::getLdapFriendList();
-
+				    auto core = CoreModel::getInstance()->getCore();
+				    auto userAddress = core->getDefaultAccount() && core->getDefaultAccount()->getParams()
+				                           ? core->getDefaultAccount()->getParams()->getIdentityAddress()
+				                           : nullptr;
 				    for (auto it : results) {
 					    QSharedPointer<FriendCore> contact;
 					    auto linphoneFriend = it->getFriend();
 					    bool isStored = false;
 					    if (linphoneFriend) {
+						    if (!mShowMe && userAddress && userAddress->weakEqual(linphoneFriend->getAddress())) {
+							    lWarning() << log().arg("do not show my own address in this contact list");
+							    continue;
+						    }
 						    isStored =
 						        (ldapContacts->findFriendByAddress(linphoneFriend->getAddress()) != linphoneFriend);
 						    contact = FriendCore::create(linphoneFriend, isStored, it->getSourceFlags());
 						    contacts->append(contact);
 					    } else if (auto address = it->getAddress()) {
-						    auto linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
+						    if (!mShowMe && userAddress && userAddress->weakEqual(address)) {
+							    lWarning() << log().arg("do not show my own address in this contact list");
+							    continue;
+						    }
+						    auto linphoneFriend = core->createFriend();
 						    linphoneFriend->setAddress(address);
 						    contact = FriendCore::create(linphoneFriend, isStored, it->getSourceFlags());
 						    auto displayName = Utils::coreStringToAppString(address->getDisplayName());
@@ -125,7 +136,7 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 						    contacts->append(contact);
 					    } else if (!it->getPhoneNumber().empty()) {
 						    auto phoneNumber = it->getPhoneNumber();
-						    linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
+						    linphoneFriend = core->createFriend();
 						    linphoneFriend->addPhoneNumber(phoneNumber);
 						    contact = FriendCore::create(linphoneFriend, isStored, it->getSourceFlags());
 						    contact->setGivenName(Utils::coreStringToAppString(it->getPhoneNumber()));
@@ -199,6 +210,17 @@ void MagicSearchList::setMaxResults(int maxResults) {
 	if (mMaxResults != maxResults) {
 		mMaxResults = maxResults;
 		emit maxResultsChanged(mMaxResults);
+	}
+}
+
+bool MagicSearchList::getShowMe() const {
+	return mShowMe;
+}
+
+void MagicSearchList::setShowMe(bool showMe) {
+	if (mShowMe != showMe) {
+		mShowMe = showMe;
+		emit showMeChanged(mShowMe);
 	}
 }
 

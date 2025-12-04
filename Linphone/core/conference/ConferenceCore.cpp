@@ -47,6 +47,7 @@ ConferenceCore::ConferenceCore(const std::shared_ptr<linphone::Conference> &conf
 	mIsLocalScreenSharing = mConferenceModel->isLocalScreenSharing();
 	mIsScreenSharingEnabled = mConferenceModel->isScreenSharingEnabled();
 	mIsRecording = conference->isRecording();
+	if (conference->getCurrentParams()) mIsChatEnabled = conference->getCurrentParams()->chatEnabled();
 	auto me = conference->getMe();
 	auto confAddress = conference->getConferenceAddress();
 	if (confAddress) {
@@ -203,6 +204,10 @@ void ConferenceCore::setIsScreenSharingEnabled(bool state) {
 		mIsScreenSharingEnabled = state;
 		emit isScreenSharingEnabledChanged();
 	}
+}
+
+bool ConferenceCore::isChatEnabled() const {
+	return mIsChatEnabled;
 }
 
 std::shared_ptr<ConferenceModel> ConferenceCore::getModel() const {

@@ -35,25 +35,6 @@ Control.TabBar {
             initButtons()
         }
     }
-
-	component UnreadNotification: Rectangle {
-		property int unread: 0
-		visible: unread > 0
-        width: Utils.getSizeWithScreenRatio(15)
-        height: Utils.getSizeWithScreenRatio(15)
-		radius: width/2
-		color: DefaultStyle.danger_500_main
-		Text{
-			id: unreadCount
-			anchors.fill: parent
-			verticalAlignment: Text.AlignVCenter
-			horizontalAlignment: Text.AlignHCenter
-			color: DefaultStyle.grey_0
-			fontSizeMode: Text.Fit
-            font.pixelSize: Utils.getSizeWithScreenRatio(15)
-			text: parent.unread > 100 ? '99+' : parent.unread
-		}
-	}
 	
     contentItem: ListView {
         model: mainItem.contentModel

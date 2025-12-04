@@ -112,88 +112,91 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	// lDebug() << "[ChatMessageCore] new" << this;
 	mustBeInLinphoneThread(getClassName());
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
-	mChatMessageModel = Utils::makeQObject_ptr<ChatMessageModel>(chatmessage);
-	mChatMessageModel->setSelf(mChatMessageModel);
-	mText = ToolModel::getMessageFromContent(chatmessage->getContents());
-	mUtf8Text = mChatMessageModel->getUtf8Text();
-	mHasTextContent = mChatMessageModel->getHasTextContent();
-	mTimestamp = QDateTime::fromSecsSinceEpoch(chatmessage->getTime());
-	mIsOutgoing = chatmessage->isOutgoing();
-	mIsRemoteMessage = !chatmessage->isOutgoing();
-	mPeerAddress = Utils::coreStringToAppString(chatmessage->getPeerAddress()->asStringUriOnly());
-	mPeerName = ToolModel::getDisplayName(chatmessage->getPeerAddress());
-	auto fromAddress = chatmessage->getFromAddress();
-	// fromAddress->clean();
-	mFromAddress = Utils::coreStringToAppString(fromAddress->asStringUriOnly());
-	mFromName = ToolModel::getDisplayName(chatmessage->getFromAddress());
-	mToName = ToolModel::getDisplayName(chatmessage->getToAddress());
+	if (chatmessage) {
+		mChatMessageModel = Utils::makeQObject_ptr<ChatMessageModel>(chatmessage);
+		mChatMessageModel->setSelf(mChatMessageModel);
+		mText = ToolModel::getMessageFromContent(chatmessage->getContents());
+		mUtf8Text = mChatMessageModel->getUtf8Text();
+		mHasTextContent = mChatMessageModel->getHasTextContent();
+		mTimestamp = QDateTime::fromSecsSinceEpoch(chatmessage->getTime());
+		mIsOutgoing = chatmessage->isOutgoing();
+		mIsRemoteMessage = !chatmessage->isOutgoing();
+		mPeerAddress = Utils::coreStringToAppString(chatmessage->getPeerAddress()->asStringUriOnly());
+		mPeerName = ToolModel::getDisplayName(chatmessage->getPeerAddress());
+		auto fromAddress = chatmessage->getFromAddress();
+		// fromAddress->clean();
+		mFromAddress = Utils::coreStringToAppString(fromAddress->asStringUriOnly());
+		mFromName = ToolModel::getDisplayName(chatmessage->getFromAddress());
+		mToName = ToolModel::getDisplayName(chatmessage->getToAddress());
+		auto chatroom = chatmessage->getChatRoom();
+		mIsFromChatGroup = chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference) &&
+		                   !chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne);
+		mIsRead = chatmessage->isRead();
+		mMessageState = LinphoneEnums::fromLinphone(chatmessage->getState());
+		mIsEphemeral = chatmessage->isEphemeral();
 
-	auto chatroom = chatmessage->getChatRoom();
-	mIsFromChatGroup = chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference) &&
-	                   !chatroom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne);
-	mIsRead = chatmessage->isRead();
-	mMessageState = LinphoneEnums::fromLinphone(chatmessage->getState());
-	mIsEphemeral = chatmessage->isEphemeral();
-	if (mIsEphemeral) {
-		auto now = QDateTime::currentDateTime();
-		mEphemeralDuration = chatmessage->getEphemeralExpireTime() == 0
-		                         ? chatmessage->getEphemeralLifetime()
-		                         : now.secsTo(QDateTime::fromSecsSinceEpoch(chatmessage->getEphemeralExpireTime()));
-	}
-	mMessageId = Utils::coreStringToAppString(chatmessage->getMessageId());
-	for (auto content : chatmessage->getContents()) {
-		auto contentCore = ChatMessageContentCore::create(content, mChatMessageModel);
-		mChatMessageContentList.push_back(contentCore);
-		if ((content->isFile() || content->isFileTransfer()) && !content->isVoiceRecording()) mHasFileContent = true;
-		if (content->isIcalendar()) mIsCalendarInvite = true;
-		if (content->isVoiceRecording()) {
-			mIsVoiceRecording = true;
-			mVoiceRecordingContent = contentCore;
+		if (mIsEphemeral) {
+			auto now = QDateTime::currentDateTime();
+			mEphemeralDuration = chatmessage->getEphemeralExpireTime() == 0
+			                         ? chatmessage->getEphemeralLifetime()
+			                         : now.secsTo(QDateTime::fromSecsSinceEpoch(chatmessage->getEphemeralExpireTime()));
 		}
-	}
-	//: "Reactions": all reactions for one message label
-	mTotalReactionsLabel = tr("all_reactions_label");
-	auto reac = chatmessage->getOwnReaction();
-	mOwnReaction = reac ? Utils::coreStringToAppString(reac->getBody()) : QString();
-	for (auto &reaction : chatmessage->getReactions()) {
-		if (reaction) {
-			auto fromAddr = reaction->getFromAddress()->clone();
-			fromAddr->clean();
-			auto reac =
-			    Reaction::createMessageReactionVariant(Utils::coreStringToAppString(reaction->getBody()),
-			                                           Utils::coreStringToAppString(fromAddr->asStringUriOnly()));
-			mReactions.append(reac);
-
-			auto it = std::find_if(mReactionsSingletonMap.begin(), mReactionsSingletonMap.end(),
-			                       [body = reac.mBody](QVariant data) {
-				                       auto dataBody = data.toMap()["body"].toString();
-				                       return body == dataBody;
-			                       });
-			if (it == mReactionsSingletonMap.end())
-				mReactionsSingletonMap.push_back(createReactionSingletonVariant(reac.mBody, 1));
-			else {
-				auto map = it->toMap();
-				auto count = map["count"].toInt();
-				++count;
-				map.remove("count");
-				map.insert("count", count);
-				mReactionsSingletonMap.erase(it);
-				mReactionsSingletonMap.push_back(map);
+		mMessageId = Utils::coreStringToAppString(chatmessage->getMessageId());
+		for (auto content : chatmessage->getContents()) {
+			auto contentCore = ChatMessageContentCore::create(content, mChatMessageModel);
+			mChatMessageContentList.push_back(contentCore);
+			if ((content->isFile() || content->isFileTransfer()) && !content->isVoiceRecording())
+				mHasFileContent = true;
+			if (content->isIcalendar()) mIsCalendarInvite = true;
+			if (content->isVoiceRecording()) {
+				mIsVoiceRecording = true;
+				mVoiceRecordingContent = contentCore;
 			}
 		}
-	}
-	connect(this, &ChatMessageCore::messageReactionChanged, this, &ChatMessageCore::resetReactionsSingleton);
+		//: "Reactions": all reactions for one message label
+		mTotalReactionsLabel = tr("all_reactions_label");
+		auto reac = chatmessage->getOwnReaction();
+		mOwnReaction = reac ? Utils::coreStringToAppString(reac->getBody()) : QString();
+		for (auto &reaction : chatmessage->getReactions()) {
+			if (reaction) {
+				auto fromAddr = reaction->getFromAddress()->clone();
+				fromAddr->clean();
+				auto reac =
+				    Reaction::createMessageReactionVariant(Utils::coreStringToAppString(reaction->getBody()),
+				                                           Utils::coreStringToAppString(fromAddr->asStringUriOnly()));
+				mReactions.append(reac);
 
-	mIsForward = chatmessage->isForward();
-	mIsReply = chatmessage->isReply();
-	if (mIsReply) {
-		auto replymessage = chatmessage->getReplyMessage();
-		if (replymessage) {
-			mReplyText = ToolModel::getMessageFromContent(replymessage->getContents());
-			if (mIsFromChatGroup) mRepliedToName = ToolModel::getDisplayName(replymessage->getFromAddress());
+				auto it = std::find_if(mReactionsSingletonMap.begin(), mReactionsSingletonMap.end(),
+				                       [body = reac.mBody](QVariant data) {
+					                       auto dataBody = data.toMap()["body"].toString();
+					                       return body == dataBody;
+				                       });
+				if (it == mReactionsSingletonMap.end())
+					mReactionsSingletonMap.push_back(createReactionSingletonVariant(reac.mBody, 1));
+				else {
+					auto map = it->toMap();
+					auto count = map["count"].toInt();
+					++count;
+					map.remove("count");
+					map.insert("count", count);
+					mReactionsSingletonMap.erase(it);
+					mReactionsSingletonMap.push_back(map);
+				}
+			}
 		}
+		connect(this, &ChatMessageCore::messageReactionChanged, this, &ChatMessageCore::resetReactionsSingleton);
+
+		mIsForward = chatmessage->isForward();
+		mIsReply = chatmessage->isReply();
+		if (mIsReply) {
+			auto replymessage = chatmessage->getReplyMessage();
+			if (replymessage) {
+				mReplyText = ToolModel::getMessageFromContent(replymessage->getContents());
+				if (mIsFromChatGroup) mRepliedToName = ToolModel::getDisplayName(replymessage->getFromAddress());
+			}
+		}
+		mImdnStatusList = computeDeliveryStatus(chatmessage);
 	}
-	mImdnStatusList = computeDeliveryStatus(chatmessage);
 }
 
 ChatMessageCore::~ChatMessageCore() {

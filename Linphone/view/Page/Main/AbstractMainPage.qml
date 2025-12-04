@@ -21,6 +21,8 @@ FocusScope {
 	property alias leftPanelContent: leftPanel.children
 	property alias rightPanelStackView: rightPanelStackView
 	property alias rightPanel: rightPanel
+	property int rightPanelStackTopMargin: 0
+	property int rightPanelStackBottomMargin: 0
 	signal noItemButtonPressed()
 
 	// Control.SplitView {
@@ -193,6 +195,8 @@ FocusScope {
 					id: rightPanelStackView
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					Layout.topMargin: mainItem.rightPanelStackTopMargin
+					Layout.bottomMargin: mainItem.rightPanelStackBottomMargin
 					visible: false
 				}
 			}

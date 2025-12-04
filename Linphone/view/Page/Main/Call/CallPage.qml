@@ -138,9 +138,13 @@ AbstractMainPage {
             ColumnLayout {
                 anchors.fill: parent
                 spacing: 0
-                RowLayout {
+                FlexboxLayout {
                     id: titleCallLayout
-                    spacing: Utils.getSizeWithScreenRatio(16)
+                    direction: FlexboxLayout.Row
+                    gap: Utils.getSizeWithScreenRatio(16)
+                    alignItems: FlexboxLayout.AlignCenter
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+                    Layout.fillHeight: false
                     Text {
                         Layout.fillWidth: true
                         //: "Appels"
@@ -148,9 +152,6 @@ AbstractMainPage {
                         color: DefaultStyle.main2_700
                         font.pixelSize: Typography.h2.pixelSize
                         font.weight: Typography.h2.weight
-                    }
-                    Item {
-                        Layout.fillWidth: true
                     }
                     PopupButton {
                         id: removeHistory
@@ -190,7 +191,6 @@ AbstractMainPage {
                         icon.source: AppIcons.newCall
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(34)
-                        Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                         icon.width: Utils.getSizeWithScreenRatio(28)
                         icon.height: Utils.getSizeWithScreenRatio(28)
                         KeyNavigation.left: removeHistory

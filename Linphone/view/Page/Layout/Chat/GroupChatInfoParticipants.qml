@@ -18,9 +18,7 @@ ColumnLayout {
     property var chatCore
     signal manageParticipantsRequested()
     
-    function isGroupEditable() {
-    	return chatCore && chatCore.meAdmin && !chatCore.isReadOnly
-	}
+    property bool isGroupEditable: chatCore && chatCore.meAdmin && !chatCore.isReadOnly
 
 	RowLayout {
 		Text {
@@ -139,7 +137,7 @@ ColumnLayout {
 									}
 								}
 								IconLabelButton {
-									visible: mainItem.isGroupEditable()
+									visible: mainItem.isGroupEditable
 									Layout.fillWidth: true
 									text: participantCore.isAdmin ? qsTr("group_infos_remove_admin_rights") : qsTr("group_infos_give_admin_rights")
 									icon.source: AppIcons.profile
@@ -163,7 +161,7 @@ ColumnLayout {
 									}
 								}
 								Rectangle {
-									visible: mainItem.isGroupEditable()
+									visible: mainItem.isGroupEditable
 									color: DefaultStyle.main2_200
 									Layout.fillWidth: true
 									height: Utils.getSizeWithScreenRatio(1)
@@ -171,7 +169,7 @@ ColumnLayout {
 									Layout.leftMargin: Utils.getSizeWithScreenRatio(17)
 								}
 								IconLabelButton {
-									visible: mainItem.isGroupEditable()
+									visible: mainItem.isGroupEditable
 									Layout.fillWidth: true
 									text: qsTr("group_infos_remove_participant")
 									icon.source: AppIcons.trashCan
@@ -199,7 +197,7 @@ ColumnLayout {
 			
 			MediumButton {
 				id: manageParticipants
-				visible: mainItem.isGroupEditable()
+				visible: mainItem.isGroupEditable
 				height: Utils.getSizeWithScreenRatio(40)
 				icon.source: AppIcons.plusCircle
 				icon.width: Utils.getSizeWithScreenRatio(16)

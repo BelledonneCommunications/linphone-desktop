@@ -26,7 +26,6 @@ IconLabelButton {
 	icon.source: UtilsCpp.getPresenceIcon(mainItem.presence)
 	Layout.fillWidth: true
 	shadowEnabled: false
-	contentImageColor: undefined
 	padding: 0
 
 	onClicked: {

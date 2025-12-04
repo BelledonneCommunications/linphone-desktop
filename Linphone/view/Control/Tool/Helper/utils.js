@@ -154,8 +154,8 @@ function isDescendant(child, parent) {
 
 // -----------------------------------------------------------------------------
 
-// Retrieve first focussable item of an Item. If no item found, return undefined
-function getFirstFocussableItemInItem(item) {
+// Retrieve first focusable item of an Item. If no item found, return undefined
+function getFirstFocusableItemInItem(item) {
   var next = item.nextItemInFocusChain();
   if (next && isDescendant(next, item)){
       return next;
@@ -163,8 +163,8 @@ function getFirstFocussableItemInItem(item) {
   return undefined;
 }
 
-// Retrieve last focussable item of an Item. If no item found, return undefined
-function getLastFocussableItemInItem(item) {
+// Retrieve last focusable item of an Item. If no item found, return undefined
+function getLastFocusableItemInItem(item) {
   var next = item.nextItemInFocusChain();
   if(next && !isDescendant(next, item)){
     return undefined;
@@ -173,7 +173,7 @@ function getLastFocussableItemInItem(item) {
   do{
     current = next;
     next = current.nextItemInFocusChain();
-  } while(isDescendant(next, item) && next.visible)
+  } while(isDescendant(next, item) && next.visible && next !== current)
   return current;
 }
 

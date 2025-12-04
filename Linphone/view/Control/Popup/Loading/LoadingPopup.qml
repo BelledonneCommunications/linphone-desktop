@@ -23,8 +23,10 @@ Popup {
 		// height: childrenRect.height
 		BusyIndicator{
 			Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: Utils.getSizeWithScreenRatio(33)
-            Layout.preferredHeight: Utils.getSizeWithScreenRatio(33)
+			width: Utils.getSizeWithScreenRatio(33)
+			height: width
+            Layout.preferredWidth: width
+            Layout.preferredHeight: width
 		}
 		Text {
 			id: contentText

@@ -66,8 +66,8 @@ public:
 	static constexpr int DefaultExpires = 600;
 	static constexpr int DefaultPublishExpires = 120;
 	static constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
-	static constexpr char VersionCheckReleaseUrl[] = "https://linphone.org/releases";
-	static constexpr char VersionCheckNightlyUrl[] = "https://linphone.org/snapshots";
+	static constexpr char VersionCheckReleaseUrl[] = "https://download.linphone.org/releases";
+	static constexpr char VersionCheckNightlyUrl[] = "https://download.linphone.org/snapshots";
 	static constexpr char PasswordRecoveryUrl[] = "https://subscribe.linphone.org/recovery/email";
 	static constexpr char CguUrl[] = "https://www.linphone.org/en/terms-of-use/";
 	static constexpr char PrivatePolicyUrl[] = "https://www.linphone.org/en/privacy-policy/";
@@ -129,7 +129,7 @@ public:
 
 	static constexpr char LinphoneDomain[] = "sip.linphone.org"; // Use for checking if config are a Linphone
 	static constexpr char WindowIconPath[] = ":/data/image/logo.svg";
-	static constexpr char ApplicationMinimalQtVersion[] = "6.6.5";
+	static constexpr char ApplicationMinimalQtVersion[] = "6.10.0";
 	static constexpr char DefaultConferenceURI[] =
 	    "sip:conference-factory@sip.linphone.org"; // Default for a Linphone account
 	static constexpr char DefaultVideoConferenceURI[] =

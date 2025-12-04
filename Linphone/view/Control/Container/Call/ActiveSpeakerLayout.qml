@@ -79,6 +79,9 @@ Item {
                     anchors.bottomMargin: Utils.getSizeWithScreenRatio(15)// Spacing
 					qmlName: 'S_'+index
 					visible: parent.visible
+					videoEnabled: (index === 0 && mainItem.call.core.cameraEnabled)
+						|| (!previewEnabled && call && call.core.remoteVideoEnabled)
+						|| (!previewEnabled && participantDevice && participantDevice.core.videoEnabled)
 					participantDevice: $modelData
 					displayAll: false
 					displayPresence: false

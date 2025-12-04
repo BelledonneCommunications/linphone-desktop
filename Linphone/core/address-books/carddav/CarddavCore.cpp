@@ -73,10 +73,10 @@ void CarddavCore::remove() {
 
 void CarddavCore::setSelf(QSharedPointer<CarddavCore> me) {
 	mCarddavModelConnection = SafeConnection<CarddavCore, CarddavModel>::create(me, mCarddavModel);
-	mCarddavModelConnection->makeConnectToModel(&CarddavModel::saved, [this](bool success) {
-		mCarddavModelConnection->invokeToCore([this, success]() {
-			if (success) emit App::getInstance()->getSettings()->cardDAVAddressBookSynchronized();
-			emit saved(success);
+	mCarddavModelConnection->makeConnectToModel(&CarddavModel::saved, [this](bool success, QString message) {
+		mCarddavModelConnection->invokeToCore([this, success, message]() {
+			if (success) emit App::getInstance() -> getSettings()->cardDAVAddressBookSynchronized();
+			emit saved(success, message);
 		});
 	});
 }

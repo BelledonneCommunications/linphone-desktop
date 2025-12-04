@@ -46,6 +46,7 @@ class App : public SingleApplication, public AbstractObject {
 	Q_PROPERTY(AccountList *accounts READ getAccounts NOTIFY accountsChanged)
 	Q_PROPERTY(CallList *calls READ getCalls NOTIFY callsChanged)
 	Q_PROPERTY(QString shortApplicationVersion READ getShortApplicationVersion CONSTANT)
+	Q_PROPERTY(QString qtVersion READ getQtVersion CONSTANT)
 	Q_PROPERTY(QString gitBranchName READ getGitBranchName CONSTANT)
 	Q_PROPERTY(QString sdkVersion READ getSdkVersion CONSTANT)
 	Q_PROPERTY(ChatGui *currentChat READ getCurrentChat WRITE setCurrentChat NOTIFY currentChatChanged)
@@ -138,7 +139,9 @@ public:
 	bool getCoreStarted() const;
 	void setCoreStarted(bool started);
 
-	QQuickWindow *getCallsWindow(QVariant callGui = QVariant());
+	QQuickWindow *getCallsWindow();
+	Q_INVOKABLE void handleAppActivity();
+	QQuickWindow *getOrCreateCallsWindow(QVariant callGui = QVariant());
 	void setCallsWindowProperty(const char *id, QVariant property);
 	void closeCallsWindow();
 
@@ -164,7 +167,9 @@ public:
 	QString getShortApplicationVersion();
 	QString getGitBranchName();
 	QString getSdkVersion();
+	QString getQtVersion() const;
 
+	Q_INVOKABLE void checkForUpdate(bool requestedByUser = false);
 	ChatGui *getCurrentChat() const;
 	void setCurrentChat(ChatGui *chat);
 
@@ -221,6 +226,7 @@ private:
 	bool mAutoStart = false;
 	bool mCoreStarted = false;
 	bool mIsRestarting = false;
+	bool mPossiblyLookForAddedAccount = false;
 	QLocale mLocale = QLocale::system();
 	DefaultTranslatorCore *mTranslatorCore = nullptr;
 	DefaultTranslatorCore *mDefaultTranslatorCore = nullptr;

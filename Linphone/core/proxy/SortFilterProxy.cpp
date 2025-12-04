@@ -26,6 +26,9 @@ SortFilterProxy::SortFilterProxy(QAbstractItemModel *list) : QSortFilterProxyMod
 	setSourceModel(list);
 }
 
+SortFilterProxy::SortFilterProxy() {
+}
+
 SortFilterProxy::SortFilterProxy(QAbstractItemModel *list, Qt::SortOrder order) : SortFilterProxy(list) {
 	sort(0, order);
 }
@@ -63,9 +66,15 @@ int SortFilterProxy::getFilterType() const {
 
 void SortFilterProxy::setFilterType(int filterType) {
 	if (getFilterType() != filterType) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
+		beginFilterChange();
 		mFilterType = filterType;
+		endFilterChange();
+#else
+		mFilterType = filterType;
+		invalidateFilter();
+#endif
 		emit filterTypeChanged(filterType);
-		invalidate();
 	}
 }
 
@@ -75,13 +84,13 @@ QString SortFilterProxy::getFilterText() const {
 
 void SortFilterProxy::setFilterText(const QString &filter) {
 	if (mFilterText != filter) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 10, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
+		beginFilterChange();
 		mFilterText = filter;
-		QSortFilterProxyModel::invalidateFilter();
+		endFilterChange();
 #else
-		QSortFilterProxyModel::beginFilterChange();
 		mFilterText = filter;
-		QSortFilterProxyModel::endFilterChange();
+		invalidateFilter();
 #endif
 		emit filterTextChanged();
 	}
@@ -96,11 +105,10 @@ void SortFilterProxy::remove(int index, int count) {
 }
 
 void SortFilterProxy::invalidateFilter() {
-// TODO for a better filter management by encapsulating filter change between begin/end
-#if QT_VERSION < QT_VERSION_CHECK(6, 10, 0)
-	QSortFilterProxyModel::invalidateFilter();
-#else
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
 	QSortFilterProxyModel::beginFilterChange();
 	QSortFilterProxyModel::endFilterChange();
+#else
+	invalidateFilter();
 #endif
 }

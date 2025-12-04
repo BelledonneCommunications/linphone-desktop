@@ -26,6 +26,16 @@ FocusScope {
     signal oneOneCall(bool video)
     signal groupCall()
 
+    onActiveFocusChanged: if(activeFocus) {
+        if (chatMessagesListView.lastItemVisible) chat.core.lMarkAsRead()
+    }
+    MouseArea{
+        anchors.fill: parent
+        onPressed: {
+            forceActiveFocus()
+        }
+    }
+
     onOneOneCall: {
         if (contact)
             mainWindow.startCallWithContact(contact, video, mainItem)
@@ -100,7 +110,6 @@ FocusScope {
                             font {
                                 pixelSize: Typography.h4.pixelSize
                                 weight: Utils.getSizeWithScreenRatio(400)
-                                capitalization: Font.Capitalize
                             }
                         }
                         RowLayout {
@@ -136,7 +145,7 @@ FocusScope {
                     RowLayout {
                         spacing: Utils.getSizeWithScreenRatio(16)
                         RoundButton {
-                            visible: !mainItem.call
+                            visible: !mainItem.call && !mainItem.chat?.core.isReadOnly
                             style: ButtonStyle.noBackground
                             icon.source: AppIcons.phone
                             onPressed: {
@@ -310,7 +319,7 @@ FocusScope {
                         Control.Control {
                             id: participantListPopup
                             width: parent.width
-                            height: Math.min(participantInfoList.height, Utils.getSizeWithScreenRatio(200))
+                            height: visible ? Math.min(participantInfoList.height, Utils.getSizeWithScreenRatio(200)) : 0
                             visible: false
                             anchors.bottom: chatMessagesListView.bottom
                             anchors.left: chatMessagesListView.left

@@ -13,10 +13,8 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 PopupButton {
     id: presenceAndRegistrationItem
-    Layout.minimumWidth: Utils.getSizeWithScreenRatio(86)
-    Layout.maximumWidth: Utils.getSizeWithScreenRatio(150)
-    Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-    Layout.preferredWidth: presenceOrRegistrationText.implicitWidth + Utils.getSizeWithScreenRatio(50)
+    width: presenceOrRegistrationText.implicitWidth + Utils.getSizeWithScreenRatio(50)
+    height: Utils.getSizeWithScreenRatio(24)
     enabled: mainItem.account && mainItem.account.core.registrationState === LinphoneEnums.RegistrationState.Ok
     onEnabledChanged: if(!enabled) close()
     property bool editCustomStatus : false

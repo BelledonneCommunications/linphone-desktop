@@ -98,15 +98,11 @@ endif()
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 
-if(${Qt6_VERSION} VERSION_LESS "6.3.0")
-	set(CMAKE_AUTOMOC ON)
-	set(CMAKE_AUTORCC ON)
-	set(CMAKE_AUTOUIC ON)
-else()
-	qt6_standard_project_setup()
+if(${Qt6_VERSION} VERSION_LESS "6.10.0")
+	message( FATAL_ERROR "Linphone requires Qt 6.10.0 or newer. Exiting CMake." )
 endif()
 
-
+qt6_standard_project_setup()
 
 
 ################################################################
@@ -127,7 +123,7 @@ add_subdirectory(core)
 
 set(LANGUAGES_DIRECTORY "data/languages")
 set(I18N_FILENAME i18n.qrc)
-set(LANGUAGES en fr_FR de)
+set(LANGUAGES en fr de)
 
 # Add languages support.
 add_subdirectory("${LANGUAGES_DIRECTORY}" "data/languages")
@@ -174,6 +170,12 @@ qt6_add_qml_module(Linphone
     RESOURCES data/fonts.qrc
 )
 
+if (WIN32)
+	if(MSVC AND (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
+		install(FILES "$<TARGET_PDB_FILE:${TARGET_NAME}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
+	endif()
+endif()
+
 qt6_add_resources(Linphone "resources" PREFIX "/" FILES ${_LINPHONEAPP_RC_FILES})
 set_property(TARGET Linphone PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
 
@@ -199,6 +201,7 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 if(MSVC)
 	set_target_properties(${TARGET_NAME} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
 endif()
+set_target_properties(${TARGET_NAME} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 if(WIN32)
 	if(ENABLE_SCREENSHARING)

@@ -21,29 +21,26 @@
 #ifndef CHAT_PROXY_H_
 #define CHAT_PROXY_H_
 
-#include "../proxy/LimitProxy.hpp"
+#include "../proxy/SortFilterProxy.hpp"
 #include "core/chat/ChatGui.hpp"
 #include "core/chat/ChatList.hpp"
 #include "tool/AbstractObject.hpp"
 
 // =============================================================================
 
-class ChatProxy : public LimitProxy, public AbstractObject {
+class ChatProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
 
 public:
-	DECLARE_SORTFILTER_CLASS()
-
 	ChatProxy(QObject *parent = Q_NULLPTR);
 	~ChatProxy();
 
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
 
-	Q_INVOKABLE int findChatIndex(ChatGui *chatGui);
-	Q_INVOKABLE void addChatInList(ChatGui *chatGui);
+	bool lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const override;
 
-signals:
-	void chatRemoved(ChatGui *chat);
+	Q_INVOKABLE int findChatIndex(ChatGui *chatGui);
+	Q_INVOKABLE bool addChatInList(ChatGui *chatGui);
 
 protected:
 	QSharedPointer<ChatList> mList;

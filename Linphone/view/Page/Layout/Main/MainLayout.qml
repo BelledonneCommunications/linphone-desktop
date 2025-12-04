@@ -113,7 +113,7 @@ Item {
                 style: ButtonStyle.toast
                 text: currentCallNotif.currentCall ? currentCallNotif.currentCall.core.conference ? ("Réunion en cours : ") + currentCallNotif.currentCall.core.conference.core.subject : (("Appel en cours : ") + currentCallNotif.remoteName) : "appel en cours"
                 onClicked: {
-                    var callsWindow = UtilsCpp.getCallsWindow(currentCallNotif.currentCall);
+                    var callsWindow = UtilsCpp.getOrCreateCallsWindow(currentCallNotif.currentCall);
                     UtilsCpp.smartShowWindow(callsWindow);
                 }
             }
@@ -494,7 +494,7 @@ Item {
                                     IconLabelButton {
                                         id: recordsButton
                                         Layout.fillWidth: true
-                                        visible: !SettingsCpp.disableCallRecordings
+                                        visible: false// !SettingsCpp.disableCallRecordings
                                         icon.width: Utils.getSizeWithScreenRatio(32)
                                         icon.height: Utils.getSizeWithScreenRatio(32)
                                         //: "Enregistrements"

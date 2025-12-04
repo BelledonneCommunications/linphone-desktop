@@ -21,14 +21,15 @@ AbstractMainPage {
 		id: leftPanel
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-        property real sideMargin: Utils.getSizeWithScreenRatio(45)
+        property real leftMargin: Utils.getSizeWithScreenRatio(45)
+        property real rightMargin: Utils.getSizeWithScreenRatio(29)
         spacing: Utils.getSizeWithScreenRatio(5)
 		RowLayout {
 			Layout.fillWidth: true
-			Layout.leftMargin: leftPanel.sideMargin
-			Layout.rightMargin: leftPanel.sideMargin
-            spacing: Utils.getSizeWithScreenRatio(5)
-			Button {
+			Layout.leftMargin: leftPanel.leftMargin
+			Layout.rightMargin: leftPanel.rightMargin
+            spacing: Utils.getSizeWithScreenRatio(8)
+			RoundButton {
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
                 icon.width: Utils.getSizeWithScreenRatio(24)
@@ -51,8 +52,8 @@ AbstractMainPage {
 			id: aboutImage
 			Layout.fillWidth: true
 			Layout.preferredHeight: Utils.getSizeWithScreenRatio(100)
-			Layout.leftMargin: leftPanel.sideMargin
-			Layout.rightMargin: leftPanel.sideMargin
+			Layout.leftMargin: leftPanel.leftMargin
+			Layout.rightMargin: leftPanel.rightMargin
 			Layout.topMargin: Utils.getSizeWithScreenRatio(41)
 			fillMode: Image.PreserveAspectFit
 			source: SettingsCpp.themeAboutPictureUrl
@@ -64,8 +65,8 @@ AbstractMainPage {
 			}
 		}
 		Text {
-			Layout.leftMargin: leftPanel.sideMargin
-			Layout.rightMargin: leftPanel.sideMargin
+			Layout.leftMargin: leftPanel.leftMargin
+			Layout.rightMargin: leftPanel.rightMargin
             Layout.topMargin: Utils.getSizeWithScreenRatio(aboutImage.visible ? 41 : 24)
 			Layout.fillWidth: true
             //: "À propos de %1"
@@ -75,8 +76,8 @@ AbstractMainPage {
 		}
 		ColumnLayout {
 			Layout.fillWidth: true
-			Layout.leftMargin: leftPanel.sideMargin
-			Layout.rightMargin: leftPanel.sideMargin
+			Layout.leftMargin: leftPanel.leftMargin
+			Layout.rightMargin: leftPanel.rightMargin
             Layout.topMargin: Utils.getSizeWithScreenRatio(24)
             spacing: Utils.getSizeWithScreenRatio(32)
 			HelpIconLabelButton {
@@ -91,13 +92,24 @@ AbstractMainPage {
 					Qt.openUrlExternally(ConstantsCpp.PrivatePolicyUrl)
 				}
 			}
-			HelpIconLabelButton {
-				Layout.fillWidth: true
-				iconSource: AppIcons.info
-                //: "Version"
-                title: qsTr("help_about_version_title")
-				subTitle: AppCpp.shortApplicationVersion
-				onClicked: {}
+			RowLayout {
+				HelpIconLabelButton {
+					Layout.preferredWidth: width
+					Layout.minimumWidth: width
+					iconSource: AppIcons.info
+					//: "Version"
+					title: qsTr("help_about_version_title")
+					subTitle: AppCpp.shortApplicationVersion
+					onClicked: {}
+				}
+				Item{Layout.fillWidth: true}
+				MediumButton {
+					style: ButtonStyle.tertiary
+					Layout.fillWidth: true
+					//: Check update
+					text: qsTr("help_check_for_update_button_label")
+					onClicked: AppCpp.checkForUpdate(true)
+				}
 			}
 			HelpIconLabelButton {
 				Layout.fillWidth: true
@@ -122,8 +134,8 @@ AbstractMainPage {
 			}
 		}
 		Text {
-			Layout.leftMargin: leftPanel.sideMargin
-			Layout.rightMargin: leftPanel.sideMargin
+			Layout.leftMargin: leftPanel.leftMargin
+			Layout.rightMargin: leftPanel.rightMargin
             Layout.topMargin: Utils.getSizeWithScreenRatio(32)
 			Layout.fillWidth: true
             //: "À propos de %1"
@@ -134,10 +146,11 @@ AbstractMainPage {
 		HelpIconLabelButton {
 			id: troubleShooting
 			Layout.fillWidth: true
-			Layout.leftMargin: leftPanel.sideMargin
-			Layout.rightMargin: leftPanel.sideMargin
+			Layout.leftMargin: leftPanel.leftMargin
+			Layout.rightMargin: leftPanel.rightMargin
             Layout.topMargin: Utils.getSizeWithScreenRatio(24)
 			iconSource: AppIcons.debug
+			arrowImageVisible: true
             //: "Dépannage"
             title: qsTr("help_troubleshooting_title")
 			onClicked: {

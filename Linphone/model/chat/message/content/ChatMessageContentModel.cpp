@@ -74,8 +74,12 @@ void ChatMessageContentModel::removeDownloadedFile(QString filePath) {
 	}
 }
 
-void ChatMessageContentModel::downloadFile(const QString &name) {
-	if (!mChatMessageModel) return;
+bool ChatMessageContentModel::downloadFile(const QString &name, QString *error) {
+	if (!mChatMessageModel) {
+		//: Internal error : message object does not exist anymore !
+		if (error) *error = tr("download_error_object_doesnt_exist");
+		return false;
+	}
 	switch (mChatMessageModel->getState()) {
 		case linphone::ChatMessage::State::Delivered:
 		case linphone::ChatMessage::State::DeliveredToUser:
@@ -83,10 +87,13 @@ void ChatMessageContentModel::downloadFile(const QString &name) {
 		case linphone::ChatMessage::State::FileTransferDone:
 			break;
 		case linphone::ChatMessage::State::FileTransferInProgress:
-			return;
+			return true;
 		default:
-			lWarning() << QStringLiteral("Wrong message state when requesting downloading, state=.")
-			           << LinphoneEnums::fromLinphone(mChatMessageModel->getState());
+			auto state = LinphoneEnums::fromLinphone(mChatMessageModel->getState());
+			lWarning() << QStringLiteral("Wrong message state when requesting downloading, state=") << state;
+			//: Error while trying to download content : %1
+			if (error) *error = tr("download_file_server_error").arg(LinphoneEnums::toString(state));
+			return false;
 	}
 	bool soFarSoGood;
 	const QString safeFilePath = Utils::getSafeFilePath(
@@ -94,21 +101,32 @@ void ChatMessageContentModel::downloadFile(const QString &name) {
 
 	if (!soFarSoGood) {
 		lWarning() << QStringLiteral("Unable to create safe file path for: %1.").arg(name);
-		return;
+		//: Unable to create safe file path for: %1
+		if (error) *error = tr("download_file_error_no_safe_file_path").arg(name);
+		return false;
 	}
 	mContent->setFilePath(Utils::appStringToCoreString(safeFilePath));
 
 	if (!mContent->isFileTransfer()) {
 		lWarning() << QStringLiteral("file transfer is not available");
-		Utils::showInformationPopup(
-		    //: Error
-		    tr("popup_error_title"),
-		    //: This file was already downloaded and is no more on the server. Your peer have to resend it if you want
-		    //: to get it
-		    tr("popup_download_error_message"), false);
+		//: This file was already downloaded and is no more on the server. Your peer have to resend it if you want
+		//: to get it
+		if (error) *error = tr("download_file_error_file_transfer_unavailable");
+		return false;
+	} else if (mContent->getName().empty()) {
+		lWarning() << QStringLiteral("content name is null, can't download it !");
+		//: Content name is null, can't download it !
+		if (error) *error = tr("download_file_error_null_name");
+		return false;
 	} else {
-		if (!mChatMessageModel->getMonitor()->downloadContent(mContent))
+		lDebug() << log().arg("download file : %1").arg(name);
+		auto downloaded = mChatMessageModel->getMonitor()->downloadContent(mContent);
+		if (!downloaded) {
 			lWarning() << QStringLiteral("Unable to download file of entry %1.").arg(name);
+			//: Unable to download file of entry %1
+			if (error) *error = tr("download_file_error_unable_to_download").arg(name);
+		}
+		return downloaded;
 	}
 }
 

@@ -32,7 +32,7 @@ ColumnLayout{
 	property var popupId
 	Component{
 		id: contactDelegate
-		Contact{
+		Contact {
 			id: contactItem
 			Layout.preferredWidth: mainItem.childrenWidth
 			account: modelData
@@ -94,6 +94,6 @@ ColumnLayout{
 							!= 0 ? getNextItem(
 										AppCpp.accounts.getCount()) : null
 	}
-	}
+}
 
  

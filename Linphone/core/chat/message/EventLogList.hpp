@@ -54,13 +54,12 @@ public:
 
 	int findFirstUnreadIndex();
 
+	void markIndexAsRead(int index);
+
 	void displayMore();
 	void setDisplayItemsStep(int displayItemsStep);
 
-	void findChatMessageWithFilter(QString filter,
-	                               QSharedPointer<EventLogCore> startEvent,
-	                               bool forward = true,
-	                               bool isFirstResearch = true);
+	void findChatMessageWithFilter(QString filter, int startIndex, bool forward = true, bool isFirstResearch = true);
 
 	void setSelf(QSharedPointer<EventLogList> me);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -69,7 +68,7 @@ public:
 signals:
 	void lUpdate();
 	void filterChanged(QString filter);
-	void eventInserted(int index, EventLogGui *message);
+	void eventInsertedByUser(int index);
 	void messageWithFilterFound(int index);
 	void listAboutToBeReset();
 	void chatGuiChanged();
@@ -79,7 +78,6 @@ signals:
 private:
 	QString mFilter;
 	QSharedPointer<ChatCore> mChatCore;
-	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
 	QSharedPointer<SafeConnection<EventLogList, CoreModel>> mCoreModelConnection;
 	int mDisplayItemsStep = 0;
 	int mItemsToLoadBeforeSearchResult = 3;

@@ -113,7 +113,7 @@ ColumnLayout {
 		style: ButtonStyle.grey
 		onClicked: {
 			if (mainItem.conferenceInfo) {
-				var callsWindow = UtilsCpp.getCallsWindow()
+				var callsWindow = UtilsCpp.getOrCreateCallsWindow()
 				callsWindow.setupConference(mainItem.conferenceInfo)
 				UtilsCpp.smartShowWindow(callsWindow)
 			}

@@ -108,7 +108,7 @@ FocusScope {
 						id: startDate
 						background.visible: mainItem.isCreation
 						indicator.visible: mainItem.isCreation
-                        contentText.font.weight: Math.min(Utils.getSizeWithScreenRatio(isCreation ? 700 : 400), 1000)
+                        contentText.font.weight: isCreation ? Font.Bold : Font.Normal
 						Layout.fillWidth: true
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 						KeyNavigation.up: confTitle
@@ -134,7 +134,7 @@ FocusScope {
                             Layout.preferredWidth: Utils.getSizeWithScreenRatio(94)
                             Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 							background.visible: mainItem.isCreation
-                            contentText.font.weight: Math.min(Utils.getSizeWithScreenRatio(isCreation ? 700 : 400), 1000)
+                            contentText.font.weight: isCreation ? Font.Bold : Font.Normal
 							KeyNavigation.up: startDate
 							KeyNavigation.down: timeZoneCbox
 							KeyNavigation.left: endHour
@@ -154,7 +154,7 @@ FocusScope {
                             Layout.preferredWidth: Utils.getSizeWithScreenRatio(94)
                             Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 							background.visible: mainItem.isCreation
-                            contentText.font.weight: Math.min(Utils.getSizeWithScreenRatio(isCreation ? 700 : 400), 1000)
+                            contentText.font.weight: isCreation ? Font.Bold : Font.Normal
 							onSelectedDateTimeChanged: mainItem.conferenceInfoGui.core.endDateTime = selectedDateTime
 							KeyNavigation.up: startDate
 							KeyNavigation.down: timeZoneCbox

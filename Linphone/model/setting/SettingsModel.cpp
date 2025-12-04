@@ -81,6 +81,20 @@ SettingsModel::SettingsModel() {
 	QObject::connect(CoreModel::getInstance().get(), &CoreModel::lastCallEnded, this, [this]() {
 		if (mCaptureGraphListenerCount > 0) createCaptureGraph(); // Repair the capture graph
 	});
+	QObject::connect(CoreModel::getInstance().get(), &CoreModel::audioDevicesListUpdated, this,
+	                 [this](const std::shared_ptr<linphone::Core> &core) {
+		                 lInfo() << log().arg("audio device list updated");
+		                 updateCallSettings();
+	                 });
+	QObject::connect(
+	    CoreModel::getInstance().get(), &CoreModel::audioDeviceChanged, this,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::AudioDevice> &device) {
+		    lInfo() << log().arg("audio device changed");
+		    if (device) lInfo() << "device :" << device->getDeviceName();
+		    // emit playbackDeviceChanged(getPlaybackDevice());
+		    // emit captureDeviceChanged(getCaptureDevice());
+		    // emit ringerDeviceChanged(getRingerDevice());
+	    });
 }
 
 SettingsModel::~SettingsModel() {
@@ -173,8 +187,10 @@ void SettingsModel::stopCaptureGraph() {
 
 // Force a call on the 'detect' method of all audio filters, updating new or removed devices
 void SettingsModel::accessCallSettings() {
-	// Audio
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	startCaptureGraph();
+
+	// Audio
 	CoreModel::getInstance()->getCore()->reloadSoundDevices();
 	emit captureDevicesChanged(getCaptureDevices());
 	emit playbackDevicesChanged(getPlaybackDevices());
@@ -185,9 +201,25 @@ void SettingsModel::accessCallSettings() {
 	emit playbackGainChanged(getPlaybackGain());
 	emit captureGainChanged(getCaptureGain());
 
-	startCaptureGraph();
 	// Video
 	CoreModel::getInstance()->getCore()->reloadVideoDevices();
+	emit videoDevicesChanged(getVideoDevices());
+}
+
+void SettingsModel::updateCallSettings() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+
+	// Audio
+	emit captureDevicesChanged(getCaptureDevices());
+	emit playbackDevicesChanged(getPlaybackDevices());
+	emit playbackDeviceChanged(getPlaybackDevice());
+	emit ringerDevicesChanged(getRingerDevices());
+	emit ringerDeviceChanged(getRingerDevice());
+	emit captureDeviceChanged(getCaptureDevice());
+	emit playbackGainChanged(getPlaybackGain());
+	emit captureGainChanged(getCaptureGain());
+
+	// Video
 	emit videoDevicesChanged(getVideoDevices());
 }
 
@@ -205,13 +237,12 @@ bool SettingsModel::getCaptureGraphRunning() {
 float SettingsModel::getMicVolume() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	float v = 0.0;
-
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		v = mSimpleCaptureGraph->getCaptureVolume();
 	} else {
 		auto call = CoreModel::getInstance()->getCore()->getCurrentCall();
 		if (call) {
-			v = MediastreamerUtils::computeVu(call->getRecordVolume());
+			v = call->getRecordVolume();
 		}
 	}
 
@@ -221,32 +252,48 @@ float SettingsModel::getMicVolume() {
 
 float SettingsModel::getPlaybackGain() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	float dbGain = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
-	return MediastreamerUtils::dbToLinear(dbGain);
+	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
+		return mSimpleCaptureGraph->getPlaybackGain();
+	} else {
+		auto call = CoreModel::getInstance()->getCore()->getCurrentCall();
+		if (call) return call->getSpeakerVolumeGain();
+		else return 0.0;
+	}
 }
 
 void SettingsModel::setPlaybackGain(float gain) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	float oldGain = getPlaybackGain();
-	CoreModel::getInstance()->getCore()->setPlaybackGainDb(MediastreamerUtils::linearToDb(gain));
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setPlaybackGain(gain);
+	}
+	auto currentCall = CoreModel::getInstance()->getCore()->getCurrentCall();
+	if (currentCall) {
+		currentCall->setSpeakerVolumeGain(gain);
 	}
 	if ((int)(oldGain * 1000) != (int)(gain * 1000)) emit playbackGainChanged(gain);
 }
 
 float SettingsModel::getCaptureGain() const {
 	mustBeInLinphoneThread(getClassName());
-	float dbGain = CoreModel::getInstance()->getCore()->getMicGainDb();
-	return MediastreamerUtils::dbToLinear(dbGain);
+	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
+		return mSimpleCaptureGraph->getCaptureGain();
+	} else {
+		auto call = CoreModel::getInstance()->getCore()->getCurrentCall();
+		if (call) return call->getMicrophoneVolumeGain();
+		else return 0.0;
+	}
 }
 
 void SettingsModel::setCaptureGain(float gain) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	float oldGain = getCaptureGain();
-	CoreModel::getInstance()->getCore()->setMicGainDb(MediastreamerUtils::linearToDb(gain));
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setCaptureGain(gain);
+	}
+	auto currentCall = CoreModel::getInstance()->getCore()->getCurrentCall();
+	if (currentCall) {
+		currentCall->setMicrophoneVolumeGain(gain);
 	}
 	if ((int)(oldGain * 1000) != (int)(gain * 1000)) emit captureGainChanged(gain);
 }
@@ -396,8 +443,7 @@ void SettingsModel::setPlaybackDevice(const QVariantMap &device) {
 QVariantMap SettingsModel::getRingerDevice() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	for (const auto &device : CoreModel::getInstance()->getCore()->getExtendedAudioDevices()) {
-		if (device->getUseForRinging())
-			return ToolModel::createVariant(device);
+		if (device->getUseForRinging()) return ToolModel::createVariant(device);
 	}
 	return ToolModel::createVariant(nullptr);
 }
@@ -408,8 +454,7 @@ void SettingsModel::setRingerDevice(QVariantMap device) {
 		auto id = Utils::appStringToCoreString(device["id"].toString());
 		if (ldevice->getId() == id) {
 			ldevice->setUseForRinging(true);
-		}else
-			ldevice->setUseForRinging(false);
+		} else ldevice->setUseForRinging(false);
 	}
 	emit ringerDeviceChanged(device);
 }
@@ -861,6 +906,40 @@ void SettingsModel::setDisableMeetingsFeature(bool value) {
 
 bool SettingsModel::getDisableMeetingsFeature() const {
 	return !!mConfig->getInt(UiSection, "disable_meetings_feature", 0);
+}
+
+bool SettingsModel::isCheckForUpdateAvailable() const {
+#ifdef ENABLE_UPDATE_CHECK
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool SettingsModel::isCheckForUpdateEnabled() const {
+	return !!mConfig->getInt(UiSection, "check_for_update_enabled", isCheckForUpdateAvailable());
+}
+
+void SettingsModel::setCheckForUpdateEnabled(bool enable) {
+	mConfig->setInt(UiSection, "check_for_update_enabled", enable);
+	emit checkForUpdateEnabledChanged();
+}
+
+QString SettingsModel::getVersionCheckUrl() {
+	auto url = mConfig->getString("misc", "version_check_url_root", "");
+	if (url == "") {
+		url = Constants::VersionCheckReleaseUrl;
+		if (url != "") mConfig->setString("misc", "version_check_url_root", url);
+	}
+	return Utils::coreStringToAppString(url);
+}
+
+void SettingsModel::setVersionCheckUrl(const QString &url) {
+	if (url != getVersionCheckUrl()) {
+		// Do not trim the url before because we want to update GUI from potential auto fix.
+		mConfig->setString("misc", "version_check_url_root", Utils::appStringToCoreString(url.trimmed()));
+		emit versionCheckUrlChanged();
+	}
 }
 
 void SettingsModel::setChatNotificationSoundPath(const QString &path) {

@@ -45,6 +45,7 @@ public:
 	void setMicrophoneMuted(bool isMuted);
 	void setSpeakerMuted(bool isMuted);
 	void setLocalVideoEnabled(bool enabled);
+	void setCameraEnabled(bool enabled);
 	void startRecording();
 	void stopRecording();
 	void setRecordFile(const std::string &path);
@@ -82,7 +83,8 @@ public:
 	LinphoneEnums::VideoSourceScreenSharingType getVideoSourceType() const;
 	int getScreenSharingIndex() const;
 	void setVideoSourceDescriptorModel(std::shared_ptr<VideoSourceDescriptorModel> model = nullptr);
-
+	void enableVideo(bool enable);
+	bool videoEnabled() const;
 	static void activateLocalVideo(std::shared_ptr<linphone::CallParams> &params, bool enable);
 
 	void sendDtmf(const QString &dtmf);
@@ -97,6 +99,7 @@ signals:
 	void microphoneVolumeChanged(float);
 	void pausedChanged(bool paused);
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
+	void cameraEnabledChanged(bool enalbed);
 	void localVideoEnabledChanged(bool enabled);
 	void recordingChanged(const std::shared_ptr<linphone::Call> &call, bool recording);
 	void speakerVolumeGainChanged(float volume);

@@ -118,6 +118,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 ChatCore::~ChatCore() {
 	lDebug() << "[ChatCore] delete" << this;
 	mustBeInMainThread("~" + getClassName());
+	if (mChatModelConnection) mChatModelConnection->disconnect();
 	emit mChatModel->removeListener();
 }
 
@@ -162,14 +163,13 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	mChatModelConnection->makeConnectToCore(&ChatCore::lDelete, [this]() {
 		mChatModelConnection->invokeToModel([this]() { mChatModel->deleteChatRoom(); });
 	});
-	mChatModelConnection->makeConnectToModel(
-	    &ChatModel::deleted, [this]() { mChatModelConnection->invokeToCore([this]() { emit deleted(); }); });
 
 	mChatModelConnection->makeConnectToModel(
 	    &ChatModel::stateChanged,
 	    [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom, linphone::ChatRoom::State newState) {
 		    auto state = LinphoneEnums::fromLinphone(newState);
 		    bool isReadOnly = chatRoom->isReadOnly();
+		    if (newState == linphone::ChatRoom::State::Deleted) emit deleted();
 		    mChatModelConnection->invokeToCore([this, state, isReadOnly]() {
 			    setChatRoomState(state);
 			    setIsReadOnly(isReadOnly);
@@ -207,8 +207,8 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatModel::newEvent, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                 const std::shared_ptr<const linphone::EventLog> &eventLog) {
 		    if (mChatModel->getMonitor() != chatRoom) return;
-		    qDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
-		    auto event = EventLogCore::create(eventLog);
+		    lDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
+		    auto event = EventLogCore::create(eventLog, chatRoom);
 		    if (event->isHandled()) {
 			    mChatModelConnection->invokeToCore([this, event]() { emit eventsInserted({event}); });
 		    }
@@ -220,10 +220,10 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatModel::chatMessagesReceived, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                             const std::list<std::shared_ptr<linphone::EventLog>> &eventsLog) {
 		    if (mChatModel->getMonitor() != chatRoom) return;
-		    qDebug() << "CHAT MESSAGE RECEIVED IN CHATROOM" << mChatModel->getTitle();
+		    lDebug() << "CHAT MESSAGE RECEIVED IN CHATROOM" << mChatModel->getTitle();
 		    QList<QSharedPointer<EventLogCore>> list;
 		    for (auto &e : eventsLog) {
-			    auto event = EventLogCore::create(e);
+			    auto event = EventLogCore::create(e, chatRoom);
 			    list.push_back(event);
 		    }
 		    mChatModelConnection->invokeToCore([this, list]() {
@@ -234,13 +234,14 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    });
 
 	mChatModelConnection->makeConnectToCore(&ChatCore::lMarkAsRead, [this]() {
-		auto mainWindow = Utils::getMainWindow();
-		if (mainWindow->isActive()) mChatModelConnection->invokeToModel([this]() { mChatModel->markAsRead(); });
+		auto lastActiveWindow = Utils::getLastActiveWindow();
+		if (lastActiveWindow && lastActiveWindow->isActive())
+			mChatModelConnection->invokeToModel([this]() { mChatModel->markAsRead(); });
 		else {
-			connect(mainWindow, &QQuickWindow::activeChanged, this, [this, mainWindow] {
-				if (mainWindow->isActive()) {
-					disconnect(mainWindow, &QQuickWindow::activeChanged, this, nullptr);
-					mChatModelConnection->invokeToModel([this, mainWindow] { mChatModel->markAsRead(); });
+			connect(lastActiveWindow, &QQuickWindow::activeChanged, this, [this, lastActiveWindow] {
+				if (lastActiveWindow->isActive()) {
+					disconnect(lastActiveWindow, &QQuickWindow::activeChanged, this, nullptr);
+					mChatModelConnection->invokeToModel([this, lastActiveWindow] { mChatModel->markAsRead(); });
 				}
 			});
 		}
@@ -285,7 +286,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	mChatModelConnection->makeConnectToModel(
 	    &ChatModel::chatMessageSending, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                           const std::shared_ptr<const linphone::EventLog> &eventLog) {
-		    auto event = EventLogCore::create(eventLog);
+		    auto event = EventLogCore::create(eventLog, chatRoom);
 		    mChatModelConnection->invokeToCore([this, event]() { emit eventsInserted({event}); });
 	    });
 	mChatModelConnection->makeConnectToCore(
@@ -362,12 +363,16 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		    auto participants = buildParticipants(chatRoom);
 		    mChatModelConnection->invokeToCore([this, participants]() { setParticipants(participants); });
 	    });
-	mChatModelConnection->makeConnectToModel(
-	    &ChatModel::participantAdminStatusChanged, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
-	                                                      const std::shared_ptr<const linphone::EventLog> &eventLog) {
-		    auto participants = buildParticipants(chatRoom);
-		    mChatModelConnection->invokeToCore([this, participants]() { setParticipants(participants); });
-	    });
+	mChatModelConnection->makeConnectToModel(&ChatModel::participantAdminStatusChanged,
+	                                         [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	                                                const std::shared_ptr<const linphone::EventLog> &eventLog) {
+		                                         auto participants = buildParticipants(chatRoom);
+		                                         bool meAdmin = chatRoom->getMe()->isAdmin();
+		                                         mChatModelConnection->invokeToCore([this, participants, meAdmin]() {
+			                                         setParticipants(participants);
+			                                         setMeAdmin(meAdmin);
+		                                         });
+	                                         });
 	mChatModelConnection->makeConnectToCore(&ChatCore::lRemoveParticipantAtIndex, [this](int index) {
 		mChatModelConnection->invokeToModel([this, index]() { mChatModel->removeParticipantAtIndex(index); });
 	});
@@ -491,7 +496,7 @@ ChatMessageGui *ChatCore::getLastMessage() const {
 
 void ChatCore::setLastMessage(QSharedPointer<ChatMessageCore> lastMessage) {
 	if (mLastMessage != lastMessage) {
-		disconnect(mLastMessage.get());
+		if (mLastMessage) disconnect(mLastMessage.get(), &ChatMessageCore::messageStateChanged, this, nullptr);
 		mLastMessage = lastMessage;
 		connect(mLastMessage.get(), &ChatMessageCore::messageStateChanged, this, &ChatCore::lastMessageChanged);
 		emit lastMessageChanged();
@@ -542,10 +547,6 @@ void ChatCore::resetFileList(QList<QSharedPointer<ChatMessageContentCore>> list)
 
 std::shared_ptr<ChatModel> ChatCore::getModel() const {
 	return mChatModel;
-}
-
-QSharedPointer<SafeConnection<ChatCore, ChatModel>> ChatCore::getChatModelConnection() const {
-	return mChatModelConnection;
 }
 
 bool ChatCore::isMuted() const {

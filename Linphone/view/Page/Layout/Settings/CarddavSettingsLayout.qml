@@ -35,15 +35,15 @@ AbstractSettingsLayout {
 	}
 	Connections {
 		target: carddavGui.core
-		function onSaved(success) {
+		function onSaved(success, message) {
 			if (success)
                 UtilsCpp.showInformationPopup(qsTr("information_popup_synchronization_success_title"),
                                               //: "Le carnet d'adresse CardDAV est synchronisé."
                                               qsTr("settings_contacts_carddav_synchronization_success_message"), true, mainWindow)
 			else
                 UtilsCpp.showInformationPopup(qsTr("settings_contacts_carddav_popup_synchronization_error_title"),
-                                              //: "Erreur de synchronisation!"
-                                              qsTr("settings_contacts_carddav_popup_synchronization_error_message"), false, mainWindow)
+                                              //: "Erreur de synchronisation : %1"
+                                              qsTr("settings_contacts_carddav_popup_synchronization_error_message").arg(message), false, mainWindow)
 		}
 	}
 	Component {

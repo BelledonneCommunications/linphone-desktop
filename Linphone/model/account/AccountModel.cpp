@@ -125,7 +125,7 @@ void AccountModel::setPictureUri(QString uri) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit pictureUriChanged(uri);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::onDefaultAccountChanged() {
@@ -182,7 +182,7 @@ void AccountModel::setDisplayName(QString displayName) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit displayNameChanged(displayName);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::setDialPlan(int index) {
@@ -274,7 +274,7 @@ void AccountModel::setTransport(linphone::TransportType value, bool save) {
 
 QString AccountModel::getRegistrarUri() const {
 	if (mMonitor->getParams()->getServerAddress())
-		return Utils::coreStringToAppString(mMonitor->getParams()->getServerAddress()->asString());
+		return Utils::coreStringToAppString(mMonitor->getParams()->getServerAddress()->asStringUriOnly());
 	else return "";
 }
 
@@ -292,13 +292,12 @@ void AccountModel::setRegistrarUri(QString value) {
 		emit setValueFailed(tr("set_server_address_failed_error_message").arg(value));
 		qWarning() << "Unable to set ServerAddress, failed creating address from" << value;
 	}
-	emit registrarUriChanged(Utils::coreStringToAppString(address->asString()));
 }
 
 QString AccountModel::getOutboundProxyUri() const {
 	auto routeAddresses = mMonitor->getParams()->getRoutesAddresses();
 	auto outbound =
-	    routeAddresses.empty() ? QString() : Utils::coreStringToAppString(routeAddresses.front()->asString());
+	    routeAddresses.empty() ? QString() : Utils::coreStringToAppString(routeAddresses.front()->asStringUriOnly());
 	return outbound;
 }
 
@@ -308,11 +307,11 @@ void AccountModel::setOutboundProxyUri(QString value) {
 		//: Unable to set outbound proxy uri, failed creating address from %1
 		emit setValueFailed(tr("set_outbound_proxy_uri_failed_error_message").arg(value));
 		return;
+	} else {
+		auto params = mMonitor->getParams()->clone();
+		params->setRoutesAddresses({linOutboundProxyAddress});
+		emit outboundProxyUriChanged(value);
 	}
-	auto params = mMonitor->getParams()->clone();
-	params->setRoutesAddresses({linOutboundProxyAddress});
-
-	emit outboundProxyUriChanged(value);
 }
 
 bool AccountModel::getOutboundProxyEnabled() const {
@@ -400,7 +399,7 @@ void AccountModel::setExpire(int value) {
 
 QString AccountModel::getConferenceFactoryAddress() const {
 	auto confAddress = mMonitor->getParams()->getConferenceFactoryAddress();
-	return confAddress ? Utils::coreStringToAppString(confAddress->asString()) : QString();
+	return confAddress ? Utils::coreStringToAppString(confAddress->asStringUriOnly()) : QString();
 }
 
 void AccountModel::setConferenceFactoryAddress(QString value) {
@@ -422,7 +421,7 @@ void AccountModel::setConferenceFactoryAddress(QString value) {
 
 QString AccountModel::getAudioVideoConferenceFactoryAddress() const {
 	auto confAddress = mMonitor->getParams()->getAudioVideoConferenceFactoryAddress();
-	return confAddress ? Utils::coreStringToAppString(confAddress->asString()) : QString();
+	return confAddress ? Utils::coreStringToAppString(confAddress->asStringUriOnly()) : QString();
 }
 
 void AccountModel::setAudioVideoConferenceFactoryAddress(QString value) {
@@ -491,7 +490,7 @@ void AccountModel::setVoicemailAddress(QString value) {
 
 QString AccountModel::getVoicemailAddress() const {
 	auto addr = mMonitor->getParams()->getVoicemailAddress();
-	return addr ? Utils::coreStringToAppString(addr->asString()) : "";
+	return addr ? Utils::coreStringToAppString(addr->asStringUriOnly()) : "";
 }
 
 // UserData (see hpp for explanations)
@@ -585,7 +584,7 @@ void AccountModel::setPresence(LinphoneEnums::Presence presence,
 	}
 
 	setNotificationsAllowed(
-	    presence != LinphoneEnums::Presence::DoNotDisturb &&
+	    presence != LinphoneEnums::Presence::Offline && presence != LinphoneEnums::Presence::DoNotDisturb &&
 	    (presence != LinphoneEnums::Presence::Away ||
 	     core->getConfig()->getBool(accountSection, "allow_notifications_in_presence_away", true)) &&
 	    (presence != LinphoneEnums::Presence::Busy ||

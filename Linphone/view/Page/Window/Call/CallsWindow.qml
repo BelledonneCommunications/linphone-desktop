@@ -22,8 +22,12 @@ AbstractWindow {
     property ConferenceGui conference: call && call.core.conference || null
     property bool isConference: call ? call.core.isConference : false
 
+    // Chat related to call
+    property var chatObj
+    property ChatGui chat: chatObj ? chatObj.value : null
+
     property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
-    property bool localVideoEnabled: call && call.core.localVideoEnabled
+    property bool cameraEnabled: call && call.core.cameraEnabled
     property bool remoteVideoEnabled: call && call.core.remoteVideoEnabled
 
     property bool callTerminatedByUser: false
@@ -38,7 +42,7 @@ AbstractWindow {
         == LinphoneEnums.CallState.OutgoingEarlyMedia
         || mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
     property Item firstButtonInBottomTab : mainWindow.startingCall ? endCallButton : (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton)
-    property Item lastButtonInBottomTab : mainWindow.startingCall ? Utils.getLastFocussableItemInItem(controlCallButtons) : endCallButton
+    property Item lastButtonInBottomTab : mainWindow.startingCall ? Utils.getLastFocusableItemInItem(controlCallButtons) : endCallButton
 
     onCallStateChanged: {
         if (callState === LinphoneEnums.CallState.Connected) {
@@ -61,7 +65,7 @@ AbstractWindow {
     onTransferStateChanged: {
         console.log("Transfer state:", transferState)
         if (mainWindow.transferState === LinphoneEnums.CallState.OutgoingInit) {
-            var callsWin = UtilsCpp.getCallsWindow()
+            var callsWin = UtilsCpp.getOrCreateCallsWindow()
             if (!callsWin)
                 return
             //: "Transfert en cours, veuillez patienter"
@@ -70,7 +74,7 @@ AbstractWindow {
                    || mainWindow.transferState === LinphoneEnums.CallState.End
                    || mainWindow.transferState === LinphoneEnums.CallState.Released
                    || mainWindow.transferState === LinphoneEnums.CallState.Connected) {
-            var callsWin = UtilsCpp.getCallsWindow()
+            var callsWin = UtilsCpp.getOrCreateCallsWindow()
             callsWin.closeLoadingPopup()
             if (transferState === LinphoneEnums.CallState.Error)
                 UtilsCpp.showInformationPopup(
@@ -738,9 +742,9 @@ AbstractWindow {
                             if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "participantListPanel") participantListButton.checked = false
 
                             // Update tab focus properties
-                            var firstContentFocusableItem = Utils.getFirstFocussableItemInItem(rightPanel.contentLoader.item)
+                            var firstContentFocusableItem = Utils.getFirstFocusableItemInItem(rightPanel.contentLoader.item)
                             rightPanel.firstContentFocusableItem = firstContentFocusableItem ?? mainWindow.firstButtonInBottomTab
-                            var lastContentFocusableItem = Utils.getLastFocussableItemInItem(rightPanel.contentLoader.item)
+                            var lastContentFocusableItem = Utils.getLastFocusableItemInItem(rightPanel.contentLoader.item)
                             if(lastContentFocusableItem != undefined){
                                 lastContentFocusableItem.KeyNavigation.tab = mainWindow.firstButtonInBottomTab
                             }
@@ -782,29 +786,29 @@ AbstractWindow {
                         searchBarBorderColor: DefaultStyle.grey_200
                         searchBarRightMaring: 0
                         onContactClicked: contact => {
-                                            var callsWin = UtilsCpp.getCallsWindow()
-                                            if (contact)
-                                            //: "Confirmer le transfert"
-                                            callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
-                                                                                //: "Vous allez transférer %1 à %2."
-                                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(contact.core.fullName), "",
-                                                function (confirmed) {
-                                                    if (confirmed) {
-                                                        mainWindow.transferCallToContact(mainWindow.call,contact,newCallForm)
-                                                    }
-                                                })
-                                        }
+                            var callsWin = UtilsCpp.getOrCreateCallsWindow()
+                            if (contact)
+                            //: "Confirmer le transfert"
+                            callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
+                                                                //: "Vous allez transférer %1 à %2."
+                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(contact.core.fullName), "",
+                                function (confirmed) {
+                                    if (confirmed) {
+                                        mainWindow.transferCallToContact(mainWindow.call,contact,newCallForm)
+                                    }
+                                })
+                        }
                         onTransferCallToAnotherRequested: dest => {
-                                                            var callsWin = UtilsCpp.getCallsWindow()
-                                                            console.log("transfer to",dest)
-                                                            callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
-                                                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(dest.core.remoteName),"",
-                                                                    function (confirmed) {
-                                                                    if (confirmed) {
-                                                                        mainWindow.call.core.lTransferCallToAnother(dest.core.remoteAddress)
-                                                                    }
-                                                            })
-                                                        }
+                            var callsWin = UtilsCpp.getOrCreateCallsWindow()
+                            console.log("transfer to",dest)
+                            callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
+                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(dest.core.remoteName),"",
+                                function (confirmed) {
+                                if (confirmed) {
+                                    mainWindow.call.core.lTransferCallToAnother(dest.core.remoteAddress)
+                                }
+                            })
+                        }
                         numPadPopup: numPadPopup
 
                         NumericPadPopup {
@@ -989,6 +993,7 @@ AbstractWindow {
                 Control.Control {
                     objectName: "chatPanel"
                     width: parent.width
+                    Component.onCompleted: chatView.forceActiveFocus()
                     SelectedChatView {
                         id: chatView
                         width: parent.width
@@ -998,8 +1003,7 @@ AbstractWindow {
                             event.accepted = true
                         }
                         call: mainWindow.call
-                        property var chatObj: UtilsCpp.getCurrentCallChat(mainWindow.call)
-                        chat: chatObj ? chatObj.value : null
+                        chat: mainWindow.chat
                     }
                     Connections {
                         target: rightPanel.contentLoader
@@ -1039,7 +1043,11 @@ AbstractWindow {
                         anchors.topMargin: Utils.getSizeWithScreenRatio(16)
                         width: parent.width
                         call: mainWindow.call
-                        onIsLocalScreenSharingChanged: if (isLocalScreenSharing) rightPanel.visible = false
+                        onIsLocalScreenSharingChanged:  {
+                            // Check if component is ready as well so we can reopen the panel after starting sharing screen
+                            // and change shared window or screen if needed
+                            if (isLocalScreenSharing && status === Component.Ready) rightPanel.visible = false
+                        }
                     }
                 }
             }
@@ -1215,11 +1223,11 @@ AbstractWindow {
                         }
                     }
                     onJoinConfRequested: uri => {
-                                            mainWindow.joinConference(uri, {
-                                                "microEnabled": microEnabled,
-                                                "localVideoEnabled": localVideoEnabled
-                                            })
-                                        }
+                        mainWindow.joinConference(uri, {
+                            "microEnabled": microEnabled,
+                            "localVideoEnabled": localVideoEnabled
+                        })
+                    }
                     onCancelJoiningRequested: mainWindow.cancelJoinConference()
                     onCancelAfterJoinRequested: mainWindow.cancelAfterJoin()
                 }
@@ -1298,7 +1306,7 @@ AbstractWindow {
                     style: ButtonStyle.phoneRedLightBorder
                     Layout.column: mainWindow.startingCall ? 0 : bottomButtonsLayout.columns - 1
                     KeyNavigation.tab: mainWindow.startingCall ? (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : openStatisticPanelButton
-                    KeyNavigation.backtab: mainWindow.startingCall ? rightPanel.visible ? Utils.getLastFocussableItemInItem(rightPanel) : nextItemInFocusChain(false): callListButton
+                    KeyNavigation.backtab: mainWindow.startingCall ? rightPanel.visible ? Utils.getLastFocusableItemInItem(rightPanel) : nextItemInFocusChain(false): callListButton
                     onClicked: {
                         mainWindow.callTerminatedByUser = true
                         mainWindow.endCall(mainWindow.call)
@@ -1439,15 +1447,14 @@ AbstractWindow {
                         checkedIconUrl: AppIcons.videoCameraSlash
                         //: "Désactiver la vidéo"
                         //: "Activer la vidéo"
-                        ToolTip.text: mainWindow.localVideoEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
-                        Accessible.name: mainWindow.localVideoEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
-                        checked: !mainWindow.localVideoEnabled
+                        ToolTip.text: mainWindow.cameraEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
+                        Accessible.name: mainWindow.cameraEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
+                        checked: !mainWindow.cameraEnabled
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         icon.width: Utils.getSizeWithScreenRatio(32)
                         icon.height: Utils.getSizeWithScreenRatio(32)
-                        onClicked: mainWindow.call.core.lSetLocalVideoEnabled(
-                                       !mainWindow.call.core.localVideoEnabled)
+                        onClicked: mainWindow.call.core.lSetCameraEnabled(!mainWindow.call.core.cameraEnabled)
                     }
 
                     // Audio microphone button
@@ -1491,11 +1498,13 @@ AbstractWindow {
                                 rightPanel.visible = false
                             }
                         }
+                        
                     }
 
                     // Chat panel button
                     CheckableButton {
                         id: chatPanelButton
+                        visible: !mainWindow.conference || mainWindow.conference.core.isChatEnabled
                         iconUrl: AppIcons.chatTeardropText
                         //: Open chat…
                         ToolTip.text: qsTr("call_open_chat_hint")
@@ -1504,9 +1513,15 @@ AbstractWindow {
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         icon.width: Utils.getSizeWithScreenRatio(32)
                         icon.height: Utils.getSizeWithScreenRatio(32)
+                        UnreadNotification {
+                            anchors.top: parent.top
+                            anchors.right: parent.right
+                            unread: mainWindow.chat ? mainWindow.chat.core.unreadMessagesCount : 0
+                        }
                         onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
+                                mainWindow.chatObj = UtilsCpp.getCurrentCallChat(mainWindow.call)
                                 rightPanel.replace(chatPanel)
                             } else {
                                 rightPanel.visible = false

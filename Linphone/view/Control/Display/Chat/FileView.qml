@@ -14,12 +14,12 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 Item {
 	id: mainItem
 	property ChatMessageContentGui contentGui
-	property string thumbnail: contentGui && contentGui.core.thumbnail
+	property string thumbnail: contentGui && contentGui.core.thumbnail || ""
 	property string name: contentGui && contentGui.core.name
 	property string filePath: contentGui && contentGui.core.filePath
 	property bool wasDownloaded: contentGui && contentGui.core.wasDownloaded
 	property bool isAnimatedImage : contentGui && contentGui.core.wasDownloaded && UtilsCpp.isAnimatedImage(filePath)
-	property bool haveThumbnail: contentGui && UtilsCpp.canHaveThumbnail(filePath)
+	property bool haveThumbnail: contentGui && UtilsCpp.canHaveThumbnail(filePath) && UtilsCpp.fileExists(filePath)
 	property int fileSize: contentGui ? contentGui.core.fileSize : 0
 	property bool isTransferring
 	property bool isVideo: UtilsCpp.isVideo(filePath)
@@ -67,20 +67,31 @@ Item {
 				sourceSize.height: mainItem.height
 				fillMode: Image.PreserveAspectFit
 			}
-			Rectangle {
+			Image {
+				id: errorImage
 				anchors.fill: parent
-				color: DefaultStyle.main1_200
-				opacity: 0.5
-				Image {
+				z: image.z + 1
+				visible: image.status == Image.Error || image.status == Image.Null
+				source: AppIcons.fileImage
+				sourceSize.width: mainItem.width
+				sourceSize.height: mainItem.height
+				fillMode: Image.PreserveAspectFit
+			}
+			Item {
+				id: loadingImageItem
+				anchors.fill: parent
+				visible: image.status === Image.Loading && !image.visible && !errorImage.visilbe
+				Rectangle {
 					anchors.fill: parent
-					z: parent.z + 1
-					visible: image.status == Image.Error || image.status == Image.Null || !UtilsCpp.fileExists(mainItem.filePath)
-					source: AppIcons.fileImage
-					sourceSize.width: mainItem.width
-					sourceSize.height: mainItem.height
-					fillMode: Image.PreserveAspectFit
+					color: DefaultStyle.main1_200
+					opacity: 0.2
+				}
+				BusyIndicator {
+					anchors.centerIn: parent
+					width: Utils.getSizeWithScreenRatio(20)
 				}
 			}
+
 			Image {
 				id: image
 				visible: mainItem.isImage && status !== Image.Loading
@@ -102,17 +113,6 @@ Item {
 					position: 100
 					source: mainItem.isVideo ? "file:///" + mainItem.filePath : ""
 					fillMode: playbackState === MediaPlayer.PlayingState ? VideoOutput.PreserveAspectFit : VideoOutput.PreserveAspectCrop
-					MouseArea {
-						propagateComposedEvents: false
-						enabled: videoThumbnail.visible
-						anchors.fill: parent
-						hoverEnabled: false
-						acceptedButtons: Qt.LeftButton
-						onClicked: (mouse) => {
-							mouse.accepted = true
-							videoThumbnail.playbackState === MediaPlayer.PlayingState ? videoThumbnail.pause() : videoThumbnail.play()
-						}
-					}
 					EffectImage {
 						anchors.centerIn: parent
 						visible: videoThumbnail.playbackState !== MediaPlayer.PlayingState

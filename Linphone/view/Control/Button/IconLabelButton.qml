@@ -15,9 +15,10 @@ Button {
 	shadowEnabled: mainItem.activeFocus || hovered
 	style: ButtonStyle.hoveredBackground
 	property bool inverseLayout: false
-	
+	spacing: Utils.getSizeWithScreenRatio(5)
+
 	contentItem: RowLayout {
-        spacing: Utils.getSizeWithScreenRatio(5)
+        spacing: mainItem.spacing
 		layoutDirection: mainItem.inverseLayout ? Qt.RightToLeft: Qt.LeftToRight
 		EffectImage {
 			imageSource: mainItem.icon.source

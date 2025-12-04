@@ -84,7 +84,7 @@ public:
 	                                             const QString &description,
 	                                             bool isSuccess = true,
 	                                             QQuickWindow *window = nullptr);
-	Q_INVOKABLE static QQuickWindow *getCallsWindow(CallGui *callGui = nullptr);
+	Q_INVOKABLE static QQuickWindow *getOrCreateCallsWindow(CallGui *callGui = nullptr);
 	Q_INVOKABLE static void closeCallsWindow();
 	Q_INVOKABLE static VariantObject *haveAccount();
 	Q_INVOKABLE static void smartShowWindow(QQuickWindow *window);
@@ -126,7 +126,7 @@ public:
 	Q_INVOKABLE static int secsTo(const QString &start, const QString &end);
 	Q_INVOKABLE static QDateTime addSecs(QDateTime date, int secs);
 	Q_INVOKABLE static QDateTime addYears(QDateTime date, int years);
-	Q_INVOKABLE static int timeOffset(QDateTime start, QDateTime end);
+	Q_INVOKABLE static int timeOffset(QTime start, QTime end);
 	Q_INVOKABLE static int daysOffset(QDateTime start, QDateTime end);
 	Q_INVOKABLE static VariantObject *interpretUrl(QString uri);
 	Q_INVOKABLE static bool isValidURL(const QString &url);

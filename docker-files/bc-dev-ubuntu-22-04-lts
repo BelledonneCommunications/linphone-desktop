@@ -1,15 +1,8 @@
 ###############################################################################
-# Dockerfile used to make gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-ubuntu-20-04-lts:20231024_add_multimedia
+# Dockerfile used to make gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-ubuntu-22-04-lts:20251106_add_commercial_qt_version_5.15.14_5.15.19_6.8.1_6.8.3_6.9.1_6.10.0
 ###############################################################################
 
 FROM ubuntu:22.04
-
-# Qt on Ubuntu 22.04 is too old. Use a downloader.
-ARG QT_VERSION=5.15.2
-ARG QT6_VERSION=6.9.1
-
-#Do not use it. It seems that it cannot be used from python command.
-#ARG QT_MODULES=qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
 
 LABEL Gaelle Braud <gaelle.braud@belledonne-communications.com>
 
@@ -88,15 +81,18 @@ RUN sudo apt install --upgrade -y python3-setuptools
 # installation is split because there is a way where some modules are not downloaded in the first attempt.
 RUN sudo apt install -y python3-py7zr
 RUN sudo pip3 install --upgrade aqtinstall
-RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt/opensource
-RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d
-RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt/opensource
-RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
+RUN sudo python3 -m aqt install-qt linux desktop 5.15.2 -O /opt/Qt/opensource
+RUN sudo python3 -m aqt install-qt linux desktop 5.15.2 -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d
+RUN sudo python3 -m aqt install-qt linux desktop 6.9.1 -O /opt/Qt/opensource
+RUN sudo python3 -m aqt install-qt linux desktop 6.9.1 -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
+RUN sudo python3 -m aqt install-qt linux desktop 6.10.0 -O /opt/Qt/opensource
+RUN sudo python3 -m aqt install-qt linux desktop 6.10.0 -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
 
 RUN sudo chown -R bc:bc /opt/Qt/
 
-RUN qtchooser -install "$QT_VERSION-opensource" /opt/Qt/opensource/$QT_VERSION/gcc_64/bin/qmake
-RUN qtchooser -install "$QT6_VERSION-opensource" /opt/Qt/opensource/$QT6_VERSION/gcc_64/bin/qmake
+RUN qtchooser -install "5.15.2-opensource" /opt/Qt/opensource/5.15.2/gcc_64/bin/qmake
+RUN qtchooser -install "6.9.1-opensource" /opt/Qt/opensource/6.9.1/gcc_64/bin/qmake
+RUN qtchooser -install "6.10.0-opensource" /opt/Qt/opensource/6.10.0/gcc_64/bin/qmake
 
 # Download QT official installer for proprietary versions
 # -O : name the destination file after the remote file name, in the current directory
@@ -158,10 +154,23 @@ RUN /opt/Qt/proprietary/MaintenanceTool \
   --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
   install qt.qt6.691.linux_gcc_64 qt.qt6.691.addons.qtnetworkauth qt.qt6.691.addons.qtquick3d qt.qt6.691.addons.qtmultimedia qt.qt6.691.addons.qt5compat qt.qt6.691.addons.qtshadertools
 
+# # Install Qt 6.10.0 proprietary
+RUN /opt/Qt/proprietary/MaintenanceTool \
+  --accept-licenses \
+  --accept-obligations \
+  --confirm-command \
+  --root "/opt/Qt/proprietary" \
+  --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
+  install qt.qt6.6100.linux_gcc_64 qt.qt6.6100.addons.qtnetworkauth qt.qt6.6100.addons.qtquick3d qt.qt6.6100.addons.qtmultimedia qt.qt6.6100.addons.qt5compat qt.qt6.6100.addons.qtshadertools
+
 RUN qtchooser -install 5.15.19-proprietary /opt/Qt/proprietary/5.15.19/gcc_64/bin/qmake
 RUN qtchooser -install 5.15.14-proprietary /opt/Qt/proprietary/5.15.14/gcc_64/bin/qmake
 RUN qtchooser -install 6.8.1-proprietary /opt/Qt/proprietary/6.8.1/gcc_64/bin/qmake
 RUN qtchooser -install 6.8.3-proprietary /opt/Qt/proprietary/6.8.3/gcc_64/bin/qmake
 RUN qtchooser -install 6.9.1-proprietary /opt/Qt/proprietary/6.9.1/gcc_64/bin/qmake
+RUN qtchooser -install 6.10.0-proprietary /opt/Qt/proprietary/6.10.0/gcc_64/bin/qmake
+
+RUN rm -f /home/bc/.local/share/Qt/qtaccount.ini
+RUN rm -f /home/bc/.local/share/Qt/qtlicenses.ini
 
 cmd bash

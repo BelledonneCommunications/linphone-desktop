@@ -44,7 +44,7 @@ ChatModel::ChatModel(const std::shared_ptr<linphone::ChatRoom> &chatroom, QObjec
 
 ChatModel::~ChatModel() {
 	mustBeInLinphoneThread("~" + getClassName());
-	disconnect(CoreModel::getInstance().get(), &CoreModel::messageReadInChatRoom, this, nullptr);
+	disconnect(CoreModel::getInstance().get(), &CoreModel::chatRoomRead, this, nullptr);
 }
 
 QDateTime ChatModel::getLastUpdateTime() {
@@ -173,7 +173,6 @@ void ChatModel::leave() {
 
 void ChatModel::deleteChatRoom() {
 	CoreModel::getInstance()->getCore()->deleteChatRoom(mMonitor);
-	emit deleted();
 }
 
 std::shared_ptr<linphone::ChatMessage>

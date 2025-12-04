@@ -320,7 +320,10 @@ bool ToolModel::createCall(const QString &sipAddress,
 		SettingsModel::getInstance()->setCallToneIndicationsEnabled(true);
 	}
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
-	CallModel::activateLocalVideo(params, localVideoEnabled);
+	params->enableVideo(localVideoEnabled);
+	params->enableCamera(localVideoEnabled);
+	auto videoDirection = localVideoEnabled ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly;
+	params->setVideoDirection(videoDirection);
 
 	bool micEnabled = options.contains("microEnabled") ? options["microEnabled"].toBool() : true;
 	params->enableMic(micEnabled);
@@ -627,6 +630,8 @@ ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_p
 	//: Dummy subject
 	params->setSubject("Dummy subject");
 	params->setAccount(account);
+	params->enableAudio(false);
+	params->enableVideo(false);
 
 	auto chatParams = params->getChatParams();
 	if (!chatParams) {
@@ -758,6 +763,7 @@ ToolModel::createGroupChatRoom(QString subject, std::list<std::shared_ptr<linpho
 	auto accountParams = account->getParams();
 
 	auto chatRoom = core->createChatRoom(params, participantsAddresses);
+	if (!chatRoom) lWarning() << ("[ToolModel] Failed to create group chat");
 	return chatRoom;
 }
 

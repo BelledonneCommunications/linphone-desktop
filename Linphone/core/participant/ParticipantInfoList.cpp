@@ -48,7 +48,7 @@ ParticipantInfoList::~ParticipantInfoList() {
 
 void ParticipantInfoList::setChatCore(const QSharedPointer<ChatCore> &chatCore) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
-	if (mChatCore) disconnect(mChatCore.get());
+	if (mChatCore) disconnect(mChatCore.get(), &ChatCore::participantsChanged, this, nullptr);
 	mChatCore = chatCore;
 	lDebug() << "[ParticipantInfoList] : set Chat " << mChatCore.get();
 	clearData();

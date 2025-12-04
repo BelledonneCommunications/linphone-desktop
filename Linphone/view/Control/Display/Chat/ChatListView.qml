@@ -18,20 +18,21 @@ ListView {
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
 
     property ChatGui currentChatGui: model.getAt(currentIndex) || null
+    onCurrentChatGuiChanged: positionViewAtIndex(currentIndex, ListView.Center)
     property ChatGui chatToSelect: null
+    property ChatGui chatToSelectLater: null
     onChatToSelectChanged: {
-        var index = chatProxy.findChatIndex(chatToSelect)
-        if (index != -1) {
-            currentIndex = index
+        if (chatToSelect) {
+            // first clear the chatToSelect property in case we need to
+            // force adding the chat to the list and the layout changes
+            var toselect = chatToSelect
             chatToSelect = null
+            selectChat(toselect, true)
         }
     }
 
     onChatClicked: (chat) => {selectChat(chat)}
-    onCountChanged: {
-        selectChat(currentChatGui)
-    }
-
+    
     signal markAllAsRead()
     signal chatClicked(ChatGui chat)
 
@@ -41,40 +42,47 @@ ListView {
             loading = true
         }
         filterText: mainItem.searchText
-        initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(56)))
-        displayItemsStep: 3 * initialDisplayItems / 2
-        onModelReset: {
-            loading = false
-            if (mainItem.chatToSelect) {
-                selectChat(mainItem.chatToSelect)
-            }
+        onFilterTextChanged: {
+            chatToSelectLater = currentChatGui
         }
         onModelAboutToBeReset: {
             loading = true
         }
-        onChatRemoved: {
-            var currentChat = model.getAt(currentIndex)
+        onModelReset: {
+            loading = false
+        }
+        onRowsRemoved: {
+            var index = mainItem.currentIndex
             mainItem.currentIndex = -1
-            selectChat(currentChat)
+            mainItem.currentIndex = index
         }
         onLayoutChanged: {
-            selectChat(mainItem.currentChatGui)
+            loading = false
+            if (mainItem.chatToSelectLater) {
+                selectChat(mainItem.chatToSelectLater)
+                mainItem.chatToSelectLater = null
+            }
+            else if (mainItem.chatToSelect) {
+                selectChat(mainItem.chatToSelect)
+                mainItem.chatToSelect = null
+            }
+            else {
+                selectChat(mainItem.currentChatGui)
+            }
         }
     }
     // flickDeceleration: 10000
     spacing: Utils.getSizeWithScreenRatio(10)
 
-    function selectChat(chatGui) {
+    function selectChat(chatGui, force) {
         var index = chatProxy.findChatIndex(chatGui)
-        mainItem.currentIndex = index
-        // if the chat exists, it may not be displayed
-        // in list if hide_empty_chatrooms is set. Thus, we need
-        // to force adding it in the list so it is displayed
-        if (index === -1 && chatGui) {
-            chatProxy.addChatInList(chatGui)
-            var index = chatProxy.findChatIndex(chatGui)
-            mainItem.currentIndex = index
+        // force adding chat to list if not in list for now
+        if (index === -1 && force === true && chatGui) {
+            if (chatProxy.addChatInList(chatGui)) {
+                var index = chatProxy.findChatIndex(chatGui)
+            }
         }
+        mainItem.currentIndex = index
     }
 
     Component.onCompleted: cacheBuffer = Math.max(contentHeight, 0) //contentHeight>0 ? contentHeight : 0// cache all items
@@ -86,12 +94,6 @@ ListView {
 
     onActiveFocusChanged: if (activeFocus && currentIndex < 0 && count > 0)
                               currentIndex = 0
-
-    onAtYEndChanged: {
-        if (atYEnd && count > 0) {
-            chatProxy.displayMore()
-        }
-    }
 
 //----------------------------------------------------------------
     function moveToCurrentItem() {
@@ -130,40 +132,6 @@ ListView {
     // Qt bug: sometimes, containsMouse may not be send and update on each MouseArea.
     // So we need to use this variable to switch off all hovered items.
     property int lastMouseContainsIndex: -1
-
-    component UnreadNotification: Item {
-        id: unreadNotif
-        property int unread: 0
-        width: Utils.getSizeWithScreenRatio(14)
-        height: Utils.getSizeWithScreenRatio(14)
-        visible: unread > 0
-        Rectangle {
-            id: background
-            anchors.fill: parent
-            radius: width/2
-            color: DefaultStyle.danger_500_main
-            Text{
-                anchors.fill: parent
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                color: DefaultStyle.grey_0
-                fontSizeMode: Text.Fit
-                font.pixelSize: Utils.getSizeWithScreenRatio(10)
-                text: parent.unreadNotif > 100 ? '99+' : unreadNotif.unread
-            }
-        }
-        MultiEffect {
-            id: shadow
-            anchors.fill: background
-            source: background
-            // Crash : https://bugreports.qt.io/browse/QTBUG-124730?
-            shadowEnabled: true
-            shadowColor: DefaultStyle.grey_1000
-            shadowBlur: 1
-            shadowOpacity: 0.15
-            z: unreadNotif.z - 1
-        }
-    }
 
     delegate: FocusScope {
         visible: !mainItem.loading
@@ -331,6 +299,8 @@ ListView {
                     }
 					UnreadNotification {
                         id: unreadCount
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
                         unread: modelData?.core.unreadMessagesCount || false
                     }
                     EffectImage {
@@ -377,6 +347,7 @@ ListView {
 						}
                     }
                     IconLabelButton {
+                        visible: modelData && modelData.core.unreadMessagesCount !== 0 || false
                         //: "Mark as read"
                         text: qsTr("chat_room_mark_as_read")
                         icon.source: AppIcons.checks

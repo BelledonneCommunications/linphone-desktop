@@ -92,7 +92,7 @@ bool ChatMessageModel::isRead() const {
 void ChatMessageModel::markAsRead() {
 	mMonitor->markAsRead();
 	emit messageRead();
-	emit CoreModel::getInstance()->messageReadInChatRoom(mMonitor->getChatRoom());
+	emit CoreModel::getInstance() -> messageReadInChatRoom(mMonitor->getChatRoom());
 }
 
 void ChatMessageModel::deleteMessageFromChatRoom(bool deletedByUser) {

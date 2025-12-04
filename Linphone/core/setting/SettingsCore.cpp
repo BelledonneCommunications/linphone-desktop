@@ -107,6 +107,9 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	mEmojiFont = settingsModel->getEmojiFont();
 	mTextMessageFont = settingsModel->getTextMessageFont();
 
+	// Check for update
+	mIsCheckForUpdateAvailable = settingsModel->isCheckForUpdateAvailable();
+
 	// Ui
 	INIT_CORE_MEMBER(DisableChatFeature, settingsModel)
 	INIT_CORE_MEMBER(DisableMeetingsFeature, settingsModel)
@@ -233,6 +236,13 @@ SettingsCore::~SettingsCore() {
 void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	mustBeInLinphoneThread(getClassName());
 	mSettingsModelConnection = SafeConnection<SettingsCore, SettingsModel>::create(me, SettingsModel::getInstance());
+
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureGraphRunningChanged, [this](bool running) {
+		mSettingsModelConnection->invokeToCore([this, running] {
+			mCaptureGraphRunning = running;
+			emit captureGraphRunningChanged(running);
+		});
+	});
 
 	// VFS
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::vfsEnabledChanged, [this](const bool enabled) {
@@ -1028,7 +1038,8 @@ QString SettingsCore::getConfigLocale() const {
 QString SettingsCore::getDownloadFolder() const {
 	auto path = mDownloadFolder;
 	if (mDownloadFolder.isEmpty()) path = Paths::getDownloadDirPath();
-	return QDir::cleanPath(path) + QDir::separator();
+	QString cleanPath = QDir::cleanPath(path);
+	return cleanPath;
 }
 
 void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
@@ -1143,6 +1154,9 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mLogsFolder = model->getLogsFolder();
 	mLogsEmail = model->getLogsEmail();
 
+	// Check update
+	mIsCheckForUpdateAvailable = model->isCheckForUpdateAvailable();
+
 	// UI
 	mDisableChatFeature = model->getDisableChatFeature();
 	mDisableMeetingsFeature = model->getDisableMeetingsFeature();
@@ -1169,6 +1183,10 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mIpv6Enabled = model->getIpv6Enabled();
 	mConfigLocale = model->getConfigLocale();
 	mDownloadFolder = model->getDownloadFolder();
+}
+
+bool SettingsCore::isCheckForUpdateAvailable() const {
+	return mIsCheckForUpdateAvailable;
 }
 
 void SettingsCore::save() {

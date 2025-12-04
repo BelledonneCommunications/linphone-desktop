@@ -36,7 +36,7 @@ class ChatMessageContentCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString name READ getName CONSTANT)
 	Q_PROPERTY(quint64 fileOffset READ getFileOffset WRITE setFileOffset NOTIFY fileOffsetChanged)
 
-	Q_PROPERTY(QString thumbnail READ getThumbnail WRITE setThumbnail NOTIFY thumbnailChanged)
+	Q_PROPERTY(QUrl thumbnail READ getThumbnail WRITE setThumbnail NOTIFY thumbnailChanged)
 	Q_PROPERTY(bool wasDownloaded READ wasDownloaded WRITE setWasDownloaded NOTIFY wasDownloadedChanged)
 	Q_PROPERTY(QString filePath READ getFilePath WRITE setFilePath NOTIFY filePathChanged)
 	Q_PROPERTY(QString utf8Text READ getUtf8Text CONSTANT)
@@ -84,8 +84,8 @@ public:
 	int getFileDuration() const;
 	ConferenceInfoGui *getConferenceInfoGui() const;
 
-	void setThumbnail(const QString &data);
-	QString getThumbnail() const;
+	void setThumbnail(const QUrl &data);
+	QUrl getThumbnail() const;
 
 	bool wasDownloaded() const;
 	void setWasDownloaded(bool downloaded);
@@ -121,7 +121,7 @@ private:
 	bool mIsText;
 	bool mIsVoiceRecording;
 	int mFileDuration;
-	QString mThumbnail;
+	QUrl mThumbnail;
 	QString mUtf8Text;
 	QString mRichFormatText;
 	QString mFilePath;

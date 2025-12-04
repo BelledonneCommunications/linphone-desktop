@@ -213,24 +213,24 @@ FriendGui{
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-        RowLayout {
+        FlexboxLayout {
             id: title
-            spacing: 0
+            direction: FlexboxLayout.Row
+            gap: Utils.getSizeWithScreenRatio(16)
+            alignItems: FlexboxLayout.AlignCenter
             anchors.top: leftPanel.top
             anchors.right: leftPanel.right
             anchors.left: leftPanel.left
             anchors.leftMargin: leftPanel.leftMargin
             anchors.rightMargin: leftPanel.rightMargin
-
+            Layout.fillHeight: false
             Text {
+                Layout.fillWidth: true
                 //: "Contacts"
                 text: qsTr("bottom_navigation_contacts_label")
                 color: DefaultStyle.main2_700
                 font.pixelSize: Typography.h2.pixelSize
                 font.weight: Typography.h2.weight
-            }
-            Item {
-                Layout.fillWidth: true
             }
             Button {
                 id: createContactButton

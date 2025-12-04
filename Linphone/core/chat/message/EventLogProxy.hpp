@@ -22,19 +22,26 @@
 #define EVENT_LIST_PROXY_H_
 
 #include "EventLogList.hpp"
-#include "core/proxy/LimitProxy.hpp"
+// #include "core/proxy/LimitProxy.hpp"
 #include "tool/AbstractObject.hpp"
+#include <QSortFilterProxyModel>
 
 // =============================================================================
 
 class ChatGui;
 
-class EventLogProxy : public LimitProxy, public AbstractObject {
+class EventLogProxy : public QSortFilterProxyModel, public AbstractObject {
 	Q_OBJECT
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 	Q_PROPERTY(ChatGui *chatGui READ getChatGui WRITE setChatGui NOTIFY chatGuiChanged)
+	Q_PROPERTY(int initialDisplayItems READ getInitialDisplayItems WRITE setInitialDisplayItems NOTIFY
+	               initialDisplayItemsChanged)
+	Q_PROPERTY(int maxDisplayItems READ getMaxDisplayItems WRITE setMaxDisplayItems NOTIFY maxDisplayItemsChanged)
+	Q_PROPERTY(int displayItemsStep READ getDisplayItemsStep WRITE setDisplayItemsStep NOTIFY displayItemsStepChanged)
+	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
 
 public:
-	DECLARE_SORTFILTER_CLASS()
+	// DECLARE_SORTFILTER_CLASS()
 
 	EventLogProxy(QObject *parent = Q_NULLPTR);
 	~EventLogProxy();
@@ -43,8 +50,27 @@ public:
 	void setChatGui(ChatGui *chat);
 
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
+	virtual int getCount() const;
+	static int getDisplayCount(int listCount, int maxCount);
+	int getDisplayCount(int listCount) const;
+	int getInitialDisplayItems() const;
+	void setInitialDisplayItems(int initialItems);
 
-	Q_INVOKABLE void displayMore() override;
+	int getMaxDisplayItems() const;
+	void setMaxDisplayItems(int maxItems);
+
+	int getDisplayItemsStep() const;
+	void setDisplayItemsStep(int step);
+
+	QString getFilterText() const;
+	void setFilterText(const QString &filter);
+
+	// bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+	// bool lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const override;
+
+	QSharedPointer<EventLogCore> getAt(int atIndex) const;
+
+	Q_INVOKABLE void displayMore();
 	Q_INVOKABLE void loadUntil(int index);
 	Q_INVOKABLE EventLogGui *getEventAtIndex(int i);
 	QSharedPointer<EventLogCore> getEventCoreAtIndex(int i);
@@ -53,15 +79,23 @@ public:
 	Q_INVOKABLE void findIndexCorrespondingToFilter(int startIndex, bool forward = true, bool isFirstResearch = true);
 
 signals:
-	void eventInserted(int index, EventLogGui *message);
+	void eventInsertedByUser(int index);
 	void indexWithFilterFound(int index);
-	void listAboutToBeReset();
 	void chatGuiChanged();
+	void countChanged();
+	void initialDisplayItemsChanged();
+	void maxDisplayItemsChanged();
+	void displayItemsStepChanged();
+	void filterTextChanged();
 
 protected:
 	QSharedPointer<EventLogList> mList;
 	QSharedPointer<EventLogCore> mLastSearchStart;
 	ChatGui *mChatGui = nullptr;
+	int mInitialDisplayItems = -1;
+	int mMaxDisplayItems = -1;
+	int mDisplayItemsStep = 5;
+	QString mFilterText;
 	DECLARE_ABSTRACT_OBJECT
 };
 

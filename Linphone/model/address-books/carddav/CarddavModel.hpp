@@ -36,12 +36,17 @@ public:
 	CarddavModel(const std::shared_ptr<linphone::FriendList> &carddavFriendList, QObject *parent = nullptr);
 	~CarddavModel();
 
-	void save(std::string displayName, std::string uri, std::string username, std::string password, std::string realm, bool storeNewFriendsInIt);
+	void save(std::string displayName,
+	          std::string uri,
+	          std::string username,
+	          std::string password,
+	          std::string realm,
+	          bool storeNewFriendsInIt);
 	void remove();
 	bool storeNewFriendsInIt();
 
 signals:
-	void saved(bool success);
+	void saved(bool success, QString message);
 	void removed();
 
 private:

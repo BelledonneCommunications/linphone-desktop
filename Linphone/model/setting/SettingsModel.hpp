@@ -22,6 +22,7 @@
 #define SETTINGS_MODEL_H_
 
 #include "MediastreamerUtils.hpp"
+#include "tool/LinphoneEnums.hpp"
 #include <QFont>
 #include <QObject>
 #include <QVariantMap>
@@ -69,6 +70,7 @@ public:
 
 	bool getIsInCall() const;
 	void accessCallSettings();
+	void updateCallSettings();
 	void closeCallSettings();
 
 	void startCaptureGraph();
@@ -186,6 +188,13 @@ public:
 	void setDisableMeetingsFeature(bool value);
 	bool getDisableMeetingsFeature() const;
 
+	bool isCheckForUpdateAvailable() const;
+	bool isCheckForUpdateEnabled() const;
+	void setCheckForUpdateEnabled(bool enable);
+	QString getVersionCheckUrl();
+	void setVersionCheckUrl(const QString &url);
+	void setVersionCheckType(const LinphoneEnums::VersionCheckType &type);
+
 	// UI
 	DECLARE_GETSET(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_GETSET(bool, disableBroadcastFeature, DisableBroadcastFeature)
@@ -268,6 +277,9 @@ signals:
 	void dndChanged(bool value);
 
 	void disableMeetingsFeatureChanged(bool value);
+
+	void checkForUpdateEnabledChanged();
+	void versionCheckUrlChanged();
 
 	// Messages. --------------------------------------------------------------------
 	void autoDownloadReceivedFilesChanged(bool enabled);

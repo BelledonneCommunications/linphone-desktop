@@ -109,7 +109,7 @@ void ParticipantProxy::setShowMe(const bool &show) {
 	if (list->mShowMe != show) {
 		list->mShowMe = show;
 		emit showMeChanged();
-		invalidateFilter();
+		invalidate();
 	}
 }
 

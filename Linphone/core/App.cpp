@@ -267,9 +267,7 @@ void App::setAutoStart(bool enabled) {
 
 void App::setAutoStart(bool enabled) {
 	QSettings settings(AutoStartSettingsFilePath, QSettings::NativeFormat);
-	QString parameters;
-	if (!mSettings->getExitOnClose()) parameters = " --minimized";
-	if (enabled) settings.setValue(EXECUTABLE_NAME, QDir::toNativeSeparators(applicationFilePath()) + parameters);
+	if (enabled) settings.setValue(EXECUTABLE_NAME, QDir::toNativeSeparators(applicationFilePath()));
 	else settings.remove(EXECUTABLE_NAME);
 
 	mAutoStart = enabled;
@@ -287,9 +285,11 @@ App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
 	// Do not use APPLICATION_NAME here.
 	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
-	QDir::setCurrent(QCoreApplication::applicationDirPath());// Set working directory as the executable to allow relative paths.
+	QDir::setCurrent(
+	    QCoreApplication::applicationDirPath()); // Set working directory as the executable to allow relative paths.
 	QThread::currentThread()->setPriority(QThread::HighPriority);
 	qDebug() << "app thread is" << QThread::currentThread();
+	lDebug() << "Starting app with Qt version" << qVersion();
 	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
 	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
 	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
@@ -337,7 +337,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 		                                         auto callCore = CallCore::create(call);
 		                                         mCoreModelConnection->invokeToCore([this, callCore] {
 			                                         auto callGui = new CallGui(callCore);
-			                                         auto win = getCallsWindow(QVariant::fromValue(callGui));
+			                                         auto win = getOrCreateCallsWindow(QVariant::fromValue(callGui));
 			                                         Utils::smartShowWindow(win);
 			                                         auto mainwin = getMainWindow();
 			                                         QMetaObject::invokeMethod(mainwin, "callCreated");
@@ -407,8 +407,12 @@ void App::setSelf(QSharedPointer<App>(me)) {
 				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
 				    // There is an account added by a remote provisioning, force switching to main  page
 				    // because the account may not be connected already
-				    QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
-				                              Q_ARG(QVariant, accountConnected));
+				    // if (accountConnected)
+				    if (mPossiblyLookForAddedAccount) {
+					    QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
+					                              Q_ARG(QVariant, accountConnected));
+				    }
+				    mPossiblyLookForAddedAccount = false;
 			    });
 		    }
 	    });
@@ -430,6 +434,43 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			emit defaultAccountChanged();
 		});
 	});
+
+	// Check update
+	mCoreModelConnection->makeConnectToModel(
+	    &CoreModel::versionUpdateCheckResultReceived,
+	    [this](const std::shared_ptr<linphone::Core> &core, linphone::VersionUpdateCheckResult result,
+	           const std::string &version, const std::string &url, bool checkRequestedByUser) {
+		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+		    mCoreModelConnection->invokeToCore([this, result, version, url, checkRequestedByUser] {
+			    switch (result) {
+				    case linphone::VersionUpdateCheckResult::Error:
+					    Utils::showInformationPopup(tr("info_popup_error_title"),
+					                                //: An error occured while trying to check update. Please
+					                                //: try again later or contact support team.
+					                                tr("info_popup_error_checking_update"), false);
+					    break;
+				    case linphone::VersionUpdateCheckResult::NewVersionAvailable: {
+					    QString downloadLink =
+					        QStringLiteral("<a href='%1'><font color='DefaultStyle.main2_600'>%2</a>")
+					            .arg(url)
+					            //: Download it !
+					            .arg(tr("info_popup_new_version_download_label"));
+					    Utils::showInformationPopup(
+					        //: New version available !
+					        tr("info_popup_new_version_available_title"),
+					        //: A new version of Linphone (%1) is available. %2
+					        tr("info_popup_new_version_available_message").arg(version).arg(downloadLink));
+					    break;
+				    }
+				    case linphone::VersionUpdateCheckResult::UpToDate:
+					    if (checkRequestedByUser)
+						    //: Up to date
+						    Utils::showInformationPopup(tr("info_popup_version_up_to_date_title"),
+						                                //: Your version is up to date
+						                                tr("info_popup_version_up_to_date_message"));
+			    }
+		    });
+	    });
 
 	//---------------------------------------------------------------------------------------------
 	mCliModelConnection = SafeConnection<App, CliModel>::create(me, CliModel::getInstance());
@@ -647,20 +688,24 @@ void App::initCore() {
 					        } else lInfo() << log().arg("Stay minimized");
 					        firstOpen = false;
 					        lInfo() << log().arg("Checking remote provisioning");
-					        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed &&
-					            mIsRestarting) {
-						        QMetaObject::invokeMethod(thread(), [this]() {
-							        auto message = CoreModel::getInstance()->mConfigMessage;
-							        //: not reachable
-							        if (message.isEmpty()) message = tr("configuration_error_detail");
-							        mustBeInMainThread(log().arg(Q_FUNC_INFO));
-							        //: Error
-							        Utils::showInformationPopup(
-							            tr("info_popup_error_title"),
-							            //: Remote provisioning failed : %1
-							            tr("info_popup_configuration_failed_message").arg(message), false);
-						        });
+					        if (mIsRestarting) {
+						        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed) {
+							        QMetaObject::invokeMethod(thread(), [this]() {
+								        auto message = CoreModel::getInstance()->mConfigMessage;
+								        //: not reachable
+								        if (message.isEmpty()) message = tr("configuration_error_detail");
+								        mustBeInMainThread(log().arg(Q_FUNC_INFO));
+								        //: Error
+								        Utils::showInformationPopup(
+								            tr("info_popup_error_title"),
+								            //: Remote provisioning failed : %1
+								            tr("info_popup_configuration_failed_message").arg(message), false);
+							        });
+						        } else {
+							        mPossiblyLookForAddedAccount = true;
+						        }
 					        }
+					        checkForUpdate();
 					        mIsRestarting = false;
 
 					        //---------------------------------------------------------------------------------------------
@@ -1025,7 +1070,38 @@ bool App::notify(QObject *receiver, QEvent *event) {
 	return done;
 }
 
-QQuickWindow *App::getCallsWindow(QVariant callGui) {
+void App::handleAppActivity() {
+	auto handle = [this](QSharedPointer<AccountCore> accountCore) {
+		if (!accountCore) return;
+		auto accountPresence = accountCore->getPresence();
+		if ((mMainWindow && mMainWindow->isActive() || (mCallsWindow && mCallsWindow->isActive())) &&
+		    accountPresence == LinphoneEnums::Presence::Away)
+			accountCore->lSetPresence(LinphoneEnums::Presence::Online);
+		if (((!mMainWindow || !mMainWindow->isActive()) && (!mCallsWindow || !mCallsWindow->isActive())) &&
+		    accountPresence == LinphoneEnums::Presence::Online)
+			accountCore->lSetPresence(LinphoneEnums::Presence::Away);
+	};
+	if (mAccountList) {
+		for (auto &account : mAccountList->getSharedList<AccountCore>())
+			handle(account);
+	} else {
+		connect(
+		    this, &App::accountsChanged, this,
+		    [this, &handle] {
+			    if (mAccountList) {
+				    for (auto &account : mAccountList->getSharedList<AccountCore>())
+					    handle(account);
+			    }
+		    },
+		    Qt::SingleShotConnection);
+	}
+}
+
+QQuickWindow *App::getCallsWindow() {
+	return mCallsWindow;
+}
+
+QQuickWindow *App::getOrCreateCallsWindow(QVariant callGui) {
 	mustBeInMainThread(getClassName());
 	if (!mCallsWindow) {
 		const QUrl callUrl("qrc:/qt/qml/Linphone/view/Page/Window/Call/CallsWindow.qml");
@@ -1060,6 +1136,7 @@ QQuickWindow *App::getCallsWindow(QVariant callGui) {
 		}
 		// window->setParent(mMainWindow);
 		mCallsWindow = window;
+		connect(mCallsWindow, &QQuickWindow::activeChanged, this, &App::handleAppActivity);
 	}
 	if (!callGui.isNull() && callGui.isValid()) mCallsWindow->setProperty("call", callGui);
 	return mCallsWindow;
@@ -1082,8 +1159,11 @@ QQuickWindow *App::getMainWindow() const {
 }
 
 void App::setMainWindow(QQuickWindow *data) {
+	if (mMainWindow) disconnect(mMainWindow, &QQuickWindow::activeChanged, this, nullptr);
 	if (mMainWindow != data) {
 		mMainWindow = data;
+		connect(mMainWindow, &QQuickWindow::activeChanged, this, &App::handleAppActivity);
+		handleAppActivity();
 		emit mainWindowChanged();
 	}
 }
@@ -1358,6 +1438,12 @@ void App::setSysTrayIcon() {
 		menu->addSeparator();
 	}
 	menu->addAction(markAllReadAction);
+	//: Check for update
+	if (mSettings->isCheckForUpdateAvailable()) {
+		QAction *checkForUpdateAction = new QAction(tr("check_for_update"), root);
+		root->connect(checkForUpdateAction, &QAction::triggered, this, [this] { checkForUpdate(true); });
+		menu->addAction(checkForUpdateAction);
+	}
 	menu->addAction(quitAction);
 	if (!mSystemTrayIcon) {
 		systemTrayIcon->setContextMenu(menu); // This is a Qt bug. We cannot call setContextMenu more than once. So
@@ -1435,6 +1521,21 @@ QString App::getSdkVersion() {
 #else
 	return tr('unknown');
 #endif
+}
+
+QString App::getQtVersion() const {
+	return qVersion();
+}
+
+void App::checkForUpdate(bool requestedByUser) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	if (CoreModel::getInstance() && mCoreModelConnection) {
+		mCoreModelConnection->invokeToModel([this, requestedByUser] {
+			mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+			CoreModel::getInstance()->checkForUpdate(Utils::appStringToCoreString(applicationVersion()),
+			                                         requestedByUser);
+		});
+	}
 }
 
 ChatGui *App::getCurrentChat() const {

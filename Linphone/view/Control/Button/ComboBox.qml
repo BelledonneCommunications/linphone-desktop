@@ -223,7 +223,7 @@ Control.ComboBox {
                         font {
                             family: DefaultStyle.defaultFont
                             pixelSize: Utils.getSizeWithScreenRatio(15)
-                            weight: Math.min(Utils.getSizeWithScreenRatio(400), 1000)
+                            weight: Font.Normal
                         }
                     }
                 }

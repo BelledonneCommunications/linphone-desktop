@@ -236,8 +236,8 @@ void ConferenceModel::onParticipantDeviceMediaCapabilityChanged(
 void ConferenceModel::onParticipantDeviceMediaAvailabilityChanged(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-	lInfo() << "onParticipantDeviceMediaAvailabilityChanged: "
-	        << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video)
+	lInfo() << "onParticipantDeviceMediaAvailabilityChanged: video stream available ="
+	        << participantDevice->getStreamAvailability(linphone::StreamType::Video)
 	        << ". Device: " << participantDevice->getAddress()->asString().c_str();
 	emit participantDeviceMediaAvailabilityChanged(participantDevice);
 }

@@ -107,9 +107,11 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mCallModel->setSelf(mCallModel);
 	mDuration = call->getDuration();
 	mIsStarted = mDuration > 0;
-	auto videoDirection = call->getParams()->getVideoDirection();
+	auto callParams = call->getParams();
+	auto videoDirection = callParams->getVideoDirection();
 	mLocalVideoEnabled =
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
+	mCameraEnabled = callParams->cameraEnabled();
 	auto remoteParams = call->getRemoteParams();
 	videoDirection = remoteParams ? remoteParams->getVideoDirection() : linphone::MediaDirection::Inactive;
 	mRemoteVideoEnabled =
@@ -133,7 +135,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mTransferState = LinphoneEnums::fromLinphone(call->getTransferState());
 	mLocalToken = Utils::coreStringToAppString(mCallModel->getLocalAtuhenticationToken());
 	mRemoteTokens = mCallModel->getRemoteAtuhenticationTokens();
-	mEncryption = LinphoneEnums::fromLinphone(call->getParams()->getMediaEncryption());
+	mEncryption = LinphoneEnums::fromLinphone(callParams->getMediaEncryption());
 	auto tokenVerified = call->getAuthenticationTokenVerified();
 	mIsMismatch = call->getZrtpCacheMismatchFlag();
 	mIsSecured = (mEncryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified) ||
@@ -160,7 +162,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mPaused = mState == LinphoneEnums::CallState::Pausing || mState == LinphoneEnums::CallState::Paused ||
 	          mState == LinphoneEnums::CallState::PausedByRemote;
 
-	mRecording = call->getParams() && call->getParams()->isRecording();
+	mRecording = callParams && callParams->isRecording();
 	mRemoteRecording = call->getRemoteParams() && call->getRemoteParams()->isRecording();
 	auto settingsModel = SettingsModel::getInstance();
 	mMicrophoneVolume = call->getRecordVolume();
@@ -193,8 +195,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::speakerMutedChanged, [this](bool isMuted) {
 		mCallModelConnection->invokeToCore([this, isMuted]() { setSpeakerMuted(isMuted); });
 	});
-	mCallModelConnection->makeConnectToCore(&CallCore::lSetLocalVideoEnabled, [this](bool enabled) {
-		mCallModelConnection->invokeToModel([this, enabled]() { mCallModel->setLocalVideoEnabled(enabled); });
+	mCallModelConnection->makeConnectToCore(&CallCore::lSetCameraEnabled, [this](bool enabled) {
+		mCallModelConnection->invokeToModel([this, enabled]() { mCallModel->setCameraEnabled(enabled); });
 	});
 	mCallModelConnection->makeConnectToCore(&CallCore::lStartRecording, [this]() {
 		mCallModelConnection->invokeToModel([this]() { mCallModel->startRecording(); });
@@ -204,15 +206,15 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToModel(
 	    &CallModel::recordingChanged, [this](const std::shared_ptr<linphone::Call> &call, bool recording) {
-		    mCallModelConnection->invokeToCore([this, recording]() {
+		    auto recordFile = QString::fromStdString(mCallModel->getRecordFile());
+		    mCallModelConnection->invokeToCore([this, recording, recordFile]() {
 			    setRecording(recording);
 			    if (recording == false) {
 				    //: "Enregistrement terminé"
 				    Utils::showInformationPopup(tr("call_record_end_message"),
 				                                //: "L'appel a été enregistré dans le fichier : %1"
-				                                tr("call_record_saved_in_file_message")
-				                                    .arg(QString::fromStdString(mCallModel->getRecordFile())),
-				                                true, App::getInstance()->getCallsWindow());
+				                                tr("call_record_saved_in_file_message").arg(recordFile), true,
+				                                App::getInstance()->getOrCreateCallsWindow());
 			    }
 		    });
 	    });
@@ -243,6 +245,9 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	                                         });
 	mCallModelConnection->makeConnectToModel(&CallModel::localVideoEnabledChanged, [this](bool enabled) {
 		mCallModelConnection->invokeToCore([this, enabled]() { setLocalVideoEnabled(enabled); });
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::cameraEnabledChanged, [this](bool enabled) {
+		mCallModelConnection->invokeToCore([this, enabled]() { setCameraEnabled(enabled); });
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::durationChanged, [this](int duration) {
 		mCallModelConnection->invokeToCore([this, duration]() { setDuration(duration); });
@@ -344,6 +349,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::conferenceChanged, [this]() {
 		auto conference = mCallModel->getMonitor()->getConference();
+		// Force enable video if in conference to handle screen sharing
+		if (conference && !mCallModel->videoEnabled()) mCallModel->enableVideo(true);
 		QSharedPointer<ConferenceCore> core = conference ? ConferenceCore::create(conference) : nullptr;
 		mCallModelConnection->invokeToCore([this, core]() { setConference(core); });
 	});
@@ -555,6 +562,18 @@ void CallCore::setLocalVideoEnabled(bool enabled) {
 		mLocalVideoEnabled = enabled;
 		lDebug() << "LocalVideoEnabled: " << mLocalVideoEnabled;
 		emit localVideoEnabledChanged();
+	}
+}
+
+bool CallCore::getCameraEnabled() const {
+	return mCameraEnabled;
+}
+
+void CallCore::setCameraEnabled(bool enabled) {
+	if (mCameraEnabled != enabled) {
+		mCameraEnabled = enabled;
+		lDebug() << "CameraEnabled: " << mCameraEnabled;
+		emit cameraEnabledChanged();
 	}
 }
 

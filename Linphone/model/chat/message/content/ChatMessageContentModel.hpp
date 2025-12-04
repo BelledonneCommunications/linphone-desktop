@@ -40,17 +40,21 @@ public:
 	                        std::shared_ptr<ChatMessageModel> chatMessageModel);
 	~ChatMessageContentModel();
 
-	QString getThumbnail() const;
-
 	void setThumbnail(const QString &data);
 	void setWasDownloaded(bool wasDownloaded);
 
 	void createThumbnail();
 	void removeDownloadedFile(QString filePath);
 
-	void downloadFile(const QString &name);
+	/**
+	 * Returns true if download succeed, false otherwise
+	 */
+	bool downloadFile(const QString &name, QString *error = nullptr);
 	void cancelDownloadFile();
 	void openFile(const QString &name, bool wasDownloaded, bool showDirectory = false);
+	/**
+	 * Returns true if file saved successfully, false otherwise
+	 */
 	bool saveAs(const QString &path);
 
 	const std::shared_ptr<linphone::Content> &getContent() const;

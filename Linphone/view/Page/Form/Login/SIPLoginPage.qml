@@ -385,16 +385,14 @@ LoginLayout {
 					ColumnLayout {
 						spacing: Utils.getSizeWithScreenRatio(10)
 						FormItemLayout {
-							id: outboundProxyUri
-							//: "Outbound SIP Proxy URI"
-							label: qsTr("login_proxy_server_url")
-							//: "If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it."
-							tooltip: qsTr("login_proxy_server_url_tooltip")
+							id: connectionId
+							//: "Authentication ID (if different)"
+							label: qsTr("login_id")
 							Layout.fillWidth: true
 							contentItem: TextField {
-								id: outboundProxyUriEdit
+								id: connectionIdEdit
 								Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
-								Accessible.name: qsTr("login_proxy_server_url")
+								Accessible.name: qsTr("login_id")
 								KeyNavigation.up: transportCbox
 								KeyNavigation.down: registrarUriEdit
 							}
@@ -413,15 +411,17 @@ LoginLayout {
 							}
 						}
 						FormItemLayout {
-							id: connectionId
-							//: "Authentication ID (if different)"
-							label: qsTr("login_id")
+							id: outboundProxyUri
+							//: "Outbound SIP Proxy URI"
+							label: qsTr("login_proxy_server_url")
+							//: "If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it."
+							tooltip: qsTr("login_proxy_server_url_tooltip")
 							Layout.fillWidth: true
 							contentItem: TextField {
-								id: connectionIdEdit
+								id: outboundProxyUriEdit
 								Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+								Accessible.name: qsTr("login_proxy_server_url")
 								KeyNavigation.up: registrarUriEdit
-								Accessible.name: qsTr("login_id")
 							}
 						}
 					}

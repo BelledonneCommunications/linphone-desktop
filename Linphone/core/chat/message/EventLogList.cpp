@@ -64,7 +64,6 @@ void EventLogList::disconnectItem(const QSharedPointer<EventLogCore> &item) {
 	if (message) {
 		disconnect(message.get(), &ChatMessageCore::isReadChanged, this, nullptr);
 		disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);
-		disconnect(message.get(), &ChatMessageCore::ephemeralDurationChanged, this, nullptr);
 	}
 }
 
@@ -82,45 +81,34 @@ void EventLogList::connectItem(const QSharedPointer<EventLogCore> &item) {
 }
 
 void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
-	auto updateChatCore = [this](QSharedPointer<ChatCore> core) {
-		if (mChatCore != core) {
-			if (mChatCore) {
-				disconnect(mChatCore.get(), &ChatCore::eventsInserted, this, nullptr);
-				disconnect(mChatCore.get(), &ChatCore::eventListCleared, this, nullptr);
-			}
-			mChatCore = core;
-			if (mChatCore) {
-				connect(mChatCore.get(), &ChatCore::eventListCleared, this, [this] { resetData(); });
-				connect(mChatCore.get(), &ChatCore::eventsInserted, this,
-				        [this](QList<QSharedPointer<EventLogCore>> list) {
-					        auto eventsList = getSharedList<EventLogCore>();
-					        for (auto &event : list) {
-						        auto it = std::find_if(
-						            eventsList.begin(), eventsList.end(),
-						            [event](const QSharedPointer<EventLogCore> item) { return item == event; });
-						        if (it == eventsList.end()) {
-							        connectItem(event);
-							        add(event);
-							        int index;
-							        get(event.get(), &index);
-							        emit eventInserted(index, new EventLogGui(event));
-						        }
-					        }
-				        });
-			}
-			lUpdate();
-			emit chatGuiChanged();
+	if (mChatCore != core) {
+		if (mChatCore) {
+			disconnect(mChatCore.get(), &ChatCore::eventsInserted, this, nullptr);
+			disconnect(mChatCore.get(), &ChatCore::eventListCleared, this, nullptr);
 		}
-	};
-	if (mIsUpdating) {
-		connect(this, &EventLogList::isUpdatingChanged, this, [this, core, updateChatCore] {
-			if (!mIsUpdating) {
-				updateChatCore(core);
-				disconnect(this, &EventLogList::isUpdatingChanged, this, nullptr);
-			}
-		});
-	} else {
-		updateChatCore(core);
+		mChatCore = core;
+		if (mChatCore) {
+			connect(mChatCore.get(), &ChatCore::eventListCleared, this, [this] { resetData(); });
+			connect(mChatCore.get(), &ChatCore::eventsInserted, this, [this](QList<QSharedPointer<EventLogCore>> list) {
+				auto eventsList = getSharedList<EventLogCore>();
+				for (auto &event : list) {
+					auto it = std::find_if(eventsList.begin(), eventsList.end(),
+					                       [event](const QSharedPointer<EventLogCore> item) { return item == event; });
+					if (it == eventsList.end()) {
+						connectItem(event);
+						prepend(event);
+						int index;
+						get(event.get(), &index);
+						if (event->getChatMessageCore() && !event->getChatMessageCore()->isRemoteMessage()) {
+							emit eventInsertedByUser(index);
+						}
+					}
+				}
+			});
+		}
+		lUpdate();
+		// setIsUpdating(false);
+		emit chatGuiChanged();
 	}
 }
 
@@ -133,6 +121,13 @@ void EventLogList::setDisplayItemsStep(int displayItemsStep) {
 	if (mDisplayItemsStep != displayItemsStep) {
 		mDisplayItemsStep = displayItemsStep;
 		emit displayItemsStepChanged();
+	}
+}
+
+void EventLogList::markIndexAsRead(int index) {
+	if (index < mList.count()) {
+		auto eventLog = mList[index].objectCast<EventLogCore>();
+		if (eventLog && eventLog->getChatMessageCore()) eventLog->getChatMessageCore()->lMarkAsRead();
 	}
 }
 
@@ -152,14 +147,17 @@ void EventLogList::displayMore() {
 			auto linphoneLogs = chatModel->getHistoryRange(totalItemsCount, newCount);
 			QList<QSharedPointer<EventLogCore>> *events = new QList<QSharedPointer<EventLogCore>>();
 			for (auto it : linphoneLogs) {
-				auto model = EventLogCore::create(it);
-				events->push_back(model);
+				auto model = EventLogCore::create(it, chatModel->getMonitor());
+				if (it->getChatMessage() || model->isHandled()) events->push_front(model);
 			}
 			mCoreModelConnection->invokeToCore([this, events] {
 				int currentCount = mList.count();
-				for (auto it = events->end() - 1; it >= events->begin(); --it) {
-					connectItem(*it);
-					prepend(*it);
+				if (!events->isEmpty()) {
+					for (int i = events->size() - 1; i >= 0; --i) {
+						const auto &ev = events->at(i);
+						connectItem(ev);
+					}
+					add(*events);
 				}
 			});
 		});
@@ -177,8 +175,10 @@ void EventLogList::displayMore() {
 
 void EventLogList::loadMessagesUpTo(std::shared_ptr<linphone::EventLog> event) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto oldestEventLoaded = getAt<EventLogCore>(0);
-	auto linOldest = std::const_pointer_cast<linphone::EventLog>(oldestEventLoaded->getModel()->getEventLog());
+	auto oldestEventLoaded = mList.count() > 0 ? getAt<EventLogCore>(mList.count() - 1) : nullptr;
+	auto linOldest = oldestEventLoaded
+	                     ? std::const_pointer_cast<linphone::EventLog>(oldestEventLoaded->getModel()->getEventLog())
+	                     : nullptr;
 	auto chatModel = mChatCore->getModel();
 	assert(chatModel);
 	if (!chatModel) return;
@@ -187,47 +187,55 @@ void EventLogList::loadMessagesUpTo(std::shared_ptr<linphone::EventLog> event) {
 	auto beforeEvents = chatModel->getHistoryRangeNear(mItemsToLoadBeforeSearchResult, 0, event, filters);
 	auto linphoneLogs = chatModel->getHistoryRangeBetween(event, linOldest, filters);
 	QList<QSharedPointer<EventLogCore>> *events = new QList<QSharedPointer<EventLogCore>>();
-	for (auto it : beforeEvents) {
-		auto model = EventLogCore::create(it);
-		events->push_back(model);
+	const auto &linChatRoom = chatModel->getMonitor();
+	for (const auto &it : beforeEvents) {
+		auto model = EventLogCore::create(it, linChatRoom);
+		if (it->getChatMessage() || model->isHandled()) events->push_front(model);
 	}
-	for (auto it : linphoneLogs) {
-		auto model = EventLogCore::create(it);
-		events->push_back(model);
+	for (const auto &it : linphoneLogs) {
+		auto model = EventLogCore::create(it, linChatRoom);
+		if (it->getChatMessage() || model->isHandled()) events->push_front(model);
 	}
 	mCoreModelConnection->invokeToCore([this, events, event] {
-		for (auto &e : *events) {
+		for (const auto &e : *events) {
 			connectItem(e);
-			add(e);
 		}
+		add(*events);
 		emit messagesLoadedUpTo(event);
 	});
 }
 
 int EventLogList::findFirstUnreadIndex() {
 	auto eventList = getSharedList<EventLogCore>();
-	auto it = std::find_if(eventList.begin(), eventList.end(), [](const QSharedPointer<EventLogCore> item) {
-		return item->getChatMessageCore() && !item->getChatMessageCore()->isRead();
+	auto it = std::find_if(eventList.rbegin(), eventList.rend(), [](const QSharedPointer<EventLogCore> item) {
+		auto chatmessage = item->getChatMessageCore();
+		return chatmessage && !chatmessage->isRead();
 	});
-	return it == eventList.end() ? -1 : std::distance(eventList.begin(), it);
+	return it == eventList.rend() ? -1 : std::distance(it, eventList.rend()) - 1;
 }
 
-void EventLogList::findChatMessageWithFilter(QString filter,
-                                             QSharedPointer<EventLogCore> startEvent,
-                                             bool forward,
-                                             bool isFirstResearch) {
+void EventLogList::findChatMessageWithFilter(QString filter, int startIndex, bool forward, bool isFirstResearch) {
 	if (mChatCore) {
 		if (isFirstResearch) mLastFoundResult.reset();
 		auto chatModel = mChatCore->getModel();
+		auto startEvent =
+		    startIndex >= 0 && startIndex < mList.count() ? mList[startIndex].objectCast<EventLogCore>() : nullptr;
+		lInfo() << log().arg("searching event starting from index") << startIndex << "| event :"
+		        << (startEvent && startEvent->getChatMessageCore() ? startEvent->getChatMessageCore()->getText()
+		                                                           : "null")
+		        << "| filter :" << filter;
 		auto startEventModel = startEvent ? startEvent->getModel() : nullptr;
 		mCoreModelConnection->invokeToModel([this, chatModel, startEventModel, filter, forward, isFirstResearch] {
 			auto linStartEvent = startEventModel ? startEventModel->getEventLog() : nullptr;
 			auto eventLog = chatModel->searchMessageByText(filter, linStartEvent, forward);
-			if (!eventLog)
+			if (!eventLog) {
 				// event not found, search in the entire history
+				lInfo() << log().arg("not found, search in entire history");
 				auto eventLog = chatModel->searchMessageByText(filter, nullptr, forward);
+			}
 			int index = -1;
 			if (eventLog) {
+				lInfo() << log().arg("event with filter found") << eventLog.get();
 				auto eventList = getSharedList<EventLogCore>();
 				auto it = std::find_if(eventList.begin(), eventList.end(),
 				                       [eventLog](const QSharedPointer<EventLogCore> item) {
@@ -255,6 +263,7 @@ void EventLogList::findChatMessageWithFilter(QString filter,
 					loadMessagesUpTo(eventLog);
 				}
 			} else {
+				lInfo() << log().arg("event not found at all in history");
 				mCoreModelConnection->invokeToCore([this, index] { emit messageWithFilterFound(index); });
 			}
 		});
@@ -277,6 +286,9 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 		}
 		setIsUpdating(true);
 		beginResetModel();
+		for (auto &event : getSharedList<EventLogCore>()) {
+			disconnectItem(event);
+		}
 		mList.clear();
 		if (!mChatCore) {
 			endResetModel();
@@ -294,17 +306,10 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 			auto linphoneLogs = chatModel->getHistoryRange(0, mDisplayItemsStep);
 			QList<QSharedPointer<EventLogCore>> *events = new QList<QSharedPointer<EventLogCore>>();
 			for (auto it : linphoneLogs) {
-				auto model = EventLogCore::create(it);
-				events->push_back(model);
+				auto model = EventLogCore::create(it, chatModel->getMonitor());
+				if (it->getChatMessage() || model->isHandled()) events->push_front(model);
 			}
 			mCoreModelConnection->invokeToCore([this, events] {
-				for (auto &event : getSharedList<EventLogCore>()) {
-					auto message = event->getChatMessageCore();
-					if (message) {
-						disconnect(message.get(), &ChatMessageCore::ephemeralDurationChanged, this, nullptr);
-						disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);
-					}
-				}
 				for (auto &event : *events) {
 					connectItem(event);
 					mList.append(event);

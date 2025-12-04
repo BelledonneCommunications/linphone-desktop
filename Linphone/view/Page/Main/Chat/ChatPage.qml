@@ -30,8 +30,32 @@ AbstractMainPage {
     onRemoteAddressChanged: console.log("ChatPage : remote address changed :", remoteAddress)
     property var remoteChatObj: UtilsCpp.getChatForAddress(remoteAddress)
     property var remoteChat: remoteChatObj ? remoteChatObj.value : null
+
+    signal openChatRequested(ChatGui chat)
+
+    Connections {
+        enabled: remoteChat !== null
+        target: remoteChat ? remoteChat.core : null
+        function onChatRoomStateChanged() {
+            if (remoteChat.core.state === LinphoneEnums.ChatRoomState.CreationPending) {
+                //: Chat room is being created...
+                mainWindow.showLoadingPopup(qsTr("loading_popup_chatroom_creation_pending_message"))
+            } else {
+                mainWindow.closeLoadingPopup()
+                if (remoteChat.core.state === LinphoneEnums.ChatRoomState.CreationFailed) {
+                    UtilsCpp.showInformationPopup(qsTr("info_popup_error_title"),
+                                                    //: Chat room creation failed !
+                                                    qsTr("info_popup_chatroom_creation_failed"), false)
+                } else if (remoteChat.core.state === LinphoneEnums.ChatRoomState.Created) {
+                    openChatRequested(remoteChat)
+                }
+            }
+        }
+    }
     onRemoteChatChanged: {
-        if (remoteChat) selectedChatGui = remoteChat
+        if (remoteChat && remoteChat.core.state === LinphoneEnums.ChatRoomState.Created) {
+            openChatRequested(remoteChat)
+        }
     }
 
     onSelectedChatGuiChanged: {
@@ -57,14 +81,14 @@ AbstractMainPage {
 
     showDefaultItem: listStackView.currentItem
                      && listStackView.currentItem.objectName == "chatListItem"
-                     && listStackView.currentItem.listView.count === 0 || false
+                     && listStackView.currentItem.listView.count === 0
+                     && !listStackView.currentItem.listView.loading || false
 
     function goToNewChat() {
         if (listStackView.currentItem
                 && listStackView.currentItem.objectName != "newChatItem")
             listStackView.push(newChatItem)
     }
-    signal openChatRequested(ChatGui chat)
 
     Dialog {
         id: deleteChatPopup
@@ -96,8 +120,12 @@ AbstractMainPage {
             ColumnLayout {
                 anchors.fill: parent
                 spacing: 0
-                RowLayout {
-                    spacing: Utils.getSizeWithScreenRatio(16)
+                FlexboxLayout {
+                    direction: FlexboxLayout.Row
+                    gap: Utils.getSizeWithScreenRatio(16)
+                    alignItems: FlexboxLayout.AlignCenter
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+                    Layout.fillHeight: false
                     Text {
                         Layout.fillWidth: true
                         //: "Conversations"
@@ -105,9 +133,6 @@ AbstractMainPage {
                         color: DefaultStyle.main2_700
                         font.pixelSize: Typography.h2.pixelSize
                         font.weight: Typography.h2.weight
-                    }
-                    Item {
-                        Layout.fillWidth: true
                     }
                     PopupButton {
                         id: chatListMenu
@@ -137,7 +162,6 @@ AbstractMainPage {
                         icon.source: AppIcons.plusCircle
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
-                        Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                         icon.width: Utils.getSizeWithScreenRatio(28)
                         icon.height: Utils.getSizeWithScreenRatio(28)
                         KeyNavigation.down: searchBar
@@ -198,9 +222,6 @@ AbstractMainPage {
 
                             Connections {
                                 target: mainItem
-                                function onSelectedChatGuiChanged() {
-                                    chatListView.selectChat(mainItem.selectedChatGui)
-                                }
                                 function onOpenChatRequested(chat) {
                                     chatListView.chatToSelect = chat
                                 }
@@ -261,12 +282,13 @@ AbstractMainPage {
                 }
                 NewChatForm {
                     id: newChatForm
+                    startGroupButtonVisible: mainItem.account && mainItem.account.core.conferenceFactoryAddress !== ""
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(8)
                     Layout.topMargin: Utils.getSizeWithScreenRatio(18)
                     onGroupCreationRequested: {
-                        console.log("groupe call requetsed")
+                        console.log("groupe call requested")
                         listStackView.push(groupChatItem)
                     }
                     onContactClicked: (contact) => {
@@ -322,22 +344,29 @@ AbstractMainPage {
             }
 
             onGroupCreationRequested: {
+                var hasError = false
                 if (groupName.text.length === 0) {
+                    //: "Un nom doit être donné au groupe
+                    groupNameItem.errorMessage = qsTr("group_chat_error_must_have_name")
+                    hasError = true
+                } if (addParticipantsLayout.selectedParticipantsCount === 0) {
                     UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
-                                                    //: "Un nom doit être donné au groupe
-                                                    qsTr("group_chat_error_must_have_name"), false)
-                } else if (!mainItem.isRegistered) {
+                                                    //: "Please select at least one participant
+                                                    qsTr("group_chat_error_no_participant"), false)
+                    hasError = true
+                } if (!mainItem.isRegistered) {
                     UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
                                 //: "Vous n'etes pas connecté"
                                 qsTr("group_call_error_not_connected"), false)
-                } else {
-                    console.log("create group chat")
-                    //: Creation de la conversation en cours …
-                    mainWindow.showLoadingPopup(qsTr("chat_creation_in_progress"), true, function () {
-                        if (chatCreationLayout.groupChat) chatCreationLayout.groupChat.core.lDelete()
-                    })
-                    chatCreationLayout.groupChatObj = UtilsCpp.createGroupChat(chatCreationLayout.groupName.text, addParticipantsLayout.selectedParticipants)
-                }
+                    hasError = true
+                } 
+                if (hasError) return
+                console.log("Create group chat")
+                //: Creation de la conversation en cours …
+                mainWindow.showLoadingPopup(qsTr("chat_creation_in_progress"), true, function () {
+                    if (chatCreationLayout.groupChat) chatCreationLayout.groupChat.core.lDelete()
+                })
+                chatCreationLayout.groupChatObj = UtilsCpp.createGroupChat(chatCreationLayout.groupName.text, addParticipantsLayout.selectedParticipants)
             }
         }
     }
@@ -360,12 +389,10 @@ AbstractMainPage {
             }
             SelectedChatView {
                 id: selectedChatView
-                visible: chat != undefined //&& (chat.core.isBasic || chat.core.conferenceJoined)
+                visible: chat != undefined
                 anchors.fill: parent
                 chat: mainItem.selectedChatGui ? mainItem.selectedChatGui : null
-                onChatChanged: {
-                    if (mainItem.selectedChatGui !== chat) mainItem.selectedChatGui = chat
-                }
+
                 // Reset current chat when switching account, otherwise the binding makes
                 // the last chat from last account the current chat for the new default account
                 Connections {
@@ -379,7 +406,7 @@ AbstractMainPage {
                 Connections {
                     target: mainItem
                     function onSelectedChatGuiChanged() {
-                        if (mainItem.selectedChatGui) selectedChatView.chat = mainItem.selectedChatGui
+                        selectedChatView.chat = mainItem.selectedChatGui ? mainItem.selectedChatGui : null
                     }
                 }
                 Binding {

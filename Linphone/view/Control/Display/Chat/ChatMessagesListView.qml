@@ -18,6 +18,7 @@ ListView {
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
     property bool loading: false
     property bool isEncrypted: chat && chat.core.isEncrypted
+    highlightFollowsCurrentItem: false
 
     verticalLayoutDirection: ListView.BottomToTop
     signal showReactionsForMessageRequested(ChatMessageGui chatMessage)
@@ -40,24 +41,16 @@ ListView {
     property bool searchForward: true
     onFindIndexWithFilter: (forward) => {
         searchForward = forward
-        eventLogProxy.findIndexCorrespondingToFilter(currentIndex, forward, false)
-    }
-
-    Component.onCompleted: {
-        Qt.callLater(function() {
-            var index = eventLogProxy.findFirstUnreadIndex()
-            positionViewAtIndex(index, ListView.Beginning)
-            eventLogProxy.markIndexAsRead(index)
-        })
+        eventLogProxy.findIndexCorrespondingToFilter(currentIndex, searchForward, false)
     }
 
     Button {
         visible: !mainItem.lastItemVisible
         icon.source: AppIcons.downArrow
-        leftPadding: Utils.getSizeWithScreenRatio(16)
-        rightPadding: Utils.getSizeWithScreenRatio(16)
-        topPadding: Utils.getSizeWithScreenRatio(16)
-        bottomPadding: Utils.getSizeWithScreenRatio(16)
+        leftPadding: Utils.getSizeWithScreenRatio(20)
+        rightPadding: Utils.getSizeWithScreenRatio(20)
+        topPadding: Utils.getSizeWithScreenRatio(20)
+        bottomPadding: Utils.getSizeWithScreenRatio(20)
         anchors.bottom: parent.bottom
         style: ButtonStyle.main
         anchors.right: parent.right
@@ -65,16 +58,23 @@ ListView {
         anchors.rightMargin: Utils.getSizeWithScreenRatio(18)
         onClicked: {
             var index = eventLogProxy.findFirstUnreadIndex()
-            mainItem.positionViewAtIndex(index, ListView.Beginning)
+            mainItem.positionViewAtIndex(index, ListView.Contain)
             eventLogProxy.markIndexAsRead(index)
+        }
+        UnreadNotification {
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.topMargin: Utils.getSizeWithScreenRatio(-5)
+            anchors.rightMargin: Utils.getSizeWithScreenRatio(-5)
+            unread: mainItem.chat?.core.unreadMessagesCount || 0
         }
     }
 
+    onAtYBeginningChanged: if (atYBeginning && count !== 0) {
+        eventLogProxy.displayMore()
+    }
     onAtYEndChanged: if (atYEnd && chat) {
         chat.core.lMarkAsRead()
-    }
-    onAtYBeginningChanged: if (atYBeginning) {
-        eventLogProxy.displayMore()
     }
 
     model: EventLogProxy {
@@ -83,23 +83,18 @@ ListView {
         filterText: mainItem.filterText
         initialDisplayItems: 20
         displayItemsStep: 20
-        onEventInserted: (index, gui) => {
-            if (!mainItem.visible) return
-            if(mainItem.lastItemVisible) {
-                mainItem.positionViewAtIndex(index, ListView.Beginning)
-                markIndexAsRead(index)
-            }
-        }
         onModelAboutToBeReset: {
             loading = true
         }
         onModelReset: {
             loading = false
             var index = eventLogProxy.findFirstUnreadIndex()
-            positionViewAtIndex(index, ListView.Beginning)
+            mainItem.positionViewAtIndex(index, ListView.Contain)
             eventLogProxy.markIndexAsRead(index)
         }
-        onChatGuiChanged: forceLayout()
+        onEventInsertedByUser: (index) => {
+            mainItem.positionViewAtIndex(index, ListView.Beginning)
+        }
         onIndexWithFilterFound: (index) => {
             if (index !== -1) {
                 currentIndex = index
@@ -246,9 +241,10 @@ ListView {
                     }
                 }
                 Component.onCompleted: {
-                    if (index === 0) mainItem.lastItemVisible = isFullyVisible
+                    if (index === 0) {
+                        mainItem.lastItemVisible = isFullyVisible
+                    }
                 }
-                // onYChanged: if (index === 0) mainItem.lastItemVisible = isFullyVisible
                 chat: mainItem.chat
                 searchedTextPart: mainItem.filterText
                 maxWidth: Math.round(mainItem.width * (3/4))

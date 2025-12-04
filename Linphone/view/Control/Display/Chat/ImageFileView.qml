@@ -26,10 +26,6 @@ Image {
 	fillMode: Image.PreserveAspectFit
 	source: contentGui && contentGui.core.thumbnail || ""
 
-	states: State {
-		name: 'hovered'
-	}
-
 	MouseArea {
 		anchors.fill: parent
 		hoverEnabled: true
@@ -40,7 +36,6 @@ Image {
 		onContainsMouseChanged: {
 			if (containsMouse) UtilsCpp.setGlobalCursor(Qt.PointingHandCursor)
 			else UtilsCpp.restoreGlobalCursor()
-			mainItem.state = containsMouse ? 'hovered' : ''
 		}
 		onPressed: (mouse) => {
 			mouse.accepted = true

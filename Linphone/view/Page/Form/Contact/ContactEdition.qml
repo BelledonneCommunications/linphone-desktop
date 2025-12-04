@@ -58,7 +58,7 @@ MainRightPanel {
 			icon.source: AppIcons.closeX
 			icon.width: Utils.getSizeWithScreenRatio(24)
 			icon.height: Utils.getSizeWithScreenRatio(24)
-			//: Close %n
+			//: Close %1
 			Accessible.name: qsTr("close_accessible_name").arg(mainItem.title)
 			onClicked: {
 				if (contact.core.isSaved) mainItem.closeEdition('')
@@ -203,10 +203,11 @@ MainRightPanel {
 				sig.connect(f)
 			}
 
-			ScrollBar.vertical: Control.ScrollBar {
+			ScrollBar.vertical: ScrollBar {
 				anchors.right: parent.right
+				visible: editionLayout.contentHeight > editionLayout.height
 			}
-			ScrollBar.horizontal: Control.ScrollBar {
+			ScrollBar.horizontal: ScrollBar {
 			}
 			ColumnLayout {
                 spacing: Utils.getSizeWithScreenRatio(20)

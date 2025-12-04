@@ -71,6 +71,9 @@ public:
 	                         LinphoneEnums::MagicSearchAggregation aggregation,
 	                         int maxResults);
 
+	void checkForUpdate(const std::string &applicationVersion, bool requestedByUser = false);
+	bool isCheckVersionRequestedByUser() const;
+
 	bool mEnd = false;
 	linphone::ConfiguringState mConfigStatus;
 	QString mConfigMessage;
@@ -97,6 +100,7 @@ private:
 	QMap<QString, OIDCModel *> mOpenIdConnections;
 	std::shared_ptr<MagicSearchModel> mMagicSearch;
 	bool mStarted = false;
+	bool mCheckVersionRequestedByUser = false;
 
 	void setPathBeforeCreation();
 	void setPathsAfterCreation();
@@ -202,6 +206,9 @@ private:
 	                                                const std::string &url) override;
 	virtual void onFriendListRemoved(const std::shared_ptr<linphone::Core> &core,
 	                                 const std::shared_ptr<linphone::FriendList> &friendList) override;
+	virtual void onAudioDevicesListUpdated(const std::shared_ptr<linphone::Core> &core) override;
+	virtual void onAudioDeviceChanged(const std::shared_ptr<linphone::Core> &core,
+	                                  const std::shared_ptr<linphone::AudioDevice> &device) override;
 
 signals:
 	void accountAdded(const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account);
@@ -281,9 +288,13 @@ signals:
 	void versionUpdateCheckResultReceived(const std::shared_ptr<linphone::Core> &core,
 	                                      linphone::VersionUpdateCheckResult result,
 	                                      const std::string &version,
-	                                      const std::string &url);
+	                                      const std::string &url,
+	                                      bool checkRequestedByUser);
 	void friendListRemoved(const std::shared_ptr<linphone::Core> &core,
 	                       const std::shared_ptr<linphone::FriendList> &friendList);
+	void audioDevicesListUpdated(const std::shared_ptr<linphone::Core> &core);
+	void audioDeviceChanged(const std::shared_ptr<linphone::Core> &core,
+	                        const std::shared_ptr<linphone::AudioDevice> &device);
 };
 
 #endif

@@ -31,3 +31,9 @@ Group changes to describe their impact on the project, as follows:
 - Default screen (between contacts, call history, conversations & meetings list) will change depending on where you were when the app was paused or killed, and you will return to that last visited screen on the next startup.
 - Minimum supported Qt version is now 6.5.3
 - Some settings have changed name and/or section in linphonerc file.
+
+
+## [6.1.0] - XXXX-XX-XX
+
+### Changed
+- Minimum supported Qt version is now 6.10.0
