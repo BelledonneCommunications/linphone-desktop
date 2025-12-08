@@ -151,6 +151,22 @@ Usually, if it is about VPX or Decaf, this could come from your Perl installatio
 
 * On Mac, the application can crash at the start from QOpenGLContext. A workaround is to deactivate the mipmap mode on images by adding into your configuration file (linphonerc): `mipmap_enabled=0` in `[ui]` section.
 
+* On Fedora 43, emoji could appear as blank spaces because the Noto font in Fedora 43 uses COLRv1 format. To prevent this, you can follow the steps described in this github issue : https://github.com/zed-industries/zed/issues/42255
+
+```
+# remove the System COLRv1 version of the font
+sudo rm /usr/share/fonts/google-noto-color-emoji-fonts/Noto-COLRv1.ttf
+
+# install a version of the font that works in Zed
+sudo wget https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf -O /usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf
+
+# reload font cache
+fc-cache --force
+
+fc-match "Noto Color Emoji"   
+# should now show: NotoColorEmoji.ttf: "Noto Color Emoji" "Regular"
+```
+
 
 ## Specific instructions for the Mac Os X platform
 
