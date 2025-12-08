@@ -582,72 +582,89 @@ Item {
                                 }
                             }
                         }
-                        CallPage {
-                            id: callPage
-                            Connections {
-                                target: mainItem
-                                function onOpenNewCallRequest() {
-                                    callPage.goToNewCall();
+                        Loader {
+                            active: mainStackLayout.currentIndex === 0
+                            sourceComponent: CallPage {
+                                id: callPage
+                                Connections {
+                                    target: mainItem
+                                    function onOpenNewCallRequest() {
+                                        callPage.goToNewCall();
+                                    }
+                                    function onCallCreated() {
+                                        callPage.goToCallHistory();
+                                    }
+                                    function onOpenCallHistory() {
+                                        callPage.goToCallHistory();
+                                    }
+                                    function onOpenNumPadRequest() {
+                                        callPage.openNumPadRequest();
+                                    }
                                 }
-                                function onCallCreated() {
-                                    callPage.goToCallHistory();
+                                onCreateContactRequested: (name, address) => {
+                                    mainItem.createContact(name, address);
                                 }
-                                function onOpenCallHistory() {
-                                    callPage.goToCallHistory();
+                                Component.onCompleted: {
+                                    magicSearchBar.numericPadPopup = callPage.numericPadPopup;
                                 }
-                                function onOpenNumPadRequest() {
-                                    callPage.openNumPadRequest();
-                                }
-                            }
-                            onCreateContactRequested: (name, address) => {
-                                mainItem.createContact(name, address);
-                            }
-                            Component.onCompleted: {
-                                magicSearchBar.numericPadPopup = callPage.numericPadPopup;
-                            }
-                            onGoToCallForwardSettings: {
-                                var page = settingsPageComponent.createObject(parent, {
-                                    defaultIndex: 1
-                                });
-                                openContextualMenuComponent(page);
-                            }
-                        }
-                        ContactPage {
-                            id: contactPage
-                            Connections {
-                                target: mainItem
-                                function onCreateContactRequested(name, address) {
-                                    contactPage.createContact(name, address);
-                                }
-                                function onDisplayContactRequested(contactAddress) {
-                                    contactPage.initialFriendToDisplay = contactAddress;
+                                onGoToCallForwardSettings: {
+                                    var page = settingsPageComponent.createObject(parent, {
+                                        defaultIndex: 1
+                                    });
+                                    openContextualMenuComponent(page);
                                 }
                             }
                         }
-                        ChatPage {
-                            id: chatPage
-                            Connections {
-                                target: mainItem
-                                function onDisplayChatRequested(contactAddress) {
-                                    console.log("display chat requested, open with address", contactAddress);
-                                    chatPage.remoteAddress = "";
-                                    chatPage.remoteAddress = contactAddress;
-                                }
-                                function onOpenChatRequested(chat) {
-                                    console.log("open chat requested, open", chat.core.title);
-                                    chatPage.openChatRequested(chat);
-                                }
-                            }
-                        }
-                        MeetingPage {
-                            id: meetingPage
-                            Connections {
-                                target: mainItem
-                                function onScheduleMeetingRequested(subject, addresses) {
-                                    meetingPage.createPreFilledMeeting(subject, addresses);
+                        Loader {
+                            active: mainStackLayout.currentIndex === 1
+                            sourceComponent: ContactPage {
+                                id: contactPage
+                                Connections {
+                                    target: mainItem
+                                    function onCreateContactRequested(name, address) {
+                                        contactPage.createContact(name, address);
+                                    }
+                                    function onDisplayContactRequested(contactAddress) {
+                                        contactPage.initialFriendToDisplay = contactAddress;
+                                    }
                                 }
                             }
                         }
+                        Loader {
+                            active: mainStackLayout.currentIndex === 2
+                            sourceComponent: ChatPage {
+                                id: chatPage
+                                Connections {
+                                    target: mainItem
+                                    function onDisplayChatRequested(contactAddress) {
+                                        console.log("display chat requested, open with address", contactAddress);
+                                        chatPage.remoteAddress = "";
+                                        chatPage.remoteAddress = contactAddress;
+                                    }
+                                    function onOpenChatRequested(chat) {
+                                        console.log("open chat requested, open", chat.core.title);
+                                        chatPage.openChatRequested(chat);
+                                    }
+                                }
+                            }
+                        }
+
+                        Loader {
+                            active: mainStackLayout.currentIndex === 3
+                            sourceComponent: Component {
+                                id: meetingComp
+                                MeetingPage {
+                                    id: meetingPage
+                                    Connections {
+                                        target: mainItem
+                                        function onScheduleMeetingRequested(subject, addresses) {
+                                            meetingPage.createPreFilledMeeting(subject, addresses);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                     }
                 }
                 Component {
