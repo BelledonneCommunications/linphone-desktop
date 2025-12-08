@@ -26,7 +26,11 @@
 DEFINE_ABSTRACT_OBJECT(ChatProxy)
 
 ChatProxy::ChatProxy(QObject *parent) {
-	mList = ChatList::create();
+	if (!App::getInstance()->getChatList()) {
+		mList = ChatList::create();
+		App::getInstance()->setChatList(mList);
+	}
+	mList = App::getInstance()->getChatList();
 	setSourceModel(mList.get());
 	setDynamicSortFilter(true);
 }

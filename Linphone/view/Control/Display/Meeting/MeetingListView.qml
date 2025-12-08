@@ -101,9 +101,6 @@ ListView {
 		filterType: ConferenceInfoProxy.None
         initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(63)))
 		displayItemsStep: initialDisplayItems/2
-		Component.onCompleted: {
-            mainItem.loading = false
-        }
 		onModelAboutToBeReset: {
             mainItem.loading = true
         }

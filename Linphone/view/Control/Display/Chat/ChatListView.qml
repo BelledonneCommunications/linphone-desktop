@@ -38,9 +38,6 @@ ListView {
 
     model: ChatProxy {
         id: chatProxy
-        Component.onCompleted: {
-            loading = true
-        }
         filterText: mainItem.searchText
         onFilterTextChanged: {
             chatToSelectLater = currentChatGui

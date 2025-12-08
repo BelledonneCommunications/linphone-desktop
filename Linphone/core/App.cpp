@@ -1190,6 +1190,27 @@ AccountList *App::getAccounts() const {
 	return mAccountList.get();
 }
 
+QSharedPointer<ConferenceInfoList> App::getConferenceInfoList() const {
+	return mConferenceInfoList;
+}
+void App::setConferenceInfoList(QSharedPointer<ConferenceInfoList> data) {
+	if (mConferenceInfoList != data) {
+		mConferenceInfoList = data;
+		emit conferenceInfosChanged();
+	}
+}
+
+QSharedPointer<ChatList> App::getChatList() const {
+	return mChatList;
+}
+
+void App::setChatList(QSharedPointer<ChatList> data) {
+	if (mChatList != data) {
+		mChatList = data;
+		emit chatsChanged();
+	}
+}
+
 QSharedPointer<CallList> App::getCallList() const {
 	return mCallList;
 }

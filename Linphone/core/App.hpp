@@ -26,6 +26,8 @@
 #include "core/account/AccountProxy.hpp"
 #include "core/call/CallProxy.hpp"
 #include "core/chat/ChatGui.hpp"
+#include "core/chat/ChatList.hpp"
+#include "core/conference/ConferenceInfoList.hpp"
 #include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "model/cli/CliModel.hpp"
@@ -154,6 +156,12 @@ public:
 	void setAccountList(QSharedPointer<AccountList> data);
 	Q_INVOKABLE AccountList *getAccounts() const;
 
+	QSharedPointer<ConferenceInfoList> getConferenceInfoList() const;
+	void setConferenceInfoList(QSharedPointer<ConferenceInfoList> data);
+
+	QSharedPointer<ChatList> getChatList() const;
+	void setChatList(QSharedPointer<ChatList> data);
+
 	QSharedPointer<CallList> getCallList() const;
 	void setCallList(QSharedPointer<CallList> data);
 	Q_INVOKABLE CallList *getCalls() const;
@@ -198,6 +206,8 @@ signals:
 	void callsChanged();
 	void currentDateChanged();
 	void currentChatChanged();
+	void conferenceInfosChanged();
+	void chatsChanged();
 	// void executeCommand(QString command);
 
 private:
@@ -220,6 +230,8 @@ private:
 	ChatGui *mCurrentChat = nullptr;
 	QSharedPointer<SettingsCore> mSettings;
 	QSharedPointer<AccountList> mAccountList;
+	QSharedPointer<ConferenceInfoList> mConferenceInfoList;
+	QSharedPointer<ChatList> mChatList;
 	QSharedPointer<CallList> mCallList;
 	QSharedPointer<SafeConnection<App, CoreModel>> mCoreModelConnection;
 	QSharedPointer<SafeConnection<App, CliModel>> mCliModelConnection;
