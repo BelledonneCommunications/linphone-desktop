@@ -730,7 +730,37 @@
     <message>
         <location filename="../../core/App.cpp" line="452"/>
         <source>info_popup_new_version_download_label</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation>Stáhněte si ji!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="447"/>
+        <source>info_popup_error_checking_update</source>
+        <translation>Při pokusu o kontrolu aktualizací došlo k chybě. Zkuste to prosím znovu později nebo kontaktujte tým podpory.</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="457"/>
+        <source>info_popup_new_version_available_title</source>
+        <translation>Nová verze k dispozici!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="459"/>
+        <source>info_popup_new_version_available_message</source>
+        <translation>Nová verze Linphone (%1) je k dispozici na %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="465"/>
+        <source>info_popup_version_up_to_date_title</source>
+        <translation>Aktuální</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="467"/>
+        <source>info_popup_version_up_to_date_message</source>
+        <translation>Vaše verze je aktuální</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1402"/>
+        <source>check_for_update</source>
+        <translation>Zkontrolovat aktualizace</translation>
     </message>
 </context>
 <context>
@@ -2199,6 +2229,11 @@
         <source>info_popup_error_titile</source>
         <translation>Chyba</translation>
     </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="105"/>
+        <source>download_file_default_error</source>
+        <translation>Chyba při stahování souboru %1</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentList</name>
@@ -2254,6 +2289,36 @@ Error</extracomment>
 </context>
 <context>
     <name>ChatMessageContentModel</name>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="95"/>
+        <source>download_file_server_error</source>
+        <translation>Chyba při pokusu o stažení obsahu: %1</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="105"/>
+        <source>download_file_error_no_safe_file_path</source>
+        <translation>Nelze vytvořit bezpečné umístění souboru: %1</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="119"/>
+        <source>download_file_error_null_name</source>
+        <translation>Název obsahu je prázdný, nelze jej stáhnout!</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="127"/>
+        <source>download_file_error_unable_to_download</source>
+        <translation>Nelze stáhnout soubor položky %1</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="80"/>
+        <source>download_error_object_doesnt_exist</source>
+        <translation>Vnitřní chyba: objekt zprávy již neexistuje!</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="114"/>
+        <source>download_file_error_file_transfer_unavailable</source>
+        <translation>Tento soubor již byl stažen a není už na serveru. Váš partner vám jej musí znovu poslat, pokud jej chcete získat</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageCore</name>
@@ -3453,6 +3518,11 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <extracomment>&quot;Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1&quot;</extracomment>
         <translation>Nahrávání záznamů se nezdařilo. Soubory záznamů můžete sdílet přímo z následující složky: %1</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="148"/>
+        <source>settings_debug_qt_version_title</source>
+        <translation>Verze Qt</translation>
+    </message>
 </context>
 <context>
     <name>DecoratedTextField</name>
@@ -3801,6 +3871,11 @@ Expirace : %1</translation>
         <source>help_troubleshooting_title</source>
         <extracomment>&quot;Dépannage&quot;</extracomment>
         <translation>Řešení potíží</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="110"/>
+        <source>help_check_for_update_button_label</source>
+        <translation>Zkontrolovat aktualizace</translation>
     </message>
 </context>
 <context>
@@ -5149,6 +5224,11 @@ Expirace : %1</translation>
         <source>conference_layout_audio_only</source>
         <extracomment>&quot;Audio uniquement&quot;</extracomment>
         <translation>Pouze zvuk</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="125"/>
+        <source>message_state_idle</source>
+        <translation>nečinný</translation>
     </message>
 </context>
 <context>

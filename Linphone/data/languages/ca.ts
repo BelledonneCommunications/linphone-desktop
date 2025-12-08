@@ -652,29 +652,29 @@
         <location filename="../../core/App.cpp" line="654"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>no accessible</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="926"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Programari de videotrucada SIP lliure i de codi obert.</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="928"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Enviar una comanda a l&apos;aplicació via l&apos;intèrpret de comandes</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="932"/>
         <source>command_line_option_show_help</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra&apos;m l&apos;ajut</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="937"/>
         <source>command_line_option_show_app_version</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra la versió de l&apos;aplicatiu</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="945"/>
@@ -725,6 +725,36 @@
         <location filename="../../core/App.cpp" line="1448"/>
         <source>mark_all_read_action</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="447"/>
+        <source>info_popup_error_checking_update</source>
+        <translation>Ha succeït un error mentre es mirava d&apos;actualitzar. Si et plau, prova-ho més tard o posa&apos;t en contacte amb l&apos;equip de suport.</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="454"/>
+        <source>info_popup_new_version_download_label</source>
+        <translation>Descarrega&apos;l!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="457"/>
+        <source>info_popup_new_version_available_title</source>
+        <translation>Nova versió a l&apos;abast!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="459"/>
+        <source>info_popup_new_version_available_message</source>
+        <translation>Una nova versió del Linphone (1%) és accessible a l&apos;1%</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="465"/>
+        <source>info_popup_version_up_to_date_title</source>
+        <translation>Actualitzat</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="467"/>
+        <source>info_popup_version_up_to_date_message</source>
+        <translation>Actualitzat, disposes de la darrera versió</translation>
     </message>
 </context>
 <context>

@@ -728,7 +728,7 @@
     <message>
         <location filename="../../core/App.cpp" line="452"/>
         <source>info_popup_new_version_download_label</source>
-        <translation> </translation>
+        <translation type="unfinished"> </translation>
     </message>
 </context>
 <context>

@@ -7317,9 +7317,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="494"/>
         <source>formatMonths</source>
         <extracomment>&apos;%1 month&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>um mês</numerusform>
+            <numerusform>%1 meses</numerusform>
         </translation>
     </message>
     <message numerus="yes">

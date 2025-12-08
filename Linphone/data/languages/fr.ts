@@ -675,7 +675,7 @@
     <message>
         <location filename="../../core/App.cpp" line="455"/>
         <source>info_popup_new_version_download_label</source>
-        <translation>Téléchargez-là !</translation>
+        <translation>Téléchargez-là&#x202f;!</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="458"/>
