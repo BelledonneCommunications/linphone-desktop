@@ -120,12 +120,11 @@ elseif(WIN32)
 		NAMES msys2_shell.cmd
 		HINTS "C:/msys64/"
 	)
-	set(MSVC_VERSION ${MSVC_TOOLSET_VERSION})
 	set(CMAKE_INSTALL_UCRT_LIBRARIES TRUE)
 	if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 		set(CMAKE_INSTALL_DEBUG_LIBRARIES TRUE)
-        endif()
-        include(InstallRequiredSystemLibraries)
+	endif()
+	include(InstallRequiredSystemLibraries)
 	find_file(UCRTBASE_LIB "ucrtbase.dll" PATHS "C:/Windows/System32")
 	install(FILES ${UCRTBASE_LIB} DESTINATION "${CMAKE_INSTALL_BINDIR}")
 
