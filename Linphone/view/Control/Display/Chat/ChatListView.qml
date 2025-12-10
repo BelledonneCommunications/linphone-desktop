@@ -83,7 +83,6 @@ ListView {
         mainItem.currentIndex = index
     }
 
-    Component.onCompleted: cacheBuffer = Math.max(contentHeight, 0) //contentHeight>0 ? contentHeight : 0// cache all items
     // remove binding loop
     onContentHeightChanged: Qt.callLater(function () {
         if (mainItem)

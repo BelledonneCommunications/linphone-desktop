@@ -93,15 +93,17 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			return;
 		}
 		setIsUpdating(true);
+		beginResetModel();
 		mModelConnection->invokeToModel([this]() {
 			mustBeInLinphoneThread(getClassName());
-			beginResetModel();
 			// Avoid copy to lambdas
 			QList<QSharedPointer<ChatCore>> *chats = new QList<QSharedPointer<ChatCore>>();
 			auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 			if (!currentAccount) {
-				setIsUpdating(false);
-				endResetModel();
+				mModelConnection->invokeToCore([this, chats]() {
+					setIsUpdating(false);
+					endResetModel();
+				});
 				return;
 			}
 			auto linphoneChatRooms = currentAccount->filterChatRooms(Utils::appStringToCoreString(mFilter));
@@ -122,8 +124,8 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 				mList.clear();
 				for (auto &chat : *chats) {
 					connectItem(chat);
+					mList.append(chat);
 				}
-				add(*chats);
 				endResetModel();
 				setIsUpdating(false);
 				delete chats;
