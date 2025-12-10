@@ -146,7 +146,7 @@ Loader{
 					width: height
 					Rectangle {
 						id: initialItem
-						property string initials: mainItem.isConference ? "" : UtilsCpp.getInitials(mainItem.displayNameVal)
+						property string initials: mainItem.isConference || mainItem.displayNameVal[0] === "+" ? "" : UtilsCpp.getInitials(mainItem.displayNameVal)
 						radius: width / 2
 						color: DefaultStyle.main2_200
 						height: stackView.height
@@ -165,7 +165,7 @@ Loader{
 						}
 						EffectImage {
 							id: initialImg
-							visible: initialItem.initials === ""
+							visible: initialItem.initials === "" || initialItem.initials[0] === "+"
 							width: stackView.width/2
 							height: width
 							colorizationColor: DefaultStyle.main2_600
