@@ -144,9 +144,11 @@ public:
 
 	float getPlaybackGain() const;
 	void setPlaybackGain(float gain);
+	void setPlaybackGainFromModel(float gain);
 
 	float getCaptureGain() const;
 	void setCaptureGain(float gain);
+	void setCaptureGainFromModel(float gain);
 
 	QVariantList getCaptureDevices() const;
 	void setCaptureDevices(QVariantList devices);
