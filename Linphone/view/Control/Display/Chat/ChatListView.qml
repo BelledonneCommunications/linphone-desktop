@@ -48,6 +48,14 @@ ListView {
         }
         onModelReset: {
             loading = false
+            if (mainItem.chatToSelectLater) {
+                selectChat(mainItem.chatToSelectLater)
+                mainItem.chatToSelectLater = null
+            }
+            else if (mainItem.chatToSelect) {
+                selectChat(mainItem.chatToSelect)
+                mainItem.chatToSelect = null
+            }
         }
         onRowsRemoved: {
             var index = mainItem.currentIndex
