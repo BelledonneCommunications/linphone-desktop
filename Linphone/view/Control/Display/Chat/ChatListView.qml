@@ -15,6 +15,7 @@ ListView {
     property SearchBar searchBar
     property bool loading: false
     property string searchText: searchBar?.text
+    property alias chatProxy: chatProxy
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
 
     property ChatGui currentChatGui: model.getAt(currentIndex) || null

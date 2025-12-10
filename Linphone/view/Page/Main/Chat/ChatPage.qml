@@ -62,7 +62,7 @@ AbstractMainPage {
         if (selectedChatGui) {
             if (!listStackView.currentItem || listStackView.currentItem.objectName !== "chatListItem") {
                 listStackView.popToIndex(0)
-                if (listStackView.depth === 0 || listStackView.currentItem.objectName !== "chatListItem") listStackView.push(chatListItem)
+                if (listStackView.depth === 0 || listStackView.currentItem && listStackView.currentItem.objectName !== "chatListItem") listStackView.push(chatListItem)
             }
         }
         AppCpp.currentChat = visible ? selectedChatGui : null
@@ -214,6 +214,7 @@ AbstractMainPage {
                             Layout.fillHeight: true
                             Layout.topMargin: Utils.getSizeWithScreenRatio(39)
                             searchBar: searchBar
+                            chatProxy.sourceModel: AppCpp.chats
                             Control.ScrollBar.vertical: scrollbar
 
                             onCurrentChatGuiChanged: {

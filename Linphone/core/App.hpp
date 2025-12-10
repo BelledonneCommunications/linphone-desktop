@@ -47,6 +47,7 @@ class App : public SingleApplication, public AbstractObject {
 	Q_PROPERTY(bool coreStarted READ getCoreStarted WRITE setCoreStarted NOTIFY coreStartedChanged)
 	Q_PROPERTY(AccountList *accounts READ getAccounts NOTIFY accountsChanged)
 	Q_PROPERTY(CallList *calls READ getCalls NOTIFY callsChanged)
+	Q_PROPERTY(ChatList *chats READ getChats NOTIFY chatsChanged)
 	Q_PROPERTY(QString shortApplicationVersion READ getShortApplicationVersion CONSTANT)
 	Q_PROPERTY(QString qtVersion READ getQtVersion CONSTANT)
 	Q_PROPERTY(QString gitBranchName READ getGitBranchName CONSTANT)
@@ -160,6 +161,7 @@ public:
 	void setConferenceInfoList(QSharedPointer<ConferenceInfoList> data);
 
 	QSharedPointer<ChatList> getChatList() const;
+	ChatList *getChats() const;
 	void setChatList(QSharedPointer<ChatList> data);
 
 	QSharedPointer<CallList> getCallList() const;

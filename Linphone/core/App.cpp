@@ -635,6 +635,9 @@ void App::initCore() {
 			    });
 			    if (!mCallList) setCallList(CallList::create());
 			    else mCallList->lUpdate();
+			    if (!mChatList) setChatList(ChatList::create());
+			    else mChatList->lUpdate();
+
 			    if (!mSettings) {
 				    mSettings = settings;
 				    setLocale(settings->getConfigLocale());
@@ -1202,6 +1205,10 @@ void App::setConferenceInfoList(QSharedPointer<ConferenceInfoList> data) {
 
 QSharedPointer<ChatList> App::getChatList() const {
 	return mChatList;
+}
+
+ChatList *App::getChats() const {
+	return mChatList.get();
 }
 
 void App::setChatList(QSharedPointer<ChatList> data) {

@@ -26,11 +26,7 @@
 DEFINE_ABSTRACT_OBJECT(ChatProxy)
 
 ChatProxy::ChatProxy(QObject *parent) {
-	if (!App::getInstance()->getChatList()) {
-		mList = ChatList::create();
-		App::getInstance()->setChatList(mList);
-	}
-	mList = App::getInstance()->getChatList();
+	mList = ChatList::create();
 	setSourceModel(mList.get());
 	setDynamicSortFilter(true);
 }
@@ -51,6 +47,8 @@ void ChatProxy::setSourceModel(QAbstractItemModel *model) {
 		        [this, newChatList] { emit newChatList->filterChanged(getFilterText()); });
 		connect(newChatList, &ChatList::chatAdded, this, [this] { invalidate(); });
 		connect(newChatList, &ChatList::dataChanged, this, [this] { invalidate(); });
+		connect(newChatList, &ChatList::modelAboutToBeReset, this, &ChatProxy::modelAboutToBeReset);
+		connect(newChatList, &ChatList::modelReset, this, &ChatProxy::modelReset);
 	}
 	QSortFilterProxyModel::setSourceModel(newChatList);
 	sort(0);
