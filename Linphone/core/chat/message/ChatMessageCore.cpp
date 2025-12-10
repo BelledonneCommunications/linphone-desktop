@@ -115,11 +115,13 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 	if (chatmessage) {
 		mChatMessageModel = Utils::makeQObject_ptr<ChatMessageModel>(chatmessage);
 		mChatMessageModel->setSelf(mChatMessageModel);
-		mText = ToolModel::getMessageFromContent(chatmessage->getContents());
+		mText = ToolModel::getMessageFromMessage(chatmessage);
 		mUtf8Text = mChatMessageModel->getUtf8Text();
 		mHasTextContent = mChatMessageModel->getHasTextContent();
 		mTimestamp = QDateTime::fromSecsSinceEpoch(chatmessage->getTime());
 		mIsOutgoing = chatmessage->isOutgoing();
+		mIsRetractable = chatmessage->isRetractable();
+		mIsRetracted = chatmessage->isRetracted();
 		mIsRemoteMessage = !chatmessage->isOutgoing();
 		mPeerAddress = Utils::coreStringToAppString(chatmessage->getPeerAddress()->asStringUriOnly());
 		mPeerName = ToolModel::getDisplayName(chatmessage->getPeerAddress());
@@ -191,7 +193,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 		if (mIsReply) {
 			auto replymessage = chatmessage->getReplyMessage();
 			if (replymessage) {
-				mReplyText = ToolModel::getMessageFromContent(replymessage->getContents());
+				mReplyText = ToolModel::getMessageFromMessage(replymessage);
 				if (mIsFromChatGroup) mRepliedToName = ToolModel::getDisplayName(replymessage->getFromAddress());
 			}
 		}
@@ -206,6 +208,9 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	mChatMessageModelConnection = SafeConnection<ChatMessageCore, ChatMessageModel>::create(me, mChatMessageModel);
 	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lDelete, [this] {
 		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->deleteMessageFromChatRoom(true); });
+	});
+	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lRetract, [this] {
+		mChatMessageModelConnection->invokeToModel([this] { mChatMessageModel->retractMessageFromChatRoom(); });
 	});
 	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageDeleted, [this](bool deletedByUser) {
 		mChatMessageModelConnection->invokeToCore([this, deletedByUser] {
@@ -350,6 +355,15 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 		    int duration = now.secsTo(QDateTime::fromSecsSinceEpoch(expireTime));
 		    mChatMessageModelConnection->invokeToCore([this, duration] { setEphemeralDuration(duration); });
 	    });
+
+	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::retracted,
+	                                                [this](const std::shared_ptr<linphone::ChatMessage> &message) {
+		                                                QString text = ToolModel::getMessageFromMessage(message);
+		                                                mChatMessageModelConnection->invokeToCore([this, text] {
+			                                                setText(text);
+			                                                setRetracted();
+		                                                });
+	                                                });
 }
 
 QList<ImdnStatus> ChatMessageCore::computeDeliveryStatus(const std::shared_ptr<linphone::ChatMessage> &message) {
@@ -470,6 +484,18 @@ void ChatMessageCore::setIsRead(bool read) {
 		mIsRead = read;
 		emit isReadChanged(read);
 	}
+}
+
+void ChatMessageCore::setRetracted() {
+	if (!mIsRetracted) {
+		mIsRetracted = true;
+		emit isRetractedChanged();
+		emit messageStateChanged();
+	}
+}
+
+bool ChatMessageCore::isRetracted() const {
+	return mIsRetracted;
 }
 
 QString ChatMessageCore::getOwnReaction() const {

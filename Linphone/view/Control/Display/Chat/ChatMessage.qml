@@ -247,11 +247,21 @@ Control.Control {
                     }
                     contentItem: ColumnLayout {
                         spacing: Utils.getSizeWithScreenRatio(5)
+                        Text {
+                            id: retractedId
+                            visible: mainItem.chatMessage.core.isRetracted
+                            font: Typography.p1i
+                            color: DefaultStyle.info_800_main
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            text: mainItem.chatMessage.core.text
+                        }
                         ChatMessageContent {
                             id: chatBubbleContent
                             Layout.fillWidth: true
                             Layout.fillHeight: true
                             chatGui: mainItem.chat
+                            visible: !mainItem.chatMessage.core.isRetracted
                             searchedTextPart: mainItem.searchedTextPart
                             chatMessageGui: mainItem.chatMessage
                             maxWidth: mainItem.maxWidth
@@ -415,6 +425,7 @@ Control.Control {
                         }
                         IconLabelButton {
                             inverseLayout: true
+							visible: !mainItem.chatMessage.core.isRetracted
                             //: Reply
                             text: qsTr("chat_message_reply")
                             icon.source: AppIcons.reply
@@ -427,6 +438,7 @@ Control.Control {
                         }
                         IconLabelButton {
                             inverseLayout: true
+                            visible: !mainItem.chatMessage.core.isRetracted
                             text: chatBubbleContent.selectedText != ""
                                 //: "Copy selection"
                                 ? qsTr("chat_message_copy_selection")
@@ -447,6 +459,7 @@ Control.Control {
                         }
                         IconLabelButton {
                             inverseLayout: true
+                            visible: !mainItem.chatMessage.core.isRetracted
                             //: Forward
                             text: qsTr("chat_message_forward")
                             icon.source: AppIcons.forward

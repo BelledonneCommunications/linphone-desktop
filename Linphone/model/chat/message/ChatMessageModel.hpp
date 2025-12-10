@@ -52,6 +52,7 @@ public:
 	void markAsRead();
 
 	void deleteMessageFromChatRoom(bool deletedByUser);
+	void retractMessageFromChatRoom();
 
 	void sendReaction(const QString &reaction);
 
@@ -95,6 +96,7 @@ signals:
 	void ephemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> &message);
 	void ephemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> &message);
 	void ephemeralMessageTimeUpdated(const std::shared_ptr<linphone::ChatMessage> &message, int expireTime);
+	void retracted(const std::shared_ptr<linphone::ChatMessage> &message);
 
 private:
 	linphone::ChatMessage::State mMessageState;
@@ -130,6 +132,7 @@ private:
 	                                   const std::shared_ptr<const linphone::ParticipantImdnState> &state) override;
 	void onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> &message) override;
 	void onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> &message) override;
+	void onRetracted(const std::shared_ptr<linphone::ChatMessage> &message) override;
 };
 
 #endif

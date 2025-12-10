@@ -225,6 +225,51 @@ ListView {
         indicatorColor: DefaultStyle.main1_500_main
     }
     
+	Dialog {
+        id: messageDeletionDialog
+        width: Utils.getSizeWithScreenRatio(637)
+        //: "Supprimer le message ?"
+        title: qsTr("conversation_dialog_delete_chat_message_title")
+        property var chatMessage
+        buttons: RowLayout {
+				id: buttonsLayout
+				Layout.alignment: Qt.AlignBottom | Qt.AlignRight
+                spacing: Utils.getSizeWithScreenRatio(20)
+				MediumButton {
+					id: firstButtonId
+					text: qsTr("conversation_dialog_delete_locally_label")
+					style: ButtonStyle.main
+					onClicked: {
+						messageDeletionDialog.chatMessage.core.lDelete()
+						messageDeletionDialog.close()
+					}
+					KeyNavigation.left: thirdButtonId
+					KeyNavigation.right: secondButtonId
+				}
+				MediumButton {
+					id: secondButtonId
+					text: qsTr("conversation_dialog_delete_for_everyone_label")
+					style: ButtonStyle.main
+					onClicked: {
+						messageDeletionDialog.chatMessage.core.lRetract()
+						messageDeletionDialog.close()
+					}
+					KeyNavigation.left: firstButtonId
+					KeyNavigation.right: thirdButtonId
+				}
+				MediumButton {
+					id: thirdButtonId
+					text: qsTr("dialog_cancel")
+					style: ButtonStyle.secondary
+					onClicked: {
+						messageDeletionDialog.close()
+					}
+					KeyNavigation.left: secondButtonId
+					KeyNavigation.right: firstButtonId
+				}
+			}
+    }
+    
     delegate: DelegateChooser {
         role: "eventType"
         DelegateChoice {
@@ -262,7 +307,14 @@ ListView {
                     ? parent.right
                     : undefined
 
-                onMessageDeletionRequested: chatMessage.core.lDelete()
+                onMessageDeletionRequested: {
+					if (chatMessage.core.isOutgoing && chatMessage.core.isRetractable && !chatMessage.core.isRetracted) {
+						messageDeletionDialog.chatMessage = chatMessage
+						messageDeletionDialog.open()
+					} else {
+						chatMessage.core.lDelete()
+					}
+                }
                 onShowReactionsForMessageRequested: mainItem.showReactionsForMessageRequested(chatMessage)
                 onShowImdnStatusForMessageRequested: mainItem.showImdnStatusForMessageRequested(chatMessage)
                 onReplyToMessageRequested: mainItem.replyToMessageRequested(chatMessage)
@@ -283,6 +335,16 @@ ListView {
                         }
                     }
                 }
+				Connections {
+					target: chatMessage.core
+					onIsRetractedChanged: {
+						if (chatMessage.core.isRetracted && chatMessage.core.isOutgoing) {
+								UtilsCpp.showInformationPopup(qsTr("info_toast_deleted_title"),
+															//: The message has been deleted
+															qsTr("info_toast_deleted_message"), true)
+						}
+					}
+				}
             }
         }
 

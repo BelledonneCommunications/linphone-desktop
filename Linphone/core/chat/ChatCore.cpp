@@ -394,6 +394,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	                                         [this](std::shared_ptr<linphone::Friend> f) { updateInfo(f); });
 	mCoreModelConnection->makeConnectToModel(&CoreModel::friendRemoved,
 	                                         [this](std::shared_ptr<linphone::Friend> f) { updateInfo(f, true); });
+
 }
 
 QDateTime ChatCore::getLastUpdatedTime() const {

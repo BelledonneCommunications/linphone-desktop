@@ -2486,6 +2486,42 @@ Only your correspondent can decrypt them.</translation>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 is writing…</translation>
     </message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="470"/>
+		<source>conversation_dialog_delete_chat_message_title</source>
+		<extracomment>&quot;Delete this message?&quot;</extracomment>
+		<translation>Delete this message?</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="471"/>
+		<source>conversation_dialog_delete_locally_label</source>
+		<extracomment>&quot;For me&quot;</extracomment>
+		<translation>For me</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
+		<source>conversation_dialog_delete_for_everyone_label</source>
+		<extracomment>&quot;For everyone&quot;</extracomment>
+		<translation>For everyone</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
+		<source>dialog_cancel</source>
+		<extracomment>&quot;Cancel&quot;</extracomment>
+		<translation>Cancel</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
+		<source>info_toast_deleted_title</source>
+		<extracomment>Deleted</extracomment>
+		<translation>Deleted</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
+		<source>info_toast_deleted_message</source>
+		<extracomment>The message has been deleted</extracomment>
+		<translation>The message has been deleted</translation>
+	</message>
 </context>
 <context>
     <name>ChatPage</name>
@@ -5947,6 +5983,18 @@ To enable them in a commercial project, please contact us.</translation>
         <source>conference_invitation_updated</source>
         <translation>Meeting modification</translation>
     </message>
+	<message>
+	<location filename="../../model/tool/ToolModel.cpp" line="530"/>
+		<source>conversation_message_content_deleted_label</source>
+		<extracomment>&quot;&lt;i&gt;This message has been deleted&lt;/i&gt;&quot;</extracomment>
+		<translation>&lt;i&gt;This message has been deleted&lt;/i&gt;</translation>
+	</message>
+	<message>
+	<location filename="../../model/tool/ToolModel.cpp" line="530"/>
+		<source>conversation_message_content_deleted_by_us_label</source>
+		<extracomment>&quot;&lt;i&gt;You have deleted this message&lt;/i&gt;&quot;</extracomment>
+		<translation>&lt;i&gt;You have deleted this message&lt;/i&gt;</translation>
+	</message>
 </context>
 <context>
     <name>Utils</name>

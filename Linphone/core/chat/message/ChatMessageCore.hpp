@@ -111,6 +111,9 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool hasFileContent MEMBER mHasFileContent CONSTANT)
 	Q_PROPERTY(bool isVoiceRecording MEMBER mIsVoiceRecording CONSTANT)
 	Q_PROPERTY(bool isCalendarInvite MEMBER mIsCalendarInvite CONSTANT)
+	Q_PROPERTY(bool isOutgoing MEMBER mIsOutgoing CONSTANT)
+	Q_PROPERTY(bool isRetractable MEMBER mIsRetractable CONSTANT)
+	Q_PROPERTY(bool isRetracted READ isRetracted NOTIFY isRetractedChanged)
 
 public:
 	static QSharedPointer<ChatMessageCore> create(const std::shared_ptr<linphone::ChatMessage> &chatmessage);
@@ -142,6 +145,9 @@ public:
 
 	bool isRead() const;
 	void setIsRead(bool read);
+
+	bool isRetracted() const;
+	void setRetracted();
 
 	QString getOwnReaction() const;
 	void setOwnReaction(const QString &reaction);
@@ -176,9 +182,11 @@ signals:
 	void messageReactionChanged();
 	void singletonReactionMapChanged();
 	void ephemeralDurationChanged(int duration);
+	void isRetractedChanged();
 
 	void lDelete();
 	void deleted();
+	void lRetract();
 	void lMarkAsRead();
 	void readChanged();
 	void lSendReaction(const QString &reaction);
@@ -214,6 +222,8 @@ private:
 	bool mIsVoiceRecording = false;
 	bool mIsEphemeral = false;
 	int mEphemeralDuration = 0;
+	bool mIsRetractable = false;
+	bool mIsRetracted = false;
 
 	bool mIsOutgoing = false;
 	QString mTotalReactionsLabel;

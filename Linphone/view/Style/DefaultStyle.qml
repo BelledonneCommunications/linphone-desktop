@@ -47,6 +47,7 @@ QtObject {
     property var success_700: "#377d71"
     property var success_900: "#1E4C53"
     property var info_500_main: "#4AA8FF"
+    property var info_800_main: "#02528D"
 
     property var vue_meter_light_green: "#6FF88D"
     property var vue_meter_dark_green: "#00D916"

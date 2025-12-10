@@ -537,6 +537,15 @@ QString ToolModel::getMessageFromContent(std::list<std::shared_ptr<linphone::Con
 	return res;
 }
 
+QString ToolModel::getMessageFromMessage(std::shared_ptr<linphone::ChatMessage> message) {
+	if (message->isRetracted()) {
+		return message->isOutgoing() ? tr("conversation_message_content_deleted_by_us_label")
+		                             : tr("conversation_message_content_deleted_label");
+	} else {
+		return getMessageFromContent(message->getContents());
+	}
+}
+
 // Load downloaded codecs like OpenH264 (needs to be after core is created and has loaded its plugins, as
 // reloadMsPlugins modifies plugin path for the factory)
 void ToolModel::loadDownloadedCodecs() {

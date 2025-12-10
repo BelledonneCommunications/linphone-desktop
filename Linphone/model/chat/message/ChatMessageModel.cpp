@@ -51,7 +51,7 @@ ChatMessageModel::~ChatMessageModel() {
 }
 
 QString ChatMessageModel::getText() const {
-	return ToolModel::getMessageFromContent(mMonitor->getContents());
+	return ToolModel::getMessageFromMessage(mMonitor);
 }
 
 QString ChatMessageModel::getUtf8Text() const {
@@ -100,6 +100,13 @@ void ChatMessageModel::deleteMessageFromChatRoom(bool deletedByUser) {
 	if (chatRoom) {
 		chatRoom->deleteMessage(mMonitor);
 		emit messageDeleted(deletedByUser);
+	}
+}
+
+void ChatMessageModel::retractMessageFromChatRoom() {
+	auto chatRoom = mMonitor->getChatRoom();
+	if (chatRoom) {
+		chatRoom->retractMessage(mMonitor);
 	}
 }
 
@@ -187,4 +194,8 @@ void ChatMessageModel::onEphemeralMessageTimerStarted(const std::shared_ptr<linp
 
 void ChatMessageModel::onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> &message) {
 	emit ephemeralMessageDeleted(message);
+}
+
+void ChatMessageModel::onRetracted(const std::shared_ptr<linphone::ChatMessage> &message) {
+	emit retracted(message);
 }

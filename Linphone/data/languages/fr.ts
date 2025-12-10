@@ -2486,6 +2486,42 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 est en train d&apos;écrire…</translation>
     </message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="470"/>
+		<source>conversation_dialog_delete_chat_message_title</source>
+		<extracomment>&quot;Delete this message?&quot;</extracomment>
+		<translation>Supprimer le message ?</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="471"/>
+		<source>conversation_dialog_delete_locally_label</source>
+		<extracomment>&quot;For me&quot;</extracomment>
+		<translation>Pour moi</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
+		<source>conversation_dialog_delete_for_everyone_label</source>
+		<extracomment>&quot;For everyone&quot;</extracomment>
+		<translation>Pour tout le monde</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
+		<source>dialog_cancel</source>
+		<extracomment>&quot;Cancel&quot;</extracomment>
+		<translation>Annuler</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
+		<source>info_toast_deleted_title</source>
+		<extracomment>Deleted</extracomment>
+		<translation>Supprimé</translation>
+	</message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
+		<source>info_toast_deleted_message</source>
+		<extracomment>The message has been deleted</extracomment>
+		<translation>Le message a été supprimé</translation>
+	</message>
 </context>
 <context>
     <name>ChatPage</name>
@@ -5947,6 +5983,18 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <source>conference_invitation_updated</source>
         <translation>Modification d&apos;une réunion</translation>
     </message>
+	<message>
+	<location filename="../../model/tool/ToolModel.cpp" line="530"/>
+		<source>conversation_message_content_deleted_label</source>
+		<extracomment>&quot;&lt;i&gt;This message has been deleted&lt;/i&gt;&quot;</extracomment>
+		<translation>&lt;i&gt;Le message a été supprimé&lt;/i&gt;</translation>
+	</message>
+	<message>
+	<location filename="../../model/tool/ToolModel.cpp" line="530"/>
+		<source>conversation_message_content_deleted_by_us_label</source>
+		<extracomment>&quot;&lt;i&gt;You have deleted this message&lt;/i&gt;&quot;</extracomment>
+		<translation>&lt;i&gt;Vous avez supprimé le message&lt;/i&gt;</translation>
+	</message>
 </context>
 <context>
     <name>Utils</name>

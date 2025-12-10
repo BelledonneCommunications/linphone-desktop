@@ -81,6 +81,14 @@ QtObject {
         weight: Font.Normal
 	})
 	
+	// Text/P1i - Paragraph text Italic
+	property font p1i: Qt.font( {
+		family: DefaultStyle.defaultFont,
+        pixelSize: Utils.getSizeWithScreenRatio(14),
+        weight: Font.Normal,
+		italic: true
+	})
+	
 	// Text/P1s - Paragraph text
 	property font p1s: Qt.font( {
 		family: DefaultStyle.defaultFont,
