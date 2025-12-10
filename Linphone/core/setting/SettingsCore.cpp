@@ -304,7 +304,7 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		});
 	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackGainChanged, [this](const float value) {
-		mSettingsModelConnection->invokeToCore([this, value]() { setPlaybackGain(value); });
+		mSettingsModelConnection->invokeToCore([this, value]() { setPlaybackGainFromModel(value); });
 	});
 
 	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureGain, [this](const float value) {
@@ -314,7 +314,7 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		});
 	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureGainChanged, [this](const float value) {
-		mSettingsModelConnection->invokeToCore([this, value]() { setCaptureGain(value); });
+		mSettingsModelConnection->invokeToCore([this, value]() { setCaptureGainFromModel(value); });
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::micVolumeChanged, [this](const float value) {
@@ -767,6 +767,13 @@ void SettingsCore::setCaptureGain(float gain) {
 	}
 }
 
+void SettingsCore::setCaptureGainFromModel(float gain) {
+	if (mCaptureGain != gain) {
+		mCaptureGain = gain;
+		emit captureGainChanged(gain);
+	}
+}
+
 QVariantMap SettingsCore::getConferenceLayout() const {
 	return mConferenceLayout;
 }
@@ -808,6 +815,13 @@ void SettingsCore::setPlaybackGain(float gain) {
 		} else {
 			setIsSaved(false);
 		}
+	}
+}
+
+void SettingsCore::setPlaybackGainFromModel(float gain) {
+	if (mPlaybackGain != gain) {
+		mPlaybackGain = gain;
+		emit playbackGainChanged(gain);
 	}
 }
 

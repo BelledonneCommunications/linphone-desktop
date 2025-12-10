@@ -50,4 +50,8 @@ AbstractSettingsMenu {
             qsTr("contact_editor_dialog_abort_confirmation_save")
 		)
 	} else {mainItem.goBack()}
+	
+	Component.onCompleted: {
+		SettingsCpp.isSaved = true
+	}
 }
