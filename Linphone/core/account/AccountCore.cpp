@@ -314,19 +314,19 @@ void AccountCore::reset(const AccountCore &accountCore) {
 	setUnreadNotifications(accountCore.mUnreadNotifications);
 	setUnreadCallNotifications(accountCore.mUnreadCallNotifications);
 	setUnreadMessageNotifications(accountCore.mUnreadMessageNotifications);
-	setMwiServerAddress(accountCore.mMwiServerAddress);
-	setVoicemailAddress(accountCore.mVoicemailAddress);
-	setTransport(accountCore.mTransport);
-	setRegistrarUri(accountCore.mRegistrarUri);
-	setOutboundProxyUri(accountCore.mOutboundProxyUri);
+	onMwiServerAddressChanged(accountCore.mMwiServerAddress);
+	onVoicemailAddressChanged(accountCore.mVoicemailAddress);
+	onTransportChanged(accountCore.mTransport);
+	onRegistrarUriChanged(accountCore.mRegistrarUri);
+	onOutboundProxyUriChanged(accountCore.mOutboundProxyUri);
 	setStunServer(accountCore.mStunServer);
-	setIceEnabled(accountCore.mIceEnabled);
-	setAvpfEnabled(accountCore.mAvpfEnabled);
-	setBundleModeEnabled(accountCore.mBundleModeEnabled);
-	setExpire(accountCore.mExpire);
-	setConferenceFactoryAddress(accountCore.mConferenceFactoryAddress);
-	setAudioVideoConferenceFactoryAddress(accountCore.mAudioVideoConferenceFactoryAddress);
-	setLimeServerUrl(accountCore.mLimeServerUrl);
+	onIceEnabledChanged(accountCore.mIceEnabled);
+	onAvpfEnabledChanged(accountCore.mAvpfEnabled);
+	onBundleModeEnabledChanged(accountCore.mBundleModeEnabled);
+	onExpireChanged(accountCore.mExpire);
+	onConferenceFactoryAddressChanged(accountCore.mConferenceFactoryAddress);
+	onAudioVideoConferenceFactoryAddressChanged(accountCore.mAudioVideoConferenceFactoryAddress);
+	onLimeServerUrlChanged(accountCore.mLimeServerUrl);
 }
 
 const std::shared_ptr<AccountModel> &AccountCore::getModel() const {

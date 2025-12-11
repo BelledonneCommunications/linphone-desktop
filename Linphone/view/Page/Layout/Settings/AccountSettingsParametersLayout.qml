@@ -81,7 +81,7 @@ AbstractSettingsLayout {
                 id: voicemailAddressField
                 propertyName: "voicemailAddress"
                 propertyOwnerGui: account
-                //: "URI de messagerie vocale"
+                //: "Voicemail address"
                 title: qsTr("account_settings_voicemail_uri_title")
                 Layout.fillWidth: true
                 toValidate: true
@@ -105,21 +105,25 @@ AbstractSettingsLayout {
         ColumnLayout {
             Layout.fillWidth: true
             spacing: Utils.getSizeWithScreenRatio(20)
-            Text {
-                //: "Transport"
-                text: qsTr("account_settings_transport_title")
-                color: DefaultStyle.main2_600
-                font: Typography.p2l
-            }
             DecoratedTextField {
+                id: registrarUriField
                 Layout.fillWidth: true
                 //:"Registrar URI"
                 title: qsTr("account_settings_registrar_uri_title")
                 propertyName: "registrarUri"
                 propertyOwnerGui: account
                 toValidate: true
+                Connections {
+                    enabled: account
+                    target: account.core
+                    function onRegistrarUriChanged() {
+                        if (registrarUriField.text != registrarUriField.propertyOwnerGui.core[registrarUriField.propertyName]) 
+                            registrarUriField.text = registrarUriField.propertyOwnerGui.core[registrarUriField.propertyName]
+                    }
+                }
             }
             DecoratedTextField {
+                id: outboundProxyUriField
                 Layout.fillWidth: true
                 //:"Outbound SIP Proxy URI"
                 title: qsTr("account_settings_sip_proxy_url_title")
@@ -128,34 +132,79 @@ AbstractSettingsLayout {
                 //: "If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it."
                 tooltip: qsTr("login_proxy_server_url_tooltip")
                 toValidate: true
+                Connections {
+                    enabled: account
+                    target: account.core
+                    function onOutboundProxyUriChanged() {
+                        if (outboundProxyUriField.text != outboundProxyUriField.propertyOwnerGui.core[outboundProxyUriField.propertyName]) 
+                            outboundProxyUriField.text = outboundProxyUriField.propertyOwnerGui.core[outboundProxyUriField.propertyName]
+                    }
+                }
             }
             DecoratedTextField {
+                id: stunServerField
                 Layout.fillWidth: true
                 propertyName: "stunServer"
                 propertyOwnerGui: account
                 //: "Adresse du serveur STUN"
                 title: qsTr("account_settings_stun_server_url_title")
                 toValidate: true
+                Connections {
+                    enabled: account
+                    target: account.core
+                    function onStunServerChanged() {
+                        if (stunServerField.text != stunServerField.propertyOwnerGui.core[stunServerField.propertyName]) 
+                            stunServerField.text = stunServerField.propertyOwnerGui.core[stunServerField.propertyName]
+                    }
+                }
             }
             SwitchSetting {
+                id: iceSwitch
                 //: "Activer ICE"
                 titleText: qsTr("account_settings_enable_ice_title")
                 propertyName: "iceEnabled"
                 propertyOwnerGui: account
+                Connections {
+                    enabled: account
+                    target: account.core
+                    function onIceEnabledChanged() {
+                        if (iceSwitch.checked != iceSwitch.propertyOwnerGui.core[iceSwitch.propertyName]) 
+                            iceSwitch.checked = iceSwitch.propertyOwnerGui.core[iceSwitch.propertyName]
+                    }
+                }
             }
             SwitchSetting {
+                id: avpfSwitch
                 //: "AVPF"
                 titleText: qsTr("account_settings_avpf_title")
                 propertyName: "avpfEnabled"
                 propertyOwnerGui: account
+                Connections {
+                    enabled: account
+                    target: account.core
+                    function onAvpfEnabledChanged() {
+                        if (avpfSwitch.checked != avpfSwitch.propertyOwnerGui.core[avpfSwitch.propertyName]) 
+                            avpfSwitch.checked = avpfSwitch.propertyOwnerGui.core[avpfSwitch.propertyName]
+                    }
+                }
             }
             SwitchSetting {
+                id: bundleModeSwitch
                 //: "Mode bundle"
                 titleText: qsTr("account_settings_bundle_mode_title")
                 propertyName: "bundleModeEnabled"
                 propertyOwnerGui: account
+                Connections {
+                    enabled: account
+                    target: account.core
+                    function onBundleModeEnabledChanged() {
+                        if (bundleModeSwitch.checked != bundleModeSwitch.propertyOwnerGui.core[bundleModeSwitch.propertyName]) 
+                            bundleModeSwitch.checked = bundleModeSwitch.propertyOwnerGui.core[bundleModeSwitch.propertyName]
+                    }
+                }
             }
             DecoratedTextField {
+                id: expireField
                 Layout.fillWidth: true
                 propertyName: "expire"
                 propertyOwnerGui: account
@@ -166,6 +215,13 @@ AbstractSettingsLayout {
                     return !isNaN(Number(text))
                 }
                 toValidate: true
+                Connections {
+                    target: account.core
+                    function onExpireChanged() {
+                        if (expireField.text != expireField.propertyOwnerGui.core[expireField.propertyName]) 
+                            expireField.text = expireField.propertyOwnerGui.core[expireField.propertyName]
+                    }
+                }
             }
             DecoratedTextField {
                 id: conferenceFactoryUriField
@@ -174,6 +230,7 @@ AbstractSettingsLayout {
                 title: qsTr("account_settings_conference_factory_uri_title")
                 propertyName: "conferenceFactoryAddress"
                 propertyOwnerGui: account
+                toValidate: true
                 Connections {
                     target: account.core
                     function onConferenceFactoryAddressChanged() {
@@ -181,7 +238,6 @@ AbstractSettingsLayout {
                             conferenceFactoryUriField.text = conferenceFactoryUriField.propertyOwnerGui.core[conferenceFactoryUriField.propertyName]
                     }
                 }
-                toValidate: true
             }
             DecoratedTextField {
                 id: audioVideoConfUriField
@@ -200,12 +256,20 @@ AbstractSettingsLayout {
                 }
             }
             DecoratedTextField {
+                id: limeServerUrlField
                 Layout.fillWidth: true
                 //: "URL du serveur d’échange de clés de chiffrement"
                 title: qsTr("account_settings_lime_server_url_title")
                 propertyName: "limeServerUrl"
                 propertyOwnerGui: account
                 toValidate: true
+                Connections {
+                    target: account.core
+                    function onLimeServerUrlChanged() {
+                        if (limeServerUrlField.text != limeServerUrlField.propertyOwnerGui.core[limeServerUrlField.propertyName]) 
+                            limeServerUrlField.text = limeServerUrlField.propertyOwnerGui.core[limeServerUrlField.propertyName]
+                    }
+                }
             }
         }
     }

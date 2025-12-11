@@ -101,8 +101,14 @@ bool AccountManager::login(QString username,
 		params->setServerAddress(linRegistrarUri);
 	}
 	if (!outboundProxyAddress.isEmpty()) {
-		auto linOutboundProxyAddress = ToolModel::interpretUrl(outboundProxyAddress);
+		auto linOutboundProxyAddress = factory->createAddress(Utils::appStringToCoreString(outboundProxyAddress));
 		if (linOutboundProxyAddress) params->setRoutesAddresses({linOutboundProxyAddress});
+		else {
+			//: Outbound proxy uri is invalid. Please make sure it matches the following format :
+			//: sip:host>:<port>;transport=<transport> (:<port> is optional)
+			*errorMessage = tr("assistant_account_login_outbound_proxy_uri_error");
+			return false;
+		}
 	}
 	if (!domain.isEmpty()) {
 		identity->setDomain(Utils::appStringToCoreString(domain));

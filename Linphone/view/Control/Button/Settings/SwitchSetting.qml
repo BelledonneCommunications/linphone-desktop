@@ -12,12 +12,10 @@ RowLayout {
 	property var propertyOwner
 	property var propertyOwnerGui
 	property bool enabled: true
+	property alias checked: switchButton.checked
     spacing : Utils.getSizeWithScreenRatio(20)
-	signal checkedChanged(bool checked)
 
-	function setChecked(value) {
-		switchButton.checked = value
-	}
+	signal toggled()
 
 	ColumnLayout {
         Layout.minimumHeight: Utils.getSizeWithScreenRatio(32)
@@ -44,8 +42,10 @@ RowLayout {
 		checked: propertyOwnerGui ? propertyOwnerGui.core[mainItem.propertyName]
 						: propertyOwner ? propertyOwner[mainItem.propertyName] : false
 		enabled: mainItem.enabled
-		onCheckedChanged: mainItem.checkedChanged(checked)
-		onToggled: binding.when = true
+		onToggled: {
+			binding.when = true
+			mainItem.toggled()
+		}
 		implicitHeight: Utils.getSizeWithScreenRatio(30)
 		Accessible.name: "%1 %2".arg(mainItem.titleText).arg(mainItem.subTitleText)
 	}

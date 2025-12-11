@@ -110,37 +110,43 @@
         <translation>The account is already connected</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="115"/>
+        <location filename="../../model/account/AccountManager.cpp" line="109"/>
+        <source>assistant_account_login_outbound_proxy_uri_error</source>
+        <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
+        <translation>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="121"/>
         <source>assistant_account_login_proxy_address_error</source>
         <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
         <translation>Unable to create proxy address. Please check the domain name.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="128"/>
+        <location filename="../../model/account/AccountManager.cpp" line="134"/>
         <source>assistant_account_login_address_configuration_error</source>
         <extracomment>&quot;Unable to configure address: `%1`.&quot;</extracomment>
         <translation>Unable to configure address: `%1`.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="135"/>
+        <location filename="../../model/account/AccountManager.cpp" line="141"/>
         <source>assistant_account_login_params_configuration_error</source>
         <extracomment>&quot;Unable to configure account settings.&quot;</extracomment>
         <translation>Unable to configure account settings.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="159"/>
+        <location filename="../../model/account/AccountManager.cpp" line="165"/>
         <source>assistant_account_login_forbidden_error</source>
         <extracomment>&quot;Username and password do not match&quot;</extracomment>
         <translation>Username and password do not match</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="161"/>
+        <location filename="../../model/account/AccountManager.cpp" line="167"/>
         <source>assistant_account_login_error</source>
         <extracomment>&quot;Error during connection, please verify your parameters&quot;</extracomment>
         <translation>Error during connection</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="175"/>
+        <location filename="../../model/account/AccountManager.cpp" line="181"/>
         <source>assistant_account_add_error</source>
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Unable to add account.</translation>
@@ -161,25 +167,25 @@
         <translation>Unable to set server address, failed creating address from %1</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountModel.cpp" line="308"/>
+        <location filename="../../model/account/AccountModel.cpp" line="310"/>
         <source>set_outbound_proxy_uri_failed_error_message</source>
-        <extracomment>Unable to set outbound proxy uri, failed creating address from %1</extracomment>
-        <translation>Unable to set outbound proxy uri, failed creating address from %1</translation>
+        <extracomment>Unable to set outbound proxy uri from address %1. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
+        <translation>Unable to set outbound proxy uri from address %1. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountModel.cpp" line="417"/>
+        <location filename="../../model/account/AccountModel.cpp" line="419"/>
         <source>set_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the conversation server address, failed creating address from %1&quot;</extracomment>
         <translation>Unable to set the conversation server address, failed creating address from %1</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountModel.cpp" line="439"/>
+        <location filename="../../model/account/AccountModel.cpp" line="441"/>
         <source>set_audio_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the meeting server address, failed creating address from %1&quot;</extracomment>
         <translation>Unable to set the meeting server address, failed creating address from %1</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountModel.cpp" line="486"/>
+        <location filename="../../model/account/AccountModel.cpp" line="488"/>
         <source>set_voicemail_address_failed_error_message</source>
         <extracomment>Unable to set voicemail address, failed creating address from %1</extracomment>
         <translation>Unable to set voicemail address, failed creating address from %1</translation>
@@ -382,20 +388,6 @@
         <translation>Account settings</translation>
     </message>
     <message>
-        <source>info_popup_invalid_registrar_uri_message</source>
-        <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="vanished">Registrar uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</translation>
-    </message>
-    <message>
-        <source>info_popup_invalid_outbound_proxy_message</source>
-        <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="vanished">Outbound proxy uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</translation>
-    </message>
-    <message>
-        <source>info_popup_error_title</source>
-        <translation type="vanished">Error</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="38"/>
         <source>information_popup_success_title</source>
         <translation>Success</translation>
@@ -420,75 +412,74 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="85"/>
         <source>account_settings_voicemail_uri_title</source>
-        <extracomment>&quot;URI de messagerie vocale&quot;</extracomment>
+        <extracomment>&quot;Voicemail address&quot;</extracomment>
         <translation>Voicemail URI</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="110"/>
         <source>account_settings_transport_title</source>
         <extracomment>&quot;Transport&quot;</extracomment>
-        <translation>Transport</translation>
+        <translation type="vanished">Transport</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="117"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="112"/>
         <source>account_settings_registrar_uri_title</source>
         <translation>Registrar URI</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="125"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="129"/>
         <source>account_settings_sip_proxy_url_title</source>
         <translation>Outbound SIP Proxy URI</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="129"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="133"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
         <translation>If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="137"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="150"/>
         <source>account_settings_stun_server_url_title</source>
         <extracomment>&quot;Adresse du serveur STUN&quot;</extracomment>
         <translation>STUN server address</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="142"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="164"/>
         <source>account_settings_enable_ice_title</source>
         <extracomment>&quot;Activer ICE&quot;</extracomment>
         <translation>Enable ICE</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="148"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="179"/>
         <source>account_settings_avpf_title</source>
         <extracomment>&quot;AVPF&quot;</extracomment>
         <translation>AVPF</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="154"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="194"/>
         <source>account_settings_bundle_mode_title</source>
         <extracomment>&quot;Mode bundle&quot;</extracomment>
         <translation>Bundle mode</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="163"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="212"/>
         <source>account_settings_expire_title</source>
         <extracomment>&quot;Expiration (en seconde)&quot;</extracomment>
         <translation>Expiration (in seconds)</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="174"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="230"/>
         <source>account_settings_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de conversations&quot;</extracomment>
         <translation>Conference factory URI</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="191"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="247"/>
         <source>account_settings_audio_video_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de réunions&quot;</extracomment>
         <translation>Video conference factory uri</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="205"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="262"/>
         <source>account_settings_lime_server_url_title</source>
         <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
         <translation>Lime server URL</translation>
@@ -617,7 +608,7 @@
         <translation>Create end to end encrypted meetings and group calls</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="239"/>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="241"/>
         <source>settings_advanced_hide_fps_title</source>
         <translation>Hide FPS</translation>
     </message>
@@ -707,80 +698,80 @@
         <translation>not reachable</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="973"/>
+        <location filename="../../core/App.cpp" line="975"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>A free and open source SIP video-phone.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="975"/>
+        <location filename="../../core/App.cpp" line="977"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Send an order to the application towards a command line</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="979"/>
+        <location filename="../../core/App.cpp" line="981"/>
         <source>command_line_option_show_help</source>
         <translation>Show this help</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="984"/>
+        <location filename="../../core/App.cpp" line="986"/>
         <source>command_line_option_show_app_version</source>
         <translation>Show app version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="992"/>
+        <location filename="../../core/App.cpp" line="994"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="994"/>
+        <location filename="../../core/App.cpp" line="996"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, path or file</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="999"/>
+        <location filename="../../core/App.cpp" line="1001"/>
         <source>command_line_option_minimized</source>
         <translation>Minimize</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1002"/>
+        <location filename="../../core/App.cpp" line="1004"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Log to stdout some debug information while running</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1005"/>
+        <location filename="../../core/App.cpp" line="1007"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1437"/>
+        <location filename="../../core/App.cpp" line="1439"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1437"/>
+        <location filename="../../core/App.cpp" line="1439"/>
         <source>show_action</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1452"/>
+        <location filename="../../core/App.cpp" line="1454"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1470"/>
+        <location filename="../../core/App.cpp" line="1472"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Check for update</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1588"/>
+        <location filename="../../core/App.cpp" line="1590"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>
@@ -2086,65 +2077,65 @@
 <context>
     <name>ChatListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="251"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="258"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 is writing…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="253"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="260"/>
         <source>chat_message_draft_sending_text</source>
         <translation>Draft : %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="398"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="405"/>
         <source>chat_room_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="337"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="344"/>
         <source>chat_room_mute</source>
         <translation>Mute</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="336"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="343"/>
         <source>chat_room_unmute</source>
         <extracomment>&quot;Mute&quot;</extracomment>
         <translation>Unmute</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="350"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="357"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
         <translation>Mark as read</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="369"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="376"/>
         <source>chat_room_leave</source>
         <extracomment>&quot;leave&quot;</extracomment>
         <translation>Leave</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="375"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="382"/>
         <source>chat_list_leave_chat_popup_title</source>
         <extracomment>leave the conversation ?</extracomment>
         <translation>Leave the conversation ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="377"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="384"/>
         <source>chat_list_leave_chat_popup_message</source>
         <extracomment>You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?</extracomment>
         <translation>You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="404"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="411"/>
         <source>chat_list_delete_chat_popup_title</source>
         <extracomment>Delete the conversation ?</extracomment>
         <translation>Delete the conversation ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="406"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="413"/>
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation>This conversation and all its messages will be deleted. Do You want to continue ?</translation>

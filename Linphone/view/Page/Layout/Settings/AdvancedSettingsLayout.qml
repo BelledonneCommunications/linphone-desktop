@@ -180,6 +180,7 @@ AbstractSettingsLayout {
 		ColumnLayout {
             spacing: Utils.getSizeWithScreenRatio(20)
 			ListView {
+				id: videoCodecList
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
                 spacing: Utils.getSizeWithScreenRatio(20)
@@ -188,7 +189,7 @@ AbstractSettingsLayout {
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.NotDownloadable
 				}
 				delegate: SwitchSetting {
-					width: parent.width
+					width: videoCodecList.width
                     height: Utils.getSizeWithScreenRatio(32)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
@@ -197,6 +198,7 @@ AbstractSettingsLayout {
 				}
 			}
 			ListView {
+				id: payloadList
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
                 spacing: Utils.getSizeWithScreenRatio(20)
@@ -205,22 +207,22 @@ AbstractSettingsLayout {
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.Downloadable
 				}
 				delegate: SwitchSetting {
-					width: parent.width
+					width: payloadList.width
                     height: Utils.getSizeWithScreenRatio(32)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
-					onCheckedChanged: Utils.openCodecOnlineInstallerDialog(
+					onToggled: Utils.openCodecOnlineInstallerDialog(
 						UtilsCpp.getMainWindow(),
 						modelData.core,
 						function cancelCallBack() {
-							setChecked(false)
+							checked = false
 						},
 						function successCallBack() {
 							videoPayloadTypeProxy.reload()
 							downloadableVideoPayloadTypeProxy.reload()
 						},
 						function errorCallBack() {
-							setChecked(false)
+							checked = false
 						})
 				}
 			}

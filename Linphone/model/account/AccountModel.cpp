@@ -302,9 +302,11 @@ QString AccountModel::getOutboundProxyUri() const {
 }
 
 void AccountModel::setOutboundProxyUri(QString value) {
-	auto linOutboundProxyAddress = ToolModel::interpretUrl(value);
+	auto linOutboundProxyAddress = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
 	if (!linOutboundProxyAddress) {
-		//: Unable to set outbound proxy uri, failed creating address from %1
+		//: Unable to set outbound proxy uri from address %1.
+		//: Please make sure it matches the following format :
+		//: sip:host>:<port>;transport=<transport> (:<port> is optional)
 		emit setValueFailed(tr("set_outbound_proxy_uri_failed_error_message").arg(value));
 		return;
 	} else {
