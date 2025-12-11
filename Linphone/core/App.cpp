@@ -708,6 +708,8 @@ void App::initCore() {
 					        }
 					        checkForUpdate();
 					        mIsRestarting = false;
+					        window->show();
+					        window->requestActivate();
 
 					        //---------------------------------------------------------------------------------------------
 					        lDebug() << log().arg("Creating KeyboardShortcuts");
@@ -1077,11 +1079,11 @@ void App::handleAppActivity() {
 		auto accountPresence = accountCore->getPresence();
 		if ((mMainWindow && mMainWindow->isActive() || (mCallsWindow && mCallsWindow->isActive())) &&
 		    accountPresence == LinphoneEnums::Presence::Away)
-			accountCore->lSetPresence(LinphoneEnums::Presence::Online);
-		if (((!mMainWindow || !mMainWindow->isActive() || !mMainWindow->isVisible()) &&
-		     (!mCallsWindow || !mCallsWindow->isActive() || !mCallsWindow->isVisible())) &&
-		    accountPresence == LinphoneEnums::Presence::Online)
-			accountCore->lSetPresence(LinphoneEnums::Presence::Away);
+			accountCore->lSetPresence(LinphoneEnums::Presence::Online, false);
+		else if (((!mMainWindow || !mMainWindow->isActive() || !mMainWindow->isVisible()) &&
+		          (!mCallsWindow || !mCallsWindow->isActive() || !mCallsWindow->isVisible())) &&
+		         accountPresence == LinphoneEnums::Presence::Online)
+			accountCore->lSetPresence(LinphoneEnums::Presence::Away, false);
 	};
 	if (mAccountList) {
 		for (auto &account : mAccountList->getSharedList<AccountCore>())
