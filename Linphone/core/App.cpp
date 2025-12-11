@@ -1078,7 +1078,8 @@ void App::handleAppActivity() {
 		if ((mMainWindow && mMainWindow->isActive() || (mCallsWindow && mCallsWindow->isActive())) &&
 		    accountPresence == LinphoneEnums::Presence::Away)
 			accountCore->lSetPresence(LinphoneEnums::Presence::Online);
-		if (((!mMainWindow || !mMainWindow->isActive()) && (!mCallsWindow || !mCallsWindow->isActive())) &&
+		if (((!mMainWindow || !mMainWindow->isActive() || !mMainWindow->isVisible()) &&
+		     (!mCallsWindow || !mCallsWindow->isActive() || !mCallsWindow->isVisible())) &&
 		    accountPresence == LinphoneEnums::Presence::Online)
 			accountCore->lSetPresence(LinphoneEnums::Presence::Away);
 	};
