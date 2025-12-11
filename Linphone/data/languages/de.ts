@@ -2225,6 +2225,12 @@
         <extracomment>&quot;Reception info&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="407"/>
+		<source>menu_edit_chat_message</source>
+		<extracomment>&quot;Edit&quot;</extracomment>
+		<translation type="unfinished"></translation>
+	</message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="419"/>
         <source>chat_message_reply</source>

@@ -32,6 +32,7 @@ Control.Control {
     leftPadding: isRemoteMessage ? Utils.getSizeWithScreenRatio(5) : 0
 
     signal messageDeletionRequested()
+	signal messageEditionRequested()
 	signal isFileHoveringChanged(bool isFileHovering)
     signal showReactionsForMessageRequested()
     signal showImdnStatusForMessageRequested()
@@ -297,16 +298,26 @@ Control.Control {
                                 }
                             }
                             RowLayout {
-                                spacing: mainItem.isRemoteMessage ? 0 : Utils.getSizeWithScreenRatio(5)
+                                spacing: mainItem.isRemoteMessage && !mainItem.chatMessage.core.isEdited ? 0 : Utils.getSizeWithScreenRatio(5)
                                 Layout.alignment: Qt.AlignVCenter
                                 Layout.preferredHeight: childrenRect.height
+                                Text {
+                                    Layout.alignment: Qt.AlignVCenter
+                                    text: qsTr("conversation_message_edited_label")
+                                    visible: mainItem.chatMessage.core.isEdited
+                                    color: DefaultStyle.main2_500_main
+                                    font {
+										pixelSize: Typography.p3.pixelSize
+										weight: Typography.p3.weight
+                                    }
+                                }
                                 Text {
                                     Layout.alignment: Qt.AlignVCenter
                                     text: UtilsCpp.formatDate(mainItem.chatMessage.core.timestamp, true, false, "dd/MM")
                                     color: DefaultStyle.main2_500_main
                                     font {
-                                        pixelSize: Typography.p3.pixelSize
-                                        weight: Typography.p3.weight
+										pixelSize: Typography.p3.pixelSize
+										weight: Typography.p3.weight
                                     }
                                 }
                                 EffectImage {
@@ -423,6 +434,19 @@ Control.Control {
                                 optionsMenu.close()
                             }
                         }
+						IconLabelButton {
+							inverseLayout: true
+							//: "Edit"
+							text: qsTr("menu_edit_chat_message")
+							visible: mainItem.chatMessage.core.isEditable
+							icon.source: AppIcons.pencil
+							Layout.fillWidth: true
+							Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
+							onClicked: {
+								mainItem.messageEditionRequested()
+								optionsMenu.close()
+							}
+						}
                         IconLabelButton {
                             inverseLayout: true
 							visible: !mainItem.chatMessage.core.isRetracted

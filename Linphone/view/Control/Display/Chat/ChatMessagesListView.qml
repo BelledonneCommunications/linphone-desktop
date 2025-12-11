@@ -25,6 +25,7 @@ ListView {
     signal showImdnStatusForMessageRequested(ChatMessageGui chatMessage)
     signal replyToMessageRequested(ChatMessageGui chatMessage)
     signal forwardMessageRequested(ChatMessageGui chatMessage)
+    signal editMessageRequested(ChatMessageGui chatMessage)
     signal requestHighlight(int indexToHighlight)
     signal requestAutoPlayVoiceRecording(int indexToPlay)
     currentIndex: -1
@@ -315,6 +316,7 @@ ListView {
 						chatMessage.core.lDelete()
 					}
                 }
+                onMessageEditionRequested: mainItem.editMessageRequested(chatMessage)
                 onShowReactionsForMessageRequested: mainItem.showReactionsForMessageRequested(chatMessage)
                 onShowImdnStatusForMessageRequested: mainItem.showImdnStatusForMessageRequested(chatMessage)
                 onReplyToMessageRequested: mainItem.replyToMessageRequested(chatMessage)

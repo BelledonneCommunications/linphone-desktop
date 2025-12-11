@@ -186,6 +186,11 @@ ChatModel::createReplyMessage(const std::shared_ptr<linphone::ChatMessage> &mess
 }
 
 std::shared_ptr<linphone::ChatMessage>
+ChatModel::createReplacesMessage(const std::shared_ptr<linphone::ChatMessage> &message) {
+	return mMonitor->createReplacesMessage(message);
+}
+
+std::shared_ptr<linphone::ChatMessage>
 ChatModel::createForwardMessage(const std::shared_ptr<linphone::ChatMessage> &message) {
 	return mMonitor->createForwardMessage(message);
 }

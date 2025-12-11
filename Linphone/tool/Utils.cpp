@@ -2159,6 +2159,50 @@ void Utils::sendReplyMessage(ChatMessageGui *message, ChatGui *chatGui, QString 
 	});
 }
 
+void Utils::sendReplaceMessage(ChatMessageGui *message, ChatGui *chatGui, QString text, QVariantList files) {
+	auto chatModel = chatGui && chatGui->mCore ? chatGui->mCore->getModel() : nullptr;
+	auto chatMessageModel = message && message->mCore ? message->mCore->getModel() : nullptr;
+	if (!chatModel || !chatMessageModel) {
+		//: Cannot edit to invalid message
+		QString error = !chatMessageModel ? tr("chat_message_edit_error")
+		                                  //: Error in the chat
+		                                  : tr("chat_error");
+		//: Error
+		showInformationPopup(tr("info_popup_error_title"),
+		                     //: Could not send edited message : %1
+		                     tr("info_popup_edited_message_error").arg(error));
+		return;
+	}
+	QList<std::shared_ptr<ChatMessageContentModel>> filesContent;
+	for (auto &file : files) {
+		auto contentGui = qvariant_cast<ChatMessageContentGui *>(file);
+		if (contentGui) {
+			auto contentCore = contentGui->mCore;
+			filesContent.append(contentCore->getContentModel());
+		}
+	}
+	App::postModelAsync([chatModel, chatMessageModel, text, filesContent] {
+		mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
+		auto chat = chatModel->getMonitor();
+		auto messageToEdit = chatMessageModel->getMonitor();
+		auto linMessage = chatModel->createReplacesMessage(messageToEdit);
+		if (linMessage) {
+			linMessage->addUtf8TextContent(Utils::appStringToCoreString(text));
+			for (auto &content : filesContent) {
+				linMessage->addFileContent(content->getContent());
+			}
+			linMessage->send();
+		} else {
+			App::postCoreAsync([] {
+				//: Error
+				showInformationPopup(tr("info_popup_error_title"),
+				                     //: Failed to create edited message
+				                     tr("info_popup_send_edited_message_error_message"));
+			});
+		}
+	});
+}
+
 VariantObject *Utils::createVoiceRecordingMessage(RecorderGui *recorderGui, ChatGui *chatGui) {
 	VariantObject *data = new VariantObject("createVoiceRecordingMessage");
 	if (!data) return nullptr;

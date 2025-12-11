@@ -23,6 +23,7 @@ Control.Control {
 
 	// disable record button if call ongoing
 	property bool callOngoing: false
+	property bool isEditing: false
 
     property ChatGui chat
 	
@@ -78,6 +79,7 @@ Control.Control {
 				spacing: Utils.getSizeWithScreenRatio(16)
 				PopupButton {
 					id: emojiPickerButton
+					visible: !mainItem.isEditing
 					style: ButtonStyle.noBackground
 					icon.source: checked ? AppIcons.closeX : AppIcons.smiley
 					popup.width: Utils.getSizeWithScreenRatio(393)
@@ -189,7 +191,7 @@ Control.Control {
 								//: Cannot record a message while a call is ongoing
 								ToolTip.text: qsTr("cannot_record_while_in_call_tooltip")
 								enabled: !mainItem.callOngoing
-								visible: !mainItem.callOngoing && sendingTextArea.text.length === 0 && mainItem.selectedFilesCount === 0
+								visible: !mainItem.callOngoing && sendingTextArea.text.length === 0 && mainItem.selectedFilesCount === 0 && !mainItem.isEditing
 								style: ButtonStyle.noBackground
 								hoverEnabled: true
 								icon.source: AppIcons.microphone
@@ -202,7 +204,7 @@ Control.Control {
 								Layout.preferredHeight: height
 								visible: sendingTextArea.text.length !== 0 || mainItem.selectedFilesCount > 0
 								style: ButtonStyle.noBackgroundOrange
-								icon.source: AppIcons.paperPlaneRight
+								icon.source: mainItem.isEditing ? AppIcons.pencil : AppIcons.paperPlaneRight
 								onClicked: {
 									mainItem.sendMessage()
 								}

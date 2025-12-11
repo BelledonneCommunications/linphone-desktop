@@ -199,3 +199,7 @@ void ChatMessageModel::onEphemeralMessageDeleted(const std::shared_ptr<linphone:
 void ChatMessageModel::onRetracted(const std::shared_ptr<linphone::ChatMessage> &message) {
 	emit retracted(message);
 }
+
+void ChatMessageModel::onContentEdited(const std::shared_ptr<linphone::ChatMessage> &message) {
+	emit contentEdited(message);
+}

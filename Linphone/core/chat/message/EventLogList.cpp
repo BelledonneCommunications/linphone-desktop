@@ -64,6 +64,7 @@ void EventLogList::disconnectItem(const QSharedPointer<EventLogCore> &item) {
 	if (message) {
 		disconnect(message.get(), &ChatMessageCore::isReadChanged, this, nullptr);
 		disconnect(message.get(), &ChatMessageCore::deleted, this, nullptr);
+		disconnect(message.get(), &ChatMessageCore::edited, this, nullptr);
 	}
 }
 
@@ -76,6 +77,20 @@ void EventLogList::connectItem(const QSharedPointer<EventLogCore> &item) {
 		connect(message.get(), &ChatMessageCore::deleted, this, [this, item] {
 			if (mChatCore) emit mChatCore->lUpdateLastMessage();
 			remove(item);
+		});
+		connect(message.get(), &ChatMessageCore::edited, this, [this, item] {
+			auto eventLogModel = item->getModel();
+			mCoreModelConnection->invokeToModel([this, eventLogModel, item]() {
+				auto chatRoom = mChatCore->getModel()->getMonitor();
+				auto newEventLog = EventLogCore::create(eventLogModel->getEventLog(), chatRoom);
+				bool wasLastMessage =
+				    mChatCore->getModel()->getLastChatMessage() == eventLogModel->getEventLog()->getChatMessage();
+				mCoreModelConnection->invokeToCore([this, newEventLog, wasLastMessage, item] {
+					connectItem(newEventLog);
+					replace(item, newEventLog);
+					if (wasLastMessage) mChatCore->setLastMessage(newEventLog->getChatMessageCore());
+				});
+			});
 		});
 	}
 }

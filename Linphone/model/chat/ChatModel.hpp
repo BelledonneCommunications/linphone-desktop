@@ -68,6 +68,7 @@ public:
 
 	std::shared_ptr<linphone::ChatMessage> createReplyMessage(const std::shared_ptr<linphone::ChatMessage> &message);
 	std::shared_ptr<linphone::ChatMessage> createForwardMessage(const std::shared_ptr<linphone::ChatMessage> &message);
+	std::shared_ptr<linphone::ChatMessage> createReplacesMessage(const std::shared_ptr<linphone::ChatMessage> &message);
 
 	std::shared_ptr<linphone::ChatMessage> createTextMessageFromText(QString text);
 	std::shared_ptr<linphone::ChatMessage> createMessage(QString text,

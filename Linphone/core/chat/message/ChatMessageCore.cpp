@@ -120,8 +120,12 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 		mHasTextContent = mChatMessageModel->getHasTextContent();
 		mTimestamp = QDateTime::fromSecsSinceEpoch(chatmessage->getTime());
 		mIsOutgoing = chatmessage->isOutgoing();
-		mIsRetractable = chatmessage->isRetractable();
+		mIsRetractable =
+		    chatmessage->isOutgoing() && chatmessage->isRetractable() && !chatmessage->getChatRoom()->isReadOnly();
 		mIsRetracted = chatmessage->isRetracted();
+		mIsEditable =
+		    chatmessage->isOutgoing() && chatmessage->isEditable() && !chatmessage->getChatRoom()->isReadOnly();
+		mIsEdited = chatmessage->isEdited();
 		mIsRemoteMessage = !chatmessage->isOutgoing();
 		mPeerAddress = Utils::coreStringToAppString(chatmessage->getPeerAddress()->asStringUriOnly());
 		mPeerName = ToolModel::getDisplayName(chatmessage->getPeerAddress());
@@ -364,6 +368,13 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 			                                                setRetracted();
 		                                                });
 	                                                });
+	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::contentEdited,
+	                                                [this](const std::shared_ptr<linphone::ChatMessage> &message) {
+		                                                mChatMessageModelConnection->invokeToCore([this] {
+			                                                mIsEdited = true;
+			                                                emit edited();
+		                                                });
+	                                                });
 }
 
 QList<ImdnStatus> ChatMessageCore::computeDeliveryStatus(const std::shared_ptr<linphone::ChatMessage> &message) {
@@ -496,6 +507,10 @@ void ChatMessageCore::setRetracted() {
 
 bool ChatMessageCore::isRetracted() const {
 	return mIsRetracted;
+}
+
+bool ChatMessageCore::isEdited() const {
+	return mIsEdited;
 }
 
 QString ChatMessageCore::getOwnReaction() const {

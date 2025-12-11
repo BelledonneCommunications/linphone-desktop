@@ -2218,6 +2218,12 @@
         <extracomment>&quot;Reception info&quot;</extracomment>
         <translation>Info de réception</translation>
     </message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="407"/>
+		<source>menu_edit_chat_message</source>
+		<extracomment>&quot;Edit&quot;</extracomment>
+		<translation>Modifier</translation>
+	</message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="419"/>
         <source>chat_message_reply</source>
@@ -2236,6 +2242,12 @@
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Supprimer</translation>
     </message>
+	<message>
+		<location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="469"/>
+		<source>conversation_message_edited_label</source>
+		<extracomment>&quot;Edited&quot;</extracomment>
+		<translation>Modifié</translation>
+	</message>
 </context>
 <context>
     <name>ChatMessageContentCore</name>
@@ -5795,6 +5807,12 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <extracomment>Reply to %1</extracomment>
         <translation>Réponse à %1</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="417"/>
+		<source>conversation_editing_message_title</source>
+		<extracomment>Message beeing edited</extracomment>
+		<translation>Modification du message</translation>
+	</message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="617"/>
         <source>shared_medias_title</source>
@@ -6210,18 +6228,36 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <extracomment>Cannot reply to invalid message</extracomment>
         <translation>Impossible de répondre : message invalide</translation>
     </message>
+	<message>
+		<location filename="../../tool/Utils.cpp" line="2123"/>
+		<source>chat_message_edit_error</source>
+		<extracomment>Cannot modify invalid message</extracomment>
+		<translation>Impossible de modifier le message : message invalide</translation>
+	</message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2129"/>
         <source>info_popup_reply_message_error</source>
         <extracomment>Could not send reply message : %1</extracomment>
         <translation>Impossible d&apos;envoyer la réponse : %1</translation>
     </message>
+	<message>
+		<location filename="../../tool/Utils.cpp" line="2129"/>
+		<source>info_popup_edited_message_error</source>
+		<extracomment>Could not send edited message : %1</extracomment>
+		<translation>Impossible d&apos;envoyer le message modifié : %1</translation>
+	</message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2156"/>
         <source>info_popup_send_reply_message_error_message</source>
         <extracomment>Failed to create reply message</extracomment>
         <translation>Impossible de créer le message</translation>
     </message>
+	<message>
+		<location filename="../../tool/Utils.cpp" line="2156"/>
+		<source>info_popup_send_edited_message_error_message</source>
+		<extracomment>Failed to create edited message</extracomment>
+		<translation>Impossible de créer le message modifié</translation>
+	</message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2194"/>
         <source>info_popup_send_voice_message_error_message</source>

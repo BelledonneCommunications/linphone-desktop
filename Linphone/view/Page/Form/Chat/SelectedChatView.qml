@@ -21,6 +21,7 @@ FocusScope {
     property CallGui call
     property alias callHeaderContent: splitPanel.header.contentItem
     property bool replyingToMessage: false
+    property bool editingMessage: false
     enum PanelType { MessageReactions, SharedFiles, Medias, ImdnStatus, ForwardToList, ManageParticipants, EphemeralSettings, None}
     
     signal oneOneCall(bool video)
@@ -299,11 +300,19 @@ FocusScope {
                             onReplyToMessageRequested: (chatMessage) => {
                                 mainItem.chatMessage = chatMessage
                                 mainItem.replyingToMessage = true
+                                if (mainItem.editingMessage) mainItem.editingMessage = false
                             }
                             onForwardMessageRequested: (chatMessage) => {
                                 mainItem.chatMessage = chatMessage
                                 contentLoader.panelType = SelectedChatView.PanelType.ForwardToList
                                 detailsPanel.visible = true
+                                if (mainItem.editingMessage) mainItem.editingMessage = false
+                            }
+                            onEditMessageRequested: (chatMessage) => {
+                                mainItem.chatMessage = chatMessage
+                                mainItem.editingMessage = true
+                                if (mainItem.replyingToMessage) mainItem.replyingToMessage = false
+                                messageSender.text = chatMessage.core.text
                             }
                         }
                         ScrollBar {
@@ -367,7 +376,7 @@ FocusScope {
                     }
                     Control.Control {
                         id: selectedFilesArea
-                        visible: selectedFiles.count > 0 || mainItem.replyingToMessage
+                        visible: selectedFiles.count > 0 || mainItem.replyingToMessage || mainItem.editingMessage
                         Layout.fillWidth: true
                         Layout.preferredHeight: implicitHeight
                         topPadding: Utils.getSizeWithScreenRatio(12)
@@ -384,7 +393,12 @@ FocusScope {
                             style: ButtonStyle.noBackground
                             onClicked: {
                                 contents.clear()
-                                mainItem.replyingToMessage = false
+                                if (mainItem.replyingToMessage)
+                                	mainItem.replyingToMessage = false
+								else if (mainItem.editingMessage) {
+									mainItem.editingMessage = false
+									messageSender.text = ""
+								}
                             }
                         }
                         background: Item{
@@ -410,11 +424,13 @@ FocusScope {
                             ColumnLayout {
                                 id: replyLayout
                                 spacing: 0
-                                visible: mainItem.chatMessage && mainItem.replyingToMessage
+                                visible: mainItem.chatMessage && (mainItem.replyingToMessage || mainItem.editingMessage)
                                 Text {
                                     Layout.fillWidth: true
                                     //: Reply to %1
-                                    text: mainItem.chatMessage ? qsTr("reply_to_label").arg(UtilsCpp.boldTextPart(mainItem.chatMessage.core.fromName, mainItem.chatMessage.core.fromName)) : ""
+                                    text: mainItem.replyingToMessage ?
+                                    	(mainItem.chatMessage ? qsTr("reply_to_label").arg(UtilsCpp.boldTextPart(mainItem.chatMessage.core.fromName, mainItem.chatMessage.core.fromName)) : "")
+                                    	: qsTr("conversation_editing_message_title")
                                     color: DefaultStyle.main2_500_main
                                     font {
                                         pixelSize: Typography.p3.pixelSize
@@ -489,6 +505,7 @@ FocusScope {
                     chat: mainItem.chat
                     selectedFilesCount: contents.count
                     callOngoing: mainItem.call != null
+                    isEditing: mainItem.editingMessage
                     onChatChanged: {
                         if (chat) messageSender.text = mainItem.chat.core.sendingText
                     }
@@ -506,6 +523,10 @@ FocusScope {
                         if (mainItem.replyingToMessage) {
                             mainItem.replyingToMessage = false
                             UtilsCpp.sendReplyMessage(mainItem.chatMessage, mainItem.chat, text, filesContents)
+                        }
+                        else if (mainItem.editingMessage) {
+                            UtilsCpp.sendReplaceMessage(mainItem.chatMessage, mainItem.chat, text, filesContents)
+                            mainItem.editingMessage = false
                         }
                         else if (filesContents.length === 0)
                             mainItem.chat.core.lSendTextMessage(text)
