@@ -16,6 +16,7 @@ ListView {
 	property bool hoverEnabled: true	
 	property var delegateButtons
 	property ConferenceInfoGui selectedConference
+	property ConferenceInfoGui confToBeSelected: null
 	property bool _moveToIndex: false
     property bool loading: false
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
@@ -102,11 +103,13 @@ ListView {
         initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(63)))
 		displayItemsStep: initialDisplayItems/2
 		onModelAboutToBeReset: {
+			mainItem.confToBeSelected = mainItem.selectedConference
             mainItem.loading = true
         }
 		onModelReset: {
 			mainItem.loading = false
-			selectData(getCurrentDateConfInfo())
+			if (mainItem.confToBeSelected) selectData(mainItem.confToBeSelected)
+			else selectData(getCurrentDateConfInfo())
 		}
 		function selectData(confInfoGui){
 			mainItem.currentIndex = loadUntil(confInfoGui)
