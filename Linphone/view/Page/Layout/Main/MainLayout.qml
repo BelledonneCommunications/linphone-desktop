@@ -130,6 +130,7 @@ Item {
                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(82)
                 defaultAccount: accountProxy.defaultAccount
                 currentIndex: 0
+                onCountChanged: if (currentIndex >= count) currentIndex = 0
                 Binding on currentIndex {
                     when: mainItem.contextualMenuOpenedComponent != undefined
                     value: -1
@@ -171,7 +172,7 @@ Item {
                     }
                 ]
                 onCurrentIndexChanged: {
-                    if (currentIndex === -1)
+                    if (currentIndex === -1 || currentIndex >= tabbar.visibleCount)
                         return;
                     if (currentIndex === 0 && accountProxy.defaultAccount)
                         accountProxy.defaultAccount.core?.lResetMissedCalls();
@@ -199,7 +200,8 @@ Item {
                     }
                     initButtons();
                     currentIndex = SettingsCpp.getLastActiveTabIndex();
-                    if (currentIndex === -1)
+                    tabbar.updateVisibleCount()
+                    if (currentIndex === -1 || currentIndex >= tabbar.visibleCount)
                         currentIndex = 0;
                 }
             }

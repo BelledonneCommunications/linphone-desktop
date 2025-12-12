@@ -70,10 +70,15 @@ SettingsModel::SettingsModel() {
 	    CoreModel::getInstance().get(), &CoreModel::defaultAccountChanged, this,
 	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> account) {
 		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		    setDisableMeetingsFeature(account && !account->getParams()->getAudioVideoConferenceFactoryAddress());
+		    if (!getDisableMeetingsFeature() && account &&
+		        !account->getParams()->getAudioVideoConferenceFactoryAddress())
+			    setDisableMeetingsFeature(true);
 	    });
 	auto defaultAccount = core->getDefaultAccount();
-	setDisableMeetingsFeature(defaultAccount && !defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress());
+	if (!getDisableMeetingsFeature() && defaultAccount &&
+	    !defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress())
+		setDisableMeetingsFeature(true);
+
 	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo
 	// calibrations in call.
 	QObject::connect(CoreModel::getInstance().get(), &CoreModel::firstCallStarted, this,
