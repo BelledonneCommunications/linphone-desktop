@@ -242,10 +242,9 @@ float SettingsModel::getMicVolume() {
 	} else {
 		auto call = CoreModel::getInstance()->getCore()->getCurrentCall();
 		if (call) {
-			v = call->getRecordVolume();
+			v = static_cast<float>(pow(10.0, call->getRecordVolume() / 10.0));
 		}
 	}
-
 	emit micVolumeChanged(v);
 	return v;
 }
