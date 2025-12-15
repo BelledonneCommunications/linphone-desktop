@@ -2069,13 +2069,13 @@
 <context>
     <name>ChatDroppableTextArea</name>
     <message>
-        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="154"/>
+        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="156"/>
         <source>chat_view_send_area_placeholder_text</source>
         <extracomment>Say something… : placeholder text for sending message text area</extracomment>
         <translation>Dites quelque chose…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="190"/>
+        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="195"/>
         <source>cannot_record_while_in_call_tooltip</source>
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
         <translation>Impossible d&apos;enregistrer un message vocal pendant un appel</translation>
@@ -5752,25 +5752,25 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <translation>Réponse à %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="617"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="623"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation>Médias partagés</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="619"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="625"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation>Documents partagés</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="648"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="654"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
         <translation>Transférer à…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="682"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="688"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Conversations</translation>

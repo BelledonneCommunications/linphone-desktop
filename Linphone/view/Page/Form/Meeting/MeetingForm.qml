@@ -76,7 +76,7 @@ FocusScope {
 					maximumLength: width
                     //: "Ajouter un titre"
                     property string defaultText: qsTr("meeting_schedule_subject_hint")
-					Component.onCompleted: text = defaultText
+					Component.onCompleted: text = mainItem.conferenceInfoGui.core.subject === "" ? defaultText : mainItem.conferenceInfoGui.core.subject
 					text: conferenceInfoGui.core.subject ? conferenceInfoGui.core.subject : ""
 					color: DefaultStyle.main2_600
 					font {

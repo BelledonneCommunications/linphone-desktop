@@ -515,6 +515,12 @@ FocusScope {
                     onDropped: (files) => {
                         contents.addFiles(files)
                     }
+                    Connections {
+                        target: mainItem
+                        function onReplyingToMessageChanged() {
+                            if (mainItem.replyingToMessage) messageSender.focusTextArea()
+                        }
+                    }
                 }
             }
         }

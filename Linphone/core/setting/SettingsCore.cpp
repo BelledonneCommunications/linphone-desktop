@@ -1053,6 +1053,7 @@ QString SettingsCore::getDownloadFolder() const {
 	auto path = mDownloadFolder;
 	if (mDownloadFolder.isEmpty()) path = Paths::getDownloadDirPath();
 	QString cleanPath = QDir::cleanPath(path);
+	if (!cleanPath.endsWith(QDir::separator())) cleanPath.append(QDir::separator());
 	return cleanPath;
 }
 
