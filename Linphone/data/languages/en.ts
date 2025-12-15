@@ -104,49 +104,55 @@
 <context>
     <name>AccountManager</name>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="93"/>
+        <location filename="../../model/account/AccountManager.cpp" line="94"/>
         <source>assistant_account_login_already_connected_error</source>
         <extracomment>&quot;The account is already connected&quot;</extracomment>
         <translation>The account is already connected</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="109"/>
+        <location filename="../../model/account/AccountManager.cpp" line="144"/>
         <source>assistant_account_login_outbound_proxy_uri_error</source>
         <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
         <translation>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="121"/>
+        <location filename="../../model/account/AccountManager.cpp" line="109"/>
         <source>assistant_account_login_proxy_address_error</source>
         <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
         <translation>Unable to create proxy address. Please check the domain name.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="134"/>
+        <location filename="../../model/account/AccountManager.cpp" line="122"/>
         <source>assistant_account_login_address_configuration_error</source>
         <extracomment>&quot;Unable to configure address: `%1`.&quot;</extracomment>
         <translation>Unable to configure address: `%1`.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="141"/>
+        <location filename="../../model/account/AccountManager.cpp" line="133"/>
+        <source>assistant_account_login_registrar_uri_error</source>
+        <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
+        <translation>Registrar uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="151"/>
         <source>assistant_account_login_params_configuration_error</source>
         <extracomment>&quot;Unable to configure account settings.&quot;</extracomment>
         <translation>Unable to configure account settings.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="165"/>
+        <location filename="../../model/account/AccountManager.cpp" line="175"/>
         <source>assistant_account_login_forbidden_error</source>
         <extracomment>&quot;Username and password do not match&quot;</extracomment>
         <translation>Username and password do not match</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="167"/>
+        <location filename="../../model/account/AccountManager.cpp" line="177"/>
         <source>assistant_account_login_error</source>
         <extracomment>&quot;Error during connection, please verify your parameters&quot;</extracomment>
         <translation>Error during connection</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="181"/>
+        <location filename="../../model/account/AccountManager.cpp" line="192"/>
         <source>assistant_account_add_error</source>
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Unable to add account.</translation>

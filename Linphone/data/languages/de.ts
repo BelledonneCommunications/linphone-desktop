@@ -104,49 +104,55 @@
 <context>
     <name>AccountManager</name>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="93"/>
+        <location filename="../../model/account/AccountManager.cpp" line="94"/>
         <source>assistant_account_login_already_connected_error</source>
         <extracomment>&quot;The account is already connected&quot;</extracomment>
         <translation>Das Konto ist bereits verbunden</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="109"/>
+        <location filename="../../model/account/AccountManager.cpp" line="144"/>
         <source>assistant_account_login_outbound_proxy_uri_error</source>
         <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="121"/>
+        <location filename="../../model/account/AccountManager.cpp" line="109"/>
         <source>assistant_account_login_proxy_address_error</source>
         <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
         <translation>Proxy-Adresse konnte nicht erstellt werden. Bitte überprüfen Sie den Domänenname.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="134"/>
+        <location filename="../../model/account/AccountManager.cpp" line="122"/>
         <source>assistant_account_login_address_configuration_error</source>
         <extracomment>&quot;Unable to configure address: `%1`.&quot;</extracomment>
         <translation>Folgende Adresse konnte nicht konfiguriert werden: `%1`.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="141"/>
+        <location filename="../../model/account/AccountManager.cpp" line="133"/>
+        <source>assistant_account_login_registrar_uri_error</source>
+        <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="151"/>
         <source>assistant_account_login_params_configuration_error</source>
         <extracomment>&quot;Unable to configure account settings.&quot;</extracomment>
         <translation>Kontoeinstellungen konnten nicht konfiguriert werden.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="165"/>
+        <location filename="../../model/account/AccountManager.cpp" line="175"/>
         <source>assistant_account_login_forbidden_error</source>
         <extracomment>&quot;Username and password do not match&quot;</extracomment>
         <translation>Benutzername und Passwort stimmen nicht überein</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="167"/>
+        <location filename="../../model/account/AccountManager.cpp" line="177"/>
         <source>assistant_account_login_error</source>
         <extracomment>&quot;Error during connection, please verify your parameters&quot;</extracomment>
         <translation>Fehler bei der Verbindung</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="181"/>
+        <location filename="../../model/account/AccountManager.cpp" line="192"/>
         <source>assistant_account_add_error</source>
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Konto konnte nicht hinzugefügt werden.</translation>
