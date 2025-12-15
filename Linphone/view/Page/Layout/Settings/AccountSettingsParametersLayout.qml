@@ -60,9 +60,11 @@ AbstractSettingsLayout {
                 id: mwiServerAddressField
                 propertyName: "mwiServerAddress"
                 propertyOwnerGui: account
-                //: "URI du serveur de messagerie vocale"
+                //: "MWI server address"
                 title: qsTr("account_settings_mwi_uri_title")
                 Layout.fillWidth: true
+                //: Address of the MWI server that sends SIP notifications to display new voicemail indicators
+                tooltip: qsTr("mwi_server_address_tooltip")
                 isValid: function (text) {
                     return text.length == 0 || !text.endsWith(".")
                 } // work around sdk crash when adress ends with .
@@ -83,6 +85,8 @@ AbstractSettingsLayout {
                 propertyOwnerGui: account
                 //: "Voicemail address"
                 title: qsTr("account_settings_voicemail_uri_title")
+                //: SIP address dialed when clicking the voicemail button
+                tooltip: qsTr("voicemail_address_tooltip")
                 Layout.fillWidth: true
                 toValidate: true
 

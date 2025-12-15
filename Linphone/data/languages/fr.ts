@@ -113,7 +113,7 @@
         <location filename="../../model/account/AccountManager.cpp" line="109"/>
         <source>assistant_account_login_outbound_proxy_uri_error</source>
         <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished">L&apos;uri du proxy SIP sortant est invalide. Assurez-vous qu&apos;elle corresponde format suivant : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; est optionnel)</translation>
+        <translation>L&apos;uri du proxy SIP sortant est invalide. Assurez-vous qu&apos;elle corresponde format suivant : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; est optionnel)</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="121"/>
@@ -406,80 +406,87 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="64"/>
         <source>account_settings_mwi_uri_title</source>
-        <extracomment>&quot;URI du serveur de messagerie vocale&quot;</extracomment>
-        <translation>URI du serveur de messagerie vocale</translation>
+        <extracomment>&quot;MWI server address&quot;</extracomment>
+        <translation>URI du serveur MWI (Message Waiting Indicator)</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="85"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="67"/>
+        <source>mwi_server_address_tooltip</source>
+        <extracomment>Address of the MWI server that sends SIP notifications to display new voicemail indicators</extracomment>
+        <translation>Adresse du serveur MWI qui envoie les notifications SIP pour afficher l&apos;indicateur de nouveaux messages vocaux</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="87"/>
         <source>account_settings_voicemail_uri_title</source>
         <extracomment>&quot;Voicemail address&quot;</extracomment>
-        <translation>URI de la boîte vocale</translation>
+        <translation>URI de la messagerie vocale</translation>
     </message>
     <message>
-        <source>account_settings_transport_title</source>
-        <extracomment>&quot;Transport&quot;</extracomment>
-        <translation type="vanished">Transport</translation>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="89"/>
+        <source>voicemail_address_tooltip</source>
+        <extracomment>SIP address dialed when clicking the voicemail button</extracomment>
+        <translation>Adresse SIP appelée lors du clic sur le bouton messagerie</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="112"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="116"/>
         <source>account_settings_registrar_uri_title</source>
         <translation>Registrar URI</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="129"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="133"/>
         <source>account_settings_sip_proxy_url_title</source>
         <translation>URL du proxy SIP sortant</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="133"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="137"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
         <translation>Si ce champ est rempli, l’outbound proxy sera activé automatiquement. Laissez-le vide pour le désactiver.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="150"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="154"/>
         <source>account_settings_stun_server_url_title</source>
         <extracomment>&quot;Adresse du serveur STUN&quot;</extracomment>
         <translation>Adresse du serveur STUN</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="164"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="168"/>
         <source>account_settings_enable_ice_title</source>
         <extracomment>&quot;Activer ICE&quot;</extracomment>
         <translation>Activer ICE</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="179"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="183"/>
         <source>account_settings_avpf_title</source>
         <extracomment>&quot;AVPF&quot;</extracomment>
         <translation>AVPF</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="194"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="198"/>
         <source>account_settings_bundle_mode_title</source>
         <extracomment>&quot;Mode bundle&quot;</extracomment>
         <translation>Mode bundle</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="212"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="216"/>
         <source>account_settings_expire_title</source>
         <extracomment>&quot;Expiration (en seconde)&quot;</extracomment>
         <translation>Expiration (en seconde)</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="230"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="234"/>
         <source>account_settings_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de conversations&quot;</extracomment>
         <translation>URI du serveur de conversations</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="247"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="251"/>
         <source>account_settings_audio_video_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de réunions&quot;</extracomment>
         <translation>URI du serveur de réunions</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="262"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="266"/>
         <source>account_settings_lime_server_url_title</source>
         <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
         <translation>URL du serveur d’échange de clés de chiffrement</translation>
