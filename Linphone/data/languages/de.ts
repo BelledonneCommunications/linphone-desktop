@@ -5874,37 +5874,37 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         <translation>Gruppenanruf starten?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="131"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="145"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
         <translation>Dieser Chat ist nicht verschlüsselt!</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="417"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="431"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
         <translation>Auf %1 antworten</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="623"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="637"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation>Geteilte Medien</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="625"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="639"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation>Geteilte Dokumente</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="654"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="668"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
         <translation>Weiterleiten an…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="688"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="702"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Konversationen</translation>

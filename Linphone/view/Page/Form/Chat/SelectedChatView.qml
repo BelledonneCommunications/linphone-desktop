@@ -103,13 +103,27 @@ FocusScope {
                             Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
                             Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
                         }
-                        Text {
-                            text: mainItem.chat?.core.title || ""
-                            color: DefaultStyle.main2_600
-                            maximumLineCount: 1
-                            font {
-                                pixelSize: Typography.h4.pixelSize
-                                weight: Utils.getSizeWithScreenRatio(400)
+                        ColumnLayout {
+                            Text {
+                                text: mainItem.chat?.core.title || ""
+                                color: DefaultStyle.main2_600
+                                maximumLineCount: 1
+                                font {
+                                    pixelSize: Typography.h4.pixelSize
+                                    weight: Utils.getSizeWithScreenRatio(400)
+                                }
+                            }
+                            RowLayout {
+                                visible: mainItem.chat.core.ephemeralEnabled
+                                EffectImage {
+                                    colorizationColor: DefaultStyle.main1_500_main
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
+                                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
+                                    imageSource: AppIcons.clockCountDown
+                                }
+                                Text {
+                                    text: UtilsCpp.getEphemeralFormatedTime(mainItem.chat.core.ephemeralLifetime)
+                                }
                             }
                         }
                         RowLayout {
