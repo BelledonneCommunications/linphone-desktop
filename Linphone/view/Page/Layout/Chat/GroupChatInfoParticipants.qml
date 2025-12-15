@@ -149,7 +149,6 @@ ColumnLayout {
 									}
 								}
 								IconLabelButton {
-									visible: !contact || (contact.core && !contact.core.isAppFriend)
 									Layout.fillWidth: true
 									text: qsTr("group_infos_copy_sip_address")
 									icon.source: AppIcons.copy

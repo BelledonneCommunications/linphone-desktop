@@ -563,10 +563,8 @@ void AccountModel::setPresence(LinphoneEnums::Presence presence,
 		core->getConfig()->sync();
 	}
 
-	if (!presenceNote.isEmpty()) {
-		core->getConfig()->setString(accountSection, "presence_note", Utils::appStringToCoreString(presenceNote));
-		core->getConfig()->sync();
-	}
+	core->getConfig()->setString(accountSection, "presence_note", Utils::appStringToCoreString(presenceNote));
+	core->getConfig()->sync();
 
 	if (!mMonitor->getParams()->publishEnabled()) {
 		auto params = mMonitor->getParams()->clone();

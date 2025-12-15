@@ -156,7 +156,7 @@ ColumnLayout {
 	Text {
 		font: Typography.p3
 		color: DefaultStyle.main2_700
-		text: mainItem.chatCore.peerAddress
+		text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(mainItem.chatCore.peerAddress) : mainItem.chatCore.peerAddress
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Utils.getSizeWithScreenRatio(5)
 	}

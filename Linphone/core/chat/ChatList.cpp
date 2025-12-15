@@ -170,6 +170,19 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	                          const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) {
 		    addChatToList(core, room, message);
 	    });
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::chatRoomStateChanged,
+	    [this, addChatToList](const std::shared_ptr<linphone::Core> &core,
+	                          const std::shared_ptr<linphone::ChatRoom> &chatRoom, linphone::ChatRoom::State state) {
+		    if (state == linphone::ChatRoom::State::Created) {
+			    if (chatRoom->getAccount() != core->getDefaultAccount()) {
+				    qWarning() << log().arg("Chatroom does not refer to current account, return");
+				    return;
+			    }
+			    auto chatCore = ChatCore::create(chatRoom);
+			    mModelConnection->invokeToCore([this, chatCore] { addChatInList(chatCore); });
+		    }
+	    });
 
 	connect(this, &ChatList::filterChanged, [this](QString filter) {
 		mFilter = filter;

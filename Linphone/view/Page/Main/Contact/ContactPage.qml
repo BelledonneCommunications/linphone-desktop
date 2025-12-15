@@ -31,9 +31,9 @@ AbstractMainPage {
     }
 
     onVisibleChanged: if (!visible) {
-                          rightPanelStackView.clear()
-                          contactList.resetSelections()
-                      }
+        rightPanelStackView.clear()
+        contactList.resetSelections()
+    }
     function goToContactDetails() {
         if (selectedContact) {
             var firstItem = rightPanelStackView.get(0)
@@ -55,15 +55,20 @@ AbstractMainPage {
         }
     }
     onSelectedContactChanged: {
-        goToContactDetails()
+        console.log("selected contact changed, go to contact details")
+        // if we are editing a contact, force staying on edition page
+        if (!rightPanelStackView.currentItem
+            || rightPanelStackView.currentItem.objectName != "contactEdition") {
+            goToContactDetails()
+        }
     }
 
     onNoItemButtonPressed: createContact("", "")
 
     function createContact(name, address) {
         var friendGui = Qt.createQmlObject('import Linphone
-FriendGui{
-}', mainItem)
+                                            FriendGui{
+                                            }', mainItem)
         friendGui.core.givenName = UtilsCpp.getGivenNameFromFullName(name)
         friendGui.core.familyName = UtilsCpp.getFamilyNameFromFullName(name)
         friendGui.core.appendAddress(address)
@@ -840,8 +845,7 @@ FriendGui{
                                         //: "Supprimer ce contact"
                                         text: qsTr("contact_details_delete")
                                         onClicked: {
-                                            mainItem.deleteContact(
-                                                        mainItem.selectedContact)
+                                            mainItem.deleteContact(mainItem.selectedContact)
                                         }
                                         style: ButtonStyle.noBackgroundRed
                                     }
