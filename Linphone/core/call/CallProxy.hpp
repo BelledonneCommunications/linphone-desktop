@@ -28,15 +28,14 @@
 
 // =============================================================================
 
-class CallProxy : public LimitProxy, public AbstractObject {
+class CallProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(CallGui *currentCall READ getCurrentCall WRITE setCurrentCall NOTIFY currentCallChanged)
 	Q_PROPERTY(bool haveCall READ getHaveCall NOTIFY haveCallChanged)
+	Q_PROPERTY(bool showCurrentCall READ showCurrentCall WRITE setShowCurrentCall NOTIFY showCurrentCallChanged)
 
 public:
-	DECLARE_SORTFILTER_CLASS()
-
-	CallProxy(QObject *parent = Q_NULLPTR);
+	CallProxy();
 	~CallProxy();
 
 	// Get a new object from List or give the stored one.
@@ -48,15 +47,23 @@ public:
 
 	bool getHaveCall() const;
 
+	void setShowCurrentCall(bool show);
+	bool showCurrentCall() const;
+
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
+
+	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+	virtual bool lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const override;
 
 signals:
 	void lMergeAll();
 	void currentCallChanged();
 	void haveCallChanged();
+	void showCurrentCallChanged();
 
 protected:
 	CallGui *mCurrentCall = nullptr; // When null, a new UI object is build from List
+	bool mShowCurrentCall = false;
 
 	DECLARE_ABSTRACT_OBJECT
 };
