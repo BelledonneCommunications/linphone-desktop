@@ -1089,49 +1089,49 @@
 <context>
     <name>CallListView</name>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="60"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="62"/>
         <source>meeting</source>
         <extracomment>&quot;Réunion</extracomment>
         <translation>Réunion</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="62"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="64"/>
         <source>call</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Appel</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="67"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="69"/>
         <source>paused_call_or_meeting</source>
         <extracomment>&quot;%1 en pause&quot;</extracomment>
         <translation>%1 en pause</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="69"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="71"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
         <translation>%1 en cours</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="89"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="91"/>
         <source>transfer_call_name_accessible_name</source>
         <extracomment>Transfer call %1</extracomment>
         <translation>Transférer l&apos;appel %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="117"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="119"/>
         <source>resume_call_name_accessible_name</source>
         <extracomment>Resume %1 call</extracomment>
         <translation>Reprendre l&apos;appel %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="119"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="121"/>
         <source>pause_call_name_accessible_name</source>
         <extracomment>Pause %1 call</extracomment>
         <translation>Mettre l&apos;appel %1 en pause</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="142"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="144"/>
         <source>end_call_name_accessible_name</source>
         <extracomment>End %1 call</extracomment>
         <translation>Terminer l&apos;appel %1</translation>
@@ -4941,7 +4941,7 @@ Expiration : %1</translation>
 <context>
     <name>NewCallForm</name>
     <message>
-        <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="24"/>
+        <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="25"/>
         <source>call_transfer_active_calls_label</source>
         <extracomment>&quot;Appels en cours&quot;</extracomment>
         <translation>Appels en cours</translation>

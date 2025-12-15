@@ -11,19 +11,21 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
 	id: mainItem
-	model: CallProxy {
-		id: callProxy
-		sourceModel: AppCpp.calls
-    }
 	implicitHeight: contentHeight
     spacing: Utils.getSizeWithScreenRatio(15)
 	clip: true
-	onCountChanged: forceLayout()
-
-	signal transferCallToAnotherRequested(CallGui dest)
 
 	property bool isTransferList: false
     property string currentRemoteAddress: AppCpp.calls.currentCall ? AppCpp.calls.currentCall.core.remoteAddress : ""
+	signal transferCallToAnotherRequested(CallGui dest)
+	
+	onCountChanged: forceLayout()
+
+	model: CallProxy {
+		id: callProxy
+		sourceModel: AppCpp.calls
+		showCurrentCall: !mainItem.isTransferList
+    }
 
 	delegate: RowLayout {
 		id: callInformationItem
