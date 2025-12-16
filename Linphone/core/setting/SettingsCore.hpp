@@ -65,6 +65,9 @@ public:
 	// Network
 	Q_PROPERTY(bool ipv6Enabled READ getIpv6Enabled WRITE setIpv6Enabled NOTIFY ipv6EnabledChanged)
 
+	// Advanced
+	Q_PROPERTY(bool autoStart READ getAutoStart WRITE setAutoStart NOTIFY autoStartChanged)
+
 	Q_PROPERTY(
 	    QVariantMap conferenceLayout READ getConferenceLayout WRITE setConferenceLayout NOTIFY conferenceLayoutChanged)
 	Q_PROPERTY(
@@ -205,6 +208,13 @@ public:
 	}
 	void setIpv6Enabled(bool enabled);
 
+	// Advanced. --------------------------------------------------------------------
+
+	bool getAutoStart() {
+		return mAutoStart;
+	}
+	void setAutoStart(bool enabled);
+
 	bool getLogsEnabled() const;
 	void setLogsEnabled(bool enabled);
 
@@ -252,7 +262,6 @@ public:
 	                           AssistantGoDirectlyToThirdPartySipAccountLogin)
 	DECLARE_CORE_GETSET_MEMBER(QString, assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
 	DECLARE_CORE_GETSET_MEMBER(QString, assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
-	DECLARE_CORE_GETSET(bool, autoStart, AutoStart)
 	DECLARE_CORE_GETSET(bool, exitOnClose, ExitOnClose)
 	DECLARE_CORE_GETSET(bool, syncLdapContacts, SyncLdapContacts)
 	DECLARE_CORE_GETSET(QString, configLocale, ConfigLocale)
@@ -297,6 +306,9 @@ signals:
 
 	// Network
 	void ipv6EnabledChanged();
+
+	// Advanced
+	void autoStartChanged();
 
 	void conferenceLayoutsChanged(const QVariantList &layouts);
 	void mediaEncryptionsChanged(const QVariantList &encryptions);
@@ -398,6 +410,9 @@ private:
 
 	// Network
 	bool mIpv6Enabled;
+
+	// Advanced
+	bool mAutoStart;
 
 	// Debug logs
 	bool mLogsEnabled;
