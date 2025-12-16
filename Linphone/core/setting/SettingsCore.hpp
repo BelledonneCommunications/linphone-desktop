@@ -62,6 +62,9 @@ public:
 	Q_PROPERTY(QVariantMap playbackDevice READ getPlaybackDevice WRITE setPlaybackDevice NOTIFY playbackDeviceChanged)
 	Q_PROPERTY(QVariantMap ringerDevice READ getRingerDevice WRITE setRingerDevice NOTIFY ringerDeviceChanged)
 
+	// Network
+	Q_PROPERTY(bool ipv6Enabled READ getIpv6Enabled WRITE setIpv6Enabled NOTIFY ipv6EnabledChanged)
+
 	Q_PROPERTY(
 	    QVariantMap conferenceLayout READ getConferenceLayout WRITE setConferenceLayout NOTIFY conferenceLayoutChanged)
 	Q_PROPERTY(
@@ -195,6 +198,13 @@ public:
 	Q_INVOKABLE void closeCallSettings();
 	Q_INVOKABLE void updateMicVolume() const;
 
+	// Network. --------------------------------------------------------------------
+
+	bool getIpv6Enabled() {
+		return mIpv6Enabled;
+	}
+	void setIpv6Enabled(bool enabled);
+
 	bool getLogsEnabled() const;
 	void setLogsEnabled(bool enabled);
 
@@ -245,7 +255,6 @@ public:
 	DECLARE_CORE_GETSET(bool, autoStart, AutoStart)
 	DECLARE_CORE_GETSET(bool, exitOnClose, ExitOnClose)
 	DECLARE_CORE_GETSET(bool, syncLdapContacts, SyncLdapContacts)
-	DECLARE_CORE_GETSET_MEMBER(bool, ipv6Enabled, Ipv6Enabled)
 	DECLARE_CORE_GETSET(QString, configLocale, ConfigLocale)
 	DECLARE_CORE_GETSET(QString, downloadFolder, DownloadFolder)
 	// Read-only
@@ -285,6 +294,10 @@ signals:
 	void captureDevicesChanged(const QVariantList &devices);
 	void playbackDevicesChanged(const QVariantList &devices);
 	void ringerDevicesChanged(const QVariantList &devices);
+
+	// Network
+	void ipv6EnabledChanged();
+
 	void conferenceLayoutsChanged(const QVariantList &layouts);
 	void mediaEncryptionsChanged(const QVariantList &encryptions);
 
@@ -382,6 +395,9 @@ private:
 	float mCaptureGain;
 	float mPlaybackGain;
 	int mEchoCancellationCalibration;
+
+	// Network
+	bool mIpv6Enabled;
 
 	// Debug logs
 	bool mLogsEnabled;

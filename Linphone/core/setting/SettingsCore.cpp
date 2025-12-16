@@ -61,6 +61,9 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 		mRingtoneFolder = mRingtonePath.left(mRingtonePath.lastIndexOf(QDir::separator()));
 	}
 
+	// Network
+	mIpv6Enabled = settingsModel->getIpv6Enabled();
+
 	// Audio
 	mCaptureDevices = settingsModel->getCaptureDevices();
 	mPlaybackDevices = settingsModel->getPlaybackDevices();
@@ -162,6 +165,9 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mAutoDownloadReceivedFiles = settingsCore.mAutoDownloadReceivedFiles;
 	mAutomaticallyRecordCallsEnabled = settingsCore.mAutomaticallyRecordCallsEnabled;
 
+	// Network
+	mIpv6Enabled = settingsCore.mIpv6Enabled;
+
 	// Audio
 	mCaptureDevices = settingsCore.mCaptureDevices;
 	mPlaybackDevices = settingsCore.mPlaybackDevices;
@@ -259,6 +265,11 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	    &SettingsModel::echoCancellationEnabledChanged, [this](const bool enabled) {
 		    mSettingsModelConnection->invokeToCore([this, enabled]() { setEchoCancellationEnabled(enabled); });
 	    });
+
+	// IP V6
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ipv6EnabledChanged, [this](const bool enabled) {
+		mSettingsModelConnection->invokeToCore([this, enabled]() { setIpv6Enabled(enabled); });
+	});
 
 	// Auto download incoming files
 	mSettingsModelConnection->makeConnectToModel(
@@ -508,6 +519,9 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setEchoCancellationEnabled(settingsCore.mEchoCancellationEnabled);
 	setAutomaticallyRecordCallsEnabled(settingsCore.mAutomaticallyRecordCallsEnabled);
 
+	// Network
+	setIpv6Enabled(settingsCore.mIpv6Enabled);
+
 	setAutoDownloadReceivedFiles(settingsCore.mAutoDownloadReceivedFiles);
 	// Audio
 	setCaptureDevices(settingsCore.mCaptureDevices);
@@ -620,6 +634,14 @@ void SettingsCore::setEchoCancellationEnabled(bool enabled) {
 	if (mEchoCancellationEnabled != enabled) {
 		mEchoCancellationEnabled = enabled;
 		emit echoCancellationEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setIpv6Enabled(bool enabled) {
+	if (mIpv6Enabled != enabled) {
+		mIpv6Enabled = enabled;
+		emit ipv6EnabledChanged();
 		setIsSaved(false);
 	}
 }
@@ -1067,6 +1089,9 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	model->setEchoCancellationEnabled(mEchoCancellationEnabled);
 	model->setAutomaticallyRecordCallsEnabled(mAutomaticallyRecordCallsEnabled);
 
+	// Network
+	model->setIpv6Enabled(mIpv6Enabled);
+
 	// Chat
 	model->setAutoDownloadReceivedFiles(mAutoDownloadReceivedFiles);
 
@@ -1137,6 +1162,9 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mRingtoneFolder = ringtone.exists() ? ringtone.absolutePath() : "";
 	mRingtoneFileName =
 	    ringtone.exists() ? ringtone.fileName() : mRingtonePath.right(mRingtonePath.lastIndexOf(QDir::separator()));
+
+	// Network
+	mIpv6Enabled = model->getIpv6Enabled();
 
 	// Chat
 	mAutoDownloadReceivedFiles = model->getAutoDownloadReceivedFiles();
