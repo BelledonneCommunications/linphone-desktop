@@ -114,7 +114,7 @@ FocusScope {
                                 }
                             }
                             RowLayout {
-                                visible: mainItem.chat.core.ephemeralEnabled
+                                visible: mainItem.chat?.core.ephemeralEnabled || false
                                 EffectImage {
                                     colorizationColor: DefaultStyle.main1_500_main
                                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
@@ -122,7 +122,7 @@ FocusScope {
                                     imageSource: AppIcons.clockCountDown
                                 }
                                 Text {
-                                    text: UtilsCpp.getEphemeralFormatedTime(mainItem.chat.core.ephemeralLifetime)
+                                    text: mainItem.chat ? UtilsCpp.getEphemeralFormatedTime(mainItem.chat.core.ephemeralLifetime) : ""
                                 }
                             }
                         }
@@ -534,6 +534,7 @@ FocusScope {
                         function onReplyingToMessageChanged() {
                             if (mainItem.replyingToMessage) messageSender.focusTextArea()
                         }
+                        function onChatChanged() {messageSender.focusTextArea()}
                     }
                 }
             }

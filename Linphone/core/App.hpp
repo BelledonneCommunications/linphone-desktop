@@ -53,6 +53,7 @@ class App : public SingleApplication, public AbstractObject {
 	Q_PROPERTY(QString gitBranchName READ getGitBranchName CONSTANT)
 	Q_PROPERTY(QString sdkVersion READ getSdkVersion CONSTANT)
 	Q_PROPERTY(ChatGui *currentChat READ getCurrentChat WRITE setCurrentChat NOTIFY currentChatChanged)
+	Q_PROPERTY(QString localeAsString READ getLocaleAsString CONSTANT)
 
 public:
 	App(int &argc, char *argv[]);
@@ -135,6 +136,7 @@ public:
 	}
 	void updateSysTrayCount(int n);
 	QLocale getLocale();
+	QString getLocaleAsString();
 
 	void onLoggerInitialized();
 	void sendCommand();
@@ -210,6 +212,7 @@ signals:
 	void currentChatChanged();
 	void conferenceInfosChanged();
 	void chatsChanged();
+	void localeChanged();
 	// void executeCommand(QString command);
 
 private:

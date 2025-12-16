@@ -143,7 +143,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 		if (!message) return;
 		if (room->getAccount() != core->getDefaultAccount()) {
-			qWarning() << log().arg("Chat room does not refer to current account, return");
+			qInfo() << log().arg("Chat room does not refer to current account, return");
 			return;
 		}
 		auto chatCore = ChatCore::create(room);

@@ -1517,10 +1517,15 @@ void App::setMacOSDockActions() {
 void App::setLocale(QString configLocale) {
 	if (!configLocale.isEmpty()) mLocale = QLocale(configLocale);
 	else mLocale = QLocale(QLocale::system().name());
+	emit localeChanged();
 }
 
 QLocale App::getLocale() {
 	return mLocale;
+}
+
+QString App::getLocaleAsString() {
+	return mLocale.name();
 }
 
 //-----------------------------------------------------------

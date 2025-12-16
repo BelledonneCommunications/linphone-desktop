@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 
 import Linphone
-import UtilsCpp 1.0
+import UtilsCpp
 import ConstantsCpp
 import SettingsCpp
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
@@ -36,7 +36,7 @@ FocusScope {
     property real itemsRightMargin: Utils.getSizeWithScreenRatio(39)
 
     property var displayName: searchResultItem? searchResultItem.core.fullName : ""
-    property var initial: displayName != "" ? displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale) : ''
+    property var initial: displayName.length > 0 ? displayName[0].toLocaleLowerCase(AppCpp.localeAsString) : ''
 
     signal clicked(var mouse)
     signal contactDeletionRequested(FriendGui contact)

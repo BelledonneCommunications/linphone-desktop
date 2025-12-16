@@ -146,7 +146,7 @@ Loader{
 					width: height
 					Rectangle {
 						id: initialItem
-						property string initials: mainItem.isConference || mainItem.displayNameVal[0] === "+" ? "" : UtilsCpp.getInitials(mainItem.displayNameVal)
+						property string initials: mainItem.isConference || (mainItem.displayNameVal && mainItem.displayNameVal[0] === "+") ? "" : UtilsCpp.getInitials(mainItem.displayNameVal)
 						radius: width / 2
 						color: DefaultStyle.main2_200
 						height: stackView.height
