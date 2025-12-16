@@ -64,6 +64,9 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	// Network
 	mIpv6Enabled = settingsModel->getIpv6Enabled();
 
+	// Advanced
+	mAutoStart = settingsModel->getAutoStart();
+
 	// Audio
 	mCaptureDevices = settingsModel->getCaptureDevices();
 	mPlaybackDevices = settingsModel->getPlaybackDevices();
@@ -135,7 +138,6 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(AutoStart, settingsModel)
 	INIT_CORE_MEMBER(ExitOnClose, settingsModel)
 	INIT_CORE_MEMBER(SyncLdapContacts, settingsModel)
-	INIT_CORE_MEMBER(Ipv6Enabled, settingsModel)
 	INIT_CORE_MEMBER(ConfigLocale, settingsModel)
 	INIT_CORE_MEMBER(DownloadFolder, settingsModel)
 
@@ -164,9 +166,6 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mEchoCancellationEnabled = settingsCore.mEchoCancellationEnabled;
 	mAutoDownloadReceivedFiles = settingsCore.mAutoDownloadReceivedFiles;
 	mAutomaticallyRecordCallsEnabled = settingsCore.mAutomaticallyRecordCallsEnabled;
-
-	// Network
-	mIpv6Enabled = settingsCore.mIpv6Enabled;
 
 	// Audio
 	mCaptureDevices = settingsCore.mCaptureDevices;
@@ -216,10 +215,10 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mAssistantGoDirectlyToThirdPartySipAccountLogin = settingsCore.mAssistantGoDirectlyToThirdPartySipAccountLogin;
 	mAssistantThirdPartySipAccountDomain = settingsCore.mAssistantThirdPartySipAccountDomain;
 	mAssistantThirdPartySipAccountTransport = settingsCore.mAssistantThirdPartySipAccountTransport;
-	mAutoStart = settingsCore.mAutoStart;
 	mExitOnClose = settingsCore.mExitOnClose;
 	mSyncLdapContacts = settingsCore.mSyncLdapContacts;
 	mIpv6Enabled = settingsCore.mIpv6Enabled;
+	mAutoStart = settingsCore.mAutoStart;
 	mConfigLocale = settingsCore.mConfigLocale;
 	mDownloadFolder = settingsCore.mDownloadFolder;
 	mShortcutCount = settingsCore.mShortcutCount;
@@ -266,9 +265,18 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		    mSettingsModelConnection->invokeToCore([this, enabled]() { setEchoCancellationEnabled(enabled); });
 	    });
 
-	// IP V6
+	// IPV6
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ipv6EnabledChanged, [this](const bool enabled) {
 		mSettingsModelConnection->invokeToCore([this, enabled]() { setIpv6Enabled(enabled); });
+	});
+
+	// AutoStart
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::autoStartChanged, [this](const bool enabled) {
+		mSettingsModelConnection->invokeToCore([this, enabled]() {
+			bool emitSignal = mAutoStart != enabled;
+			setAutoStart(enabled);
+			if (emitSignal) emit autoStartChanged();
+		});
 	});
 
 	// Auto download incoming files
@@ -461,8 +469,6 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                           ExitOnClose)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
 	                           syncLdapContacts, SyncLdapContacts)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool, ipv6Enabled,
-	                           Ipv6Enabled)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
 	                           configLocale, ConfigLocale)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
@@ -519,9 +525,6 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setEchoCancellationEnabled(settingsCore.mEchoCancellationEnabled);
 	setAutomaticallyRecordCallsEnabled(settingsCore.mAutomaticallyRecordCallsEnabled);
 
-	// Network
-	setIpv6Enabled(settingsCore.mIpv6Enabled);
-
 	setAutoDownloadReceivedFiles(settingsCore.mAutoDownloadReceivedFiles);
 	// Audio
 	setCaptureDevices(settingsCore.mCaptureDevices);
@@ -573,11 +576,11 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setAssistantGoDirectlyToThirdPartySipAccountLogin(settingsCore.mAssistantGoDirectlyToThirdPartySipAccountLogin);
 	setAssistantThirdPartySipAccountDomain(settingsCore.mAssistantThirdPartySipAccountDomain);
 	setAssistantThirdPartySipAccountTransport(settingsCore.mAssistantThirdPartySipAccountTransport);
-	setAutoStart(settingsCore.mAutoStart);
 	setExitOnClose(settingsCore.mExitOnClose);
 	setSyncLdapContacts(settingsCore.mSyncLdapContacts);
 	setCardDAVMinCharForResearch(settingsCore.mCardDAVMinCharForResearch);
 	setIpv6Enabled(settingsCore.mIpv6Enabled);
+	setAutoStart(settingsCore.mAutoStart);
 	setConfigLocale(settingsCore.mConfigLocale);
 	setDownloadFolder(settingsCore.mDownloadFolder);
 }
@@ -642,6 +645,13 @@ void SettingsCore::setIpv6Enabled(bool enabled) {
 	if (mIpv6Enabled != enabled) {
 		mIpv6Enabled = enabled;
 		emit ipv6EnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setAutoStart(bool enabled) {
+	if (mAutoStart != enabled) {
+		mAutoStart = enabled;
 		setIsSaved(false);
 	}
 }
@@ -1044,10 +1054,6 @@ void SettingsCore::setShowAccountDevices(bool show) {
 	}
 }
 
-bool SettingsCore::getAutoStart() const {
-	return mAutoStart;
-}
-
 bool SettingsCore::getExitOnClose() const {
 	return mExitOnClose;
 }
@@ -1087,9 +1093,6 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	model->setVideoEnabled(mVideoEnabled);
 	model->setEchoCancellationEnabled(mEchoCancellationEnabled);
 	model->setAutomaticallyRecordCallsEnabled(mAutomaticallyRecordCallsEnabled);
-
-	// Network
-	model->setIpv6Enabled(mIpv6Enabled);
 
 	// Chat
 	model->setAutoDownloadReceivedFiles(mAutoDownloadReceivedFiles);
@@ -1138,10 +1141,10 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	model->setAssistantGoDirectlyToThirdPartySipAccountLogin(mAssistantGoDirectlyToThirdPartySipAccountLogin);
 	model->setAssistantThirdPartySipAccountDomain(mAssistantThirdPartySipAccountDomain);
 	model->setAssistantThirdPartySipAccountTransport(mAssistantThirdPartySipAccountTransport);
-	model->setAutoStart(mAutoStart);
 	model->setExitOnClose(mExitOnClose);
 	model->setSyncLdapContacts(mSyncLdapContacts);
 	model->setIpv6Enabled(mIpv6Enabled);
+	model->setAutoStart(mAutoStart);
 	model->setConfigLocale(mConfigLocale);
 	model->setDownloadFolder(mDownloadFolder);
 }
@@ -1162,8 +1165,8 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mRingtoneFileName =
 	    ringtone.exists() ? ringtone.fileName() : mRingtonePath.right(mRingtonePath.lastIndexOf(QDir::separator()));
 
-	// Network
-	mIpv6Enabled = model->getIpv6Enabled();
+	// Advanced
+	mAutoStart = model->getAutoStart();
 
 	// Chat
 	mAutoDownloadReceivedFiles = model->getAutoDownloadReceivedFiles();
@@ -1223,6 +1226,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mSyncLdapContacts = model->getSyncLdapContacts();
 	mCardDAVMinCharForResearch = model->getCardDAVMinCharResearch();
 	mIpv6Enabled = model->getIpv6Enabled();
+	mAutoStart = model->getAutoStart();
 	mConfigLocale = model->getConfigLocale();
 	mDownloadFolder = model->getDownloadFolder();
 }
@@ -1234,6 +1238,7 @@ bool SettingsCore::isCheckForUpdateAvailable() const {
 void SettingsCore::save() {
 	mustBeInMainThread(getClassName() + Q_FUNC_INFO);
 	SettingsCore *thisCopy = new SettingsCore(*this);
+	emit autoStartChanged();
 	if (SettingsModel::getInstance()) {
 		mSettingsModelConnection->invokeToModel([this, thisCopy] {
 			mustBeInLinphoneThread(getClassName() + Q_FUNC_INFO);
