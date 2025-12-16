@@ -13,7 +13,6 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 Rectangle {
 	id: mainItem
 	property ChatGui chatGui
-	property var chatCore: chatGui.core
 	Layout.fillHeight: true
 	Layout.fillWidth: true
 	Layout.topMargin: Utils.getSizeWithScreenRatio(9)
@@ -37,7 +36,7 @@ Rectangle {
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.leftArrow
 				onClicked: {
-					mainItem.chatCore.lSetParticipantsAddresses(manageParticipantsLayout.selectedParticipants)
+					mainItem.chatGui.core.lSetParticipantsAddresses(manageParticipantsLayout.selectedParticipants)
 					mainItem.done()
 				}
 			}
@@ -56,11 +55,11 @@ Rectangle {
 			Layout.topMargin: Utils.getSizeWithScreenRatio(9)
 			Layout.bottomMargin: Utils.getSizeWithScreenRatio(17)
 			Layout.alignment: Qt.AlignVCenter
-			selectedParticipants: mainItem.chatCore.participantsAddresses
+			selectedParticipants: mainItem.chatGui.core.participantsAddresses
 			focus: true
 			onVisibleChanged: {
 				if (visible)
-					selectedParticipants = mainItem.chatCore.participantsAddresses
+					selectedParticipants = mainItem.chatGui.core.participantsAddresses
 			}
 		}
 		Item {

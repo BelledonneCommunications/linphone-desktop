@@ -13,11 +13,10 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 ColumnLayout {
 	id: mainItem
 	property ChatGui chatGui
-	property var chatCore: chatGui.core
-	property var contactObj: chatGui ? UtilsCpp.findFriendByAddress(mainItem.chatCore.peerAddress) : null
+	property var contactObj: chatGui ? UtilsCpp.findFriendByAddress(mainItem.chatGui.core.peerAddress) : null
 	property FriendGui contact: contactObj ? contactObj.value : null
 	property bool isAppFriend: contact && contact.core.isAppFriend
-	property bool isGroup: chatCore && chatCore.isGroupChat
+	property bool isGroup: chatGui && chatGui.core.isGroupChat
 	spacing: 0
 	signal ephemeralSettingsRequested()
 	signal showSharedFilesRequested(bool showMedias)
@@ -29,7 +28,7 @@ ColumnLayout {
 	Avatar {
 		Layout.alignment: Qt.AlignHCenter
 		contact: mainItem.contact
-		displayNameVal: mainItem.chatCore.avatarUri
+		displayNameVal: mainItem.chatGui.core.avatarUri
 		secured: mainItem.chatGui && mainItem.chatGui.core.isSecured
 		Layout.preferredWidth: Utils.getSizeWithScreenRatio(100)
 		Layout.preferredHeight: Utils.getSizeWithScreenRatio(100)
@@ -51,7 +50,7 @@ ColumnLayout {
 			popup.contentItem: RowLayout {
 				Text {
 					id: chatroomaddress
-					text: chatCore?.chatRoomAddress || ""
+					text: chatGui?.core?.chatRoomAddress || ""
 				}
 				SmallButton {
 					icon.source: AppIcons.copy
@@ -70,10 +69,10 @@ ColumnLayout {
 		RowLayout {
 			id: titleMainItem
 			property bool isEditingSubject: false
-			property bool canEditSubject: mainItem.chatCore.meAdmin && mainItem.chatCore.isGroupChat
+			property bool canEditSubject: mainItem.chatGui.core.meAdmin && mainItem.chatGui.core.isGroupChat
 			
 			function saveSubject() {
-				mainItem.chatCore.lSetSubject(title.text)
+				mainItem.chatGui.core.lSetSubject(title.text)
 			}
 			
 			Item {
@@ -96,7 +95,7 @@ ColumnLayout {
 					anchors.margins: 6
 					font: Typography.p1
 					color: DefaultStyle.main2_700
-					text: mainItem.chatCore.title || ""
+					text: mainItem.chatGui.core.title || ""
 					enabled: titleMainItem.isEditingSubject
 					wrapMode: TextEdit.Wrap
 					horizontalAlignment: Text.AlignHCenter
@@ -142,7 +141,7 @@ ColumnLayout {
 		Text {
 			font: Typography.p1
 			color: DefaultStyle.main2_700
-			text: mainItem.chatCore.title || ""
+			text: mainItem.chatGui.core.title || ""
 		}
 	}
 	
@@ -156,7 +155,7 @@ ColumnLayout {
 	Text {
 		font: Typography.p3
 		color: DefaultStyle.main2_700
-		text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(mainItem.chatCore.peerAddress) : mainItem.chatCore.peerAddress
+		text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(mainItem.chatGui.core.peerAddress) : mainItem.chatGui.core.peerAddress
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Utils.getSizeWithScreenRatio(5)
 	}
@@ -171,7 +170,7 @@ ColumnLayout {
 	}
 	
 	RowLayout {
-		visible: !mainItem.chatCore.isReadOnly
+		visible: !mainItem.chatGui.core.isReadOnly
 		spacing: Utils.getSizeWithScreenRatio(10)
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Utils.getSizeWithScreenRatio(30)
@@ -200,11 +199,11 @@ ColumnLayout {
 			Layout.maximumWidth: Utils.getSizeWithScreenRatio(130)
 			button.icon.width: Utils.getSizeWithScreenRatio(24)
 			button.icon.height: Utils.getSizeWithScreenRatio(24)
-			button.icon.source: mainItem.chatCore.muted ? AppIcons.bell : AppIcons.bellSlash
+			button.icon.source: mainItem.chatGui.core.muted ? AppIcons.bell : AppIcons.bellSlash
 			//: "Sourdine"
-			label: mainItem.chatCore.muted ? qsTr("one_one_infos_unmute") : qsTr("one_one_infos_mute")
+			label: mainItem.chatGui.core.muted ? qsTr("one_one_infos_unmute") : qsTr("one_one_infos_mute")
 			button.onClicked: {
-				mainItem.chatCore.muted = !mainItem.chatCore.muted
+				mainItem.chatGui.core.muted = !mainItem.chatGui.core.muted
 			}
 		}
 		LabelButton {
@@ -232,12 +231,12 @@ ColumnLayout {
 					: qsTr("one_one_infos_create_contact")
 			button.onClicked: {
 				if (mainItem.isGroup)
-					UtilsCpp.getMainWindow().scheduleMeeting(mainItem.chatCore.title, mainItem.chatCore.participantsAddresses)
+					UtilsCpp.getMainWindow().scheduleMeeting(mainItem.chatGui.core.title, mainItem.chatGui.core.participantsAddresses)
 				else {
 					if (mainItem.isAppFriend)
 						mainWindow.displayContactPage(mainItem.contact.core.defaultAddress)
 					else
-						mainWindow.displayCreateContactPage("",mainItem.chatCore.peerAddress)
+						mainWindow.displayCreateContactPage("",mainItem.chatGui.core.peerAddress)
 				}
 			}
 		}
@@ -269,13 +268,13 @@ ColumnLayout {
 				active: mainItem.isGroup
 				sourceComponent: GroupChatInfoParticipants {
 					Layout.fillWidth: true
-					title: qsTr("group_infos_participants").arg(mainItem.chatCore.participants.length)
-					participants: mainItem.chatCore.participants
-					chatCore: mainItem.chatCore
+					title: qsTr("group_infos_participants").arg(mainItem.chatGui.core.participants.length)
+					participants: mainItem.chatGui.core.participants
+					chatGui: mainItem.chatGui
 					onManageParticipantsRequested: mainItem.manageParticipantsRequested()
 				}
 				Connections {
-					target: mainItem.chatCore
+					target: mainItem.chatGui.core
 					onParticipantsChanged : { // hacky reload to update intric height
 						participantLoader.active = false
 						participantLoader.active = true
@@ -321,8 +320,8 @@ ColumnLayout {
 				? [
 					{
 						icon: AppIcons.clockCountDown,
-						visible: !mainItem.chatCore.isReadOnly,
-						text: mainItem.chatCore.ephemeralEnabled ? qsTr("group_infos_ephemerals")+UtilsCpp.getEphemeralFormatedTime(mainItem.chatCore.ephemeralLifetime) : qsTr("group_infos_enable_ephemerals"),
+						visible: !mainItem.chatGui.core.isReadOnly,
+						text: mainItem.chatGui.core.ephemeralEnabled ? qsTr("group_infos_ephemerals")+UtilsCpp.getEphemeralFormatedTime(mainItem.chatGui.core.ephemeralLifetime) : qsTr("group_infos_enable_ephemerals"),
 						color: DefaultStyle.main2_600,
 						showRightArrow: false,
 						action: function() {
@@ -331,7 +330,7 @@ ColumnLayout {
 					},
 					{
 						icon: AppIcons.signOut,
-						visible: !mainItem.chatCore.isReadOnly,
+						visible: !mainItem.chatGui.core.isReadOnly,
 						//: Leave chat room
 						text: qsTr("group_infos_leave_room"),
 						color: DefaultStyle.main2_600,
@@ -344,7 +343,7 @@ ColumnLayout {
 							"",
 							function(confirmed) {
 								if (confirmed) {
-									mainItem.chatCore.lLeave()
+									mainItem.chatGui.core.lLeave()
 								}
 							})
 						}
@@ -364,7 +363,7 @@ ColumnLayout {
 								"",
 								function(confirmed) {
 									if (confirmed) {
-										mainItem.chatCore.lDeleteHistory()
+										mainItem.chatGui.core.lDeleteHistory()
 									}
 								})
 						}
@@ -373,8 +372,8 @@ ColumnLayout {
 				: [
 					{
 						icon: AppIcons.clockCountDown,
-						visible: !mainItem.chatCore.isReadOnly,
-						text: mainItem.chatCore.ephemeralEnabled ? qsTr("one_one_infos_ephemerals")+UtilsCpp.getEphemeralFormatedTime(mainItem.chatCore.ephemeralLifetime) : qsTr("one_one_infos_enable_ephemerals"),
+						visible: !mainItem.chatGui.core.isReadOnly,
+						text: mainItem.chatGui.core.ephemeralEnabled ? qsTr("one_one_infos_ephemerals")+UtilsCpp.getEphemeralFormatedTime(mainItem.chatGui.core.ephemeralLifetime) : qsTr("one_one_infos_enable_ephemerals"),
 						color: DefaultStyle.main2_600,
 						showRightArrow: false,
 						action: function() {
@@ -395,7 +394,7 @@ ColumnLayout {
 							"",
 							function(confirmed) {
 								if (confirmed) {
-									mainItem.chatCore.lDeleteHistory()
+									mainItem.chatGui.core.lDeleteHistory()
 								}
 							})
 						}

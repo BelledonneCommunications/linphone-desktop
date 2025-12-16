@@ -15,10 +15,10 @@ ColumnLayout {
 	id: mainItem
     property var title: String
     property var participants
-    property var chatCore
+    property ChatGui chatGui
     signal manageParticipantsRequested()
     
-    property bool isGroupEditable: chatCore && chatCore.meAdmin && !chatCore.isReadOnly
+    property bool isGroupEditable: chatGui && chatGui.core.meAdmin && !chatGui.core.isReadOnly
 
 	RowLayout {
 		Text {
@@ -145,7 +145,7 @@ ColumnLayout {
 									icon.height: Utils.getSizeWithScreenRatio(32)
 									onClicked: {
 										detailOptions.close()
-										mainItem.chatCore.lToggleParticipantAdminStatusAtIndex(index)
+										mainItem.chatGui.core.lToggleParticipantAdminStatusAtIndex(index)
 									}
 								}
 								IconLabelButton {
@@ -182,7 +182,7 @@ ColumnLayout {
 										"",
 										function(confirmed) {
 											if (confirmed) {
-												mainItem.chatCore.lRemoveParticipantAtIndex(index)
+												mainItem.chatGui.core.lRemoveParticipantAtIndex(index)
 											}
 										})
 									}

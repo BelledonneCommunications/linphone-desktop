@@ -53,8 +53,7 @@ FocusScope {
                 let addresses = [];
                 for (let i = 0; i < sourceList.length; ++i) {
                     const participantGui = sourceList[i]
-                    const participantCore = participantGui.core
-                    addresses.push(participantCore.sipAddress)
+                    addresses.push(participantGui.core.sipAddress)
                 }
                 UtilsCpp.createGroupCall(mainItem.chat?.core.title, addresses)
             }

@@ -7,8 +7,7 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 Rectangle {
 	anchors.centerIn: parent
 	property EventLogGui eventLogGui
-	property var eventLogCore: eventLogGui.core
-	visible: eventLogCore.handled
+	visible: eventLogGui.core.handled
 	height: row.height + Utils.getSizeWithScreenRatio(15)
 	width: row.width + Utils.getSizeWithScreenRatio(15)
 	radius: Utils.getSizeWithScreenRatio(10)
@@ -27,7 +26,7 @@ Rectangle {
 		}
 		Text {
 			id: message
-			text: eventLogCore.eventDetails
+			text: eventLogGui.core.eventDetails
 			font: Typography.p3
 			color: DefaultStyle.main2_400
 		}
