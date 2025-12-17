@@ -620,23 +620,30 @@ void App::initCore() {
 			    mNotifier = new Notifier(mEngine);
 			    mEngine->setObjectOwnership(settings.get(), QQmlEngine::CppOwnership);
 			    mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
-			    if (!mAccountList) setAccountList(AccountList::create());
-			    else {
-				    mAccountList->setInitialized(false);
-				    mAccountList->lUpdate(true);
-			    }
-			    // Update global unread Notifications when an account updates his unread Notifications
-			    connect(mAccountList.get(), &AccountList::unreadNotificationsChanged, this, [this]() {
-				    lDebug() << "unreadNotificationsChanged of AccountList";
-				    mCoreModelConnection->invokeToModel([this] {
-					    int n = mEventCountNotifier->getCurrentEventCount();
-					    mCoreModelConnection->invokeToCore([this, n] { mEventCountNotifier->notifyEventCount(n); });
-				    });
+
+			    connect(this, &App::coreStartedChanged, this, [this] {
+				    if (mCoreStarted) {
+					    if (!mAccountList) setAccountList(AccountList::create());
+					    else {
+						    mAccountList->setInitialized(false);
+						    mAccountList->lUpdate(true);
+					    }
+					    // Update global unread Notifications when an account updates his unread Notifications
+					    connect(mAccountList.get(), &AccountList::unreadNotificationsChanged, this, [this]() {
+						    lDebug() << "unreadNotificationsChanged of AccountList";
+						    mCoreModelConnection->invokeToModel([this] {
+							    int n = mEventCountNotifier->getCurrentEventCount();
+							    mCoreModelConnection->invokeToCore(
+							        [this, n] { mEventCountNotifier->notifyEventCount(n); });
+						    });
+					    });
+					    if (!mCallList) setCallList(CallList::create());
+					    else mCallList->lUpdate();
+					    if (!mChatList) setChatList(ChatList::create());
+					    else mChatList->lUpdate();
+					    disconnect(this, &App::coreStartedChanged, this, nullptr);
+				    }
 			    });
-			    if (!mCallList) setCallList(CallList::create());
-			    else mCallList->lUpdate();
-			    if (!mChatList) setChatList(ChatList::create());
-			    else mChatList->lUpdate();
 
 			    if (!mSettings) {
 				    mSettings = settings;
