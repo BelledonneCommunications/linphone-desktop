@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2024 Belledonne Communications SARL.
+ * Copyright (c) 2010-2026 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -528,4 +528,28 @@ void CallModel::onRemoteRecording(const std::shared_ptr<linphone::Call> &call, b
 
 void CallModel::onAuthenticationTokenVerified(const std::shared_ptr<linphone::Call> &call, bool verified) {
 	emit authenticationTokenVerified(call, verified);
+}
+
+void CallModel::onHeadsetAnswerCallRequested(const std::shared_ptr<linphone::Call> &call) {
+	emit headsetAnswerCallRequested();
+}
+
+void CallModel::onHeadsetEndCallRequested(const std::shared_ptr<linphone::Call> &call) {
+	emit headsetEndCallRequested();
+}
+
+void CallModel::onHeadsetHoldCallRequested(const std::shared_ptr<linphone::Call> &call) {
+	emit headsetHoldCallRequested();
+}
+
+void CallModel::onHeadsetMicrophoneMuteToggled(const std::shared_ptr<linphone::Call> &call, bool mute) {
+	emit headsetMicrophoneMuteToggled(mute);
+}
+
+void CallModel::onHeadsetRejectCallRequested(const std::shared_ptr<linphone::Call> &call) {
+	emit headsetRejectCallRequested();
+}
+
+void CallModel::onHeadsetResumeCallRequested(const std::shared_ptr<linphone::Call> &call) {
+	emit headsetResumeCallRequested();
 }

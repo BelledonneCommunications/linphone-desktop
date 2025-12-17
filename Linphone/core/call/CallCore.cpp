@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2024 Belledonne Communications SARL.
+ * Copyright (c) 2010-2026 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -27,6 +27,8 @@
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/thread/SafeConnection.hpp"
+
+#include <QQuickWindow>
 
 DEFINE_ABSTRACT_OBJECT(CallCore)
 
@@ -449,6 +451,44 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    setVideoStats(videoStats);
 		    }
 	    });
+
+	mCallModelConnection->makeConnectToModel(&CallModel::headsetAnswerCallRequested, [this]() {
+		mCallModelConnection->invokeToCore([this]() {
+			const auto callList = App::getInstance()->getCallList();
+			const auto currentPendingCall = callList->getFirstIncommingPendingCall();
+			if (!currentPendingCall.isNull()) {
+				const auto gui = new CallGui(currentPendingCall);
+				Utils::openCallsWindow(gui);
+				currentPendingCall->lAccept(false);
+			}
+		});
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::headsetEndCallRequested, [this]() {
+		mCallModelConnection->invokeToCore([this]() {
+			const auto window = Utils::getOrCreateCallsWindow();
+			window->setProperty("callTerminatedByUser", true);
+			lTerminate();
+		});
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::headsetHoldCallRequested, [this]() {
+		mCallModelConnection->invokeToCore([this]() { lSetPaused(true); });
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::headsetMicrophoneMuteToggled, [this](bool mute) {
+		mCallModelConnection->invokeToCore([this, mute]() { lSetMicrophoneMuted(mute); });
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::headsetRejectCallRequested, [this]() {
+		mCallModelConnection->invokeToCore([this]() {
+			const auto callList = App::getInstance()->getCallList();
+			const auto currentPendingCall = callList->getFirstIncommingPendingCall();
+			if (!currentPendingCall.isNull()) {
+				currentPendingCall->lDecline();
+			}
+		});
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::headsetResumeCallRequested, [this]() {
+		mCallModelConnection->invokeToCore([this]() { lSetPaused(false); });
+	});
+
 	if (mShouldFindRemoteFriend) findRemoteFriend(me);
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2024 Belledonne Communications SARL.
+ * Copyright (c) 2010-2026 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -156,6 +156,12 @@ private:
 	                                  const std::shared_ptr<linphone::AudioDevice> &audioDevice) override;
 	virtual void onRemoteRecording(const std::shared_ptr<linphone::Call> &call, bool recording) override;
 	virtual void onAuthenticationTokenVerified(const std::shared_ptr<linphone::Call> &call, bool verified) override;
+	virtual void onHeadsetAnswerCallRequested(const std::shared_ptr<linphone::Call> &call) override;
+	virtual void onHeadsetEndCallRequested(const std::shared_ptr<linphone::Call> &call) override;
+	virtual void onHeadsetHoldCallRequested(const std::shared_ptr<linphone::Call> &call) override;
+	virtual void onHeadsetMicrophoneMuteToggled(const std::shared_ptr<linphone::Call> &call, bool mute) override;
+	virtual void onHeadsetRejectCallRequested(const std::shared_ptr<linphone::Call> &call) override;
+	virtual void onHeadsetResumeCallRequested(const std::shared_ptr<linphone::Call> &call) override;
 
 signals:
 	void dtmfReceived(const std::shared_ptr<linphone::Call> &call, int dtmf);
@@ -185,6 +191,12 @@ signals:
 	                        const std::shared_ptr<linphone::AudioDevice> &audioDevice);
 	void remoteRecording(const std::shared_ptr<linphone::Call> &call, bool recording);
 	void authenticationTokenVerified(const std::shared_ptr<linphone::Call> &call, bool verified);
+	void headsetAnswerCallRequested();
+	void headsetEndCallRequested();
+	void headsetHoldCallRequested();
+	void headsetMicrophoneMuteToggled(bool mute);
+	void headsetRejectCallRequested();
+	void headsetResumeCallRequested();
 };
 
 #endif
