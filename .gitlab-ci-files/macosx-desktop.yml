@@ -26,7 +26,9 @@
 
 .macosx-desktop:
   stage: build
-  tags: [ "macosx-min-xcode12.2" ]
+  tags: [ "macos-min-xcode12.2" ]
+  before_script:
+    - QT_MAC_VER=${QT_MAC_VER_FORCED:-$QT_MAC_VER}
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
     - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
@@ -85,7 +87,7 @@ macosx-ninja-novideo:
 #   variables:
 #     - $NIGHTLY_MASTER
 #     - $DEPLOY_RUN_MACOSX
-#      
+#
 
 #################################################
 # Package - Nightly

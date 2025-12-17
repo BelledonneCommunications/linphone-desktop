@@ -18,6 +18,9 @@
     CMAKE_CXX_COMPILER : cl.exe
     CMAKE_RC_COMPILER : rc.exe
 
+  before_script:
+    - If ( Test-Path env:QT_WIN_VER_FORCED ) { $env:Path = ("C:\Qt\$QT_SUBDIR\" + $env:QT_WIN_VER_FORCED + "\msvc2022_64\bin;" + $env:Path) }
+
   script:
     - if ($MAKE_RELEASE_FILE_URL) { } else { $RELEASE_FILE = "" }
     - echo $env:Path
