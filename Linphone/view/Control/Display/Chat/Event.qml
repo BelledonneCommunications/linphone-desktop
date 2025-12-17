@@ -7,7 +7,7 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 RowLayout {
 	id: mainItem
 	height: Utils.getSizeWithScreenRatio(40)
-	visible: eventLogCore.handled
+	visible: eventLogGui.core.handled
 	property EventLogGui eventLogGui
 
 	Rectangle {

@@ -175,7 +175,11 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	    [this, addChatToList](const std::shared_ptr<linphone::Core> &core,
 	                          const std::shared_ptr<linphone::ChatRoom> &chatRoom, linphone::ChatRoom::State state) {
 		    if (state == linphone::ChatRoom::State::Created) {
-			    if (chatRoom->getAccount() != core->getDefaultAccount()) {
+			    auto chatAccount = chatRoom->getAccount();
+			    auto defaultAccount = core->getDefaultAccount();
+			    if (!chatAccount || !defaultAccount) return;
+			    if (!chatAccount->getParams()->getIdentityAddress()->weakEqual(
+			            defaultAccount->getParams()->getIdentityAddress())) {
 				    qWarning() << log().arg("Chatroom does not refer to current account, return");
 				    return;
 			    }
@@ -203,6 +207,10 @@ int ChatList::findChatIndex(ChatGui *chatGui) {
 
 bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	if (chatCore->getIdentifier().isEmpty()) {
+		qWarning() << "ChatRoom with invalid identifier cannot be added to the list, return";
+		return false;
+	}
 	auto chatList = getSharedList<ChatCore>();
 	auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
 		return item && chatCore && item->getIdentifier() == chatCore->getIdentifier();
