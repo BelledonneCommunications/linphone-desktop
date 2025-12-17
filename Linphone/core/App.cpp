@@ -405,10 +405,9 @@ void App::setSelf(QSharedPointer<App>(me)) {
 				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
 				    // There is an account added by a remote provisioning, force switching to main  page
 				    // because the account may not be connected already
-				    // if (accountConnected)
 				    if (mPossiblyLookForAddedAccount) {
 					    QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
-					                              Q_ARG(QVariant, true));
+					                              Q_ARG(QVariant, accountConnected));
 				    }
 				    mPossiblyLookForAddedAccount = false;
 			    });
@@ -712,8 +711,12 @@ void App::initCore() {
 						        } else {
 							        mPossiblyLookForAddedAccount = true;
 							        if (mAccountList && mAccountList->getCount() > 0) {
+								        auto defaultConnected =
+								            mAccountList->getDefaultAccountCore() &&
+								            mAccountList->getDefaultAccountCore()->getRegistrationState() ==
+								                LinphoneEnums::RegistrationState::Ok;
 								        QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
-								                                  Q_ARG(QVariant, true));
+								                                  Q_ARG(QVariant, defaultConnected));
 							        }
 						        }
 					        }
@@ -962,6 +965,7 @@ void App::restart() {
 			mIsRestarting = true;
 			closeCallsWindow();
 			setMainWindow(nullptr);
+			setCoreStarted(false);
 			mEngine->clearComponentCache();
 			mEngine->clearSingletons();
 			delete mEngine;
