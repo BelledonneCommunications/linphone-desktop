@@ -124,8 +124,8 @@ AbstractWindow {
 		function onAssistantGoDirectlyToThirdPartySipAccountLoginChanged() {
             initStackViewItem()
 		}
-		function onIsSavedChanged() {
-            if (SettingsCpp.isSaved) UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"),
+		function onIsSavedChanged(saved) {
+            if (saved) UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"),
                                                                    //: "Les changements ont été sauvegardés"
                                                                    qsTr("information_popup_changes_saved"), true, mainWindow)
         }

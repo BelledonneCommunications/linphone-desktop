@@ -64,6 +64,7 @@ public:
 
 	// Network
 	Q_PROPERTY(bool ipv6Enabled READ getIpv6Enabled WRITE setIpv6Enabled NOTIFY ipv6EnabledChanged)
+	Q_PROPERTY(bool hideFps READ getHideFps WRITE setHideFps NOTIFY hideFpsChanged)
 
 	// Advanced
 	Q_PROPERTY(bool autoStart READ getAutoStart WRITE setAutoStart NOTIFY autoStartChanged)
@@ -215,6 +216,11 @@ public:
 	}
 	void setAutoStart(bool enabled);
 
+	bool getHideFps() {
+		return mHideFps;
+	}
+	void setHideFps(bool hide);
+
 	bool getLogsEnabled() const;
 	void setLogsEnabled(bool enabled);
 
@@ -249,7 +255,6 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(bool, disableBroadcastFeature, DisableBroadcastFeature)
 	DECLARE_CORE_GETSET_MEMBER(bool, hideSettings, HideSettings)
 	DECLARE_CORE_GETSET_MEMBER(bool, hideAccountSettings, HideAccountSettings)
-	DECLARE_CORE_GETSET_MEMBER(bool, hideFps, HideFps)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableCallRecordings, DisableCallRecordings)
 	DECLARE_CORE_GETSET_MEMBER(bool, assistantHideCreateAccount, AssistantHideCreateAccount)
 	DECLARE_CORE_GETSET_MEMBER(bool, assistantDisableQrCode, AssistantDisableQrCode)
@@ -309,6 +314,7 @@ signals:
 
 	// Advanced
 	void autoStartChanged();
+	void hideFpsChanged();
 
 	void conferenceLayoutsChanged(const QVariantList &layouts);
 	void mediaEncryptionsChanged(const QVariantList &encryptions);
@@ -330,7 +336,7 @@ signals:
 
 	void createEndToEndEncryptedMeetingsAndGroupCallsChanged(bool endtoend);
 
-	void isSavedChanged();
+	void isSavedChanged(bool saved);
 
 	void lSetPlaybackDevice(QVariantMap device);
 	void playbackDeviceChanged(const QVariantMap &device);
@@ -413,6 +419,7 @@ private:
 
 	// Advanced
 	bool mAutoStart;
+	bool mHideFps;
 
 	// Debug logs
 	bool mLogsEnabled;
