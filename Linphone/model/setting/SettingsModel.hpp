@@ -223,7 +223,6 @@ public:
 	DECLARE_GETSET(bool, usernameOnlyForCardDAVLookupsInCalls, UsernameOnlyForCardDAVLookupsInCalls)
 	DECLARE_GETSET(QString, commandLine, CommandLine)
 	DECLARE_GETSET(bool, disableCommandLine, DisableCommandLine)
-	DECLARE_GETSET(bool, disableCallForward, DisableCallForward)
 	DECLARE_GETSET(QString, callForwardToAddress, CallForwardToAddress)
 	DECLARE_GETSET(QString, chatNotificationSoundPath, ChatNotificationSoundPath)
 	DECLARE_GETSET(QString, themeMainColor, ThemeMainColor)
@@ -293,7 +292,6 @@ private:
 	VfsUtils mVfsUtils;
 #endif
 
-	void enableCallForward(QString destination);
 	void disableCallForward();
 
 	static std::shared_ptr<SettingsModel> gSettingsModel;
