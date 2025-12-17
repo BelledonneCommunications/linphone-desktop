@@ -837,26 +837,13 @@ QString SettingsModel::getDefaultDomain() const {
 	    mConfig->getString(SettingsModel::AppSection, "default_domain", "sip.linphone.org"));
 }
 
-void SettingsModel::enableCallForward(QString destination) {
-	// TODO implement business logic to activate call forward to destination on PBX via external API (contains voicemail
-	// or a destination).
-	mConfig->setString(UiSection, "call_forward_to_address", Utils::appStringToCoreString(destination));
-	emit callForwardToAddressChanged(getCallForwardToAddress());
-}
-
-void SettingsModel::disableCallForward() {
-	// TODO implement business logic to de-activate call forward on PBX via external API
-	mConfig->setString(UiSection, "call_forward_to_address", "");
-}
-
 QString SettingsModel::getCallForwardToAddress() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "call_forward_to_address", ""));
 }
 
 void SettingsModel::setCallForwardToAddress(const QString &data) {
-	if (data == "") disableCallForward();
-	else enableCallForward(data);
+	mConfig->setString(UiSection, "call_forward_to_address", Utils::appStringToCoreString(data)); // TODO implement BL
 	emit(callForwardToAddressChanged(data));
 }
 
@@ -1139,13 +1126,6 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 					 		DisableCommandLine,
 							"disable_command_line",
 							false)
-DEFINE_GETSET_CONFIG(SettingsModel,
-							bool,
-							Bool,
-					 		disableCallForward,
-					 		DisableCallForward,
-							"disable_call_forward",
-							true)
 DEFINE_GETSET_CONFIG_STRING(SettingsModel,
 							themeMainColor,
 							ThemeMainColor,

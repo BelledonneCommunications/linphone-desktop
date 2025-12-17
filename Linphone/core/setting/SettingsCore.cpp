@@ -146,7 +146,6 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(CallToneIndicationsEnabled, settingsModel)
 	INIT_CORE_MEMBER(CommandLine, settingsModel)
 	INIT_CORE_MEMBER(DisableCommandLine, settingsModel)
-	INIT_CORE_MEMBER(DisableCallForward, settingsModel)
 	INIT_CORE_MEMBER(CallForwardToAddress, settingsModel)
 
 	INIT_CORE_MEMBER(ThemeMainColor, settingsModel)
@@ -226,7 +225,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mCallToneIndicationsEnabled = settingsCore.mCallToneIndicationsEnabled;
 	mCommandLine = settingsCore.mCommandLine;
 	mDisableCommandLine = settingsCore.mDisableCommandLine;
-	mDisableCallForward = settingsCore.mDisableCallForward;
+	mCallForwardToAddress = settingsCore.mCallForwardToAddress;
 
 	mDefaultDomain = settingsCore.mDefaultDomain;
 	mShowAccountDevices = settingsCore.mShowAccountDevices;
@@ -269,6 +268,12 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ipv6EnabledChanged, [this](const bool enabled) {
 		mSettingsModelConnection->invokeToCore([this, enabled]() { setIpv6Enabled(enabled); });
 	});
+
+	// Call Forward
+	mSettingsModelConnection->makeConnectToModel(
+	    &SettingsModel::callForwardToAddressChanged, [this](const QString address) {
+		    mSettingsModelConnection->invokeToCore([this, address]() { setCallForwardToAddress(address); });
+	    });
 
 	// Hide FPS
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::hideFpsChanged, [this](const bool hide) {
@@ -488,10 +493,6 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                           commandLine, CommandLine)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
 	                           disableCommandLine, DisableCommandLine)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
-	                           disableCallForward, DisableCallForward)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
-	                           callForwardToAddress, CallForwardToAddress)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
 	                           themeAboutPictureUrl, ThemeAboutPictureUrl)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
@@ -588,6 +589,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setAutoStart(settingsCore.mAutoStart);
 	setConfigLocale(settingsCore.mConfigLocale);
 	setDownloadFolder(settingsCore.mDownloadFolder);
+	setCallForwardToAddress(settingsCore.mCallForwardToAddress);
 }
 
 QString SettingsCore::getConfigPath(const QCommandLineParser &parser) {
@@ -657,6 +659,13 @@ void SettingsCore::setIpv6Enabled(bool enabled) {
 void SettingsCore::setAutoStart(bool enabled) {
 	if (mAutoStart != enabled) {
 		mAutoStart = enabled;
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setCallForwardToAddress(QString address) {
+	if (mCallForwardToAddress != address) {
+		mCallForwardToAddress = address;
 		setIsSaved(false);
 	}
 }
@@ -1160,6 +1169,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	model->setAutoStart(mAutoStart);
 	model->setConfigLocale(mConfigLocale);
 	model->setDownloadFolder(mDownloadFolder);
+	model->setCallForwardToAddress(mCallForwardToAddress);
 }
 
 void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
@@ -1242,6 +1252,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mAutoStart = model->getAutoStart();
 	mConfigLocale = model->getConfigLocale();
 	mDownloadFolder = model->getDownloadFolder();
+	mCallForwardToAddress = model->getCallForwardToAddress();
 }
 
 bool SettingsCore::isCheckForUpdateAvailable() const {

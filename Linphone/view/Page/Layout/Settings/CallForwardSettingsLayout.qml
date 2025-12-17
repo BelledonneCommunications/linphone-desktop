@@ -9,11 +9,9 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 AbstractSettingsLayout {
 	id: mainItem
+	width: parent?.width
 	
 	property bool enableCallForward: SettingsCpp.callForwardToAddress.length > 0
-	property string localCallForwardToAddress: SettingsCpp.callForwardToAddress
-	
-	width: parent?.width
 	
 	contentModel: [
 		{
@@ -23,44 +21,14 @@ AbstractSettingsLayout {
 		}
 	]
 	
-	Connections {
-		target: SettingsCpp
-		function onCallForwardToAddressChanged() {
-			requestTimeOut.stop()
-			UtilsCpp.getMainWindow().closeLoadingPopup()
-			UtilsCpp.showInformationPopup("",
-				SettingsCpp.callForwardToAddress
-					? qsTr("settings_call_forward_activation_success") + (SettingsCpp.callForwardToAddress == "voicemail" ? qsTr("settings_call_forward_to_voicemail") : SettingsCpp.callForwardToAddress)
-					: qsTr("settings_call_forward_deactivation_success")
-				, true)
-		}
-	}
-	
-	Timer {
-        id: requestTimeOut
-        interval: 10000
-        running: false
-        repeat: false
-        onTriggered: {
-			UtilsCpp.getMainWindow().closeLoadingPopup()
-			UtilsCpp.showInformationPopup("", qsTr("settings_call_forward_address_timeout"), false)
-        }
-    }
-
 	onSave: {
-		if (mainItem.enableCallForward && mainItem.localCallForwardToAddress.length == 0) {
+		if (mainItem.enableCallForward && SettingsCpp.callForwardToAddress.length == 0) {
 			UtilsCpp.getMainWindow().showInformationPopup("", qsTr("settings_call_forward_address_cannot_be_empty"), false)
 			return
 		}
-		requestTimeOut.start()
-		if (!mainItem.enableCallForward && SettingsCpp.callForwardToAddress.length > 0) {
-			UtilsCpp.getMainWindow().showLoadingPopup(qsTr("settings_call_forward_address_progress_disabling") + " ...")
-			SettingsCpp.callForwardToAddress = ""
-		} else if (SettingsCpp.callForwardToAddress != mainItem.localCallForwardToAddress) {
-			UtilsCpp.getMainWindow().showLoadingPopup(qsTr("settings_call_forward_address_progress_enabling")+(mainItem.localCallForwardToAddress === 'voicemail' ?  qsTr("settings_call_forward_to_voicemail") : mainItem.localCallForwardToAddress) + " ...")
-			SettingsCpp.callForwardToAddress = mainItem.localCallForwardToAddress
-		}
+		SettingsCpp.save()
 	}
+	onUndo: SettingsCpp.undo()
 
 	// Generic forward parameters
 	/////////////////////////////
@@ -76,6 +44,11 @@ AbstractSettingsLayout {
                 subTitleText: qsTr("settings_call_forward_activate_subtitle")
                 propertyName: "enableCallForward"
                 propertyOwner: mainItem
+                onToggled: function () {
+                	SettingsCpp.isSaved = false
+					if (!mainItem.enableCallForward)
+						SettingsCpp.callForwardToAddress = ""
+				}
             }
 			Text {
 				visible: mainItem.enableCallForward
@@ -99,7 +72,7 @@ AbstractSettingsLayout {
 				Component.onCompleted: {
 					if (mainItem.enableCallForward) {
 						forwardDestination.currentIndex =
-							(mainItem.localCallForwardToAddress === "voicemail" || mainItem.localCallForwardToAddress.length === 0) ? 0 : 1;
+							(SettingsCpp.callForwardToAddress === "voicemail" || SettingsCpp.callForwardToAddress.length === 0) ? 0 : 1;
 					} else {
 						forwardDestination.currentIndex = 0;
 					}
@@ -109,16 +82,16 @@ AbstractSettingsLayout {
 					if (!forwardDestination.isInitialized)
 						return;
 					if (currentIndex == 0)
-						mainItem.localCallForwardToAddress = "voicemail";
+						SettingsCpp.callForwardToAddress = "voicemail";
 					else {
-						mainItem.localCallForwardToAddress = "";
+						SettingsCpp.callForwardToAddress = "";
 						sipInputField.empty();
 					}
 				}
 				onVisibleChanged: {
 					if (visible) {
 						currentIndex = 0
-						mainItem.localCallForwardToAddress = "voicemail";
+							SettingsCpp.callForwardToAddress = "voicemail";
 					}
 				}
 
@@ -127,8 +100,8 @@ AbstractSettingsLayout {
 				id: sipInputField
 				visible: mainItem.enableCallForward && forwardDestination.currentIndex == 1
 				Layout.fillWidth: true
-				propertyName: "localCallForwardToAddress"
-				propertyOwner: mainItem
+				propertyName: "callForwardToAddress"
+				propertyOwner: SettingsCpp
 				//: SIP Address
 				title: qsTr("settings_call_forward_sipaddress_title")
 				placeHolder: qsTr("settings_call_forward_sipaddress_placeholder")

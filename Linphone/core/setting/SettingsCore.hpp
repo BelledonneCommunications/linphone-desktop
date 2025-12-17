@@ -62,6 +62,10 @@ public:
 	Q_PROPERTY(QVariantMap playbackDevice READ getPlaybackDevice WRITE setPlaybackDevice NOTIFY playbackDeviceChanged)
 	Q_PROPERTY(QVariantMap ringerDevice READ getRingerDevice WRITE setRingerDevice NOTIFY ringerDeviceChanged)
 
+	// Call Forward
+	Q_PROPERTY(QString callForwardToAddress READ getCallForwardToAddress WRITE setCallForwardToAddress NOTIFY
+	               callForwardToAddressChanged)
+
 	// Network
 	Q_PROPERTY(bool ipv6Enabled READ getIpv6Enabled WRITE setIpv6Enabled NOTIFY ipv6EnabledChanged)
 	Q_PROPERTY(bool hideFps READ getHideFps WRITE setHideFps NOTIFY hideFpsChanged)
@@ -202,6 +206,13 @@ public:
 	Q_INVOKABLE void closeCallSettings();
 	Q_INVOKABLE void updateMicVolume() const;
 
+	// Call Forward. --------------------------------------------------------------------
+
+	QString getCallForwardToAddress() {
+		return mCallForwardToAddress;
+	}
+	void setCallForwardToAddress(QString address);
+
 	// Network. --------------------------------------------------------------------
 
 	bool getIpv6Enabled() {
@@ -277,8 +288,6 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(bool, callToneIndicationsEnabled, CallToneIndicationsEnabled)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableCommandLine, DisableCommandLine)
 	DECLARE_CORE_GETSET_MEMBER(QString, commandLine, CommandLine)
-	DECLARE_CORE_GETSET_MEMBER(bool, disableCallForward, DisableCallForward)
-	DECLARE_CORE_GETSET_MEMBER(QString, callForwardToAddress, CallForwardToAddress)
 	DECLARE_CORE_GET_CONSTANT(QFont, emojiFont, EmojiFont)
 	DECLARE_CORE_GET_CONSTANT(QFont, textMessageFont, TextMessageFont)
 	// Theme
@@ -311,6 +320,9 @@ signals:
 
 	// Network
 	void ipv6EnabledChanged();
+
+	// Call Forward
+	void callForwardToAddressChanged();
 
 	// Advanced
 	void autoStartChanged();
@@ -416,6 +428,9 @@ private:
 
 	// Network
 	bool mIpv6Enabled;
+
+	// Call Forward
+	QString mCallForwardToAddress;
 
 	// Advanced
 	bool mAutoStart;
