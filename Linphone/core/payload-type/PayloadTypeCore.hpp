@@ -43,7 +43,7 @@ public:
 	                                              const std::shared_ptr<linphone::PayloadType> &payloadType);
 
 	PayloadTypeCore(Family family, const std::shared_ptr<linphone::PayloadType> &payloadType);
-	PayloadTypeCore(){};
+	PayloadTypeCore() {};
 	~PayloadTypeCore();
 
 	void setSelf(QSharedPointer<PayloadTypeCore> me);
@@ -51,9 +51,15 @@ public:
 	bool isDownloadable();
 	QString getMimeType();
 
+	Q_INVOKABLE void save();
+
+signals:
+	void changed();
+
 protected:
 	Family mFamily;
 	bool mDownloadable = false;
+	bool mChanged = false;
 	DECLARE_CORE_GETSET_MEMBER(bool, enabled, Enabled)
 	DECLARE_CORE_MEMBER(QString, mimeType, MimeType)
 	DECLARE_CORE_MEMBER(QString, encoderDescription, EncoderDescription)

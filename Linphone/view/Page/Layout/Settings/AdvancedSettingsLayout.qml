@@ -167,6 +167,17 @@ AbstractSettingsLayout {
 					subTitleText: modelData.core.clockRate + " Hz"
 					propertyName: "enabled"
 					propertyOwnerGui: modelData
+					Connections {
+						target: modelData.core
+						function onChanged() { SettingsCpp.isSaved = false }
+					}
+					Connections {
+						target: SettingsCpp
+						function onIsSavedChanged(saved) {
+							if (saved)
+								modelData.core.save()
+						}
+					}
 				}
 			}
 		}
@@ -195,6 +206,17 @@ AbstractSettingsLayout {
 					subTitleText: modelData.core.encoderDescription
 					propertyName: "enabled"
 					propertyOwnerGui: modelData
+					Connections {
+						target: modelData.core
+						function onChanged() { SettingsCpp.isSaved = false }
+					}
+					Connections {
+						target: SettingsCpp
+						function onIsSavedChanged(saved) {
+							if (saved)
+								modelData.core.save()
+						}
+					}
 				}
 			}
 			ListView {

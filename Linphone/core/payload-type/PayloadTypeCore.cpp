@@ -51,8 +51,25 @@ PayloadTypeCore::~PayloadTypeCore() {
 
 void PayloadTypeCore::setSelf(QSharedPointer<PayloadTypeCore> me) {
 	mPayloadTypeModelConnection = SafeConnection<PayloadTypeCore, PayloadTypeModel>::create(me, mPayloadTypeModel);
-	DEFINE_CORE_GETSET_CONNECT(mPayloadTypeModelConnection, PayloadTypeCore, PayloadTypeModel, mPayloadTypeModel, bool,
-	                           enabled, Enabled)
+	mPayloadTypeModelConnection->makeConnectToCore(&PayloadTypeCore::setEnabled, [this](bool enabled) {
+		if (enabled != mEnabled) {
+			mChanged = true;
+			emit changed();
+		}
+		mEnabled = enabled;
+	});
+	mPayloadTypeModelConnection->makeConnectToModel(&PayloadTypeModel::enabledChanged, [this](bool enabled) {
+		mPayloadTypeModelConnection->invokeToCore([this, enabled]() {
+			if (mEnabled != enabled) {
+				mEnabled = enabled;
+				emit enabledChanged();
+			}
+		});
+	});
+}
+
+void PayloadTypeCore::save() {
+	if (mChanged) mPayloadTypeModelConnection->invokeToModel([this]() { mPayloadTypeModel->setEnabled(mEnabled); });
 }
 
 PayloadTypeCore::Family PayloadTypeCore::getFamily() {
