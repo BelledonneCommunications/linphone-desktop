@@ -8,20 +8,20 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 ColumnLayout {
 	id: mainItem
 	
-	property var accountCore
+	property var accountGui
 	signal setCustomStatusClicked
 	signal isSet
 	
 	spacing: Utils.getSizeWithScreenRatio(8)
-	PresenceStatusItem { presence: LinphoneEnums.Presence.Online; accountCore: mainItem.accountCore; onClick: mainItem.isSet()}
-	PresenceStatusItem { presence: LinphoneEnums.Presence.Away; accountCore: mainItem.accountCore; onClick: mainItem.isSet()}
-	PresenceStatusItem { presence: LinphoneEnums.Presence.Busy; accountCore: mainItem.accountCore; onClick: mainItem.isSet()}
-	PresenceStatusItem { presence: LinphoneEnums.Presence.DoNotDisturb; accountCore: mainItem.accountCore; onClick: mainItem.isSet()}
-	PresenceStatusItem { presence: LinphoneEnums.Presence.Offline; accountCore: mainItem.accountCore; onClick: mainItem.isSet()}
+	PresenceStatusItem { presence: LinphoneEnums.Presence.Online; accountGui: mainItem.accountGui; onClick: mainItem.isSet()}
+	PresenceStatusItem { presence: LinphoneEnums.Presence.Away; accountGui: mainItem.accountGui; onClick: mainItem.isSet()}
+	PresenceStatusItem { presence: LinphoneEnums.Presence.Busy; accountGui: mainItem.accountGui; onClick: mainItem.isSet()}
+	PresenceStatusItem { presence: LinphoneEnums.Presence.DoNotDisturb; accountGui: mainItem.accountGui; onClick: mainItem.isSet()}
+	PresenceStatusItem { presence: LinphoneEnums.Presence.Offline; accountGui: mainItem.accountGui; onClick: mainItem.isSet()}
 
 	RowLayout {
 		spacing: 0
-		visible: accountCore.explicitPresence != LinphoneEnums.Presence.Undefined
+		visible: accountGui.core.explicitPresence != LinphoneEnums.Presence.Undefined
 		Layout.alignment: Qt.AlignLeft
 		Layout.topMargin: Utils.getSizeWithScreenRatio(3)
 		Layout.bottomMargin: Utils.getSizeWithScreenRatio(3)
@@ -39,7 +39,7 @@ ColumnLayout {
 			icon.width: Utils.getSizeWithScreenRatio(17)
 			icon.height: Utils.getSizeWithScreenRatio(17)
 			icon.source: AppIcons.reloadArrow
-			onClicked: accountCore.resetToAutomaticPresence()
+			onClicked: accountGui.core.resetToAutomaticPresence()
 		}
 	}
 	HorizontalBar {
@@ -53,16 +53,16 @@ ColumnLayout {
 			Layout.alignment: Qt.AlignLeft
 			Text {
 				font: Typography.p1
-				text: accountCore.presenceNote.length > 0 ? accountCore.presenceNote : qsTr("contact_presence_custom_status")
+				text: accountGui.core.presenceNote.length > 0 ? accountGui.core.presenceNote : qsTr("contact_presence_custom_status")
 				color: DefaultStyle.main2_600
 				wrapMode: Text.WordWrap
-				Layout.preferredWidth: Utils.getSizeWithScreenRatio(accountCore.presenceNote.length == 0 ? 175 : 230)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(accountGui.core.presenceNote.length == 0 ? 175 : 230)
 			}
 			Item {
 				   Layout.fillWidth: true
 			}
 			SmallButton {
-				visible: accountCore.presenceNote.length == 0
+				visible: accountGui.core.presenceNote.length == 0
 				style: ButtonStyle.secondary
 				text: qsTr("contact_presence_button_set_custom_status")
 				onClicked: {
@@ -71,7 +71,7 @@ ColumnLayout {
 			}
 		}
 		RowLayout {
-			visible: accountCore.presenceNote.length > 0
+			visible: accountGui.core.presenceNote.length > 0
 			spacing: Utils.getSizeWithScreenRatio(10)
 			Item {
 				   Layout.fillWidth: true
@@ -85,10 +85,10 @@ ColumnLayout {
 			}
 			SmallButton {
 				style: ButtonStyle.secondary
-				visible: accountCore.presenceNote.length > 0
+				visible: accountGui.core.presenceNote.length > 0
 				text: qsTr("contact_presence_button_delete_custom_status")
 				onClicked: {
-					mainItem.accountCore.presenceNote = ""
+					mainItem.accountGui.core.presenceNote = ""
 				}
 			}
 		}

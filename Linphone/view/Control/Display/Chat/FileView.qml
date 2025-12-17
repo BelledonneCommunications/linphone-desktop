@@ -42,7 +42,7 @@ Item {
 	
 	Connections {
 		enabled: contentGui
-		target: contentGui.core
+		target: contentGui ? contentGui.core : null
 		function onMsgStateChanged(state) {
 			mainItem.isTransferring = state === LinphoneEnums.ChatMessageState.StateFileTransferInProgress 
 			|| state === LinphoneEnums.ChatMessageState.StateInProgress

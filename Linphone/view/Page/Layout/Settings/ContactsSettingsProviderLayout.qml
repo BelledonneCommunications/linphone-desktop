@@ -79,7 +79,8 @@ RowLayout {
 				}
 				Binding {
 					id: binding
-					target: modelData.core
+					enabled: modelData
+					target: modelData ? modelData.core : null
 					property: "enabled"
 					value: switchButton.checked
 					when: false
@@ -94,7 +95,8 @@ RowLayout {
 					}
 				}
 				Connections {
-					target: modelData.core
+					enabled: modelData
+					target: modelData ? modelData.core : null
 					function onSavedChanged() {
                         if (modelData.core.saved) UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"),
                                                                                 //: "Les changements ont été sauvegardés"

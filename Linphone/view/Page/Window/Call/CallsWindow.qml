@@ -169,7 +169,7 @@ AbstractWindow {
 
     Connections {
         enabled: !!mainWindow.call
-        target: mainWindow.call && mainWindow.call.core
+        target: mainWindow.call ? mainWindow.call.core : null
         function onSecurityUpdated() {
             if (mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
                 if (call.core.tokenVerified) {
@@ -1349,8 +1349,7 @@ AbstractWindow {
                         pressedColor: enabled ? DefaultStyle.success_500_main : DefaultStyle.grey_600
                         hoveredColor: enabled ? DefaultStyle.main2_400 : DefaultStyle.grey_600
                         onClicked: {
-                            mainWindow.call.core.lSetPaused(
-                                        !mainWindow.call.core.paused)
+                            mainWindow.call.core.lSetPaused(!mainWindow.call.core.paused)
                         }
                         KeyNavigation.backtab: moreOptionsButton
                     }

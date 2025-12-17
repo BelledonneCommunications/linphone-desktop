@@ -71,7 +71,7 @@ ColumnLayout {
 			}
 			PresenceNoteLayout {
 				visible: contact?.core.presenceNote.length > 0 && mainItem.useVerticalLayout
-				friendCore: contact?.core || null
+				friendGui: contact
 				Layout.preferredWidth: Utils.getSizeWithScreenRatio(412)
 				Layout.preferredHeight: Utils.getSizeWithScreenRatio(85)
 			}
@@ -96,7 +96,7 @@ ColumnLayout {
 		visible: contact && contact.core.presenceNote.length > 0 && !mainItem.useVerticalLayout
 		PresenceNoteLayout {
 			anchors.centerIn: parent
-			friendCore: contact?.core || null
+			friendGui: contact
 			width: Utils.getSizeWithScreenRatio(412)
 			height: Utils.getSizeWithScreenRatio(85)
 		}

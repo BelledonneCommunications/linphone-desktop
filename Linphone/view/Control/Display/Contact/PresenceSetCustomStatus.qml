@@ -10,7 +10,7 @@ Column {
 	id: mainItem
 	spacing: Utils.getSizeWithScreenRatio(20)
 	anchors.centerIn: parent
-	property var accountCore
+	property var accountGui
 	signal isSet
 
 	Text {
@@ -39,9 +39,9 @@ Column {
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				property string previoustext: ""
-				text: mainItem.accountCore.presenceNote
+				text: mainItem.accountGui.core.presenceNote
 				onTextChanged: {
-					if (statusMessage.text.length > accountCore.maxPresenceNoteSize) {
+					if (statusMessage.text.length > accountGui.core.maxPresenceNoteSize) {
 						statusMessage.text = previoustext
 						statusMessage.cursorPosition = statusMessage.text.length
 					} else {
@@ -54,7 +54,7 @@ Column {
 			}
 			Text {
 				Layout.fillWidth: true
-				text: statusMessage.text.length + " / " + accountCore.maxPresenceNoteSize
+				text: statusMessage.text.length + " / " + accountGui.core.maxPresenceNoteSize
 				font: Typography.p1
 				color: DefaultStyle.main2_400
 				horizontalAlignment: Text.AlignRight
@@ -71,7 +71,7 @@ Column {
 			text: qsTr("contact_presence_button_save_custom_status")
 			enabled: statusMessage.text.length > 0
 			onClicked: {
-				mainItem.accountCore.presenceNote = statusMessage.text
+				mainItem.accountGui.core.presenceNote = statusMessage.text
 				mainItem.isSet()
 			}
 		}

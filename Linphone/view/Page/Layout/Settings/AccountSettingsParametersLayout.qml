@@ -31,7 +31,8 @@ AbstractSettingsLayout {
     }
     onUndo: account.core.undo()
     Connections {
-        target: account.core
+        enabled: account
+        target: account ? account.core : null
         function onIsSavedChanged() {
             console.log("saved changed", account.core.isSaved)
             if (account.core.isSaved) {
@@ -72,7 +73,7 @@ AbstractSettingsLayout {
 
                 Connections {
                     enabled: account
-                    target: account.core
+                    target: account ? account.core : null
                     function onMwiServerAddressChanged() {
                         if (mwiServerAddressField.text != mwiServerAddressField.propertyOwnerGui.core[mwiServerAddressField.propertyName]) 
                             mwiServerAddressField.text = mwiServerAddressField.propertyOwnerGui.core[mwiServerAddressField.propertyName]
@@ -92,7 +93,7 @@ AbstractSettingsLayout {
 
                 Connections {
                     enabled: account
-                    target: account.core
+                    target: account ? account.core : null
                     function onVoicemailAddressChanged() {
                         if (voicemailAddressField.text != voicemailAddressField.propertyOwnerGui.core[voicemailAddressField.propertyName]) 
                             voicemailAddressField.text = voicemailAddressField.propertyOwnerGui.core[voicemailAddressField.propertyName]
@@ -119,7 +120,7 @@ AbstractSettingsLayout {
                 toValidate: true
                 Connections {
                     enabled: account
-                    target: account.core
+                    target: account ? account.core : null
                     function onRegistrarUriChanged() {
                         if (registrarUriField.text != registrarUriField.propertyOwnerGui.core[registrarUriField.propertyName]) 
                             registrarUriField.text = registrarUriField.propertyOwnerGui.core[registrarUriField.propertyName]
@@ -138,7 +139,7 @@ AbstractSettingsLayout {
                 toValidate: true
                 Connections {
                     enabled: account
-                    target: account.core
+                    target: account ? account.core : null
                     function onOutboundProxyUriChanged() {
                         if (outboundProxyUriField.text != outboundProxyUriField.propertyOwnerGui.core[outboundProxyUriField.propertyName]) 
                             outboundProxyUriField.text = outboundProxyUriField.propertyOwnerGui.core[outboundProxyUriField.propertyName]
@@ -155,7 +156,7 @@ AbstractSettingsLayout {
                 toValidate: true
                 Connections {
                     enabled: account
-                    target: account.core
+                    target: account ? account.core : null
                     function onStunServerChanged() {
                         if (stunServerField.text != stunServerField.propertyOwnerGui.core[stunServerField.propertyName]) 
                             stunServerField.text = stunServerField.propertyOwnerGui.core[stunServerField.propertyName]
@@ -170,7 +171,7 @@ AbstractSettingsLayout {
                 propertyOwnerGui: account
                 Connections {
                     enabled: account
-                    target: account.core
+                    target: account ? account.core : null
                     function onIceEnabledChanged() {
                         if (iceSwitch.checked != iceSwitch.propertyOwnerGui.core[iceSwitch.propertyName]) 
                             iceSwitch.checked = iceSwitch.propertyOwnerGui.core[iceSwitch.propertyName]
@@ -185,7 +186,7 @@ AbstractSettingsLayout {
                 propertyOwnerGui: account
                 Connections {
                     enabled: account
-                    target: account.core
+                    target: account ? account.core : null
                     function onAvpfEnabledChanged() {
                         if (avpfSwitch.checked != avpfSwitch.propertyOwnerGui.core[avpfSwitch.propertyName]) 
                             avpfSwitch.checked = avpfSwitch.propertyOwnerGui.core[avpfSwitch.propertyName]
@@ -200,7 +201,7 @@ AbstractSettingsLayout {
                 propertyOwnerGui: account
                 Connections {
                     enabled: account
-                    target: account.core
+                    target: account ? account.core : null
                     function onBundleModeEnabledChanged() {
                         if (bundleModeSwitch.checked != bundleModeSwitch.propertyOwnerGui.core[bundleModeSwitch.propertyName]) 
                             bundleModeSwitch.checked = bundleModeSwitch.propertyOwnerGui.core[bundleModeSwitch.propertyName]
@@ -220,7 +221,7 @@ AbstractSettingsLayout {
                 }
                 toValidate: true
                 Connections {
-                    target: account.core
+                    target: account ? account.core : null
                     function onExpireChanged() {
                         if (expireField.text != expireField.propertyOwnerGui.core[expireField.propertyName]) 
                             expireField.text = expireField.propertyOwnerGui.core[expireField.propertyName]
@@ -236,7 +237,7 @@ AbstractSettingsLayout {
                 propertyOwnerGui: account
                 toValidate: true
                 Connections {
-                    target: account.core
+                    target: account ? account.core : null
                     function onConferenceFactoryAddressChanged() {
                         if (conferenceFactoryUriField.text != conferenceFactoryUriField.propertyOwnerGui.core[conferenceFactoryUriField.propertyName]) 
                             conferenceFactoryUriField.text = conferenceFactoryUriField.propertyOwnerGui.core[conferenceFactoryUriField.propertyName]
@@ -252,7 +253,7 @@ AbstractSettingsLayout {
                 propertyOwnerGui: account
                 toValidate: true
                 Connections {
-                    target: account.core
+                    target: account ? account.core : null
                     function onAudioVideoConferenceFactoryAddressChanged() {
                         if (audioVideoConfUriField.text != audioVideoConfUriField.propertyOwnerGui.core[audioVideoConfUriField.propertyName]) 
                             audioVideoConfUriField.text = audioVideoConfUriField.propertyOwnerGui.core[audioVideoConfUriField.propertyName]
@@ -268,7 +269,7 @@ AbstractSettingsLayout {
                 propertyOwnerGui: account
                 toValidate: true
                 Connections {
-                    target: account.core
+                    target: account ? account.core : null
                     function onLimeServerUrlChanged() {
                         if (limeServerUrlField.text != limeServerUrlField.propertyOwnerGui.core[limeServerUrlField.propertyName]) 
                             limeServerUrlField.text = limeServerUrlField.propertyOwnerGui.core[limeServerUrlField.propertyName]

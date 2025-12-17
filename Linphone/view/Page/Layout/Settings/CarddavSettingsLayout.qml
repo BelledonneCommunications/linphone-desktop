@@ -34,7 +34,8 @@ AbstractSettingsLayout {
 		}
 	}
 	Connections {
-		target: carddavGui.core
+		enabled: carddavGui
+		target: carddavGui ? carddavGui.core : null
 		function onSaved(success, message) {
 			if (success)
                 UtilsCpp.showInformationPopup(qsTr("information_popup_synchronization_success_title"),

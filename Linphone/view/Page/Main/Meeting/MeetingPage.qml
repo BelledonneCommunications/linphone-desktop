@@ -498,7 +498,8 @@ AbstractMainPage {
 						}
 					}
 					Connections {
-						target: conferenceEdit.conferenceInfoGui.core
+						enabled: conferenceEdit.conferenceInfoGui
+						target: conferenceEdit.conferenceInfoGui ? conferenceEdit.conferenceInfoGui.core : null
 						ignoreUnknownSignals: true
 						function onSaveFailed() {
 							UtilsCpp.getMainWindow().closeLoadingPopup()

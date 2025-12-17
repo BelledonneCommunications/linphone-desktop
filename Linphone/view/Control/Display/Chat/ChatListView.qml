@@ -45,6 +45,7 @@ ListView {
         }
         onModelAboutToBeReset: {
             loading = true
+            
         }
         onModelReset: {
             loading = false

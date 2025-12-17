@@ -5,11 +5,10 @@ import UtilsCpp
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 RowLayout {
-	id: mainLayout
+	id: mainItem
 	height: Utils.getSizeWithScreenRatio(40)
 	visible: eventLogCore.handled
 	property EventLogGui eventLogGui
-	property var eventLogCore: eventLogGui.core
 
 	Rectangle {
 		height: 1
@@ -24,15 +23,15 @@ RowLayout {
 
 		Text {
 			id: message
-			text: eventLogCore.eventDetails
+			text: mainItem.eventLogGui.core.eventDetails
 			font: Typography.p3
-			color: eventLogCore.important ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
+			color: mainItem.eventLogGui.core.important ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
 			horizontalAlignment: Text.AlignHCenter
 			Layout.alignment: Qt.AlignHCenter
 		}
 		Text {
 			id: date
-			text: UtilsCpp.toDateTimeString(eventLogCore.timestamp)
+			text: UtilsCpp.toDateTimeString(mainItem.eventLogGui.core.timestamp)
 			font: Typography.p3
 			color: DefaultStyle.main2_500_main
 			horizontalAlignment: Text.AlignHCenter

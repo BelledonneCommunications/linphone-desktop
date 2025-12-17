@@ -274,7 +274,7 @@ ColumnLayout {
 					onManageParticipantsRequested: mainItem.manageParticipantsRequested()
 				}
 				Connections {
-					target: mainItem.chatGui.core
+					target: mainItem.chatGui ? mainItem.chatGui.core : null
 					onParticipantsChanged : { // hacky reload to update intric height
 						participantLoader.active = false
 						participantLoader.active = true

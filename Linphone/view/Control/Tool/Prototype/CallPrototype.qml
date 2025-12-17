@@ -93,7 +93,6 @@ Window {
 								height: 20
 								width: accountList.width
 								Text{
-									
 									text: modelData.core.identityAddress
 								}
 							}

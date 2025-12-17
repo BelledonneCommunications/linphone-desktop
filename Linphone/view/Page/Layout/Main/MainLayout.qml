@@ -341,7 +341,7 @@ Item {
                                 model: accountProxy
                                 delegate: Item {
                                     Connections {
-                                        target: modelData.core
+                                        target: modelData ? modelData.core : null
                                         function onShowMwiChanged() {
                                             voicemail.updateCumulatedMwi();
                                         }

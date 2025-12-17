@@ -10,7 +10,7 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 IconLabelButton {
 	id: mainItem
 
-	property var accountCore
+	property var accountGui
 	property var presence
 	signal click()
 	
@@ -29,7 +29,7 @@ IconLabelButton {
 	padding: 0
 
 	onClicked: {
-		mainItem.accountCore.presence = mainItem.presence
+		mainItem.accountGui.core.presence = mainItem.presence
 		mainItem.click()
 	}
 }
