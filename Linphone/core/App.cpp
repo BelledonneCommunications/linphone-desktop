@@ -408,7 +408,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 				    // if (accountConnected)
 				    if (mPossiblyLookForAddedAccount) {
 					    QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
-					                              Q_ARG(QVariant, accountConnected));
+					                              Q_ARG(QVariant, true));
 				    }
 				    mPossiblyLookForAddedAccount = false;
 			    });
@@ -711,6 +711,10 @@ void App::initCore() {
 							        });
 						        } else {
 							        mPossiblyLookForAddedAccount = true;
+							        if (mAccountList && mAccountList->getCount() > 0) {
+								        QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
+								                                  Q_ARG(QVariant, true));
+							        }
 						        }
 					        }
 					        checkForUpdate();
