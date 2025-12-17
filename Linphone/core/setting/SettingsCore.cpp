@@ -66,6 +66,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 
 	// Advanced
 	mAutoStart = settingsModel->getAutoStart();
+	mHideFps = settingsModel->getHideFps();
 
 	// Audio
 	mCaptureDevices = settingsModel->getCaptureDevices();
@@ -122,7 +123,6 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(DisableBroadcastFeature, settingsModel)
 	INIT_CORE_MEMBER(HideSettings, settingsModel)
 	INIT_CORE_MEMBER(HideAccountSettings, settingsModel)
-	INIT_CORE_MEMBER(HideFps, settingsModel)
 	INIT_CORE_MEMBER(DisableCallRecordings, settingsModel)
 	INIT_CORE_MEMBER(AssistantHideCreateAccount, settingsModel)
 	INIT_CORE_MEMBER(AssistantHideCreateAccount, settingsModel)
@@ -268,6 +268,11 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	// IPV6
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::ipv6EnabledChanged, [this](const bool enabled) {
 		mSettingsModelConnection->invokeToCore([this, enabled]() { setIpv6Enabled(enabled); });
+	});
+
+	// Hide FPS
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::hideFpsChanged, [this](const bool hide) {
+		mSettingsModelConnection->invokeToCore([this, hide]() { setHideFps(hide); });
 	});
 
 	// AutoStart
@@ -656,6 +661,14 @@ void SettingsCore::setAutoStart(bool enabled) {
 	}
 }
 
+void SettingsCore::setHideFps(bool hide) {
+	if (mHideFps != hide) {
+		mHideFps = hide;
+		emit hideFpsChanged();
+		setIsSaved(false);
+	}
+}
+
 void SettingsCore::setAutoDownloadReceivedFiles(bool enabled) {
 	if (mAutoDownloadReceivedFiles != enabled) {
 		mAutoDownloadReceivedFiles = enabled;
@@ -748,7 +761,7 @@ bool SettingsCore::isSaved() const {
 void SettingsCore::setIsSaved(bool saved) {
 	if (mIsSaved != saved) {
 		mIsSaved = saved;
-		emit isSavedChanged();
+		emit isSavedChanged(saved);
 	}
 }
 
