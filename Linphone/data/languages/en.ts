@@ -626,7 +626,7 @@
         <translation>Create end to end encrypted meetings and group calls</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="241"/>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="263"/>
         <source>settings_advanced_hide_fps_title</source>
         <translation>Hide FPS</translation>
     </message>
@@ -766,30 +766,30 @@
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1450"/>
+        <location filename="../../core/App.cpp" line="1453"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1450"/>
+        <location filename="../../core/App.cpp" line="1453"/>
         <source>show_action</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1465"/>
+        <location filename="../../core/App.cpp" line="1468"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1483"/>
+        <location filename="../../core/App.cpp" line="1486"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Check for update</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1606"/>
+        <location filename="../../core/App.cpp" line="1609"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>
@@ -913,75 +913,68 @@
 <context>
     <name>CallForwardSettingsLayout</name>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="74"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="42"/>
         <source>settings_call_forward_activate_title</source>
         <extracomment>&quot;Forward calls&quot;</extracomment>
         <translation>Forward calls</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="76"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="44"/>
         <source>settings_call_forward_activate_subtitle</source>
         <extracomment>&quot;Enable call forwarding to voicemail or sip address&quot;</extracomment>
         <translation>Forward calls to voicemail or a Number / SIP Address / number</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="83"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
         <source>settings_call_forward_destination_choose</source>
         <extracomment>Forward to destination</extracomment>
         <translation>Forward calls to:</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="60"/>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="95"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="68"/>
         <source>settings_call_forward_to_voicemail</source>
         <translation>Voicemail</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="96"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="69"/>
         <source>settings_call_forward_to_sipaddress</source>
         <translation>Number / SIP Address</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="133"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="106"/>
         <source>settings_call_forward_sipaddress_title</source>
         <extracomment>SIP Address</extracomment>
         <translation>Number / SIP Address:</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="134"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="107"/>
         <source>settings_call_forward_sipaddress_placeholder</source>
         <translation>John.doe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="52"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="26"/>
         <source>settings_call_forward_address_cannot_be_empty</source>
         <translation>A number or SIP address is mandatory</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="46"/>
         <source>settings_call_forward_address_timeout</source>
-        <translation>Unable to set call forward, request timeout</translation>
+        <translation type="vanished">Unable to set call forward, request timeout</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="57"/>
         <source>settings_call_forward_address_progress_disabling</source>
-        <translation>Disabling call forward</translation>
+        <translation type="vanished">Disabling call forward</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="60"/>
         <source>settings_call_forward_address_progress_enabling</source>
-        <translation>Enabling call forward to:</translation>
+        <translation type="vanished">Enabling call forward to:</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
         <source>settings_call_forward_activation_success</source>
-        <translation>Call forward activated to : </translation>
+        <translation type="vanished">Call forward activated to : </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="34"/>
         <source>settings_call_forward_deactivation_success</source>
-        <translation>Call forward deactivated</translation>
+        <translation type="vanished">Call forward deactivated</translation>
     </message>
 </context>
 <context>
