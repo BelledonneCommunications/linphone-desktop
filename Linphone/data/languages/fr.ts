@@ -1009,7 +1009,7 @@
 <context>
     <name>CallHistoryListView</name>
     <message>
-        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="205"/>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="206"/>
         <source>call_name_accessible_button</source>
         <extracomment>Call %1</extracomment>
         <translation>Appeler %1</translation>
@@ -1138,67 +1138,67 @@
 <context>
     <name>CallModel</name>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="372"/>
+        <location filename="../../model/call/CallModel.cpp" line="373"/>
         <source>call_error_no_response_toast</source>
         <extracomment>&quot;No response&quot;</extracomment>
         <translation>Pas de réponse</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="376"/>
+        <location filename="../../model/call/CallModel.cpp" line="377"/>
         <source>call_error_forbidden_resource_toast</source>
         <extracomment>&quot;403 : Forbidden resource&quot;</extracomment>
         <translation>403 : Forbidden resource</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="380"/>
+        <location filename="../../model/call/CallModel.cpp" line="381"/>
         <source>call_error_not_answered_toast</source>
         <extracomment>&quot;Request timeout&quot;</extracomment>
         <translation>La requête a expiré</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="384"/>
+        <location filename="../../model/call/CallModel.cpp" line="385"/>
         <source>call_error_user_declined_toast</source>
         <extracomment>&quot;User declined the call&quot;</extracomment>
         <translation>Le correspondant a décliné l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="388"/>
+        <location filename="../../model/call/CallModel.cpp" line="389"/>
         <source>call_error_user_not_found_toast</source>
         <extracomment>&quot;User was not found&quot;</extracomment>
         <translation>Le correspondant n&apos;a pas été trouvé</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="392"/>
+        <location filename="../../model/call/CallModel.cpp" line="393"/>
         <source>call_error_user_busy_toast</source>
         <extracomment>&quot;User is busy&quot;</extracomment>
         <translation>Le correspondant est occupé</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="396"/>
+        <location filename="../../model/call/CallModel.cpp" line="397"/>
         <source>call_error_incompatible_media_params_toast</source>
         <extracomment>&quot;User can&amp;apos;t accept your call&quot;</extracomment>
         <translation>Le correspondant ne peut accepter votre appel</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="400"/>
+        <location filename="../../model/call/CallModel.cpp" line="401"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Unavailable service or network error&quot;</extracomment>
         <translation>Service indisponible ou erreur réseau</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="404"/>
+        <location filename="../../model/call/CallModel.cpp" line="405"/>
         <source>call_error_do_not_disturb_toast</source>
         <extracomment>&quot;Le correspondant ne peut être dérangé&quot;</extracomment>
         <translation>Le correspondant ne peut être dérangé</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="408"/>
+        <location filename="../../model/call/CallModel.cpp" line="409"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporarily unavailable&quot;</extracomment>
         <translation>Temporairement indisponible</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="412"/>
+        <location filename="../../model/call/CallModel.cpp" line="413"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server tiemout&quot;</extracomment>
         <translation>Délai d&apos;attente du serveur dépassé</translation>

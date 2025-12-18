@@ -196,6 +196,7 @@ ListView {
                 }
             }
             BigButton {
+                visible: !modelData.core.isConference || !SettingsCpp.disableMeetingsFeature
                 style: ButtonStyle.noBackground
                 icon.source: AppIcons.phone
                 focus: true

@@ -300,6 +300,7 @@ void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layo
 	auto params = coreManager->getCore()->createCallParams(mMonitor);
 	params->setConferenceVideoLayout(LinphoneEnums::toLinphone(layout));
 	params->enableVideo(layout != LinphoneEnums::ConferenceLayout::AudioOnly);
+	params->enableCamera(layout != LinphoneEnums::ConferenceLayout::AudioOnly);
 	if (!params->videoEnabled() && params->screenSharingEnabled()) {
 		params->enableScreenSharing(false); // Deactivate screensharing if going to audio only.
 	}
