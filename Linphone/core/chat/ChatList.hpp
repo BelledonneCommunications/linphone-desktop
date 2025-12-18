@@ -48,7 +48,7 @@ public:
 signals:
 	void lUpdate();
 	void filterChanged(QString filter);
-	void chatAdded();
+	void chatAdded(QSharedPointer<ChatCore> chatCore);
 	void chatUpdated();
 
 private:

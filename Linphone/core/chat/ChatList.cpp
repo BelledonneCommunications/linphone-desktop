@@ -218,7 +218,7 @@ bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
 	if (it == chatList.end()) {
 		connectItem(chatCore);
 		add(chatCore);
-		emit chatAdded();
+		emit chatAdded(chatCore);
 		return true;
 	}
 	return false;

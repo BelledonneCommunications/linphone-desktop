@@ -45,7 +45,6 @@ ListView {
         }
         onModelAboutToBeReset: {
             loading = true
-            
         }
         onModelReset: {
             loading = false
@@ -56,7 +55,12 @@ ListView {
             else if (mainItem.chatToSelect) {
                 selectChat(mainItem.chatToSelect)
                 mainItem.chatToSelect = null
+            } else {
+                selectChat(mainItem.currentChatGui)
             }
+        }
+        onChatAdded: (chat) => {
+            mainItem.chatToSelect = chat
         }
         onRowsRemoved: {
             var index = mainItem.currentIndex
@@ -83,7 +87,9 @@ ListView {
 
     function selectChat(chatGui, force) {
         var index = chatProxy.findChatIndex(chatGui)
-        // force adding chat to list if not in list for now
+        // force adding chat to list if it already exists 
+        // but has not been added to the list yet because 
+        // it is empty and hide_empty_chatrooms is set
         if (index === -1 && force === true && chatGui) {
             if (chatProxy.addChatInList(chatGui)) {
                 var index = chatProxy.findChatIndex(chatGui)
