@@ -966,6 +966,10 @@ void App::restart() {
 			closeCallsWindow();
 			setMainWindow(nullptr);
 			setCoreStarted(false);
+			if (mAccountList) mAccountList->resetData();
+			if (mCallList) mCallList->resetData();
+			if (mChatList) mChatList->resetData();
+			if (mConferenceInfoList) mConferenceInfoList->resetData();
 			mEngine->clearComponentCache();
 			mEngine->clearSingletons();
 			delete mEngine;
@@ -1265,11 +1269,24 @@ void App::onAuthenticationRequested(const std::shared_ptr<linphone::Core> &core,
                                     const std::shared_ptr<linphone::AuthInfo> &authInfo,
                                     linphone::AuthMethod method) {
 	bool authInfoIsInAccounts = false;
-	for (auto &account : core->getAccountList()) {
-		auto accountAuthInfo = account->findAuthInfo();
-		if (authInfo && accountAuthInfo && authInfo->isEqualButAlgorithms(accountAuthInfo)) {
-			authInfoIsInAccounts = true;
-			break;
+	if (authInfo) {
+		for (auto &account : core->getAccountList()) {
+			if (!account) continue;
+			auto accountAuthInfo = account->findAuthInfo();
+			if (accountAuthInfo) {
+				if (authInfo->isEqualButAlgorithms(accountAuthInfo)) {
+					authInfoIsInAccounts = true;
+					break;
+				}
+			} else {
+				auto identityAddress = account->getParams()->getIdentityAddress();
+				if (!identityAddress) continue;
+				if (authInfo->getUsername() == identityAddress->getUsername() &&
+				    authInfo->getDomain() == identityAddress->getDomain()) {
+					authInfoIsInAccounts = true;
+					break;
+				}
+			}
 		}
 	}
 	if (!authInfoIsInAccounts) return;
