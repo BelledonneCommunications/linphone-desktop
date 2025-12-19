@@ -55,6 +55,9 @@ AbstractWindow {
                                                     || call.core.isMismatch)) {
                 zrtpValidation.open()
             }
+        } else if (callState === LinphoneEnums.CallState.StreamsRunning) {
+            if (!mainWindow.chat)
+                mainWindow.chatObj = UtilsCpp.getCurrentCallChat(mainWindow.call)
         } else if (callState === LinphoneEnums.CallState.Error
                    || callState === LinphoneEnums.CallState.End) {
             zrtpValidation.close()
@@ -841,13 +844,12 @@ AbstractWindow {
                         searchBarBorderColor: DefaultStyle.grey_200
                         numPadPopup: numericPad
                         onContactClicked: contact => {
-                                            mainWindow.startCallWithContact(
-                                                contact, false, rightPanel)
-                                        }
+                            mainWindow.startCallWithContact(contact, false, rightPanel)
+                        }
                         Connections {
                             target: mainWindow
                             function onCallChanged() {
-                                if (newCallForm.Control.StackView.status === Control.StackView.Active)
+                                if (rightPanel.contentLoader.item.objectName === "newCallPanel")
                                     rightPanel.visible = false
                             }
                         }
@@ -1520,7 +1522,6 @@ AbstractWindow {
                         onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
-                                mainWindow.chatObj = UtilsCpp.getCurrentCallChat(mainWindow.call)
                                 rightPanel.replace(chatPanel)
                             } else {
                                 rightPanel.visible = false
