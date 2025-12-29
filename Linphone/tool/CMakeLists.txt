@@ -27,6 +27,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	tool/file/TemporaryFile.cpp
 
 	tool/ui/DashRectangle.cpp
+	tool/ui/FocusNavigator.cpp
 
 	tool/accessibility/AccessibilityHelper.cpp
 	tool/accessibility/KeyboardShortcuts.cpp

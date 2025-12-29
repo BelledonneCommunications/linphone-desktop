@@ -5,17 +5,22 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import CustomControls 1.0
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
     id: mainItem
     clip: true
+    keyNavigationEnabled: false // We will reimplement the keyNavigation
+    activeFocusOnTab: true
 
     property SearchBar searchBar
     property bool loading: false
     property string searchText: searchBar?.text
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
+    property bool keyboardFocus: FocusHelper.keyboardFocus
+    property bool lastFocusByNavigationKeyboard: false // Workaround to get the correct focusReason
 
     signal resultsReceived
 
@@ -41,7 +46,26 @@ ListView {
     Keys.onPressed: event => {
         if (event.key == Qt.Key_Escape) {
             console.log("Back")
-            searchBar.forceActiveFocus()
+            searchBar.forceActiveFocus(Qt.BacktabFocusReason)
+            event.accepted = true
+        }
+
+        // Re-implement key navigation to have Qt.TabFocusReason and Qt.BacktabFocusReason instead of Qt.OtherFocusReason when using arrows to navigate in listView
+        else if (event.key === Qt.Key_Up) {
+            if(currentIndex === 0){
+                searchBar.forceActiveFocus(Qt.BacktabFocusReason)
+                lastFocusByNavigationKeyboard = false
+            }else{
+                decrementCurrentIndex()
+                currentItem.forceActiveFocus(Qt.BacktabFocusReason) // The focusReason is created by QT later, need to create a workaround
+                lastFocusByNavigationKeyboard = true
+            }
+            event.accepted = true
+        }
+        else if(event.key === Qt.Key_Down){
+            incrementCurrentIndex()
+            currentItem.forceActiveFocus(Qt.TabFocusReason) // The focusReason is created by QT later, need to create a workaround
+            lastFocusByNavigationKeyboard = true
             event.accepted = true
         }
     }
@@ -113,6 +137,8 @@ ListView {
     delegate: FocusScope {
         width: mainItem.width
         height: Utils.getSizeWithScreenRatio(56)
+        Accessible.role: Accessible.ListItem
+
         RowLayout {
             z: 1
             anchors.fill: parent
@@ -188,12 +214,14 @@ ListView {
                 }
             }
             BigButton {
+                id: callButton
                 visible: !modelData.core.isConference || !SettingsCpp.disableMeetingsFeature
                 style: ButtonStyle.noBackground
                 icon.source: AppIcons.phone
-                focus: true
+                focus: false
                 activeFocusOnTab: false
                 asynchronous: false
+                
                 //: Call %1
                 Accessible.name: qsTr("call_name_accessible_button").arg(historyAvatar.displayNameVal)
                 onClicked: {
@@ -206,12 +234,38 @@ ListView {
                         UtilsCpp.createCall(modelData.core.remoteAddress)
                     }
                 }
+                Keys.onPressed: event => {
+                    if (event.key === Qt.Key_Left){
+                        backgroundMouseArea.forceActiveFocus(Qt.BacktabFocusReason)
+                        lastFocusByNavigationKeyboard = true;
+                    }
+                }
+                onActiveFocusChanged: {
+                    if (!activeFocus) {
+                        console.log("Unfocus button");
+                        callButton.focus = false // Make sure to be unfocusable (could be when called by forceActiveFocus)
+                        backgroundMouseArea.focus = true
+                    }
+                }
             }
         }
         MouseArea {
+            id: backgroundMouseArea
             hoverEnabled: true
             anchors.fill: parent
             focus: true
+            property bool keyboardFocus: FocusHelper.keyboardFocus || activeFocus && lastFocusByNavigationKeyboard
+
+            //: %1 - %2 - %3 - right arrow for call-back button
+            Accessible.name: qsTr("call_history_entry_accessible_name").arg(
+                    //: "Appel manqué"
+                    modelData.core.status === LinphoneEnums.CallStatus.Missed ? qsTr("notification_missed_call_title")
+                    //: "Appel sortant"
+                    : modelData.core.isOutgoing ? qsTr("call_outgoing")
+                    //: "Appel entrant"
+                    : qsTr("call_audio_incoming")
+                ).arg(historyAvatar.displayNameVal).arg(UtilsCpp.formatDate(modelData.core.date))
+            
             onContainsMouseChanged: {
                 if (containsMouse)
                     mainItem.lastMouseContainsIndex = index
@@ -224,12 +278,20 @@ ListView {
                 radius: Utils.getSizeWithScreenRatio(8)
                 color: mainItem.currentIndex
                        === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
+				border.color: backgroundMouseArea.keyboardFocus ? DefaultStyle.main2_900 : "transparent"
+				border.width: backgroundMouseArea.keyboardFocus ? Utils.getSizeWithScreenRatio(3) : 0
                 visible: mainItem.lastMouseContainsIndex === index
                          || mainItem.currentIndex === index
             }
             onPressed: {
                 mainItem.currentIndex = model.index
                 mainItem.forceActiveFocus()
+                mainItem.lastFocusByNavigationKeyboard = false
+            }
+            Keys.onPressed: event => {
+                if(event.key === Qt.Key_Right){
+                    callButton.forceActiveFocus(Qt.TabFocusReason)
+                }
             }
         }
     }

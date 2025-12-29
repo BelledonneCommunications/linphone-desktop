@@ -18,6 +18,9 @@ Control.TabBar {
 	property AccountGui defaultAccount
 
 	property int visibleCount: 0
+
+	signal enterPressed()
+	signal spacePressed()
 	
 	// Call it after model is ready. If done before, Repeater will not be updated
 	function initButtons(){
@@ -96,6 +99,8 @@ Control.TabBar {
 			onVisibleChanged: mainItem.updateVisibleCount()
 			text: modelData.accessibilityLabel
 			property bool keyboardFocus: FocusHelper.keyboardFocus
+			focusPolicy: Qt.StrongFocus
+			activeFocusOnTab: true
 			UnreadNotification {
 				unread: !defaultAccount 
 				? -1
@@ -163,6 +168,23 @@ Control.TabBar {
 				Component.onCompleted: {
                     font.weight = Utils.getSizeWithScreenRatio(800)
 					mainItem.implicitWidth = Math.max(mainItem.implicitWidth, advanceWidth + buttonIcon.buttonSize)
+				}
+			}
+			Keys.onPressed: event => {
+                if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+                    mainItem.enterPressed()
+                } else if(event.key === Qt.Key_Space){
+					mainItem.spacePressed()
+				} else if(event.key === Qt.Key_Down){
+					event.accepted = true;
+					if(TabBar.index >= mainItem.visibleCount - 1)
+       					return;
+					tabButton.nextItemInFocusChain(true).forceActiveFocus(Qt.TabFocusReason)
+				} else if(event.key === Qt.Key_Up){
+					event.accepted = true;
+					if(TabBar.index <= 0)
+       					return;
+					tabButton.nextItemInFocusChain(false).forceActiveFocus(Qt.BacktabFocusReason)
 				}
 			}
 			onClicked: {

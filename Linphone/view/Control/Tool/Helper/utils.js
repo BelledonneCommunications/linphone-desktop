@@ -807,6 +807,17 @@ function infoDialog(window, message) {
 	}, function (status) {})
 }
 
+// Ensure that the item is visible in the view
+function ensureVisibleY(item, view){
+  const itemPosition = item.mapToItem(view, 0, 0)
+
+  if (itemPosition.y < 0){
+    view.contentY = view.contentY + itemPosition.y
+  } else if (itemPosition.y + item.height > view.height){
+    view.contentY = itemPosition.y + view.contentY + item.height - view.height
+  }  
+}
+
 // Set position of list.currentItem into the scrollItem
 function updatePosition(scrollItem, list){
 	if(scrollItem.height == 0) return;

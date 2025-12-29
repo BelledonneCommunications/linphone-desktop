@@ -114,6 +114,7 @@
 #include "tool/request/RequestDialog.hpp"
 #include "tool/thread/Thread.hpp"
 #include "tool/ui/DashRectangle.hpp"
+#include "tool/ui/FocusNavigator.hpp"
 
 #if defined(Q_OS_MACOS)
 #include "core/event-count-notifier/EventCountNotifierMacOs.hpp"
@@ -714,6 +715,7 @@ void App::initCore() {
 #endif
 			    mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
 			    mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);
+			    mEngine->rootContext()->setContextProperty("FocusNavigator", new FocusNavigator(mEngine));
 
 			    initCppInterfaces();
 			    mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());

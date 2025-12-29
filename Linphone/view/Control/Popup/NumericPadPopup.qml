@@ -69,6 +69,8 @@ Control.Popup {
             icon.height: Utils.getSizeWithScreenRatio(24)
 			style: ButtonStyle.noBackground
 			onClicked: mainItem.close()
+			//: Close numeric pad
+			Accessible.name: qsTr("close_numeric_pad_accessible_name")
 		}
 	}
 	contentItem: NumericPad{

@@ -172,6 +172,9 @@ FocusScope {
                 radius: Utils.getSizeWithScreenRatio(71)
 				style: ButtonStyle.numericPad
 
+				//: %1 longpress %2
+				Accessible.name: longPressText.text ? qsTr("numpad_longpress_accessible_name").arg(pressText.text).arg(longPressText.text) : pressText.text
+
 				contentItem: Item {
 					anchors.fill: parent
 					Text {
@@ -214,7 +217,10 @@ FocusScope {
             icon.height: Utils.getSizeWithScreenRatio(32)
             radius: Utils.getSizeWithScreenRatio(71)
 			style: ButtonStyle.phoneGreen
-			
+
+			//: Call			
+			Accessible.name: qsTr("call_accessible_name")
+
 			onClicked: mainItem.launchCall()
 			
 			KeyNavigation.left: eraseButton
@@ -237,6 +243,9 @@ FocusScope {
             Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(38)
             Layout.Layout.preferredHeight: Utils.getSizeWithScreenRatio(38)
 			
+			//: Erase
+			Accessible.name: qsTr("erase_accessible_name")
+
 			onClicked: mainItem.wipe()
 			
 			KeyNavigation.left: launchCallButton
@@ -244,8 +253,13 @@ FocusScope {
 			KeyNavigation.up: numPadGrid.getButtonAt(11)
 			KeyNavigation.down: numPadGrid.getButtonAt(1)
 			
-			background: Item {
-				visible: false
+			background: Rectangle {
+				width: eraseButton.width
+				height: eraseButton.height
+                color: "transparent"
+
+				border.color: eraseButton.keyboardFocus ? eraseButton.keyboardFocusedBorderColor : "transparent"
+				border.width: eraseButton.keyboardFocus ? eraseButton.keyboardFocusedBorderWidth : eraseButton.borderWidth 
 			}
 		}
 	}

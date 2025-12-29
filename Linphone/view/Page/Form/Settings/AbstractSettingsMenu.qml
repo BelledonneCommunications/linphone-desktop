@@ -48,6 +48,8 @@ AbstractMainPage {
 				onClicked: {
 					mainItem.goBackRequested()
 				}
+				//: Back to previous menu
+				Accessible.name: qsTr("back_previous_menu_accessible_name")
 			}
 			Text {
 				text: titleText
@@ -69,6 +71,9 @@ AbstractMainPage {
 			property int selectedIndex: mainItem.defaultIndex != -1 ? mainItem.defaultIndex : 0
 			activeFocusOnTab: true
 			spacing: Utils.getSizeWithScreenRatio(5)
+			Accessible.role: Accessible.List
+			//: Settings page selection
+			Accessible.name: qsTr("settings_page_selection_accessible_name")
 			
 			delegate: SettingsMenuItem {
 				titleText: modelData.title
@@ -86,7 +91,9 @@ AbstractMainPage {
 			let initialEntry = mainItem.families[familiesList.selectedIndex]
 			rightPanelStackView.push(layoutUrl(initialEntry.layout), { titleText: initialEntry.title, model: initialEntry.model, container: rightPanelStackView})
 			familiesList.currentIndex = familiesList.selectedIndex
-			backButton.forceActiveFocus()
 		}
 	}
+	Control.StackView.onActivated: {
+	    familiesList.forceActiveFocus(FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.MouseFocusReason)
+    }
 }

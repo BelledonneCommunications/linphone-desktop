@@ -23,7 +23,8 @@ Button {
             : mainItem.hovered || mainItem.hasNavigationFocus
                 ? mainItem.hoveredColor
                 : mainItem.color
-        border.color: mainItem.borderColor
+        border.color: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderColor : mainItem.borderColor
+        border.width: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth 
     }
 	
     contentItem: EffectImage {

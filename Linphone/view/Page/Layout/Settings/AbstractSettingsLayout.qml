@@ -100,17 +100,13 @@ Rectangle {
 			}
 		}
 	}
-	Control.ScrollView {
+	Flickable {
 		id: scrollView
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.bottom: parent.bottom
 		anchors.top: header.bottom
         anchors.topMargin: Utils.getSizeWithScreenRatio(16)
-		// Workaround while the CI is made with Qt6.5.3
-		// When updated to 6.8, remove this Item and
-		// change the ScrollView with a Flickable
-		Item{anchors.fill: parent}
 		contentHeight: contentListView.contentHeight
 		Control.ScrollBar.vertical: ScrollBar {
 			active: contentListView.contentHeight > scrollView.height
@@ -130,21 +126,21 @@ Rectangle {
 			model: mainItem.contentModel
 			anchors.left: parent.left
 			anchors.right: parent.right
-            anchors.leftMargin: Utils.getSizeWithScreenRatio(45)
-            anchors.rightMargin: Utils.getSizeWithScreenRatio(45)
+			anchors.leftMargin: Utils.getSizeWithScreenRatio(45)
+			anchors.rightMargin: Utils.getSizeWithScreenRatio(45)
 			height: contentHeight
-            spacing: Utils.getSizeWithScreenRatio(10)
+			spacing: Utils.getSizeWithScreenRatio(10)
 			delegate: ColumnLayout {
-                visible: modelData.visible != undefined ? modelData.visible: true
-                Component.onCompleted: if (!visible) height = 0
-                spacing: Utils.getSizeWithScreenRatio(16)
+				visible: modelData.visible != undefined ? modelData.visible: true
+				Component.onCompleted: if (!visible) height = 0
+				spacing: Utils.getSizeWithScreenRatio(16)
 				width: contentListView.width
 				Rectangle {
 					visible: index !== 0
-                    Layout.topMargin: Utils.getSizeWithScreenRatio(modelData.hideTopSeparator ? 0 : 16)
-                    Layout.bottomMargin: Utils.getSizeWithScreenRatio(16)
+					Layout.topMargin: Utils.getSizeWithScreenRatio(modelData.hideTopSeparator ? 0 : 16)
+					Layout.bottomMargin: Utils.getSizeWithScreenRatio(16)
 					Layout.fillWidth: true
-                    height: Utils.getSizeWithScreenRatio(1)
+					height: Utils.getSizeWithScreenRatio(1)
 					color: modelData.hideTopSeparator ? 'transparent' : DefaultStyle.main2_500_main
 				}
 				GridLayout {
@@ -152,12 +148,12 @@ Rectangle {
 					columns: mainItem.useVerticalLayout ? 1 : 2
 					Layout.fillWidth: true
 					// Layout.preferredWidth: parent.width
-                    rowSpacing: modelData.title.length > 0 || modelData.subTitle.length > 0 ? Utils.getSizeWithScreenRatio(20) : 0
-                    columnSpacing: Utils.getSizeWithScreenRatio(47)
+					rowSpacing: modelData.title.length > 0 || modelData.subTitle.length > 0 ? Utils.getSizeWithScreenRatio(20) : 0
+					columnSpacing: Utils.getSizeWithScreenRatio(47)
 					ColumnLayout {
-                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(341)
-                        Layout.maximumWidth: Utils.getSizeWithScreenRatio(341)
-                        spacing: Utils.getSizeWithScreenRatio(3)
+						Layout.preferredWidth: Utils.getSizeWithScreenRatio(341)
+						Layout.maximumWidth: Utils.getSizeWithScreenRatio(341)
+						spacing: Utils.getSizeWithScreenRatio(3)
 						Text {
 							text: modelData.title
 							visible: modelData.title.length > 0
@@ -179,10 +175,10 @@ Rectangle {
 						}
 					}
 					RowLayout {
-                        Layout.topMargin: modelData.hideTopMargin ? 0 : Utils.getSizeWithScreenRatio(mainItem.useVerticalLayout ? 10 : 21)
-                        Layout.bottomMargin: Utils.getSizeWithScreenRatio(21)
-                        Layout.leftMargin: mainItem.useVerticalLayout ? 0 : Utils.getSizeWithScreenRatio(17)
-                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(modelData.customWidth > 0 ? modelData.customWidth : 545)
+						Layout.topMargin: modelData.hideTopMargin ? 0 : Utils.getSizeWithScreenRatio(mainItem.useVerticalLayout ? 10 : 21)
+						Layout.bottomMargin: Utils.getSizeWithScreenRatio(21)
+						Layout.leftMargin: mainItem.useVerticalLayout ? 0 : Utils.getSizeWithScreenRatio(17)
+						Layout.preferredWidth: Utils.getSizeWithScreenRatio(modelData.customWidth > 0 ? modelData.customWidth : 545)
 						Layout.alignment: Qt.AlignRight
 						Loader {
 							id: contentLoader
@@ -190,9 +186,19 @@ Rectangle {
 							sourceComponent: modelData.contentComponent
 						}
 						Item {
-                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(modelData.customRightMargin > 0 ? modelData.customRightMargin : 17)
+							Layout.preferredWidth: Utils.getSizeWithScreenRatio(modelData.customRightMargin > 0 ? modelData.customRightMargin : 17)
 						}
 					}
+				}
+			}
+		}
+		
+		Connections {
+			target: FocusNavigator
+
+			function onFocusChanged(item, keyboardFocus) {
+				if(Utils.isDescendant(item,scrollView) && keyboardFocus){
+					Utils.ensureVisibleY(item, scrollView)
 				}
 			}
 		}

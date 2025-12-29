@@ -26,6 +26,15 @@ AbstractMainPage {
 	rightPanelStackTopMargin: Utils.getSizeWithScreenRatio(45)
 	rightPanelStackBottomMargin: Utils.getSizeWithScreenRatio(30)
 
+    /**
+     * Focus on the first pertinent element in the page (LINQT-2202)
+     * @override
+     */
+    function forceActiveFocus(reason = undefined){
+		leftPanelStackView.currentItem?.newConfButton?.forceActiveFocus(reason)
+    }
+
+
 	function createPreFilledMeeting(subject, addresses) {
 		mainItem.selectedConference = Qt.createQmlObject('import Linphone
 										ConferenceInfoGui{
@@ -137,6 +146,7 @@ AbstractMainPage {
 		id: listLayout
 		FocusScope{
 			property string objectName: "listLayout"
+			property alias newConfButton: newConfButton
 			Control.StackView.onDeactivated: {
 				mainItem.selectedConference = null
 			}
@@ -166,6 +176,7 @@ AbstractMainPage {
 					}
 					Button {
 						id: newConfButton
+						focus: true
 						style: ButtonStyle.noBackground
 						icon.source: AppIcons.plusCircle
 						Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)

@@ -34,6 +34,7 @@ bool FocusHelperAttached::eventFilter(QObject *watched, QEvent *event) {
 			auto fe = static_cast<QFocusEvent *>(event);
 			if (fe) {
 				int focusReason = fe->reason();
+				// qDebug() << "FocusReason" << focusReason; // Usefull to debug focus problems
 				m_keyboardFocus = (focusReason == Qt::TabFocusReason || focusReason == Qt::BacktabFocusReason);
 				m_otherFocus = focusReason == Qt::OtherFocusReason;
 				emit keyboardFocusChanged();

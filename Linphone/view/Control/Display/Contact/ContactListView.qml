@@ -68,13 +68,13 @@ ListView {
 		
 	property bool _moveToIndex: false
 	
-	function selectIndex(index){
+	function selectIndex(index, focusReason = Qt.OtherFocusReason){
 		if(mainItem.expanded && index >= 0){
 			mainItem.currentIndex = index
 			var item = itemAtIndex(mainItem.currentIndex)
 			if(item){// Item is ready and available
 				mainItem.highlightedContact = item.searchResultItem
-				item.forceActiveFocus()
+				item.forceActiveFocus(focusReason)
 				updatePosition()
 				_moveToIndex = false
 			}else{// Move on the next items load.
@@ -85,7 +85,7 @@ ListView {
 			mainItem.currentIndex = -1
 			mainItem.highlightedContact = null
 			if(headerItem) {
-				headerItem.forceActiveFocus()
+				headerItem.forceActiveFocus(focusReason)
 			}
 			_moveToIndex = false
 		}
@@ -97,12 +97,12 @@ ListView {
 		if(event.key == Qt.Key_Up || event.key == Qt.Key_Down){
 			if(event.key == Qt.Key_Up && !headerItem.activeFocus) {
 				if(currentIndex >= 0 ) {
-					selectIndex(mainItem.currentIndex-1)
+					selectIndex(mainItem.currentIndex-1, Qt.BacktabFocusReason)
 					event.accepted = true;
 				}
 			}else if(event.key == Qt.Key_Down && mainItem.expanded){
 				if(currentIndex < model.count - 1) {
-					selectIndex(mainItem.currentIndex+1)
+					selectIndex(mainItem.currentIndex+1, Qt.TabFocusReason)
 					event.accepted = true;
 				}
 			}

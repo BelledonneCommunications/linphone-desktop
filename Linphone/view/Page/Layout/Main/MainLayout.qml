@@ -14,6 +14,7 @@ Item {
     id: mainItem
     property var callObj
     property var contextualMenuOpenedComponent: undefined
+    property bool focusPageOnNextLoad: false // Focus the page on next load - usefull cause of loader
 
     signal addAccountRequest
     signal openNewCallRequest
@@ -184,6 +185,18 @@ Item {
                         mainStackView.currentItem.forceActiveFocus();
                     }
                 }
+
+                /**
+                 * Focus the page when user select the page with keyboard.
+                 * Do not add this behavior on the arrows
+                 */
+                onEnterPressed: {
+                    focusPageOnNextLoad = true
+                }
+                onSpacePressed: {
+                    focusPageOnNextLoad = true
+                }
+                
                 Component.onCompleted: {
                     if (SettingsCpp.shortcutCount > 0) {
                         var shortcuts = SettingsCpp.shortcuts;
@@ -639,6 +652,10 @@ Item {
                                     openContextualMenuComponent(page);
                                 }
                             }
+                            onLoaded: {
+                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
+                                focusPageOnNextLoad = false
+                            }
                         }
                         Loader {
                             active: mainStackLayout.currentIndex === 1
@@ -653,6 +670,10 @@ Item {
                                         contactPage.initialFriendToDisplay = contactAddress;
                                     }
                                 }
+                            }
+                            onLoaded: {
+                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
+                                focusPageOnNextLoad = false
                             }
                         }
                         Loader {
@@ -672,6 +693,10 @@ Item {
                                     }
                                 }
                             }
+                            onLoaded: {
+                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
+                                focusPageOnNextLoad = false
+                            }
                         }
 
                         Loader {
@@ -687,6 +712,10 @@ Item {
                                         }
                                     }
                                 }
+                            }
+                            onLoaded: {
+                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
+                                focusPageOnNextLoad = false
                             }
                         }
 

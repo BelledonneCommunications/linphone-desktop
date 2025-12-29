@@ -17,6 +17,14 @@ AbstractMainPage {
     emptyListText: qsTr("contacts_list_empty")
     newItemIconSource: AppIcons.plusCircle
 
+    /**
+     * Focus on the first pertinent element in the page (LINQT-2202)
+     * @override
+     */
+    function forceActiveFocus(reason = undefined){
+        createContactButton.forceActiveFocus(reason)
+    }
+
     // disable left panel contact list interaction while a contact is being edited
     property bool leftPanelEnabled: !rightPanelStackView.currentItem
                                     || rightPanelStackView.currentItem.objectName
@@ -243,6 +251,7 @@ AbstractMainPage {
                 visible: !rightPanelStackView.currentItem
                          || rightPanelStackView.currentItem.objectName !== "contactEdition"
                 style: ButtonStyle.noBackground
+                focus: true
                 icon.source: AppIcons.plusCircle
                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)
                 Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)

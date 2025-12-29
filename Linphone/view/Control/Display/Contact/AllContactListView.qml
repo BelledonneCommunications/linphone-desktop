@@ -185,7 +185,7 @@ Flickable {
                                        direction)
                 if (newItem) {
                     newItem.selectIndex(
-                        direction > 0 ? -1 : newItem.model.count - 1)
+                        direction > 0 ? -1 : newItem.model.count - 1, direction > 0 ? Qt.BacktabFocusReason : Qt.TabFocusReason)
                     event.accepted = true
                 }
             }

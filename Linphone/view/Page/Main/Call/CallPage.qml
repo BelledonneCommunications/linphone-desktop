@@ -24,6 +24,14 @@ AbstractMainPage {
         goToCallHistory()
     }
 
+    /**
+     * Focus on the first pertinent element in the page (LINQT-2202)
+     * @override
+     */
+    function forceActiveFocus(reason = undefined){
+        listStackView.currentItem?.newCallButton?.forceActiveFocus(reason)
+    }
+
     //Group call properties
     property ConferenceInfoGui confInfoGui
     property AccountProxy accounts: AccountProxy {
@@ -134,6 +142,8 @@ AbstractMainPage {
         FocusScope {
             objectName: "historyListItem"
             property alias listView: historyListView
+            property alias newCallButton: newCallButton
+
             ColumnLayout {
                 anchors.fill: parent
                 spacing: 0
@@ -187,6 +197,7 @@ AbstractMainPage {
                     }
                     Button {
                         id: newCallButton
+                        focus: true
                         style: ButtonStyle.noBackground
                         icon.source: AppIcons.newCall
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)

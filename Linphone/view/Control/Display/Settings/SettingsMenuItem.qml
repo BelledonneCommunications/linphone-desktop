@@ -20,6 +20,7 @@ Item {
 
 	//: %1 settings
 	Accessible.name: qsTr("setting_tab_accessible_name").arg(titleText)
+	Accessible.role: Accessible.ListItem
 	
 	Keys.onPressed: (event)=>{
 		if(event.key == Qt.Key_Space || event.key == Qt.Key_Return || event.key == Qt.Key_Enter){

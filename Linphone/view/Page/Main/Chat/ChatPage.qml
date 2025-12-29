@@ -16,6 +16,14 @@ AbstractMainPage {
     emptyListText: qsTr("chat_empty_title")
     newItemIconSource: AppIcons.plusCircle
 
+    /**
+     * Focus on the first pertinent element in the page (LINQT-2202)
+     * @override
+     */
+    function forceActiveFocus(reason = undefined){
+		listStackView.currentItem?.newChatButton?.forceActiveFocus(reason)
+    }
+
     property AccountProxy accounts: AccountProxy {
         id: accountProxy
     }
@@ -116,6 +124,7 @@ AbstractMainPage {
         FocusScope {
             objectName: "chatListItem"
             property alias listView: chatListView
+            property alias newChatButton: newChatButton
             ColumnLayout {
                 anchors.fill: parent
                 spacing: 0
@@ -158,6 +167,7 @@ AbstractMainPage {
                     }
                     Button {
                         id: newChatButton
+                        focus: true
                         style: ButtonStyle.noBackground
                         icon.source: AppIcons.plusCircle
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)

@@ -6,6 +6,7 @@ import Linphone
 import UtilsCpp
 import ConstantsCpp
 import SettingsCpp
+import CustomControls 1.0
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
@@ -149,6 +150,9 @@ FocusScope {
                         onClicked: UtilsCpp.createCall(mainItem.addressFromFilter)
                         KeyNavigation.left: chatButton
                         KeyNavigation.right: videoCallButton
+                        //: "Call %1"
+                        Accessible.name: qsTr("call_with_contact_name_accessible_button").arg(mainItem.displayName)
+                        keyboardFocus: FocusHelper.keyboardFocus || FocusHelper.otherFocus
                     }
                     IconButton {
                         id: videoCallButton
@@ -164,6 +168,9 @@ FocusScope {
                         onClicked: UtilsCpp.createCall(mainItem.addressFromFilter, {"localVideoEnabled": true})
                         KeyNavigation.left: callButton
                         KeyNavigation.right: chatButton
+                        //: "Video call %1"
+                        Accessible.name: qsTr("video_call_with_contact_name_accessible_button").arg(mainItem.displayName)
+                        keyboardFocus: FocusHelper.keyboardFocus || FocusHelper.otherFocus
                     }
                     IconButton {
                         id: chatButton
@@ -184,6 +191,9 @@ FocusScope {
                             console.debug("[ContactListItem.qml] Open conversation")
                             mainWindow.displayChatPage(mainItem.addressFromFilter)
                         }
+                        //: "Message %1"
+                        Accessible.name: qsTr("message_with_contact_name_accessible_button").arg(mainItem.displayName)
+                        keyboardFocus: FocusHelper.keyboardFocus || FocusHelper.otherFocus
                     }
                 }
                 PopupButton {
