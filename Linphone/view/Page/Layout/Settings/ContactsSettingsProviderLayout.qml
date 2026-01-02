@@ -79,7 +79,6 @@ RowLayout {
 				}
 				Binding {
 					id: binding
-					enabled: modelData
 					target: modelData ? modelData.core : null
 					property: "enabled"
 					value: switchButton.checked
