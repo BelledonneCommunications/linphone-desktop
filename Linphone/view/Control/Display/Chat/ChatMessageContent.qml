@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
-import QtMultimedia
 
 import Linphone
 import UtilsCpp

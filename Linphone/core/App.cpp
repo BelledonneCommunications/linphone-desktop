@@ -384,9 +384,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::globalStateChanged,
 	    [this](const std::shared_ptr<linphone::Core> &core, linphone::GlobalState gstate, const std::string &message) {
-		    if (gstate == linphone::GlobalState::On) {
-			    mCoreModelConnection->invokeToCore([this] { setCoreStarted(true); });
-		    }
+		    mCoreModelConnection->invokeToCore([this, gstate] { setCoreStarted(gstate == linphone::GlobalState::On); });
 	    });
 	mCoreModelConnection->makeConnectToModel(&CoreModel::authenticationRequested, &App::onAuthenticationRequested);
 	// Config error message

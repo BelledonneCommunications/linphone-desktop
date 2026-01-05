@@ -1599,13 +1599,6 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 			} else {
 				lWarning() << "[Utils] Failed to create 1-1 conversation with"
 				           << callModel->getRemoteAddress()->asStringUriOnly() << "!";
-				data->mConnection->invokeToCore([] {
-					//: Error
-					showInformationPopup(tr("information_popup_error_title"),
-					                     //: Failed to create 1-1 conversation with %1 !
-					                     tr("information_popup_chatroom_creation_error_message"), false,
-					                     getOrCreateCallsWindow());
-				});
 				return QVariant();
 			}
 		}

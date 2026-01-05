@@ -56,7 +56,7 @@ AbstractWindow {
                 zrtpValidation.open()
             }
         } else if (callState === LinphoneEnums.CallState.StreamsRunning) {
-            if (!mainWindow.chat)
+            if (!mainWindow.chat && mainWindow.conference.core.isChatEnabled)
                 mainWindow.chatObj = UtilsCpp.getCurrentCallChat(mainWindow.call)
         } else if (callState === LinphoneEnums.CallState.Error
                    || callState === LinphoneEnums.CallState.End) {
@@ -551,7 +551,7 @@ AbstractWindow {
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(40)
                         Layout.rightMargin: Utils.getSizeWithScreenRatio(30)
                         icon.source: quality >= 4 ? AppIcons.cellSignalFull : quality >= 3 ? AppIcons.cellSignalMedium : quality >= 2 ? AppIcons.cellSignalLow : AppIcons.cellSignalNone
-                        colorizationColor: DefaultStyle.grey_0
+                        colorizationColor: quality >= 2 ? DefaultStyle.grey_0 : DefaultStyle.danger_500_main
                         style: ButtonStyle.noBackgroundLightBorder
                         Accessible.name: qsTr("open_statistic_panel_accessible_name")
                         onClicked: {
