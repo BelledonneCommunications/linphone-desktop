@@ -115,7 +115,6 @@
 #include "tool/thread/Thread.hpp"
 #include "tool/ui/DashRectangle.hpp"
 
-
 #if defined(Q_OS_MACOS)
 #include "core/event-count-notifier/EventCountNotifierMacOs.hpp"
 #else
@@ -395,7 +394,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	    &CoreModel::configuringStatus, [this](const std::shared_ptr<linphone::Core> &core,
 	                                          linphone::ConfiguringState status, const std::string &message) {
 		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		    if (status == linphone::ConfiguringState::Failed) {
+		    if (mIsRestarting && status == linphone::ConfiguringState::Failed) {
 			    mCoreModelConnection->invokeToCore([this, message]() {
 				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
 				    //: Error
@@ -851,7 +850,6 @@ void App::initCppInterfaces() {
 	qmlRegisterType<CallHistoryProxy>(Constants::MainQmlUri, 1, 0, "CallHistoryProxy");
 	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
 	qmlRegisterType<CallProxy>(Constants::MainQmlUri, 1, 0, "CallProxy");
-	qmlRegisterType<ChatList>(Constants::MainQmlUri, 1, 0, "ChatList");
 	qmlRegisterType<ChatProxy>(Constants::MainQmlUri, 1, 0, "ChatProxy");
 	qmlRegisterType<ChatGui>(Constants::MainQmlUri, 1, 0, "ChatGui");
 	qmlRegisterType<EventLogGui>(Constants::MainQmlUri, 1, 0, "EventLogGui");
@@ -974,13 +972,13 @@ void App::restart() {
 		CoreModel::getInstance()->getCore()->stop();
 		mCoreModelConnection->invokeToCore([this]() {
 			mIsRestarting = true;
-			closeCallsWindow();
-			setMainWindow(nullptr);
-			setCoreStarted(false);
 			if (mAccountList) mAccountList->resetData();
 			if (mCallList) mCallList->resetData();
 			if (mChatList) mChatList->resetData();
 			if (mConferenceInfoList) mConferenceInfoList->resetData();
+			closeCallsWindow();
+			setMainWindow(nullptr);
+			setCoreStarted(false);
 			mEngine->clearComponentCache();
 			mEngine->clearSingletons();
 			delete mEngine;

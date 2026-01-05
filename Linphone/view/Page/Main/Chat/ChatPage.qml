@@ -214,7 +214,6 @@ AbstractMainPage {
                             Layout.fillHeight: true
                             Layout.topMargin: Utils.getSizeWithScreenRatio(39)
                             searchBar: searchBar
-                            chatProxy.sourceModel: AppCpp.chats
                             Control.ScrollBar.vertical: scrollbar
 
                             onCurrentChatGuiChanged: {
