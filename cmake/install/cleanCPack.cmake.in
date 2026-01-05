@@ -97,10 +97,12 @@ elseif(WIN32)
     #####################################################
     # Clean all unwanted files to package.
     #####################################################
+    remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/Qt*.pdb")
+
      # TODO: remove all pdb when CrashReporter is available. Symbols for crashing are in server so it is not needed for deployment.
      # if debugging is needed, we could rebuild it and use pdb from local build instead of using official binaries.
+     # Warning: Do not remove files from here like below. NSIS have a check integrity that is done from install() commands.
     #remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/*.pdb")
-    remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/Qt*.pdb")
-    remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/*.cmake")
-    remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/*.lib")
+    #remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/*.cmake")
+    #remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/*.lib")
 endif()

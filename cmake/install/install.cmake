@@ -132,35 +132,6 @@ elseif(WIN32)
 	endif ()
 endif()
 
-#Windeployqt hack for CPack. WindeployQt cannot be used only with a simple 'install(CODE "execute_process' or CPack will not have all required files.
-#Call it from target folder
-function(deployqt_hack target)
-	if(WIN32)
-		find_program(DEPLOYQT_PROGRAM windeployqt HINTS "${_qt_bin_dir}")
-		if (NOT DEPLOYQT_PROGRAM)
-			message(FATAL_ERROR "Could not find the windeployqt program. Make sure it is in the PATH.")
-		endif ()
-		add_custom_command(TARGET ${target} POST_BUILD
-							COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/winqt/"
-							COMMAND "${CMAKE_COMMAND}" -E
-								env PATH="${_qt_bin_dir}" "${DEPLOYQT_PROGRAM}"
-								--qmldir "${LINPHONE_QML_DIR}"
-								--plugindir "${CMAKE_CURRENT_BINARY_DIR}/winqt/plugins"
-								--verbose 0
-								--no-compiler-runtime
-								--dir "${CMAKE_CURRENT_BINARY_DIR}/winqt/"
-								"$<TARGET_FILE:${target}>"
-							COMMENT "Deploying Qt..."
-							WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/.."
-		)
-		install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/winqt/" DESTINATION bin)
-		set(CMAKE_INSTALL_UCRT_LIBRARIES TRUE)
-		include(InstallRequiredSystemLibraries)
-	endif()
-endfunction()
-
-
-
 ################################################################
 #						CRASHPAD
 ################################################################
@@ -245,7 +216,9 @@ if(${ENABLE_APP_PACKAGING})
 		set(DO_GENERATOR YES)
 		set(PACKAGE_EXT "exe")
 		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}-${BIN_ARCH}")
-		set(CPACK_SOURCE_IGNORE_FILES "*Qt*.pdb;*.lib;*.cmake")	#Doesn't seem to work but we let the option just in case.
+		set(CPACK_SOURCE_IGNORE_FILES "*Qt*.pdb;*.lib;*.cmake")
+		set(CPACK_IGNORE_FILES ".*Qt.*\\.pdb$" ".*\\.lib$" ".*\\.cmake$") #Not documented
+
 		find_program(NSIS_PROGRAM makensis)
 		if(NOT NSIS_PROGRAM)
 			if(ENABLE_WINDOWS_TOOLS_CHECK)
