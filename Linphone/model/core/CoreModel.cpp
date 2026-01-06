@@ -460,7 +460,9 @@ void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
 		SettingsModel::getInstance()->setCallToneIndicationsEnabled(false);
 	}
 	App::postModelAsync([core]() {
-		for (int i = 0; i < App::getInstance()->getAccountList()->rowCount(); ++i) {
+		auto accounts = App::getInstance()->getAccountList();
+		if(!accounts) return;
+		for (int i = 0; i < accounts->rowCount(); ++i) {
 			auto accountCore = App::getInstance()->getAccountList()->getAt<AccountCore>(i);
 			emit accountCore->lSetPresence(core->getCallsNb() == 0 ? LinphoneEnums::Presence::Online
 			                                                       : LinphoneEnums::Presence::Busy,
