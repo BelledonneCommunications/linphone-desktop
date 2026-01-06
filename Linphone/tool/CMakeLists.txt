@@ -15,7 +15,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	tool/providers/ImageProvider.cpp
 	tool/providers/ScreenProvider.cpp
 	tool/providers/ThumbnailProvider.cpp
-	tool/providers/VideoFrameGrabber.cpp
+	# tool/providers/VideoFrameGrabber.cpp
 	
 	tool/native/DesktopTools.hpp
 

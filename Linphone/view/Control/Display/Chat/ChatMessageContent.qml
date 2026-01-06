@@ -109,10 +109,10 @@ ColumnLayout {
 		Layout.fillWidth: true
 		width: Math.min(Utils.getSizeWithScreenRatio(285), mainItem.maxWidth)
 		height: Math.min(Utils.getSizeWithScreenRatio(285), mainItem.maxWidth)
-		Layout.preferredWidth: videoOutput.contentRect.width
-		Layout.preferredHeight: videoOutput.contentRect.height
+		Layout.preferredWidth: width
+		Layout.preferredHeight: height
 		Layout.alignment: Qt.AlignHCenter
-		fillMode: VideoOutput.PreserveAspectFit
+		// fillMode: VideoOutput.PreserveAspectFit
 	}
 
 	// FILES

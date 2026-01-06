@@ -23,7 +23,7 @@
 
 #include <QQuickAsyncImageProvider>
 
-#include "VideoFrameGrabber.hpp"
+// #include "VideoFrameGrabber.hpp"
 #include "tool/AbstractObject.hpp"
 
 // Thumbnails are created asynchronously with QQuickAsyncImageProvider and not QQuickImageProvider.
@@ -43,7 +43,7 @@ public:
 
 	QImage mImage;
 	QString mPath;
-	VideoFrameGrabberListener mListener;
+	// VideoFrameGrabberListener mListener;
 
 private:
 	DECLARE_ABSTRACT_OBJECT

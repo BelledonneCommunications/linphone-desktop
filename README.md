@@ -32,7 +32,7 @@ For Desktop : you will need QT6 (_6.10.0 or newer_). `C++17` support is required
 - Using the [official QT installer](https://www.qt.io/download-thank-you)
 - Using an alternative installer like [aqtinstall](https://github.com/miurahr/aqtinstall)
 
-The following QT optional modules are required: qtmultimedia qtnetworkauth qtshadertools .
+The following QT optional modules are required: <!--qtmultimedia--> qtnetworkauth qtshadertools .
 
 If you wan't to build with Crash handler, you need to install the following tools:
 - clang
@@ -266,7 +266,7 @@ For Fedora (42), the required packages are:
   - qt6-qtbase-devel
   - qt6-qttools-devel
   - qt6-qtsvg-devel
-  - qt6-qtmultimedia-devel
+  <!-- - qt6-qtmultimedia-devel -->
   - qt6-qtnetworkauth-devel
   - qt6-qtquick3d-devel
   - qt6-qtlanguageserver-devel

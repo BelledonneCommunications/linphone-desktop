@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls as Control
 import QtQuick.Layouts
-import QtMultimedia
 
 import Linphone
 import UtilsCpp
@@ -107,35 +106,35 @@ Item {
 				visible: mainItem.isVideo
 				color: DefaultStyle.grey_1000
 				anchors.fill: parent
-				Video {
-					id: videoThumbnail
-					anchors.fill: parent
-					position: 100
-					source: mainItem.isVideo ? "file:///" + mainItem.filePath : ""
-					fillMode: playbackState === MediaPlayer.PlayingState ? VideoOutput.PreserveAspectFit : VideoOutput.PreserveAspectCrop
+				// Video {
+					// id: videoThumbnail
+					// anchors.fill: parent
+					// position: 100
+					// source: mainItem.isVideo ? "file:///" + mainItem.filePath : ""
+					// fillMode: playbackState === MediaPlayer.PlayingState ? VideoOutput.PreserveAspectFit : VideoOutput.PreserveAspectCrop
 					EffectImage {
 						anchors.centerIn: parent
-						visible: videoThumbnail.playbackState !== MediaPlayer.PlayingState
+						// visible: videoThumbnail.playbackState !== MediaPlayer.PlayingState
 						width: Utils.getSizeWithScreenRatio(24)
 						height: Utils.getSizeWithScreenRatio(24)
 						imageSource: AppIcons.playFill
 						colorizationColor: DefaultStyle.main2_0
 					}
-					Text {
-						z: parent.z + 1
-						property int timeDisplayed: videoThumbnail.playbackState === MediaPlayer.PlayingState ? videoThumbnail.position : videoThumbnail.duration
-						anchors.bottom: parent.bottom
-						anchors.left: parent.left
-						anchors.bottomMargin: Utils.getSizeWithScreenRatio(6)
-						anchors.leftMargin: Utils.getSizeWithScreenRatio(6)
-						text: UtilsCpp.formatDuration(timeDisplayed)
-						color: DefaultStyle.grey_0
-						font {
-							pixelSize: Typography.d1.pixelSize
-							weight: Typography.d1.weight
-						}
-					}
-				}
+					// Text {
+					// 	z: parent.z + 1
+					// 	property int timeDisplayed: videoThumbnail.playbackState === MediaPlayer.PlayingState ? videoThumbnail.position : videoThumbnail.duration
+					// 	anchors.bottom: parent.bottom
+					// 	anchors.left: parent.left
+					// 	anchors.bottomMargin: Utils.getSizeWithScreenRatio(6)
+					// 	anchors.leftMargin: Utils.getSizeWithScreenRatio(6)
+					// 	text: UtilsCpp.formatDuration(timeDisplayed)
+					// 	color: DefaultStyle.grey_0
+					// 	font {
+					// 		pixelSize: Typography.d1.pixelSize
+					// 		weight: Typography.d1.weight
+					// 	}
+					// }
+				// }
 			}
 		}
 	}

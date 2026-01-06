@@ -36,7 +36,7 @@ const QString ThumbnailProvider::ProviderId = "thumbnail";
 
 ThumbnailAsyncImageResponse::ThumbnailAsyncImageResponse(const QString &id, const QSize &requestedSize) {
 	mPath = id;
-	connect(&mListener, &VideoFrameGrabberListener::imageGrabbed, this, &ThumbnailAsyncImageResponse::imageGrabbed);
+	// connect(&mListener, &VideoFrameGrabberListener::imageGrabbed, this, &ThumbnailAsyncImageResponse::imageGrabbed);
 
 	if (QFileInfo(mPath).isFile()) {
 		bool removeExportedFile = SettingsModel::getInstance()->getVfsEncrypted();
@@ -53,11 +53,12 @@ ThumbnailAsyncImageResponse::ThumbnailAsyncImageResponse(const QString &id, cons
 			if (!format.isEmpty()) {
 				originalImage = QImage(mPath, format);
 			} else if (Utils::isVideo(mPath)) {
-				VideoFrameGrabber *grabber = new VideoFrameGrabber(removeExportedFile);
-				removeExportedFile = false;
-				connect(grabber, &VideoFrameGrabber::grabFinished, &mListener,
-				        &VideoFrameGrabberListener::imageGrabbed);
-				grabber->requestFrame(mPath);
+				originalImage = QImage(mPath);
+				// VideoFrameGrabber *grabber = new VideoFrameGrabber(removeExportedFile);
+				// removeExportedFile = false;
+				// connect(grabber, &VideoFrameGrabber::grabFinished, &mListener,
+				//         &VideoFrameGrabberListener::imageGrabbed);
+				// grabber->requestFrame(mPath);
 			}
 		}
 		if (removeExportedFile) QFile(mPath).remove();
