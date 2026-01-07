@@ -58,7 +58,6 @@ SettingsModel::SettingsModel() {
 		    if (gstate == linphone::GlobalState::On) { // reached when misc|config-uri is set in config and app starts
 			                                           // and after config is fetched.
 			    notifyConfigReady();
-
 		    }
 	    });
 	QObject::connect(CoreModel::getInstance().get(), &CoreModel::configuringStatus, this,
@@ -314,8 +313,6 @@ QVariantList SettingsModel::getCaptureDevices() const {
 	for (const auto &device : core->getExtendedAudioDevices()) {
 		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityRecord)) {
 			list << ToolModel::createVariant(device);
-		} else if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityAll)) {
-			list << ToolModel::createVariant(device);
 		}
 	}
 	return list;
@@ -328,8 +325,6 @@ QVariantList SettingsModel::getPlaybackDevices() const {
 
 	for (const auto &device : core->getExtendedAudioDevices()) {
 		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityPlay)) {
-			list << ToolModel::createVariant(device);
-		} else if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityAll)) {
 			list << ToolModel::createVariant(device);
 		}
 	}
@@ -705,9 +700,6 @@ QString SettingsModel::getLogsEmail() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "logs_email", Constants::DefaultLogsEmail));
 }
-
-
-
 
 // =============================================================================
 // Do not disturb

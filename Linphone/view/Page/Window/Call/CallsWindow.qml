@@ -347,7 +347,17 @@ AbstractWindow {
                             Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
                             Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
                             // TODO : change with broadcast or meeting icon when available
-                            imageSource: !mainWindow.call ? AppIcons.meeting : (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released) ? AppIcons.endCall : (mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote) ? AppIcons.pause : mainWindow.conference ? AppIcons.usersThree : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? AppIcons.arrowUpRight : AppIcons.arrowDownLeft
+                            imageSource: !mainWindow.call
+                                ? AppIcons.meeting
+                                : (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released)
+                                    ? AppIcons.endCall
+                                    : (mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote)
+                                        ? AppIcons.pause
+                                        : mainWindow.conference
+                                            ? AppIcons.usersThree
+                                            : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing
+                                                ? AppIcons.arrowUpRight
+                                                : AppIcons.arrowDownLeft
                             colorizationColor: !mainWindow.call
                                                || mainWindow.call.core.paused
                                                || mainWindow.callState
