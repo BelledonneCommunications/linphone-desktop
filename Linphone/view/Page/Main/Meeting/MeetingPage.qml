@@ -61,9 +61,10 @@ AbstractMainPage {
 	}
 
 	onSelectedConferenceChanged: {
-		// While a conference is being edited, we need to stay on the edit page
-		if (rightPanelStackView.currentItem && (rightPanelStackView.currentItem.objectName === "editConf")) return
+		// While a conference is being created or edited, we need to stay on the edition page
 		rightPanelStackView.clear()
+		if ((rightPanelStackView.currentItem && rightPanelStackView.currentItem.objectName === "editConf")
+				|| (leftPanelStackView.currentItem && leftPanelStackView.currentItem.objectName === "createConf")) return
 		if (selectedConference && selectedConference.core && selectedConference.core.haveModel) {
 			rightPanelStackView.push(meetingDetail, Control.StackView.Immediate)
 		}
