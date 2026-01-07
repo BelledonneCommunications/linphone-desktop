@@ -40,7 +40,6 @@ ListView {
     model: ChatProxy {
         id: chatProxy
         filterText: mainItem.searchText
-        model: AppCpp.chats
         onFilterTextChanged: {
             chatToSelectLater = currentChatGui
         }

@@ -212,6 +212,7 @@ AbstractMainPage {
                             id: chatListView
                             Layout.fillWidth: true
                             Layout.fillHeight: true
+                            chatProxy.model: AppCpp.chats
                             Layout.topMargin: Utils.getSizeWithScreenRatio(39)
                             searchBar: searchBar
                             Control.ScrollBar.vertical: scrollbar

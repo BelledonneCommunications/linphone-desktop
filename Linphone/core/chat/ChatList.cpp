@@ -50,7 +50,7 @@ ChatList::ChatList(QObject *parent) : ListProxy(parent) {
 
 ChatList::~ChatList() {
 	mustBeInMainThread("~" + getClassName());
-	mModelConnection = nullptr;
+	mModelConnection->disconnect();
 }
 
 void ChatList::connectItem(QSharedPointer<ChatCore> chat) {

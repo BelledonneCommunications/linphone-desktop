@@ -26,6 +26,8 @@
 DEFINE_ABSTRACT_OBJECT(ChatProxy)
 
 ChatProxy::ChatProxy(QObject *parent) {
+	mList = ChatList::create();
+	setSourceModel(mList.get());
 }
 
 ChatProxy::~ChatProxy() {
