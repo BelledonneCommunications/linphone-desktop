@@ -486,7 +486,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="235"/>
         <source>settings_advanced_hide_fps_title</source>
-        <translation type="unfinished"></translation>
+        <translation>FPS ausblenden</translation>
     </message>
 </context>
 <context>
@@ -523,20 +523,20 @@
         <location filename="../../core/App.cpp" line="620"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="404"/>
         <location filename="../../core/App.cpp" line="622"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Remote-Provisionierung fehlgeschlagen: %1</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="616"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>nicht erreichbar</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="851"/>
@@ -575,7 +575,7 @@
     <message>
         <location filename="../../core/App.cpp" line="877"/>
         <source>command_line_option_minimized</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimieren</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="880"/>
@@ -701,7 +701,7 @@
         <location filename="../../core/call/CallCore.cpp" line="654"/>
         <source>media_encryption_dtls</source>
         <extracomment>DTLS</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>DTLS</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="657"/>
@@ -713,13 +713,13 @@
         <location filename="../../core/call/CallCore.cpp" line="660"/>
         <source>media_encryption_srtp</source>
         <extracomment>SRTP</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SRTP</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="663"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
-        <translation type="unfinished">Post-quantum ZRTP</translation>
+        <translation>Post-quantum ZRTP</translation>
     </message>
 </context>
 <context>
@@ -956,7 +956,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="237"/>
         <source>history_list_empty_history</source>
         <extracomment>&quot;Aucun appel dans votre historique&quot;</extracomment>
-        <translation>Anrufverlauf leer</translation>
+        <translation>Anrufprotokoll leer</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="314"/>
@@ -974,7 +974,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="392"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>1 ausgewählter Teilnehmer</numerusform>
             <numerusform>%n ausgewählte Teilnehmer</numerusform>
         </translation>
@@ -1240,7 +1240,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="369"/>
         <source>call_paused_by_remote</source>
         <extracomment>Call paused by remote</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Anruf vom Gegenüber pausiert</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="573"/>
@@ -1371,7 +1371,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="961"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="969"/>
         <source>group_call_participant_selected</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>1 ausgewählter Teilnehmer</numerusform>
             <numerusform>%n ausgewählte Teilnehmer</numerusform>
         </translation>
@@ -1510,13 +1510,13 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1482"/>
         <source>call_activate_speaker_hint</source>
         <extracomment>&quot;Activer le son&quot;</extracomment>
-        <translation type="unfinished">Lautsprecher aktivieren</translation>
+        <translation>Lautsprecher aktivieren</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1484"/>
         <source>call_deactivate_speaker_hint</source>
         <extracomment>&quot;Désactiver le son&quot;</extracomment>
-        <translation type="unfinished">Lautsprecher stummschalten</translation>
+        <translation>Lautsprecher stummschalten</translation>
     </message>
 </context>
 <context>
@@ -1630,17 +1630,17 @@
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="39"/>
         <source>show_function_description</source>
-        <translation type="unfinished">Anzeigen</translation>
+        <translation>Zeigen</translation>
     </message>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="40"/>
         <source>fetch_config_function_description</source>
-        <translation type="unfinished">Konfiguration abrufen</translation>
+        <translation>Konfiguration abrufen</translation>
     </message>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="41"/>
         <source>call_function_description</source>
-        <translation type="unfinished">Anrufen</translation>
+        <translation>Anrufen</translation>
     </message>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="42"/>
@@ -1650,7 +1650,7 @@
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="43"/>
         <source>accept_function_description</source>
-        <translation type="unfinished">Akzeptieren</translation>
+        <translation>Akzeptieren</translation>
     </message>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="44"/>
@@ -2797,7 +2797,7 @@
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="144"/>
         <source>bottom_navigation_conversations_label</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation>Konversationen</translation>
+        <translation>Chats</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="150"/>
@@ -3190,7 +3190,7 @@
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="534"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>1 ausgewählter Teilnehmer</numerusform>
             <numerusform>%n ausgewählte Teilnehmer</numerusform>
         </translation>
@@ -3306,7 +3306,7 @@
     <message>
         <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="106"/>
         <source>call_start_group_call_title</source>
-        <translation type="unfinished">Gruppenanruf</translation>
+        <translation>Gruppenanruf</translation>
     </message>
 </context>
 <context>
@@ -3335,114 +3335,114 @@
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="56"/>
         <source>OAuthHttpServerReplyHandler is not listening</source>
-        <translation type="unfinished"></translation>
+        <translation>OAuthHttpServerReplyHandler ist nicht aktiv</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="120"/>
         <source>oidc_authentication_timeout_message</source>
         <extracomment>Timeout: Not authenticated</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zeitüberschreitung: Nicht authentifiziert</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="137"/>
         <source>oidc_authentication_granted_message</source>
         <extracomment>Authentication granted</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Authentifizierung erfolgreich</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="144"/>
         <source>oidc_authentication_not_authenticated_message</source>
         <extracomment>Not authenticated</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nicht authentifiziert</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="150"/>
         <source>oidc_authentication_refresh_message</source>
         <extracomment>Refreshing token</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Token wird aktualisiert</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="155"/>
         <source>oidc_authentication_temporary_credentials_message</source>
         <extracomment>Temporary credentials received</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Temporäre Anmeldedaten erhalten</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="173"/>
         <source>oidc_authentication_network_error</source>
         <extracomment>Network error</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Netzwerkfehler</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="177"/>
         <source>oidc_authentication_server_error</source>
         <extracomment>Server error</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Serverfehler</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="181"/>
         <source>oidc_authentication_token_not_found_error</source>
         <extracomment>OAuth token not found</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>OAuth-Token nicht gefunden</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="185"/>
         <source>oidc_authentication_token_secret_not_found_error</source>
         <extracomment>OAuth token secret not found</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>OAuth-Token-Geheimnis nicht gefunden</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="189"/>
         <source>oidc_authentication_callback_not_verified_error</source>
         <extracomment>OAuth callback not verified</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>OAuth-Callback nicht verifiziert</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="200"/>
         <source>oidc_authentication_request_auth_message</source>
         <extracomment>Requesting authorization from browser</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Autorisierung über den Browser anfordern</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="232"/>
         <source>oidc_authentication_no_token_found_error</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Token gefunden</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="244"/>
         <source>oidc_authentication_request_token_message</source>
         <extracomment>Requesting access token</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zugriffstoken wird angefordert</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="249"/>
         <source>oidc_authentication_refresh_token_message</source>
         <extracomment>Refreshing access token</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zugriffstoken wird aktualisiert</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="254"/>
         <source>oidc_authentication_request_authorization_message</source>
         <extracomment>Requesting authorization</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Autorisierung wird angefordert</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="259"/>
         <source>oidc_authentication_request_temporary_credentials_message</source>
         <extracomment>Requesting temporary credentials</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Temporäre Anmeldedaten werden angefordert</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="286"/>
         <source>oidc_authentication_no_auth_found_in_config_error</source>
         <extracomment>No authorization endpoint found in OpenID configuration</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kein Autorisierungs-Endpunkt in der OpenID-Konfiguration gefunden</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="301"/>
         <source>oidc_authentication_no_token_found_in_config_error</source>
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kein Token-Endpunkt in der OpenID-Konfiguration gefunden</translation>
     </message>
 </context>
 <context>
@@ -3538,7 +3538,7 @@
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="77"/>
         <source>assistant_account_creation_confirmation_explanation</source>
         <extracomment>Nous vous avons envoyé un code de vérification sur votre %1 %2&lt;br&gt; Merci de le saisir ci-dessous</extracomment>
-        <translation>Wir haben Ihnen einen Bestätigungscode an Ihr %1 %2&lt;br&gt; geschickt. Bitte geben Sie ihn unten ein.</translation>
+        <translation>Wir haben Ihnen einen Bestätigungscode an Ihr %1 %2&lt;br&gt; geschickt. Bitte geben Sie diesen unten ein.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="149"/>
@@ -3596,7 +3596,7 @@
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="179"/>
         <source>email</source>
-        <translation type="unfinished">Email</translation>
+        <translation>Email</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="198"/>
@@ -3693,9 +3693,9 @@ Ces fonctionnalités seront masquées si vous utilisez un compte SIP tiers.
 Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <translation>Einige Funktionen wie Gruppenchats, Videokonferenzen usw. erfordern ein %1-Konto.
 
-            Diese Funktionen werden ausgeblendet, wenn Sie ein Drittanbieter-SIP-Konto verwenden.
+Diese Funktionen werden ausgeblendet, wenn Sie ein Drittanbieter-SIP-Konto verwenden.
 
-            Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.</translation>
+Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="131"/>
@@ -3763,19 +3763,19 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="366"/>
         <source>login_advanced_parameters_label</source>
         <extracomment>Advanced parameters</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterte Einstellungen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="374"/>
         <source>login_proxy_server_url</source>
         <extracomment>&quot;Proxy server URL&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Proxy-Server-URL</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="385"/>
         <source>login_id</source>
         <extracomment>&quot;Connexion ID (if different)&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Verbindungs ID (falls anders)</translation>
     </message>
 </context>
 <context>
@@ -3895,7 +3895,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="17"/>
         <source>settings_conversations_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation>Konversationen</translation>
+        <translation>Chats</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="19"/>
@@ -3913,7 +3913,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="25"/>
         <source>settings_security_title</source>
         <extracomment>&quot;Security&quot;</extracomment>
-        <translation type="unfinished">Sicherheit / Verschlüsselung</translation>
+        <translation>Sicherheit / Verschlüsselung</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="27"/>
@@ -3978,17 +3978,17 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="267"/>
         <source>group_call_error_no_account</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Standardkonto gefunden, Gruppengespräch kann nicht erstellt werden</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="292"/>
         <source>group_call_error_participants_invite</source>
-        <translation type="unfinished"></translation>
+        <translation>Teilnehmer konnten nicht zum Gruppengespräch eingeladen werden</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="296"/>
         <source>group_call_error_creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppengespräch konnte nicht erstellt werden</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="441"/>
@@ -4008,12 +4008,12 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../tool/Utils.cpp" line="155"/>
         <location filename="../../tool/Utils.cpp" line="166"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="165"/>
         <source>information_popup_group_call_not_created_message</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppengespräch konnte nicht erstellt werden</translation>
     </message>
     <message numerus="yes">
         <location filename="../../tool/Utils.cpp" line="286"/>
@@ -4664,12 +4664,12 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="714"/>
         <source>DemocraticRepublicOfCongo</source>
-        <translation type="unfinished">Demokratische Republik Kongo</translation>
+        <translation>Demokratische Republik Kongo</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="854"/>
         <source>HongKong</source>
-        <translation type="unfinished">Hongkong</translation>
+        <translation>Hongkong</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="857"/>

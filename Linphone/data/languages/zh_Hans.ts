@@ -585,6 +585,23 @@
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>退出</translation>
     </message>
+    <message>
+        <location filename="../../core/App.cpp" line="403"/>
+        <location filename="../../core/App.cpp" line="620"/>
+        <source>info_popup_error_title</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="404"/>
+        <location filename="../../core/App.cpp" line="622"/>
+        <source>info_popup_configuration_failed_message</source>
+        <translation>远程配置失败：%1</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="616"/>
+        <source>configuration_error_detail</source>
+        <translation>无法接通</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationDialog</name>
@@ -3429,6 +3446,11 @@
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
         <translation>在OpenID配置中找不到令牌终结点</translation>
     </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="232"/>
+        <source>oidc_authentication_no_token_found_error</source>
+        <translation> </translation>
+    </message>
 </context>
 <context>
     <name>ParticipantListView</name>
@@ -3744,6 +3766,21 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <extracomment>&quot;Veuillez saisir un nom de domaine</extracomment>
         <translation>请输入域名</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="385"/>
+        <source>login_id</source>
+        <translation>连接ID（如不同）</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="366"/>
+        <source>login_advanced_parameters_label</source>
+        <translation>高级参数</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="374"/>
+        <source>login_proxy_server_url</source>
+        <translation>代理服务器URL</translation>
+    </message>
 </context>
 <context>
     <name>ScreencastSettings</name>
@@ -3911,6 +3948,11 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <source>contact_editor_dialog_abort_confirmation_save</source>
         <extracomment>&quot;Enregistrer&quot;</extracomment>
         <translation>保存</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="25"/>
+        <source>settings_security_title</source>
+        <translation>安全</translation>
     </message>
 </context>
 <context>

@@ -585,6 +585,12 @@
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Выйти</translation>
     </message>
+    <message>
+        <location filename="../../core/App.cpp" line="403"/>
+        <location filename="../../core/App.cpp" line="620"/>
+        <source>info_popup_error_title</source>
+        <translation>Ошибка</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationDialog</name>
@@ -3749,6 +3755,11 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <source>assistant_account_login_missing_domain</source>
         <extracomment>&quot;Veuillez saisir un nom de domaine</extracomment>
         <translation>Пожалуйста, введите домен</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="366"/>
+        <source>login_advanced_parameters_label</source>
+        <translation>Расширенные параметры</translation>
     </message>
 </context>
 <context>

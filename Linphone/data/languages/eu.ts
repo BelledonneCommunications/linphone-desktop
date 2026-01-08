@@ -1065,7 +1065,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="675"/>
         <source>call_audio_incoming</source>
         <extracomment>&quot;Appel entrant&quot;</extracomment>
-        <translation>Jasotako deia</translation>
+        <translation>Sarrerako deia</translation>
     </message>
 </context>
 <context>
@@ -3449,6 +3449,11 @@
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
         <translation>Ez da token endpointik aurkitu OpenID konfigurazioan</translation>
     </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="232"/>
+        <source>oidc_authentication_no_token_found_error</source>
+        <translation>Ez da tokenik aurkitu</translation>
+    </message>
 </context>
 <context>
     <name>ParticipantListView</name>
@@ -3763,6 +3768,21 @@ Proiektu komertzial batean gaitzeko, jarri gurekin harremanetan.</translation>
         <source>assistant_account_login_missing_domain</source>
         <extracomment>&quot;Veuillez saisir un nom de domaine</extracomment>
         <translation>Mesedez idatzi domeinu bat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="366"/>
+        <source>login_advanced_parameters_label</source>
+        <translation>Ezarpen aurreratuak</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="385"/>
+        <source>login_id</source>
+        <translation>Konexio IDa (desberdina bada)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="374"/>
+        <source>login_proxy_server_url</source>
+        <translation>Proxy zerbitzariko URLa</translation>
     </message>
 </context>
 <context>

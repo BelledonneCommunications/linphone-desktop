@@ -871,13 +871,13 @@
         <location filename="../../model/call/CallModel.cpp" line="354"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Service indisponible ou erreur réseau&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Serviço indisponível ou erro de rede</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="358"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporairement indisponible&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>temporariamente indisponível</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="362"/>
@@ -892,7 +892,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="14"/>
         <source>history_call_start_title</source>
         <extracomment>&quot;Nouvel appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nova chamada</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="16"/>
@@ -1298,7 +1298,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="688"/>
         <source>call_action_start_new_call</source>
         <extracomment>&quot;Nouvel appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nova chamada</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="728"/>
@@ -1330,7 +1330,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1492"/>
         <source>call_action_go_to_settings</source>
         <extracomment>&quot;Paramètres&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="859"/>
@@ -1348,7 +1348,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="914"/>
         <source>copied</source>
         <extracomment>Copié</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Copiado</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="916"/>
@@ -1362,7 +1362,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="935"/>
         <source>conference_participants_list_title</source>
         <extracomment>&quot;Participants (%1)&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Participantes (%1)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="955"/>
@@ -1435,7 +1435,7 @@
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1264"/>
         <source>call_activate_video_hint</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar video</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1277"/>
@@ -1533,7 +1533,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="30"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="32"/>
@@ -1544,7 +1544,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="39"/>
         <source>information_popup_synchronization_success_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Sucesso</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="41"/>
@@ -1555,7 +1555,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="43"/>
         <source>settings_contacts_carddav_popup_synchronization_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="45"/>
@@ -1573,7 +1573,7 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="88"/>
         <source>sip_address_display_name</source>
         <extracomment>Nom d&apos;affichage</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome de exibição</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="97"/>
@@ -1589,7 +1589,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="113"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation>Senha</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="121"/>
@@ -1627,7 +1627,7 @@
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="39"/>
         <source>show_function_description</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar</translation>
     </message>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="40"/>
@@ -1637,7 +1637,7 @@
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="41"/>
         <source>call_function_description</source>
-        <translation type="unfinished"></translation>
+        <translation>Chamar</translation>
     </message>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="42"/>
@@ -1661,7 +1661,7 @@
         <location filename="../../core/conference/ConferenceInfoCore.cpp" line="577"/>
         <source>information_popup_error_title</source>
         <extracomment>&quot;Erreur&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../core/conference/ConferenceInfoCore.cpp" line="579"/>
@@ -1676,31 +1676,31 @@
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="107"/>
         <source>drawer_menu_account_connection_status_connected</source>
         <extracomment>&quot;Connecté&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conectado</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="110"/>
         <source>drawer_menu_account_connection_status_cleared</source>
         <extracomment>&quot;Désactivé&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Desabilitado</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="113"/>
         <source>drawer_menu_account_connection_status_refreshing</source>
         <extracomment>&quot;Connexion…&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conectando…</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="115"/>
         <source>drawer_menu_account_connection_status_failed</source>
         <extracomment>&quot;Erreur&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="169"/>
         <source>information_popup_error_title</source>
         <extracomment>Erreur</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="171"/>
@@ -1721,7 +1721,7 @@
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="27"/>
         <source>save</source>
         <extracomment>&quot;Enregistrer</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gravar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="41"/>
@@ -1746,7 +1746,7 @@
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="110"/>
         <source>contact_editor_add_image_label</source>
         <extracomment>&quot;Ajouter une image&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Adicione uma imagem</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="128"/>
@@ -1758,7 +1758,7 @@
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="153"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Apagar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="204"/>
@@ -1788,7 +1788,7 @@
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="296"/>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="324"/>
         <source>sip_address</source>
-        <translation type="unfinished"></translation>
+        <translation>Endereço SIP</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="390"/>
@@ -1820,7 +1820,7 @@
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="219"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="221"/>
@@ -1850,7 +1850,7 @@
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="235"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Apagar</translation>
     </message>
 </context>
 <context>
@@ -1887,13 +1887,13 @@
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="85"/>
         <source>save</source>
-        <translation type="unfinished"></translation>
+        <translation>Gravar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="99"/>
         <source>contact_dialog_delete_title</source>
         <extracomment>Supprimer %1 ?&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Apagar %1?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="101"/>
@@ -1934,13 +1934,13 @@
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="152"/>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="158"/>
         <source>dialog_call</source>
         <extracomment>&quot;Appeler&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="175"/>
@@ -1958,13 +1958,13 @@
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="200"/>
         <source>dialog_ok</source>
         <extracomment>&quot;Ok&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="226"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Contatos</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="266"/>
@@ -1995,19 +1995,19 @@
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="409"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="422"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mensagem</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="434"/>
         <source>contact_video_call_action</source>
         <extracomment>&quot;Appel vidéo&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Video chamada</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="464"/>
@@ -2019,13 +2019,13 @@
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="467"/>
         <source>contact_presence_status_busy</source>
         <extracomment>&quot;Occupé&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ocupado</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="470"/>
         <source>contact_presence_status_do_not_disturb</source>
         <extracomment>&quot;Ne pas déranger&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Não perturbe</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="472"/>
@@ -2120,7 +2120,7 @@
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="811"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="813"/>
@@ -2207,7 +2207,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsProviderLayout.qml" line="92"/>
         <source>information_popup_success_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Sucesso</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsProviderLayout.qml" line="94"/>
@@ -2345,7 +2345,7 @@
         <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="28"/>
         <source>dialog_cancel</source>
         <extracomment>&quot;Annuler&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -2414,7 +2414,7 @@
         <location filename="../../core/friend/FriendCore.cpp" line="613"/>
         <source>sip_address</source>
         <extracomment>&quot;Adresse SIP&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Endereço SIP</translation>
     </message>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="33"/>
@@ -2427,7 +2427,7 @@
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="419"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="421"/>
@@ -2503,7 +2503,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="29"/>
         <source>information_popup_success_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Sucesso</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="31"/>
@@ -2520,7 +2520,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="33"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="53"/>
@@ -2544,7 +2544,7 @@
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="97"/>
         <source>settings_contacts_ldap_password_title</source>
         <extracomment>&quot;Mot de passe&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Senha</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="103"/>
@@ -2626,7 +2626,7 @@
     <message>
         <location filename="../../view/Control/Popup/Loading/LoadingPopup.qml" line="39"/>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -2641,13 +2641,13 @@
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="32"/>
         <source>password</source>
         <extracomment>Mot de passe</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Senha</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="68"/>
         <source>assistant_account_login</source>
         <extracomment>&quot;Connexion&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conexão</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="107"/>
@@ -2659,7 +2659,7 @@
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="110"/>
         <source>assistant_account_login_missing_password</source>
         <extracomment>&quot;Veuillez saisir un mot de passe&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, digite uma senha</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="129"/>
@@ -2720,7 +2720,7 @@
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="42"/>
         <source>assistant_account_login</source>
         <extracomment>Connexion</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conexão</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="60"/>
@@ -2744,7 +2744,7 @@
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="103"/>
         <source>assistant_login_remote_provisioning</source>
         <extracomment>&quot;Configuration distante&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Provisionamento remoto</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="131"/>
@@ -2761,7 +2761,7 @@
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="135"/>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="140"/>
@@ -2778,7 +2778,7 @@
     <message>
         <location filename="../../core/login/LoginPage.cpp" line="80"/>
         <source>default_account_connection_state_error_toast</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro durante a conexão</translation>
     </message>
 </context>
 <context>
@@ -2795,13 +2795,13 @@
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="133"/>
         <source>bottom_navigation_calls_label</source>
         <extracomment>&quot;Appels&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ligações</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="138"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Contatos</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="143"/>
@@ -2837,7 +2837,7 @@
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="361"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="363"/>
@@ -2849,7 +2849,7 @@
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="423"/>
         <source>drawer_menu_manage_account</source>
         <extracomment>Mon compte</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Minha conta</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="441"/>
@@ -2860,7 +2860,7 @@
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="460"/>
         <source>settings_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="478"/>
@@ -2969,7 +2969,7 @@
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="231"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
 </context>
 <context>
@@ -2978,7 +2978,7 @@
         <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="39"/>
         <source>meeting_schedule_meeting_label</source>
         <extracomment>&quot;Réunion&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reunião</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="51"/>
@@ -3068,7 +3068,7 @@
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="97"/>
         <source>meeting_schedule_delete_action</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Apagar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="106"/>
@@ -3120,7 +3120,7 @@
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="421"/>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="470"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="275"/>
@@ -3158,7 +3158,7 @@
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="411"/>
         <source>save</source>
-        <translation type="unfinished"></translation>
+        <translation>Gravar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="461"/>
@@ -3233,7 +3233,7 @@
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="835"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Participar da reunião</translation>
     </message>
 </context>
 <context>
@@ -3316,7 +3316,7 @@
     <message>
         <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="105"/>
         <source>call_start_group_call_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Chamada em grupo</translation>
     </message>
 </context>
 <context>
@@ -3325,7 +3325,7 @@
         <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="89"/>
         <source>call_audio_incoming</source>
         <extracomment>&quot;Appel entrant&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamada recebida</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="112"/>
@@ -3470,23 +3470,23 @@
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="60"/>
         <source>DTLS</source>
-        <translation type="unfinished"></translation>
+        <translation>DTLS</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="62"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="64"/>
         <source>SRTP</source>
-        <translation type="unfinished"></translation>
+        <translation>SRTP</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="67"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ZRTP pós-quântico</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="182"/>
@@ -3574,7 +3574,7 @@
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="82"/>
         <source>assistant_account_login</source>
-        <translation type="unfinished"></translation>
+        <translation>Conexão</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="103"/>
@@ -3606,7 +3606,7 @@
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="198"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation>Senha</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="211"/>
@@ -3648,7 +3648,7 @@
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="288"/>
         <source>assistant_account_create_missing_password_error</source>
         <extracomment>&quot;Veuillez entrer un mot de passe&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, digite uma senha</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="292"/>
@@ -3719,7 +3719,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="214"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation>Senha</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="230"/>
@@ -3731,18 +3731,18 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="251"/>
         <source>sip_address_display_name</source>
         <extracomment>Nom d&apos;affichage</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome de exibição</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="262"/>
         <source>transport</source>
         <extracomment>&quot;Transport&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Transporte</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="302"/>
         <source>assistant_account_login</source>
-        <translation type="unfinished"></translation>
+        <translation>Conexão</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="351"/>
@@ -3752,7 +3752,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="353"/>
         <source>assistant_account_login_missing_password</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, digite uma senha</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="356"/>
@@ -3866,13 +3866,13 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="12"/>
         <source>settings_title</source>
         <extracomment>&quot;Paramètres&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="15"/>
         <source>settings_calls_title</source>
         <extracomment>&quot;Appels&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ligações</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="17"/>
@@ -3884,7 +3884,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="19"/>
         <source>settings_contacts_title</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Contatos</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="21"/>
@@ -3908,25 +3908,25 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="32"/>
         <source>contact_editor_popup_abort_confirmation_title</source>
         <extracomment>Modifications non enregistrées</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modificações não salvas</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="34"/>
         <source>contact_editor_popup_abort_confirmation_message</source>
         <extracomment>Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Você tem modificações que não foram salvas. Se você deixar esta página, suas modificações serão perdidas. Você gostaria de salvar suas modificações antes de continuar?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="44"/>
         <source>contact_editor_dialog_abort_confirmation_do_not_save</source>
         <extracomment>&quot;Ne pas enregistrer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Não gravar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="46"/>
         <source>contact_editor_dialog_abort_confirmation_save</source>
         <extracomment>&quot;Enregistrer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gravar</translation>
     </message>
 </context>
 <context>
@@ -3985,7 +3985,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../tool/Utils.cpp" line="152"/>
         <location filename="../../tool/Utils.cpp" line="163"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="162"/>
@@ -4065,7 +4065,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="131"/>
         <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="173"/>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="145"/>
@@ -4140,7 +4140,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="124"/>
         <source>start</source>
         <extracomment>&quot;Commencer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar</translation>
     </message>
 </context>
 <context>

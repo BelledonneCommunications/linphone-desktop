@@ -2805,7 +2805,7 @@
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="149"/>
         <source>bottom_navigation_meetings_label</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Schôdzky</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="196"/>

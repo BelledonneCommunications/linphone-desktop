@@ -50,7 +50,7 @@
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="420"/>
         <source>drawer_menu_account_connection_status_cleared</source>
-        <translation>Desativado</translation>
+        <translation>Desabilitado</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="430"/>
@@ -86,7 +86,7 @@
         <location filename="../../model/account/AccountManager.cpp" line="84"/>
         <source>assistant_account_login_already_connected_error</source>
         <extracomment>&quot;Le compte est déjà connecté&quot;</extracomment>
-        <translation>A conta está conectada</translation>
+        <translation>A conta já está conectada</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="98"/>
@@ -98,7 +98,7 @@
         <location filename="../../model/account/AccountManager.cpp" line="113"/>
         <source>assistant_account_login_address_configuration_error</source>
         <extracomment>&quot;Impossible de configurer l&apos;adresse : `%1`.&quot;</extracomment>
-        <translation>Impossível de configurar o endereço: `%1`.</translation>
+        <translation>Falha ao configurar o endereço: `%1`.</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="119"/>
@@ -137,7 +137,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="21"/>
         <source>manage_account_details_subtitle</source>
         <extracomment>Éditer les informations de votre compte.</extracomment>
-        <translation>Editar informações da conta.</translation>
+        <translation>Editar informações da sua conta.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="27"/>
@@ -155,7 +155,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="59"/>
         <source>manage_account_add_picture</source>
         <extracomment>&quot;Ajouter une image&quot;</extracomment>
-        <translation>Adicione uma imagem</translation>
+        <translation>Adicionar uma imagem</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="74"/>
@@ -196,7 +196,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="180"/>
         <source>manage_account_delete</source>
         <extracomment>&quot;Déconnecter mon compte&quot;</extracomment>
-        <translation>Desconecte minha conta</translation>
+        <translation>Desconectar minha conta</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="188"/>
@@ -230,13 +230,13 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="313"/>
         <source>manage_account_device_remove_confirm_dialog</source>
-        <translation>Excluir %1?</translation>
+        <translation>Apagar %1?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="327"/>
         <source>manage_account_device_last_connection</source>
         <extracomment>&quot;Dernière connexion:&quot;</extracomment>
-        <translation>Ultimo login:</translation>
+        <translation>Último login:</translation>
     </message>
 </context>
 <context>
@@ -369,13 +369,13 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="147"/>
         <source>account_settings_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de conversations&quot;</extracomment>
-        <translation>URI do servidor de conferencia</translation>
+        <translation>URI da fábrica de conferência</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="156"/>
         <source>account_settings_audio_video_conference_factory_uri_title</source>
         <extracomment>&quot;URI du serveur de réunions&quot;</extracomment>
-        <translation>URI do servidor de vídeo conferência</translation>
+        <translation>URI da fábrica de vídeoconferência</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="163"/>
@@ -396,7 +396,7 @@
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="111"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun contact&quot;</extracomment>
-        <translation>Não encontrado…</translation>
+        <translation>Nenhum resultado encontrado…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="111"/>
@@ -469,19 +469,19 @@
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="114"/>
         <source>settings_advanced_media_encryption_title</source>
         <extracomment>Media encryption</extracomment>
-        <translation>Encriptação de mídia</translation>
+        <translation>Criptografia de mídia</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="132"/>
         <source>settings_advanced_media_encryption_mandatory_title</source>
         <extracomment>Media encryption mandatory</extracomment>
-        <translation>Encriptação de mídia obrigatória</translation>
+        <translation>Criptografia de mídia obrigatória</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="139"/>
         <source>settings_advanced_create_endtoend_encrypted_meetings_title</source>
         <extracomment>Create end to end encrypted meetings and group calls</extracomment>
-        <translation>Criar conferências e grupos de chamadas encriptadas fim-a-fim</translation>
+        <translation>Criar conferências e grupos de chamadas com criptografia de ponta-a-ponta</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="235"/>
@@ -560,13 +560,13 @@
     <message>
         <location filename="../../core/App.cpp" line="802"/>
         <source>command_line_option_log_to_stdout</source>
-        <translation>Gerar log de debug para a saída padrão durante a execução</translation>
+        <translation>Registrar na saída padrão informações de depuração durante a execução</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="805"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
-        <translation>Imprimir somente logs da aplicação</translation>
+        <translation>Imprimir somente registros da aplicação</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="1165"/>
@@ -589,7 +589,7 @@
         <location filename="../../core/App.cpp" line="440"/>
         <location filename="../../core/App.cpp" line="575"/>
         <source>info_popup_configuration_failed_message</source>
-        <translation>Provisionamento remoto falhou : %1</translation>
+        <translation>O provisionamento remoto falhou: %1</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="439"/>
@@ -600,7 +600,7 @@
     <message>
         <location filename="../../core/App.cpp" line="569"/>
         <source>configuration_error_detail</source>
-        <translation>não acessível</translation>
+        <translation>Não alcançável</translation>
     </message>
 </context>
 <context>
@@ -680,7 +680,7 @@
         <location filename="../../core/call/CallCore.cpp" line="407"/>
         <source>call_stats_jitter_buffer_label</source>
         <extracomment>&quot;Tampon de gigue: %1 ms&quot;</extracomment>
-        <translation>Buffer de jitter? %1 ms</translation>
+        <translation>Buffer de jitter: %1 ms</translation>
     </message>
     <message>
         <location filename="../../core/call/CallCore.cpp" line="434"/>
@@ -716,7 +716,7 @@
         <location filename="../../core/call/CallCore.cpp" line="662"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
-        <translation>ZRTP Pós-quântico</translation>
+        <translation>ZRTP pós-quântico</translation>
     </message>
 </context>
 <context>
@@ -883,7 +883,7 @@
         <location filename="../../model/call/CallModel.cpp" line="362"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Délai d&apos;attente du serveur dépassé&quot;</extracomment>
-        <translation>Tempo esgotado do Servidor</translation>
+        <translation>Tempo esgotado do servidor</translation>
     </message>
 </context>
 <context>
@@ -904,25 +904,25 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="86"/>
         <source>history_dialog_delete_all_call_logs_title</source>
         <extracomment>Supprimer l&apos;historique d&apos;appels ?</extracomment>
-        <translation>Excluir histórico de chamadas?</translation>
+        <translation>Apagar histórico de chamadas?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="88"/>
         <source>history_dialog_delete_all_call_logs_message</source>
         <extracomment>&quot;L&apos;ensemble de votre historique d&apos;appels sera définitivement supprimé.&quot;</extracomment>
-        <translation>O histórico de chamadas será excluído permanentemente.</translation>
+        <translation>O histórico de chamadas será apagado permanentemente.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="94"/>
         <source>history_dialog_delete_call_logs_title</source>
         <extracomment>Supprimer l&apos;historique d&apos;appels ?</extracomment>
-        <translation>Excluir histórico de chamadas?</translation>
+        <translation>Apagar histórico de chamadas?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="96"/>
         <source>history_dialog_delete_call_logs_message</source>
         <extracomment>&quot;L&apos;ensemble de votre historique d&apos;appels avec ce correspondant sera définitivement supprimé.&quot;</extracomment>
-        <translation>O histórico de chamadas deste usuário será excluído permanentemente.</translation>
+        <translation>O histórico de chamadas deste usuário será apagado permanentemente.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="147"/>
@@ -935,7 +935,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="594"/>
         <source>menu_delete_history</source>
         <extracomment>&quot;Supprimer l&apos;historique&quot;</extracomment>
-        <translation>Excluir histórico</translation>
+        <translation>Apagar histórico</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="208"/>
@@ -1086,13 +1086,13 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="43"/>
         <source>settings_calls_echo_canceller_title</source>
         <extracomment>&quot;Annulateur d&apos;écho&quot;</extracomment>
-        <translation>Cancelador de ruído</translation>
+        <translation>Cancelador de eco</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="45"/>
         <source>settings_calls_echo_canceller_subtitle</source>
         <extracomment>&quot;Évite que de l&apos;écho soit entendu par votre correspondant&quot;</extracomment>
-        <translation>Impede que o ruído seja ouvido pelo seu correspondente</translation>
+        <translation>Impede que o eco seja ouvido pelo seu correspondente</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="52"/>
@@ -1336,7 +1336,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="859"/>
         <source>conference_action_screen_sharing</source>
         <extracomment>&quot;Partage de votre écran&quot;</extracomment>
-        <translation>Compartilhe sua tela</translation>
+        <translation>Compartilhar sua tela</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="910"/>
@@ -1354,7 +1354,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="916"/>
         <source>information_popup_meeting_address_copied_to_clipboard</source>
         <extracomment>Le lien de la réunion a été copié dans le presse-papier</extracomment>
-        <translation>O link da reunião foi copiado para a área de transferência</translation>
+        <translation>O endereço da reunião foi copiado para a área de transferência</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="924"/>
@@ -1412,7 +1412,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1170"/>
         <source>call_action_transfer_call</source>
         <extracomment>&quot;Transférer l&apos;appel&quot;</extracomment>
-        <translation>Chamada de transferência</translation>
+        <translation>Transferir chamada</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1197"/>
@@ -1770,7 +1770,7 @@
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="220"/>
         <source>contact_editor_last_name</source>
         <extracomment>&quot;Nom&quot;</extracomment>
-        <translation>Ultimo nome</translation>
+        <translation>Último nome</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="233"/>
@@ -1893,25 +1893,25 @@
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="99"/>
         <source>contact_dialog_delete_title</source>
         <extracomment>Supprimer %1 ?&quot;</extracomment>
-        <translation>Excluir %1?</translation>
+        <translation>Apagar %1?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="101"/>
         <source>contact_dialog_delete_message</source>
         <extracomment>Ce contact sera définitivement supprimé.</extracomment>
-        <translation>Este contato será excluído permanentemente.</translation>
+        <translation>Este contato será apagado permanentemente.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="108"/>
         <source>contact_deleted_toast</source>
         <extracomment>&quot;Contact supprimé&quot;</extracomment>
-        <translation>Contato excluído</translation>
+        <translation>Contato apagado</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="110"/>
         <source>contact_deleted_message</source>
         <extracomment>&quot;%1 a été supprimé&quot;</extracomment>
-        <translation>%1 foi excluído</translation>
+        <translation>%1 foi apagado</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="126"/>
@@ -1940,7 +1940,7 @@
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="158"/>
         <source>dialog_call</source>
         <extracomment>&quot;Appeler&quot;</extracomment>
-        <translation>Chamada</translation>
+        <translation>Chamar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="175"/>
@@ -1995,13 +1995,13 @@
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="409"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation>Chamada</translation>
+        <translation>Chamar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="422"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
-        <translation>Mensagem</translation>
+        <translation>Enviar mensagem</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="434"/>
@@ -2043,7 +2043,7 @@
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="588"/>
         <source>contact_details_company_name</source>
         <extracomment>&quot;Société :&quot;</extracomment>
-        <translation>Companhia:</translation>
+        <translation>Empresa:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="609"/>
@@ -2061,7 +2061,7 @@
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="644"/>
         <source>contact_details_medias_subtitle</source>
         <extracomment>&quot;Afficher les medias partagés&quot;</extracomment>
-        <translation>Mostrar mídia compartilhada</translation>
+        <translation type="unfinished">Mostrar mídias compartilhadas</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="667"/>
@@ -2228,7 +2228,7 @@
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="32"/>
         <source>settings_debug_clean_logs_message</source>
         <extracomment>&quot;Les traces de débogage seront supprimées. Souhaitez-vous continuer ?&quot;</extracomment>
-        <translation>Os rastreamentos de depuração serão excluídos. Deseja continuar?</translation>
+        <translation>Os rastreamentos de depuração serão apagados. Deseja continuar?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="43"/>
@@ -2277,7 +2277,7 @@
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="86"/>
         <source>settings_debug_enable_full_logs_title</source>
         <extracomment>&quot;Activer les traces de débogage intégrales&quot;</extracomment>
-        <translation>Habilitar logs completos</translation>
+        <translation>Habilitar registros completos</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="96"/>
@@ -2354,7 +2354,7 @@
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="22"/>
         <source>call_stats_media_encryption_title</source>
         <extracomment>&quot;Encryption :&quot;</extracomment>
-        <translation>Encriptação:</translation>
+        <translation>Criptografia:</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="35"/>
@@ -2604,13 +2604,13 @@
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="179"/>
         <source>settings_contacts_ldap_sip_domain_title</source>
         <extracomment>&quot;Domaine SIP&quot;</extracomment>
-        <translation>SIP domain</translation>
+        <translation>Domínio SIP</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="185"/>
         <source>settings_contacts_ldap_debug_title</source>
         <extracomment>&quot;Débogage&quot;</extracomment>
-        <translation>Debug</translation>
+        <translation>Depuração</translation>
     </message>
 </context>
 <context>
@@ -2626,7 +2626,7 @@
     <message>
         <location filename="../../view/Control/Popup/Loading/LoadingPopup.qml" line="39"/>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -2726,7 +2726,7 @@
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="60"/>
         <source>assistant_no_account_yet</source>
         <extracomment>&quot;Pas encore de compte ?&quot;</extracomment>
-        <translation>Ainda não há conta?</translation>
+        <translation>Ainda não possui uma conta?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="68"/>
@@ -2744,7 +2744,7 @@
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="103"/>
         <source>assistant_login_remote_provisioning</source>
         <extracomment>&quot;Configuration distante&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Provisionamento remoto</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="131"/>
@@ -2825,7 +2825,7 @@
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="199"/>
         <source>searchbar_placeholder_text_chat_feature_enabled</source>
         <extracomment>&quot;ou envoyer un message …&quot;</extracomment>
-        <translation>ou enviar mensagem …</translation>
+        <translation>ou envie uma mensagem…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="305"/>
@@ -2878,13 +2878,13 @@
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="510"/>
         <source>help_quit_title</source>
         <extracomment>&quot;Quitter l&apos;application&quot;</extracomment>
-        <translation>Sair do app</translation>
+        <translation>Sair do aplicativo</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="515"/>
         <source>quit_app_question</source>
         <extracomment>&quot;Quitter %1 ?&quot;</extracomment>
-        <translation>Sair %1?</translation>
+        <translation>Sair do %1?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="544"/>
@@ -3044,25 +3044,25 @@
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="78"/>
         <source>meeting_schedule_cancel_dialog_message</source>
         <extracomment>&quot;Souhaitez-vous annuler et supprimer cette réunion ?&quot;</extracomment>
-        <translation>Gostaria de cancelar e excluir esta reunião?</translation>
+        <translation>Gostaria de cancelar e apagar esta reunião?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="80"/>
         <source>meeting_schedule_delete_dialog_message</source>
         <extracomment>Souhaitez-vous supprimer cette réunion ?</extracomment>
-        <translation>Gostaria de excluir esta reunião?</translation>
+        <translation>Gostaria de apagar esta reunião?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="86"/>
         <source>meeting_schedule_cancel_and_delete_action</source>
         <extracomment>&quot;Annuler et supprimer&quot;</extracomment>
-        <translation>Cancelar e excluir</translation>
+        <translation>Cancelar e apagar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="95"/>
         <source>meeting_schedule_delete_only_action</source>
         <extracomment>&quot;Supprimer seulement&quot;</extracomment>
-        <translation>Excluir apenas</translation>
+        <translation>Apenas apagar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="97"/>
@@ -5363,7 +5363,7 @@ Para habilitá-las em um projeto comercial, por favor, entre em contato conosco.
         <location filename="../../view/Control/Tool/Helper/utils.js" line="455"/>
         <source>formatMonths</source>
         <extracomment>&apos;%1 month&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>um mês</numerusform>
             <numerusform>%1 meses</numerusform>
         </translation>
