@@ -304,6 +304,21 @@
         <extracomment>&quot;No information&quot;</extracomment>
         <translation>Žádné informace</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
+        <source>copied</source>
+        <translation>Zkopírováno</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="129"/>
+        <source>account_settings_sip_address_copied_message</source>
+        <translation>Vaše SIP adresa byla zkopírována do schránky</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="133"/>
+        <source>account_settings_sip_address_copied_error_message</source>
+        <translation>Chyba při kopírování vaší SIP adresy</translation>
+    </message>
 </context>
 <context>
     <name>AccountSettingsPage</name>
@@ -360,23 +375,6 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="21"/>
         <source>settings_account_title</source>
         <translation>Nastavení účtu</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="32"/>
-        <source>info_popup_invalid_registrar_uri_message</source>
-        <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation>Registrační uri je neplatná. Ujistěte se, že odpovídá následujícímu formátu: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="34"/>
-        <source>info_popup_invalid_outbound_proxy_message</source>
-        <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation>Uri odchozího proxy serveru je neplatné. Ujistěte se, že odpovídá následujícímu formátu: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="35"/>
-        <source>info_popup_error_title</source>
-        <translation>Chyba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="45"/>
@@ -1955,7 +1953,7 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="45"/>
         <source>settings_contacts_carddav_popup_synchronization_error_message</source>
         <extracomment>&quot;Erreur de synchronisation!&quot;</extracomment>
-        <translation>Chyba synchronizace!</translation>
+        <translation>Chyba synchronizace: %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="62"/>
@@ -2559,6 +2557,26 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
         <translation>Probíhá vytváření chatu…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="46"/>
+        <source>info_popup_error_title</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="355"/>
+        <source>group_chat_error_no_participant</source>
+        <translation>Vyberte prosím alespoň jednoho účastníka</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="48"/>
+        <source>info_popup_chatroom_creation_failed</source>
+        <translation>Vytvoření chatovací místnosti se nezdařilo!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="42"/>
+        <source>loading_popup_chatroom_creation_pending_message</source>
+        <translation>Chatovací místnost se vytváří...</translation>
     </message>
 </context>
 <context>

@@ -251,19 +251,19 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
         <source>copied</source>
         <extracomment>Copied</extracomment>
-        <translation type="unfinished">Kopiert</translation>
+        <translation>Kopiert</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="129"/>
         <source>account_settings_sip_address_copied_message</source>
         <extracomment>Your SIP address has been copied in the clipboard</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ihre SIP-Adresse wurde in die Zwischenablage kopiert</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="133"/>
         <source>account_settings_sip_address_copied_error_message</source>
         <extracomment>Error copying your SIP address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Kopieren Ihrer SIP-Adresse</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="143"/>
@@ -404,6 +404,7 @@
         <translation type="vanished">Die Ausgangsproxy-URI ist ungültig. Bitte stellen Sie sicher, dass sie dem folgenden Format entspricht: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (&lt;port&gt; ist optional)</translation>
     </message>
     <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="36"/>
         <source>info_popup_error_title</source>
         <translation type="vanished">Fehler</translation>
     </message>
@@ -2015,7 +2016,7 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="47"/>
         <source>settings_contacts_carddav_popup_synchronization_error_message</source>
         <extracomment>&quot;Erreur de synchronisation : %1&quot;</extracomment>
-        <translation>Synchronisierungsfehler!</translation>
+        <translation>Synchronisierungsfehler: %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="64"/>
@@ -2548,19 +2549,19 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="46"/>
         <source>info_popup_error_title</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="48"/>
         <source>info_popup_chatroom_creation_failed</source>
         <extracomment>Chat room creation failed !</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chat konnte nicht erstellt werden!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="42"/>
         <source>loading_popup_chatroom_creation_pending_message</source>
         <extracomment>Chat room is being created...</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chat wird erstellt...</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="97"/>
@@ -2578,7 +2579,7 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="132"/>
         <source>chat_list_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation>Konversationen</translation>
+        <translation>Chats</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="150"/>
@@ -2650,7 +2651,7 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="359"/>
         <source>group_chat_error_no_participant</source>
         <extracomment>&quot;Please select at least one participant</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wählen Sie mindestens einen Teilnehmer aus</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="364"/>
@@ -4397,7 +4398,7 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="159"/>
         <source>bottom_navigation_conversations_label</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation>Konversationen</translation>
+        <translation>Chats</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="161"/>
@@ -5376,7 +5377,7 @@ Ablauf: %1</translation>
         <location filename="../../tool/LinphoneEnums.cpp" line="146"/>
         <source>message_state_displayed</source>
         <extracomment>read</extracomment>
-        <translation>gelsen</translation>
+        <translation>gelesen</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="149"/>
@@ -5906,7 +5907,7 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="702"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
-        <translation>Konversationen</translation>
+        <translation>Chats</translation>
     </message>
 </context>
 <context>
@@ -5949,7 +5950,7 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="19"/>
         <source>settings_conversations_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation>Konversationen</translation>
+        <translation>Chats</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="21"/>
