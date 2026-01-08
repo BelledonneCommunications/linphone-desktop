@@ -25,7 +25,6 @@
 
 #include "CameraDummy.hpp"
 #include "CameraGui.hpp"
-#include "PreviewManager.hpp"
 #include "core/App.hpp"
 #include "core/call/CallCore.hpp"
 #include "core/call/CallGui.hpp"
@@ -51,6 +50,10 @@ CameraGui::CameraGui(QQuickItem *parent) : QQuickFramebufferObject(parent) {
 CameraGui::~CameraGui() {
 	mustBeInMainThread("~" + getClassName());
 	mRefreshTimer.stop();
+	if(mIsPreview) {
+		lDebug() << "[CameraGui] Deactivation";
+		CoreModel::getInstance()->getCore()->enableVideoPreview(false);
+	}
 	setWindowIdLocation(None);
 }
 
@@ -77,6 +80,7 @@ void CameraGui::clearRenderer() {
 	mLastRenderer = nullptr;
 }
 
+
 QQuickFramebufferObject::Renderer *CameraGui::createRenderer() const {
 	QQuickFramebufferObject::Renderer *renderer = NULL;
 	lDebug() << log().arg("CreateRenderer");
@@ -84,9 +88,11 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer() const {
 	// A renderer is mandatory, we cannot wait async.
 	switch (getSourceLocation()) {
 		case CorePreview: {
-			// if (resetWindowId) PreviewManager::getInstance()->unsubscribe(this);
-			renderer = PreviewManager::getInstance()->subscribe(this);
-			//(QQuickFramebufferObject::Renderer *)CoreModel::getInstance()->getCore()->createNativePreviewWindowId();
+			App::postModelBlock([qmlName = mQmlName, callGui = mCallGui, &renderer]() {
+				lInfo() << "[Camera] (" << qmlName << ") Camera create from Preview";
+				renderer = (QQuickFramebufferObject::Renderer *)CoreModel::getInstance()->getCore()->createNativePreviewWindowId(
+					nullptr);
+			});
 
 		} break;
 		case Call: {
@@ -135,7 +141,10 @@ void CameraGui::updateSDKRenderer(QQuickFramebufferObject::Renderer *renderer) {
 	lDebug() << log().arg("Apply Qt Renderer to SDK") << renderer;
 	switch (getSourceLocation()) {
 		case CorePreview: {
-
+			App::postModelBlock([qmlName = mQmlName, renderer]() {
+				lInfo() << "[Camera] (" << qmlName << ") Camera to CorePreview";
+				CoreModel::getInstance()->getCore()->setNativePreviewWindowId(renderer);
+			});
 		} break;
 		case Call: {
 			App::postModelAsync([qmlName = mQmlName, callGui = mCallGui, renderer]() {
@@ -197,6 +206,11 @@ bool CameraGui::getIsPreview() const {
 void CameraGui::setIsPreview(bool status) {
 	if (mIsPreview != status) {
 		mIsPreview = status;
+		// We block it to serialize the action and allow only one CameraGui to change the state.
+		App::postModelBlock([status]() {
+			lDebug() << "[CameraGui] " << (status ? "Activation" : "Deactivation");
+			CoreModel::getInstance()->getCore()->enableVideoPreview(status);
+		});
 		updateWindowIdLocation();
 		update();
 
@@ -240,18 +254,9 @@ CameraGui::WindowIdLocation CameraGui::getSourceLocation() const {
 void CameraGui::setWindowIdLocation(const WindowIdLocation &location) {
 	if (mWindowIdLocation != location) {
 		lDebug() << log().arg("Update Window Id location from %2 to %3").arg(mWindowIdLocation).arg(location);
-		if (mWindowIdLocation == CorePreview) PreviewManager::getInstance()->unsubscribe(this);
-		//  else if (mWindowIdLocation != None) resetWindowId(); // Location change: Reset old window ID.
 		resetWindowId();
 		mWindowIdLocation = location;
-		if (mWindowIdLocation == CorePreview) PreviewManager::getInstance()->subscribe(this);
-		else updateSDKRenderer();
-		// QTimer::singleShot(100, this, &CameraGui::requestNewRenderer);
-		//		if (mWindowIdLocation == WindowIdLocation::CorePreview) {
-		//			mLastVideoDefinition =
-		//  CoreManager::getInstance()->getSettingsModel()->getCurrentPreviewVideoDefinition(); 			emit
-		//  videoDefinitionChanged(); 			mLastVideoDefinitionChecker.start();
-		//		} else mLastVideoDefinitionChecker.stop();
+		updateSDKRenderer();
 	}
 }
 void CameraGui::updateWindowIdLocation() {
@@ -262,7 +267,7 @@ void CameraGui::updateWindowIdLocation() {
 		setWindowIdLocation(WindowIdLocation::Device);
 	else setWindowIdLocation(WindowIdLocation::CorePreview);
 }
-
+// TODO to remove
 void CameraGui::callStateChanged(LinphoneEnums::CallState state) {
 	if (getSourceLocation() == CorePreview && state == LinphoneEnums::CallState::Connected) {
 		if (!getIsReady()) {
