@@ -566,12 +566,6 @@ void AccountModel::setPresence(LinphoneEnums::Presence presence,
 	core->getConfig()->setString(accountSection, "presence_note", Utils::appStringToCoreString(presenceNote));
 	core->getConfig()->sync();
 
-	if (!mMonitor->getParams()->publishEnabled()) {
-		auto params = mMonitor->getParams()->clone();
-		params->enablePublish(true);
-		mMonitor->setParams(params);
-	}
-
 	auto presenceModel = ToolModel::appPresenceToCorePresenceModel(presence, presenceNote);
 	core->setPresenceModel(presenceModel); // No api (yet) at the account level
 

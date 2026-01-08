@@ -506,7 +506,7 @@ FocusScope {
                         if (chat) messageSender.text = mainItem.chat.core.sendingText
                     }
                     onTextChanged: {
-                        if (text !== "" && mainItem.chat.core.composingName !== "") {
+                        if (text !== "") {
                             mainItem.chat.core.lCompose()
                         }
                         var lastChar = text.slice(-1)

@@ -56,7 +56,7 @@ AbstractWindow {
                 zrtpValidation.open()
             }
         } else if (callState === LinphoneEnums.CallState.StreamsRunning) {
-            if (!mainWindow.chat && mainWindow.conference.core.isChatEnabled)
+            if (!mainWindow.chat && (!mainWindow.conference || mainWindow.conference.core.isChatEnabled))
                 mainWindow.chatObj = UtilsCpp.getCurrentCallChat(mainWindow.call)
         } else if (callState === LinphoneEnums.CallState.Error
                    || callState === LinphoneEnums.CallState.End) {

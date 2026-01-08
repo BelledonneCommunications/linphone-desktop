@@ -81,6 +81,7 @@ FocusScope {
                 Layout.fillWidth: true
                 Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
                 focus: true
+                isError: groupNameItem.errorMessage !== ""
                 KeyNavigation.down: addParticipantsLayout //participantList.count > 0 ? participantList : searchbar
                 Accessible.name: qsTr("group_start_dialog_subject_hint")
             }

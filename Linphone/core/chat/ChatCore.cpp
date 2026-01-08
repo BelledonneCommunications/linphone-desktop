@@ -198,7 +198,11 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 				    emit conferenceJoined();
 			    });
 		    }
-		    mChatModelConnection->invokeToCore([this, participants]() { setParticipants(participants); });
+		    auto meAdmin = chatRoom->getMe() && chatRoom->getMe()->isAdmin();
+		    mChatModelConnection->invokeToCore([this, participants, meAdmin]() {
+			    setParticipants(participants);
+			    setMeAdmin(meAdmin);
+		    });
 	    });
 
 	// Events (excluding messages)
@@ -621,6 +625,8 @@ ChatCore::buildParticipants(const std::shared_ptr<linphone::ChatRoom> &chatRoom)
 		auto participantCore = ParticipantCore::create(participant);
 		result.append(participantCore);
 	}
+	auto meCore = ParticipantCore::create(chatRoom->getMe());
+	if (meCore) result.append(meCore);
 	return result;
 }
 

@@ -1589,8 +1589,11 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 			auto chatCore = ChatCore::create(linphoneChatRoom);
 			return QVariant::fromValue(new ChatGui(chatCore));
 		} else {
-			lInfo() << "[Utils] Did not find existing chat room, create one";
-			linphoneChatRoom = ToolModel::createCurrentCallChat(callModel);
+			// Only try to create chatroom if 1-1 call
+			if (!callModel->getConference()) {
+				lInfo() << "[Utils] Did not find existing chat room, create one";
+				linphoneChatRoom = ToolModel::createCurrentCallChat(callModel);
+			}
 			if (linphoneChatRoom != nullptr) {
 				lInfo() << "[Utils] Chatroom created with" << callModel->getRemoteAddress()->asStringUriOnly();
 				auto id = linphoneChatRoom->getIdentifier();
