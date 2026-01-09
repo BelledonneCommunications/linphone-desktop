@@ -276,7 +276,8 @@ ListView {
                     Item{Layout.fillWidth: true}
                     Text {
                         color: DefaultStyle.main2_500_main
-                        text: modelData ? UtilsCpp.formatDate(modelData.core.lastUpdatedTime, true, false) : ""
+                        property string format: modelData && UtilsCpp.isCurrentYear(modelData.core.lastUpdatedTime) ? "dd/MM" : "dd/MM/yy"
+                        text: modelData ? UtilsCpp.formatDate(modelData.core.lastUpdatedTime, true, false, format) : ""
                         font {
                             pixelSize: Typography.p3.pixelSize
                             weight: Typography.p3.weight

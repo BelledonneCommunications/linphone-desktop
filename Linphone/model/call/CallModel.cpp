@@ -69,7 +69,7 @@ void CallModel::accept(bool withVideo) {
 	activateLocalVideo(params, withVideo);
 	mMonitor->acceptWithParams(params);
 	emit localVideoEnabledChanged(withVideo);
-	emit cameraEnabledChanged(params->cameraEnabled());
+	emit cameraEnabledChanged(withVideo && params->cameraEnabled());
 }
 
 void CallModel::decline() {
@@ -460,9 +460,11 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		auto videoDirection = params->getVideoDirection();
 		auto remoteVideoDirection = call->getRemoteParams()->getVideoDirection();
 		lInfo() << log().arg("Camera enabled changed") << params->cameraEnabled();
-		emit cameraEnabledChanged(params->cameraEnabled());
 		emit localVideoEnabledChanged(videoDirection == linphone::MediaDirection::SendOnly ||
 		                              videoDirection == linphone::MediaDirection::SendRecv);
+		emit cameraEnabledChanged((videoDirection == linphone::MediaDirection::SendOnly ||
+		                           videoDirection == linphone::MediaDirection::SendRecv) &&
+		                          params->cameraEnabled());
 		emit remoteVideoEnabledChanged(remoteVideoDirection == linphone::MediaDirection::SendOnly ||
 		                               remoteVideoDirection == linphone::MediaDirection::SendRecv);
 		updateConferenceVideoLayout();

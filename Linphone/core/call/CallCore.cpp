@@ -111,7 +111,8 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	auto videoDirection = callParams->getVideoDirection();
 	mLocalVideoEnabled =
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
-	mCameraEnabled = callParams->cameraEnabled();
+	mCameraEnabled = mLocalVideoEnabled && callParams->cameraEnabled();
+	qDebug() << "create call with camera enabled" << mLocalVideoEnabled << callParams->cameraEnabled();
 	auto remoteParams = call->getRemoteParams();
 	videoDirection = remoteParams ? remoteParams->getVideoDirection() : linphone::MediaDirection::Inactive;
 	mRemoteVideoEnabled =

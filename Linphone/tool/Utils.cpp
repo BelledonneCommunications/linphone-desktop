@@ -1397,6 +1397,11 @@ bool Utils::isCurrentMonth(QDate date) {
 	return date.month() == currentDate.month() && date.year() == currentDate.year();
 }
 
+bool Utils::isCurrentYear(QDate date) {
+	auto currentDate = QDate::currentDate();
+	return date.year() == currentDate.year();
+}
+
 bool Utils::datesAreEqual(const QDate &a, const QDate &b) {
 	return a.month() == b.month() && a.year() == b.year() && a.day() == b.day();
 }

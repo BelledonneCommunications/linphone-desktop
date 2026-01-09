@@ -117,6 +117,7 @@ public:
 	Q_INVOKABLE static bool isCurrentDay(QDateTime date);
 	Q_INVOKABLE static bool isCurrentDay(QDate date);
 	Q_INVOKABLE static bool isCurrentMonth(QDate date);
+	Q_INVOKABLE static bool isCurrentYear(QDate date);
 	Q_INVOKABLE static bool datesAreEqual(const QDate &a, const QDate &b);
 	Q_INVOKABLE static bool dateisInMonth(const QDate &a, int month, int year);
 	Q_INVOKABLE static QDateTime createDateTime(const QDate &date, int hour, int min);
@@ -246,9 +247,13 @@ public:
 	static QUrl getRegistrationStateIcon(LinphoneEnums::RegistrationState state);
 
 #ifdef Q_OS_WINDOWS
-	static inline std::wstring getNativeString(const QString &s){ return s.toStdWString(); }
+	static inline std::wstring getNativeString(const QString &s) {
+		return s.toStdWString();
+	}
 #else
-	static std::string getNativeString(const QString &s){ return s.toStdString(); }
+	static std::string getNativeString(const QString &s) {
+		return s.toStdString();
+	}
 #endif
 
 private:
