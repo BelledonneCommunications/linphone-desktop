@@ -2,6 +2,7 @@
 <config xmlns="http://www.linphone.org/xsds/lpconfig.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.linphone.org/xsds/lpconfig.xsd lpconfig.xsd">
   <section name="app">
     <entry name="auto_download_incoming_files_max_size" overwrite="true">10000000</entry>
+    <entry name="record_aware" overwrite="true">1</entry>
   </section>
   <section name="proxy_default_values">
     <entry name="avpf" overwrite="true">0</entry>
@@ -30,11 +31,20 @@
   <section name="sip">
     <entry name="use_rls_presence" overwrite="true"></entry>
     <entry name="rls_uri" overwrite="true"></entry>
+    <entry name="sip_tcp_port" overwrite="true">-2</entry>
+    <entry name="sip_udp_port" overwrite="true">-2</entry>
+    <entry name="sip_tls_port" overwrite="true">-2</entry>
   </section>
   <section name="video">
     <entry name="automatically_accept" overwrite="true">1</entry>
     <entry name="automatically_initiate" overwrite="true">0</entry>
     <entry name="automatically_accept_direction" overwrite="true">2</entry>
+    <entry name="displaytype" overwrite="true">MSQOGL</entry>
+    <entry name="show_local" overwrite="true">0</entry>
+  </section>
+  <section name="sound">
+    <entry name="mic_gain_db" overwrite="true">0</entry>
+    <entry name="playback_gain_db" overwrite="true">0</entry>
   </section>
   <section name="assistant">
     <entry name="domain" overwrite="true"></entry>

@@ -75,30 +75,17 @@ void CoreModel::start() {
 	    linphone::Factory::get()->createCore(Utils::appStringToCoreString(Paths::getConfigFilePath(mConfigPath)),
 	                                         Utils::appStringToCoreString(Paths::getFactoryConfigFilePath()), nullptr);
 	setMonitor(mCore);
-	mCore->enableRecordAware(true);
-	mCore->setVideoDisplayFilter("MSQOGL");
 	mCore->usePreviewWindow(true);
 	// Force capture/display.
 	// Useful if the app was built without video support.
 	// (The capture/display attributes are reset by the core in this case.)
-	auto config = mCore->getConfig();
-	if (!mCore->videoSupported()) {
-		config->setInt("video", "capture", 0);
-		config->setInt("video", "display", 0);
-	}
+	// if (!mCore->videoSupported()) {
+	// 	config->setInt("video", "capture", 0);
+	// 	config->setInt("video", "display", 0);
+	// }
 
-	// TODO : set the real transport type when sdk will be updated
-	// for now, we need to let the OS choose the port to listen on
-	// so that the user can be connected to linphone and another softphone
-	// at the same time (otherwise it tries to listen on the same port as
-	// the other software)
-	auto transports = mCore->getTransports();
-	transports->setTcpPort(-2);
-	transports->setUdpPort(-2);
-	transports->setTlsPort(-2);
-	mCore->setTransports(transports);
-	mCore->enableVideoPreview(false);         // SDK doesn't write the state in configuration if not ready.
-	config->setInt("video", "show_local", 0); // So : write ourself to turn off camera before starting the core.
+	mCore->enableVideoPreview(false); // SDK doesn't write the state in configuration if not ready.
+	auto config = mCore->getConfig();
 	QString userAgent = ToolModel::computeUserAgent(config);
 	mCore->setUserAgent(Utils::appStringToCoreString(userAgent), LINPHONESDK_VERSION);
 	mCore->start();
@@ -114,10 +101,6 @@ void CoreModel::start() {
 	if (mCore->getLogCollectionUploadServerUrl().empty())
 		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
 
-	/// These 2 API should not be used as they manage internal gains insterad of those of the soundcard.
-	// Use playback/capture gain from capture graph and call only
-	mCore->setMicGainDb(0.0);
-	mCore->setPlaybackGainDb(0.0);
 	mIterateTimer = new QTimer(this);
 	mIterateTimer->setInterval(20);
 	connect(mIterateTimer, &QTimer::timeout, [this]() { mCore->iterate(); });
@@ -461,7 +444,7 @@ void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
 	}
 	App::postModelAsync([core]() {
 		auto accounts = App::getInstance()->getAccountList();
-		if(!accounts) return;
+		if (!accounts) return;
 		for (int i = 0; i < accounts->rowCount(); ++i) {
 			auto accountCore = App::getInstance()->getAccountList()->getAt<AccountCore>(i);
 			emit accountCore->lSetPresence(core->getCallsNb() == 0 ? LinphoneEnums::Presence::Online
