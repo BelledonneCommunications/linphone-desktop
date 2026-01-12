@@ -76,11 +76,17 @@ SettingsModel::SettingsModel() {
 		    if (!getDisableMeetingsFeature() && account &&
 		        !account->getParams()->getAudioVideoConferenceFactoryAddress())
 			    setDisableMeetingsFeature(true);
+		    else if (getDisableMeetingsFeature() && account &&
+		             account->getParams()->getAudioVideoConferenceFactoryAddress())
+			    setDisableMeetingsFeature(false);
 	    });
 	auto defaultAccount = core->getDefaultAccount();
 	if (!getDisableMeetingsFeature() && defaultAccount &&
 	    !defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress())
 		setDisableMeetingsFeature(true);
+	else if (getDisableMeetingsFeature() && defaultAccount &&
+	         defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress())
+		setDisableMeetingsFeature(false);
 
 	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo
 	// calibrations in call.
