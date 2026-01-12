@@ -193,7 +193,7 @@ FocusScope {
 						anchors.fill: parent
 						color: DefaultStyle.grey_100
 					}
-					model: TimeZoneProxy{
+					model: TimeZoneProxy {
 					}
 					visible: model.count > 0
 					onCurrentIndexChanged: {

@@ -127,7 +127,7 @@ QString ConferenceInfoModel::getOrganizerAddress() const {
 
 QString ConferenceInfoModel::getDescription() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	return Utils::coreStringToAppString(mConferenceInfo->getSubject());
+	return Utils::coreStringToAppString(mConferenceInfo->getDescription());
 }
 
 QString ConferenceInfoModel::getUri() const {
