@@ -1099,28 +1099,30 @@ bool App::notify(QObject *receiver, QEvent *event) {
 	return done;
 }
 
+void App::handleAccountActivity(QSharedPointer<AccountCore> accountCore) {
+	if (!accountCore) return;
+	auto accountPresence = accountCore->getPresence();
+	if ((mMainWindow && mMainWindow->isActive() || (mCallsWindow && mCallsWindow->isActive())) &&
+	    accountPresence == LinphoneEnums::Presence::Away) {
+		accountCore->lSetPresence(LinphoneEnums::Presence::Online, false);
+	} else if (((!mMainWindow || !mMainWindow->isActive() || !mMainWindow->isVisible()) &&
+	            (!mCallsWindow || !mCallsWindow->isActive() || !mCallsWindow->isVisible())) &&
+	           accountPresence == LinphoneEnums::Presence::Online) {
+		accountCore->lSetPresence(LinphoneEnums::Presence::Away, false);
+	}
+}
+
 void App::handleAppActivity() {
-	auto handle = [this](QSharedPointer<AccountCore> accountCore) {
-		if (!accountCore) return;
-		auto accountPresence = accountCore->getPresence();
-		if ((mMainWindow && mMainWindow->isActive() || (mCallsWindow && mCallsWindow->isActive())) &&
-		    accountPresence == LinphoneEnums::Presence::Away)
-			accountCore->lSetPresence(LinphoneEnums::Presence::Online, false);
-		else if (((!mMainWindow || !mMainWindow->isActive() || !mMainWindow->isVisible()) &&
-		          (!mCallsWindow || !mCallsWindow->isActive() || !mCallsWindow->isVisible())) &&
-		         accountPresence == LinphoneEnums::Presence::Online)
-			accountCore->lSetPresence(LinphoneEnums::Presence::Away, false);
-	};
 	if (mAccountList) {
 		for (auto &account : mAccountList->getSharedList<AccountCore>())
-			handle(account);
+			handleAccountActivity(account);
 	} else {
 		connect(
 		    this, &App::accountsChanged, this,
-		    [this, &handle] {
+		    [this] {
 			    if (mAccountList) {
 				    for (auto &account : mAccountList->getSharedList<AccountCore>())
-					    handle(account);
+					    handleAccountActivity(account);
 			    }
 		    },
 		    Qt::SingleShotConnection);
@@ -1441,12 +1443,12 @@ bool App::event(QEvent *event) {
 	} else if (event->type() == QEvent::ApplicationActivate) {
 		for (int i = 0; i < getAccountList()->rowCount(); ++i) {
 			auto accountCore = getAccountList()->getAt<AccountCore>(i);
-			emit accountCore->lSetPresence(LinphoneEnums::Presence::Online, false, false);
+			handleAccountActivity(accountCore);
 		}
 	} else if (event->type() == QEvent::ApplicationDeactivate) {
 		for (int i = 0; i < getAccountList()->rowCount(); ++i) {
 			auto accountCore = getAccountList()->getAt<AccountCore>(i);
-			emit accountCore->lSetPresence(LinphoneEnums::Presence::Away, false, false);
+			handleAccountActivity(accountCore);
 		}
 	}
 

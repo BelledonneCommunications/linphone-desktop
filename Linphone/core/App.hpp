@@ -145,6 +145,7 @@ public:
 	void setCoreStarted(bool started);
 
 	QQuickWindow *getCallsWindow();
+	void handleAccountActivity(QSharedPointer<AccountCore> accountCore);
 	Q_INVOKABLE void handleAppActivity();
 	QQuickWindow *getOrCreateCallsWindow(QVariant callGui = QVariant());
 	void setCallsWindowProperty(const char *id, QVariant property);
