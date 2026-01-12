@@ -108,6 +108,8 @@ AbstractWindow {
             if (rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName === "dialerPanel"){
                 mainWindow.keyPressedOnDialer(event)
             }
+            if ((event.key === Qt.Key_Escape || event.key === Qt.Key_Return) && mainWindow.visibility == Window.FullScreen)
+                mainWindow.showNormal()
         }
     }
     
@@ -332,11 +334,6 @@ AbstractWindow {
         anchors.fill: parent
         color: DefaultStyle.grey_900
         focus: true
-
-        Keys.onPressed: (event) => {
-            if ((event.key === Qt.Key_Escape || event.key === Qt.Key_Return) && mainWindow.visibility == Window.FullScreen)
-                mainWindow.showNormal()
-        }
 
         ColumnLayout {
             anchors.fill: parent
