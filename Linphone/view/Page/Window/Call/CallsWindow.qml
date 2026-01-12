@@ -353,34 +353,52 @@ AbstractWindow {
                     spacing: Utils.getSizeWithScreenRatio(10)
                     RowLayout {
                         spacing: Utils.getSizeWithScreenRatio(10)
-                        EffectImage {
-                            id: callStatusIcon
+                        Loader {
+                            id: callStatusIconLoader
                             Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
                             Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
-                            // TODO : change with broadcast or meeting icon when available
-                            imageSource: !mainWindow.call
-                                ? AppIcons.meeting
-                                : (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released)
-                                    ? AppIcons.endCall
-                                    : (mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote)
-                                        ? AppIcons.pause
-                                        : mainWindow.conference
-                                            ? AppIcons.usersThree
-                                            : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing
-                                                ? AppIcons.arrowUpRight
-                                                : AppIcons.arrowDownLeft
-                            colorizationColor: !mainWindow.call
-                                            || mainWindow.call.core.paused
-                                            || mainWindow.callState
-                                            === LinphoneEnums.CallState.Paused
-                                            || mainWindow.callState
-                                            === LinphoneEnums.CallState.PausedByRemote
-                                            || mainWindow.callState
-                                            === LinphoneEnums.CallState.End
-                                            || mainWindow.callState
-                                            === LinphoneEnums.CallState.Released
-                                            || mainWindow.conference ? DefaultStyle.danger_500_main : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500_main
-                            
+                            sourceComponent: EffectImage {
+                                id: callStatusIcon
+                                anchors.fill: parent
+                                // TODO : change with broadcast or meeting icon when available
+                                // onImageSourceChanged: console.log("image source changed", imageSource)
+                                imageSource: !mainWindow.call
+                                    ? AppIcons.meeting
+                                    : (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released)
+                                        ? AppIcons.endCall
+                                        : (mainWindow.call.core.paused || mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote)
+                                            ? AppIcons.pause
+                                            : mainWindow.conference
+                                                ? AppIcons.usersThree
+                                                : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing
+                                                    ? AppIcons.arrowUpRight
+                                                    : AppIcons.arrowDownLeft
+                                colorizationColor: !mainWindow.call
+                                                || mainWindow.call.core.paused
+                                                || mainWindow.callState
+                                                === LinphoneEnums.CallState.Paused
+                                                || mainWindow.callState
+                                                === LinphoneEnums.CallState.PausedByRemote
+                                                || mainWindow.callState
+                                                === LinphoneEnums.CallState.End
+                                                || mainWindow.callState
+                                                === LinphoneEnums.CallState.Released
+                                                || mainWindow.conference ? DefaultStyle.danger_500_main : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500_main
+                                
+                                Binding {
+                                    target: callStatusIcon
+                                    when: middleItemStackView.currentItem.objectName === "waitingRoom"
+                                    property: "imageSource"
+                                    value: AppIcons.usersThree
+                                }
+                            }
+                            Connections {
+                                target: mainWindow
+                                function onCallStateChanged() {
+                                    callStatusIconLoader.active = !callStatusIconLoader.active
+                                    callStatusIconLoader.active = !callStatusIconLoader.active
+                                }
+                            }
                         }
                         ColumnLayout {
                             spacing: Utils.getSizeWithScreenRatio(6)
@@ -1272,12 +1290,6 @@ AbstractWindow {
                         } else {
                             rightPanel.visible = false
                         }
-                    }
-                    Binding {
-                        target: callStatusIcon
-                        when: middleItemStackView.currentItem.objectName === "waitingRoom"
-                        property: "imageSource"
-                        value: AppIcons.usersThree
                     }
                     Binding {
                         target: callStatusText
