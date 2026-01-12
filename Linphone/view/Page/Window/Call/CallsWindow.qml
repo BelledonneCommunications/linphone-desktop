@@ -93,14 +93,26 @@ AbstractWindow {
         }
     }
     onClosing: close => {
-                   DesktopToolsCpp.screenSaverStatus = true
-                   if (callsModel.haveCall) {
-                       close.accepted = false
-                       terminateAllCallsDialog.open()
-                   }
-                   if (middleItemStackView.currentItem.objectName === "waitingRoom")
-                   middleItemStackView.replace(inCallItem)
-               }
+        DesktopToolsCpp.screenSaverStatus = true
+        if (callsModel.haveCall) {
+            close.accepted = false
+            terminateAllCallsDialog.open()
+        }
+        if (middleItemStackView.currentItem.objectName === "waitingRoom")
+        middleItemStackView.replace(inCallItem)
+    }
+    Connections {
+        enabled: activeFocusItem !== null
+        target: activeFocusItem.Keys
+        function onPressed(event) {
+            if (rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName === "dialerPanel"){
+                mainWindow.keyPressedOnDialer(event)
+            }
+        }
+    }
+    
+    signal keyPressedOnDialer(KeyEvent event)
+
 
     function changeLayout(layoutIndex) {
         if (layoutIndex == 0) {
@@ -319,16 +331,18 @@ AbstractWindow {
     Rectangle {
         anchors.fill: parent
         color: DefaultStyle.grey_900
-        Keys.onEscapePressed: {
-            if (mainWindow.visibility == Window.FullScreen)
+        focus: true
+
+        Keys.onPressed: (event) => {
+            if ((event.key === Qt.Key_Escape || event.key === Qt.Key_Return) && mainWindow.visibility == Window.FullScreen)
                 mainWindow.showNormal()
         }
 
         ColumnLayout {
             anchors.fill: parent
-            spacing: Utils.getSizeWithScreenRatio(10)
             anchors.bottomMargin: Utils.getSizeWithScreenRatio(10)
             anchors.topMargin: Utils.getSizeWithScreenRatio(10)
+            spacing: Utils.getSizeWithScreenRatio(10)
             Item {
                 id: headerItem
                 Layout.margins: Utils.getSizeWithScreenRatio(10)
@@ -359,20 +373,17 @@ AbstractWindow {
                                                 ? AppIcons.arrowUpRight
                                                 : AppIcons.arrowDownLeft
                             colorizationColor: !mainWindow.call
-                                               || mainWindow.call.core.paused
-                                               || mainWindow.callState
-                                               === LinphoneEnums.CallState.Paused
-                                               || mainWindow.callState
-                                               === LinphoneEnums.CallState.PausedByRemote
-                                               || mainWindow.callState
-                                               === LinphoneEnums.CallState.End
-                                               || mainWindow.callState
-                                               === LinphoneEnums.CallState.Released
-                                               || mainWindow.conference ? DefaultStyle.danger_500_main : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500_main
-                            onColorizationColorChanged: {
-                                callStatusIcon.active = !callStatusIcon.active
-                                callStatusIcon.active = !callStatusIcon.active
-                            }
+                                            || mainWindow.call.core.paused
+                                            || mainWindow.callState
+                                            === LinphoneEnums.CallState.Paused
+                                            || mainWindow.callState
+                                            === LinphoneEnums.CallState.PausedByRemote
+                                            || mainWindow.callState
+                                            === LinphoneEnums.CallState.End
+                                            || mainWindow.callState
+                                            === LinphoneEnums.CallState.Released
+                                            || mainWindow.conference ? DefaultStyle.danger_500_main : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500_main
+                            
                         }
                         ColumnLayout {
                             spacing: Utils.getSizeWithScreenRatio(6)
@@ -921,6 +932,69 @@ AbstractWindow {
                                     UtilsCpp.createCall(dialerTextInput.text)
                                 }
                                 Component.onCompleted: parent.height = height
+                                Connections {
+                                    target: mainWindow
+                                    function onKeyPressedOnDialer(event) {
+                                        if (event.modifiers & Qt.KeypadModifier) {
+                                            if (event.key === Qt.Key_0) {
+                                                numPad.keypadKeyPressedAtIndex(10)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_1) {
+                                                numPad.keypadKeyPressedAtIndex(0)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_2) {
+                                                numPad.keypadKeyPressedAtIndex(1)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_3) {
+                                                numPad.keypadKeyPressedAtIndex(2)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_4) {
+                                                numPad.keypadKeyPressedAtIndex(3)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_5) {
+                                                numPad.keypadKeyPressedAtIndex(4)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_6) {
+                                                numPad.keypadKeyPressedAtIndex(5)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_7) {
+                                                numPad.keypadKeyPressedAtIndex(6)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_8) {
+                                                numPad.keypadKeyPressedAtIndex(7)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_9) {
+                                                numPad.keypadKeyPressedAtIndex(8)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_Asterisk) {
+                                                numPad.keypadKeyPressedAtIndex(9)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_Plus) {
+                                                numPad.buttonPressed("+")
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_Enter) {
+                                                numPad.launchCall()
+                                                event.accepted = true
+                                            }
+                                        }
+                                        if (event.key === Qt.Key_Backspace) {
+                                            numPad.wipe()
+                                            event.accepted = true
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -932,9 +1006,9 @@ AbstractWindow {
                     objectName: "changeLayoutPanel"
                     width: parent.width
                     Keys.onEscapePressed: event => {
-                                              rightPanel.visible = false
-                                              event.accepted = true
-                                          }
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
                     call: mainWindow.call
                     onChangeLayoutRequested: index => {
                         mainWindow.changeLayout(index)
@@ -946,9 +1020,9 @@ AbstractWindow {
                 ColumnLayout {
                     objectName: "callListPanel"
                     Keys.onEscapePressed: event => {
-                                              rightPanel.visible = false
-                                              event.accepted = true
-                                          }
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
                     spacing: 0
                     Component {
                         id: mergeCallPopupButton
