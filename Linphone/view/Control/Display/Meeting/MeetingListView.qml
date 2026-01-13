@@ -27,6 +27,10 @@ ListView {
     spacing: Utils.getSizeWithScreenRatio(8)
 	highlightFollowsCurrentItem: false
 
+	onCurrentIndexChanged: if(currentIndex === -1) {
+		resetSelections()
+	}
+
 	signal meetingDeletionRequested(ConferenceInfoGui confInfo, bool canCancel)
 	
 	function selectIndex(index){
@@ -53,7 +57,6 @@ ListView {
 		moveToCurrentItem()
 		if(currentItem) {
 			mainItem.selectedConference = currentItem.itemGui
-			currentItem.forceActiveFocus()
 		}
 	}
 	// Update position only if we are moving to current item and its position is changing.
@@ -243,7 +246,7 @@ ListView {
 					anchors.fill: parent
 					anchors.rightMargin: 5	// margin to avoid clipping shadows at right
                     radius: Utils.getSizeWithScreenRatio(10)
-					visible: itemDelegate.haveModel || itemDelegate.activeFocus
+					visible: itemDelegate.haveModel || mainItem.currentIndex === itemDelegate.index
 					color: itemDelegate.isSelected ? DefaultStyle.main2_200 : DefaultStyle.grey_0 // mainItem.currentIndex === index
 					ColumnLayout {
 						anchors.fill: parent
