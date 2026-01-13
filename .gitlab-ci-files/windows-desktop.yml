@@ -238,9 +238,9 @@ win64-codesigning:
     - if: $DEPLOY_WINDOWS
 
   script:
-    - scp -pr build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
-    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/Packages/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
-    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/Packages/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
+    - rsync --perms --chmod=Fu=rw,Fg=r,Fo=r build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
+    - if ($MAKE_RELEASE_FILE_URL) { rsync --perms --chmod=Fu=rw,Fg=r,Fo=r build-desktop/OUTPUT/Packages/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
+    - if ($MAKE_RELEASE_FILE_URL) { rsync --perms --chmod=Fu=rw,Fg=r,Fo=r build-desktop/OUTPUT/Packages/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
 
 win64-ninja-vs2022-upload:
   extends:
