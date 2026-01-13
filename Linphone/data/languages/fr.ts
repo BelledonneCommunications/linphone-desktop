@@ -5640,13 +5640,13 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 <context>
     <name>SearchBar</name>
     <message>
-        <location filename="../../view/Control/Input/SearchBar.qml" line="124"/>
+        <location filename="../../view/Control/Input/SearchBar.qml" line="131"/>
         <source>open_dialer_acccessibility_label</source>
         <extracomment>&quot;Open dialer&quot;</extracomment>
         <translation>Ouvrir le numéroteur</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/SearchBar.qml" line="144"/>
+        <location filename="../../view/Control/Input/SearchBar.qml" line="151"/>
         <source>clear_text_input_acccessibility_label</source>
         <extracomment>&quot;Clear text input&quot;</extracomment>
         <translation>Supprimer le texte saisi</translation>
