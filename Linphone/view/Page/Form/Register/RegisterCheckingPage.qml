@@ -14,6 +14,7 @@ LoginLayout {
 	property string address
 	property string sipIdentityAddress
 	property string code
+	property alias errorMessage: codeItemLayout.errorMessage
 	property bool ctrlIsPressed
 	onCtrlIsPressedChanged: console.log("ctrl is pressed", ctrlIsPressed)
 	titleContent: [
@@ -78,66 +79,71 @@ LoginLayout {
                     text = qsTr("assistant_account_creation_confirmation_explanation").arg(completeString).arg(address)
 				}
 			}
-			RowLayout {
-                spacing: Utils.getSizeWithScreenRatio(45)
-				Repeater {
-					model: 4
-					id: repeater
-					signal pasteRequested(string text)
-					DigitInput {
-						id: digitInput
-						required property int index
-						Layout.preferredWidth: width
-						Layout.preferredHeight: height
-						Connections {
-							target: repeater
-							function onPasteRequested(text) {
-								console.log("paste requested", text[digitInput.index])
-								var test= text;
-								if (UtilsCpp.isInteger(text))
-								{
-									digitInput.text = text[digitInput.index]
+			FormItemLayout {
+				id: codeItemLayout
+				errorTextTopMargin: Utils.getSizeWithScreenRatio(5)
+				contentItem: RowLayout {
+					spacing: Utils.getSizeWithScreenRatio(45)
+					Repeater {
+						model: 4
+						id: repeater
+						signal pasteRequested(string text)
+						DigitInput {
+							id: digitInput
+							required property int index
+							Layout.preferredWidth: width
+							Layout.preferredHeight: height
+							isError: codeItemLayout.errorMessage !== ""
+							Connections {
+								target: repeater
+								function onPasteRequested(text) {
+									console.log("paste requested", text[digitInput.index])
+									var test= text;
+									if (UtilsCpp.isInteger(text))
+									{
+										digitInput.text = text[digitInput.index]
+									}
 								}
 							}
-						}
-						onTextChanged: {
-							console.log("text edited", text)
-							if (text.length > 0 ) {
-								mainItem.code = mainItem.code.slice(0, index) + text + mainItem.code.slice(index)
-								if (index < 3)
-									nextItemInFocusChain(true).forceActiveFocus()
-								else {
-									mainItem.sendCode(mainItem.code)
-									mainItem.code = ""
-								}
-							} else {
-								if (index > 0)
-									nextItemInFocusChain(false).forceActiveFocus()
-							}
-						}
-						Keys.onPressed: (event) => {
-							if (event.key == Qt.Key_Backspace) {
-								if (text.length === 0) {
-									nextItemInFocusChain(false).forceActiveFocus()
-									event.accepted = true
+							onTextChanged: {
+								console.log("text edited", text)
+								if (text.length > 0 ) {
+									mainItem.code = mainItem.code.slice(0, index) + text + mainItem.code.slice(index)
+									if (index < 3)
+										nextItemInFocusChain(true).forceActiveFocus()
+									else {
+										mainItem.sendCode(mainItem.code)
+										mainItem.code = ""
+									}
 								} else {
-								event.accepted = false
+									if (index > 0)
+										nextItemInFocusChain(false).forceActiveFocus()
 								}
-							} else if (event.key == Qt.Key_Control) {
-								mainItem.ctrlIsPressed = true
-								event.accepted = false
-							} else if (mainItem.ctrlIsPressed && event.key == Qt.Key_V) {
-								var clipboard = UtilsCpp.getClipboardText()
-								console.log("paste", clipboard)
-								repeater.pasteRequested(clipboard)
-							} else {
-								event.accepted = false
 							}
-						}
-						Keys.onReleased: (event) => {
-							if (event.key == Qt.Key_Control) {
-								mainItem.ctrlIsPressed = false
-								event.accepted = true
+							Keys.onPressed: (event) => {
+								if (event.key == Qt.Key_Backspace) {
+									if (text.length === 0) {
+										nextItemInFocusChain(false).forceActiveFocus()
+										event.accepted = true
+									} else {
+									event.accepted = false
+									}
+								} else if (event.key == Qt.Key_Control) {
+									mainItem.ctrlIsPressed = true
+									event.accepted = false
+								} else if (mainItem.ctrlIsPressed && event.key == Qt.Key_V) {
+									var clipboard = UtilsCpp.getClipboardText()
+									console.log("paste", clipboard)
+									repeater.pasteRequested(clipboard)
+								} else {
+									event.accepted = false
+								}
+							}
+							Keys.onReleased: (event) => {
+								if (event.key == Qt.Key_Control) {
+									mainItem.ctrlIsPressed = false
+									event.accepted = true
+								}
 							}
 						}
 					}

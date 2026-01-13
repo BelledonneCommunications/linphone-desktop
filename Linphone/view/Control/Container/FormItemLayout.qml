@@ -12,6 +12,7 @@ FocusScope{
 	property string labelIndication
 	property string tooltip: ""
 	property bool mandatory: false
+	property int errorTextTopMargin: 0//
 
 	property alias errorTextItem: errorText
 	property alias errorMessage: errorText.text
@@ -85,7 +86,7 @@ FocusScope{
 		Item {
 			Layout.preferredHeight: childrenRect.height
 			Layout.fillWidth: true
-			StackLayout {
+			FocusScope {
 				id: contentItem
 				height: childrenRect.height
 				anchors.left: parent.left
@@ -94,6 +95,7 @@ FocusScope{
 			TemporaryText {
 				id: errorText
 				anchors.top: contentItem.bottom
+				anchors.topMargin: mainItem.errorTextTopMargin
 				color: DefaultStyle.danger_500_main
 			}
 		}

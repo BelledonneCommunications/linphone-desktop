@@ -230,6 +230,7 @@ AbstractWindow {
 	Component {
 		id: checkingPage
 		RegisterCheckingPage {
+			id: registerCheckingPage
 			onReturnToRegister: mainWindowStackView.pop()
 			onSendCode: (code) => {
 				RegisterPageCpp.linkNewAccountUsingCode(code, registerWithEmail, sipIdentityAddress)
@@ -238,15 +239,16 @@ AbstractWindow {
 				target: RegisterPageCpp
 				function onLinkingNewAccountWithCodeSucceed() {
 					goToLogin()
-                    //: "Compte créé"
-                    mainWindow.showInformationPopup(qsTr("assistant_register_success_title"),
-                                                    //: "Le compte a été créé. Vous pouvez maintenant vous connecter"
-                                                    qsTr("assistant_register_success_message"), true)
+					//: "Compte créé"
+					mainWindow.showInformationPopup(qsTr("assistant_register_success_title"),
+													//: "Le compte a été créé. Vous pouvez maintenant vous connecter"
+													qsTr("assistant_register_success_message"), true)
 				}
 				function onLinkingNewAccountWithCodeFailed(errorMessage) {
-                    //: "Erreur dans le code de validation"
-                    if (errorMessage.length === 0) errorMessage = qsTr("assistant_register_error_code")
-                    mainWindow.showInformationPopup(qsTr("information_popup_error_title"), errorMessage, false)
+					registerCheckingPage.errorMessage = ""
+					//: "Erreur dans le code de validation"
+					if (errorMessage.length === 0) errorMessage = qsTr("assistant_register_error_code")
+					registerCheckingPage.errorMessage = errorMessage
 				}
 			}
 		}

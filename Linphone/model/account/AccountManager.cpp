@@ -357,10 +357,11 @@ void AccountManager::linkNewAccountUsingCode(const QString &code,
 	           const std::string &errorMessage, const std::shared_ptr<const linphone::Dictionary> &parameterErrors) {
 		    if (request->getType() == linphone::AccountManagerServicesRequest::Type::LinkEmailUsingCode) {
 			    lInfo() << "[AccountManager] error linking email to account" << errorMessage;
+			    emit linkingNewAccountWithCodeFailed(Utils::coreStringToAppString(errorMessage));
 		    } else if (request->getType() == linphone::AccountManagerServicesRequest::Type::LinkPhoneNumberUsingCode) {
 			    lInfo() << "[AccountManager] error linking phone number to account" << errorMessage;
+			    emit linkingNewAccountWithCodeFailed(Utils::coreStringToAppString(errorMessage));
 		    }
-		    emit linkingNewAccountWithCodeFailed(Utils::coreStringToAppString(errorMessage));
 	    });
 	if (registerType == RegisterType::Email)
 		mAccountManagerServicesModel->linkEmailToAccountUsingCode(sipIdentityAddress,

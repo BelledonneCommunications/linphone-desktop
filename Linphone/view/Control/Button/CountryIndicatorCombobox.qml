@@ -3,12 +3,18 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Layouts
 import QtQuick.Effects
 import Linphone
+import CustomControls 1.0
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Control.ComboBox {
 	id: mainItem
 	property string defaultCallingCode: ""
 	property bool enableBackgroundColors: false
+	onKeyboardFocusChanged: console.log("keyboard focus combobox", keyboardFocus)
+	property bool keyboardFocus: FocusHelper.keyboardFocus
+	property color keyboardFocusedBorderColor: DefaultStyle.main2_900
+	property real borderWidth: Utils.getSizeWithScreenRatio(1)
+	property real keyboardFocusedBorderWidth: Utils.getSizeWithScreenRatio(3)
 	property string text: combobox.model.getAt(combobox.currentIndex) ? combobox.model.getAt(combobox.currentIndex).countryCallingCode : ""
 	currentIndex: phoneNumberModel.count > 0 ? Math.max(0, phoneNumberModel.findIndexByCountryCallingCode(defaultCallingCode)) : -1
 	Accessible.name: mainItem.Accessible.name	
@@ -19,13 +25,16 @@ Control.ComboBox {
 		anchors.fill: parent
 		radius: Utils.getSizeWithScreenRatio(63)
 		color: mainItem.enableBackgroundColor ? DefaultStyle.grey_100 : "transparent"
-		border.color: mainItem.enableBackgroundColors 
-					? (mainItem.errorMessage.length > 0 
-						? DefaultStyle.danger_500_main 
-						: textField.activeFocus
-							? DefaultStyle.main1_500_main
-							: DefaultStyle.grey_200)
-					: "transparent"
+		border.color: mainItem.keyboardFocus 
+			? mainItem.keyboardFocusedBorderColor
+			: mainItem.enableBackgroundColors 
+				? (mainItem.errorMessage.length > 0 
+					? DefaultStyle.danger_500_main 
+					: mainItem.activeFocus || textField.activeFocus
+						? DefaultStyle.main1_500_main
+						: DefaultStyle.grey_200)
+				: "transparent"
+		border.width: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth
 	}
 	contentItem: RowLayout {
 		readonly property var currentItem: combobox.model.getAt(combobox.currentIndex)
@@ -95,8 +104,6 @@ Control.ComboBox {
 			maximumFlickVelocity: 1500
 			spacing: Utils.getSizeWithScreenRatio(10)
 			highlight: Rectangle {
-				anchors.left: parent.left
-				anchors.right: parent.right
 				width: listView.width
 				height: listView.height
 				color: DefaultStyle.main2_300
