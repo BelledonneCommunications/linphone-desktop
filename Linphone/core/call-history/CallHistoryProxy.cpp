@@ -27,6 +27,11 @@ DEFINE_ABSTRACT_OBJECT(CallHistoryProxy)
 
 CallHistoryProxy::CallHistoryProxy(QObject *parent) : LimitProxy(parent) {
 	mHistoryList = CallHistoryList::create();
+	if (!App::getInstance()->getCallHistoryList()) {
+		mHistoryList = CallHistoryList::create();
+		App::getInstance()->setCallHistoryList(mHistoryList);
+	}
+	mHistoryList = App::getInstance()->getCallHistoryList();
 	connect(mHistoryList.get(), &CallHistoryList::listAboutToBeReset, this, &CallHistoryProxy::listAboutToBeReset);
 	setSourceModels(new SortFilterList(mHistoryList.get(), Qt::DescendingOrder));
 	connect(App::getInstance(), &App::currentDateChanged, this, [this] { emit mHistoryList->lUpdate(); });

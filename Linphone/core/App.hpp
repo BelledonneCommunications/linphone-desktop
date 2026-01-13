@@ -24,6 +24,7 @@
 #include <QSharedPointer>
 
 #include "core/account/AccountProxy.hpp"
+#include "core/call-history/CallHistoryList.hpp"
 #include "core/call/CallProxy.hpp"
 #include "core/chat/ChatGui.hpp"
 #include "core/chat/ChatList.hpp"
@@ -163,6 +164,9 @@ public:
 	QSharedPointer<ConferenceInfoList> getConferenceInfoList() const;
 	void setConferenceInfoList(QSharedPointer<ConferenceInfoList> data);
 
+	QSharedPointer<CallHistoryList> getCallHistoryList() const;
+	void setCallHistoryList(QSharedPointer<CallHistoryList> data);
+
 	QSharedPointer<ChatList> getChatList() const;
 	ChatList *getChats() const;
 	void setChatList(QSharedPointer<ChatList> data);
@@ -213,6 +217,7 @@ signals:
 	void currentChatChanged();
 	void conferenceInfosChanged();
 	void chatsChanged();
+	void callHistoryChanged();
 	void localeChanged();
 	// void executeCommand(QString command);
 
@@ -239,6 +244,7 @@ private:
 	QSharedPointer<ConferenceInfoList> mConferenceInfoList;
 	QSharedPointer<ChatList> mChatList;
 	QSharedPointer<CallList> mCallList;
+	QSharedPointer<CallHistoryList> mCallHistoryList;
 	QSharedPointer<SafeConnection<App, CoreModel>> mCoreModelConnection;
 	QSharedPointer<SafeConnection<App, CliModel>> mCliModelConnection;
 	bool mAutoStart = false;

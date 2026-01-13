@@ -972,6 +972,7 @@ void App::restart() {
 			mIsRestarting = true;
 			if (mAccountList) mAccountList->resetData();
 			if (mCallList) mCallList->resetData();
+			if (mCallHistoryList) mCallHistoryList->resetData();
 			if (mChatList) mChatList->resetData();
 			if (mConferenceInfoList) mConferenceInfoList->resetData();
 			closeCallsWindow();
@@ -1231,6 +1232,16 @@ void App::setConferenceInfoList(QSharedPointer<ConferenceInfoList> data) {
 	if (mConferenceInfoList != data) {
 		mConferenceInfoList = data;
 		emit conferenceInfosChanged();
+	}
+}
+
+QSharedPointer<CallHistoryList> App::getCallHistoryList() const {
+	return mCallHistoryList;
+}
+void App::setCallHistoryList(QSharedPointer<CallHistoryList> data) {
+	if (mCallHistoryList != data) {
+		mCallHistoryList = data;
+		emit callHistoryChanged();
 	}
 }
 

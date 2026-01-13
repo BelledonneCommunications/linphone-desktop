@@ -26,14 +26,12 @@ ListView {
 
     model: CallHistoryProxy {
         id: callHistoryProxy
-        Component.onCompleted: {
-            loading = true
-        }
         onListAboutToBeReset: loading = true
         filterText: mainItem.searchText
         onFilterTextChanged: maxDisplayItems = initialDisplayItems
         initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(56)))
         displayItemsStep: 3 * initialDisplayItems / 2
+        onModelAboutToBeReset: loading = true
         onModelReset: {
             mainItem.resultsReceived()
         }
