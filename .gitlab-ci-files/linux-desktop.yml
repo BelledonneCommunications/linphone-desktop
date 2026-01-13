@@ -30,10 +30,10 @@
   rm -f file.key
 
 .deploy_linux: &deploy_linux |
-  rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
+  rsync -rlv --chmod=Fu=rw,Fg=r,Fo=r --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
   if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
-    rsync -rlv build/OUTPUT/Packages/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
-    rsync -rlv build/OUTPUT/Packages/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+    rsync -rlv --chmod=Fu=rw,Fg=r,Fo=r build/OUTPUT/Packages/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+    rsync -rlv --chmod=Fu=rw,Fg=r,Fo=r build/OUTPUT/Packages/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
   fi
 
 .linux-desktop:
