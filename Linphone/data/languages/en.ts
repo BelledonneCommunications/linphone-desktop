@@ -2319,37 +2319,37 @@ Error</extracomment>
 <context>
     <name>ChatMessageContentModel</name>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="80"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="83"/>
         <source>download_error_object_doesnt_exist</source>
-        <extracomment>Internal error : message object does not exist anymore !</extracomment>
-        <translation>Internal error : message object does not exist anymore !</translation>
+        <extracomment>Internal error : message object associated to this content does not exist anymore !</extracomment>
+        <translation>Internal error : message object associated to this content does not exist anymore !</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="95"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="98"/>
         <source>download_file_server_error</source>
         <extracomment>Error while trying to download content : %1</extracomment>
         <translation>Error while trying to download content : %1</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="105"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="108"/>
         <source>download_file_error_no_safe_file_path</source>
         <extracomment>Unable to create safe file path for: %1</extracomment>
         <translation>Unable to create safe file path for: %1</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="114"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="117"/>
         <source>download_file_error_file_transfer_unavailable</source>
         <extracomment>This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it</extracomment>
         <translation>This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="119"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="122"/>
         <source>download_file_error_null_name</source>
         <extracomment>Content name is null, can&apos;t download it !</extracomment>
         <translation>Content name is null, can&apos;t download it !</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="127"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="130"/>
         <source>download_file_error_unable_to_download</source>
         <extracomment>Unable to download file of entry %1</extracomment>
         <translation>Unable to download file of entry %1</translation>
@@ -4815,13 +4815,13 @@ Expiration : %1</translation>
 <context>
     <name>MessageSharedFilesInfos</name>
     <message>
-        <location filename="../../view/Page/Layout/Chat/MessageSharedFilesInfos.qml" line="40"/>
+        <location filename="../../view/Page/Layout/Chat/MessageSharedFilesInfos.qml" line="41"/>
         <source>no_shared_medias</source>
         <extracomment>No media</extracomment>
         <translation>No media</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/MessageSharedFilesInfos.qml" line="42"/>
+        <location filename="../../view/Page/Layout/Chat/MessageSharedFilesInfos.qml" line="43"/>
         <source>no_shared_documents</source>
         <extracomment>No document</extracomment>
         <translation>No document</translation>
@@ -5761,25 +5761,25 @@ To enable them in a commercial project, please contact us.</translation>
         <translation>Reply to %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="637"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="638"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation>Shared medias</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="639"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="640"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation>Shared documents</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="668"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="669"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
         <translation>Froward to…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="702"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="703"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Conversations</translation>

@@ -632,6 +632,7 @@ FocusScope {
                 id: sharedFilesComponent
                 MessageSharedFilesInfos {
                     chatGui: mainItem.chat
+                    showAsSquare: contentLoader.panelType === SelectedChatView.PanelType.Medias 
                     title: contentLoader.panelType === SelectedChatView.PanelType.Medias 
                         //: Shared medias
                         ? qsTr("shared_medias_title") 

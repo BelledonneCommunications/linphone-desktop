@@ -75,8 +75,11 @@ void ChatMessageContentModel::removeDownloadedFile(QString filePath) {
 }
 
 bool ChatMessageContentModel::downloadFile(const QString &name, QString *error) {
+	const QString filepath = Utils::getSafeFilePath(
+	    QStringLiteral("%1%2").arg(App::getInstance()->getSettings()->getDownloadFolder()).arg(name), nullptr);
+	qDebug() << "try to download" << filepath;
 	if (!mChatMessageModel) {
-		//: Internal error : message object does not exist anymore !
+		//: Internal error : message object associated to this content does not exist anymore !
 		if (error) *error = tr("download_error_object_doesnt_exist");
 		return false;
 	}

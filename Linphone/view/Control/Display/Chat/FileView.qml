@@ -270,7 +270,7 @@ Item {
 					EffectImage {
 						z: parent.z + 1
 						anchors.centerIn: parent
-						imageSource: defaultViewStack.imageSource
+						imageSource: mainItem.imageSource
 						width: Utils.getSizeWithScreenRatio(22)
 						height: width
 						colorizationColor: DefaultStyle.main2_600
