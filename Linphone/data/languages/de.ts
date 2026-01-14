@@ -113,7 +113,7 @@
         <location filename="../../model/account/AccountManager.cpp" line="144"/>
         <source>assistant_account_login_outbound_proxy_uri_error</source>
         <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Die ausgehende Proxy-Adresse ist ungültig. Bitte stellen Sie sicher, dass sie dem folgenden Format entspricht: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; ist optional)</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="109"/>
@@ -131,7 +131,7 @@
         <location filename="../../model/account/AccountManager.cpp" line="133"/>
         <source>assistant_account_login_registrar_uri_error</source>
         <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Die Registrar Adresse ist ungültig. Bitte stellen Sie sicher, dass sie dem folgenden Format entspricht: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; ist optional)</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="151"/>
@@ -176,7 +176,7 @@
         <location filename="../../model/account/AccountModel.cpp" line="310"/>
         <source>set_outbound_proxy_uri_failed_error_message</source>
         <extracomment>Unable to set outbound proxy uri from address %1. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation>Ausgehende Proxy-Adresse kann nicht festgelegt werden. Ungültige Adresse aus %1</translation>
+        <translation>Die ausgehende Proxy-Adresse kann nicht festgelegt werden: %1. Bitte stellen Sie sicher, dass sie dem folgenden Format entspricht: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; ist optional)</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="419"/>
@@ -433,7 +433,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="68"/>
         <source>mwi_server_address_tooltip</source>
         <extracomment>Address of the MWI server that sends SIP notifications to display new voicemail indicators</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Adresse des MWI Servers, der SIP Benachrichtigungen zum Anzeigen neuer Voicemail-Hinweise sendet</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="88"/>
@@ -454,7 +454,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="134"/>
         <source>account_settings_sip_proxy_url_title</source>
-        <translation>Ausgehende Proxy-Server-URL</translation>
+        <translation>Ausgehende Proxy-Adresse</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="138"/>
@@ -471,7 +471,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="90"/>
         <source>voicemail_address_tooltip</source>
         <extracomment>SIP address dialed when clicking the voicemail button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SIP-Adresse, die beim Klicken auf die Voicemail-Taste gewählt wird</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="155"/>
@@ -2249,7 +2249,7 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="408"/>
         <source>chat_message_send_again</source>
         <extracomment>&quot;Re-send&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erneut senden</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="419"/>
@@ -2364,7 +2364,7 @@ Error</extracomment>
         <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="83"/>
         <source>download_error_object_doesnt_exist</source>
         <extracomment>Internal error : message object associated to this content does not exist anymore !</extracomment>
-        <translation>Interner Fehler: Nachrichtenobjekt existiert nicht mehr!</translation>
+        <translation type="unfinished">Interner Fehler: Nachrichtenobjekt existiert nicht mehr!</translation>
     </message>
     <message>
         <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="98"/>
@@ -5405,7 +5405,7 @@ Ablauf: %1</translation>
         <location filename="../../tool/LinphoneEnums.cpp" line="227"/>
         <source>outgoing</source>
         <extracomment>&quot;Sortant&quot;</extracomment>
-        <translation>Ausgehend</translation>
+        <translation>Ausgehender</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="253"/>
@@ -5727,7 +5727,7 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="423"/>
         <source>login_proxy_server_url</source>
         <extracomment>&quot;Outbound SIP Proxy URI&quot;</extracomment>
-        <translation>Ausgehende Proxy-Server-URL</translation>
+        <translation>Ausgehende Proxy-Adresse</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="418"/>

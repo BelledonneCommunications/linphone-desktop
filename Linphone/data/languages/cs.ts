@@ -145,6 +145,16 @@
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Nelze přidat účet.</translation>
     </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="144"/>
+        <source>assistant_account_login_outbound_proxy_uri_error</source>
+        <translation>URI odchozího proxy serveru je neplatné. Ujistěte se, že odpovídá následujícímu formátu: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="133"/>
+        <source>assistant_account_login_registrar_uri_error</source>
+        <translation>Registrátor uri je neplatný. Ujistěte se, že odpovídá následujícímu formátu: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
+    </message>
 </context>
 <context>
     <name>AccountModel</name>
@@ -164,7 +174,7 @@
         <location filename="../../model/account/AccountModel.cpp" line="309"/>
         <source>set_outbound_proxy_uri_failed_error_message</source>
         <extracomment>Unable to set outbound proxy uri, failed creating address from %1</extracomment>
-        <translation>Nelze nastavit odchozí proxy URI, selhalo vytvoření adresy z %1</translation>
+        <translation>Nelze nastavit odchozí proxy URI z adresy %1. Ujistěte se, že odpovídá následujícímu formátu: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="418"/>
@@ -405,12 +415,6 @@
         <translation>URI hlasových zpráv</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="120"/>
-        <source>account_settings_transport_title</source>
-        <extracomment>&quot;Transport&quot;</extracomment>
-        <translation>Transport</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="127"/>
         <source>account_settings_registrar_uri_title</source>
         <translation>Registrační URI</translation>
@@ -473,6 +477,16 @@
         <source>account_settings_lime_server_url_title</source>
         <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
         <translation>URL adresa Lime serveru</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="68"/>
+        <source>mwi_server_address_tooltip</source>
+        <translation>Adresa serveru MWI, který odesílá oznámení SIP pro zobrazení nových indikátorů hlasové pošty</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="90"/>
+        <source>voicemail_address_tooltip</source>
+        <translation>SIP adresa vytočená po kliknutí na tlačítko hlasové schránky</translation>
     </message>
 </context>
 <context>
@@ -924,31 +938,6 @@
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="51"/>
         <source>settings_call_forward_address_cannot_be_empty</source>
         <translation>Číslo nebo SIP adresa je vyžadována</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="45"/>
-        <source>settings_call_forward_address_timeout</source>
-        <translation>Nelze nastavit přesměrování hovoru, vypršel časový limit požadavku</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
-        <source>settings_call_forward_address_progress_disabling</source>
-        <translation>Vypnutí přesměrování hovoru</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
-        <source>settings_call_forward_address_progress_enabling</source>
-        <translation>Zapnutí přesměrování hovoru na:</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
-        <source>settings_call_forward_activation_success</source>
-        <translation>Zapnuto přesměrování hovoru na: </translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
-        <source>settings_call_forward_deactivation_success</source>
-        <translation>Přesměrování hovoru vypnuto</translation>
     </message>
 </context>
 <context>
@@ -2207,6 +2196,11 @@
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Smazat</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="408"/>
+        <source>chat_message_send_again</source>
+        <translation>Znovu odeslat</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentCore</name>
@@ -2310,7 +2304,7 @@ Error</extracomment>
     <message>
         <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="80"/>
         <source>download_error_object_doesnt_exist</source>
-        <translation>Vnitřní chyba: objekt zprávy již neexistuje!</translation>
+        <translation type="unfinished">Vnitřní chyba: objekt zprávy již neexistuje!</translation>
     </message>
     <message>
         <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="114"/>
@@ -4428,11 +4422,6 @@ Expirace : %1</translation>
         <source>assistant_register_error_code</source>
         <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
         <translation>Chyba v ověřovacím kódu</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="249"/>
-        <source>information_popup_error_title</source>
-        <translation>Chyba</translation>
     </message>
 </context>
 <context>
