@@ -50,6 +50,7 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mIsDefaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount() == account;
 	mUnreadNotifications = account->getMissedCallsCount() + account->getUnreadChatMessageCount();
 	mDisplayName = Utils::coreStringToAppString(identityAddress->getDisplayName());
+	mPublishEnabled = params->publishEnabled();
 	if (mDisplayName.isEmpty()) {
 		mDisplayName = ToolModel::getDisplayName(identityAddress);
 		auto copyAddress = identityAddress->clone();

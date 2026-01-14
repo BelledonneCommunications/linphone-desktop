@@ -39,45 +39,45 @@
 <context>
     <name>AccountCore</name>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="446"/>
+        <location filename="../../core/account/AccountCore.cpp" line="447"/>
         <source>drawer_menu_account_connection_status_connected</source>
         <extracomment>&quot;Connecté&quot;</extracomment>
         <translation>Verbunden</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="449"/>
+        <location filename="../../core/account/AccountCore.cpp" line="450"/>
         <source>drawer_menu_account_connection_status_refreshing</source>
         <translation>Aktualisiere…</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="452"/>
+        <location filename="../../core/account/AccountCore.cpp" line="453"/>
         <source>drawer_menu_account_connection_status_progress</source>
         <translation>Verbinde…</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="455"/>
+        <location filename="../../core/account/AccountCore.cpp" line="456"/>
         <source>drawer_menu_account_connection_status_failed</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="459"/>
+        <location filename="../../core/account/AccountCore.cpp" line="460"/>
         <source>drawer_menu_account_connection_status_cleared</source>
         <translation>Deaktiviert</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="493"/>
+        <location filename="../../core/account/AccountCore.cpp" line="494"/>
         <source>manage_account_status_connected_summary</source>
         <extracomment>&quot;Vous êtes en ligne et joignable.&quot;</extracomment>
         <translation>Sie sind online und erreichbar.</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="496"/>
+        <location filename="../../core/account/AccountCore.cpp" line="497"/>
         <source>manage_account_status_failed_summary</source>
         <extracomment>&quot;Erreur de connexion, vérifiez vos paramètres.&quot;</extracomment>
         <translation>Verbindungsfehler, überprüfen Sie Ihre Einstellungen.</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="500"/>
+        <location filename="../../core/account/AccountCore.cpp" line="501"/>
         <source>manage_account_status_cleared_summary</source>
         <extracomment>&quot;Compte désactivé, vous ne recevrez ni appel ni message.&quot;</extracomment>
         <translation>Konto deaktiviert, Sie erhalten keine Anrufe oder Nachrichten.</translation>
@@ -2757,19 +2757,19 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <translation type="vanished">Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="164"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="165"/>
         <source>information_popup_error_title</source>
         <extracomment>Erreur</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="166"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="167"/>
         <source>information_popup_voicemail_address_undefined_message</source>
         <extracomment>L&apos;URI de messagerie vocale n&apos;est pas définie.</extracomment>
         <translation>Die Voicemail-URI ist nicht definiert.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="180"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="181"/>
         <source>account_settings_name_accessible_name</source>
         <extracomment>Account settings of %1</extracomment>
         <translation>Kontoeinstellungen von %1</translation>

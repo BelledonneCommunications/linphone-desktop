@@ -84,6 +84,7 @@ public:
 	Q_PROPERTY(LinphoneEnums::Presence explicitPresence MEMBER mExplicitPresence NOTIFY presenceChanged)
 	Q_PROPERTY(QString presenceNote READ getPresenceNote WRITE setPresenceNote NOTIFY presenceChanged)
 	Q_PROPERTY(int maxPresenceNoteSize MEMBER mMaxPresenceNoteSize CONSTANT)
+	Q_PROPERTY(bool publishEnabled MEMBER mPublishEnabled CONSTANT)
 
 	DECLARE_CORE_GET(int, voicemailCount, VoicemailCount)
 	static QSharedPointer<AccountCore> create(const std::shared_ptr<linphone::Account> &account);
@@ -272,6 +273,7 @@ private:
 	LinphoneEnums::Presence mExplicitPresence;
 	QString mPresenceNote;
 	int mMaxPresenceNoteSize;
+	bool mPublishEnabled = false;
 
 	bool mIsSaved = true;
 

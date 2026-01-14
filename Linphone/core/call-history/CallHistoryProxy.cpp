@@ -70,6 +70,6 @@ bool CallHistoryProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 bool CallHistoryProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
 	auto l = getItemAtSource<CallHistoryList, CallHistoryCore>(sourceLeft.row());
 	auto r = getItemAtSource<CallHistoryList, CallHistoryCore>(sourceRight.row());
-
-	return l->mDate < r->mDate;
+	if (l && r) return l->mDate < r->mDate;
+	return false;
 }

@@ -528,6 +528,11 @@ void AccountModel::setPresence(LinphoneEnums::Presence presence,
                                QString presenceNote) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 
+	if (!mMonitor->getParams()->publishEnabled()) {
+		lDebug() << log().arg("cannot set presence as publish is disabled in account params, return");
+		return;
+	}
+
 	lDebug() << log().arg("presence set request to: " + LinphoneEnums::toString(presence) + " | user initiated? " +
 	                      (userInitiated ? "true" : "false") + " | reset to auto? " + (resetToAuto ? "true" : "false"));
 

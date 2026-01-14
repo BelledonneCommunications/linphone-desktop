@@ -39,45 +39,45 @@
 <context>
     <name>AccountCore</name>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="446"/>
+        <location filename="../../core/account/AccountCore.cpp" line="447"/>
         <source>drawer_menu_account_connection_status_connected</source>
         <extracomment>&quot;Connecté&quot;</extracomment>
         <translation>Connected</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="449"/>
+        <location filename="../../core/account/AccountCore.cpp" line="450"/>
         <source>drawer_menu_account_connection_status_refreshing</source>
         <translation>Refreshing…</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="452"/>
+        <location filename="../../core/account/AccountCore.cpp" line="453"/>
         <source>drawer_menu_account_connection_status_progress</source>
         <translation>Connecting…</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="455"/>
+        <location filename="../../core/account/AccountCore.cpp" line="456"/>
         <source>drawer_menu_account_connection_status_failed</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="459"/>
+        <location filename="../../core/account/AccountCore.cpp" line="460"/>
         <source>drawer_menu_account_connection_status_cleared</source>
         <translation>Disabled</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="493"/>
+        <location filename="../../core/account/AccountCore.cpp" line="494"/>
         <source>manage_account_status_connected_summary</source>
         <extracomment>&quot;Vous êtes en ligne et joignable.&quot;</extracomment>
         <translation>You are online and reachable.</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="496"/>
+        <location filename="../../core/account/AccountCore.cpp" line="497"/>
         <source>manage_account_status_failed_summary</source>
         <extracomment>&quot;Erreur de connexion, vérifiez vos paramètres.&quot;</extracomment>
         <translation>Connection error, check your settings.</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="500"/>
+        <location filename="../../core/account/AccountCore.cpp" line="501"/>
         <source>manage_account_status_cleared_summary</source>
         <extracomment>&quot;Compte désactivé, vous ne recevrez ni appel ni message.&quot;</extracomment>
         <translation>Account disabled, you will not receive calls or messages.</translation>
@@ -2690,19 +2690,19 @@ Only your correspondent can decrypt them.</translation>
 <context>
     <name>Contact</name>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="164"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="165"/>
         <source>information_popup_error_title</source>
         <extracomment>Erreur</extracomment>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="166"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="167"/>
         <source>information_popup_voicemail_address_undefined_message</source>
         <extracomment>L&apos;URI de messagerie vocale n&apos;est pas définie.</extracomment>
         <translation>The voicemail URI is not defined.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/Contact.qml" line="180"/>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="181"/>
         <source>account_settings_name_accessible_name</source>
         <extracomment>Account settings of %1</extracomment>
         <translation>Account settings of %1</translation>
