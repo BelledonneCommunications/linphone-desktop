@@ -27,7 +27,7 @@ Control.Control {
     property var msgState: chatMessage ? chatMessage.core.messageState : LinphoneEnums.ChatMessageState.StateIdle
     hoverEnabled: true
     property bool linkHovered: false
-    property real maxWidth: parent?.width || Utils.getSizeWithScreenRatio(300)
+    property real maxWidth: parent ? parent.width : Utils.getSizeWithScreenRatio(300)
 
     leftPadding: isRemoteMessage ? Utils.getSizeWithScreenRatio(5) : 0
 
