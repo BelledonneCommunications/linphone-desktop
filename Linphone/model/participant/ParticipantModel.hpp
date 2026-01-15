@@ -40,6 +40,7 @@ public:
 	~ParticipantModel();
 
 	QString getSipAddress() const;
+	std::shared_ptr<const linphone::Address> getAddress() const;
 	QDateTime getCreationTime() const;
 	bool getAdminStatus() const;
 	bool isFocus() const;
