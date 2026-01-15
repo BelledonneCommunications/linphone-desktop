@@ -70,7 +70,7 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 			for (auto it : linphoneCallLogs) {
 				auto model = createCallHistoryCore(it);
 				toConnect(model.get());
-				callLogs->push_back(model);
+				callLogs->push_front(model);
 			}
 			mModelConnection->invokeToCore([this, callLogs]() {
 				mustBeInMainThread(getClassName());
