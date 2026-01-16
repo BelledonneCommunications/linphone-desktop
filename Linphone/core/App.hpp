@@ -55,6 +55,8 @@ class App : public SingleApplication, public AbstractObject {
 	Q_PROPERTY(QString sdkVersion READ getSdkVersion CONSTANT)
 	Q_PROPERTY(ChatGui *currentChat READ getCurrentChat WRITE setCurrentChat NOTIFY currentChatChanged)
 	Q_PROPERTY(QString localeAsString READ getLocaleAsString CONSTANT)
+	Q_PROPERTY(int remainingTimeBeforeOidcTimeout MEMBER mRemainingTimeBeforeOidcTimeout NOTIFY
+	               remainingTimeBeforeOidcTimeoutChanged)
 
 public:
 	App(int &argc, char *argv[]);
@@ -219,6 +221,8 @@ signals:
 	void chatsChanged();
 	void callHistoryChanged();
 	void localeChanged();
+	void lForceOidcTimeout();
+	void remainingTimeBeforeOidcTimeoutChanged();
 	// void executeCommand(QString command);
 
 private:
@@ -257,6 +261,8 @@ private:
 	QTimer mDateUpdateTimer;
 	QDate mCurrentDate;
 	float mScreenRatio = 1;
+	QTimer mOIDCRefreshTimer;
+	int mRemainingTimeBeforeOidcTimeout = 0;
 
 	DECLARE_ABSTRACT_OBJECT
 };

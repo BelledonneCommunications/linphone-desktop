@@ -72,6 +72,7 @@ Dialog {
             contentItem: TextField {
                 id: passwordEdit
                 hidden: true
+                width: parent.width
                 isError: passwordItem.errorTextVisible
                 KeyNavigation.down: cancelButton
             }

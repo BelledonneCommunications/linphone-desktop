@@ -102,6 +102,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 		lWarning() << log().arg("Timeout reached for OpenID connection.");
 		dynamic_cast<OAuthHttpServerReplyHandler *>(mOidc.replyHandler())->close();
 		CoreModel::getInstance()->getCore()->abortAuthentication(mAuthInfo);
+		emit timeoutTimerStopped();
 		//: Timeout: Not authenticated
 		emit statusChanged(tr("oidc_authentication_timeout_message"));
 		emit finished();
@@ -120,14 +121,14 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	connect(&mOidc, &QOAuth2AuthorizationCodeFlow::statusChanged, [=](QAbstractOAuth::Status status) {
 		switch (status) {
 			case QAbstractOAuth::Status::Granted: {
-				mTimeout.stop();
+				stopTimeoutTimer();
 				//: Authentication granted
 				emit statusChanged(tr("oidc_authentication_granted_message"));
 				emit authenticated();
 				break;
 			}
 			case QAbstractOAuth::Status::NotAuthenticated: {
-				mTimeout.stop();
+				stopTimeoutTimer();
 				//: Not authenticated
 				emit statusChanged(tr("oidc_authentication_not_authenticated_message"));
 				emit finished();
@@ -149,7 +150,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	});
 
 	connect(&mOidc, &QOAuth2AuthorizationCodeFlow::requestFailed, [=](QAbstractOAuth::Error error) {
-		mTimeout.stop();
+		stopTimeoutTimer();
 
 		const QMetaObject metaObject = QAbstractOAuth::staticMetaObject;
 		int index = metaObject.indexOfEnumerator("Error");
@@ -183,10 +184,12 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	});
 
 	connect(&mOidc, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, [this](const QUrl &url) {
+		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 		qDebug() << "Browser authentication url : " << url;
 		//: Requesting authorization from browser
 		emit statusChanged(tr("oidc_authentication_request_auth_message"));
 		mTimeout.start();
+		emit timeoutTimerStarted();
 		QDesktopServices::openUrl(url);
 	});
 
@@ -259,6 +262,29 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	QNetworkRequest request(url);
 	auto reply = mOidc.networkAccessManager()->get(request);
 	connect(reply, &QNetworkReply::finished, this, &OIDCModel::openIdConfigReceived);
+}
+
+void OIDCModel::forceTimeout() {
+	lWarning() << log().arg("Froce timeout for OpenID connection.");
+	stopTimeoutTimer();
+	dynamic_cast<OAuthHttpServerReplyHandler *>(mOidc.replyHandler())->close();
+	CoreModel::getInstance()->getCore()->abortAuthentication(mAuthInfo);
+	//: Timeout: Not authenticated
+	emit statusChanged(tr("oidc_authentication_timeout_message"));
+	emit finished();
+}
+
+bool OIDCModel::isTimerRunning() const {
+	return mTimeout.isActive();
+}
+
+int OIDCModel::getRemainingTimeBeforeTimeOut() {
+	return mTimeout.remainingTime();
+}
+
+void OIDCModel::stopTimeoutTimer() {
+	mTimeout.stop();
+	emit timeoutTimerStopped();
 }
 
 void OIDCModel::openIdConfigReceived() {

@@ -36,12 +36,18 @@ public:
 
 	void openIdConfigReceived();
 	void setBearers();
+	void forceTimeout();
+	bool isTimerRunning() const;
+	int getRemainingTimeBeforeTimeOut();
+	void stopTimeoutTimer();
 
 signals:
 	void authenticated();
 	void requestFailed(const QString &error);
 	void statusChanged(const QString &status);
 	void finished();
+	void timeoutTimerStarted();
+	void timeoutTimerStopped();
 
 private:
 	/**

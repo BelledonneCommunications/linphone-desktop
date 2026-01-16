@@ -73,7 +73,9 @@ void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
 	};
 	connect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, [this, dataChange] {
 		dataChange();
-		auto defaultAccount = App::getInstance()->getAccountList()->getDefaultAccountCore();
+		auto defaultAccount = App::getInstance()->getAccountList()
+		                          ? App::getInstance()->getAccountList()->getDefaultAccountCore()
+		                          : nullptr;
 		if (defaultAccount) emit defaultAccount->lRefreshNotifications();
 	});
 	connect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, dataChange);

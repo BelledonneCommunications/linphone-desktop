@@ -87,7 +87,6 @@ Item {
 
     AccountProxy {
         id: accountProxy
-        sourceModel: AppCpp.accounts
         onDefaultAccountChanged: if (tabbar.currentIndex === 0 && defaultAccount)
             defaultAccount.core?.lResetMissedCalls()
     }

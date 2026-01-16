@@ -145,6 +145,14 @@ void CoreModel::setConfigPath(QString path) {
 	}
 }
 
+void CoreModel::refreshOidcRemainingTime() {
+	for (auto oidc : mOpenIdConnections) {
+		if (oidc && oidc->isTimerRunning()) {
+			emit oidcRemainingTimeBeforeTimeoutChanged(oidc->getRemainingTimeBeforeTimeOut());
+		}
+	}
+}
+
 //-------------------------------------------------------------------------------
 //				PATHS
 //-------------------------------------------------------------------------------
@@ -402,7 +410,19 @@ void CoreModel::onAuthenticationRequested(const std::shared_ptr<linphone::Core> 
 			         << realm << " at " << serverUrl;
 			QString key = username + '@' + realm + ' ' + serverUrl;
 			if (mOpenIdConnections.contains(key)) mOpenIdConnections[key]->deleteLater();
-			mOpenIdConnections[key] = new OIDCModel(authInfo, this);
+			auto oidcModel = new OIDCModel(authInfo, this);
+			mOpenIdConnections[key] = oidcModel;
+			connect(oidcModel, &OIDCModel::timeoutTimerStarted, this, [this] {
+				mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+				emit timeoutTimerStarted();
+				qDebug() << "start refresh timer";
+			});
+			connect(oidcModel, &OIDCModel::timeoutTimerStopped, this, [this] { emit timeoutTimerStopped(); });
+			connect(this, &CoreModel::forceOidcTimeout, oidcModel, [this, oidcModel] {
+				if (oidcModel->isTimerRunning()) {
+					oidcModel->forceTimeout();
+				}
+			});
 		}
 	}
 	emit authenticationRequested(core, authInfo, method);

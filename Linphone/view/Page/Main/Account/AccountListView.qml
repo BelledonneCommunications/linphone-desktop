@@ -67,7 +67,6 @@ ColumnLayout{
 	Repeater{
 		model: AccountProxy {
 			id: accountProxy
-			sourceModel: AppCpp.accounts
 		}
 		delegate: contactDelegate
 	}

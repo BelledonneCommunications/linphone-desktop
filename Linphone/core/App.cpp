@@ -329,6 +329,9 @@ App::App(int &argc, char *argv[])
 	mEventCountNotifier = new EventCountNotifier(this);
 	mDateUpdateTimer.start();
 
+	mOIDCRefreshTimer.setInterval(1000);
+	mOIDCRefreshTimer.setSingleShot(false);
+
 #ifdef Q_OS_LINUX
 	exportDesktopFile();
 #endif
@@ -384,7 +387,29 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::globalStateChanged,
 	    [this](const std::shared_ptr<linphone::Core> &core, linphone::GlobalState gstate, const std::string &message) {
-		    mCoreModelConnection->invokeToCore([this, gstate] { setCoreStarted(gstate == linphone::GlobalState::On); });
+		    mCoreModelConnection->invokeToCore([this, gstate] {
+			    setCoreStarted(gstate == linphone::GlobalState::On);
+			    if (gstate == linphone::GlobalState::Configuring) {
+				    if (mMainWindow) {
+					    QMetaObject::invokeMethod(mMainWindow, "openSSOPage", Qt::DirectConnection);
+				    } else {
+					    connect(
+					        this, &App::mainWindowChanged, this,
+					        [this] {
+						        mCoreModelConnection->invokeToModel([this] {
+							        auto gstate = CoreModel::getInstance()->getCore()->getGlobalState();
+							        if (gstate == linphone::GlobalState::Configuring)
+								        mCoreModelConnection->invokeToCore([this] {
+									        if (mMainWindow)
+										        QMetaObject::invokeMethod(mMainWindow, "openSSOPage",
+										                                  Qt::DirectConnection);
+								        });
+						        });
+					        },
+					        Qt::SingleShotConnection);
+				    }
+			    }
+		    });
 	    });
 	mCoreModelConnection->makeConnectToModel(&CoreModel::authenticationRequested, &App::onAuthenticationRequested);
 	// Config error message
@@ -425,7 +450,28 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	// Synchronize state for because linphoneCore was ran before any connections.
 	mCoreModelConnection->invokeToModel([this]() {
 		auto state = CoreModel::getInstance()->getCore()->getGlobalState();
-		mCoreModelConnection->invokeToCore([this, state] { setCoreStarted(state == linphone::GlobalState::On); });
+		mCoreModelConnection->invokeToCore([this, state] {
+			setCoreStarted(state == linphone::GlobalState::On);
+			if (state == linphone::GlobalState::Configuring) {
+				if (mMainWindow) {
+					QMetaObject::invokeMethod(mMainWindow, "openSSOPage", Qt::DirectConnection);
+				} else {
+					connect(
+					    this, &App::mainWindowChanged, this,
+					    [this] {
+						    mCoreModelConnection->invokeToModel([this] {
+							    auto gstate = CoreModel::getInstance()->getCore()->getGlobalState();
+							    if (gstate == linphone::GlobalState::Configuring)
+								    mCoreModelConnection->invokeToCore([this] {
+									    if (mMainWindow)
+										    QMetaObject::invokeMethod(mMainWindow, "openSSOPage", Qt::DirectConnection);
+								    });
+						    });
+					    },
+					    Qt::SingleShotConnection);
+				}
+			}
+		});
 	});
 
 	mCoreModelConnection->makeConnectToModel(&CoreModel::unreadNotificationsChanged, [this] {
@@ -476,6 +522,30 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			    }
 		    });
 	    });
+
+	mCoreModelConnection->makeConnectToModel(&CoreModel::oidcRemainingTimeBeforeTimeoutChanged,
+	                                         [this](int remainingTime) {
+		                                         qDebug() << "App: oidc timeout changed";
+		                                         mCoreModelConnection->invokeToCore([this, remainingTime] {
+			                                         mRemainingTimeBeforeOidcTimeout = remainingTime;
+			                                         emit remainingTimeBeforeOidcTimeoutChanged();
+		                                         });
+	                                         });
+	mCoreModelConnection->makeConnectToCore(&App::lForceOidcTimeout, [this] {
+		qDebug() << "App: force oidc timeout";
+		mCoreModelConnection->invokeToModel([this] { emit CoreModel::getInstance()->forceOidcTimeout(); });
+	});
+	mCoreModelConnection->makeConnectToModel(&CoreModel::timeoutTimerStarted, [this]() {
+		qDebug() << "App: oidc timer started";
+		mCoreModelConnection->invokeToCore([this] { mOIDCRefreshTimer.start(); });
+	});
+	mCoreModelConnection->makeConnectToModel(&CoreModel::timeoutTimerStopped, [this]() {
+		qDebug() << "App: oidc timer stopped";
+		mCoreModelConnection->invokeToCore([this] { mOIDCRefreshTimer.stop(); });
+	});
+	connect(&mOIDCRefreshTimer, &QTimer::timeout, this, [this]() {
+		mCoreModelConnection->invokeToModel([this] { CoreModel::getInstance()->refreshOidcRemainingTime(); });
+	});
 
 	//---------------------------------------------------------------------------------------------
 	mCliModelConnection = SafeConnection<App, CliModel>::create(me, CliModel::getInstance());
@@ -1090,7 +1160,7 @@ bool App::notify(QObject *receiver, QEvent *event) {
 	}
 	if (event->type() == QEvent::MouseButtonPress) {
 		auto window = findParentWindow(receiver);
-		if (getMainWindow() == window) {
+		if (getMainWindow() == window && mAccountList) {
 			auto defaultAccountCore = mAccountList->getDefaultAccountCore();
 			if (defaultAccountCore && defaultAccountCore->getUnreadCallNotifications() > 0) {
 				emit defaultAccountCore->lResetMissedCalls();

@@ -61,6 +61,8 @@ public:
 	void start();
 	void setConfigPath(QString path);
 
+	void refreshOidcRemainingTime();
+
 	QString getFetchConfig(QString filePath, bool *error);
 	void useFetchConfig(QString filePath);
 	bool setFetchConfig(QString filePath);
@@ -93,6 +95,10 @@ signals:
 	void enabledLdapAddressBookSaved();
 	void magicSearchResultReceived(QString filter);
 	void messageReadInChatRoom(std::shared_ptr<linphone::ChatRoom> chatRoom);
+	void oidcRemainingTimeBeforeTimeoutChanged(int remainingTime);
+	void forceOidcTimeout();
+	void timeoutTimerStarted();
+	void timeoutTimerStopped();
 
 private:
 	QString mConfigPath;
