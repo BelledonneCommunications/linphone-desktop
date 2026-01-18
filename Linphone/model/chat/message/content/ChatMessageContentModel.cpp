@@ -57,6 +57,10 @@ ChatMessageContentModel::~ChatMessageContentModel() {
 	mustBeInLinphoneThread("~" + getClassName());
 }
 
+std::shared_ptr<ChatMessageModel> ChatMessageContentModel::getChatMessageModel() const {
+	return mChatMessageModel;
+}
+
 // Create a thumbnail from the first content that have a file
 void ChatMessageContentModel::createThumbnail() {
 	auto path = Utils::coreStringToAppString(mContent->getFilePath());

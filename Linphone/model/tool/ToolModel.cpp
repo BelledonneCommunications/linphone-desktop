@@ -131,7 +131,21 @@ QString ToolModel::getDisplayName(QString address) {
 	return nameSplitted.join(" ");
 }
 
+QString ToolModel::boldTextPart(const QString &text, const QString &regex) {
+	int regexIndex = text.indexOf(regex, 0, Qt::CaseInsensitive);
+	if (regex.isEmpty() || regexIndex == -1) return text;
+	QString result;
+	QStringList splittedText = text.split(regex, Qt::KeepEmptyParts, Qt::CaseInsensitive);
+	for (int i = 0; i < splittedText.size() - 1; ++i) {
+		result.append(splittedText[i]);
+		result.append("<b>" + regex + "</b>");
+	}
+	if (splittedText.size() > 0) result.append(splittedText[splittedText.size() - 1]);
+	return result;
+}
+
 QString ToolModel::encodeTextToQmlRichFormat(const QString &text,
+                                             const QString &textPartToBold,
                                              const QVariantMap &options,
                                              std::shared_ptr<linphone::ChatRoom> chatRoom) {
 	QStringList formattedText;
@@ -230,7 +244,11 @@ QString ToolModel::encodeTextToQmlRichFormat(const QString &text,
 			}
 		}
 	}
-	return "<p style=\"white-space:pre-wrap;\">" + formattedText.join("");
+	QString finalText = formattedText.join("");
+	if (!textPartToBold.isEmpty()) {
+		finalText = boldTextPart(finalText, textPartToBold);
+	}
+	return finalText;
 }
 
 std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &address) {

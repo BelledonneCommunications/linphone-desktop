@@ -2279,24 +2279,24 @@
 <context>
     <name>ChatMessageContentCore</name>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="105"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="111"/>
         <source>download_file_default_error</source>
         <extracomment>Error downloading file %1</extracomment>
         <translation>Fehler beim Herunterladen der Datei %1</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="106"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
         <source>info_popup_error_titile</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="138"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="144"/>
         <source>popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="140"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="146"/>
         <source>popup_open_file_error_does_not_exist_message</source>
         <extracomment>Could not open file : unknown path %1</extracomment>
         <translation>Datei konnte nicht geöffnet werden: unbekannter Pfad %1</translation>
@@ -2361,37 +2361,37 @@ Error</extracomment>
         <translation type="vanished">Fehler</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="83"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="87"/>
         <source>download_error_object_doesnt_exist</source>
         <extracomment>Internal error : message object associated to this content does not exist anymore !</extracomment>
         <translation type="unfinished">Interner Fehler: Nachrichtenobjekt existiert nicht mehr!</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="98"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="102"/>
         <source>download_file_server_error</source>
         <extracomment>Error while trying to download content : %1</extracomment>
         <translation>Fehler beim Versuch, Inhalte herunterzuladen: %1</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="108"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="112"/>
         <source>download_file_error_no_safe_file_path</source>
         <extracomment>Unable to create safe file path for: %1</extracomment>
         <translation>Speicherpfad konnte nicht erstellen für: %1</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="117"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="121"/>
         <source>download_file_error_file_transfer_unavailable</source>
         <extracomment>This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it</extracomment>
         <translation>Diese Datei wurde bereits heruntergeladen und ist nicht mehr auf dem Server verfügbar. Ihr Kontakt muss die Datei erneut senden</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="122"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="126"/>
         <source>download_file_error_null_name</source>
         <extracomment>Content name is null, can&apos;t download it !</extracomment>
         <translation>Inhaltsname nicht gesetzt, herunterladen fehlgeschlagen!</translation>
     </message>
     <message>
-        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="130"/>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="134"/>
         <source>download_file_error_unable_to_download</source>
         <extracomment>Unable to download file of entry %1</extracomment>
         <translation>Datei des Eintrags %1 konnte nicht heruntergeladen werden</translation>
@@ -6050,49 +6050,49 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
 <context>
     <name>ToolModel</name>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="311"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="330"/>
         <source>call_error_uninterpretable_sip_address</source>
         <extracomment>&quot;The calling address is not an interpretable SIP address : %1</extracomment>
         <translation>Die Anrufadresse ist keine interpretierbare SIP-Adresse: %1</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="386"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="405"/>
         <source>group_call_error_no_account</source>
         <translation>Kein Standardkonto gefunden, Gruppengespräch kann nicht erstellt werden</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="416"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="435"/>
         <source>group_call_error_participants_invite</source>
         <translation>Teilnehmer konnten nicht zum Gruppengespräch eingeladen werden</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="420"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="439"/>
         <source>group_call_error_creation</source>
         <translation>Gruppengespräch konnte nicht erstellt werden</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="520"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="539"/>
         <source>voice_recording_duration</source>
         <extracomment>&quot;Voice recording (%1)&quot; : %1 is the duration formated in mm:ss</extracomment>
         <translation>Sprachnachricht (%1)</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="528"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="547"/>
         <source>conference_invitation</source>
         <translation>Meeting-Einladung</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="530"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="549"/>
         <source>conference_invitation_updated</source>
         <translation>Meeting-Änderung</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="532"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="551"/>
         <source>conference_invitation_cancelled</source>
         <translation>Meeting-Absage</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="594"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="613"/>
         <source>unknown_audio_device_name</source>
         <translation>Unbekannter Gerätename</translation>
     </message>
@@ -6100,7 +6100,7 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
 <context>
     <name>Utils</name>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2278"/>
+        <location filename="../../tool/Utils.cpp" line="2192"/>
         <source>nMinute</source>
         <translation>
             <numerusform>%1 Minute</numerusform>
@@ -6108,7 +6108,7 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2279"/>
+        <location filename="../../tool/Utils.cpp" line="2193"/>
         <source>nHour</source>
         <translation>
             <numerusform>%1 Stunde</numerusform>
@@ -6116,8 +6116,8 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2280"/>
-        <location filename="../../tool/Utils.cpp" line="2281"/>
+        <location filename="../../tool/Utils.cpp" line="2194"/>
+        <location filename="../../tool/Utils.cpp" line="2195"/>
         <source>nDay</source>
         <translation>
             <numerusform>%1 Tag</numerusform>
@@ -6125,7 +6125,7 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2282"/>
+        <location filename="../../tool/Utils.cpp" line="2196"/>
         <source>nWeek</source>
         <translation>
             <numerusform>%1 Woche</numerusform>
@@ -6133,7 +6133,7 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2283"/>
+        <location filename="../../tool/Utils.cpp" line="2197"/>
         <source>nSeconds</source>
         <translation>
             <numerusform>%1 Sekunde</numerusform>
@@ -6259,73 +6259,73 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2189"/>
+        <location filename="../../tool/Utils.cpp" line="2103"/>
         <source>recorder_error</source>
         <extracomment>Error with the recorder</extracomment>
         <translation>Fehler mit der Aufzeichnung</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2094"/>
-        <location filename="../../tool/Utils.cpp" line="2126"/>
-        <location filename="../../tool/Utils.cpp" line="2191"/>
+        <location filename="../../tool/Utils.cpp" line="2008"/>
+        <location filename="../../tool/Utils.cpp" line="2040"/>
+        <location filename="../../tool/Utils.cpp" line="2105"/>
         <source>chat_error</source>
         <translation>Fehler im Chat</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2092"/>
+        <location filename="../../tool/Utils.cpp" line="2006"/>
         <source>chat_message_forward_error</source>
         <extracomment>Cannot forward an invalid message</extracomment>
         <translation>Eine ungültige Nachricht kann nicht weitergeleitet werden</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2096"/>
-        <location filename="../../tool/Utils.cpp" line="2111"/>
-        <location filename="../../tool/Utils.cpp" line="2128"/>
-        <location filename="../../tool/Utils.cpp" line="2155"/>
-        <location filename="../../tool/Utils.cpp" line="2193"/>
-        <location filename="../../tool/Utils.cpp" line="2207"/>
+        <location filename="../../tool/Utils.cpp" line="2010"/>
+        <location filename="../../tool/Utils.cpp" line="2025"/>
+        <location filename="../../tool/Utils.cpp" line="2042"/>
+        <location filename="../../tool/Utils.cpp" line="2069"/>
+        <location filename="../../tool/Utils.cpp" line="2107"/>
+        <location filename="../../tool/Utils.cpp" line="2121"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2098"/>
+        <location filename="../../tool/Utils.cpp" line="2012"/>
         <source>info_popup_forward_message_error</source>
         <extracomment>Could not forward message : %1</extracomment>
         <translation>Nachricht konnte nicht weitergeleitet werden: %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2113"/>
+        <location filename="../../tool/Utils.cpp" line="2027"/>
         <source>info_popup_send_forward_message_error_message</source>
         <extracomment>Failed to create forward message</extracomment>
         <translation>Weiterleitungsnachricht konnte nicht erstellt werden</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2124"/>
+        <location filename="../../tool/Utils.cpp" line="2038"/>
         <source>chat_message_reply_error</source>
         <extracomment>Cannot reply to invalid message</extracomment>
         <translation>Auf eine ungültige Nachricht kann nicht geantwortet werden</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2130"/>
+        <location filename="../../tool/Utils.cpp" line="2044"/>
         <source>info_popup_reply_message_error</source>
         <extracomment>Could not send reply message : %1</extracomment>
         <translation>Antwort konnte nicht gesendet werden: %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2157"/>
+        <location filename="../../tool/Utils.cpp" line="2071"/>
         <source>info_popup_send_reply_message_error_message</source>
         <extracomment>Failed to create reply message</extracomment>
         <translation>Antwort konnte nicht erstellt werden</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2195"/>
+        <location filename="../../tool/Utils.cpp" line="2109"/>
         <source>info_popup_send_voice_message_error_message</source>
         <extracomment>Could not send voice message : %1</extracomment>
         <translation>Sprachnachricht konnte nicht gesendet werden: %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2209"/>
+        <location filename="../../tool/Utils.cpp" line="2123"/>
         <source>info_popup_send_voice_message_sending_error_message</source>
         <extracomment>Failed to create message from record</extracomment>
         <translation>Nachricht aus der Aufnahme konnte nicht erstellt werden</translation>

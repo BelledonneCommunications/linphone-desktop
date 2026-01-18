@@ -40,7 +40,8 @@ class ChatMessageContentCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool wasDownloaded READ wasDownloaded WRITE setWasDownloaded NOTIFY wasDownloadedChanged)
 	Q_PROPERTY(QString filePath READ getFilePath WRITE setFilePath NOTIFY filePathChanged)
 	Q_PROPERTY(QString utf8Text READ getUtf8Text CONSTANT)
-	Q_PROPERTY(QString richFormatText MEMBER mRichFormatText CONSTANT)
+	Q_PROPERTY(QString richFormatText WRITE setRichFormatText MEMBER mRichFormatText NOTIFY richFormatTextChanged)
+	Q_PROPERTY(QString searchTextPart READ getSearchedTextPart WRITE setSearchedTextPart NOTIFY searchedTextPartChanged)
 	Q_PROPERTY(bool isFile READ isFile WRITE setIsFile NOTIFY isFileChanged)
 	Q_PROPERTY(bool isFileEncrypted READ isFileEncrypted WRITE setIsFileEncrypted NOTIFY isFileEncryptedChanged)
 	Q_PROPERTY(bool isFileTransfer READ isFileTransfer WRITE setIsFileTransfer NOTIFY isFileTransferChanged)
@@ -90,6 +91,10 @@ public:
 	bool wasDownloaded() const;
 	void setWasDownloaded(bool downloaded);
 
+	void setRichFormatText(const QString &richFormatText);
+	Q_INVOKABLE void setSearchedTextPart(const QString &searchedTextPart);
+	QString getSearchedTextPart() const;
+
 	const std::shared_ptr<ChatMessageContentModel> &getContentModel() const;
 
 signals:
@@ -102,6 +107,8 @@ signals:
 	void isFileEncryptedChanged();
 	void wasDownloadedChanged(bool downloaded);
 	void isVideoChanged();
+	void searchedTextPartChanged();
+	void richFormatTextChanged();
 
 	void lCreateThumbnail(const bool &force = false);
 	void lRemoveDownloadedFile();
@@ -124,6 +131,7 @@ private:
 	QUrl mThumbnail;
 	QString mUtf8Text;
 	QString mRichFormatText;
+	QString mSearchedTextPart;
 	QString mFilePath;
 	QString mName;
 	quint64 mFileSize;

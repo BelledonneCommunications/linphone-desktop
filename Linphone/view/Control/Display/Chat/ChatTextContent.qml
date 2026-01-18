@@ -26,9 +26,10 @@ TextEdit {
 	readOnly: true
 	selectByMouse: true
 	
-	text: searchedTextPart !== ""
-			? UtilsCpp.boldTextPart(contentGui.core.richFormatText, searchedTextPart)
-			: contentGui.core.richFormatText
+	text: contentGui.core.richFormatText
+	onSearchedTextPartChanged: {
+		contentGui.core.setSearchedTextPart(searchedTextPart)
+	}
 
 	textFormat: Text.RichText // To supports links and imgs.
 	wrapMode: TextEdit.Wrap

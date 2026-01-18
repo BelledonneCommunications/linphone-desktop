@@ -43,6 +43,7 @@ public:
 	void setThumbnail(const QString &data);
 	void setWasDownloaded(bool wasDownloaded);
 
+	std::shared_ptr<ChatMessageModel> getChatMessageModel() const;
 	void createThumbnail();
 	void removeDownloadedFile(QString filePath);
 

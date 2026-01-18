@@ -50,9 +50,11 @@ public:
 	static QString getDisplayName(const std::shared_ptr<const linphone::Address> &address);
 	static QString getDisplayName(QString address);
 
+	static QString boldTextPart(const QString &text, const QString &regex);
 	static QString encodeTextToQmlRichFormat(const QString &text,
-	                                         const QVariantMap &options,
-	                                         std::shared_ptr<linphone::ChatRoom> chatRoom);
+	                                         const QString &textPartToBold = QString(),
+	                                         const QVariantMap &options = QVariantMap(),
+	                                         std::shared_ptr<linphone::ChatRoom> chatRoom = nullptr);
 
 	static std::shared_ptr<linphone::Friend> findFriendByAddress(const QString &address);
 	static std::shared_ptr<linphone::Friend>
