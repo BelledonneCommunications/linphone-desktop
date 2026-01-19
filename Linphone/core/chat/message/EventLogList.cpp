@@ -223,15 +223,20 @@ void EventLogList::findChatMessageWithFilter(QString filter, int startIndex, boo
 		lInfo() << log().arg("searching event starting from index") << startIndex << "| event :"
 		        << (startEvent && startEvent->getChatMessageCore() ? startEvent->getChatMessageCore()->getText()
 		                                                           : "null")
-		        << "| filter :" << filter;
+		        << "| filter :" << filter << "forward =" << forward;
 		auto startEventModel = startEvent ? startEvent->getModel() : nullptr;
 		mCoreModelConnection->invokeToModel([this, chatModel, startEventModel, filter, forward, isFirstResearch] {
 			auto linStartEvent = startEventModel ? startEventModel->getEventLog() : nullptr;
 			auto eventLog = chatModel->searchMessageByText(filter, linStartEvent, forward);
-			if (!eventLog) {
+			if (!eventLog && isFirstResearch) {
+				// event not found, search backward
+				lInfo() << log().arg("not found, search backward");
+				eventLog = chatModel->searchMessageByText(filter, linStartEvent, !forward);
+			}
+			if (!eventLog && isFirstResearch) {
 				// event not found, search in the entire history
 				lInfo() << log().arg("not found, search in entire history");
-				auto eventLog = chatModel->searchMessageByText(filter, nullptr, forward);
+				eventLog = chatModel->searchMessageByText(filter, nullptr, forward);
 			}
 			int index = -1;
 			if (eventLog) {

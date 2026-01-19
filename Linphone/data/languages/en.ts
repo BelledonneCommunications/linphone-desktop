@@ -5915,49 +5915,49 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>ToolModel</name>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="330"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="329"/>
         <source>call_error_uninterpretable_sip_address</source>
         <extracomment>&quot;The calling address is not an interpretable SIP address : %1</extracomment>
         <translation>The calling address is not an interpretable SIP address : %1</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="405"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="404"/>
         <source>group_call_error_no_account</source>
         <translation>No default account found, can&apos;t create group call</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="435"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="434"/>
         <source>group_call_error_participants_invite</source>
         <translation>Couldn&apos;t invite participants to group call</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="439"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="438"/>
         <source>group_call_error_creation</source>
         <translation>Group call couldn&apos;t be created</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="539"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="538"/>
         <source>voice_recording_duration</source>
         <extracomment>&quot;Voice recording (%1)&quot; : %1 is the duration formated in mm:ss</extracomment>
         <translation>Voice recording (%1)</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="613"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="612"/>
         <source>unknown_audio_device_name</source>
         <translation>Unknown device name</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="547"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="546"/>
         <source>conference_invitation</source>
         <translation>Meeting invitation</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="551"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="550"/>
         <source>conference_invitation_cancelled</source>
         <translation>Meeting cancellation</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="549"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="548"/>
         <source>conference_invitation_updated</source>
         <translation>Meeting modification</translation>
     </message>
