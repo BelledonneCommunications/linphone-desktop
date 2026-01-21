@@ -1173,7 +1173,7 @@
     <message>
         <location filename="../../model/call/CallModel.cpp" line="413"/>
         <source>call_error_server_timeout_toast</source>
-        <extracomment>&quot;Server tiemout&quot;</extracomment>
+        <extracomment>&quot;Server timeout&quot;</extracomment>
         <translation>Délai d&apos;attente du serveur dépassé</translation>
     </message>
 </context>

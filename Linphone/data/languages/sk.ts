@@ -1091,7 +1091,7 @@
     <message>
         <location filename="../../model/call/CallModel.cpp" line="388"/>
         <source>call_error_server_timeout_toast</source>
-        <extracomment>&quot;Server tiemout&quot;</extracomment>
+        <extracomment>&quot;Server timeout&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

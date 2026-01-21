@@ -1198,8 +1198,8 @@
     <message>
         <location filename="../../model/call/CallModel.cpp" line="413"/>
         <source>call_error_server_timeout_toast</source>
-        <extracomment>&quot;Server tiemout&quot;</extracomment>
-        <translation>Server tiemout</translation>
+        <extracomment>&quot;Server timeout&quot;</extracomment>
+        <translation>Server timeout</translation>
     </message>
 </context>
 <context>
@@ -5789,7 +5789,7 @@ To enable them in a commercial project, please contact us.</translation>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="669"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
-        <translation>Froward to…</translation>
+        <translation>Forward to…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="703"/>
@@ -6841,7 +6841,7 @@ To enable them in a commercial project, please contact us.</translation>
     <message>
         <location filename="../../tool/Utils.cpp" line="929"/>
         <source>Italy</source>
-        <translation>Italie</translation>
+        <translation>Italy</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="932"/>

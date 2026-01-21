@@ -409,7 +409,7 @@ void CallModel::updateCallErrorFromReason(linphone::Reason reason) {
 			error = tr("call_error_temporarily_unavailable_toast");
 			break;
 		case linphone::Reason::ServerTimeout:
-			//: "Server tiemout"
+			//: "Server timeout"
 			error = tr("call_error_server_timeout_toast");
 			break;
 		default:
