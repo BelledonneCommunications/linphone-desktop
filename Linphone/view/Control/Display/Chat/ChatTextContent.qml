@@ -31,7 +31,7 @@ TextEdit {
 		contentGui.core.setSearchedTextPart(searchedTextPart)
 	}
 
-	textFormat: Text.RichText // To supports links and imgs.
+	textFormat: Text.AutoText // To supports links and imgs.
 	wrapMode: TextEdit.Wrap
 	
 	onLinkActivated: (link) => {
