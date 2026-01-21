@@ -4445,6 +4445,11 @@ Error</extracomment>
         <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
         <translation>Błąd walidacji kodu</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
+        <source>cancel</source>
+        <translation>Anuluj</translation>
+    </message>
 </context>
 <context>
     <name>ManageParticipants</name>

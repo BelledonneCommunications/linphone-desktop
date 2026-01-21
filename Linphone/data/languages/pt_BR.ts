@@ -4287,6 +4287,11 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
         <translation>Erro no código de validação</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
+        <source>cancel</source>
+        <translation>Cancelar</translation>
+    </message>
 </context>
 <context>
     <name>ManageParticipants</name>

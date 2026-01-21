@@ -4289,6 +4289,11 @@ Error</extracomment>
         <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
         <translation>Помилка в коді перевірки</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
+        <source>cancel</source>
+        <translation>Скасувати</translation>
+    </message>
 </context>
 <context>
     <name>ManageParticipants</name>

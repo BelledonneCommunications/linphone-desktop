@@ -2364,7 +2364,7 @@ Error</extracomment>
         <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="87"/>
         <source>download_error_object_doesnt_exist</source>
         <extracomment>Internal error : message object associated to this content does not exist anymore !</extracomment>
-        <translation type="unfinished">Interner Fehler: Nachrichtenobjekt existiert nicht mehr!</translation>
+        <translation>Interner Fehler: Das mit diesem Inhalt verknüpfte Nachrichtenobjekt existiert nicht mehr!</translation>
     </message>
     <message>
         <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="102"/>
@@ -4560,13 +4560,13 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
         <extracomment>&quot;Trying to connect to single sign on on web page ...&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kein Token gefunden</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
         <source>cancel</source>
         <extracomment>Cancel</extracomment>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="257"/>

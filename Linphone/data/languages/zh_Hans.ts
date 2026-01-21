@@ -4286,6 +4286,16 @@ Error</extracomment>
         <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
         <translation>验证码错误</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
+        <source>oidc_connection_waiting_message</source>
+        <translation> </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
+        <source>cancel</source>
+        <translation>取消</translation>
+    </message>
 </context>
 <context>
     <name>ManageParticipants</name>

@@ -2304,7 +2304,7 @@ Error</extracomment>
     <message>
         <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="80"/>
         <source>download_error_object_doesnt_exist</source>
-        <translation type="unfinished">Vnitřní chyba: objekt zprávy již neexistuje!</translation>
+        <translation>Vnitřní chyba: objekt zprávy spojený s tímto obsahem již neexistuje!</translation>
     </message>
     <message>
         <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="114"/>
@@ -4422,6 +4422,16 @@ Expirace : %1</translation>
         <source>assistant_register_error_code</source>
         <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
         <translation>Chyba v ověřovacím kódu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
+        <source>oidc_connection_waiting_message</source>
+        <translation>Žádný token nenalezen</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
+        <source>cancel</source>
+        <translation>Zrušit</translation>
     </message>
 </context>
 <context>

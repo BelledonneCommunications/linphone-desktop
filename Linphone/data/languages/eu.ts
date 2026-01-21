@@ -4285,6 +4285,16 @@ Error</extracomment>
         <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
         <translation>Errorea baliozkotze kodean</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
+        <source>oidc_connection_waiting_message</source>
+        <translation>Ez da tokenik aurkitu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
+        <source>cancel</source>
+        <translation>Utzi</translation>
+    </message>
 </context>
 <context>
     <name>ManageParticipants</name>
