@@ -177,6 +177,10 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	    [this, addChatToList](const std::shared_ptr<linphone::Core> &core,
 	                          const std::shared_ptr<linphone::ChatRoom> &chatRoom, linphone::ChatRoom::State state) {
 		    if (state == linphone::ChatRoom::State::Created) {
+			    if (chatRoom->getConferenceInfo()) {
+				    qWarning() << log().arg("Chatroom created during a conference, return");
+				    return;
+			    }
 			    auto chatAccount = chatRoom->getAccount();
 			    auto defaultAccount = core->getDefaultAccount();
 			    if (!chatAccount || !defaultAccount) return;
