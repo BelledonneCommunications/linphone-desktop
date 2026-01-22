@@ -434,6 +434,8 @@ void App::setSelf(QSharedPointer<App>(me)) {
 		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 		    if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Successful) {
 			    bool accountConnected = account && account->getState() == linphone::RegistrationState::Ok;
+			    // update settings if case config contains changes
+			    if (mSettings) mSettings->reloadSettings();
 			    mCoreModelConnection->invokeToCore([this, accountConnected]() {
 				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
 				    // There is an account added by a remote provisioning, force switching to main  page
@@ -443,6 +445,9 @@ void App::setSelf(QSharedPointer<App>(me)) {
 					                              Q_ARG(QVariant, accountConnected));
 				    }
 				    mPossiblyLookForAddedAccount = false;
+				    // setLocale(mSettings->getConfigLocale());
+				    // setAutoStart(mSettings->getAutoStart());
+				    // setQuitOnLastWindowClosed(mSettings->getExitOnClose());
 			    });
 		    }
 	    });
@@ -640,7 +645,7 @@ void App::initCore() {
 		    lDebug() << log().arg("Creating SettingsModel");
 		    SettingsModel::create();
 		    lDebug() << log().arg("Creating SettingsCore");
-		    if (!settings) settings = SettingsCore::create();
+		    settings = SettingsCore::create();
 		    lDebug() << log().arg("Checking downloaded codecs updates");
 		    Utils::checkDownloadedCodecsUpdates();
 		    lDebug() << log().arg("Setting Video Codec Priority Policy");
@@ -722,30 +727,30 @@ void App::initCore() {
 				    }
 			    });
 
-			    if (!mSettings) {
-				    mSettings = settings;
-				    setLocale(settings->getConfigLocale());
-				    setAutoStart(settings->getAutoStart());
-				    setQuitOnLastWindowClosed(settings->getExitOnClose());
-				    mEngine->setObjectOwnership(mSettings.get(), QQmlEngine::CppOwnership);
+			    // if (!mSettings) {
+			    mSettings = settings;
+			    setLocale(settings->getConfigLocale());
+			    setAutoStart(settings->getAutoStart());
+			    setQuitOnLastWindowClosed(settings->getExitOnClose());
+			    mEngine->setObjectOwnership(mSettings.get(), QQmlEngine::CppOwnership);
 
-				    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
-				            Qt::UniqueConnection);
-				    QObject::connect(mSettings.get(), &SettingsCore::autoStartChanged, [this]() {
-					    mustBeInMainThread(log().arg(Q_FUNC_INFO));
-					    setAutoStart(mSettings->getAutoStart());
-				    });
-				    QObject::connect(mSettings.get(), &SettingsCore::configLocaleChanged, [this]() {
-					    mustBeInMainThread(log().arg(Q_FUNC_INFO));
-					    if (mSettings) setLocale(mSettings->getConfigLocale());
-				    });
-				    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
-				            Qt::UniqueConnection);
-			    } else {
-				    setLocale(settings->getConfigLocale());
-				    setAutoStart(settings->getAutoStart());
-				    setQuitOnLastWindowClosed(settings->getExitOnClose());
-			    }
+			    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
+			            Qt::UniqueConnection);
+			    QObject::connect(mSettings.get(), &SettingsCore::autoStartChanged, [this]() {
+				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+				    setAutoStart(mSettings->getAutoStart());
+			    });
+			    QObject::connect(mSettings.get(), &SettingsCore::configLocaleChanged, [this]() {
+				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+				    if (mSettings) setLocale(mSettings->getConfigLocale());
+			    });
+			    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
+			            Qt::UniqueConnection);
+			    // } else {
+			    //     setLocale(settings->getConfigLocale());
+			    //     setAutoStart(settings->getAutoStart());
+			    //     setQuitOnLastWindowClosed(settings->getExitOnClose());
+			    // }
 			    const QUrl url("qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml");
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,

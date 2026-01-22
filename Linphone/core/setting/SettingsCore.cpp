@@ -126,7 +126,6 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(HideAccountSettings, settingsModel)
 	INIT_CORE_MEMBER(DisableCallRecordings, settingsModel)
 	INIT_CORE_MEMBER(AssistantHideCreateAccount, settingsModel)
-	INIT_CORE_MEMBER(AssistantHideCreateAccount, settingsModel)
 	INIT_CORE_MEMBER(AssistantDisableQrCode, settingsModel)
 
 	INIT_CORE_MEMBER(AssistantHideThirdPartyAccount, settingsModel)
@@ -237,6 +236,110 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 }
 
 SettingsCore::~SettingsCore() {
+}
+
+void SettingsCore::reloadSettings() {
+	mustBeInLinphoneThread(getClassName());
+	auto settingsModel = SettingsModel::getInstance();
+	assert(settingsModel);
+
+	// Security
+	setVfsEnabled(settingsModel->getVfsEnabled());
+
+	// Call
+	setVideoEnabled(settingsModel->getVideoEnabled());
+	setEchoCancellationEnabled(settingsModel->getEchoCancellationEnabled());
+	setAutoDownloadReceivedFiles(settingsModel->getAutoDownloadReceivedFiles());
+	setAutomaticallyRecordCallsEnabled(settingsModel->getAutomaticallyRecordCallsEnabled());
+	setRingtone(settingsModel->getRingtone());
+
+	// Network
+	setIpv6Enabled(settingsModel->getIpv6Enabled());
+
+	// Advanced
+	setAutoStart(settingsModel->getAutoStart());
+	setHideFps(settingsModel->getHideFps());
+
+	// Audio
+	setCaptureDevices(settingsModel->getCaptureDevices());
+	setPlaybackDevices(settingsModel->getPlaybackDevices());
+	setRingerDevices(settingsModel->getRingerDevices());
+	setCaptureDevice(settingsModel->getCaptureDevice());
+	setPlaybackDevice(settingsModel->getPlaybackDevice());
+	setRingerDevice(settingsModel->getRingerDevice());
+
+	setConferenceLayout(
+	    LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(settingsModel->getDefaultConferenceLayout())));
+
+	setMediaEncryption(
+	    LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(settingsModel->getDefaultMediaEncryption())));
+
+	setMediaEncryptionMandatory(settingsModel->getMediaEncryptionMandatory());
+	setCreateEndToEndEncryptedMeetingsAndGroupCalls(settingsModel->getCreateEndToEndEncryptedMeetingsAndGroupCalls());
+
+	setCaptureGain(settingsModel->getCaptureGain());
+	setPlaybackGain(settingsModel->getPlaybackGain());
+
+	// Video
+	setVideoDevice(settingsModel->getVideoDevice());
+	setVideoDevices(settingsModel->getVideoDevices());
+
+	// Logs
+	setLogsEnabled(settingsModel->getLogsEnabled());
+	setFullLogsEnabled(settingsModel->getFullLogsEnabled());
+	setCrashReporterEnabled(settingsModel->getCrashReporterEnabled());
+	setLogsFolder(settingsModel->getLogsFolder());
+	mLogsEmail = settingsModel->getLogsEmail();
+
+	// DND
+	setDndEnabled(settingsModel->dndEnabled());
+
+	mDefaultDomain = settingsModel->getDefaultDomain();
+	auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+	if (currentAccount) {
+		auto accountDomain = Utils::coreStringToAppString(currentAccount->getParams()->getDomain());
+		setShowAccountDevices(accountDomain == mDefaultDomain);
+	}
+
+	// Chat
+	mEmojiFont = settingsModel->getEmojiFont();
+	mTextMessageFont = settingsModel->getTextMessageFont();
+
+	// Check for update
+	mIsCheckForUpdateAvailable = settingsModel->isCheckForUpdateAvailable();
+
+	setDisableChatFeature(settingsModel->getDisableChatFeature());
+	setDisableMeetingsFeature(settingsModel->getDisableMeetingsFeature());
+	setDisableBroadcastFeature(settingsModel->getDisableBroadcastFeature());
+
+	setHideSettings(settingsModel->getHideSettings());
+	setHideAccountSettings(settingsModel->getHideAccountSettings());
+
+	setDisableCallRecordings(settingsModel->getDisableCallRecordings());
+	setAssistantHideCreateAccount(settingsModel->getAssistantHideCreateAccount());
+	setAssistantDisableQrCode(settingsModel->getAssistantDisableQrCode());
+	setAssistantHideThirdPartyAccount(settingsModel->getAssistantHideThirdPartyAccount());
+	setHideSipAddresses(settingsModel->getHideSipAddresses());
+	setDarkModeAllowed(settingsModel->getDarkModeAllowed());
+	setMaxAccount(settingsModel->getMaxAccount());
+	setAssistantGoDirectlyToThirdPartySipAccountLogin(
+	    settingsModel->getAssistantGoDirectlyToThirdPartySipAccountLogin());
+	setAssistantGoDirectlyToThirdPartySipAccountLogin(
+	    settingsModel->getAssistantGoDirectlyToThirdPartySipAccountLogin());
+	setAssistantThirdPartySipAccountDomain(settingsModel->getAssistantThirdPartySipAccountDomain());
+	setAssistantThirdPartySipAccountTransport(settingsModel->getAssistantThirdPartySipAccountTransport());
+	setAutoStart(settingsModel->getAutoStart());
+	setExitOnClose(settingsModel->getExitOnClose());
+	setSyncLdapContacts(settingsModel->getSyncLdapContacts());
+	setConfigLocale(settingsModel->getConfigLocale());
+	setDownloadFolder(settingsModel->getDownloadFolder());
+
+	setCallToneIndicationsEnabled(settingsModel->getCallToneIndicationsEnabled());
+	setCommandLine(settingsModel->getCommandLine());
+	setDisableCommandLine(settingsModel->getDisableCommandLine());
+	setCallForwardToAddress(settingsModel->getCallForwardToAddress());
+	setThemeMainColor(settingsModel->getThemeMainColor());
+	setThemeAboutPictureUrl(settingsModel->getThemeAboutPictureUrl());
 }
 
 void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
