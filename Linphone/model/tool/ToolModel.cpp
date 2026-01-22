@@ -160,11 +160,13 @@ QString ToolModel::encodeTextToQmlRichFormat(const QString &text,
 
 		for (int i = 0; i < iriParsed.size(); ++i) {
 			QString iri = iriParsed[i]
-			                  .second.replace('&', "&amp;")
+			                  .second
+			                  //   .replace('&', "&amp;")
 			                  .replace('<', "\u2063&lt;")
-			                  .replace('>', "\u2063&gt;")
-			                  .replace('"', "&quot;")
-			                  .replace('\'', "&#039;");
+			                  .replace('\n', "<br>");
+			//   .replace('>', "\u2063&gt;")
+			//   .replace('"', "&quot;")
+			//   .replace('\'', "&#039;");
 			if (!iriParsed[i].first) {
 				if (lastWasUrl) {
 					lastWasUrl = false;

@@ -210,8 +210,8 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatModel::newEvent, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                 const std::shared_ptr<const linphone::EventLog> &eventLog) {
 		    if (mChatModel->getMonitor() != chatRoom) return;
-		    lDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
 		    if (!eventLog) return;
+		    lDebug() << "EVENT LOG RECEIVED IN CHATROOM" << mChatModel->getTitle();
 		    auto event = EventLogCore::create(eventLog, chatRoom);
 		    if (event->isHandled()) {
 			    mChatModelConnection->invokeToCore([this, event]() { emit eventsInserted({event}); });
