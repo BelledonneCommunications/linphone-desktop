@@ -60,7 +60,7 @@ ListView {
             }
         }
         onChatAdded: (chat) => {
-            mainItem.chatToSelect = chat
+            // mainItem.chatToSelect = chat
         }
         onRowsRemoved: {
             var index = mainItem.currentIndex

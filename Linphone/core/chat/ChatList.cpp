@@ -130,6 +130,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 				}
 				endResetModel();
 				setIsUpdating(false);
+				chats->clear();
 				delete chats;
 			});
 		});

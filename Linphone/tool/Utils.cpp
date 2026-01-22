@@ -1592,7 +1592,7 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 		auto linphoneChatRoom = ToolModel::lookupCurrentCallChat(callModel);
 		if (linphoneChatRoom) {
 			auto chatCore = ChatCore::create(linphoneChatRoom);
-			return QVariant::fromValue(new ChatGui(chatCore));
+			return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 		} else {
 			// Only try to create chatroom if 1-1 call
 			if (!callModel->getConference()) {
@@ -1603,7 +1603,7 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 				lInfo() << "[Utils] Chatroom created with" << callModel->getRemoteAddress()->asStringUriOnly();
 				auto id = linphoneChatRoom->getIdentifier();
 				auto chatCore = ChatCore::create(linphoneChatRoom);
-				return QVariant::fromValue(new ChatGui(chatCore));
+				return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 			} else {
 				lWarning() << "[Utils] Failed to create 1-1 conversation with"
 				           << callModel->getRemoteAddress()->asStringUriOnly() << "!";
@@ -1625,14 +1625,14 @@ VariantObject *Utils::getChatForAddress(QString address) {
 		auto linphoneChatRoom = ToolModel::lookupChatForAddress(linAddr);
 		if (linphoneChatRoom) {
 			auto chatCore = ChatCore::create(linphoneChatRoom);
-			return QVariant::fromValue(new ChatGui(chatCore));
+			return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 		} else {
 			lInfo() << "[Utils] Did not find existing chat room, create one";
 			linphoneChatRoom = ToolModel::createChatForAddress(linAddr);
 			if (linphoneChatRoom != nullptr) {
 				lInfo() << "[Utils] Chatroom created with" << linAddr->asStringUriOnly();
 				auto chatCore = ChatCore::create(linphoneChatRoom);
-				return QVariant::fromValue(new ChatGui(chatCore));
+				return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 			} else {
 				lWarning() << "[Utils] Failed to create 1-1 conversation with" << linAddr->asStringUriOnly() << "!";
 				//: Failed to create 1-1 conversation with %1 !
@@ -1662,7 +1662,7 @@ VariantObject *Utils::createGroupChat(QString subject, QStringList participantAd
 		auto linphoneChatRoom = ToolModel::createGroupChatRoom(subject, addresses);
 		if (linphoneChatRoom) {
 			auto chatCore = ChatCore::create(linphoneChatRoom);
-			return QVariant::fromValue(new ChatGui(chatCore));
+			return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 		} else {
 			return QVariant();
 		}
