@@ -72,7 +72,7 @@ int ChatProxy::findChatIndex(ChatGui *chatGui) {
 bool ChatProxy::addChatInList(ChatGui *chatGui) {
 	auto chatList = dynamic_cast<ChatList *>(sourceModel());
 	if (chatList && chatGui) {
-		return chatList->addChatInList(chatGui->mCore);
+		return chatList->addChatInList(chatGui->mCore, true);
 	}
 	return false;
 }

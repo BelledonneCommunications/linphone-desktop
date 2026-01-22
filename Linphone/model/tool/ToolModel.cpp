@@ -757,6 +757,7 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::createChatForAddress(std::shared_
 		return nullptr;
 	}
 	auto chatRoom = core->createChatRoom(params, participants);
+	CoreModel::getInstance()->mChatRoomBeingCreated = chatRoom;
 	return chatRoom;
 }
 
@@ -784,6 +785,7 @@ ToolModel::createGroupChatRoom(QString subject, std::list<std::shared_ptr<linpho
 
 	auto chatRoom = core->createChatRoom(params, participantsAddresses);
 	if (!chatRoom) lWarning() << ("[ToolModel] Failed to create group chat");
+	CoreModel::getInstance()->mChatRoomBeingCreated = chatRoom;
 	return chatRoom;
 }
 

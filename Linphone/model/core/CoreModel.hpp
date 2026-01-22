@@ -79,6 +79,9 @@ public:
 	bool mEnd = false;
 	linphone::ConfiguringState mConfigStatus;
 	QString mConfigMessage;
+	// Used to get a chatroom created by user when trying to add
+	// one to the chat room list, so we can automatically select it
+	std::shared_ptr<linphone::ChatRoom> mChatRoomBeingCreated;
 
 	std::shared_ptr<linphone::Core> mCore;
 	std::shared_ptr<LoggerModel> mLogger;

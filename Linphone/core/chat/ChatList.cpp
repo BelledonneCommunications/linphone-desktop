@@ -150,7 +150,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			return;
 		}
 		auto chatCore = ChatCore::create(room);
-		mModelConnection->invokeToCore([this, chatCore] { addChatInList(chatCore); });
+		mModelConnection->invokeToCore([this, chatCore] { addChatInList(chatCore, false); });
 	};
 	mModelConnection->makeConnectToModel(&CoreModel::messageReceived,
 	                                     [this, addChatToList](const std::shared_ptr<linphone::Core> &core,
@@ -178,6 +178,11 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	    [this, addChatToList](const std::shared_ptr<linphone::Core> &core,
 	                          const std::shared_ptr<linphone::ChatRoom> &chatRoom, linphone::ChatRoom::State state) {
 		    if (state == linphone::ChatRoom::State::Created) {
+			    bool sendAddSignal = false;
+			    if (chatRoom == CoreModel::getInstance()->mChatRoomBeingCreated) {
+				    sendAddSignal = true;
+			    }
+			    CoreModel::getInstance()->mChatRoomBeingCreated = nullptr;
 			    if (chatRoom->getConferenceInfo()) {
 				    qWarning() << log().arg("Chatroom created during a conference, return");
 				    return;
@@ -191,7 +196,8 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 				    return;
 			    }
 			    auto chatCore = ChatCore::create(chatRoom);
-			    mModelConnection->invokeToCore([this, chatCore] { addChatInList(chatCore); });
+			    mModelConnection->invokeToCore(
+			        [this, chatCore, sendAddSignal] { addChatInList(chatCore, sendAddSignal); });
 		    }
 	    });
 
@@ -212,7 +218,7 @@ int ChatList::findChatIndex(ChatGui *chatGui) {
 	return it == chatList.end() ? -1 : std::distance(chatList.begin(), it);
 }
 
-bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
+bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore, bool emitAddSignal) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	if (chatCore->getIdentifier().isEmpty()) {
 		qWarning() << "ChatRoom with invalid identifier cannot be added to the list, return";
@@ -225,7 +231,7 @@ bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
 	if (it == chatList.end()) {
 		connectItem(chatCore);
 		add(chatCore);
-		emit chatAdded(chatCore);
+		if (emitAddSignal) emit chatAdded(chatCore);
 		return true;
 	}
 	return false;
