@@ -67,7 +67,11 @@ TextEdit {
 		propagateComposedEvents: true
 		hoverEnabled: true
 		scrollGestureEnabled: false
-		cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.IBeamCursor
+		onContainsMouseChanged: {
+			if (containsMouse) UtilsCpp.setGlobalCursor(Qt.IBeamCursor)
+			else UtilsCpp.restoreGlobalCursor()
+		}
+		cursorShape: mainItem.hoveredLink ? Qt.PointingHandCursor : Qt.IBeamCursor
 		acceptedButtons: Qt.LeftButton
 		onPressed: (mouse) => {
 		// 	if(!keepLastSelection) {
