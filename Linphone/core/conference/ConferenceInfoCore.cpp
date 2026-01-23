@@ -29,6 +29,7 @@
 #include "tool/thread/SafeConnection.hpp"
 
 #include <QDesktopServices>
+#include <QRegularExpression>
 
 DEFINE_ABSTRACT_OBJECT(ConferenceInfoCore)
 
@@ -201,8 +202,7 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 				    if (state == linphone::ConferenceScheduler::State::Ready) {
 					    uri = mConferenceInfoModel->getConferenceScheduler()->getUri();
 					    emit CoreModel::getInstance() -> conferenceInfoReceived(
-					                                      CoreModel::getInstance()->getCore(),
-					                                      mConferenceInfoModel->getConferenceInfo());
+					        CoreModel::getInstance()->getCore(), mConferenceInfoModel->getConferenceInfo());
 				    }
 				    mConfInfoModelConnection->invokeToCore([this, state = LinphoneEnums::fromLinphone(state),
 				                                            infoState = LinphoneEnums::fromLinphone(confInfoState),
@@ -659,13 +659,179 @@ bool ConferenceInfoCore::isAllDayConf() const {
 	       mEndDateTime.time().minute() == 59;
 }
 
-void ConferenceInfoCore::exportConferenceToICS() const {
-	QString filePath(Paths::getAppLocalDirPath() + "conference.ics");
-	QFile file(filePath);
-	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		QTextStream out(&file);
-		out << mIcalendarString;
-		file.close();
+void ConferenceInfoCore::exportConferenceToICS() {
+	// Collect participant addresses to look up display names
+	QStringList participantAddresses;
+	for (const auto &participant : mParticipants) {
+		auto map = participant.toMap();
+		QString address = map["address"].toString();
+		if (!address.isEmpty()) {
+			participantAddresses.append(address);
+		}
 	}
-	QDesktopServices::openUrl(QUrl::fromLocalFile(filePath));
+
+	// Copy data needed for ICS generation
+	QString uri = mUri;
+	QString organizerAddress = mOrganizerAddress;
+	QString organizerName = mOrganizerName;
+	QString subject = mSubject;
+	QString description = mDescription;
+	QDateTime dateTime = mDateTime;
+	QDateTime endDateTime = mEndDateTime;
+
+	// Look up display names from friend list in model thread
+	App::postModelAsync(
+	    [participantAddresses, uri, organizerAddress, organizerName, subject, description, dateTime, endDateTime]() {
+		    // Helper to extract phone number from SIP address
+		    auto extractPhoneNumber = [](const QString &address) -> QString {
+			    QString addr = address;
+			    if (addr.startsWith("sip:", Qt::CaseInsensitive)) {
+				    addr = addr.mid(4);
+			    } else if (addr.startsWith("sips:", Qt::CaseInsensitive)) {
+				    addr = addr.mid(5);
+			    }
+			    int atIndex = addr.indexOf('@');
+			    if (atIndex > 0) {
+				    return addr.left(atIndex);
+			    }
+			    return addr;
+		    };
+
+		    // Build map of address -> display name
+		    QMap<QString, QString> displayNames;
+		    auto appFriendList = ToolModel::getAppFriendList();
+
+		    for (const QString &address : participantAddresses) {
+			    QString displayName;
+
+			    // First try standard lookup by address
+			    auto linFriend = ToolModel::findFriendByAddress(address);
+			    if (linFriend) {
+				    displayName = Utils::coreStringToAppString(linFriend->getName());
+			    }
+
+			    // If not found, search by phone number in friend list
+			    if (displayName.isEmpty() && appFriendList) {
+				    QString phoneNumber = extractPhoneNumber(address);
+				    if (!phoneNumber.isEmpty()) {
+					    // Iterate through all friends and check their phone numbers
+					    for (const auto &friendEntry : appFriendList->getFriends()) {
+						    auto friendPhoneNumbers = friendEntry->getPhoneNumbers();
+						    for (const auto &friendPhone : friendPhoneNumbers) {
+							    QString friendPhoneStr = Utils::coreStringToAppString(friendPhone);
+							    // Normalize both numbers for comparison (digits only)
+							    QString normalizedFriendPhone = friendPhoneStr;
+							    QString normalizedSearchPhone = phoneNumber;
+							    normalizedFriendPhone.remove(QRegularExpression("[^0-9]"));
+							    normalizedSearchPhone.remove(QRegularExpression("[^0-9]"));
+							    // Check if phone numbers match
+							    if (friendPhoneStr == phoneNumber || normalizedFriendPhone == normalizedSearchPhone) {
+								    displayName = Utils::coreStringToAppString(friendEntry->getName());
+								    break;
+							    }
+						    }
+						    if (!displayName.isEmpty()) break;
+					    }
+				    }
+			    }
+
+			    // Fallback to phone number if no display name found
+			    if (displayName.isEmpty()) {
+				    displayName = extractPhoneNumber(address);
+			    }
+
+			    displayNames[address] = displayName;
+		    }
+
+		    // Write ICS file in main thread
+		    App::postCoreAsync([participantAddresses, displayNames, uri, organizerAddress, organizerName, subject,
+		                        description, dateTime, endDateTime]() {
+			    QString filePath(Paths::getAppLocalDirPath() + "conference.ics");
+			    QFile file(filePath);
+			    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+				    QTextStream out(&file);
+
+				    // Helper lambda to escape special characters in ICS text fields
+				    auto escapeIcsText = [](const QString &text) {
+					    QString escaped = text;
+					    escaped.replace("\\", "\\\\");
+					    escaped.replace(";", "\\;");
+					    escaped.replace(",", "\\,");
+					    escaped.replace("\n", "\\n");
+					    return escaped;
+				    };
+
+				    // Helper lambda to format datetime in ICS format (UTC)
+				    auto formatIcsDateTime = [](const QDateTime &dt) {
+					    return dt.toUTC().toString("yyyyMMdd'T'HHmmss'Z'");
+				    };
+
+				    // Generate a unique UID based on URI or datetime + organizer
+				    QString uid;
+				    if (!uri.isEmpty()) {
+					    uid = uri;
+					    uid.replace("sip:", "").replace("@", "-at-");
+				    } else {
+					    uid = dateTime.toUTC().toString("yyyyMMddHHmmss") + "-" + organizerAddress;
+					    uid.replace("sip:", "").replace("@", "-at-");
+				    }
+
+				    // Build the ICS content
+				    out << "BEGIN:VCALENDAR\r\n";
+				    out << "VERSION:2.0\r\n";
+				    out << "PRODID:-//Titanium Comms//EN\r\n";
+				    out << "METHOD:REQUEST\r\n";
+				    out << "BEGIN:VEVENT\r\n";
+
+				    // UID and timestamps
+				    out << "UID:" << uid << "\r\n";
+				    out << "DTSTAMP:" << formatIcsDateTime(QDateTime::currentDateTimeUtc()) << "\r\n";
+				    out << "DTSTART:" << formatIcsDateTime(dateTime) << "\r\n";
+				    out << "DTEND:" << formatIcsDateTime(endDateTime) << "\r\n";
+
+				    // Organizer
+				    if (!organizerAddress.isEmpty()) {
+					    out << "ORGANIZER";
+					    if (!organizerName.isEmpty()) {
+						    out << ";CN=" << escapeIcsText(organizerName);
+					    }
+					    out << ":" << organizerAddress << "\r\n";
+				    }
+
+				    // Attendees/Participants
+				    for (const QString &address : participantAddresses) {
+					    QString displayName = displayNames.value(address);
+					    out << "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE";
+					    if (!displayName.isEmpty()) {
+						    out << ";CN=" << escapeIcsText(displayName);
+					    }
+					    out << ":" << address << "\r\n";
+				    }
+
+				    // Subject/Summary
+				    if (!subject.isEmpty()) {
+					    out << "SUMMARY:" << escapeIcsText(subject) << "\r\n";
+				    }
+
+				    // Description
+				    if (!description.isEmpty()) {
+					    out << "DESCRIPTION:" << escapeIcsText(description) << "\r\n";
+				    }
+
+				    // Location (conference URI)
+				    if (!uri.isEmpty()) {
+					    out << "LOCATION:" << uri << "\r\n";
+					    out << "URL:" << uri << "\r\n";
+				    }
+
+				    out << "STATUS:CONFIRMED\r\n";
+				    out << "SEQUENCE:0\r\n";
+				    out << "END:VEVENT\r\n";
+				    out << "END:VCALENDAR\r\n";
+
+				    file.close();
+			    }
+			    QDesktopServices::openUrl(QUrl::fromLocalFile(filePath));
+		    });
+	    });
 }

@@ -135,7 +135,7 @@ public:
 
 	Q_INVOKABLE bool isAllDayConf() const;
 
-	Q_INVOKABLE void exportConferenceToICS() const;
+	Q_INVOKABLE void exportConferenceToICS();
 
 signals:
 	void dateTimeChanged();
