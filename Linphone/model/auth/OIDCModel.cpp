@@ -192,6 +192,8 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 		emit timeoutTimerStarted();
 		QDesktopServices::openUrl(url);
 	});
+	mTimeout.start();
+	emit timeoutTimerStarted();
 
 	connect(&mOidc, &QOAuth2AuthorizationCodeFlow::finished, [this](QNetworkReply *reply) {
 		connect(reply, &QNetworkReply::errorOccurred,

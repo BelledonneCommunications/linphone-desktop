@@ -682,14 +682,14 @@
     <message>
         <location filename="../../core/App.cpp" line="425"/>
         <location filename="../../core/App.cpp" line="503"/>
-        <location filename="../../core/App.cpp" line="790"/>
+        <location filename="../../core/App.cpp" line="789"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="426"/>
-        <location filename="../../core/App.cpp" line="792"/>
+        <location filename="../../core/App.cpp" line="791"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation>Remote-Provisionierung fehlgeschlagen: %1</translation>
@@ -729,86 +729,86 @@
         <translation>Ihre Version ist auf dem neuesten Stand</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="786"/>
+        <location filename="../../core/App.cpp" line="785"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation>nicht erreichbar</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1077"/>
+        <location filename="../../core/App.cpp" line="1076"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>Ein kostenloses Open-Source SIP Video-Telefon.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1079"/>
+        <location filename="../../core/App.cpp" line="1078"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Kommandozeilen-Befehl an die Anwendung schicken</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1083"/>
+        <location filename="../../core/App.cpp" line="1082"/>
         <source>command_line_option_show_help</source>
         <translation>Zeige Hilfe</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1088"/>
+        <location filename="../../core/App.cpp" line="1087"/>
         <source>command_line_option_show_app_version</source>
         <translation>App-Version anzeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1096"/>
+        <location filename="../../core/App.cpp" line="1095"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Abzurufende Linphone-Konfigurationsdatei angeben. Sie wird mit der aktuellen Konfiguration zusammengeführt.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1098"/>
+        <location filename="../../core/App.cpp" line="1097"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, Pfad oder Datei</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1103"/>
+        <location filename="../../core/App.cpp" line="1102"/>
         <source>command_line_option_minimized</source>
         <translation>Minimieren</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1106"/>
+        <location filename="../../core/App.cpp" line="1105"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Debug-Informationen auf der Standardausgabe ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1109"/>
+        <location filename="../../core/App.cpp" line="1108"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Nur Anwendungs-Logs ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1565"/>
+        <location filename="../../core/App.cpp" line="1564"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Ausblenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1565"/>
+        <location filename="../../core/App.cpp" line="1564"/>
         <source>show_action</source>
         <translation>Zeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1580"/>
+        <location filename="../../core/App.cpp" line="1579"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1598"/>
+        <location filename="../../core/App.cpp" line="1597"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Auf Updates prüfen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1721"/>
+        <location filename="../../core/App.cpp" line="1720"/>
         <source>mark_all_read_action</source>
         <translation>Alle als gelesen markieren</translation>
     </message>
@@ -5106,7 +5106,7 @@ Ablauf: %1</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="107"/>
-        <location filename="../../model/auth/OIDCModel.cpp" line="273"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="275"/>
         <source>oidc_authentication_timeout_message</source>
         <extracomment>Timeout: Not authenticated</extracomment>
         <translation>Zeitüberschreitung: Nicht authentifiziert</translation>
@@ -5172,42 +5172,42 @@ Ablauf: %1</translation>
         <translation>Autorisierung über den Browser anfordern</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="222"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="224"/>
         <source>oidc_authentication_no_token_found_error</source>
         <translation>Kein Token gefunden</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="235"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="237"/>
         <source>oidc_authentication_request_token_message</source>
         <extracomment>Requesting access token</extracomment>
         <translation>Zugriffstoken wird angefordert</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="240"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="242"/>
         <source>oidc_authentication_refresh_token_message</source>
         <extracomment>Refreshing access token</extracomment>
         <translation>Zugriffstoken wird aktualisiert</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="245"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="247"/>
         <source>oidc_authentication_request_authorization_message</source>
         <extracomment>Requesting authorization</extracomment>
         <translation>Autorisierung wird angefordert</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="250"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="252"/>
         <source>oidc_authentication_request_temporary_credentials_message</source>
         <extracomment>Requesting temporary credentials</extracomment>
         <translation>Temporäre Anmeldedaten werden angefordert</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="300"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="302"/>
         <source>oidc_authentication_no_auth_found_in_config_error</source>
         <extracomment>No authorization endpoint found in OpenID configuration</extracomment>
         <translation>Kein Autorisierungs-Endpunkt in der OpenID-Konfiguration gefunden</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="315"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="317"/>
         <source>oidc_authentication_no_token_found_in_config_error</source>
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
         <translation>Kein Token-Endpunkt in der OpenID-Konfiguration gefunden</translation>

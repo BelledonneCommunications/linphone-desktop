@@ -306,6 +306,9 @@ App::App(int &argc, char *argv[])
 	setWindowIcon(QIcon(Constants::WindowIconPath));
 	initFonts();
 	//-------------------
+	mOIDCRefreshTimer.setInterval(1000);
+	mOIDCRefreshTimer.setSingleShot(false);
+
 	mLinphoneThread = new Thread(this);
 
 	init();
@@ -328,9 +331,6 @@ App::App(int &argc, char *argv[])
 	});
 	mEventCountNotifier = new EventCountNotifier(this);
 	mDateUpdateTimer.start();
-
-	mOIDCRefreshTimer.setInterval(1000);
-	mOIDCRefreshTimer.setSingleShot(false);
 
 #ifdef Q_OS_LINUX
 	exportDesktopFile();
@@ -530,7 +530,6 @@ void App::setSelf(QSharedPointer<App>(me)) {
 
 	mCoreModelConnection->makeConnectToModel(&CoreModel::oidcRemainingTimeBeforeTimeoutChanged,
 	                                         [this](int remainingTime) {
-		                                         qDebug() << "App: oidc timeout changed";
 		                                         mCoreModelConnection->invokeToCore([this, remainingTime] {
 			                                         mRemainingTimeBeforeOidcTimeout = remainingTime;
 			                                         emit remainingTimeBeforeOidcTimeoutChanged();

@@ -417,6 +417,9 @@ void CoreModel::onAuthenticationRequested(const std::shared_ptr<linphone::Core> 
 				emit timeoutTimerStarted();
 				qDebug() << "start refresh timer";
 			});
+			if (oidcModel->isTimerRunning()) {
+				emit timeoutTimerStarted();
+			}
 			connect(oidcModel, &OIDCModel::timeoutTimerStopped, this, [this] { emit timeoutTimerStopped(); });
 			connect(this, &CoreModel::forceOidcTimeout, oidcModel, [this, oidcModel] {
 				if (oidcModel->isTimerRunning()) {
