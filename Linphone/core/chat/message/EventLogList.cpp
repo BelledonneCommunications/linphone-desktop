@@ -91,7 +91,7 @@ void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 			connect(mChatCore.get(), &ChatCore::eventListCleared, this, [this] { resetData(); });
 			connect(mChatCore.get(), &ChatCore::eventsInserted, this, [this](QList<QSharedPointer<EventLogCore>> list) {
 				auto eventsList = getSharedList<EventLogCore>();
-				for (auto &event : list) {
+				for (const auto &event : list) {
 					auto it = std::find_if(eventsList.begin(), eventsList.end(),
 					                       [event](const QSharedPointer<EventLogCore> item) { return item == event; });
 					if (it == eventsList.end()) {

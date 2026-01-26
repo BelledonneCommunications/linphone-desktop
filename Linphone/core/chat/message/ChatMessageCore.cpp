@@ -157,7 +157,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 		mTotalReactionsLabel = tr("all_reactions_label");
 		auto reac = chatmessage->getOwnReaction();
 		mOwnReaction = reac ? Utils::coreStringToAppString(reac->getBody()) : QString();
-		for (auto &reaction : chatmessage->getReactions()) {
+		for (const auto &reaction : chatmessage->getReactions()) {
 			if (reaction) {
 				auto fromAddr = reaction->getFromAddress()->clone();
 				fromAddr->clean();

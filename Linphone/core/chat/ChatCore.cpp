@@ -121,7 +121,7 @@ ChatCore::~ChatCore() {
 	emit mChatModel->removeListener();
 }
 
-void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
+void ChatCore::setSelf(const QSharedPointer<ChatCore> &me) {
 	mChatModelConnection = SafeConnection<ChatCore, ChatModel>::create(me, mChatModel);
 	mChatModelConnection->makeConnectToCore(&ChatCore::lDeleteHistory, [this]() {
 		mChatModelConnection->invokeToModel([this]() { mChatModel->deleteHistory(); });
