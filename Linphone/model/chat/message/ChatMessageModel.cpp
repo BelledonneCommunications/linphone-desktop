@@ -44,6 +44,15 @@ ChatMessageModel::ChatMessageModel(const std::shared_ptr<linphone::ChatMessage> 
 		mEphemeralTimer.stop();
 		deleteMessageFromChatRoom(false);
 	});
+	// We need to force this signal sending because there is no callback to know when a message has been read
+	connect(CoreModel::getInstance().get(), &CoreModel::chatRoomRead, this,
+	        [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::ChatRoom> &chatRoom) {
+		        if (chatRoom == mMonitor->getChatRoom()) {
+			        if (mMonitor->isRead()) {
+				        emit messageRead(mMonitor);
+			        }
+		        }
+	        });
 }
 
 ChatMessageModel::~ChatMessageModel() {
@@ -91,7 +100,7 @@ bool ChatMessageModel::isRead() const {
 
 void ChatMessageModel::markAsRead() {
 	mMonitor->markAsRead();
-	emit messageRead();
+	emit messageRead(mMonitor);
 	emit CoreModel::getInstance()->messageReadInChatRoom(mMonitor->getChatRoom());
 }
 

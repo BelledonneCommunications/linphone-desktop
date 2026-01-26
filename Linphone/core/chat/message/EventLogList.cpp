@@ -298,12 +298,14 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 		if (!mChatCore) {
 			endResetModel();
 			setIsUpdating(false);
+			emit modelUpdated();
 			return;
 		}
 		auto chatModel = mChatCore->getModel();
 		if (!chatModel) {
 			endResetModel();
 			setIsUpdating(false);
+			emit modelUpdated();
 			return;
 		}
 		mCoreModelConnection->invokeToModel([this, chatModel]() {
@@ -321,6 +323,7 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 				}
 				endResetModel();
 				setIsUpdating(false);
+				emit modelUpdated();
 			});
 		});
 	});

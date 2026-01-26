@@ -18,7 +18,7 @@ ListView {
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
     property bool loading: false
     property bool isEncrypted: chat && chat.core.isEncrypted
-    highlightFollowsCurrentItem: false
+    highlightFollowsCurrentItem: true
 
     verticalLayoutDirection: ListView.BottomToTop
     signal showReactionsForMessageRequested(ChatMessageGui chatMessage)
@@ -73,7 +73,7 @@ ListView {
     onAtYBeginningChanged: if (atYBeginning && count !== 0) {
         eventLogProxy.displayMore()
     }
-    onAtYEndChanged: if (atYEnd && chat) {
+    onAtYEndChanged: if (atYEnd && chat && count !== 0) {
         chat.core.lMarkAsRead()
     }
 
@@ -86,10 +86,13 @@ ListView {
         onModelAboutToBeReset: {
             loading = true
         }
-        onModelReset: {
+        onModelUpdated: {
             loading = false
             var index = eventLogProxy.findFirstUnreadIndex()
-            mainItem.positionViewAtIndex(index, ListView.Contain)
+            var itemToSelect = mainItem.itemAtIndex(index)
+            mainItem.positionViewAtIndex(index, ListView.Beginning)
+            var lastMessage = itemAtIndex(0)
+            mainItem.lastItemVisible = lastMessage.isFullyVisible
             eventLogProxy.markIndexAsRead(index)
         }
         onEventInsertedByUser: (index) => {
@@ -224,7 +227,7 @@ ListView {
         indicatorWidth: mainItem.busyIndicatorSize
         indicatorColor: DefaultStyle.main1_500_main
     }
-    
+
     delegate: DelegateChooser {
         role: "eventType"
         DelegateChoice {

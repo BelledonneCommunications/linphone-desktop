@@ -57,6 +57,7 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 			int proxyIndex = mapFromSource(newEventLogList->index(i, 0)).row();
 			emit eventInsertedByUser(proxyIndex);
 		});
+		connect(newEventLogList, &EventLogList::modelUpdated, this, &EventLogProxy::modelUpdated);
 	}
 	QSortFilterProxyModel::setSourceModel(model);
 }

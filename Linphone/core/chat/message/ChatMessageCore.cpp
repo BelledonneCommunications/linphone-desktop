@@ -230,9 +230,11 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 			});
 		}
 	});
-	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageRead, [this]() {
-		mChatMessageModelConnection->invokeToCore([this] { setIsRead(true); });
-	});
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::messageRead, [this](const std::shared_ptr<linphone::ChatMessage> &chatMessage) {
+		    bool isRead = chatMessage->isRead();
+		    mChatMessageModelConnection->invokeToCore([this, isRead] { setIsRead(isRead); });
+	    });
 	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lSendReaction, [this](const QString &reaction) {
 		mChatMessageModelConnection->invokeToModel([this, reaction] { mChatMessageModel->sendReaction(reaction); });
 	});

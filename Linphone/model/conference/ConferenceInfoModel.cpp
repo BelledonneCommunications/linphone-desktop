@@ -32,7 +32,8 @@ DEFINE_ABSTRACT_OBJECT(ConferenceInfoModel)
 
 ConferenceInfoModel::ConferenceInfoModel(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo,
                                          QObject *parent)
-    : mConferenceInfo(conferenceInfo) {
+    // TODO : remove cloning when a fix will be done in SDK (#SDK-1001 ticket)
+    : mConferenceInfo(conferenceInfo->clone()) {
 	mustBeInLinphoneThread(getClassName());
 }
 
