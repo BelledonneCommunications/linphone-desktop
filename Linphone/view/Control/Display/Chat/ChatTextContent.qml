@@ -15,6 +15,9 @@ TextEdit {
 	property string lastTextSelected : ''
 	property string searchedTextPart
 	color: DefaultStyle.main2_700
+	// force restoring cursor in case we click on a mention, otherwise
+	// the cursor stays IBeam
+	onVisibleChanged: if (!visible) UtilsCpp.restoreGlobalCursor()
 	font {
 		pixelSize: (contentGui && UtilsCpp.isOnlyEmojis(contentGui.core.text)) ? Typography.h1.pixelSize : Typography.p1.pixelSize
 		weight: Typography.p1.weight

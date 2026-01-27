@@ -21,6 +21,7 @@ FocusScope {
     property CallGui call
     property alias callHeaderContent: splitPanel.header.contentItem
     property bool replyingToMessage: false
+    property string lastChar
     enum PanelType { MessageReactions, SharedFiles, Medias, ImdnStatus, ForwardToList, ManageParticipants, EphemeralSettings, None}
     
     signal oneOneCall(bool video)
@@ -332,8 +333,9 @@ FocusScope {
                         Control.Control {
                             id: participantListPopup
                             width: parent.width
-                            height: visible ? Math.min(participantInfoList.height, Utils.getSizeWithScreenRatio(200)) : 0
-                            visible: false
+                            height: Math.min(participantInfoList.height, Utils.getSizeWithScreenRatio(200))
+                            visible: mainItem.lastChar === "@"
+                            onVisibleChanged: console.log("participant list visible changed", visible, height)
                             anchors.bottom: chatMessagesListView.bottom
                             anchors.left: chatMessagesListView.left
                             anchors.right: chatMessagesListView.right
@@ -371,6 +373,7 @@ FocusScope {
                                 height: contentHeight
                                 width: participantListPopup.width
                                 chatGui: mainItem.chat
+                                delegateHoverRectangleRadius: Utils.getSizeWithScreenRatio(20)
                                 onParticipantClicked: (username) => {
                                     messageSender.text = messageSender.text + username + " "
                                     messageSender.textArea.cursorPosition = messageSender.text.length
@@ -509,9 +512,7 @@ FocusScope {
                         if (text !== "") {
                             mainItem.chat.core.lCompose()
                         }
-                        var lastChar = text.slice(-1)
-                        if (lastChar == "@") participantListPopup.visible = true
-                        else participantListPopup.visible = false
+                        mainItem.lastChar = text.slice(-1)
                         mainItem.chat.core.sendingText = text
                     }
                     onSendMessage: {

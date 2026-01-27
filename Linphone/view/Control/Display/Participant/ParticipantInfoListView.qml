@@ -15,6 +15,7 @@ ListView {
 
 	property ChatGui chatGui
 	height: contentHeight
+	property int delegateHoverRectangleRadius: 0
 
 	signal participantClicked(string username)
 
@@ -60,6 +61,7 @@ ListView {
 				visible: mousearea.containsMouse
 				color: DefaultStyle.main2_200
 				opacity: 0.5
+				radius: mainItem.delegateHoverRectangleRadius
 			}
 		}
 	}
