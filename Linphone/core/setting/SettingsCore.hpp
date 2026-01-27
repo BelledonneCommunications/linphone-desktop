@@ -91,6 +91,8 @@ public:
 
 	Q_PROPERTY(bool logsEnabled READ getLogsEnabled WRITE setLogsEnabled NOTIFY logsEnabledChanged)
 	Q_PROPERTY(bool fullLogsEnabled READ getFullLogsEnabled WRITE setFullLogsEnabled NOTIFY fullLogsEnabledChanged)
+	Q_PROPERTY(bool crashReporterEnabled READ getCrashReporterEnabled WRITE setCrashReporterEnabled NOTIFY
+	               crashReporterEnabledChanged)
 	Q_PROPERTY(QString logsEmail READ getLogsEmail)
 	Q_PROPERTY(QString logsFolder READ getLogsFolder)
 	Q_PROPERTY(QString ringtoneName READ getRingtoneFileName NOTIFY ringtoneChanged)
@@ -106,6 +108,8 @@ public:
 	SettingsCore(QObject *parent = Q_NULLPTR);
 	SettingsCore(const SettingsCore &settingsCore);
 	virtual ~SettingsCore();
+
+	void reloadSettings();
 
 	void setSelf(QSharedPointer<SettingsCore> me);
 	void reset(const SettingsCore &settingsCore);
@@ -234,9 +238,10 @@ public:
 
 	bool getLogsEnabled() const;
 	void setLogsEnabled(bool enabled);
-
 	bool getFullLogsEnabled() const;
 	void setFullLogsEnabled(bool enabled);
+	bool getCrashReporterEnabled() const;
+	void setCrashReporterEnabled(bool enabled);
 
 	void setRingtone(QString path);
 	QString getRingtoneFileName() const;
@@ -364,6 +369,7 @@ signals:
 
 	void logsEnabledChanged();
 	void fullLogsEnabledChanged();
+	void crashReporterEnabledChanged();
 
 	void logsUploadTerminated(bool status, QString url);
 	void logsFolderChanged(const QString &folder);
@@ -439,6 +445,7 @@ private:
 	// Debug logs
 	bool mLogsEnabled;
 	bool mFullLogsEnabled;
+	bool mCrashReporterEnabled;
 	QString mLogsFolder;
 	QString mLogsEmail;
 

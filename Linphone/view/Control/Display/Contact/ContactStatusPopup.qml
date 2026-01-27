@@ -73,7 +73,7 @@ PopupButton {
             visible: !presenceAndRegistrationItem.editCustomStatus
             anchors.fill: parent
             anchors.margins: Utils.getSizeWithScreenRatio(20)
-            accountCore: mainItem.account.core
+            accountGui: mainItem.account
             onSetCustomStatusClicked: {
                 presenceAndRegistrationItem.editCustomStatus = true
             }
@@ -84,7 +84,7 @@ PopupButton {
             visible: presenceAndRegistrationItem.editCustomStatus
             anchors.fill: parent
             anchors.margins: Utils.getSizeWithScreenRatio(20)
-            accountCore: mainItem.account.core
+            accountGui: mainItem.account
             onVisibleChanged: {
                 if (!visible) {
                     presenceAndRegistrationItem.editCustomStatus = false

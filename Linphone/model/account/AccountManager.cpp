@@ -31,6 +31,7 @@
 
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
@@ -96,17 +97,10 @@ bool AccountManager::login(QString username,
 	}
 
 	if (!displayName.isEmpty()) identity->setDisplayName(Utils::appStringToCoreString(displayName));
-	if (!registrarUri.isEmpty()) {
-		auto linRegistrarUri = ToolModel::interpretUrl(registrarUri);
-		params->setServerAddress(linRegistrarUri);
-	}
-	if (!outboundProxyAddress.isEmpty()) {
-		auto linOutboundProxyAddress = ToolModel::interpretUrl(outboundProxyAddress);
-		if (linOutboundProxyAddress) params->setRoutesAddresses({linOutboundProxyAddress});
-	}
+
 	if (!domain.isEmpty()) {
 		identity->setDomain(Utils::appStringToCoreString(domain));
-		if (QString::compare(domain, "sip.linphone.org")) {
+		if (QString::compare(domain, SettingsModel::getInstance()->getDefaultDomain())) {
 			params->setLimeServerUrl("");
 			auto computedServerAddress =
 			    factory->createAddress(Utils::appStringToCoreString(QStringLiteral("sip:%1").arg(domain)));
@@ -128,6 +122,28 @@ bool AccountManager::login(QString username,
 		*errorMessage = tr("assistant_account_login_address_configuration_error")
 		                    .arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
 		return false;
+	}
+
+	if (!registrarUri.isEmpty()) {
+		auto linRegistrarUri = factory->createAddress(Utils::appStringToCoreString(registrarUri));
+		if (linRegistrarUri) params->setServerAddress(linRegistrarUri);
+		else {
+			//: Registrar uri is invalid. Please make sure it matches the following format :
+			//: sip:host>:<port>;transport=<transport> (:<port> is optional)
+			*errorMessage = tr("assistant_account_login_registrar_uri_error");
+			return false;
+		}
+	}
+
+	if (!outboundProxyAddress.isEmpty()) {
+		auto linOutboundProxyAddress = factory->createAddress(Utils::appStringToCoreString(outboundProxyAddress));
+		if (linOutboundProxyAddress) params->setRoutesAddresses({linOutboundProxyAddress});
+		else {
+			//: Outbound proxy uri is invalid. Please make sure it matches the following format :
+			//: sip:host>:<port>;transport=<transport> (:<port> is optional)
+			*errorMessage = tr("assistant_account_login_outbound_proxy_uri_error");
+			return false;
+		}
 	}
 
 	if (account->setParams(params)) {
@@ -169,6 +185,7 @@ bool AccountManager::login(QString username,
 		        }
 		        emit registrationStateChanged(state, account->getError(), errorMessage);
 	        });
+
 	auto status = core->addAccount(account);
 	if (status == -1) {
 		//: "Unable to add account."
@@ -340,10 +357,11 @@ void AccountManager::linkNewAccountUsingCode(const QString &code,
 	           const std::string &errorMessage, const std::shared_ptr<const linphone::Dictionary> &parameterErrors) {
 		    if (request->getType() == linphone::AccountManagerServicesRequest::Type::LinkEmailUsingCode) {
 			    lInfo() << "[AccountManager] error linking email to account" << errorMessage;
+			    emit linkingNewAccountWithCodeFailed(Utils::coreStringToAppString(errorMessage));
 		    } else if (request->getType() == linphone::AccountManagerServicesRequest::Type::LinkPhoneNumberUsingCode) {
 			    lInfo() << "[AccountManager] error linking phone number to account" << errorMessage;
+			    emit linkingNewAccountWithCodeFailed(Utils::coreStringToAppString(errorMessage));
 		    }
-		    emit linkingNewAccountWithCodeFailed(Utils::coreStringToAppString(errorMessage));
 	    });
 	if (registerType == RegisterType::Email)
 		mAccountManagerServicesModel->linkEmailToAccountUsingCode(sipIdentityAddress,

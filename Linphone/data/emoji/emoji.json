@@ -129,6 +129,20 @@
             ]
         },
         {
+            "code": "1fae0",
+            "char": "🫠",
+            "name": "melting face",
+            "keywords": [
+                "face",
+                "melting",
+                "smile",
+                "embarrassed",
+                "overwhelmed",
+                "shame",
+                "dread"
+            ]
+        },
+        {
             "code": "1f609",
             "char": "😉",
             "name": "winking face",
@@ -361,6 +375,30 @@
             ]
         },
         {
+            "code": "1fae2",
+            "char": "🫢",
+            "name": "face with open eyes and hand over mouth",
+            "keywords": [
+                "face with open eyes hand over mouth",
+                "whoops",
+                "shock",
+                "gasp",
+                "sudden realization",
+                "surprise"
+            ]
+        },
+        {
+            "code": "1fae3",
+            "char": "🫣",
+            "name": "face with peeking eye",
+            "keywords": [
+                "face with peeking eye",
+                "hide",
+                "hidden",
+                "eye"
+            ]
+        },
+        {
             "code": "1f92b",
             "char": "🤫",
             "name": "shushing face",
@@ -376,6 +414,17 @@
             "keywords": [
                 "face",
                 "thinking face"
+            ]
+        },
+        {
+            "code": "1fae1",
+            "char": "🫡",
+            "name": "saluting face",
+            "keywords": [
+                "face",
+                "saluting face",
+                "respect",
+                "honor"
             ]
         },
         {
@@ -438,6 +487,32 @@
             ]
         },
         {
+            "code": "1fae5",
+            "char": "🫥",
+            "name": "dotted line face",
+            "keywords": [
+                "dotted line face",
+                "shy",
+                "embarrased",
+                "quiet",
+                "ignore"
+            ]
+        },
+        {
+            "code": "1f636-200d-1f32b-feof",
+            "char": "😶‍🌫️",
+            "name": "face in clouds",
+            "keywords": [
+                "face in clouds",
+                "confused",
+                "embarrased",
+                "lost",
+                "daydreaming",
+                "overwhelmed",
+                "hazy"
+            ]
+        },
+        {
             "code": "1f60f",
             "char": "😏",
             "name": "smirking face",
@@ -477,6 +552,20 @@
             ]
         },
         {
+            "code": "1f62e-200d-1f4a8",
+            "char": "😮‍💨",
+            "name": "face exhaling",
+            "keywords": [
+                "face",
+                "face exhaling",
+                "relief",
+                "exhausted",
+                "frustrated",
+                "exasperation",
+                "calm"
+            ]
+        },
+        {
             "code": "1f925",
             "char": "🤥",
             "name": "lying face",
@@ -485,6 +574,39 @@
                 "lie",
                 "pinocchio",
                 "lying face"
+            ]
+        },
+        {
+            "code": "1fae8",
+            "char": "🫨",
+            "name": "shaking face",
+            "keywords": [
+                "face",
+                "shaking",
+                "overwhelmed",
+                "excited",
+                "shocked",
+                "anxious"
+            ]
+        },
+        {
+            "code": "1f642-200d-2194-fe0f",
+            "char": "🙂‍↔️",
+            "name": "head shaking horizontally",
+            "keywords": [
+                "head shaking horizontally",
+                "no"
+            ]
+        },
+        {
+            "code": "1f642-200d-2195-fe0f",
+            "char": "🙂‍↕️",
+            "name": "head shaking vertically",
+            "keywords": [
+                "head shaking vertically",
+                "yes",
+                "support",
+                "confirm"
             ]
         },
         {
@@ -534,6 +656,18 @@
                 "face",
                 "sleeping face",
                 "zzz"
+            ]
+        },
+        {
+            "code": "1fae9",
+            "char": "🫩",
+            "name": "face with bags under eyes",
+            "keywords": [
+                "face",
+                "sleeping",
+                "bags under eyes",
+                "tired",
+                "stressed"
             ]
         },
         {

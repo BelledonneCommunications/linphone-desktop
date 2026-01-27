@@ -66,7 +66,7 @@ template <class A, class B>
 class SafeConnection : public QObject {
 	// Use create functions.
 protected:
-	SafeConnection(QSharedPointer<A> a, std::shared_ptr<B> b)
+	SafeConnection(const QSharedPointer<A> &a, std::shared_ptr<B> b)
 	    : mCore(a), mModel(b), mCoreObject(a.get()), mModelObject(b.get()) {
 	}
 	SafeConnection(QSharedPointer<A> a, QSharedPointer<B> b)

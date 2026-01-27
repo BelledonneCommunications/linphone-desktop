@@ -10,6 +10,7 @@ MessageInfosLayout {
 	spacing: Utils.getSizeWithScreenRatio(25)
 	property ChatGui chatGui
 	property int filter
+	property bool showAsSquare: false
 	tabbar.visible: false
 
 	content: [
@@ -43,7 +44,7 @@ MessageInfosLayout {
 			}
 			delegate: FileView {
 				contentGui: modelData
-				showAsSquare: false
+				showAsSquare: mainItem.showAsSquare
 				width: gridView.cellWidth - Utils.getSizeWithScreenRatio(2)
 				height: gridView.cellHeight - Utils.getSizeWithScreenRatio(2)
 			}

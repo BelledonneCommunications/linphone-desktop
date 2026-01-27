@@ -164,7 +164,7 @@
         <location filename="../../model/account/AccountModel.cpp" line="309"/>
         <source>set_outbound_proxy_uri_failed_error_message</source>
         <extracomment>Unable to set outbound proxy uri, failed creating address from %1</extracomment>
-        <translation>Ezin da irteerako proxy uri-a ezarri, huts egin du %1 (e)tik helbidea sortzean</translation>
+        <translation type="unfinished">Ezin da irteerako proxy uri-a ezarri, huts egin du %1 (e)tik helbidea sortzean</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="418"/>
@@ -304,6 +304,11 @@
         <extracomment>&quot;No information&quot;</extracomment>
         <translation>Ez dago informaziorik</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
+        <source>copied</source>
+        <translation>Kopiatuta</translation>
+    </message>
 </context>
 <context>
     <name>AccountSettingsPage</name>
@@ -362,23 +367,6 @@
         <translation>Kontuaren ezarpenak</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="32"/>
-        <source>info_popup_invalid_registrar_uri_message</source>
-        <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="34"/>
-        <source>info_popup_invalid_outbound_proxy_message</source>
-        <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="35"/>
-        <source>info_popup_error_title</source>
-        <translation>Errorea</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="45"/>
         <source>information_popup_success_title</source>
         <translation>Ondo joan da</translation>
@@ -405,12 +393,6 @@
         <source>account_settings_voicemail_uri_title</source>
         <extracomment>&quot;URI de messagerie vocale&quot;</extracomment>
         <translation>Ahots-postontziaren URIa</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="120"/>
-        <source>account_settings_transport_title</source>
-        <extracomment>&quot;Transport&quot;</extracomment>
-        <translation>Garraiatu</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="127"/>
@@ -891,31 +873,6 @@
         <source>settings_call_forward_address_cannot_be_empty</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="45"/>
-        <source>settings_call_forward_address_timeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
-        <source>settings_call_forward_address_progress_disabling</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
-        <source>settings_call_forward_address_progress_enabling</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
-        <source>settings_call_forward_activation_success</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
-        <source>settings_call_forward_deactivation_success</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CallHistoryLayout</name>
@@ -1138,8 +1095,8 @@
     <message>
         <location filename="../../model/call/CallModel.cpp" line="388"/>
         <source>call_error_server_timeout_toast</source>
-        <extracomment>&quot;Server tiemout&quot;</extracomment>
-        <translation>Zerbitzariaren denbora-muga</translation>
+        <extracomment>&quot;Server timeout&quot;</extracomment>
+        <translation type="unfinished">Zerbitzariaren denbora-muga</translation>
     </message>
 </context>
 <context>
@@ -1918,7 +1875,7 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="45"/>
         <source>settings_contacts_carddav_popup_synchronization_error_message</source>
         <extracomment>&quot;Erreur de synchronisation!&quot;</extracomment>
-        <translation>Sinkronizazio-errorea!</translation>
+        <translation type="unfinished">Sinkronizazio-errorea!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="62"/>
@@ -2483,6 +2440,11 @@ Error</extracomment>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="46"/>
+        <source>info_popup_error_title</source>
+        <translation>Errorea</translation>
     </message>
 </context>
 <context>
@@ -4324,9 +4286,14 @@ Error</extracomment>
         <translation>Errorea baliozkotze kodean</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="249"/>
-        <source>information_popup_error_title</source>
-        <translation>Errorea</translation>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
+        <source>oidc_connection_waiting_message</source>
+        <translation>Ez da tokenik aurkitu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
+        <source>cancel</source>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
@@ -6667,7 +6634,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../tool/Utils.cpp" line="926"/>
         <source>Italy</source>
-        <translation>Italia</translation>
+        <translation type="unfinished">Italia</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="929"/>

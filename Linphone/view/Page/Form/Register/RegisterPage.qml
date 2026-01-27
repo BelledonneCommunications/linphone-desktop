@@ -128,15 +128,11 @@ LoginLayout {
 
 				ColumnLayout {
 					id: contentLayout
-					anchors.left: parent.left
-					anchors.right: parent.right
                     spacing: Utils.getSizeWithScreenRatio(8)
 					ColumnLayout {
 						id: formLayout
                         spacing: Utils.getSizeWithScreenRatio(24)
 						RowLayout {
-							Layout.preferredHeight: usernameItem.height
-                            spacing: Utils.getSizeWithScreenRatio(16)
 							FormItemLayout {
 								id: usernameItem
                                 label: qsTr("username")
@@ -152,6 +148,7 @@ LoginLayout {
 							}
 							RowLayout {
                                 spacing: Utils.getSizeWithScreenRatio(10)
+								Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
 								ComboBox {
                                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(210)
                                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
@@ -171,7 +168,8 @@ LoginLayout {
 							currentIndex: bar.currentIndex
 							PhoneNumberInput {
 								id: phoneNumberInput
-                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
+								Layout.fillWidth: false
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(390)
 								property string completePhoneNumber: countryCode + phoneNumber
                                 //: "Numéro de téléphone"
                                 label: qsTr("phone_number")
@@ -221,6 +219,7 @@ LoginLayout {
 								}
 								FormItemLayout {
                                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
+									Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
                                     //: "Confirmation mot de passe"
                                     label: qsTr("assistant_account_register_password_confirmation")
 									mandatory: true
@@ -235,12 +234,13 @@ LoginLayout {
 									}
 								}
 							}
-							TemporaryText {
-								id: otherErrorText
-								Layout.fillWidth: true
-                                Layout.topMargin: Utils.getSizeWithScreenRatio(5)
-							}
 						}
+					}
+					TemporaryText {
+						id: otherErrorText
+						Layout.fillWidth: true
+						Layout.preferredHeight: implicitHeight
+						// Layout.topMargin: Utils.getSizeWithScreenRatio(5)
 					}
 					// ColumnLayout {
                     // 	spacing: Utils.getSizeWithScreenRatio(18)
@@ -276,6 +276,7 @@ LoginLayout {
 							Accessible.name: acceptCguAndPrivacyPolicyItem.associatedText
                         }
                         Text {
+							id: privacyLinkText
                             text: acceptCguAndPrivacyPolicyItem.associatedText
                             onLinkActivated: (link) => Qt.openUrlExternally(link)
                             font {
@@ -284,9 +285,17 @@ LoginLayout {
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                acceptedButtons: Qt.NoButton
+                                acceptedButtons: Qt.LeftButton
                                 cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
-                                onClicked: termsCheckBox.toggle()
+                                onClicked: (mouse) => {
+									mouse.accepted = false
+									if (parent.hoveredLink) {
+										privacyLinkText.linkActivated(privacyLinkText.linkAt(mouse.x, mouse.y))
+									}
+									else {
+										termsCheckBox.toggle()
+									}
+								}
                             }
                         }
                     }

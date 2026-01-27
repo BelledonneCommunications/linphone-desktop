@@ -54,8 +54,8 @@ private:
 
 // class MAC_APPLICATION_MENU : public QObject{
 //	QString forcedTranslation(){
-//		return tr("About %1") + tr("Preferences…") + tr("Services") + tr("Hide %1") + tr("Hide Others") + tr("Show All") +
-//tr("Quit %1");
+//		return tr("About %1") + tr("Preferences…") + tr("Services") + tr("Hide %1") + tr("Hide Others") + tr("Show All")
+//+ tr("Quit %1");
 //	}
 // };
 

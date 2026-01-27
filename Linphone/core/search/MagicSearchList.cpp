@@ -49,7 +49,7 @@ MagicSearchList::~MagicSearchList() {
 	mustBeInMainThread("~" + getClassName());
 }
 
-void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
+void MagicSearchList::setSelf(const QSharedPointer<MagicSearchList> &me) {
 	mCoreModelConnection = SafeConnection<MagicSearchList, CoreModel>::create(me, CoreModel::getInstance());
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::friendCreated, [this](const std::shared_ptr<linphone::Friend> &f) {

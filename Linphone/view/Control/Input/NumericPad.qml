@@ -41,50 +41,69 @@ FocusScope {
 		}
 	}
 
+	function handleKeyPadEvent(event) {
+		if (event.key === Qt.Key_0) {
+			keypadKeyPressedAtIndex(10)
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_1) {
+			keypadKeyPressedAtIndex(0)
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_2) {
+			keypadKeyPressedAtIndex(1)
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_3) {
+			keypadKeyPressedAtIndex(2)
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_4) {
+			keypadKeyPressedAtIndex(3)
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_5) {
+			keypadKeyPressedAtIndex(4)
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_6) {
+			keypadKeyPressedAtIndex(5)
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_7) {
+			keypadKeyPressedAtIndex(6)
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_8) {
+			keypadKeyPressedAtIndex(7)
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_9) {
+			keypadKeyPressedAtIndex(8)
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_Asterisk) {
+			keypadKeyPressedAtIndex(9)
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_Plus) {
+			mainItem.buttonPressed("+")
+			event.accepted = true
+		}
+		if (event.key === Qt.Key_Enter) {
+			mainItem.launchCall()
+			event.accepted = true
+		}
+	}
+
 	Keys.onPressed: (event) => {
+		event.accepted = false
 		if (event.modifiers & Qt.KeypadModifier) {
-			if (event.key === Qt.Key_0) {
-				keypadKeyPressedAtIndex(10)
-			}
-			if (event.key === Qt.Key_1) {
-				keypadKeyPressedAtIndex(0)
-			}
-			if (event.key === Qt.Key_2) {
-				keypadKeyPressedAtIndex(1)
-			}
-			if (event.key === Qt.Key_3) {
-				keypadKeyPressedAtIndex(2)
-			}
-			if (event.key === Qt.Key_4) {
-				keypadKeyPressedAtIndex(3)
-			}
-			if (event.key === Qt.Key_5) {
-				keypadKeyPressedAtIndex(4)
-			}
-			if (event.key === Qt.Key_6) {
-				keypadKeyPressedAtIndex(5)
-			}
-			if (event.key === Qt.Key_7) {
-				keypadKeyPressedAtIndex(6)
-			}
-			if (event.key === Qt.Key_8) {
-				keypadKeyPressedAtIndex(7)
-			}
-			if (event.key === Qt.Key_9) {
-				keypadKeyPressedAtIndex(8)
-			}
-			if (event.key === Qt.Key_Asterisk) {
-				keypadKeyPressedAtIndex(9)
-			}
-			if (event.key === Qt.Key_Plus) {
-				mainItem.buttonPressed("+")
-			}
-			if (event.key === Qt.Key_Enter) {
-				mainItem.launchCall()
-			}
+			handleKeyPadEvent(event)
 		}
 		if (event.key === Qt.Key_Backspace) {
 			mainItem.wipe()
+			event.accepted = true
 		}
 	}
 

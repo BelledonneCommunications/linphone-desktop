@@ -27,7 +27,7 @@
 
 namespace Paths {
 bool filePathExists(const QString &path, const bool isWritable = false);
-//bool convertToRelativePath(const QString &path, QString *relativePath);
+// bool convertToRelativePath(const QString &path, QString *relativePath);
 
 // Return true if paths are different and point to the same file
 bool isSameRelativeFile(const QString &filePath, const QString &relativeFilePath);
@@ -48,6 +48,8 @@ QString getFactoryConfigFilePath();
 QString getFriendsListFilePath();
 QString getLimeDatabasePath();
 QString getLogsDirPath();
+QString getCrashpadDirPath();
+QString getMetricsDirPath();
 QString getMessageHistoryFilePath();
 QString getPackageMsPluginsDirPath();
 QString getPackagePluginsAppDirPath();
@@ -58,6 +60,7 @@ QString getToolsDirPath();
 QString getUserCertificatesDirPath();
 QString getZrtpDataFilePath();
 QString getZrtpSecretsFilePath();
+QString getCrashpadHandlerFilePath();
 
 void migrate();
 } // namespace Paths

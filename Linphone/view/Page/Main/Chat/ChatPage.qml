@@ -18,7 +18,6 @@ AbstractMainPage {
 
     property AccountProxy accounts: AccountProxy {
         id: accountProxy
-        sourceModel: AppCpp.accounts
     }
     property AccountGui account: accountProxy.defaultAccount
     property var state: account && account.core?.registrationState || 0
@@ -28,7 +27,7 @@ AbstractMainPage {
     property var selectedChatGui: null
     property string remoteAddress
     onRemoteAddressChanged: console.log("ChatPage : remote address changed :", remoteAddress)
-    property var remoteChatObj: UtilsCpp.getChatForAddress(remoteAddress)
+    property var remoteChatObj: remoteAddress.length > 0 ? UtilsCpp.getChatForAddress(remoteAddress) : null
     property var remoteChat: remoteChatObj ? remoteChatObj.value : null
 
     signal openChatRequested(ChatGui chat)
@@ -46,8 +45,6 @@ AbstractMainPage {
                     UtilsCpp.showInformationPopup(qsTr("info_popup_error_title"),
                                                     //: Chat room creation failed !
                                                     qsTr("info_popup_chatroom_creation_failed"), false)
-                } else if (remoteChat.core.state === LinphoneEnums.ChatRoomState.Created) {
-                    openChatRequested(remoteChat)
                 }
             }
         }
@@ -62,7 +59,7 @@ AbstractMainPage {
         if (selectedChatGui) {
             if (!listStackView.currentItem || listStackView.currentItem.objectName !== "chatListItem") {
                 listStackView.popToIndex(0)
-                if (listStackView.depth === 0 || listStackView.currentItem.objectName !== "chatListItem") listStackView.push(chatListItem)
+                if (listStackView.depth === 0 || listStackView.currentItem && listStackView.currentItem.objectName !== "chatListItem") listStackView.push(chatListItem)
             }
         }
         AppCpp.currentChat = visible ? selectedChatGui : null
@@ -78,6 +75,7 @@ AbstractMainPage {
     rightPanelStackView.visible: false//listStackView.currentItem && listStackView.currentItem.objectName === "chatListItem" && selectedChatGui !== null
 
     onNoItemButtonPressed: goToNewChat()
+    signal newChatItemOpen()
 
     showDefaultItem: listStackView.currentItem
                      && listStackView.currentItem.objectName == "chatListItem"
@@ -88,6 +86,7 @@ AbstractMainPage {
         if (listStackView.currentItem
                 && listStackView.currentItem.objectName != "newChatItem")
             listStackView.push(newChatItem)
+        newChatItemOpen()
     }
 
     Dialog {
@@ -212,6 +211,7 @@ AbstractMainPage {
                             id: chatListView
                             Layout.fillWidth: true
                             Layout.fillHeight: true
+                            chatProxy.model: AppCpp.chats
                             Layout.topMargin: Utils.getSizeWithScreenRatio(39)
                             searchBar: searchBar
                             Control.ScrollBar.vertical: scrollbar
@@ -224,6 +224,10 @@ AbstractMainPage {
                                 target: mainItem
                                 function onOpenChatRequested(chat) {
                                     chatListView.chatToSelect = chat
+                                }
+                                function onNewChatItemOpen() {
+                                    // reset index to clear right panel when opening new conversation
+                                    chatListView.currentIndex = -1
                                 }
                             }
                         }

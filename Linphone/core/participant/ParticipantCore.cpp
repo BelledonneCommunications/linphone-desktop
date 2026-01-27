@@ -20,10 +20,8 @@
 
 #include <QQmlApplicationEngine>
 
-#include "core/App.hpp"
-
 #include "ParticipantCore.hpp"
-// #include "ParticipantDeviceList.hpp"
+#include "core/App.hpp"
 #include "model/participant/ParticipantModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
@@ -77,6 +75,48 @@ void ParticipantCore::setSelf(QSharedPointer<ParticipantCore> me) {
 		QTimer::singleShot(secs * 1000, this, &ParticipantCore::onEndOfInvitation);
 	});
 	connect(this, &ParticipantCore::sipAddressChanged, this, &ParticipantCore::updateIsMe);
+	auto update = [this, remoteAddress = mSipAddress](const std::shared_ptr<linphone::Friend> &updatedFriend) {
+		bool isThisFriend = false;
+		std::shared_ptr<linphone::Address> friendAddress;
+		auto participantAddress = mParticipantModel->getAddress();
+		for (auto address : updatedFriend->getAddresses()) {
+			if (address->weakEqual(participantAddress)) {
+				isThisFriend = true;
+				friendAddress = address;
+				break;
+			}
+		}
+		if (isThisFriend) {
+			auto displayName = friendAddress->getDisplayName();
+			mCoreModelConnection->invokeToCore([this, displayName] {
+				auto me = mCoreModelConnection->mCore.mQData; // Locked from previous call.
+				setDisplayName(Utils::coreStringToAppString(displayName));
+			});
+		}
+	};
+	auto onRemoved = [this](const std::shared_ptr<linphone::Friend> &updatedFriend) {
+		bool isThisFriend = false;
+		std::shared_ptr<linphone::Address> friendAddress;
+		auto participantAddress = mParticipantModel->getAddress();
+		for (auto address : updatedFriend->getAddresses()) {
+			if (address->weakEqual(participantAddress)) {
+				isThisFriend = true;
+				friendAddress = address;
+				break;
+			}
+		}
+		if (isThisFriend) {
+			auto displayName = ToolModel::getDisplayName(participantAddress);
+			mCoreModelConnection->invokeToCore([this, displayName] {
+				auto me = mCoreModelConnection->mCore.mQData; // Locked from previous call.
+				setDisplayName(displayName);
+			});
+		}
+	};
+	mCoreModelConnection = SafeConnection<ParticipantCore, CoreModel>::create(me, CoreModel::getInstance());
+	mCoreModelConnection->makeConnectToModel(&CoreModel::friendCreated, update);
+	mCoreModelConnection->makeConnectToModel(&CoreModel::friendUpdated, update);
+	mCoreModelConnection->makeConnectToModel(&CoreModel::friendRemoved, onRemoved);
 }
 
 LinphoneEnums::SecurityLevel ParticipantCore::getSecurityLevel() const {

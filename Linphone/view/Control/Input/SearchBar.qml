@@ -104,6 +104,13 @@ FocusScope {
 			repeat: false
 			onTriggered: textField.searchText = textField.text
 		}
+		Keys.onPressed: (event) => {
+			event.accepted = false
+			if (mainItem.numericPadPopup && mainItem.numericPadPopup.opened && (event.modifiers & Qt.KeypadModifier)) {
+				mainItem.numericPadPopup.keyPadKeyPressed(event)
+				event.accepted = true
+			}
+		}
 	}
 	Button {
 		id: dialerButton

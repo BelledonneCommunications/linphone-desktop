@@ -110,7 +110,7 @@ void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 			connect(mChatCore.get(), &ChatCore::eventListCleared, this, [this] { resetData(); });
 			connect(mChatCore.get(), &ChatCore::eventsInserted, this, [this](QList<QSharedPointer<EventLogCore>> list) {
 				auto eventsList = getSharedList<EventLogCore>();
-				for (auto &event : list) {
+				for (const auto &event : list) {
 					auto it = std::find_if(eventsList.begin(), eventsList.end(),
 					                       [event](const QSharedPointer<EventLogCore> item) { return item == event; });
 					if (it == eventsList.end()) {
@@ -242,15 +242,20 @@ void EventLogList::findChatMessageWithFilter(QString filter, int startIndex, boo
 		lInfo() << log().arg("searching event starting from index") << startIndex << "| event :"
 		        << (startEvent && startEvent->getChatMessageCore() ? startEvent->getChatMessageCore()->getText()
 		                                                           : "null")
-		        << "| filter :" << filter;
+		        << "| filter :" << filter << "forward =" << forward;
 		auto startEventModel = startEvent ? startEvent->getModel() : nullptr;
 		mCoreModelConnection->invokeToModel([this, chatModel, startEventModel, filter, forward, isFirstResearch] {
 			auto linStartEvent = startEventModel ? startEventModel->getEventLog() : nullptr;
 			auto eventLog = chatModel->searchMessageByText(filter, linStartEvent, forward);
-			if (!eventLog) {
+			if (!eventLog && isFirstResearch) {
+				// event not found, search backward
+				lInfo() << log().arg("not found, search backward");
+				eventLog = chatModel->searchMessageByText(filter, linStartEvent, !forward);
+			}
+			if (!eventLog && isFirstResearch) {
 				// event not found, search in the entire history
 				lInfo() << log().arg("not found, search in entire history");
-				auto eventLog = chatModel->searchMessageByText(filter, nullptr, forward);
+				eventLog = chatModel->searchMessageByText(filter, nullptr, forward);
 			}
 			int index = -1;
 			if (eventLog) {
@@ -312,12 +317,14 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 		if (!mChatCore) {
 			endResetModel();
 			setIsUpdating(false);
+			emit modelUpdated();
 			return;
 		}
 		auto chatModel = mChatCore->getModel();
 		if (!chatModel) {
 			endResetModel();
 			setIsUpdating(false);
+			emit modelUpdated();
 			return;
 		}
 		mCoreModelConnection->invokeToModel([this, chatModel]() {
@@ -335,6 +342,7 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 				}
 				endResetModel();
 				setIsUpdating(false);
+				emit modelUpdated();
 			});
 		});
 	});

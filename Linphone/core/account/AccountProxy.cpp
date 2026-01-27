@@ -24,6 +24,12 @@
 #include "core/App.hpp"
 
 AccountProxy::AccountProxy(QObject *parent) : LimitProxy(parent) {
+	if (!App::getInstance()->getAccountList()) {
+		mList = AccountList::create();
+		App::getInstance()->setAccountList(mList);
+	}
+	mList = App::getInstance()->getAccountList();
+	setSourceModel(mList.get());
 	connect(this, &AccountProxy::initializedChanged, this, &AccountProxy::resetDefaultAccount);
 	connect(this, &AccountProxy::initializedChanged, this, &AccountProxy::haveAccountChanged);
 }

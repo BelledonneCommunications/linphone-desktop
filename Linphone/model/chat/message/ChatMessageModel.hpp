@@ -66,7 +66,7 @@ public:
 
 signals:
 	void messageDeleted(bool deletedByUser);
-	void messageRead();
+	void messageRead(const std::shared_ptr<linphone::ChatMessage> &chatMessage);
 
 	void msgStateChanged(const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state);
 	void newMessageReaction(const std::shared_ptr<linphone::ChatMessage> &message,
@@ -102,6 +102,7 @@ signals:
 private:
 	linphone::ChatMessage::State mMessageState;
 	QTimer mEphemeralTimer;
+	std::weak_ptr<linphone::ChatRoom> mChatRoom;
 
 	DECLARE_ABSTRACT_OBJECT
 

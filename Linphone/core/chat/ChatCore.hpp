@@ -74,7 +74,7 @@ public:
 	static QSharedPointer<ChatCore> create(const std::shared_ptr<linphone::ChatRoom> &chatRoom);
 	ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom);
 	~ChatCore();
-	void setSelf(QSharedPointer<ChatCore> me);
+	void setSelf(const QSharedPointer<ChatCore> &me);
 
 	QDateTime getLastUpdatedTime() const;
 	void setLastUpdatedTime(QDateTime time);

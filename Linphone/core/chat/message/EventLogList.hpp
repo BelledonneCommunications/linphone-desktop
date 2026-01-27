@@ -67,6 +67,7 @@ public:
 
 signals:
 	void lUpdate();
+	void modelUpdated();
 	void filterChanged(QString filter);
 	void eventInsertedByUser(int index);
 	void messageWithFilterFound(int index);

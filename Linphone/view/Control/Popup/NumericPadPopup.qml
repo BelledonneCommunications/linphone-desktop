@@ -20,6 +20,10 @@ Control.Popup {
 	property var currentCall
 	onOpened: numPad.forceActiveFocus()
 	signal buttonPressed(string text)
+	signal keyPadKeyPressed(KeyEvent event)
+	onKeyPadKeyPressed: (event) => {
+		numPad.handleKeyPadEvent(event)
+	}
 	signal launchCall()
 	signal wipe()
 
@@ -72,7 +76,6 @@ Control.Popup {
 		lastRowVisible: mainItem.lastRowVisible
 		currentCall: mainItem.currentCall
 		onButtonPressed: (text) => {
-			console.log("BUTTON PRESSED NUMPAD")
 			mainItem.buttonPressed(text)
 		}
 		onLaunchCall: mainItem.launchCall()

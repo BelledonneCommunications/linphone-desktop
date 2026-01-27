@@ -26,6 +26,8 @@ Control.Control {
 	property bool isEditing: false
 
     property ChatGui chat
+
+	signal focusTextArea()
 	
 	// ---------------------------------------------------------------------------
 	
@@ -177,6 +179,9 @@ Control.Control {
 									}
 									function onSendMessage() {
 										sendingTextArea.clear()
+									}
+									function onFocusTextArea() {
+										sendingTextArea.forceActiveFocus()
 									}
 								}
 							}

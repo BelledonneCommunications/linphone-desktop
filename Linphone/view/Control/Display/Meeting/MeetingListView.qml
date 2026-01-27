@@ -16,6 +16,7 @@ ListView {
 	property bool hoverEnabled: true	
 	property var delegateButtons
 	property ConferenceInfoGui selectedConference
+	property ConferenceInfoGui confToBeSelected: null
 	property bool _moveToIndex: false
     property bool loading: false
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
@@ -25,6 +26,10 @@ ListView {
 	
     spacing: Utils.getSizeWithScreenRatio(8)
 	highlightFollowsCurrentItem: false
+
+	onCurrentIndexChanged: if(currentIndex === -1) {
+		resetSelections()
+	}
 
 	signal meetingDeletionRequested(ConferenceInfoGui confInfo, bool canCancel)
 	
@@ -52,7 +57,6 @@ ListView {
 		moveToCurrentItem()
 		if(currentItem) {
 			mainItem.selectedConference = currentItem.itemGui
-			currentItem.forceActiveFocus()
 		}
 	}
 	// Update position only if we are moving to current item and its position is changing.
@@ -101,15 +105,14 @@ ListView {
 		filterType: ConferenceInfoProxy.None
         initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(63)))
 		displayItemsStep: initialDisplayItems/2
-		Component.onCompleted: {
-            mainItem.loading = false
-        }
 		onModelAboutToBeReset: {
+			mainItem.confToBeSelected = mainItem.selectedConference
             mainItem.loading = true
         }
 		onModelReset: {
 			mainItem.loading = false
-			selectData(getCurrentDateConfInfo())
+			if (mainItem.confToBeSelected) selectData(mainItem.confToBeSelected)
+			else selectData(getCurrentDateConfInfo())
 		}
 		function selectData(confInfoGui){
 			mainItem.currentIndex = loadUntil(confInfoGui)
@@ -243,7 +246,7 @@ ListView {
 					anchors.fill: parent
 					anchors.rightMargin: 5	// margin to avoid clipping shadows at right
                     radius: Utils.getSizeWithScreenRatio(10)
-					visible: itemDelegate.haveModel || itemDelegate.activeFocus
+					visible: itemDelegate.haveModel || mainItem.currentIndex === itemDelegate.index
 					color: itemDelegate.isSelected ? DefaultStyle.main2_200 : DefaultStyle.grey_0 // mainItem.currentIndex === index
 					ColumnLayout {
 						anchors.fill: parent

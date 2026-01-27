@@ -1397,6 +1397,11 @@ bool Utils::isCurrentMonth(QDate date) {
 	return date.month() == currentDate.month() && date.year() == currentDate.year();
 }
 
+bool Utils::isCurrentYear(QDate date) {
+	auto currentDate = QDate::currentDate();
+	return date.year() == currentDate.year();
+}
+
 bool Utils::datesAreEqual(const QDate &a, const QDate &b) {
 	return a.month() == b.month() && a.year() == b.year() && a.day() == b.day();
 }
@@ -1587,25 +1592,21 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 		auto linphoneChatRoom = ToolModel::lookupCurrentCallChat(callModel);
 		if (linphoneChatRoom) {
 			auto chatCore = ChatCore::create(linphoneChatRoom);
-			return QVariant::fromValue(new ChatGui(chatCore));
+			return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 		} else {
-			lInfo() << "[Utils] Did not find existing chat room, create one";
-			linphoneChatRoom = ToolModel::createCurrentCallChat(callModel);
+			// Only try to create chatroom if 1-1 call
+			if (!callModel->getConference()) {
+				lInfo() << "[Utils] Did not find existing chat room, create one";
+				linphoneChatRoom = ToolModel::createCurrentCallChat(callModel);
+			}
 			if (linphoneChatRoom != nullptr) {
 				lInfo() << "[Utils] Chatroom created with" << callModel->getRemoteAddress()->asStringUriOnly();
 				auto id = linphoneChatRoom->getIdentifier();
 				auto chatCore = ChatCore::create(linphoneChatRoom);
-				return QVariant::fromValue(new ChatGui(chatCore));
+				return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 			} else {
 				lWarning() << "[Utils] Failed to create 1-1 conversation with"
 				           << callModel->getRemoteAddress()->asStringUriOnly() << "!";
-				data->mConnection->invokeToCore([] {
-					//: Error
-					showInformationPopup(tr("information_popup_error_title"),
-					                     //: Failed to create 1-1 conversation with %1 !
-					                     tr("information_popup_chatroom_creation_error_message"), false,
-					                     getOrCreateCallsWindow());
-				});
 				return QVariant();
 			}
 		}
@@ -1624,14 +1625,14 @@ VariantObject *Utils::getChatForAddress(QString address) {
 		auto linphoneChatRoom = ToolModel::lookupChatForAddress(linAddr);
 		if (linphoneChatRoom) {
 			auto chatCore = ChatCore::create(linphoneChatRoom);
-			return QVariant::fromValue(new ChatGui(chatCore));
+			return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 		} else {
 			lInfo() << "[Utils] Did not find existing chat room, create one";
 			linphoneChatRoom = ToolModel::createChatForAddress(linAddr);
 			if (linphoneChatRoom != nullptr) {
 				lInfo() << "[Utils] Chatroom created with" << linAddr->asStringUriOnly();
 				auto chatCore = ChatCore::create(linphoneChatRoom);
-				return QVariant::fromValue(new ChatGui(chatCore));
+				return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 			} else {
 				lWarning() << "[Utils] Failed to create 1-1 conversation with" << linAddr->asStringUriOnly() << "!";
 				//: Failed to create 1-1 conversation with %1 !
@@ -1661,7 +1662,7 @@ VariantObject *Utils::createGroupChat(QString subject, QStringList participantAd
 		auto linphoneChatRoom = ToolModel::createGroupChatRoom(subject, addresses);
 		if (linphoneChatRoom) {
 			auto chatCore = ChatCore::create(linphoneChatRoom);
-			return QVariant::fromValue(new ChatGui(chatCore));
+			return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 		} else {
 			return QVariant();
 		}
@@ -1865,7 +1866,10 @@ QString Utils::getPresenceStatus(LinphoneEnums::Presence presence) {
 	return presenceStatus;
 }
 
-VariantObject *Utils::encodeTextToQmlRichFormat(const QString &text, const QVariantMap &options, ChatGui *chat) {
+VariantObject *Utils::encodeTextToQmlRichFormat(const QString &text,
+                                                const QString &textPartToBold,
+                                                const QVariantMap &options,
+                                                ChatGui *chat) {
 	/*QString images;
 	QStringList imageFormat;
 	for(auto format : QImageReader::supportedImageFormats())
@@ -1874,99 +1878,10 @@ VariantObject *Utils::encodeTextToQmlRichFormat(const QString &text, const QVari
 	VariantObject *data = new VariantObject("encodeTextToQmlRichFormat");
 	if (!data) return nullptr;
 	auto primaryColor = getDefaultStyleColor("info_500_main");
-	data->makeRequest([text, options, chat, primaryColor] {
-		QStringList formattedText;
-		bool lastWasUrl = false;
-
-		if (options.contains("noLink") && options["noLink"].toBool()) {
-			formattedText.append(encodeEmojiToQmlRichFormat(text));
-		} else {
-
-			auto iriParsed = UriTools::parseIri(text);
-
-			for (int i = 0; i < iriParsed.size(); ++i) {
-				QString iri = iriParsed[i]
-				                  .second.replace('&', "&amp;")
-				                  .replace('<', "\u2063&lt;")
-				                  .replace('>', "\u2063&gt;")
-				                  .replace('"', "&quot;")
-				                  .replace('\'', "&#039;");
-				if (!iriParsed[i].first) {
-					if (lastWasUrl) {
-						lastWasUrl = false;
-						if (iri.front() != ' ') iri.push_front(' ');
-					}
-					formattedText.append(encodeEmojiToQmlRichFormat(iri));
-				} else {
-					QString uri =
-					    iriParsed[i].second.left(3) == "www" ? "http://" + iriParsed[i].second : iriParsed[i].second;
-					/* TODO : preview from link
-					int extIndex = iriParsed[i].second.lastIndexOf('.');
-					QString ext;
-					if( extIndex >= 0)
-					    ext = iriParsed[i].second.mid(extIndex+1).toUpper();
-					if(imageFormat.contains(ext.toLatin1())){// imagesHeight is not used because of bugs on display
-					(blank image if set without width) images += "<a href=\"" + uri + "\"><img" + (
-					options.contains("imagesWidth") ? QString(" width='") + options["imagesWidth"].toString() + "'" : ""
-					        ) + (
-					            options.contains("imagesWidth")
-					            ? QString(" height='auto'")
-					            : ""
-					        ) + " src=\"" + iriParsed[i].second + "\" />"+uri+"</a>";
-					}else{
-					*/
-					formattedText.append("<a style=\"color:" + primaryColor.name() + ";\" href=\"" + uri + "\">" + iri +
-					                     "</a>");
-					lastWasUrl = true;
-					/*}*/
-				}
-			}
-		}
-		if (lastWasUrl && formattedText.last().back() != ' ') {
-			formattedText.push_back(" ");
-		}
-		if (chat && chat->mCore) {
-			auto participants = chat->mCore->getParticipants();
-			auto mentionsParsed = UriTools::parseMention(formattedText.join(""));
-			formattedText.clear();
-
-			for (int i = 0; i < mentionsParsed.size(); ++i) {
-				QString mention = mentionsParsed[i].second;
-
-				if (mentionsParsed[i].first) {
-					QString mentions = mentionsParsed[i].second;
-					QStringList finalMentions;
-					QStringList parts = mentions.split(" ");
-					for (auto part : parts) {
-						if (part.startsWith("@")) { // mention
-							QString username = part;
-							username.removeFirst();
-							auto it = std::find_if(
-							    participants.begin(), participants.end(),
-							    [username](QSharedPointer<ParticipantCore> p) { return username == p->getUsername(); });
-							if (it != participants.end()) {
-								auto foundParticipant = participants.at(std::distance(participants.begin(), it));
-								auto address = foundParticipant->getSipAddress();
-								auto isFriend = ToolModel::findFriendByAddress(address);
-								if (isFriend)
-									part = "@" + Utils::coreStringToAppString(isFriend->getAddress()->getDisplayName());
-								QString participantLink = "<a style=\"color:" + primaryColor.name() +
-								                          ";\" href=\"mention:" + address + "\">" + part + "</a>";
-								finalMentions.append(participantLink);
-							} else {
-								finalMentions.append(part);
-							}
-						} else {
-							finalMentions.append(part);
-						}
-					}
-					formattedText.push_back(finalMentions.join(" "));
-				} else {
-					formattedText.push_back(mentionsParsed[i].second);
-				}
-			}
-		}
-		return "<p style=\"white-space:pre-wrap;\">" + formattedText.join("");
+	data->makeRequest([text, options, chat, primaryColor, textPartToBold] {
+		auto chatroom =
+		    chat && chat->mCore && chat->mCore->getModel() ? chat->mCore->getModel()->getMonitor() : nullptr;
+		return ToolModel::encodeTextToQmlRichFormat(text, textPartToBold, options, chatroom);
 	});
 	data->requestValue();
 	return data;

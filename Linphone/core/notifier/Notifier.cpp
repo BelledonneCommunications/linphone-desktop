@@ -358,7 +358,7 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 					if (content->isText()) txt += content->getUtf8Text().c_str();
 				}
 			} else if (fileContent->isVoiceRecording())
-				//: 'Voice message received!' : message to warn the user in a notofication for voice messages.
+				//: 'Voice message received!' : message to warn the user in a notification for voice messages.
 				txt = tr("new_voice_message");
 			else txt = tr("new_file_message");
 			if (txt.isEmpty() && message->hasConferenceInvitationContent())

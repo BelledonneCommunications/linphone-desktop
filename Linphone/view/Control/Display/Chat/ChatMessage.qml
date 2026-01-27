@@ -27,7 +27,7 @@ Control.Control {
     property var msgState: chatMessage ? chatMessage.core.messageState : LinphoneEnums.ChatMessageState.StateIdle
     hoverEnabled: true
     property bool linkHovered: false
-    property real maxWidth: parent?.width || Utils.getSizeWithScreenRatio(300)
+    property real maxWidth: parent ? parent.width : Utils.getSizeWithScreenRatio(300)
 
     leftPadding: isRemoteMessage ? Utils.getSizeWithScreenRatio(5) : 0
 
@@ -422,6 +422,18 @@ Control.Control {
                     popup.padding: 0
                     popup.contentItem: ColumnLayout {
                         spacing: 0
+                        IconLabelButton {
+                            visible: mainItem.msgStatev === LinphoneEnums.ChatMessageState.StateNotDelivered
+                            inverseLayout: true
+                            //: "Re-send"
+                            text: qsTr("chat_message_send_again")
+                            icon.source: AppIcons.chatTeardropText
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
+                            onClicked: {
+                                mainItem.chatMessage.lSend()
+                            }
+                        }
                         IconLabelButton {
                             inverseLayout: true
                             //: "Reception info"

@@ -31,6 +31,7 @@ FocusScope {
 					]
 					RadioButton {
 						id: radiobutton
+						enabled: mainItem.call && !mainItem.call.core.paused
 						checkOnClick: false
 						color: DefaultStyle.main1_500_main
                         indicatorSize: Utils.getSizeWithScreenRatio(20)

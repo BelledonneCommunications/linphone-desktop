@@ -55,6 +55,9 @@ AbstractWindow {
                                                     || call.core.isMismatch)) {
                 zrtpValidation.open()
             }
+        } else if (callState === LinphoneEnums.CallState.StreamsRunning) {
+            if (!mainWindow.chat && (!mainWindow.conference || mainWindow.conference.core.isChatEnabled))
+                mainWindow.chatObj = UtilsCpp.getCurrentCallChat(mainWindow.call)
         } else if (callState === LinphoneEnums.CallState.Error
                    || callState === LinphoneEnums.CallState.End) {
             zrtpValidation.close()
@@ -90,14 +93,28 @@ AbstractWindow {
         }
     }
     onClosing: close => {
-                   DesktopToolsCpp.screenSaverStatus = true
-                   if (callsModel.haveCall) {
-                       close.accepted = false
-                       terminateAllCallsDialog.open()
-                   }
-                   if (middleItemStackView.currentItem.objectName === "waitingRoom")
-                   middleItemStackView.replace(inCallItem)
-               }
+        DesktopToolsCpp.screenSaverStatus = true
+        if (callsModel.haveCall) {
+            close.accepted = false
+            terminateAllCallsDialog.open()
+        }
+        if (middleItemStackView.currentItem.objectName === "waitingRoom")
+        middleItemStackView.replace(inCallItem)
+    }
+    Connections {
+        enabled: activeFocusItem !== null
+        target: activeFocusItem.Keys
+        function onPressed(event) {
+            if (rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName === "dialerPanel"){
+                mainWindow.keyPressedOnDialer(event)
+            }
+            if ((event.key === Qt.Key_Escape || event.key === Qt.Key_Return) && mainWindow.visibility == Window.FullScreen)
+                mainWindow.showNormal()
+        }
+    }
+    
+    signal keyPressedOnDialer(KeyEvent event)
+
 
     function changeLayout(layoutIndex) {
         if (layoutIndex == 0) {
@@ -169,7 +186,7 @@ AbstractWindow {
 
     Connections {
         enabled: !!mainWindow.call
-        target: mainWindow.call && mainWindow.call.core
+        target: mainWindow.call ? mainWindow.call.core : null
         function onSecurityUpdated() {
             if (mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
                 if (call.core.tokenVerified) {
@@ -316,16 +333,13 @@ AbstractWindow {
     Rectangle {
         anchors.fill: parent
         color: DefaultStyle.grey_900
-        Keys.onEscapePressed: {
-            if (mainWindow.visibility == Window.FullScreen)
-                mainWindow.showNormal()
-        }
+        focus: true
 
         ColumnLayout {
             anchors.fill: parent
-            spacing: Utils.getSizeWithScreenRatio(10)
             anchors.bottomMargin: Utils.getSizeWithScreenRatio(10)
             anchors.topMargin: Utils.getSizeWithScreenRatio(10)
+            spacing: Utils.getSizeWithScreenRatio(10)
             Item {
                 id: headerItem
                 Layout.margins: Utils.getSizeWithScreenRatio(10)
@@ -339,26 +353,51 @@ AbstractWindow {
                     spacing: Utils.getSizeWithScreenRatio(10)
                     RowLayout {
                         spacing: Utils.getSizeWithScreenRatio(10)
-                        EffectImage {
-                            id: callStatusIcon
+                        Loader {
+                            id: callStatusIconLoader
                             Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
                             Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
-                            // TODO : change with broadcast or meeting icon when available
-                            imageSource: !mainWindow.call ? AppIcons.meeting : (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released) ? AppIcons.endCall : (mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote) ? AppIcons.pause : mainWindow.conference ? AppIcons.usersThree : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? AppIcons.arrowUpRight : AppIcons.arrowDownLeft
-                            colorizationColor: !mainWindow.call
-                                               || mainWindow.call.core.paused
-                                               || mainWindow.callState
-                                               === LinphoneEnums.CallState.Paused
-                                               || mainWindow.callState
-                                               === LinphoneEnums.CallState.PausedByRemote
-                                               || mainWindow.callState
-                                               === LinphoneEnums.CallState.End
-                                               || mainWindow.callState
-                                               === LinphoneEnums.CallState.Released
-                                               || mainWindow.conference ? DefaultStyle.danger_500_main : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500_main
-                            onColorizationColorChanged: {
-                                callStatusIcon.active = !callStatusIcon.active
-                                callStatusIcon.active = !callStatusIcon.active
+                            sourceComponent: EffectImage {
+                                id: callStatusIcon
+                                anchors.fill: parent
+                                // TODO : change with broadcast or meeting icon when available
+                                // onImageSourceChanged: console.log("image source changed", imageSource)
+                                imageSource: !mainWindow.call
+                                    ? AppIcons.meeting
+                                    : (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released)
+                                        ? AppIcons.endCall
+                                        : (mainWindow.call.core.paused || mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote)
+                                            ? AppIcons.pause
+                                            : mainWindow.conference
+                                                ? AppIcons.usersThree
+                                                : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing
+                                                    ? AppIcons.arrowUpRight
+                                                    : AppIcons.arrowDownLeft
+                                colorizationColor: !mainWindow.call
+                                                || mainWindow.call.core.paused
+                                                || mainWindow.callState
+                                                === LinphoneEnums.CallState.Paused
+                                                || mainWindow.callState
+                                                === LinphoneEnums.CallState.PausedByRemote
+                                                || mainWindow.callState
+                                                === LinphoneEnums.CallState.End
+                                                || mainWindow.callState
+                                                === LinphoneEnums.CallState.Released
+                                                || mainWindow.conference ? DefaultStyle.danger_500_main : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500_main
+                                
+                                Binding {
+                                    target: callStatusIcon
+                                    when: middleItemStackView.currentItem.objectName === "waitingRoom"
+                                    property: "imageSource"
+                                    value: AppIcons.usersThree
+                                }
+                            }
+                            Connections {
+                                target: mainWindow
+                                function onCallStateChanged() {
+                                    callStatusIconLoader.active = !callStatusIconLoader.active
+                                    callStatusIconLoader.active = !callStatusIconLoader.active
+                                }
                             }
                         }
                         ColumnLayout {
@@ -548,7 +587,7 @@ AbstractWindow {
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(40)
                         Layout.rightMargin: Utils.getSizeWithScreenRatio(30)
                         icon.source: quality >= 4 ? AppIcons.cellSignalFull : quality >= 3 ? AppIcons.cellSignalMedium : quality >= 2 ? AppIcons.cellSignalLow : AppIcons.cellSignalNone
-                        colorizationColor: DefaultStyle.grey_0
+                        colorizationColor: quality >= 2 ? DefaultStyle.grey_0 : DefaultStyle.danger_500_main
                         style: ButtonStyle.noBackgroundLightBorder
                         Accessible.name: qsTr("open_statistic_panel_accessible_name")
                         onClicked: {
@@ -841,13 +880,12 @@ AbstractWindow {
                         searchBarBorderColor: DefaultStyle.grey_200
                         numPadPopup: numericPad
                         onContactClicked: contact => {
-                                            mainWindow.startCallWithContact(
-                                                contact, false, rightPanel)
-                                        }
+                            mainWindow.startCallWithContact(contact, false, rightPanel)
+                        }
                         Connections {
                             target: mainWindow
                             function onCallChanged() {
-                                if (newCallForm.Control.StackView.status === Control.StackView.Active)
+                                if (rightPanel.contentLoader.item.objectName === "newCallPanel")
                                     rightPanel.visible = false
                             }
                         }
@@ -909,6 +947,69 @@ AbstractWindow {
                                     UtilsCpp.createCall(dialerTextInput.text)
                                 }
                                 Component.onCompleted: parent.height = height
+                                Connections {
+                                    target: mainWindow
+                                    function onKeyPressedOnDialer(event) {
+                                        if (event.modifiers & Qt.KeypadModifier) {
+                                            if (event.key === Qt.Key_0) {
+                                                numPad.keypadKeyPressedAtIndex(10)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_1) {
+                                                numPad.keypadKeyPressedAtIndex(0)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_2) {
+                                                numPad.keypadKeyPressedAtIndex(1)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_3) {
+                                                numPad.keypadKeyPressedAtIndex(2)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_4) {
+                                                numPad.keypadKeyPressedAtIndex(3)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_5) {
+                                                numPad.keypadKeyPressedAtIndex(4)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_6) {
+                                                numPad.keypadKeyPressedAtIndex(5)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_7) {
+                                                numPad.keypadKeyPressedAtIndex(6)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_8) {
+                                                numPad.keypadKeyPressedAtIndex(7)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_9) {
+                                                numPad.keypadKeyPressedAtIndex(8)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_Asterisk) {
+                                                numPad.keypadKeyPressedAtIndex(9)
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_Plus) {
+                                                numPad.buttonPressed("+")
+                                                event.accepted = true
+                                            }
+                                            if (event.key === Qt.Key_Enter) {
+                                                numPad.launchCall()
+                                                event.accepted = true
+                                            }
+                                        }
+                                        if (event.key === Qt.Key_Backspace) {
+                                            numPad.wipe()
+                                            event.accepted = true
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -920,9 +1021,9 @@ AbstractWindow {
                     objectName: "changeLayoutPanel"
                     width: parent.width
                     Keys.onEscapePressed: event => {
-                                              rightPanel.visible = false
-                                              event.accepted = true
-                                          }
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
                     call: mainWindow.call
                     onChangeLayoutRequested: index => {
                         mainWindow.changeLayout(index)
@@ -934,9 +1035,9 @@ AbstractWindow {
                 ColumnLayout {
                     objectName: "callListPanel"
                     Keys.onEscapePressed: event => {
-                                              rightPanel.visible = false
-                                              event.accepted = true
-                                          }
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
                     spacing: 0
                     Component {
                         id: mergeCallPopupButton
@@ -1191,12 +1292,6 @@ AbstractWindow {
                         }
                     }
                     Binding {
-                        target: callStatusIcon
-                        when: middleItemStackView.currentItem.objectName === "waitingRoom"
-                        property: "imageSource"
-                        value: AppIcons.usersThree
-                    }
-                    Binding {
                         target: callStatusText
                         when: middleItemStackView.currentItem.objectName === "waitingRoom"
                         property: "text"
@@ -1349,8 +1444,7 @@ AbstractWindow {
                         pressedColor: enabled ? DefaultStyle.success_500_main : DefaultStyle.grey_600
                         hoveredColor: enabled ? DefaultStyle.main2_400 : DefaultStyle.grey_600
                         onClicked: {
-                            mainWindow.call.core.lSetPaused(
-                                        !mainWindow.call.core.paused)
+                            mainWindow.call.core.lSetPaused(!mainWindow.call.core.paused)
                         }
                         KeyNavigation.backtab: moreOptionsButton
                     }
@@ -1521,7 +1615,6 @@ AbstractWindow {
                         onToggled: {
                             if (checked) {
                                 rightPanel.visible = true
-                                mainWindow.chatObj = UtilsCpp.getCurrentCallChat(mainWindow.call)
                                 rightPanel.replace(chatPanel)
                             } else {
                                 rightPanel.visible = false

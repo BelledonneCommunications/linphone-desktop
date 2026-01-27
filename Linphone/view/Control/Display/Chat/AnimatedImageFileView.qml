@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls as Control
 import QtQuick.Layouts
-import QtMultimedia
 
 import Linphone
 import UtilsCpp
@@ -25,7 +24,8 @@ AnimatedImage {
 	autoTransform: true
 	fillMode: Image.PreserveAspectFit
 	source: contentGui && UtilsCpp.isAnimatedImage(contentGui.core.filePath) ? ('file:/'+ contentGui.core.filePath) : ""
-
+	// sourceSize.width: implicitWidth
+	// sourceSize.height: implicitHeight
 	states: State {
 		name: 'hovered'
 	}

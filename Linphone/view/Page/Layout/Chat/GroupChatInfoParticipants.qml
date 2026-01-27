@@ -15,10 +15,10 @@ ColumnLayout {
 	id: mainItem
     property var title: String
     property var participants
-    property var chatCore
+    property ChatGui chatGui
     signal manageParticipantsRequested()
     
-    property bool isGroupEditable: chatCore && chatCore.meAdmin && !chatCore.isReadOnly
+    property bool isGroupEditable: chatGui && chatGui.core.meAdmin && !chatGui.core.isReadOnly
 
 	RowLayout {
 		Text {
@@ -65,12 +65,11 @@ ColumnLayout {
 					Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
 					spacing: Utils.getSizeWithScreenRatio(10)
 					property var participantGui: modelData
-					property var participantCore: participantGui.core
-					property var contactObj: UtilsCpp.findFriendByAddress(participantCore.sipAddress)
+					property var contactObj: UtilsCpp.findFriendByAddress(participantGui.core.sipAddress)
 					property var contact: contactObj?.value || null
 					Avatar {
 						contact: contactObj?.value || null
-						displayNameVal: participantCore.displayName
+						displayNameVal: participantGui.core.displayName
 						Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
 						Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
 					}
@@ -83,13 +82,13 @@ ColumnLayout {
 							Layout.alignment: Qt.AlignVCenter
 
 							Text {
-								text:  participantCore.displayName
+								text:  participantGui.core.displayName
 								font: Typography.p1
 								color: DefaultStyle.main2_700
 							}
 
 							Text {
-								visible: participantCore.isAdmin
+								visible: participantGui.core.isAdmin
 								text: qsTr("group_infos_participant_is_admin")
 								font: Typography.p3
 								color: DefaultStyle.main2_500_main
@@ -131,25 +130,24 @@ ColumnLayout {
 									onClicked: {
 										detailOptions.close()
 										if (contact && contact.core.isAppFriend)
-											UtilsCpp.getMainWindow().displayContactPage(participantCore.sipAddress)
+											UtilsCpp.getMainWindow().displayContactPage(participantGui.core.sipAddress)
 										else
-											UtilsCpp.getMainWindow().displayCreateContactPage("",participantCore.sipAddress)
+											UtilsCpp.getMainWindow().displayCreateContactPage("",participantGui.core.sipAddress)
 									}
 								}
 								IconLabelButton {
 									visible: mainItem.isGroupEditable
 									Layout.fillWidth: true
-									text: participantCore.isAdmin ? qsTr("group_infos_remove_admin_rights") : qsTr("group_infos_give_admin_rights")
+									text: participantGui.core.isAdmin ? qsTr("group_infos_remove_admin_rights") : qsTr("group_infos_give_admin_rights")
 									icon.source: AppIcons.profile
 									icon.width: Utils.getSizeWithScreenRatio(32)
 									icon.height: Utils.getSizeWithScreenRatio(32)
 									onClicked: {
 										detailOptions.close()
-										mainItem.chatCore.lToggleParticipantAdminStatusAtIndex(index)
+										mainItem.chatGui.core.lToggleParticipantAdminStatusAtIndex(index)
 									}
 								}
 								IconLabelButton {
-									visible: !contact || (contact.core && !contact.core.isAppFriend)
 									Layout.fillWidth: true
 									text: qsTr("group_infos_copy_sip_address")
 									icon.source: AppIcons.copy
@@ -157,7 +155,7 @@ ColumnLayout {
 									icon.height: Utils.getSizeWithScreenRatio(32)
 									onClicked: {
 										detailOptions.close()
-										UtilsCpp.copyToClipboard(participantCore.sipAddress)
+										UtilsCpp.copyToClipboard(participantGui.core.sipAddress)
 									}
 								}
 								Rectangle {
@@ -183,7 +181,7 @@ ColumnLayout {
 										"",
 										function(confirmed) {
 											if (confirmed) {
-												mainItem.chatCore.lRemoveParticipantAtIndex(index)
+												mainItem.chatGui.core.lRemoveParticipantAtIndex(index)
 											}
 										})
 									}

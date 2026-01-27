@@ -15,6 +15,9 @@ TextEdit {
 	property string lastTextSelected : ''
 	property string searchedTextPart
 	color: DefaultStyle.main2_700
+	// force restoring cursor in case we click on a mention, otherwise
+	// the cursor stays IBeam
+	onVisibleChanged: if (!visible) UtilsCpp.restoreGlobalCursor()
 	font {
 		pixelSize: (contentGui && UtilsCpp.isOnlyEmojis(contentGui.core.text)) ? Typography.h1.pixelSize : Typography.p1.pixelSize
 		weight: Typography.p1.weight
@@ -26,9 +29,10 @@ TextEdit {
 	readOnly: true
 	selectByMouse: true
 	
-	text: searchedTextPart !== ""
-			? UtilsCpp.boldTextPart(contentGui.core.richFormatText, searchedTextPart)
-			: contentGui.core.richFormatText
+	text: contentGui.core.richFormatText
+	onSearchedTextPartChanged: {
+		contentGui.core.setSearchedTextPart(searchedTextPart)
+	}
 
 	textFormat: Text.RichText // To supports links and imgs.
 	wrapMode: TextEdit.Wrap
@@ -66,7 +70,11 @@ TextEdit {
 		propagateComposedEvents: true
 		hoverEnabled: true
 		scrollGestureEnabled: false
-		cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.IBeamCursor
+		onContainsMouseChanged: {
+			if (containsMouse) UtilsCpp.setGlobalCursor(Qt.IBeamCursor)
+			else UtilsCpp.restoreGlobalCursor()
+		}
+		cursorShape: mainItem.hoveredLink ? Qt.PointingHandCursor : Qt.IBeamCursor
 		acceptedButtons: Qt.LeftButton
 		onPressed: (mouse) => {
 		// 	if(!keepLastSelection) {

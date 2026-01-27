@@ -21,19 +21,16 @@ ListView {
 
     onResultsReceived: {
         loading = false
-        // contentY = 0
     }
 
     model: CallHistoryProxy {
         id: callHistoryProxy
-        Component.onCompleted: {
-            loading = true
-        }
         onListAboutToBeReset: loading = true
         filterText: mainItem.searchText
         onFilterTextChanged: maxDisplayItems = initialDisplayItems
         initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(56)))
         displayItemsStep: 3 * initialDisplayItems / 2
+        onModelAboutToBeReset: loading = true
         onModelReset: {
             mainItem.resultsReceived()
         }
@@ -51,13 +48,12 @@ ListView {
 
     Component.onCompleted: cacheBuffer = Math.max(mainItem.height,0) //contentHeight>0 ? contentHeight : 0// cache all items
     // remove binding loop
-    onContentHeightChanged: Qt.callLater(function () {
-        if (mainItem)
-            mainItem.cacheBuffer = Math?.max(contentHeight, 0) || 0
-    })
+    // onContentHeightChanged: Qt.callLater(function () {
+    //     if (mainItem)
+    //         mainItem.cacheBuffer = Math?.max(contentHeight, 0) || 0
+    // })
 
-    onActiveFocusChanged: if (activeFocus && currentIndex < 0 && count > 0)
-                              currentIndex = 0
+    onActiveFocusChanged: if (activeFocus && currentIndex < 0 && count > 0) currentIndex = 0
     onCountChanged: {
         if (currentIndex < 0 && count > 0) {
             mainItem.currentIndex = 0 // Select first item after loading model
@@ -88,8 +84,8 @@ ListView {
     // Update position only if we are moving to current item and its position is changing.
     property var _currentItemY: currentItem?.y
     on_CurrentItemYChanged: if (_currentItemY && moveAnimation.running) {
-                                moveToCurrentItem()
-                            }
+        moveToCurrentItem()
+    }
     Behavior on contentY {
         NumberAnimation {
             id: moveAnimation
@@ -100,10 +96,6 @@ ListView {
     }
 
     //----------------------------------------------------------------
-    onVisibleChanged: {
-//        if (!visible)
-//            currentIndex = -1
-    }
 
     BusyIndicator {
         anchors.horizontalCenter: mainItem.horizontalCenter
@@ -196,6 +188,7 @@ ListView {
                 }
             }
             BigButton {
+                visible: !modelData.core.isConference || !SettingsCpp.disableMeetingsFeature
                 style: ButtonStyle.noBackground
                 icon.source: AppIcons.phone
                 focus: true

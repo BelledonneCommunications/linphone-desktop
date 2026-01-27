@@ -52,6 +52,10 @@ QString ParticipantModel::getSipAddress() const {
 	return Utils::coreStringToAppString(mParticipant->getAddress()->asString());
 }
 
+std::shared_ptr<const linphone::Address> ParticipantModel::getAddress() const {
+	return mParticipant ? mParticipant->getAddress() : nullptr;
+}
+
 QDateTime ParticipantModel::getCreationTime() const {
 	return QDateTime::fromSecsSinceEpoch(mParticipant->getCreationTime());
 }

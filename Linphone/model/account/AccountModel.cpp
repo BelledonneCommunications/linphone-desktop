@@ -125,7 +125,7 @@ void AccountModel::setPictureUri(QString uri) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit pictureUriChanged(uri);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::onDefaultAccountChanged() {
@@ -182,7 +182,7 @@ void AccountModel::setDisplayName(QString displayName) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit displayNameChanged(displayName);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::setDialPlan(int index) {
@@ -302,9 +302,11 @@ QString AccountModel::getOutboundProxyUri() const {
 }
 
 void AccountModel::setOutboundProxyUri(QString value) {
-	auto linOutboundProxyAddress = ToolModel::interpretUrl(value);
+	auto linOutboundProxyAddress = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
 	if (!linOutboundProxyAddress) {
-		//: Unable to set outbound proxy uri, failed creating address from %1
+		//: Unable to set outbound proxy uri from address %1.
+		//: Please make sure it matches the following format :
+		//: sip:host>:<port>;transport=<transport> (:<port> is optional)
 		emit setValueFailed(tr("set_outbound_proxy_uri_failed_error_message").arg(value));
 		return;
 	} else {
@@ -526,6 +528,11 @@ void AccountModel::setPresence(LinphoneEnums::Presence presence,
                                QString presenceNote) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 
+	if (!mMonitor->getParams()->publishEnabled()) {
+		lDebug() << log().arg("cannot set presence as publish is disabled in account params, return");
+		return;
+	}
+
 	lDebug() << log().arg("presence set request to: " + LinphoneEnums::toString(presence) + " | user initiated? " +
 	                      (userInitiated ? "true" : "false") + " | reset to auto? " + (resetToAuto ? "true" : "false"));
 
@@ -561,16 +568,8 @@ void AccountModel::setPresence(LinphoneEnums::Presence presence,
 		core->getConfig()->sync();
 	}
 
-	if (!presenceNote.isEmpty()) {
-		core->getConfig()->setString(accountSection, "presence_note", Utils::appStringToCoreString(presenceNote));
-		core->getConfig()->sync();
-	}
-
-	if (!mMonitor->getParams()->publishEnabled()) {
-		auto params = mMonitor->getParams()->clone();
-		params->enablePublish(true);
-		mMonitor->setParams(params);
-	}
+	core->getConfig()->setString(accountSection, "presence_note", Utils::appStringToCoreString(presenceNote));
+	core->getConfig()->sync();
 
 	auto presenceModel = ToolModel::appPresenceToCorePresenceModel(presence, presenceNote);
 	core->setPresenceModel(presenceModel); // No api (yet) at the account level

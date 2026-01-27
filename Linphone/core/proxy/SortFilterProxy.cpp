@@ -57,7 +57,7 @@ int SortFilterProxy::getCount() const {
 
 QVariant SortFilterProxy::getAt(const int &atIndex) const {
 	auto modelIndex = index(atIndex, 0);
-	return sourceModel()->data(mapToSource(modelIndex), 0);
+	return sourceModel() ? sourceModel()->data(mapToSource(modelIndex), 0) : QVariant();
 }
 
 int SortFilterProxy::getFilterType() const {

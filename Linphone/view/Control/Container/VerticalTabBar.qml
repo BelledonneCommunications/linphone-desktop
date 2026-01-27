@@ -16,10 +16,18 @@ Control.TabBar {
 	readonly property alias cornerRadius: bottomLeftCorner.radius
 
 	property AccountGui defaultAccount
+
+	property int visibleCount: 0
 	
 	// Call it after model is ready. If done before, Repeater will not be updated
 	function initButtons(){
 		actionsRepeater.model = mainItem.model
+	}
+	function updateVisibleCount() {
+		mainItem.visibleCount = 0
+		contentChildren.forEach(child => {
+			if (child.visible) mainItem.visibleCount = mainItem.visibleCount + 1
+		})
 	}
 	
 	onDefaultAccountChanged: {
@@ -86,6 +94,7 @@ Control.TabBar {
             topInset:  Utils.getSizeWithScreenRatio(32)
 			hoverEnabled: true
 			visible: modelData?.visible != undefined ? modelData.visible : true
+			onVisibleChanged: mainItem.updateVisibleCount()
 			text: modelData.accessibilityLabel
 			property bool keyboardFocus: FocusHelper.keyboardFocus
 			UnreadNotification {

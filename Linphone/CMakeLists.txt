@@ -22,7 +22,7 @@ set(APP_TARGETS ${LinphoneCxx_TARGET}
 				${LibLinphone_TARGET})#Liblinphone
 
 set(QT_DEFAULT_MAJOR_VERSION 6)
-set(QT_PACKAGES Quick Qml Widgets Svg Multimedia Test NetworkAuth Concurrent)# Search Core at first for initialize Qt scripts for next find_packages.
+set(QT_PACKAGES Quick Qml Widgets Svg Test NetworkAuth Concurrent)# Search Core at first for initialize Qt scripts for next find_packages.
 if (UNIX AND NOT APPLE)
 	list(APPEND QT_PACKAGES DBus)
 endif()
@@ -96,14 +96,11 @@ else()
 	set(MSPLUGINS_DIR "${CMAKE_INSTALL_LIBDIR}/mediastreamer/plugins")
 endif()
 
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
-
 if(${Qt6_VERSION} VERSION_LESS "6.10.0")
 	message( FATAL_ERROR "Linphone requires Qt 6.10.0 or newer. Exiting CMake." )
 endif()
 
 qt6_standard_project_setup()
-
 
 ################################################################
 #						SOURCES
@@ -124,6 +121,7 @@ add_subdirectory(core)
 set(LANGUAGES_DIRECTORY "data/languages")
 set(I18N_FILENAME i18n.qrc)
 set(LANGUAGES en fr de)
+set(CMAKE_CPP_COMPILER gcc)
 
 # Add languages support.
 add_subdirectory("${LANGUAGES_DIRECTORY}" "data/languages")
@@ -154,7 +152,7 @@ qt6_add_big_resources(_LINPHONEAPP_FONTS_FILES data/fonts.qrc)
 list(APPEND _LINPHONEAPP_FONTS_FILES data/fonts.qrc)
 set_property(SOURCE data/fonts.qrc PROPERTY SKIP_AUTORCC ON)
 
-qt6_add_executable(Linphone
+qt6_add_executable(${TARGET_NAME}
 	${_LINPHONEAPP_SOURCES}
 	${_LINPHONEAPP_FONTS_FILES}
 	${_APPDETAILS_RC_FILE}
@@ -170,14 +168,18 @@ qt6_add_qml_module(Linphone
     RESOURCES data/fonts.qrc
 )
 
-if (WIN32)
-	if(MSVC AND (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
-		install(FILES "$<TARGET_PDB_FILE:${TARGET_NAME}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
-	endif()
-endif()
-
 qt6_add_resources(Linphone "resources" PREFIX "/" FILES ${_LINPHONEAPP_RC_FILES})
 set_property(TARGET Linphone PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
+
+################################################################
+#						CRASHPAD
+################################################################
+
+if (HAVE_CRASH_HANDLER)
+	add_dependencies(${TARGET_NAME} Crashpad)
+	target_link_libraries(${TARGET_NAME} PRIVATE Crashpad)
+	get_target_property(CRASHPAD_EXECUTABLE_NAME Crashpad CRASHPAD_EXECUTABLE_NAME)
+endif()
 
 ################################################################
 #						TARGETS LINKS
@@ -223,3 +225,14 @@ foreach(T ${QT_PACKAGES})
 endforeach()
 
 
+
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
+
+if (WIN32)
+	if(MSVC AND (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
+		install(FILES "$<TARGET_PDB_FILE:${TARGET_NAME}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
+		foreach(T ${APP_TARGETS})
+			install(FILES "$<TARGET_PDB_FILE:${T}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
+		endforeach ()
+	endif()
+endif()

@@ -32,7 +32,12 @@ For Desktop : you will need QT6 (_6.10.0 or newer_). `C++17` support is required
 - Using the [official QT installer](https://www.qt.io/download-thank-you)
 - Using an alternative installer like [aqtinstall](https://github.com/miurahr/aqtinstall)
 
-The following QT optional modules are required: qtmultimedia qtnetworkauth qtshadertools .
+The following QT optional modules are required: <!--qtmultimedia--> qtnetworkauth qtshadertools .
+
+If you wan't to build with Crash handler, you need to install the following tools:
+- clang
+- curl dev (for C development headers) (ex: `sudo apt install libcurl4-openssl-dev`)
+- httplib2 v0.22.0 (use `pip install httplib2==0.22.0` or `pip3 install httplib2==0.22.0`)
 
 ### Set your environment
 
@@ -151,6 +156,22 @@ Usually, if it is about VPX or Decaf, this could come from your Perl installatio
 
 * On Mac, the application can crash at the start from QOpenGLContext. A workaround is to deactivate the mipmap mode on images by adding into your configuration file (linphonerc): `mipmap_enabled=0` in `[ui]` section.
 
+* On Fedora 43, emoji could appear as blank spaces because the Noto font in Fedora 43 uses COLRv1 format. To prevent this, you can follow the steps described in this github issue : https://github.com/zed-industries/zed/issues/42255
+
+```
+# remove the System COLRv1 version of the font
+sudo rm /usr/share/fonts/google-noto-color-emoji-fonts/Noto-COLRv1.ttf
+
+# install a version of the font that works in Zed
+sudo wget https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf -O /usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf
+
+# reload font cache
+fc-cache --force
+
+fc-match "Noto Color Emoji"   
+# should now show: NotoColorEmoji.ttf: "Noto Color Emoji" "Regular"
+```
+
 
 ## Specific instructions for the Mac Os X platform
 
@@ -245,7 +266,7 @@ For Fedora (42), the required packages are:
   - qt6-qtbase-devel
   - qt6-qttools-devel
   - qt6-qtsvg-devel
-  - qt6-qtmultimedia-devel
+  <!-- - qt6-qtmultimedia-devel -->
   - qt6-qtnetworkauth-devel
   - qt6-qtquick3d-devel
   - qt6-qtlanguageserver-devel
@@ -279,6 +300,7 @@ Also, more configurations are available in the docker-files folder of linphone-s
 | ENABLE_UNIT_TESTS | Enable unit test of SDK. | NO |
 | ENABLE_OPENLDAP | Build openLDAP external library. | YES |
 | ENABLE_UPDATE_CHECK | Enable update check. | YES |
+| ENABLE_CRASH_HANDLER | Enable crash handler. | YES |
 | LINPHONE_SDK_MAKE_RELEASE_FILE_URL | Make a RELEASE file that work along check_version and use this URL | "" |
 
 

@@ -180,12 +180,20 @@ win64-ninja-vs2022-scheduled-windows:
   needs: []
   rules:
     - !reference [.rules-merge-request-manual, rules]
-    - if: $NIGHTLY_MASTER
     - if: $NIGHTLY_RELEASE
     - if: $PACKAGE_WINDOWS
-    - if: $DEPLOY_WINDOWS
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=OFF
+    RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$WINDOWS_PLATFORM/$APP_FOLDER
+
+.vs-win64-package-cr:
+  stage: package
+  needs: []
+  rules:
+    - if: $NIGHTLY_MASTER
+    - if: $DEPLOY_WINDOWS
+  variables:
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=OFF -DENABLE_BUGSPLAT_SYMBOLS_UPLOAD=ON -DBUGSPLAT_CLIENT_ID=$BUGSPLAT_CLIENT_ID -DBUGSPLAT_CLIENT_SECRET=$BUGSPLAT_CLIENT_SECRET -DBUGSPLAT_DATABASE=$BUGSPLAT_DATABASE
     RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$WINDOWS_PLATFORM/$APP_FOLDER
 
 win64-ninja-vs2022-package-windows:
@@ -197,6 +205,18 @@ win64-ninja-vs2022-package-windows:
     - .windows-vs2022
     - .windows-ninja-variables
     - .vs-win64-package
+
+#Packaging for deployment (Upload symbols at the same time of the packaging)
+win64-ninja-vs2022-package-cr-windows:
+  variables:
+    CMAKE_GENERATOR: "Ninja"
+    CMAKE_ARCHITECTURE: ""
+    PARALLEL_OPTIONS: ""
+  extends:
+    - .windows-vs2022
+    - .windows-ninja-variables
+    - .vs-win64-package-cr
+
 
 #################################################
 #               SIGNING
@@ -213,8 +233,28 @@ win64-codesigning:
     MINGW_TYPE: mingw64
   rules:
     - !reference [.rules-merge-request-manual, rules]
-    - if: $NIGHTLY_MASTER
     - if: $PACKAGE_WINDOWS
+  script:
+    - cd build-desktop/OUTPUT/Packages/
+    - Invoke-Expression "& ${WINDOWS_SIGN_TOOL} sign /fd SHA256 /t ${WINDOWS_SIGN_TIMESTAMP_URL} /sha1 ${WINDOWS_SIGN_HASH} *.exe"
+    - 'if (-not ($LastExitCode -eq 0)) {throw "Error: Signature failed"}'
+  artifacts:
+    paths:
+      - build-desktop\OUTPUT\Packages\*
+    when: always
+    expire_in: 1 week
+
+win64-codesigning-cr:
+  stage: signing
+  allow_failure: true
+  extends:
+    - .windows-codesigning
+  needs:
+    - win64-ninja-vs2022-package-cr-windows
+  variables:
+    MINGW_TYPE: mingw64
+  rules:
+    - if: $NIGHTLY_MASTER
     - if: $DEPLOY_WINDOWS
   script:
     - cd build-desktop/OUTPUT/Packages/
@@ -246,7 +286,7 @@ win64-ninja-vs2022-upload:
   extends:
     - .win64-upload
   needs:
-    - win64-codesigning
+    - win64-codesigning-cr
 
 .win64-plugins-upload:
   stage: deploy

@@ -50,7 +50,7 @@ ChatList::ChatList(QObject *parent) : ListProxy(parent) {
 
 ChatList::~ChatList() {
 	mustBeInMainThread("~" + getClassName());
-	mModelConnection = nullptr;
+	mModelConnection->disconnect();
 }
 
 void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
@@ -73,7 +73,9 @@ void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
 	};
 	connect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, [this, dataChange] {
 		dataChange();
-		auto defaultAccount = App::getInstance()->getAccountList()->getDefaultAccountCore();
+		auto defaultAccount = App::getInstance()->getAccountList()
+		                          ? App::getInstance()->getAccountList()->getDefaultAccountCore()
+		                          : nullptr;
 		if (defaultAccount) emit defaultAccount->lRefreshNotifications();
 	});
 	connect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, dataChange);
@@ -93,15 +95,17 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			return;
 		}
 		setIsUpdating(true);
+		beginResetModel();
 		mModelConnection->invokeToModel([this]() {
 			mustBeInLinphoneThread(getClassName());
-			beginResetModel();
 			// Avoid copy to lambdas
 			QList<QSharedPointer<ChatCore>> *chats = new QList<QSharedPointer<ChatCore>>();
 			auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 			if (!currentAccount) {
-				setIsUpdating(false);
-				endResetModel();
+				mModelConnection->invokeToCore([this, chats]() {
+					setIsUpdating(false);
+					endResetModel();
+				});
 				return;
 			}
 			auto linphoneChatRooms = currentAccount->filterChatRooms(Utils::appStringToCoreString(mFilter));
@@ -122,10 +126,11 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 				mList.clear();
 				for (auto &chat : *chats) {
 					connectItem(chat);
+					mList.append(chat);
 				}
-				add(*chats);
 				endResetModel();
 				setIsUpdating(false);
+				chats->clear();
 				delete chats;
 			});
 		});
@@ -141,11 +146,11 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 		if (!message) return;
 		if (room->getAccount() != core->getDefaultAccount()) {
-			qWarning() << log().arg("Chat room does not refer to current account, return");
+			qInfo() << log().arg("Chat room does not refer to current account, return");
 			return;
 		}
 		auto chatCore = ChatCore::create(room);
-		mModelConnection->invokeToCore([this, chatCore] { addChatInList(chatCore); });
+		mModelConnection->invokeToCore([this, chatCore] { addChatInList(chatCore, false); });
 	};
 	mModelConnection->makeConnectToModel(&CoreModel::messageReceived,
 	                                     [this, addChatToList](const std::shared_ptr<linphone::Core> &core,
@@ -168,6 +173,33 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	                          const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) {
 		    addChatToList(core, room, message);
 	    });
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::chatRoomStateChanged,
+	    [this, addChatToList](const std::shared_ptr<linphone::Core> &core,
+	                          const std::shared_ptr<linphone::ChatRoom> &chatRoom, linphone::ChatRoom::State state) {
+		    if (state == linphone::ChatRoom::State::Created) {
+			    bool sendAddSignal = false;
+			    if (chatRoom == CoreModel::getInstance()->mChatRoomBeingCreated) {
+				    sendAddSignal = true;
+			    }
+			    CoreModel::getInstance()->mChatRoomBeingCreated = nullptr;
+			    if (chatRoom->getConferenceInfo()) {
+				    qWarning() << log().arg("Chatroom created during a conference, return");
+				    return;
+			    }
+			    auto chatAccount = chatRoom->getAccount();
+			    auto defaultAccount = core->getDefaultAccount();
+			    if (!chatAccount || !defaultAccount) return;
+			    if (!chatAccount->getParams()->getIdentityAddress()->weakEqual(
+			            defaultAccount->getParams()->getIdentityAddress())) {
+				    qWarning() << log().arg("Chatroom does not refer to current account, return");
+				    return;
+			    }
+			    auto chatCore = ChatCore::create(chatRoom);
+			    mModelConnection->invokeToCore(
+			        [this, chatCore, sendAddSignal] { addChatInList(chatCore, sendAddSignal); });
+		    }
+	    });
 
 	connect(this, &ChatList::filterChanged, [this](QString filter) {
 		mFilter = filter;
@@ -186,8 +218,12 @@ int ChatList::findChatIndex(ChatGui *chatGui) {
 	return it == chatList.end() ? -1 : std::distance(chatList.begin(), it);
 }
 
-bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
+bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore, bool emitAddSignal) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	if (chatCore->getIdentifier().isEmpty()) {
+		qWarning() << "ChatRoom with invalid identifier cannot be added to the list, return";
+		return false;
+	}
 	auto chatList = getSharedList<ChatCore>();
 	auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
 		return item && chatCore && item->getIdentifier() == chatCore->getIdentifier();
@@ -195,7 +231,7 @@ bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
 	if (it == chatList.end()) {
 		connectItem(chatCore);
 		add(chatCore);
-		emit chatAdded();
+		if (emitAddSignal) emit chatAdded(chatCore);
 		return true;
 	}
 	return false;

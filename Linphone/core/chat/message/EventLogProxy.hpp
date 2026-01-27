@@ -87,6 +87,7 @@ signals:
 	void maxDisplayItemsChanged();
 	void displayItemsStepChanged();
 	void filterTextChanged();
+	void modelUpdated();
 
 protected:
 	QSharedPointer<EventLogList> mList;

@@ -117,6 +117,7 @@ public:
 	Q_INVOKABLE static bool isCurrentDay(QDateTime date);
 	Q_INVOKABLE static bool isCurrentDay(QDate date);
 	Q_INVOKABLE static bool isCurrentMonth(QDate date);
+	Q_INVOKABLE static bool isCurrentYear(QDate date);
 	Q_INVOKABLE static bool datesAreEqual(const QDate &a, const QDate &b);
 	Q_INVOKABLE static bool dateisInMonth(const QDate &a, int month, int year);
 	Q_INVOKABLE static QDateTime createDateTime(const QDate &date, int hour, int min);
@@ -142,10 +143,10 @@ public:
 	Q_INVOKABLE static void useFetchConfig(const QString &configUrl);
 	Q_INVOKABLE void playDtmf(const QString &dtmf);
 	Q_INVOKABLE bool isInteger(const QString &text);
-	Q_INVOKABLE QString boldTextPart(const QString &text, const QString &regex);
+	Q_INVOKABLE static QString boldTextPart(const QString &text, const QString &regex);
 	Q_INVOKABLE static QString getFileChecksum(const QString &filePath);
-	Q_INVOKABLE QList<QVariant> append(const QList<QVariant> a, const QList<QVariant> b);
-	Q_INVOKABLE QString getAddressToDisplay(QVariantList addressList, QString filter, QString defaultAddress);
+	Q_INVOKABLE static QList<QVariant> append(const QList<QVariant> a, const QList<QVariant> b);
+	Q_INVOKABLE static QString getAddressToDisplay(QVariantList addressList, QString filter, QString defaultAddress);
 	Q_INVOKABLE static QColor getPresenceColor(LinphoneEnums::Presence presence);
 	Q_INVOKABLE static QUrl getPresenceIcon(LinphoneEnums::Presence presence);
 	Q_INVOKABLE static QString getPresenceStatus(LinphoneEnums::Presence presence);
@@ -155,8 +156,10 @@ public:
 	Q_INVOKABLE static VariantObject *createGroupChat(QString subject, QStringList participantAddresses);
 	Q_INVOKABLE static void openChat(ChatGui *chat);
 	Q_INVOKABLE static bool isEmptyMessage(QString message);
-	Q_INVOKABLE static VariantObject *
-	encodeTextToQmlRichFormat(const QString &text, const QVariantMap &options = QVariantMap(), ChatGui *chat = nullptr);
+	Q_INVOKABLE static VariantObject *encodeTextToQmlRichFormat(const QString &text,
+	                                                            const QString &textPartToBold = QString(),
+	                                                            const QVariantMap &options = QVariantMap(),
+	                                                            ChatGui *chat = nullptr);
 	Q_INVOKABLE static QString encodeEmojiToQmlRichFormat(const QString &body);
 	Q_INVOKABLE static bool isOnlyEmojis(const QString &text);
 	Q_INVOKABLE static void openContactAtAddress(const QString &address);
@@ -246,6 +249,16 @@ public:
 	static QColor getDefaultStyleColor(const QString &colorName);
 	static QUrl getAppIcon(const QString &iconName);
 	static QUrl getRegistrationStateIcon(LinphoneEnums::RegistrationState state);
+
+#ifdef Q_OS_WINDOWS
+	static inline std::wstring getNativeString(const QString &s) {
+		return s.toStdWString();
+	}
+#else
+	static std::string getNativeString(const QString &s) {
+		return s.toStdString();
+	}
+#endif
 
 private:
 	DECLARE_ABSTRACT_OBJECT

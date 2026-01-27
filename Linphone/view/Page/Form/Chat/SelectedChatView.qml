@@ -22,6 +22,7 @@ FocusScope {
     property alias callHeaderContent: splitPanel.header.contentItem
     property bool replyingToMessage: false
     property bool editingMessage: false
+    property string lastChar
     enum PanelType { MessageReactions, SharedFiles, Medias, ImdnStatus, ForwardToList, ManageParticipants, EphemeralSettings, None}
     
     signal oneOneCall(bool video)
@@ -54,8 +55,7 @@ FocusScope {
                 let addresses = [];
                 for (let i = 0; i < sourceList.length; ++i) {
                     const participantGui = sourceList[i]
-                    const participantCore = participantGui.core
-                    addresses.push(participantCore.sipAddress)
+                    addresses.push(participantGui.core.sipAddress)
                 }
                 UtilsCpp.createGroupCall(mainItem.chat?.core.title, addresses)
             }
@@ -104,13 +104,27 @@ FocusScope {
                             Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
                             Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
                         }
-                        Text {
-                            text: mainItem.chat?.core.title || ""
-                            color: DefaultStyle.main2_600
-                            maximumLineCount: 1
-                            font {
-                                pixelSize: Typography.h4.pixelSize
-                                weight: Utils.getSizeWithScreenRatio(400)
+                        ColumnLayout {
+                            Text {
+                                text: mainItem.chat?.core.title || ""
+                                color: DefaultStyle.main2_600
+                                maximumLineCount: 1
+                                font {
+                                    pixelSize: Typography.h4.pixelSize
+                                    weight: Utils.getSizeWithScreenRatio(400)
+                                }
+                            }
+                            RowLayout {
+                                visible: mainItem.chat?.core.ephemeralEnabled || false
+                                EffectImage {
+                                    colorizationColor: DefaultStyle.main1_500_main
+                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
+                                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
+                                    imageSource: AppIcons.clockCountDown
+                                }
+                                Text {
+                                    text: mainItem.chat ? UtilsCpp.getEphemeralFormatedTime(mainItem.chat.core.ephemeralLifetime) : ""
+                                }
                             }
                         }
                         RowLayout {
@@ -328,8 +342,9 @@ FocusScope {
                         Control.Control {
                             id: participantListPopup
                             width: parent.width
-                            height: visible ? Math.min(participantInfoList.height, Utils.getSizeWithScreenRatio(200)) : 0
-                            visible: false
+                            height: Math.min(participantInfoList.height, Utils.getSizeWithScreenRatio(200))
+                            visible: mainItem.lastChar === "@"
+                            onVisibleChanged: console.log("participant list visible changed", visible, height)
                             anchors.bottom: chatMessagesListView.bottom
                             anchors.left: chatMessagesListView.left
                             anchors.right: chatMessagesListView.right
@@ -367,6 +382,7 @@ FocusScope {
                                 height: contentHeight
                                 width: participantListPopup.width
                                 chatGui: mainItem.chat
+                                delegateHoverRectangleRadius: Utils.getSizeWithScreenRatio(20)
                                 onParticipantClicked: (username) => {
                                     messageSender.text = messageSender.text + username + " "
                                     messageSender.textArea.cursorPosition = messageSender.text.length
@@ -510,12 +526,10 @@ FocusScope {
                         if (chat) messageSender.text = mainItem.chat.core.sendingText
                     }
                     onTextChanged: {
-                        if (text !== "" && mainItem.chat.core.composingName !== "") {
+                        if (text !== "") {
                             mainItem.chat.core.lCompose()
                         }
-                        var lastChar = text.slice(-1)
-                        if (lastChar == "@") participantListPopup.visible = true
-                        else participantListPopup.visible = false
+                        mainItem.lastChar = text.slice(-1)
                         mainItem.chat.core.sendingText = text
                     }
                     onSendMessage: {
@@ -535,6 +549,13 @@ FocusScope {
                     }
                     onDropped: (files) => {
                         contents.addFiles(files)
+                    }
+                    Connections {
+                        target: mainItem
+                        function onReplyingToMessageChanged() {
+                            if (mainItem.replyingToMessage) messageSender.focusTextArea()
+                        }
+                        function onChatChanged() {messageSender.focusTextArea()}
                     }
                 }
             }
@@ -633,6 +654,7 @@ FocusScope {
                 id: sharedFilesComponent
                 MessageSharedFilesInfos {
                     chatGui: mainItem.chat
+                    showAsSquare: contentLoader.panelType === SelectedChatView.PanelType.Medias 
                     title: contentLoader.panelType === SelectedChatView.PanelType.Medias 
                         //: Shared medias
                         ? qsTr("shared_medias_title") 

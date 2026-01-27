@@ -15,7 +15,8 @@ MainRightPanel {
 
 	property FriendGui contact
 	Connections {
-		target: contact.core
+		enabled: contact
+		target: contact? contact.core : null
 		function onIsSavedChanged() {
 			if (contact.core.isSaved) {
 				mainItem.closeEdition(contact.core.defaultFullAddress)

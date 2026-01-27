@@ -113,7 +113,7 @@
         <location filename="../../model/account/AccountManager.cpp" line="109"/>
         <source>assistant_account_login_proxy_address_error</source>
         <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
-        <translation>Impossível criar endereço do proxy. Por favor verifique o nome do domínio.</translation>
+        <translation>Impossível criar endereço do proxy. Por favor, verifique o nome do domínio.</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="122"/>
@@ -145,6 +145,16 @@
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Impossível adicionar conta.</translation>
     </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="133"/>
+        <source>assistant_account_login_registrar_uri_error</source>
+        <translation>Registrar url ié nválida. Por favor, certifique-se de que ela segue o formato: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; é opcional)</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="144"/>
+        <source>assistant_account_login_outbound_proxy_uri_error</source>
+        <translation>Url do proxy de saída inválida. Por favor, certifique-se de que ela segue o formato: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; é opcional)</translation>
+    </message>
 </context>
 <context>
     <name>AccountModel</name>
@@ -164,7 +174,7 @@
         <location filename="../../model/account/AccountModel.cpp" line="309"/>
         <source>set_outbound_proxy_uri_failed_error_message</source>
         <extracomment>Unable to set outbound proxy uri, failed creating address from %1</extracomment>
-        <translation>Não foi possível definir URI do proxy de saída, falha ao criar endereço de %1</translation>
+        <translation type="unfinished">Não foi possível definir URI do proxy de saída, falha ao criar endereço de %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="418"/>
@@ -304,6 +314,21 @@
         <extracomment>&quot;No information&quot;</extracomment>
         <translation>Sem informação</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
+        <source>copied</source>
+        <translation>Copiado</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="133"/>
+        <source>account_settings_sip_address_copied_error_message</source>
+        <translation>Erro copiando seu endereço SIP</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="129"/>
+        <source>account_settings_sip_address_copied_message</source>
+        <translation>O seu endereço SIP foi copiado para a área de transferência</translation>
+    </message>
 </context>
 <context>
     <name>AccountSettingsPage</name>
@@ -362,23 +387,6 @@
         <translation>Configurações de conta</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="32"/>
-        <source>info_popup_invalid_registrar_uri_message</source>
-        <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="34"/>
-        <source>info_popup_invalid_outbound_proxy_message</source>
-        <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation>O URI do proxy de saída está inválido. Por favor, certifique-se que ele está no seguinte formato: sip:&lt;host&gt;:&lt;porta&gt;;transport=&lt;transporte&gt; (:&lt;porta&gt; é opcional)</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="35"/>
-        <source>info_popup_error_title</source>
-        <translation>Erro</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="45"/>
         <source>information_popup_success_title</source>
         <translation>Sucesso</translation>
@@ -405,12 +413,6 @@
         <source>account_settings_voicemail_uri_title</source>
         <extracomment>&quot;URI de messagerie vocale&quot;</extracomment>
         <translation>URI do correio de voz</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="120"/>
-        <source>account_settings_transport_title</source>
-        <extracomment>&quot;Transport&quot;</extracomment>
-        <translation>Transporte</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="127"/>
@@ -891,31 +893,6 @@
         <source>settings_call_forward_address_cannot_be_empty</source>
         <translation>Um número ou endereço SIP é exigido</translation>
     </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="45"/>
-        <source>settings_call_forward_address_timeout</source>
-        <translation>Não foi possível definir encaminhamento de chamada, tempo de requisição esgotado</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
-        <source>settings_call_forward_address_progress_disabling</source>
-        <translation>Desabilitando encaminhamento de chamada</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
-        <source>settings_call_forward_address_progress_enabling</source>
-        <translation>Habilitando encaminhamento de chamada para:</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
-        <source>settings_call_forward_activation_success</source>
-        <translation>Encaminhamento de chamada ativado para: </translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
-        <source>settings_call_forward_deactivation_success</source>
-        <translation>Encaminhamento de chamada desativado</translation>
-    </message>
 </context>
 <context>
     <name>CallHistoryLayout</name>
@@ -1138,8 +1115,8 @@
     <message>
         <location filename="../../model/call/CallModel.cpp" line="388"/>
         <source>call_error_server_timeout_toast</source>
-        <extracomment>&quot;Server tiemout&quot;</extracomment>
-        <translation>Tempo esgotado do servidor</translation>
+        <extracomment>&quot;Server timeout&quot;</extracomment>
+        <translation type="unfinished">Tempo esgotado do servidor</translation>
     </message>
 </context>
 <context>
@@ -1918,7 +1895,7 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="45"/>
         <source>settings_contacts_carddav_popup_synchronization_error_message</source>
         <extracomment>&quot;Erreur de synchronisation!&quot;</extracomment>
-        <translation>Erro de sincronização!</translation>
+        <translation type="unfinished">Erro de sincronização!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="62"/>
@@ -2485,6 +2462,11 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
         <translation>Criando conversa…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="46"/>
+        <source>info_popup_error_title</source>
+        <translation>Erro</translation>
     </message>
 </context>
 <context>
@@ -4326,9 +4308,9 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <translation>Erro no código de validação</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="249"/>
-        <source>information_popup_error_title</source>
-        <translation>Erro</translation>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
+        <source>cancel</source>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -5612,7 +5594,7 @@ Para habilitá-las em um projeto comercial, por favor, entre em contato conosco.
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="638"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
-        <translation>Encaminhar para…</translation>
+        <translation type="unfinished">Encaminhar para…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="672"/>
@@ -6669,7 +6651,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../tool/Utils.cpp" line="926"/>
         <source>Italy</source>
-        <translation>Itália</translation>
+        <translation type="unfinished">Itália</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="929"/>
@@ -7317,9 +7299,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="494"/>
         <source>formatMonths</source>
         <extracomment>&apos;%1 month&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>um mês</numerusform>
+            <numerusform>%1 meses</numerusform>
         </translation>
     </message>
     <message numerus="yes">

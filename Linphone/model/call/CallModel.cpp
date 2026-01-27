@@ -69,7 +69,7 @@ void CallModel::accept(bool withVideo) {
 	activateLocalVideo(params, withVideo);
 	mMonitor->acceptWithParams(params);
 	emit localVideoEnabledChanged(withVideo);
-	emit cameraEnabledChanged(params->cameraEnabled());
+	emit cameraEnabledChanged(withVideo && params->cameraEnabled());
 }
 
 void CallModel::decline() {
@@ -300,6 +300,7 @@ void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layo
 	auto params = coreManager->getCore()->createCallParams(mMonitor);
 	params->setConferenceVideoLayout(LinphoneEnums::toLinphone(layout));
 	params->enableVideo(layout != LinphoneEnums::ConferenceLayout::AudioOnly);
+	params->enableCamera(layout != LinphoneEnums::ConferenceLayout::AudioOnly);
 	if (!params->videoEnabled() && params->screenSharingEnabled()) {
 		params->enableScreenSharing(false); // Deactivate screensharing if going to audio only.
 	}
@@ -408,7 +409,7 @@ void CallModel::updateCallErrorFromReason(linphone::Reason reason) {
 			error = tr("call_error_temporarily_unavailable_toast");
 			break;
 		case linphone::Reason::ServerTimeout:
-			//: "Server tiemout"
+			//: "Server timeout"
 			error = tr("call_error_server_timeout_toast");
 			break;
 		default:
@@ -459,9 +460,11 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		auto videoDirection = params->getVideoDirection();
 		auto remoteVideoDirection = call->getRemoteParams()->getVideoDirection();
 		lInfo() << log().arg("Camera enabled changed") << params->cameraEnabled();
-		emit cameraEnabledChanged(params->cameraEnabled());
 		emit localVideoEnabledChanged(videoDirection == linphone::MediaDirection::SendOnly ||
 		                              videoDirection == linphone::MediaDirection::SendRecv);
+		emit cameraEnabledChanged((videoDirection == linphone::MediaDirection::SendOnly ||
+		                           videoDirection == linphone::MediaDirection::SendRecv) &&
+		                          params->cameraEnabled());
 		emit remoteVideoEnabledChanged(remoteVideoDirection == linphone::MediaDirection::SendOnly ||
 		                               remoteVideoDirection == linphone::MediaDirection::SendRecv);
 		updateConferenceVideoLayout();

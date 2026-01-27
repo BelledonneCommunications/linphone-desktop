@@ -91,6 +91,10 @@ AbstractWindow {
 			mainWindowStackView.replace(loginPage)
 	}
 
+	function openSSOPage() {
+		mainWindowStackView.replace(ssoPage)
+	}
+
 	function scheduleMeeting(subject, addresses) {
 		openMainPage()
 		mainWindowStackView.currentItem.scheduleMeeting(subject, addresses)
@@ -145,7 +149,6 @@ AbstractWindow {
 		id: accountProxyLoader
 		active: AppCpp.coreStarted
 		sourceComponent: AccountProxy {
-			sourceModel: AppCpp.accounts
             onInitializedChanged: if (isInitialized) {
 				mainWindow.accountProxy = this
 				mainWindow.initStackViewItem()
@@ -178,6 +181,45 @@ AbstractWindow {
 			onStartButtonPressed: {
 				goToLogin() // Replacing the first item will destroy the old.
 				SettingsCpp.setFirstLaunch(false)
+			}
+		}
+	}
+	Component {
+		id: ssoPage
+		Rectangle {
+			color: DefaultStyle.grey_0
+			Image {
+				id: logoImage
+				anchors.centerIn: parent
+				source: AppIcons.splashscreenLogo
+                sourceSize.width: Utils.getSizeWithScreenRatio(395)
+                sourceSize.height: Utils.getSizeWithScreenRatio(395)
+                width: Utils.getSizeWithScreenRatio(395)
+                height: Utils.getSizeWithScreenRatio(395)
+			}
+			ColumnLayout {
+				anchors.top: logoImage.bottom
+				anchors.topMargin: Utils.getSizeWithScreenRatio(24)
+				anchors.horizontalCenter: parent.horizontalCenter
+				Text {
+					Layout.alignment: Qt.AlignHCenter
+					//: "Trying to connect to single sign on on web page ..."
+					text: qsTr("oidc_connection_waiting_message")
+					font: Typography.h2
+					horizontalAlignment: Text.AlignHCenter
+				}
+				Text {
+					Layout.alignment: Qt.AlignHCenter
+					text: UtilsCpp.formatDuration(AppCpp.remainingTimeBeforeOidcTimeout)
+					font: Typography.h3m
+					horizontalAlignment: Text.AlignHCenter
+				}
+				Button {
+					Layout.alignment: Qt.AlignHCenter
+					//: Cancel
+					text: qsTr("cancel")
+					onClicked: AppCpp.lForceOidcTimeout()
+				}
 			}
 		}
 	}
@@ -230,6 +272,7 @@ AbstractWindow {
 	Component {
 		id: checkingPage
 		RegisterCheckingPage {
+			id: registerCheckingPage
 			onReturnToRegister: mainWindowStackView.pop()
 			onSendCode: (code) => {
 				RegisterPageCpp.linkNewAccountUsingCode(code, registerWithEmail, sipIdentityAddress)
@@ -238,15 +281,16 @@ AbstractWindow {
 				target: RegisterPageCpp
 				function onLinkingNewAccountWithCodeSucceed() {
 					goToLogin()
-                    //: "Compte créé"
-                    mainWindow.showInformationPopup(qsTr("assistant_register_success_title"),
-                                                    //: "Le compte a été créé. Vous pouvez maintenant vous connecter"
-                                                    qsTr("assistant_register_success_message"), true)
+					//: "Compte créé"
+					mainWindow.showInformationPopup(qsTr("assistant_register_success_title"),
+													//: "Le compte a été créé. Vous pouvez maintenant vous connecter"
+													qsTr("assistant_register_success_message"), true)
 				}
 				function onLinkingNewAccountWithCodeFailed(errorMessage) {
-                    //: "Erreur dans le code de validation"
-                    if (errorMessage.length === 0) errorMessage = qsTr("assistant_register_error_code")
-                    mainWindow.showInformationPopup(qsTr("information_popup_error_title"), errorMessage, false)
+					registerCheckingPage.errorMessage = ""
+					//: "Erreur dans le code de validation"
+					if (errorMessage.length === 0) errorMessage = qsTr("assistant_register_error_code")
+					registerCheckingPage.errorMessage = errorMessage
 				}
 			}
 		}

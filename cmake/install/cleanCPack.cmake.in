@@ -25,9 +25,19 @@
 #	It is neccessary to use it because CPack doesn't take account of some install()  (those that do the move)
 
 cmake_policy(SET CMP0009 NEW)#Not following symlinks for file()
+IF(POLICY CMP0012)
+    CMAKE_POLICY(SET CMP0012 NEW)#Allow if(ON)
+ENDIF()
 
 set(DO_SIGNING @LINPHONE_BUILDER_SIGNING_IDENTITY@)
 set(DEPLOYQT_PROGRAM  @DEPLOYQT_PROGRAM@)
+
+function(remove_file expression)
+    file(GLOB_RECURSE UNWANTED_FILES ${expression})
+    foreach(F ${UNWANTED_FILES})
+        file(REMOVE ${F})
+    endforeach()
+endfunction()
 
 if(APPLE)
 	find_program(DSYMUTIL_PROGRAM dsymutil)
@@ -61,8 +71,38 @@ if(APPLE)
 		execute_process(COMMAND codesign --force --deep --sign "-" "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@APPLICATION_NAME@.app" )#If not code signed, app can crash because of APPLE on "Code Signature Invalid" (spotted for ARM64)
 	endif()
 elseif(WIN32)
-	message(STATUS "Execute : @DEPLOYQT_PROGRAM@ ${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@CMAKE_INSTALL_BINDIR@/@EXECUTABLE_NAME@.exe --qmldir=@LINPHONE_QML_DIR@ --verbose=0 --no-compiler-runtime")
-	execute_process(COMMAND @DEPLOYQT_PROGRAM@ "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@CMAKE_INSTALL_BINDIR@/@EXECUTABLE_NAME@.exe" "--qmldir=@LINPHONE_QML_DIR@" "--verbose=0" "--no-compiler-runtime")
+	message(STATUS "Execute : @DEPLOYQT_PROGRAM@ ${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@CMAKE_INSTALL_BINDIR@/@EXECUTABLE_NAME@.exe --qmldir=@LINPHONE_QML_DIR@ --verbose=0 --no-compiler-runtime --pdb")
+	execute_process(COMMAND @DEPLOYQT_PROGRAM@ "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@CMAKE_INSTALL_BINDIR@/@EXECUTABLE_NAME@.exe" "--qmldir=@LINPHONE_QML_DIR@" "--verbose=0" "--no-compiler-runtime" "--pdb")
 	# --plugindir "${CMAKE_CURRENT_BINARY_DIR}/winqt/plugins"
 	# --dir "${CMAKE_CURRENT_BINARY_DIR}/winqt/"
+	 if(@ENABLE_BUGSPLAT_SYMBOLS_UPLOAD@)
+        message(STATUS "Uploading Bugsplat symbols from ${CPACK_TEMPORARY_INSTALL_DIRECTORY}")
+        execute_process(COMMAND "@CRASHPAD_SYMBOLS_UPLOADER@" -m -b @BUGSPLAT_DATABASE@ -a "@LINPHONEAPP_APPLICATION_NAME@" -v "@LINPHONEAPP_VERSION@" -f "**/*.{pdb,exe,dll}" -d "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@CMAKE_INSTALL_BINDIR@" --clientId "@BUGSPLAT_CLIENT_ID@" --clientSecret "@BUGSPLAT_CLIENT_SECRET@"
+            WORKING_DIRECTORY ${CPACK_TEMPORARY_INSTALL_DIRECTORY}
+            RESULT_VARIABLE CPACK_COMMAND_RESULT
+            COMMAND_ECHO  NONE
+        )
+        if(CPACK_COMMAND_RESULT)
+            message(FATAL_ERROR "Failed to upload symbols! ${CPACK_COMMAND_RESULT}")
+        endif()
+        execute_process(COMMAND "@CRASHPAD_SYMBOLS_UPLOADER@" -m -b @BUGSPLAT_DATABASE@ -a "@LINPHONEAPP_APPLICATION_NAME@" -v "@LINPHONEAPP_VERSION@" -f "**/*.{pdb,exe,dll}" -d "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@CMAKE_INSTALL_LIBDIR@/mediastreamer/plugins" --clientId "@BUGSPLAT_CLIENT_ID@" --clientSecret "@BUGSPLAT_CLIENT_SECRET@"
+            WORKING_DIRECTORY ${CPACK_TEMPORARY_INSTALL_DIRECTORY}
+            RESULT_VARIABLE CPACK_COMMAND_RESULT
+            COMMAND_ECHO  NONE
+        )
+        if(CPACK_COMMAND_RESULT)
+            message(FATAL_ERROR "Failed to upload symbols! ${CPACK_COMMAND_RESULT}")
+        endif()
+    endif()
+    #####################################################
+    # Clean all unwanted files to package.
+    #####################################################
+    remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/Qt*.pdb")
+
+     # TODO: remove all pdb when CrashReporter is available. Symbols for crashing are in server so it is not needed for deployment.
+     # if debugging is needed, we could rebuild it and use pdb from local build instead of using official binaries.
+     # Warning: Do not remove files from here like below. NSIS have a check integrity that is done from install() commands.
+    #remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/*.pdb")
+    #remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/*.cmake")
+    #remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/*.lib")
 endif()

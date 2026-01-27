@@ -97,6 +97,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	// Logs
 	mLogsEnabled = settingsModel->getLogsEnabled();
 	mFullLogsEnabled = settingsModel->getFullLogsEnabled();
+	mCrashReporterEnabled = settingsModel->getCrashReporterEnabled();
 	mLogsFolder = settingsModel->getLogsFolder();
 	mLogsEmail = settingsModel->getLogsEmail();
 
@@ -124,7 +125,6 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(HideSettings, settingsModel)
 	INIT_CORE_MEMBER(HideAccountSettings, settingsModel)
 	INIT_CORE_MEMBER(DisableCallRecordings, settingsModel)
-	INIT_CORE_MEMBER(AssistantHideCreateAccount, settingsModel)
 	INIT_CORE_MEMBER(AssistantHideCreateAccount, settingsModel)
 	INIT_CORE_MEMBER(AssistantDisableQrCode, settingsModel)
 
@@ -189,6 +189,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	// Logs
 	mLogsEnabled = settingsCore.mLogsEnabled;
 	mFullLogsEnabled = settingsCore.mFullLogsEnabled;
+	mCrashReporterEnabled = settingsCore.mCrashReporterEnabled;
 	mLogsFolder = settingsCore.mLogsFolder;
 	mLogsEmail = settingsCore.mLogsEmail;
 
@@ -235,6 +236,110 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 }
 
 SettingsCore::~SettingsCore() {
+}
+
+void SettingsCore::reloadSettings() {
+	mustBeInLinphoneThread(getClassName());
+	auto settingsModel = SettingsModel::getInstance();
+	assert(settingsModel);
+
+	// Security
+	setVfsEnabled(settingsModel->getVfsEnabled());
+
+	// Call
+	setVideoEnabled(settingsModel->getVideoEnabled());
+	setEchoCancellationEnabled(settingsModel->getEchoCancellationEnabled());
+	setAutoDownloadReceivedFiles(settingsModel->getAutoDownloadReceivedFiles());
+	setAutomaticallyRecordCallsEnabled(settingsModel->getAutomaticallyRecordCallsEnabled());
+	setRingtone(settingsModel->getRingtone());
+
+	// Network
+	setIpv6Enabled(settingsModel->getIpv6Enabled());
+
+	// Advanced
+	setAutoStart(settingsModel->getAutoStart());
+	setHideFps(settingsModel->getHideFps());
+
+	// Audio
+	setCaptureDevices(settingsModel->getCaptureDevices());
+	setPlaybackDevices(settingsModel->getPlaybackDevices());
+	setRingerDevices(settingsModel->getRingerDevices());
+	setCaptureDevice(settingsModel->getCaptureDevice());
+	setPlaybackDevice(settingsModel->getPlaybackDevice());
+	setRingerDevice(settingsModel->getRingerDevice());
+
+	setConferenceLayout(
+	    LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(settingsModel->getDefaultConferenceLayout())));
+
+	setMediaEncryption(
+	    LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(settingsModel->getDefaultMediaEncryption())));
+
+	setMediaEncryptionMandatory(settingsModel->getMediaEncryptionMandatory());
+	setCreateEndToEndEncryptedMeetingsAndGroupCalls(settingsModel->getCreateEndToEndEncryptedMeetingsAndGroupCalls());
+
+	setCaptureGain(settingsModel->getCaptureGain());
+	setPlaybackGain(settingsModel->getPlaybackGain());
+
+	// Video
+	setVideoDevice(settingsModel->getVideoDevice());
+	setVideoDevices(settingsModel->getVideoDevices());
+
+	// Logs
+	setLogsEnabled(settingsModel->getLogsEnabled());
+	setFullLogsEnabled(settingsModel->getFullLogsEnabled());
+	setCrashReporterEnabled(settingsModel->getCrashReporterEnabled());
+	setLogsFolder(settingsModel->getLogsFolder());
+	mLogsEmail = settingsModel->getLogsEmail();
+
+	// DND
+	setDndEnabled(settingsModel->dndEnabled());
+
+	mDefaultDomain = settingsModel->getDefaultDomain();
+	auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+	if (currentAccount) {
+		auto accountDomain = Utils::coreStringToAppString(currentAccount->getParams()->getDomain());
+		setShowAccountDevices(accountDomain == mDefaultDomain);
+	}
+
+	// Chat
+	mEmojiFont = settingsModel->getEmojiFont();
+	mTextMessageFont = settingsModel->getTextMessageFont();
+
+	// Check for update
+	mIsCheckForUpdateAvailable = settingsModel->isCheckForUpdateAvailable();
+
+	setDisableChatFeature(settingsModel->getDisableChatFeature());
+	setDisableMeetingsFeature(settingsModel->getDisableMeetingsFeature());
+	setDisableBroadcastFeature(settingsModel->getDisableBroadcastFeature());
+
+	setHideSettings(settingsModel->getHideSettings());
+	setHideAccountSettings(settingsModel->getHideAccountSettings());
+
+	setDisableCallRecordings(settingsModel->getDisableCallRecordings());
+	setAssistantHideCreateAccount(settingsModel->getAssistantHideCreateAccount());
+	setAssistantDisableQrCode(settingsModel->getAssistantDisableQrCode());
+	setAssistantHideThirdPartyAccount(settingsModel->getAssistantHideThirdPartyAccount());
+	setHideSipAddresses(settingsModel->getHideSipAddresses());
+	setDarkModeAllowed(settingsModel->getDarkModeAllowed());
+	setMaxAccount(settingsModel->getMaxAccount());
+	setAssistantGoDirectlyToThirdPartySipAccountLogin(
+	    settingsModel->getAssistantGoDirectlyToThirdPartySipAccountLogin());
+	setAssistantGoDirectlyToThirdPartySipAccountLogin(
+	    settingsModel->getAssistantGoDirectlyToThirdPartySipAccountLogin());
+	setAssistantThirdPartySipAccountDomain(settingsModel->getAssistantThirdPartySipAccountDomain());
+	setAssistantThirdPartySipAccountTransport(settingsModel->getAssistantThirdPartySipAccountTransport());
+	setAutoStart(settingsModel->getAutoStart());
+	setExitOnClose(settingsModel->getExitOnClose());
+	setSyncLdapContacts(settingsModel->getSyncLdapContacts());
+	setConfigLocale(settingsModel->getConfigLocale());
+	setDownloadFolder(settingsModel->getDownloadFolder());
+
+	setCallToneIndicationsEnabled(settingsModel->getCallToneIndicationsEnabled());
+	setCommandLine(settingsModel->getCommandLine());
+	setDisableCommandLine(settingsModel->getDisableCommandLine());
+	setCallForwardToAddress(settingsModel->getCallForwardToAddress());
+	setThemeMainColor(settingsModel->getThemeMainColor());
+	setThemeAboutPictureUrl(settingsModel->getThemeAboutPictureUrl());
 }
 
 void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
@@ -416,7 +521,10 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 
 	// Logs
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::logsEnabledChanged, [this](const bool status) {
-		mSettingsModelConnection->invokeToCore([this, status]() { setLogsEnabled(status); });
+		mSettingsModelConnection->invokeToCore([this, status]() {
+			setCrashReporterEnabled(status);
+			setLogsEnabled(status);
+		});
 	});
 
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::fullLogsEnabledChanged, [this](const bool status) {
@@ -558,6 +666,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	// Logs
 	setLogsEnabled(settingsCore.mLogsEnabled);
 	setFullLogsEnabled(settingsCore.mFullLogsEnabled);
+	setCrashReporterEnabled(settingsCore.mCrashReporterEnabled);
 	setLogsFolder(settingsCore.mLogsFolder);
 
 	// DND
@@ -1007,6 +1116,18 @@ void SettingsCore::setFullLogsEnabled(bool enabled) {
 	}
 }
 
+bool SettingsCore::getCrashReporterEnabled() const {
+	return mCrashReporterEnabled;
+}
+
+void SettingsCore::setCrashReporterEnabled(bool enabled) {
+	if (mCrashReporterEnabled != enabled) {
+		mCrashReporterEnabled = enabled;
+		emit crashReporterEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
 void SettingsCore::setRingtone(QString path) {
 	if (mRingtonePath != path) {
 		mRingtonePath = path;
@@ -1103,6 +1224,7 @@ QString SettingsCore::getDownloadFolder() const {
 	auto path = mDownloadFolder;
 	if (mDownloadFolder.isEmpty()) path = Paths::getDownloadDirPath();
 	QString cleanPath = QDir::cleanPath(path);
+	if (!cleanPath.endsWith(QDir::separator())) cleanPath.append(QDir::separator());
 	return cleanPath;
 }
 
@@ -1143,6 +1265,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	// Logs
 	model->setLogsEnabled(mLogsEnabled);
 	model->setFullLogsEnabled(mFullLogsEnabled);
+	model->setCrashReporterEnabled(mLogsEnabled);
 
 	// UI
 	model->setDisableChatFeature(mDisableChatFeature);
@@ -1219,6 +1342,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	// Logs
 	mLogsEnabled = model->getLogsEnabled();
 	mFullLogsEnabled = model->getFullLogsEnabled();
+	mCrashReporterEnabled = model->getCrashReporterEnabled();
 	mLogsFolder = model->getLogsFolder();
 	mLogsEmail = model->getLogsEmail();
 

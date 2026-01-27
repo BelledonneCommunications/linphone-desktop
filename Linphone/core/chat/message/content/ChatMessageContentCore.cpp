@@ -64,7 +64,13 @@ ChatMessageContentCore::ChatMessageContentCore(const std::shared_ptr<linphone::C
 		mFileOffset = 0;
 		mUtf8Text = Utils::coreStringToAppString(content->getUtf8Text());
 		auto chatRoom = chatMessageModel ? chatMessageModel->getMonitor()->getChatRoom() : nullptr;
-		mRichFormatText = ToolModel::encodeTextToQmlRichFormat(mUtf8Text, {}, chatRoom);
+		mRichFormatText = ToolModel::encodeTextToQmlRichFormat(mUtf8Text, mSearchedTextPart, {}, chatRoom);
+		connect(this, &ChatMessageContentCore::searchedTextPartChanged, this, [this] {
+			auto chatroom = mChatMessageContentModel->getChatMessageModel()
+			                    ? mChatMessageContentModel->getChatMessageModel()->getMonitor()->getChatRoom()
+			                    : nullptr;
+			setRichFormatText(ToolModel::encodeTextToQmlRichFormat(mUtf8Text, mSearchedTextPart, {}, chatroom));
+		});
 		mWasDownloaded = !mFilePath.isEmpty() && QFileInfo(mFilePath).isFile();
 		mThumbnail = mFilePath.isEmpty()
 		                 ? QUrl()
@@ -246,10 +252,6 @@ ConferenceInfoGui *ChatMessageContentCore::getConferenceInfoGui() const {
 	return mConferenceInfo ? new ConferenceInfoGui(mConferenceInfo) : nullptr;
 }
 
-bool ChatMessageContentCore::wasDownloaded() const {
-	return mWasDownloaded;
-}
-
 QUrl ChatMessageContentCore::getThumbnail() const {
 	return mThumbnail;
 }
@@ -260,11 +262,33 @@ void ChatMessageContentCore::setThumbnail(const QUrl &data) {
 		emit thumbnailChanged();
 	}
 }
+
+bool ChatMessageContentCore::wasDownloaded() const {
+	return mWasDownloaded;
+}
 void ChatMessageContentCore::setWasDownloaded(bool wasDownloaded) {
 	if (mWasDownloaded != wasDownloaded) {
 		mWasDownloaded = wasDownloaded;
 		emit wasDownloadedChanged(wasDownloaded);
 	}
+}
+
+void ChatMessageContentCore::setRichFormatText(const QString &richFormatText) {
+	if (mRichFormatText != richFormatText) {
+		mRichFormatText = richFormatText;
+		emit richFormatTextChanged();
+	}
+}
+
+void ChatMessageContentCore::setSearchedTextPart(const QString &searchedTextPart) {
+	if (mSearchedTextPart != searchedTextPart) {
+		mSearchedTextPart = searchedTextPart;
+		emit searchedTextPartChanged();
+	}
+}
+
+QString ChatMessageContentCore::getSearchedTextPart() const {
+	return mSearchedTextPart;
 }
 
 const std::shared_ptr<ChatMessageContentModel> &ChatMessageContentCore::getContentModel() const {

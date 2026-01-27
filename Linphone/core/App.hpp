@@ -24,8 +24,11 @@
 #include <QSharedPointer>
 
 #include "core/account/AccountProxy.hpp"
+#include "core/call-history/CallHistoryList.hpp"
 #include "core/call/CallProxy.hpp"
 #include "core/chat/ChatGui.hpp"
+#include "core/chat/ChatList.hpp"
+#include "core/conference/ConferenceInfoList.hpp"
 #include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "model/cli/CliModel.hpp"
@@ -45,11 +48,15 @@ class App : public SingleApplication, public AbstractObject {
 	Q_PROPERTY(bool coreStarted READ getCoreStarted WRITE setCoreStarted NOTIFY coreStartedChanged)
 	Q_PROPERTY(AccountList *accounts READ getAccounts NOTIFY accountsChanged)
 	Q_PROPERTY(CallList *calls READ getCalls NOTIFY callsChanged)
+	Q_PROPERTY(ChatList *chats READ getChats NOTIFY chatsChanged)
 	Q_PROPERTY(QString shortApplicationVersion READ getShortApplicationVersion CONSTANT)
 	Q_PROPERTY(QString qtVersion READ getQtVersion CONSTANT)
 	Q_PROPERTY(QString gitBranchName READ getGitBranchName CONSTANT)
 	Q_PROPERTY(QString sdkVersion READ getSdkVersion CONSTANT)
 	Q_PROPERTY(ChatGui *currentChat READ getCurrentChat WRITE setCurrentChat NOTIFY currentChatChanged)
+	Q_PROPERTY(QString localeAsString READ getLocaleAsString CONSTANT)
+	Q_PROPERTY(int remainingTimeBeforeOidcTimeout MEMBER mRemainingTimeBeforeOidcTimeout NOTIFY
+	               remainingTimeBeforeOidcTimeoutChanged)
 
 public:
 	App(int &argc, char *argv[]);
@@ -132,6 +139,7 @@ public:
 	}
 	void updateSysTrayCount(int n);
 	QLocale getLocale();
+	QString getLocaleAsString();
 
 	void onLoggerInitialized();
 	void sendCommand();
@@ -140,6 +148,7 @@ public:
 	void setCoreStarted(bool started);
 
 	QQuickWindow *getCallsWindow();
+	void handleAccountActivity(QSharedPointer<AccountCore> accountCore);
 	Q_INVOKABLE void handleAppActivity();
 	QQuickWindow *getOrCreateCallsWindow(QVariant callGui = QVariant());
 	void setCallsWindowProperty(const char *id, QVariant property);
@@ -153,6 +162,16 @@ public:
 	QSharedPointer<AccountList> getAccountList() const;
 	void setAccountList(QSharedPointer<AccountList> data);
 	Q_INVOKABLE AccountList *getAccounts() const;
+
+	QSharedPointer<ConferenceInfoList> getConferenceInfoList() const;
+	void setConferenceInfoList(QSharedPointer<ConferenceInfoList> data);
+
+	QSharedPointer<CallHistoryList> getCallHistoryList() const;
+	void setCallHistoryList(QSharedPointer<CallHistoryList> data);
+
+	QSharedPointer<ChatList> getChatList() const;
+	ChatList *getChats() const;
+	void setChatList(QSharedPointer<ChatList> data);
 
 	QSharedPointer<CallList> getCallList() const;
 	void setCallList(QSharedPointer<CallList> data);
@@ -198,6 +217,12 @@ signals:
 	void callsChanged();
 	void currentDateChanged();
 	void currentChatChanged();
+	void conferenceInfosChanged();
+	void chatsChanged();
+	void callHistoryChanged();
+	void localeChanged();
+	void lForceOidcTimeout();
+	void remainingTimeBeforeOidcTimeoutChanged();
 	// void executeCommand(QString command);
 
 private:
@@ -220,7 +245,10 @@ private:
 	ChatGui *mCurrentChat = nullptr;
 	QSharedPointer<SettingsCore> mSettings;
 	QSharedPointer<AccountList> mAccountList;
+	QSharedPointer<ConferenceInfoList> mConferenceInfoList;
+	QSharedPointer<ChatList> mChatList;
 	QSharedPointer<CallList> mCallList;
+	QSharedPointer<CallHistoryList> mCallHistoryList;
 	QSharedPointer<SafeConnection<App, CoreModel>> mCoreModelConnection;
 	QSharedPointer<SafeConnection<App, CliModel>> mCliModelConnection;
 	bool mAutoStart = false;
@@ -233,6 +261,8 @@ private:
 	QTimer mDateUpdateTimer;
 	QDate mCurrentDate;
 	float mScreenRatio = 1;
+	QTimer mOIDCRefreshTimer;
+	int mRemainingTimeBeforeOidcTimeout = 0;
 
 	DECLARE_ABSTRACT_OBJECT
 };

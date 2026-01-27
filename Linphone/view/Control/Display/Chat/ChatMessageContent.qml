@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
-import QtMultimedia
 
 import Linphone
 import UtilsCpp
@@ -82,6 +81,7 @@ ColumnLayout {
 	// SINGLE FILE
 	ImageFileView {
 		id: singleImageFile
+		cache: false
 		visible: mainItem.filescontentProxy.count === 1 && source !== "" && UtilsCpp.isImage(contentGui.core.filePath)
 		contentGui: mainItem.filescontentProxy.count === 1
 			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
@@ -100,6 +100,22 @@ ColumnLayout {
 		Layout.preferredHeight: paintedHeight
 		Layout.alignment: Qt.AlignHCenter
 		fillMode: Image.PreserveAspectFit
+		cache: false
+		property int initialSourceWidth
+		property int initialSourceHeight
+		property bool initialization: true
+		onStatusChanged: {
+			if (status == Image.Ready) {
+				if (singleAnimatedImageFile.initialization) {
+					initialSourceWidth = sourceSize.width
+					initialSourceHeight = sourceSize.height
+					singleAnimatedImageFile.initialization = false
+				}
+				var sourceW = Math.min(initialSourceWidth, mainItem.maxWidth)
+				sourceSize.height = Math.round((sourceW/initialSourceWidth) * initialSourceHeight)
+				sourceSize.width = sourceW
+			}
+		}
 	}
 	VideoFileView {
 		id: singleVideoFile
@@ -110,10 +126,10 @@ ColumnLayout {
 		Layout.fillWidth: true
 		width: Math.min(Utils.getSizeWithScreenRatio(285), mainItem.maxWidth)
 		height: Math.min(Utils.getSizeWithScreenRatio(285), mainItem.maxWidth)
-		Layout.preferredWidth: videoOutput.contentRect.width
-		Layout.preferredHeight: videoOutput.contentRect.height
+		Layout.preferredWidth: width
+		Layout.preferredHeight: height
 		Layout.alignment: Qt.AlignHCenter
-		fillMode: VideoOutput.PreserveAspectFit
+		// fillMode: VideoOutput.PreserveAspectFit
 	}
 
 	// FILES

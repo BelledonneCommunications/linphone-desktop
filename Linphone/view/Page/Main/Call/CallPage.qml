@@ -28,7 +28,6 @@ AbstractMainPage {
     property ConferenceInfoGui confInfoGui
     property AccountProxy accounts: AccountProxy {
         id: accountProxy
-        sourceModel: AppCpp.accounts
     }
     property AccountGui account: accountProxy.defaultAccount
     property var state: account && account.core?.registrationState || 0

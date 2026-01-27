@@ -1,3 +1,12 @@
 [submodule "linphone-sdk"]
 path = external/linphone-sdk
 	url = https://gitlab.linphone.org/BC/public/linphone-sdk.git
+[submodule "external/google/gn"]
+	path = external/google/gn
+	url = https://gitlab.linphone.org/BC/public/external/gn.git
+[submodule "external/google/crashpad"]
+	path = external/google/crashpad
+	url = https://gitlab.linphone.org/BC/public/external/crashpad.git
+[submodule "external/google/chromium-depot-tools"]
+	path = external/google/chromium-depot-tools
+	url = https://gitlab.linphone.org/BC/public/external/chromium-depot-tools.git

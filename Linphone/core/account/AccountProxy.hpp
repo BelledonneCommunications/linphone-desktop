@@ -59,6 +59,7 @@ signals:
 
 protected:
 	bool mInitialized = false;
+	QSharedPointer<AccountList> mList;
 	QSharedPointer<AccountCore> mDefaultAccount; // When null, a new UI object is build from List
 };
 

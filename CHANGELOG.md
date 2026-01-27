@@ -10,6 +10,26 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
+## [6.1.0] - Unreleased
+
+6.1.0 release is the complete version of the new Linphone Desktop with all features including chat
+
+### Added
+- Chat: chat with your contacts, including text messaging, voice recording, sharing files or medias
+- Presence: get your friend's presence status as long as you both are in your contact list
+- Translations: Linphone is now available in English, French, Chinese, Czech, German, Portuguese, Russian and Ukrainian thank's to the Weblate contributors
+- Check for update : you will get a notification on start if a new version is available, and you can look for a new version from the help page
+- Bugsplat integration: add Bugsplat database parameters to improve crash reporting.
+
+### Fixed
+- Fixed "End-to-end encrypted call" label while in conference, the call may be end-to-end encrypted but only to the conference server, not to all participants
+- Audio device list : display the correct devices in multimedia settings according to their functions (capture / playback / video)
+
+### Changed
+- Minimum supported Qt version is now 6.10.0
+- Removed QtMultimedia dependency
+
+
 ## [6.0.0] - 2025-04-17
 
 6.0.0 release is a complete rework of Linphone Desktop, with only the call and contact list features availables
@@ -31,9 +51,3 @@ Group changes to describe their impact on the project, as follows:
 - Default screen (between contacts, call history, conversations & meetings list) will change depending on where you were when the app was paused or killed, and you will return to that last visited screen on the next startup.
 - Minimum supported Qt version is now 6.5.3
 - Some settings have changed name and/or section in linphonerc file.
-
-
-## [6.1.0] - XXXX-XX-XX
-
-### Changed
-- Minimum supported Qt version is now 6.10.0

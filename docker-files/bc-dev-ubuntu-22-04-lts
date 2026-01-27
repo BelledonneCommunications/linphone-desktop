@@ -59,6 +59,10 @@ RUN sudo apt-get install -y gnupg2
 # Install configuration tools
 RUN sudo apt-get install -y wget
 
+# Install crashpad build tools
+RUN sudo apt-get install -y libcurl4-openssl-dev
+RUN sudo pip3 install httplib2==0.22.0
+
 # Configure user bc
 RUN useradd -ms /bin/bash bc && \
     echo 'bc:cotcot' | chpasswd && \
@@ -84,9 +88,9 @@ RUN sudo pip3 install --upgrade aqtinstall
 RUN sudo python3 -m aqt install-qt linux desktop 5.15.2 -O /opt/Qt/opensource
 RUN sudo python3 -m aqt install-qt linux desktop 5.15.2 -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d
 RUN sudo python3 -m aqt install-qt linux desktop 6.9.1 -O /opt/Qt/opensource
-RUN sudo python3 -m aqt install-qt linux desktop 6.9.1 -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
+RUN sudo python3 -m aqt install-qt linux desktop 6.9.1 -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d qt5compat qtshadertools
 RUN sudo python3 -m aqt install-qt linux desktop 6.10.0 -O /opt/Qt/opensource
-RUN sudo python3 -m aqt install-qt linux desktop 6.10.0 -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d qtmultimedia qt5compat qtshadertools
+RUN sudo python3 -m aqt install-qt linux desktop 6.10.0 -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d qt5compat qtshadertools
 
 RUN sudo chown -R bc:bc /opt/Qt/
 
@@ -134,7 +138,7 @@ RUN /opt/Qt/proprietary/MaintenanceTool \
   --confirm-command \
   --root "/opt/Qt/proprietary" \
   --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
-  install qt.qt6.681.linux_gcc_64 qt.qt6.681.addons.qtnetworkauth qt.qt6.681.addons.qtquick3d qt.qt6.681.addons.qtmultimedia qt.qt6.681.addons.qt5compat qt.qt6.681.addons.qtshadertools
+  install qt.qt6.681.linux_gcc_64 qt.qt6.681.addons.qtnetworkauth qt.qt6.681.addons.qtquick3d qt.qt6.681.addons.qt5compat qt.qt6.681.addons.qtshadertools
 
 # # Install Qt 6.8.3 proprietary
 RUN /opt/Qt/proprietary/MaintenanceTool \
@@ -143,7 +147,7 @@ RUN /opt/Qt/proprietary/MaintenanceTool \
   --confirm-command \
   --root "/opt/Qt/proprietary" \
   --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
-  install qt.qt6.683.linux_gcc_64 qt.qt6.683.addons.qtnetworkauth qt.qt6.683.addons.qtquick3d qt.qt6.683.addons.qtmultimedia qt.qt6.683.addons.qt5compat qt.qt6.683.addons.qtshadertools
+  install qt.qt6.683.linux_gcc_64 qt.qt6.683.addons.qtnetworkauth qt.qt6.683.addons.qtquick3d qt.qt6.683.addons.qt5compat qt.qt6.683.addons.qtshadertools
 
 # # Install Qt 6.9.1 proprietary
 RUN /opt/Qt/proprietary/MaintenanceTool \
@@ -152,7 +156,7 @@ RUN /opt/Qt/proprietary/MaintenanceTool \
   --confirm-command \
   --root "/opt/Qt/proprietary" \
   --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
-  install qt.qt6.691.linux_gcc_64 qt.qt6.691.addons.qtnetworkauth qt.qt6.691.addons.qtquick3d qt.qt6.691.addons.qtmultimedia qt.qt6.691.addons.qt5compat qt.qt6.691.addons.qtshadertools
+  install qt.qt6.691.linux_gcc_64 qt.qt6.691.addons.qtnetworkauth qt.qt6.691.addons.qtquick3d qt.qt6.691.addons.qt5compat qt.qt6.691.addons.qtshadertools
 
 # # Install Qt 6.10.0 proprietary
 RUN /opt/Qt/proprietary/MaintenanceTool \
@@ -161,7 +165,7 @@ RUN /opt/Qt/proprietary/MaintenanceTool \
   --confirm-command \
   --root "/opt/Qt/proprietary" \
   --auto-answer OperationDoesNotExistError=Ignore,OverwriteTargetDirectory=Yes,stopProcessesForUpdates=Ignore,installationErrorWithCancel=Ignore,InstallationErrorWithIgnore=Ignore,AssociateCommonFiletypes=Yes,telemetry-question=No \
-  install qt.qt6.6100.linux_gcc_64 qt.qt6.6100.addons.qtnetworkauth qt.qt6.6100.addons.qtquick3d qt.qt6.6100.addons.qtmultimedia qt.qt6.6100.addons.qt5compat qt.qt6.6100.addons.qtshadertools
+  install qt.qt6.6100.linux_gcc_64 qt.qt6.6100.addons.qtnetworkauth qt.qt6.6100.addons.qtquick3d qt.qt6.6100.addons.qt5compat qt.qt6.6100.addons.qtshadertools
 
 RUN qtchooser -install 5.15.19-proprietary /opt/Qt/proprietary/5.15.19/gcc_64/bin/qmake
 RUN qtchooser -install 5.15.14-proprietary /opt/Qt/proprietary/5.15.14/gcc_64/bin/qmake

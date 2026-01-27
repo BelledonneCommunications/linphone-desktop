@@ -145,6 +145,16 @@
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Nelze přidat účet.</translation>
     </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="144"/>
+        <source>assistant_account_login_outbound_proxy_uri_error</source>
+        <translation>URI odchozího proxy serveru je neplatné. Ujistěte se, že odpovídá následujícímu formátu: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="133"/>
+        <source>assistant_account_login_registrar_uri_error</source>
+        <translation>Registrátor uri je neplatný. Ujistěte se, že odpovídá následujícímu formátu: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
+    </message>
 </context>
 <context>
     <name>AccountModel</name>
@@ -164,7 +174,7 @@
         <location filename="../../model/account/AccountModel.cpp" line="309"/>
         <source>set_outbound_proxy_uri_failed_error_message</source>
         <extracomment>Unable to set outbound proxy uri, failed creating address from %1</extracomment>
-        <translation>Nelze nastavit odchozí proxy URI, selhalo vytvoření adresy z %1</translation>
+        <translation>Nelze nastavit odchozí proxy URI z adresy %1. Ujistěte se, že odpovídá následujícímu formátu: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="418"/>
@@ -304,6 +314,21 @@
         <extracomment>&quot;No information&quot;</extracomment>
         <translation>Žádné informace</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
+        <source>copied</source>
+        <translation>Zkopírováno</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="129"/>
+        <source>account_settings_sip_address_copied_message</source>
+        <translation>Vaše SIP adresa byla zkopírována do schránky</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="133"/>
+        <source>account_settings_sip_address_copied_error_message</source>
+        <translation>Chyba při kopírování vaší SIP adresy</translation>
+    </message>
 </context>
 <context>
     <name>AccountSettingsPage</name>
@@ -362,23 +387,6 @@
         <translation>Nastavení účtu</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="32"/>
-        <source>info_popup_invalid_registrar_uri_message</source>
-        <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation>Registrační uri je neplatná. Ujistěte se, že odpovídá následujícímu formátu: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="34"/>
-        <source>info_popup_invalid_outbound_proxy_message</source>
-        <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation>Uri odchozího proxy serveru je neplatné. Ujistěte se, že odpovídá následujícímu formátu: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; je volitelný)</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="35"/>
-        <source>info_popup_error_title</source>
-        <translation>Chyba</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="45"/>
         <source>information_popup_success_title</source>
         <translation>Hotovo</translation>
@@ -405,12 +413,6 @@
         <source>account_settings_voicemail_uri_title</source>
         <extracomment>&quot;URI de messagerie vocale&quot;</extracomment>
         <translation>URI hlasových zpráv</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="120"/>
-        <source>account_settings_transport_title</source>
-        <extracomment>&quot;Transport&quot;</extracomment>
-        <translation>Transport</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="127"/>
@@ -475,6 +477,16 @@
         <source>account_settings_lime_server_url_title</source>
         <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
         <translation>URL adresa Lime serveru</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="68"/>
+        <source>mwi_server_address_tooltip</source>
+        <translation>Adresa serveru MWI, který odesílá oznámení SIP pro zobrazení nových indikátorů hlasové pošty</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="90"/>
+        <source>voicemail_address_tooltip</source>
+        <translation>SIP adresa vytočená po kliknutí na tlačítko hlasové schránky</translation>
     </message>
 </context>
 <context>
@@ -730,7 +742,37 @@
     <message>
         <location filename="../../core/App.cpp" line="452"/>
         <source>info_popup_new_version_download_label</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation>Stáhněte si ji!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="447"/>
+        <source>info_popup_error_checking_update</source>
+        <translation>Při pokusu o kontrolu aktualizací došlo k chybě. Zkuste to prosím znovu později nebo kontaktujte tým podpory.</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="457"/>
+        <source>info_popup_new_version_available_title</source>
+        <translation>Nová verze k dispozici!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="459"/>
+        <source>info_popup_new_version_available_message</source>
+        <translation>Nová verze Linphone (%1) je k dispozici na %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="465"/>
+        <source>info_popup_version_up_to_date_title</source>
+        <translation>Aktuální</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="467"/>
+        <source>info_popup_version_up_to_date_message</source>
+        <translation>Vaše verze je aktuální</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1402"/>
+        <source>check_for_update</source>
+        <translation>Zkontrolovat aktualizace</translation>
     </message>
 </context>
 <context>
@@ -896,31 +938,6 @@
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="51"/>
         <source>settings_call_forward_address_cannot_be_empty</source>
         <translation>Číslo nebo SIP adresa je vyžadována</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="45"/>
-        <source>settings_call_forward_address_timeout</source>
-        <translation>Nelze nastavit přesměrování hovoru, vypršel časový limit požadavku</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
-        <source>settings_call_forward_address_progress_disabling</source>
-        <translation>Vypnutí přesměrování hovoru</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
-        <source>settings_call_forward_address_progress_enabling</source>
-        <translation>Zapnutí přesměrování hovoru na:</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
-        <source>settings_call_forward_activation_success</source>
-        <translation>Zapnuto přesměrování hovoru na: </translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
-        <source>settings_call_forward_deactivation_success</source>
-        <translation>Přesměrování hovoru vypnuto</translation>
     </message>
 </context>
 <context>
@@ -1144,7 +1161,7 @@
     <message>
         <location filename="../../model/call/CallModel.cpp" line="388"/>
         <source>call_error_server_timeout_toast</source>
-        <extracomment>&quot;Server tiemout&quot;</extracomment>
+        <extracomment>&quot;Server timeout&quot;</extracomment>
         <translation>Prodleva serveru</translation>
     </message>
 </context>
@@ -1925,7 +1942,7 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="45"/>
         <source>settings_contacts_carddav_popup_synchronization_error_message</source>
         <extracomment>&quot;Erreur de synchronisation!&quot;</extracomment>
-        <translation>Chyba synchronizace!</translation>
+        <translation>Chyba synchronizace: %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="62"/>
@@ -2179,6 +2196,11 @@
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Smazat</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="408"/>
+        <source>chat_message_send_again</source>
+        <translation>Znovu odeslat</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentCore</name>
@@ -2198,6 +2220,11 @@
         <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
         <source>info_popup_error_titile</source>
         <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="105"/>
+        <source>download_file_default_error</source>
+        <translation>Chyba při stahování souboru %1</translation>
     </message>
 </context>
 <context>
@@ -2254,6 +2281,36 @@ Error</extracomment>
 </context>
 <context>
     <name>ChatMessageContentModel</name>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="95"/>
+        <source>download_file_server_error</source>
+        <translation>Chyba při pokusu o stažení obsahu: %1</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="105"/>
+        <source>download_file_error_no_safe_file_path</source>
+        <translation>Nelze vytvořit bezpečné umístění souboru: %1</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="119"/>
+        <source>download_file_error_null_name</source>
+        <translation>Název obsahu je prázdný, nelze jej stáhnout!</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="127"/>
+        <source>download_file_error_unable_to_download</source>
+        <translation>Nelze stáhnout soubor položky %1</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="80"/>
+        <source>download_error_object_doesnt_exist</source>
+        <translation>Vnitřní chyba: objekt zprávy spojený s tímto obsahem již neexistuje!</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="114"/>
+        <source>download_file_error_file_transfer_unavailable</source>
+        <translation>Tento soubor již byl stažen a není už na serveru. Váš partner vám jej musí znovu poslat, pokud jej chcete získat</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageCore</name>
@@ -2494,6 +2551,26 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
         <translation>Probíhá vytváření chatu…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="46"/>
+        <source>info_popup_error_title</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="355"/>
+        <source>group_chat_error_no_participant</source>
+        <translation>Vyberte prosím alespoň jednoho účastníka</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="48"/>
+        <source>info_popup_chatroom_creation_failed</source>
+        <translation>Vytvoření chatovací místnosti se nezdařilo!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="42"/>
+        <source>loading_popup_chatroom_creation_pending_message</source>
+        <translation>Chatovací místnost se vytváří...</translation>
     </message>
 </context>
 <context>
@@ -3453,6 +3530,11 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <extracomment>&quot;Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1&quot;</extracomment>
         <translation>Nahrávání záznamů se nezdařilo. Soubory záznamů můžete sdílet přímo z následující složky: %1</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="148"/>
+        <source>settings_debug_qt_version_title</source>
+        <translation>Verze Qt</translation>
+    </message>
 </context>
 <context>
     <name>DecoratedTextField</name>
@@ -3801,6 +3883,11 @@ Expirace : %1</translation>
         <source>help_troubleshooting_title</source>
         <extracomment>&quot;Dépannage&quot;</extracomment>
         <translation>Řešení potíží</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="110"/>
+        <source>help_check_for_update_button_label</source>
+        <translation>Zkontrolovat aktualizace</translation>
     </message>
 </context>
 <context>
@@ -4337,9 +4424,14 @@ Expirace : %1</translation>
         <translation>Chyba v ověřovacím kódu</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="249"/>
-        <source>information_popup_error_title</source>
-        <translation>Chyba</translation>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
+        <source>oidc_connection_waiting_message</source>
+        <translation>Žádný token nenalezen</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
+        <source>cancel</source>
+        <translation>Zrušit</translation>
     </message>
 </context>
 <context>
@@ -5149,6 +5241,11 @@ Expirace : %1</translation>
         <source>conference_layout_audio_only</source>
         <extracomment>&quot;Audio uniquement&quot;</extracomment>
         <translation>Pouze zvuk</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="125"/>
+        <source>message_state_idle</source>
+        <translation>nečinný</translation>
     </message>
 </context>
 <context>

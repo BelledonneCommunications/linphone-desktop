@@ -35,7 +35,6 @@ RowLayout {
 				mutedStatus: microButton.checked
 				AccountProxy {
 					id: accounts
-					sourceModel: AppCpp.accounts
 				}
 				account: accounts.defaultAccount
 			}

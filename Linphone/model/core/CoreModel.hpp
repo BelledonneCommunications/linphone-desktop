@@ -61,6 +61,8 @@ public:
 	void start();
 	void setConfigPath(QString path);
 
+	void refreshOidcRemainingTime();
+
 	QString getFetchConfig(QString filePath, bool *error);
 	void useFetchConfig(QString filePath);
 	bool setFetchConfig(QString filePath);
@@ -77,6 +79,9 @@ public:
 	bool mEnd = false;
 	linphone::ConfiguringState mConfigStatus;
 	QString mConfigMessage;
+	// Used to get a chatroom created by user when trying to add
+	// one to the chat room list, so we can automatically select it
+	std::shared_ptr<linphone::ChatRoom> mChatRoomBeingCreated;
 
 	std::shared_ptr<linphone::Core> mCore;
 	std::shared_ptr<LoggerModel> mLogger;
@@ -93,6 +98,10 @@ signals:
 	void enabledLdapAddressBookSaved();
 	void magicSearchResultReceived(QString filter);
 	void messageReadInChatRoom(std::shared_ptr<linphone::ChatRoom> chatRoom);
+	void oidcRemainingTimeBeforeTimeoutChanged(int remainingTime);
+	void forceOidcTimeout();
+	void timeoutTimerStarted();
+	void timeoutTimerStopped();
 
 private:
 	QString mConfigPath;

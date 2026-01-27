@@ -101,6 +101,9 @@
 #include "tool/accessibility/AccessibilityHelper.hpp"
 #include "tool/accessibility/FocusHelper.hpp"
 #include "tool/accessibility/KeyboardShortcuts.hpp"
+#ifdef HAVE_CRASH_HANDLER
+#include "tool/crash_reporter/CrashReporter.hpp"
+#endif
 #include "tool/native/DesktopTools.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/EmojiProvider.hpp"
@@ -293,11 +296,21 @@ App::App(int &argc, char *argv[])
 	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
 	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
 	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
+	// CarshReporter must be call after app initialization like names.
+#ifdef HAVE_CRASH_HANDLER
+	CrashReporter::start();
+#else
+	lWarning() << "[Main] The application doesn't support the CrashReporter.";
+#endif
+
 	// If not OpenGL, createRender is never call.
 	QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
 	setWindowIcon(QIcon(Constants::WindowIconPath));
 	initFonts();
 	//-------------------
+	mOIDCRefreshTimer.setInterval(1000);
+	mOIDCRefreshTimer.setSingleShot(false);
+
 	mLinphoneThread = new Thread(this);
 
 	init();
@@ -376,9 +389,29 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::globalStateChanged,
 	    [this](const std::shared_ptr<linphone::Core> &core, linphone::GlobalState gstate, const std::string &message) {
-		    if (gstate == linphone::GlobalState::On) {
-			    mCoreModelConnection->invokeToCore([this] { setCoreStarted(true); });
-		    }
+		    mCoreModelConnection->invokeToCore([this, gstate] {
+			    setCoreStarted(gstate == linphone::GlobalState::On);
+			    if (gstate == linphone::GlobalState::Configuring) {
+				    if (mMainWindow) {
+					    QMetaObject::invokeMethod(mMainWindow, "openSSOPage", Qt::DirectConnection);
+				    } else {
+					    connect(
+					        this, &App::mainWindowChanged, this,
+					        [this] {
+						        mCoreModelConnection->invokeToModel([this] {
+							        auto gstate = CoreModel::getInstance()->getCore()->getGlobalState();
+							        if (gstate == linphone::GlobalState::Configuring)
+								        mCoreModelConnection->invokeToCore([this] {
+									        if (mMainWindow)
+										        QMetaObject::invokeMethod(mMainWindow, "openSSOPage",
+										                                  Qt::DirectConnection);
+								        });
+						        });
+					        },
+					        Qt::SingleShotConnection);
+				    }
+			    }
+		    });
 	    });
 	mCoreModelConnection->makeConnectToModel(&CoreModel::authenticationRequested, &App::onAuthenticationRequested);
 	// Config error message
@@ -386,7 +419,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	    &CoreModel::configuringStatus, [this](const std::shared_ptr<linphone::Core> &core,
 	                                          linphone::ConfiguringState status, const std::string &message) {
 		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		    if (status == linphone::ConfiguringState::Failed) {
+		    if (mIsRestarting && status == linphone::ConfiguringState::Failed) {
 			    mCoreModelConnection->invokeToCore([this, message]() {
 				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
 				    //: Error
@@ -403,16 +436,20 @@ void App::setSelf(QSharedPointer<App>(me)) {
 		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 		    if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Successful) {
 			    bool accountConnected = account && account->getState() == linphone::RegistrationState::Ok;
+			    // update settings if case config contains changes
+			    if (mSettings) mSettings->reloadSettings();
 			    mCoreModelConnection->invokeToCore([this, accountConnected]() {
 				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
 				    // There is an account added by a remote provisioning, force switching to main  page
 				    // because the account may not be connected already
-				    // if (accountConnected)
 				    if (mPossiblyLookForAddedAccount) {
 					    QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
 					                              Q_ARG(QVariant, accountConnected));
 				    }
 				    mPossiblyLookForAddedAccount = false;
+				    // setLocale(mSettings->getConfigLocale());
+				    // setAutoStart(mSettings->getAutoStart());
+				    // setQuitOnLastWindowClosed(mSettings->getExitOnClose());
 			    });
 		    }
 	    });
@@ -420,7 +457,28 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	// Synchronize state for because linphoneCore was ran before any connections.
 	mCoreModelConnection->invokeToModel([this]() {
 		auto state = CoreModel::getInstance()->getCore()->getGlobalState();
-		mCoreModelConnection->invokeToCore([this, state] { setCoreStarted(state == linphone::GlobalState::On); });
+		mCoreModelConnection->invokeToCore([this, state] {
+			setCoreStarted(state == linphone::GlobalState::On);
+			if (state == linphone::GlobalState::Configuring) {
+				if (mMainWindow) {
+					QMetaObject::invokeMethod(mMainWindow, "openSSOPage", Qt::DirectConnection);
+				} else {
+					connect(
+					    this, &App::mainWindowChanged, this,
+					    [this] {
+						    mCoreModelConnection->invokeToModel([this] {
+							    auto gstate = CoreModel::getInstance()->getCore()->getGlobalState();
+							    if (gstate == linphone::GlobalState::Configuring)
+								    mCoreModelConnection->invokeToCore([this] {
+									    if (mMainWindow)
+										    QMetaObject::invokeMethod(mMainWindow, "openSSOPage", Qt::DirectConnection);
+								    });
+						    });
+					    },
+					    Qt::SingleShotConnection);
+				}
+			}
+		});
 	});
 
 	mCoreModelConnection->makeConnectToModel(&CoreModel::unreadNotificationsChanged, [this] {
@@ -472,6 +530,29 @@ void App::setSelf(QSharedPointer<App>(me)) {
 		    });
 	    });
 
+	mCoreModelConnection->makeConnectToModel(&CoreModel::oidcRemainingTimeBeforeTimeoutChanged,
+	                                         [this](int remainingTime) {
+		                                         mCoreModelConnection->invokeToCore([this, remainingTime] {
+			                                         mRemainingTimeBeforeOidcTimeout = remainingTime;
+			                                         emit remainingTimeBeforeOidcTimeoutChanged();
+		                                         });
+	                                         });
+	mCoreModelConnection->makeConnectToCore(&App::lForceOidcTimeout, [this] {
+		qDebug() << "App: force oidc timeout";
+		mCoreModelConnection->invokeToModel([this] { emit CoreModel::getInstance()->forceOidcTimeout(); });
+	});
+	mCoreModelConnection->makeConnectToModel(&CoreModel::timeoutTimerStarted, [this]() {
+		qDebug() << "App: oidc timer started";
+		mCoreModelConnection->invokeToCore([this] { mOIDCRefreshTimer.start(); });
+	});
+	mCoreModelConnection->makeConnectToModel(&CoreModel::timeoutTimerStopped, [this]() {
+		qDebug() << "App: oidc timer stopped";
+		mCoreModelConnection->invokeToCore([this] { mOIDCRefreshTimer.stop(); });
+	});
+	connect(&mOIDCRefreshTimer, &QTimer::timeout, this, [this]() {
+		mCoreModelConnection->invokeToModel([this] { CoreModel::getInstance()->refreshOidcRemainingTime(); });
+	});
+
 	//---------------------------------------------------------------------------------------------
 	mCliModelConnection = SafeConnection<App, CliModel>::create(me, CliModel::getInstance());
 	mCliModelConnection->makeConnectToCore(&App::receivedMessage, [this](int, const QByteArray &byteArray) {
@@ -494,7 +575,7 @@ App *App::getInstance() {
 }
 
 Thread *App::getLinphoneThread() {
-	return App::getInstance()->mLinphoneThread;
+	return App::getInstance() ? App::getInstance()->mLinphoneThread : nullptr;
 }
 
 Notifier *App::getNotifier() const {
@@ -565,7 +646,7 @@ void App::initCore() {
 		    lDebug() << log().arg("Creating SettingsModel");
 		    SettingsModel::create();
 		    lDebug() << log().arg("Creating SettingsCore");
-		    if (!settings) settings = SettingsCore::create();
+		    settings = SettingsCore::create();
 		    lDebug() << log().arg("Checking downloaded codecs updates");
 		    Utils::checkDownloadedCodecsUpdates();
 		    lDebug() << log().arg("Setting Video Codec Priority Policy");
@@ -622,45 +703,55 @@ void App::initCore() {
 			    mNotifier = new Notifier(mEngine);
 			    mEngine->setObjectOwnership(settings.get(), QQmlEngine::CppOwnership);
 			    mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
-			    if (!mAccountList) setAccountList(AccountList::create());
-			    else {
-				    mAccountList->setInitialized(false);
-				    mAccountList->lUpdate(true);
-			    }
-			    // Update global unread Notifications when an account updates his unread Notifications
-			    connect(mAccountList.get(), &AccountList::unreadNotificationsChanged, this, [this]() {
-				    lDebug() << "unreadNotificationsChanged of AccountList";
-				    mCoreModelConnection->invokeToModel([this] {
-					    int n = mEventCountNotifier->getCurrentEventCount();
-					    mCoreModelConnection->invokeToCore([this, n] { mEventCountNotifier->notifyEventCount(n); });
-				    });
-			    });
-			    if (!mCallList) setCallList(CallList::create());
-			    else mCallList->lUpdate();
-			    if (!mSettings) {
-				    mSettings = settings;
-				    setLocale(settings->getConfigLocale());
-				    setAutoStart(settings->getAutoStart());
-				    setQuitOnLastWindowClosed(settings->getExitOnClose());
-				    mEngine->setObjectOwnership(mSettings.get(), QQmlEngine::CppOwnership);
 
-				    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
-				            Qt::UniqueConnection);
-				    QObject::connect(mSettings.get(), &SettingsCore::autoStartChanged, [this]() {
-					    mustBeInMainThread(log().arg(Q_FUNC_INFO));
-					    setAutoStart(mSettings->getAutoStart());
-				    });
-				    QObject::connect(mSettings.get(), &SettingsCore::configLocaleChanged, [this]() {
-					    mustBeInMainThread(log().arg(Q_FUNC_INFO));
-					    if (mSettings) setLocale(mSettings->getConfigLocale());
-				    });
-				    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
-				            Qt::UniqueConnection);
-			    } else {
-				    setLocale(settings->getConfigLocale());
-				    setAutoStart(settings->getAutoStart());
-				    setQuitOnLastWindowClosed(settings->getExitOnClose());
-			    }
+			    connect(this, &App::coreStartedChanged, this, [this] {
+				    if (mCoreStarted) {
+					    if (!mAccountList) setAccountList(AccountList::create());
+					    else {
+						    mAccountList->setInitialized(false);
+						    mAccountList->lUpdate(true);
+					    }
+					    // Update global unread Notifications when an account updates his unread Notifications
+					    connect(mAccountList.get(), &AccountList::unreadNotificationsChanged, this, [this]() {
+						    lDebug() << "unreadNotificationsChanged of AccountList";
+						    mCoreModelConnection->invokeToModel([this] {
+							    int n = mEventCountNotifier->getCurrentEventCount();
+							    mCoreModelConnection->invokeToCore(
+							        [this, n] { mEventCountNotifier->notifyEventCount(n); });
+						    });
+					    });
+					    if (!mCallList) setCallList(CallList::create());
+					    else mCallList->lUpdate();
+					    if (!mChatList) setChatList(ChatList::create());
+					    else mChatList->lUpdate();
+					    disconnect(this, &App::coreStartedChanged, this, nullptr);
+				    }
+			    });
+
+			    // if (!mSettings) {
+			    mSettings = settings;
+			    setLocale(settings->getConfigLocale());
+			    setAutoStart(settings->getAutoStart());
+			    setQuitOnLastWindowClosed(settings->getExitOnClose());
+			    mEngine->setObjectOwnership(mSettings.get(), QQmlEngine::CppOwnership);
+
+			    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
+			            Qt::UniqueConnection);
+			    QObject::connect(mSettings.get(), &SettingsCore::autoStartChanged, [this]() {
+				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+				    setAutoStart(mSettings->getAutoStart());
+			    });
+			    QObject::connect(mSettings.get(), &SettingsCore::configLocaleChanged, [this]() {
+				    mustBeInMainThread(log().arg(Q_FUNC_INFO));
+				    if (mSettings) setLocale(mSettings->getConfigLocale());
+			    });
+			    connect(mSettings.get(), &SettingsCore::exitOnCloseChanged, this, &App::onExitOnCloseChanged,
+			            Qt::UniqueConnection);
+			    // } else {
+			    //     setLocale(settings->getConfigLocale());
+			    //     setAutoStart(settings->getAutoStart());
+			    //     setQuitOnLastWindowClosed(settings->getExitOnClose());
+			    // }
 			    const QUrl url("qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml");
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,
@@ -703,10 +794,20 @@ void App::initCore() {
 							        });
 						        } else {
 							        mPossiblyLookForAddedAccount = true;
+							        if (mAccountList && mAccountList->getCount() > 0) {
+								        auto defaultConnected =
+								            mAccountList->getDefaultAccountCore() &&
+								            mAccountList->getDefaultAccountCore()->getRegistrationState() ==
+								                LinphoneEnums::RegistrationState::Ok;
+								        QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
+								                                  Q_ARG(QVariant, defaultConnected));
+							        }
 						        }
 					        }
 					        checkForUpdate();
 					        mIsRestarting = false;
+					        window->show();
+					        window->requestActivate();
 
 					        //---------------------------------------------------------------------------------------------
 					        lDebug() << log().arg("Creating KeyboardShortcuts");
@@ -823,7 +924,6 @@ void App::initCppInterfaces() {
 	qmlRegisterType<CallHistoryProxy>(Constants::MainQmlUri, 1, 0, "CallHistoryProxy");
 	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
 	qmlRegisterType<CallProxy>(Constants::MainQmlUri, 1, 0, "CallProxy");
-	qmlRegisterType<ChatList>(Constants::MainQmlUri, 1, 0, "ChatList");
 	qmlRegisterType<ChatProxy>(Constants::MainQmlUri, 1, 0, "ChatProxy");
 	qmlRegisterType<ChatGui>(Constants::MainQmlUri, 1, 0, "ChatGui");
 	qmlRegisterType<EventLogGui>(Constants::MainQmlUri, 1, 0, "EventLogGui");
@@ -946,8 +1046,14 @@ void App::restart() {
 		CoreModel::getInstance()->getCore()->stop();
 		mCoreModelConnection->invokeToCore([this]() {
 			mIsRestarting = true;
+			if (mAccountList) mAccountList->resetData();
+			if (mCallList) mCallList->resetData();
+			if (mCallHistoryList) mCallHistoryList->resetData();
+			if (mChatList) mChatList->resetData();
+			if (mConferenceInfoList) mConferenceInfoList->resetData();
 			closeCallsWindow();
 			setMainWindow(nullptr);
+			setCoreStarted(false);
 			mEngine->clearComponentCache();
 			mEngine->clearSingletons();
 			delete mEngine;
@@ -1060,7 +1166,7 @@ bool App::notify(QObject *receiver, QEvent *event) {
 	}
 	if (event->type() == QEvent::MouseButtonPress) {
 		auto window = findParentWindow(receiver);
-		if (getMainWindow() == window) {
+		if (getMainWindow() == window && mAccountList) {
 			auto defaultAccountCore = mAccountList->getDefaultAccountCore();
 			if (defaultAccountCore && defaultAccountCore->getUnreadCallNotifications() > 0) {
 				emit defaultAccountCore->lResetMissedCalls();
@@ -1070,27 +1176,30 @@ bool App::notify(QObject *receiver, QEvent *event) {
 	return done;
 }
 
+void App::handleAccountActivity(QSharedPointer<AccountCore> accountCore) {
+	if (!accountCore) return;
+	auto accountPresence = accountCore->getPresence();
+	if ((mMainWindow && mMainWindow->isActive() || (mCallsWindow && mCallsWindow->isActive())) &&
+	    accountPresence == LinphoneEnums::Presence::Away) {
+		accountCore->lSetPresence(LinphoneEnums::Presence::Online, false);
+	} else if (((!mMainWindow || !mMainWindow->isActive() || !mMainWindow->isVisible()) &&
+	            (!mCallsWindow || !mCallsWindow->isActive() || !mCallsWindow->isVisible())) &&
+	           accountPresence == LinphoneEnums::Presence::Online) {
+		accountCore->lSetPresence(LinphoneEnums::Presence::Away, false);
+	}
+}
+
 void App::handleAppActivity() {
-	auto handle = [this](QSharedPointer<AccountCore> accountCore) {
-		if (!accountCore) return;
-		auto accountPresence = accountCore->getPresence();
-		if ((mMainWindow && mMainWindow->isActive() || (mCallsWindow && mCallsWindow->isActive())) &&
-		    accountPresence == LinphoneEnums::Presence::Away)
-			accountCore->lSetPresence(LinphoneEnums::Presence::Online);
-		if (((!mMainWindow || !mMainWindow->isActive()) && (!mCallsWindow || !mCallsWindow->isActive())) &&
-		    accountPresence == LinphoneEnums::Presence::Online)
-			accountCore->lSetPresence(LinphoneEnums::Presence::Away);
-	};
 	if (mAccountList) {
 		for (auto &account : mAccountList->getSharedList<AccountCore>())
-			handle(account);
+			handleAccountActivity(account);
 	} else {
 		connect(
 		    this, &App::accountsChanged, this,
-		    [this, &handle] {
+		    [this] {
 			    if (mAccountList) {
 				    for (auto &account : mAccountList->getSharedList<AccountCore>())
-					    handle(account);
+					    handleAccountActivity(account);
 			    }
 		    },
 		    Qt::SingleShotConnection);
@@ -1192,6 +1301,41 @@ AccountList *App::getAccounts() const {
 	return mAccountList.get();
 }
 
+QSharedPointer<ConferenceInfoList> App::getConferenceInfoList() const {
+	return mConferenceInfoList;
+}
+void App::setConferenceInfoList(QSharedPointer<ConferenceInfoList> data) {
+	if (mConferenceInfoList != data) {
+		mConferenceInfoList = data;
+		emit conferenceInfosChanged();
+	}
+}
+
+QSharedPointer<CallHistoryList> App::getCallHistoryList() const {
+	return mCallHistoryList;
+}
+void App::setCallHistoryList(QSharedPointer<CallHistoryList> data) {
+	if (mCallHistoryList != data) {
+		mCallHistoryList = data;
+		emit callHistoryChanged();
+	}
+}
+
+QSharedPointer<ChatList> App::getChatList() const {
+	return mChatList;
+}
+
+ChatList *App::getChats() const {
+	return mChatList.get();
+}
+
+void App::setChatList(QSharedPointer<ChatList> data) {
+	if (mChatList != data) {
+		mChatList = data;
+		emit chatsChanged();
+	}
+}
+
 QSharedPointer<CallList> App::getCallList() const {
 	return mCallList;
 }
@@ -1221,12 +1365,24 @@ void App::onAuthenticationRequested(const std::shared_ptr<linphone::Core> &core,
                                     const std::shared_ptr<linphone::AuthInfo> &authInfo,
                                     linphone::AuthMethod method) {
 	bool authInfoIsInAccounts = false;
-	for (auto &account : core->getAccountList()) {
-		auto accountAuthInfo = account->findAuthInfo();
-		if (authInfo && accountAuthInfo && authInfo->isEqualButAlgorithms(accountAuthInfo)) {
-			authInfoIsInAccounts = true;
-			if (account->getState() == linphone::RegistrationState::Ok) return;
-			break;
+	if (authInfo) {
+		for (auto &account : core->getAccountList()) {
+			if (!account) continue;
+			auto accountAuthInfo = account->findAuthInfo();
+			if (accountAuthInfo) {
+				if (authInfo->isEqualButAlgorithms(accountAuthInfo)) {
+					authInfoIsInAccounts = true;
+					break;
+				}
+			} else {
+				auto identityAddress = account->getParams()->getIdentityAddress();
+				if (!identityAddress) continue;
+				if (authInfo->getUsername() == identityAddress->getUsername() &&
+				    authInfo->getDomain() == identityAddress->getDomain()) {
+					authInfoIsInAccounts = true;
+					break;
+				}
+			}
 		}
 	}
 	if (!authInfoIsInAccounts) return;
@@ -1374,12 +1530,12 @@ bool App::event(QEvent *event) {
 	} else if (event->type() == QEvent::ApplicationActivate) {
 		for (int i = 0; i < getAccountList()->rowCount(); ++i) {
 			auto accountCore = getAccountList()->getAt<AccountCore>(i);
-			emit accountCore->lSetPresence(LinphoneEnums::Presence::Online, false, false);
+			handleAccountActivity(accountCore);
 		}
 	} else if (event->type() == QEvent::ApplicationDeactivate) {
 		for (int i = 0; i < getAccountList()->rowCount(); ++i) {
 			auto accountCore = getAccountList()->getAt<AccountCore>(i);
-			emit accountCore->lSetPresence(LinphoneEnums::Presence::Away, false, false);
+			handleAccountActivity(accountCore);
 		}
 	}
 
@@ -1488,10 +1644,15 @@ void App::setMacOSDockActions() {
 void App::setLocale(QString configLocale) {
 	if (!configLocale.isEmpty()) mLocale = QLocale(configLocale);
 	else mLocale = QLocale(QLocale::system().name());
+	emit localeChanged();
 }
 
 QLocale App::getLocale() {
 	return mLocale;
+}
+
+QString App::getLocaleAsString() {
+	return mLocale.name();
 }
 
 //-----------------------------------------------------------

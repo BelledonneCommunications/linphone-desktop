@@ -304,6 +304,11 @@
         <extracomment>&quot;No information&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
+        <source>copied</source>
+        <translation>Скопированный</translation>
+    </message>
 </context>
 <context>
     <name>AccountSettingsPage</name>
@@ -362,23 +367,6 @@
         <translation>Настройки учётной записи</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="32"/>
-        <source>info_popup_invalid_registrar_uri_message</source>
-        <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="34"/>
-        <source>info_popup_invalid_outbound_proxy_message</source>
-        <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="35"/>
-        <source>info_popup_error_title</source>
-        <translation>Ошибка</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="45"/>
         <source>information_popup_success_title</source>
         <translation>Успешно</translation>
@@ -405,12 +393,6 @@
         <source>account_settings_voicemail_uri_title</source>
         <extracomment>&quot;URI de messagerie vocale&quot;</extracomment>
         <translation>URI голосовой почты</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="120"/>
-        <source>account_settings_transport_title</source>
-        <extracomment>&quot;Transport&quot;</extracomment>
-        <translation>Транспорт</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="127"/>
@@ -892,31 +874,6 @@
         <source>settings_call_forward_address_cannot_be_empty</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="45"/>
-        <source>settings_call_forward_address_timeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
-        <source>settings_call_forward_address_progress_disabling</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
-        <source>settings_call_forward_address_progress_enabling</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
-        <source>settings_call_forward_activation_success</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
-        <source>settings_call_forward_deactivation_success</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CallHistoryLayout</name>
@@ -1139,8 +1096,8 @@
     <message>
         <location filename="../../model/call/CallModel.cpp" line="388"/>
         <source>call_error_server_timeout_toast</source>
-        <extracomment>&quot;Server tiemout&quot;</extracomment>
-        <translation>Тайм-аут сервера</translation>
+        <extracomment>&quot;Server timeout&quot;</extracomment>
+        <translation type="unfinished">Тайм-аут сервера</translation>
     </message>
 </context>
 <context>
@@ -1920,7 +1877,7 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="45"/>
         <source>settings_contacts_carddav_popup_synchronization_error_message</source>
         <extracomment>&quot;Erreur de synchronisation!&quot;</extracomment>
-        <translation>Ошибка синхронизации!</translation>
+        <translation type="unfinished">Ошибка синхронизации!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="62"/>
@@ -2487,6 +2444,11 @@ Error</extracomment>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="46"/>
+        <source>info_popup_error_title</source>
+        <translation>Ошибка</translation>
     </message>
 </context>
 <context>
@@ -4328,9 +4290,9 @@ Error</extracomment>
         <translation>Ошибка в коде проверки</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="249"/>
-        <source>information_popup_error_title</source>
-        <translation>Ошибка</translation>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
+        <source>cancel</source>
+        <translation>Отмена</translation>
     </message>
 </context>
 <context>
@@ -6682,7 +6644,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../tool/Utils.cpp" line="926"/>
         <source>Italy</source>
-        <translation>Италия</translation>
+        <translation type="unfinished">Италия</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="929"/>

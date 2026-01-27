@@ -31,14 +31,7 @@ class PayloadTypeProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
 
 public:
-	enum PayloadTypeProxyFiltering {
-		All = 0,
-		Audio = 2,
-		Video = 4,
-		Text = 8,
-		Downloadable = 16,
-		NotDownloadable = 32
-	};
+	enum PayloadTypeProxyFiltering { All = 0, Audio = 2, Video = 4, Text = 8, Downloadable = 16, NotDownloadable = 32 };
 	Q_ENUMS(PayloadTypeProxyFiltering)
 
 	DECLARE_SORTFILTER_CLASS()

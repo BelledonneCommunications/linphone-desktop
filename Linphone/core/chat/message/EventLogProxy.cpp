@@ -57,6 +57,7 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 			int proxyIndex = mapFromSource(newEventLogList->index(i, 0)).row();
 			emit eventInsertedByUser(proxyIndex);
 		});
+		connect(newEventLogList, &EventLogList::modelUpdated, this, &EventLogProxy::modelUpdated);
 	}
 	QSortFilterProxyModel::setSourceModel(model);
 }
@@ -148,7 +149,7 @@ void EventLogProxy::setDisplayItemsStep(int step) {
 }
 
 void EventLogProxy::loadUntil(int index) {
-	if (mMaxDisplayItems < index) setMaxDisplayItems(index + mDisplayItemsStep);
+	if (mMaxDisplayItems <= index) setMaxDisplayItems(index + mDisplayItemsStep);
 }
 
 int EventLogProxy::findFirstUnreadIndex() {
@@ -157,7 +158,7 @@ int EventLogProxy::findFirstUnreadIndex() {
 		auto listIndex = eventLogList->findFirstUnreadIndex();
 		if (listIndex != -1) {
 			listIndex = mapFromSource(eventLogList->index(listIndex, 0)).row();
-			if (mMaxDisplayItems <= listIndex) setMaxDisplayItems(listIndex + mDisplayItemsStep);
+			loadUntil(listIndex);
 			return listIndex;
 		} else {
 			return 0;

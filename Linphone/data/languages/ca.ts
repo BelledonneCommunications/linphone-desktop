@@ -362,23 +362,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="32"/>
-        <source>info_popup_invalid_registrar_uri_message</source>
-        <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="34"/>
-        <source>info_popup_invalid_outbound_proxy_message</source>
-        <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="35"/>
-        <source>info_popup_error_title</source>
-        <translation>Error</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="45"/>
         <source>information_popup_success_title</source>
         <translation type="unfinished"></translation>
@@ -404,12 +387,6 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="95"/>
         <source>account_settings_voicemail_uri_title</source>
         <extracomment>&quot;URI de messagerie vocale&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="120"/>
-        <source>account_settings_transport_title</source>
-        <extracomment>&quot;Transport&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -652,29 +629,29 @@
         <location filename="../../core/App.cpp" line="654"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>no accessible</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="926"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Programari de videotrucada SIP lliure i de codi obert.</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="928"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Enviar una comanda a l&apos;aplicació via l&apos;intèrpret de comandes</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="932"/>
         <source>command_line_option_show_help</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra&apos;m l&apos;ajut</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="937"/>
         <source>command_line_option_show_app_version</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra la versió de l&apos;aplicatiu</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="945"/>
@@ -725,6 +702,36 @@
         <location filename="../../core/App.cpp" line="1448"/>
         <source>mark_all_read_action</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="447"/>
+        <source>info_popup_error_checking_update</source>
+        <translation>Ha succeït un error mentre es mirava d&apos;actualitzar. Si et plau, prova-ho més tard o posa&apos;t en contacte amb l&apos;equip de suport.</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="454"/>
+        <source>info_popup_new_version_download_label</source>
+        <translation>Descarrega&apos;l!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="457"/>
+        <source>info_popup_new_version_available_title</source>
+        <translation>Nova versió a l&apos;abast!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="459"/>
+        <source>info_popup_new_version_available_message</source>
+        <translation>Una nova versió del Linphone (1%) és accessible a l&apos;1%</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="465"/>
+        <source>info_popup_version_up_to_date_title</source>
+        <translation>Actualitzat</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="467"/>
+        <source>info_popup_version_up_to_date_message</source>
+        <translation>Actualitzat, disposes de la darrera versió</translation>
     </message>
 </context>
 <context>
@@ -889,31 +896,6 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="51"/>
         <source>settings_call_forward_address_cannot_be_empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="45"/>
-        <source>settings_call_forward_address_timeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
-        <source>settings_call_forward_address_progress_disabling</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
-        <source>settings_call_forward_address_progress_enabling</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
-        <source>settings_call_forward_activation_success</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="33"/>
-        <source>settings_call_forward_deactivation_success</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1138,7 +1120,7 @@
     <message>
         <location filename="../../model/call/CallModel.cpp" line="388"/>
         <source>call_error_server_timeout_toast</source>
-        <extracomment>&quot;Server tiemout&quot;</extracomment>
+        <extracomment>&quot;Server timeout&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2483,6 +2465,11 @@ Error</extracomment>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="46"/>
+        <source>info_popup_error_title</source>
+        <translation>Error</translation>
     </message>
 </context>
 <context>
@@ -4322,11 +4309,6 @@ Error</extracomment>
         <source>assistant_register_error_code</source>
         <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="249"/>
-        <source>information_popup_error_title</source>
-        <translation>Error</translation>
     </message>
 </context>
 <context>

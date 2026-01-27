@@ -27,7 +27,11 @@
 DEFINE_ABSTRACT_OBJECT(ConferenceInfoProxy)
 
 ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
-	mList = ConferenceInfoList::create();
+	if (!App::getInstance()->getConferenceInfoList()) {
+		mList = ConferenceInfoList::create();
+		App::getInstance()->setConferenceInfoList(mList);
+	}
+	mList = App::getInstance()->getConferenceInfoList();
 	setSourceModels(new SortFilterList(mList.get(), Qt::AscendingOrder));
 	connect(
 	    mList.get(), &ConferenceInfoList::haveCurrentDateChanged, this,

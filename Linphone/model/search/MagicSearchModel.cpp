@@ -155,5 +155,5 @@ void MagicSearchModel::updateFriendListWithFriend(const std::shared_ptr<linphone
 	}
 	qInfo() << log().arg("Adding Friend:") << linphoneFriend.get();
 	if (friendList) friendList->addFriend(linphoneFriend);
-	emit CoreModel::getInstance() -> friendCreated(linphoneFriend);
+	emit CoreModel::getInstance()->friendCreated(linphoneFriend);
 }

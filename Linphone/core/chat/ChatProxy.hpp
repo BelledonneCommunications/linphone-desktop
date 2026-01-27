@@ -30,6 +30,7 @@
 
 class ChatProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
+	Q_PROPERTY(QAbstractItemModel *model WRITE setSourceModel NOTIFY modelChanged)
 
 public:
 	ChatProxy(QObject *parent = Q_NULLPTR);
@@ -41,6 +42,10 @@ public:
 
 	Q_INVOKABLE int findChatIndex(ChatGui *chatGui);
 	Q_INVOKABLE bool addChatInList(ChatGui *chatGui);
+
+signals:
+	void chatAdded(ChatGui *chat);
+	void modelChanged();
 
 protected:
 	QSharedPointer<ChatList> mList;

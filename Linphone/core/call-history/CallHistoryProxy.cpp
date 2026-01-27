@@ -27,6 +27,11 @@ DEFINE_ABSTRACT_OBJECT(CallHistoryProxy)
 
 CallHistoryProxy::CallHistoryProxy(QObject *parent) : LimitProxy(parent) {
 	mHistoryList = CallHistoryList::create();
+	if (!App::getInstance()->getCallHistoryList()) {
+		mHistoryList = CallHistoryList::create();
+		App::getInstance()->setCallHistoryList(mHistoryList);
+	}
+	mHistoryList = App::getInstance()->getCallHistoryList();
 	connect(mHistoryList.get(), &CallHistoryList::listAboutToBeReset, this, &CallHistoryProxy::listAboutToBeReset);
 	setSourceModels(new SortFilterList(mHistoryList.get(), Qt::DescendingOrder));
 	connect(App::getInstance(), &App::currentDateChanged, this, [this] { emit mHistoryList->lUpdate(); });
@@ -63,8 +68,5 @@ bool CallHistoryProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 }
 
 bool CallHistoryProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
-	auto l = getItemAtSource<CallHistoryList, CallHistoryCore>(sourceLeft.row());
-	auto r = getItemAtSource<CallHistoryList, CallHistoryCore>(sourceRight.row());
-
-	return l->mDate < r->mDate;
+	return true;
 }

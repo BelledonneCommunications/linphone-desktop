@@ -40,7 +40,7 @@ public:
 	MagicSearchList(QObject *parent = Q_NULLPTR);
 	~MagicSearchList();
 
-	void setSelf(QSharedPointer<MagicSearchList> me);
+	void setSelf(const QSharedPointer<MagicSearchList> &me);
 	void connectContact(FriendCore *data);
 	void setSearch(const QString &search);
 	void setResults(const QList<QSharedPointer<FriendCore>> &contacts);

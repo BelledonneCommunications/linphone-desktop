@@ -61,9 +61,10 @@ AbstractMainPage {
 	}
 
 	onSelectedConferenceChanged: {
-		// While a conference is being edited, we need to stay on the edit page
-		if (rightPanelStackView.currentItem && (rightPanelStackView.currentItem.objectName === "editConf")) return
+		// While a conference is being created or edited, we need to stay on the edition page
 		rightPanelStackView.clear()
+		if ((rightPanelStackView.currentItem && rightPanelStackView.currentItem.objectName === "editConf")
+				|| (leftPanelStackView.currentItem && leftPanelStackView.currentItem.objectName === "createConf")) return
 		if (selectedConference && selectedConference.core && selectedConference.core.haveModel) {
 			rightPanelStackView.push(meetingDetail, Control.StackView.Immediate)
 		}
@@ -226,6 +227,8 @@ AbstractMainPage {
 					Layout.topMargin: Utils.getSizeWithScreenRatio(38 - 24)
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					focusPolicy: Qt.ClickFocus
+					focus: true
 
 					searchBarText: searchBar.text
 
@@ -496,7 +499,8 @@ AbstractMainPage {
 						}
 					}
 					Connections {
-						target: conferenceEdit.conferenceInfoGui.core
+						enabled: conferenceEdit.conferenceInfoGui
+						target: conferenceEdit.conferenceInfoGui ? conferenceEdit.conferenceInfoGui.core : null
 						ignoreUnknownSignals: true
 						function onSaveFailed() {
 							UtilsCpp.getMainWindow().closeLoadingPopup()

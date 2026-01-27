@@ -20,7 +20,7 @@ AbstractSettingsMenu {
         {title: qsTr("settings_account_title"), layout: "AccountSettingsParametersLayout", model: account}
 	]
 	Connections {
-		target: account.core
+		target: account ? account.core : null
 		function onRemoved() { accountRemoved() }
 	}
 	onGoBackRequested: if (!account.core.isSaved) {

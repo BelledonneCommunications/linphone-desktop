@@ -15,6 +15,7 @@ ListView {
     property SearchBar searchBar
     property bool loading: false
     property string searchText: searchBar?.text
+    property alias chatProxy: chatProxy
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
 
     property ChatGui currentChatGui: model.getAt(currentIndex) || null
@@ -38,9 +39,6 @@ ListView {
 
     model: ChatProxy {
         id: chatProxy
-        Component.onCompleted: {
-            loading = true
-        }
         filterText: mainItem.searchText
         onFilterTextChanged: {
             chatToSelectLater = currentChatGui
@@ -50,6 +48,19 @@ ListView {
         }
         onModelReset: {
             loading = false
+            if (mainItem.chatToSelectLater) {
+                selectChat(mainItem.chatToSelectLater)
+                mainItem.chatToSelectLater = null
+            }
+            else if (mainItem.chatToSelect) {
+                selectChat(mainItem.chatToSelect)
+                mainItem.chatToSelect = null
+            } else {
+                selectChat(mainItem.currentChatGui)
+            }
+        }
+        onChatAdded: (chat) => {
+            mainItem.chatToSelect = chat
         }
         onRowsRemoved: {
             var index = mainItem.currentIndex
@@ -76,7 +87,9 @@ ListView {
 
     function selectChat(chatGui, force) {
         var index = chatProxy.findChatIndex(chatGui)
-        // force adding chat to list if not in list for now
+        // force adding chat to list if it already exists 
+        // but has not been added to the list yet because 
+        // it is empty and hide_empty_chatrooms is set
         if (index === -1 && force === true && chatGui) {
             if (chatProxy.addChatInList(chatGui)) {
                 var index = chatProxy.findChatIndex(chatGui)
@@ -85,7 +98,6 @@ ListView {
         mainItem.currentIndex = index
     }
 
-    Component.onCompleted: cacheBuffer = Math.max(contentHeight, 0) //contentHeight>0 ? contentHeight : 0// cache all items
     // remove binding loop
     onContentHeightChanged: Qt.callLater(function () {
         if (mainItem)
@@ -264,7 +276,8 @@ ListView {
                     Item{Layout.fillWidth: true}
                     Text {
                         color: DefaultStyle.main2_500_main
-                        text: modelData ? UtilsCpp.formatDate(modelData.core.lastUpdatedTime, true, false) : ""
+                        property string format: modelData && UtilsCpp.isCurrentYear(modelData.core.lastUpdatedTime) ? "dd/MM" : "dd/MM/yy"
+                        text: modelData ? UtilsCpp.formatDate(modelData.core.lastUpdatedTime, true, false, format) : ""
                         font {
                             pixelSize: Typography.p3.pixelSize
                             weight: Typography.p3.weight

@@ -145,13 +145,21 @@ public:
 	static constexpr char PathTools[] = "/tools/";
 	static constexpr char PathLogs[] = "/logs/";
 	static constexpr char PathVCards[] = "/vcards/";
+	static constexpr char PathMetrics[] = "/metrics/";
 #ifdef APPLE
 	static constexpr char PathPlugins[] = "/Plugins/";
 #else
 	static constexpr char PathPlugins[] = "/plugins/";
 #endif
 	static constexpr char PathPluginsApp[] = "app/";
+	static constexpr char PathBin[] = "/bin/";
+	static constexpr char PathSounds[] = "/sounds/linphone";
 	static constexpr char PathUserCertificates[] = "/usr-crt/";
+#ifdef HAVE_CRASH_HANDLER
+	static constexpr char PathCrashpad[] = "/crashpad/";
+	static constexpr char PathCrashpadHandler[] = CRASHPAD_EXECUTABLE_NAME;
+	static constexpr char BugsplatUrl[] = "https://Linphone.bugsplat.com/post/bp/crash/crashpad.php";
+#endif
 
 	static constexpr char PathCallHistoryList[] = "/call-history.db";
 	static constexpr char PathConfig[] = "/linphonerc";

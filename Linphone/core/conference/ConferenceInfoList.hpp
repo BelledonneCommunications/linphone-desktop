@@ -40,6 +40,9 @@ public:
 
 	void setSelf(QSharedPointer<ConferenceInfoList> me);
 	void resetData(QList<QSharedPointer<ConferenceInfoCore>> data);
+	void resetData() override {
+		ListProxy::resetData();
+	}
 
 	void addConference(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
 

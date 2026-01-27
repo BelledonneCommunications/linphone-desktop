@@ -43,7 +43,7 @@ public:
 	                                              const std::shared_ptr<linphone::PayloadType> &payloadType);
 
 	PayloadTypeCore(Family family, const std::shared_ptr<linphone::PayloadType> &payloadType);
-	PayloadTypeCore() {};
+	PayloadTypeCore(){};
 	~PayloadTypeCore();
 
 	void setSelf(QSharedPointer<PayloadTypeCore> me);

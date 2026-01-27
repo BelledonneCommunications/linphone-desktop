@@ -25,6 +25,9 @@
 #include "model/tool/ToolModel.hpp"
 // #include "model/tool/VfsUtils.hpp"
 #include "tool/Utils.hpp"
+#ifdef HAVE_CRASH_HANDLER
+#include "tool/crash_reporter/CrashReporter.hpp"
+#endif
 
 // =============================================================================
 
@@ -70,10 +73,21 @@ SettingsModel::SettingsModel() {
 	    CoreModel::getInstance().get(), &CoreModel::defaultAccountChanged, this,
 	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> account) {
 		    mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-		    setDisableMeetingsFeature(account && !account->getParams()->getAudioVideoConferenceFactoryAddress());
+		    if (!getDisableMeetingsFeature() && account &&
+		        !account->getParams()->getAudioVideoConferenceFactoryAddress())
+			    setDisableMeetingsFeature(true);
+		    else if (getDisableMeetingsFeature() && account &&
+		             account->getParams()->getAudioVideoConferenceFactoryAddress())
+			    setDisableMeetingsFeature(false);
 	    });
 	auto defaultAccount = core->getDefaultAccount();
-	setDisableMeetingsFeature(defaultAccount && !defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress());
+	if (!getDisableMeetingsFeature() && defaultAccount &&
+	    !defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress())
+		setDisableMeetingsFeature(true);
+	else if (getDisableMeetingsFeature() && defaultAccount &&
+	         defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress())
+		setDisableMeetingsFeature(false);
+
 	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo
 	// calibrations in call.
 	QObject::connect(CoreModel::getInstance().get(), &CoreModel::firstCallStarted, this,
@@ -242,10 +256,9 @@ float SettingsModel::getMicVolume() {
 	} else {
 		auto call = CoreModel::getInstance()->getCore()->getCurrentCall();
 		if (call) {
-			v = call->getRecordVolume();
+			v = static_cast<float>(pow(10.0, call->getRecordVolume() / 10.0));
 		}
 	}
-
 	emit micVolumeChanged(v);
 	return v;
 }
@@ -306,8 +319,6 @@ QVariantList SettingsModel::getCaptureDevices() const {
 	for (const auto &device : core->getExtendedAudioDevices()) {
 		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityRecord)) {
 			list << ToolModel::createVariant(device);
-		} else if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityAll)) {
-			list << ToolModel::createVariant(device);
 		}
 	}
 	return list;
@@ -320,8 +331,6 @@ QVariantList SettingsModel::getPlaybackDevices() const {
 
 	for (const auto &device : core->getExtendedAudioDevices()) {
 		if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityPlay)) {
-			list << ToolModel::createVariant(device);
-		} else if (device->hasCapability(linphone::AudioDevice::Capabilities::CapabilityAll)) {
 			list << ToolModel::createVariant(device);
 		}
 	}
@@ -620,14 +629,30 @@ void SettingsModel::setFullLogsEnabled(bool status) {
 	emit fullLogsEnabledChanged(status);
 }
 
+bool SettingsModel::getCrashReporterEnabled() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return getCrashReporterEnabled(mConfig);
+}
+
+void SettingsModel::setCrashReporterEnabled(bool status) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mConfig->setInt(AppSection, "send_logs_to_crashlytics", status);
+#ifdef HAVE_CRASH_HANDLER
+	CrashReporter::enable(status);
+#endif
+	emit crashReporterEnabledChanged(status);
+}
+
 bool SettingsModel::getLogsEnabled(const shared_ptr<linphone::Config> &config) {
-	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 	return config ? config->getInt(UiSection, "logs_enabled", false) : true;
 }
 
 bool SettingsModel::getFullLogsEnabled(const shared_ptr<linphone::Config> &config) {
-	mustBeInLinphoneThread(sLog().arg(Q_FUNC_INFO));
 	return config ? config->getInt(UiSection, "full_logs_enabled", false) : false;
+}
+
+bool SettingsModel::getCrashReporterEnabled(const shared_ptr<linphone::Config> &config) {
+	return config ? config->getInt(AppSection, "send_logs_to_crashlytics", true) : true;
 }
 
 QString SettingsModel::getLogsFolder() const {

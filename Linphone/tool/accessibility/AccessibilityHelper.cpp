@@ -28,6 +28,7 @@ DEFINE_ABSTRACT_OBJECT(AccessibilityHelper)
 
 void AccessibilityHelper::announceMessage(const QString &message, QObject *context, bool assertive) {
 	QObject *target = context ? context : static_cast<QObject *>(Utils::getMainWindow());
+	if (!target) return;
 	QAccessibleAnnouncementEvent event(target, message);
 	event.setPoliteness(assertive ? QAccessible::AnnouncementPoliteness::Assertive
 	                              : QAccessible::AnnouncementPoliteness::Polite);

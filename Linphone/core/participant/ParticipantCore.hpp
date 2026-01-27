@@ -107,6 +107,7 @@ signals:
 private:
 	std::shared_ptr<ParticipantModel> mParticipantModel;
 	QSharedPointer<SafeConnection<ParticipantCore, ParticipantModel>> mParticipantConnection;
+	QSharedPointer<SafeConnection<ParticipantCore, CoreModel>> mCoreModelConnection;
 
 	QList<QVariant> mParticipantDevices;
 

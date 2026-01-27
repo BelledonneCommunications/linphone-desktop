@@ -163,7 +163,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 		mTotalReactionsLabel = tr("all_reactions_label");
 		auto reac = chatmessage->getOwnReaction();
 		mOwnReaction = reac ? Utils::coreStringToAppString(reac->getBody()) : QString();
-		for (auto &reaction : chatmessage->getReactions()) {
+		for (const auto &reaction : chatmessage->getReactions()) {
 			if (reaction) {
 				auto fromAddr = reaction->getFromAddress()->clone();
 				fromAddr->clean();
@@ -239,9 +239,11 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 			});
 		}
 	});
-	mChatMessageModelConnection->makeConnectToModel(&ChatMessageModel::messageRead, [this]() {
-		mChatMessageModelConnection->invokeToCore([this] { setIsRead(true); });
-	});
+	mChatMessageModelConnection->makeConnectToModel(
+	    &ChatMessageModel::messageRead, [this](const std::shared_ptr<linphone::ChatMessage> &chatMessage) {
+		    bool isRead = chatMessage->isRead();
+		    mChatMessageModelConnection->invokeToCore([this, isRead] { setIsRead(isRead); });
+	    });
 	mChatMessageModelConnection->makeConnectToCore(&ChatMessageCore::lSendReaction, [this](const QString &reaction) {
 		mChatMessageModelConnection->invokeToModel([this, reaction] { mChatMessageModel->sendReaction(reaction); });
 	});

@@ -44,7 +44,7 @@ ChatGui *ParticipantInfoProxy::getChat() const {
 }
 
 void ParticipantInfoProxy::setChat(ChatGui *chat) {
-	lDebug() << "[ParticipantInfoProxy] set current chat " << chat;
+	lDebug() << "[ParticipantInfoProxy] set current chat " << chat << (chat ? chat->mCore->getTitle() : "NULL");
 	if (mChat != chat) {
 		mChat = chat;
 		mParticipants->setChatCore(chat ? chat->mCore : nullptr);

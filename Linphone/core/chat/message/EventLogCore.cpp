@@ -107,13 +107,13 @@ void EventLogCore::computeEvent(const std::shared_ptr<const linphone::EventLog> 
 
 	switch (eventLog->getType()) {
 		case linphone::EventLog::Type::ConferenceCreated:
-			if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne) &&
+			if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne) ||
 			    !chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference))
 				mHandled = false;
 			mEventDetails = tr("conference_created_event");
 			break;
 		case linphone::EventLog::Type::ConferenceTerminated:
-			if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne) &&
+			if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne) ||
 			    !chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference))
 				mHandled = false;
 			mEventDetails = tr("conference_created_terminated");

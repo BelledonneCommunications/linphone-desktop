@@ -77,10 +77,12 @@ void ChatMessageFileList::setSelf(QSharedPointer<ChatMessageFileList> me) {
 				docs = chatModel->getSharedDocuments();
 			}
 			for (auto it : medias) {
+				if (it->isVoiceRecording()) continue;
 				auto model = ChatMessageContentCore::create(it, nullptr);
 				contents->push_back(model);
 			}
 			for (auto it : docs) {
+				if (it->isVoiceRecording()) continue;
 				auto model = ChatMessageContentCore::create(it, nullptr);
 				contents->push_back(model);
 			}
