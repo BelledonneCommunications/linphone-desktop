@@ -1096,7 +1096,7 @@
         <location filename="../../model/call/CallModel.cpp" line="388"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server timeout&quot;</extracomment>
-        <translation>Zerbitzariaren denbora-muga</translation>
+        <translation type="unfinished">Zerbitzariaren denbora-muga</translation>
     </message>
 </context>
 <context>
@@ -6634,7 +6634,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../tool/Utils.cpp" line="926"/>
         <source>Italy</source>
-        <translation>Italia</translation>
+        <translation type="unfinished">Italia</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="929"/>

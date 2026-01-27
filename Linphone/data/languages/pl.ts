@@ -1167,7 +1167,7 @@
         <location filename="../../model/call/CallModel.cpp" line="412"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server timeout&quot;</extracomment>
-        <translation>Przekroczono limit czasu serwera</translation>
+        <translation type="unfinished">Przekroczono limit czasu serwera</translation>
     </message>
 </context>
 <context>

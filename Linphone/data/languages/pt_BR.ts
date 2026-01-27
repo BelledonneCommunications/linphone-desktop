@@ -113,7 +113,7 @@
         <location filename="../../model/account/AccountManager.cpp" line="109"/>
         <source>assistant_account_login_proxy_address_error</source>
         <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
-        <translation>Impossível criar endereço do proxy. Por favor verifique o nome do domínio.</translation>
+        <translation>Impossível criar endereço do proxy. Por favor, verifique o nome do domínio.</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountManager.cpp" line="122"/>
@@ -144,6 +144,16 @@
         <source>assistant_account_add_error</source>
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Impossível adicionar conta.</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="133"/>
+        <source>assistant_account_login_registrar_uri_error</source>
+        <translation>Registrar url ié nválida. Por favor, certifique-se de que ela segue o formato: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; é opcional)</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="144"/>
+        <source>assistant_account_login_outbound_proxy_uri_error</source>
+        <translation>Url do proxy de saída inválida. Por favor, certifique-se de que ela segue o formato: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; é opcional)</translation>
     </message>
 </context>
 <context>
@@ -308,6 +318,16 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
         <source>copied</source>
         <translation>Copiado</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="133"/>
+        <source>account_settings_sip_address_copied_error_message</source>
+        <translation>Erro copiando seu endereço SIP</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="129"/>
+        <source>account_settings_sip_address_copied_message</source>
+        <translation>O seu endereço SIP foi copiado para a área de transferência</translation>
     </message>
 </context>
 <context>
@@ -1096,7 +1116,7 @@
         <location filename="../../model/call/CallModel.cpp" line="388"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server timeout&quot;</extracomment>
-        <translation>Tempo esgotado do servidor</translation>
+        <translation type="unfinished">Tempo esgotado do servidor</translation>
     </message>
 </context>
 <context>
@@ -5574,7 +5594,7 @@ Para habilitá-las em um projeto comercial, por favor, entre em contato conosco.
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="638"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
-        <translation>Encaminhar para…</translation>
+        <translation type="unfinished">Encaminhar para…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="672"/>
@@ -6631,7 +6651,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../tool/Utils.cpp" line="926"/>
         <source>Italy</source>
-        <translation>Itália</translation>
+        <translation type="unfinished">Itália</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="929"/>

@@ -1100,7 +1100,7 @@
         <location filename="../../model/call/CallModel.cpp" line="388"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server timeout&quot;</extracomment>
-        <translation>服务器连接超时</translation>
+        <translation type="unfinished">服务器连接超时</translation>
     </message>
 </context>
 <context>
@@ -6624,7 +6624,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../tool/Utils.cpp" line="926"/>
         <source>Italy</source>
-        <translation>意大利</translation>
+        <translation type="unfinished">意大利</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="929"/>
