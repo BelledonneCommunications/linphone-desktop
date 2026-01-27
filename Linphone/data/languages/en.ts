@@ -39,45 +39,45 @@
 <context>
     <name>AccountCore</name>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="447"/>
+        <location filename="../../core/account/AccountCore.cpp" line="454"/>
         <source>drawer_menu_account_connection_status_connected</source>
         <extracomment>&quot;Connecté&quot;</extracomment>
         <translation>Connected</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="450"/>
+        <location filename="../../core/account/AccountCore.cpp" line="457"/>
         <source>drawer_menu_account_connection_status_refreshing</source>
         <translation>Refreshing…</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="453"/>
+        <location filename="../../core/account/AccountCore.cpp" line="460"/>
         <source>drawer_menu_account_connection_status_progress</source>
         <translation>Connecting…</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="456"/>
+        <location filename="../../core/account/AccountCore.cpp" line="463"/>
         <source>drawer_menu_account_connection_status_failed</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="460"/>
+        <location filename="../../core/account/AccountCore.cpp" line="467"/>
         <source>drawer_menu_account_connection_status_cleared</source>
         <translation>Disabled</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="494"/>
+        <location filename="../../core/account/AccountCore.cpp" line="501"/>
         <source>manage_account_status_connected_summary</source>
         <extracomment>&quot;Vous êtes en ligne et joignable.&quot;</extracomment>
         <translation>You are online and reachable.</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="497"/>
+        <location filename="../../core/account/AccountCore.cpp" line="504"/>
         <source>manage_account_status_failed_summary</source>
         <extracomment>&quot;Erreur de connexion, vérifiez vos paramètres.&quot;</extracomment>
         <translation>Connection error, check your settings.</translation>
     </message>
     <message>
-        <location filename="../../core/account/AccountCore.cpp" line="501"/>
+        <location filename="../../core/account/AccountCore.cpp" line="508"/>
         <source>manage_account_status_cleared_summary</source>
         <extracomment>&quot;Compte désactivé, vous ne recevrez ni appel ni message.&quot;</extracomment>
         <translation>Account disabled, you will not receive calls or messages.</translation>
@@ -502,12 +502,12 @@
         <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
         <translation>Lime server URL</translation>
     </message>
-	<message>
-		<location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml"/>
-		<source>account_settings_ccmp_server_url_title</source>
-		<extracomment>&quot;URL du serveur CCMP&quot;</extracomment>
-		<translation>CCMP server URL</translation>
-	</message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="282"/>
+        <source>account_settings_ccmp_server_url_title</source>
+        <extracomment>&quot;URL du serveur CCMP&quot;</extracomment>
+        <translation>CCMP server URL</translation>
+    </message>
 </context>
 <context>
     <name>AddParticipantsForm</name>
@@ -661,141 +661,141 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../../core/App.cpp" line="368"/>
+        <location filename="../../core/App.cpp" line="370"/>
         <source>remote_provisioning_dialog</source>
         <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
         <translation>Do you want to download and apply remote provisioning from this address ?</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="425"/>
-        <location filename="../../core/App.cpp" line="503"/>
-        <location filename="../../core/App.cpp" line="789"/>
+        <location filename="../../core/App.cpp" line="427"/>
+        <location filename="../../core/App.cpp" line="505"/>
+        <location filename="../../core/App.cpp" line="791"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="426"/>
-        <location filename="../../core/App.cpp" line="791"/>
+        <location filename="../../core/App.cpp" line="428"/>
+        <location filename="../../core/App.cpp" line="793"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation>Remote provisioning failed : %1</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="506"/>
+        <location filename="../../core/App.cpp" line="508"/>
         <source>info_popup_error_checking_update</source>
         <extracomment>An error occured while trying to check update. Please try again later or contact support team.</extracomment>
         <translation>An error occured while trying to check update. Please try again later or contact support team.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="513"/>
+        <location filename="../../core/App.cpp" line="515"/>
         <source>info_popup_new_version_download_label</source>
         <translation>Download it !</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="516"/>
+        <location filename="../../core/App.cpp" line="518"/>
         <source>info_popup_new_version_available_title</source>
         <extracomment>New version available !</extracomment>
         <translation>New version available !</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="518"/>
+        <location filename="../../core/App.cpp" line="520"/>
         <source>info_popup_new_version_available_message</source>
         <extracomment>A new version of Linphone (%1) is available. %2</extracomment>
         <translation>A new version of Linphone (%1) is available at %1</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="524"/>
+        <location filename="../../core/App.cpp" line="526"/>
         <source>info_popup_version_up_to_date_title</source>
         <translation>Up to date</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="526"/>
+        <location filename="../../core/App.cpp" line="528"/>
         <source>info_popup_version_up_to_date_message</source>
         <extracomment>Your version is up to date</extracomment>
         <translation>Up to date Your version is up to date</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="785"/>
+        <location filename="../../core/App.cpp" line="787"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation>not reachable</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1076"/>
+        <location filename="../../core/App.cpp" line="1078"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>A free and open source SIP video-phone.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1078"/>
+        <location filename="../../core/App.cpp" line="1080"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Send an order to the application towards a command line</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1082"/>
+        <location filename="../../core/App.cpp" line="1084"/>
         <source>command_line_option_show_help</source>
         <translation>Show this help</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1087"/>
+        <location filename="../../core/App.cpp" line="1089"/>
         <source>command_line_option_show_app_version</source>
         <translation>Show app version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1095"/>
+        <location filename="../../core/App.cpp" line="1097"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1097"/>
+        <location filename="../../core/App.cpp" line="1099"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, path or file</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1102"/>
+        <location filename="../../core/App.cpp" line="1104"/>
         <source>command_line_option_minimized</source>
         <translation>Minimize</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1105"/>
+        <location filename="../../core/App.cpp" line="1107"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Log to stdout some debug information while running</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1108"/>
+        <location filename="../../core/App.cpp" line="1110"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1564"/>
+        <location filename="../../core/App.cpp" line="1566"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1564"/>
+        <location filename="../../core/App.cpp" line="1566"/>
         <source>show_action</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1579"/>
+        <location filename="../../core/App.cpp" line="1581"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1597"/>
+        <location filename="../../core/App.cpp" line="1599"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Check for update</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1720"/>
+        <location filename="../../core/App.cpp" line="1722"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>
@@ -841,76 +841,76 @@
 <context>
     <name>CallCore</name>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="215"/>
+        <location filename="../../core/call/CallCore.cpp" line="217"/>
         <source>call_record_end_message</source>
         <extracomment>&quot;Enregistrement terminé&quot;</extracomment>
         <translation>Recording ended</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="217"/>
+        <location filename="../../core/call/CallCore.cpp" line="219"/>
         <source>call_record_saved_in_file_message</source>
         <extracomment>&quot;L&apos;appel a été enregistré dans le fichier : %1&quot;</extracomment>
         <translation>Recording has been saved in file : %1</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="401"/>
-        <location filename="../../core/call/CallCore.cpp" line="426"/>
+        <location filename="../../core/call/CallCore.cpp" line="403"/>
+        <location filename="../../core/call/CallCore.cpp" line="428"/>
         <source>call_stats_codec_label</source>
         <extracomment>&quot;Codec: %1 / %2 kHz&quot;</extracomment>
         <translation>Codec: %1 / %2 kHz</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="405"/>
-        <location filename="../../core/call/CallCore.cpp" line="429"/>
+        <location filename="../../core/call/CallCore.cpp" line="407"/>
+        <location filename="../../core/call/CallCore.cpp" line="431"/>
         <source>call_stats_bandwidth_label</source>
         <extracomment>&quot;Bande passante : %1 %2 kbits/s %3 %4 kbits/s&quot;</extracomment>
         <translation>Bandwidth : %1 %2 kbits/s %3 %4 kbits/s</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="411"/>
-        <location filename="../../core/call/CallCore.cpp" line="434"/>
+        <location filename="../../core/call/CallCore.cpp" line="413"/>
+        <location filename="../../core/call/CallCore.cpp" line="436"/>
         <source>call_stats_loss_rate_label</source>
         <extracomment>&quot;Taux de perte: %1% %2%&quot;</extracomment>
         <translation>Loss rate: %1% %2%</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="416"/>
+        <location filename="../../core/call/CallCore.cpp" line="418"/>
         <source>call_stats_jitter_buffer_label</source>
         <extracomment>&quot;Tampon de gigue: %1 ms&quot;</extracomment>
         <translation>Jitter buffer : %1 ms</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="443"/>
+        <location filename="../../core/call/CallCore.cpp" line="445"/>
         <source>call_stats_resolution_label</source>
         <extracomment>&quot;Définition vidéo : %1 %2 %3 %4&quot;</extracomment>
         <translation>Video resolution: %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="449"/>
+        <location filename="../../core/call/CallCore.cpp" line="451"/>
         <source>call_stats_fps_label</source>
         <extracomment>&quot;FPS : %1 %2 %3 %4&quot;</extracomment>
         <translation>FPS : %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="674"/>
+        <location filename="../../core/call/CallCore.cpp" line="714"/>
         <source>media_encryption_dtls</source>
         <extracomment>DTLS</extracomment>
         <translation>DTLS</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="677"/>
+        <location filename="../../core/call/CallCore.cpp" line="717"/>
         <source>media_encryption_none</source>
         <extracomment>None</extracomment>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="680"/>
+        <location filename="../../core/call/CallCore.cpp" line="720"/>
         <source>media_encryption_srtp</source>
         <extracomment>SRTP</extracomment>
         <translation>SRTP</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="683"/>
+        <location filename="../../core/call/CallCore.cpp" line="723"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
         <translation>Post quantum ZRTP</translation>
@@ -2079,13 +2079,13 @@
 <context>
     <name>ChatDroppableTextArea</name>
     <message>
-        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="156"/>
+        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="158"/>
         <source>chat_view_send_area_placeholder_text</source>
         <extracomment>Say something… : placeholder text for sending message text area</extracomment>
         <translation>Say something…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="195"/>
+        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="197"/>
         <source>cannot_record_while_in_call_tooltip</source>
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
         <translation>Cannot record a message while a call is ongoing</translation>
@@ -2161,101 +2161,100 @@
 <context>
     <name>ChatMessage</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="444"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="480"/>
         <source>chat_message_copy_selection</source>
         <extracomment>&quot;Copy selection&quot;</extracomment>
         <translation>Copy selection</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="446"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="482"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="454"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="490"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
         <translation>Copied</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="456"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="492"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
         <translation>in clipboard</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="129"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="130"/>
         <source>chat_message_remote_replied</source>
         <extracomment>%1 replied</extracomment>
         <translation>%1 replied to</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="96"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="97"/>
         <source>chat_message_forwarded</source>
         <extracomment>Forwarded</extracomment>
         <translation>Forwarded</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="127"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="128"/>
         <source>chat_message_remote_replied_to</source>
         <extracomment>%1 replied to %2</extracomment>
         <translation>%1 replied to %2</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="132"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="133"/>
         <source>chat_message_user_replied_to</source>
         <extracomment>You replied to %1</extracomment>
         <translation>You replied to %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="134"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="135"/>
         <source>chat_message_user_replied</source>
         <extracomment>You replied</extracomment>
         <translation>You replied</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="408"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="429"/>
         <source>chat_message_send_again</source>
         <extracomment>&quot;Re-send&quot;</extracomment>
         <translation>Re-send</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="419"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="440"/>
         <source>chat_message_reception_info</source>
         <extracomment>&quot;Reception info&quot;</extracomment>
         <translation>Reception info</translation>
     </message>
-	<message>
-		<location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="407"/>
-		<source>menu_edit_chat_message</source>
-		<extracomment>&quot;Edit&quot;</extracomment>
-		<translation>Edit</translation>
-	</message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="431"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="452"/>
+        <source>menu_edit_chat_message</source>
+        <extracomment>&quot;Edit&quot;</extracomment>
+        <translation>Edit</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="466"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
         <translation>Reply</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="463"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="500"/>
         <source>chat_message_forward</source>
         <extracomment>Forward</extracomment>
         <translation>Forward</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="480"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="517"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Delete</translation>
     </message>
-	<message>
-		<location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="469"/>
-		<source>conversation_message_edited_label</source>
-		<extracomment>&quot;Edited&quot;</extracomment>
-		<translation>Edited</translation>
-	</message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="306"/>
+        <source>conversation_message_edited_label</source>
+        <translation>Edited</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentCore</name>
@@ -2376,19 +2375,19 @@ Error</extracomment>
 <context>
     <name>ChatMessageCore</name>
     <message>
-        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="157"/>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="163"/>
         <source>all_reactions_label</source>
         <extracomment>&quot;Reactions&quot;: all reactions for one message label</extracomment>
         <translation>Reactions</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="214"/>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="223"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation>Deleted</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="216"/>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="225"/>
         <source>info_toast_deleted_message</source>
         <extracomment>The message has been deleted</extracomment>
         <translation>The message has been deleted</translation>
@@ -2419,24 +2418,24 @@ Error</extracomment>
         <translation>Meeting has been cancelled</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="171"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="182"/>
         <source></source>
         <translation>from %1 to %2 (UTC%3)</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="234"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="245"/>
         <source>ics_bubble_description_title</source>
         <extracomment>Description</extracomment>
         <translation>Description</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="286"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="297"/>
         <source>ics_bubble_join</source>
         <extracomment>&quot;Rejoindre&quot;</extracomment>
         <translation>Join</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="276"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="287"/>
         <source>ics_bubble_participants</source>
         <extracomment>%n participant(s)</extracomment>
         <translation>
@@ -2448,44 +2447,44 @@ Error</extracomment>
 <context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="110"/>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="121"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="111"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="122"/>
         <source>popup_info_find_message_title</source>
         <extracomment>Find message</extracomment>
         <translation>Find message</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="123"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="124"/>
         <source>info_popup_no_result_message</source>
         <extracomment>No result found</extracomment>
         <translation>No result found</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="115"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="116"/>
         <source>info_popup_first_result_message</source>
         <extracomment>First result reached</extracomment>
         <translation>First result reached</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="113"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="114"/>
         <source>info_popup_last_result_message</source>
         <extracomment>Last result reached</extracomment>
         <translation>Last result reached</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="160"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="161"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation>End to end encrypted chat</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="162"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="163"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
         <translation>This conversation is not encrypted !</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="173"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="174"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Messages in this conversation are e2e encrypted. 
  Only your correspondent can decrypt them.</extracomment>
@@ -2493,7 +2492,7 @@ Error</extracomment>
 Only your correspondent can decrypt them.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="175"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="176"/>
         <source>chat_message_list_not_encrypted_header_message</source>
         <extracomment>Messages are not end to end encrypted, 
  may sure you don&apos;t share any sensitive information !</extracomment>
@@ -2501,47 +2500,43 @@ Only your correspondent can decrypt them.</translation>
  may sure you don&apos;t share any sensitive information !</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="215"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="216"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 is writing…</translation>
     </message>
-	<message>
-		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="470"/>
-		<source>conversation_dialog_delete_chat_message_title</source>
-		<extracomment>&quot;Delete this message?&quot;</extracomment>
-		<translation>Delete this message?</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="471"/>
-		<source>conversation_dialog_delete_locally_label</source>
-		<extracomment>&quot;For me&quot;</extracomment>
-		<translation>For me</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
-		<source>conversation_dialog_delete_for_everyone_label</source>
-		<extracomment>&quot;For everyone&quot;</extracomment>
-		<translation>For everyone</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
-		<source>dialog_cancel</source>
-		<extracomment>&quot;Cancel&quot;</extracomment>
-		<translation>Cancel</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
-		<source>info_toast_deleted_title</source>
-		<extracomment>Deleted</extracomment>
-		<translation>Deleted</translation>
-	</message>
-	<message>
-		<location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="472"/>
-		<source>info_toast_deleted_message</source>
-		<extracomment>The message has been deleted</extracomment>
-		<translation>The message has been deleted</translation>
-	</message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="237"/>
+        <source>conversation_dialog_delete_chat_message_title</source>
+        <extracomment>&quot;Supprimer le message ?&quot;</extracomment>
+        <translation>Delete this message?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="245"/>
+        <source>conversation_dialog_delete_locally_label</source>
+        <translation>For me</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="256"/>
+        <source>conversation_dialog_delete_for_everyone_label</source>
+        <translation>For everyone</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="267"/>
+        <source>dialog_cancel</source>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="348"/>
+        <source>info_toast_deleted_title</source>
+        <translation>Deleted</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="350"/>
+        <source>info_toast_deleted_message</source>
+        <extracomment>The message has been deleted</extracomment>
+        <translation>The message has been deleted</translation>
+    </message>
 </context>
 <context>
     <name>ChatPage</name>
@@ -2729,13 +2724,13 @@ Only your correspondent can decrypt them.</translation>
 <context>
     <name>ConferenceInfoCore</name>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="577"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="583"/>
         <source>information_popup_error_title</source>
         <extracomment>&quot;Erreur&quot;</extracomment>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="579"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="585"/>
         <source>information_popup_disconnected_account_message</source>
         <extracomment>&quot;Votre compte est déconnecté&quot;</extracomment>
         <translation>Your account is disconnected</translation>
@@ -3530,12 +3525,12 @@ Only your correspondent can decrypt them.</translation>
 <context>
     <name>CoreModel</name>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="215"/>
+        <location filename="../../model/core/CoreModel.cpp" line="218"/>
         <source>info_popup_error_title</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="217"/>
+        <location filename="../../model/core/CoreModel.cpp" line="220"/>
         <source>fetching_config_failed_error_message</source>
         <extracomment>&quot;Remote provisioning cannot be retrieved&quot;</extracomment>
         <translation>Remote provisioning cannot be retrieved</translation>
@@ -4815,19 +4810,19 @@ Expiration : %1</translation>
         <translation>Meeting URI copied</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="786"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="798"/>
         <source>meeting_schedule_timezone_title</source>
         <extracomment>&quot;Fuseau horaire&quot;</extracomment>
         <translation>Timezone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="892"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="904"/>
         <source>meeting_info_organizer_label</source>
         <extracomment>&quot;Organisateur&quot;</extracomment>
         <translation>Organizer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="909"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="921"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
         <translation>Join meeting</translation>
@@ -5811,48 +5806,47 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>SelectedChatView</name>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="49"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="50"/>
         <source>chat_view_group_call_toast_message</source>
         <translation>Start a group call ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="145"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="146"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
         <translation>This conversation is not encrypted !</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="433"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="448"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
         <translation>Reply to %1</translation>
     </message>
-	<message>
-		<location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="417"/>
-		<source>conversation_editing_message_title</source>
-		<extracomment>Message beeing edited</extracomment>
-		<translation>Message beeing edited</translation>
-	</message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="639"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="449"/>
+        <source>conversation_editing_message_title</source>
+        <translation>Message beeing edited</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="660"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation>Shared medias</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="641"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="662"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation>Shared documents</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="670"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="691"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
         <translation>Forward to…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="704"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="725"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Conversations</translation>
@@ -6002,7 +5996,7 @@ To enable them in a commercial project, please contact us.</translation>
         <translation>Voice recording (%1)</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="614"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="623"/>
         <source>unknown_audio_device_name</source>
         <translation>Unknown device name</translation>
     </message>
@@ -6021,23 +6015,21 @@ To enable them in a commercial project, please contact us.</translation>
         <source>conference_invitation_updated</source>
         <translation>Meeting modification</translation>
     </message>
-	<message>
-	<location filename="../../model/tool/ToolModel.cpp" line="530"/>
-		<source>conversation_message_content_deleted_label</source>
-		<extracomment>&quot;&lt;i&gt;This message has been deleted&lt;/i&gt;&quot;</extracomment>
-		<translation>&lt;i&gt;This message has been deleted&lt;/i&gt;</translation>
-	</message>
-	<message>
-	<location filename="../../model/tool/ToolModel.cpp" line="530"/>
-		<source>conversation_message_content_deleted_by_us_label</source>
-		<extracomment>&quot;&lt;i&gt;You have deleted this message&lt;/i&gt;&quot;</extracomment>
-		<translation>&lt;i&gt;You have deleted this message&lt;/i&gt;</translation>
-	</message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="563"/>
+        <source>conversation_message_content_deleted_label</source>
+        <translation>&lt;i&gt;This message has been deleted&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="562"/>
+        <source>conversation_message_content_deleted_by_us_label</source>
+        <translation>&lt;i&gt;You have deleted this message&lt;/i&gt;</translation>
+    </message>
 </context>
 <context>
     <name>Utils</name>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2197"/>
+        <location filename="../../tool/Utils.cpp" line="2241"/>
         <source>nSeconds</source>
         <translation>
             <numerusform>%1 second</numerusform>
@@ -6045,7 +6037,7 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2192"/>
+        <location filename="../../tool/Utils.cpp" line="2236"/>
         <source>nMinute</source>
         <translation>
             <numerusform>%1 minute</numerusform>
@@ -6076,38 +6068,38 @@ To enable them in a commercial project, please contact us.</translation>
         <extracomment>Cannot reply to invalid message</extracomment>
         <translation>Cannot reply to invalid message</translation>
     </message>
-	<message>
-		<location filename="../../tool/Utils.cpp" line="2123"/>
-		<source>chat_message_edit_error</source>
-		<extracomment>Cannot modify invalid message</extracomment>
-		<translation>Cannot modify invalid message</translation>
-	</message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2082"/>
+        <source>chat_message_edit_error</source>
+        <extracomment>Cannot edit to invalid message</extracomment>
+        <translation>Cannot modify invalid message</translation>
+    </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2044"/>
         <source>info_popup_reply_message_error</source>
         <extracomment>Could not send reply message : %1</extracomment>
         <translation>Could not send reply message : %1</translation>
     </message>
-	<message>
-		<location filename="../../tool/Utils.cpp" line="2129"/>
-		<source>info_popup_edited_message_error</source>
-		<extracomment>Could not send edited message : %1</extracomment>
-		<translation>Could not send edited message : %1</translation>
-	</message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2088"/>
+        <source>info_popup_edited_message_error</source>
+        <extracomment>Could not send edited message : %1</extracomment>
+        <translation>Could not send edited message : %1</translation>
+    </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2071"/>
         <source>info_popup_send_reply_message_error_message</source>
         <extracomment>Failed to create reply message</extracomment>
         <translation>Failed to create reply message</translation>
     </message>
-	<message>
-		<location filename="../../tool/Utils.cpp" line="2156"/>
-		<source>info_popup_send_edited_message_error_message</source>
-		<extracomment>Failed to create edited message</extracomment>
-		<translation>Failed to create edited message</translation>
-	</message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2115"/>
+        <source>info_popup_send_edited_message_error_message</source>
+        <extracomment>Failed to create edited message</extracomment>
+        <translation>Failed to create edited message</translation>
+    </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2193"/>
+        <location filename="../../tool/Utils.cpp" line="2237"/>
         <source>nHour</source>
         <translation>
             <numerusform>%1 hour</numerusform>
@@ -6115,8 +6107,8 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2194"/>
-        <location filename="../../tool/Utils.cpp" line="2195"/>
+        <location filename="../../tool/Utils.cpp" line="2238"/>
+        <location filename="../../tool/Utils.cpp" line="2239"/>
         <source>nDay</source>
         <translation>
             <numerusform>%1 day</numerusform>
@@ -6124,7 +6116,7 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2196"/>
+        <location filename="../../tool/Utils.cpp" line="2240"/>
         <source>nWeek</source>
         <translation>
             <numerusform>%1 week</numerusform>
@@ -6250,7 +6242,7 @@ To enable them in a commercial project, please contact us.</translation>
         <translation>Failed to create 1-1 conversation with %1 !</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2103"/>
+        <location filename="../../tool/Utils.cpp" line="2147"/>
         <source>recorder_error</source>
         <extracomment>Error with the recorder</extracomment>
         <translation>Error with the recorder</translation>
@@ -6258,7 +6250,8 @@ To enable them in a commercial project, please contact us.</translation>
     <message>
         <location filename="../../tool/Utils.cpp" line="2008"/>
         <location filename="../../tool/Utils.cpp" line="2040"/>
-        <location filename="../../tool/Utils.cpp" line="2105"/>
+        <location filename="../../tool/Utils.cpp" line="2084"/>
+        <location filename="../../tool/Utils.cpp" line="2149"/>
         <source>chat_error</source>
         <translation>Error in the chat</translation>
     </message>
@@ -6267,20 +6260,22 @@ To enable them in a commercial project, please contact us.</translation>
         <location filename="../../tool/Utils.cpp" line="2025"/>
         <location filename="../../tool/Utils.cpp" line="2042"/>
         <location filename="../../tool/Utils.cpp" line="2069"/>
-        <location filename="../../tool/Utils.cpp" line="2107"/>
-        <location filename="../../tool/Utils.cpp" line="2121"/>
+        <location filename="../../tool/Utils.cpp" line="2086"/>
+        <location filename="../../tool/Utils.cpp" line="2113"/>
+        <location filename="../../tool/Utils.cpp" line="2151"/>
+        <location filename="../../tool/Utils.cpp" line="2165"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2109"/>
+        <location filename="../../tool/Utils.cpp" line="2153"/>
         <source>info_popup_send_voice_message_error_message</source>
         <extracomment>Could not send voice message : %1</extracomment>
         <translation>Could not send voice message : %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2123"/>
+        <location filename="../../tool/Utils.cpp" line="2167"/>
         <source>info_popup_send_voice_message_sending_error_message</source>
         <extracomment>Failed to create message from record</extracomment>
         <translation>Failed to create message from record</translation>

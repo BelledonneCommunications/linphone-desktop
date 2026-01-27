@@ -275,71 +275,73 @@ QString Paths::getLogsDirPath() {
 QString Paths::getAppRootCaFilePath() {
 	// Hardcoded because it comes from linphone and is not customizable.
 	return getReadableFilePath(getAppPackageDataDirPath() + "/linphone/rootca.pem");
-	QString Paths::getCrashpadDirPath() {
+}
+
+QString Paths::getCrashpadDirPath() {
 #ifdef HAVE_CRASH_HANDLER
-		return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
-		                          Constants::PathCrashpad);
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+	                          Constants::PathCrashpad);
 #else
-		return "";
+	return "";
 #endif
-	}
+}
 
-	QString Paths::getMetricsDirPath() {
-		return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
-		                          Constants::PathMetrics);
-	}
+QString Paths::getMetricsDirPath() {
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+	                          Constants::PathMetrics);
+}
 
-	QString Paths::getMessageHistoryFilePath() {
-		return getReadableFilePath(
-		    getAppMessageHistoryFilePath()); // No need to ensure that the file exists as this DB is deprecated
-	}
+QString Paths::getMessageHistoryFilePath() {
+	return getReadableFilePath(
+	    getAppMessageHistoryFilePath()); // No need to ensure that the file exists as this DB is deprecated
+}
 
-	QString Paths::getPackageMsPluginsDirPath() {
-		return getReadableDirPath(getAppPackageMsPluginsDirPath());
-	}
+QString Paths::getPackageMsPluginsDirPath() {
+	return getReadableDirPath(getAppPackageMsPluginsDirPath());
+}
 
-	QString Paths::getPackagePluginsAppDirPath() {
-		return getReadableDirPath(getAppPackagePluginsDirPath() + Constants::PathPluginsApp);
-	}
+QString Paths::getPackagePluginsAppDirPath() {
+	return getReadableDirPath(getAppPackagePluginsDirPath() + Constants::PathPluginsApp);
+}
 
-	QString Paths::getPackageTopDirPath() {
-		return getReadableDirPath(getAppPackageDataDirPath());
-	}
+QString Paths::getPackageTopDirPath() {
+	return getReadableDirPath(getAppPackageDataDirPath());
+}
 
-	QString Paths::getPluginsAppDirPath() {
-		return getWritableDirPath(getAppPluginsDirPath() + Constants::PathPluginsApp);
-	}
+QString Paths::getPluginsAppDirPath() {
+	return getWritableDirPath(getAppPluginsDirPath() + Constants::PathPluginsApp);
+}
 
-	QStringList Paths::getPluginsAppFolders() {
-		QStringList pluginPaths;
-		pluginPaths << Paths::getPluginsAppDirPath();
-		pluginPaths << Paths::getPackagePluginsAppDirPath();
-		return pluginPaths;
-	}
+QStringList Paths::getPluginsAppFolders() {
+	QStringList pluginPaths;
+	pluginPaths << Paths::getPluginsAppDirPath();
+	pluginPaths << Paths::getPackagePluginsAppDirPath();
+	return pluginPaths;
+}
 
-	QString Paths::getToolsDirPath() {
-		return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
-		                          Constants::PathTools);
-	}
-	QString Paths::getUserCertificatesDirPath() {
-		return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
-		                          Constants::PathUserCertificates);
-	}
+QString Paths::getToolsDirPath() {
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+	                          Constants::PathTools);
+}
+QString Paths::getUserCertificatesDirPath() {
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+	                          Constants::PathUserCertificates);
+}
 
-	QString Paths::getZrtpSecretsFilePath() {
-		return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
-		                           Constants::PathZrtpSecrets);
-	}
+QString Paths::getZrtpSecretsFilePath() {
+	return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+	                           Constants::PathZrtpSecrets);
+}
 
-	QString Paths::getCrashpadHandlerFilePath() {
+QString Paths::getCrashpadHandlerFilePath() {
 #ifdef HAVE_CRASH_HANDLER
-		return getAppBinDirPath() + Constants::PathCrashpadHandler;
+	return getAppBinDirPath() + Constants::PathCrashpadHandler;
 #else
-		return "";
+	return "";
 #endif
-	}
+}
 
-	// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
-	void Paths::migrate() {
-	}
+void Paths::migrate() {
+}
