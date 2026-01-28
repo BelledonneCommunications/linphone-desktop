@@ -4377,7 +4377,7 @@ Error</extracomment>
 <context>
     <name>MagicSearchList</name>
     <message>
-        <location filename="../../core/search/MagicSearchList.cpp" line="143"/>
+        <location filename="../../core/search/MagicSearchList.cpp" line="145"/>
         <source>device_id</source>
         <translation>Telefon</translation>
     </message>

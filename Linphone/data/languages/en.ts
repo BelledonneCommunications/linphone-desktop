@@ -4309,7 +4309,7 @@ Expiration : %1</translation>
 <context>
     <name>MagicSearchList</name>
     <message>
-        <location filename="../../core/search/MagicSearchList.cpp" line="143"/>
+        <location filename="../../core/search/MagicSearchList.cpp" line="145"/>
         <source>device_id</source>
         <translation>Phone</translation>
     </message>

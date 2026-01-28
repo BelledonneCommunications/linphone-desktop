@@ -92,6 +92,8 @@ void MagicSearchList::setSelf(const QSharedPointer<MagicSearchList> &me) {
 			mModelConnection->makeConnectToModel(
 			    &MagicSearchModel::searchResultsReceived,
 			    [this](const std::list<std::shared_ptr<linphone::SearchResult>> &results) {
+				    lInfo() << log().arg("Search result received : Safe Connection =") << mModelConnection.get();
+				    lInfo() << log().arg("this =") << this;
 				    auto *contacts = new QList<QSharedPointer<FriendCore>>();
 				    auto ldapContacts = ToolModel::getLdapFriendList();
 				    auto core = CoreModel::getInstance()->getCore();
