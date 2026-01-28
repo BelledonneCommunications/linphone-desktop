@@ -321,7 +321,7 @@ AbstractMainPage {
 								meetingSetup.conferenceInfoGui.core.save()
 								//: "Création de la réunion en cours …"
 								mainWindow.showLoadingPopup(qsTr("meeting_schedule_creation_in_progress"), true, function () {
-									meetingSetup.conferenceInfoGui.core.cancelCreation()
+									meetingSetup.conferenceInfoGui.core.lCancelCreation()
 								})
 							}
 						}
