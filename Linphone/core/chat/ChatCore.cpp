@@ -223,10 +223,24 @@ void ChatCore::setSelf(const QSharedPointer<ChatCore> &me) {
 	mChatModelConnection->makeConnectToModel(
 	    &ChatModel::chatMessagesReceived, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                             const std::list<std::shared_ptr<linphone::EventLog>> &eventsLog) {
+		    if (!mChatModel) {
+			    lWarning() << log().arg("Chat model is null !");
+			    return;
+		    } else if (!mChatModelConnection) {
+			    lWarning() << log().arg("Connection between Core and Model is null !");
+			    return;
+		    }
 		    if (mChatModel->getMonitor() != chatRoom) return;
 		    lDebug() << log().arg("CHAT MESSAGE RECEIVED IN CHATROOM") << this << mChatModel->getTitle();
+		    lInfo() << log().arg("Chat message received in chatroom") << this << mChatModel->getTitle();
+		    lInfo() << log().arg("Safe Connection =") << mChatModelConnection.get();
+		    lInfo() << log().arg("this =") << this;
 		    QList<QSharedPointer<EventLogCore>> list;
 		    for (auto &e : eventsLog) {
+			    if (!e) {
+				    lWarning() << log().arg("Event log is null, continue");
+				    continue;
+			    }
 			    auto event = EventLogCore::create(e, chatRoom);
 			    list.push_back(event);
 		    }

@@ -37,6 +37,7 @@ ChatMessageModel::ChatMessageModel(const std::shared_ptr<linphone::ChatMessage> 
 	mEphemeralTimer.setInterval(60);
 	mEphemeralTimer.setSingleShot(false);
 	if (mMonitor->getEphemeralExpireTime() != 0) mEphemeralTimer.start();
+	mChatRoom = mMonitor->getChatRoom();
 	connect(&mEphemeralTimer, &QTimer::timeout, this,
 	        [this] { emit ephemeralMessageTimeUpdated(mMonitor, mMonitor->getEphemeralExpireTime()); });
 	connect(this, &ChatMessageModel::ephemeralMessageTimerStarted, this, [this] { mEphemeralTimer.start(); });
@@ -47,7 +48,8 @@ ChatMessageModel::ChatMessageModel(const std::shared_ptr<linphone::ChatMessage> 
 	// We need to force this signal sending because there is no callback to know when a message has been read
 	connect(CoreModel::getInstance().get(), &CoreModel::chatRoomRead, this,
 	        [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::ChatRoom> &chatRoom) {
-		        if (chatRoom == mMonitor->getChatRoom()) {
+		        if (!mMonitor || !mChatRoom.lock()) return;
+		        if (chatRoom == mChatRoom.lock()) {
 			        if (mMonitor->isRead()) {
 				        emit messageRead(mMonitor);
 			        }
