@@ -185,7 +185,7 @@ add_cache(OPTION_LIST LINPHONE_SDK_MAKE_RELEASE_FILE_URL "Make a RELEASE file th
 add_option(OPTION_LIST ENABLE_OPENH264 "Enable the use of OpenH264 codec" ${ENABLE_VIDEO})
 add_option(OPTION_LIST ENABLE_SCREENSHARING "Enable screen sharing." ${ENABLE_VIDEO})
 
-add_option(OPTION_LIST ENABLE_BUGSPLAT_SYMBOLS_UPLOAD "Generate and upload symbols to Bugsplat." OFF)
+add_option(OPTION_LIST ENABLE_BUGSPLAT_SYMBOLS_UPLOAD "Generate and upload symbols to Bugsplat." ON)
 add_cache(OPTION_LIST BUGSPLAT_CLIENT_ID "Client ID for Bugsplat." "")
 add_cache(OPTION_LIST BUGSPLAT_CLIENT_SECRET "Client Secret for Bugsplat." "")
 add_cache(OPTION_LIST BUGSPLAT_DATABASE "Database name for Bugsplat." "Linphone")
