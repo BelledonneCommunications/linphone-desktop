@@ -2422,44 +2422,44 @@ Error</extracomment>
 <context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="111"/>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="122"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="112"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="123"/>
         <source>popup_info_find_message_title</source>
         <extracomment>Find message</extracomment>
         <translation>Trouver un message</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="124"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="125"/>
         <source>info_popup_no_result_message</source>
         <extracomment>No result found</extracomment>
         <translation>Aucun résultat trouvé</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="116"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="117"/>
         <source>info_popup_first_result_message</source>
         <extracomment>First result reached</extracomment>
         <translation>Premier résultat atteint</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="114"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="115"/>
         <source>info_popup_last_result_message</source>
         <extracomment>Last result reached</extracomment>
         <translation>Dernier résultat atteint</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="161"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="162"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation>Conversation chiffrée de bout en bout</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="163"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="164"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
         <translation>Cette conversation n&apos;est pas chiffrée !</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="174"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="175"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Messages in this conversation are e2e encrypted. 
  Only your correspondent can decrypt them.</extracomment>
@@ -2467,7 +2467,7 @@ Error</extracomment>
 en bout. Seul votre correspondant peut les déchiffrer.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="176"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="177"/>
         <source>chat_message_list_not_encrypted_header_message</source>
         <extracomment>Messages are not end to end encrypted, 
  may sure you don&apos;t share any sensitive information !</extracomment>
@@ -2475,39 +2475,39 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         assurez-vous de ne pas partager d’informations sensibles !</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="216"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="217"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 est en train d&apos;écrire…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="237"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="238"/>
         <source>conversation_dialog_delete_chat_message_title</source>
         <extracomment>&quot;Supprimer le message ?&quot;</extracomment>
         <translation>Supprimer le message ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="245"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="246"/>
         <source>conversation_dialog_delete_locally_label</source>
         <translation>Pour moi</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="256"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="257"/>
         <source>conversation_dialog_delete_for_everyone_label</source>
         <translation>Pour tout le monde</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="267"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="268"/>
         <source>dialog_cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="348"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="349"/>
         <source>info_toast_deleted_title</source>
         <translation>Supprimé</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="350"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="351"/>
         <source>info_toast_deleted_message</source>
         <extracomment>The message has been deleted</extracomment>
         <translation>Le message a été supprimé</translation>

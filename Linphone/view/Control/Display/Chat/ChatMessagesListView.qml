@@ -87,6 +87,7 @@ ListView {
         onModelAboutToBeReset: {
             loading = true
         }
+        onModelReset: loading = false
         onModelUpdated: {
             loading = false
             var index = eventLogProxy.findFirstUnreadIndex()
