@@ -56,9 +56,11 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	if (ringtone.exists()) {
 		mRingtoneFileName = ringtone.fileName();
 		mRingtoneFolder = ringtone.absolutePath();
+		CoreModel::getInstance()->getCore()->enableNativeRinging(false);
 	} else {
 		mRingtoneFileName = mRingtonePath.right(mRingtonePath.lastIndexOf(QDir::separator()));
 		mRingtoneFolder = mRingtonePath.left(mRingtonePath.lastIndexOf(QDir::separator()));
+		CoreModel::getInstance()->getCore()->enableNativeRinging(true);
 	}
 
 	// Network

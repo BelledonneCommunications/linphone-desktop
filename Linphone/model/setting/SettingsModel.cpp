@@ -466,7 +466,9 @@ void SettingsModel::setRingtone(QString ringtonePath) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	QFileInfo ringtone(ringtonePath);
 	if (ringtonePath.isEmpty() || !ringtone.exists()) {
+		CoreModel::getInstance()->getCore()->enableNativeRinging(true);
 	} else {
+		CoreModel::getInstance()->getCore()->enableNativeRinging(false);
 		CoreModel::getInstance()->getCore()->setRing(Utils::appStringToCoreString(ringtonePath));
 		emit ringtoneChanged(ringtonePath);
 	}
