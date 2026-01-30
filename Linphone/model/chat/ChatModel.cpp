@@ -237,17 +237,23 @@ void ChatModel::toggleParticipantAdminStatusAtIndex(int index) const {
 	mMonitor->setParticipantAdminStatus(participant, !participant->isAdmin());
 }
 
-void ChatModel::setParticipantAddresses(const QStringList &addresses) const {
+void ChatModel::setParticipantAddresses(const QStringList &addresses) {
 	QSet<QString> s{addresses.cbegin(), addresses.cend()};
+	bool soFarSoGood = true;
 	for (auto p : mMonitor->getParticipants()) {
 		auto address = Utils::coreStringToAppString(p->getAddress()->asStringUriOnly());
 		if (s.contains(address)) s.remove(address);
-		else mMonitor->removeParticipant(p);
+		else {
+			mMonitor->removeParticipants({p});
+		}
 	}
 	for (const auto &a : s) {
 		auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(a));
-		if (address) mMonitor->addParticipant(address);
+		if (address) {
+			soFarSoGood &= mMonitor->addParticipants({address});
+		}
 	}
+	emit participantAddressesChanged(mMonitor, soFarSoGood);
 }
 
 //---------------------------------------------------------------//

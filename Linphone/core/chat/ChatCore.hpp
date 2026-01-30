@@ -175,6 +175,7 @@ signals:
 	void fileListChanged();
 	void isSecuredChanged();
 	void conferenceJoined();
+	void participantAddressesChanged(bool success);
 
 	void lDeleteMessage(ChatMessageGui *message);
 	void lDelete();

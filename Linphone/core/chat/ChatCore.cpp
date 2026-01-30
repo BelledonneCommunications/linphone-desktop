@@ -231,10 +231,8 @@ void ChatCore::setSelf(const QSharedPointer<ChatCore> &me) {
 			    return;
 		    }
 		    if (mChatModel->getMonitor() != chatRoom) return;
-		    lDebug() << log().arg("CHAT MESSAGE RECEIVED IN CHATROOM") << this << mChatModel->getTitle();
 		    lInfo() << log().arg("Chat message received in chatroom") << this << mChatModel->getTitle();
-		    lInfo() << log().arg("Safe Connection =") << mChatModelConnection.get();
-		    lInfo() << log().arg("this =") << this;
+		    lInfo() << log().arg("Connection =") << mChatModelConnection.get();
 		    QList<QSharedPointer<EventLogCore>> list;
 		    for (auto &e : eventsLog) {
 			    if (!e) {
@@ -391,6 +389,15 @@ void ChatCore::setSelf(const QSharedPointer<ChatCore> &me) {
 			                                         setMeAdmin(meAdmin);
 		                                         });
 	                                         });
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::participantAddressesChanged,
+	    [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom, bool success) {
+		    if (!success) {
+			    auto participants = buildParticipants(chatRoom);
+			    mChatModelConnection->invokeToCore([this, participants] { setParticipants(participants); });
+		    }
+		    mChatModelConnection->invokeToCore([this, success] { emit participantAddressesChanged(success); });
+	    });
 	mChatModelConnection->makeConnectToCore(&ChatCore::lRemoveParticipantAtIndex, [this](int index) {
 		mChatModelConnection->invokeToModel([this, index]() { mChatModel->removeParticipantAtIndex(index); });
 	});
