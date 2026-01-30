@@ -83,7 +83,7 @@ public:
 	void setEphemeralLifetime(int time);
 	void setSubject(QString subject) const;
 	void removeParticipantAtIndex(int index) const;
-	void setParticipantAddresses(const QStringList &addresses) const;
+	void setParticipantAddresses(const QStringList &addresses);
 	void toggleParticipantAdminStatusAtIndex(int index) const;
 
 signals:
@@ -93,6 +93,7 @@ signals:
 	void mutedChanged(bool muted);
 	void ephemeralEnableChanged(bool enable);
 	void ephemeralLifetimeChanged(int time);
+	void participantAddressesChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom, bool success);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

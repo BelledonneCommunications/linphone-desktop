@@ -2472,44 +2472,44 @@ Error</extracomment>
 <context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="110"/>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="121"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="111"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="122"/>
         <source>popup_info_find_message_title</source>
         <extracomment>Find message</extracomment>
         <translation>Nachricht suchen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="123"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="124"/>
         <source>info_popup_no_result_message</source>
         <extracomment>No result found</extracomment>
         <translation>Keine Ergebnisse gefunden</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="115"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="116"/>
         <source>info_popup_first_result_message</source>
         <extracomment>First result reached</extracomment>
         <translation>Erstes Ergebnis erreicht</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="113"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="114"/>
         <source>info_popup_last_result_message</source>
         <extracomment>Last result reached</extracomment>
         <translation>Letztes Ergebnis erreicht</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="160"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="161"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation>Ende-zu-Ende-verschlüsselter Chat</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="162"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="163"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
         <translation>Dieser Chat ist nicht verschlüsselt!</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="173"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="174"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Messages in this conversation are e2e encrypted. 
  Only your correspondent can decrypt them.</extracomment>
@@ -2517,7 +2517,7 @@ Error</extracomment>
 Nur Ihr Gesprächspartner kann sie entschlüsseln.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="175"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="176"/>
         <source>chat_message_list_not_encrypted_header_message</source>
         <extracomment>Messages are not end to end encrypted, 
  may sure you don&apos;t share any sensitive information !</extracomment>
@@ -2525,7 +2525,7 @@ Nur Ihr Gesprächspartner kann sie entschlüsseln.</translation>
 Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="215"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="216"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 schreibt…</translation>
@@ -4362,7 +4362,7 @@ Ablauf: %1</translation>
 <context>
     <name>MagicSearchList</name>
     <message>
-        <location filename="../../core/search/MagicSearchList.cpp" line="145"/>
+        <location filename="../../core/search/MagicSearchList.cpp" line="146"/>
         <source>device_id</source>
         <translation>Telefon</translation>
     </message>
@@ -4606,9 +4606,37 @@ Ablauf: %1</translation>
 <context>
     <name>ManageParticipants</name>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="44"/>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
+        <source>info_popup_manage_participant_error_message</source>
+        <extracomment>Error while setting participants !</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
+        <source>info_popup_success_title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
+        <source>info_popup_manage_participant_updated_message</source>
+        <extracomment>Participants updated</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="59"/>
         <source>group_infos_manage_participants</source>
         <translation>Teilnehmer</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
+        <source>apply_button_text</source>
+        <extracomment>Apply</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -22,6 +22,22 @@ Rectangle {
 	height: participantAddColumn.implicitHeight
 	signal done()
 
+	Connections {
+		enabled: chatGui !== null
+		target: chatGui.core
+		function onParticipantAddressesChanged(success) {
+			if (!success) UtilsCpp.showInformationPopup(qsTr("info_popup_error_title"), 
+			//: Error while setting participants !
+			qsTr("info_popup_manage_participant_error_message"), false)
+			else {
+				mainItem.done()
+				UtilsCpp.showInformationPopup(qsTr("info_popup_success_title"), 
+				//: Participants updated
+				qsTr("info_popup_manage_participant_updated_message"), true)
+			}
+		}
+	}
+
 	ColumnLayout {
 		id: participantAddColumn
 		anchors.fill: parent
@@ -36,7 +52,6 @@ Rectangle {
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.leftArrow
 				onClicked: {
-					mainItem.chatGui.core.lSetParticipantsAddresses(manageParticipantsLayout.selectedParticipants)
 					mainItem.done()
 				}
 			}
@@ -46,6 +61,14 @@ Rectangle {
 				maximumLineCount: 1
 				font: Typography.h4
 				Layout.fillWidth: true
+			}
+			MediumButton {
+				id: manageParticipantsApplyButton
+				//: Apply
+				text: qsTr("apply_button_text")
+				onClicked: {
+					mainItem.chatGui.core.lSetParticipantsAddresses(manageParticipantsLayout.selectedParticipants)
+				}
 			}
 		}
 		AddParticipantsForm {

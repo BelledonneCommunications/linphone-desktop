@@ -66,7 +66,7 @@ template <class A, class B>
 class SafeConnection : public QObject {
 	// Use create functions.
 protected:
-	SafeConnection(const QSharedPointer<A> &a, std::shared_ptr<B> b)
+	SafeConnection(QSharedPointer<A> a, std::shared_ptr<B> b)
 	    : mCore(a), mModel(b), mCoreObject(a.get()), mModelObject(b.get()) {
 	}
 	SafeConnection(QSharedPointer<A> a, QSharedPointer<B> b)
@@ -150,6 +150,7 @@ public:
 	}
 
 	bool tryLock() {
+		if (!this) return false;
 		mLocker.lock();
 		auto coreLocked = mCore.lock();
 		auto modelLocked = mModel.lock();
