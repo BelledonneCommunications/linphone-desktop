@@ -466,9 +466,7 @@ void SettingsModel::setRingtone(QString ringtonePath) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	QFileInfo ringtone(ringtonePath);
 	if (ringtonePath.isEmpty() || !ringtone.exists()) {
-		CoreModel::getInstance()->getCore()->enableNativeRinging(true);
 	} else {
-		CoreModel::getInstance()->getCore()->enableNativeRinging(false);
 		CoreModel::getInstance()->getCore()->setRing(Utils::appStringToCoreString(ringtonePath));
 		emit ringtoneChanged(ringtonePath);
 	}
@@ -515,6 +513,17 @@ void SettingsModel::setAutoDownloadReceivedFiles(bool status) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	CoreModel::getInstance()->getCore()->setMaxSizeForAutoDownloadIncomingFiles(status ? 0 : -1);
 	emit autoDownloadReceivedFilesChanged(status);
+}
+
+bool SettingsModel::getDisplayNotificationContent() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return !!mConfig->getInt(UiSection, "display_notification_content", 1);
+}
+
+void SettingsModel::setDisplayNotificationContent(bool display) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mConfig->setInt(UiSection, "display_notification_content", display);
+	emit displayNotificationContentChanged(display);
 }
 
 bool SettingsModel::getEchoCancellationEnabled() const {

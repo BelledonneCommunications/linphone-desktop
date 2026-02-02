@@ -2602,16 +2602,34 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <translation>Fichiers joints</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="25"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="21"/>
+        <source>settings_chat_notifications_title</source>
+        <extracomment>Notifications</extracomment>
+        <translation>Notifications</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="32"/>
         <source>settings_chat_attached_files_auto_download_title</source>
         <extracomment>&quot;Automatic download&quot;</extracomment>
         <translation>Téléchargement automatique</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="27"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="34"/>
         <source>settings_chat_attached_files_auto_download_subtitle</source>
         <extracomment>&quot;Automatically download transferred or received files in conversations&quot;</extracomment>
         <translation>Télécharger automatiquement les fichiers échangés dans les conversations</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="50"/>
+        <source>settings_chat_display_notification_content_title</source>
+        <extracomment>&quot;Display notification content&quot;</extracomment>
+        <translation>Afficher le contenu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="52"/>
+        <source>settings_chat_display_notification_content_subtitle</source>
+        <extracomment>&quot;Display the content of the received message&quot;</extracomment>
+        <translation>Afficher le contenu du message reçu</translation>
     </message>
 </context>
 <context>
@@ -4973,13 +4991,19 @@ Expiration : %1</translation>
         <translation>Nouvelle invitation à une conférence !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="387"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="388"/>
+        <source>new_chat_room_message</source>
+        <extracomment>&apos;New message received!&apos; Notification that warn the user of a new message.</extracomment>
+        <translation>Nouveau message reçu</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="391"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>Nouveaux messages reçus !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="415"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="419"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Nouveau message sur la conversation %1</translation>

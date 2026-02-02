@@ -2674,16 +2674,34 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <translation>Angefügte Dateien</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="25"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="21"/>
+        <source>settings_chat_notifications_title</source>
+        <extracomment>Notifications</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="32"/>
         <source>settings_chat_attached_files_auto_download_title</source>
         <extracomment>&quot;Automatic download&quot;</extracomment>
         <translation>Automatischer Download</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="27"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="34"/>
         <source>settings_chat_attached_files_auto_download_subtitle</source>
         <extracomment>&quot;Automatically download transferred or received files in conversations&quot;</extracomment>
         <translation>Übertragene oder empfangene Dateien in Unterhaltungen automatisch herunterladen</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="50"/>
+        <source>settings_chat_display_notification_content_title</source>
+        <extracomment>&quot;Display notification content&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="52"/>
+        <source>settings_chat_display_notification_content_subtitle</source>
+        <extracomment>&quot;Display the content of the received message&quot;</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5113,13 +5131,19 @@ Ablauf: %1</translation>
         <translation>Konferenzeinladung erhalten!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="387"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="388"/>
+        <source>new_chat_room_message</source>
+        <extracomment>&apos;New message received!&apos; Notification that warn the user of a new message.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="391"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>Neue Nachrichten erhalten!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="415"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="419"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Neue Nachricht im Chat %1</translation>

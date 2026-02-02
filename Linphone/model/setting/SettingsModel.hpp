@@ -66,6 +66,9 @@ public:
 	void setAutoDownloadReceivedFiles(bool enabled);
 	bool getAutoDownloadReceivedFiles() const;
 
+	void setDisplayNotificationContent(bool display);
+	bool getDisplayNotificationContent() const;
+
 	// Audio. --------------------------------------------------------------------
 
 	bool getIsInCall() const;
@@ -287,6 +290,7 @@ signals:
 
 	// Messages. --------------------------------------------------------------------
 	void autoDownloadReceivedFilesChanged(bool enabled);
+	void displayNotificationContentChanged(bool display);
 
 private:
 	void notifyConfigReady();
