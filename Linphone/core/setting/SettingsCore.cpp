@@ -50,17 +50,16 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	mVideoEnabled = settingsModel->getVideoEnabled();
 	mEchoCancellationEnabled = settingsModel->getEchoCancellationEnabled();
 	mAutoDownloadReceivedFiles = settingsModel->getAutoDownloadReceivedFiles();
+	mDisplayNotificationContent = settingsModel->getDisplayNotificationContent();
 	mAutomaticallyRecordCallsEnabled = settingsModel->getAutomaticallyRecordCallsEnabled();
 	mRingtonePath = settingsModel->getRingtone();
 	QFileInfo ringtone(mRingtonePath);
 	if (ringtone.exists()) {
 		mRingtoneFileName = ringtone.fileName();
 		mRingtoneFolder = ringtone.absolutePath();
-		CoreModel::getInstance()->getCore()->enableNativeRinging(false);
 	} else {
 		mRingtoneFileName = mRingtonePath.right(mRingtonePath.lastIndexOf(QDir::separator()));
 		mRingtoneFolder = mRingtonePath.left(mRingtonePath.lastIndexOf(QDir::separator()));
-		CoreModel::getInstance()->getCore()->enableNativeRinging(true);
 	}
 
 	// Network
@@ -166,6 +165,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mVideoEnabled = settingsCore.mVideoEnabled;
 	mEchoCancellationEnabled = settingsCore.mEchoCancellationEnabled;
 	mAutoDownloadReceivedFiles = settingsCore.mAutoDownloadReceivedFiles;
+	mDisplayNotificationContent = settingsCore.mDisplayNotificationContent;
 	mAutomaticallyRecordCallsEnabled = settingsCore.mAutomaticallyRecordCallsEnabled;
 
 	// Audio
@@ -252,6 +252,7 @@ void SettingsCore::reloadSettings() {
 	setVideoEnabled(settingsModel->getVideoEnabled());
 	setEchoCancellationEnabled(settingsModel->getEchoCancellationEnabled());
 	setAutoDownloadReceivedFiles(settingsModel->getAutoDownloadReceivedFiles());
+	setDisplayNotificationContent(settingsModel->getDisplayNotificationContent());
 	setAutomaticallyRecordCallsEnabled(settingsModel->getAutomaticallyRecordCallsEnabled());
 	setRingtone(settingsModel->getRingtone());
 
@@ -400,6 +401,12 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	mSettingsModelConnection->makeConnectToModel(
 	    &SettingsModel::autoDownloadReceivedFilesChanged, [this](const bool enabled) {
 		    mSettingsModelConnection->invokeToCore([this, enabled]() { setAutoDownloadReceivedFiles(enabled); });
+	    });
+
+	// Auto download incoming files
+	mSettingsModelConnection->makeConnectToModel(
+	    &SettingsModel::displayNotificationContentChanged, [this](const bool enabled) {
+		    mSettingsModelConnection->invokeToCore([this, enabled]() { setDisplayNotificationContent(enabled); });
 	    });
 
 	// Auto recording
@@ -642,6 +649,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setAutomaticallyRecordCallsEnabled(settingsCore.mAutomaticallyRecordCallsEnabled);
 
 	setAutoDownloadReceivedFiles(settingsCore.mAutoDownloadReceivedFiles);
+	setDisplayNotificationContent(settingsCore.mDisplayNotificationContent);
 	// Audio
 	setCaptureDevices(settingsCore.mCaptureDevices);
 	setPlaybackDevices(settingsCore.mPlaybackDevices);
@@ -793,6 +801,14 @@ void SettingsCore::setAutoDownloadReceivedFiles(bool enabled) {
 	if (mAutoDownloadReceivedFiles != enabled) {
 		mAutoDownloadReceivedFiles = enabled;
 		emit autoDownloadReceivedFilesChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setDisplayNotificationContent(bool enabled) {
+	if (mDisplayNotificationContent != enabled) {
+		mDisplayNotificationContent = enabled;
+		emit displayNotificationContentChanged();
 		setIsSaved(false);
 	}
 }
@@ -1243,6 +1259,8 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	// Chat
 	model->setAutoDownloadReceivedFiles(mAutoDownloadReceivedFiles);
 
+	model->setDisplayNotificationContent(mDisplayNotificationContent);
+
 	// Audio
 	model->setRingerDevice(mRingerDevice);
 	model->setCaptureDevice(mCaptureDevice);
@@ -1318,6 +1336,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 
 	// Chat
 	mAutoDownloadReceivedFiles = model->getAutoDownloadReceivedFiles();
+	mDisplayNotificationContent = model->getDisplayNotificationContent();
 
 	// Audio
 	mCaptureDevices = model->getCaptureDevices();

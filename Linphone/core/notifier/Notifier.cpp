@@ -366,7 +366,8 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 				txt = tr("new_conference_invitation");
 		};
 
-		if (messages.size() == 1) { // Display only sender on mono message.
+		if (messages.size() == 1 &&
+		    SettingsModel::getInstance()->getDisplayNotificationContent()) { // Display only sender on mono message.
 			if (message->isRead()) return;
 			getMessage(message);
 			if (txt.isEmpty()) { // Do not notify message without content
@@ -382,6 +383,9 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 				}
 			}
 			if (unreadCount == 0) return;
+			else if (unreadCount == 1)
+				//: 'New message received!' Notification that warn the user of a new message.
+				txt = tr("new_chat_room_message");
 			if (unreadCount > 1)
 				//: 'New messages received!' Notification that warn the user of new messages.
 				txt = tr("new_chat_room_messages");

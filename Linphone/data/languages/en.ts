@@ -2676,16 +2676,34 @@ Only your correspondent can decrypt them.</translation>
         <translation>Attached files</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="25"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="21"/>
+        <source>settings_chat_notifications_title</source>
+        <extracomment>Notifications</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="32"/>
         <source>settings_chat_attached_files_auto_download_title</source>
         <extracomment>&quot;Automatic download&quot;</extracomment>
         <translation>Automatic download</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="27"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="34"/>
         <source>settings_chat_attached_files_auto_download_subtitle</source>
         <extracomment>&quot;Automatically download transferred or received files in conversations&quot;</extracomment>
         <translation>Automatically download transferred or received files in conversations</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="50"/>
+        <source>settings_chat_display_notification_content_title</source>
+        <extracomment>&quot;Display notification content&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="52"/>
+        <source>settings_chat_display_notification_content_subtitle</source>
+        <extracomment>&quot;Display the content of the received message&quot;</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4553,9 +4571,37 @@ Expiration : %1</translation>
 <context>
     <name>ManageParticipants</name>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="44"/>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
+        <source>info_popup_manage_participant_error_message</source>
+        <extracomment>Error while setting participants !</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
+        <source>info_popup_success_title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
+        <source>info_popup_manage_participant_updated_message</source>
+        <extracomment>Participants updated</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="59"/>
         <source>group_infos_manage_participants</source>
         <translation>Participants</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
+        <source>apply_button_text</source>
+        <extracomment>Apply</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5023,13 +5069,19 @@ Expiration : %1</translation>
         <translation>Conference invitation received !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="387"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="388"/>
+        <source>new_chat_room_message</source>
+        <extracomment>&apos;New message received!&apos; Notification that warn the user of a new message.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="391"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>New messages received !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="415"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="419"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>New message on chatroom %1</translation>
